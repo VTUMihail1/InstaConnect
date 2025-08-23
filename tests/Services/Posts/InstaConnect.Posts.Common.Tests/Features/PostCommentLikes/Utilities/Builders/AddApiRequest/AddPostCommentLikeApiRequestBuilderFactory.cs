@@ -8,14 +8,6 @@ public class AddPostCommentLikeApiRequestBuilderFactory
 {
     private readonly ObjectBuilderFactory<AddPostCommentLikeApiRequest> _objectBuilderFactory = new();
 
-    public AddPostCommentLikeApiRequestBuilder Create()
-    {
-        var objectBuilder = _objectBuilderFactory.Create();
-        var requestBuilder = new AddPostCommentLikeApiRequestBuilder(objectBuilder);
-
-        return requestBuilder;
-    }
-
     public AddPostCommentLikeApiRequestBuilder Create(Post post, PostComment postComment, User user)
     {
         var objectBuilder = _objectBuilderFactory.Create();

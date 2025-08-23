@@ -79,8 +79,8 @@ public class UserBuilder
         return this;
     }
 
-    public User Create()
+    public User Build()
     {
-        return _objectBuilder.Create();
+        return _objectBuilder.Build();
     }
 }

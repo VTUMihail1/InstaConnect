@@ -21,7 +21,7 @@ public class GetAllPostCommentLikesControllerUnitTests : BasePostCommentLikePres
     {
         _requestBuilderFactory = new();
         _requestBuilder = _requestBuilderFactory.Create(PostCommentLike, User);
-        _request = _requestBuilder.Create();
+        _request = _requestBuilder.Build();
 
         _postCommentLikeController = new(ApplicationMapper, ApplicationSender);
 

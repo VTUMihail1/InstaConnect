@@ -6,7 +6,7 @@ namespace InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities
 public sealed class PostCommentContentTooLongDataAttribute : LengthStringDataAttribute
 {
     public PostCommentContentTooLongDataAttribute()
-        : base(PostCommentTestValueUtilities.ContentTooLong)
+        : base(PostCommentOutOfBoundsUtilities.ContentTooLong)
     {
     }
 }

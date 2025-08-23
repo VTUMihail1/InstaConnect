@@ -7,7 +7,7 @@ namespace InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities
 public sealed class PostCommentContentTooLongWithMessageDataAttribute : LengthStringWithMessageDataAttribute
 {
     public PostCommentContentTooLongWithMessageDataAttribute()
-        : base(PostCommentTestValueUtilities.ContentTooLong, PostCommentErrorMessages.GetContentTooLong(PostCommentTestValueUtilities.ContentTooLong))
+        : base(PostCommentOutOfBoundsUtilities.ContentTooLong, PostCommentErrorMessages.GetContentTooLong(PostCommentOutOfBoundsUtilities.ContentTooLong))
     {
     }
 }

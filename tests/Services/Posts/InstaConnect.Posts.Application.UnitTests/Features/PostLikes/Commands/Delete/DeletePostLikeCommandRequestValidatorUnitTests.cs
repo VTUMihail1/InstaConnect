@@ -23,7 +23,7 @@ public class DeletePostLikeCommandRequestValidatorUnitTests : BasePostLikeApplic
     {
         _requestBuilderFactory = new();
         _requestBuilder = _requestBuilderFactory.Create(PostLike);
-        _request = _requestBuilder.Create();
+        _request = _requestBuilder.Build();
 
         _requestValidator = new();
     }
@@ -37,7 +37,7 @@ public class DeletePostLikeCommandRequestValidatorUnitTests : BasePostLikeApplic
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
@@ -55,7 +55,7 @@ public class DeletePostLikeCommandRequestValidatorUnitTests : BasePostLikeApplic
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithLikeId(_request.LikeId, transformer).Create();
+        var request = _requestBuilder.WithLikeId(_request.LikeId, transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
@@ -73,7 +73,7 @@ public class DeletePostLikeCommandRequestValidatorUnitTests : BasePostLikeApplic
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);

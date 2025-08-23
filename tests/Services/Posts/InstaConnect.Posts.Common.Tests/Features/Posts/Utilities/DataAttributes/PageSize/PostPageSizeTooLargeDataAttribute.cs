@@ -6,7 +6,7 @@ namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttribute
 public sealed class PostPageSizeTooLargeDataAttribute : ValueIntDataAttribute
 {
     public PostPageSizeTooLargeDataAttribute()
-        : base(PostTestValueUtilities.PageSizeTooLarge)
+        : base(PostOutOfBoundsUtilities.PageSizeTooLarge)
     {
     }
 }

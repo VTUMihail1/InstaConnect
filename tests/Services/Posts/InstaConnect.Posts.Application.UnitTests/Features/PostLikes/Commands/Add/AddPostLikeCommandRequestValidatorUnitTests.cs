@@ -21,7 +21,7 @@ public class AddPostLikeCommandRequestValidatorUnitTests : BasePostLikeApplicati
     {
         _requestBuilderFactory = new();
         _requestBuilder = _requestBuilderFactory.Create(Post, User);
-        _request = _requestBuilder.Create();
+        _request = _requestBuilder.Build();
 
         _requestValidator = new();
     }
@@ -35,7 +35,7 @@ public class AddPostLikeCommandRequestValidatorUnitTests : BasePostLikeApplicati
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
@@ -53,7 +53,7 @@ public class AddPostLikeCommandRequestValidatorUnitTests : BasePostLikeApplicati
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);

@@ -6,7 +6,7 @@ namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttribute
 public sealed class PostTitleTooShortWithMessageDataAttribute : ValueIntWithMessageDataAttribute
 {
     public PostTitleTooShortWithMessageDataAttribute()
-        : base(PostTestValueUtilities.TitleTooShort, PostErrorMessages.GetTitleTooShort(PostTestValueUtilities.TitleTooShort))
+        : base(PostOutOfBoundsUtilities.TitleTooShort, PostErrorMessages.GetTitleTooShort(PostOutOfBoundsUtilities.TitleTooShort))
     {
     }
 }

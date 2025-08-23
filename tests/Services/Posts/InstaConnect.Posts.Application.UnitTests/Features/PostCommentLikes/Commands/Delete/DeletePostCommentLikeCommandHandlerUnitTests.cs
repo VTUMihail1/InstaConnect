@@ -18,7 +18,7 @@ public class DeletePostCommentLikeCommandHandlerUnitTests : BasePostCommentLikeA
     {
         _requestBuilderFactory = new();
         _requestBuilder = _requestBuilderFactory.Create(PostCommentLike);
-        _request = _requestBuilder.Create();
+        _request = _requestBuilder.Build();
 
         _handler = new(ApplicationMapper, PostCommentLikeService);
     }

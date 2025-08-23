@@ -23,8 +23,8 @@ public class UserDeletedEventRequestBuilder
         return this;
     }
 
-    public UserDeletedEventRequest Create()
+    public UserDeletedEventRequest Build()
     {
-        return _objectBuilder.Create();
+        return _objectBuilder.Build();
     }
 }

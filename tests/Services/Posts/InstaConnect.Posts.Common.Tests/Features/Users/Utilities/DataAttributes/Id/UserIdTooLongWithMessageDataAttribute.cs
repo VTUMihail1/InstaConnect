@@ -7,7 +7,7 @@ namespace InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttribute
 public sealed class UserIdTooLongWithMessageDataAttribute : LengthStringWithMessageDataAttribute
 {
     public UserIdTooLongWithMessageDataAttribute()
-        : base(UserTestValueUtilities.IdTooLong, UserErrorMessages.GetIdTooLong(UserTestValueUtilities.IdTooLong))
+        : base(UserOutOfBoundsUtilities.IdTooLong, UserErrorMessages.GetIdTooLong(UserOutOfBoundsUtilities.IdTooLong))
     {
     }
 }

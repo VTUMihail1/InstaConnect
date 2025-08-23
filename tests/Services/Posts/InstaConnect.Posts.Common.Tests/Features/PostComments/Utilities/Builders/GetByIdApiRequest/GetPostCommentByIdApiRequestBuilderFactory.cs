@@ -10,14 +10,6 @@ public class GetPostCommentByIdApiRequestBuilderFactory
 {
     private readonly ObjectBuilderFactory<GetPostCommentByIdApiRequest> _objectBuilderFactory = new();
 
-    public GetPostCommentByIdApiRequestBuilder Create()
-    {
-        var objectBuilder = _objectBuilderFactory.Create();
-        var requestBuilder = new GetPostCommentByIdApiRequestBuilder(objectBuilder);
-
-        return requestBuilder;
-    }
-
     public GetPostCommentByIdApiRequestBuilder Create(PostComment postComment)
     {
         var objectBuilder = _objectBuilderFactory.Create();

@@ -13,14 +13,6 @@ public class GetAllPostCommentLikesQueryRequestBuilderFactory
 {
     private readonly ObjectBuilderFactory<GetAllPostCommentLikesQueryRequest> _objectBuilderFactory = new();
 
-    public GetAllPostCommentLikesQueryRequestBuilder Create()
-    {
-        var objectBuilder = _objectBuilderFactory.Create();
-        var requestBuilder = new GetAllPostCommentLikesQueryRequestBuilder(objectBuilder);
-
-        return requestBuilder;
-    }
-
     public GetAllPostCommentLikesQueryRequestBuilder Create(PostCommentLike postCommentLike, User user)
     {
         var objectBuilder = _objectBuilderFactory.Create();

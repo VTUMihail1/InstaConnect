@@ -27,7 +27,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
     {
         _requestBuilderFactory = new();
         _requestBuilder = _requestBuilderFactory.Create(Post, PostComment, User);
-        _request = _requestBuilder.Create();
+        _request = _requestBuilder.Build();
     }
 
     protected override async Task OnInitializeAsync()
@@ -66,7 +66,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentLikeStatusCodeAsync(request, CancellationToken);
@@ -84,7 +84,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentLikeProblemDetailsAsync(request, CancellationToken);
@@ -102,7 +102,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
+        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentLikeStatusCodeAsync(request, CancellationToken);
@@ -120,7 +120,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
+        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentLikeProblemDetailsAsync(request, CancellationToken);
@@ -138,7 +138,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentLikeStatusCodeAsync(request, CancellationToken);
@@ -156,7 +156,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentLikeProblemDetailsAsync(request, CancellationToken);
@@ -165,94 +165,82 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
         response.ShouldSatisfyBadRequest(errorMessage);
     }
 
-    [Theory]
-    [PostIdNotFoundData]
-    public async Task AddAsync_ShouldHaveNotFoundStatusCode_WhenIdIsInvalid(
-        IStringTransformer transformer)
+    [Fact]
+    public async Task AddAsync_ShouldHaveNotFoundStatusCode_WhenIdIsInvalid()
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        await ServiceScope.DeletePostAsync(Post, CancellationToken);
 
         // Act
-        var response = await HttpClient.AddPostCommentLikeStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.AddPostCommentLikeStatusCodeAsync(_request, CancellationToken);
 
         // Assert
         response.ShouldBeNotFound();
     }
 
-    [Theory]
-    [PostIdNotFoundData]
-    public async Task AddAsync_ShouldHavePostNotFoundProblemDetails_WhenIdIsInvalid(
-        IStringTransformer transformer)
+    [Fact]
+    public async Task AddAsync_ShouldHavePostNotFoundProblemDetails_WhenIdIsInvalid()
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        await ServiceScope.DeletePostAsync(Post, CancellationToken);
 
         // Act
-        var response = await HttpClient.AddPostCommentLikeProblemDetailsAsync(request, CancellationToken);
+        var response = await HttpClient.AddPostCommentLikeProblemDetailsAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyPostNotFound(request.Id);
+        response.ShouldSatisfyPostNotFound(_request.Id);
     }
 
-    [Theory]
-    [PostCommentIdNotFoundData]
-    public async Task AddAsync_ShouldHaveNotFoundStatusCode_WhenCommentIdIsInvalid(
-        IStringTransformer transformer)
+    [Fact]
+    public async Task AddAsync_ShouldHaveNotFoundStatusCode_WhenCommentIdIsInvalid()
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
+        await ServiceScope.DeletePostCommentAsync(PostComment, CancellationToken);
 
         // Act
-        var response = await HttpClient.AddPostCommentLikeStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.AddPostCommentLikeStatusCodeAsync(_request, CancellationToken);
 
         // Assert
         response.ShouldBeNotFound();
     }
 
-    [Theory]
-    [PostCommentIdNotFoundData]
-    public async Task AddAsync_ShouldHavePostCommentNotFoundProblemDetails_WhenCommentIdIsInvalid(
-        IStringTransformer transformer)
+    [Fact]
+    public async Task AddAsync_ShouldHavePostCommentNotFoundProblemDetails_WhenCommentIdIsInvalid()
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
+        await ServiceScope.DeletePostCommentAsync(PostComment, CancellationToken);
 
         // Act
-        var response = await HttpClient.AddPostCommentLikeProblemDetailsAsync(request, CancellationToken);
+        var response = await HttpClient.AddPostCommentLikeProblemDetailsAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyPostCommentNotFound(request.Id, request.CommentId);
+        response.ShouldSatisfyPostCommentNotFound(_request.Id, _request.CommentId);
     }
 
-    [Theory]
-    [UserIdNotFoundData]
-    public async Task AddAsync_ShouldHaveNotFoundStatusCode_WhenUserIdIsInvalid(
-        IStringTransformer transformer)
+    [Fact]
+    public async Task AddAsync_ShouldHaveNotFoundStatusCode_WhenUserIdIsInvalid()
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+        await ServiceScope.DeleteUserAsync(User, CancellationToken);
 
         // Act
-        var response = await HttpClient.AddPostCommentLikeStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.AddPostCommentLikeStatusCodeAsync(_request, CancellationToken);
 
         // Assert
         response.ShouldBeNotFound();
     }
 
-    [Theory]
-    [UserIdNotFoundData]
-    public async Task AddAsync_ShouldHaveUserNotFoundProblemDetails_WhenUserIdIsInvalid(
-        IStringTransformer transformer)
+    [Fact]
+    public async Task AddAsync_ShouldHaveUserNotFoundProblemDetails_WhenUserIdIsInvalid()
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+        await ServiceScope.DeleteUserAsync(User, CancellationToken);
 
         // Act
-        var response = await HttpClient.AddPostCommentLikeProblemDetailsAsync(request, CancellationToken);
+        var response = await HttpClient.AddPostCommentLikeProblemDetailsAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyUserNotFound(request.UserId);
+        response.ShouldSatisfyUserNotFound(_request.UserId);
     }
 
     [Fact]
@@ -275,7 +263,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
     {
         // Arrange
         await ServiceScope.AddPostCommentLikeAsync(PostCommentLike, CancellationToken);
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentLikeStatusCodeAsync(request, CancellationToken);
@@ -291,7 +279,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
     {
         // Arrange
         await ServiceScope.AddPostCommentLikeAsync(PostCommentLike, CancellationToken);
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
+        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentLikeStatusCodeAsync(request, CancellationToken);
@@ -307,7 +295,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
     {
         // Arrange
         await ServiceScope.AddPostCommentLikeAsync(PostCommentLike, CancellationToken);
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentLikeStatusCodeAsync(request, CancellationToken);
@@ -336,7 +324,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
     {
         // Arrange
         await ServiceScope.AddPostCommentLikeAsync(PostCommentLike, CancellationToken);
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentLikeProblemDetailsAsync(request, CancellationToken);
@@ -352,7 +340,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
     {
         // Arrange
         await ServiceScope.AddPostCommentLikeAsync(PostCommentLike, CancellationToken);
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
+        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentLikeProblemDetailsAsync(request, CancellationToken);
@@ -368,7 +356,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
     {
         // Arrange
         await ServiceScope.AddPostCommentLikeAsync(PostCommentLike, CancellationToken);
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentLikeProblemDetailsAsync(request, CancellationToken);
@@ -393,7 +381,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentLikeStatusCodeAsync(request, CancellationToken);
@@ -408,7 +396,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
+        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentLikeStatusCodeAsync(request, CancellationToken);
@@ -423,7 +411,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentLikeStatusCodeAsync(request, CancellationToken);
@@ -449,7 +437,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentLikeAsync(request, CancellationToken);
@@ -465,7 +453,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
+        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentLikeAsync(request, CancellationToken);
@@ -481,7 +469,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentLikeAsync(request, CancellationToken);
@@ -508,7 +496,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentLikeAsync(request, CancellationToken);
@@ -524,7 +512,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
+        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentLikeAsync(request, CancellationToken);
@@ -540,7 +528,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentLikeAsync(request, CancellationToken);
@@ -568,7 +556,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentLikeAsync(request, CancellationToken);
@@ -585,7 +573,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
+        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentLikeAsync(request, CancellationToken);
@@ -602,7 +590,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentLikeAsync(request, CancellationToken);

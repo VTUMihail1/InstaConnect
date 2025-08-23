@@ -1,8 +1,9 @@
 ﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
+using InstaConnect.Posts.Application.Features.Posts.Commands.Update;
 
 namespace InstaConnect.Users.Application.Features.Users.Commands.Add;
 
-internal class UpdateUserCommandHandler : ICommandHandler<UpdateUserCommandRequest>
+internal class UpdateUserCommandHandler : ICommandHandler<UpdateUserCommandRequest, UpdateUserCommandResponse>
 {
     private readonly IUserService _userService;
     private readonly IApplicationMapper _applicationMapper;
@@ -15,9 +16,13 @@ internal class UpdateUserCommandHandler : ICommandHandler<UpdateUserCommandReque
         _applicationMapper = applicationMapper;
     }
 
-    public async Task Handle(UpdateUserCommandRequest request, CancellationToken cancellationToken)
+    public async Task<UpdateUserCommandResponse> Handle(UpdateUserCommandRequest request, CancellationToken cancellationToken)
     {
         var serviceRequest = _applicationMapper.Map<UpdateUserCommand>(request);
-        await _userService.UpdateAsync(serviceRequest, cancellationToken);
+        var user = await _userService.UpdateAsync(serviceRequest, cancellationToken);
+
+        var response = _applicationMapper.Map<UpdateUserCommandResponse>(user);
+
+        return response;
     }
 }

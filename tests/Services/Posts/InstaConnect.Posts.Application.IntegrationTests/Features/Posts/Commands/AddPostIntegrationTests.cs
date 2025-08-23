@@ -24,7 +24,7 @@ public class AddPostIntegrationTests : BasePostApplicationIntegrationTest
     {
         _requestBuilderFactory = new();
         _requestBuilder = _requestBuilderFactory.Create(User);
-        _request = _requestBuilder.Create();
+        _request = _requestBuilder.Build();
     }
 
     protected override async Task OnInitializeAsync()
@@ -41,7 +41,7 @@ public class AddPostIntegrationTests : BasePostApplicationIntegrationTest
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
@@ -59,7 +59,7 @@ public class AddPostIntegrationTests : BasePostApplicationIntegrationTest
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithTitle(_request.Title, transformer).Create();
+        var request = _requestBuilder.WithTitle(_request.Title, transformer).Build();
 
         // Act
         var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
@@ -77,7 +77,7 @@ public class AddPostIntegrationTests : BasePostApplicationIntegrationTest
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithContent(_request.Content, transformer).Create();
+        var request = _requestBuilder.WithContent(_request.Content, transformer).Build();
 
         // Act
         var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
@@ -86,19 +86,17 @@ public class AddPostIntegrationTests : BasePostApplicationIntegrationTest
         await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
     }
 
-    [Theory]
-    [UserIdNotFoundData]
-    public async Task SendAsync_ShouldThrowUserNotFoundException_WhenUserIdIsInvalid(
-        IStringTransformer transformer)
+    [Fact]
+    public async Task SendAsync_ShouldThrowUserNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+        await ServiceScope.DeleteUserAsync(User, CancellationToken);
 
         // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(_request, CancellationToken);
 
         // Assert
-        await action.ShouldThrowUserNotFoundExceptionAsync(request.UserId);
+        await action.ShouldThrowUserNotFoundExceptionAsync(_request.UserId);
     }
 
     [Fact]
@@ -118,7 +116,7 @@ public class AddPostIntegrationTests : BasePostApplicationIntegrationTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(User.Id, transformer).Create();
+        var request = _requestBuilder.WithUserId(User.Id, transformer).Build();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
@@ -145,7 +143,7 @@ public class AddPostIntegrationTests : BasePostApplicationIntegrationTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
@@ -173,7 +171,7 @@ public class AddPostIntegrationTests : BasePostApplicationIntegrationTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);

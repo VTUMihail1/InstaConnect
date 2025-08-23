@@ -11,15 +11,6 @@ public class DeletePostLikeApiRequestBuilder
 {
     private readonly ObjectBuilder<DeletePostLikeApiRequest> _objectBuilder;
 
-    public DeletePostLikeApiRequestBuilder(ObjectBuilder<DeletePostLikeApiRequest> objectBuilder)
-    {
-        _objectBuilder = objectBuilder;
-
-        WithId(PostDataFaker.GetId());
-        WithLikeId(PostLikeDataFaker.GetId());
-        WithUserId(UserDataFaker.GetId());
-    }
-
     public DeletePostLikeApiRequestBuilder(ObjectBuilder<DeletePostLikeApiRequest> objectBuilder, PostLike postLike)
     {
         _objectBuilder = objectBuilder;
@@ -50,8 +41,8 @@ public class DeletePostLikeApiRequestBuilder
         return this;
     }
 
-    public DeletePostLikeApiRequest Create()
+    public DeletePostLikeApiRequest Build()
     {
-        return _objectBuilder.Create();
+        return _objectBuilder.Build();
     }
 }

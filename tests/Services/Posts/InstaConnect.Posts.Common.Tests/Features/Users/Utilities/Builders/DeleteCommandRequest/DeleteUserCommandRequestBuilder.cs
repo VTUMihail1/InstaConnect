@@ -24,8 +24,8 @@ public class DeleteUserCommandRequestBuilder
         return this;
     }
 
-    public DeleteUserCommandRequest Create()
+    public DeleteUserCommandRequest Build()
     {
-        return _objectBuilder.Create();
+        return _objectBuilder.Build();
     }
 }

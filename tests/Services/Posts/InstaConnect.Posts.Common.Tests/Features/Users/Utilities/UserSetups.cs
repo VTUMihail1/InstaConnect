@@ -1,6 +1,9 @@
-﻿using InstaConnect.Common.Tests.Utilities;
+﻿using InstaConnect.Common.Application.Contracts.Users;
+using InstaConnect.Common.Tests.Utilities;
+using InstaConnect.Common.Tests.Utilities.Events;
 using InstaConnect.Posts.Domain.Features.Users.Abstractions;
 using InstaConnect.Posts.Infrastructure;
+using InstaConnect.Users.Common.Tests.Features.Users.Utilities;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,7 +29,7 @@ public static class UserSetups
         return user;
     }
 
-    public static async Task<User> AddUserAsync(
+    public static async Task AddUserAsync(
         this IServiceScope serviceScope,
         User user,
         CancellationToken cancellationToken)
@@ -36,8 +39,18 @@ public static class UserSetups
 
         userRepository.Add(user);
         await unitOfWork.SaveChangesAsync(cancellationToken);
+    }
 
-        return user;
+    public static async Task DeleteUserAsync(
+        this IServiceScope serviceScope,
+        User user,
+        CancellationToken cancellationToken)
+    {
+        var unitOfWork = serviceScope.GetUnitOfWork();
+        var userRepository = serviceScope.GetUserRepository();
+
+        userRepository.Delete(user);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
     }
 
     public static async Task ResetUserDatabase(

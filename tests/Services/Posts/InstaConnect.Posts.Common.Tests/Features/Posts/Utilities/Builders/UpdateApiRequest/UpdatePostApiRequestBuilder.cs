@@ -9,16 +9,6 @@ public class UpdatePostApiRequestBuilder
 {
     private readonly ObjectBuilder<UpdatePostApiRequest> _objectBuilder;
 
-    public UpdatePostApiRequestBuilder(ObjectBuilder<UpdatePostApiRequest> objectBuilder)
-    {
-        _objectBuilder = objectBuilder;
-
-        WithId(PostDataFaker.GetId());
-        WithUserId(UserDataFaker.GetId());
-        WithTitle(PostDataFaker.GetTitle());
-        WithContent(PostDataFaker.GetContent());
-    }
-
     public UpdatePostApiRequestBuilder(ObjectBuilder<UpdatePostApiRequest> objectBuilder, Post post)
     {
         _objectBuilder = objectBuilder;
@@ -57,8 +47,8 @@ public class UpdatePostApiRequestBuilder
         return this;
     }
 
-    public UpdatePostApiRequest Create()
+    public UpdatePostApiRequest Build()
     {
-        return _objectBuilder.Create();
+        return _objectBuilder.Build();
     }
 }

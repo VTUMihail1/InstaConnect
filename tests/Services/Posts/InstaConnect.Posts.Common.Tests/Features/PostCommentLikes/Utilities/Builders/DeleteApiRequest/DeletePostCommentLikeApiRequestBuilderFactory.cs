@@ -9,14 +9,6 @@ public class DeletePostCommentLikeApiRequestBuilderFactory
 {
     private readonly ObjectBuilderFactory<DeletePostCommentLikeApiRequest> _objectBuilderFactory = new();
 
-    public DeletePostCommentLikeApiRequestBuilder Create()
-    {
-        var objectBuilder = _objectBuilderFactory.Create();
-        var requestBuilder = new DeletePostCommentLikeApiRequestBuilder(objectBuilder);
-
-        return requestBuilder;
-    }
-
     public DeletePostCommentLikeApiRequestBuilder Create(PostCommentLike postCommentLike)
     {
         var objectBuilder = _objectBuilderFactory.Create();

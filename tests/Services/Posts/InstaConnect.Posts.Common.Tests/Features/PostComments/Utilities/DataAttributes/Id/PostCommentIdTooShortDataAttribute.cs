@@ -6,7 +6,7 @@ namespace InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities
 public sealed class PostCommentIdTooShortDataAttribute : LengthStringDataAttribute
 {
     public PostCommentIdTooShortDataAttribute()
-        : base(PostCommentTestValueUtilities.IdTooShort)
+        : base(PostCommentOutOfBoundsUtilities.IdTooShort)
     {
     }
 }

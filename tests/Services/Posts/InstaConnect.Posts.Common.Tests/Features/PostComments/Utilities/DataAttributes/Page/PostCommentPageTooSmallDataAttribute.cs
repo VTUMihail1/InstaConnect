@@ -6,7 +6,7 @@ namespace InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities
 public sealed class PostCommentPageTooSmallDataAttribute : ValueIntDataAttribute
 {
     public PostCommentPageTooSmallDataAttribute()
-        : base(PostCommentTestValueUtilities.PageTooSmall)
+        : base(PostCommentOutOfBoundsUtilities.PageTooSmall)
     {
     }
 }

@@ -9,14 +9,6 @@ public class GetPostByIdApiRequestBuilderFactory
 {
     private readonly ObjectBuilderFactory<GetPostByIdApiRequest> _objectBuilderFactory = new();
 
-    public GetPostByIdApiRequestBuilder Create()
-    {
-        var objectBuilder = _objectBuilderFactory.Create();
-        var requestBuilder = new GetPostByIdApiRequestBuilder(objectBuilder);
-
-        return requestBuilder;
-    }
-
     public GetPostByIdApiRequestBuilder Create(Post post)
     {
         var objectBuilder = _objectBuilderFactory.Create();

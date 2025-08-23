@@ -31,7 +31,7 @@ public class GetAllPostLikesQueryRequestValidatorUnitTests : BasePostLikeApplica
     {
         _requestBuilderFactory = new();
         _requestBuilder = _requestBuilderFactory.Create(PostLike, User);
-        _request = _requestBuilder.Create();
+        _request = _requestBuilder.Build();
 
         _requestValidator = new();
     }
@@ -45,7 +45,7 @@ public class GetAllPostLikesQueryRequestValidatorUnitTests : BasePostLikeApplica
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Filter.Id, transformer).Create();
+        var request = _requestBuilder.WithId(_request.Filter.Id, transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
@@ -60,7 +60,7 @@ public class GetAllPostLikesQueryRequestValidatorUnitTests : BasePostLikeApplica
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
@@ -75,7 +75,7 @@ public class GetAllPostLikesQueryRequestValidatorUnitTests : BasePostLikeApplica
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Create();
+        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
@@ -90,7 +90,7 @@ public class GetAllPostLikesQueryRequestValidatorUnitTests : BasePostLikeApplica
         IEnumTransformer<SortOrder> transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithSortOrder(_request.Sorting.Order, transformer).Create();
+        var request = _requestBuilder.WithSortOrder(_request.Sorting.Order, transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
@@ -105,7 +105,7 @@ public class GetAllPostLikesQueryRequestValidatorUnitTests : BasePostLikeApplica
         IEnumTransformer<PostLikeSortProperty> transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(_request.Sorting.Property, transformer).Create();
+        var request = _requestBuilder.WithSortProperty(_request.Sorting.Property, transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
@@ -121,7 +121,7 @@ public class GetAllPostLikesQueryRequestValidatorUnitTests : BasePostLikeApplica
         IIntTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithPage(_request.Pagination.Page, transformer).Create();
+        var request = _requestBuilder.WithPage(_request.Pagination.Page, transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
@@ -137,7 +137,7 @@ public class GetAllPostLikesQueryRequestValidatorUnitTests : BasePostLikeApplica
         IIntTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithPageSize(_request.Pagination.PageSize, transformer).Create();
+        var request = _requestBuilder.WithPageSize(_request.Pagination.PageSize, transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
@@ -153,7 +153,7 @@ public class GetAllPostLikesQueryRequestValidatorUnitTests : BasePostLikeApplica
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
@@ -169,7 +169,7 @@ public class GetAllPostLikesQueryRequestValidatorUnitTests : BasePostLikeApplica
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Create();
+        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);

@@ -30,7 +30,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
     {
         _requestBuilderFactory = new();
         _requestBuilder = _requestBuilderFactory.Create(Post, User);
-        _request = _requestBuilder.Create();
+        _request = _requestBuilder.Build();
     }
 
     protected override async Task OnInitializeAsync()
@@ -45,7 +45,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
@@ -60,7 +60,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsProblemDetailsAsync(request, CancellationToken);
@@ -75,7 +75,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Create();
+        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
@@ -90,7 +90,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Create();
+        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsProblemDetailsAsync(request, CancellationToken);
@@ -105,7 +105,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithTitle(_request.Filter.Title, transformer).Create();
+        var request = _requestBuilder.WithTitle(_request.Filter.Title, transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
@@ -120,7 +120,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithTitle(_request.Filter.Title, transformer).Create();
+        var request = _requestBuilder.WithTitle(_request.Filter.Title, transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsProblemDetailsAsync(request, CancellationToken);
@@ -137,7 +137,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
         IIntTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithPage(_request.Pagination.Page, transformer).Create();
+        var request = _requestBuilder.WithPage(_request.Pagination.Page, transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
@@ -154,7 +154,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
         IIntTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithPage(_request.Pagination.Page, transformer).Create();
+        var request = _requestBuilder.WithPage(_request.Pagination.Page, transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsProblemDetailsAsync(request, CancellationToken);
@@ -169,7 +169,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
         IEnumTransformer<SortOrder> transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortOrder(_request.Sorting.Order, transformer).Create();
+        var request = _requestBuilder.WithSortOrder(_request.Sorting.Order, transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
@@ -184,7 +184,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
         IEnumTransformer<SortOrder> transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithSortOrder(_request.Sorting.Order, transformer).Create();
+        var request = _requestBuilder.WithSortOrder(_request.Sorting.Order, transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsProblemDetailsAsync(request, CancellationToken);
@@ -199,7 +199,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
         IEnumTransformer<PostSortProperty> transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(_request.Sorting.Property, transformer).Create();
+        var request = _requestBuilder.WithSortProperty(_request.Sorting.Property, transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
@@ -214,7 +214,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
         IEnumTransformer<PostSortProperty> transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(_request.Sorting.Property, transformer).Create();
+        var request = _requestBuilder.WithSortProperty(_request.Sorting.Property, transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsProblemDetailsAsync(request, CancellationToken);
@@ -231,7 +231,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
         IIntTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithPageSize(_request.Pagination.Page, transformer).Create();
+        var request = _requestBuilder.WithPageSize(_request.Pagination.Page, transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
@@ -248,7 +248,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
         IIntTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithPageSize(_request.Pagination.Page, transformer).Create();
+        var request = _requestBuilder.WithPageSize(_request.Pagination.Page, transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsProblemDetailsAsync(request, CancellationToken);
@@ -275,7 +275,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
@@ -292,7 +292,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Create();
+        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
@@ -309,7 +309,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithTitle(_request.Filter.Title, transformer).Create();
+        var request = _requestBuilder.WithTitle(_request.Filter.Title, transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
@@ -336,7 +336,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsAsync(request, CancellationToken);
@@ -353,7 +353,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Create();
+        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsAsync(request, CancellationToken);
@@ -370,7 +370,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithTitle(_request.Filter.Title, transformer).Create();
+        var request = _requestBuilder.WithTitle(_request.Filter.Title, transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsAsync(request, CancellationToken);

@@ -1,4 +1,9 @@
-﻿using MassTransit.Testing;
+﻿using InstaConnect.Common.Application.Contracts.Users;
+
+using MassTransit;
+using MassTransit.Testing;
+
+using NSubstitute;
 
 namespace InstaConnect.Common.Tests.Utilities.Events;
 
@@ -11,6 +16,13 @@ public class EventHarness : IEventHarness
         _testHarness = testHarness;
     }
 
+    public async Task PublishAsync<T>(T message, CancellationToken cancellationToken)
+        where T : class
+    {
+        await _testHarness.Bus.Publish(message, cancellationToken);
+        await _testHarness.InactivityTask;
+    }
+
     public async Task<bool> PublishedAsync<T>(Func<T, bool> predicate, CancellationToken cancellationToken)
         where T : class
     {
@@ -18,6 +30,16 @@ public class EventHarness : IEventHarness
                 .Any<T>(e => predicate(e.Context.Message), cancellationToken);
 
         return isPublished;
+    }
+
+    public async Task<bool> FaultedAsync<T>(Func<T, bool> predicate, string errorMessage, CancellationToken cancellationToken)
+    where T : class
+    {
+        var isFaulted = await _testHarness.Published
+            .Any<Fault<T>>(e => predicate(e.Context.Message.Message) &&
+                                e.Context.Message.Exceptions.FirstOrDefault()?.Message == errorMessage, cancellationToken);
+
+        return isFaulted;
     }
 
     public async Task<bool> ConsumedAsync<T>(Func<T, bool> predicate, CancellationToken cancellationToken)

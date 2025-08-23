@@ -28,7 +28,7 @@ public static class PostCommentSetups
         return postComment;
     }
 
-    public static async Task<PostComment> AddPostCommentAsync(
+    public static async Task AddPostCommentAsync(
         this IServiceScope serviceScope,
         PostComment postComment,
         CancellationToken cancellationToken)
@@ -38,8 +38,18 @@ public static class PostCommentSetups
 
         postCommentRepository.Add(postComment);
         await unitOfWork.SaveChangesAsync(cancellationToken);
+    }
 
-        return postComment;
+    public static async Task DeletePostCommentAsync(
+        this IServiceScope serviceScope,
+        PostComment postComment,
+        CancellationToken cancellationToken)
+    {
+        var unitOfWork = serviceScope.GetUnitOfWork();
+        var postCommentRepository = serviceScope.GetPostCommentRepository();
+
+        postCommentRepository.Delete(postComment);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
     }
 
     public static async Task ResetPostCommentDatabase(

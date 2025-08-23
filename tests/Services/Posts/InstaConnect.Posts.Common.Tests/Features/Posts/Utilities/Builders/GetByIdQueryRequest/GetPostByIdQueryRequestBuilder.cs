@@ -8,13 +8,6 @@ public class GetPostByIdQueryRequestBuilder
 {
     private readonly ObjectBuilder<GetPostByIdQueryRequest> _objectBuilder;
 
-    public GetPostByIdQueryRequestBuilder(ObjectBuilder<GetPostByIdQueryRequest> objectBuilder)
-    {
-        _objectBuilder = objectBuilder;
-
-        WithId(PostDataFaker.GetId());
-    }
-
     public GetPostByIdQueryRequestBuilder(ObjectBuilder<GetPostByIdQueryRequest> objectBuilder, Post post)
     {
         _objectBuilder = objectBuilder;
@@ -29,8 +22,8 @@ public class GetPostByIdQueryRequestBuilder
         return this;
     }
 
-    public GetPostByIdQueryRequest Create()
+    public GetPostByIdQueryRequest Build()
     {
-        return _objectBuilder.Create();
+        return _objectBuilder.Build();
     }
 }

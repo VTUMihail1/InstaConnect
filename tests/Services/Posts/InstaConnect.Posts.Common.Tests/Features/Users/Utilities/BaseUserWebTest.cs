@@ -1,17 +1,8 @@
-﻿using InstaConnect.Common.Application.Abstractions;
-using InstaConnect.Common.Tests.Utilities;
+﻿using InstaConnect.Common.Tests.Utilities;
 using InstaConnect.Common.Tests.Utilities.Events;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities;
 using InstaConnect.Posts.Common.Tests.Features.Utilities;
-using InstaConnect.Users.Common.Tests.Features.Users.Utilities.Builders;
-using InstaConnect.Users.Common.Tests.Features.Users.Utilities.Builders;
-using InstaConnect.Users.Common.Tests.Features.Utilities;
-using InstaConnect.Users.Domain.Features.Users.Abstractions;
-using InstaConnect.Users.Domain.Features.Users.Abstractions;
-using InstaConnect.Users.Domain.Features.Users.Models.Entities;
-using InstaConnect.Users.Infrastructure;
 
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 using Xunit;

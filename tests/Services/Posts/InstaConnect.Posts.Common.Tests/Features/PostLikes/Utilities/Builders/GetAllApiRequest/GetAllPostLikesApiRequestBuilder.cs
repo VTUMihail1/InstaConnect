@@ -21,19 +21,6 @@ public class GetAllPostLikesApiRequestBuilder
 {
     private readonly ObjectBuilder<GetAllPostLikesApiRequest> _objectBuilder;
 
-    public GetAllPostLikesApiRequestBuilder(ObjectBuilder<GetAllPostLikesApiRequest> objectBuilder)
-    {
-        _objectBuilder = objectBuilder;
-
-        WithId(PostDataFaker.GetId());
-        WithUserId(UserDataFaker.GetId());
-        WithUserName(UserDataFaker.GetName());
-        WithPage(PostLikeDataFaker.GetPage());
-        WithPageSize(PostLikeDataFaker.GetPageSize());
-        WithSortOrder(DataFaker.GetSortOrder());
-        WithSortProperty(PostLikeDataFaker.GetSortProperty());
-    }
-
     public GetAllPostLikesApiRequestBuilder(ObjectBuilder<GetAllPostLikesApiRequest> objectBuilder, PostLike postLike, User user)
     {
         _objectBuilder = objectBuilder;
@@ -96,8 +83,8 @@ public class GetAllPostLikesApiRequestBuilder
         return this;
     }
 
-    public GetAllPostLikesApiRequest Create()
+    public GetAllPostLikesApiRequest Build()
     {
-        return _objectBuilder.Create();
+        return _objectBuilder.Build();
     }
 }

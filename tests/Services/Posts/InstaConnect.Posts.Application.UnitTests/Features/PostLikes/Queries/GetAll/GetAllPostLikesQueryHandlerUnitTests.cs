@@ -19,7 +19,7 @@ public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeApplicationUnitT
     {
         _requestBuilderFactory = new();
         _requestBuilder = _requestBuilderFactory.Create(PostLike, User);
-        _request = _requestBuilder.Create();
+        _request = _requestBuilder.Build();
 
         _handler = new(PostLikeService, ApplicationMapper);
 

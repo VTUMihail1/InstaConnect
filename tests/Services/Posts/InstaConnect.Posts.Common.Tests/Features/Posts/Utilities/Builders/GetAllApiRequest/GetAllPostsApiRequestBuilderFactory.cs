@@ -12,14 +12,6 @@ public class GetAllPostsApiRequestBuilderFactory
 {
     private readonly ObjectBuilderFactory<GetAllPostsApiRequest> _objectBuilderFactory = new();
 
-    public GetAllPostsApiRequestBuilder Create()
-    {
-        var objectBuilder = _objectBuilderFactory.Create();
-        var requestBuilder = new GetAllPostsApiRequestBuilder(objectBuilder);
-
-        return requestBuilder;
-    }
-
     public GetAllPostsApiRequestBuilder Create(Post post, User user)
     {
         var objectBuilder = _objectBuilderFactory.Create();

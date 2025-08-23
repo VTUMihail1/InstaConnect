@@ -12,6 +12,7 @@ using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Responses;
 using InstaConnect.Posts.Domain.Features.Users.Abstractions;
 using InstaConnect.Posts.Domain.Features.Users.Exceptions;
+using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Domain.Features.Posts.Helpers;
 internal class UserService : IUserService
@@ -29,7 +30,7 @@ internal class UserService : IUserService
         _userRepository = userRepository;
         _dateTimeProvider = dateTimeProvider;
     }
-    public async Task AddAsync(AddUserCommand command, CancellationToken cancellationToken)
+    public async Task<User> AddAsync(AddUserCommand command, CancellationToken cancellationToken)
     {
         var existingUser = await _userRepository.GetByIdAsync(command.Id, cancellationToken);
 
@@ -61,9 +62,11 @@ internal class UserService : IUserService
             command.ProfileImage);
 
         _userRepository.Add(user);
+
+        return user;
     }
 
-    public async Task UpdateAsync(UpdateUserCommand command, CancellationToken cancellationToken)
+    public async Task<User> UpdateAsync(UpdateUserCommand command, CancellationToken cancellationToken)
     {
         var existingUser = await _userRepository.GetByIdAsync(command.Id, cancellationToken);
 
@@ -74,14 +77,14 @@ internal class UserService : IUserService
 
         var existingUserByEmail = await _userRepository.GetByEmailAsync(command.Email, cancellationToken);
 
-        if (existingUser!.Email != command.Email && existingUserByEmail.IsNotNull())
+        if (existingUser!.Email.NotEqualsOrdinalIgnoreCase(command.Email) && existingUserByEmail.IsNotNull())
         {
             throw new UserEmailAlreadyExistsException(command.Email);
         }
 
         var existingUserByName = await _userRepository.GetByNameAsync(command.Name, cancellationToken);
 
-        if (existingUser!.Name != command.Name && existingUserByName.IsNotNull())
+        if (existingUser!.Name.NotEqualsOrdinalIgnoreCase(command.Name) && existingUserByName.IsNotNull())
         {
             throw new UserNameAlreadyExistsException(command.Name);
         }
@@ -94,7 +97,9 @@ internal class UserService : IUserService
             command.Name,
             command.ProfileImage,
            utcNow);
-        _userRepository.Add(existingUser);
+        _userRepository.Update(existingUser);
+
+        return existingUser;
     }
 
     public async Task DeleteAsync(DeleteUserCommand command, CancellationToken cancellationToken)

@@ -9,13 +9,6 @@ public class GetPostByIdApiRequestBuilder
 {
     private readonly ObjectBuilder<GetPostByIdApiRequest> _objectBuilder;
 
-    public GetPostByIdApiRequestBuilder(ObjectBuilder<GetPostByIdApiRequest> objectBuilder)
-    {
-        _objectBuilder = objectBuilder;
-
-        WithId(PostDataFaker.GetId());
-    }
-
     public GetPostByIdApiRequestBuilder(ObjectBuilder<GetPostByIdApiRequest> objectBuilder, Post post)
     {
         _objectBuilder = objectBuilder;
@@ -30,8 +23,8 @@ public class GetPostByIdApiRequestBuilder
         return this;
     }
 
-    public GetPostByIdApiRequest Create()
+    public GetPostByIdApiRequest Build()
     {
-        return _objectBuilder.Create();
+        return _objectBuilder.Build();
     }
 }

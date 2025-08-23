@@ -24,7 +24,7 @@ public class UpdatePostCommentCommandRequestValidatorUnitTests : BasePostComment
     {
         _requestBuilderFactory = new();
         _requestBuilder = _requestBuilderFactory.Create(PostComment);
-        _request = _requestBuilder.Create();
+        _request = _requestBuilder.Build();
 
         _requestValidator = new();
     }
@@ -38,7 +38,7 @@ public class UpdatePostCommentCommandRequestValidatorUnitTests : BasePostComment
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
@@ -56,7 +56,7 @@ public class UpdatePostCommentCommandRequestValidatorUnitTests : BasePostComment
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
+        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
@@ -74,7 +74,7 @@ public class UpdatePostCommentCommandRequestValidatorUnitTests : BasePostComment
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.Id, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.Id, transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
@@ -92,7 +92,7 @@ public class UpdatePostCommentCommandRequestValidatorUnitTests : BasePostComment
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithContent(_request.Content, transformer).Create();
+        var request = _requestBuilder.WithContent(_request.Content, transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);

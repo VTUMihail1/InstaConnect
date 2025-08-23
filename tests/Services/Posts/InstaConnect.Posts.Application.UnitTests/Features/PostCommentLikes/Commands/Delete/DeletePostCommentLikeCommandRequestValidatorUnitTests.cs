@@ -24,7 +24,7 @@ public class DeletePostCommentLikeCommandRequestValidatorUnitTests : BasePostCom
     {
         _requestBuilderFactory = new();
         _requestBuilder = _requestBuilderFactory.Create(PostCommentLike);
-        _request = _requestBuilder.Create();
+        _request = _requestBuilder.Build();
 
         _requestValidator = new();
     }
@@ -38,7 +38,7 @@ public class DeletePostCommentLikeCommandRequestValidatorUnitTests : BasePostCom
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
@@ -56,7 +56,7 @@ public class DeletePostCommentLikeCommandRequestValidatorUnitTests : BasePostCom
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
+        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
@@ -74,7 +74,7 @@ public class DeletePostCommentLikeCommandRequestValidatorUnitTests : BasePostCom
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentLikeId(_request.CommentLikeId, transformer).Create();
+        var request = _requestBuilder.WithCommentLikeId(_request.CommentLikeId, transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
@@ -92,7 +92,7 @@ public class DeletePostCommentLikeCommandRequestValidatorUnitTests : BasePostCom
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);

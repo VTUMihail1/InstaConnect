@@ -19,7 +19,7 @@ public class UpdatePostCommentCommandHandlerUnitTests : BasePostCommentApplicati
     {
         _requestBuilderFactory = new();
         _requestBuilder = _requestBuilderFactory.Create(PostComment);
-        _request = _requestBuilder.Create();
+        _request = _requestBuilder.Build();
 
         _handler = new(ApplicationMapper, PostCommentService);
 

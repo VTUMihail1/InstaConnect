@@ -6,7 +6,7 @@ namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttribute
 public sealed class PostTitleTooLongDataAttribute : LengthStringDataAttribute
 {
     public PostTitleTooLongDataAttribute()
-        : base(PostTestValueUtilities.TitleTooLong)
+        : base(PostOutOfBoundsUtilities.TitleTooLong)
     {
     }
 }

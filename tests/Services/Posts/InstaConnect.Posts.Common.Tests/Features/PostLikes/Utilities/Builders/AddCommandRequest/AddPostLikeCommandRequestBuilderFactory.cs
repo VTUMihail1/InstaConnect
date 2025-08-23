@@ -8,14 +8,6 @@ public class AddPostLikeCommandRequestBuilderFactory
 {
     private readonly ObjectBuilderFactory<AddPostLikeCommandRequest> _objectBuilderFactory = new();
 
-    public AddPostLikeCommandRequestBuilder Create()
-    {
-        var objectBuilder = _objectBuilderFactory.Create();
-        var addRequest = new AddPostLikeCommandRequestBuilder(objectBuilder);
-
-        return addRequest;
-    }
-
     public AddPostLikeCommandRequestBuilder Create(Post post, User user)
     {
         var objectBuilder = _objectBuilderFactory.Create();

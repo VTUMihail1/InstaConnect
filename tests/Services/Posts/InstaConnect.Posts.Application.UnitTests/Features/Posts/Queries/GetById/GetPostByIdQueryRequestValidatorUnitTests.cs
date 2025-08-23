@@ -21,7 +21,7 @@ public class GetPostByIdQueryRequestValidatorUnitTests : BasePostApplicationUnit
     {
         _requestBuilderFactory = new();
         _requestBuilder = _requestBuilderFactory.Create(Post);
-        _request = _requestBuilder.Create();
+        _request = _requestBuilder.Build();
 
         _requestValidator = new();
     }
@@ -35,7 +35,7 @@ public class GetPostByIdQueryRequestValidatorUnitTests : BasePostApplicationUnit
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);

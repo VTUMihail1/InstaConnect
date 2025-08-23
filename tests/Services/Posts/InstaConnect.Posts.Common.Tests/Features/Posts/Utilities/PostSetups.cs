@@ -10,7 +10,9 @@ using InstaConnect.Common.Application.Abstractions;
 using InstaConnect.Common.Tests.Utilities;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Factories;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities;
 using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
 using InstaConnect.Posts.Domain.Features.Users.Abstractions;
 using InstaConnect.Posts.Infrastructure;
 
@@ -38,7 +40,7 @@ public static class PostSetups
         return post;
     }
 
-    public static async Task<Post> AddPostAsync(
+    public static async Task AddPostAsync(
         this IServiceScope serviceScope,
         Post post,
         CancellationToken cancellationToken)
@@ -48,8 +50,18 @@ public static class PostSetups
 
         postRepository.Add(post);
         await unitOfWork.SaveChangesAsync(cancellationToken);
+    }
 
-        return post;
+    public static async Task DeletePostAsync(
+        this IServiceScope serviceScope,
+        Post post,
+        CancellationToken cancellationToken)
+    {
+        var unitOfWork = serviceScope.GetUnitOfWork();
+        var postRepository = serviceScope.GetPostRepository();
+
+        postRepository.Delete(post);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
     }
 
     public static async Task ResetPostDatabase(

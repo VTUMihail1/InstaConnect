@@ -8,14 +8,6 @@ public class AddPostLikeCommandRequestBuilder
 {
     private readonly ObjectBuilder<AddPostLikeCommandRequest> _objectBuilder;
 
-    public AddPostLikeCommandRequestBuilder(ObjectBuilder<AddPostLikeCommandRequest> objectBuilder)
-    {
-        _objectBuilder = objectBuilder;
-
-        WithId(PostLikeDataFaker.GetId());
-        WithUserId(UserDataFaker.GetId());
-    }
-
     public AddPostLikeCommandRequestBuilder(ObjectBuilder<AddPostLikeCommandRequest> objectBuilder, Post post, User user)
     {
         _objectBuilder = objectBuilder;
@@ -38,8 +30,8 @@ public class AddPostLikeCommandRequestBuilder
         return this;
     }
 
-    public AddPostLikeCommandRequest Create()
+    public AddPostLikeCommandRequest Build()
     {
-        return _objectBuilder.Create();
+        return _objectBuilder.Build();
     }
 }

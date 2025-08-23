@@ -20,7 +20,7 @@ public class AddPostLikeControllerUnitTests : BasePostLikePresentationUnitTest
     {
         _requestBuilderFactory = new();
         _requestBuilder = _requestBuilderFactory.Create(Post, User);
-        _request = _requestBuilder.Create();
+        _request = _requestBuilder.Build();
 
         _postLikeController = new(ApplicationMapper, ApplicationSender);
 

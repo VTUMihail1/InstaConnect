@@ -11,9 +11,4 @@ public static class IntOperations
     {
         return value - 1;
     }
-
-    public static int Average(int max, int min)
-    {
-        return (max - min) / 2;
-    }
 }

@@ -7,7 +7,7 @@ namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttribute
 public sealed class PostPageSizeTooSmallWithMessageDataAttribute : ValueIntWithMessageDataAttribute
 {
     public PostPageSizeTooSmallWithMessageDataAttribute()
-        : base(PostTestValueUtilities.PageSizeTooSmall, PostErrorMessages.GetPageSizeTooSmall(PostTestValueUtilities.PageSizeTooSmall))
+        : base(PostOutOfBoundsUtilities.PageSizeTooSmall, PostErrorMessages.GetPageSizeTooSmall(PostOutOfBoundsUtilities.PageSizeTooSmall))
     {
     }
 }

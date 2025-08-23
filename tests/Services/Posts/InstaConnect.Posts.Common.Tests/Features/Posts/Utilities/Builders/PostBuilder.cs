@@ -74,8 +74,8 @@ public class PostBuilder
         return this;
     }
 
-    public Post Create()
+    public Post Build()
     {
-        return _objectBuilder.Create();
+        return _objectBuilder.Build();
     }
 }

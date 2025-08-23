@@ -24,7 +24,7 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentApp
     {
         _requestBuilderFactory = new();
         _requestBuilder = _requestBuilderFactory.Create(PostComment);
-        _request = _requestBuilder.Create();
+        _request = _requestBuilder.Build();
     }
 
     protected override async Task OnInitializeAsync()
@@ -43,7 +43,7 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentApp
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
 
         // Act
         var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
@@ -61,7 +61,7 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentApp
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
+        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Build();
 
         // Act
         var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
@@ -70,35 +70,32 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentApp
         await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
     }
 
-    [Theory]
-    [PostIdNotFoundData]
-    public async Task SendAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid(
-        IStringTransformer transformer)
+    [Fact]
+    public async Task SendAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        await ServiceScope.DeletePostAsync(Post, CancellationToken);
 
         // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(_request, CancellationToken);
 
         // Assert
-        await action.ShouldThrowPostNotFoundExceptionAsync(request.Id);
+        await action.ShouldThrowPostNotFoundExceptionAsync(_request.Id);
     }
 
-    [Theory]
-    [PostCommentIdNotFoundData]
-    public async Task SendAsync_ShouldThrowPostCommentNotFoundException_WhenIdIsInvalid(
-        IStringTransformer transformer)
+    [Fact]
+    public async Task SendAsync_ShouldThrowPostCommentNotFoundException_WhenCommentIdIsInvalid()
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
+        await ServiceScope.DeletePostCommentAsync(PostComment, CancellationToken);
 
         // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(_request, CancellationToken);
 
         // Assert
-        await action.ShouldThrowPostCommentNotFoundExceptionAsync(request.Id, _request.CommentId);
+        await action.ShouldThrowPostCommentNotFoundExceptionAsync(_request.Id, _request.CommentId);
     }
+
 
     [Fact]
     public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValid()
@@ -116,7 +113,7 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentApp
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
@@ -131,7 +128,7 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentApp
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
+        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Build();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);

@@ -21,7 +21,7 @@ public class GetPostLikeByIdControllerUnitTests : BasePostLikePresentationUnitTe
     {
         _requestBuilderFactory = new();
         _requestBuilder = _requestBuilderFactory.Create(PostLike);
-        _request = _requestBuilder.Create();
+        _request = _requestBuilder.Build();
 
         _postLikeController = new(ApplicationMapper, ApplicationSender);
 

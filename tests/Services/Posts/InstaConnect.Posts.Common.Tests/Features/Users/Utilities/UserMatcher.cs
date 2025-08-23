@@ -20,11 +20,11 @@ public static class UserMatcher
     public static UpdateUserCommandRequest IsUpdateUserCommandRequest(UserUpdatedEventRequest request)
     {
         return Matcher.Is<UpdateUserCommandRequest>(u => u.Id == request.Id &&
-                                                      u.Email == request.Email &&
-                                                      u.Name == request.Name &&
-                                                      u.FirstName == request.FirstName &&
-                                                      u.LastName == request.LastName &&
-                                                      u.ProfileImage == request.ProfileImage);
+                                                         u.Email == request.Email &&
+                                                         u.Name == request.Name &&
+                                                         u.FirstName == request.FirstName &&
+                                                         u.LastName == request.LastName &&
+                                                         u.ProfileImage == request.ProfileImage);
     }
 
     public static DeleteUserCommandRequest IsDeleteUserCommandRequest(UserDeletedEventRequest request)
@@ -35,11 +35,11 @@ public static class UserMatcher
     public static AddUserCommand IsAddUserCommand(AddUserCommandRequest request)
     {
         return Matcher.Is<AddUserCommand>(u => u.Id == request.Id &&
-                                                      u.Email == request.Email &&
-                                                      u.Name == request.Name &&
-                                                      u.FirstName == request.FirstName &&
-                                                      u.LastName == request.LastName &&
-                                                      u.ProfileImage == request.ProfileImage);
+                                               u.Email == request.Email &&
+                                               u.Name == request.Name &&
+                                               u.FirstName == request.FirstName &&
+                                               u.LastName == request.LastName &&
+                                               u.ProfileImage == request.ProfileImage);
     }
 
     public static UpdateUserCommand IsUpdateUserCommand(UpdateUserCommandRequest request)

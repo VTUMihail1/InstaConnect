@@ -7,7 +7,7 @@ namespace InstaConnect.PostCommentLikes.Common.Tests.Features.PostCommentLikes.U
 public sealed class PostCommentLikePageTooSmallWithMessageDataAttribute : ValueIntWithMessageDataAttribute
 {
     public PostCommentLikePageTooSmallWithMessageDataAttribute()
-        : base(PostCommentLikeTestValueUtilities.PageTooSmall, PostCommentLikeErrorMessages.GetPageTooSmall(PostCommentLikeTestValueUtilities.PageTooSmall))
+        : base(PostCommentLikeOutOfBoundsUtilities.PageTooSmall, PostCommentLikeErrorMessages.GetPageTooSmall(PostCommentLikeOutOfBoundsUtilities.PageTooSmall))
     {
     }
 }

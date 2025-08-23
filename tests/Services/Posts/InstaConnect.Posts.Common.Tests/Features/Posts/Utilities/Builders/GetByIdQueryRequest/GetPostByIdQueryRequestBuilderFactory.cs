@@ -8,14 +8,6 @@ public class GetPostByIdQueryRequestBuilderFactory
 {
     private readonly ObjectBuilderFactory<GetPostByIdQueryRequest> _objectBuilderFactory = new();
 
-    public GetPostByIdQueryRequestBuilder Create()
-    {
-        var objectBuilder = _objectBuilderFactory.Create();
-        var requestBuilder = new GetPostByIdQueryRequestBuilder(objectBuilder);
-
-        return requestBuilder;
-    }
-
     public GetPostByIdQueryRequestBuilder Create(Post post)
     {
         var objectBuilder = _objectBuilderFactory.Create();

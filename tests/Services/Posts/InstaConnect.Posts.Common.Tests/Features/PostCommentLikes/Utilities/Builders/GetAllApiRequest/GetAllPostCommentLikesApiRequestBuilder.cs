@@ -16,20 +16,6 @@ public class GetAllPostCommentLikesApiRequestBuilder
 {
     private readonly ObjectBuilder<GetAllPostCommentLikesApiRequest> _objectBuilder;
 
-    public GetAllPostCommentLikesApiRequestBuilder(ObjectBuilder<GetAllPostCommentLikesApiRequest> objectBuilder)
-    {
-        _objectBuilder = objectBuilder;
-
-        WithId(PostDataFaker.GetId());
-        WithCommentId(PostCommentDataFaker.GetId());
-        WithUserId(UserDataFaker.GetId());
-        WithUserName(UserDataFaker.GetName());
-        WithPage(PostCommentLikeDataFaker.GetPage());
-        WithPageSize(PostCommentLikeDataFaker.GetPageSize());
-        WithSortOrder(DataFaker.GetSortOrder());
-        WithSortProperty(PostCommentLikeDataFaker.GetSortProperty());
-    }
-
     public GetAllPostCommentLikesApiRequestBuilder(ObjectBuilder<GetAllPostCommentLikesApiRequest> objectBuilder, PostCommentLike postCommentLike, User user)
     {
         _objectBuilder = objectBuilder;
@@ -100,8 +86,8 @@ public class GetAllPostCommentLikesApiRequestBuilder
         return this;
     }
 
-    public GetAllPostCommentLikesApiRequest Create()
+    public GetAllPostCommentLikesApiRequest Build()
     {
-        return _objectBuilder.Create();
+        return _objectBuilder.Build();
     }
 }

@@ -6,7 +6,7 @@ namespace InstaConnect.PostCommentLikes.Common.Tests.Features.PostCommentLikes.U
 public sealed class PostCommentLikePageSizeTooLargeDataAttribute : ValueIntDataAttribute
 {
     public PostCommentLikePageSizeTooLargeDataAttribute()
-        : base(PostCommentLikeTestValueUtilities.PageSizeTooLarge)
+        : base(PostCommentLikeOutOfBoundsUtilities.PageSizeTooLarge)
     {
     }
 }

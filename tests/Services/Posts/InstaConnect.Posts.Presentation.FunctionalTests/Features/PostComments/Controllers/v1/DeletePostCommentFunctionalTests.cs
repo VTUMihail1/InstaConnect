@@ -7,6 +7,8 @@ using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.Bui
 using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.DataAttributes.Id;
 using InstaConnect.PostComments.Presentation.Features.PostComments.Models.Requests;
 using InstaConnect.PostComments.Presentation.FunctionalTests.Features.PostComments.Utilities;
+using InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities;
+using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Entities;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
@@ -25,7 +27,7 @@ public class DeletePostCommentFunctionalTests : BasePostCommentPresentationFunct
     {
         _requestBuilderFactory = new();
         _requestBuilder = _requestBuilderFactory.Create(PostComment);
-        _request = _requestBuilder.Create();
+        _request = _requestBuilder.Build();
     }
 
     protected override async Task OnInitializeAsync()
@@ -64,7 +66,7 @@ public class DeletePostCommentFunctionalTests : BasePostCommentPresentationFunct
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
 
         // Act
         var response = await HttpClient.DeletePostCommentStatusCodeAsync(request, CancellationToken);
@@ -82,7 +84,7 @@ public class DeletePostCommentFunctionalTests : BasePostCommentPresentationFunct
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
 
         // Act
         var response = await HttpClient.DeletePostCommentProblemDetailsAsync(request, CancellationToken);
@@ -100,7 +102,7 @@ public class DeletePostCommentFunctionalTests : BasePostCommentPresentationFunct
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
+        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Build();
 
         // Act
         var response = await HttpClient.DeletePostCommentStatusCodeAsync(request, CancellationToken);
@@ -118,7 +120,7 @@ public class DeletePostCommentFunctionalTests : BasePostCommentPresentationFunct
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
+        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Build();
 
         // Act
         var response = await HttpClient.DeletePostCommentProblemDetailsAsync(request, CancellationToken);
@@ -136,7 +138,7 @@ public class DeletePostCommentFunctionalTests : BasePostCommentPresentationFunct
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var response = await HttpClient.DeletePostCommentStatusCodeAsync(request, CancellationToken);
@@ -154,7 +156,7 @@ public class DeletePostCommentFunctionalTests : BasePostCommentPresentationFunct
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var response = await HttpClient.DeletePostCommentProblemDetailsAsync(request, CancellationToken);
@@ -163,73 +165,65 @@ public class DeletePostCommentFunctionalTests : BasePostCommentPresentationFunct
         response.ShouldSatisfyBadRequest(errorMessage);
     }
 
-    [Theory]
-    [PostIdNotFoundData]
-    public async Task DeleteAsync_ShouldHaveNotFoundStatusCode_WhenIdIsInvalid(
-        IStringTransformer transformer)
+    [Fact]
+    public async Task DeleteAsync_ShouldHaveNotFoundStatusCode_WhenIdIsInvalid()
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        await ServiceScope.DeletePostAsync(Post, CancellationToken);
 
         // Act
-        var response = await HttpClient.DeletePostCommentStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.DeletePostCommentStatusCodeAsync(_request, CancellationToken);
 
         // Assert
         response.ShouldBeNotFound();
     }
 
-    [Theory]
-    [PostIdNotFoundData]
-    public async Task DeleteAsync_ShouldHavePostCommentNotFoundProblemDetails_WhenIdIsInvalid(
-        IStringTransformer transformer)
+    [Fact]
+    public async Task DeleteAsync_ShouldHavePostNotFoundProblemDetails_WhenIdIsInvalid()
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        await ServiceScope.DeletePostAsync(Post, CancellationToken);
 
         // Act
-        var response = await HttpClient.DeletePostCommentProblemDetailsAsync(request, CancellationToken);
+        var response = await HttpClient.DeletePostCommentProblemDetailsAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyPostNotFound(request.Id);
+        response.ShouldSatisfyPostNotFound(_request.Id);
     }
 
-    [Theory]
-    [PostCommentIdNotFoundData]
-    public async Task DeleteAsync_ShouldHaveNotFoundStatusCode_WhenCommentIdIsInvalid(
-        IStringTransformer transformer)
+    [Fact]
+    public async Task DeleteAsync_ShouldHaveNotFoundStatusCode_WhenCommentIdIsInvalid()
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
+        await ServiceScope.DeletePostCommentAsync(PostComment, CancellationToken);
 
         // Act
-        var response = await HttpClient.DeletePostCommentStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.DeletePostCommentStatusCodeAsync(_request, CancellationToken);
 
         // Assert
         response.ShouldBeNotFound();
     }
 
-    [Theory]
-    [PostCommentIdNotFoundData]
-    public async Task DeleteAsync_ShouldHavePostCommentNotFoundProblemDetails_WhenCommentIdIsInvalid(
-        IStringTransformer transformer)
+    [Fact]
+    public async Task DeleteAsync_ShouldHavePostCommentNotFoundProblemDetails_WhenCommentIdIsInvalid()
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
+        await ServiceScope.DeletePostCommentAsync(PostComment, CancellationToken);
 
         // Act
-        var response = await HttpClient.DeletePostCommentProblemDetailsAsync(request, CancellationToken);
+        var response = await HttpClient.DeletePostCommentProblemDetailsAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyPostCommentNotFound(request.Id, request.CommentId);
+        response.ShouldSatisfyPostCommentNotFound(_request.Id, _request.CommentId);
     }
 
-    [Theory]
-    [UserIdNotFoundData]
-    public async Task DeleteAsync_ShouldHaveForbiddenStatusCode_WhenUserIdIsInvalid(
-        IStringTransformer transformer)
+    [Fact]
+    public async Task DeleteAsync_ShouldHaveForbiddenStatusCode_WhenUserIdIsInvalid()
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.UserId, transformer).Create();
+        var user = UserBuilderFactory.Create().Build();
+        await ServiceScope.AddUserAsync(user, CancellationToken);
+        var request = _requestBuilder.WithUserId(user.Id).Build();
 
         // Act
         var response = await HttpClient.DeletePostCommentStatusCodeAsync(request, CancellationToken);
@@ -238,13 +232,13 @@ public class DeletePostCommentFunctionalTests : BasePostCommentPresentationFunct
         response.ShouldBeForbidden();
     }
 
-    [Theory]
-    [UserIdNotFoundData]
-    public async Task DeleteAsync_ShouldHavePostCommentForbiddenProblemDetails_WhenUserIdIsInvalid(
-        IStringTransformer transformer)
+    [Fact]
+    public async Task DeleteAsync_ShouldHavePostCommentForbiddenProblemDetails_WhenUserIdIsInvalid()
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.UserId, transformer).Create();
+        var user = UserBuilderFactory.Create().Build();
+        await ServiceScope.AddUserAsync(user, CancellationToken);
+        var request = _requestBuilder.WithUserId(user.Id).Build();
 
         // Act
         var response = await HttpClient.DeletePostCommentProblemDetailsAsync(request, CancellationToken);
@@ -269,7 +263,7 @@ public class DeletePostCommentFunctionalTests : BasePostCommentPresentationFunct
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
 
         // Act
         var response = await HttpClient.DeletePostCommentStatusCodeAsync(request, CancellationToken);
@@ -284,7 +278,7 @@ public class DeletePostCommentFunctionalTests : BasePostCommentPresentationFunct
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
+        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Build();
 
         // Act
         var response = await HttpClient.DeletePostCommentStatusCodeAsync(request, CancellationToken);
@@ -299,7 +293,7 @@ public class DeletePostCommentFunctionalTests : BasePostCommentPresentationFunct
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var response = await HttpClient.DeletePostCommentStatusCodeAsync(request, CancellationToken);
@@ -325,7 +319,7 @@ public class DeletePostCommentFunctionalTests : BasePostCommentPresentationFunct
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
 
         // Act
         await HttpClient.DeletePostCommentAsync(request, CancellationToken);
@@ -341,7 +335,7 @@ public class DeletePostCommentFunctionalTests : BasePostCommentPresentationFunct
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
+        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Build();
 
         // Act
         await HttpClient.DeletePostCommentAsync(request, CancellationToken);
@@ -357,7 +351,7 @@ public class DeletePostCommentFunctionalTests : BasePostCommentPresentationFunct
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         await HttpClient.DeletePostCommentAsync(request, CancellationToken);
@@ -384,7 +378,7 @@ public class DeletePostCommentFunctionalTests : BasePostCommentPresentationFunct
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
 
         // Act
         await HttpClient.DeletePostCommentAsync(request, CancellationToken);
@@ -400,7 +394,7 @@ public class DeletePostCommentFunctionalTests : BasePostCommentPresentationFunct
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
+        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Build();
 
         // Act
         await HttpClient.DeletePostCommentAsync(request, CancellationToken);
@@ -416,7 +410,7 @@ public class DeletePostCommentFunctionalTests : BasePostCommentPresentationFunct
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         await HttpClient.DeletePostCommentAsync(request, CancellationToken);

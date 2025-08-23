@@ -12,16 +12,6 @@ public class DeletePostCommentLikeApiRequestBuilder
 {
     private readonly ObjectBuilder<DeletePostCommentLikeApiRequest> _objectBuilder;
 
-    public DeletePostCommentLikeApiRequestBuilder(ObjectBuilder<DeletePostCommentLikeApiRequest> objectBuilder)
-    {
-        _objectBuilder = objectBuilder;
-
-        WithId(PostDataFaker.GetId());
-        WithCommentId(PostCommentDataFaker.GetId());
-        WithCommentLikeId(PostCommentLikeDataFaker.GetId());
-        WithUserId(UserDataFaker.GetId());
-    }
-
     public DeletePostCommentLikeApiRequestBuilder(ObjectBuilder<DeletePostCommentLikeApiRequest> objectBuilder, PostCommentLike postCommentLike)
     {
         _objectBuilder = objectBuilder;
@@ -60,8 +50,8 @@ public class DeletePostCommentLikeApiRequestBuilder
         return this;
     }
 
-    public DeletePostCommentLikeApiRequest Create()
+    public DeletePostCommentLikeApiRequest Build()
     {
-        return _objectBuilder.Create();
+        return _objectBuilder.Build();
     }
 }

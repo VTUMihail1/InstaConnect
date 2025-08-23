@@ -9,14 +9,6 @@ public class UpdatePostCommentApiRequestBuilderFactory
 {
     private readonly ObjectBuilderFactory<UpdatePostCommentApiRequest> _objectBuilderFactory = new();
 
-    public UpdatePostCommentApiRequestBuilder Create()
-    {
-        var objectBuilder = _objectBuilderFactory.Create();
-        var requestBuilder = new UpdatePostCommentApiRequestBuilder(objectBuilder);
-
-        return requestBuilder;
-    }
-
     public UpdatePostCommentApiRequestBuilder Create(PostComment postComment)
     {
         var objectBuilder = _objectBuilderFactory.Create();

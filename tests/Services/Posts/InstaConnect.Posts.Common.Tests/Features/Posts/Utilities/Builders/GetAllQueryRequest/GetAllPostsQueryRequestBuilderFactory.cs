@@ -12,14 +12,6 @@ public class GetAllPostsQueryRequestBuilderFactory
 {
     private readonly ObjectBuilderFactory<GetAllPostsQueryRequest> _objectBuilderFactory = new();
 
-    public GetAllPostsQueryRequestBuilder Create()
-    {
-        var objectBuilder = _objectBuilderFactory.Create();
-        var requestBuilder = new GetAllPostsQueryRequestBuilder(objectBuilder);
-
-        return requestBuilder;
-    }
-
     public GetAllPostsQueryRequestBuilder Create(Post post, User user)
     {
         var objectBuilder = _objectBuilderFactory.Create();

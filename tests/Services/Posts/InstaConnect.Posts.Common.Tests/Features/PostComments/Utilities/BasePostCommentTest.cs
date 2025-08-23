@@ -25,15 +25,15 @@ public abstract class BasePostCommentTest
     {
         UserBuilderFactory = new();
         UserBuilder = UserBuilderFactory.Create();
-        User = UserBuilder.Create();
+        User = UserBuilder.Build();
 
         PostBuilderFactory = new();
         PostBuilder = PostBuilderFactory.Create(User);
-        Post = PostBuilder.Create();
+        Post = PostBuilder.Build();
 
         PostCommentBuilderFactory = new();
         PostCommentBuilder = PostCommentBuilderFactory.Create(User);
-        PostComment = PostCommentBuilder.Create();
+        PostComment = PostCommentBuilder.Build();
 
         CancellationToken = MockFactory.CreateCancellationToken();
     }

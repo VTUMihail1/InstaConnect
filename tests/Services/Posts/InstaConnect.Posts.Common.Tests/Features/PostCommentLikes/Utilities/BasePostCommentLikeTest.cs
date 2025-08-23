@@ -33,19 +33,19 @@ public abstract class BasePostCommentLikeTest
     {
         UserBuilderFactory = new();
         UserBuilder = UserBuilderFactory.Create();
-        User = UserBuilder.Create();
+        User = UserBuilder.Build();
 
         PostBuilderFactory = new();
         PostBuilder = PostBuilderFactory.Create(User);
-        Post = PostBuilder.Create();
+        Post = PostBuilder.Build();
 
         PostCommentBuilderFactory = new();
         PostCommentBuilder = PostCommentBuilderFactory.Create(Post, User);
-        PostComment = PostCommentBuilder.Create();
+        PostComment = PostCommentBuilder.Build();
 
         PostCommentLikeBuilderFactory = new();
         PostCommentLikeBuilder = PostCommentLikeBuilderFactory.Create(Post, PostComment, User);
-        PostCommentLike = PostCommentLikeBuilder.Create();
+        PostCommentLike = PostCommentLikeBuilder.Build();
 
         CancellationToken = MockFactory.CreateCancellationToken();
     }

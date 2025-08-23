@@ -64,8 +64,8 @@ public class AddUserCommandRequestBuilder
         return this;
     }
 
-    public AddUserCommandRequest Create()
+    public AddUserCommandRequest Build()
     {
-        return _objectBuilder.Create();
+        return _objectBuilder.Build();
     }
 }

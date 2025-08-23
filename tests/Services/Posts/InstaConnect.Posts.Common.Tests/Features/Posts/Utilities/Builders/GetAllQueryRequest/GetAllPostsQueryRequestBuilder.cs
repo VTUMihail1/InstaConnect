@@ -18,19 +18,6 @@ public class GetAllPostsQueryRequestBuilder
 {
     private readonly ObjectBuilder<GetAllPostsQueryRequest> _objectBuilder;
 
-    public GetAllPostsQueryRequestBuilder(ObjectBuilder<GetAllPostsQueryRequest> objectBuilder)
-    {
-        _objectBuilder = objectBuilder;
-
-        WithUserId(UserDataFaker.GetId());
-        WithUserName(UserDataFaker.GetName());
-        WithTitle(PostDataFaker.GetTitle());
-        WithPage(PostDataFaker.GetPage());
-        WithPageSize(PostDataFaker.GetPageSize());
-        WithSortOrder(DataFaker.GetSortOrder());
-        WithSortProperty(PostDataFaker.GetSortProperty());
-    }
-
     public GetAllPostsQueryRequestBuilder(ObjectBuilder<GetAllPostsQueryRequest> objectBuilder, Post post, User user)
     {
         _objectBuilder = objectBuilder;
@@ -93,8 +80,8 @@ public class GetAllPostsQueryRequestBuilder
         return this;
     }
 
-    public GetAllPostsQueryRequest Create()
+    public GetAllPostsQueryRequest Build()
     {
-        return _objectBuilder.Create();
+        return _objectBuilder.Build();
     }
 }

@@ -8,14 +8,6 @@ public class UpdatePostApiRequestBuilderFactory
 {
     private readonly ObjectBuilderFactory<UpdatePostApiRequest> _objectBuilderFactory = new();
 
-    public UpdatePostApiRequestBuilder Create()
-    {
-        var objectBuilder = _objectBuilderFactory.Create();
-        var requestBuilder = new UpdatePostApiRequestBuilder(objectBuilder);
-
-        return requestBuilder;
-    }
-
     public UpdatePostApiRequestBuilder Create(Post post)
     {
         var objectBuilder = _objectBuilderFactory.Create();

@@ -28,11 +28,11 @@ public abstract class BasePostTest
     {
         UserBuilderFactory = new();
         UserBuilder = UserBuilderFactory.Create();
-        User = UserBuilder.Create();
+        User = UserBuilder.Build();
 
         PostBuilderFactory = new();
         PostBuilder = PostBuilderFactory.Create(User);
-        Post = PostBuilder.Create();
+        Post = PostBuilder.Build();
 
         CancellationToken = MockFactory.CreateCancellationToken();
     }

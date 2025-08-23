@@ -8,14 +8,6 @@ public class DeletePostApiRequestBuilderFactory
 {
     private readonly ObjectBuilderFactory<DeletePostApiRequest> _objectBuilderFactory = new();
 
-    public DeletePostApiRequestBuilder Create()
-    {
-        var objectBuilder = _objectBuilderFactory.Create();
-        var requestBuilder = new DeletePostApiRequestBuilder(objectBuilder);
-
-        return requestBuilder;
-    }
-
     public DeletePostApiRequestBuilder Create(Post post)
     {
         var objectBuilder = _objectBuilderFactory.Create();

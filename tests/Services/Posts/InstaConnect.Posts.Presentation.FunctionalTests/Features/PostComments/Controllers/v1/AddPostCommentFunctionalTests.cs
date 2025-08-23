@@ -7,7 +7,9 @@ using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.Dat
 using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.DataAttributes.Id;
 using InstaConnect.PostComments.Presentation.Features.PostComments.Models.Requests;
 using InstaConnect.PostComments.Presentation.FunctionalTests.Features.PostComments.Utilities;
+using InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities;
 using InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities.Assertions;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Assertions;
@@ -27,7 +29,7 @@ public class AddPostCommentFunctionalTests : BasePostCommentPresentationFunction
     {
         _requestBuilderFactory = new();
         _requestBuilder = _requestBuilderFactory.Create(Post, User);
-        _request = _requestBuilder.Create();
+        _request = _requestBuilder.Build();
     }
 
     protected override async Task OnInitializeAsync()
@@ -65,7 +67,7 @@ public class AddPostCommentFunctionalTests : BasePostCommentPresentationFunction
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentStatusCodeAsync(request, CancellationToken);
@@ -83,7 +85,7 @@ public class AddPostCommentFunctionalTests : BasePostCommentPresentationFunction
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentProblemDetailsAsync(request, CancellationToken);
@@ -101,7 +103,7 @@ public class AddPostCommentFunctionalTests : BasePostCommentPresentationFunction
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentStatusCodeAsync(request, CancellationToken);
@@ -119,7 +121,7 @@ public class AddPostCommentFunctionalTests : BasePostCommentPresentationFunction
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentProblemDetailsAsync(request, CancellationToken);
@@ -137,7 +139,7 @@ public class AddPostCommentFunctionalTests : BasePostCommentPresentationFunction
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithContent(_request.Body.Content, transformer).Create();
+        var request = _requestBuilder.WithContent(_request.Body.Content, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentStatusCodeAsync(request, CancellationToken);
@@ -155,7 +157,7 @@ public class AddPostCommentFunctionalTests : BasePostCommentPresentationFunction
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithContent(_request.Body.Content, transformer).Create();
+        var request = _requestBuilder.WithContent(_request.Body.Content, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentProblemDetailsAsync(request, CancellationToken);
@@ -164,64 +166,56 @@ public class AddPostCommentFunctionalTests : BasePostCommentPresentationFunction
         response.ShouldSatisfyBadRequest(errorMessage);
     }
 
-    [Theory]
-    [PostIdNotFoundData]
-    public async Task AddAsync_ShouldHaveNotFoundStatusCode_WhenIdIsInvalid(
-        IStringTransformer transformer)
+    [Fact]
+    public async Task AddAsync_ShouldHaveNotFoundStatusCode_WhenIdIsInvalid()
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        await ServiceScope.DeletePostAsync(Post, CancellationToken);
 
         // Act
-        var response = await HttpClient.AddPostCommentStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.AddPostCommentStatusCodeAsync(_request, CancellationToken);
 
         // Assert
         response.ShouldBeNotFound();
     }
 
-    [Theory]
-    [PostIdNotFoundData]
-    public async Task AddAsync_ShouldHavePostNotFoundProblemDetails_WhenIdIsInvalid(
-        IStringTransformer transformer)
+    [Fact]
+    public async Task AddAsync_ShouldHavePostNotFoundProblemDetails_WhenIdIsInvalid()
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        await ServiceScope.DeletePostAsync(Post, CancellationToken);
 
         // Act
-        var response = await HttpClient.AddPostCommentProblemDetailsAsync(request, CancellationToken);
+        var response = await HttpClient.AddPostCommentProblemDetailsAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyPostNotFound(request.Id);
+        response.ShouldSatisfyPostNotFound(_request.Id);
     }
 
-    [Theory]
-    [UserIdNotFoundData]
-    public async Task AddAsync_ShouldHaveNotFoundStatusCode_WhenUserIdIsInvalid(
-        IStringTransformer transformer)
+    [Fact]
+    public async Task AddAsync_ShouldHaveNotFoundStatusCode_WhenUserIdIsInvalid()
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+        await ServiceScope.DeleteUserAsync(User, CancellationToken);
 
         // Act
-        var response = await HttpClient.AddPostCommentStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.AddPostCommentStatusCodeAsync(_request, CancellationToken);
 
         // Assert
         response.ShouldBeNotFound();
     }
 
-    [Theory]
-    [UserIdNotFoundData]
-    public async Task AddAsync_ShouldHaveUserNotFoundProblemDetails_WhenUserIdIsInvalid(
-        IStringTransformer transformer)
+    [Fact]
+    public async Task AddAsync_ShouldHaveUserNotFoundProblemDetails_WhenUserIdIsInvalid()
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+        await ServiceScope.DeleteUserAsync(User, CancellationToken);
 
         // Act
-        var response = await HttpClient.AddPostCommentProblemDetailsAsync(request, CancellationToken);
+        var response = await HttpClient.AddPostCommentProblemDetailsAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyUserNotFound(request.UserId);
+        response.ShouldSatisfyUserNotFound(_request.UserId);
     }
 
     [Fact]
@@ -240,7 +234,7 @@ public class AddPostCommentFunctionalTests : BasePostCommentPresentationFunction
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentStatusCodeAsync(request, CancellationToken);
@@ -255,7 +249,7 @@ public class AddPostCommentFunctionalTests : BasePostCommentPresentationFunction
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentStatusCodeAsync(request, CancellationToken);
@@ -281,7 +275,7 @@ public class AddPostCommentFunctionalTests : BasePostCommentPresentationFunction
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentAsync(request, CancellationToken);
@@ -297,7 +291,7 @@ public class AddPostCommentFunctionalTests : BasePostCommentPresentationFunction
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentAsync(request, CancellationToken);
@@ -324,7 +318,7 @@ public class AddPostCommentFunctionalTests : BasePostCommentPresentationFunction
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentAsync(request, CancellationToken);
@@ -340,7 +334,7 @@ public class AddPostCommentFunctionalTests : BasePostCommentPresentationFunction
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentAsync(request, CancellationToken);
@@ -368,7 +362,7 @@ public class AddPostCommentFunctionalTests : BasePostCommentPresentationFunction
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentAsync(request, CancellationToken);
@@ -385,7 +379,7 @@ public class AddPostCommentFunctionalTests : BasePostCommentPresentationFunction
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var response = await HttpClient.AddPostCommentAsync(request, CancellationToken);

@@ -12,14 +12,6 @@ public class UpdatePostCommandRequestBuilderFactory
 {
     private readonly ObjectBuilderFactory<UpdatePostCommandRequest> _objectBuilderFactory = new();
 
-    public UpdatePostCommandRequestBuilder Create()
-    {
-        var objectBuilder = _objectBuilderFactory.Create();
-        var requestBuilder = new UpdatePostCommandRequestBuilder(objectBuilder);
-
-        return requestBuilder;
-    }
-
     public UpdatePostCommandRequestBuilder Create(Post post)
     {
         var objectBuilder = _objectBuilderFactory.Create();

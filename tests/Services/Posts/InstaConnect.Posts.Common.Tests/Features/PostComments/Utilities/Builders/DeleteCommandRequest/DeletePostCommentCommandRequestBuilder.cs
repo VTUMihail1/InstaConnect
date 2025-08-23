@@ -11,15 +11,6 @@ public class DeletePostCommentCommandRequestBuilder
 {
     private readonly ObjectBuilder<DeletePostCommentCommandRequest> _objectBuilder;
 
-    public DeletePostCommentCommandRequestBuilder(ObjectBuilder<DeletePostCommentCommandRequest> objectBuilder)
-    {
-        _objectBuilder = objectBuilder;
-
-        WithId(PostDataFaker.GetId());
-        WithCommentId(PostCommentDataFaker.GetId());
-        WithUserId(UserDataFaker.GetId());
-    }
-
     public DeletePostCommentCommandRequestBuilder(ObjectBuilder<DeletePostCommentCommandRequest> objectBuilder, PostComment postComment)
     {
         _objectBuilder = objectBuilder;
@@ -50,8 +41,8 @@ public class DeletePostCommentCommandRequestBuilder
         return this;
     }
 
-    public DeletePostCommentCommandRequest Create()
+    public DeletePostCommentCommandRequest Build()
     {
-        return _objectBuilder.Create();
+        return _objectBuilder.Build();
     }
 }

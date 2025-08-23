@@ -20,7 +20,7 @@ public class AddPostCommentLikeControllerUnitTests : BasePostCommentLikePresenta
     {
         _requestBuilderFactory = new();
         _requestBuilder = _requestBuilderFactory.Create(Post, PostComment, User);
-        _request = _requestBuilder.Create();
+        _request = _requestBuilder.Build();
 
         _postCommentLikeController = new(ApplicationMapper, ApplicationSender);
 

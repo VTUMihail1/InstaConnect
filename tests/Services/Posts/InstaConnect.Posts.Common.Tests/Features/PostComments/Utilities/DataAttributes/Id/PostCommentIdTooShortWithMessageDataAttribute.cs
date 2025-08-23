@@ -7,7 +7,7 @@ namespace InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities
 public sealed class PostCommentIdTooShortWithMessageDataAttribute : LengthStringWithMessageDataAttribute
 {
     public PostCommentIdTooShortWithMessageDataAttribute()
-        : base(PostCommentTestValueUtilities.IdTooShort, PostCommentErrorMessages.GetIdTooShort(PostCommentTestValueUtilities.IdTooShort))
+        : base(PostCommentOutOfBoundsUtilities.IdTooShort, PostCommentErrorMessages.GetIdTooShort(PostCommentOutOfBoundsUtilities.IdTooShort))
     {
     }
 }

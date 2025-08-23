@@ -11,14 +11,6 @@ public class DeletePostCommentCommandRequestBuilderFactory
 {
     private readonly ObjectBuilderFactory<DeletePostCommentCommandRequest> _objectBuilderFactory = new();
 
-    public DeletePostCommentCommandRequestBuilder Create()
-    {
-        var objectBuilder = _objectBuilderFactory.Create();
-        var requestBuilder = new DeletePostCommentCommandRequestBuilder(objectBuilder);
-
-        return requestBuilder;
-    }
-
     public DeletePostCommentCommandRequestBuilder Create(PostComment postComment)
     {
         var objectBuilder = _objectBuilderFactory.Create();

@@ -6,7 +6,7 @@ namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttribute
 public sealed class UserEmailTooLongDataAttribute : LengthStringDataAttribute
 {
     public UserEmailTooLongDataAttribute()
-        : base(UserTestValueUtilities.EmailTooLong)
+        : base(UserOutOfBoundsUtilities.EmailTooLong)
     {
     }
 }

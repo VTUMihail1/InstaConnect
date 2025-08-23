@@ -6,7 +6,7 @@ namespace InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities.DataA
 public sealed class PostLikeIdTooShortDataAttribute : LengthStringDataAttribute
 {
     public PostLikeIdTooShortDataAttribute()
-        : base(PostLikeTestValueUtilities.IdTooShort)
+        : base(PostLikeOutOfBoundsUtilities.IdTooShort)
     {
     }
 }

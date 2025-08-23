@@ -21,7 +21,7 @@ public class GetPostCommentByIdControllerUnitTests : BasePostCommentPresentation
     {
         _requestBuilderFactory = new();
         _requestBuilder = _requestBuilderFactory.Create(PostComment);
-        _request = _requestBuilder.Create();
+        _request = _requestBuilder.Build();
 
         _postCommentController = new(ApplicationMapper, ApplicationSender);
 

@@ -7,7 +7,7 @@ namespace InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities
 public sealed class PostCommentPageSizeTooLargeWithMessageDataAttribute : ValueIntWithMessageDataAttribute
 {
     public PostCommentPageSizeTooLargeWithMessageDataAttribute()
-        : base(PostCommentTestValueUtilities.PageSizeTooLarge, PostCommentErrorMessages.GetPageSizeTooLarge(PostCommentTestValueUtilities.PageSizeTooLarge))
+        : base(PostCommentOutOfBoundsUtilities.PageSizeTooLarge, PostCommentErrorMessages.GetPageSizeTooLarge(PostCommentOutOfBoundsUtilities.PageSizeTooLarge))
     {
     }
 }

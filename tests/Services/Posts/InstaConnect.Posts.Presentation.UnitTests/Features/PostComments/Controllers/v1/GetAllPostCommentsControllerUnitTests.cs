@@ -21,7 +21,7 @@ public class GetAllPostCommentsControllerUnitTests : BasePostCommentPresentation
     {
         _requestBuilderFactory = new();
         _requestBuilder = _requestBuilderFactory.Create(PostComment, User);
-        _request = _requestBuilder.Create();
+        _request = _requestBuilder.Build();
 
         _postCommentController = new(ApplicationMapper, ApplicationSender);
 

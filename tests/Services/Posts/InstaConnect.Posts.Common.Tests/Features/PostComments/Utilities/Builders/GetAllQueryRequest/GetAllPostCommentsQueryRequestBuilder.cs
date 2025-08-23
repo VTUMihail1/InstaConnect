@@ -15,19 +15,6 @@ public class GetAllPostCommentsQueryRequestBuilder
 {
     private readonly ObjectBuilder<GetAllPostCommentsQueryRequest> _objectBuilder;
 
-    public GetAllPostCommentsQueryRequestBuilder(ObjectBuilder<GetAllPostCommentsQueryRequest> objectBuilder)
-    {
-        _objectBuilder = objectBuilder;
-
-        WithId(PostDataFaker.GetId());
-        WithUserId(UserDataFaker.GetId());
-        WithUserName(UserDataFaker.GetName());
-        WithPage(PostCommentDataFaker.GetPage());
-        WithPageSize(PostCommentDataFaker.GetPageSize());
-        WithSortOrder(DataFaker.GetSortOrder());
-        WithSortProperty(PostCommentDataFaker.GetSortProperty());
-    }
-
     public GetAllPostCommentsQueryRequestBuilder(ObjectBuilder<GetAllPostCommentsQueryRequest> objectBuilder, PostComment postComment, User user)
     {
         _objectBuilder = objectBuilder;
@@ -90,8 +77,8 @@ public class GetAllPostCommentsQueryRequestBuilder
         return this;
     }
 
-    public GetAllPostCommentsQueryRequest Create()
+    public GetAllPostCommentsQueryRequest Build()
     {
-        return _objectBuilder.Create();
+        return _objectBuilder.Build();
     }
 }

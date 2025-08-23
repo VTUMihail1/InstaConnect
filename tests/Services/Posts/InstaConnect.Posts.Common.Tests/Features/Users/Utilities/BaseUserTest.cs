@@ -15,7 +15,7 @@ public abstract class BaseUserTest
     {
         UserBuilderFactory = new();
         UserBuilder = UserBuilderFactory.Create();
-        User = UserBuilder.Create();
+        User = UserBuilder.Build();
 
         CancellationToken = MockFactory.CreateCancellationToken();
     }

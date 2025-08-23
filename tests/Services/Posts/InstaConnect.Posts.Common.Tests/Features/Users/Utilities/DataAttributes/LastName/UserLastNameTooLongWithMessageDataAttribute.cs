@@ -7,7 +7,7 @@ namespace InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttribute
 public sealed class UserLastNameTooLongWithMessageDataAttribute : LengthStringWithMessageDataAttribute
 {
     public UserLastNameTooLongWithMessageDataAttribute()
-        : base(UserTestValueUtilities.LastNameTooLong, UserErrorMessages.GetLastNameTooLong(UserTestValueUtilities.LastNameTooLong))
+        : base(UserOutOfBoundsUtilities.LastNameTooLong, UserErrorMessages.GetLastNameTooLong(UserOutOfBoundsUtilities.LastNameTooLong))
     {
     }
 }

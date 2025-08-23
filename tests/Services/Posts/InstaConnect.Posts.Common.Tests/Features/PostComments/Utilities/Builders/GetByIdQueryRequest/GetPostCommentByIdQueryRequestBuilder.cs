@@ -11,14 +11,6 @@ public class GetPostCommentByIdQueryRequestBuilder
 {
     private readonly ObjectBuilder<GetPostCommentByIdQueryRequest> _objectBuilder;
 
-    public GetPostCommentByIdQueryRequestBuilder(ObjectBuilder<GetPostCommentByIdQueryRequest> objectBuilder)
-    {
-        _objectBuilder = objectBuilder;
-
-        WithId(PostDataFaker.GetId());
-        WithCommentId(PostCommentDataFaker.GetId());
-    }
-
     public GetPostCommentByIdQueryRequestBuilder(ObjectBuilder<GetPostCommentByIdQueryRequest> objectBuilder, PostComment postComment)
     {
         _objectBuilder = objectBuilder;
@@ -41,8 +33,8 @@ public class GetPostCommentByIdQueryRequestBuilder
         return this;
     }
 
-    public GetPostCommentByIdQueryRequest Create()
+    public GetPostCommentByIdQueryRequest Build()
     {
-        return _objectBuilder.Create();
+        return _objectBuilder.Build();
     }
 }

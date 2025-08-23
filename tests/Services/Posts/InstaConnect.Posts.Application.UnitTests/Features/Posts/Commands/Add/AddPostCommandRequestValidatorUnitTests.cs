@@ -21,7 +21,7 @@ public class AddPostCommandRequestValidatorUnitTests : BasePostApplicationUnitTe
     {
         _requestBuilderFactory = new();
         _requestBuilder = _requestBuilderFactory.Create(User);
-        _request = _requestBuilder.Create();
+        _request = _requestBuilder.Build();
 
         _requestValidator = new();
     }
@@ -35,7 +35,7 @@ public class AddPostCommandRequestValidatorUnitTests : BasePostApplicationUnitTe
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
@@ -53,7 +53,7 @@ public class AddPostCommandRequestValidatorUnitTests : BasePostApplicationUnitTe
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithTitle(_request.Title, transformer).Create();
+        var request = _requestBuilder.WithTitle(_request.Title, transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
@@ -71,7 +71,7 @@ public class AddPostCommandRequestValidatorUnitTests : BasePostApplicationUnitTe
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithContent(_request.Content, transformer).Create();
+        var request = _requestBuilder.WithContent(_request.Content, transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);

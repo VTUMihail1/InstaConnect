@@ -14,15 +14,6 @@ public class GetPostCommentLikeByIdApiRequestBuilder
 {
     private readonly ObjectBuilder<GetPostCommentLikeByIdApiRequest> _objectBuilder;
 
-    public GetPostCommentLikeByIdApiRequestBuilder(ObjectBuilder<GetPostCommentLikeByIdApiRequest> objectBuilder)
-    {
-        _objectBuilder = objectBuilder;
-
-        WithId(PostDataFaker.GetId());
-        WithCommentId(PostCommentDataFaker.GetId());
-        WithCommentLikeId(PostCommentLikeDataFaker.GetId());
-    }
-
     public GetPostCommentLikeByIdApiRequestBuilder(ObjectBuilder<GetPostCommentLikeByIdApiRequest> objectBuilder, PostCommentLike postCommentLike)
     {
         _objectBuilder = objectBuilder;
@@ -53,8 +44,8 @@ public class GetPostCommentLikeByIdApiRequestBuilder
         return this;
     }
 
-    public GetPostCommentLikeByIdApiRequest Create()
+    public GetPostCommentLikeByIdApiRequest Build()
     {
-        return _objectBuilder.Create();
+        return _objectBuilder.Build();
     }
 }

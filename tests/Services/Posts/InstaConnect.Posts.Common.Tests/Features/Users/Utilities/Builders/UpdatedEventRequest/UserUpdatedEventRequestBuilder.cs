@@ -14,11 +14,11 @@ public class UserUpdatedEventRequestBuilder
         _objectBuilder = objectBuilder;
 
         WithId(user.Id);
-        WithName(user.Name);
-        WithFirstName(user.FirstName);
-        WithLastName(user.LastName);
-        WithEmail(user.Email);
-        WithProfileImage(user.ProfileImage);
+        WithName(UserDataFaker.GetName());
+        WithFirstName(UserDataFaker.GetFirstName());
+        WithLastName(UserDataFaker.GetLastName());
+        WithEmail(UserDataFaker.GetEmail());
+        WithProfileImage(UserDataFaker.GetProfileImage());
     }
 
     public UserUpdatedEventRequestBuilder WithId(string id, IStringTransformer? transformer = null)
@@ -64,8 +64,8 @@ public class UserUpdatedEventRequestBuilder
         return this;
     }
 
-    public UserUpdatedEventRequest Create()
+    public UserUpdatedEventRequest Build()
     {
-        return _objectBuilder.Create();
+        return _objectBuilder.Build();
     }
 }

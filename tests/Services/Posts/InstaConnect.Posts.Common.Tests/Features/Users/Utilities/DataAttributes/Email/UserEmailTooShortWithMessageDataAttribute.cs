@@ -7,7 +7,7 @@ namespace InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttribute
 public sealed class UserEmailTooShortWithMessageDataAttribute : LengthStringWithMessageDataAttribute
 {
     public UserEmailTooShortWithMessageDataAttribute()
-        : base(UserTestValueUtilities.EmailTooShort, UserErrorMessages.GetEmailTooShort(UserTestValueUtilities.EmailTooShort))
+        : base(UserOutOfBoundsUtilities.EmailTooShort, UserErrorMessages.GetEmailTooShort(UserOutOfBoundsUtilities.EmailTooShort))
     {
     }
 }

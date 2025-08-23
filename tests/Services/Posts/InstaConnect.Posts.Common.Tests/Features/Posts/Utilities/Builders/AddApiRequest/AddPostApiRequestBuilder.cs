@@ -11,15 +11,6 @@ public class AddPostApiRequestBuilder
 {
     private readonly ObjectBuilder<AddPostApiRequest> _objectBuilder;
 
-    public AddPostApiRequestBuilder(ObjectBuilder<AddPostApiRequest> objectBuilder)
-    {
-        _objectBuilder = objectBuilder;
-
-        WithUserId(UserDataFaker.GetId());
-        WithTitle(PostDataFaker.GetTitle());
-        WithContent(PostDataFaker.GetContent());
-    }
-
     public AddPostApiRequestBuilder(ObjectBuilder<AddPostApiRequest> objectBuilder, User user)
     {
         _objectBuilder = objectBuilder;
@@ -50,8 +41,8 @@ public class AddPostApiRequestBuilder
         return this;
     }
 
-    public AddPostApiRequest Create()
+    public AddPostApiRequest Build()
     {
-        return _objectBuilder.Create();
+        return _objectBuilder.Build();
     }
 }

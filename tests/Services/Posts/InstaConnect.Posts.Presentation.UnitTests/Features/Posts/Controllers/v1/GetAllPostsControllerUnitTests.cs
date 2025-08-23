@@ -18,7 +18,7 @@ public class GetAllPostsControllerUnitTests : BasePostPresentationUnitTest
     {
         _requestBuilderFactory = new();
         _requestBuilder = _requestBuilderFactory.Create(Post, User);
-        _request = _requestBuilder.Create();
+        _request = _requestBuilder.Build();
 
         _postController = new(ApplicationMapper, ApplicationSender);
 

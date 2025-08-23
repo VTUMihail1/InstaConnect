@@ -7,7 +7,7 @@ namespace InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttribute
 public sealed class UserProfileImageTooLongWithMessageDataAttribute : LengthStringWithMessageDataAttribute
 {
     public UserProfileImageTooLongWithMessageDataAttribute()
-        : base(UserTestValueUtilities.ProfileImageTooLong, UserErrorMessages.GetProfileImageTooLong(UserTestValueUtilities.ProfileImageTooLong))
+        : base(UserOutOfBoundsUtilities.ProfileImageTooLong, UserErrorMessages.GetProfileImageTooLong(UserOutOfBoundsUtilities.ProfileImageTooLong))
     {
     }
 }

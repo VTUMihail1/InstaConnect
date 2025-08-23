@@ -10,14 +10,6 @@ public class GetPostLikeByIdApiRequestBuilder
 {
     private readonly ObjectBuilder<GetPostLikeByIdApiRequest> _objectBuilder;
 
-    public GetPostLikeByIdApiRequestBuilder(ObjectBuilder<GetPostLikeByIdApiRequest> objectBuilder)
-    {
-        _objectBuilder = objectBuilder;
-
-        WithId(PostDataFaker.GetId());
-        WithLikeId(PostLikeDataFaker.GetId());
-    }
-
     public GetPostLikeByIdApiRequestBuilder(ObjectBuilder<GetPostLikeByIdApiRequest> objectBuilder, PostLike postLike)
     {
         _objectBuilder = objectBuilder;
@@ -40,8 +32,8 @@ public class GetPostLikeByIdApiRequestBuilder
         return this;
     }
 
-    public GetPostLikeByIdApiRequest Create()
+    public GetPostLikeByIdApiRequest Build()
     {
-        return _objectBuilder.Create();
+        return _objectBuilder.Build();
     }
 }

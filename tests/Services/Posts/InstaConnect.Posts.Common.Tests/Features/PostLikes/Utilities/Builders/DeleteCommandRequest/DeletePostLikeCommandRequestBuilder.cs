@@ -14,15 +14,6 @@ public class DeletePostLikeCommandRequestBuilder
 {
     private readonly ObjectBuilder<DeletePostLikeCommandRequest> _objectBuilder;
 
-    public DeletePostLikeCommandRequestBuilder(ObjectBuilder<DeletePostLikeCommandRequest> objectBuilder)
-    {
-        _objectBuilder = objectBuilder;
-
-        WithId(PostDataFaker.GetId());
-        WithLikeId(PostLikeDataFaker.GetId());
-        WithUserId(UserDataFaker.GetId());
-    }
-
     public DeletePostLikeCommandRequestBuilder(ObjectBuilder<DeletePostLikeCommandRequest> objectBuilder, PostLike postLike)
     {
         _objectBuilder = objectBuilder;
@@ -53,8 +44,8 @@ public class DeletePostLikeCommandRequestBuilder
         return this;
     }
 
-    public DeletePostLikeCommandRequest Create()
+    public DeletePostLikeCommandRequest Build()
     {
-        return _objectBuilder.Create();
+        return _objectBuilder.Build();
     }
 }

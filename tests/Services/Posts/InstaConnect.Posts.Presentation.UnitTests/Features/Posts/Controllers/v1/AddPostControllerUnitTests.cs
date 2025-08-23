@@ -17,7 +17,7 @@ public class AddPostControllerUnitTests : BasePostPresentationUnitTest
     {
         _requestBuilderFactory = new();
         _requestBuilder = _requestBuilderFactory.Create(User);
-        _request = _requestBuilder.Create();
+        _request = _requestBuilder.Build();
 
         _postController = new(ApplicationMapper, ApplicationSender);
 

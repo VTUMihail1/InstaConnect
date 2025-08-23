@@ -6,7 +6,7 @@ namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttribute
 public sealed class PostPageTooSmallDataAttribute : ValueIntDataAttribute
 {
     public PostPageTooSmallDataAttribute()
-        : base(PostTestValueUtilities.PageTooSmall)
+        : base(PostOutOfBoundsUtilities.PageTooSmall)
     {
     }
 }

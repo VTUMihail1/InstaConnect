@@ -10,14 +10,6 @@ public class DeletePostCommandRequestBuilderFactory
 {
     private readonly ObjectBuilderFactory<DeletePostCommandRequest> _objectBuilderFactory = new();
 
-    public DeletePostCommandRequestBuilder Create()
-    {
-        var objectBuilder = _objectBuilderFactory.Create();
-        var requestBuilder = new DeletePostCommandRequestBuilder(objectBuilder);
-
-        return requestBuilder;
-    }
-
     public DeletePostCommandRequestBuilder Create(Post post)
     {
         var objectBuilder = _objectBuilderFactory.Create();

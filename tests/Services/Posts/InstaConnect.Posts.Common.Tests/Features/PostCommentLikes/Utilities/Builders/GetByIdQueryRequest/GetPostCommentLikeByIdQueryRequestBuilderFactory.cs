@@ -9,14 +9,6 @@ public class GetPostCommentLikeByIdQueryRequestBuilderFactory
 {
     private readonly ObjectBuilderFactory<GetPostCommentLikeByIdQueryRequest> _objectBuilderFactory = new();
 
-    public GetPostCommentLikeByIdQueryRequestBuilder Create()
-    {
-        var objectBuilder = _objectBuilderFactory.Create();
-        var requestBuilder = new GetPostCommentLikeByIdQueryRequestBuilder(objectBuilder);
-
-        return requestBuilder;
-    }
-
     public GetPostCommentLikeByIdQueryRequestBuilder Create(PostCommentLike postCommentLike)
     {
         var objectBuilder = _objectBuilderFactory.Create();

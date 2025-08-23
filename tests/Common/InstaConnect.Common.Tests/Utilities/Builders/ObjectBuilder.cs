@@ -82,7 +82,7 @@ public class ObjectBuilder<T>
         return this;
     }
 
-    public T Create()
+    public T Build()
     {
         return _customizationComposer.Create();
     }

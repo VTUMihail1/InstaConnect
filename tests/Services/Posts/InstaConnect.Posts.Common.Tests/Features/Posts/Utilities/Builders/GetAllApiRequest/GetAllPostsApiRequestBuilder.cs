@@ -18,19 +18,6 @@ public class GetAllPostsApiRequestBuilder
 {
     private readonly ObjectBuilder<GetAllPostsApiRequest> _objectBuilder;
 
-    public GetAllPostsApiRequestBuilder(ObjectBuilder<GetAllPostsApiRequest> objectBuilder)
-    {
-        _objectBuilder = objectBuilder;
-
-        WithUserId(UserDataFaker.GetId());
-        WithUserName(UserDataFaker.GetName());
-        WithTitle(PostDataFaker.GetTitle());
-        WithPage(PostDataFaker.GetPage());
-        WithPageSize(PostDataFaker.GetPageSize());
-        WithSortOrder(DataFaker.GetSortOrder());
-        WithSortProperty(PostDataFaker.GetSortProperty());
-    }
-
     public GetAllPostsApiRequestBuilder(ObjectBuilder<GetAllPostsApiRequest> objectBuilder, Post post, User user)
     {
         _objectBuilder = objectBuilder;
@@ -93,8 +80,8 @@ public class GetAllPostsApiRequestBuilder
         return this;
     }
 
-    public GetAllPostsApiRequest Create()
+    public GetAllPostsApiRequest Build()
     {
-        return _objectBuilder.Create();
+        return _objectBuilder.Build();
     }
 }

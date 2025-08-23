@@ -64,8 +64,8 @@ public class UserAddedEventRequestBuilder
         return this;
     }
 
-    public UserAddedEventRequest Create()
+    public UserAddedEventRequest Build()
     {
-        return _objectBuilder.Create();
+        return _objectBuilder.Build();
     }
 }

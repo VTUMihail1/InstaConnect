@@ -29,7 +29,7 @@ public static class PostCommentLikeSetups
         return postCommentLike;
     }
 
-    public static async Task<PostCommentLike> AddPostCommentLikeAsync(
+    public static async Task AddPostCommentLikeAsync(
         this IServiceScope serviceScope,
         PostCommentLike postCommentLike,
         CancellationToken cancellationToken)
@@ -39,8 +39,18 @@ public static class PostCommentLikeSetups
 
         postCommentLikeRepository.Add(postCommentLike);
         await unitOfWork.SaveChangesAsync(cancellationToken);
+    }
 
-        return postCommentLike;
+    public static async Task DeletePostCommentLikeAsync(
+        this IServiceScope serviceScope,
+        PostCommentLike postCommentLike,
+        CancellationToken cancellationToken)
+    {
+        var unitOfWork = serviceScope.GetUnitOfWork();
+        var postCommentLikeRepository = serviceScope.GetPostCommentLikeRepository();
+
+        postCommentLikeRepository.Delete(postCommentLike);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
     }
 
     public static async Task ResetPostCommentLikeDatabase(

@@ -9,14 +9,6 @@ public class AddPostLikeApiRequestBuilder
 {
     private readonly ObjectBuilder<AddPostLikeApiRequest> _objectBuilder;
 
-    public AddPostLikeApiRequestBuilder(ObjectBuilder<AddPostLikeApiRequest> objectBuilder)
-    {
-        _objectBuilder = objectBuilder;
-
-        WithId(PostLikeDataFaker.GetId());
-        WithUserId(UserDataFaker.GetId());
-    }
-
     public AddPostLikeApiRequestBuilder(ObjectBuilder<AddPostLikeApiRequest> objectBuilder, Post post, User user)
     {
         _objectBuilder = objectBuilder;
@@ -39,8 +31,8 @@ public class AddPostLikeApiRequestBuilder
         return this;
     }
 
-    public AddPostLikeApiRequest Create()
+    public AddPostLikeApiRequest Build()
     {
-        return _objectBuilder.Create();
+        return _objectBuilder.Build();
     }
 }

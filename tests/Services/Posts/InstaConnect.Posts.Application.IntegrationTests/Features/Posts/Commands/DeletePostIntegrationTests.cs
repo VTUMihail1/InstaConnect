@@ -26,7 +26,7 @@ public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
     {
         _requestBuilderFactory = new();
         _requestBuilder = _requestBuilderFactory.Create(Post);
-        _request = _requestBuilder.Create();
+        _request = _requestBuilder.Build();
     }
 
     protected override async Task OnInitializeAsync()
@@ -44,7 +44,7 @@ public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
 
         // Act
         var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
@@ -62,7 +62,7 @@ public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
@@ -71,28 +71,26 @@ public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
         await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
     }
 
-    [Theory]
-    [PostIdNotFoundData]
-    public async Task SendAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid(
-        IStringTransformer transformer)
+    [Fact]
+    public async Task SendAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        await ServiceScope.DeletePostAsync(Post, CancellationToken);
 
         // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(_request, CancellationToken);
 
         // Assert
-        await action.ShouldThrowPostNotFoundExceptionAsync(request.Id);
+        await action.ShouldThrowPostNotFoundExceptionAsync(_request.Id);
     }
 
-    [Theory]
-    [UserIdNotFoundData]
-    public async Task SendAsync_ShouldThrowPostForbiddenException_WhenUserIdIsInvalid(
-        IStringTransformer transformer)
+    [Fact]
+    public async Task SendAsync_ShouldThrowPostForbiddenException_WhenUserIdIsInvalid()
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+        var user = UserBuilderFactory.Create().Build();
+        await ServiceScope.AddUserAsync(user, CancellationToken);
+        var request = _requestBuilder.WithUserId(user.Id).Build();
 
         // Act
         var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
@@ -118,7 +116,7 @@ public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
 
         // Act
         await ApplicationSender.SendAsync(request, CancellationToken);
@@ -134,7 +132,7 @@ public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         await ApplicationSender.SendAsync(request, CancellationToken);
@@ -161,7 +159,7 @@ public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
 
         // Act
         await ApplicationSender.SendAsync(request, CancellationToken);
@@ -177,7 +175,7 @@ public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         await ApplicationSender.SendAsync(request, CancellationToken);

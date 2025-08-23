@@ -15,19 +15,6 @@ public class GetAllPostLikesQueryRequestBuilder
 {
     private readonly ObjectBuilder<GetAllPostLikesQueryRequest> _objectBuilder;
 
-    public GetAllPostLikesQueryRequestBuilder(ObjectBuilder<GetAllPostLikesQueryRequest> objectBuilder)
-    {
-        _objectBuilder = objectBuilder;
-
-        WithId(PostDataFaker.GetId());
-        WithUserId(UserDataFaker.GetId());
-        WithUserName(UserDataFaker.GetName());
-        WithPage(PostLikeDataFaker.GetPage());
-        WithPageSize(PostLikeDataFaker.GetPageSize());
-        WithSortOrder(DataFaker.GetSortOrder());
-        WithSortProperty(PostLikeDataFaker.GetSortProperty());
-    }
-
     public GetAllPostLikesQueryRequestBuilder(ObjectBuilder<GetAllPostLikesQueryRequest> objectBuilder, PostLike postLike, User user)
     {
         _objectBuilder = objectBuilder;
@@ -90,8 +77,8 @@ public class GetAllPostLikesQueryRequestBuilder
         return this;
     }
 
-    public GetAllPostLikesQueryRequest Create()
+    public GetAllPostLikesQueryRequest Build()
     {
-        return _objectBuilder.Create();
+        return _objectBuilder.Build();
     }
 }

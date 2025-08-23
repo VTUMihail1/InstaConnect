@@ -13,14 +13,6 @@ public class GetAllPostCommentLikesApiRequestBuilderFactory
 {
     private readonly ObjectBuilderFactory<GetAllPostCommentLikesApiRequest> _objectBuilderFactory = new();
 
-    public GetAllPostCommentLikesApiRequestBuilder Create()
-    {
-        var objectBuilder = _objectBuilderFactory.Create();
-        var requestBuilder = new GetAllPostCommentLikesApiRequestBuilder(objectBuilder);
-
-        return requestBuilder;
-    }
-
     public GetAllPostCommentLikesApiRequestBuilder Create(PostCommentLike postCommentLike, User user)
     {
         var objectBuilder = _objectBuilderFactory.Create();

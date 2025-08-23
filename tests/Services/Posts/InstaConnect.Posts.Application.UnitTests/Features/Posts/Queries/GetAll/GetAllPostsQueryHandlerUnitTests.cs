@@ -16,7 +16,7 @@ public class GetAllPostsQueryHandlerUnitTests : BasePostApplicationUnitTest
     {
         _requestBuilderFactory = new();
         _requestBuilder = _requestBuilderFactory.Create(Post, User);
-        _request = _requestBuilder.Create();
+        _request = _requestBuilder.Build();
 
         _handler = new(PostService, ApplicationMapper);
 

@@ -24,7 +24,7 @@ public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeApplicati
     {
         _requestBuilderFactory = new();
         _requestBuilder = _requestBuilderFactory.Create(PostLike);
-        _request = _requestBuilder.Create();
+        _request = _requestBuilder.Build();
     }
 
     protected override async Task OnInitializeAsync()
@@ -43,7 +43,7 @@ public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeApplicati
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
 
         // Act
         var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
@@ -61,7 +61,7 @@ public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeApplicati
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithLikeId(_request.LikeId, transformer).Create();
+        var request = _requestBuilder.WithLikeId(_request.LikeId, transformer).Build();
 
         // Act
         var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
@@ -70,34 +70,30 @@ public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeApplicati
         await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
     }
 
-    [Theory]
-    [PostIdNotFoundData]
-    public async Task SendAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid(
-        IStringTransformer transformer)
+    [Fact]
+    public async Task SendAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        await ServiceScope.DeletePostAsync(Post, CancellationToken);
 
         // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(_request, CancellationToken);
 
         // Assert
-        await action.ShouldThrowPostNotFoundExceptionAsync(request.Id);
+        await action.ShouldThrowPostNotFoundExceptionAsync(_request.Id);
     }
 
-    [Theory]
-    [PostLikeIdNotFoundData]
-    public async Task SendAsync_ShouldThrowPostLikeNotFoundException_WhenIdIsInvalid(
-        IStringTransformer transformer)
+    [Fact]
+    public async Task SendAsync_ShouldThrowPostLikeNotFoundException_WhenLikeIdIsInvalid()
     {
         // Arrange
-        var request = _requestBuilder.WithLikeId(_request.LikeId, transformer).Create();
+        await ServiceScope.DeletePostLikeAsync(PostLike, CancellationToken);
 
         // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(_request, CancellationToken);
 
         // Assert
-        await action.ShouldThrowPostLikeNotFoundExceptionAsync(request.Id, request.LikeId);
+        await action.ShouldThrowPostLikeNotFoundExceptionAsync(_request.Id, _request.LikeId);
     }
 
     [Fact]
@@ -116,7 +112,7 @@ public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeApplicati
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
@@ -131,7 +127,7 @@ public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeApplicati
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithLikeId(_request.LikeId, transformer).Create();
+        var request = _requestBuilder.WithLikeId(_request.LikeId, transformer).Build();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);

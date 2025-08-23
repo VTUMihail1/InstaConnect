@@ -6,7 +6,7 @@ namespace InstaConnect.PostCommentLikes.Common.Tests.Features.PostCommentLikes.U
 public sealed class PostCommentLikeIdTooLongDataAttribute : LengthStringDataAttribute
 {
     public PostCommentLikeIdTooLongDataAttribute()
-        : base(PostCommentLikeTestValueUtilities.IdTooLong)
+        : base(PostCommentLikeOutOfBoundsUtilities.IdTooLong)
     {
     }
 }

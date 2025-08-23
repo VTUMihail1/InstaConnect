@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Users.Application.Features.Users.Commands.Add;
+﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Update;
+
+namespace InstaConnect.Users.Application.Features.Users.Commands.Add;
 
 public record AddUserCommandRequest(
     string Id,
@@ -6,4 +8,4 @@ public record AddUserCommandRequest(
     string LastName,
     string Name,
     string Email,
-    string? ProfileImage) : ICommandRequest;
+    string? ProfileImage) : ICommandRequest<AddUserCommandResponse>;

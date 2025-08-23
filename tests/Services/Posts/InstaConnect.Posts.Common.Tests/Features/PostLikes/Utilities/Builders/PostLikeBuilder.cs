@@ -63,8 +63,8 @@ public class PostLikeBuilder
         return this;
     }
 
-    public PostLike Create()
+    public PostLike Build()
     {
-        return _objectBuilder.Create();
+        return _objectBuilder.Build();
     }
 }

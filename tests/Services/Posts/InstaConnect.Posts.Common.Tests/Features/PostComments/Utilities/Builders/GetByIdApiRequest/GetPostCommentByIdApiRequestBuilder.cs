@@ -10,14 +10,6 @@ public class GetPostCommentByIdApiRequestBuilder
 {
     private readonly ObjectBuilder<GetPostCommentByIdApiRequest> _objectBuilder;
 
-    public GetPostCommentByIdApiRequestBuilder(ObjectBuilder<GetPostCommentByIdApiRequest> objectBuilder)
-    {
-        _objectBuilder = objectBuilder;
-
-        WithId(PostDataFaker.GetId());
-        WithCommentId(PostCommentDataFaker.GetId());
-    }
-
     public GetPostCommentByIdApiRequestBuilder(ObjectBuilder<GetPostCommentByIdApiRequest> objectBuilder, PostComment postComment)
     {
         _objectBuilder = objectBuilder;
@@ -40,8 +32,8 @@ public class GetPostCommentByIdApiRequestBuilder
         return this;
     }
 
-    public GetPostCommentByIdApiRequest Create()
+    public GetPostCommentByIdApiRequest Build()
     {
-        return _objectBuilder.Create();
+        return _objectBuilder.Build();
     }
 }

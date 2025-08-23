@@ -72,8 +72,8 @@ public class PostCommentLikeBuilder
         return this;
     }
 
-    public PostCommentLike Create()
+    public PostCommentLike Build()
     {
-        return _objectBuilder.Create();
+        return _objectBuilder.Build();
     }
 }

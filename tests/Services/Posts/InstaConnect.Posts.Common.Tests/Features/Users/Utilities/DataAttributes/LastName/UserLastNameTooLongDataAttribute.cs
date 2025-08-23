@@ -6,7 +6,7 @@ namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttribute
 public sealed class UserLastNameTooLongDataAttribute : LengthStringDataAttribute
 {
     public UserLastNameTooLongDataAttribute()
-        : base(UserTestValueUtilities.LastNameTooLong)
+        : base(UserOutOfBoundsUtilities.LastNameTooLong)
     {
     }
 }

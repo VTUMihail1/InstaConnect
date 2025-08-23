@@ -7,7 +7,7 @@ namespace InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttribute
 public sealed class UserNameTooShortWithMessageDataAttribute : LengthStringWithMessageDataAttribute
 {
     public UserNameTooShortWithMessageDataAttribute()
-        : base(UserTestValueUtilities.NameTooShort, UserErrorMessages.GetNameTooShort(UserTestValueUtilities.NameTooShort))
+        : base(UserOutOfBoundsUtilities.NameTooShort, UserErrorMessages.GetNameTooShort(UserOutOfBoundsUtilities.NameTooShort))
     {
     }
 }
