@@ -1,16 +1,17 @@
 ﻿using InstaConnect.Common.Exceptions;
+using InstaConnect.Follows.Common.Features.Follows.Utilities;
 
 namespace InstaConnect.Follows.Domain.Features.Follows.Exceptions;
 
 public class FollowNotFoundException : NotFoundException
 {
-    private const string ErrorMessage = "Follow not found";
-
-    public FollowNotFoundException() : base(ErrorMessage)
+    public FollowNotFoundException(string followerId, string followingId)
+        : base(FollowExceptionErrorMessages.GetNotFoundMessage(followerId, followingId))
     {
     }
 
-    public FollowNotFoundException(Exception exception) : base(ErrorMessage, exception)
+    public FollowNotFoundException(string followerId, string followingId, Exception exception)
+        : base(FollowExceptionErrorMessages.GetNotFoundMessage(followerId, followingId), exception)
     {
     }
 }

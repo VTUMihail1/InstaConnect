@@ -1,16 +1,14 @@
-﻿using InstaConnect.Identity.Infrastructure.Features.Users.Models.Options;
+﻿using InstaConnect.Common.Extensions;
+using InstaConnect.Identity.Infrastructure.Extensions;
+using InstaConnect.Identity.Infrastructure.Features.Users.Abstractions;
 
-namespace InstaConnect.Identity.Infrastructure.Features.Users.Extensions;
+namespace InstaConnect.Users.Infrastructure.Features.Users.Extensions;
 
 internal static class ServiceCollectionExtensions
 {
     internal static IServiceCollection AddUserServices(this IServiceCollection serviceCollection)
     {
-        serviceCollection
-            .AddOptions<AdminOptions>()
-            .BindConfiguration(nameof(AdminOptions))
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
+        serviceCollection.AddImplementationsOf<IUserSortProperty>(IdentityInfrastructureReference.Assembly);
 
         return serviceCollection;
     }

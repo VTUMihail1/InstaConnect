@@ -1,12 +1,12 @@
 ﻿using InstaConnect.Common.Exceptions;
+using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Utilities;
 
 namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Exceptions;
 
 public class ForgotPasswordTokenNotFoundException : NotFoundException
 {
-    private const string ErrorMessage = "Forgot password token does not exist";
-
-    public ForgotPasswordTokenNotFoundException() : base(ErrorMessage)
+    public ForgotPasswordTokenNotFoundException(string id, string value)
+        : base(ForgotPasswordTokenExceptionErrorMessages.GetNotFoundMessage(id, value))
     {
     }
 }

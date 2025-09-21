@@ -2,7 +2,6 @@
 
 public record GetAllPostLikesQueryParameters(
     string Id,
-    string UserId,
     string UserName,
     string SortOrder,
     string SortProperty,

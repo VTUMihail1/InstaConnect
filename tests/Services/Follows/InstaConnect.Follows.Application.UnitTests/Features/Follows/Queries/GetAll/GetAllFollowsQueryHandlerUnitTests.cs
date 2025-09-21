@@ -5,7 +5,7 @@ namespace InstaConnect.Follows.Application.UnitTests.Features.Follows.Queries.Ge
 
 public class GetAllFollowsQueryHandlerUnitTests : BaseFollowUnitTest
 {
-    private readonly GetAllFollowsQueryHandler _queryHandler;
+    private readonly GetAllFollowsByFollowerQueryHandler _queryHandler;
 
     public GetAllFollowsQueryHandlerUnitTests()
     {

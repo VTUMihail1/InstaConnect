@@ -85,21 +85,6 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
     }
 
     [Theory]
-    [UserIdTooLongWithMessageData]
-    public async Task SendAsync_ShouldThrowValidationException_WhenUserIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
-    {
-        // Arrange
-        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Build();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
-
-        // Assert
-        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
-    }
-
-    [Theory]
     [UserNameTooLongWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenUserNameIsInvalid(
         IStringTransformer transformer, string errorMessage)
@@ -236,23 +221,6 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
     {
         // Arrange
         var request = _requestBuilder.WithCommentId(_request.Filter.CommentId, transformer).Build();
-
-        // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
-
-        // Assert
-        response.ShouldSatisfy(PostCommentLike, User, _request);
-    }
-
-    [Theory]
-    [UserIdNullData]
-    [UserIdEmptyData]
-    [UserIdDifferentCaseData]
-    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndUserIdAreValid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Build();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);

@@ -10,18 +10,9 @@ public static class PostLikeProblemDetailsAssertions
     public static void ShouldSatisfyPostLikeNotFound(
         this ProblemDetails problemDetails,
         string id,
-        string likeId)
-    {
-        problemDetails.ShouldSatisfyNotFound(PostLikeExceptionErrorMessages.GetNotFoundMessage(id, likeId));
-    }
-
-    public static void ShouldSatisfyPostLikeForbidden(
-        this ProblemDetails problemDetails,
-        string id,
-        string likeId,
         string userId)
     {
-        problemDetails.ShouldSatisfyForbidden(PostLikeExceptionErrorMessages.GetForbiddenMessage(id, likeId, userId));
+        problemDetails.ShouldSatisfyNotFound(PostLikeExceptionErrorMessages.GetNotFoundMessage(id, userId));
     }
 
     public static void ShouldSatisfyPostLikeAlreadyExists(

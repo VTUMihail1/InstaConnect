@@ -1,4 +1,7 @@
-﻿namespace InstaConnect.Follows.Infrastructure;
+﻿using InstaConnect.Follows.Infrastructure.Extensions;
+using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
+
+namespace InstaConnect.Follows.Infrastructure;
 
 public class FollowsContext : DbContext
 {
@@ -11,10 +14,8 @@ public class FollowsContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        var currentAssembly = typeof(FollowsContext).Assembly;
-
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.ApplyConfigurationsFromAssembly(currentAssembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(FollowInfrastructureReference.Assembly);
     }
 }

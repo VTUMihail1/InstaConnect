@@ -1,15 +1,17 @@
 ﻿using InstaConnect.Common.Exceptions;
+using InstaConnect.Follows.Common.Features.Follows.Utilities;
 
 namespace InstaConnect.Follows.Domain.Features.Follows.Exceptions;
-public class FollowAlreadyExistsException : BadRequestException
-{
-    private const string ErrorMessage = "This user has already been followed";
 
-    public FollowAlreadyExistsException() : base(ErrorMessage)
+public class FollowAlreadyExistsException : NotFoundException
+{
+    public FollowAlreadyExistsException(string followerId, string followingId)
+        : base(FollowExceptionErrorMessages.GetAlreadyExistsMessage(followerId, followingId))
     {
     }
 
-    public FollowAlreadyExistsException(Exception exception) : base(ErrorMessage, exception)
+    public FollowAlreadyExistsException(string followerId, string followingId, Exception exception)
+        : base(FollowExceptionErrorMessages.GetAlreadyExistsMessage(followerId, followingId), exception)
     {
     }
 }

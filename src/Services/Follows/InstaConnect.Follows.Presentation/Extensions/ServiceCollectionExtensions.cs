@@ -1,7 +1,7 @@
 ﻿using InstaConnect.Common.Extensions;
 using InstaConnect.Common.Presentation.Extensions;
 using InstaConnect.Follows.Presentation.Features.Follows.Extensions;
-using InstaConnect.Follows.Presentation.Features.Users.Extensions;
+using InstaConnect.Posts.Presentation.Features.Users.Extensions;
 
 namespace InstaConnect.Follows.Presentation.Extensions;
 
@@ -10,13 +10,13 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddPresentation(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
         serviceCollection
-            .AddFollowServices()
-            .AddUserServices();
+            .AddUserServices()
+            .AddFollowServices();
 
         serviceCollection
-            .AddServicesWithMatchingInterfaces(PresentationReference.Assembly)
+            .AddServicesWithMatchingInterfaces(FollowPresentationReference.Assembly)
             .AddApiControllers()
-            .AddMapper(PresentationReference.Assembly)
+            .AddMapper(FollowPresentationReference.Assembly)
             .AddAuthorizationPolicies()
             .AddCorsPolicies(configuration)
             .AddSwagger()

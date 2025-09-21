@@ -8,23 +8,23 @@ public class PostCommentLikeNotFoundException : NotFoundException
     public PostCommentLikeNotFoundException(
         string id,
         string commentId,
-        string commentLikeId)
+        string userId)
         : base(PostCommentLikeExceptionErrorMessages.GetNotFoundMessage(
             id,
             commentId,
-            commentLikeId))
+            userId))
     {
     }
 
     public PostCommentLikeNotFoundException(
         string id,
         string commentId,
-        string commentLikeId, 
+        string userId, 
         Exception exception)
         : base(PostCommentLikeExceptionErrorMessages.GetNotFoundMessage(
             id,
             commentId,
-            commentLikeId), exception)
+            userId), exception)
     {
     }
 }

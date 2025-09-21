@@ -15,7 +15,7 @@ internal class PostCommentLikePresentationMappings : IRegister
     {
         config.NewConfig<GetAllPostCommentLikesApiRequest, GetAllPostCommentLikesQueryRequest>()
             .ConstructUsing(src => new(
-                new(src.Filter.Id, src.Filter.CommentId, src.Filter.UserId, src.Filter.UserName),
+                new(src.Filter.Id, src.Filter.CommentId, src.Filter.UserName),
                 new(src.Sorting.Order, src.Sorting.Property),
                 new(src.Pagination.Page, src.Pagination.PageSize)));
 
@@ -24,7 +24,6 @@ internal class PostCommentLikePresentationMappings : IRegister
                   pc.Data.Select(p => new PostCommentLikeApiResponse(
                                       p.Id,
                                       p.CommentId,
-                                      p.CommentLikeId,
                                       new(
                                           p.User.Id,
                                           p.User.Name,
@@ -37,13 +36,12 @@ internal class PostCommentLikePresentationMappings : IRegister
                   pc.HasPreviousPage));
 
         config.NewConfig<GetPostCommentLikeByIdApiRequest, GetPostCommentLikeByIdQueryRequest>()
-            .ConstructUsing(src => new(src.Id, src.CommentId, src.CommentLikeId));
+            .ConstructUsing(src => new(src.Id, src.CommentId, src.UserId));
 
         config.NewConfig<GetPostCommentLikeByIdQueryResponse, GetPostCommentLikeByIdApiResponse>()
             .ConstructUsing(src => new(
                 new(src.Data.Id,
                     src.Data.CommentId,
-                    src.Data.CommentLikeId,
                     new(
                         src.Data.User.Id,
                         src.Data.User.Name,
@@ -53,9 +51,9 @@ internal class PostCommentLikePresentationMappings : IRegister
             .ConstructUsing(src => new(src.Id, src.CommentId, src.UserId));
 
         config.NewConfig<AddPostCommentLikeCommandResponse, AddPostCommentLikeApiResponse>()
-            .ConstructUsing(src => new(src.Id, src.CommentId, src.CommentLikeId, src.CreatedAt, src.UpdatedAt));
+            .ConstructUsing(src => new(src.Id, src.CommentId, src.UserId, src.CreatedAt, src.UpdatedAt));
 
         config.NewConfig<DeletePostCommentLikeApiRequest, DeletePostCommentLikeCommandRequest>()
-            .ConstructUsing(src => new(src.Id, src.CommentId, src.CommentLikeId, src.UserId));
+            .ConstructUsing(src => new(src.Id, src.CommentId, src.UserId));
     }
 }

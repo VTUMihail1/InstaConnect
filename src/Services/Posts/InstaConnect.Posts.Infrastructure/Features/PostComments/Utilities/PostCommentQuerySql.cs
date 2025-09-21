@@ -32,9 +32,9 @@ public static class PostCommentQuerySql
     public const string GetAllTotalCount = $@"SELECT COUNT(*)
                                               FROM post_comments pc
                                               INNER JOIN users u ON pc.{nameof(PostCommentQueryEntity.UserId)} = u.{nameof(UserQueryEntity.Id)}
-                                              WHERE pc.{nameof(PostCommentQueryEntity.Id)} = @{nameof(GetAllPostCommentsQueryParameters.Id)}
-                                                AND pl.{nameof(PostCommentQueryEntity.UserId)} = @{nameof(GetAllPostCommentsQueryParameters.UserId)}
-                                                AND u.{nameof(PostCommentQueryEntity.UserName)} LIKE @{nameof(GetAllPostCommentsQueryParameters.UserName)};";
+                                              WHERE pc.{nameof(PostCommentQueryEntity.Id)} = @{nameof(GetAllPostCommentsTotalCountQueryParameters.Id)}
+                                                AND pl.{nameof(PostCommentQueryEntity.UserId)} = @{nameof(GetAllPostCommentsTotalCountQueryParameters.UserId)}
+                                                AND u.{nameof(PostCommentQueryEntity.UserName)} LIKE @{nameof(GetAllPostCommentsTotalCountQueryParameters.UserName)};";
 
     public const string GetById = $@"SELECT
                                        pc.id AS {nameof(PostCommentQueryEntity.Id)},

@@ -1,16 +1,17 @@
 ﻿using InstaConnect.Common.Exceptions;
+using InstaConnect.Identity.Domain.Features.Users.Utilities;
 
 namespace InstaConnect.Identity.Domain.Features.Users.Exceptions;
 
 public class UserNameAlreadyTakenException : BadRequestException
 {
-    private const string ErrorMessage = "Username already taken";
-
-    public UserNameAlreadyTakenException() : base(ErrorMessage)
+    public UserNameAlreadyTakenException(string name) : base(
+        UserExceptionErrorMessages.GetNameAlreadyTakenMessage(name))
     {
     }
 
-    public UserNameAlreadyTakenException(Exception exception) : base(ErrorMessage, exception)
+    public UserNameAlreadyTakenException(string name, Exception exception) : base(
+        UserExceptionErrorMessages.GetNameAlreadyTakenMessage(name), exception)
     {
     }
 }

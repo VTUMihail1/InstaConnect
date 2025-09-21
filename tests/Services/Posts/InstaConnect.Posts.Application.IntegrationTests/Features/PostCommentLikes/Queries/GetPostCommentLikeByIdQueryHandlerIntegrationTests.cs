@@ -12,6 +12,7 @@ using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.Ass
 using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Utilities;
 
 namespace InstaConnect.PostCommentLikes.Application.IntegrationTests.Features.PostCommentLikes.Queries;
@@ -75,15 +76,15 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
     }
 
     [Theory]
-    [PostCommentLikeIdNullWithMessageData]
-    [PostCommentLikeIdEmptyWithMessageData]
-    [PostCommentLikeIdTooShortWithMessageData]
-    [PostCommentLikeIdTooLongWithMessageData]
-    public async Task SendAsync_ShouldThrowValidationException_WhenCommentLikeIdIsInvalid(
+    [UserIdNullWithMessageData]
+    [UserIdEmptyWithMessageData]
+    [UserIdTooShortWithMessageData]
+    [UserIdTooLongWithMessageData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenUserIdIsInvalid(
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentLikeId(_request.CommentLikeId, transformer).Build();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
@@ -119,7 +120,7 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowPostCommentLikeNotFoundException_WhenCommentLikeIdIsInvalid()
+    public async Task SendAsync_ShouldThrowPostCommentLikeNotFoundException_WhenUserIdIsInvalid()
     {
         // Arrange
         await ServiceScope.DeletePostCommentAsync(PostComment, CancellationToken);
@@ -128,7 +129,7 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
         var action = async () => await ApplicationSender.SendAsync(_request, CancellationToken);
 
         // Assert
-        await action.ShouldThrowPostCommentLikeNotFoundExceptionAsync(_request.Id, _request.CommentId, _request.CommentLikeId);
+        await action.ShouldThrowPostCommentLikeNotFoundExceptionAsync(_request.Id, _request.CommentId, _request.UserId);
     }
 
     [Fact]
@@ -172,12 +173,12 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
     }
 
     [Theory]
-    [PostCommentLikeIdDifferentCaseData]
-    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndCommentLikeIdAreValid(
+    [UserIdDifferentCaseData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndUserIdAreValid(
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentLikeId(_request.CommentLikeId, transformer).Build();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);

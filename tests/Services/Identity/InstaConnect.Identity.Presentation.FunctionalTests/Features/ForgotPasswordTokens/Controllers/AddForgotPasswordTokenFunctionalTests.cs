@@ -15,7 +15,7 @@ public class AddForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenFunc
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
-        var request = new AddForgotPasswordTokenRequest(
+        var request = new AddForgotPasswordTokenApiRequest(
             DataFaker.GetString(length)
         );
 
@@ -32,7 +32,7 @@ public class AddForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenFunc
     public async Task AddAsync_ShouldReturnNotFoundResponse_WhenEmailIsInvalid()
     {
         // Arrange
-        var request = new AddForgotPasswordTokenRequest(
+        var request = new AddForgotPasswordTokenApiRequest(
             UserTestUtilities.ValidAddEmail
         );
 

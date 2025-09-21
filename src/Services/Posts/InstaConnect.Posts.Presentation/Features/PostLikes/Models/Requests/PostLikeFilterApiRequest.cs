@@ -2,5 +2,4 @@
 
 public record PostLikeFilterApiRequest(
     [FromRoute] string Id,
-    [FromQuery(Name = "userId")] string UserId = "",
     [FromQuery(Name = "userName")] string UserName = "");

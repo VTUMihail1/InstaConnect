@@ -1,4 +1,5 @@
 ﻿using InstaConnect.PostLikes.Common.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Domain.Features.Users.Utilities;
 
 namespace InstaConnect.PostLikes.Application.Features.PostLikes.Queries.GetById;
 
@@ -14,12 +15,12 @@ public class GetPostLikeByIdQueryRequestValidator : AbstractValidator<GetPostLik
             .MaximumLength(PostConfigurations.IdMaxLength)
             .WithMessage(r => PostErrorMessages.GetIdTooLong(r.Id.Length));
 
-        RuleFor(r => r.LikeId)
+        RuleFor(r => r.UserId)
             .NotEmpty()
-            .WithMessage(PostLikeErrorMessages.GetIdEmpty())
-            .MinimumLength(PostLikeConfigurations.IdMinLength)
-            .WithMessage(r => PostLikeErrorMessages.GetIdTooShort(r.LikeId.Length))
-            .MaximumLength(PostLikeConfigurations.IdMaxLength)
-            .WithMessage(r => PostLikeErrorMessages.GetIdTooLong(r.LikeId.Length));
+            .WithMessage(UserErrorMessages.GetIdEmpty())
+            .MinimumLength(UserConfigurations.IdMinLength)
+            .WithMessage(r => UserErrorMessages.GetIdTooShort(r.UserId.Length))
+            .MaximumLength(UserConfigurations.IdMaxLength)
+            .WithMessage(r => UserErrorMessages.GetIdTooLong(r.UserId.Length));
     }
 }

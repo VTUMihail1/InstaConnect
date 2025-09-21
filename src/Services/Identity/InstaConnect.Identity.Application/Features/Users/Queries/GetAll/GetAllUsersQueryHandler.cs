@@ -1,28 +1,29 @@
-﻿using InstaConnect.Identity.Domain.Features.Users.Models.Filters;
+﻿using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
+using InstaConnect.Users.Domain.Features.Users.Abstractions;
 
-namespace InstaConnect.Identity.Application.Features.Users.Queries.GetAll;
+namespace InstaConnect.Users.Application.Features.Users.Queries.GetAll;
 
-public class GetAllUsersQueryHandler : IQueryHandler<GetAllUsersQuery, UserPaginationQueryViewModel>
+internal class GetAllUsersQueryHandler : IQueryHandler<GetAllUsersQueryRequest, GetAllUsersQueryResponse>
 {
+    private readonly IUserService _userService;
     private readonly IApplicationMapper _applicationMapper;
-    private readonly IUserReadRepository _userReadRepository;
 
     public GetAllUsersQueryHandler(
-        IApplicationMapper applicationMapper,
-        IUserReadRepository userReadRepository)
+        IUserService userService,
+        IApplicationMapper applicationMapper)
     {
+        _userService = userService;
         _applicationMapper = applicationMapper;
-        _userReadRepository = userReadRepository;
     }
 
-    public async Task<UserPaginationQueryViewModel> Handle(
-        GetAllUsersQuery request,
+    public async Task<GetAllUsersQueryResponse> Handle(
+        GetAllUsersQueryRequest request,
         CancellationToken cancellationToken)
     {
-        var filteredCollectionQuery = _applicationMapper.Map<UserCollectionReadQuery>(request);
-        var users = await _userReadRepository.GetAllAsync(filteredCollectionQuery, cancellationToken);
+        var serviceRequest = _applicationMapper.Map<GetAllUsersQuery>(request);
+        var collection = await _userService.GetAllAsync(serviceRequest, cancellationToken);
 
-        var response = _applicationMapper.Map<UserPaginationQueryViewModel>(users);
+        var response = _applicationMapper.Map<GetAllUsersQueryResponse>(collection);
 
         return response;
     }

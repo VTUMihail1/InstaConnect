@@ -5,9 +5,6 @@ namespace InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities;
 
 public static class PostLikeOutOfBoundsUtilities
 {
-    public static readonly int IdTooShort = IntOperations.Decrement(PostLikeConfigurations.IdMinLength);
-    public static readonly int IdTooLong = IntOperations.Increment(PostLikeConfigurations.IdMaxLength);
-
     public static readonly int PageTooSmall = IntOperations.Decrement(PostLikeConfigurations.PageMinValue);
     public static readonly int PageTooLarge = IntOperations.Increment(PostLikeConfigurations.PageMaxValue);
 

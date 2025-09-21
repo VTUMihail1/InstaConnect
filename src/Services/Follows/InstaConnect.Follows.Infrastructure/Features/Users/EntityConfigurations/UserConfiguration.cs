@@ -1,48 +1,53 @@
-﻿namespace InstaConnect.Follows.Infrastructure.Features.Users.EntityConfigurations;
+﻿using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
+using InstaConnect.Posts.Domain.Features.Users.Utilities;
 
-internal class UserConfiguration : IEntityTypeConfiguration<User>
+namespace InstaConnect.Posts.Infrastructure.Features.Users.EntityConfigurations;
+
+public class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
         builder
-            .ToTable("user");
+            .HasKey(u => u.Id);
 
         builder
-            .Property(p => p.Id)
-            .HasColumnName("id");
+            .Property(u => u.Id)
+            .HasMaxLength(UserConfigurations.IdMaxLength)
+            .IsRequired()
+            .ValueGeneratedNever();
 
         builder
-            .Property(p => p.FirstName)
-            .HasColumnName("first_name")
-            .HasMaxLength(255)
+            .Property(u => u.FirstName)
+            .HasMaxLength(UserConfigurations.FirstNameMaxLength)
             .IsRequired();
 
         builder
-            .Property(p => p.LastName)
-            .HasColumnName("last_name")
-            .HasMaxLength(255)
+            .Property(u => u.LastName)
+            .HasMaxLength(UserConfigurations.LastNameMaxLength)
             .IsRequired();
 
         builder
-            .Property(p => p.Email)
-            .HasColumnName("email");
+            .Property(u => u.Email)
+            .HasMaxLength(UserConfigurations.EmailMaxLength)
+            .IsRequired();
 
         builder
-            .Property(p => p.UserName)
-            .HasColumnName("user_name");
+            .Property(u => u.Name)
+            .HasMaxLength(UserConfigurations.NameMaxLength)
+            .IsRequired();
 
         builder
-            .Property(p => p.ProfileImage)
-            .HasColumnName("profile_image");
+            .Property(u => u.ProfileImage)
+            .HasMaxLength(UserConfigurations.ProfileImageMaxLength);
 
-        builder.HasMany(f => f.Followings)
+        builder.HasMany(f => f.Follows)
+                .WithOne(u => u.Follower)
+                .HasForeignKey(f => f.FollowerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasMany(f => f.Follows)
                 .WithOne(u => u.Following)
                 .HasForeignKey(f => f.FollowingId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-        builder.HasMany(f => f.Followers)
-                    .WithOne(u => u.Follower)
-                    .HasForeignKey(f => f.FollowerId)
-                    .OnDelete(DeleteBehavior.Restrict);
     }
 }

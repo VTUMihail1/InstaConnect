@@ -9,6 +9,7 @@ using InstaConnect.PostLikes.Presentation.Features.PostLikes.Models.Requests;
 using InstaConnect.PostLikes.Presentation.FunctionalTests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Utilities;
 
 namespace InstaConnect.PostLikes.Presentation.FunctionalTests.Features.PostLikes.Controllers.v1;
@@ -71,15 +72,15 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationFunctional
     }
 
     [Theory]
-    [PostLikeIdNullData]
-    [PostLikeIdEmptyData]
-    [PostLikeIdTooShortData]
-    [PostLikeIdTooLongData]
-    public async Task GetByIdAsync_ShouldHaveBadRequestStatusCode_WhenLikeIdIsInvalid(
+    [UserIdNullData]
+    [UserIdEmptyData]
+    [UserIdTooShortData]
+    [UserIdTooLongData]
+    public async Task GetByIdAsync_ShouldHaveBadRequestStatusCode_WhenUserIdIsInvalid(
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithLikeId(_request.LikeId, transformer).Build();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var response = await HttpClient.GetPostLikeByIdStatusCodeAsync(request, CancellationToken);
@@ -89,15 +90,15 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationFunctional
     }
 
     [Theory]
-    [PostLikeIdNullWithMessageData]
-    [PostLikeIdEmptyWithMessageData]
-    [PostLikeIdTooShortWithMessageData]
-    [PostLikeIdTooLongWithMessageData]
-    public async Task GetByIdAsync_ShouldHaveBadRequestProblemDetails_WhenLikeIdIsInvalid(
+    [UserIdNullWithMessageData]
+    [UserIdEmptyWithMessageData]
+    [UserIdTooShortWithMessageData]
+    [UserIdTooLongWithMessageData]
+    public async Task GetByIdAsync_ShouldHaveBadRequestProblemDetails_WhenUserIdIsInvalid(
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithLikeId(_request.LikeId, transformer).Build();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var response = await HttpClient.GetPostLikeByIdProblemDetailsAsync(request, CancellationToken);
@@ -133,7 +134,7 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationFunctional
     }
 
     [Fact]
-    public async Task GetByIdAsync_ShouldHaveNotFoundStatusCode_WhenLikeIdIsInvalid()
+    public async Task GetByIdAsync_ShouldHaveNotFoundStatusCode_WhenUserIdIsInvalid()
     {
         // Arrange
         await ServiceScope.DeletePostLikeAsync(PostLike, CancellationToken);
@@ -146,7 +147,7 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationFunctional
     }
 
     [Fact]
-    public async Task GetByIdAsync_ShouldHavePostLikeNotFoundProblemDetails_WhenLikeIdIsInvalid()
+    public async Task GetByIdAsync_ShouldHavePostLikeNotFoundProblemDetails_WhenUserIdIsInvalid()
     {
         // Arrange
         await ServiceScope.DeletePostLikeAsync(PostLike, CancellationToken);
@@ -155,7 +156,7 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationFunctional
         var response = await HttpClient.GetPostLikeByIdProblemDetailsAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyPostLikeNotFound(_request.Id, _request.LikeId);
+        response.ShouldSatisfyPostLikeNotFound(_request.Id, _request.UserId);
     }
 
     [Fact]
@@ -184,12 +185,12 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationFunctional
     }
 
     [Theory]
-    [PostLikeIdDifferentCaseData]
-    public async Task GetByIdAsync_ShouldHaveOkStatusCode_WhenRequestAndLikeIdAreValid(
+    [UserIdDifferentCaseData]
+    public async Task GetByIdAsync_ShouldHaveOkStatusCode_WhenRequestAndUserIdAreValid(
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithLikeId(_request.LikeId, transformer).Build();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var response = await HttpClient.GetPostLikeByIdStatusCodeAsync(request, CancellationToken);
@@ -224,12 +225,12 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationFunctional
     }
 
     [Theory]
-    [PostLikeIdDifferentCaseData]
-    public async Task GetByIdAsync_ShouldHaveResponse_WhenRequestAndLikeIdAreValid(
+    [UserIdDifferentCaseData]
+    public async Task GetByIdAsync_ShouldHaveResponse_WhenRequestAndUserIdAreValid(
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithLikeId(_request.LikeId, transformer).Build();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var response = await HttpClient.GetPostLikeByIdAsync(request, CancellationToken);

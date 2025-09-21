@@ -1,8 +1,12 @@
-﻿using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
+﻿using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Entities;
+using InstaConnect.PostComments.Domain.Features.PostComments.Models.Entities;
+using InstaConnect.Chats.Domain.Features.Chats.Models.Entities;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
+using InstaConnect.ChatMessages.Domain.Features.ChatMessages.Models.Entities;
 
-namespace InstaConnect.Messages.Domain.Features.Users.Models.Entities;
+namespace InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
-public class User : IEntity, IAuditableInfo
+public class User : IEntity
 {
     private User()
     {
@@ -10,9 +14,9 @@ public class User : IEntity, IAuditableInfo
         FirstName = string.Empty;
         LastName = string.Empty;
         Email = string.Empty;
-        UserName = string.Empty;
-        SenderMessages = [];
-        ReceiverMessages = [];
+        Name = string.Empty;
+        Chats = [];
+        ChatMessages = [];
     }
 
     public User(
@@ -20,7 +24,7 @@ public class User : IEntity, IAuditableInfo
         string firstName,
         string lastName,
         string email,
-        string userName,
+        string name,
         string? profileImage,
         DateTimeOffset createdAt,
         DateTimeOffset updatedAt)
@@ -29,10 +33,10 @@ public class User : IEntity, IAuditableInfo
         FirstName = firstName;
         LastName = lastName;
         Email = email;
-        UserName = userName;
+        Name = name;
         ProfileImage = profileImage;
-        SenderMessages = [];
-        ReceiverMessages = [];
+        Chats = [];
+        ChatMessages = [];
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
     }
@@ -42,44 +46,60 @@ public class User : IEntity, IAuditableInfo
         string firstName,
         string lastName,
         string email,
-        string userName,
+        string name,
         string? profileImage,
         DateTimeOffset createdAt,
         DateTimeOffset updatedAt,
-        ICollection<Message> senderMessages,
-        ICollection<Message> receiverMessages)
+        ICollection<Chat> chats,
+        ICollection<ChatMessage> chatMessages)
     {
         Id = id;
         FirstName = firstName;
         LastName = lastName;
         Email = email;
-        UserName = userName;
+        Name = name;
         ProfileImage = profileImage;
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
-        SenderMessages = senderMessages;
-        ReceiverMessages = receiverMessages;
+        Chats = chats;
+        ChatMessages = chatMessages;
     }
 
     public string Id { get; }
 
-    public string FirstName { get; set; }
+    public string FirstName { get; private set; }
 
-    public string LastName { get; set; }
+    public string LastName { get; private set; }
 
-    public string Email { get; set; }
+    public string Email { get; private set; }
 
-    public string UserName { get; set; }
+    public string Name { get; private set; }
 
-    public string? ProfileImage { get; set; }
+    public string? ProfileImage { get; private set; }
 
-    public ICollection<Message> SenderMessages { get; }
+    public ICollection<Chat> Chats { get; }
 
-    public ICollection<Message> ReceiverMessages { get; }
+    public ICollection<ChatMessage> ChatMessages { get; }
 
     public DateTimeOffset CreatedAt { get; }
 
-    public DateTimeOffset UpdatedAt { get; }
+    public DateTimeOffset UpdatedAt { get; private set; }
+
+    public void Update(
+        string email,
+        string firstName,
+        string lastName,
+        string name,
+        string? profileImage,
+        DateTimeOffset updatedAt)
+    {
+        Email = email;
+        FirstName = firstName;
+        LastName = lastName;
+        Name = name;
+        ProfileImage = profileImage;
+        UpdatedAt = updatedAt;
+    }
 }
 
 

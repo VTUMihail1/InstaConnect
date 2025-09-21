@@ -14,6 +14,7 @@ public class GetPostLikeByIdQueryRequestBuilder
         _objectBuilder = objectBuilder;
 
         WithId(postLike.Id);
+        WithUserId(postLike.UserId);
     }
 
     public GetPostLikeByIdQueryRequestBuilder WithId(string id, IStringTransformer? transformer = null)
@@ -23,9 +24,9 @@ public class GetPostLikeByIdQueryRequestBuilder
         return this;
     }
 
-    public GetPostLikeByIdQueryRequestBuilder WithLikeId(string likeId, IStringTransformer? transformer = null)
+    public GetPostLikeByIdQueryRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)
     {
-        _objectBuilder.With(p => p.LikeId, likeId, transformer);
+        _objectBuilder.With(p => p.UserId, userId, transformer);
 
         return this;
     }

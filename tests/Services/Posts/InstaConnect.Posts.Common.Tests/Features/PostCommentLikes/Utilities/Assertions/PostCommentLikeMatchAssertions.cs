@@ -14,7 +14,7 @@ public static class PostCommentLikeMatchAssertions
     {
         response.ShouldSatisfy(p => p.Id == postCommentLike.Id &&
                                     p.CommentId == postCommentLike.CommentId &&
-                                    p.CommentLikeId == postCommentLike.CommentLikeId &&
+                                    p.UserId == postCommentLike.UserId &&
                                     p.CreatedAt == postCommentLike.CreatedAt &&
                                     p.UpdatedAt == postCommentLike.UpdatedAt);
     }
@@ -23,7 +23,6 @@ public static class PostCommentLikeMatchAssertions
     {
         response.ShouldSatisfy(p => p.Data.Id == postCommentLike.Id &&
                                     p.Data.CommentId == postCommentLike.CommentId &&
-                                    p.Data.CommentLikeId == postCommentLike.CommentLikeId &&
                                     p.Data.User.Id == user.Id &&
                                     p.Data.User.Name == user.Name &&
                                     p.Data.User.ProfileImage == user.ProfileImage);
@@ -33,7 +32,6 @@ public static class PostCommentLikeMatchAssertions
     {
         response.ShouldSatisfy(pp => pp.Data.All(p => p.Id == postCommentLike.Id &&
                                                       p.CommentId == postCommentLike.CommentId &&
-                                                      p.CommentLikeId == postCommentLike.CommentLikeId &&
                                                       p.User.Id == user.Id &&
                                                       p.User.Name == user.Name &&
                                                       p.User.ProfileImage == user.ProfileImage) &&
@@ -48,7 +46,7 @@ public static class PostCommentLikeMatchAssertions
     {
         response.ShouldSatisfy(p => p.Id == postCommentLike.Id &&
                                     p.CommentId == postCommentLike.CommentId &&
-                                    p.CommentLikeId == postCommentLike.CommentLikeId &&
+                                    p.UserId == postCommentLike.UserId &&
                                     p.CreatedAt == postCommentLike.CreatedAt &&
                                     p.UpdatedAt == postCommentLike.UpdatedAt);
     }
@@ -57,7 +55,6 @@ public static class PostCommentLikeMatchAssertions
     {
         response.ShouldSatisfy(p => p.Data.Id == postCommentLike.Id &&
                                     p.Data.CommentId == postCommentLike.CommentId &&
-                                    p.Data.CommentLikeId == postCommentLike.CommentLikeId &&
                                     p.Data.User.Id == user.Id &&
                                     p.Data.User.Name == user.Name &&
                                     p.Data.User.ProfileImage == user.ProfileImage);
@@ -67,7 +64,6 @@ public static class PostCommentLikeMatchAssertions
     {
         response.ShouldSatisfy(pp => pp.Data.All(p => p.Id == postCommentLike.Id &&
                                                       p.CommentId == postCommentLike.CommentId &&
-                                                      p.CommentLikeId == postCommentLike.CommentLikeId &&
                                                       p.User.Id == user.Id &&
                                                       p.User.Name == user.Name &&
                                                       p.User.ProfileImage == user.ProfileImage) &&
@@ -82,7 +78,7 @@ public static class PostCommentLikeMatchAssertions
     {
         response.ShouldBeActionResultAndSatisfy(p => p.Id == postCommentLike.Id &&
                                                      p.CommentId == postCommentLike.CommentId &&
-                                                     p.CommentLikeId == postCommentLike.CommentLikeId &&
+                                                     p.UserId == postCommentLike.UserId &&
                                                      p.CreatedAt == postCommentLike.CreatedAt &&
                                                      p.UpdatedAt == postCommentLike.UpdatedAt);
     }
@@ -91,7 +87,6 @@ public static class PostCommentLikeMatchAssertions
     {
         response.ShouldBeActionResultAndSatisfy(p => p.Data.Id == postCommentLike.Id &&
                                                      p.Data.CommentId == postCommentLike.CommentId &&
-                                                     p.Data.CommentLikeId == postCommentLike.CommentLikeId &&
                                                      p.Data.User.Id == user.Id &&
                                                      p.Data.User.Name == user.Name &&
                                                      p.Data.User.ProfileImage == user.ProfileImage);
@@ -101,7 +96,6 @@ public static class PostCommentLikeMatchAssertions
     {
         response.ShouldBeActionResultAndSatisfy(pp => pp.Data.All(p => p.Id == postCommentLike.Id &&
                                                                        p.CommentId == postCommentLike.CommentId &&
-                                                                       p.CommentLikeId == postCommentLike.CommentLikeId &&
                                                                        p.User.Id == user.Id &&
                                                                        p.User.Name == user.Name &&
                                                                        p.User.ProfileImage == user.ProfileImage) &&
@@ -116,7 +110,6 @@ public static class PostCommentLikeMatchAssertions
     {
         postCommentLike.ShouldSatisfy(p => p.Id == request.Id &&
                                            p.CommentId == postCommentLike.CommentId &&
-                                           p.CommentLikeId == postCommentLike.CommentLikeId &&
                                            p.UserId == request.UserId);
     }
 
@@ -124,7 +117,6 @@ public static class PostCommentLikeMatchAssertions
     {
         postCommentLike.ShouldSatisfy(p => p.Id == request.Id &&
                                            p.CommentId == postCommentLike.CommentId &&
-                                           p.CommentLikeId == postCommentLike.CommentLikeId &&
                                            p.UserId == request.UserId);
     }
 }

@@ -20,7 +20,6 @@ public class GetAllPostLikesQueryRequestBuilder
         _objectBuilder = objectBuilder;
 
         WithId(postLike.Id);
-        WithUserId(user.Id);
         WithUserName(user.Name);
         WithPage(PostLikeDataFaker.GetPage());
         WithPageSize(PostLikeDataFaker.GetPageSize());
@@ -31,13 +30,6 @@ public class GetAllPostLikesQueryRequestBuilder
     public GetAllPostLikesQueryRequestBuilder WithId(string id, IStringTransformer? transformer = null)
     {
         _objectBuilder.With(p => p.Filter.Id, id, transformer);
-
-        return this;
-    }
-
-    public GetAllPostLikesQueryRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)
-    {
-        _objectBuilder.With(p => p.Filter.UserId, userId, transformer);
 
         return this;
     }

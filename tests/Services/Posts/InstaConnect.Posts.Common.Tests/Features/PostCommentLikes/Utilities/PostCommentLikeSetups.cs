@@ -20,11 +20,11 @@ public static class PostCommentLikeSetups
         this IServiceScope serviceScope,
         string id,
         string commentId,
-        string commentLikeId,
+        string userId,
         CancellationToken cancellationToken)
     {
         var postCommentLikeRepository = serviceScope.GetPostCommentLikeRepository();
-        var postCommentLike = await postCommentLikeRepository.GetByIdAsync(id, commentId, commentLikeId, cancellationToken);
+        var postCommentLike = await postCommentLikeRepository.GetByIdAsync(id, commentId, userId, cancellationToken);
 
         return postCommentLike;
     }

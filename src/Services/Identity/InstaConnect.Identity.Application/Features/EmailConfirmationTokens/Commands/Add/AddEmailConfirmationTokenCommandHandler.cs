@@ -1,43 +1,23 @@
-﻿namespace InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Add;
+﻿using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Requests;
 
-public class AddEmailConfirmationTokenCommandHandler : ICommandHandler<AddEmailConfirmationTokenCommand>
+namespace InstaConnect.EmailConfirmationTokens.Application.Features.EmailConfirmationTokens.Commands.Add;
+
+internal class AddEmailConfirmationTokenCommandHandler : ICommandHandler<AddEmailConfirmationTokenCommandRequest>
 {
-    private readonly IUnitOfWork _unitOfWork;
     private readonly IApplicationMapper _applicationMapper;
-    private readonly IUserWriteRepository _userWriteRepository;
-    private readonly IEmailConfirmationTokenPublisher _emailConfirmationTokenPublisher;
+    private readonly IEmailConfirmationTokenService _emailConfirmationTokenService;
 
     public AddEmailConfirmationTokenCommandHandler(
-        IUnitOfWork unitOfWork,
         IApplicationMapper applicationMapper,
-        IUserWriteRepository userWriteRepository,
-        IEmailConfirmationTokenPublisher emailConfirmationTokenPublisher)
+        IEmailConfirmationTokenService emailConfirmationTokenService)
     {
-        _unitOfWork = unitOfWork;
         _applicationMapper = applicationMapper;
-        _userWriteRepository = userWriteRepository;
-        _emailConfirmationTokenPublisher = emailConfirmationTokenPublisher;
+        _emailConfirmationTokenService = emailConfirmationTokenService;
     }
 
-    public async Task Handle(
-        AddEmailConfirmationTokenCommand request,
-        CancellationToken cancellationToken)
+    public async Task Handle(AddEmailConfirmationTokenCommandRequest request, CancellationToken cancellationToken)
     {
-        var existingUser = await _userWriteRepository.GetByEmailAsync(request.Email, cancellationToken);
-
-        if (existingUser == null)
-        {
-            throw new UserNotFoundException();
-        }
-
-        if (existingUser.IsEmailConfirmed)
-        {
-            throw new UserEmailAlreadyConfirmedException();
-        }
-
-        var createEmailConfirmationTokenModel = _applicationMapper.Map<CreateEmailConfirmationTokenModel>(existingUser);
-        await _emailConfirmationTokenPublisher.PublishEmailConfirmationTokenAsync(createEmailConfirmationTokenModel, cancellationToken);
-
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        var serviceRequest = _applicationMapper.Map<AddEmailConfirmationTokenCommand>(request);
+        await _emailConfirmationTokenService.AddAsync(serviceRequest, cancellationToken);
     }
 }

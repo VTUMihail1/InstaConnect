@@ -31,9 +31,9 @@ public static class PostQuerySql
     public const string GetAllTotalCount = $@"SELECT COUNT(*)
                                               FROM posts p
                                               INNER JOIN users u ON p.{nameof(PostQueryEntity.UserId)} = u.{nameof(UserQueryEntity.Id)}
-                                              WHERE p.{nameof(PostQueryEntity.UserId)} = @{nameof(GetAllPostsQueryParameters.UserId)}
-                                                AND u.{nameof(PostQueryEntity.UserName)} LIKE @{nameof(GetAllPostsQueryParameters.UserName)}
-                                                AND p.{nameof(PostQueryEntity.Title)} LIKE @{nameof(GetAllPostsQueryParameters.Title)};";
+                                              WHERE p.{nameof(PostQueryEntity.UserId)} = @{nameof(GetAllPostsTotalCountQueryParameters.UserId)}
+                                                AND u.{nameof(PostQueryEntity.UserName)} LIKE @{nameof(GetAllPostsTotalCountQueryParameters.UserName)}
+                                                AND p.{nameof(PostQueryEntity.Title)} LIKE @{nameof(GetAllPostsTotalCountQueryParameters.Title)};";
 
     public const string GetById = $@"SELECT
                                        p.id AS {nameof(PostQueryEntity.Id)},

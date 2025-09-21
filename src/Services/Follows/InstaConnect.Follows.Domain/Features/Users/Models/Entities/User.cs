@@ -1,8 +1,11 @@
-﻿using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
+﻿using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Entities;
+using InstaConnect.PostComments.Domain.Features.PostComments.Models.Entities;
+using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
 
-namespace InstaConnect.Follows.Domain.Features.Users.Models.Entities;
+namespace InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
-public class User : IEntity, IAuditableInfo
+public class User : IEntity
 {
     private User()
     {
@@ -10,9 +13,7 @@ public class User : IEntity, IAuditableInfo
         FirstName = string.Empty;
         LastName = string.Empty;
         Email = string.Empty;
-        UserName = string.Empty;
-        Followers = [];
-        Followings = [];
+        Name = string.Empty;
     }
 
     public User(
@@ -20,7 +21,7 @@ public class User : IEntity, IAuditableInfo
         string firstName,
         string lastName,
         string email,
-        string userName,
+        string name,
         string? profileImage,
         DateTimeOffset createdAt,
         DateTimeOffset updatedAt)
@@ -29,10 +30,9 @@ public class User : IEntity, IAuditableInfo
         FirstName = firstName;
         LastName = lastName;
         Email = email;
-        UserName = userName;
+        Name = name;
         ProfileImage = profileImage;
-        Followers = [];
-        Followings = [];
+        Follows = [];
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
     }
@@ -42,44 +42,56 @@ public class User : IEntity, IAuditableInfo
         string firstName,
         string lastName,
         string email,
-        string userName,
+        string name,
         string? profileImage,
         DateTimeOffset createdAt,
         DateTimeOffset updatedAt,
-        ICollection<Follow> followers,
-        ICollection<Follow> followings)
+        ICollection<Follow> follows)
     {
         Id = id;
         FirstName = firstName;
         LastName = lastName;
         Email = email;
-        UserName = userName;
+        Name = name;
         ProfileImage = profileImage;
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
-        Followers = followers;
-        Followings = followings;
+        Follows = follows;
     }
 
     public string Id { get; }
 
-    public string FirstName { get; set; }
+    public string FirstName { get; private set; }
 
-    public string LastName { get; set; }
+    public string LastName { get; private set; }
 
-    public string Email { get; set; }
+    public string Email { get; private set; }
 
-    public string UserName { get; set; }
+    public string Name { get; private set; }
 
-    public string? ProfileImage { get; set; }
+    public string? ProfileImage { get; private set; }
 
-    public ICollection<Follow> Followers { get; }
-
-    public ICollection<Follow> Followings { get; }
+    public ICollection<Follow> Follows { get; }
 
     public DateTimeOffset CreatedAt { get; }
 
-    public DateTimeOffset UpdatedAt { get; }
+    public DateTimeOffset UpdatedAt { get; private set; }
+
+    public void Update(
+        string email,
+        string firstName,
+        string lastName,
+        string name,
+        string? profileImage,
+        DateTimeOffset updatedAt)
+    {
+        Email = email;
+        FirstName = firstName;
+        LastName = lastName;
+        Name = name;
+        ProfileImage = profileImage;
+        UpdatedAt = updatedAt;
+    }
 }
 
 

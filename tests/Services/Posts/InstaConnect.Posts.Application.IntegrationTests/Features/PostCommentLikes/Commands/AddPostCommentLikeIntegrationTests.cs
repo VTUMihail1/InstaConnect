@@ -118,7 +118,7 @@ public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeApplication
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowUserNotFoundException_WhenIdIsInvalid()
+    public async Task SendAsync_ShouldThrowUserNotFoundException_WhenUserIdIsInvalid()
     {
         // Arrange
         await ServiceScope.DeleteUserAsync(User, CancellationToken);
@@ -196,7 +196,7 @@ public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeApplication
     {
         // Act
         var response = await ApplicationSender.SendAsync(_request, CancellationToken);
-        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.CommentLikeId, CancellationToken);
+        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.UserId, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(postCommentLike);
@@ -212,7 +212,7 @@ public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeApplication
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.CommentLikeId, CancellationToken);
+        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.UserId, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(postCommentLike);
@@ -228,7 +228,7 @@ public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeApplication
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.CommentLikeId, CancellationToken);
+        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.UserId, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(postCommentLike);
@@ -244,7 +244,7 @@ public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeApplication
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.CommentLikeId, CancellationToken);
+        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.UserId, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(postCommentLike);
@@ -255,7 +255,7 @@ public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeApplication
     {
         // Act
         var response = await ApplicationSender.SendAsync(_request, CancellationToken);
-        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.CommentLikeId, CancellationToken);
+        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.UserId, CancellationToken);
 
         // Assert
         postCommentLike.ShouldSatisfy(_request);
@@ -271,7 +271,7 @@ public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeApplication
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.CommentLikeId, CancellationToken);
+        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.UserId, CancellationToken);
 
         // Assert
         postCommentLike.ShouldSatisfy(_request);
@@ -287,7 +287,7 @@ public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeApplication
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.CommentLikeId, CancellationToken);
+        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.UserId, CancellationToken);
 
         // Assert
         postCommentLike.ShouldSatisfy(_request);
@@ -303,7 +303,7 @@ public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeApplication
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.CommentLikeId, CancellationToken);
+        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.UserId, CancellationToken);
 
         // Assert
         postCommentLike.ShouldSatisfy(_request);
@@ -314,7 +314,7 @@ public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeApplication
     {
         // Act
         var response = await ApplicationSender.SendAsync(_request, CancellationToken);
-        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.CommentLikeId, CancellationToken);
+        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.UserId, CancellationToken);
         var eventWasPublished = await EventHarness.HasPublishPostCommentLikeAddedEventAsync(postCommentLike, CancellationToken);
 
         // Assert
@@ -331,7 +331,7 @@ public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeApplication
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.CommentLikeId, CancellationToken);
+        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.UserId, CancellationToken);
         var eventWasPublished = await EventHarness.HasPublishPostCommentLikeAddedEventAsync(postCommentLike, CancellationToken);
 
         // Assert
@@ -348,7 +348,7 @@ public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeApplication
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.CommentLikeId, CancellationToken);
+        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.UserId, CancellationToken);
         var eventWasPublished = await EventHarness.HasPublishPostCommentLikeAddedEventAsync(postCommentLike, CancellationToken);
 
         // Assert
@@ -365,7 +365,7 @@ public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeApplication
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.CommentLikeId, CancellationToken);
+        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.UserId, CancellationToken);
         var eventWasPublished = await EventHarness.HasPublishPostCommentLikeAddedEventAsync(postCommentLike, CancellationToken);
 
         // Assert

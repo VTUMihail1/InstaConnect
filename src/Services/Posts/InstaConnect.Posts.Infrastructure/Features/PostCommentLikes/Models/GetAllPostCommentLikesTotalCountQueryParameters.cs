@@ -3,5 +3,4 @@
 public record GetAllPostCommentLikesTotalCountQueryParameters(
     string Id,
     string CommentId,
-    string UserId,
     string UserName);

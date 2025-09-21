@@ -1,0 +1,27 @@
+﻿using InstaConnect.Common.Infrastructure.Abstractions;
+using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
+using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
+using InstaConnect.Users.Application.Features.Users.Commands.Add;
+using InstaConnect.Users.Application.Features.Users.Commands.Delete;
+
+namespace InstaConnect.Posts.Presentation.Features.Users.Consumers;
+
+internal class UserUpdatedEventHandler : IEventHandler<UserUpdatedEventRequest>
+{
+    private readonly IApplicationMapper _applicationMapper;
+    private readonly IApplicationSender _applicationSender;
+
+    public UserUpdatedEventHandler(
+        IApplicationMapper applicationMapper,
+        IApplicationSender applicationSender)
+    {
+        _applicationMapper = applicationMapper;
+        _applicationSender = applicationSender;
+    }
+
+    public async Task Consume(ConsumeContext<UserUpdatedEventRequest> context)
+    {
+        var request = _applicationMapper.Map<UpdateUserCommandRequest>(context.Message);
+        await _applicationSender.SendAsync(request, context.CancellationToken);
+    }
+}

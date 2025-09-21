@@ -22,7 +22,6 @@ public static class PostLikeMockSetups
 
         var postLikeQueryResponse = new PostLikeQueryResponse(
             postLike.Id,
-            postLike.LikeId,
             new(
                 user.Id,
                 user.Name,
@@ -52,7 +51,6 @@ public static class PostLikeMockSetups
         var response = new GetPostLikeByIdQueryResponse(
             new(
                 postLike.Id,
-                postLike.LikeId,
                 new(
                     user.Id,
                     user.Name,
@@ -69,7 +67,7 @@ public static class PostLikeMockSetups
         PostLike postLike,
         CancellationToken cancellationToken)
     {
-        var response = new AddPostLikeCommandResponse(postLike.Id, postLike.LikeId, postLike.CreatedAt, postLike.UpdatedAt);
+        var response = new AddPostLikeCommandResponse(postLike.Id, postLike.UserId, postLike.CreatedAt, postLike.UpdatedAt);
 
         applicationSender
             .SendAsync(PostLikeMatcher.IsAddPostLikeCommandRequest(request), cancellationToken)

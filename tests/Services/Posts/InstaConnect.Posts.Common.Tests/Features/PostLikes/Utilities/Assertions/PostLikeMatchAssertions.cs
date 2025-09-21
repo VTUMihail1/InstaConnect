@@ -13,7 +13,7 @@ public static class PostLikeMatchAssertions
     public static void ShouldSatisfy(this AddPostLikeCommandResponse response, PostLike postLike)
     {
         response.ShouldSatisfy(p => p.Id == postLike.Id &&
-                                    p.LikeId == postLike.LikeId &&
+                                    p.UserId == postLike.UserId &&
                                     p.CreatedAt == postLike.CreatedAt &&
                                     p.UpdatedAt == postLike.UpdatedAt);
     }
@@ -21,7 +21,6 @@ public static class PostLikeMatchAssertions
     public static void ShouldSatisfy(this GetPostLikeByIdQueryResponse response, PostLike postLike, User user)
     {
         response.ShouldSatisfy(p => p.Data.Id == postLike.Id &&
-                                    p.Data.LikeId == postLike.LikeId &&
                                     p.Data.User.Id == user.Id &&
                                     p.Data.User.Name == user.Name &&
                                     p.Data.User.ProfileImage == user.ProfileImage);
@@ -30,7 +29,6 @@ public static class PostLikeMatchAssertions
     public static void ShouldSatisfy(this GetAllPostLikesQueryResponse response, PostLike postLike, User user, GetAllPostLikesQueryRequest request)
     {
         response.ShouldSatisfy(pp => pp.Data.All(p => p.Id == postLike.Id &&
-                                                      p.LikeId == postLike.LikeId &&
                                                       p.User.Id == user.Id &&
                                                       p.User.Name == user.Name &&
                                                       p.User.ProfileImage == user.ProfileImage) &&
@@ -44,7 +42,7 @@ public static class PostLikeMatchAssertions
     public static void ShouldSatisfy(this AddPostLikeApiResponse response, PostLike postLike)
     {
         response.ShouldSatisfy(p => p.Id == postLike.Id &&
-                                    p.LikeId == postLike.LikeId &&
+                                    p.UserId == postLike.UserId &&
                                     p.CreatedAt == postLike.CreatedAt &&
                                     p.UpdatedAt == postLike.UpdatedAt);
     }
@@ -52,7 +50,6 @@ public static class PostLikeMatchAssertions
     public static void ShouldSatisfy(this GetPostLikeByIdApiResponse response, PostLike postLike, User user)
     {
         response.ShouldSatisfy(p => p.Data.Id == postLike.Id &&
-                                    p.Data.LikeId == postLike.LikeId &&
                                     p.Data.User.Id == user.Id &&
                                     p.Data.User.Name == user.Name &&
                                     p.Data.User.ProfileImage == user.ProfileImage);
@@ -61,7 +58,6 @@ public static class PostLikeMatchAssertions
     public static void ShouldSatisfy(this GetAllPostLikesApiResponse response, PostLike postLike, User user, GetAllPostLikesApiRequest request)
     {
         response.ShouldSatisfy(pp => pp.Data.All(p => p.Id == postLike.Id &&
-                                                      p.LikeId == postLike.LikeId &&
                                                       p.User.Id == user.Id &&
                                                       p.User.Name == user.Name &&
                                                       p.User.ProfileImage == user.ProfileImage) &&
@@ -75,7 +71,7 @@ public static class PostLikeMatchAssertions
     public static void ShouldSatisfy(this ActionResult<AddPostLikeApiResponse> response, PostLike postLike)
     {
         response.ShouldBeActionResultAndSatisfy(p => p.Id == postLike.Id &&
-                                    p.LikeId == postLike.LikeId &&
+                                    p.UserId == postLike.UserId &&
                                     p.CreatedAt == postLike.CreatedAt &&
                                     p.UpdatedAt == postLike.UpdatedAt);
     }
@@ -83,7 +79,6 @@ public static class PostLikeMatchAssertions
     public static void ShouldSatisfy(this ActionResult<GetPostLikeByIdApiResponse> response, PostLike postLike, User user)
     {
         response.ShouldBeActionResultAndSatisfy(p => p.Data.Id == postLike.Id &&
-                                                     p.Data.LikeId == postLike.LikeId &&
                                                      p.Data.User.Id == user.Id &&
                                                      p.Data.User.Name == user.Name &&
                                                      p.Data.User.ProfileImage == user.ProfileImage);
@@ -92,7 +87,6 @@ public static class PostLikeMatchAssertions
     public static void ShouldSatisfy(this ActionResult<GetAllPostLikesApiResponse> response, PostLike postLike, User user, GetAllPostLikesApiRequest request)
     {
         response.ShouldBeActionResultAndSatisfy(pp => pp.Data.All(p => p.Id == postLike.Id &&
-                                                                       p.LikeId == postLike.LikeId &&
                                                                        p.User.Id == user.Id &&
                                                                        p.User.Name == user.Name &&
                                                                        p.User.ProfileImage == user.ProfileImage) &&

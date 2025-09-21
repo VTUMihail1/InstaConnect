@@ -3,5 +3,5 @@
 public record GetPostCommentLikeByIdApiRequest(
     [FromRoute] string Id,
     [FromRoute] string CommentId,
-    [FromRoute] string CommentLikeId
+    [FromRoute] string UserId
 );

@@ -18,7 +18,6 @@ public class DeletePostCommentLikeApiRequestBuilder
 
         WithId(postCommentLike.Id);
         WithCommentId(postCommentLike.CommentId);
-        WithCommentLikeId(postCommentLike.CommentLikeId);
         WithUserId(postCommentLike.UserId);
     }
 
@@ -32,13 +31,6 @@ public class DeletePostCommentLikeApiRequestBuilder
     public DeletePostCommentLikeApiRequestBuilder WithCommentId(string commentId, IStringTransformer? transformer = null)
     {
         _objectBuilder.With(p => p.CommentId, commentId, transformer);
-
-        return this;
-    }
-
-    public DeletePostCommentLikeApiRequestBuilder WithCommentLikeId(string commentLikeId, IStringTransformer? transformer = null)
-    {
-        _objectBuilder.With(p => p.CommentLikeId, commentLikeId, transformer);
 
         return this;
     }

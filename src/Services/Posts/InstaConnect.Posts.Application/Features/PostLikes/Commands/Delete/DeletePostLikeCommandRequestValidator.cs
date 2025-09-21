@@ -14,14 +14,6 @@ public class DeletePostLikeCommandRequestValidator : AbstractValidator<DeletePos
             .MaximumLength(PostConfigurations.IdMaxLength)
             .WithMessage(r => PostErrorMessages.GetIdTooLong(r.Id.Length));
 
-        RuleFor(r => r.LikeId)
-            .NotEmpty()
-            .WithMessage(PostLikeErrorMessages.GetIdEmpty())
-            .MinimumLength(PostLikeConfigurations.IdMinLength)
-            .WithMessage(r => PostLikeErrorMessages.GetIdTooShort(r.Id.Length))
-            .MaximumLength(PostLikeConfigurations.IdMaxLength)
-            .WithMessage(r => PostLikeErrorMessages.GetIdTooLong(r.Id.Length));
-
         RuleFor(r => r.UserId)
             .NotEmpty()
             .WithMessage(UserErrorMessages.GetIdEmpty())

@@ -37,7 +37,7 @@ public abstract class BaseFollowUnitTest
         FollowFactory = Substitute.For<IFollowFactory>();
         ApplicationMapper = new ApplicationMapper(
             new Mapper(
-                new MapperConfiguration(cfg => cfg.AddMaps(ApplicationReference.Assembly))));
+                new MapperConfiguration(cfg => cfg.AddMaps(FollowApplicationReference.Assembly))));
         CancellationToken = new CancellationToken();
         EntityPropertyValidator = new EntityPropertyValidator();
         UserWriteRepository = Substitute.For<IUserWriteRepository>();

@@ -2,5 +2,4 @@
 
 public record DeletePostLikeCommandRequest(
     string Id,
-    string LikeId,
     string UserId) : ICommandRequest;

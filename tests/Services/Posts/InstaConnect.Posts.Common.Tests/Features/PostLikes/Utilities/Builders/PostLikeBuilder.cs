@@ -14,7 +14,6 @@ public class PostLikeBuilder
         _objectBuilder = objectBuilder;
 
         WithId(post.Id);
-        WithLikeId(PostLikeDataFaker.GetId());
         WithUser(user);
         WithCreatedAt(PostLikeDataFaker.GetCreatedAt());
         WithUpdatedAt(PostLikeDataFaker.GetUpdatedAt());
@@ -23,13 +22,6 @@ public class PostLikeBuilder
     public PostLikeBuilder WithId(string id, IStringTransformer? transformer = null)
     {
         _objectBuilder.With(p => p.Id, id, transformer);
-
-        return this;
-    }
-
-    public PostLikeBuilder WithLikeId(string likeId, IStringTransformer? transformer = null)
-    {
-        _objectBuilder.With(p => p.LikeId, likeId, transformer);
 
         return this;
     }

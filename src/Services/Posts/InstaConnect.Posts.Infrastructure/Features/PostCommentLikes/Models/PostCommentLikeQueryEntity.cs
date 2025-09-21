@@ -3,7 +3,6 @@
 public record PostCommentLikeQueryEntity(
         string Id,
         string CommentId,
-        string CommentLikeId,
         DateTimeOffset CreatedAt,
         DateTimeOffset UpdatedAt,
         string UserId,

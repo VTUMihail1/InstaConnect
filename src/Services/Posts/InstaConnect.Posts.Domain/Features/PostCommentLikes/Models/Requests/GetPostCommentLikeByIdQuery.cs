@@ -3,4 +3,4 @@
 public record GetPostCommentLikeByIdQuery(
     string Id,
     string CommentId,
-    string CommentLikeId);
+    string UserId);

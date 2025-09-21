@@ -1,17 +1,13 @@
-﻿using InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Models.Options;
+﻿using InstaConnect.Common.Extensions;
+using InstaConnect.Identity.Infrastructure.Extensions;
+using InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Abstractions;
 
-namespace InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Extensions;
+namespace InstaConnect.ForgotPasswordTokens.Infrastructure.Features.ForgotPasswordTokens.Extensions;
 
 internal static class ServiceCollectionExtensions
 {
     internal static IServiceCollection AddForgotPasswordTokenServices(this IServiceCollection serviceCollection)
     {
-        serviceCollection
-            .AddOptions<ForgotPasswordOptions>()
-            .BindConfiguration(nameof(ForgotPasswordOptions))
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
-
         return serviceCollection;
     }
 }

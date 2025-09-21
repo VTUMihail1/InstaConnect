@@ -16,20 +16,12 @@ public class DeletePostLikeApiRequestBuilder
         _objectBuilder = objectBuilder;
 
         WithId(postLike.Id);
-        WithLikeId(postLike.LikeId);
         WithUserId(postLike.UserId);
     }
 
     public DeletePostLikeApiRequestBuilder WithId(string id, IStringTransformer? transformer = null)
     {
         _objectBuilder.With(p => p.Id, id, transformer);
-
-        return this;
-    }
-
-    public DeletePostLikeApiRequestBuilder WithLikeId(string likeId, IStringTransformer? transformer = null)
-    {
-        _objectBuilder.With(p => p.LikeId, likeId, transformer);
 
         return this;
     }

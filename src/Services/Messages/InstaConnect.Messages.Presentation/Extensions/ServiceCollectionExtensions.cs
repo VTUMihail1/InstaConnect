@@ -1,9 +1,10 @@
 ﻿using InstaConnect.Common.Extensions;
 using InstaConnect.Common.Presentation.Extensions;
-using InstaConnect.Messages.Presentation.Features.Messages.Extensions;
-using InstaConnect.Messages.Presentation.Features.Users.Extensions;
+using InstaConnect.Chats.Presentation.Features.Chats.Extensions;
+using InstaConnect.Posts.Presentation.Features.Users.Extensions;
+using InstaConnect.ChatMessages.Presentation.Features.ChatMessages.Extensions;
 
-namespace InstaConnect.Messages.Presentation.Extensions;
+namespace InstaConnect.Chats.Presentation.Extensions;
 
 public static class ServiceCollectionExtensions
 {
@@ -11,12 +12,13 @@ public static class ServiceCollectionExtensions
     {
         serviceCollection
             .AddUserServices()
-            .AddMessageServices();
+            .AddChatServices()
+            .AddChatMessageServices();
 
         serviceCollection
-            .AddServicesWithMatchingInterfaces(PresentationReference.Assembly)
+            .AddServicesWithMatchingInterfaces(ChatPresentationReference.Assembly)
             .AddApiControllers()
-            .AddMapper(PresentationReference.Assembly)
+            .AddMapper(ChatPresentationReference.Assembly)
             .AddAuthorizationPolicies()
             .AddCorsPolicies(configuration)
             .AddSwagger()

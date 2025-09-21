@@ -19,20 +19,12 @@ public class DeletePostLikeCommandRequestBuilder
         _objectBuilder = objectBuilder;
 
         WithId(postLike.Id);
-        WithLikeId(postLike.LikeId);
         WithUserId(postLike.UserId);
     }
 
     public DeletePostLikeCommandRequestBuilder WithId(string id, IStringTransformer? transformer = null)
     {
         _objectBuilder.With(p => p.Id, id, transformer);
-
-        return this;
-    }
-
-    public DeletePostLikeCommandRequestBuilder WithLikeId(string likeId, IStringTransformer? transformer = null)
-    {
-        _objectBuilder.With(p => p.LikeId, likeId, transformer);
 
         return this;
     }

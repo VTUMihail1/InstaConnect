@@ -15,7 +15,7 @@ internal class PostLikePresentationMappings : IRegister
     {
         config.NewConfig<GetAllPostLikesApiRequest, GetAllPostLikesQueryRequest>()
             .ConstructUsing(src => new(
-                new(src.Filter.Id, src.Filter.UserId, src.Filter.UserName),
+                new(src.Filter.Id, src.Filter.UserName),
                 new(src.Sorting.Order, src.Sorting.Property),
                 new(src.Pagination.Page, src.Pagination.PageSize)));
 
@@ -23,7 +23,6 @@ internal class PostLikePresentationMappings : IRegister
             .ConstructUsing(pc => new(
                   pc.Data.Select(p => new PostLikeApiResponse(
                                       p.Id,
-                                      p.LikeId,
                                       new(
                                           p.User.Id,
                                           p.User.Name,
@@ -36,12 +35,11 @@ internal class PostLikePresentationMappings : IRegister
                   pc.HasPreviousPage));
 
         config.NewConfig<GetPostLikeByIdApiRequest, GetPostLikeByIdQueryRequest>()
-            .ConstructUsing(src => new(src.Id, src.LikeId));
+            .ConstructUsing(src => new(src.Id, src.UserId));
 
         config.NewConfig<GetPostLikeByIdQueryResponse, GetPostLikeByIdApiResponse>()
             .ConstructUsing(src => new(
                 new(src.Data.Id,
-                    src.Data.LikeId,
                     new(
                         src.Data.User.Id,
                         src.Data.User.Name,
@@ -51,9 +49,9 @@ internal class PostLikePresentationMappings : IRegister
             .ConstructUsing(src => new(src.Id, src.UserId));
 
         config.NewConfig<AddPostLikeCommandResponse, AddPostLikeApiResponse>()
-            .ConstructUsing(src => new(src.Id, src.LikeId, src.CreatedAt, src.UpdatedAt));
+            .ConstructUsing(src => new(src.Id, src.UserId, src.CreatedAt, src.UpdatedAt));
 
         config.NewConfig<DeletePostLikeApiRequest, DeletePostLikeCommandRequest>()
-            .ConstructUsing(src => new(src.Id, src.LikeId, src.UserId));
+            .ConstructUsing(src => new(src.Id, src.UserId));
     }
 }

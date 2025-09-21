@@ -8,6 +8,7 @@
     <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Infrastructure\InstaConnect.Common.Infrastructure.csproj" />
     <ProjectReference Include="..\..\..\Common\InstaConnect.Common\InstaConnect.Common.csproj" />
     <ProjectReference Include="..\InstaConnect.Identity.Application\InstaConnect.Identity.Application.csproj" />
+    <ProjectReference Include="..\InstaConnect.Identity.Domain\InstaConnect.Identity.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,7 +39,7 @@
     <Using Include="InstaConnect.Identity.Common.Features.Users.Utilities" />
     <Using Include="InstaConnect.Identity.Common.Features.EmailConfirmationTokens.Utilities" />
     <Using Include="InstaConnect.Identity.Common.Features.ForgotPasswordTokens.Utilities" />
-    <Using Include="InstaConnect.Common.Domain.Abstractions"/>
+    <Using Include="InstaConnect.Common.Domain.Abstractions" />
     <Using Include="InstaConnect.Common.Application.Abstractions" />
   </ItemGroup>
 

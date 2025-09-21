@@ -55,21 +55,6 @@ public class GetAllPostLikesQueryRequestValidatorUnitTests : BasePostLikeApplica
     }
 
     [Theory]
-    [UserIdTooLongWithMessageData]
-    public void TestValidate_ShouldHaveAnError_WhenUserIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
-    {
-        // Arrange
-        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Build();
-
-        // Act
-        var result = _requestValidator.TestValidate(request);
-
-        // Assert
-        result.ShouldHaveValidationErrorForUserId(errorMessage);
-    }
-
-    [Theory]
     [UserNameTooLongWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenUserNameIsInvalid(
         IStringTransformer transformer, string errorMessage)

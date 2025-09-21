@@ -2,9 +2,6 @@
 
 public static class PostCommentLikeConfigurations
 {
-    public const int IdMinLength = 7;
-    public const int IdMaxLength = 100;
-
     public const int PageMinValue = 1;
     public const int PageMaxValue = 100;
 

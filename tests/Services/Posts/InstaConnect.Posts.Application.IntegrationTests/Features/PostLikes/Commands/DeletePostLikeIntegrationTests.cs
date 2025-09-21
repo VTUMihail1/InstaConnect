@@ -54,24 +54,6 @@ public class DeletePostLikeIntegrationTests : BasePostLikeApplicationIntegration
     }
 
     [Theory]
-    [PostLikeIdNullWithMessageData]
-    [PostLikeIdEmptyWithMessageData]
-    [PostLikeIdTooShortWithMessageData]
-    [PostLikeIdTooLongWithMessageData]
-    public async Task SendAsync_ShouldThrowValidationException_WhenLikeIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
-    {
-        // Arrange
-        var request = _requestBuilder.WithLikeId(_request.LikeId, transformer).Build();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
-
-        // Assert
-        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
-    }
-
-    [Theory]
     [UserIdNullWithMessageData]
     [UserIdEmptyWithMessageData]
     [UserIdTooShortWithMessageData]
@@ -103,7 +85,7 @@ public class DeletePostLikeIntegrationTests : BasePostLikeApplicationIntegration
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowPostLikeNotFoundException_WhenLikeIdIsInvalid()
+    public async Task SendAsync_ShouldThrowPostLikeNotFoundException_WhenUserIdIsInvalid()
     {
         // Arrange
         await ServiceScope.DeletePostLikeAsync(PostLike, CancellationToken);
@@ -112,22 +94,7 @@ public class DeletePostLikeIntegrationTests : BasePostLikeApplicationIntegration
         var action = async () => await ApplicationSender.SendAsync(_request, CancellationToken);
 
         // Assert
-        await action.ShouldThrowPostLikeNotFoundExceptionAsync(_request.Id, _request.LikeId);
-    }
-
-    [Fact]
-    public async Task SendAsync_ShouldThrowPostLikeForbiddenException_WhenUserIdIsInvalid()
-    {
-        // Arrange
-        var user = UserBuilderFactory.Create().Build();
-        await ServiceScope.AddUserAsync(user, CancellationToken);
-        var request = _requestBuilder.WithUserId(user.Id).Build();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
-
-        // Assert
-        await action.ShouldThrowPostLikeForbiddenExceptionAsync(request.Id, request.LikeId, request.UserId);
+        await action.ShouldThrowPostLikeNotFoundExceptionAsync(_request.Id, _request.UserId);
     }
 
     [Fact]
@@ -135,7 +102,7 @@ public class DeletePostLikeIntegrationTests : BasePostLikeApplicationIntegration
     {
         // Act
         await ApplicationSender.SendAsync(_request, CancellationToken);
-        var postLike = await ServiceScope.GetPostLikeByIdAsync(_request.Id, _request.LikeId, CancellationToken);
+        var postLike = await ServiceScope.GetPostLikeByIdAsync(_request.Id, _request.UserId, CancellationToken);
 
         // Assert
         postLike.ShouldBeNull();
@@ -151,23 +118,7 @@ public class DeletePostLikeIntegrationTests : BasePostLikeApplicationIntegration
 
         // Act
         await ApplicationSender.SendAsync(request, CancellationToken);
-        var postLike = await ServiceScope.GetPostLikeByIdAsync(request.Id, request.LikeId, CancellationToken);
-
-        // Assert
-        postLike.ShouldBeNull();
-    }
-
-    [Theory]
-    [PostLikeIdDifferentCaseData]
-    public async Task SendAsync_ShouldDeletePostLike_WhenRequestAndLikeIdAreValid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithLikeId(_request.LikeId, transformer).Build();
-
-        // Act
-        await ApplicationSender.SendAsync(request, CancellationToken);
-        var postLike = await ServiceScope.GetPostLikeByIdAsync(request.Id, request.LikeId, CancellationToken);
+        var postLike = await ServiceScope.GetPostLikeByIdAsync(request.Id, request.UserId, CancellationToken);
 
         // Assert
         postLike.ShouldBeNull();
@@ -183,7 +134,7 @@ public class DeletePostLikeIntegrationTests : BasePostLikeApplicationIntegration
 
         // Act
         await ApplicationSender.SendAsync(request, CancellationToken);
-        var postLike = await ServiceScope.GetPostLikeByIdAsync(request.Id, request.LikeId, CancellationToken);
+        var postLike = await ServiceScope.GetPostLikeByIdAsync(request.Id, request.UserId, CancellationToken);
 
         // Assert
         postLike.ShouldBeNull();
@@ -207,22 +158,6 @@ public class DeletePostLikeIntegrationTests : BasePostLikeApplicationIntegration
     {
         // Arrange
         var request = _requestBuilder.WithId(_request.Id, transformer).Build();
-
-        // Act
-        await ApplicationSender.SendAsync(request, CancellationToken);
-        var hasPublshed = await EventHarness.HasPublishPostLikeDeletedEventAsync(PostLike, CancellationToken);
-
-        // Assert
-        hasPublshed.ShouldBeTrue();
-    }
-
-    [Theory]
-    [PostLikeIdDifferentCaseData]
-    public async Task SendAsync_ShouldPublishPostLikeDeletedEvent_WhenRequestAndLikeIdAreValid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithLikeId(_request.LikeId, transformer).Build();
 
         // Act
         await ApplicationSender.SendAsync(request, CancellationToken);

@@ -1,6 +1,7 @@
 ﻿using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Entities;
 using InstaConnect.PostComments.Domain.Features.PostComments.Models.Entities;
 using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Entities;
+using InstaConnect.Posts.Infrastructure.Extensions;
 
 namespace InstaConnect.Posts.Infrastructure;
 
@@ -22,10 +23,8 @@ public class PostsContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        var currentAssembly = typeof(PostsContext).Assembly;
-
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.ApplyConfigurationsFromAssembly(currentAssembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(PostInfrastructureReference.Assembly);
     }
 }

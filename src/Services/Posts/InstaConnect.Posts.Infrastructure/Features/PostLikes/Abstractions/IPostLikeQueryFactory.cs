@@ -8,7 +8,5 @@ public interface IPostLikeQueryFactory
 
     GetAllPostLikesTotalCountQuerySpecification CreateGetAllTotalCount(PostLikeFilterQuery query);
 
-    GetPostLikeByIdQuerySpecification CreateGetById(string id, string likeId);
-
-    GetPostLikeByIdAndUserIdQuerySpecification CreateGetByIdAndUserId(string id, string userId);
+    GetPostLikeByIdQuerySpecification CreateGetById(string id, string userId);
 }

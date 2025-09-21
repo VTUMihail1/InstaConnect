@@ -23,7 +23,6 @@ public static class PostCommentLikeMockSetups
         var postCommentLikeQueryResponse = new PostCommentLikeQueryResponse(
             postCommentLike.Id,
             postCommentLike.CommentId,
-            postCommentLike.CommentLikeId,
             new(
                 user.Id,
                 user.Name,
@@ -53,7 +52,6 @@ public static class PostCommentLikeMockSetups
         var response = new GetPostCommentLikeByIdQueryResponse(
             new(postCommentLike.Id,
                 postCommentLike.CommentId,
-                postCommentLike.CommentLikeId,
                 new(
                     user.Id,
                     user.Name,
@@ -70,7 +68,7 @@ public static class PostCommentLikeMockSetups
         PostCommentLike postCommentLike,
         CancellationToken cancellationToken)
     {
-        var response = new AddPostCommentLikeCommandResponse(postCommentLike.Id, postCommentLike.CommentId, postCommentLike.CommentLikeId, postCommentLike.CreatedAt, postCommentLike.UpdatedAt);
+        var response = new AddPostCommentLikeCommandResponse(postCommentLike.Id, postCommentLike.CommentId, postCommentLike.UserId, postCommentLike.CreatedAt, postCommentLike.UpdatedAt);
 
         applicationSender
             .SendAsync(PostCommentLikeMatcher.IsAddPostCommentLikeCommandRequest(request), cancellationToken)

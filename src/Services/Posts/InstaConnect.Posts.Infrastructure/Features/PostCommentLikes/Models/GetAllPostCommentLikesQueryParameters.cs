@@ -3,7 +3,6 @@
 public record GetAllPostCommentLikesQueryParameters(
     string Id,
     string CommentId,
-    string UserId,
     string UserName,
     string SortOrder,
     string SortProperty,

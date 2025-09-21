@@ -12,6 +12,7 @@ using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.Ass
 using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Utilities;
 
 namespace InstaConnect.PostCommentLikes.Presentation.FunctionalTests.Features.PostCommentLikes.Controllers.v1;
@@ -111,15 +112,15 @@ public class GetPostCommentLikeByIdFunctionalTests : BasePostCommentLikePresenta
     }
 
     [Theory]
-    [PostCommentLikeIdNullData]
-    [PostCommentLikeIdEmptyData]
-    [PostCommentLikeIdTooShortData]
-    [PostCommentLikeIdTooLongData]
-    public async Task GetByIdAsync_ShouldHaveBadRequestStatusCode_WhenCommentLikeIdIsInvalid(
+    [UserIdNullData]
+    [UserIdEmptyData]
+    [UserIdTooShortData]
+    [UserIdTooLongData]
+    public async Task GetByIdAsync_ShouldHaveBadRequestStatusCode_WhenUserIdIsInvalid(
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentLikeId(_request.CommentLikeId, transformer).Build();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var response = await HttpClient.GetPostCommentLikeByIdStatusCodeAsync(request, CancellationToken);
@@ -129,15 +130,15 @@ public class GetPostCommentLikeByIdFunctionalTests : BasePostCommentLikePresenta
     }
 
     [Theory]
-    [PostCommentLikeIdNullWithMessageData]
-    [PostCommentLikeIdEmptyWithMessageData]
-    [PostCommentLikeIdTooShortWithMessageData]
-    [PostCommentLikeIdTooLongWithMessageData]
-    public async Task GetByIdAsync_ShouldHaveBadRequestProblemDetails_WhenCommentLikeIdIsInvalid(
+    [UserIdNullWithMessageData]
+    [UserIdEmptyWithMessageData]
+    [UserIdTooShortWithMessageData]
+    [UserIdTooLongWithMessageData]
+    public async Task GetByIdAsync_ShouldHaveBadRequestProblemDetails_WhenUserIdIsInvalid(
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentLikeId(_request.CommentLikeId, transformer).Build();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var response = await HttpClient.GetPostCommentLikeByIdProblemDetailsAsync(request, CancellationToken);
@@ -199,7 +200,7 @@ public class GetPostCommentLikeByIdFunctionalTests : BasePostCommentLikePresenta
     }
 
     [Fact]
-    public async Task GetByIdAsync_ShouldHaveNotFoundStatusCode_WhenCommentLikeIdIsInvalid()
+    public async Task GetByIdAsync_ShouldHaveNotFoundStatusCode_WhenUserIdIsInvalid()
     {
         // Arrange
         await ServiceScope.DeletePostCommentLikeAsync(PostCommentLike, CancellationToken);
@@ -212,7 +213,7 @@ public class GetPostCommentLikeByIdFunctionalTests : BasePostCommentLikePresenta
     }
 
     [Fact]
-    public async Task GetByIdAsync_ShouldHavePostCommentLikeNotFoundProblemDetails_WhenCommentLikeIdIsInvalid()
+    public async Task GetByIdAsync_ShouldHavePostCommentLikeNotFoundProblemDetails_WhenUserIdIsInvalid()
     {
         // Arrange
         await ServiceScope.DeletePostCommentLikeAsync(PostCommentLike, CancellationToken);
@@ -221,7 +222,7 @@ public class GetPostCommentLikeByIdFunctionalTests : BasePostCommentLikePresenta
         var response = await HttpClient.GetPostCommentLikeByIdProblemDetailsAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyPostCommentLikeNotFound(_request.Id, _request.CommentId, _request.CommentLikeId);
+        response.ShouldSatisfyPostCommentLikeNotFound(_request.Id, _request.CommentId, _request.UserId);
     }
 
     [Fact]
@@ -265,12 +266,12 @@ public class GetPostCommentLikeByIdFunctionalTests : BasePostCommentLikePresenta
     }
 
     [Theory]
-    [PostCommentLikeIdDifferentCaseData]
-    public async Task GetByIdAsync_ShouldHaveOkStatusCode_WhenRequestAndCommentLikeIdAreValid(
+    [UserIdDifferentCaseData]
+    public async Task GetByIdAsync_ShouldHaveOkStatusCode_WhenRequestAndUserIdAreValid(
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentLikeId(_request.CommentLikeId, transformer).Build();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var response = await HttpClient.GetPostCommentLikeByIdStatusCodeAsync(request, CancellationToken);
@@ -320,12 +321,12 @@ public class GetPostCommentLikeByIdFunctionalTests : BasePostCommentLikePresenta
     }
 
     [Theory]
-    [PostCommentLikeIdDifferentCaseData]
-    public async Task GetByIdAsync_ShouldHaveResponse_WhenRequestAndCommentLikeIdAreValid(
+    [UserIdDifferentCaseData]
+    public async Task GetByIdAsync_ShouldHaveResponse_WhenRequestAndUserIdAreValid(
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentLikeId(_request.CommentLikeId, transformer).Build();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var response = await HttpClient.GetPostCommentLikeByIdAsync(request, CancellationToken);

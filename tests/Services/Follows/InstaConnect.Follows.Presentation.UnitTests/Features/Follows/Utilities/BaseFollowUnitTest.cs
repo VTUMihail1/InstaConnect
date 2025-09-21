@@ -27,7 +27,7 @@ public abstract class BaseFollowUnitTest
         ApplicationSender = Substitute.For<IApplicationSender>();
         ApplicationMapper = new ApplicationMapper(
             new Mapper(
-                new MapperConfiguration(cfg => cfg.AddMaps(PresentationReference.Assembly))));
+                new MapperConfiguration(cfg => cfg.AddMaps(FollowPresentationReference.Assembly))));
     }
 
     private static User CreateUserUtil()

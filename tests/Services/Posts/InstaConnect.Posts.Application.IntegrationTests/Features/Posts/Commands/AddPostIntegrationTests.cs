@@ -87,7 +87,7 @@ public class AddPostIntegrationTests : BasePostApplicationIntegrationTest
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowUserNotFoundException_WhenIdIsInvalid()
+    public async Task SendAsync_ShouldThrowUserNotFoundException_WhenUserIdIsInvalid()
     {
         // Arrange
         await ServiceScope.DeleteUserAsync(User, CancellationToken);

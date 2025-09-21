@@ -47,24 +47,6 @@ public class DeletePostLikeCommandRequestValidatorUnitTests : BasePostLikeApplic
     }
 
     [Theory]
-    [PostLikeIdNullWithMessageData]
-    [PostLikeIdEmptyWithMessageData]
-    [PostLikeIdTooShortWithMessageData]
-    [PostLikeIdTooLongWithMessageData]
-    public void TestValidate_ShouldHaveAnError_WhenLikeIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
-    {
-        // Arrange
-        var request = _requestBuilder.WithLikeId(_request.LikeId, transformer).Build();
-
-        // Act
-        var result = _requestValidator.TestValidate(request);
-
-        // Assert
-        result.ShouldHaveValidationErrorForId(errorMessage);
-    }
-
-    [Theory]
     [UserIdNullWithMessageData]
     [UserIdEmptyWithMessageData]
     [UserIdTooShortWithMessageData]

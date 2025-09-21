@@ -1,7 +1,4 @@
-﻿using InstaConnect.Common.Extensions;
-using InstaConnect.PostCommentLikes.Common.Features.PostCommentLikes.Utilities;
-using InstaConnect.PostCommentLikes.Domain.Features.Users.Utilities;
-using InstaConnect.PostComments.Common.Features.PostComments.Utilities;
+﻿using InstaConnect.PostComments.Common.Features.PostComments.Utilities;
 using InstaConnect.Posts.Domain.Features.Users.Utilities;
 
 namespace InstaConnect.PostCommentLikes.Application.Features.PostCommentLikes.Commands.Add;

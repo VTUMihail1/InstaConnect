@@ -1,33 +1,9 @@
 ﻿using InstaConnect.Common.Extensions;
-using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
 
 namespace InstaConnect.PostLikes.Common.Features.PostLikes.Utilities;
 
 public static class PostLikeErrorMessages
 {
-    public static string GetIdEmpty()
-    {
-        const string Message = "Id must not be empty.";
-
-        return Message;
-    }
-
-    public static string GetIdTooShort(int length)
-    {
-        const string Format = "Id length is {0} and it must be at least {1} characters long";
-        var result = Format.FormatInvariantCulture(length, PostLikeConfigurations.IdMinLength);
-
-        return result;
-    }
-
-    public static string GetIdTooLong(int length)
-    {
-        const string Format = "Id length is {0} and it must be at most {1} characters long";
-        var result = Format.FormatInvariantCulture(length, PostLikeConfigurations.IdMaxLength);
-
-        return result;
-    }
-
     public static string GetSortPropertyEmpty()
     {
         const string Message = "Sort property must not be empty.";
@@ -45,7 +21,7 @@ public static class PostLikeErrorMessages
     public static string GetPageTooSmall(int page)
     {
         const string Format = "Page value is {0} and it must be at least {1}";
-        var result = Format.FormatInvariantCulture(page, PostCommentLikeConfigurations.PageMinValue);
+        var result = Format.FormatInvariantCulture(page, PostLikeConfigurations.PageMinValue);
 
         return result;
     }
@@ -53,7 +29,7 @@ public static class PostLikeErrorMessages
     public static string GetPageTooLarge(int page)
     {
         const string Format = "Page value is {0} and it must be at most {1}";
-        var result = Format.FormatInvariantCulture(page, PostCommentLikeConfigurations.PageMaxValue);
+        var result = Format.FormatInvariantCulture(page, PostLikeConfigurations.PageMaxValue);
 
         return result;
     }
@@ -68,7 +44,7 @@ public static class PostLikeErrorMessages
     public static string GetPageSizeTooSmall(int pageSize)
     {
         const string Format = "Page size is {0} and it must be at least {1}";
-        var result = Format.FormatInvariantCulture(pageSize, PostCommentLikeConfigurations.PageSizeMinValue);
+        var result = Format.FormatInvariantCulture(pageSize, PostLikeConfigurations.PageSizeMinValue);
 
         return result;
     }
@@ -76,7 +52,7 @@ public static class PostLikeErrorMessages
     public static string GetPageSizeTooLarge(int pageSize)
     {
         const string Format = "Page size is {0} and it must be at most {1}";
-        var result = Format.FormatInvariantCulture(pageSize, PostCommentLikeConfigurations.PageSizeMaxValue);
+        var result = Format.FormatInvariantCulture(pageSize, PostLikeConfigurations.PageSizeMaxValue);
 
         return result;
     }

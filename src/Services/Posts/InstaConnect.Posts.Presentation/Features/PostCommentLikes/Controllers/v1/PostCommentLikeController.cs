@@ -53,8 +53,8 @@ public class PostCommentLikeController : ControllerBase
         return Ok(response);
     }
 
-    // POST: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/likes
-    [HttpPost]
+    // POST: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/likes/current
+    [HttpPost(PostCommentLikeRoutes.Current)]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -70,8 +70,8 @@ public class PostCommentLikeController : ControllerBase
         return Ok(response);
     }
 
-    // DELETE: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-    [HttpDelete(PostCommentLikeRoutes.Id)]
+    // DELETE: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/likes/current
+    [HttpDelete(PostCommentLikeRoutes.Current)]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]

@@ -48,14 +48,9 @@ public static class PostCommentLikeValidationAssertions
         result.ShouldHaveValidationErrorForProperty(p => p.Filter.CommentId, errorMessage);
     }
 
-    public static void ShouldHaveValidationErrorForCommentLikeId(this TestValidationResult<DeletePostCommentLikeCommandRequest> result, string errorMessage)
+    public static void ShouldHaveValidationErrorForUserId(this TestValidationResult<GetPostCommentLikeByIdQueryRequest> result, string errorMessage)
     {
-        result.ShouldHaveValidationErrorForProperty(p => p.CommentLikeId, errorMessage);
-    }
-
-    public static void ShouldHaveValidationErrorForCommentLikeId(this TestValidationResult<GetPostCommentLikeByIdQueryRequest> result, string errorMessage)
-    {
-        result.ShouldHaveValidationErrorForProperty(p => p.CommentLikeId, errorMessage);
+        result.ShouldHaveValidationErrorForProperty(p => p.UserId, errorMessage);
     }
 
     public static void ShouldHaveValidationErrorForUserId(this TestValidationResult<AddPostCommentLikeCommandRequest> result, string errorMessage)
@@ -66,11 +61,6 @@ public static class PostCommentLikeValidationAssertions
     public static void ShouldHaveValidationErrorForUserId(this TestValidationResult<DeletePostCommentLikeCommandRequest> result, string errorMessage)
     {
         result.ShouldHaveValidationErrorForProperty(p => p.UserId, errorMessage);
-    }
-
-    public static void ShouldHaveValidationErrorForUserId(this TestValidationResult<GetAllPostCommentLikesQueryRequest> result, string errorMessage)
-    {
-        result.ShouldHaveValidationErrorForProperty(p => p.Filter.UserId, errorMessage);
     }
 
     public static void ShouldHaveValidationErrorForUserName(this TestValidationResult<GetAllPostCommentLikesQueryRequest> result, string errorMessage)

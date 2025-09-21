@@ -51,7 +51,7 @@ public class DeleteUserFunctionalTests : BaseUserFunctionalTest
     public async Task DeleteAsync_ShouldReturnBadRequestResponse_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var request = new DeleteUserRequest(
+        var request = new DeleteUserApiRequest(
             DataFaker.GetString(length)
         );
 
@@ -68,7 +68,7 @@ public class DeleteUserFunctionalTests : BaseUserFunctionalTest
     public async Task DeleteAsync_ShouldReturnNotFoundResponse_WhenIdIsInvalid()
     {
         // Arrange
-        var request = new DeleteUserRequest(
+        var request = new DeleteUserApiRequest(
             UserTestUtilities.InvalidId
         );
 

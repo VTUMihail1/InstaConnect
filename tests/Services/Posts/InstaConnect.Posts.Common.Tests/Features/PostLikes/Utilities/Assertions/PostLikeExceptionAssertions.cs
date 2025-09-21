@@ -10,20 +10,10 @@ public static class PostLikeExceptionAssertions
     public static async Task ShouldThrowPostLikeNotFoundExceptionAsync(
         this Func<Task> action,
         string id,
-        string likeId)
-    {
-        await action.ShouldThrowAsync<PostLikeNotFoundException>(
-            PostLikeExceptionErrorMessages.GetNotFoundMessage(id, likeId));
-    }
-
-    public static async Task ShouldThrowPostLikeForbiddenExceptionAsync(
-        this Func<Task> action,
-        string id,
-        string likeId,
         string userId)
     {
-        await action.ShouldThrowAsync<PostLikeForbiddenException>(
-            PostLikeExceptionErrorMessages.GetForbiddenMessage(id, likeId, userId));
+        await action.ShouldThrowAsync<PostLikeNotFoundException>(
+            PostLikeExceptionErrorMessages.GetNotFoundMessage(id, userId));
     }
 
     public static async Task ShouldThrowPostLikeAlreadyExistsExceptionAsync(

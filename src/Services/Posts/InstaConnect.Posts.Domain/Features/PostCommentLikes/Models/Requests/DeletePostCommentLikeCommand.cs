@@ -3,5 +3,4 @@
 public record DeletePostCommentLikeCommand(
     string Id,
     string CommentId,
-    string CommentLikeId,
     string UserId);

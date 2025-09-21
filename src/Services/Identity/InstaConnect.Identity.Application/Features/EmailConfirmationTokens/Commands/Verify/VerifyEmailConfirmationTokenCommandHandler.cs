@@ -1,53 +1,25 @@
-﻿namespace InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Verify;
+﻿using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Requests;
+using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Abstractions;
+using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Requests;
 
-public class VerifyEmailConfirmationTokenCommandHandler : ICommandHandler<VerifyEmailConfirmationTokenCommand>
+namespace InstaConnect.EmailConfirmationTokens.Application.Features.EmailConfirmationTokens.Commands.Add;
+
+internal class VerifyEmailConfirmationTokenCommandHandler : ICommandHandler<VerifyEmailConfirmationTokenCommandRequest>
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IUserWriteRepository _userWriteRepository;
-    private readonly IEmailConfirmationTokenWriteRepository _emailConfirmationTokenWriteRepository;
+    private readonly IApplicationMapper _applicationMapper;
+    private readonly IEmailConfirmationTokenService _emailConfirmationTokenService;
 
     public VerifyEmailConfirmationTokenCommandHandler(
-        IUnitOfWork unitOfWork,
-        IUserWriteRepository userWriteRepository,
-        IEmailConfirmationTokenWriteRepository emailConfirmationTokenWriteRepository)
+        IApplicationMapper applicationMapper,
+        IEmailConfirmationTokenService emailConfirmationTokenService)
     {
-        _unitOfWork = unitOfWork;
-        _userWriteRepository = userWriteRepository;
-        _emailConfirmationTokenWriteRepository = emailConfirmationTokenWriteRepository;
+        _applicationMapper = applicationMapper;
+        _emailConfirmationTokenService = emailConfirmationTokenService;
     }
 
-    public async Task Handle(
-        VerifyEmailConfirmationTokenCommand request,
-        CancellationToken cancellationToken)
+    public async Task Handle(VerifyEmailConfirmationTokenCommandRequest request, CancellationToken cancellationToken)
     {
-        var existingUser = await _userWriteRepository.GetByIdAsync(request.UserId, cancellationToken);
-
-        if (existingUser == null)
-        {
-            throw new UserNotFoundException();
-        }
-
-        if (existingUser.IsEmailConfirmed)
-        {
-            throw new UserEmailAlreadyConfirmedException();
-        }
-
-        var existingToken = await _emailConfirmationTokenWriteRepository.GetByValueAsync(request.Token, cancellationToken);
-
-        if (existingToken == null)
-        {
-            throw new EmailConfirmationTokenNotFoundException();
-        }
-
-        if (existingToken.UserId != request.UserId)
-        {
-            throw new UserForbiddenException();
-        }
-
-        _emailConfirmationTokenWriteRepository.Delete(existingToken);
-
-        await _userWriteRepository.ConfirmEmailAsync(existingUser.Id, cancellationToken);
-
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        var serviceRequest = _applicationMapper.Map<VerifyEmailConfirmationTokenCommand>(request);
+        await _emailConfirmationTokenService.VerifyAsync(serviceRequest, cancellationToken);
     }
 }

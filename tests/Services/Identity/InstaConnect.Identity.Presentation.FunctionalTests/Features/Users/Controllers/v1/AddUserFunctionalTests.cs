@@ -17,7 +17,7 @@ public class AddUserFunctionalTests : BaseUserFunctionalTest
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenNameLengthIsInvalid(int length)
     {
         // Arrange
-        var request = new AddUserRequest(
+        var request = new AddUserApiRequest(
             new(
             DataFaker.GetString(length),
             UserTestUtilities.ValidAddEmail,
@@ -44,7 +44,7 @@ public class AddUserFunctionalTests : BaseUserFunctionalTest
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
-        var request = new AddUserRequest(
+        var request = new AddUserApiRequest(
             new(
             UserTestUtilities.ValidAddName,
             DataFaker.GetString(length),
@@ -72,7 +72,7 @@ public class AddUserFunctionalTests : BaseUserFunctionalTest
     {
         // Arrange
         var password = DataFaker.GetString(length);
-        var request = new AddUserRequest(
+        var request = new AddUserApiRequest(
             new(
             UserTestUtilities.ValidAddName,
             password,
@@ -96,7 +96,7 @@ public class AddUserFunctionalTests : BaseUserFunctionalTest
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenPasswordDoesNotMatchConfirmPassword()
     {
         // Arrange
-        var request = new AddUserRequest(
+        var request = new AddUserApiRequest(
             new(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
@@ -123,7 +123,7 @@ public class AddUserFunctionalTests : BaseUserFunctionalTest
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenFirstNameLengthIsInvalid(int length)
     {
         // Arrange
-        var request = new AddUserRequest(
+        var request = new AddUserApiRequest(
             new(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
@@ -150,7 +150,7 @@ public class AddUserFunctionalTests : BaseUserFunctionalTest
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenLastNameLengthIsInvalid(int length)
     {
         // Arrange
-        var request = new AddUserRequest(
+        var request = new AddUserApiRequest(
             new(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
@@ -175,7 +175,7 @@ public class AddUserFunctionalTests : BaseUserFunctionalTest
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var request = new AddUserRequest(
+        var request = new AddUserApiRequest(
             new(
             UserTestUtilities.ValidAddName,
             existingUser.Email,
@@ -200,7 +200,7 @@ public class AddUserFunctionalTests : BaseUserFunctionalTest
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var request = new AddUserRequest(
+        var request = new AddUserApiRequest(
             new(
             existingUser.UserName,
             UserTestUtilities.ValidAddEmail,
@@ -224,7 +224,7 @@ public class AddUserFunctionalTests : BaseUserFunctionalTest
     public async Task AddAsync_ShouldReturnOkResponse_WhenRequestIsValid()
     {
         // Arrange
-        var request = new AddUserRequest(
+        var request = new AddUserApiRequest(
             new(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
@@ -248,7 +248,7 @@ public class AddUserFunctionalTests : BaseUserFunctionalTest
     public async Task AddAsync_ShouldRegisterUser_WhenRequestIsValid()
     {
         // Arrange
-        var request = new AddUserRequest(
+        var request = new AddUserApiRequest(
             new(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
@@ -280,7 +280,7 @@ public class AddUserFunctionalTests : BaseUserFunctionalTest
     public async Task AddAsync_ShouldRegisterUser_WhenUserIsValidAndFormFileIsNull()
     {
         // Arrange
-        var request = new AddUserRequest(
+        var request = new AddUserApiRequest(
             new(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
@@ -312,7 +312,7 @@ public class AddUserFunctionalTests : BaseUserFunctionalTest
     public async Task AddAsync_ShouldPublishUserCreatedEvent_WhenUserIsValid()
     {
         // Arrange
-        var request = new AddUserRequest(
+        var request = new AddUserApiRequest(
             new(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
@@ -345,7 +345,7 @@ public class AddUserFunctionalTests : BaseUserFunctionalTest
     public async Task AddAsync_ShouldPublishUserCreatedEvent_WhenUserIsValidAndFormFileIsNull()
     {
         // Arrange
-        var request = new AddUserRequest(
+        var request = new AddUserApiRequest(
             new(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
@@ -378,7 +378,7 @@ public class AddUserFunctionalTests : BaseUserFunctionalTest
     public async Task AddAsync_ShouldPublishUserConfirmEmailTokenCreatedEvent_WhenUserIsValid()
     {
         // Arrange
-        var request = new AddUserRequest(
+        var request = new AddUserApiRequest(
             new(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,

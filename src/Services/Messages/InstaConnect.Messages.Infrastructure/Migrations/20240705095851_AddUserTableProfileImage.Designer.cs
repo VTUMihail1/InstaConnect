@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace InstaConnect.Messages.Read.Data.Migrations
 {
-    [DbContext(typeof(MessagesContext))]
+    [DbContext(typeof(ChatsContext))]
     [Migration("20240705095851_AddUserTableProfileImage")]
     partial class AddUserTableProfileImage
     {

@@ -14,12 +14,11 @@ internal class PostLikeDomainMappings : IRegister
         config.NewConfig<PostLike, PostLikeAddedEventRequest>()
             .ConstructUsing(p => new(
                 p.Id,
-                p.LikeId,
                 p.UserId,
                 p.CreatedAt,
                 p.UpdatedAt));
 
         config.NewConfig<PostLike, PostLikeDeletedEventRequest>()
-            .ConstructUsing(p => new(p.Id, p.LikeId));
+            .ConstructUsing(p => new(p.Id, p.UserId));
     }
 }

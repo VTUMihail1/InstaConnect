@@ -36,7 +36,7 @@ public class UpdateCurrentUserFunctionalTests : BaseUserFunctionalTest
     public async Task UpdateCurrentAsync_ShouldReturnBadRequestResponse_WhenIdIsNull()
     {
         // Arrange
-        var request = new UpdateCurrentUserRequest(
+        var request = new UpdateCurrentUserApiRequest(
             null,
             new(
             UserTestUtilities.ValidUpdateName,
@@ -61,7 +61,7 @@ public class UpdateCurrentUserFunctionalTests : BaseUserFunctionalTest
     public async Task UpdateCurrentAsync_ShouldReturnBadRequestResponse_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var request = new UpdateCurrentUserRequest(
+        var request = new UpdateCurrentUserApiRequest(
             DataFaker.GetString(length),
             new(
             UserTestUtilities.ValidUpdateName,
@@ -160,7 +160,7 @@ public class UpdateCurrentUserFunctionalTests : BaseUserFunctionalTest
     public async Task UpdateCurrentAsync_ShouldReturnNotFoundResponse_WhenIdIsInvalid()
     {
         // Arrange
-        var request = new UpdateCurrentUserRequest(
+        var request = new UpdateCurrentUserApiRequest(
             UserTestUtilities.InvalidId,
             new(
             UserTestUtilities.ValidUpdateName,

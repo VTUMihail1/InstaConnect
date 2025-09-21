@@ -2,5 +2,4 @@
 
 public record PostLikeQueryFilter(
     string Id,
-    string UserId,
     string UserName);

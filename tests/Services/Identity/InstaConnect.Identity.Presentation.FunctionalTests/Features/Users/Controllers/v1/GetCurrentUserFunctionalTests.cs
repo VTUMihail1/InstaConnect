@@ -34,7 +34,7 @@ public class GetCurrentUserFunctionalTests : BaseUserFunctionalTest
     public async Task GetCurrent_ShouldReturnBadRequestResponse_WhenIdIsNull()
     {
         // Arrange
-        var request = new GetCurrentUserRequest(
+        var request = new GetCurrentUserByIdApiRequest(
             null
         );
 
@@ -55,7 +55,7 @@ public class GetCurrentUserFunctionalTests : BaseUserFunctionalTest
     public async Task GetCurrent_ShouldReturnBadRequestResponse_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var request = new GetCurrentUserRequest(DataFaker.GetString(length)
+        var request = new GetCurrentUserByIdApiRequest(DataFaker.GetString(length)
         );
 
         // Act
@@ -72,7 +72,7 @@ public class GetCurrentUserFunctionalTests : BaseUserFunctionalTest
     public async Task GetCurrent_ShouldReturnNotFoundResponse_WhenIdIsInvalid()
     {
         // Arrange
-        var request = new GetCurrentUserRequest(
+        var request = new GetCurrentUserByIdApiRequest(
             UserTestUtilities.InvalidId
         );
 
@@ -129,7 +129,7 @@ public class GetCurrentUserFunctionalTests : BaseUserFunctionalTest
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var request = new GetCurrentUserRequest(
+        var request = new GetCurrentUserByIdApiRequest(
             DataFaker.GetDifferentCaseString(existingUser.Id)
         );
 

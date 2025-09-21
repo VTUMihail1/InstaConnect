@@ -5,5 +5,5 @@ namespace InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.
 public record PostCommentLikeDeletedEventRequest(
     string Id,
     string CommentId,
-    string CommentLikeId)
+    string UserId)
     : IEventRequest;

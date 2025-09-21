@@ -23,14 +23,6 @@ public class DeletePostCommentLikeCommandRequestValidator : AbstractValidator<De
             .MaximumLength(PostCommentConfigurations.IdMaxLength)
             .WithMessage(r => PostCommentErrorMessages.GetIdTooLong(r.CommentId.Length));
 
-        RuleFor(r => r.CommentLikeId)
-            .NotEmpty()
-            .WithMessage(PostCommentLikeErrorMessages.GetIdEmpty())
-            .MinimumLength(PostCommentLikeConfigurations.IdMinLength)
-            .WithMessage(r => PostCommentLikeErrorMessages.GetIdTooShort(r.CommentLikeId.Length))
-            .MaximumLength(PostCommentLikeConfigurations.IdMaxLength)
-            .WithMessage(r => PostCommentLikeErrorMessages.GetIdTooLong(r.CommentLikeId.Length));
-
         RuleFor(r => r.UserId)
             .NotEmpty()
             .WithMessage(UserErrorMessages.GetIdEmpty())

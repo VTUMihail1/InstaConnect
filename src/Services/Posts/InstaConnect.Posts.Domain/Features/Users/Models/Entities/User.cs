@@ -1,4 +1,5 @@
-﻿using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Entities;
+﻿using InstaConnect.Common.Extensions;
+using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Entities;
 using InstaConnect.PostComments.Domain.Features.PostComments.Models.Entities;
 using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Entities;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
@@ -49,7 +50,7 @@ public class User : IEntity
         string firstName,
         string lastName,
         string email,
-        string userName,
+        string name,
         string? profileImage,
         DateTimeOffset createdAt,
         DateTimeOffset updatedAt,
@@ -62,7 +63,7 @@ public class User : IEntity
         FirstName = firstName;
         LastName = lastName;
         Email = email;
-        Name = userName;
+        Name = name;
         ProfileImage = profileImage;
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
@@ -110,6 +111,34 @@ public class User : IEntity
         Name = name;
         ProfileImage = profileImage;
         UpdatedAt = updatedAt;
+    }
+
+    public bool HasEmail(string email)
+    {
+        var hasEmail = Email.EqualsOrdinalIgnoreCase(email);
+
+        return hasEmail;
+    }
+
+    public bool DoesNotHaveEmail(string email)
+    {
+        var hasEmail = !HasEmail(email);
+
+        return hasEmail;
+    }
+
+    public bool HasName(string name)
+    {
+        var hasName = Name.EqualsOrdinalIgnoreCase(name);
+
+        return hasName;
+    }
+
+    public bool DoesNotHaveName(string name)
+    {
+        var hasName = !HasName(name);
+
+        return hasName;
     }
 }
 

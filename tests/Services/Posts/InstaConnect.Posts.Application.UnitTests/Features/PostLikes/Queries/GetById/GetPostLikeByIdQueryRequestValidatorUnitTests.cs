@@ -7,6 +7,7 @@ using InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities.Builders.
 using InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities.Builders.GetByIdQueryRequest;
 using InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
 
 namespace InstaConnect.PostLikes.Application.UnitTests.Features.PostLikes.Queries.GetById;
 
@@ -46,21 +47,21 @@ public class GetPostLikeByIdQueryRequestValidatorUnitTests : BasePostLikeApplica
     }
 
     [Theory]
-    [PostLikeIdNullWithMessageData]
-    [PostLikeIdEmptyWithMessageData]
-    [PostLikeIdTooShortWithMessageData]
-    [PostLikeIdTooLongWithMessageData]
-    public void TestValidate_ShouldHaveAnError_WhenLikeIdIsInvalid(
+    [UserIdNullWithMessageData]
+    [UserIdEmptyWithMessageData]
+    [UserIdTooShortWithMessageData]
+    [UserIdTooLongWithMessageData]
+    public void TestValidate_ShouldHaveAnError_WhenUserIdIsInvalid(
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithLikeId(_request.LikeId, transformer).Build();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForId(errorMessage);
+        result.ShouldHaveValidationErrorForUserId(errorMessage);
     }
 
     [Fact]

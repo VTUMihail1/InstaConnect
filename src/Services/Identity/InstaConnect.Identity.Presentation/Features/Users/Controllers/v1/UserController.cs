@@ -1,13 +1,9 @@
-﻿using InstaConnect.Identity.Application.Features.Users.Commands.Add;
-using InstaConnect.Identity.Application.Features.Users.Commands.Delete;
-using InstaConnect.Identity.Application.Features.Users.Commands.Login;
-using InstaConnect.Identity.Application.Features.Users.Commands.Update;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetAll;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetById;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetByName;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrent;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentDetailed;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetDetailedById;
+﻿using InstaConnect.Users.Application.Features.Users.Commands.Add;
+using InstaConnect.Users.Application.Features.Users.Commands.Delete;
+using InstaConnect.Users.Application.Features.Users.Commands.Update;
+using InstaConnect.Users.Application.Features.Users.Queries.GetAll;
+using InstaConnect.Users.Application.Features.Users.Queries.GetById;
+using InstaConnect.Users.Presentation.Features.Users.Models.Requests;
 
 namespace InstaConnect.Identity.Presentation.Features.Users.Controllers.v1;
 
@@ -30,50 +26,50 @@ public class UserController : ControllerBase
     // GET: api/users
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<UserPaginationQueryResponse>> GetAllAsync(
-        GetAllUsersRequest request,
+    public async Task<ActionResult<GetAllUsersApiResponse>> GetAllAsync(
+        GetAllUsersApiRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _applicationMapper.Map<GetAllUsersQuery>(request);
+        var queryRequest = _applicationMapper.Map<GetAllUsersQueryRequest>(request);
         var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
 
-        var response = _applicationMapper.Map<UserPaginationQueryResponse>(queryResponse);
+        var response = _applicationMapper.Map<GetAllUsersApiResponse>(queryResponse);
 
         return Ok(response);
     }
 
-    // GET: api/users/current/detailed
-    [HttpGet(UserRoutes.CurrentDetailed)]
+    // GET: api/users/current/details
+    [HttpGet(UserRoutes.CurrentDetails)]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<UserDetailedQueryResponse>> GetCurrentDetailedAsync(
-        GetCurrentDetailedUserRequest request,
+    public async Task<ActionResult<GetCurrentUserByIdApiResponse>> GetCurrentDetailsByIdAsync(
+        GetCurrentUserDetailsApiRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _applicationMapper.Map<GetCurrentDetailedUserQuery>(request);
+        var queryRequest = _applicationMapper.Map<GetCurrentUserByIdQueryRequest>(request);
         var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
 
-        var response = _applicationMapper.Map<UserDetailedQueryResponse>(queryResponse);
+        var response = _applicationMapper.Map<GetCurrentUserByIdApiResponse>(queryResponse);
 
         return Ok(response);
     }
 
-    // GET: api/users/5f0f2dd0-e957-4d72-8141-767a36fc6e95/detailed
-    [HttpGet(UserRoutes.IdDetailed)]
+    // GET: api/users/5f0f2dd0-e957-4d72-8141-767a36fc6e95/details
+    [HttpGet(UserRoutes.IdDetails)]
     [Authorize(AppPolicies.AdminPolicy)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<UserDetailedQueryResponse>> GetDetailedByIdAsync(
-        GetDetailedUserByIdRequest request,
+    public async Task<ActionResult<GetUserDetailsByIdApiResponse>> GetDetailsByIdAsync(
+        GetUserDetailsByIdApiRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _applicationMapper.Map<GetDetailedUserByIdQuery>(request);
+        var queryRequest = _applicationMapper.Map<GetUserDetailsByIdQueryRequest>(request);
         var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
 
-        var response = _applicationMapper.Map<UserDetailedQueryResponse>(queryResponse);
+        var response = _applicationMapper.Map<GetUserDetailsByIdApiResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -83,14 +79,14 @@ public class UserController : ControllerBase
     [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<UserQueryResponse>> GetCurrentAsync(
-        GetCurrentUserRequest request,
+    public async Task<ActionResult<GetCurrentUserByIdApiResponse>> GetCurrentByIdAsync(
+        GetCurrentUserByIdApiRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _applicationMapper.Map<GetCurrentUserQuery>(request);
+        var queryRequest = _applicationMapper.Map<GetCurrentUserByIdQueryRequest>(request);
         var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
 
-        var response = _applicationMapper.Map<UserQueryResponse>(queryResponse);
+        var response = _applicationMapper.Map<GetCurrentUserByIdApiResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -99,61 +95,29 @@ public class UserController : ControllerBase
     [HttpGet(UserRoutes.Id)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<UserQueryResponse>> GetByIdAsync(
-        GetUserByIdRequest request,
+    public async Task<ActionResult<GetUserByIdApiResponse>> GetByIdAsync(
+        GetUserByIdApiRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _applicationMapper.Map<GetUserByIdQuery>(request);
+        var queryRequest = _applicationMapper.Map<GetUserByIdQueryRequest>(request);
         var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
 
-        var response = _applicationMapper.Map<UserQueryResponse>(queryResponse);
+        var response = _applicationMapper.Map<GetUserByIdApiResponse>(queryResponse);
 
         return Ok(response);
     }
 
-    // GET: api/users/by-name/example
-    [HttpGet(UserRoutes.Name)]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<UserQueryResponse>> GetByNameAsync(
-        GetUserByNameRequest request,
-        CancellationToken cancellationToken)
-    {
-        var queryRequest = _applicationMapper.Map<GetUserByNameQuery>(request);
-        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
-
-        var response = _applicationMapper.Map<UserQueryResponse>(queryResponse);
-
-        return Ok(response);
-    }
-
-    // POST: api/users/login
-    [HttpPost(UserRoutes.Login)]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<UserTokenCommandResponse>> LoginAsync(
-        LoginUserRequest request,
-        CancellationToken cancellationToken)
-    {
-        var commandRequest = _applicationMapper.Map<LoginUserCommand>(request);
-        var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
-
-        var response = _applicationMapper.Map<UserTokenCommandResponse>(commandResponse);
-
-        return Ok(response);
-    }
-
-    // POST: api/users/register
+    // POST: api/users
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<UserCommandResponse>> AddAsync(
-        AddUserRequest request,
+    public async Task<ActionResult<AddUserApiResponse>> AddAsync(
+        AddUserApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<AddUserCommand>(request);
+        var commandRequest = _applicationMapper.Map<AddUserCommandRequest>(request);
         var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
-        var response = _applicationMapper.Map<UserCommandResponse>(commandResponse);
+        var response = _applicationMapper.Map<AddUserApiResponse>(commandResponse);
 
         return Ok(response);
     }
@@ -164,13 +128,13 @@ public class UserController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<UserCommandResponse>> UpdateCurrentAsync(
-        UpdateCurrentUserRequest request,
+    public async Task<ActionResult<UpdateCurrentUserApiResponse>> UpdateCurrentAsync(
+        UpdateCurrentUserApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<UpdateUserCommand>(request);
+        var commandRequest = _applicationMapper.Map<UpdateCurrentUserCommandRequest>(request);
         var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
-        var response = _applicationMapper.Map<UserCommandResponse>(commandResponse);
+        var response = _applicationMapper.Map<UpdateCurrentUserApiResponse>(commandResponse);
 
         return Ok(response);
     }
@@ -181,10 +145,10 @@ public class UserController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> DeleteCurrentAsync(
-        DeleteCurrentUserRequest request,
+        DeleteCurrentUserApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<DeleteUserCommand>(request);
+        var commandRequest = _applicationMapper.Map<DeleteCurrentUserCommandRequest>(request);
         await _applicationSender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
@@ -196,10 +160,10 @@ public class UserController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> DeleteAsync(
-        DeleteUserRequest request,
+        DeleteUserApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<DeleteUserCommand>(request);
+        var commandRequest = _applicationMapper.Map<DeleteUserCommandRequest>(request);
         await _applicationSender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();

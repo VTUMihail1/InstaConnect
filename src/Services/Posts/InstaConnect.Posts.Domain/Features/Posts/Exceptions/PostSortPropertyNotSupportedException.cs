@@ -2,7 +2,7 @@
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 
-namespace InstaConnect.Common.Infrastructure.Exceptions;
+namespace InstaConnect.Posts.Domain.Features.Posts.Exceptions;
 
 public class PostSortPropertyNotSupportedException : BadRequestException
 {

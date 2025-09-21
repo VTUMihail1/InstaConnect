@@ -14,7 +14,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenF
     {
         // Arrange
         var existingForgotPasswordToken = await CreateForgotPasswordTokenAsync(CancellationToken);
-        var request = new VerifyForgotPasswordTokenRequest(
+        var request = new VerifyForgotPasswordTokenApiRequest(
             DataFaker.GetString(length),
             existingForgotPasswordToken.Value,
             new(UserTestUtilities.ValidPassword, UserTestUtilities.ValidPassword)
@@ -120,7 +120,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenF
     {
         // Arrange
         var existingForgotPasswordToken = await CreateForgotPasswordTokenAsync(CancellationToken);
-        var request = new VerifyForgotPasswordTokenRequest(
+        var request = new VerifyForgotPasswordTokenApiRequest(
             UserTestUtilities.InvalidId,
             existingForgotPasswordToken.Value,
             new(UserTestUtilities.ValidUpdatePassword, UserTestUtilities.ValidUpdatePassword)

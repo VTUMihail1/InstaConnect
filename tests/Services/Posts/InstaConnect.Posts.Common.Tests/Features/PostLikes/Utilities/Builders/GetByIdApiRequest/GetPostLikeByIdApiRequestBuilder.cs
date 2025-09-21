@@ -15,7 +15,7 @@ public class GetPostLikeByIdApiRequestBuilder
         _objectBuilder = objectBuilder;
 
         WithId(postLike.Id);
-        WithLikeId(postLike.LikeId);
+        WithUserId(postLike.UserId);
     }
 
     public GetPostLikeByIdApiRequestBuilder WithId(string id, IStringTransformer? transformer = null)
@@ -25,9 +25,9 @@ public class GetPostLikeByIdApiRequestBuilder
         return this;
     }
 
-    public GetPostLikeByIdApiRequestBuilder WithLikeId(string likeId, IStringTransformer? transformer = null)
+    public GetPostLikeByIdApiRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)
     {
-        _objectBuilder.With(p => p.LikeId, likeId, transformer);
+        _objectBuilder.With(p => p.UserId, userId, transformer);
 
         return this;
     }

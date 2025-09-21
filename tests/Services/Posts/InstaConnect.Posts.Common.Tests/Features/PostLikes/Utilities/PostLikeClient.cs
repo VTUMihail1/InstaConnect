@@ -64,7 +64,7 @@ public static class PostLikeClient
         GetPostLikeByIdApiRequest request,
         CancellationToken cancellationToken)
     {
-        var route = PostLikeTestRoutes.GetId(request.Id, request.LikeId);
+        var route = PostLikeTestRoutes.GetId(request.Id, request.UserId);
         var response = await httpClient
             .GetStatusCodeAsync(route, cancellationToken);
 
@@ -76,7 +76,7 @@ public static class PostLikeClient
         GetPostLikeByIdApiRequest request,
         CancellationToken cancellationToken)
     {
-        var route = PostLikeTestRoutes.GetId(request.Id, request.LikeId);
+        var route = PostLikeTestRoutes.GetId(request.Id, request.UserId);
         var response = await httpClient
             .GetProblemDetailsAsync(route, cancellationToken);
 
@@ -88,7 +88,7 @@ public static class PostLikeClient
         GetPostLikeByIdApiRequest request,
         CancellationToken cancellationToken)
     {
-        var route = PostLikeTestRoutes.GetId(request.Id, request.LikeId);
+        var route = PostLikeTestRoutes.GetId(request.Id, request.UserId);
         var response = await httpClient
             .GetFromJsonAsync<GetPostLikeByIdApiResponse>(route, cancellationToken);
 
@@ -100,7 +100,7 @@ public static class PostLikeClient
         AddPostLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        var route = PostLikeTestRoutes.GetDefault(request.Id);
+        var route = PostLikeTestRoutes.GetCurrent(request.Id);
         var response = await httpClient
             .AddUserId(request.UserId)
             .PostStatusCodeAsync(route, cancellationToken);
@@ -113,7 +113,7 @@ public static class PostLikeClient
         AddPostLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        var route = PostLikeTestRoutes.GetDefault(request.Id);
+        var route = PostLikeTestRoutes.GetCurrent(request.Id);
         var response = await httpClient
             .PostStatusCodeAsync(route, cancellationToken);
 
@@ -125,7 +125,7 @@ public static class PostLikeClient
         AddPostLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        var route = PostLikeTestRoutes.GetDefault(request.Id);
+        var route = PostLikeTestRoutes.GetCurrent(request.Id);
         var response = await httpClient
             .AddUserId(request.UserId)
             .PostProblemDetailsAsync(route, cancellationToken);
@@ -138,7 +138,7 @@ public static class PostLikeClient
         AddPostLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        var route = PostLikeTestRoutes.GetDefault(request.Id);
+        var route = PostLikeTestRoutes.GetCurrent(request.Id);
         var response = await httpClient
             .PostProblemDetailsAsync(route, cancellationToken);
 
@@ -150,7 +150,7 @@ public static class PostLikeClient
         AddPostLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        var route = PostLikeTestRoutes.GetDefault(request.Id);
+        var route = PostLikeTestRoutes.GetCurrent(request.Id);
         var response = await httpClient
             .AddUserId(request.UserId)
             .PostAsync<AddPostLikeApiResponse>(route, cancellationToken);
@@ -163,7 +163,7 @@ public static class PostLikeClient
         DeletePostLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        var route = PostLikeTestRoutes.GetId(request.Id, request.LikeId);
+        var route = PostLikeTestRoutes.GetCurrent(request.Id);
         var response = await httpClient
             .AddUserId(request.UserId)
             .DeleteStatusCodeAsync(route, cancellationToken);
@@ -176,7 +176,7 @@ public static class PostLikeClient
         DeletePostLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        var route = PostLikeTestRoutes.GetId(request.Id, request.LikeId);
+        var route = PostLikeTestRoutes.GetCurrent(request.Id);
         var response = await httpClient
             .DeleteStatusCodeAsync(route, cancellationToken);
 
@@ -188,7 +188,7 @@ public static class PostLikeClient
         DeletePostLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        var route = PostLikeTestRoutes.GetId(request.Id, request.LikeId);
+        var route = PostLikeTestRoutes.GetCurrent(request.Id);
         var response = await httpClient
             .AddUserId(request.UserId)
             .DeleteProblemDetailsAsync(route, cancellationToken);
@@ -201,7 +201,7 @@ public static class PostLikeClient
         DeletePostLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        var route = PostLikeTestRoutes.GetId(request.Id, request.LikeId);
+        var route = PostLikeTestRoutes.GetCurrent(request.Id);
         var response = await httpClient
             .DeleteProblemDetailsAsync(route, cancellationToken);
 
@@ -213,7 +213,7 @@ public static class PostLikeClient
         DeletePostLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        var route = PostLikeTestRoutes.GetId(request.Id, request.LikeId);
+        var route = PostLikeTestRoutes.GetCurrent(request.Id);
         await httpClient
             .AddUserId(request.UserId)
             .DeleteAsync(route, cancellationToken);

@@ -19,7 +19,6 @@ public static class PostCommentLikeTestRoutes
         const string Format = "{0}?&userId={1}&userName={2}&sortOrder={3}&sortProperty={4}&page={5}&pageSize={6}";
         var route = Format.FormatInvariantCulture(
             GetDefault(request.Filter.Id, request.Filter.CommentId),
-            request.Filter.UserId,
             request.Filter.UserName,
             request.Sorting.Order,
             request.Sorting.Property,
@@ -29,12 +28,20 @@ public static class PostCommentLikeTestRoutes
         return route;
     }
 
-    public static string GetId(string id, string commentId, string commentLikeId)
+    public static string GetId(string id, string commentId, string userId)
     {
         const string Format = "{0}/{1}";
         var route = Format.FormatInvariantCulture(
             GetDefault(id, commentId),
-            commentLikeId);
+            userId);
+
+        return route;
+    }
+
+    public static string GetCurrent(string id, string commentId)
+    {
+        const string Format = "{0}/current";
+        var route = Format.FormatInvariantCulture(GetDefault(id, commentId));
 
         return route;
     }

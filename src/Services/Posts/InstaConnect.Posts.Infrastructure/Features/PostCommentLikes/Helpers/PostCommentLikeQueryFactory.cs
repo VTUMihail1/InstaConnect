@@ -30,7 +30,6 @@ public class PostCommentLikeQueryFactory : IPostCommentLikeQueryFactory
         var parameters = new GetAllPostCommentLikesQueryParameters(
             query.Filter.Id,
             query.Filter.CommentId,
-            query.Filter.UserId,
             query.Filter.UserName,
             sortOrder.Order,
             sortProperty.Property,
@@ -49,7 +48,6 @@ public class PostCommentLikeQueryFactory : IPostCommentLikeQueryFactory
         var parameters = new GetAllPostCommentLikesTotalCountQueryParameters(
             query.Id,
             query.CommentId,
-            query.UserId,
             query.UserName);
 
         var specification = new GetAllPostCommentLikesTotalCountQuerySpecification(
@@ -59,22 +57,11 @@ public class PostCommentLikeQueryFactory : IPostCommentLikeQueryFactory
         return specification;
     }
 
-    public GetPostCommentLikeByIdQuerySpecification CreateGetById(string id, string commentId, string commentLikeId)
+    public GetPostCommentLikeByIdSpecification CreateGetById(string id, string commentId, string userId)
     {
-        var parameters = new GetPostCommentLikeByIdQueryParameters(id, commentId, commentLikeId);
+        var parameters = new GetPostCommentLikeByIdQueryParameters(id, commentId, userId);
 
-        var result = new GetPostCommentLikeByIdQuerySpecification(
-            PostCommentLikeQuerySql.GetById,
-            parameters);
-
-        return result;
-    }
-
-    public GetPostCommentLikeByIdAndUserIdQuerySpecification CreateGetByIdAndUserId(string id, string commentId, string userId)
-    {
-        var parameters = new GetPostCommentLikeByIdAndUserIdQueryParameters(id, commentId, userId);
-
-        var result = new GetPostCommentLikeByIdAndUserIdQuerySpecification(
+        var result = new GetPostCommentLikeByIdSpecification(
             PostCommentLikeQuerySql.GetById,
             parameters);
 

@@ -10,11 +10,11 @@ using InstaConnect.Identity.Application.Features.Users.Models;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetAll;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetById;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetByName;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrent;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentDetailed;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetDetailedById;
+using InstaConnect.Identity.Application.Features.Utilities;
 using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entities;
 using InstaConnect.Identity.Domain.Features.Users.Models.Entities;
+using InstaConnect.Identity.Domain.Features.Users.Models.Requests;
 using InstaConnect.Identity.Presentation.Extensions;
 
 namespace InstaConnect.Identity.Presentation.UnitTests.Features.Users.Utilities;

@@ -19,11 +19,11 @@ public static class PostLikeSetups
     public static async Task<PostLike?> GetPostLikeByIdAsync(
         this IServiceScope serviceScope,
         string id,
-        string likeId,
+        string userId,
         CancellationToken cancellationToken)
     {
         var postLikeRepository = serviceScope.GetPostLikeRepository();
-        var postLike = await postLikeRepository.GetByIdAsync(id, likeId, cancellationToken);
+        var postLike = await postLikeRepository.GetByIdAsync(id, userId, cancellationToken);
 
         return postLike;
     }

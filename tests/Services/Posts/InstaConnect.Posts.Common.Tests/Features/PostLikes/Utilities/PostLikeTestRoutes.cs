@@ -16,10 +16,9 @@ public static class PostLikeTestRoutes
 
     public static string GetAll(GetAllPostLikesApiRequest request)
     {
-        const string Format = "{0}?&userId={1}&userName={2}&sortOrder={3}&sortProperty={4}&page={5}&pageSize={6}";
+        const string Format = "{0}?userName={1}&sortOrder={2}&sortProperty={3}&page={4}&pageSize={5}";
         var route = Format.FormatInvariantCulture(
             GetDefault(request.Filter.Id),
-            request.Filter.UserId,
             request.Filter.UserName,
             request.Sorting.Order,
             request.Sorting.Property,
@@ -29,12 +28,20 @@ public static class PostLikeTestRoutes
         return route;
     }
 
-    public static string GetId(string id, string likeId)
+    public static string GetId(string id, string userId)
     {
         const string Format = "{0}/{1}";
         var route = Format.FormatInvariantCulture(
             GetDefault(id),
-            likeId);
+            userId);
+
+        return route;
+    }
+
+    public static string GetCurrent(string id)
+    {
+        const string Format = "{0}/current";
+        var route = Format.FormatInvariantCulture(GetDefault(id));
 
         return route;
     }

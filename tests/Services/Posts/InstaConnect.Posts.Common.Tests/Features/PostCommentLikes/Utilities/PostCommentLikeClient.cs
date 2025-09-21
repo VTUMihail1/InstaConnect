@@ -65,7 +65,7 @@ public static class PostCommentLikeClient
         GetPostCommentLikeByIdApiRequest request,
         CancellationToken cancellationToken)
     {
-        var route = PostCommentLikeTestRoutes.GetId(request.Id, request.CommentId, request.CommentLikeId);
+        var route = PostCommentLikeTestRoutes.GetId(request.Id, request.CommentId, request.UserId);
         var response = await httpClient
             .GetStatusCodeAsync(route, cancellationToken);
 
@@ -77,7 +77,7 @@ public static class PostCommentLikeClient
         GetPostCommentLikeByIdApiRequest request,
         CancellationToken cancellationToken)
     {
-        var route = PostCommentLikeTestRoutes.GetId(request.Id, request.CommentId, request.CommentLikeId);
+        var route = PostCommentLikeTestRoutes.GetId(request.Id, request.CommentId, request.UserId);
         var response = await httpClient
             .GetProblemDetailsAsync(route, cancellationToken);
 
@@ -89,7 +89,7 @@ public static class PostCommentLikeClient
         GetPostCommentLikeByIdApiRequest request,
         CancellationToken cancellationToken)
     {
-        var route = PostCommentLikeTestRoutes.GetId(request.Id, request.CommentId, request.CommentLikeId);
+        var route = PostCommentLikeTestRoutes.GetId(request.Id, request.CommentId, request.UserId);
         var response = await httpClient
             .GetFromJsonAsync<GetPostCommentLikeByIdApiResponse>(route, cancellationToken);
 
@@ -101,7 +101,7 @@ public static class PostCommentLikeClient
         AddPostCommentLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        var route = PostCommentLikeTestRoutes.GetDefault(request.Id, request.CommentId);
+        var route = PostCommentLikeTestRoutes.GetCurrent(request.Id, request.CommentId);
         var response = await httpClient
             .AddUserId(request.UserId)
             .PostStatusCodeAsync(route, cancellationToken);
@@ -114,7 +114,7 @@ public static class PostCommentLikeClient
         AddPostCommentLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        var route = PostCommentLikeTestRoutes.GetDefault(request.Id, request.CommentId);
+        var route = PostCommentLikeTestRoutes.GetCurrent(request.Id, request.CommentId);
         var response = await httpClient
             .PostStatusCodeAsync(route, cancellationToken);
 
@@ -126,7 +126,7 @@ public static class PostCommentLikeClient
         AddPostCommentLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        var route = PostCommentLikeTestRoutes.GetDefault(request.Id, request.CommentId);
+        var route = PostCommentLikeTestRoutes.GetCurrent(request.Id, request.CommentId);
         var response = await httpClient
             .AddUserId(request.UserId)
             .PostProblemDetailsAsync(route, cancellationToken);
@@ -139,7 +139,7 @@ public static class PostCommentLikeClient
         AddPostCommentLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        var route = PostCommentLikeTestRoutes.GetDefault(request.Id, request.CommentId);
+        var route = PostCommentLikeTestRoutes.GetCurrent(request.Id, request.CommentId);
         var response = await httpClient
             .PostProblemDetailsAsync(route, cancellationToken);
 
@@ -151,7 +151,7 @@ public static class PostCommentLikeClient
         AddPostCommentLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        var route = PostCommentLikeTestRoutes.GetDefault(request.Id, request.CommentId);
+        var route = PostCommentLikeTestRoutes.GetCurrent(request.Id, request.CommentId);
         var response = await httpClient
             .AddUserId(request.UserId)
             .PostAsync<AddPostCommentLikeApiResponse>(route, cancellationToken);
@@ -164,7 +164,7 @@ public static class PostCommentLikeClient
         DeletePostCommentLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        var route = PostCommentLikeTestRoutes.GetId(request.Id, request.CommentId, request.CommentLikeId);
+        var route = PostCommentLikeTestRoutes.GetCurrent(request.Id, request.CommentId);
         var response = await httpClient
             .AddUserId(request.UserId)
             .DeleteStatusCodeAsync(route, cancellationToken);
@@ -177,7 +177,7 @@ public static class PostCommentLikeClient
         DeletePostCommentLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        var route = PostCommentLikeTestRoutes.GetId(request.Id, request.CommentId, request.CommentLikeId);
+        var route = PostCommentLikeTestRoutes.GetCurrent(request.Id, request.CommentId);
         var response = await httpClient
             .DeleteStatusCodeAsync(route, cancellationToken);
 
@@ -189,7 +189,7 @@ public static class PostCommentLikeClient
         DeletePostCommentLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        var route = PostCommentLikeTestRoutes.GetId(request.Id, request.CommentId, request.CommentLikeId);
+        var route = PostCommentLikeTestRoutes.GetCurrent(request.Id, request.CommentId);
         var response = await httpClient
             .AddUserId(request.UserId)
             .DeleteProblemDetailsAsync(route, cancellationToken);
@@ -202,7 +202,7 @@ public static class PostCommentLikeClient
         DeletePostCommentLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        var route = PostCommentLikeTestRoutes.GetId(request.Id, request.CommentId, request.CommentLikeId);
+        var route = PostCommentLikeTestRoutes.GetCurrent(request.Id, request.CommentId);
         var response = await httpClient
             .DeleteProblemDetailsAsync(route, cancellationToken);
 
@@ -214,7 +214,7 @@ public static class PostCommentLikeClient
         DeletePostCommentLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        var route = PostCommentLikeTestRoutes.GetId(request.Id, request.CommentId, request.CommentLikeId);
+        var route = PostCommentLikeTestRoutes.GetCurrent(request.Id, request.CommentId);
         await httpClient
             .AddUserId(request.UserId)
             .DeleteAsync(route, cancellationToken);

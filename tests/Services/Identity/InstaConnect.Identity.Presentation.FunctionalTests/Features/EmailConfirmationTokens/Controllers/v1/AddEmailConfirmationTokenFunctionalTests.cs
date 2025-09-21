@@ -15,7 +15,7 @@ public class AddEmailConfirmationTokenFunctionalTests : BaseEmailConfirmationTok
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
-        var request = new AddEmailConfirmationTokenRequest(
+        var request = new AddEmailConfirmationTokenApiRequest(
             DataFaker.GetString(length)
         );
 
@@ -32,7 +32,7 @@ public class AddEmailConfirmationTokenFunctionalTests : BaseEmailConfirmationTok
     public async Task AddAsync_ShouldReturnNotFoundResponse_WhenEmailIsInvalid()
     {
         // Arrange
-        var request = new AddEmailConfirmationTokenRequest(
+        var request = new AddEmailConfirmationTokenApiRequest(
             UserTestUtilities.ValidAddEmail
         );
 

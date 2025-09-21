@@ -49,7 +49,7 @@ public class GetDetailedUserByIdFunctionalTests : BaseUserFunctionalTest
     public async Task GetDetailedById_ShouldReturnBadRequestResponse_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var request = new GetDetailedUserByIdRequest(
+        var request = new GetUserDetailsByIdApiRequest(
             DataFaker.GetString(length)
         );
 
@@ -67,7 +67,7 @@ public class GetDetailedUserByIdFunctionalTests : BaseUserFunctionalTest
     public async Task GetDetailedById_ShouldReturnNotFoundResponse_WhenIdIsInvalid()
     {
         // Arrange
-        var request = new GetDetailedUserByIdRequest(
+        var request = new GetUserDetailsByIdApiRequest(
             UserTestUtilities.InvalidId
         );
 
@@ -126,7 +126,7 @@ public class GetDetailedUserByIdFunctionalTests : BaseUserFunctionalTest
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var request = new GetDetailedUserByIdRequest(
+        var request = new GetUserDetailsByIdApiRequest(
             DataFaker.GetDifferentCaseString(existingUser.Id)
         );
 

@@ -6,11 +6,6 @@ namespace InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities;
 
 public static class PostLikeDataFaker
 {
-    public static string GetId()
-    {
-        return DataFaker.GetAverageString(PostLikeConfigurations.IdMaxLength, PostLikeConfigurations.IdMinLength);
-    }
-
     public static DateTimeOffset GetCreatedAt()
     {
         return DataFaker.GetMaxDate();

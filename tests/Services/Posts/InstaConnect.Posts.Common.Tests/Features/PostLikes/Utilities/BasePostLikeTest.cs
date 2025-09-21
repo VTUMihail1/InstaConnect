@@ -32,7 +32,7 @@ public abstract class BasePostLikeTest
         Post = PostBuilder.Build();
 
         PostLikeBuilderFactory = new();
-        PostLikeBuilder = PostLikeBuilderFactory.Create(User);
+        PostLikeBuilder = PostLikeBuilderFactory.Create(Post, User);
         PostLike = PostLikeBuilder.Build();
 
         CancellationToken = MockFactory.CreateCancellationToken();

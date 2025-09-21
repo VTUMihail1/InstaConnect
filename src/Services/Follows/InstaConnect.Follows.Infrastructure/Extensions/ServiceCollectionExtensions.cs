@@ -1,6 +1,6 @@
 ﻿using InstaConnect.Common.Extensions;
 using InstaConnect.Follows.Infrastructure.Features.Follows.Extensions;
-using InstaConnect.Follows.Infrastructure.Features.Users.Extensions;
+using InstaConnect.Posts.Infrastructure.Features.Users.Extensions;
 using InstaConnect.Shared.Infrastructure.Extensions;
 
 using Microsoft.AspNetCore.Hosting;
@@ -18,14 +18,14 @@ public static class ServiceCollectionExtensions
             .AddDatabaseContext<FollowsContext>(configuration);
 
         serviceCollection
-            .AddFollowServices()
-            .AddUserServices();
+            .AddUserServices()
+            .AddFollowServices();
 
         serviceCollection
             .AddObservability(configuration, webHostEnvironment)
-            .AddServicesWithMatchingInterfaces(InfrastructureReference.Assembly)
+            .AddServicesWithMatchingInterfaces(FollowInfrastructureReference.Assembly)
             .AddUnitOfWork<FollowsContext>()
-            .AddRabbitMQ(configuration, InfrastructureReference.Assembly)
+            .AddRabbitMQ(configuration, FollowInfrastructureReference.Assembly)
             .AddJwtBearer(configuration)
             .AddGuidProvider()
             .AddDateTimeProvider();

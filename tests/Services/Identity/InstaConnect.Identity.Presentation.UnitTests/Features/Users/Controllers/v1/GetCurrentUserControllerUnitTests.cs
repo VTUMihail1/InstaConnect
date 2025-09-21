@@ -1,4 +1,4 @@
-﻿using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrent;
+﻿using InstaConnect.Identity.Application.Features.Utilities;
 
 namespace InstaConnect.Identity.Presentation.UnitTests.Features.Users.Controllers.v1;
 

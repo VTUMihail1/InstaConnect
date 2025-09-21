@@ -1,16 +1,18 @@
 ﻿using InstaConnect.Common.Exceptions;
+using InstaConnect.Identity.Domain.Features.RefreshTokens.Utilities;
+using InstaConnect.Identity.Domain.Features.Users.Utilities;
 
 namespace InstaConnect.Identity.Domain.Features.Users.Exceptions;
 
 public class UserInvalidDetailsException : BadRequestException
 {
-    private const string ErrorMessage = "Invalid user details";
-
-    public UserInvalidDetailsException() : base(ErrorMessage)
+    public UserInvalidDetailsException(string name) : base(
+        UserExceptionErrorMessages.GetInvalidDetailsMessage(name))
     {
     }
 
-    public UserInvalidDetailsException(Exception exception) : base(ErrorMessage, exception)
+    public UserInvalidDetailsException(string name, Exception exception) : base(
+        UserExceptionErrorMessages.GetInvalidDetailsMessage(name), exception)
     {
     }
 }

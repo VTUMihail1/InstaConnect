@@ -2,4 +2,4 @@
 
 namespace InstaConnect.PostLikes.Application.Features.PostLikes.Queries.GetById;
 
-public record GetPostLikeByIdQueryRequest(string Id, string LikeId) : IQueryRequest<GetPostLikeByIdQueryResponse>;
+public record GetPostLikeByIdQueryRequest(string Id, string UserId) : IQueryRequest<GetPostLikeByIdQueryResponse>;

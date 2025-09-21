@@ -1,5 +1,4 @@
-﻿using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Add;
-using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Verify;
+﻿using InstaConnect.ForgotPasswordTokens.Application.Features.ForgotPasswordTokens.Commands.Add;
 
 namespace InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Controllers.v1;
 
@@ -24,10 +23,10 @@ public class ForgotPasswordTokenController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> AddAsync(
-        AddForgotPasswordTokenRequest request,
+        AddForgotPasswordTokenApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<AddForgotPasswordTokenCommand>(request);
+        var commandRequest = _applicationMapper.Map<AddForgotPasswordTokenCommandRequest>(request);
         await _applicationSender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
@@ -38,10 +37,10 @@ public class ForgotPasswordTokenController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> VerifyAsync(
-        VerifyForgotPasswordTokenRequest request,
+        VerifyForgotPasswordTokenApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<VerifyForgotPasswordTokenCommand>(request);
+        var commandRequest = _applicationMapper.Map<VerifyForgotPasswordTokenCommandRequest>(request);
         await _applicationSender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();

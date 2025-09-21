@@ -64,11 +64,11 @@ internal class PostLikeService : IPostLikeService
             throw new PostNotFoundException(query.Id);
         }
 
-        var existingPostLike = await _postLikeRepository.GetByIdAsync(query.Id, query.LikeId, cancellationToken);
+        var existingPostLike = await _postLikeRepository.GetByIdAsync(query.Id, query.UserId, cancellationToken);
 
         if (existingPostLike.IsNull())
         {
-            throw new PostLikeNotFoundException(query.Id, query.LikeId);
+            throw new PostLikeNotFoundException(query.Id, query.UserId);
         }
 
         return existingPostLike!;
@@ -90,7 +90,7 @@ internal class PostLikeService : IPostLikeService
             throw new UserNotFoundException(command.UserId);
         }
 
-        var existingPostLike = await _postLikeRepository.GetByIdAndUserIdAsync(command.Id, command.UserId, cancellationToken);
+        var existingPostLike = await _postLikeRepository.GetByIdAsync(command.Id, command.UserId, cancellationToken);
 
         if (existingPostLike.IsNotNull())
         {
@@ -115,21 +115,16 @@ internal class PostLikeService : IPostLikeService
             throw new PostNotFoundException(command.Id);
         }
 
-        var existingPostLike = await _postLikeRepository.GetByIdAsync(command.Id, command.LikeId, cancellationToken);
+        var existingPostLike = await _postLikeRepository.GetByIdAsync(command.Id, command.UserId, cancellationToken);
 
         if (existingPostLike.IsNull())
         {
-            throw new PostLikeNotFoundException(command.Id, command.LikeId);
+            throw new PostLikeNotFoundException(command.Id, command.UserId);
         }
 
-        if (existingPostLike!.UserId.NotEqualsOrdinalIgnoreCase(command.UserId))
-        {
-            throw new PostLikeForbiddenException(command.Id, command.LikeId, command.UserId);
-        }
+        _postLikeRepository.Delete(existingPostLike!);
 
-        _postLikeRepository.Delete(existingPostLike);
-
-        var eventRequest = _applicationMapper.Map<PostLikeDeletedEventRequest>(existingPostLike);
+        var eventRequest = _applicationMapper.Map<PostLikeDeletedEventRequest>(existingPostLike!);
         await _eventPublisher.PublishAsync(eventRequest, cancellationToken);
     }
 }

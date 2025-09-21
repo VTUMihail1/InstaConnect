@@ -1,0 +1,3 @@
+﻿namespace InstaConnect.EmailConfirmationTokens.Infrastructure.Features.EmailConfirmationTokens.Models;
+
+public record GetEmailConfirmationTokenByIdQueryParameters(string Id, string Value);

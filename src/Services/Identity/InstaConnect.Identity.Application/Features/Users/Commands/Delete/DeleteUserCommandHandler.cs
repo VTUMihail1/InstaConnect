@@ -1,42 +1,28 @@
-﻿using InstaConnect.Common.Domain.Abstractions;
+﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
+using InstaConnect.Users.Application.Features.Users.Commands.Add;
+using InstaConnect.Users.Domain.Features.Users.Abstractions;
+using InstaConnect.Users.Domain.Features.Users.Models.Requests;
 
-namespace InstaConnect.Identity.Application.Features.Users.Commands.Delete;
+namespace InstaConnect.Users.Application.Features.Users.Commands.Delete;
 
-public class DeleteUserCommandHandler : ICommandHandler<DeleteUserCommand>
+internal class DeleteUserCommandHandler : ICommandHandler<DeleteUserCommandRequest>
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IEventPublisher _eventPublisher;
+    private readonly IUserService _userService;
     private readonly IApplicationMapper _applicationMapper;
-    private readonly IUserWriteRepository _userWriteRepository;
 
     public DeleteUserCommandHandler(
-        IUnitOfWork unitOfWork,
-        IEventPublisher eventPublisher,
-        IApplicationMapper applicationMapper,
-        IUserWriteRepository userWriteRepository)
+        IUserService userService,
+        IApplicationMapper applicationMapper)
     {
-        _unitOfWork = unitOfWork;
-        _eventPublisher = eventPublisher;
+        _userService = userService;
         _applicationMapper = applicationMapper;
-        _userWriteRepository = userWriteRepository;
     }
 
     public async Task Handle(
-        DeleteUserCommand request,
+        DeleteUserCommandRequest request, 
         CancellationToken cancellationToken)
     {
-        var existingUser = await _userWriteRepository.GetByIdAsync(request.Id, cancellationToken);
-
-        if (existingUser == null)
-        {
-            throw new UserNotFoundException();
-        }
-
-        _userWriteRepository.Delete(existingUser);
-
-        var userDeletedEvent = _applicationMapper.Map<UserDeletedEventRequest>(existingUser);
-        await _eventPublisher.PublishAsync(userDeletedEvent, cancellationToken);
-
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        var serviceRequest = _applicationMapper.Map<DeleteUserCommand>(request);
+        await _userService.DeleteAsync(serviceRequest, cancellationToken);
     }
 }

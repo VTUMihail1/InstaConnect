@@ -1,16 +1,17 @@
 ﻿using InstaConnect.Common.Exceptions;
+using InstaConnect.Identity.Domain.Features.Users.Utilities;
 
 namespace InstaConnect.Identity.Domain.Features.Users.Exceptions;
 
 public class UserEmailAlreadyConfirmedException : BadRequestException
 {
-    private const string ErrorMessage = "Email already confirmed";
-
-    public UserEmailAlreadyConfirmedException() : base(ErrorMessage)
+    public UserEmailAlreadyConfirmedException(string email) : base(
+        UserExceptionErrorMessages.GetEmailAlreadyConfirmedMessage(email))
     {
     }
 
-    public UserEmailAlreadyConfirmedException(Exception exception) : base(ErrorMessage, exception)
+    public UserEmailAlreadyConfirmedException(string email, Exception exception) : base(
+        UserExceptionErrorMessages.GetEmailAlreadyConfirmedMessage(email), exception)
     {
     }
 }

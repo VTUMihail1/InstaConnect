@@ -4,29 +4,6 @@ namespace InstaConnect.PostCommentLikes.Common.Features.PostCommentLikes.Utiliti
 
 public static class PostCommentLikeErrorMessages
 {
-    public static string GetIdEmpty()
-    {
-        const string Message = "Id must not be empty.";
-
-        return Message;
-    }
-
-    public static string GetIdTooShort(int length)
-    {
-        const string Format = "Id length is {0} and it must be at least {1} characters long";
-        var result = Format.FormatInvariantCulture(length, PostCommentLikeConfigurations.IdMinLength);
-
-        return result;
-    }
-
-    public static string GetIdTooLong(int length)
-    {
-        const string Format = "Id length is {0} and it must be at most {1} characters long";
-        var result = Format.FormatInvariantCulture(length, PostCommentLikeConfigurations.IdMaxLength);
-
-        return result;
-    }
-
     public static string GetSortPropertyEmpty()
     {
         const string Message = "Sort property must not be empty.";

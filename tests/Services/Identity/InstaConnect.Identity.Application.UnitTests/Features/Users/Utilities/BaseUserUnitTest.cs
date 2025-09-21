@@ -13,9 +13,9 @@ using InstaConnect.Identity.Application.Features.Users.Abstractions;
 using InstaConnect.Identity.Domain.Features.UserClaims.Abstractions;
 using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entities;
 using InstaConnect.Identity.Domain.Features.UserClaims.Models.Filters;
-using InstaConnect.Identity.Domain.Features.Users.Abstractions;
 using InstaConnect.Identity.Domain.Features.Users.Models;
 using InstaConnect.Identity.Domain.Features.Users.Models.Filters;
+using InstaConnect.Identity.Domain.Helpers;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Utilities;
 
@@ -62,19 +62,19 @@ public abstract class BaseUserUnitTest
         UserClaimWriteRepository = Substitute.For<IUserClaimWriteRepository>();
         EmailConfirmationTokenPublisher = Substitute.For<IEmailConfirmationTokenPublisher>();
 
-        PasswordHasher.Verify(UserTestUtilities.ValidPassword, UserTestUtilities.ValidPasswordHash)
+        PasswordHasher.IsMatch(UserTestUtilities.ValidPassword, UserTestUtilities.ValidPasswordHash)
             .Returns(true);
 
         PasswordHasher.Hash(UserTestUtilities.ValidAddPassword)
             .Returns(new PasswordHashResultModel(UserTestUtilities.ValidAddPasswordHash));
 
-        PasswordHasher.Verify(UserTestUtilities.ValidAddPassword, UserTestUtilities.ValidAddPasswordHash)
+        PasswordHasher.IsMatch(UserTestUtilities.ValidAddPassword, UserTestUtilities.ValidAddPasswordHash)
             .Returns(true);
 
         PasswordHasher.Hash(UserTestUtilities.ValidUpdatePassword)
             .Returns(new PasswordHashResultModel(UserTestUtilities.ValidUpdatePasswordHash));
 
-        PasswordHasher.Verify(UserTestUtilities.ValidUpdatePassword, UserTestUtilities.ValidUpdatePasswordHash)
+        PasswordHasher.IsMatch(UserTestUtilities.ValidUpdatePassword, UserTestUtilities.ValidUpdatePasswordHash)
             .Returns(true);
 
         ImageHandler.UploadAsync(Arg.Is<ImageUploadModel>(i => i.FormFile == UserTestUtilities.ValidAddFormFile), CancellationToken)
@@ -98,7 +98,7 @@ public abstract class BaseUserUnitTest
         UserClaimWriteRepository.GetAllAsync(Arg.Is<UserClaimCollectionWriteQuery>(uc => uc.UserId == user.Id), CancellationToken)
             .Returns([userClaim]);
 
-        AccessTokenGenerator.GenerateAccessToken(Arg.Is<CreateAccessTokenModel>(at => at.UserId == user.Id &&
+        AccessTokenGenerator.GenerateAccessToken(Arg.Is<CreateAccessTokenRequest>(at => at.UserId == user.Id &&
                                                                                       at.Email == user.Email &&
                                                                                       at.FirstName == user.FirstName &&
                                                                                       at.LastName == user.LastName &&

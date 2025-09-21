@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace InstaConnect.Messages.Read.Data.Migrations
 {
-    [DbContext(typeof(MessagesContext))]
+    [DbContext(typeof(ChatsContext))]
     partial class MessagesContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

@@ -9,7 +9,9 @@ using InstaConnect.Common.Infrastructure.Abstractions;
 using InstaConnect.Common.Infrastructure.Extensions;
 using InstaConnect.Common.Presentation.Abstractions;
 using InstaConnect.Common.Presentation.Binders.FromClaim;
+using InstaConnect.Common.Presentation.Binders.FromCookie;
 using InstaConnect.Common.Presentation.ExceptionHandlers;
+using InstaConnect.Common.Presentation.Helpers;
 using InstaConnect.Common.Presentation.Models.Options;
 using InstaConnect.Common.Presentation.Utilities;
 using InstaConnect.Common.Utilities;
@@ -41,8 +43,15 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddApiControllers(this IServiceCollection serviceCollection)
     {
         serviceCollection
+            .AddHttpContextAccessor()
+            .AddScoped<ICookieStore, CookieStore>();
+
+        serviceCollection
             .AddControllers(options =>
-                options.ValueProviderFactories.Add(new FromClaimValueProviderFactory()))
+            {
+                options.ValueProviderFactories.Add(new FromClaimValueProviderFactory());
+                options.ValueProviderFactories.Add(new FromCookieValueProviderFactory());
+            })
             .AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;

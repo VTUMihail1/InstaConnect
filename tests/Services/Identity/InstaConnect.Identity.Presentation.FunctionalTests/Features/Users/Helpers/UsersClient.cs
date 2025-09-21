@@ -17,7 +17,7 @@ public class UsersClient : IUsersClient
     }
 
     public async Task<HttpStatusCode> GetAllStatusCodeAsync(
-        GetAllUsersRequest request,
+        GetAllUsersApiRequest request,
         CancellationToken cancellationToken)
     {
         var route = GetAllRoute(request);
@@ -27,7 +27,7 @@ public class UsersClient : IUsersClient
     }
 
     public async Task<UserPaginationQueryResponse> GetAllAsync(
-        GetAllUsersRequest request,
+        GetAllUsersApiRequest request,
         CancellationToken cancellationToken)
     {
         var route = GetAllRoute(request);
@@ -46,7 +46,7 @@ public class UsersClient : IUsersClient
     }
 
     public async Task<HttpStatusCode> GetByIdStatusCodeAsync(
-        GetUserByIdRequest request,
+        GetUserByIdApiRequest request,
         CancellationToken cancellationToken)
     {
         var route = IdRoute(request.Id);
@@ -56,7 +56,7 @@ public class UsersClient : IUsersClient
     }
 
     public async Task<UserQueryResponse> GetByIdAsync(
-        GetUserByIdRequest request,
+        GetUserByIdApiRequest request,
         CancellationToken cancellationToken)
     {
         var route = IdRoute(request.Id);
@@ -67,7 +67,7 @@ public class UsersClient : IUsersClient
     }
 
     public async Task<HttpStatusCode> GetDetailedByIdStatusCodeAsync(
-        GetDetailedUserByIdRequest request,
+        GetUserDetailsByIdApiRequest request,
         CancellationToken cancellationToken)
     {
         _httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>()
@@ -83,7 +83,7 @@ public class UsersClient : IUsersClient
     }
 
     public async Task<HttpStatusCode> GetDetailedByIdStatusCodeUnathorizedAsync(
-        GetDetailedUserByIdRequest request,
+        GetUserDetailsByIdApiRequest request,
         CancellationToken cancellationToken)
     {
         var route = IdDetailedRoute(request.Id);
@@ -93,7 +93,7 @@ public class UsersClient : IUsersClient
     }
 
     public async Task<HttpStatusCode> GetDetailedByIdStatusCodeNonAdminAsync(
-        GetDetailedUserByIdRequest request,
+        GetUserDetailsByIdApiRequest request,
         CancellationToken cancellationToken)
     {
         _httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>()
@@ -108,7 +108,7 @@ public class UsersClient : IUsersClient
     }
 
     public async Task<UserDetailedQueryResponse> GetDetailedByIdAsync(
-        GetDetailedUserByIdRequest request,
+        GetUserDetailsByIdApiRequest request,
         CancellationToken cancellationToken)
     {
         _httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>()
@@ -146,7 +146,7 @@ public class UsersClient : IUsersClient
     }
 
     public async Task<HttpStatusCode> GetCurrentStatusCodeAsync(
-        GetCurrentUserRequest request,
+        GetCurrentUserByIdApiRequest request,
         CancellationToken cancellationToken)
     {
         _httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>()
@@ -161,7 +161,7 @@ public class UsersClient : IUsersClient
     }
 
     public async Task<HttpStatusCode> GetCurrentStatusCodeUnauthorizedAsync(
-        GetCurrentUserRequest request,
+        GetCurrentUserByIdApiRequest request,
         CancellationToken cancellationToken)
     {
         var response = await _httpClient
@@ -171,7 +171,7 @@ public class UsersClient : IUsersClient
     }
 
     public async Task<UserQueryResponse> GetCurrentAsync(
-        GetCurrentUserRequest request,
+        GetCurrentUserByIdApiRequest request,
         CancellationToken cancellationToken)
     {
         _httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>()
@@ -187,7 +187,7 @@ public class UsersClient : IUsersClient
     }
 
     public async Task<HttpStatusCode> GetCurrentDetailedStatusCodeAsync(
-        GetCurrentDetailedUserRequest request,
+        GetCurrentUserDetailsApiRequest request,
         CancellationToken cancellationToken)
     {
         _httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>()
@@ -202,7 +202,7 @@ public class UsersClient : IUsersClient
     }
 
     public async Task<HttpStatusCode> GetCurrentDetailedStatusCodeUnauthorizedAsync(
-        GetCurrentDetailedUserRequest request,
+        GetCurrentUserDetailsApiRequest request,
         CancellationToken cancellationToken)
     {
         var response = await _httpClient
@@ -212,7 +212,7 @@ public class UsersClient : IUsersClient
     }
 
     public async Task<UserDetailedQueryResponse> GetCurrentDetailedAsync(
-        GetCurrentDetailedUserRequest request,
+        GetCurrentUserDetailsApiRequest request,
         CancellationToken cancellationToken)
     {
         _httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>()
@@ -228,7 +228,7 @@ public class UsersClient : IUsersClient
     }
 
     public async Task<HttpStatusCode> AddStatusCodeAsync(
-        AddUserRequest request,
+        AddUserApiRequest request,
         CancellationToken cancellationToken)
     {
         var requestForm = GetForm(request.Form);
@@ -239,7 +239,7 @@ public class UsersClient : IUsersClient
     }
 
     public async Task<UserCommandResponse> AddAsync(
-        AddUserRequest request,
+        AddUserApiRequest request,
         CancellationToken cancellationToken)
     {
         var requestForm = GetForm(request.Form);
@@ -272,7 +272,7 @@ public class UsersClient : IUsersClient
     }
 
     public async Task<HttpStatusCode> UpdateCurrentStatusCodeAsync(
-        UpdateCurrentUserRequest request,
+        UpdateCurrentUserApiRequest request,
         CancellationToken cancellationToken)
     {
         var requestForm = GetForm(request.Form);
@@ -289,7 +289,7 @@ public class UsersClient : IUsersClient
     }
 
     public async Task<HttpStatusCode> UpdateCurrentStatusCodeUnauthorizedAsync(
-        UpdateCurrentUserRequest request,
+        UpdateCurrentUserApiRequest request,
         CancellationToken cancellationToken)
     {
         var requestForm = GetForm(request.Form);
@@ -301,7 +301,7 @@ public class UsersClient : IUsersClient
     }
 
     public async Task<UserCommandResponse> UpdateCurrentAsync(
-        UpdateCurrentUserRequest request,
+        UpdateCurrentUserApiRequest request,
         CancellationToken cancellationToken)
     {
         var requestForm = GetForm(request.Form);
@@ -319,7 +319,7 @@ public class UsersClient : IUsersClient
     }
 
     public async Task<HttpStatusCode> DeleteStatusCodeAsync(
-        DeleteUserRequest request,
+        DeleteUserApiRequest request,
         CancellationToken cancellationToken)
     {
         var route = IdRoute(request.Id);
@@ -336,7 +336,7 @@ public class UsersClient : IUsersClient
     }
 
     public async Task<HttpStatusCode> DeleteStatusCodeUnauthorizedAsync(
-        DeleteUserRequest request,
+        DeleteUserApiRequest request,
         CancellationToken cancellationToken)
     {
         var route = IdRoute(request.Id);
@@ -347,7 +347,7 @@ public class UsersClient : IUsersClient
     }
 
     public async Task<HttpStatusCode> DeleteStatusCodeNonAdminAsync(
-        DeleteUserRequest request,
+        DeleteUserApiRequest request,
         CancellationToken cancellationToken)
     {
         var route = IdRoute(request.Id);
@@ -363,7 +363,7 @@ public class UsersClient : IUsersClient
     }
 
     public async Task DeleteAsync(
-        DeleteUserRequest request,
+        DeleteUserApiRequest request,
         CancellationToken cancellationToken)
     {
         var route = IdRoute(request.Id);
@@ -378,7 +378,7 @@ public class UsersClient : IUsersClient
     }
 
     public async Task<HttpStatusCode> DeleteCurrentStatusCodeAsync(
-        DeleteCurrentUserRequest request,
+        DeleteCurrentUserApiRequest request,
         CancellationToken cancellationToken)
     {
         _httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>()
@@ -392,7 +392,7 @@ public class UsersClient : IUsersClient
     }
 
     public async Task<HttpStatusCode> DeleteCurrentStatusCodeUnauthorizedAsync(
-        DeleteCurrentUserRequest request,
+        DeleteCurrentUserApiRequest request,
         CancellationToken cancellationToken)
     {
         var response = await _httpClient.DeleteAsync(UserTestRoutes.Current, cancellationToken);
@@ -401,7 +401,7 @@ public class UsersClient : IUsersClient
     }
 
     public async Task DeleteCurrentAsync(
-        DeleteCurrentUserRequest request,
+        DeleteCurrentUserApiRequest request,
         CancellationToken cancellationToken)
     {
         _httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>()
@@ -412,7 +412,7 @@ public class UsersClient : IUsersClient
         await _httpClient.DeleteAsync(UserTestRoutes.Current, cancellationToken);
     }
 
-    private static string GetAllRoute(GetAllUsersRequest request)
+    private static string GetAllRoute(GetAllUsersApiRequest request)
     {
         var route = string.Format(
             CultureInfo.InvariantCulture,
@@ -458,7 +458,7 @@ public class UsersClient : IUsersClient
         return route;
     }
 
-    private static MultipartFormDataContent GetForm(AddUserForm form)
+    private static MultipartFormDataContent GetForm(AddUserApiForm form)
     {
         var multipartContent = new MultipartFormDataContent
     {
@@ -480,7 +480,7 @@ public class UsersClient : IUsersClient
         return multipartContent;
     }
 
-    private static MultipartFormDataContent GetForm(UpdateUserForm form)
+    private static MultipartFormDataContent GetForm(UpdateUserApiForm form)
     {
         var multipartContent = new MultipartFormDataContent
         {

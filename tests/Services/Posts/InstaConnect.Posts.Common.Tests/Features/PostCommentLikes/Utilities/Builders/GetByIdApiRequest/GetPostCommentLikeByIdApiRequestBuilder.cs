@@ -20,7 +20,7 @@ public class GetPostCommentLikeByIdApiRequestBuilder
 
         WithId(postCommentLike.Id);
         WithCommentId(postCommentLike.CommentId);
-        WithCommentLikeId(postCommentLike.CommentLikeId);
+        WithUserId(postCommentLike.UserId);
     }
 
     public GetPostCommentLikeByIdApiRequestBuilder WithId(string id, IStringTransformer? transformer = null)
@@ -37,9 +37,9 @@ public class GetPostCommentLikeByIdApiRequestBuilder
         return this;
     }
 
-    public GetPostCommentLikeByIdApiRequestBuilder WithCommentLikeId(string commentLikeId, IStringTransformer? transformer = null)
+    public GetPostCommentLikeByIdApiRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)
     {
-        _objectBuilder.With(p => p.CommentLikeId, commentLikeId, transformer);
+        _objectBuilder.With(p => p.UserId, userId, transformer);
 
         return this;
     }

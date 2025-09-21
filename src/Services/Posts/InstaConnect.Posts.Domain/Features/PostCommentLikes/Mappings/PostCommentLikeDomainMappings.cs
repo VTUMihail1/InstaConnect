@@ -15,12 +15,11 @@ internal class PostCommentLikeDomainMappings : IRegister
             .ConstructUsing(p => new(
                 p.Id,
                 p.CommentId,
-                p.CommentLikeId,
                 p.UserId,
                 p.CreatedAt,
                 p.UpdatedAt));
 
         config.NewConfig<PostCommentLike, PostCommentLikeDeletedEventRequest>()
-            .ConstructUsing(p => new(p.Id, p.CommentId, p.CommentLikeId));
+            .ConstructUsing(p => new(p.Id, p.CommentId, p.UserId));
     }
 }

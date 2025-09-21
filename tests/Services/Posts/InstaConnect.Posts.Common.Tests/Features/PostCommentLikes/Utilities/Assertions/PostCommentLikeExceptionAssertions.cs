@@ -12,21 +12,10 @@ public static class PostCommentLikeExceptionAssertions
         this Func<Task> action,
         string id,
         string commentId,
-        string commentLikeId)
-    {
-        await action.ShouldThrowAsync<PostCommentLikeNotFoundException>(
-            PostCommentLikeExceptionErrorMessages.GetNotFoundMessage(id, commentId, commentLikeId));
-    }
-
-    public static async Task ShouldThrowPostCommentLikeForbiddenExceptionAsync(
-        this Func<Task> action,
-        string id,
-        string commentId,
-        string commentLikeId,
         string userId)
     {
-        await action.ShouldThrowAsync<PostCommentLikeForbiddenException>(
-            PostCommentLikeExceptionErrorMessages.GetForbiddenMessage(id, commentId, commentLikeId, userId));
+        await action.ShouldThrowAsync<PostCommentLikeNotFoundException>(
+            PostCommentLikeExceptionErrorMessages.GetNotFoundMessage(id, commentId, userId));
     }
 
     public static async Task ShouldThrowPostCommentLikeAlreadyExistsExceptionAsync(

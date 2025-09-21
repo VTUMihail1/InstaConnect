@@ -132,42 +132,6 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
     }
 
     [Theory]
-    [PostCommentLikeIdNullData]
-    [PostCommentLikeIdEmptyData]
-    [PostCommentLikeIdTooShortData]
-    [PostCommentLikeIdTooLongData]
-    public async Task DeleteAsync_ShouldHaveBadRequestStatusCode_WhenCommentLikeIdIsInvalid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithCommentLikeId(_request.CommentLikeId, transformer).Build();
-
-        // Act
-        var response = await HttpClient.DeletePostCommentLikeStatusCodeAsync(request, CancellationToken);
-
-        // Assert
-        response.ShouldBeBadRequest();
-    }
-
-    [Theory]
-    [PostCommentLikeIdNullWithMessageData]
-    [PostCommentLikeIdEmptyWithMessageData]
-    [PostCommentLikeIdTooShortWithMessageData]
-    [PostCommentLikeIdTooLongWithMessageData]
-    public async Task DeleteAsync_ShouldHaveBadRequestProblemDetails_WhenCommentLikeIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
-    {
-        // Arrange
-        var request = _requestBuilder.WithCommentLikeId(_request.CommentLikeId, transformer).Build();
-
-        // Act
-        var response = await HttpClient.DeletePostCommentLikeProblemDetailsAsync(request, CancellationToken);
-
-        // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
-    }
-
-    [Theory]
     [UserIdNullData]
     [UserIdEmptyData]
     [UserIdTooShortData]
@@ -256,7 +220,7 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
     }
 
     [Fact]
-    public async Task DeleteAsync_ShouldHaveNotFoundStatusCode_WhenCommentLikeIdIsInvalid()
+    public async Task DeleteAsync_ShouldHaveNotFoundStatusCode_WhenUserIdIsInvalid()
     {
         // Arrange
         await ServiceScope.DeletePostCommentLikeAsync(PostCommentLike, CancellationToken);
@@ -269,7 +233,7 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
     }
 
     [Fact]
-    public async Task DeleteAsync_ShouldHavePostCommentLikeNotFoundProblemDetails_WhenCommentLikeIdIsInvalid()
+    public async Task DeleteAsync_ShouldHavePostCommentLikeNotFoundProblemDetails_WhenUserIdIsInvalid()
     {
         // Arrange
         await ServiceScope.DeletePostCommentLikeAsync(PostCommentLike, CancellationToken);
@@ -278,37 +242,7 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
         var response = await HttpClient.DeletePostCommentLikeProblemDetailsAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyPostCommentLikeNotFound(_request.Id, _request.CommentId, _request.CommentLikeId);
-    }
-
-    [Fact]
-    public async Task DeleteAsync_ShouldHaveForbiddenStatusCode_WhenUserIdIsInvalid()
-    {
-        // Arrange
-        var user = UserBuilderFactory.Create().Build();
-        await ServiceScope.AddUserAsync(user, CancellationToken);
-        var request = _requestBuilder.WithUserId(user.Id).Build();
-
-        // Act
-        var response = await HttpClient.DeletePostCommentLikeStatusCodeAsync(request, CancellationToken);
-
-        // Assert
-        response.ShouldBeForbidden();
-    }
-
-    [Fact]
-    public async Task DeleteAsync_ShouldHavePostCommentForbiddenProblemDetails_WhenUserIdIsInvalid()
-    {
-        // Arrange
-        var user = UserBuilderFactory.Create().Build();
-        await ServiceScope.AddUserAsync(user, CancellationToken);
-        var request = _requestBuilder.WithUserId(user.Id).Build();
-
-        // Act
-        var response = await HttpClient.DeletePostCommentLikeProblemDetailsAsync(request, CancellationToken);
-
-        // Assert
-        response.ShouldSatisfyPostCommentLikeForbidden(request.Id, request.CommentId, request.CommentLikeId, request.UserId);
+        response.ShouldSatisfyPostCommentLikeNotFound(_request.Id, _request.CommentId, _request.UserId);
     }
 
     [Fact]
@@ -352,21 +286,6 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
     }
 
     [Theory]
-    [PostCommentLikeIdDifferentCaseData]
-    public async Task DeleteAsync_ShouldHaveNoContentStatusCode_WhenRequestAndCommentLikeIdAreValid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithCommentLikeId(_request.CommentLikeId, transformer).Build();
-
-        // Act
-        var response = await HttpClient.DeletePostCommentLikeStatusCodeAsync(request, CancellationToken);
-
-        // Assert
-        response.ShouldBeNoContent();
-    }
-
-    [Theory]
     [UserIdDifferentCaseData]
     public async Task DeleteAsync_ShouldHaveNoContentStatusCode_WhenRequestAndUserIdAreValid(
         IStringTransformer transformer)
@@ -386,7 +305,7 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
     {
         // Act
         await HttpClient.DeletePostCommentLikeAsync(_request, CancellationToken);
-        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(_request.Id, _request.CommentId, _request.CommentLikeId, CancellationToken);
+        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(_request.Id, _request.CommentId, _request.UserId, CancellationToken);
 
         // Assert
         postCommentLike.ShouldBeNull();
@@ -402,7 +321,7 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
 
         // Act
         await HttpClient.DeletePostCommentLikeAsync(request, CancellationToken);
-        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(_request.Id, _request.CommentId, _request.CommentLikeId, CancellationToken);
+        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(_request.Id, _request.CommentId, _request.UserId, CancellationToken);
 
         // Assert
         postCommentLike.ShouldBeNull();
@@ -418,23 +337,7 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
 
         // Act
         await HttpClient.DeletePostCommentLikeAsync(request, CancellationToken);
-        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(_request.Id, _request.CommentId, _request.CommentLikeId, CancellationToken);
-
-        // Assert
-        postCommentLike.ShouldBeNull();
-    }
-
-    [Theory]
-    [PostCommentLikeIdDifferentCaseData]
-    public async Task DeleteAsync_ShouldDeletePostCommentLike_WhenRequestAndCommentLikeIdAreValid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithCommentLikeId(_request.CommentLikeId, transformer).Build();
-
-        // Act
-        await HttpClient.DeletePostCommentLikeAsync(request, CancellationToken);
-        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(_request.Id, _request.CommentId, _request.CommentLikeId, CancellationToken);
+        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(_request.Id, _request.CommentId, _request.UserId, CancellationToken);
 
         // Assert
         postCommentLike.ShouldBeNull();
@@ -450,7 +353,7 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
 
         // Act
         await HttpClient.DeletePostCommentLikeAsync(request, CancellationToken);
-        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(_request.Id, _request.CommentId, _request.CommentLikeId, CancellationToken);
+        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(_request.Id, _request.CommentId, _request.UserId, CancellationToken);
 
         // Assert
         postCommentLike.ShouldBeNull();
@@ -490,22 +393,6 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
     {
         // Arrange
         var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Build();
-
-        // Act
-        await HttpClient.DeletePostCommentLikeAsync(request, CancellationToken);
-        var hasPublshed = await EventHarness.HasPublishPostCommentLikeDeletedEventAsync(PostCommentLike, CancellationToken);
-
-        // Assert
-        hasPublshed.ShouldBeTrue();
-    }
-
-    [Theory]
-    [PostCommentLikeIdDifferentCaseData]
-    public async Task DeleteAsync_ShouldPublishPostCommentLikeDeletedEvent_WhenRequestAndCommentLikeIdAreValid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithCommentLikeId(_request.CommentLikeId, transformer).Build();
 
         // Act
         await HttpClient.DeletePostCommentLikeAsync(request, CancellationToken);

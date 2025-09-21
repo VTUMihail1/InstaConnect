@@ -16,7 +16,6 @@ public class PostCommentLikeBuilder
 
         WithId(post.Id);
         WithCommentId(postComment.Id);
-        WithCommentLikeId(PostCommentLikeDataFaker.GetId());
         WithUser(user);
         WithCreatedAt(PostCommentLikeDataFaker.GetCreatedAt());
         WithUpdatedAt(PostCommentLikeDataFaker.GetUpdatedAt());
@@ -32,13 +31,6 @@ public class PostCommentLikeBuilder
     public PostCommentLikeBuilder WithCommentId(string commentId, IStringTransformer? transformer = null)
     {
         _objectBuilder.With(p => p.CommentId, commentId, transformer);
-
-        return this;
-    }
-
-    public PostCommentLikeBuilder WithCommentLikeId(string commentLikeId, IStringTransformer? transformer = null)
-    {
-        _objectBuilder.With(p => p.CommentLikeId, commentLikeId, transformer);
 
         return this;
     }

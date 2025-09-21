@@ -5,7 +5,6 @@ namespace InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.
 public record PostCommentLikeAddedEventRequest(
         string Id,
         string CommentId,
-        string CommentLikeId,
         string UserId,
         DateTimeOffset CreatedAt,
         DateTimeOffset UpdatedAt)

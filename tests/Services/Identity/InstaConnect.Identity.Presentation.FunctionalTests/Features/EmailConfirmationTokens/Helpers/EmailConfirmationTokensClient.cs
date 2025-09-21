@@ -13,25 +13,25 @@ public class EmailConfirmationTokensClient : IEmailConfirmationTokensClient
     }
 
     public async Task<HttpStatusCode> AddStatusCodeAsync(
-        AddEmailConfirmationTokenRequest request,
+        AddEmailConfirmationTokenApiRequest request,
         CancellationToken cancellationToken)
     {
-        var route = GetAddRoute(request.Email);
+        var route = GetAddRoute(request.Name);
         var response = await _httpClient.PostAsync(route, null, cancellationToken);
 
         return response.StatusCode;
     }
 
     public async Task AddAsync(
-        AddEmailConfirmationTokenRequest request,
+        AddEmailConfirmationTokenApiRequest request,
         CancellationToken cancellationToken)
     {
-        var route = GetAddRoute(request.Email);
+        var route = GetAddRoute(request.Name);
         await _httpClient.PostAsync(route, null, cancellationToken);
     }
 
     public async Task<HttpStatusCode> VerifyStatusCodeAsync(
-        VerifyEmailConfirmationTokenRequest request,
+        VerifyEmailConfirmationTokenApiRequest request,
         CancellationToken cancellationToken)
     {
         var route = GetVerifyRoute(request.UserId, request.Token);
@@ -41,7 +41,7 @@ public class EmailConfirmationTokensClient : IEmailConfirmationTokensClient
     }
 
     public async Task VerifyAsync(
-        VerifyEmailConfirmationTokenRequest request,
+        VerifyEmailConfirmationTokenApiRequest request,
         CancellationToken cancellationToken)
     {
         var route = GetVerifyRoute(request.UserId, request.Token);

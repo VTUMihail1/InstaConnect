@@ -13,7 +13,6 @@ internal class PostCommentLikeInfrastructureMappings : IRegister
               .ConstructUsing(pcl => new(
                             pcl.Id,
                             pcl.CommentId,
-                            pcl.CommentLikeId,
                             new User(
                                 pcl.UserId,
                                 pcl.UserFirstName,

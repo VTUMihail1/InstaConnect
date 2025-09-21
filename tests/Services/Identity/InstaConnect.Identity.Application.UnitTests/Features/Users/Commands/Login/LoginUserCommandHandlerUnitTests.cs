@@ -102,7 +102,7 @@ public class LoginUserCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         AccessTokenGenerator
             .Received(1)
-            .GenerateAccessToken(Arg.Is<CreateAccessTokenModel>(at => at.UserId == existingUserClaim.User.Id &&
+            .GenerateAccessToken(Arg.Is<CreateAccessTokenRequest>(at => at.UserId == existingUserClaim.User.Id &&
                                                                       at.Email == existingUserClaim.User.Email &&
                                                                       at.FirstName == existingUserClaim.User.FirstName &&
                                                                       at.LastName == existingUserClaim.User.LastName &&

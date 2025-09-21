@@ -25,10 +25,6 @@ public class GetAllPostCommentLikesQueryRequestValidator : AbstractValidator<Get
             .MaximumLength(PostCommentConfigurations.IdMaxLength)
             .WithMessage(r => PostCommentErrorMessages.GetIdTooLong(r.Filter.CommentId.Length));
 
-        RuleFor(c => c.Filter.UserId)
-            .MaximumLength(UserConfigurations.IdMaxLength)
-            .WithMessage(q => UserErrorMessages.GetIdTooLong(q.Filter.UserId.Length));
-
         RuleFor(c => c.Filter.UserName)
             .MaximumLength(UserConfigurations.NameMaxLength)
             .WithMessage(q => UserErrorMessages.GetNameTooLong(q.Filter.UserName.Length));

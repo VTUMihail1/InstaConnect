@@ -26,7 +26,7 @@ public class MessagesWebApplicationFactory : WebApplicationFactory<Program>, IAs
     {
         builder.ConfigureTestServices(serviceCollection =>
         {
-            serviceCollection.AddTestDbContext<MessagesContext>(opt => opt.UseSqlServer(_msSqlContainer.GetConnectionString()));
+            serviceCollection.AddTestDbContext<ChatsContext>(opt => opt.UseSqlServer(_msSqlContainer.GetConnectionString()));
             serviceCollection.AddTestJwtAuth();
 
             serviceCollection.AddMassTransitTestHarness();

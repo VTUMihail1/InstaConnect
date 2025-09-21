@@ -12,7 +12,6 @@ internal class PostLikeInfrastructureMappings : IRegister
         config.NewConfig<PostLikeQueryEntity, PostLike>()
               .ConstructUsing(pl => new(
                             pl.Id,
-                            pl.LikeId,
                             new User(
                                 pl.UserId,
                                 pl.UserFirstName,

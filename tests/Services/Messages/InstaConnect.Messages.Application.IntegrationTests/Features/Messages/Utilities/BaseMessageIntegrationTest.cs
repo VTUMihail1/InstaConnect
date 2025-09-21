@@ -114,7 +114,7 @@ public abstract class BaseMessageIntegrationTest : IClassFixture<MessagesWebAppl
 
     private async Task EnsureDatabaseIsEmpty()
     {
-        var dbContext = ServiceScope.ServiceProvider.GetRequiredService<MessagesContext>();
+        var dbContext = ServiceScope.ServiceProvider.GetRequiredService<ChatsContext>();
 
         if (await dbContext.Messages.AnyAsync(CancellationToken))
         {

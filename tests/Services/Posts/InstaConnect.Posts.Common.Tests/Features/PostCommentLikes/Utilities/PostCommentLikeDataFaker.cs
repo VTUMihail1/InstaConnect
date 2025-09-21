@@ -6,11 +6,6 @@ namespace InstaConnect.PostCommentLikes.Common.Tests.Features.PostCommentLikes.U
 
 public static class PostCommentLikeDataFaker
 {
-    public static string GetId()
-    {
-        return DataFaker.GetAverageString(PostCommentLikeConfigurations.IdMaxLength, PostCommentLikeConfigurations.IdMinLength);
-    }
-
     public static DateTimeOffset GetCreatedAt()
     {
         return DataFaker.GetMaxDate();

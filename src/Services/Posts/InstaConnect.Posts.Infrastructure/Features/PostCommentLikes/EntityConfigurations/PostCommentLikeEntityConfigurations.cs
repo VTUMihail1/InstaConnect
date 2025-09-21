@@ -10,9 +10,6 @@ public class PostCommentLikeEntityConfigurations : IEntityTypeConfiguration<Post
     public void Configure(EntityTypeBuilder<PostCommentLike> builder)
     {
         builder
-            .HasKey(p => p.CommentLikeId);
-
-        builder
             .Property(p => p.Id)
             .HasMaxLength(PostConfigurations.IdMaxLength)
             .IsRequired()
@@ -21,11 +18,6 @@ public class PostCommentLikeEntityConfigurations : IEntityTypeConfiguration<Post
         builder
             .Property(p => p.CommentId)
             .HasMaxLength(PostCommentConfigurations.IdMaxLength)
-            .IsRequired();
-
-        builder
-            .Property(p => p.CommentLikeId)
-            .HasMaxLength(PostCommentLikeConfigurations.IdMaxLength)
             .IsRequired();
 
         builder

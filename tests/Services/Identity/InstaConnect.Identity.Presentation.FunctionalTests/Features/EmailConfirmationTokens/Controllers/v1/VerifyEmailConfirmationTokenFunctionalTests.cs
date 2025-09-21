@@ -14,7 +14,7 @@ public class VerifyEmailConfirmationTokenFunctionalTests : BaseEmailConfirmation
     {
         // Arrange
         var existingEmailConfirmationToken = await CreateEmailConfirmationTokenAsync(CancellationToken);
-        var request = new VerifyEmailConfirmationTokenRequest(
+        var request = new VerifyEmailConfirmationTokenApiRequest(
             existingEmailConfirmationToken.Value,
             DataFaker.GetString(length)
         );
@@ -54,7 +54,7 @@ public class VerifyEmailConfirmationTokenFunctionalTests : BaseEmailConfirmation
     {
         // Arrange
         var existingEmailConfirmationToken = await CreateEmailConfirmationTokenAsync(CancellationToken);
-        var request = new VerifyEmailConfirmationTokenRequest(
+        var request = new VerifyEmailConfirmationTokenApiRequest(
             existingEmailConfirmationToken.Value,
             UserTestUtilities.InvalidId
         );

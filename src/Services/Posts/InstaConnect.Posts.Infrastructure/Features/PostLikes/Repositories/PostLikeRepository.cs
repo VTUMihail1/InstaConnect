@@ -52,30 +52,14 @@ internal class PostLikeRepository : IPostLikeRepository
         return response;
     }
 
-    public async Task<PostLike?> GetByIdAsync(string id, string likeId, CancellationToken cancellationToken)
+    public async Task<PostLike?> GetByIdAsync(string id, string userId, CancellationToken cancellationToken)
     {
         using var connection = _sqlConnectionFactory.Create();
 
-        var getByIdQuery = _postLikeQueryFactory.CreateGetById(id, likeId);
+        var getByIdQuery = _postLikeQueryFactory.CreateGetById(id, userId);
         var queryResponse = await connection.ExecuteQueryFirstAsync<PostLikeQueryEntity>(
             getByIdQuery.Sql,
             getByIdQuery.Parameters,
-            cancellationToken);
-        var postLike = _applicationMapper.Map<PostLike>(queryResponse!);
-
-        return postLike;
-    }
-
-
-
-    public async Task<PostLike?> GetByIdAndUserIdAsync(string id, string userId, CancellationToken cancellationToken)
-    {
-        using var connection = _sqlConnectionFactory.Create();
-
-        var getByIdAndUserIdQuery = _postLikeQueryFactory.CreateGetByIdAndUserId(id, userId);
-        var queryResponse = await connection.ExecuteQueryFirstAsync<PostLikeQueryEntity>(
-            getByIdAndUserIdQuery.Sql,
-            getByIdAndUserIdQuery.Parameters,
             cancellationToken);
         var postLike = _applicationMapper.Map<PostLike>(queryResponse!);
 

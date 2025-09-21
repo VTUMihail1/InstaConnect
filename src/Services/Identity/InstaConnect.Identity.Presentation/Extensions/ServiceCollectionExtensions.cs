@@ -16,9 +16,9 @@ public static class ServiceCollectionExtensions
             .AddEmailConfirmationTokenServices();
 
         serviceCollection
-            .AddServicesWithMatchingInterfaces(PresentationReference.Assembly)
+            .AddServicesWithMatchingInterfaces(IdentityPresentationReference.Assembly)
             .AddApiControllers()
-            .AddMapper(PresentationReference.Assembly)
+            .AddMapper(IdentityPresentationReference.Assembly)
             .AddAuthorizationPolicies()
             .AddCorsPolicies(configuration)
             .AddSwagger()

@@ -11,19 +11,9 @@ public static class PostCommentLikeProblemDetailsAssertions
         this ProblemDetails problemDetails,
         string id,
         string commentId,
-        string commentLikeId)
-    {
-        problemDetails.ShouldSatisfyNotFound(PostCommentLikeExceptionErrorMessages.GetNotFoundMessage(id, commentId, commentLikeId));
-    }
-
-    public static void ShouldSatisfyPostCommentLikeForbidden(
-        this ProblemDetails problemDetails,
-        string id,
-        string commentId,
-        string commentLikeId,
         string userId)
     {
-        problemDetails.ShouldSatisfyForbidden(PostCommentLikeExceptionErrorMessages.GetForbiddenMessage(id, commentId, commentLikeId, userId));
+        problemDetails.ShouldSatisfyNotFound(PostCommentLikeExceptionErrorMessages.GetNotFoundMessage(id, commentId, userId));
     }
 
     public static void ShouldSatisfyPostCommentLikeAlreadyExists(

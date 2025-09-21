@@ -14,7 +14,7 @@ public class ForgotPasswordTokensClient : IForgotPasswordTokensClient
     }
 
     public async Task<HttpStatusCode> AddStatusCodeAsync(
-        AddForgotPasswordTokenRequest request,
+        AddForgotPasswordTokenApiRequest request,
         CancellationToken cancellationToken)
     {
         var route = GetAddRoute(request.Email);
@@ -24,7 +24,7 @@ public class ForgotPasswordTokensClient : IForgotPasswordTokensClient
     }
 
     public async Task AddAsync(
-        AddForgotPasswordTokenRequest request,
+        AddForgotPasswordTokenApiRequest request,
         CancellationToken cancellationToken)
     {
         var route = GetAddRoute(request.Email);
@@ -32,7 +32,7 @@ public class ForgotPasswordTokensClient : IForgotPasswordTokensClient
     }
 
     public async Task<HttpStatusCode> VerifyStatusCodeAsync(
-        VerifyForgotPasswordTokenRequest request,
+        VerifyForgotPasswordTokenApiRequest request,
         CancellationToken cancellationToken)
     {
         var route = GetVerifyRoute(request.UserId, request.Token);
@@ -42,7 +42,7 @@ public class ForgotPasswordTokensClient : IForgotPasswordTokensClient
     }
 
     public async Task VerifyAsync(
-        VerifyForgotPasswordTokenRequest request,
+        VerifyForgotPasswordTokenApiRequest request,
         CancellationToken cancellationToken)
     {
         var route = GetVerifyRoute(request.UserId, request.Token);

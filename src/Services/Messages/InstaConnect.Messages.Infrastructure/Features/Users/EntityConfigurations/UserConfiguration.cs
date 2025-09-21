@@ -1,48 +1,58 @@
-﻿namespace InstaConnect.Messages.Infrastructure.Features.Users.EntityConfigurations;
+﻿using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
+using InstaConnect.Posts.Domain.Features.Users.Utilities;
 
-internal class UserConfiguration : IEntityTypeConfiguration<User>
+namespace InstaConnect.Posts.Infrastructure.Features.Users.EntityConfigurations;
+
+public class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
         builder
-            .ToTable("user");
+            .HasKey(u => u.Id);
 
         builder
-            .Property(p => p.Id)
-            .HasColumnName("id");
+            .Property(u => u.Id)
+            .HasMaxLength(UserConfigurations.IdMaxLength)
+            .IsRequired()
+            .ValueGeneratedNever();
 
         builder
-            .Property(p => p.FirstName)
-            .HasColumnName("first_name")
-            .HasMaxLength(255)
+            .Property(u => u.FirstName)
+            .HasMaxLength(UserConfigurations.FirstNameMaxLength)
             .IsRequired();
 
         builder
-            .Property(p => p.LastName)
-            .HasColumnName("last_name")
-            .HasMaxLength(255)
+            .Property(u => u.LastName)
+            .HasMaxLength(UserConfigurations.LastNameMaxLength)
             .IsRequired();
 
         builder
-            .Property(p => p.Email)
-            .HasColumnName("email");
+            .Property(u => u.Email)
+            .HasMaxLength(UserConfigurations.EmailMaxLength)
+            .IsRequired();
 
         builder
-            .Property(p => p.UserName)
-            .HasColumnName("user_name");
+            .Property(u => u.Name)
+            .HasMaxLength(UserConfigurations.NameMaxLength)
+            .IsRequired();
 
         builder
-            .Property(p => p.ProfileImage)
-            .HasColumnName("profile_image");
+            .Property(u => u.ProfileImage)
+            .HasMaxLength(UserConfigurations.ProfileImageMaxLength);
 
-        builder.HasMany(f => f.SenderMessages)
+        builder.HasMany(f => f.Chats)
+                .WithOne(u => u.ParticipantOne)
+                .HasForeignKey(f => f.ParticipantOneId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasMany(f => f.Chats)
+                .WithOne(u => u.ParticipantTwo)
+                .HasForeignKey(f => f.ParticipantTwoId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasMany(f => f.ChatMessages)
                 .WithOne(u => u.Sender)
                 .HasForeignKey(f => f.SenderId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-        builder.HasMany(f => f.ReceiverMessages)
-                    .WithOne(u => u.Receiver)
-                    .HasForeignKey(f => f.ReceiverId)
-                    .OnDelete(DeleteBehavior.Restrict);
     }
 }

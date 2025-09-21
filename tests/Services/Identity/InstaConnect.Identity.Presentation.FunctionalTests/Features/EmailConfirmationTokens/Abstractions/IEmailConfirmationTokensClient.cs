@@ -1,8 +1,8 @@
 ﻿namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.EmailConfirmationTokens.Abstractions;
 public interface IEmailConfirmationTokensClient
 {
-    Task AddAsync(AddEmailConfirmationTokenRequest request, CancellationToken cancellationToken);
-    Task<HttpStatusCode> AddStatusCodeAsync(AddEmailConfirmationTokenRequest request, CancellationToken cancellationToken);
-    Task VerifyAsync(VerifyEmailConfirmationTokenRequest request, CancellationToken cancellationToken);
-    Task<HttpStatusCode> VerifyStatusCodeAsync(VerifyEmailConfirmationTokenRequest request, CancellationToken cancellationToken);
+    Task AddAsync(AddEmailConfirmationTokenApiRequest request, CancellationToken cancellationToken);
+    Task<HttpStatusCode> AddStatusCodeAsync(AddEmailConfirmationTokenApiRequest request, CancellationToken cancellationToken);
+    Task VerifyAsync(VerifyEmailConfirmationTokenApiRequest request, CancellationToken cancellationToken);
+    Task<HttpStatusCode> VerifyStatusCodeAsync(VerifyEmailConfirmationTokenApiRequest request, CancellationToken cancellationToken);
 }

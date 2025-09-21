@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Messages.Presentation.Features.Users.Extensions;
+﻿namespace InstaConnect.Posts.Presentation.Features.Users.Extensions;
 
 public static class ServiceCollectionExtensions
 {

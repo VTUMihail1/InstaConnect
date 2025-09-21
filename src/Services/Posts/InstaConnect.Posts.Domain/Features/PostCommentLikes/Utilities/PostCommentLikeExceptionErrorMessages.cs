@@ -8,10 +8,10 @@ public static class PostCommentLikeExceptionErrorMessages
     public static string GetNotFoundMessage(
         string id, 
         string commentId, 
-        string commentLikeId)
+        string userId)
     {
-        const string Format = "PostCommentLike(id: {0}, commentId: {1}, commentLikeId: {2}) with that id does not exist";
-        var result = Format.FormatInvariantCulture(id, commentId, commentLikeId);
+        const string Format = "PostCommentLike(id: {0}, commentId: {1}, userId: {2}) with that id does not exist";
+        var result = Format.FormatInvariantCulture(id, commentId, userId);
 
         return result;
     }
@@ -20,18 +20,6 @@ public static class PostCommentLikeExceptionErrorMessages
     {
         const string Format = "PostCommentLike(id: {0}, commentId: {1}, userId: {2}) already exists";
         var result = Format.FormatInvariantCulture(id, commentId, userId);
-
-        return result;
-    }
-
-    public static string GetForbiddenMessage(
-        string id, 
-        string commentId, 
-        string commentLikeId,
-        string userId)
-    {
-        const string Format = "PostCommentLike(id: {0}, commentId: {1}, commentLikeId: {2}) is not owned by User(id: {1})";
-        var result = Format.FormatInvariantCulture(id, commentId, commentLikeId, userId);
 
         return result;
     }

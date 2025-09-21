@@ -53,30 +53,14 @@ internal class PostCommentLikeRepository : IPostCommentLikeRepository
         return response;
     }
 
-    public async Task<PostCommentLike?> GetByIdAsync(string id, string commentId, string commentLikeId, CancellationToken cancellationToken)
+    public async Task<PostCommentLike?> GetByIdAsync(string id, string commentId, string userId, CancellationToken cancellationToken)
     {
         using var connection = _sqlConnectionFactory.Create();
 
-        var getByIdQuery = _postCommentLikeQueryFactory.CreateGetById(id, commentId, commentLikeId);
+        var getByIdQuery = _postCommentLikeQueryFactory.CreateGetById(id, commentId, userId);
         var queryResponse = await connection.ExecuteQueryFirstAsync<PostCommentLikeQueryEntity>(
             getByIdQuery.Sql,
             getByIdQuery.Parameters,
-            cancellationToken);
-        var postCommentLike = _appclicationMapper.Map<PostCommentLike>(queryResponse!);
-
-        return postCommentLike;
-    }
-
-
-
-    public async Task<PostCommentLike?> GetByIdAndUserIdAsync(string id, string commentId, string userId, CancellationToken cancellationToken)
-    {
-        using var connection = _sqlConnectionFactory.Create();
-
-        var getByIdAndUserIdQuery = _postCommentLikeQueryFactory.CreateGetByIdAndUserId(id, commentId, userId);
-        var queryResponse = await connection.ExecuteQueryFirstAsync<PostCommentLikeQueryEntity>(
-            getByIdAndUserIdQuery.Sql,
-            getByIdAndUserIdQuery.Parameters,
             cancellationToken);
         var postCommentLike = _appclicationMapper.Map<PostCommentLike>(queryResponse!);
 

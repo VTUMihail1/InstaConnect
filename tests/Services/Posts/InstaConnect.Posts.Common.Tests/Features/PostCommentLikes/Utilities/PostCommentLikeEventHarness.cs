@@ -14,7 +14,6 @@ public static class PostCommentLikeEventHarness
     {
         var result = await eventHarness.PublishedAsync<PostCommentLikeAddedEventRequest>(p => p.Id == postCommentLike.Id &&
                                                                                    p.CommentId == postCommentLike.CommentId &&
-                                                                                   p.CommentLikeId == postCommentLike.CommentLikeId &&
                                                                                    p.UserId == postCommentLike.UserId &&
                                                                                    p.CreatedAt == postCommentLike.CreatedAt &&
                                                                                    p.UpdatedAt == postCommentLike.UpdatedAt, cancellationToken);
@@ -29,7 +28,7 @@ public static class PostCommentLikeEventHarness
     {
         var result = await eventHarness.PublishedAsync<PostCommentLikeDeletedEventRequest>(p => p.Id == postCommentLike.Id &&
                                                                                          p.CommentId == postCommentLike.CommentId &&
-                                                                                         p.CommentLikeId == postCommentLike.CommentLikeId, cancellationToken);
+                                                                                         p.UserId == postCommentLike.UserId, cancellationToken);
 
         return result;
     }

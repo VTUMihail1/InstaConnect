@@ -13,7 +13,6 @@ public static class PostCommentLikeMatcher
     {
         return Matcher.Is<GetAllPostCommentLikesQueryRequest>(p => p.Filter.Id == request.Filter.Id &&
                                                                    p.Filter.CommentId == request.Filter.CommentId &&
-                                                                   p.Filter.UserId == request.Filter.UserId &&
                                                                    p.Filter.UserName == request.Filter.UserName &&
                                                                    p.Pagination.Page == request.Pagination.Page &&
                                                                    p.Pagination.PageSize == request.Pagination.PageSize &&
@@ -25,7 +24,7 @@ public static class PostCommentLikeMatcher
     {
         return Matcher.Is<GetPostCommentLikeByIdQueryRequest>(p => p.Id == request.Id &&
                                                                    p.CommentId == request.CommentId &&
-                                                                   p.CommentLikeId == request.CommentLikeId);
+                                                                   p.UserId == request.UserId);
     }
 
     public static AddPostCommentLikeCommandRequest IsAddPostCommentLikeCommandRequest(AddPostCommentLikeApiRequest request)
@@ -39,14 +38,12 @@ public static class PostCommentLikeMatcher
     {
         return Matcher.Is<DeletePostCommentLikeCommandRequest>(p => p.Id == request.Id &&
                                                                     p.CommentId == request.CommentId &&
-                                                                    p.CommentLikeId == request.CommentLikeId &&
                                                                     p.UserId == request.UserId);
     }
     public static GetAllPostCommentLikesQuery IsGetAllPostCommentLikesQuery(GetAllPostCommentLikesQueryRequest request)
     {
         return Matcher.Is<GetAllPostCommentLikesQuery>(p => p.Filter.Id == request.Filter.Id &&
                                                             p.Filter.CommentId == request.Filter.CommentId &&
-                                                            p.Filter.UserId == request.Filter.UserId &&
                                                             p.Filter.UserName == request.Filter.UserName &&
                                                             p.Pagination.Page == request.Pagination.Page &&
                                                             p.Pagination.PageSize == request.Pagination.PageSize &&
@@ -58,7 +55,7 @@ public static class PostCommentLikeMatcher
     {
         return Matcher.Is<GetPostCommentLikeByIdQuery>(p => p.Id == request.Id &&
                                                             p.CommentId == request.CommentId &&
-                                                            p.CommentLikeId == request.CommentLikeId);
+                                                            p.UserId == request.UserId);
     }
 
     public static AddPostCommentLikeCommand IsAddPostCommentLikeCommand(AddPostCommentLikeCommandRequest request)
@@ -72,7 +69,6 @@ public static class PostCommentLikeMatcher
     {
         return Matcher.Is<DeletePostCommentLikeCommand>(p => p.Id == request.Id &&
                                                              p.CommentId == request.CommentId &&
-                                                             p.CommentLikeId == request.CommentLikeId &&
                                                              p.UserId == request.UserId);
     }
 }

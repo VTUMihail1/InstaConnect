@@ -81,36 +81,6 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationFunctional
     }
 
     [Theory]
-    [UserIdTooLongData]
-    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenUserIdIsInvalid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Build();
-
-        // Act
-        var response = await HttpClient.GetAllPostLikesStatusCodeAsync(request, CancellationToken);
-
-        // Assert
-        response.ShouldBeBadRequest();
-    }
-
-    [Theory]
-    [UserIdTooLongWithMessageData]
-    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenUserIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
-    {
-        // Arrange
-        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Build();
-
-        // Act
-        var response = await HttpClient.GetAllPostLikesProblemDetailsAsync(request, CancellationToken);
-
-        // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
-    }
-
-    [Theory]
     [UserNameTooLongData]
     public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenUserNameIsInvalid(
         IStringTransformer transformer)
@@ -320,23 +290,6 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationFunctional
     }
 
     [Theory]
-    [UserIdNullData]
-    [UserIdEmptyData]
-    [UserIdDifferentCaseData]
-    public async Task GetAllAsync_ShouldHaveOkStatusCode_WhenRequestAndUserIdAreValid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Build();
-
-        // Act
-        var response = await HttpClient.GetAllPostLikesStatusCodeAsync(request, CancellationToken);
-
-        // Assert
-        response.ShouldBeOk();
-    }
-
-    [Theory]
     [UserNameNullData]
     [UserNameEmptyData]
     [UserNameDifferentCaseData]
@@ -370,23 +323,6 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationFunctional
     {
         // Arrange
         var request = _requestBuilder.WithId(_request.Filter.Id, transformer).Build();
-
-        // Act
-        var response = await HttpClient.GetAllPostLikesAsync(request, CancellationToken);
-
-        // Assert
-        response.ShouldSatisfy(PostLike, User, _request);
-    }
-
-    [Theory]
-    [UserIdNullData]
-    [UserIdEmptyData]
-    [UserIdDifferentCaseData]
-    public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndUserIdAreValid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostLikesAsync(request, CancellationToken);

@@ -1,7 +1,7 @@
 ﻿using InstaConnect.Common.Application.Abstractions;
 using InstaConnect.Identity.Domain.Features.UserClaims.Abstractions;
 using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entities;
-using InstaConnect.Identity.Domain.Features.Users.Abstractions;
+using InstaConnect.Identity.Domain.Helpers;
 using InstaConnect.Identity.Infrastructure;
 
 using MassTransit.Testing;

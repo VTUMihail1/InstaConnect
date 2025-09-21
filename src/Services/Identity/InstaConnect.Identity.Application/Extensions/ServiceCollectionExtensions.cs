@@ -1,8 +1,9 @@
 ﻿using InstaConnect.Common.Application.Extensions;
 using InstaConnect.Common.Extensions;
-using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Extensions;
-using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Extensions;
-using InstaConnect.Identity.Application.Features.Users.Extensions;
+using InstaConnect.EmailConfirmationTokens.Application.Features.EmailConfirmationTokens.Extensions;
+using InstaConnect.ForgotPasswordTokens.Application.Features.ForgotPasswordTokens.Extensions;
+using InstaConnect.RefreshTokens.Application.Features.RefreshTokens.Extensions;
+using InstaConnect.Users.Application.Features.Users.Extensions;
 
 namespace InstaConnect.Identity.Application.Extensions;
 
@@ -12,13 +13,14 @@ public static class ServiceCollectionExtensions
     {
         serviceCollection
             .AddUserServices()
+            .AddRefreshTokenServices()
             .AddForgotPasswordTokenServices()
             .AddEmailConfirmationTokenServices();
 
         serviceCollection
-            .AddValidators(ApplicationReference.Assembly)
-            .AddCQRS(ApplicationReference.Assembly)
-            .AddMapper(ApplicationReference.Assembly);
+            .AddValidators(IdentityApplicationReference.Assembly)
+            .AddCQRS(IdentityApplicationReference.Assembly)
+            .AddMapper(IdentityApplicationReference.Assembly);
 
         return serviceCollection;
     }

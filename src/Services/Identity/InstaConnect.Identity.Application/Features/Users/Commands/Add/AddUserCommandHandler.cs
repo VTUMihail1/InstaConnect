@@ -1,76 +1,35 @@
-﻿using InstaConnect.Common.Domain.Abstractions;
+﻿using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Requests;
+using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
+using InstaConnect.Users.Domain.Features.Users.Abstractions;
 
-namespace InstaConnect.Identity.Application.Features.Users.Commands.Add;
+namespace InstaConnect.Users.Application.Features.Users.Commands.Add;
 
-public class AddUserCommandHandler : ICommandHandler<AddUserCommand, UserCommandViewModel>
+internal class AddUserCommandHandler : ICommandHandler<AddUserCommandRequest, AddUserCommandResponse>
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IImageHandler _imageHandler;
-    private readonly IPasswordHasher _passwordHasher;
-    private readonly IEventPublisher _eventPublisher;
+    private readonly IUserService _userService;
     private readonly IApplicationMapper _applicationMapper;
-    private readonly IUserWriteRepository _userWriteRepository;
-    private readonly IEmailConfirmationTokenPublisher _emailConfirmationTokenPublisher;
+    private readonly IEmailConfirmationTokenService _emailConfirmationTokenService;
 
     public AddUserCommandHandler(
-        IUnitOfWork unitOfWork,
-        IImageHandler imageHandler,
-        IPasswordHasher passwordHasher,
-        IEventPublisher eventPublisher,
+        IUserService userService,
         IApplicationMapper applicationMapper,
-        IUserWriteRepository userWriteRepository,
-        IEmailConfirmationTokenPublisher emailConfirmationTokenPublisher)
+        IEmailConfirmationTokenService emailConfirmationTokenService)
     {
-        _unitOfWork = unitOfWork;
-        _imageHandler = imageHandler;
-        _passwordHasher = passwordHasher;
-        _eventPublisher = eventPublisher;
+        _userService = userService;
         _applicationMapper = applicationMapper;
-        _userWriteRepository = userWriteRepository;
-        _emailConfirmationTokenPublisher = emailConfirmationTokenPublisher;
+        _emailConfirmationTokenService = emailConfirmationTokenService;
     }
 
-    public async Task<UserCommandViewModel> Handle(
-        AddUserCommand request,
-        CancellationToken cancellationToken)
+    public async Task<AddUserCommandResponse> Handle(AddUserCommandRequest request, CancellationToken cancellationToken)
     {
-        var existingEmailUser = await _userWriteRepository.GetByEmailAsync(request.Email, cancellationToken);
+        var serviceRequest = _applicationMapper.Map<AddUserCommand>(request);
+        var user = await _userService.AddAsync(serviceRequest, cancellationToken);
 
-        if (existingEmailUser != null)
-        {
-            throw new UserEmailAlreadyTakenException();
-        }
+        var tokenServiceRequest = _applicationMapper.Map<AddEmailConfirmationTokenCommand>(user);
+        await _emailConfirmationTokenService.AddAsync(tokenServiceRequest, cancellationToken);
 
-        var existingNameUser = await _userWriteRepository.GetByNameAsync(request.UserName, cancellationToken);
+        var response = _applicationMapper.Map<AddUserCommandResponse>(user);
 
-        if (existingNameUser != null)
-        {
-            throw new UserNameAlreadyTakenException();
-        }
-
-        var passwordHash = _passwordHasher.Hash(request.Password);
-        var user = _applicationMapper.Map<User>((passwordHash, request));
-
-        if (request.ProfileImage != null)
-        {
-            var imageUploadModel = _applicationMapper.Map<ImageUploadModel>(request);
-            var imageUploadResult = await _imageHandler.UploadAsync(imageUploadModel, cancellationToken);
-
-            _applicationMapper.Map(imageUploadResult, user);
-        }
-
-        _userWriteRepository.Add(user);
-
-        var userCreatedEvent = _applicationMapper.Map<UserAddedEventRequest>(user);
-        await _eventPublisher.PublishAsync(userCreatedEvent, cancellationToken);
-
-        var createEmailConfirmationTokenModel = _applicationMapper.Map<CreateEmailConfirmationTokenModel>(user);
-        await _emailConfirmationTokenPublisher.PublishEmailConfirmationTokenAsync(createEmailConfirmationTokenModel, cancellationToken);
-
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-
-        var accountCommandViewModel = _applicationMapper.Map<UserCommandViewModel>(user);
-
-        return accountCommandViewModel;
+        return response;
     }
 }

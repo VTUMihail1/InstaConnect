@@ -2,9 +2,9 @@
 
 internal class DatabaseSeeder : IDatabaseSeeder
 {
-    private readonly MessagesContext _messagesContext;
+    private readonly ChatsContext _messagesContext;
 
-    public DatabaseSeeder(MessagesContext messagesContext)
+    public DatabaseSeeder(ChatsContext messagesContext)
     {
         _messagesContext = messagesContext;
     }

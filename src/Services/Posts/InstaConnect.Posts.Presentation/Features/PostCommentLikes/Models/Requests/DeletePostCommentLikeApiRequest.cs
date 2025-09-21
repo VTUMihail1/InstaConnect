@@ -5,6 +5,5 @@ namespace InstaConnect.PostCommentLikes.Presentation.Features.PostCommentLikes.M
 public record DeletePostCommentLikeApiRequest(
     [FromRoute] string Id,
     [FromRoute] string CommentId,
-    [FromRoute] string CommentLikeId,
     [FromClaim(ClaimTypes.NameIdentifier)] string UserId
 );

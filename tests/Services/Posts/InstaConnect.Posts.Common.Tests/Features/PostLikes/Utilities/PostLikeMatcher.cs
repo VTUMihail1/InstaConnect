@@ -12,7 +12,6 @@ public static class PostLikeMatcher
     public static GetAllPostLikesQueryRequest IsGetAllPostLikesQueryRequest(GetAllPostLikesApiRequest request)
     {
         return Matcher.Is<GetAllPostLikesQueryRequest>(p => p.Filter.Id == request.Filter.Id &&
-                                                            p.Filter.UserId == request.Filter.UserId &&
                                                             p.Filter.UserName == request.Filter.UserName &&
                                                             p.Pagination.Page == request.Pagination.Page &&
                                                             p.Pagination.PageSize == request.Pagination.PageSize &&
@@ -23,7 +22,7 @@ public static class PostLikeMatcher
     public static GetPostLikeByIdQueryRequest IsGetPostLikeByIdQueryRequest(GetPostLikeByIdApiRequest request)
     {
         return Matcher.Is<GetPostLikeByIdQueryRequest>(p => p.Id == request.Id &&
-                                                            p.LikeId == request.LikeId);
+                                                            p.UserId == request.UserId);
     }
 
     public static AddPostLikeCommandRequest IsAddPostLikeCommandRequest(AddPostLikeApiRequest request)
@@ -35,13 +34,11 @@ public static class PostLikeMatcher
     public static DeletePostLikeCommandRequest IsDeletePostLikeCommandRequest(DeletePostLikeApiRequest request)
     {
         return Matcher.Is<DeletePostLikeCommandRequest>(p => p.Id == request.Id &&
-                                                             p.LikeId == request.LikeId &&
                                                              p.UserId == request.UserId);
     }
     public static GetAllPostLikesQuery IsGetAllPostLikesQuery(GetAllPostLikesQueryRequest request)
     {
         return Matcher.Is<GetAllPostLikesQuery>(p => p.Filter.Id == request.Filter.Id &&
-                                                        p.Filter.UserId == request.Filter.UserId &&
                                                         p.Filter.UserName == request.Filter.UserName &&
                                                         p.Pagination.Page == request.Pagination.Page &&
                                                         p.Pagination.PageSize == request.Pagination.PageSize &&
@@ -52,7 +49,7 @@ public static class PostLikeMatcher
     public static GetPostLikeByIdQuery IsGetPostLikeByIdQuery(GetPostLikeByIdQueryRequest request)
     {
         return Matcher.Is<GetPostLikeByIdQuery>(p => p.Id == request.Id &&
-                                                     p.LikeId == request.LikeId);
+                                                     p.UserId == request.UserId);
     }
 
     public static AddPostLikeCommand IsAddPostLikeCommand(AddPostLikeCommandRequest request)
@@ -64,7 +61,6 @@ public static class PostLikeMatcher
     public static DeletePostLikeCommand IsDeletePostLikeCommand(DeletePostLikeCommandRequest request)
     {
         return Matcher.Is<DeletePostLikeCommand>(p => p.Id == request.Id &&
-                                                      p.LikeId == request.LikeId &&
                                                       p.UserId == request.UserId);
     }
 }

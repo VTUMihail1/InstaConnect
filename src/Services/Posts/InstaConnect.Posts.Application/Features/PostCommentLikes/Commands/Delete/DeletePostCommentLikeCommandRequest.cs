@@ -3,5 +3,4 @@
 public record DeletePostCommentLikeCommandRequest(
     string Id,
     string CommentId,
-    string CommentLikeId,
     string UserId) : ICommandRequest;

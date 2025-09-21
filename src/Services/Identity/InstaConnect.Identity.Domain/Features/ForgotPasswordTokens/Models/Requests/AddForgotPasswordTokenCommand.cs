@@ -1,0 +1,5 @@
+﻿using Microsoft.AspNetCore.Http;
+
+namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Requests;
+
+public record AddForgotPasswordTokenCommand(string Name);

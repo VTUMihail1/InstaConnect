@@ -1,16 +1,17 @@
 ﻿using InstaConnect.Common.Exceptions;
+using InstaConnect.Identity.Domain.Features.Users.Utilities;
 
 namespace InstaConnect.Identity.Domain.Features.Users.Exceptions;
 
 public class UserEmailNotConfirmedException : BadRequestException
 {
-    private const string ErrorMessage = "Email needs to be confirmed";
-
-    public UserEmailNotConfirmedException() : base(ErrorMessage)
+    public UserEmailNotConfirmedException(string email) : base(
+        UserExceptionErrorMessages.GetEmailNotConfirmedMessage(email))
     {
     }
 
-    public UserEmailNotConfirmedException(Exception exception) : base(ErrorMessage, exception)
+    public UserEmailNotConfirmedException(string email, Exception exception) : base(
+        UserExceptionErrorMessages.GetEmailNotConfirmedMessage(email), exception)
     {
     }
 }

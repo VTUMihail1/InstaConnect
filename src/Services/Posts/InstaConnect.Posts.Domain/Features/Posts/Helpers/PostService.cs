@@ -85,7 +85,7 @@ internal class PostService : IPostService
             throw new PostNotFoundException(command.Id);
         }
 
-        if (existingPost!.UserId.NotEqualsOrdinalIgnoreCase(command.UserId))
+        if (existingPost!.IsNotOwnedByUser(command.UserId))
         {
             throw new PostForbiddenException(command.Id, command.UserId);
         }
@@ -109,7 +109,7 @@ internal class PostService : IPostService
             throw new PostNotFoundException(command.Id);
         }
 
-        if (existingPost!.UserId.NotEqualsOrdinalIgnoreCase(command.UserId))
+        if (existingPost!.IsNotOwnedByUser(command.UserId))
         {
             throw new PostForbiddenException(command.Id, command.UserId);
         }

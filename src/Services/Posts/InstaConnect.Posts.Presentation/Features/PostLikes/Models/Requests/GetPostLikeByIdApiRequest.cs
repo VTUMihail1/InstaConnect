@@ -2,5 +2,5 @@
 
 public record GetPostLikeByIdApiRequest(
     [FromRoute] string Id,
-    [FromRoute] string LikeId
+    [FromRoute] string UserId
 );

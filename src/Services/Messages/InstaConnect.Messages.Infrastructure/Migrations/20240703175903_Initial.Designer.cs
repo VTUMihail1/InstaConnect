@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace InstaConnect.Messages.Read.Data.Migrations
 {
-    [DbContext(typeof(MessagesContext))]
+    [DbContext(typeof(ChatsContext))]
     [Migration("20240703175903_Initial")]
     partial class Initial
     {

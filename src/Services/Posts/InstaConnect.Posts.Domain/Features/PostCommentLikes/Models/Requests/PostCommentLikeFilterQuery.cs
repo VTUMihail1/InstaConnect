@@ -3,5 +3,4 @@
 public record PostCommentLikeFilterQuery(
     string Id,
     string CommentId,
-    string UserId,
     string UserName);

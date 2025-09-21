@@ -80,7 +80,7 @@ public abstract class BaseUserFunctionalTest : IClassFixture<MessagesWebApplicat
 
     private async Task EnsureDatabaseIsEmpty()
     {
-        var dbContext = ServiceScope.ServiceProvider.GetRequiredService<MessagesContext>();
+        var dbContext = ServiceScope.ServiceProvider.GetRequiredService<ChatsContext>();
 
         if (await dbContext.Users.AnyAsync(CancellationToken))
         {

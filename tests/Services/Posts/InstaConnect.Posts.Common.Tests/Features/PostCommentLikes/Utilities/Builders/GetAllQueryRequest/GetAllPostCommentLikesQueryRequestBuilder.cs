@@ -22,7 +22,6 @@ public class GetAllPostCommentLikesQueryRequestBuilder
 
         WithId(postCommentLike.Id);
         WithCommentId(postCommentLike.CommentId);
-        WithUserId(user.Id);
         WithUserName(user.Name);
         WithPage(PostCommentLikeDataFaker.GetPage());
         WithPageSize(PostCommentLikeDataFaker.GetPageSize());
@@ -40,13 +39,6 @@ public class GetAllPostCommentLikesQueryRequestBuilder
     public GetAllPostCommentLikesQueryRequestBuilder WithCommentId(string commentId, IStringTransformer? transformer = null)
     {
         _objectBuilder.With(p => p.Filter.CommentId, commentId, transformer);
-
-        return this;
-    }
-
-    public GetAllPostCommentLikesQueryRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)
-    {
-        _objectBuilder.With(p => p.Filter.UserId, userId, transformer);
 
         return this;
     }

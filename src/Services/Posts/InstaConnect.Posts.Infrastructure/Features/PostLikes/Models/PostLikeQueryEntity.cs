@@ -2,7 +2,6 @@
 
 public record PostLikeQueryEntity(
         string Id,
-        string LikeId,
         DateTimeOffset CreatedAt,
         DateTimeOffset UpdatedAt,
         string UserId,

@@ -17,7 +17,7 @@ public class PostLikeApplicationMappings : IRegister
     {
         config.NewConfig<GetAllPostLikesQueryRequest, GetAllPostLikesQuery>()
             .ConstructUsing(src => new(
-                new(src.Filter.Id, src.Filter.UserId, src.Filter.UserName),
+                new(src.Filter.Id, src.Filter.UserName),
                 new(src.Sorting.Order, src.Sorting.Property),
                 new(src.Pagination.Page, src.Pagination.PageSize)));
 
@@ -25,7 +25,6 @@ public class PostLikeApplicationMappings : IRegister
             .ConstructUsing(pc => new(
                   pc.Data.Select(p => new PostLikeQueryResponse(
                                       p.Id,
-                                      p.LikeId,
                                       new(
                                           p.UserId,
                                           p.User!.Name,
@@ -38,12 +37,11 @@ public class PostLikeApplicationMappings : IRegister
                   pc.HasPreviousPage));
 
         config.NewConfig<GetPostLikeByIdQueryRequest, GetPostLikeByIdQuery>()
-            .ConstructUsing(src => new(src.Id, src.LikeId));
+            .ConstructUsing(src => new(src.Id, src.UserId));
 
         config.NewConfig<PostLike, GetPostLikeByIdQueryResponse>()
             .ConstructUsing(src => new(
                 new(src.Id,
-                    src.LikeId,
                     new(
                         src.UserId,
                         src.User!.Name,
@@ -53,9 +51,9 @@ public class PostLikeApplicationMappings : IRegister
             .ConstructUsing(src => new(src.Id, src.UserId));
 
         config.NewConfig<PostLike, AddPostLikeCommandResponse>()
-            .ConstructUsing(src => new(src.Id, src.LikeId, src.CreatedAt, src.UpdatedAt));
+            .ConstructUsing(src => new(src.Id, src.UserId, src.CreatedAt, src.UpdatedAt));
 
         config.NewConfig<DeletePostLikeCommandRequest, DeletePostLikeCommand>()
-            .ConstructUsing(src => new(src.Id, src.LikeId, src.UserId));
+            .ConstructUsing(src => new(src.Id, src.UserId));
     }
 }

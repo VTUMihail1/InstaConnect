@@ -29,7 +29,6 @@ public class PostLikeQueryFactory : IPostLikeQueryFactory
         var offset = _paginator.GetOffset(query.Pagination.Page, query.Pagination.PageSize);
         var parameters = new GetAllPostLikesQueryParameters(
             query.Filter.Id,
-            query.Filter.UserId,
             query.Filter.UserName,
             sortOrder.Order,
             sortProperty.Property,
@@ -47,7 +46,6 @@ public class PostLikeQueryFactory : IPostLikeQueryFactory
     {
         var parameters = new GetAllPostLikesTotalCountQueryParameters(
             query.Id,
-            query.UserId,
             query.UserName);
 
         var specification = new GetAllPostLikesTotalCountQuerySpecification(
@@ -57,22 +55,11 @@ public class PostLikeQueryFactory : IPostLikeQueryFactory
         return specification;
     }
 
-    public GetPostLikeByIdQuerySpecification CreateGetById(string id, string likeId)
+    public GetPostLikeByIdQuerySpecification CreateGetById(string id, string userId)
     {
-        var parameters = new GetPostLikeByIdQueryParameters(id, likeId);
+        var parameters = new GetPostLikeByIdQueryParameters(id, userId);
 
         var result = new GetPostLikeByIdQuerySpecification(
-            PostLikeQuerySql.GetById,
-            parameters);
-
-        return result;
-    }
-
-    public GetPostLikeByIdAndUserIdQuerySpecification CreateGetByIdAndUserId(string id, string userId)
-    {
-        var parameters = new GetPostLikeByIdAndUserIdQueryParameters(id, userId);
-
-        var result = new GetPostLikeByIdAndUserIdQuerySpecification(
             PostLikeQuerySql.GetById,
             parameters);
 

@@ -66,24 +66,6 @@ public class DeletePostCommentLikeCommandRequestValidatorUnitTests : BasePostCom
     }
 
     [Theory]
-    [PostCommentLikeIdNullWithMessageData]
-    [PostCommentLikeIdEmptyWithMessageData]
-    [PostCommentLikeIdTooShortWithMessageData]
-    [PostCommentLikeIdTooLongWithMessageData]
-    public void TestValidate_ShouldHaveAnError_WhenCommentLikeIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
-    {
-        // Arrange
-        var request = _requestBuilder.WithCommentLikeId(_request.CommentLikeId, transformer).Build();
-
-        // Act
-        var result = _requestValidator.TestValidate(request);
-
-        // Assert
-        result.ShouldHaveValidationErrorForId(errorMessage);
-    }
-
-    [Theory]
     [UserIdNullWithMessageData]
     [UserIdEmptyWithMessageData]
     [UserIdTooShortWithMessageData]

@@ -13,7 +13,6 @@ public static class PostLikeEventHarness
         CancellationToken cancellationToken)
     {
         var result = await eventHarness.PublishedAsync<PostLikeAddedEventRequest>(p => p.Id == postLike.Id &&
-                                                                                p.LikeId == postLike.LikeId &&
                                                                                 p.UserId == postLike.UserId &&
                                                                                 p.CreatedAt == postLike.CreatedAt &&
                                                                                 p.UpdatedAt == postLike.UpdatedAt, cancellationToken);
@@ -27,7 +26,7 @@ public static class PostLikeEventHarness
         CancellationToken cancellationToken)
     {
         var result = await eventHarness.PublishedAsync<PostLikeDeletedEventRequest>(p => p.Id == postLike.Id &&
-                                                                                  p.LikeId == postLike.LikeId, cancellationToken);
+                                                                                         p.UserId == postLike.UserId, cancellationToken);
 
         return result;
     }

@@ -11,12 +11,6 @@ public interface IPostCommentLikeRepository
         CancellationToken cancellationToken);
 
     Task<PostCommentLike?> GetByIdAsync(
-        string id, 
-        string commentId, 
-        string commentLikeId, 
-        CancellationToken cancellationToken);
-
-    Task<PostCommentLike?> GetByIdAndUserIdAsync(
         string id,
         string commentId,
         string userId,

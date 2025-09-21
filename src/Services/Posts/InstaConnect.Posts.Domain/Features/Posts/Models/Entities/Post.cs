@@ -1,4 +1,7 @@
-﻿using InstaConnect.PostComments.Domain.Features.PostComments.Models.Entities;
+﻿using System.Xml.Linq;
+
+using InstaConnect.Common.Extensions;
+using InstaConnect.PostComments.Domain.Features.PostComments.Models.Entities;
 using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Entities;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
@@ -97,5 +100,19 @@ public class Post : IEntity
         Title = title;
         Content = content;
         UpdatedAt = updatedAt;
+    }
+
+    public bool IsOwnedByUser(string userId)
+    {
+        var isOwnedByUser = UserId.EqualsOrdinalIgnoreCase(userId);
+
+        return isOwnedByUser;
+    }
+
+    public bool IsNotOwnedByUser(string userId)
+    {
+        var isNotOwnedByUser = !IsOwnedByUser(userId);
+
+        return isNotOwnedByUser;
     }
 }

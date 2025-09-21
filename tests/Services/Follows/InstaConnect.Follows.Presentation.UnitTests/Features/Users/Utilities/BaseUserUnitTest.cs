@@ -24,7 +24,7 @@ public abstract class BaseUserUnitTest
         CancellationToken = new();
         ApplicationMapper = new ApplicationMapper(
             new Mapper(
-                new MapperConfiguration(cfg => cfg.AddMaps(PresentationReference.Assembly))));
+                new MapperConfiguration(cfg => cfg.AddMaps(FollowPresentationReference.Assembly))));
         UserWriteRepository = Substitute.For<IUserWriteRepository>();
     }
 

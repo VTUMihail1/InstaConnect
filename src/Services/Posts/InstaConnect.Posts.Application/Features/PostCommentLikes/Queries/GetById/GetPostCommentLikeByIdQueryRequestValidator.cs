@@ -1,5 +1,6 @@
 ﻿using InstaConnect.PostCommentLikes.Common.Features.PostCommentLikes.Utilities;
 using InstaConnect.PostComments.Common.Features.PostComments.Utilities;
+using InstaConnect.Posts.Domain.Features.Users.Utilities;
 
 namespace InstaConnect.PostCommentLikes.Application.Features.PostCommentLikes.Queries.GetById;
 
@@ -23,12 +24,12 @@ public class GetPostCommentLikeByIdQueryRequestValidator : AbstractValidator<Get
             .MaximumLength(PostCommentConfigurations.IdMaxLength)
             .WithMessage(r => PostCommentErrorMessages.GetIdTooLong(r.CommentId.Length));
 
-        RuleFor(r => r.CommentLikeId)
+        RuleFor(r => r.UserId)
             .NotEmpty()
-            .WithMessage(PostCommentLikeErrorMessages.GetIdEmpty())
-            .MinimumLength(PostCommentLikeConfigurations.IdMinLength)
-            .WithMessage(r => PostCommentLikeErrorMessages.GetIdTooShort(r.CommentLikeId.Length))
-            .MaximumLength(PostCommentLikeConfigurations.IdMaxLength)
-            .WithMessage(r => PostCommentLikeErrorMessages.GetIdTooLong(r.CommentLikeId.Length));
+            .WithMessage(UserErrorMessages.GetIdEmpty())
+            .MinimumLength(UserConfigurations.IdMinLength)
+            .WithMessage(r => UserErrorMessages.GetIdTooShort(r.UserId.Length))
+            .MaximumLength(UserConfigurations.IdMaxLength)
+            .WithMessage(r => UserErrorMessages.GetIdTooLong(r.UserId.Length));
     }
 }

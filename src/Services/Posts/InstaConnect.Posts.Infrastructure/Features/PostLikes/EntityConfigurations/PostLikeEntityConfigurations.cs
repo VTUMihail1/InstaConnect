@@ -9,18 +9,10 @@ public class PostLikeEntityConfigurations : IEntityTypeConfiguration<PostLike>
     public void Configure(EntityTypeBuilder<PostLike> builder)
     {
         builder
-            .HasKey(p => p.LikeId);
-
-        builder
             .Property(p => p.Id)
             .HasMaxLength(PostConfigurations.IdMaxLength)
             .IsRequired()
             .ValueGeneratedNever();
-
-        builder
-            .Property(p => p.LikeId)
-            .HasMaxLength(PostLikeConfigurations.IdMaxLength)
-            .IsRequired();
 
         builder
             .Property(p => p.UserId)

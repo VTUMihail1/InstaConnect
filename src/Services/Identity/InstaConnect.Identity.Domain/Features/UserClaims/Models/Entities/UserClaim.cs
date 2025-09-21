@@ -1,29 +1,30 @@
-﻿using InstaConnect.Identity.Domain.Features.Users.Models.Entities;
+﻿namespace InstaConnect.Identity.Domain.Features.UserClaims.Models.Entities;
 
-namespace InstaConnect.Identity.Domain.Features.UserClaims.Models.Entities;
-
-public class UserClaim : BaseEntity
+public class UserClaim : IEntity
 {
-    public UserClaim(string claim, string value, string userId)
+    public UserClaim()
     {
-        Claim = claim;
-        Value = value;
-        UserId = userId;
+        Id = string.Empty;
+        Claim = string.Empty;
+        Value = string.Empty;
     }
 
-    public UserClaim(string claim, string value, User user)
+    public UserClaim(string id, string claim, string value, DateTimeOffset createdAt, DateTimeOffset updatedAt)
     {
+        Id = id;
         Claim = claim;
         Value = value;
-        UserId = user.Id;
-        User = user;
+        CreatedAt = createdAt;
+        UpdatedAt = updatedAt;
     }
+
+    public string Id { get; }
 
     public string Claim { get; }
 
     public string Value { get; }
 
-    public string UserId { get; }
+    public DateTimeOffset CreatedAt { get; }
 
-    public User? User { get; set; }
+    public DateTimeOffset UpdatedAt { get; }
 }
