@@ -8,7 +8,7 @@ public static class PostCommentExceptionErrorMessages
     public static string GetNotFoundMessage(string id, string commentId)
     {
         const string Format = "PostComment(id: {0}, commentId: {1}) with that id does not exist";
-        var result = Format.FormatInvariantCulture(id);
+        var result = Format.FormatCurrentCulture(id);
 
         return result;
     }
@@ -16,7 +16,7 @@ public static class PostCommentExceptionErrorMessages
     public static string GetForbiddenMessage(string id, string commentId, string userId)
     {
         const string Format = "PostComment(id: {0}, commentId: {1}) is not owned by User(id: {2})";
-        var result = Format.FormatInvariantCulture(id, userId);
+        var result = Format.FormatCurrentCulture(id, userId);
 
         return result;
     }
@@ -24,7 +24,7 @@ public static class PostCommentExceptionErrorMessages
     public static string GetSortPropertyNotSupportedMessage(PostCommentSortProperty sortProperty)
     {
         const string Format = "PostCommentSortProperty(type: {0}) is not supported";
-        var result = Format.FormatInvariantCulture(sortProperty);
+        var result = Format.FormatCurrentCulture(sortProperty);
 
         return result;
     }

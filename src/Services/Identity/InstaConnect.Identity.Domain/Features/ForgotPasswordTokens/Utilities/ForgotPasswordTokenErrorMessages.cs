@@ -15,12 +15,12 @@ public static class ForgotPasswordTokenErrorMessages
     public static string GetValueTooShort(int length)
     {
         const string Format = "Value length is {0} and it must be at least {1} characters long";
-        return Format.FormatInvariantCulture(length, RefreshTokenConfigurations.ValueMinLength);
+        return Format.FormatCurrentCulture(length, RefreshTokenConfigurations.ValueMinLength);
     }
 
     public static string GetValueTooLong(int length)
     {
         const string Format = "Value length is {0} and it must be at most {1} characters long";
-        return Format.FormatInvariantCulture(length, RefreshTokenConfigurations.ValueMaxLength);
+        return Format.FormatCurrentCulture(length, RefreshTokenConfigurations.ValueMaxLength);
     }
 }

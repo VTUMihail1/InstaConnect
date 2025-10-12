@@ -65,7 +65,7 @@ public abstract class BaseFollowIntegrationTest : IClassFixture<FollowsWebApplic
         var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
 
         userWriteRepository.Add(user);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        await unitOfWork.CommitAsync(cancellationToken);
 
         return user;
     }
@@ -88,7 +88,7 @@ public abstract class BaseFollowIntegrationTest : IClassFixture<FollowsWebApplic
         var followWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IFollowWriteRepository>();
 
         followWriteRepository.Add(follow);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        await unitOfWork.CommitAsync(cancellationToken);
 
         return follow;
     }

@@ -7,7 +7,7 @@ public static class EmailConfirmationTokenExceptionErrorMessages
     public static string GetNotFoundMessage(string id, string value)
     {
         const string Format = "EmailConfirmationToken(id: {0}, value: {1}) does not exist";
-        var result = Format.FormatInvariantCulture(id, value);
+        var result = Format.FormatCurrentCulture(id, value);
 
         return result;
     }
@@ -15,7 +15,7 @@ public static class EmailConfirmationTokenExceptionErrorMessages
     public static string GetExpiredMessage(string id, string value)
     {
         const string Format = "EmailConfirmationToken(id: {0}, value: {1}) has expired";
-        var result = Format.FormatInvariantCulture(id, value);
+        var result = Format.FormatCurrentCulture(id, value);
 
         return result;
     }

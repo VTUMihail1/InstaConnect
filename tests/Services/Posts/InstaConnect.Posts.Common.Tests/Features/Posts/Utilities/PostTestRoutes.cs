@@ -16,7 +16,7 @@ public static class PostTestRoutes
     public static string GetAll(GetAllPostsApiRequest request)
     {
         const string Format = "{0}?&userId={1}&userName={2}&title={3}&sortOrder={4}&sortProperty={5}&page={6}&pageSize={7}";
-        var route = Format.FormatInvariantCulture(
+        var route = Format.FormatCurrentCulture(
             GetDefault(),
             request.Filter.UserId,
             request.Filter.UserName,
@@ -32,7 +32,7 @@ public static class PostTestRoutes
     public static string GetId(string id)
     {
         const string Format = "{0}/{1}";
-        var route = Format.FormatInvariantCulture(
+        var route = Format.FormatCurrentCulture(
             GetDefault(),
             id);
 

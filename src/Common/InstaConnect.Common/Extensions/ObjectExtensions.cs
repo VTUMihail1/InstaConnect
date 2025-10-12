@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Common.Extensions;
+﻿using System.Runtime.CompilerServices;
+
+namespace InstaConnect.Common.Extensions;
 
 public static class ObjectExtensions
 {

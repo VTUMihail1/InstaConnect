@@ -175,7 +175,7 @@ public class UpdateUserCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         await UnitOfWork
             .Received(1)
-            .SaveChangesAsync(CancellationToken);
+            .CommitAsync(CancellationToken);
     }
 
     [Fact]

@@ -84,7 +84,7 @@ public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
         // Assert
         await UnitOfWork
             .Received(0)
-            .SaveChangesAsync(CancellationToken);
+            .CommitAsync(CancellationToken);
     }
 
     [Fact]
@@ -161,6 +161,6 @@ public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
         // Assert
         await UnitOfWork
             .Received(1)
-            .SaveChangesAsync(CancellationToken);
+            .CommitAsync(CancellationToken);
     }
 }

@@ -16,10 +16,20 @@ internal sealed class UnitOfWorkPipelineBehavior<TRequest, TResponse>
         RequestHandlerDelegate<TResponse> next,
         CancellationToken cancellationToken)
     {
-        var response = await next();
+        await _unitOfWork.BeginAsync(cancellationToken);
 
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        try
+        {
+            var response = await next();
+            await _unitOfWork.CommitAsync(cancellationToken);
 
-        return response;
+            return response;
+        }
+        catch
+        {
+            await _unitOfWork.AbortAsync(cancellationToken);
+
+            throw;
+        }    
     }
 }

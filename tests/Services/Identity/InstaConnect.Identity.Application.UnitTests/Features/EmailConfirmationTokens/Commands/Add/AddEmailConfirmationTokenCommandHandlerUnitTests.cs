@@ -72,6 +72,6 @@ public class AddEmailConfirmationTokenCommandHandlerUnitTests : BaseEmailConfirm
         // Assert
         await UnitOfWork
             .Received(1)
-            .SaveChangesAsync(CancellationToken);
+            .CommitAsync(CancellationToken);
     }
 }

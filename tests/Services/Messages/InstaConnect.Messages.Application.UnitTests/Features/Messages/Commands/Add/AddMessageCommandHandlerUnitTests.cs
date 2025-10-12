@@ -153,6 +153,6 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
         // Assert
         await UnitOfWork
             .Received(1)
-            .SaveChangesAsync(CancellationToken);
+            .CommitAsync(CancellationToken);
     }
 }

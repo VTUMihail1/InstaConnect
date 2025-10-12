@@ -14,7 +14,7 @@ public static class PostErrorMessages
     public static string GetIdTooShort(int length)
     {
         const string Format = "Id length is {0} and it must be at least {1} characters long";
-        var result = Format.FormatInvariantCulture(length, PostConfigurations.IdMinLength);
+        var result = Format.FormatCurrentCulture(length, PostConfigurations.IdMinLength);
 
         return result;
     }
@@ -22,7 +22,7 @@ public static class PostErrorMessages
     public static string GetIdTooLong(int length)
     {
         const string Format = "Id length is {0} and it must be at most {1} characters long";
-        var result = Format.FormatInvariantCulture(length, PostConfigurations.IdMaxLength);
+        var result = Format.FormatCurrentCulture(length, PostConfigurations.IdMaxLength);
 
         return result;
     }
@@ -37,7 +37,7 @@ public static class PostErrorMessages
     public static string GetTitleTooShort(int length)
     {
         const string Format = "Title length is {0} and it must be at least {1} characters long";
-        var result = Format.FormatInvariantCulture(length, PostConfigurations.TitleMinLength);
+        var result = Format.FormatCurrentCulture(length, PostConfigurations.TitleMinLength);
 
         return result;
     }
@@ -45,7 +45,7 @@ public static class PostErrorMessages
     public static string GetTitleTooLong(int length)
     {
         const string Format = "Title length is {0} and it must be at most {1} characters long";
-        var result = Format.FormatInvariantCulture(length, PostConfigurations.TitleMaxLength);
+        var result = Format.FormatCurrentCulture(length, PostConfigurations.TitleMaxLength);
         return result;
     }
 
@@ -59,7 +59,7 @@ public static class PostErrorMessages
     public static string GetContentTooShort(int length)
     {
         const string Format = "Content length is {0} and it must be at least {1} characters long";
-        var result = Format.FormatInvariantCulture(length, PostConfigurations.ContentMinLength);
+        var result = Format.FormatCurrentCulture(length, PostConfigurations.ContentMinLength);
 
         return result;
     }
@@ -67,7 +67,7 @@ public static class PostErrorMessages
     public static string GetContentTooLong(int length)
     {
         const string Format = "Content length is {0} and it must be at most {1} characters long";
-        var result = Format.FormatInvariantCulture(length, PostConfigurations.ContentMaxLength);
+        var result = Format.FormatCurrentCulture(length, PostConfigurations.ContentMaxLength);
 
         return result;
     }
@@ -89,7 +89,7 @@ public static class PostErrorMessages
     public static string GetPageTooSmall(int page)
     {
         const string Format = "Page value is {0} and it must be at least {1}";
-        var result = Format.FormatInvariantCulture(page, PostConfigurations.PageMinValue);
+        var result = Format.FormatCurrentCulture(page, PostConfigurations.PageMinValue);
 
         return result;
     }
@@ -97,7 +97,7 @@ public static class PostErrorMessages
     public static string GetPageTooLarge(int page)
     {
         const string Format = "Page value is {0} and it must be at most {1}";
-        var result = Format.FormatInvariantCulture(page, PostConfigurations.PageMaxValue);
+        var result = Format.FormatCurrentCulture(page, PostConfigurations.PageMaxValue);
 
         return result;
     }
@@ -112,7 +112,7 @@ public static class PostErrorMessages
     public static string GetPageSizeTooSmall(int pageSize)
     {
         const string Format = "Page size is {0} and it must be at least {1}";
-        var result = Format.FormatInvariantCulture(pageSize, PostConfigurations.PageSizeMinValue);
+        var result = Format.FormatCurrentCulture(pageSize, PostConfigurations.PageSizeMinValue);
 
         return result;
     }
@@ -120,7 +120,7 @@ public static class PostErrorMessages
     public static string GetPageSizeTooLarge(int pageSize)
     {
         const string Format = "Page size is {0} and it must be at most {1}";
-        var result = Format.FormatInvariantCulture(pageSize, PostConfigurations.PageSizeMaxValue);
+        var result = Format.FormatCurrentCulture(pageSize, PostConfigurations.PageSizeMaxValue);
 
         return result;
     }

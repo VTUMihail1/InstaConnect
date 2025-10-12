@@ -15,13 +15,13 @@ public static class UserErrorMessages
     public static string GetIdTooShort(int length)
     {
         const string Format = "Id length is {0} and it must be at least {1} characters long";
-        return Format.FormatInvariantCulture(length, UserConfigurations.IdMinLength);
+        return Format.FormatCurrentCulture(length, UserConfigurations.IdMinLength);
     }
 
     public static string GetIdTooLong(int length)
     {
         const string Format = "Id length is {0} and it must be at most {1} characters long";
-        return Format.FormatInvariantCulture(length, UserConfigurations.IdMaxLength);
+        return Format.FormatCurrentCulture(length, UserConfigurations.IdMaxLength);
     }
 
     public static string GetEmailEmpty()
@@ -34,13 +34,13 @@ public static class UserErrorMessages
     public static string GetEmailTooShort(int length)
     {
         const string Format = "Email length is {0} and it must be at least {1} characters long";
-        return Format.FormatInvariantCulture(length, UserConfigurations.EmailMinLength);
+        return Format.FormatCurrentCulture(length, UserConfigurations.EmailMinLength);
     }
 
     public static string GetEmailTooLong(int length)
     {
         const string Format = "Email length is {0} and it must be at most {1} characters long";
-        return Format.FormatInvariantCulture(length, UserConfigurations.EmailMaxLength);
+        return Format.FormatCurrentCulture(length, UserConfigurations.EmailMaxLength);
     }
 
     public static string GetFirstNameEmpty()
@@ -53,13 +53,13 @@ public static class UserErrorMessages
     public static string GetFirstNameTooShort(int length)
     {
         const string Format = "First name length is {0} and it must be at least {1} characters long";
-        return Format.FormatInvariantCulture(length, UserConfigurations.FirstNameMinLength);
+        return Format.FormatCurrentCulture(length, UserConfigurations.FirstNameMinLength);
     }
 
     public static string GetFirstNameTooLong(int length)
     {
         const string Format = "First name length is {0} and it must be at most {1} characters long";
-        return Format.FormatInvariantCulture(length, UserConfigurations.FirstNameMaxLength);
+        return Format.FormatCurrentCulture(length, UserConfigurations.FirstNameMaxLength);
     }
 
     public static string GetLastNameEmpty()
@@ -72,13 +72,13 @@ public static class UserErrorMessages
     public static string GetLastNameTooShort(int length)
     {
         const string Format = "Last name length is {0} and it must be at least {1} characters long";
-        return Format.FormatInvariantCulture(length, UserConfigurations.LastNameMinLength);
+        return Format.FormatCurrentCulture(length, UserConfigurations.LastNameMinLength);
     }
 
     public static string GetLastNameTooLong(int length)
     {
         const string Format = "Last name length is {0} and it must be at most {1} characters long";
-        return Format.FormatInvariantCulture(length, UserConfigurations.LastNameMaxLength);
+        return Format.FormatCurrentCulture(length, UserConfigurations.LastNameMaxLength);
     }
 
     public static string GetNameEmpty()
@@ -91,18 +91,18 @@ public static class UserErrorMessages
     public static string GetNameTooShort(int length)
     {
         const string Format = "Name length is {0} and it must be at least {1} characters long";
-        return Format.FormatInvariantCulture(length, UserConfigurations.NameMinLength);
+        return Format.FormatCurrentCulture(length, UserConfigurations.NameMinLength);
     }
 
     public static string GetNameTooLong(int length)
     {
         const string Format = "Name length is {0} and it must be at most {1} characters long";
-        return Format.FormatInvariantCulture(length, UserConfigurations.NameMaxLength);
+        return Format.FormatCurrentCulture(length, UserConfigurations.NameMaxLength);
     }
 
     public static string GetProfileImageTooLong(int length)
     {
         const string Format = "Profile image URL length is {0} and it must be at most {1} characters long";
-        return Format.FormatInvariantCulture(length, UserConfigurations.ProfileImageMaxLength);
+        return Format.FormatCurrentCulture(length, UserConfigurations.ProfileImageMaxLength);
     }
 }

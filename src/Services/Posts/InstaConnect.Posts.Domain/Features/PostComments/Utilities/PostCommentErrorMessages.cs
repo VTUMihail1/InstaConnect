@@ -15,7 +15,7 @@ public static class PostCommentErrorMessages
     public static string GetIdTooShort(int length)
     {
         const string Format = "Id length is {0} and it must be at least {1} characters long";
-        var result = Format.FormatInvariantCulture(length, PostCommentConfigurations.IdMinLength);
+        var result = Format.FormatCurrentCulture(length, PostCommentConfigurations.IdMinLength);
 
         return result;
     }
@@ -23,7 +23,7 @@ public static class PostCommentErrorMessages
     public static string GetIdTooLong(int length)
     {
         const string Format = "Id length is {0} and it must be at most {1} characters long";
-        var result = Format.FormatInvariantCulture(length, PostCommentConfigurations.IdMaxLength);
+        var result = Format.FormatCurrentCulture(length, PostCommentConfigurations.IdMaxLength);
 
         return result;
     }
@@ -38,7 +38,7 @@ public static class PostCommentErrorMessages
     public static string GetContentTooShort(int length)
     {
         const string Format = "Content length is {0} and it must be at least {1} characters long";
-        var result = Format.FormatInvariantCulture(length, PostCommentConfigurations.ContentMinLength);
+        var result = Format.FormatCurrentCulture(length, PostCommentConfigurations.ContentMinLength);
 
         return result;
     }
@@ -46,7 +46,7 @@ public static class PostCommentErrorMessages
     public static string GetContentTooLong(int length)
     {
         const string Format = "Content length is {0} and it must be at most {1} characters long";
-        var result = Format.FormatInvariantCulture(length, PostCommentConfigurations.ContentMaxLength);
+        var result = Format.FormatCurrentCulture(length, PostCommentConfigurations.ContentMaxLength);
 
         return result;
     }
@@ -68,7 +68,7 @@ public static class PostCommentErrorMessages
     public static string GetPageTooSmall(int page)
     {
         const string Format = "Page value is {0} and it must be at least {1}";
-        var result = Format.FormatInvariantCulture(page, PostCommentConfigurations.PageMinValue);
+        var result = Format.FormatCurrentCulture(page, PostCommentConfigurations.PageMinValue);
 
         return result;
     }
@@ -76,7 +76,7 @@ public static class PostCommentErrorMessages
     public static string GetPageTooLarge(int page)
     {
         const string Format = "Page value is {0} and it must be at most {1}";
-        var result = Format.FormatInvariantCulture(page, PostCommentConfigurations.PageMaxValue);
+        var result = Format.FormatCurrentCulture(page, PostCommentConfigurations.PageMaxValue);
 
         return result;
     }
@@ -91,7 +91,7 @@ public static class PostCommentErrorMessages
     public static string GetPageSizeTooSmall(int pageSize)
     {
         const string Format = "Page size is {0} and it must be at least {1}";
-        var result = Format.FormatInvariantCulture(pageSize, PostCommentConfigurations.PageSizeMinValue);
+        var result = Format.FormatCurrentCulture(pageSize, PostCommentConfigurations.PageSizeMinValue);
 
         return result;
     }
@@ -99,7 +99,7 @@ public static class PostCommentErrorMessages
     public static string GetPageSizeTooLarge(int pageSize)
     {
         const string Format = "Page size is {0} and it must be at most {1}";
-        var result = Format.FormatInvariantCulture(pageSize, PostCommentConfigurations.PageSizeMaxValue);
+        var result = Format.FormatCurrentCulture(pageSize, PostCommentConfigurations.PageSizeMaxValue);
 
         return result;
     }

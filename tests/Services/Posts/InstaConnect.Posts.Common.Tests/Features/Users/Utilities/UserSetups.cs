@@ -38,7 +38,7 @@ public static class UserSetups
         var userRepository = serviceScope.GetUserRepository();
 
         userRepository.Add(user);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        await unitOfWork.CommitAsync(cancellationToken);
     }
 
     public static async Task DeleteUserAsync(
@@ -50,7 +50,7 @@ public static class UserSetups
         var userRepository = serviceScope.GetUserRepository();
 
         userRepository.Delete(user);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        await unitOfWork.CommitAsync(cancellationToken);
     }
 
     public static async Task ResetUserDatabase(

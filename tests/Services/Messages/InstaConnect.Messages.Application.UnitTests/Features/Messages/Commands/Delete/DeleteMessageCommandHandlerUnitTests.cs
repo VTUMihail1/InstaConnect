@@ -105,6 +105,6 @@ public class DeleteMessageCommandHandlerUnitTests : BaseMessageUnitTest
         // Assert
         await UnitOfWork
             .Received(1)
-            .SaveChangesAsync(CancellationToken);
+            .CommitAsync(CancellationToken);
     }
 }

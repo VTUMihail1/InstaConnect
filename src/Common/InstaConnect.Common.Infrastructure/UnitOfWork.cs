@@ -1,16 +1,29 @@
-﻿namespace InstaConnect.Common.Infrastructure;
+﻿using InstaConnect.Common.Infrastructure.Abstractions;
+
+namespace InstaConnect.Common.Infrastructure;
 
 internal class UnitOfWork : IUnitOfWork
 {
-    private readonly DbContext _dbContext;
+    private readonly IMongoDbContext _mongoDbContext;
 
-    public UnitOfWork(DbContext dbContext)
+    public UnitOfWork(IMongoDbContext mongoDbContext)
     {
-        _dbContext = dbContext;
+        _mongoDbContext = mongoDbContext;
     }
 
-    public async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
+    public async Task BeginAsync(CancellationToken cancellationToken)
     {
-        return await _dbContext.SaveChangesAsync(cancellationToken);
+        await _mongoDbContext.BeginAsync(cancellationToken);
     }
+
+    public async Task CommitAsync(CancellationToken cancellationToken)
+    {
+        await _mongoDbContext.CommitAsync(cancellationToken);
+    }
+
+    public async Task AbortAsync(CancellationToken cancellationToken)
+    {
+        await _mongoDbContext.AbortAsync(cancellationToken);
+    }
+
 }

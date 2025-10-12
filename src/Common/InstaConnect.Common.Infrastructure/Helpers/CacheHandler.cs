@@ -3,6 +3,8 @@
 using Microsoft.Extensions.Caching.Distributed;
 
 namespace InstaConnect.Common.Infrastructure.Helpers;
+
+
 internal class CacheHandler : ICacheHandler
 {
     private readonly IJsonConverter _jsonConverter;

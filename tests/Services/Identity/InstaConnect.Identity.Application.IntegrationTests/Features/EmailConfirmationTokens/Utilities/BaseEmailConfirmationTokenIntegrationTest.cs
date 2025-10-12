@@ -128,7 +128,7 @@ public abstract class BaseEmailConfirmationTokenIntegrationTest : IClassFixture<
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
 
         userWriteRepository.Add(user);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        await unitOfWork.CommitAsync(cancellationToken);
 
         return user;
     }
@@ -160,7 +160,7 @@ public abstract class BaseEmailConfirmationTokenIntegrationTest : IClassFixture<
         var emailConfirmationTokenWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IEmailConfirmationTokenWriteRepository>();
 
         emailConfirmationTokenWriteRepository.Add(emailConfirmationToken);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        await unitOfWork.CommitAsync(cancellationToken);
 
         return emailConfirmationToken;
     }

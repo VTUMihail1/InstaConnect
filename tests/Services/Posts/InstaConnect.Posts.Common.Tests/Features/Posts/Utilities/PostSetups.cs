@@ -49,7 +49,7 @@ public static class PostSetups
         var postRepository = serviceScope.GetPostRepository();
 
         postRepository.Add(post);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        await unitOfWork.CommitAsync(cancellationToken);
     }
 
     public static async Task DeletePostAsync(
@@ -61,7 +61,7 @@ public static class PostSetups
         var postRepository = serviceScope.GetPostRepository();
 
         postRepository.Delete(post);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        await unitOfWork.CommitAsync(cancellationToken);
     }
 
     public static async Task ResetPostDatabase(

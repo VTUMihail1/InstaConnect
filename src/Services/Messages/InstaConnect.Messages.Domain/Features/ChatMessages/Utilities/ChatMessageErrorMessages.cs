@@ -14,13 +14,13 @@ public static class ChatMessageErrorMessages
     public static string GetIdTooShort(int length)
     {
         const string Format = "Id length is {0} and it must be at least {1} characters long";
-        return Format.FormatInvariantCulture(length, ChatMessageConfigurations.IdMinLength);
+        return Format.FormatCurrentCulture(length, ChatMessageConfigurations.IdMinLength);
     }
 
     public static string GetIdTooLong(int length)
     {
         const string Format = "Id length is {0} and it must be at most {1} characters long";
-        return Format.FormatInvariantCulture(length, ChatMessageConfigurations.IdMaxLength);
+        return Format.FormatCurrentCulture(length, ChatMessageConfigurations.IdMaxLength);
     }
     public static string GetContentEmpty()
     {
@@ -32,13 +32,13 @@ public static class ChatMessageErrorMessages
     public static string GetContentTooShort(int length)
     {
         const string Format = "Content length is {0} and it must be at least {1} characters long";
-        return Format.FormatInvariantCulture(length, ChatMessageConfigurations.ContentMinLength);
+        return Format.FormatCurrentCulture(length, ChatMessageConfigurations.ContentMinLength);
     }
 
     public static string GetContentTooLong(int length)
     {
         const string Format = "Content length is {0} and it must be at most {1} characters long";
-        return Format.FormatInvariantCulture(length, ChatMessageConfigurations.ContentMaxLength);
+        return Format.FormatCurrentCulture(length, ChatMessageConfigurations.ContentMaxLength);
     }
 
     public static string GetSortPropertyEmpty()
@@ -58,7 +58,7 @@ public static class ChatMessageErrorMessages
     public static string GetPageTooSmall(int page)
     {
         const string Format = "Page value is {0} and it must be at least {1}";
-        var result = Format.FormatInvariantCulture(page, ChatMessageConfigurations.PageMinValue);
+        var result = Format.FormatCurrentCulture(page, ChatMessageConfigurations.PageMinValue);
 
         return result;
     }
@@ -66,7 +66,7 @@ public static class ChatMessageErrorMessages
     public static string GetPageTooLarge(int page)
     {
         const string Format = "Page value is {0} and it must be at most {1}";
-        var result = Format.FormatInvariantCulture(page, ChatMessageConfigurations.PageMaxValue);
+        var result = Format.FormatCurrentCulture(page, ChatMessageConfigurations.PageMaxValue);
 
         return result;
     }
@@ -81,7 +81,7 @@ public static class ChatMessageErrorMessages
     public static string GetPageSizeTooSmall(int pageSize)
     {
         const string Format = "Page size is {0} and it must be at least {1}";
-        var result = Format.FormatInvariantCulture(pageSize, ChatMessageConfigurations.PageSizeMinValue);
+        var result = Format.FormatCurrentCulture(pageSize, ChatMessageConfigurations.PageSizeMinValue);
 
         return result;
     }
@@ -89,7 +89,7 @@ public static class ChatMessageErrorMessages
     public static string GetPageSizeTooLarge(int pageSize)
     {
         const string Format = "Page size is {0} and it must be at most {1}";
-        var result = Format.FormatInvariantCulture(pageSize, ChatMessageConfigurations.PageSizeMaxValue);
+        var result = Format.FormatCurrentCulture(pageSize, ChatMessageConfigurations.PageSizeMaxValue);
 
         return result;
     }

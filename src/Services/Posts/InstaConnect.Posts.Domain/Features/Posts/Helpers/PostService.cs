@@ -3,7 +3,6 @@ using InstaConnect.Common.Exceptions.Users;
 using InstaConnect.Common.Extensions;
 using InstaConnect.Common.Helpers;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
-using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
 using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
 using InstaConnect.Posts.Domain.Features.Posts.Exceptions;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
@@ -41,14 +40,22 @@ internal class PostService : IPostService
 
     public async Task<PostCollection> GetAllAsync(GetAllPostsQuery query, CancellationToken cancellationToken)
     {
-        var existingPostCollection = await _postRepository.GetAllAsync(query, cancellationToken);
+        var existingPostCollection = await _postRepository.GetAllAsync(
+            query.Filter,
+            query.Sorting,
+            query.Pagination,
+            query.Include,
+            cancellationToken);
 
         return existingPostCollection;
     }
 
     public async Task<Post> GetByIdAsync(GetPostByIdQuery query, CancellationToken cancellationToken)
     {
-        var existingPost = await _postRepository.GetByIdAsync(query.Id, cancellationToken);
+        var existingPost = await _postRepository.GetByIdAsync(
+            query.Id,
+            query.Include,
+            cancellationToken);
 
         if (existingPost.IsNull())
         {
@@ -68,7 +75,7 @@ internal class PostService : IPostService
         }
 
         var post = _postFactory.Create(command.UserId, command.Title, command.Content);
-        _postRepository.Add(post);
+        await _postRepository.AddAsync(post, cancellationToken);
 
         var eventRequest = _applicationMapper.Map<PostAddedEventRequest>(post);
         await _eventPublisher.PublishAsync(eventRequest, cancellationToken);
@@ -92,7 +99,7 @@ internal class PostService : IPostService
 
         var utcNow = _dateTimeProvider.GetOffsetUtcNow();
         existingPost.Update(command.Title, command.Content, utcNow);
-        _postRepository.Update(existingPost);
+        await _postRepository.UpdateAsync(existingPost, cancellationToken);
 
         var eventRequest = _applicationMapper.Map<PostUpdatedEventRequest>(existingPost);
         await _eventPublisher.PublishAsync(eventRequest, cancellationToken);
@@ -114,7 +121,7 @@ internal class PostService : IPostService
             throw new PostForbiddenException(command.Id, command.UserId);
         }
 
-        _postRepository.Delete(existingPost);
+        await _postRepository.DeleteAsync(existingPost, cancellationToken);
 
         var eventRequest = _applicationMapper.Map<PostDeletedEventRequest>(existingPost);
         await _eventPublisher.PublishAsync(eventRequest, cancellationToken);

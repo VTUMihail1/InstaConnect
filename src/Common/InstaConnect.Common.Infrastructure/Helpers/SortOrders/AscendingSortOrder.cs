@@ -1,11 +1,17 @@
-﻿using InstaConnect.Common.Infrastructure.Abstractions;
-using InstaConnect.Common.Infrastructure.SortOrders;
+﻿using System.Linq.Expressions;
+
+using InstaConnect.Common.Infrastructure.Abstractions;
 using InstaConnect.Common.Models.Enums;
+
+using MongoDB.Driver;
 
 namespace InstaConnect.Common.Infrastructure.Helpers.SortOrders;
 public class AscendingSortOrder : ISortOrder
 {
     public SortOrder SortOrder => SortOrder.ASC;
 
-    public string Order => SortOrderUtilities.Asc;
+    public SortDefinition<TDocument> Sort<TDocument>(Expression<Func<TDocument, object>> sortProperty)
+    {
+        return Builders<TDocument>.Sort.Ascending(sortProperty);
+    }
 }

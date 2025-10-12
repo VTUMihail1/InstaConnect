@@ -136,6 +136,6 @@ public class AddFollowCommandHandlerUnitTests : BaseFollowUnitTest
         // Assert
         await UnitOfWork
             .Received(1)
-            .SaveChangesAsync(CancellationToken);
+            .CommitAsync(CancellationToken);
     }
 }

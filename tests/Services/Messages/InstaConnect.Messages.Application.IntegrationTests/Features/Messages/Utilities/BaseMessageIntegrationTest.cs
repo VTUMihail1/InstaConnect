@@ -65,7 +65,7 @@ public abstract class BaseMessageIntegrationTest : IClassFixture<MessagesWebAppl
         var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
 
         userWriteRepository.Add(user);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        await unitOfWork.CommitAsync(cancellationToken);
 
         return user;
     }
@@ -88,7 +88,7 @@ public abstract class BaseMessageIntegrationTest : IClassFixture<MessagesWebAppl
         var messageWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IMessageWriteRepository>();
 
         messageWriteRepository.Add(message);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        await unitOfWork.CommitAsync(cancellationToken);
 
         return message;
     }

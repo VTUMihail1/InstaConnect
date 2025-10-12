@@ -1,6 +1,4 @@
-﻿using System.Xml.Linq;
-
-using InstaConnect.Common.Extensions;
+﻿using InstaConnect.Common.Extensions;
 using InstaConnect.PostComments.Domain.Features.PostComments.Models.Entities;
 using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Entities;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
@@ -9,14 +7,17 @@ namespace InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
 
 public class Post : IEntity
 {
+    private readonly IList<PostLike> _likes;
+    private readonly IList<PostComment> _comments;
+
     private Post()
     {
         Id = string.Empty;
         Title = string.Empty;
         Content = string.Empty;
         UserId = string.Empty;
-        Likes = [];
-        Comments = [];
+        _likes = [];
+        _comments = [];
     }
 
     public Post(
@@ -31,8 +32,8 @@ public class Post : IEntity
         Title = title;
         Content = content;
         UserId = userId;
-        Likes = [];
-        Comments = [];
+        _likes = [];
+        _comments = [];
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
     }
@@ -50,8 +51,8 @@ public class Post : IEntity
         Content = content;
         UserId = user.Id;
         User = user;
-        Likes = [];
-        Comments = [];
+        _likes = [];
+        _comments = [];
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
     }
@@ -61,8 +62,8 @@ public class Post : IEntity
         string title,
         string content,
         User user,
-        ICollection<PostLike> likes,
-        ICollection<PostComment> comments,
+        IList<PostLike> likes,
+        IList<PostComment> comments,
         DateTimeOffset createdAt,
         DateTimeOffset updatedAt)
     {
@@ -71,8 +72,8 @@ public class Post : IEntity
         Content = content;
         UserId = user.Id;
         User = user;
-        Likes = likes;
-        Comments = comments;
+        _likes = likes;
+        _comments = comments;
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
     }
@@ -85,11 +86,11 @@ public class Post : IEntity
 
     public string UserId { get; }
 
-    public User? User { get; }
+    public User? User { get; private set; }
 
-    public ICollection<PostLike> Likes { get; }
+    public IReadOnlyCollection<PostLike> Likes => _likes.AsReadOnly();
 
-    public ICollection<PostComment> Comments { get; }
+    public IReadOnlyCollection<PostComment> Comments => _comments.AsReadOnly();
 
     public DateTimeOffset CreatedAt { get; }
 
@@ -114,5 +115,20 @@ public class Post : IEntity
         var isNotOwnedByUser = !IsOwnedByUser(userId);
 
         return isNotOwnedByUser;
+    }
+
+    public void AddUser(User user)
+    {
+        User = user;
+    }
+
+    public void AddComment(PostComment comment)
+    {
+        _comments.Add(comment);
+    }
+
+    public void AddLike(PostLike like)
+    {
+        _likes.Add(like);
     }
 }

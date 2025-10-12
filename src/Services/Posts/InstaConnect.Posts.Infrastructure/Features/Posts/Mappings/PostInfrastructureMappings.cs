@@ -16,21 +16,5 @@ internal class PostInfrastructureMappings : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<PostQueryEntity, Post>()
-              .ConstructUsing(p => new(
-                            p.Id,
-                            p.Title,
-                            p.Content,
-                            new User(
-                                p.UserId,
-                                p.UserFirstName,
-                                p.UserLastName,
-                                p.UserEmail,
-                                p.UserName,
-                                p.UserProfileImage,
-                                p.UserCreatedAt,
-                                p.UserUpdatedAt),
-                            p.CreatedAt,
-                            p.UpdatedAt));
     }
 }

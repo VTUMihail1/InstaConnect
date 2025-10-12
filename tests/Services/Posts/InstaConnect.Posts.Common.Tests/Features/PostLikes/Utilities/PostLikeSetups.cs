@@ -37,7 +37,7 @@ public static class PostLikeSetups
         var postLikeRepository = serviceScope.GetPostLikeRepository();
 
         postLikeRepository.Add(postLike);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        await unitOfWork.CommitAsync(cancellationToken);
     }
 
     public static async Task DeletePostLikeAsync(
@@ -49,7 +49,7 @@ public static class PostLikeSetups
         var postLikeRepository = serviceScope.GetPostLikeRepository();
 
         postLikeRepository.Delete(postLike);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        await unitOfWork.CommitAsync(cancellationToken);
     }
 
     public static async Task ResetPostLikeDatabase(

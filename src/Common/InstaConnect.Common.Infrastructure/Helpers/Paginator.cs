@@ -11,7 +11,7 @@ internal class Paginator : IPaginator
         return offset;
     }
 
-    public bool HasNextPage(int page, int pageSize, int totalCount)
+    public bool HasNextPage(int page, int pageSize, long totalCount)
     {
         var hasNextPage = page * pageSize < totalCount;
 

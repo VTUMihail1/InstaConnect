@@ -83,7 +83,7 @@ public abstract class BaseForgotPasswordTokenFunctionalTest : IClassFixture<Iden
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
 
         userWriteRepository.Add(user);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        await unitOfWork.CommitAsync(cancellationToken);
 
         return user;
     }
@@ -108,7 +108,7 @@ public abstract class BaseForgotPasswordTokenFunctionalTest : IClassFixture<Iden
         var forgotPasswordTokenWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IForgotPasswordTokenWriteRepository>();
 
         forgotPasswordTokenWriteRepository.Add(forgotPasswordToken);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        await unitOfWork.CommitAsync(cancellationToken);
 
         return forgotPasswordToken;
     }

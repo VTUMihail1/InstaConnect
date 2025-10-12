@@ -37,7 +37,7 @@ public static class PostCommentSetups
         var postCommentRepository = serviceScope.GetPostCommentRepository();
 
         postCommentRepository.Add(postComment);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        await unitOfWork.CommitAsync(cancellationToken);
     }
 
     public static async Task DeletePostCommentAsync(
@@ -49,7 +49,7 @@ public static class PostCommentSetups
         var postCommentRepository = serviceScope.GetPostCommentRepository();
 
         postCommentRepository.Delete(postComment);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        await unitOfWork.CommitAsync(cancellationToken);
     }
 
     public static async Task ResetPostCommentDatabase(

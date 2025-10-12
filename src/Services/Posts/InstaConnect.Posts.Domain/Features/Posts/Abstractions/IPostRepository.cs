@@ -6,13 +6,25 @@ namespace InstaConnect.Posts.Domain.Features.Posts.Abstractions;
 
 public interface IPostRepository
 {
-    Task<PostCollection> GetAllAsync(GetAllPostsQuery query, CancellationToken cancellationToken);
+    Task<PostCollection> GetAllAsync(
+        PostFilterQuery filter,
+        PostSortingQuery sorting,
+        PostPaginationQuery pagination,
+        PostIncludeQuery? include,
+        CancellationToken cancellationToken);
 
-    Task<Post?> GetByIdAsync(string id, CancellationToken cancellationToken);
+    Task<Post?> GetByIdAsync(
+        string id,
+        PostIncludeQuery? include,
+        CancellationToken cancellationToken);
 
-    void Add(Post post);
+    Task<Post?> GetByIdAsync(
+        string id,
+        CancellationToken cancellationToken);
 
-    void Update(Post post);
+    Task AddAsync(Post entity, CancellationToken cancellationToken);
 
-    void Delete(Post post);
+    Task UpdateAsync(Post entity, CancellationToken cancellationToken);
+
+    Task DeleteAsync(Post entity, CancellationToken cancellationToken);
 }

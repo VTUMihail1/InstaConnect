@@ -168,6 +168,6 @@ public class VerifyEmailConfirmationTokenCommandHandlerUnitTests : BaseEmailConf
         // Assert
         await UnitOfWork
             .Received(1)
-            .SaveChangesAsync(CancellationToken);
+            .CommitAsync(CancellationToken);
     }
 }

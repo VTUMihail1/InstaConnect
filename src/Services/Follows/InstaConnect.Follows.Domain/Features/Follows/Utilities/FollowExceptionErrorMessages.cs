@@ -8,7 +8,7 @@ public static class FollowExceptionErrorMessages
     public static string GetNotFoundMessage(string followerId, string followingId)
     {
         const string Format = "Follow(followerId: {0}, followingId: {1}) with that id does not exist";
-        var result = Format.FormatInvariantCulture(followerId, followingId);
+        var result = Format.FormatCurrentCulture(followerId, followingId);
 
         return result;
     }
@@ -16,7 +16,7 @@ public static class FollowExceptionErrorMessages
     public static string GetAlreadyExistsMessage(string followerId, string followingId)
     {
         const string Format = "Follow(followerId: {0}, followingId: {1}) already exists";
-        var result = Format.FormatInvariantCulture(followerId, followingId);
+        var result = Format.FormatCurrentCulture(followerId, followingId);
 
         return result;
     }
@@ -24,7 +24,7 @@ public static class FollowExceptionErrorMessages
     public static string GetByFollowerSortPropertyNotSupportedMessage(FollowByFollowerSortProperty sortProperty)
     {
         const string Format = "FollowByFollowerSortProperty(type: {0}) is not supported";
-        var result = Format.FormatInvariantCulture(sortProperty);
+        var result = Format.FormatCurrentCulture(sortProperty);
 
         return result;
     }
@@ -32,7 +32,7 @@ public static class FollowExceptionErrorMessages
     public static string GetByFollowingSortPropertyNotSupportedMessage(FollowByFollowingSortProperty sortProperty)
     {
         const string Format = "FollowByFollowingSortProperty(type: {0}) is not supported";
-        var result = Format.FormatInvariantCulture(sortProperty);
+        var result = Format.FormatCurrentCulture(sortProperty);
 
         return result;
     }

@@ -93,7 +93,7 @@ public abstract class BaseUserFunctionalTest : IClassFixture<IdentityWebApplicat
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
 
         userClaimWriteRepository.Add(userClaim);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        await unitOfWork.CommitAsync(cancellationToken);
 
         return userClaim;
     }
@@ -134,7 +134,7 @@ public abstract class BaseUserFunctionalTest : IClassFixture<IdentityWebApplicat
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
 
         userWriteRepository.Add(user);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        await unitOfWork.CommitAsync(cancellationToken);
 
         return user;
     }

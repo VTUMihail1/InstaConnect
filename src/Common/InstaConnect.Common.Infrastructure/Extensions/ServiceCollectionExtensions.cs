@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Linq.Expressions;
+using System.Reflection;
 
 using CloudinaryDotNet;
 
@@ -9,6 +10,7 @@ using InstaConnect.Common.Infrastructure;
 using InstaConnect.Common.Infrastructure.Abstractions;
 using InstaConnect.Common.Infrastructure.Extensions;
 using InstaConnect.Common.Infrastructure.Helpers;
+using InstaConnect.Common.Infrastructure.Helpers.Conventions;
 using InstaConnect.Common.Infrastructure.Helpers.SortOrders;
 using InstaConnect.Common.Infrastructure.Models.Options;
 using InstaConnect.Shared.Infrastructure.Extensions;
@@ -17,7 +19,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Conventions;
+using MongoDB.Driver;
 
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -26,11 +33,9 @@ using OpenTelemetry.Trace;
 namespace InstaConnect.Shared.Infrastructure.Extensions;
 public static partial class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddUnitOfWork<TContext>(this IServiceCollection serviceCollection)
-    where TContext : DbContext
+    public static IServiceCollection AddUnitOfWork(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>(sp =>
-        new UnitOfWork(sp.GetRequiredService<TContext>()));
+        serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return serviceCollection;
     }
@@ -55,8 +60,6 @@ public static partial class ServiceCollectionExtensions
               .WithTracing(tracing => tracing
                   .AddAspNetCoreInstrumentation()
                   .AddHttpClientInstrumentation()
-                  .AddEntityFrameworkCoreInstrumentation()
-                  .AddSqlClientInstrumentation()
                   .AddRedisInstrumentation()
                   .AddMassTransitInstrumentation()
                   .AddOtlpExporter(options =>
@@ -75,50 +78,47 @@ public static partial class ServiceCollectionExtensions
         return serviceCollection;
     }
 
-    public static IServiceCollection AddDatabaseContext<TContext>(
-        this IServiceCollection serviceCollection,
-        IConfiguration configuration,
-        Action<DbContextOptionsBuilder>? optionsAction = null)
-    where TContext : DbContext
+    public static IServiceCollection AddMongoDbContext(this IServiceCollection serviceCollection)
     {
+        const string ConventionName = "ApplicationConventionPack";
+
         serviceCollection
-            .AddOptions<DatabaseOptions>()
-            .BindConfiguration(nameof(DatabaseOptions))
+            .AddOptions<MongoDatabaseOptions>()
+            .BindConfiguration(nameof(MongoDatabaseOptions))
             .ValidateDataAnnotations()
             .ValidateOnStart();
 
-        var databaseOptions = configuration
-                    .GetSection(nameof(DatabaseOptions))
-                    .Get<DatabaseOptions>()!;
+        serviceCollection.AddScoped<IMongoClient>(sp => new MongoClient(sp.GetRequiredService<IOptions<MongoDatabaseOptions>>()
+                                                                          .Value
+                                                                          .ConnectionString));
 
-
-
-        serviceCollection.AddDbContext<TContext>((sp, options) =>
-        {
-            options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-
-            options.UseSqlServer(
-                    databaseOptions.ConnectionString,
-                    sqlServerOptions => sqlServerOptions.EnableRetryOnFailure());
-
-            optionsAction?.Invoke(options);
-        });
+        serviceCollection.AddScoped(sp => sp.GetRequiredService<IMongoClient>()
+                                            .GetDatabase(sp.GetRequiredService<IOptions<MongoDatabaseOptions>>()
+                                                           .Value
+                                                           .Name));
 
         serviceCollection
             .AddScoped<IPaginator, Paginator>()
-            .AddScoped<ISqlConnectionFactory, SqlConnectionFactory>();
+            .AddScoped<IMongoDbContext, MongoDbContext>();
 
-        serviceCollection
-            .AddHealthChecks()
-            .AddDbContextCheck<TContext>();
+        var conventionPack = new ConventionPack
+        {
+            new SnakeCaseElementNameConvention(),
+            new IgnoreExtraElementsConvention(true)
+        };
+
+        ConventionRegistry.Register(
+            ConventionName,
+            conventionPack,
+            t => true
+        );
 
         return serviceCollection;
     }
 
     public static IServiceCollection AddRedisCaching(
         this IServiceCollection serviceCollection,
-        IConfiguration configuration
-        )
+        IConfiguration configuration)
     {
         serviceCollection
             .AddOptions<CacheOptions>()

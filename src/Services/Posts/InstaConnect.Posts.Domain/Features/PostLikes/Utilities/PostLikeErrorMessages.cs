@@ -21,7 +21,7 @@ public static class PostLikeErrorMessages
     public static string GetPageTooSmall(int page)
     {
         const string Format = "Page value is {0} and it must be at least {1}";
-        var result = Format.FormatInvariantCulture(page, PostLikeConfigurations.PageMinValue);
+        var result = Format.FormatCurrentCulture(page, PostLikeConfigurations.PageMinValue);
 
         return result;
     }
@@ -29,7 +29,7 @@ public static class PostLikeErrorMessages
     public static string GetPageTooLarge(int page)
     {
         const string Format = "Page value is {0} and it must be at most {1}";
-        var result = Format.FormatInvariantCulture(page, PostLikeConfigurations.PageMaxValue);
+        var result = Format.FormatCurrentCulture(page, PostLikeConfigurations.PageMaxValue);
 
         return result;
     }
@@ -44,7 +44,7 @@ public static class PostLikeErrorMessages
     public static string GetPageSizeTooSmall(int pageSize)
     {
         const string Format = "Page size is {0} and it must be at least {1}";
-        var result = Format.FormatInvariantCulture(pageSize, PostLikeConfigurations.PageSizeMinValue);
+        var result = Format.FormatCurrentCulture(pageSize, PostLikeConfigurations.PageSizeMinValue);
 
         return result;
     }
@@ -52,7 +52,7 @@ public static class PostLikeErrorMessages
     public static string GetPageSizeTooLarge(int pageSize)
     {
         const string Format = "Page size is {0} and it must be at most {1}";
-        var result = Format.FormatInvariantCulture(pageSize, PostLikeConfigurations.PageSizeMaxValue);
+        var result = Format.FormatCurrentCulture(pageSize, PostLikeConfigurations.PageSizeMaxValue);
 
         return result;
     }

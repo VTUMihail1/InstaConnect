@@ -1,89 +1,114 @@
-﻿using Dapper;
-
-using InstaConnect.Common.Abstractions;
+﻿using InstaConnect.Common.Extensions;
 using InstaConnect.Common.Infrastructure.Abstractions;
 using InstaConnect.Common.Infrastructure.Extensions;
-using InstaConnect.Posts.Application.Features.Posts.Models;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Responses;
 using InstaConnect.Posts.Infrastructure.Features.Posts.Abstractions;
-using InstaConnect.Posts.Infrastructure.Features.Posts.Models;
+
+using MongoDB.Driver;
 
 namespace InstaConnect.Posts.Infrastructure.Features.Posts.Repositories;
 
 internal class PostRepository : IPostRepository
 {
-    private readonly PostsContext _postsContext;
-    private readonly IPostQueryFactory _postQueryFactory;
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly ISqlConnectionFactory _sqlConnectionFactory;
+    private readonly IPaginator _paginator;
+    private readonly IPostsContext _postsContext;
+    private readonly ISortOrderFactory _sortOrderFactory;
     private readonly IPostCollectionFactory _postCollectionFactory;
+    private readonly IPostSortPropertyFactory _postSortPropertyFactory;
+    private readonly IPostIncludePropertyFactory _postIncludePropertyFactory;
 
     public PostRepository(
-        PostsContext postsContext,
-        IPostQueryFactory postQueryFactory,
-        IApplicationMapper applicationMapper,
-        ISqlConnectionFactory sqlConnectionFactory,
-        IPostCollectionFactory postCollectionFactory)
+        IPaginator paginator,
+        IPostsContext postsContext,
+        ISortOrderFactory sortOrderFactory,
+        IPostCollectionFactory postCollectionFactory,
+        IPostSortPropertyFactory postSortPropertyFactory,
+        IPostIncludePropertyFactory postIncludePropertyFactory)
     {
+        _paginator = paginator;
         _postsContext = postsContext;
-        _postQueryFactory = postQueryFactory;
-        _applicationMapper = applicationMapper;
-        _sqlConnectionFactory = sqlConnectionFactory;
+        _sortOrderFactory = sortOrderFactory;
         _postCollectionFactory = postCollectionFactory;
+        _postSortPropertyFactory = postSortPropertyFactory;
+        _postIncludePropertyFactory = postIncludePropertyFactory;
     }
 
-    public async Task<PostCollection> GetAllAsync(GetAllPostsQuery query, CancellationToken cancellationToken)
+    public async Task<PostCollection> GetAllAsync(
+        PostFilterQuery filter,
+        PostSortingQuery sorting,
+        PostPaginationQuery pagination,
+        PostIncludeQuery? include,
+        CancellationToken cancellationToken)
     {
-        using var connection = _sqlConnectionFactory.Create();
+        var sortOrder = _sortOrderFactory.Create(sorting.Order);
+        var sortProperty = _postSortPropertyFactory.Create(sorting.Property);
+        var includeProperties = _postIncludePropertyFactory.Create(include?.Properties);
+        var offset = _paginator.GetOffset(pagination.Page, pagination.PageSize);
 
-        var getAllQuery = _postQueryFactory.CreateGetAll(query);
-        var queryEntity = await connection.ExecuteQueryAsync<PostQueryEntity>(
-            getAllQuery.Sql,
-            getAllQuery.Parameters,
-            cancellationToken);
-        var posts = _applicationMapper.Map<ICollection<Post>>(queryEntity.ToList());
-
-        var getAllTotalCountQuery = _postQueryFactory.CreateGetAllTotalCount(query.Filter);
-        var postsTotalCount = await connection.ExecuteFunctionAsync<int>(getAllTotalCountQuery.Sql, getAllTotalCountQuery.Parameters, cancellationToken);
-
-        var response = _postCollectionFactory.Create(posts, postsTotalCount, query.Pagination);
-
-        return response;
-    }
-
-    public async Task<Post?> GetByIdAsync(string id, CancellationToken cancellationToken)
-    {
-        using var connection = _sqlConnectionFactory.Create();
-
-        var getByIdQuery = _postQueryFactory.CreateGetById(id);
-        var queryResponse = await connection.ExecuteQueryFirstAsync<PostQueryEntity>(
-            getByIdQuery.Sql,
-            getByIdQuery.Parameters,
-            cancellationToken);
-        var post = _applicationMapper.Map<Post>(queryResponse!);
-
-        return post;
-    }
-
-    public void Add(Post post)
-    {
-        _postsContext
+        var basePipeline = _postsContext
             .Posts
-            .Add(post);
+            .Aggregate()
+            .Includes(includeProperties)
+            .Match(p => (filter.UserId.IsNullOrEmptyOrWhiteSpace() || p.UserId == filter.UserId) &&
+                        (filter.UserName.IsNullOrEmptyOrWhiteSpace() || p.User!.Name == filter.UserName) &&
+                        (filter.Title.IsNullOrEmptyOrWhiteSpace() || p.Title == filter.Title));
+
+        var totalCountsResult = await basePipeline.Count().FirstOrDefaultAsync(cancellationToken);
+
+        var entities = await basePipeline
+            .Sort(sortOrder.Sort(sortProperty.Property))
+            .Skip(offset)
+            .Limit(pagination.PageSize)
+            .ToListAsync(cancellationToken);
+
+        var collectionEntities = _postCollectionFactory.Create(entities, totalCountsResult.Count, pagination);
+
+        return collectionEntities;
     }
 
-    public void Update(Post post)
+    public async Task<Post?> GetByIdAsync(
+        string id,
+        PostIncludeQuery? include,
+        CancellationToken cancellationToken)
     {
-        _postsContext
+        var includeProperties = _postIncludePropertyFactory.Create(include?.Properties);
+
+        var entity = await _postsContext
             .Posts
-            .Update(post);
+            .Aggregate()
+            .Includes(includeProperties)
+            .Match(p => p.Id == id)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        return entity;
     }
 
-    public void Delete(Post post)
+    public async Task<Post?> GetByIdAsync(
+        string id,
+        CancellationToken cancellationToken)
     {
-        _postsContext
+        return await GetByIdAsync(id, null, cancellationToken);
+    }
+
+    public async Task AddAsync(Post entity, CancellationToken cancellationToken)
+    {
+        await _postsContext
             .Posts
-            .Remove(post);
+            .AddAsync(_postsContext.ClientSessionHandle, entity, cancellationToken);
+    }
+
+    public async Task UpdateAsync(Post entity, CancellationToken cancellationToken)
+    {
+        await _postsContext
+            .Posts
+            .UpdateAsync(_postsContext.ClientSessionHandle, x => x.Id == entity.Id, entity, cancellationToken);
+    }
+
+    public async Task DeleteAsync(Post entity, CancellationToken cancellationToken)
+    {
+        await _postsContext
+            .Posts
+            .DeleteAsync(_postsContext.ClientSessionHandle, x => x.Id == entity.Id, cancellationToken);
     }
 }
