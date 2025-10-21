@@ -59,7 +59,7 @@ public class ChatMessage : IEntity
 
     public string SenderId { get; }
 
-    public User? Sender { get; }
+    public User? Sender { get; private set; }
 
     public string Content { get; private set; }
 
@@ -85,5 +85,10 @@ public class ChatMessage : IEntity
         var isNotOwnedBySender = !IsOwnedBySender(senderId);
 
         return isNotOwnedBySender;
+    }
+
+    public void AddSender(User sender)
+    {
+        Sender = sender;
     }
 }

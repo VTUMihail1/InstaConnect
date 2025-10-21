@@ -6,13 +6,27 @@ namespace InstaConnect.Chats.Domain.Features.Chats.Abstractions;
 
 public interface IChatRepository
 {
-    Task<ChatCollection> GetAllByParticipantAsync(GetAllChatsByParticipantQuery query, CancellationToken cancellationToken);
+    Task<ChatCollection> GetAllByParticipantAsync(
+        ChatByParticipantFilterQuery filter,
+        ChatByParticipantSortingQuery sorting,
+        ChatPaginationQuery pagination,
+        ChatIncludeQuery? include,
+        CancellationToken cancellationToken);
 
-    Task<Chat?> GetByIdAsync(string participantOneId, string participantTwoId, CancellationToken cancellationToken);
+    Task<Chat?> GetByIdAsync(
+        string participantOneId,
+        string participantTwoId,
+        CancellationToken cancellationToken);
 
-    void Add(Chat chat);
+    Task<Chat?> GetByIdAsync(
+        string participantOneId,
+        string participantTwoId,
+        ChatIncludeQuery? include,
+        CancellationToken cancellationToken);
 
-    void Update(Chat chat);
+    Task AddAsync(Chat entity, CancellationToken cancellationToken);
 
-    void Delete(Chat chat);
+    Task DeleteAsync(Chat entity, CancellationToken cancellationToken);
+
+    Task UpdateAsync(Chat entity, CancellationToken cancellationToken);
 }

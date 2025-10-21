@@ -61,7 +61,7 @@ internal class UserService : IUserService
             command.Email,
             command.ProfileImage);
 
-        _userRepository.Add(user);
+        await _userRepository.AddAsync(user, cancellationToken);
 
         return user;
     }
@@ -97,7 +97,7 @@ internal class UserService : IUserService
             command.Name,
             command.ProfileImage,
            utcNow);
-        _userRepository.Update(existingUser);
+        await _userRepository.UpdateAsync(existingUser, cancellationToken);
 
         return existingUser;
     }
@@ -111,6 +111,6 @@ internal class UserService : IUserService
             throw new UserNotFoundException(command.Id);
         }
 
-        _userRepository.Delete(existingUser!);
+        await _userRepository.DeleteAsync(existingUser!, cancellationToken);
     }
 }

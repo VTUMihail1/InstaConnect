@@ -61,7 +61,7 @@ internal class UserService : IUserService
             command.Email,
             command.ProfileImage);
 
-        _userRepository.Add(user);
+        await _userRepository.AddAsync(user, cancellationToken);
 
         return user;
     }
@@ -77,14 +77,14 @@ internal class UserService : IUserService
 
         var existingUserByEmail = await _userRepository.GetByEmailAsync(command.Email, cancellationToken);
 
-        if (existingUser!.Email.NotEqualsOrdinalIgnoreCase(command.Email) && existingUserByEmail.IsNotNull())
+        if (existingUser!.DoesNotHaveEmail(command.Email) && existingUserByEmail.IsNotNull())
         {
             throw new UserEmailAlreadyExistsException(command.Email);
         }
 
         var existingUserByName = await _userRepository.GetByNameAsync(command.Name, cancellationToken);
 
-        if (existingUser!.Name.NotEqualsOrdinalIgnoreCase(command.Name) && existingUserByName.IsNotNull())
+        if (existingUser!.DoesNotHaveName(command.Name) && existingUserByName.IsNotNull())
         {
             throw new UserNameAlreadyExistsException(command.Name);
         }
@@ -97,7 +97,7 @@ internal class UserService : IUserService
             command.Name,
             command.ProfileImage,
            utcNow);
-        _userRepository.Update(existingUser);
+        await _userRepository.UpdateAsync(existingUser, cancellationToken);
 
         return existingUser;
     }
@@ -111,6 +111,6 @@ internal class UserService : IUserService
             throw new UserNotFoundException(command.Id);
         }
 
-        _userRepository.Delete(existingUser!);
+        await _userRepository.DeleteAsync(existingUser!, cancellationToken);
     }
 }

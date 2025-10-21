@@ -5,8 +5,5 @@ using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Resp
 namespace InstaConnect.PostCommentLikes.Infrastructure.Features.PostCommentLikes.Abstractions;
 internal interface IPostCommentLikeCollectionFactory
 {
-    PostCommentLikeCollection Create(
-        ICollection<PostCommentLike> postCommentLikes,
-        int totalCount,
-        PostCommentLikePaginationQuery pagination);
+    PostCommentLikeCollection Create(ICollection<PostCommentLike> entities, int totalCount, PostCommentLikePaginationQuery pagination);
 }

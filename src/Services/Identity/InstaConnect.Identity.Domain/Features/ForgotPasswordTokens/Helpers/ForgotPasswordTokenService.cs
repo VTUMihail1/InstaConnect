@@ -20,6 +20,7 @@ internal class ForgotPasswordTokenService : IForgotPasswordTokenService
     private readonly IApplicationMapper _applicationMapper;
     private readonly IForgotPasswordTokenFactory _forgotPasswordTokenFactory;
     private readonly IForgotPasswordTokenRepository _forgotPasswordTokenRepository;
+    private readonly IUserIncludeQueryBuilderFactory _userIncludeQueryBuilderFactory;
 
     public ForgotPasswordTokenService(
         IPasswordHasher passwordHasher,
@@ -28,7 +29,8 @@ internal class ForgotPasswordTokenService : IForgotPasswordTokenService
         IDateTimeProvider dateTimeProvider,
         IApplicationMapper applicationMapper,
         IForgotPasswordTokenFactory forgotPasswordTokenFactory,
-        IForgotPasswordTokenRepository forgotPasswordTokenRepository)
+        IForgotPasswordTokenRepository forgotPasswordTokenRepository,
+        IUserIncludeQueryBuilderFactory userIncludeQueryBuilderFactory)
     {
         _passwordHasher = passwordHasher;
         _userRepository = userRepository;
@@ -37,6 +39,7 @@ internal class ForgotPasswordTokenService : IForgotPasswordTokenService
         _applicationMapper = applicationMapper;
         _forgotPasswordTokenFactory = forgotPasswordTokenFactory;
         _forgotPasswordTokenRepository = forgotPasswordTokenRepository;
+        _userIncludeQueryBuilderFactory = userIncludeQueryBuilderFactory;
     }
 
     public async Task<ForgotPasswordToken> AddAsync(AddForgotPasswordTokenCommand command, CancellationToken cancellationToken)
@@ -49,7 +52,7 @@ internal class ForgotPasswordTokenService : IForgotPasswordTokenService
         }
 
         var forgotPasswordToken = _forgotPasswordTokenFactory.Create(existingUser!.Id);
-        _forgotPasswordTokenRepository.Add(forgotPasswordToken);
+        await _forgotPasswordTokenRepository.AddAsync(forgotPasswordToken, cancellationToken);
 
         var forgotPasswordTokenAddedEvent = _applicationMapper.Map<ForgotPasswordTokenAddedEventRequest>(forgotPasswordToken);
         await _eventPublisher.PublishAsync(forgotPasswordTokenAddedEvent, cancellationToken);
@@ -59,7 +62,8 @@ internal class ForgotPasswordTokenService : IForgotPasswordTokenService
 
     public async Task VerifyAsync(VerifyForgotPasswordTokenCommand command, CancellationToken cancellationToken)
     {
-        var existingUser = await _userRepository.GetByIdAsync(command.Id, cancellationToken);
+        var include = _userIncludeQueryBuilderFactory.Create().WithForgotPasswordTokens().Build();
+        var existingUser = await _userRepository.GetByIdAsync(command.Id, include, cancellationToken);
 
         if (existingUser.IsNull())
         {
@@ -80,11 +84,11 @@ internal class ForgotPasswordTokenService : IForgotPasswordTokenService
             throw new ForgotPasswordTokenExpiredException(command.Id, command.Value);
         }
 
-        _forgotPasswordTokenRepository.Delete(existingForgotPasswordToken);
+        await _forgotPasswordTokenRepository.DeleteRangeAsync(existingUser!.ForgotPasswordTokens, cancellationToken);
 
         var passwordHash = _passwordHasher.Hash(command.Password);
 
         existingUser!.UpdatePasswordHash(passwordHash);
-        _userRepository.Update(existingUser);
+        await _userRepository.UpdateAsync(existingUser, cancellationToken);
     }
 }

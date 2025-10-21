@@ -4,25 +4,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using InstaConnect.Common.Infrastructure.Abstractions;
 using InstaConnect.Common.Infrastructure.Exceptions;
 using InstaConnect.Common.Models.Enums;
 using InstaConnect.Identity.Domain.Features.Users.Models.Requests;
-using InstaConnect.Identity.Infrastructure.Features.Users.Abstractions;
 using InstaConnect.Users.Domain.Features.Users.Models.Requests;
+using InstaConnect.Users.Infrastructure.Features.Users.Abstractions;
 
 namespace InstaConnect.Common.Infrastructure.UserSortPropertys;
 internal class UserSortPropertyFactory : IUserSortPropertyFactory
 {
-    private readonly IEnumerable<IUserSortProperty> _userSortProperty;
+    private readonly IEnumerable<IUserSortProperty> _userSortProperties;
 
-    public UserSortPropertyFactory(IEnumerable<IUserSortProperty> userSortProperty)
+    public UserSortPropertyFactory(IEnumerable<IUserSortProperty> userSortProperties)
     {
-        _userSortProperty = userSortProperty;
+        _userSortProperties = userSortProperties;
     }
 
     public IUserSortProperty Create(UserSortProperty sortProperty)
     {
-        var property = _userSortProperty.FirstOrDefault(s => s.SortProperty == sortProperty);
+        var property = _userSortProperties.FirstOrDefault(s => s.SortProperty == sortProperty);
 
         if (property == null)
         {

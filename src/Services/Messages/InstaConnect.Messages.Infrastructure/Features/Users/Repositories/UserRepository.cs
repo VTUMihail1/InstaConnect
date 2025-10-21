@@ -1,94 +1,118 @@
-﻿using InstaConnect.Common.Abstractions;
+﻿using InstaConnect.Common.Extensions;
 using InstaConnect.Common.Infrastructure.Abstractions;
 using InstaConnect.Common.Infrastructure.Extensions;
-using InstaConnect.Chats.Infrastructure;
-using InstaConnect.Posts.Domain.Features.Users.Abstractions;
-using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
-using InstaConnect.Posts.Infrastructure.Features.Posts.Abstractions;
-using InstaConnect.Posts.Infrastructure.Features.Posts.Models;
-using InstaConnect.Messages.Infrastructure;
+using InstaConnect.Chats.Infrastructure.Abstractions;
+using InstaConnect.Users.Domain.Features.Users.Models.Requests;
 
-namespace InstaConnect.Posts.Infrastructure.Features.Users.Repositories;
+using MongoDB.Driver;
+using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
+using InstaConnect.Posts.Domain.Features.Users.Abstractions;
+
+namespace InstaConnect.Users.Infrastructure.Features.Users.Repositories;
 
 internal class UserRepository : IUserRepository
 {
-    private readonly ChatsContext _chatsContext;
-    private readonly IUserQueryFactory _userQueryFactory;
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly ISqlConnectionFactory _sqlConnectionFactory;
+    private readonly IChatsContext _chatsContext;
+    private readonly IUserIncludePropertyFactory _chatIncludePropertyFactory;
 
     public UserRepository(
-        ChatsContext chatsContext,
-        IUserQueryFactory userQueryFactory,
-        IApplicationMapper applicationMapper,
-        ISqlConnectionFactory sqlConnectionFactory)
+        IChatsContext chatsContext,
+        IUserIncludePropertyFactory chatIncludePropertyFactory)
     {
         _chatsContext = chatsContext;
-        _userQueryFactory = userQueryFactory;
-        _applicationMapper = applicationMapper;
-        _sqlConnectionFactory = sqlConnectionFactory;
+        _chatIncludePropertyFactory = chatIncludePropertyFactory;
     }
 
-    public async Task<User?> GetByIdAsync(string id, CancellationToken cancellationToken)
+    public async Task<User?> GetByIdAsync(
+        string id,
+        UserIncludeQuery? include,
+        CancellationToken cancellationToken)
     {
-        using var connection = _sqlConnectionFactory.Create();
+        var includeProperties = _chatIncludePropertyFactory.Create(include?.Properties);
 
-        var getByIdQuery = _userQueryFactory.CreateGetById(id);
-        var queryResponse = await connection.ExecuteQueryFirstAsync<UserQueryEntity>(
-            getByIdQuery.Sql,
-            getByIdQuery.Parameters,
-            cancellationToken);
-        var user = _applicationMapper.Map<User>(queryResponse!);
-
-        return user;
-    }
-
-    public async Task<User?> GetByNameAsync(string name, CancellationToken cancellationToken)
-    {
-        using var connection = _sqlConnectionFactory.Create();
-
-        var getByNameQuery = _userQueryFactory.CreateGetByName(name);
-        var queryResponse = await connection.ExecuteQueryFirstAsync<UserQueryEntity>(
-            getByNameQuery.Sql,
-            getByNameQuery.Parameters,
-            cancellationToken);
-        var user = _applicationMapper.Map<User>(queryResponse!);
-
-        return user;
-    }
-
-    public async Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken)
-    {
-        using var connection = _sqlConnectionFactory.Create();
-
-        var getByEmailQuery = _userQueryFactory.CreateGetByEmail(email);
-        var queryResponse = await connection.ExecuteQueryFirstAsync<UserQueryEntity>(
-            getByEmailQuery.Sql,
-            getByEmailQuery.Parameters,
-            cancellationToken);
-        var user = _applicationMapper.Map<User>(queryResponse!);
-
-        return user;
-    }
-
-    public void Add(User user)
-    {
-        _chatsContext
+        var entity = await _chatsContext
             .Users
-            .Add(user);
+            .Aggregate()
+            .Includes(includeProperties)
+            .Match(p => p.Id == id)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        return entity;
     }
 
-    public void Update(User user)
+    public async Task<User?> GetByIdAsync(
+        string id,
+        CancellationToken cancellationToken)
     {
-        _chatsContext
-            .Users
-            .Update(user);
+        return await GetByIdAsync(id, null, cancellationToken);
     }
 
-    public void Delete(User user)
+    public async Task<User?> GetByNameAsync(
+        string name,
+        UserIncludeQuery? include,
+        CancellationToken cancellationToken)
     {
-        _chatsContext
+        var includeProperties = _chatIncludePropertyFactory.Create(include?.Properties);
+
+        var entity = await _chatsContext
             .Users
-            .Remove(user);
+            .Aggregate()
+            .Includes(includeProperties)
+            .Match(p => p.Name == name)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        return entity;
+    }
+
+    public async Task<User?> GetByNameAsync(
+        string name,
+        CancellationToken cancellationToken)
+    {
+        return await GetByNameAsync(name, null, cancellationToken);
+    }
+
+    public async Task<User?> GetByEmailAsync(
+        string email,
+        UserIncludeQuery? include,
+        CancellationToken cancellationToken)
+    {
+        var includeProperties = _chatIncludePropertyFactory.Create(include?.Properties);
+
+        var entity = await _chatsContext
+            .Users
+            .Aggregate()
+            .Includes(includeProperties)
+            .Match(p => p.Email == email)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        return entity;
+    }
+
+    public async Task<User?> GetByEmailAsync(
+        string email,
+        CancellationToken cancellationToken)
+    {
+        return await GetByEmailAsync(email, null, cancellationToken);
+    }
+
+    public async Task AddAsync(User entity, CancellationToken cancellationToken)
+    {
+        await _chatsContext
+            .Users
+            .AddAsync(_chatsContext.ClientSessionHandle, entity, cancellationToken);
+    }
+
+    public async Task UpdateAsync(User entity, CancellationToken cancellationToken)
+    {
+        await _chatsContext
+            .Users
+            .UpdateAsync(_chatsContext.ClientSessionHandle, x => x.Id == entity.Id, entity, cancellationToken);
+    }
+
+    public async Task DeleteAsync(User entity, CancellationToken cancellationToken)
+    {
+        await _chatsContext
+            .Users
+            .DeleteAsync(_chatsContext.ClientSessionHandle, x => x.Id == entity.Id, cancellationToken);
     }
 }

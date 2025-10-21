@@ -1,7 +1,7 @@
 ﻿using InstaConnect.Common.Extensions;
 using InstaConnect.Follows.Infrastructure.Features.Follows.Extensions;
-using InstaConnect.Posts.Infrastructure.Features.Users.Extensions;
 using InstaConnect.Shared.Infrastructure.Extensions;
+using InstaConnect.Users.Infrastructure.Features.Users.Extensions;
 
 using Microsoft.AspNetCore.Hosting;
 
@@ -15,19 +15,17 @@ public static class ServiceCollectionExtensions
         IWebHostEnvironment webHostEnvironment)
     {
         serviceCollection
-            .AddDatabaseContext<FollowsContext>(configuration);
-
-        serviceCollection
             .AddUserServices()
             .AddFollowServices();
 
         serviceCollection
             .AddObservability(configuration, webHostEnvironment)
+            .AddMapper(FollowInfrastructureReference.Assembly)
             .AddServicesWithMatchingInterfaces(FollowInfrastructureReference.Assembly)
-            .AddUnitOfWork<FollowsContext>()
+            .AddMongoDbContext()
+            .AddUnitOfWork()
             .AddRabbitMQ(configuration, FollowInfrastructureReference.Assembly)
             .AddJwtBearer(configuration)
-            .AddGuidProvider()
             .AddDateTimeProvider();
 
         return serviceCollection;

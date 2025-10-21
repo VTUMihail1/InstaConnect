@@ -5,8 +5,5 @@ using InstaConnect.PostComments.Domain.Features.PostComments.Models.Responses;
 namespace InstaConnect.PostComments.Infrastructure.Features.PostComments.Abstractions;
 internal interface IPostCommentCollectionFactory
 {
-    PostCommentCollection Create(
-        ICollection<PostComment> postComments,
-        int totalCount,
-        PostCommentPaginationQuery pagination);
+    PostCommentCollection Create(ICollection<PostComment> postComments, int totalCount, PostCommentPaginationQuery pagination);
 }

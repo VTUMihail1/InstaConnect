@@ -19,4 +19,12 @@ public static class ForgotPasswordTokenExceptionErrorMessages
 
         return result;
     }
+
+    public static string GetInclidePropertyNotSupportedMessage(ICollection<ForgotPasswordTokenIncludeProperty> includeProperties)
+    {
+        const string Format = "ForgotPasswordTokenIncludeProperties(types: {0}) is not supported";
+        var result = Format.FormatCurrentCulture(string.Join(", ", includeProperties));
+
+        return result;
+    }
 }

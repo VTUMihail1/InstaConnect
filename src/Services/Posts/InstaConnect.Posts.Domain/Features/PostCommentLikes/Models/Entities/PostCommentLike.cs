@@ -47,9 +47,14 @@ public class PostCommentLike : IEntity
 
     public string UserId { get; }
 
-    public User? User { get; }
+    public User? User { get; private set; }
 
     public DateTimeOffset CreatedAt { get; }
 
     public DateTimeOffset UpdatedAt { get; }
+
+    public void AddUser(User user)
+    {
+        User = user;
+    }
 }

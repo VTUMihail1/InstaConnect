@@ -1,13 +1,14 @@
-﻿using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Entities;
-using InstaConnect.PostComments.Domain.Features.PostComments.Models.Entities;
+﻿using InstaConnect.ChatMessages.Domain.Features.ChatMessages.Models.Entities;
 using InstaConnect.Chats.Domain.Features.Chats.Models.Entities;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
-using InstaConnect.ChatMessages.Domain.Features.ChatMessages.Models.Entities;
+using InstaConnect.Common.Extensions;
 
 namespace InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 public class User : IEntity
 {
+    private readonly IList<Chat> _chats;
+    private readonly IList<ChatMessage> _chatMessages;
+
     private User()
     {
         Id = string.Empty;
@@ -15,8 +16,8 @@ public class User : IEntity
         LastName = string.Empty;
         Email = string.Empty;
         Name = string.Empty;
-        Chats = [];
-        ChatMessages = [];
+        _chats = [];
+        _chatMessages = [];
     }
 
     public User(
@@ -35,8 +36,8 @@ public class User : IEntity
         Email = email;
         Name = name;
         ProfileImage = profileImage;
-        Chats = [];
-        ChatMessages = [];
+        _chats = [];
+        _chatMessages = [];
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
     }
@@ -50,8 +51,8 @@ public class User : IEntity
         string? profileImage,
         DateTimeOffset createdAt,
         DateTimeOffset updatedAt,
-        ICollection<Chat> chats,
-        ICollection<ChatMessage> chatMessages)
+        IList<Chat> chats,
+        IList<ChatMessage> chatMessages)
     {
         Id = id;
         FirstName = firstName;
@@ -61,8 +62,8 @@ public class User : IEntity
         ProfileImage = profileImage;
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
-        Chats = chats;
-        ChatMessages = chatMessages;
+        _chats = chats;
+        _chatMessages = chatMessages;
     }
 
     public string Id { get; }
@@ -77,9 +78,9 @@ public class User : IEntity
 
     public string? ProfileImage { get; private set; }
 
-    public ICollection<Chat> Chats { get; }
+    public IReadOnlyCollection<Chat> Chats => _chats.AsReadOnly();
 
-    public ICollection<ChatMessage> ChatMessages { get; }
+    public IReadOnlyCollection<ChatMessage> ChatMessages => _chatMessages.AsReadOnly();
 
     public DateTimeOffset CreatedAt { get; }
 
@@ -99,6 +100,44 @@ public class User : IEntity
         Name = name;
         ProfileImage = profileImage;
         UpdatedAt = updatedAt;
+    }
+
+    public bool HasEmail(string email)
+    {
+        var hasEmail = Email.EqualsOrdinalIgnoreCase(email);
+
+        return hasEmail;
+    }
+
+    public bool DoesNotHaveEmail(string email)
+    {
+        var hasEmail = !HasEmail(email);
+
+        return hasEmail;
+    }
+
+    public bool HasName(string name)
+    {
+        var hasName = Name.EqualsOrdinalIgnoreCase(name);
+
+        return hasName;
+    }
+
+    public bool DoesNotHaveName(string name)
+    {
+        var hasName = !HasName(name);
+
+        return hasName;
+    }
+
+    public void AddChat(Chat chat)
+    {
+        _chats.Add(chat);
+    }
+
+    public void AddChatMessage(ChatMessage chatMessage)
+    {
+        _chatMessages.Add(chatMessage);
     }
 }
 

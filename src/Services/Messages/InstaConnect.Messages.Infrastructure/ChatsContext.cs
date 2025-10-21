@@ -1,26 +1,26 @@
-﻿using InstaConnect.ChatMessages.Domain.Features.ChatMessages.Models.Entities;
-using InstaConnect.Chats.Domain.Features.Chats.Models.Entities;
-using InstaConnect.Chats.Infrastructure.Extensions;
+﻿using InstaConnect.Common.Infrastructure;
+using InstaConnect.ChatCommentLikes.Domain.Features.ChatCommentLikes.Models.Entities;
+using InstaConnect.ChatComments.Domain.Features.ChatComments.Models.Entities;
+using InstaConnect.ChatLikes.Domain.Features.ChatLikes.Models.Entities;
+using InstaConnect.Chats.Infrastructure.Abstractions;
+using InstaConnect.Chats.Infrastructure.Utilities;
+
+using MongoDB.Driver;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
+using InstaConnect.Chats.Domain.Features.Chats.Models.Entities;
+using InstaConnect.ChatMessages.Domain.Features.ChatMessages.Models.Entities;
 
-namespace InstaConnect.Messages.Infrastructure;
-
-public class ChatsContext : DbContext
+namespace InstaConnect.Chats.Infrastructure;
+public class ChatsContext : MongoDbContext, IChatsContext
 {
-    public ChatsContext(DbContextOptions<ChatsContext> options) : base(options)
+    public ChatsContext(IMongoClient mongoClient, IMongoDatabase mongoDatabase)
+        : base(mongoClient, mongoDatabase)
     {
     }
 
-    public DbSet<Chat> Chats { get; set; }
+    public IMongoCollection<User> Users => Collection<User>(ChatCollectionNames.Users);
 
-    public DbSet<ChatMessage> ChatMessages { get; set; }
+    public IMongoCollection<Chat> Chats => Collection<Chat>(ChatCollectionNames.Chats);
 
-    public DbSet<User> Users { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        base.OnModelCreating(modelBuilder);
-
-        modelBuilder.ApplyConfigurationsFromAssembly(ChatInfrastructureReference.Assembly);
-    }
+    public IMongoCollection<ChatMessage> ChatMessages => Collection<ChatMessage>(ChatCollectionNames.ChatMessages);
 }

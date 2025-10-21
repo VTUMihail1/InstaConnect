@@ -1,31 +1,26 @@
-﻿using InstaConnect.Common.Infrastructure.Extensions;
+﻿using InstaConnect.Common.Infrastructure;
 using InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Entities;
-using InstaConnect.Identity.Infrastructure.Extensions;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
+using InstaConnect.Users.Infrastructure.Abstractions;
+using InstaConnect.Users.Infrastructure.Utilities;
 
-namespace InstaConnect.Identity.Infrastructure;
+using MongoDB.Driver;
 
-public class IdentityContext : DbContext
+namespace InstaConnect.Users.Infrastructure;
+public class IdentityContext : MongoDbContext, IIdentityContext
 {
-    public IdentityContext(DbContextOptions options) : base(options)
-    { }
-
-    public DbSet<User> Users { get; set; }
-
-    public DbSet<UserClaim> UserClaims { get; set; }
-
-    public DbSet<RefreshToken> RefreshTokens { get; set; }
-
-    public DbSet<EmailConfirmationToken> EmailConfirmationTokens { get; set; }
-
-    public DbSet<ForgotPasswordToken> ForgotPasswordTokens { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    public IdentityContext(IMongoClient mongoClient, IMongoDatabase mongoDatabase)
+        : base(mongoClient, mongoDatabase)
     {
-        base.OnModelCreating(modelBuilder);
-
-        modelBuilder.ApplyConfigurationsFromAssembly(IdentityInfrastructureReference.Assembly);
-
-        modelBuilder.ApplyTransactionalOutboxEntityConfiguration();
     }
+
+    public IMongoCollection<User> Users => Collection<User>(IdentityCollectionNames.Users);
+
+    public IMongoCollection<UserClaim> UserClaims => Collection<UserClaim>(IdentityCollectionNames.UserClaims);
+
+    public IMongoCollection<RefreshToken> RefreshTokens => Collection<RefreshToken>(IdentityCollectionNames.RefreshTokens);
+
+    public IMongoCollection<ForgotPasswordToken> ForgotPasswordTokens => Collection<ForgotPasswordToken>(IdentityCollectionNames.ForgotPasswordTokens);
+
+    public IMongoCollection<EmailConfirmationToken> EmailConfirmationTokens => Collection<EmailConfirmationToken>(IdentityCollectionNames.EmailConfirmationTokens);
 }

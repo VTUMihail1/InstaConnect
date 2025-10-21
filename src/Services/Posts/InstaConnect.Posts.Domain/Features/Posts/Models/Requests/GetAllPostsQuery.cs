@@ -7,7 +7,7 @@ public record GetAllPostsQuery(
 {
     public PostIncludeQuery? Include { get; private set; }
 
-    public GetAllPostsQuery AddInclues(PostIncludeQuery include)
+    public GetAllPostsQuery AddInclude(PostIncludeQuery include)
     {
         Include = include;
 

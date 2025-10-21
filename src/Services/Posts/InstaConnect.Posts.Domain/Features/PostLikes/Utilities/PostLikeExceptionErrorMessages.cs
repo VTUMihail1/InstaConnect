@@ -1,5 +1,6 @@
 ﻿using InstaConnect.Common.Extensions;
 using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Requests;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 
 namespace InstaConnect.PostLikes.Common.Features.PostLikes.Utilities;
 
@@ -25,6 +26,14 @@ public static class PostLikeExceptionErrorMessages
     {
         const string Format = "PostLikeSortProperty(type: {0}) is not supported";
         var result = Format.FormatCurrentCulture(sortProperty);
+
+        return result;
+    }
+
+    public static string GetInclidePropertyNotSupportedMessage(ICollection<PostLikeIncludeProperty> includeProperties)
+    {
+        const string Format = "PostLikeIncludeProperties(types: {0}) is not supported";
+        var result = Format.FormatCurrentCulture(string.Join(", ", includeProperties));
 
         return result;
     }

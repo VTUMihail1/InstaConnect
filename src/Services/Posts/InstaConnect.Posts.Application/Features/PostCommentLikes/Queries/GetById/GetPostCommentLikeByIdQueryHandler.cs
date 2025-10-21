@@ -8,20 +8,24 @@ internal class GetPostCommentLikeByIdQueryHandler : IQueryHandler<GetPostComment
 {
     private readonly IApplicationMapper _applicationMapper;
     private readonly IPostCommentLikeService _postCommentLikeService;
+    private readonly IPostCommentLikeIncludeQueryBuilderFactory _postCommentLikeIncludeQueryBuilderFactory;
 
     public GetPostCommentLikeByIdQueryHandler(
         IApplicationMapper applicationMapper,
-        IPostCommentLikeService postCommentLikeService)
+        IPostCommentLikeService postCommentLikeService,
+        IPostCommentLikeIncludeQueryBuilderFactory postCommentLikeIncludeQueryBuilderFactory)
     {
         _applicationMapper = applicationMapper;
         _postCommentLikeService = postCommentLikeService;
+        _postCommentLikeIncludeQueryBuilderFactory = postCommentLikeIncludeQueryBuilderFactory;
     }
 
     public async Task<GetPostCommentLikeByIdQueryResponse> Handle(
         GetPostCommentLikeByIdQueryRequest request,
         CancellationToken cancellationToken)
     {
-        var serviceRequest = _applicationMapper.Map<GetPostCommentLikeByIdQuery>(request);
+        var include = _postCommentLikeIncludeQueryBuilderFactory.Create().WithUser().Build();
+        var serviceRequest = _applicationMapper.Map<GetPostCommentLikeByIdQuery>(request).AddInclude(include);
         var postCommentLike = await _postCommentLikeService.GetByIdAsync(serviceRequest, cancellationToken);
 
         var response = _applicationMapper.Map<GetPostCommentLikeByIdQueryResponse>(postCommentLike);

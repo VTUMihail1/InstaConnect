@@ -1,5 +1,6 @@
 ﻿using InstaConnect.Common.Extensions;
 using InstaConnect.PostComments.Domain.Features.PostComments.Models.Requests;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 
 namespace InstaConnect.PostComments.Common.Features.PostComments.Utilities;
 
@@ -25,6 +26,14 @@ public static class PostCommentExceptionErrorMessages
     {
         const string Format = "PostCommentSortProperty(type: {0}) is not supported";
         var result = Format.FormatCurrentCulture(sortProperty);
+
+        return result;
+    }
+
+    public static string GetInclidePropertyNotSupportedMessage(ICollection<PostCommentIncludeProperty> includeProperties)
+    {
+        const string Format = "PostCommentIncludeProperties(types: {0}) is not supported";
+        var result = Format.FormatCurrentCulture(string.Join(", ", includeProperties));
 
         return result;
     }

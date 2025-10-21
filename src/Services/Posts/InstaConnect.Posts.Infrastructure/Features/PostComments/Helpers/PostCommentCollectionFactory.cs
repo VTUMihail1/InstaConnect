@@ -17,7 +17,7 @@ internal class PostCommentCollectionFactory : IPostCommentCollectionFactory
 
     public PostCommentCollection Create(ICollection<PostComment> postComments, int totalCount, PostCommentPaginationQuery pagination)
     {
-        var hasNextPage = _paginator.HasNextPage(pagination.Page ,pagination.PageSize ,totalCount);
+        var hasNextPage = _paginator.HasNextPage(pagination.Page, pagination.PageSize, totalCount);
         var hasPreviousPage = _paginator.HasPreviousPage(pagination.Page);
 
         return new PostCommentCollection(

@@ -14,7 +14,7 @@ internal class PostCollectionFactory : IPostCollectionFactory
         _paginator = paginator;
     }
 
-    public PostCollection Create(ICollection<Post> posts, long totalCount, PostPaginationQuery pagination)
+    public PostCollection Create(ICollection<Post> posts, int totalCount, PostPaginationQuery pagination)
     {
         var hasNextPage = _paginator.HasNextPage(pagination.Page, pagination.PageSize, totalCount);
         var hasPreviousPage = _paginator.HasPreviousPage(pagination.Page);

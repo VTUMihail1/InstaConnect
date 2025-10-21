@@ -42,6 +42,13 @@ public static class StringExtensions
         return result;
     }
 
+    public static bool StartsWithOrdinalIgnoreCase(this string a, string b)
+    {
+        var result = a.StartsWith(b, StringComparison.OrdinalIgnoreCase);
+
+        return result;
+    }
+
     public static bool NotEqualsOrdinalIgnoreCase(this string a, string b)
     {
         var result = !a.EqualsOrdinalIgnoreCase(b);

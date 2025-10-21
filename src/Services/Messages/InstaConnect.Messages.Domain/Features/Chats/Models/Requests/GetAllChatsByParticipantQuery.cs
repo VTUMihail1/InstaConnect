@@ -3,4 +3,14 @@
 public record GetAllChatsByParticipantQuery(
     ChatByParticipantFilterQuery Filter,
     ChatByParticipantSortingQuery Sorting,
-    ChatPaginationQuery Pagination);
+    ChatPaginationQuery Pagination)
+{
+    public ChatIncludeQuery? Include { get; private set; }
+
+    public GetAllChatsByParticipantQuery AddInclude(ChatIncludeQuery include)
+    {
+        Include = include;
+
+        return this;
+    }
+};

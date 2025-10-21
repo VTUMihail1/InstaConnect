@@ -1,5 +1,4 @@
-﻿using InstaConnect.Common.Abstractions;
-using InstaConnect.Common.Helpers;
+﻿using InstaConnect.Common.Extensions;
 using InstaConnect.Common.Infrastructure.Abstractions;
 using InstaConnect.Common.Infrastructure.Extensions;
 using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Abstractions;
@@ -7,84 +6,124 @@ using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Enti
 using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Requests;
 using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Responses;
 using InstaConnect.PostCommentLikes.Infrastructure.Features.PostCommentLikes.Abstractions;
-using InstaConnect.PostCommentLikes.Infrastructure.Features.PostCommentLikes.Models;
-using InstaConnect.Posts.Infrastructure;
+using InstaConnect.Posts.Infrastructure.Abstractions;
+
+using MongoDB.Driver;
 
 namespace InstaConnect.PostCommentLikes.Infrastructure.Features.PostCommentLikes.Repositories;
 
 internal class PostCommentLikeRepository : IPostCommentLikeRepository
 {
-    private readonly PostsContext _postsContext;
-    private readonly IApplicationMapper _appclicationMapper;
-    private readonly ISqlConnectionFactory _sqlConnectionFactory;
-    private readonly IPostCommentLikeQueryFactory _postCommentLikeQueryFactory;
+    private readonly IPaginator _paginator;
+    private readonly IPostsContext _postsContext;
+    private readonly ISortOrderFactory _sortOrderFactory;
     private readonly IPostCommentLikeCollectionFactory _postCommentLikeCollectionFactory;
+    private readonly IPostCommentLikeSortPropertyFactory _postCommentLikeSortPropertyFactory;
+    private readonly IPostCommentLikeIncludePropertyFactory _postCommentLikeIncludePropertyFactory;
 
     public PostCommentLikeRepository(
-        PostsContext postsContext,
-        IApplicationMapper appclicationMapper,
-        ISqlConnectionFactory sqlConnectionFactory,
-        IPostCommentLikeQueryFactory postCommentLikeQueryFactory,
-        IPostCommentLikeCollectionFactory postCommentLikeCollectionFactory)
+        IPaginator paginator,
+        IPostsContext postsContext,
+        ISortOrderFactory sortOrderFactory,
+        IPostCommentLikeCollectionFactory postCommentLikeCollectionFactory,
+        IPostCommentLikeSortPropertyFactory postCommentLikeSortPropertyFactory,
+        IPostCommentLikeIncludePropertyFactory postCommentLikeIncludePropertyFactory)
     {
+        _paginator = paginator;
         _postsContext = postsContext;
-        _appclicationMapper = appclicationMapper;
-        _sqlConnectionFactory = sqlConnectionFactory;
-        _postCommentLikeQueryFactory = postCommentLikeQueryFactory;
+        _sortOrderFactory = sortOrderFactory;
         _postCommentLikeCollectionFactory = postCommentLikeCollectionFactory;
+        _postCommentLikeSortPropertyFactory = postCommentLikeSortPropertyFactory;
+        _postCommentLikeIncludePropertyFactory = postCommentLikeIncludePropertyFactory;
     }
 
-    public async Task<PostCommentLikeCollection> GetAllAsync(GetAllPostCommentLikesQuery query, CancellationToken cancellationToken)
+    public async Task<PostCommentLikeCollection> GetAllAsync(
+        PostCommentLikeFilterQuery filter,
+        PostCommentLikeSortingQuery sorting,
+        PostCommentLikePaginationQuery pagination,
+        PostCommentLikeIncludeQuery? include,
+        CancellationToken cancellationToken)
     {
-        using var connection = _sqlConnectionFactory.Create();
+        var sortOrder = _sortOrderFactory.Create(sorting.Order);
+        var sortProperty = _postCommentLikeSortPropertyFactory.Create(sorting.Property);
+        var includeProperties = _postCommentLikeIncludePropertyFactory.Create(include?.Properties);
+        var offset = _paginator.GetOffset(pagination.Page, pagination.PageSize);
+        var isUserNameEmpty = filter.UserName.IsNullOrEmptyOrWhiteSpace();
 
-        var getAllQuery = _postCommentLikeQueryFactory.CreateGetAll(query);
-        var queryEntity = await connection.ExecuteQueryAsync<PostCommentLikeQueryEntity>(
-            getAllQuery.Sql,
-            getAllQuery.Parameters,
+        var pipeline = _postsContext
+            .PostCommentLikes
+            .Aggregate()
+            .Includes(includeProperties)
+            .Match(p => p.Id == filter.Id &&
+                        p.CommentId == filter.CommentId &&
+                        (isUserNameEmpty || p.User!.Name.StartsWithOrdinalIgnoreCase(filter.UserName)));
+
+        var totalCountsResult = await pipeline.Count().FirstOrDefaultAsync(cancellationToken);
+
+        var entities = await pipeline
+            .Sort(sortOrder.Sort(sortProperty.Property))
+            .Skip(offset)
+            .Limit(pagination.PageSize)
+            .ToListAsync(cancellationToken);
+
+        var collectionEntities = _postCommentLikeCollectionFactory.Create(entities, (int)totalCountsResult.Count, pagination);
+
+        return collectionEntities;
+    }
+
+    public async Task<PostCommentLike?> GetByIdAsync(
+        string id,
+        string commentId,
+        string userId,
+        PostCommentLikeIncludeQuery? include,
+        CancellationToken cancellationToken)
+    {
+        var includeProperties = _postCommentLikeIncludePropertyFactory.Create(include?.Properties);
+
+        var entity = await _postsContext
+            .PostCommentLikes
+            .Aggregate()
+            .Includes(includeProperties)
+            .Match(p => p.Id == id && p.CommentId == commentId && p.UserId == userId)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        return entity;
+    }
+
+    public async Task<PostCommentLike?> GetByIdAsync(
+        string id,
+        string commentId,
+        string userId,
+        CancellationToken cancellationToken)
+    {
+        return await GetByIdAsync(id, commentId, userId, null, cancellationToken);
+    }
+
+    public async Task AddAsync(PostCommentLike entity, CancellationToken cancellationToken)
+    {
+        await _postsContext
+            .PostCommentLikes
+            .AddAsync(_postsContext.ClientSessionHandle, entity, cancellationToken);
+    }
+
+    public async Task UpdateAsync(PostCommentLike entity, CancellationToken cancellationToken)
+    {
+        await _postsContext
+            .PostCommentLikes
+            .UpdateAsync(
+            _postsContext.ClientSessionHandle,
+            p => p.Id == entity.Id && p.CommentId == entity.CommentId && p.UserId == entity.UserId,
+            entity,
             cancellationToken);
-        var postCommentLikes = _appclicationMapper.Map<ICollection<PostCommentLike>>(queryEntity.ToList());
-
-        var getAllTotalCountQuery = _postCommentLikeQueryFactory.CreateGetAllTotalCount(query.Filter);
-        var postCommentLikesTotalCount = await connection.ExecuteFunctionAsync<int>(getAllTotalCountQuery.Sql, getAllTotalCountQuery.Parameters, cancellationToken);
-
-        var response = _postCommentLikeCollectionFactory.Create(postCommentLikes, postCommentLikesTotalCount, query.Pagination);
-
-        return response;
     }
 
-    public async Task<PostCommentLike?> GetByIdAsync(string id, string commentId, string userId, CancellationToken cancellationToken)
+    public async Task DeleteAsync(PostCommentLike entity, CancellationToken cancellationToken)
     {
-        using var connection = _sqlConnectionFactory.Create();
-
-        var getByIdQuery = _postCommentLikeQueryFactory.CreateGetById(id, commentId, userId);
-        var queryResponse = await connection.ExecuteQueryFirstAsync<PostCommentLikeQueryEntity>(
-            getByIdQuery.Sql,
-            getByIdQuery.Parameters,
+        await _postsContext
+            .PostCommentLikes
+            .DeleteAsync(
+            _postsContext.ClientSessionHandle,
+            p => p.Id == entity.Id && p.CommentId == entity.CommentId && p.UserId == entity.UserId,
             cancellationToken);
-        var postCommentLike = _appclicationMapper.Map<PostCommentLike>(queryResponse!);
-
-        return postCommentLike;
-    }
-
-    public void Add(PostCommentLike postCommentLike)
-    {
-        _postsContext
-            .PostCommentLikes
-            .Add(postCommentLike);
-    }
-
-    public void Update(PostCommentLike postCommentLike)
-    {
-        _postsContext
-            .PostCommentLikes
-            .Update(postCommentLike);
-    }
-
-    public void Delete(PostCommentLike postCommentLike)
-    {
-        _postsContext
-            .PostCommentLikes
-            .Remove(postCommentLike);
     }
 }

@@ -1,11 +1,6 @@
 ﻿using InstaConnect.Common.Extensions;
-using InstaConnect.Common.Infrastructure.Extensions;
 using InstaConnect.EmailConfirmationTokens.Infrastructure.Features.EmailConfirmationTokens.Extensions;
 using InstaConnect.ForgotPasswordTokens.Infrastructure.Features.ForgotPasswordTokens.Extensions;
-using InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Extensions;
-using InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Extensions;
-using InstaConnect.Identity.Infrastructure.Features.UserClaims.Extensions;
-using InstaConnect.Identity.Infrastructure.Features.Users.Extensions;
 using InstaConnect.RefreshTokens.Infrastructure.Features.RefreshTokens.Extensions;
 using InstaConnect.Shared.Infrastructure.Extensions;
 using InstaConnect.UserClaims.Infrastructure.Features.UserClaims.Extensions;
@@ -13,7 +8,7 @@ using InstaConnect.Users.Infrastructure.Features.Users.Extensions;
 
 using Microsoft.AspNetCore.Hosting;
 
-namespace InstaConnect.Identity.Infrastructure.Extensions;
+namespace InstaConnect.Users.Infrastructure.Extensions;
 
 public static class ServiceCollectionExtensions
 {
@@ -31,14 +26,12 @@ public static class ServiceCollectionExtensions
 
         serviceCollection
             .AddObservability(configuration, webHostEnvironment)
-            .AddDatabaseContext<IdentityContext>(configuration)
+            .AddMapper(IdentityInfrastructureReference.Assembly)
             .AddServicesWithMatchingInterfaces(IdentityInfrastructureReference.Assembly)
-            .AddRedisCaching(configuration)
-            .AddUnitOfWork<IdentityContext>()
+            .AddMongoDbContext()
+            .AddUnitOfWork()
+            .AddRabbitMQ(configuration, IdentityInfrastructureReference.Assembly)
             .AddJwtBearer(configuration)
-            .AddCloudinary(configuration)
-            .AddRabbitMQ(configuration, IdentityInfrastructureReference.Assembly, busConfigurator =>
-                busConfigurator.AddTransactionalOutbox<IdentityContext>())
             .AddDateTimeProvider();
 
         return serviceCollection;

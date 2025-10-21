@@ -61,4 +61,19 @@ public static class MongoCollectionExtensions
         await collection.DeleteOneAsync(session, filter, null, cancellationToken);
             
     }
+
+    public static async Task DeleteRangeAsync<T>(
+        this IMongoCollection<T> collection,
+        IClientSessionHandle? session,
+        Expression<Func<T, bool>> filter,
+        CancellationToken cancellationToken)
+    {
+        if (session.IsNotInTransaction())
+        {
+            await collection.DeleteManyAsync(filter, null, cancellationToken);
+            return;
+        }
+
+        await collection.DeleteManyAsync(session, filter, null, cancellationToken);
+    }
 }

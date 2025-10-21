@@ -8,6 +8,7 @@ using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Reque
 using InstaConnect.Identity.Domain.Features.Users.Exceptions;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
 using InstaConnect.Users.Domain.Features.Users.Abstractions;
+using InstaConnect.Users.Domain.Features.Users.Helpers;
 
 namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Helpers;
 internal class EmailConfirmationTokenService : IEmailConfirmationTokenService
@@ -17,6 +18,7 @@ internal class EmailConfirmationTokenService : IEmailConfirmationTokenService
     private readonly IDateTimeProvider _dateTimeProvider;
     private readonly IApplicationMapper _applicationMapper;
     private readonly IEmailConfirmationTokenFactory _emailConfirmationTokenFactory;
+    private readonly IUserIncludeQueryBuilderFactory _userIncludeQueryBuilderFactory;
     private readonly IEmailConfirmationTokenRepository _emailConfirmationTokenRepository;
 
     public EmailConfirmationTokenService(
@@ -25,6 +27,7 @@ internal class EmailConfirmationTokenService : IEmailConfirmationTokenService
         IDateTimeProvider dateTimeProvider,
         IApplicationMapper applicationMapper,
         IEmailConfirmationTokenFactory emailConfirmationTokenFactory,
+        IUserIncludeQueryBuilderFactory userIncludeQueryBuilderFactory,
         IEmailConfirmationTokenRepository emailConfirmationTokenRepository)
     {
         _userRepository = userRepository;
@@ -32,6 +35,7 @@ internal class EmailConfirmationTokenService : IEmailConfirmationTokenService
         _dateTimeProvider = dateTimeProvider;
         _applicationMapper = applicationMapper;
         _emailConfirmationTokenFactory = emailConfirmationTokenFactory;
+        _userIncludeQueryBuilderFactory = userIncludeQueryBuilderFactory;
         _emailConfirmationTokenRepository = emailConfirmationTokenRepository;
     }
 
@@ -45,7 +49,7 @@ internal class EmailConfirmationTokenService : IEmailConfirmationTokenService
         }
 
         var emailConfirmationToken = _emailConfirmationTokenFactory.Create(existingUser!.Id);
-        _emailConfirmationTokenRepository.Add(emailConfirmationToken);
+        await _emailConfirmationTokenRepository.AddAsync(emailConfirmationToken, cancellationToken);
 
         var emailConfirmationTokenAddedEvent = _applicationMapper.Map<EmailConfirmationTokenAddedEventRequest>(emailConfirmationToken);
         await _eventPublisher.PublishAsync(emailConfirmationTokenAddedEvent, cancellationToken);
@@ -55,7 +59,8 @@ internal class EmailConfirmationTokenService : IEmailConfirmationTokenService
 
     public async Task VerifyAsync(VerifyEmailConfirmationTokenCommand command, CancellationToken cancellationToken)
     {
-        var existingUser = await _userRepository.GetByIdAsync(command.Id, cancellationToken);
+        var include = _userIncludeQueryBuilderFactory.Create().WithEmailConfirmationTokens().Build();
+        var existingUser = await _userRepository.GetByIdAsync(command.Id, include, cancellationToken);
 
         if (existingUser.IsNull())
         {
@@ -76,9 +81,9 @@ internal class EmailConfirmationTokenService : IEmailConfirmationTokenService
             throw new EmailConfirmationTokenExpiredException(command.Id, command.Value);
         }
 
-        _emailConfirmationTokenRepository.Delete(existingEmailConfirmationToken);
+        await _emailConfirmationTokenRepository.DeleteRangeAsync(existingUser!.EmailConfirmationTokens, cancellationToken);
 
         existingUser!.ConfirmEmail();
-        _userRepository.Update(existingUser);
+        await _userRepository.UpdateAsync(existingUser, cancellationToken);
     }
 }

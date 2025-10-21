@@ -8,20 +8,24 @@ internal class GetChatByIdQueryHandler : IQueryHandler<GetChatByIdQueryRequest, 
 {
     private readonly IChatService _chatService;
     private readonly IApplicationMapper _applicationMapper;
+    private readonly IChatIncludeQueryBuilderFactory _chatIncludeQueryBuilderFactory;
 
     public GetChatByIdQueryHandler(
         IChatService chatService,
-        IApplicationMapper applicationMapper)
+        IApplicationMapper applicationMapper,
+        IChatIncludeQueryBuilderFactory chatIncludeQueryBuilderFactory)
     {
         _chatService = chatService;
         _applicationMapper = applicationMapper;
+        _chatIncludeQueryBuilderFactory = chatIncludeQueryBuilderFactory;
     }
 
     public async Task<GetChatByIdQueryResponse> Handle(
         GetChatByIdQueryRequest request,
         CancellationToken cancellationToken)
     {
-        var serviceRequest = _applicationMapper.Map<GetChatByIdQuery>(request);
+        var include = _chatIncludeQueryBuilderFactory.Create().WithParticipantOne().WithParticipantTwo().Build();
+        var serviceRequest = _applicationMapper.Map<GetChatByIdQuery>(request).AddInclude(include);
         var chat = await _chatService.GetByIdAsync(serviceRequest, cancellationToken);
 
         var response = _applicationMapper.Map<GetChatByIdQueryResponse>(chat);

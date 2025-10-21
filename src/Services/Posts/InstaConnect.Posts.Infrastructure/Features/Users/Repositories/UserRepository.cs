@@ -1,91 +1,116 @@
-﻿using InstaConnect.Common.Abstractions;
+﻿using InstaConnect.Common.Extensions;
 using InstaConnect.Common.Infrastructure.Abstractions;
 using InstaConnect.Common.Infrastructure.Extensions;
-using InstaConnect.Posts.Application.Features.Posts.Models;
-using InstaConnect.Posts.Infrastructure.Features.Posts.Abstractions;
-using InstaConnect.Posts.Infrastructure.Features.Posts.Models;
+using InstaConnect.Posts.Infrastructure.Abstractions;
+using InstaConnect.Users.Domain.Features.Users.Models.Requests;
 
-namespace InstaConnect.Posts.Infrastructure.Features.Users.Repositories;
+using MongoDB.Driver;
+
+namespace InstaConnect.Users.Infrastructure.Features.Users.Repositories;
 
 internal class UserRepository : IUserRepository
 {
-    private readonly PostsContext _postsContext;
-    private readonly IUserQueryFactory _userQueryFactory;
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly ISqlConnectionFactory _sqlConnectionFactory;
+    private readonly IPostsContext _postsContext;
+    private readonly IUserIncludePropertyFactory _postIncludePropertyFactory;
 
     public UserRepository(
-        PostsContext postsContext,
-        IUserQueryFactory userQueryFactory,
-        IApplicationMapper applicationMapper,
-        ISqlConnectionFactory sqlConnectionFactory)
+        IPostsContext postsContext,
+        IUserIncludePropertyFactory postIncludePropertyFactory)
     {
         _postsContext = postsContext;
-        _userQueryFactory = userQueryFactory;
-        _applicationMapper = applicationMapper;
-        _sqlConnectionFactory = sqlConnectionFactory;
+        _postIncludePropertyFactory = postIncludePropertyFactory;
     }
 
-    public async Task<User?> GetByIdAsync(string id, CancellationToken cancellationToken)
+    public async Task<User?> GetByIdAsync(
+        string id,
+        UserIncludeQuery? include,
+        CancellationToken cancellationToken)
     {
-        using var connection = _sqlConnectionFactory.Create();
+        var includeProperties = _postIncludePropertyFactory.Create(include?.Properties);
 
-        var getByIdQuery = _userQueryFactory.CreateGetById(id);
-        var queryResponse = await connection.ExecuteQueryFirstAsync<UserQueryEntity>(
-            getByIdQuery.Sql,
-            getByIdQuery.Parameters,
-            cancellationToken);
-        var user = _applicationMapper.Map<User>(queryResponse!);
-
-        return user;
-    }
-
-    public async Task<User?> GetByNameAsync(string name, CancellationToken cancellationToken)
-    {
-        using var connection = _sqlConnectionFactory.Create();
-
-        var getByNameQuery = _userQueryFactory.CreateGetByName(name);
-        var queryResponse = await connection.ExecuteQueryFirstAsync<UserQueryEntity>(
-            getByNameQuery.Sql,
-            getByNameQuery.Parameters,
-            cancellationToken);
-        var user = _applicationMapper.Map<User>(queryResponse!);
-
-        return user;
-    }
-
-    public async Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken)
-    {
-        using var connection = _sqlConnectionFactory.Create();
-
-        var getByEmailQuery = _userQueryFactory.CreateGetByEmail(email);
-        var queryResponse = await connection.ExecuteQueryFirstAsync<UserQueryEntity>(
-            getByEmailQuery.Sql,
-            getByEmailQuery.Parameters,
-            cancellationToken);
-        var user = _applicationMapper.Map<User>(queryResponse!);
-
-        return user;
-    }
-
-    public void Add(User user)
-    {
-        _postsContext
+        var entity = await _postsContext
             .Users
-            .Add(user);
+            .Aggregate()
+            .Includes(includeProperties)
+            .Match(p => p.Id == id)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        return entity;
     }
 
-    public void Update(User user)
+    public async Task<User?> GetByIdAsync(
+        string id,
+        CancellationToken cancellationToken)
     {
-        _postsContext
-            .Users
-            .Update(user);
+        return await GetByIdAsync(id, null, cancellationToken);
     }
 
-    public void Delete(User user)
+    public async Task<User?> GetByNameAsync(
+        string name,
+        UserIncludeQuery? include,
+        CancellationToken cancellationToken)
     {
-        _postsContext
+        var includeProperties = _postIncludePropertyFactory.Create(include?.Properties);
+
+        var entity = await _postsContext
             .Users
-            .Remove(user);
+            .Aggregate()
+            .Includes(includeProperties)
+            .Match(p => p.Name == name)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        return entity;
+    }
+
+    public async Task<User?> GetByNameAsync(
+        string name,
+        CancellationToken cancellationToken)
+    {
+        return await GetByNameAsync(name, null, cancellationToken);
+    }
+
+    public async Task<User?> GetByEmailAsync(
+        string email,
+        UserIncludeQuery? include,
+        CancellationToken cancellationToken)
+    {
+        var includeProperties = _postIncludePropertyFactory.Create(include?.Properties);
+
+        var entity = await _postsContext
+            .Users
+            .Aggregate()
+            .Includes(includeProperties)
+            .Match(p => p.Email == email)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        return entity;
+    }
+
+    public async Task<User?> GetByEmailAsync(
+        string email,
+        CancellationToken cancellationToken)
+    {
+        return await GetByEmailAsync(email, null, cancellationToken);
+    }
+
+    public async Task AddAsync(User entity, CancellationToken cancellationToken)
+    {
+        await _postsContext
+            .Users
+            .AddAsync(_postsContext.ClientSessionHandle, entity, cancellationToken);
+    }
+
+    public async Task UpdateAsync(User entity, CancellationToken cancellationToken)
+    {
+        await _postsContext
+            .Users
+            .UpdateAsync(_postsContext.ClientSessionHandle, x => x.Id == entity.Id, entity, cancellationToken);
+    }
+
+    public async Task DeleteAsync(User entity, CancellationToken cancellationToken)
+    {
+        await _postsContext
+            .Users
+            .DeleteAsync(_postsContext.ClientSessionHandle, x => x.Id == entity.Id, cancellationToken);
     }
 }

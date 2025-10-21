@@ -1,8 +1,8 @@
 ﻿using InstaConnect.Common.Infrastructure.Abstractions;
-using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
 using InstaConnect.Follows.Domain.Features.Follows.Models.Requests;
 using InstaConnect.Follows.Domain.Features.Follows.Models.Responses;
 using InstaConnect.Follows.Infrastructure.Features.Follows.Abstractions;
+using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
 
 namespace InstaConnect.Follows.Infrastructure.Features.Follows.Helpers;
 

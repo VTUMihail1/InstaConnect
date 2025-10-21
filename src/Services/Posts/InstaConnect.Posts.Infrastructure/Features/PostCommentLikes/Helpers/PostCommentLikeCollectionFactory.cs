@@ -15,13 +15,13 @@ internal class PostCommentLikeCollectionFactory : IPostCommentLikeCollectionFact
         _paginator = paginator;
     }
 
-    public PostCommentLikeCollection Create(ICollection<PostCommentLike> postCommentLikes, int totalCount, PostCommentLikePaginationQuery pagination)
+    public PostCommentLikeCollection Create(ICollection<PostCommentLike> entities, int totalCount, PostCommentLikePaginationQuery pagination)
     {
         var hasNextPage = _paginator.HasNextPage(pagination.Page, pagination.PageSize, totalCount);
         var hasPreviousPage = _paginator.HasPreviousPage(pagination.Page);
 
         return new PostCommentLikeCollection(
-            postCommentLikes,
+            entities,
             pagination.Page,
             pagination.PageSize,
             totalCount,

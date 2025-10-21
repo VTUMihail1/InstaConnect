@@ -1,4 +1,6 @@
 ﻿using InstaConnect.Common.Extensions;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
+using InstaConnect.Users.Domain.Features.Users.Models.Requests;
 
 namespace InstaConnect.Posts.Common.Features.Users.Utilities;
 
@@ -32,6 +34,14 @@ public static class UserExceptionErrorMessages
     {
         const string Format = "User(email: {0}) already exists";
         var result = Format.FormatCurrentCulture(email);
+
+        return result;
+    }
+
+    public static string GetInclidePropertyNotSupportedMessage(ICollection<UserIncludeProperty> includeProperties)
+    {
+        const string Format = "UserIncludeProperties(types: {0}) is not supported";
+        var result = Format.FormatCurrentCulture(string.Join(", ", includeProperties));
 
         return result;
     }

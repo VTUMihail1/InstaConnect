@@ -57,14 +57,20 @@ internal class PostCommentLikeService : IPostCommentLikeService
 
         var existingPostComment = await _postCommentRepository.GetByIdAsync(
             query.Filter.Id,
-            query.Filter.CommentId, cancellationToken);
+            query.Filter.CommentId,
+            cancellationToken);
 
         if (existingPostComment.IsNull())
         {
             throw new PostCommentNotFoundException(query.Filter.Id, query.Filter.CommentId);
         }
 
-        var existingPostCommentLikeCollection = await _postCommentLikeRepository.GetAllAsync(query, cancellationToken);
+        var existingPostCommentLikeCollection = await _postCommentLikeRepository.GetAllAsync(
+            query.Filter,
+            query.Sorting,
+            query.Pagination,
+            query.Include,
+            cancellationToken);
 
         return existingPostCommentLikeCollection;
     }
@@ -89,6 +95,7 @@ internal class PostCommentLikeService : IPostCommentLikeService
             query.Id,
             query.CommentId,
             query.UserId,
+            query.Include,
             cancellationToken);
 
         if (existingPostCommentLike.IsNull())
@@ -137,7 +144,7 @@ internal class PostCommentLikeService : IPostCommentLikeService
         }
 
         var postCommentLike = _postCommentLikeFactory.Create(command.Id, command.CommentId, command.UserId);
-        _postCommentLikeRepository.Add(postCommentLike);
+        await _postCommentLikeRepository.AddAsync(postCommentLike, cancellationToken);
 
         var eventRequest = _applicationMapper.Map<PostCommentLikeAddedEventRequest>(postCommentLike);
         await _eventPublisher.PublishAsync(eventRequest, cancellationToken);
@@ -172,7 +179,7 @@ internal class PostCommentLikeService : IPostCommentLikeService
             throw new PostCommentLikeNotFoundException(command.Id, command.CommentId, command.UserId);
         }
 
-        _postCommentLikeRepository.Delete(existingPostCommentLike!);
+        await _postCommentLikeRepository.DeleteAsync(existingPostCommentLike!, cancellationToken);
 
         var eventRequest = _applicationMapper.Map<PostCommentLikeDeletedEventRequest>(existingPostCommentLike!);
         await _eventPublisher.PublishAsync(eventRequest, cancellationToken);

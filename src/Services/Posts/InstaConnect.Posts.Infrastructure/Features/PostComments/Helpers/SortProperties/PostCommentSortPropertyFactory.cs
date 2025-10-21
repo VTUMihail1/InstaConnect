@@ -10,19 +10,19 @@ using InstaConnect.Common.Models.Enums;
 using InstaConnect.PostComments.Domain.Features.PostComments.Models.Requests;
 using InstaConnect.PostComments.Infrastructure.Features.PostComments.Abstractions;
 
-namespace InstaConnect.Posts.Infrastructure.Features.PostComments.Helpers.SortProperties;
+namespace InstaConnect.Common.Infrastructure.PostCommentSortPropertys;
 internal class PostCommentSortPropertyFactory : IPostCommentSortPropertyFactory
 {
-    private readonly IEnumerable<IPostCommentSortProperty> _postCommentSortProperty;
+    private readonly IEnumerable<IPostCommentSortProperty> _postCommentSortProperties;
 
-    public PostCommentSortPropertyFactory(IEnumerable<IPostCommentSortProperty> postCommentSortProperty)
+    public PostCommentSortPropertyFactory(IEnumerable<IPostCommentSortProperty> postCommentSortProperties)
     {
-        _postCommentSortProperty = postCommentSortProperty;
+        _postCommentSortProperties = postCommentSortProperties;
     }
 
     public IPostCommentSortProperty Create(PostCommentSortProperty sortProperty)
     {
-        var property = _postCommentSortProperty.FirstOrDefault(s => s.SortProperty == sortProperty);
+        var property = _postCommentSortProperties.FirstOrDefault(s => s.SortProperty == sortProperty);
 
         if (property == null)
         {

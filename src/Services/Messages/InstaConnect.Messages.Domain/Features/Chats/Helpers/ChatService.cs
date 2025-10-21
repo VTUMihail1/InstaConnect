@@ -1,7 +1,4 @@
-﻿using InstaConnect.Common.Abstractions;
-using InstaConnect.Common.Exceptions.Users;
-using InstaConnect.Common.Extensions;
-using InstaConnect.ChatLikes.Domain.Features.ChatLikes.Abstractions;
+﻿using InstaConnect.ChatLikes.Domain.Features.ChatLikes.Abstractions;
 using InstaConnect.Chats.Application.Features.Chats.Commands.Add;
 using InstaConnect.Chats.Application.Features.Chats.Queries.GetById;
 using InstaConnect.Chats.Domain.Features.Chats.Abstractions;
@@ -9,6 +6,8 @@ using InstaConnect.Chats.Domain.Features.Chats.Exceptions;
 using InstaConnect.Chats.Domain.Features.Chats.Models.Entities;
 using InstaConnect.Chats.Domain.Features.Chats.Models.Requests;
 using InstaConnect.Chats.Domain.Features.Chats.Models.Responses;
+using InstaConnect.Common.Abstractions;
+using InstaConnect.Common.Extensions;
 using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Events;
 using InstaConnect.Posts.Domain.Features.Users.Abstractions;
 using InstaConnect.Posts.Domain.Features.Users.Exceptions;
@@ -45,14 +44,23 @@ internal class ChatService : IChatService
             throw new UserNotFoundException(query.Filter.ParticipantId);
         }
 
-        var existingChatCollection = await _chatRepository.GetAllByParticipantAsync(query, cancellationToken);
+        var existingChatCollection = await _chatRepository.GetAllByParticipantAsync(
+            query.Filter,
+            query.Sorting,
+            query.Pagination,
+            query.Include,
+            cancellationToken);
 
         return existingChatCollection;
     }
 
     public async Task<Chat> GetByIdAsync(GetChatByIdQuery query, CancellationToken cancellationToken)
     {
-        var existingChat = await _chatRepository.GetByIdAsync(query.ParticipantOneId, query.ParticipantTwoId, cancellationToken);
+        var existingChat = await _chatRepository.GetByIdAsync(
+            query.ParticipantOneId,
+            query.ParticipantTwoId,
+            query.Include,
+            cancellationToken);
 
         if (existingChat.IsNull())
         {
@@ -86,7 +94,7 @@ internal class ChatService : IChatService
         }
 
         var chat = _chatFactory.Create(command.ParticipantOneId, command.ParticipantTwoId);
-        _chatRepository.Add(chat);
+        await _chatRepository.AddAsync(chat, cancellationToken);
 
         var eventRequest = _applicationMapper.Map<ChatAddedEventRequest>(chat);
         await _eventPublisher.PublishAsync(eventRequest, cancellationToken);
@@ -103,7 +111,7 @@ internal class ChatService : IChatService
             throw new ChatNotFoundException(command.ParticipantOneId, command.ParticipantTwoId);
         }
 
-        _chatRepository.Delete(existingChat!);
+        await _chatRepository.DeleteAsync(existingChat!, cancellationToken);
 
         var eventRequest = _applicationMapper.Map<ChatDeletedEventRequest>(existingChat!);
         await _eventPublisher.PublishAsync(eventRequest, cancellationToken);

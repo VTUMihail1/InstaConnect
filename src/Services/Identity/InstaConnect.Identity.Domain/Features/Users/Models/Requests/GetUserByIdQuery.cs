@@ -1,3 +1,16 @@
-﻿namespace InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
+﻿using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
+using InstaConnect.Users.Domain.Features.Users.Models.Requests;
 
-public record GetUserByIdQuery(string Id);
+namespace InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
+
+public record GetUserByIdQuery(string Id)
+{
+    public UserIncludeQuery? Include { get; private set; }
+
+    public GetUserByIdQuery AddInclude(UserIncludeQuery include)
+    {
+        Include = include;
+
+        return this;
+    }
+};

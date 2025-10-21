@@ -5,6 +5,7 @@ using InstaConnect.PostLikes.Application.Features.PostLikes.Queries.GetAll;
 using InstaConnect.PostLikes.Application.Features.PostLikes.Queries.GetById;
 using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Requests;
 using InstaConnect.PostLikes.Presentation.Features.PostLikes.Models.Requests;
+using InstaConnect.Posts.Domain.Features.PostLikes.Models.Requests;
 
 namespace InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities;
 public static class PostLikeMatcher

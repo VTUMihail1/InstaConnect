@@ -3,4 +3,14 @@
 public record GetAllFollowsByFollowerQuery(
     FollowByFollowerFilterQuery Filter,
     FollowByFollowerSortingQuery Sorting,
-    FollowPaginationQuery Pagination);
+    FollowPaginationQuery Pagination)
+{
+    public FollowIncludeQuery? Include { get; private set; }
+
+    public GetAllFollowsByFollowerQuery AddInclude(FollowIncludeQuery include)
+    {
+        Include = include;
+
+        return this;
+    }
+};

@@ -1,12 +1,12 @@
-﻿using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Entities;
-using InstaConnect.PostComments.Domain.Features.PostComments.Models.Entities;
+﻿using InstaConnect.Common.Extensions;
 using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
 
 namespace InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 public class User : IEntity
 {
+    private readonly IList<Follow> _follows;
+
     private User()
     {
         Id = string.Empty;
@@ -14,6 +14,7 @@ public class User : IEntity
         LastName = string.Empty;
         Email = string.Empty;
         Name = string.Empty;
+        _follows = [];
     }
 
     public User(
@@ -32,7 +33,7 @@ public class User : IEntity
         Email = email;
         Name = name;
         ProfileImage = profileImage;
-        Follows = [];
+        _follows = [];
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
     }
@@ -46,7 +47,7 @@ public class User : IEntity
         string? profileImage,
         DateTimeOffset createdAt,
         DateTimeOffset updatedAt,
-        ICollection<Follow> follows)
+        IList<Follow> follows)
     {
         Id = id;
         FirstName = firstName;
@@ -56,7 +57,7 @@ public class User : IEntity
         ProfileImage = profileImage;
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
-        Follows = follows;
+        _follows = follows;
     }
 
     public string Id { get; }
@@ -71,7 +72,7 @@ public class User : IEntity
 
     public string? ProfileImage { get; private set; }
 
-    public ICollection<Follow> Follows { get; }
+    public IReadOnlyCollection<Follow> Follows => _follows.AsReadOnly();
 
     public DateTimeOffset CreatedAt { get; }
 
@@ -91,6 +92,39 @@ public class User : IEntity
         Name = name;
         ProfileImage = profileImage;
         UpdatedAt = updatedAt;
+    }
+
+    public bool HasEmail(string email)
+    {
+        var hasEmail = Email.EqualsOrdinalIgnoreCase(email);
+
+        return hasEmail;
+    }
+
+    public bool DoesNotHaveEmail(string email)
+    {
+        var hasEmail = !HasEmail(email);
+
+        return hasEmail;
+    }
+
+    public bool HasName(string name)
+    {
+        var hasName = Name.EqualsOrdinalIgnoreCase(name);
+
+        return hasName;
+    }
+
+    public bool DoesNotHaveName(string name)
+    {
+        var hasName = !HasName(name);
+
+        return hasName;
+    }
+
+    public void AddPost(Follow follow)
+    {
+        _follows.Add(follow);
     }
 }
 

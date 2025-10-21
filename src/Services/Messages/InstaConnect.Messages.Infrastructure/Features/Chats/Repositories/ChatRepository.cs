@@ -1,90 +1,141 @@
-﻿using InstaConnect.Common.Abstractions;
-using InstaConnect.Common.Infrastructure.Abstractions;
-using InstaConnect.Common.Infrastructure.Extensions;
+﻿using System.Xml.Linq;
+
 using InstaConnect.Chats.Domain.Features.Chats.Abstractions;
 using InstaConnect.Chats.Domain.Features.Chats.Models.Entities;
 using InstaConnect.Chats.Domain.Features.Chats.Models.Requests;
 using InstaConnect.Chats.Domain.Features.Chats.Models.Responses;
+using InstaConnect.Chats.Infrastructure.Abstractions;
 using InstaConnect.Chats.Infrastructure.Features.Chats.Abstractions;
-using InstaConnect.Chats.Infrastructure.Features.Chats.Models;
-using InstaConnect.Posts.Infrastructure;
-using InstaConnect.Messages.Infrastructure;
+using InstaConnect.Common.Extensions;
+using InstaConnect.Common.Infrastructure.Abstractions;
+using InstaConnect.Common.Infrastructure.Extensions;
+
+using MongoDB.Driver;
 
 namespace InstaConnect.Chats.Infrastructure.Features.Chats.Repositories;
 
 internal class ChatRepository : IChatRepository
 {
-    private readonly ChatsContext _chatsContext;
-    private readonly IChatQueryFactory _chatQueryFactory;
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly ISqlConnectionFactory _sqlConnectionFactory;
+    private readonly IPaginator _paginator;
+    private readonly IChatsContext _chatsContext;
+    private readonly ISortOrderFactory _sortOrderFactory;
     private readonly IChatCollectionFactory _chatCollectionFactory;
+    private readonly IChatIncludePropertyFactory _chatIncludePropertyFactory;
+    private readonly IChatByParticipantSortPropertyFactory _chatSortPropertyFactory;
 
     public ChatRepository(
-        ChatsContext chatsContext,
-        IChatQueryFactory chatQueryFactory,
-        IApplicationMapper applicationMapper,
-        ISqlConnectionFactory sqlConnectionFactory,
-        IChatCollectionFactory chatCollectionFactory)
+        IPaginator paginator,
+        IChatsContext chatsContext,
+        ISortOrderFactory sortOrderFactory,
+        IChatCollectionFactory chatCollectionFactory,
+        IChatIncludePropertyFactory chatIncludePropertyFactory,
+        IChatByParticipantSortPropertyFactory chatSortPropertyFactory)
     {
+        _paginator = paginator;
         _chatsContext = chatsContext;
-        _applicationMapper = applicationMapper;
-        _chatQueryFactory = chatQueryFactory;
-        _sqlConnectionFactory = sqlConnectionFactory;
+        _sortOrderFactory = sortOrderFactory;
         _chatCollectionFactory = chatCollectionFactory;
+        _chatSortPropertyFactory = chatSortPropertyFactory;
+        _chatIncludePropertyFactory = chatIncludePropertyFactory;
     }
 
-    public async Task<ChatCollection> GetAllByParticipantAsync(GetAllChatsByParticipantQuery query, CancellationToken cancellationToken)
+    public async Task<ChatCollection> GetAllByParticipantAsync(
+        ChatByParticipantFilterQuery filter,
+        ChatByParticipantSortingQuery sorting,
+        ChatPaginationQuery pagination,
+        ChatIncludeQuery? include,
+        CancellationToken cancellationToken)
     {
-        using var connection = _sqlConnectionFactory.Create();
+        var sortOrder = _sortOrderFactory.Create(sorting.Order);
+        var sortProperty = _chatSortPropertyFactory.Create(sorting.Property);
+        var includeProperties = _chatIncludePropertyFactory.Create(include?.Properties);
+        var offset = _paginator.GetOffset(pagination.Page, pagination.PageSize);
+        var isParticipantNameEmpty = filter.ParticipantName.IsNullOrEmptyOrWhiteSpace();
 
-        var getAllByParticipantQuery = _chatQueryFactory.CreateGetAllByParticipant(query);
-        var queryEntity = await connection.ExecuteQueryAsync<ChatQueryEntity>(
-            getAllByParticipantQuery.Sql,
-            getAllByParticipantQuery.Parameters,
+        var pipeline = _chatsContext
+            .Chats
+            .Aggregate()
+            .Includes(includeProperties)
+            .Match(p => (p.ParticipantOneId == filter.ParticipantId ||
+                         p.ParticipantTwoId == filter.ParticipantId) &&
+                         (isParticipantNameEmpty ||
+                         p.ParticipantOne!.Name.StartsWithOrdinalIgnoreCase(filter.ParticipantName) ||
+                         p.ParticipantTwo!.Name.StartsWithOrdinalIgnoreCase(filter.ParticipantName)));
+
+        var totalCountsResult = await pipeline.Count().FirstOrDefaultAsync(cancellationToken);
+
+        var entities = await pipeline
+            .Project(a => new Chat(
+                a.ParticipantOneId == filter.ParticipantId ? a.ParticipantOne! : a.ParticipantTwo!,
+                a.ParticipantTwoId == filter.ParticipantId ? a.ParticipantTwo! : a.ParticipantOne!,
+                a.CreatedAt,
+                a.UpdatedAt))
+            .Sort(sortOrder.Sort(sortProperty.Property))
+            .Skip(offset)
+            .Limit(pagination.PageSize)
+            .ToListAsync(cancellationToken);
+
+        var collectionEntities = _chatCollectionFactory.Create(entities, (int)totalCountsResult.Count, pagination);
+
+        return collectionEntities;
+    }
+
+    public async Task<Chat?> GetByIdAsync(
+        string participantOneId,
+        string participantTwoId,
+        ChatIncludeQuery? include,
+        CancellationToken cancellationToken)
+    {
+        var includeProperties = _chatIncludePropertyFactory.Create(include?.Properties);
+
+        var entity = await _chatsContext
+            .Chats
+            .Aggregate()
+            .Includes(includeProperties)
+            .Match(p => p.ParticipantOneId == participantOneId && p.ParticipantTwoId == participantTwoId)
+            .Project(a => new Chat(
+                a.ParticipantOneId == participantOneId ? a.ParticipantOne! : a.ParticipantTwo!,
+                a.ParticipantTwoId == participantOneId ? a.ParticipantTwo! : a.ParticipantOne!,
+                a.CreatedAt,
+                a.UpdatedAt))
+            .FirstOrDefaultAsync(cancellationToken);
+
+        return entity;
+    }
+
+    public async Task<Chat?> GetByIdAsync(
+        string participantOneId,
+        string participantTwoId,
+        CancellationToken cancellationToken)
+    {
+        return await GetByIdAsync(participantOneId, participantTwoId, null, cancellationToken);
+    }
+
+    public async Task AddAsync(Chat entity, CancellationToken cancellationToken)
+    {
+        await _chatsContext
+            .Chats
+            .AddAsync(_chatsContext.ClientSessionHandle, entity, cancellationToken);
+    }
+
+    public async Task UpdateAsync(Chat entity, CancellationToken cancellationToken)
+    {
+        await _chatsContext
+            .Chats
+            .UpdateAsync(
+            _chatsContext.ClientSessionHandle,
+            x => x.ParticipantOneId == entity.ParticipantOneId && x.ParticipantTwoId == entity.ParticipantTwoId,
+            entity,
             cancellationToken);
-        var chats = _applicationMapper.Map<ICollection<Chat>>(queryEntity.ToList());
-
-        var getAllByParticipantTotalCountQuery = _chatQueryFactory.CreateGetAllByParticipantTotalCount(query.Filter);
-        var chatsTotalCount = await connection.ExecuteFunctionAsync<int>(getAllByParticipantTotalCountQuery.Sql, getAllByParticipantTotalCountQuery.Parameters, cancellationToken);
-
-        var response = _chatCollectionFactory.Create(chats, chatsTotalCount, query.Pagination);
-
-        return response;
     }
 
-    public async Task<Chat?> GetByIdAsync(string participantOneId, string participantTwoId, CancellationToken cancellationToken)
+    public async Task DeleteAsync(Chat entity, CancellationToken cancellationToken)
     {
-        using var connection = _sqlConnectionFactory.Create();
-
-        var getByIdQuery = _chatQueryFactory.CreateGetById(participantOneId, participantTwoId);
-        var queryResponse = await connection.ExecuteQueryFirstAsync<ChatQueryEntity>(
-            getByIdQuery.Sql,
-            getByIdQuery.Parameters,
+        await _chatsContext
+            .Chats
+            .DeleteAsync(
+            _chatsContext.ClientSessionHandle,
+            x => x.ParticipantOneId == entity.ParticipantOneId && x.ParticipantTwoId == entity.ParticipantTwoId,
             cancellationToken);
-        var chat = _applicationMapper.Map<Chat>(queryResponse!);
-
-        return chat;
-    }
-
-    public void Add(Chat chat)
-    {
-        _chatsContext
-            .Chats
-            .Add(chat);
-    }
-
-    public void Update(Chat chat)
-    {
-        _chatsContext
-            .Chats
-            .Update(chat);
-    }
-
-    public void Delete(Chat chat)
-    {
-        _chatsContext
-            .Chats
-            .Remove(chat);
     }
 }

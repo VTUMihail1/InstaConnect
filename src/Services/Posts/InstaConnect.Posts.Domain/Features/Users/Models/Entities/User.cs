@@ -1,4 +1,6 @@
-﻿using InstaConnect.Common.Extensions;
+﻿using System.Xml.Linq;
+
+using InstaConnect.Common.Extensions;
 using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Entities;
 using InstaConnect.PostComments.Domain.Features.PostComments.Models.Entities;
 using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Entities;
@@ -8,6 +10,11 @@ namespace InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 public class User : IEntity
 {
+    private readonly IList<Post> _posts;
+    private readonly IList<PostLike> _postLikes;
+    private readonly IList<PostComment> _postComments;
+    private readonly IList<PostCommentLike> _postCommentLikes;
+
     private User()
     {
         Id = string.Empty;
@@ -15,10 +22,10 @@ public class User : IEntity
         LastName = string.Empty;
         Email = string.Empty;
         Name = string.Empty;
-        Posts = [];
-        PostLikes = [];
-        PostComments = [];
-        PostCommentLikes = [];
+        _posts = [];
+        _postLikes = [];
+        _postComments = [];
+        _postCommentLikes = [];
     }
 
     public User(
@@ -37,10 +44,10 @@ public class User : IEntity
         Email = email;
         Name = name;
         ProfileImage = profileImage;
-        Posts = [];
-        PostLikes = [];
-        PostComments = [];
-        PostCommentLikes = [];
+        _posts = [];
+        _postLikes = [];
+        _postComments = [];
+        _postCommentLikes = [];
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
     }
@@ -54,10 +61,10 @@ public class User : IEntity
         string? profileImage,
         DateTimeOffset createdAt,
         DateTimeOffset updatedAt,
-        ICollection<Post> posts,
-        ICollection<PostLike> postLikes,
-        ICollection<PostComment> postComments,
-        ICollection<PostCommentLike> postCommentLikes)
+        IList<Post> posts,
+        IList<PostLike> postLikes,
+        IList<PostComment> postComments,
+        IList<PostCommentLike> postCommentLikes)
     {
         Id = id;
         FirstName = firstName;
@@ -67,10 +74,10 @@ public class User : IEntity
         ProfileImage = profileImage;
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
-        Posts = posts;
-        PostLikes = postLikes;
-        PostComments = postComments;
-        PostCommentLikes = postCommentLikes;
+        _posts = posts;
+        _postLikes = postLikes;
+        _postComments = postComments;
+        _postCommentLikes = postCommentLikes;
     }
 
     public string Id { get; }
@@ -85,13 +92,13 @@ public class User : IEntity
 
     public string? ProfileImage { get; private set; }
 
-    public ICollection<Post> Posts { get; }
+    public IReadOnlyCollection<Post> Posts => _posts.AsReadOnly();
 
-    public ICollection<PostLike> PostLikes { get; }
+    public IReadOnlyCollection<PostLike> PostLikes => _postLikes.AsReadOnly();
 
-    public ICollection<PostComment> PostComments { get; }
+    public IReadOnlyCollection<PostComment> PostComments => _postComments.AsReadOnly();
 
-    public ICollection<PostCommentLike> PostCommentLikes { get; }
+    public IReadOnlyCollection<PostCommentLike> PostCommentLikes => _postCommentLikes.AsReadOnly();
 
     public DateTimeOffset CreatedAt { get; }
 
@@ -139,6 +146,26 @@ public class User : IEntity
         var hasName = !HasName(name);
 
         return hasName;
+    }
+
+    public void AddPost(Post post)
+    {
+        _posts.Add(post);
+    }
+
+    public void AddPostLike(PostLike postLike)
+    {
+        _postLikes.Add(postLike);
+    }
+
+    public void AddPostComment(PostComment postComment)
+    {
+        _postComments.Add(postComment);
+    }
+
+    public void AddPostCommentLike(PostCommentLike postCommentLike)
+    {
+        _postCommentLikes.Add(postCommentLike);
     }
 }
 

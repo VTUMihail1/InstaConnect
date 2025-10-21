@@ -28,4 +28,12 @@ public static class ChatExceptionErrorMessages
 
         return result;
     }
+
+    public static string GetInclidePropertyNotSupportedMessage(ICollection<ChatIncludeProperty> includeProperties)
+    {
+        const string Format = "ChatIncludeProperties(types: {0}) is not supported";
+        var result = Format.FormatCurrentCulture(string.Join(", ", includeProperties));
+
+        return result;
+    }
 }

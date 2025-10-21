@@ -8,6 +8,11 @@ namespace InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 public class User : IEntity
 {
+    private readonly IList<UserClaim> _claims;
+    private readonly IList<RefreshToken> _refreshTokens;
+    private readonly IList<ForgotPasswordToken> _forgotPasswordTokens;
+    private readonly IList<EmailConfirmationToken> _emailConfirmationTokens;
+
     private User()
     {
         Id = string.Empty;
@@ -17,10 +22,10 @@ public class User : IEntity
         Name = string.Empty;
         PasswordHash = string.Empty;
         IsEmailConfirmed = false;
-        Claims = [];
-        RefreshTokens = [];
-        EmailConfirmationTokens = [];
-        ForgotPasswordTokens = [];
+        _claims = [];
+        _refreshTokens = [];
+        _forgotPasswordTokens = [];
+        _emailConfirmationTokens = [];
     }
 
     public User(
@@ -43,10 +48,10 @@ public class User : IEntity
         PasswordHash = passwordHash;
         IsEmailConfirmed = isEmailConfirmed;
         ProfileImage = profileImage;
-        Claims = [];
-        RefreshTokens = [];
-        EmailConfirmationTokens = [];
-        ForgotPasswordTokens = [];
+        _claims = [];
+        _refreshTokens = [];
+        _forgotPasswordTokens = [];
+        _emailConfirmationTokens = [];
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
     }
@@ -62,10 +67,10 @@ public class User : IEntity
         string? profileImage,
         DateTimeOffset createdAt,
         DateTimeOffset updatedAt,
-        ICollection<UserClaim> claims,
-        ICollection<RefreshToken> refreshTokens,
-        ICollection<EmailConfirmationToken> emailConfirmationTokens,
-        ICollection<ForgotPasswordToken> forgotPasswordTokens)
+        IList<UserClaim> claims,
+        IList<RefreshToken> refreshTokens,
+        IList<ForgotPasswordToken> forgotPasswordTokens,
+        IList<EmailConfirmationToken> emailConfirmationTokens)
     {
         Id = id;
         FirstName = firstName;
@@ -77,10 +82,10 @@ public class User : IEntity
         ProfileImage = profileImage;
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
-        Claims = claims;
-        RefreshTokens = refreshTokens;
-        EmailConfirmationTokens = emailConfirmationTokens;
-        ForgotPasswordTokens = forgotPasswordTokens;
+        _claims = claims;
+        _refreshTokens = refreshTokens;
+        _forgotPasswordTokens = forgotPasswordTokens;
+        _emailConfirmationTokens = emailConfirmationTokens;
     }
 
     public string Id { get; }
@@ -99,13 +104,13 @@ public class User : IEntity
 
     public string? ProfileImage { get; private set; }
 
-    public ICollection<UserClaim> Claims { get; }
+    public IReadOnlyCollection<UserClaim> Claims => _claims.AsReadOnly();
 
-    public ICollection<RefreshToken> RefreshTokens { get; }
+    public IReadOnlyCollection<RefreshToken> RefreshTokens => _refreshTokens.AsReadOnly();
 
-    public ICollection<EmailConfirmationToken> EmailConfirmationTokens { get; }
+    public IReadOnlyCollection<EmailConfirmationToken> EmailConfirmationTokens => _emailConfirmationTokens.AsReadOnly();
 
-    public ICollection<ForgotPasswordToken> ForgotPasswordTokens { get; }
+    public IReadOnlyCollection<ForgotPasswordToken> ForgotPasswordTokens => _forgotPasswordTokens.AsReadOnly();
 
     public DateTimeOffset CreatedAt { get; }
 

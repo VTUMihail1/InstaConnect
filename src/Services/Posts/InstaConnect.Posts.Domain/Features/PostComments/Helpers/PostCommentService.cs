@@ -52,7 +52,12 @@ internal class PostCommentService : IPostCommentService
             throw new PostNotFoundException(query.Filter.Id);
         }
 
-        var existingPostCommentCollection = await _postCommentRepository.GetAllAsync(query, cancellationToken);
+        var existingPostCommentCollection = await _postCommentRepository.GetAllAsync(
+            query.Filter,
+            query.Sorting,
+            query.Pagination,
+            query.Include,
+            cancellationToken);
 
         return existingPostCommentCollection;
     }
@@ -66,7 +71,11 @@ internal class PostCommentService : IPostCommentService
             throw new PostNotFoundException(query.Id);
         }
 
-        var existingPostComment = await _postCommentRepository.GetByIdAsync(query.Id, query.CommentId, cancellationToken);
+        var existingPostComment = await _postCommentRepository.GetByIdAsync(
+            query.Id,
+            query.CommentId,
+            query.Include,
+            cancellationToken);
 
         if (existingPostComment.IsNull())
         {
@@ -93,7 +102,7 @@ internal class PostCommentService : IPostCommentService
         }
 
         var postComment = _postCommentFactory.Create(command.Id, command.UserId, command.Content);
-        _postCommentRepository.Add(postComment);
+        await _postCommentRepository.AddAsync(postComment, cancellationToken);
 
         var eventRequest = _applicationMapper.Map<PostCommentAddedEventRequest>(postComment);
         await _eventPublisher.PublishAsync(eventRequest, cancellationToken);
@@ -124,7 +133,7 @@ internal class PostCommentService : IPostCommentService
 
         var utcNow = _dateTimeProvider.GetOffsetUtcNow();
         existingPostComment.Update(command.Content, utcNow);
-        _postCommentRepository.Update(existingPostComment);
+        await _postCommentRepository.UpdateAsync(existingPostComment, cancellationToken);
 
         var eventRequest = _applicationMapper.Map<PostCommentUpdatedEventRequest>(existingPostComment);
         await _eventPublisher.PublishAsync(eventRequest, cancellationToken);
@@ -153,7 +162,7 @@ internal class PostCommentService : IPostCommentService
             throw new PostCommentForbiddenException(command.Id, command.CommentId, command.UserId);
         }
 
-        _postCommentRepository.Delete(existingPostComment);
+        await _postCommentRepository.DeleteAsync(existingPostComment, cancellationToken);
 
         var eventRequest = _applicationMapper.Map<PostCommentDeletedEventRequest>(existingPostComment);
         await _eventPublisher.PublishAsync(eventRequest, cancellationToken);

@@ -1,57 +1,66 @@
-﻿using InstaConnect.Common.Abstractions;
-using InstaConnect.Common.Infrastructure.Abstractions;
+﻿using InstaConnect.Common.Infrastructure.Abstractions;
 using InstaConnect.Common.Infrastructure.Extensions;
 using InstaConnect.Identity.Domain.Features.RefreshTokens.Abstractions;
 using InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Entities;
-using InstaConnect.Identity.Infrastructure.Features.RefreshTokens.Abstractions;
-using InstaConnect.RefreshTokens.Infrastructure.Features.RefreshTokens.Models;
+using InstaConnect.RefreshTokens.Domain.Features.RefreshTokens.Models.Requests;
+using InstaConnect.Users.Infrastructure.Abstractions;
 
-namespace InstaConnect.Identity.Infrastructure.Features.RefreshTokens.Repositories;
+using MongoDB.Driver;
+
+namespace InstaConnect.RefreshTokens.Infrastructure.Features.RefreshTokens.Repositories;
 
 internal class RefreshTokenRepository : IRefreshTokenRepository
 {
-    private readonly IdentityContext _identityContext;
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly ISqlConnectionFactory _sqlConnectionFactory;
-    private readonly IRefreshTokenQueryFactory _refreshTokenQueryFactory;
+    private readonly IIdentityContext _identityContext;
+    private readonly IRefreshTokenIncludePropertyFactory _refreshTokenIncludePropertyFactory;
 
     public RefreshTokenRepository(
-        IdentityContext identityContext,
-        IApplicationMapper applicationMapper,
-        ISqlConnectionFactory sqlConnectionFactory,
-        IRefreshTokenQueryFactory refreshTokenQueryFactory)
+        IIdentityContext identityContext,
+        IRefreshTokenIncludePropertyFactory refreshTokenIncludePropertyFactory)
     {
         _identityContext = identityContext;
-        _applicationMapper = applicationMapper;
-        _sqlConnectionFactory = sqlConnectionFactory;
-        _refreshTokenQueryFactory = refreshTokenQueryFactory;
+        _refreshTokenIncludePropertyFactory = refreshTokenIncludePropertyFactory;
     }
 
-    public async Task<RefreshToken?> GetByIdAsync(string id, string value, CancellationToken cancellationToken)
+    public async Task<RefreshToken?> GetByIdAsync(
+        string id,
+        string value,
+        RefreshTokenIncludeQuery? include,
+        CancellationToken cancellationToken)
     {
-        using var connection = _sqlConnectionFactory.Create();
+        var includeProperties = _refreshTokenIncludePropertyFactory.Create(include?.Properties);
 
-        var getByIdQuery = _refreshTokenQueryFactory.CreateGetById(id, value);
-        var queryResponse = await connection.ExecuteQueryFirstAsync<RefreshTokenQueryEntity>(
-            getByIdQuery.Sql,
-            getByIdQuery.Parameters,
+        var entity = await _identityContext
+            .RefreshTokens
+            .Aggregate()
+            .Includes(includeProperties)
+            .Match(p => p.Id == id && p.Value == value)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        return entity;
+    }
+
+    public async Task<RefreshToken?> GetByIdAsync(
+        string id,
+        string value,
+        CancellationToken cancellationToken)
+    {
+        return await GetByIdAsync(id, value, null, cancellationToken);
+    }
+
+    public async Task AddAsync(RefreshToken entity, CancellationToken cancellationToken)
+    {
+        await _identityContext
+            .RefreshTokens
+            .AddAsync(_identityContext.ClientSessionHandle, entity, cancellationToken);
+    }
+
+    public async Task DeleteAsync(RefreshToken entity, CancellationToken cancellationToken)
+    {
+        await _identityContext.RefreshTokens
+            .DeleteAsync(
+            _identityContext.ClientSessionHandle,
+            x => x.Id == entity.Id && x.Value == entity.Value,
             cancellationToken);
-        var refreshToken = _applicationMapper.Map<RefreshToken>(queryResponse!);
-
-        return refreshToken;
-    }
-
-    public void Add(RefreshToken refreshToken)
-    {
-        _identityContext
-            .RefreshTokens
-            .Add(refreshToken);
-    }
-
-    public void Delete(RefreshToken refreshToken)
-    {
-        _identityContext
-            .RefreshTokens
-            .Remove(refreshToken);
     }
 }

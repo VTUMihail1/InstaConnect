@@ -3,6 +3,7 @@ using InstaConnect.Common.Infrastructure.Abstractions;
 using InstaConnect.Common.Infrastructure.Extensions;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Responses;
+using InstaConnect.Posts.Infrastructure.Abstractions;
 using InstaConnect.Posts.Infrastructure.Features.Posts.Abstractions;
 
 using MongoDB.Driver;
@@ -45,24 +46,27 @@ internal class PostRepository : IPostRepository
         var sortProperty = _postSortPropertyFactory.Create(sorting.Property);
         var includeProperties = _postIncludePropertyFactory.Create(include?.Properties);
         var offset = _paginator.GetOffset(pagination.Page, pagination.PageSize);
+        var isUserIdEmpty = filter.UserId.IsNullOrEmptyOrWhiteSpace();
+        var isUserNameEmpty = filter.UserName.IsNullOrEmptyOrWhiteSpace();
+        var isTitleEmpty = filter.Title.IsNullOrEmptyOrWhiteSpace();
 
-        var basePipeline = _postsContext
+        var pipeline = _postsContext
             .Posts
             .Aggregate()
             .Includes(includeProperties)
-            .Match(p => (filter.UserId.IsNullOrEmptyOrWhiteSpace() || p.UserId == filter.UserId) &&
-                        (filter.UserName.IsNullOrEmptyOrWhiteSpace() || p.User!.Name == filter.UserName) &&
-                        (filter.Title.IsNullOrEmptyOrWhiteSpace() || p.Title == filter.Title));
+            .Match(p => (isUserIdEmpty || p.UserId == filter.UserId) &&
+                        (isUserNameEmpty || p.User!.Name.StartsWithOrdinalIgnoreCase(filter.UserName) &&
+                        (isTitleEmpty || p.Title.StartsWithOrdinalIgnoreCase(filter.Title))));
 
-        var totalCountsResult = await basePipeline.Count().FirstOrDefaultAsync(cancellationToken);
+        var totalCountsResult = await pipeline.Count().FirstOrDefaultAsync(cancellationToken);
 
-        var entities = await basePipeline
+        var entities = await pipeline
             .Sort(sortOrder.Sort(sortProperty.Property))
             .Skip(offset)
             .Limit(pagination.PageSize)
             .ToListAsync(cancellationToken);
 
-        var collectionEntities = _postCollectionFactory.Create(entities, totalCountsResult.Count, pagination);
+        var collectionEntities = _postCollectionFactory.Create(entities, (int)totalCountsResult.Count, pagination);
 
         return collectionEntities;
     }

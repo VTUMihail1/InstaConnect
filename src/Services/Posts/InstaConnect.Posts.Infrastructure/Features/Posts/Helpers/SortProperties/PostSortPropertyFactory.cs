@@ -13,16 +13,16 @@ using InstaConnect.Posts.Infrastructure.Features.Posts.Abstractions;
 namespace InstaConnect.Common.Infrastructure.PostSortPropertys;
 internal class PostSortPropertyFactory : IPostSortPropertyFactory
 {
-    private readonly IEnumerable<IPostSortProperty> _postSortProperty;
+    private readonly IEnumerable<IPostSortProperty> _postSortProperties;
 
-    public PostSortPropertyFactory(IEnumerable<IPostSortProperty> postSortProperty)
+    public PostSortPropertyFactory(IEnumerable<IPostSortProperty> postSortProperties)
     {
-        _postSortProperty = postSortProperty;
+        _postSortProperties = postSortProperties;
     }
 
     public IPostSortProperty Create(PostSortProperty sortProperty)
     {
-        var property = _postSortProperty.FirstOrDefault(s => s.SortProperty == sortProperty);
+        var property = _postSortProperties.FirstOrDefault(s => s.SortProperty == sortProperty);
 
         if (property == null)
         {

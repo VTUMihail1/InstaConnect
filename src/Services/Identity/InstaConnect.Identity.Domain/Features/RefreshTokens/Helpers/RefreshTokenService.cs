@@ -1,18 +1,11 @@
-﻿using InstaConnect.Common.Abstractions;
-using InstaConnect.Common.Application.Abstractions;
-using InstaConnect.Common.Extensions;
+﻿using InstaConnect.Common.Extensions;
 using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Exceptions;
 using InstaConnect.Identity.Domain.Features.RefreshTokens.Abstractions;
 using InstaConnect.Identity.Domain.Features.RefreshTokens.Exceptions;
-using InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Entities;
-using InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Options;
 using InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Requests;
-using InstaConnect.Identity.Domain.Features.UserClaims.Abstractions;
 using InstaConnect.Identity.Domain.Features.Users.Exceptions;
 using InstaConnect.Identity.Domain.Helpers;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
-using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 using InstaConnect.RefreshTokens.Domain.Features.RefreshTokens.Models.Responses;
 using InstaConnect.Users.Domain.Features.Users.Abstractions;
 
@@ -22,38 +15,36 @@ internal class RefreshTokenService : IRefreshTokenService
     private readonly IPasswordHasher _passwordHasher;
     private readonly IUserRepository _userRepository;
     private readonly IDateTimeProvider _dateTimeProvider;
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly IUserClaimRepository _userClaimRepository;
     private readonly IRefreshTokenFactory _refreshTokenFactory;
     private readonly ISessionTokenFactory _sessionTokenFactory;
     private readonly IAccessTokenGenerator _accessTokenGenerator;
     private readonly IRefreshTokenRepository _refreshTokenRepository;
+    private readonly IUserIncludeQueryBuilderFactory _userIncludeQueryBuilderFactory;
 
     public RefreshTokenService(
         IPasswordHasher passwordHasher,
         IUserRepository userRepository,
         IDateTimeProvider dateTimeProvider,
-        IApplicationMapper applicationMapper,
-        IUserClaimRepository userClaimRepository,
         IRefreshTokenFactory refreshTokenFactory,
         ISessionTokenFactory sessionTokenFactory,
         IAccessTokenGenerator accessTokenGenerator,
-        IRefreshTokenRepository refreshTokenRepository)
+        IRefreshTokenRepository refreshTokenRepository,
+        IUserIncludeQueryBuilderFactory userIncludeQueryBuilderFactory)
     {
         _passwordHasher = passwordHasher;
         _userRepository = userRepository;
         _dateTimeProvider = dateTimeProvider;
-        _applicationMapper = applicationMapper;
-        _accessTokenGenerator = accessTokenGenerator;
-        _userClaimRepository = userClaimRepository;
         _refreshTokenFactory = refreshTokenFactory;
         _sessionTokenFactory = sessionTokenFactory;
+        _accessTokenGenerator = accessTokenGenerator;
         _refreshTokenRepository = refreshTokenRepository;
+        _userIncludeQueryBuilderFactory = userIncludeQueryBuilderFactory;
     }
 
     public async Task<SessionToken> IssueAsync(IssueRefreshTokenCommand command, CancellationToken cancellationToken)
     {
-        var existingUser = await _userRepository.GetByNameAsync(command.Name, cancellationToken);
+        var include = _userIncludeQueryBuilderFactory.Create().WithClaims().Build();
+        var existingUser = await _userRepository.GetByNameAsync(command.Name, include, cancellationToken);
 
         if (existingUser.IsNull())
         {
@@ -68,11 +59,9 @@ internal class RefreshTokenService : IRefreshTokenService
         }
 
         var refreshToken = _refreshTokenFactory.Create(existingUser.Id);
-        _refreshTokenRepository.Add(refreshToken);
+        await _refreshTokenRepository.AddAsync(refreshToken, cancellationToken);
 
-        var claimsRequst = _applicationMapper.Map<GetAllUserClaimsQuery>(existingUser);
-        var userClaims = await _userClaimRepository.GetAllAsync(claimsRequst, cancellationToken);
-        var accessToken = _accessTokenGenerator.Generate(existingUser, userClaims.Data);
+        var accessToken = _accessTokenGenerator.Generate(existingUser);
         var sessionToken = _sessionTokenFactory.Create(refreshToken, accessToken);
 
         return sessionToken;
@@ -80,7 +69,8 @@ internal class RefreshTokenService : IRefreshTokenService
 
     public async Task<SessionToken> RotateAsync(RotateRefreshTokenCommand command, CancellationToken cancellationToken)
     {
-        var existingUser = await _userRepository.GetByIdAsync(command.Id, cancellationToken);
+        var include = _userIncludeQueryBuilderFactory.Create().WithClaims().Build();
+        var existingUser = await _userRepository.GetByNameAsync(command.Id, include, cancellationToken);
 
         if (existingUser.IsNull())
         {
@@ -101,14 +91,12 @@ internal class RefreshTokenService : IRefreshTokenService
             throw new EmailConfirmationTokenExpiredException(command.Id, command.Value);
         }
 
-        _refreshTokenRepository.Delete(existingRefreshToken);
+        await _refreshTokenRepository.DeleteAsync(existingRefreshToken, cancellationToken);
 
         var refreshToken = _refreshTokenFactory.Create(existingUser!.Id);
-        _refreshTokenRepository.Add(refreshToken);
+        await _refreshTokenRepository.AddAsync(refreshToken, cancellationToken);
 
-        var claimsRequst = _applicationMapper.Map<GetAllUserClaimsQuery>(existingUser);
-        var userClaims = await _userClaimRepository.GetAllAsync(claimsRequst, cancellationToken);
-        var accessToken = _accessTokenGenerator.Generate(existingUser, userClaims.Data);
+        var accessToken = _accessTokenGenerator.Generate(existingUser);
         var sessionToken = _sessionTokenFactory.Create(refreshToken, accessToken);
 
         return sessionToken;
@@ -130,6 +118,6 @@ internal class RefreshTokenService : IRefreshTokenService
             throw new RefreshTokenNotFoundException(command.Id, command.Value);
         }
 
-        _refreshTokenRepository.Delete(existingRefreshToken!);
+        await _refreshTokenRepository.DeleteAsync(existingRefreshToken!, cancellationToken);
     }
 }

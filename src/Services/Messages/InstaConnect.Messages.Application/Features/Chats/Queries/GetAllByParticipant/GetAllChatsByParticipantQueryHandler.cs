@@ -7,20 +7,24 @@ internal class GetAllChatsByParticipantQueryHandler : IQueryHandler<GetAllChatsB
 {
     private readonly IChatService _chatService;
     private readonly IApplicationMapper _applicationMapper;
+    private readonly IChatIncludeQueryBuilderFactory _chatIncludeQueryBuilderFactory;
 
     public GetAllChatsByParticipantQueryHandler(
         IChatService chatService,
-        IApplicationMapper applicationMapper)
+        IApplicationMapper applicationMapper,
+        IChatIncludeQueryBuilderFactory chatIncludeQueryBuilderFactory)
     {
         _chatService = chatService;
         _applicationMapper = applicationMapper;
+        _chatIncludeQueryBuilderFactory = chatIncludeQueryBuilderFactory;
     }
 
     public async Task<GetAllChatsByParticipantQueryResponse> Handle(
         GetAllChatsByParticipantQueryRequest request,
         CancellationToken cancellationToken)
     {
-        var serviceRequest = _applicationMapper.Map<GetAllChatsByParticipantQuery>(request);
+        var include = _chatIncludeQueryBuilderFactory.Create().WithParticipantOne().WithParticipantTwo().Build();
+        var serviceRequest = _applicationMapper.Map<GetAllChatsByParticipantQuery>(request).AddInclude(include);
         var collection = await _chatService.GetAllByParticipantAsync(serviceRequest, cancellationToken);
 
         var response = _applicationMapper.Map<GetAllChatsByParticipantQueryResponse>(collection);

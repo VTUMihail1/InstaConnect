@@ -1,15 +1,6 @@
-﻿using InstaConnect.Common.Abstractions;
-using InstaConnect.Common.Exceptions.Users;
-using InstaConnect.Common.Extensions;
-using InstaConnect.Common.Helpers;
+﻿using InstaConnect.Common.Extensions;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
-using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
 using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
-using InstaConnect.Posts.Domain.Features.Posts.Exceptions;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Events;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Responses;
 using InstaConnect.Posts.Domain.Features.Users.Abstractions;
 using InstaConnect.Posts.Domain.Features.Users.Exceptions;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
@@ -61,7 +52,7 @@ internal class UserService : IUserService
             command.Email,
             command.ProfileImage);
 
-        _userRepository.Add(user);
+        await _userRepository.AddAsync(user, cancellationToken);
 
         return user;
     }
@@ -77,14 +68,14 @@ internal class UserService : IUserService
 
         var existingUserByEmail = await _userRepository.GetByEmailAsync(command.Email, cancellationToken);
 
-        if (existingUser!.Email.NotEqualsOrdinalIgnoreCase(command.Email) && existingUserByEmail.IsNotNull())
+        if (existingUser!.DoesNotHaveEmail(command.Email) && existingUserByEmail.IsNotNull())
         {
             throw new UserEmailAlreadyExistsException(command.Email);
         }
 
         var existingUserByName = await _userRepository.GetByNameAsync(command.Name, cancellationToken);
 
-        if (existingUser!.Name.NotEqualsOrdinalIgnoreCase(command.Name) && existingUserByName.IsNotNull())
+        if (existingUser!.DoesNotHaveName(command.Name) && existingUserByName.IsNotNull())
         {
             throw new UserNameAlreadyExistsException(command.Name);
         }
@@ -97,7 +88,7 @@ internal class UserService : IUserService
             command.Name,
             command.ProfileImage,
            utcNow);
-        _userRepository.Update(existingUser);
+        await _userRepository.UpdateAsync(existingUser, cancellationToken);
 
         return existingUser;
     }
@@ -111,6 +102,6 @@ internal class UserService : IUserService
             throw new UserNotFoundException(command.Id);
         }
 
-        _userRepository.Delete(existingUser!);
+        await _userRepository.DeleteAsync(existingUser!, cancellationToken);
     }
 }

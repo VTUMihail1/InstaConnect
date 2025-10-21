@@ -37,13 +37,23 @@ public class Follow : IEntity
 
     public string FollowerId { get; }
 
-    public User? Follower { get; }
+    public User? Follower { get; private set; }
 
     public string FollowingId { get; }
 
-    public User? Following { get; }
+    public User? Following { get; private set; }
 
     public DateTimeOffset CreatedAt { get; }
 
     public DateTimeOffset UpdatedAt { get; }
+
+    public void AddFollower(User follower)
+    {
+        Follower = follower;
+    }
+
+    public void AddFollowing(User following)
+    {
+        Following = following;
+    }
 }

@@ -1,6 +1,7 @@
 ﻿using InstaConnect.Common.Infrastructure.Abstractions;
 using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Entities;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
+using InstaConnect.Posts.Infrastructure.Abstractions;
 using InstaConnect.Posts.Infrastructure.Features.Posts.Abstractions;
 
 using MongoDB.Driver;

@@ -3,13 +3,13 @@ using InstaConnect.Common.Exceptions.Users;
 using InstaConnect.Common.Extensions;
 using InstaConnect.PostLikeLikes.Domain.Features.PostLikeLikes.Abstractions;
 using InstaConnect.PostLikes.Application.Features.PostLikes.Commands.Add;
-using InstaConnect.PostLikes.Application.Features.PostLikes.Queries.GetById;
 using InstaConnect.PostLikes.Domain.Features.PostLikes.Abstractions;
 using InstaConnect.PostLikes.Domain.Features.PostLikes.Exceptions;
 using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Entities;
 using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Events;
 using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Requests;
 using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Responses;
+using InstaConnect.Posts.Domain.Features.PostLikes.Models.Requests;
 using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
 using InstaConnect.Posts.Domain.Features.Posts.Exceptions;
 using InstaConnect.Posts.Domain.Features.Users.Abstractions;
@@ -50,7 +50,12 @@ internal class PostLikeService : IPostLikeService
             throw new PostNotFoundException(query.Filter.Id);
         }
 
-        var existingPostLikeCollection = await _postLikeRepository.GetAllAsync(query, cancellationToken);
+        var existingPostLikeCollection = await _postLikeRepository.GetAllAsync(
+            query.Filter,
+            query.Sorting,
+            query.Pagination,
+            query.Include,
+            cancellationToken);
 
         return existingPostLikeCollection;
     }
@@ -64,7 +69,11 @@ internal class PostLikeService : IPostLikeService
             throw new PostNotFoundException(query.Id);
         }
 
-        var existingPostLike = await _postLikeRepository.GetByIdAsync(query.Id, query.UserId, cancellationToken);
+        var existingPostLike = await _postLikeRepository.GetByIdAsync(
+            query.Id,
+            query.UserId,
+            query.Include,
+            cancellationToken);
 
         if (existingPostLike.IsNull())
         {
@@ -98,7 +107,7 @@ internal class PostLikeService : IPostLikeService
         }
 
         var postLike = _postLikeFactory.Create(command.Id, command.UserId);
-        _postLikeRepository.Add(postLike);
+        await _postLikeRepository.AddAsync(postLike, cancellationToken);
 
         var eventRequest = _applicationMapper.Map<PostLikeAddedEventRequest>(postLike);
         await _eventPublisher.PublishAsync(eventRequest, cancellationToken);
@@ -122,7 +131,7 @@ internal class PostLikeService : IPostLikeService
             throw new PostLikeNotFoundException(command.Id, command.UserId);
         }
 
-        _postLikeRepository.Delete(existingPostLike!);
+        await _postLikeRepository.DeleteAsync(existingPostLike!, cancellationToken);
 
         var eventRequest = _applicationMapper.Map<PostLikeDeletedEventRequest>(existingPostLike!);
         await _eventPublisher.PublishAsync(eventRequest, cancellationToken);

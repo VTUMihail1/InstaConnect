@@ -1,8 +1,8 @@
 ﻿using InstaConnect.Common.Infrastructure.Abstractions;
-using InstaConnect.ChatMessages.Domain.Features.ChatMessages.Models.Entities;
 using InstaConnect.ChatMessages.Domain.Features.ChatMessages.Models.Requests;
 using InstaConnect.ChatMessages.Domain.Features.ChatMessages.Models.Responses;
 using InstaConnect.ChatMessages.Infrastructure.Features.ChatMessages.Abstractions;
+using InstaConnect.ChatMessages.Domain.Features.ChatMessages.Models.Entities;
 
 namespace InstaConnect.ChatMessages.Infrastructure.Features.ChatMessages.Helpers;
 

@@ -7,7 +7,17 @@ namespace InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Abstrac
 public interface IPostCommentLikeRepository
 {
     Task<PostCommentLikeCollection> GetAllAsync(
-        GetAllPostCommentLikesQuery query,
+        PostCommentLikeFilterQuery filter,
+        PostCommentLikeSortingQuery sorting,
+        PostCommentLikePaginationQuery pagination,
+        PostCommentLikeIncludeQuery? include,
+        CancellationToken cancellationToken);
+
+    Task<PostCommentLike?> GetByIdAsync(
+        string id,
+        string commentId,
+        string userId,
+        PostCommentLikeIncludeQuery? include,
         CancellationToken cancellationToken);
 
     Task<PostCommentLike?> GetByIdAsync(
@@ -16,9 +26,9 @@ public interface IPostCommentLikeRepository
         string userId,
         CancellationToken cancellationToken);
 
-    void Add(PostCommentLike postCommentLike);
+    Task AddAsync(PostCommentLike entity, CancellationToken cancellationToken);
 
-    void Update(PostCommentLike postCommentLike);
+    Task UpdateAsync(PostCommentLike entity, CancellationToken cancellationToken);
 
-    void Delete(PostCommentLike postCommentLike);
+    Task DeleteAsync(PostCommentLike entity, CancellationToken cancellationToken);
 }

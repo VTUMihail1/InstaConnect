@@ -6,15 +6,15 @@ namespace InstaConnect.ChatMessages.Application.Features.ChatMessages.Commands.D
 
 internal class DeleteChatMessageCommandHandler : ICommandHandler<DeleteChatMessageCommandRequest>
 {
-    private readonly IChatMessageService _chatMessageService;
     private readonly IApplicationMapper _applicationMapper;
+    private readonly IChatMessageService _chatMessageService;
 
     public DeleteChatMessageCommandHandler(
-        IChatMessageService chatMessageService,
-        IApplicationMapper applicationMapper)
+        IApplicationMapper applicationMapper,
+        IChatMessageService chatMessageService)
     {
-        _chatMessageService = chatMessageService;
         _applicationMapper = applicationMapper;
+        _chatMessageService = chatMessageService;
     }
 
     public async Task Handle(

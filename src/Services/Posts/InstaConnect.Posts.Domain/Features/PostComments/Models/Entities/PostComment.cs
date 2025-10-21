@@ -1,18 +1,21 @@
 ﻿using InstaConnect.Common.Extensions;
 using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Entities;
+using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Entities;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.PostComments.Domain.Features.PostComments.Models.Entities;
 
 public class PostComment : IEntity
 {
+    private readonly IList<PostCommentLike> _likes;
+
     private PostComment()
     {
         Id = string.Empty;
         CommentId = string.Empty;
         Content = string.Empty;
         UserId = string.Empty;
-        Likes = [];
+        _likes = [];
     }
 
     public PostComment(
@@ -27,7 +30,7 @@ public class PostComment : IEntity
         CommentId = commentId;
         Content = content;
         UserId = userId;
-        Likes = [];
+        _likes = [];
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
     }
@@ -45,7 +48,7 @@ public class PostComment : IEntity
         Content = content;
         UserId = user.Id;
         User = user;
-        Likes = [];
+        _likes = [];
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
     }
@@ -55,7 +58,7 @@ public class PostComment : IEntity
         string commentId,
         string content,
         User user,
-        ICollection<PostCommentLike> likes,
+        IList<PostCommentLike> likes,
         DateTimeOffset createdAt,
         DateTimeOffset updatedAt)
     {
@@ -64,7 +67,7 @@ public class PostComment : IEntity
         Content = content;
         UserId = user.Id;
         User = user;
-        Likes = likes;
+        _likes = likes;
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
     }
@@ -77,9 +80,9 @@ public class PostComment : IEntity
 
     public string UserId { get; }
 
-    public User? User { get; }
+    public User? User { get; private set; }
 
-    public ICollection<PostCommentLike> Likes { get; }
+    public IReadOnlyCollection<PostCommentLike> Likes => _likes.AsReadOnly();
 
     public DateTimeOffset CreatedAt { get; }
 
@@ -103,5 +106,10 @@ public class PostComment : IEntity
         var isNotOwnedByUser = !IsOwnedByUser(userId);
 
         return isNotOwnedByUser;
+    }
+
+    public void AddUser(User user)
+    {
+        User = user;
     }
 }

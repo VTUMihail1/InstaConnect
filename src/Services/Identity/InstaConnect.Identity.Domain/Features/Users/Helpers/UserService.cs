@@ -2,12 +2,8 @@
 using InstaConnect.Common.Application.Abstractions;
 using InstaConnect.Common.Application.Contracts.Users;
 using InstaConnect.Common.Extensions;
-using InstaConnect.Identity.Application.Features.Users.Abstractions;
 using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Abstractions;
-using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Requests;
-using InstaConnect.Identity.Domain.Features.UserClaims.Abstractions;
 using InstaConnect.Identity.Domain.Features.Users.Exceptions;
-using InstaConnect.Identity.Domain.Features.Users.Models.Requests;
 using InstaConnect.Identity.Domain.Helpers;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
@@ -26,6 +22,7 @@ internal class UserService : IUserService
     private readonly IUserRepository _userRepository;
     private readonly IDateTimeProvider _dateTimeProvider;
     private readonly IApplicationMapper _applicationMapper;
+    private readonly IUserIncludeQueryBuilderFactory _userIncludeQueryBuilderFactory;
     private readonly IEmailConfirmationTokenRepository _emailConfirmationTokenRepository;
 
     public UserService(
@@ -36,6 +33,7 @@ internal class UserService : IUserService
         IUserRepository userRepository,
         IDateTimeProvider dateTimeProvider,
         IApplicationMapper applicationMapper,
+        IUserIncludeQueryBuilderFactory userIncludeQueryBuilderFactory,
         IEmailConfirmationTokenRepository emailConfirmationTokenRepository)
     {
         _userFactory = userFactory;
@@ -45,19 +43,28 @@ internal class UserService : IUserService
         _userRepository = userRepository;
         _dateTimeProvider = dateTimeProvider;
         _applicationMapper = applicationMapper;
+        _userIncludeQueryBuilderFactory = userIncludeQueryBuilderFactory;
         _emailConfirmationTokenRepository = emailConfirmationTokenRepository;
     }
 
     public async Task<UserCollection> GetAllAsync(GetAllUsersQuery query, CancellationToken cancellationToken)
     {
-        var existingUserCollection = await _userRepository.GetAllAsync(query, cancellationToken);
+        var existingUserCollection = await _userRepository.GetAllAsync(
+            query.Filter,
+            query.Sorting,
+            query.Pagination,
+            query.Include,
+            cancellationToken);
 
         return existingUserCollection;
     }
 
     public async Task<User> GetByIdAsync(GetUserByIdQuery query, CancellationToken cancellationToken)
     {
-        var existingUser = await _userRepository.GetByIdAsync(query.Id, cancellationToken);
+        var existingUser = await _userRepository.GetByIdAsync(
+            query.Id,
+            query.Include,
+            cancellationToken);
 
         if (existingUser.IsNull())
         {
@@ -93,7 +100,7 @@ internal class UserService : IUserService
         var passwordHash = _passwordHasher.Hash(command.Password);
         var user = _userFactory.Create(
             command.Name, command.FirstName, command.LastName, command.Email, passwordHash, profileImage);
-        _userRepository.Add(user);
+        await _userRepository.AddAsync(user, cancellationToken);
 
         var userAddedEvent = _applicationMapper.Map<UserAddedEventRequest>(user);
         await _eventPublisher.PublishAsync(userAddedEvent, cancellationToken);
@@ -103,7 +110,8 @@ internal class UserService : IUserService
 
     public async Task<User> UpdateAsync(UpdateUserCommand command, CancellationToken cancellationToken)
     {
-        var existingUser = await _userRepository.GetByIdAsync(command.Id, cancellationToken);
+        var include = _userIncludeQueryBuilderFactory.Create().WithEmailConfirmationTokens().Build();
+        var existingUser = await _userRepository.GetByIdAsync(command.Id, include, cancellationToken);
 
         if (existingUser.IsNull())
         {
@@ -119,9 +127,7 @@ internal class UserService : IUserService
 
         if (existingUser.DoesNotHaveEmail(command.Email))
         {
-            var emailConfirmationTokenRequest = _applicationMapper.Map<GetAllEmailConfirmationTokensQuery>(existingUser);
-            var emailConfirmationTokenCollection = await _emailConfirmationTokenRepository.GetAllAsync(emailConfirmationTokenRequest, cancellationToken);
-            _emailConfirmationTokenRepository.DeleteRange(emailConfirmationTokenCollection.Data);
+            await _emailConfirmationTokenRepository.DeleteRangeAsync(existingUser.EmailConfirmationTokens, cancellationToken);
 
             existingUser.UpdateEmail(command.Email);
         }
@@ -157,7 +163,7 @@ internal class UserService : IUserService
             throw new UserNotFoundException(command.Id);
         }
 
-        _userRepository.Delete(existingUser!);
+        await _userRepository.DeleteAsync(existingUser!, cancellationToken);
 
         var eventRequest = _applicationMapper.Map<UserDeletedEventRequest>(existingUser!);
         await _eventPublisher.PublishAsync(eventRequest, cancellationToken);

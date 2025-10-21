@@ -41,14 +41,24 @@ internal class ChatMessageService : IChatMessageService
             throw new ChatNotFoundException(query.Filter.ParticipantOneId, query.Filter.ParticipantTwoId);
         }
 
-        var existingChatMessageCollection = await _chatMessageRepository.GetAllAsync(query, cancellationToken);
+        var existingChatMessageCollection = await _chatMessageRepository.GetAllAsync(
+            query.Filter,
+            query.Sorting,
+            query.Pagination,
+            query.Include,
+            cancellationToken);
 
         return existingChatMessageCollection;
     }
 
     public async Task<ChatMessage> GetByIdAsync(GetChatMessageByIdQuery query, CancellationToken cancellationToken)
     {
-        var existingChatMessage = await _chatMessageRepository.GetByIdAsync(query.ParticipantOneId, query.ParticipantTwoId, query.MessageId, cancellationToken);
+        var existingChatMessage = await _chatMessageRepository.GetByIdAsync(
+            query.ParticipantOneId,
+            query.ParticipantTwoId,
+            query.MessageId,
+            query.Include,
+            cancellationToken);
 
         if (existingChatMessage.IsNull())
         {
@@ -68,7 +78,7 @@ internal class ChatMessageService : IChatMessageService
         }
 
         var chatMessage = _chatMessageFactory.Create(command.ParticipantOneId, command.ParticipantTwoId, command.Content);
-        _chatMessageRepository.Add(chatMessage);
+        await _chatMessageRepository.AddAsync(chatMessage, cancellationToken);
 
         return chatMessage;
     }
@@ -91,7 +101,7 @@ internal class ChatMessageService : IChatMessageService
 
         var utcNow = _dateTimeProvider.GetOffsetUtcNow();
         existingChatMessage!.Update(command.Content, utcNow);
-        _chatMessageRepository.Update(existingChatMessage);
+        await _chatMessageRepository.UpdateAsync(existingChatMessage, cancellationToken);
 
         return existingChatMessage;
     }
@@ -105,6 +115,6 @@ internal class ChatMessageService : IChatMessageService
             throw new ChatMessageNotFoundException(command.ParticipantOneId, command.ParticipantTwoId, command.MessageId);
         }
 
-        _chatMessageRepository.Delete(existingChatMessage!);
+        await _chatMessageRepository.DeleteAsync(existingChatMessage!, cancellationToken);
     }
 }

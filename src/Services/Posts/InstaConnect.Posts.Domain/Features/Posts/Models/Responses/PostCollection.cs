@@ -5,6 +5,6 @@ public record PostCollection(
     ICollection<Post> Data,
     int Page,
     int PageSize,
-    long TotalCount,
+    int TotalCount,
     bool HasNextPage,
     bool HasPreviousPage);

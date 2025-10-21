@@ -1,19 +1,22 @@
-﻿using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entities;
-using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Requests;
-using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Response;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
-using InstaConnect.Users.Domain.Features.Users.Models.Responses;
+﻿using InstaConnect.EmailConfirmationTokens.Domain.Features.EmailConfirmationTokens.Models.Requests;
+using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entities;
 
 namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Abstractions;
 
 public interface IEmailConfirmationTokenRepository
 {
-    Task<EmailConfirmationTokenCollection> GetAllAsync(GetAllEmailConfirmationTokensQuery query, CancellationToken cancellationToken);
-    Task<EmailConfirmationToken?> GetByIdAsync(string id, string value, CancellationToken cancellationToken);
+    Task<EmailConfirmationToken?> GetByIdAsync(
+        string id,
+        string value,
+        EmailConfirmationTokenIncludeQuery? include,
+        CancellationToken cancellationToken);
 
-    void Add(EmailConfirmationToken emailConfirmationToken);
+    Task<EmailConfirmationToken?> GetByIdAsync(
+        string id,
+        string value,
+        CancellationToken cancellationToken);
 
-    void Delete(EmailConfirmationToken emailConfirmationToken);
+    Task AddAsync(EmailConfirmationToken entity, CancellationToken cancellationToken);
 
-    void DeleteRange(ICollection<EmailConfirmationToken> emailConfirmationTokens);
+    Task DeleteRangeAsync(ICollection<EmailConfirmationToken> entities, CancellationToken cancellationToken);
 }

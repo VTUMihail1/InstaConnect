@@ -36,4 +36,12 @@ public static class FollowExceptionErrorMessages
 
         return result;
     }
+
+    public static string GetInclidePropertyNotSupportedMessage(ICollection<FollowIncludeProperty> includeProperties)
+    {
+        const string Format = "FollowIncludeProperties(types: {0}) is not supported";
+        var result = Format.FormatCurrentCulture(string.Join(", ", includeProperties));
+
+        return result;
+    }
 }

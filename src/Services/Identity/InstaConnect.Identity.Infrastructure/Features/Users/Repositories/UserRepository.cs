@@ -1,117 +1,169 @@
-﻿using InstaConnect.Common.Abstractions;
+﻿using InstaConnect.Common.Extensions;
 using InstaConnect.Common.Infrastructure.Abstractions;
 using InstaConnect.Common.Infrastructure.Extensions;
-using InstaConnect.Identity.Infrastructure;
-using InstaConnect.Identity.Infrastructure.Features.Users.Abstractions;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 using InstaConnect.Users.Domain.Features.Users.Abstractions;
+using InstaConnect.Users.Domain.Features.Users.Models.Requests;
 using InstaConnect.Users.Domain.Features.Users.Models.Responses;
-using InstaConnect.Users.Infrastructure.Features.Users.Models;
+using InstaConnect.Users.Infrastructure.Abstractions;
+using InstaConnect.Users.Infrastructure.Features.Users.Abstractions;
 
-namespace InstaConnect.Identity.Infrastructure.Features.Users.Repositories;
+using MongoDB.Driver;
+
+namespace InstaConnect.Users.Infrastructure.Features.Users.Repositories;
 
 internal class UserRepository : IUserRepository
 {
-    private readonly IdentityContext _identityContext;
-    private readonly IUserQueryFactory _userQueryFactory;
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly ISqlConnectionFactory _sqlConnectionFactory;
+    private readonly IPaginator _paginator;
+    private readonly IIdentityContext _identityContext;
+    private readonly ISortOrderFactory _sortOrderFactory;
     private readonly IUserCollectionFactory _userCollectionFactory;
+    private readonly IUserSortPropertyFactory _userSortPropertyFactory;
+    private readonly IUserIncludePropertyFactory _userIncludePropertyFactory;
 
     public UserRepository(
-        IdentityContext identityContext,
-        IUserQueryFactory userQueryFactory,
-        IApplicationMapper applicationMapper,
-        ISqlConnectionFactory sqlConnectionFactory,
-        IUserCollectionFactory userCollectionFactory)
+        IPaginator paginator,
+        IIdentityContext identityContext,
+        ISortOrderFactory sortOrderFactory,
+        IUserCollectionFactory userCollectionFactory,
+        IUserSortPropertyFactory userSortPropertyFactory,
+        IUserIncludePropertyFactory userIncludePropertyFactory)
     {
+        _paginator = paginator;
         _identityContext = identityContext;
-        _userQueryFactory = userQueryFactory;
-        _applicationMapper = applicationMapper;
-        _sqlConnectionFactory = sqlConnectionFactory;
+        _sortOrderFactory = sortOrderFactory;
         _userCollectionFactory = userCollectionFactory;
+        _userSortPropertyFactory = userSortPropertyFactory;
+        _userIncludePropertyFactory = userIncludePropertyFactory;
     }
 
-    public async Task<UserCollection> GetAllAsync(GetAllUsersQuery query, CancellationToken cancellationToken)
+    public async Task<UserCollection> GetAllAsync(
+        UserFilterQuery filter,
+        UserSortingQuery sorting,
+        UserPaginationQuery pagination,
+        UserIncludeQuery? include,
+        CancellationToken cancellationToken)
     {
-        using var connection = _sqlConnectionFactory.Create();
+        var sortOrder = _sortOrderFactory.Create(sorting.Order);
+        var sortProperty = _userSortPropertyFactory.Create(sorting.Property);
+        var includeProperties = _userIncludePropertyFactory.Create(include?.Properties);
+        var offset = _paginator.GetOffset(pagination.Page, pagination.PageSize);
+        var isNameEmpty = filter.Name.IsNullOrEmptyOrWhiteSpace();
+        var isFirstNameEmpty = filter.FirstName.IsNullOrEmptyOrWhiteSpace();
+        var isLastNameEmpty = filter.LastName.IsNullOrEmptyOrWhiteSpace();
 
-        var getAllQuery = _userQueryFactory.CreateGetAll(query);
-        var queryEntity = await connection.ExecuteQueryAsync<UserQueryEntity>(
-            getAllQuery.Sql,
-            getAllQuery.Parameters,
-            cancellationToken);
-        var users = _applicationMapper.Map<ICollection<User>>(queryEntity.ToList());
-
-        var getAllTotalCountQuery = _userQueryFactory.CreateGetAllTotalCount(query.Filter);
-        var usersTotalCount = await connection.ExecuteFunctionAsync<int>(getAllTotalCountQuery.Sql, getAllTotalCountQuery.Parameters, cancellationToken);
-
-        var response = _userCollectionFactory.Create(users, usersTotalCount, query.Pagination);
-
-        return response;
-    }
-
-    public async Task<User?> GetByIdAsync(string id, CancellationToken cancellationToken)
-    {
-        using var connection = _sqlConnectionFactory.Create();
-
-        var getByIdQuery = _userQueryFactory.CreateGetById(id);
-        var queryResponse = await connection.ExecuteQueryFirstAsync<UserQueryEntity>(
-            getByIdQuery.Sql,
-            getByIdQuery.Parameters,
-            cancellationToken);
-        var user = _applicationMapper.Map<User>(queryResponse!);
-
-        return user;
-    }
-
-    public async Task<User?> GetByNameAsync(string name, CancellationToken cancellationToken)
-    {
-        using var connection = _sqlConnectionFactory.Create();
-
-        var getByNameQuery = _userQueryFactory.CreateGetByName(name);
-        var queryResponse = await connection.ExecuteQueryFirstAsync<UserQueryEntity>(
-            getByNameQuery.Sql,
-            getByNameQuery.Parameters,
-            cancellationToken);
-        var user = _applicationMapper.Map<User>(queryResponse!);
-
-        return user;
-    }
-
-    public async Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken)
-    {
-        using var connection = _sqlConnectionFactory.Create();
-
-        var getByEmailQuery = _userQueryFactory.CreateGetByEmail(email);
-        var queryResponse = await connection.ExecuteQueryFirstAsync<UserQueryEntity>(
-            getByEmailQuery.Sql,
-            getByEmailQuery.Parameters,
-            cancellationToken);
-        var user = _applicationMapper.Map<User>(queryResponse!);
-
-        return user;
-    }
-
-    public void Add(User user)
-    {
-        _identityContext
+        var pipeline = _identityContext
             .Users
-            .Add(user);
+            .Aggregate()
+            .Includes(includeProperties)
+            .Match(p => isNameEmpty || p.Name.StartsWithOrdinalIgnoreCase(filter.Name) &&
+                       (isFirstNameEmpty || p.FirstName.StartsWithOrdinalIgnoreCase(filter.FirstName) &&
+                       (isLastNameEmpty || p.LastName.StartsWithOrdinalIgnoreCase(filter.LastName))));
+
+        var totalCountsResult = await pipeline.Count().FirstOrDefaultAsync(cancellationToken);
+
+        var entities = await pipeline
+            .Sort(sortOrder.Sort(sortProperty.Property))
+            .Skip(offset)
+            .Limit(pagination.PageSize)
+            .ToListAsync(cancellationToken);
+
+        var collectionEntities = _userCollectionFactory.Create(entities, (int)totalCountsResult.Count, pagination);
+
+        return collectionEntities;
     }
 
-    public void Update(User user)
+    public async Task<User?> GetByIdAsync(
+        string id,
+        UserIncludeQuery? include,
+        CancellationToken cancellationToken)
     {
-        _identityContext
+        var includeProperties = _userIncludePropertyFactory.Create(include?.Properties);
+
+        var entity = await _identityContext
             .Users
-            .Update(user);
+            .Aggregate()
+            .Includes(includeProperties)
+            .Match(p => p.Id == id)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        return entity;
     }
 
-    public void Delete(User user)
+    public async Task<User?> GetByIdAsync(
+        string id,
+        CancellationToken cancellationToken)
     {
-        _identityContext
+        return await GetByIdAsync(id, null, cancellationToken);
+    }
+
+    public async Task<User?> GetByNameAsync(
+        string name,
+        UserIncludeQuery? include,
+        CancellationToken cancellationToken)
+    {
+        var includeProperties = _userIncludePropertyFactory.Create(include?.Properties);
+
+        var entity = await _identityContext
             .Users
-            .Remove(user);
+            .Aggregate()
+            .Includes(includeProperties)
+            .Match(p => p.Name == name)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        return entity;
+    }
+
+    public async Task<User?> GetByNameAsync(
+        string name,
+        CancellationToken cancellationToken)
+    {
+        return await GetByNameAsync(name, null, cancellationToken);
+    }
+
+    public async Task<User?> GetByEmailAsync(
+        string email,
+        UserIncludeQuery? include,
+        CancellationToken cancellationToken)
+    {
+        var includeProperties = _userIncludePropertyFactory.Create(include?.Properties);
+
+        var entity = await _identityContext
+            .Users
+            .Aggregate()
+            .Includes(includeProperties)
+            .Match(p => p.Email == email)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        return entity;
+    }
+
+    public async Task<User?> GetByEmailAsync(
+        string email,
+        CancellationToken cancellationToken)
+    {
+        return await GetByEmailAsync(email, null, cancellationToken);
+    }
+
+    public async Task AddAsync(User entity, CancellationToken cancellationToken)
+    {
+        await _identityContext
+            .Users
+            .AddAsync(_identityContext.ClientSessionHandle, entity, cancellationToken);
+    }
+
+    public async Task UpdateAsync(User entity, CancellationToken cancellationToken)
+    {
+        await _identityContext
+            .Users
+            .UpdateAsync(_identityContext.ClientSessionHandle, x => x.Id == entity.Id, entity, cancellationToken);
+    }
+
+    public async Task DeleteAsync(User entity, CancellationToken cancellationToken)
+    {
+        await _identityContext
+            .Users
+            .DeleteAsync(_identityContext.ClientSessionHandle, x => x.Id == entity.Id, cancellationToken);
     }
 }

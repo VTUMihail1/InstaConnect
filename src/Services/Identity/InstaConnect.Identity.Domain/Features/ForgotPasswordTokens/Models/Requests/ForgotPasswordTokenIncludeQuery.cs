@@ -1,0 +1,3 @@
+﻿namespace InstaConnect.ForgotPasswordTokens.Domain.Features.ForgotPasswordTokens.Models.Requests;
+
+public record ForgotPasswordTokenIncludeQuery(ICollection<ForgotPasswordTokenIncludeProperty> Properties);

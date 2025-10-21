@@ -10,19 +10,19 @@ using InstaConnect.Common.Models.Enums;
 using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Requests;
 using InstaConnect.PostCommentLikes.Infrastructure.Features.PostCommentLikes.Abstractions;
 
-namespace InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Helpers.SortProperties;
+namespace InstaConnect.Common.Infrastructure.PostCommentLikeSortPropertys;
 internal class PostCommentLikeSortPropertyFactory : IPostCommentLikeSortPropertyFactory
 {
-    private readonly IEnumerable<IPostCommentLikeSortProperty> _postCommentLikeSortProperty;
+    private readonly IEnumerable<IPostCommentLikeSortProperty> _postCommentLikeSortProperties;
 
-    public PostCommentLikeSortPropertyFactory(IEnumerable<IPostCommentLikeSortProperty> postCommentLikeSortProperty)
+    public PostCommentLikeSortPropertyFactory(IEnumerable<IPostCommentLikeSortProperty> postCommentLikeSortProperties)
     {
-        _postCommentLikeSortProperty = postCommentLikeSortProperty;
+        _postCommentLikeSortProperties = postCommentLikeSortProperties;
     }
 
     public IPostCommentLikeSortProperty Create(PostCommentLikeSortProperty sortProperty)
     {
-        var property = _postCommentLikeSortProperty.FirstOrDefault(s => s.SortProperty == sortProperty);
+        var property = _postCommentLikeSortProperties.FirstOrDefault(s => s.SortProperty == sortProperty);
 
         if (property == null)
         {

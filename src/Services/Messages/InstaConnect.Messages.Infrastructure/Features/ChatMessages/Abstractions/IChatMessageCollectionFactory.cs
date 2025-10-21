@@ -5,8 +5,5 @@ using InstaConnect.ChatMessages.Domain.Features.ChatMessages.Models.Responses;
 namespace InstaConnect.ChatMessages.Infrastructure.Features.ChatMessages.Abstractions;
 internal interface IChatMessageCollectionFactory
 {
-    ChatMessageCollection Create(
-        ICollection<ChatMessage> chatMessages,
-        int totalCount,
-        ChatMessagePaginationQuery pagination);
+    ChatMessageCollection Create(ICollection<ChatMessage> chatMessages, int totalCount, ChatMessagePaginationQuery pagination);
 }

@@ -1,11 +1,10 @@
-﻿using InstaConnect.Common.Extensions;
+﻿using InstaConnect.ChatMessages.Infrastructure.Features.ChatMessages.Extensions;
 using InstaConnect.Chats.Infrastructure.Features.Chats.Extensions;
-using InstaConnect.Posts.Infrastructure.Features.Users.Extensions;
+using InstaConnect.Common.Extensions;
 using InstaConnect.Shared.Infrastructure.Extensions;
+using InstaConnect.Users.Infrastructure.Features.Users.Extensions;
 
 using Microsoft.AspNetCore.Hosting;
-using InstaConnect.Messages.Infrastructure;
-using InstaConnect.ChatMessages.Infrastructure.Features.ChatMessages.Extensions;
 
 namespace InstaConnect.Chats.Infrastructure.Extensions;
 
@@ -17,20 +16,18 @@ public static class ServiceCollectionExtensions
         IWebHostEnvironment webHostEnvironment)
     {
         serviceCollection
-            .AddDatabaseContext<ChatsContext>(configuration);
-
-        serviceCollection
             .AddUserServices()
             .AddChatServices()
             .AddChatMessageServices();
 
         serviceCollection
             .AddObservability(configuration, webHostEnvironment)
+            .AddMapper(ChatInfrastructureReference.Assembly)
             .AddServicesWithMatchingInterfaces(ChatInfrastructureReference.Assembly)
-            .AddUnitOfWork<ChatsContext>()
+            .AddMongoDbContext()
+            .AddUnitOfWork()
             .AddRabbitMQ(configuration, ChatInfrastructureReference.Assembly)
             .AddJwtBearer(configuration)
-            .AddGuidProvider()
             .AddDateTimeProvider();
 
         return serviceCollection;

@@ -23,7 +23,7 @@ internal class GetAllPostsQueryHandler : IQueryHandler<GetAllPostsQueryRequest, 
         CancellationToken cancellationToken)
     {
         var include = _postIncludeQueryBuilderFactory.Create().WithUser().Build();
-        var serviceRequest = _applicationMapper.Map<GetAllPostsQuery>(request).AddInclues(include);
+        var serviceRequest = _applicationMapper.Map<GetAllPostsQuery>(request).AddInclude(include);
         var collection = await _postService.GetAllAsync(serviceRequest, cancellationToken);
 
         var response = _applicationMapper.Map<GetAllPostsQueryResponse>(collection);

@@ -4,15 +4,15 @@ namespace InstaConnect.ChatMessages.Application.Features.ChatMessages.Commands.A
 
 internal class AddChatMessageCommandHandler : ICommandHandler<AddChatMessageCommandRequest, AddChatMessageCommandResponse>
 {
-    private readonly IChatMessageService _chatMessageService;
     private readonly IApplicationMapper _applicationMapper;
+    private readonly IChatMessageService _chatMessageService;
 
     public AddChatMessageCommandHandler(
-        IChatMessageService chatMessageService,
-        IApplicationMapper applicationMapper)
+        IApplicationMapper applicationMapper,
+        IChatMessageService chatMessageService)
     {
-        _chatMessageService = chatMessageService;
         _applicationMapper = applicationMapper;
+        _chatMessageService = chatMessageService;
     }
 
     public async Task<AddChatMessageCommandResponse> Handle(AddChatMessageCommandRequest request, CancellationToken cancellationToken)

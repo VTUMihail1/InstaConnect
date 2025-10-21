@@ -1,0 +1,3 @@
+﻿namespace InstaConnect.EmailConfirmationTokens.Domain.Features.EmailConfirmationTokens.Models.Requests;
+
+public record EmailConfirmationTokenIncludeQuery(ICollection<EmailConfirmationTokenIncludeProperty> Properties);

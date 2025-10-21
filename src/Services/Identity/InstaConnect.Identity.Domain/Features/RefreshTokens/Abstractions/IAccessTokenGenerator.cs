@@ -5,5 +5,5 @@ using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 namespace InstaConnect.Identity.Domain.Features.RefreshTokens.Abstractions;
 public interface IAccessTokenGenerator
 {
-    AccessToken Generate(User user, ICollection<UserClaim> claims);
+    AccessToken Generate(User user);
 }

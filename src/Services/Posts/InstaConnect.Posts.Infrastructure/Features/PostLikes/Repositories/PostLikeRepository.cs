@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Abstractions;
+﻿using InstaConnect.Common.Extensions;
 using InstaConnect.Common.Infrastructure.Abstractions;
 using InstaConnect.Common.Infrastructure.Extensions;
 using InstaConnect.PostLikes.Domain.Features.PostLikes.Abstractions;
@@ -6,84 +6,115 @@ using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Entities;
 using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Requests;
 using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Responses;
 using InstaConnect.PostLikes.Infrastructure.Features.PostLikes.Abstractions;
-using InstaConnect.PostLikes.Infrastructure.Features.PostLikes.Models;
-using InstaConnect.Posts.Infrastructure;
+using InstaConnect.Posts.Domain.Features.PostLikes.Models.Requests;
+using InstaConnect.Posts.Infrastructure.Abstractions;
+
+using MongoDB.Driver;
 
 namespace InstaConnect.PostLikes.Infrastructure.Features.PostLikes.Repositories;
 
 internal class PostLikeRepository : IPostLikeRepository
 {
-    private readonly PostsContext _postsContext;
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly ISqlConnectionFactory _sqlConnectionFactory;
-    private readonly IPostLikeQueryFactory _postLikeQueryFactory;
+    private readonly IPaginator _paginator;
+    private readonly IPostsContext _postsContext;
+    private readonly ISortOrderFactory _sortOrderFactory;
     private readonly IPostLikeCollectionFactory _postLikeCollectionFactory;
+    private readonly IPostLikeSortPropertyFactory _postLikeSortPropertyFactory;
+    private readonly IPostLikeIncludePropertyFactory _postLikeIncludePropertyFactory;
 
     public PostLikeRepository(
-        PostsContext postsContext,
-        IApplicationMapper applicationMapper,
-        ISqlConnectionFactory sqlConnectionFactory,
-        IPostLikeQueryFactory postLikeQueryFactory,
-        IPostLikeCollectionFactory postLikeCollectionFactory)
+        IPaginator paginator,
+        IPostsContext postsContext,
+        ISortOrderFactory sortOrderFactory,
+        IPostLikeCollectionFactory postLikeCollectionFactory,
+        IPostLikeSortPropertyFactory postLikeSortPropertyFactory,
+        IPostLikeIncludePropertyFactory postLikeIncludePropertyFactory)
     {
+        _paginator = paginator;
         _postsContext = postsContext;
-        _applicationMapper = applicationMapper;
-        _sqlConnectionFactory = sqlConnectionFactory;
-        _postLikeQueryFactory = postLikeQueryFactory;
+        _sortOrderFactory = sortOrderFactory;
         _postLikeCollectionFactory = postLikeCollectionFactory;
+        _postLikeSortPropertyFactory = postLikeSortPropertyFactory;
+        _postLikeIncludePropertyFactory = postLikeIncludePropertyFactory;
     }
 
-    public async Task<PostLikeCollection> GetAllAsync(GetAllPostLikesQuery query, CancellationToken cancellationToken)
+    public async Task<PostLikeCollection> GetAllAsync(
+        PostLikeFilterQuery filter,
+        PostLikeSortingQuery sorting,
+        PostLikePaginationQuery pagination,
+        PostLikeIncludeQuery? include,
+        CancellationToken cancellationToken)
     {
-        using var connection = _sqlConnectionFactory.Create();
+        var sortOrder = _sortOrderFactory.Create(sorting.Order);
+        var sortProperty = _postLikeSortPropertyFactory.Create(sorting.Property);
+        var includeProperties = _postLikeIncludePropertyFactory.Create(include?.Properties);
+        var offset = _paginator.GetOffset(pagination.Page, pagination.PageSize);
+        var isUserNameEmpty = filter.UserName.IsNullOrEmptyOrWhiteSpace();
 
-        var getAllQuery = _postLikeQueryFactory.CreateGetAll(query);
-        var queryEntity = await connection.ExecuteQueryAsync<PostLikeQueryEntity>(
-            getAllQuery.Sql,
-            getAllQuery.Parameters,
-            cancellationToken);
-        var postLikes = _applicationMapper.Map<ICollection<PostLike>>(queryEntity.ToList());
-
-        var getAllTotalCountQuery = _postLikeQueryFactory.CreateGetAllTotalCount(query.Filter);
-        var postLikesTotalCount = await connection.ExecuteFunctionAsync<int>(getAllTotalCountQuery.Sql, getAllTotalCountQuery.Parameters, cancellationToken);
-
-        var response = _postLikeCollectionFactory.Create(postLikes, postLikesTotalCount, query.Pagination);
-
-        return response;
-    }
-
-    public async Task<PostLike?> GetByIdAsync(string id, string userId, CancellationToken cancellationToken)
-    {
-        using var connection = _sqlConnectionFactory.Create();
-
-        var getByIdQuery = _postLikeQueryFactory.CreateGetById(id, userId);
-        var queryResponse = await connection.ExecuteQueryFirstAsync<PostLikeQueryEntity>(
-            getByIdQuery.Sql,
-            getByIdQuery.Parameters,
-            cancellationToken);
-        var postLike = _applicationMapper.Map<PostLike>(queryResponse!);
-
-        return postLike;
-    }
-
-    public void Add(PostLike postLike)
-    {
-        _postsContext
+        var pipeline = _postsContext
             .PostLikes
-            .Add(postLike);
+            .Aggregate()
+            .Includes(includeProperties)
+            .Match(p => p.Id == filter.Id &&
+                        (isUserNameEmpty || p.User!.Name.StartsWithOrdinalIgnoreCase(filter.UserName)));
+
+        var totalCountsResult = await pipeline.Count().FirstOrDefaultAsync(cancellationToken);
+
+        var entities = await pipeline
+            .Sort(sortOrder.Sort(sortProperty.Property))
+            .Skip(offset)
+            .Limit(pagination.PageSize)
+            .ToListAsync(cancellationToken);
+
+        var collectionEntities = _postLikeCollectionFactory.Create(entities, (int)totalCountsResult.Count, pagination);
+
+        return collectionEntities;
     }
 
-    public void Update(PostLike postLike)
+    public async Task<PostLike?> GetByIdAsync(
+        string id,
+        string userId,
+        PostLikeIncludeQuery? include,
+        CancellationToken cancellationToken)
     {
-        _postsContext
+        var includeProperties = _postLikeIncludePropertyFactory.Create(include?.Properties);
+
+        var entity = await _postsContext
             .PostLikes
-            .Update(postLike);
+            .Aggregate()
+            .Includes(includeProperties)
+            .Match(p => p.Id == id && p.UserId == userId)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        return entity;
     }
 
-    public void Delete(PostLike postLike)
+    public async Task<PostLike?> GetByIdAsync(
+        string id,
+        string userId,
+        CancellationToken cancellationToken)
     {
-        _postsContext
+        return await GetByIdAsync(id, userId, null, cancellationToken);
+    }
+
+    public async Task AddAsync(PostLike entity, CancellationToken cancellationToken)
+    {
+        await _postsContext
             .PostLikes
-            .Remove(postLike);
+            .AddAsync(_postsContext.ClientSessionHandle, entity, cancellationToken);
+    }
+
+    public async Task UpdateAsync(PostLike entity, CancellationToken cancellationToken)
+    {
+        await _postsContext
+            .PostLikes
+            .UpdateAsync(_postsContext.ClientSessionHandle, x => x.Id == entity.Id && x.UserId == entity.UserId, entity, cancellationToken);
+    }
+
+    public async Task DeleteAsync(PostLike entity, CancellationToken cancellationToken)
+    {
+        await _postsContext
+            .PostLikes
+            .DeleteAsync(_postsContext.ClientSessionHandle, x => x.Id == entity.Id && x.UserId == entity.UserId, cancellationToken);
     }
 }

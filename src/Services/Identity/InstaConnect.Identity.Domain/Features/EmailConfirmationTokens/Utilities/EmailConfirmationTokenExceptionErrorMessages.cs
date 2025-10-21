@@ -19,4 +19,12 @@ public static class EmailConfirmationTokenExceptionErrorMessages
 
         return result;
     }
+
+    public static string GetInclidePropertyNotSupportedMessage(ICollection<EmailConfirmationTokenIncludeProperty> includeProperties)
+    {
+        const string Format = "EmailConfirmationTokenIncludeProperties(types: {0}) is not supported";
+        var result = Format.FormatCurrentCulture(string.Join(", ", includeProperties));
+
+        return result;
+    }
 }

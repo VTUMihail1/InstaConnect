@@ -2,12 +2,9 @@
 using InstaConnect.PostCommentLikes.Infrastructure.Features.PostCommentLikes.Extensions;
 using InstaConnect.PostComments.Infrastructure.Features.PostComments.Extensions;
 using InstaConnect.PostLikes.Infrastructure.Features.PostLikes.Extensions;
-using InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Extensions;
-using InstaConnect.Posts.Infrastructure.Features.PostComments.Extensions;
-using InstaConnect.Posts.Infrastructure.Features.PostLikes.Extensions;
 using InstaConnect.Posts.Infrastructure.Features.Posts.Extensions;
-using InstaConnect.Posts.Infrastructure.Features.Users.Extensions;
 using InstaConnect.Shared.Infrastructure.Extensions;
+using InstaConnect.Users.Infrastructure.Features.Users.Extensions;
 
 using Microsoft.AspNetCore.Hosting;
 
@@ -31,8 +28,8 @@ public static class ServiceCollectionExtensions
             .AddObservability(configuration, webHostEnvironment)
             .AddMapper(PostInfrastructureReference.Assembly)
             .AddServicesWithMatchingInterfaces(PostInfrastructureReference.Assembly)
-            .AddDatabaseContext<PostsContext>(configuration)
-            .AddUnitOfWork<PostsContext>()
+            .AddMongoDbContext()
+            .AddUnitOfWork()
             .AddRabbitMQ(configuration, PostInfrastructureReference.Assembly)
             .AddJwtBearer(configuration)
             .AddDateTimeProvider();

@@ -63,8 +63,16 @@ public static class UserExceptionErrorMessages
 
     public static string GetSortPropertyNotSupportedMessage(UserSortProperty sortProperty)
     {
-        const string Format = "PostSortProperty(type: {0}) is not supported";
+        const string Format = "UserSortProperty(type: {0}) is not supported";
         var result = Format.FormatCurrentCulture(sortProperty);
+
+        return result;
+    }
+
+    public static string GetInclidePropertyNotSupportedMessage(ICollection<UserIncludeProperty> includeProperties)
+    {
+        const string Format = "UserIncludeProperties(types: {0}) is not supported";
+        var result = Format.FormatCurrentCulture(string.Join(", ", includeProperties));
 
         return result;
     }

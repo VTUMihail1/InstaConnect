@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace InstaConnect.Identity.Infrastructure.Extensions;
+namespace InstaConnect.Users.Infrastructure.Extensions;
 public static class IdentityInfrastructureReference
 {
     public static readonly Assembly Assembly = typeof(IdentityInfrastructureReference).Assembly;
