@@ -1,9 +1,6 @@
-﻿using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
-using InstaConnect.Posts.Infrastructure.Features.Posts.Abstractions;
-
-namespace InstaConnect.Common.Infrastructure.Abstractions;
+﻿namespace InstaConnect.Posts.Infrastructure.Features.Posts.Abstractions;
 
 public interface IPostIncludePropertyFactory
 {
-    ICollection<IPostIncludeProperty> Create(ICollection<PostIncludeProperty>? includeProperties);
+    IEnumerable<IPostIncludeProperty> Create(ICollection<PostIncludeProperty>? includeProperties);
 }

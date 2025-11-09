@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace InstaConnect.Users.Application.Features.Users.Commands.Add;
+namespace InstaConnect.Identity.Application.Features.Users.Commands.Add;
 
 public record AddUserCommandRequest(
     string Name,

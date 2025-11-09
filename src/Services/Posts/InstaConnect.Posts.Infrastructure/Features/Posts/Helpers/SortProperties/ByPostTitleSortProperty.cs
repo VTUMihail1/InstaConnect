@@ -1,9 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
-using InstaConnect.Posts.Infrastructure.Features.Posts.Abstractions;
-
-namespace InstaConnect.Common.Infrastructure.SortOrders;
+namespace InstaConnect.Posts.Infrastructure.Features.Posts.Helpers.SortProperties;
 
 public class ByPostTitleSortProperty : IPostSortProperty
 {

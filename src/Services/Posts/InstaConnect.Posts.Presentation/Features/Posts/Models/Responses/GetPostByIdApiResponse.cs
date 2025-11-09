@@ -1,5 +1,3 @@
-﻿using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
-
-namespace InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
+﻿namespace InstaConnect.Posts.Presentation.Features.Posts.Models.Responses;
 
 public record GetPostByIdApiResponse(PostApiResponse Data);

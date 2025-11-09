@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.RefreshTokens.Domain.Features.RefreshTokens.Models.Requests;
+﻿namespace InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Requests;
 
 public enum RefreshTokenIncludeProperty
 {

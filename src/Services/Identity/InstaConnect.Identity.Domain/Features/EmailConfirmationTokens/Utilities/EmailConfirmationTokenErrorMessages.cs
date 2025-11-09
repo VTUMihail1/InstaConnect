@@ -1,5 +1,4 @@
-﻿using InstaConnect.Common.Extensions;
-using InstaConnect.Posts.Domain.Features.RefreshTokens.Utilities;
+﻿using InstaConnect.Common.Domain.Extensions;
 
 namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Utilities;
 

@@ -1,7 +1,4 @@
-﻿using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
-using InstaConnect.Users.Domain.Features.Users.Abstractions;
-
-namespace InstaConnect.Users.Application.Features.Users.Queries.GetAll;
+﻿namespace InstaConnect.Identity.Application.Features.Users.Queries.GetAll;
 
 internal class GetAllUsersQueryHandler : IQueryHandler<GetAllUsersQueryRequest, GetAllUsersQueryResponse>
 {

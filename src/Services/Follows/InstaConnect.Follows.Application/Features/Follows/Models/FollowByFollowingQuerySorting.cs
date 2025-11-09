@@ -1,6 +1,6 @@
-﻿using InstaConnect.Follows.Domain.Features.Follows.Models.Requests;
+﻿using InstaConnect.Common.Domain.Models;
 
-namespace InstaConnect.Follows.Domain.Features.Follows.Models;
+namespace InstaConnect.Follows.Application.Features.Follows.Models;
 
 public record FollowByFollowingQuerySorting(
     SortOrder Order,

@@ -1,7 +1,4 @@
-﻿using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
-using InstaConnect.Users.Domain.Features.Users.Models.Requests;
-
-namespace InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
+﻿namespace InstaConnect.Identity.Domain.Features.Users.Models.Requests;
 
 public record GetUserByIdQuery(string Id)
 {

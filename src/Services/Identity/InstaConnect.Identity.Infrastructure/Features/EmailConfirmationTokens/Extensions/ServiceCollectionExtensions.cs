@@ -1,12 +1,10 @@
-﻿using InstaConnect.Common.Extensions;
-using InstaConnect.EmailConfirmationTokens.Infrastructure.Features.EmailConfirmationTokens.Abstractions;
-using InstaConnect.Users.Infrastructure.Extensions;
+﻿using InstaConnect.Identity.Infrastructure.Extensions;
 
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 
-namespace InstaConnect.EmailConfirmationTokens.Infrastructure.Features.EmailConfirmationTokens.Extensions;
+namespace InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Extensions;
 
 internal static class ServiceCollectionExtensions
 {

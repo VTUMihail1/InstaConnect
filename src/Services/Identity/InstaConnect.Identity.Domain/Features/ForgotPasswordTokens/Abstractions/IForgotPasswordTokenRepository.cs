@@ -1,7 +1,4 @@
-﻿using InstaConnect.ForgotPasswordTokens.Domain.Features.ForgotPasswordTokens.Models.Requests;
-using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entities;
-
-namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Abstractions;
+﻿namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Abstractions;
 
 public interface IForgotPasswordTokenRepository
 {
@@ -18,5 +15,5 @@ public interface IForgotPasswordTokenRepository
 
     Task AddAsync(ForgotPasswordToken entity, CancellationToken cancellationToken);
 
-    Task DeleteRangeAsync(ICollection<ForgotPasswordToken> entities, CancellationToken cancellationToken);
+    Task DeleteRangeAsync(IEnumerable<ForgotPasswordToken> entities, CancellationToken cancellationToken);
 }

@@ -1,7 +1,4 @@
-﻿using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Abstractions;
-using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Requests;
-
-namespace InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Helpers;
+﻿namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Helpers;
 
 public class PostCommentLikeIncludeQueryBuilder
 {

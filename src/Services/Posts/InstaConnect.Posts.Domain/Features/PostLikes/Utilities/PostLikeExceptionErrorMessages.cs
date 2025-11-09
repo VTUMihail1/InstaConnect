@@ -1,8 +1,6 @@
-﻿using InstaConnect.Common.Extensions;
-using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Requests;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
+﻿using InstaConnect.Common.Domain.Extensions;
 
-namespace InstaConnect.PostLikes.Common.Features.PostLikes.Utilities;
+namespace InstaConnect.Posts.Domain.Features.PostLikes.Utilities;
 
 public static class PostLikeExceptionErrorMessages
 {

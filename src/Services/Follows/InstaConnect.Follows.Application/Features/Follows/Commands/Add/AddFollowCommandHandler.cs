@@ -1,6 +1,4 @@
-﻿using InstaConnect.Follows.Domain.Features.Follows.Abstractions;
-
-namespace InstaConnect.Follows.Application.Features.Follows.Commands.Add;
+﻿namespace InstaConnect.Follows.Application.Features.Follows.Commands.Add;
 
 internal class AddFollowCommandHandler : ICommandHandler<AddFollowCommandRequest, AddFollowCommandResponse>
 {

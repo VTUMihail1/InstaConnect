@@ -1,14 +1,6 @@
-﻿using InstaConnect.Common.Abstractions;
-using InstaConnect.Common.Domain.Events.ForgotPasswordTokens;
-using InstaConnect.Common.Extensions;
-using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Abstractions;
-using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Exceptions;
-using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entities;
-using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Requests;
-using InstaConnect.Identity.Domain.Features.Users.Exceptions;
+﻿using InstaConnect.Common.Domain.Extensions;
+using InstaConnect.Common.Events.Abstractions;
 using InstaConnect.Identity.Domain.Helpers;
-using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
-using InstaConnect.Users.Domain.Features.Users.Abstractions;
 
 namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Helpers;
 internal class ForgotPasswordTokenService : IForgotPasswordTokenService

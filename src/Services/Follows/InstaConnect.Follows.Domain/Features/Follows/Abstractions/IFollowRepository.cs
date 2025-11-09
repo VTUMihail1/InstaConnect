@@ -1,8 +1,4 @@
-﻿using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
-using InstaConnect.Follows.Domain.Features.Follows.Models.Requests;
-using InstaConnect.Follows.Domain.Features.Follows.Models.Responses;
-
-namespace InstaConnect.Follows.Domain.Features.Follows.Abstractions;
+﻿namespace InstaConnect.Follows.Domain.Features.Follows.Abstractions;
 
 public interface IFollowRepository
 {

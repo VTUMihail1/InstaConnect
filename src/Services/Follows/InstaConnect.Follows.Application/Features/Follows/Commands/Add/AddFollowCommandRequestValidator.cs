@@ -1,7 +1,4 @@
-﻿using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Posts.Domain.Features.Users.Utilities;
-
-namespace InstaConnect.Follows.Application.Features.Follows.Commands.Add;
+﻿namespace InstaConnect.Follows.Application.Features.Follows.Commands.Add;
 public class AddFollowCommandRequestValidator : AbstractValidator<AddFollowCommandRequest>
 {
     public AddFollowCommandRequestValidator()

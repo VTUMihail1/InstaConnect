@@ -1,6 +1,6 @@
-﻿using InstaConnect.Common.Extensions;
+﻿using InstaConnect.Common.Domain.Extensions;
 
-namespace InstaConnect.Follows.Common.Features.Follows.Utilities;
+namespace InstaConnect.Follows.Domain.Features.Follows.Utilities;
 
 public static class FollowErrorMessages
 {

@@ -1,6 +1,4 @@
-﻿using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Requests;
-
-namespace InstaConnect.ForgotPasswordTokens.Application.Features.ForgotPasswordTokens.Commands.Add;
+﻿namespace InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Add;
 
 internal class AddForgotPasswordTokenCommandHandler : ICommandHandler<AddForgotPasswordTokenCommandRequest>
 {

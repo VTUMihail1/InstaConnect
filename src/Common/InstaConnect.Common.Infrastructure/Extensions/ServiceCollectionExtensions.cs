@@ -1,11 +1,11 @@
-﻿using System.Linq.Expressions;
-using System.Reflection;
+﻿using System.Reflection;
 
 using CloudinaryDotNet;
 
 using InstaConnect.Common.Application.Helpers;
 using InstaConnect.Common.Domain.Abstractions;
-using InstaConnect.Common.Extensions;
+using InstaConnect.Common.Domain.Extensions;
+using InstaConnect.Common.Events.Abstractions;
 using InstaConnect.Common.Infrastructure;
 using InstaConnect.Common.Infrastructure.Abstractions;
 using InstaConnect.Common.Infrastructure.Extensions;
@@ -15,6 +15,8 @@ using InstaConnect.Common.Infrastructure.Helpers.SortOrders;
 using InstaConnect.Common.Infrastructure.Models.Options;
 using InstaConnect.Shared.Infrastructure.Extensions;
 
+using MassTransit;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -22,7 +24,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 

@@ -1,10 +1,6 @@
-﻿using InstaConnect.Common.Extensions;
-using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entities;
-using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entities;
-using InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Entities;
-using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entities;
+﻿using InstaConnect.Common.Domain.Extensions;
 
-namespace InstaConnect.Posts.Domain.Features.Users.Models.Entities;
+namespace InstaConnect.Identity.Domain.Features.Users.Models.Entities;
 
 public class User : IEntity
 {

@@ -1,9 +1,6 @@
-﻿using InstaConnect.Common.Extensions;
-using InstaConnect.Follows.Infrastructure.Features.Follows.Extensions;
+﻿using InstaConnect.Follows.Infrastructure.Features.Follows.Extensions;
+using InstaConnect.Follows.Infrastructure.Features.Users.Extensions;
 using InstaConnect.Shared.Infrastructure.Extensions;
-using InstaConnect.Users.Infrastructure.Features.Users.Extensions;
-
-using Microsoft.AspNetCore.Hosting;
 
 namespace InstaConnect.Follows.Infrastructure.Extensions;
 

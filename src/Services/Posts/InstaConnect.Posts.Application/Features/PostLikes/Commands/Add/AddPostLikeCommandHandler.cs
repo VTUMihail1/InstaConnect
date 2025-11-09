@@ -1,6 +1,4 @@
-﻿using InstaConnect.PostLikes.Domain.Features.PostLikes.Abstractions;
-
-namespace InstaConnect.PostLikes.Application.Features.PostLikes.Commands.Add;
+﻿namespace InstaConnect.Posts.Application.Features.PostLikes.Commands.Add;
 
 internal class AddPostLikeCommandHandler : ICommandHandler<AddPostLikeCommandRequest, AddPostLikeCommandResponse>
 {

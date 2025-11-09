@@ -1,7 +1,4 @@
-﻿using InstaConnect.UserClaims.Domain.Features.UserClaims.Abstractions;
-using InstaConnect.UserClaims.Domain.Features.UserClaims.Models.Requests;
-
-namespace InstaConnect.UserClaims.Domain.Features.UserClaims.Helpers;
+﻿namespace InstaConnect.Identity.Domain.Features.UserClaims.Helpers;
 
 public class UserClaimIncludeQueryBuilder
 {

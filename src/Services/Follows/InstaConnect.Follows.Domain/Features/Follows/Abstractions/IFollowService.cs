@@ -1,10 +1,4 @@
-﻿using InstaConnect.Follows.Application.Features.Follows.Commands.Add;
-using InstaConnect.Follows.Application.Features.Follows.Queries.GetById;
-using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
-using InstaConnect.Follows.Domain.Features.Follows.Models.Requests;
-using InstaConnect.Follows.Domain.Features.Follows.Models.Responses;
-
-namespace InstaConnect.Follows.Domain.Features.Follows.Abstractions;
+﻿namespace InstaConnect.Follows.Domain.Features.Follows.Abstractions;
 public interface IFollowService
 {
     public Task<FollowCollection> GetAllByFollowerAsync(GetAllFollowsByFollowerQuery query, CancellationToken cancellationToken);

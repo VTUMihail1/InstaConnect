@@ -1,13 +1,8 @@
-﻿using InstaConnect.Common.Infrastructure.Abstractions;
-using InstaConnect.Common.Infrastructure.Extensions;
-using InstaConnect.Identity.Domain.Features.RefreshTokens.Abstractions;
-using InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Entities;
-using InstaConnect.RefreshTokens.Domain.Features.RefreshTokens.Models.Requests;
-using InstaConnect.Users.Infrastructure.Abstractions;
+﻿using InstaConnect.Identity.Infrastructure.Abstractions;
 
 using MongoDB.Driver;
 
-namespace InstaConnect.RefreshTokens.Infrastructure.Features.RefreshTokens.Repositories;
+namespace InstaConnect.Identity.Infrastructure.Features.RefreshTokens.Repositories;
 
 internal class RefreshTokenRepository : IRefreshTokenRepository
 {

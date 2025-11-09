@@ -1,7 +1,4 @@
-﻿using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
-
-namespace InstaConnect.Posts.Domain.Features.Posts.Helpers;
+﻿namespace InstaConnect.Posts.Domain.Features.Posts.Helpers;
 
 public class PostIncludeQueryBuilder
 {

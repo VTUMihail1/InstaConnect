@@ -1,7 +1,6 @@
-﻿using InstaConnect.Common.Exceptions;
-using InstaConnect.PostCommentLikes.Common.Features.PostCommentLikes.Utilities;
+﻿using InstaConnect.Common.Domain.Exceptions;
 
-namespace InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Exceptions;
+namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Exceptions;
 
 public class PostCommentLikeNotFoundException : NotFoundException
 {
@@ -19,7 +18,7 @@ public class PostCommentLikeNotFoundException : NotFoundException
     public PostCommentLikeNotFoundException(
         string id,
         string commentId,
-        string userId, 
+        string userId,
         Exception exception)
         : base(PostCommentLikeExceptionErrorMessages.GetNotFoundMessage(
             id,

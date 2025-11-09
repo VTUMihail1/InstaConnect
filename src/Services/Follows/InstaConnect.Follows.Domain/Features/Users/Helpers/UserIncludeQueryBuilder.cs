@@ -1,7 +1,4 @@
-﻿using InstaConnect.Users.Domain.Features.Users.Abstractions;
-using InstaConnect.Users.Domain.Features.Users.Models.Requests;
-
-namespace InstaConnect.Users.Domain.Features.Users.Helpers;
+﻿namespace InstaConnect.Follows.Domain.Features.Users.Helpers;
 
 public class UserIncludeQueryBuilder
 {

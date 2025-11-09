@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace InstaConnect.PostCommentLikes.Presentation.Features.PostCommentLikes.Models.Requests;
+namespace InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Requests;
 
 public record DeletePostCommentLikeApiRequest(
     [FromRoute] string Id,

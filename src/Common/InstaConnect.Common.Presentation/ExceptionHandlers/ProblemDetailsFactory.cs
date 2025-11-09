@@ -1,5 +1,4 @@
-﻿using InstaConnect.Common.Exceptions;
-using InstaConnect.Common.Infrastructure.Abstractions;
+﻿using InstaConnect.Common.Domain.Exceptions;
 using InstaConnect.Common.Presentation.Abstractions;
 
 using Microsoft.AspNetCore.Http;

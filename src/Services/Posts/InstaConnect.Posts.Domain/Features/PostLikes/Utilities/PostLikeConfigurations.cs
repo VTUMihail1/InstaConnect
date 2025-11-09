@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.PostLikes.Common.Features.PostLikes.Utilities;
+﻿namespace InstaConnect.Posts.Domain.Features.PostLikes.Utilities;
 
 public static class PostLikeConfigurations
 {

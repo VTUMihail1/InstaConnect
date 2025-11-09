@@ -1,7 +1,4 @@
-﻿using InstaConnect.RefreshTokens.Domain.Features.RefreshTokens.Abstractions;
-using InstaConnect.RefreshTokens.Domain.Features.RefreshTokens.Models.Requests;
-
-namespace InstaConnect.RefreshTokens.Domain.Features.RefreshTokens.Helpers;
+﻿namespace InstaConnect.Identity.Domain.Features.RefreshTokens.Helpers;
 
 public class RefreshTokenIncludeQueryBuilder
 {

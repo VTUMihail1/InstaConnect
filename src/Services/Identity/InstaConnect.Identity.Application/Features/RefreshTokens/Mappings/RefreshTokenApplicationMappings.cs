@@ -1,12 +1,10 @@
-﻿using InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Requests;
-using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
-using InstaConnect.RefreshTokens.Application.Features.RefreshTokens.Commands.Add;
-using InstaConnect.RefreshTokens.Application.Features.RefreshTokens.Commands.Delete;
-using InstaConnect.RefreshTokens.Domain.Features.RefreshTokens.Models.Responses;
+﻿using InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Delete;
+using InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Issue;
+using InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Rotate;
 
 using Mapster;
 
-namespace InstaConnect.RefreshTokens.Application.Features.RefreshTokens.Mappings;
+namespace InstaConnect.Identity.Application.Features.RefreshTokens.Mappings;
 
 public class RefreshTokenApplicationMappings : IRegister
 {

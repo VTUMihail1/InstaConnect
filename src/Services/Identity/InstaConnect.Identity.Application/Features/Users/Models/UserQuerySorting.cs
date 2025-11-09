@@ -1,6 +1,6 @@
-﻿using InstaConnect.Identity.Domain.Features.Users.Models.Requests;
+﻿using InstaConnect.Common.Domain.Models;
 
-namespace InstaConnect.Users.Domain.Features.Users.Models;
+namespace InstaConnect.Identity.Application.Features.Users.Models;
 
 public record UserQuerySorting(
     SortOrder Order,

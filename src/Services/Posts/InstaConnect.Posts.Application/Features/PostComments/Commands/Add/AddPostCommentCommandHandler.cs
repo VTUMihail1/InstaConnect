@@ -1,6 +1,4 @@
-﻿using InstaConnect.PostComments.Domain.Features.PostComments.Abstractions;
-
-namespace InstaConnect.PostComments.Application.Features.PostComments.Commands.Add;
+﻿namespace InstaConnect.Posts.Application.Features.PostComments.Commands.Add;
 
 internal class AddPostCommentCommandHandler : ICommandHandler<AddPostCommentCommandRequest, AddPostCommentCommandResponse>
 {

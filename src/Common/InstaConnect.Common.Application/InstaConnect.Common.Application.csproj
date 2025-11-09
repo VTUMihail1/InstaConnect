@@ -7,16 +7,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\InstaConnect.Common\InstaConnect.Common.csproj" />
     <ProjectReference Include="..\InstaConnect.Common.Domain\InstaConnect.Common.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <!-- General -->
-    <Using Include="MediatR" />
-    <Using Include="Microsoft.Extensions.Logging" />
-    
-    <!-- Common -->
+  <ItemGroup Label="Common">
     <Using Include="InstaConnect.Common.Application.Abstractions" />
   </ItemGroup>
 </Project>

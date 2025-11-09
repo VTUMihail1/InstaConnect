@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Follows.Presentation.UnitTests.Features.Users.Consumers;
+﻿using InstaConnect.Common.Domain.Models.Events.Users;
+
+namespace InstaConnect.Follows.Presentation.UnitTests.Features.Users.Consumers;
 
 public class UserDeletedEventConsumerUnitTests : BaseUserUnitTest
 {

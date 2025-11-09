@@ -1,12 +1,6 @@
-﻿using InstaConnect.Common.Infrastructure.Abstractions;
-using InstaConnect.Common.Models.Enums;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
-using InstaConnect.Posts.Infrastructure.Abstractions;
-using InstaConnect.Posts.Infrastructure.Features.Posts.Abstractions;
+﻿using MongoDB.Driver;
 
-using MongoDB.Driver;
-
-namespace InstaConnect.Common.Infrastructure.SortOrders;
+namespace InstaConnect.Posts.Infrastructure.Features.Posts.Helpers.Includes;
 public class PostUserIncludeProperty : IPostIncludeProperty
 {
     private readonly IPostsContext _postsContext;
@@ -25,7 +19,7 @@ public class PostUserIncludeProperty : IPostIncludeProperty
                 _postsContext.Users,
                 p => p.UserId,
                 u => u.Id,
-                p => p.User 
+                p => p.User
             );
     }
 }

@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Extensions;
+﻿using InstaConnect.Common.Domain.Extensions;
 
 namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Utilities;
 

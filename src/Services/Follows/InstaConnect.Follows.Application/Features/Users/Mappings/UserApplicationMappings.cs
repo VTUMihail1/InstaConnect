@@ -1,12 +1,10 @@
-﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
-using InstaConnect.Posts.Application.Features.Posts.Commands.Update;
-using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
-using InstaConnect.Users.Application.Features.Users.Commands.Add;
-using InstaConnect.Users.Application.Features.Users.Commands.Delete;
+﻿using InstaConnect.Follows.Application.Features.Users.Commands.Add;
+using InstaConnect.Follows.Application.Features.Users.Commands.Delete;
+using InstaConnect.Follows.Application.Features.Users.Commands.Update;
 
 using Mapster;
 
-namespace InstaConnect.Users.Application.Features.Users.Mappings;
+namespace InstaConnect.Follows.Application.Features.Users.Mappings;
 
 public class UserApplicationMappings : IRegister
 {

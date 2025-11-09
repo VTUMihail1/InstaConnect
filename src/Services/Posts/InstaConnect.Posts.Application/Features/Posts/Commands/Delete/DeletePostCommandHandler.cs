@@ -1,7 +1,4 @@
-﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
-
-namespace InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
+﻿namespace InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
 
 internal class DeletePostCommandHandler : ICommandHandler<DeletePostCommandRequest>
 {
@@ -17,7 +14,7 @@ internal class DeletePostCommandHandler : ICommandHandler<DeletePostCommandReque
     }
 
     public async Task Handle(
-        DeletePostCommandRequest request, 
+        DeletePostCommandRequest request,
         CancellationToken cancellationToken)
     {
         var serviceRequest = _applicationMapper.Map<DeletePostCommand>(request);

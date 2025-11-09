@@ -1,5 +1,5 @@
 ﻿using InstaConnect.Common.Application.Contracts.EmailConfirmationTokens;
-using InstaConnect.Common.Application.Contracts.Users;
+using InstaConnect.Common.Domain.Models.Events.Users;
 using InstaConnect.Common.Exceptions;
 using InstaConnect.Identity.Application.Features.Users.Commands.Add;
 

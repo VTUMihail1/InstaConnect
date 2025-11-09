@@ -1,9 +1,4 @@
-﻿using InstaConnect.Common.Utilities;
-using InstaConnect.Identity.Domain.Features.Users.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Users.Domain.Features.Users.Utilities;
-
-namespace InstaConnect.Users.Application.Features.Users.Queries.GetAll;
+﻿namespace InstaConnect.Identity.Application.Features.Users.Queries.GetAll;
 
 public class GetAllUsersQueryRequestValidator : AbstractValidator<GetAllUsersQueryRequest>
 {

@@ -1,9 +1,4 @@
-﻿using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Utilities;
-using InstaConnect.Identity.Domain.Features.Users.Utilities;
-using InstaConnect.Posts.Common.Features.RefreshTokens.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-
-namespace InstaConnect.ForgotPasswordTokens.Application.Features.ForgotPasswordTokens.Commands.Add;
+﻿namespace InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Verify;
 public class VerifyForgotPasswordTokenCommandRequestValidator : AbstractValidator<VerifyForgotPasswordTokenCommandRequest>
 {
     public VerifyForgotPasswordTokenCommandRequestValidator()

@@ -1,9 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-using InstaConnect.Follows.Domain.Features.Follows.Models.Requests;
-using InstaConnect.Follows.Infrastructure.Features.Follows.Abstractions;
-
-namespace InstaConnect.Common.Infrastructure.SortOrders;
+namespace InstaConnect.Follows.Infrastructure.Features.Follows.Helpers.SortProperties;
 
 public class ByFollowByFollowingCreatedAtSortProperty : IFollowByFollowingSortProperty
 {

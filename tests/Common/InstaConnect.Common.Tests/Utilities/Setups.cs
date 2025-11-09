@@ -1,8 +1,4 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-
-using InstaConnect.Common.Application.Abstractions;
-using InstaConnect.Common.Tests.Utilities.Events;
+﻿using InstaConnect.Common.Tests.Events;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -22,12 +18,5 @@ public static class Setups
         var applicationSender = serviceScope.ServiceProvider.GetRequiredService<IApplicationSender>();
 
         return applicationSender;
-    }
-
-    public static IUnitOfWork GetUnitOfWork(this IServiceScope serviceScope)
-    {
-        var unitOfWork = serviceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-
-        return unitOfWork;
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Common.Application.PipelineBehaviors;
+﻿using MediatR;
+
+namespace InstaConnect.Common.Application.PipelineBehaviors;
 
 internal sealed class UnitOfWorkPipelineBehavior<TRequest, TResponse>
     : IPipelineBehavior<TRequest, TResponse>
@@ -30,6 +32,6 @@ internal sealed class UnitOfWorkPipelineBehavior<TRequest, TResponse>
             await _unitOfWork.AbortAsync(cancellationToken);
 
             throw;
-        }    
+        }
     }
 }

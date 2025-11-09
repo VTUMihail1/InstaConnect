@@ -1,8 +1,4 @@
-﻿using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Requests;
-using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Abstractions;
-using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Requests;
-
-namespace InstaConnect.EmailConfirmationTokens.Application.Features.EmailConfirmationTokens.Commands.Add;
+﻿namespace InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Verify;
 
 internal class VerifyEmailConfirmationTokenCommandHandler : ICommandHandler<VerifyEmailConfirmationTokenCommandRequest>
 {

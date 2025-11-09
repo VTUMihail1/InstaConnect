@@ -1,7 +1,4 @@
-﻿using InstaConnect.Common.Extensions;
-using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
-
-namespace InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Entities;
+﻿namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entities;
 
 public class PostCommentLike : IEntity
 {

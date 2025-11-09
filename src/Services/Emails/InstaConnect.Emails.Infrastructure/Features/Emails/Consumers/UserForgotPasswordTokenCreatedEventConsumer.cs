@@ -1,13 +1,13 @@
-﻿using InstaConnect.Common.Application.Contracts.ForgotPasswordTokens;
-using InstaConnect.Common.Exceptions.Base;
+﻿using InstaConnect.Common.Domain.Exceptions;
 using InstaConnect.Emails.Application.Features.Emails.Abstractions;
 using InstaConnect.Emails.Infrastructure.Features.Emails.Utilities;
+using InstaConnect.Identity.Events.Features.ForgotPasswordTokens;
 
 using MassTransit;
 
 namespace InstaConnect.Emails.Infrastructure.Features.Emails.Consumers;
 
-public class UserForgotPasswordTokenCreatedEventConsumer : IConsumer<UserForgotPasswordTokenCreatedEventRequest>
+public class UserForgotPasswordTokenCreatedEventConsumer : IConsumer<ForgotPasswordTokenAddedEventRequest>
 {
     private readonly IEmailSender _emailSender;
     private readonly IEmailFactory _emailFactory;
@@ -20,9 +20,9 @@ public class UserForgotPasswordTokenCreatedEventConsumer : IConsumer<UserForgotP
         _emailFactory = emailFactory;
     }
 
-    public async Task Consume(ConsumeContext<UserForgotPasswordTokenCreatedEventRequest> context)
+    public async Task Consume(ConsumeContext<ForgotPasswordTokenAddedEventRequest> context)
     {
-        var mailMessage = _emailFactory.GetEmail(context.Message.Email, EmailConstants.ForgotPasswordTitle, context.Message.RedirectUrl);
+        var mailMessage = _emailFactory.GetEmail(context.Message.Id, EmailConstants.ForgotPasswordTitle, context.Message.Id);
 
         try
         {

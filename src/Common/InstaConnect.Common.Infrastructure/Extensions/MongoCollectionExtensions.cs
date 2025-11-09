@@ -1,7 +1,5 @@
 ﻿using System.Linq.Expressions;
 
-using InstaConnect.Common.Extensions;
-
 using MongoDB.Driver;
 
 namespace InstaConnect.Common.Infrastructure.Extensions;
@@ -22,7 +20,7 @@ public static class MongoCollectionExtensions
         }
 
         await collection.InsertOneAsync(session, entity, null, cancellationToken);
-            
+
     }
 
     public static async Task UpdateAsync<T>(
@@ -42,7 +40,7 @@ public static class MongoCollectionExtensions
         }
 
         await collection.ReplaceOneAsync(session, filter, entity, options, cancellationToken);
-            
+
     }
 
     public static async Task DeleteAsync<T>(
@@ -59,7 +57,7 @@ public static class MongoCollectionExtensions
         }
 
         await collection.DeleteOneAsync(session, filter, null, cancellationToken);
-            
+
     }
 
     public static async Task DeleteRangeAsync<T>(

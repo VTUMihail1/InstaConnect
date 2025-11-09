@@ -1,6 +1,6 @@
 ﻿using Mapster;
 
-namespace InstaConnect.RefreshTokens.Infrastructure.Features.RefreshTokens.Mappings;
+namespace InstaConnect.Identity.Infrastructure.Features.RefreshTokens.Mappings;
 
 internal class RefreshTokenInfrastructureMappings : IRegister
 {

@@ -1,23 +1,7 @@
-﻿using InstaConnect.Common.Abstractions;
-using InstaConnect.Common.Exceptions.Users;
-using InstaConnect.Common.Extensions;
-using InstaConnect.PostCommentLikes.Application.Features.PostCommentLikes.Commands.Add;
-using InstaConnect.PostCommentLikes.Application.Features.PostCommentLikes.Queries.GetById;
-using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Abstractions;
-using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Exceptions;
-using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Entities;
-using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Events;
-using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Requests;
-using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Responses;
-using InstaConnect.PostComments.Domain.Features.PostComments.Abstractions;
-using InstaConnect.PostComments.Domain.Features.PostComments.Exceptions;
-using InstaConnect.PostLikes.Domain.Features.PostLikes.Exceptions;
-using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
-using InstaConnect.Posts.Domain.Features.Posts.Exceptions;
-using InstaConnect.Posts.Domain.Features.Users.Abstractions;
-using InstaConnect.Posts.Domain.Features.Users.Exceptions;
+﻿using InstaConnect.Common.Domain.Extensions;
+using InstaConnect.Common.Events.Abstractions;
 
-namespace InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Helpers;
+namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Helpers;
 internal class PostCommentLikeService : IPostCommentLikeService
 {
     private readonly IEventPublisher _eventPublisher;

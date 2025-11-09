@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Extensions;
+﻿using InstaConnect.Common.Domain.Extensions;
 using InstaConnect.Common.Presentation.Extensions;
 
 namespace InstaConnect.Emails.Presentation.Extensions;

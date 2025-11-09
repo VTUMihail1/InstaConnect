@@ -1,6 +1,3 @@
-﻿using InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Responses;
-using InstaConnect.RefreshTokens.Domain.Features.RefreshTokens.Models.Responses;
-
-namespace InstaConnect.RefreshTokens.Application.Features.RefreshTokens.Commands.Add;
+﻿namespace InstaConnect.Identity.Presentation.Features.RefreshTokens.Models.Responses;
 
 public record RotateRefreshTokenApiResponse(AccessTokenApiResponse AccessToken);

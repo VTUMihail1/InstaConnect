@@ -30,16 +30,10 @@
   </ItemGroup>
 	
   <ItemGroup>
-    <ProjectReference Include="..\InstaConnect.Common\InstaConnect.Common.csproj" />
     <ProjectReference Include="..\InstaConnect.Common.Application\InstaConnect.Common.Application.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <!-- General -->
-    <Using Include="MassTransit" />
-    <Using Include="System.ComponentModel.DataAnnotations" />
-
-    <!-- Common -->
+  <ItemGroup Label="Common">
     <Using Include="InstaConnect.Common.Application.Abstractions" />
     <Using Include="InstaConnect.Common.Application.Models" />
   </ItemGroup>

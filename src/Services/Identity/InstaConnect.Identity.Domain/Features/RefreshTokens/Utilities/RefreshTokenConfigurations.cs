@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Posts.Domain.Features.RefreshTokens.Utilities;
+﻿namespace InstaConnect.Identity.Domain.Features.RefreshTokens.Utilities;
 
 public abstract class RefreshTokenConfigurations
 {

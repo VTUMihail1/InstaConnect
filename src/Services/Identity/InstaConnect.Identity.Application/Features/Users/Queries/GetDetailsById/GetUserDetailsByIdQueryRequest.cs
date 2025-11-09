@@ -1,5 +1,3 @@
-﻿using InstaConnect.Users.Application.Features.Users.Queries.GetAll;
-
-namespace InstaConnect.Users.Application.Features.Users.Queries.GetById;
+﻿namespace InstaConnect.Identity.Application.Features.Users.Queries.GetDetailsById;
 
 public record GetUserDetailsByIdQueryRequest(string Id) : IQueryRequest<GetUserDetailsByIdQueryResponse>;

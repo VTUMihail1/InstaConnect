@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Users.Domain.Features.Users.Models.Requests;
+﻿namespace InstaConnect.Identity.Domain.Features.Users.Models.Requests;
 
 public enum UserIncludeProperty
 {

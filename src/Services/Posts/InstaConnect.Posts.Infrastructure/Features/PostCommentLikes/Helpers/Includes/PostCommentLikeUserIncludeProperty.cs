@@ -1,14 +1,6 @@
-﻿using InstaConnect.Common.Infrastructure.Abstractions;
-using InstaConnect.Common.Models.Enums;
-using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Entities;
-using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Requests;
-using InstaConnect.PostCommentLikes.Infrastructure.Features.PostCommentLikes.Abstractions;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
-using InstaConnect.Posts.Infrastructure.Abstractions;
+﻿using MongoDB.Driver;
 
-using MongoDB.Driver;
-
-namespace InstaConnect.Common.Infrastructure.SortOrders;
+namespace InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Helpers.Includes;
 public class PostCommentLikeUserIncludeProperty : IPostCommentLikeIncludeProperty
 {
     private readonly IPostsContext _postsContext;
@@ -27,7 +19,7 @@ public class PostCommentLikeUserIncludeProperty : IPostCommentLikeIncludePropert
                 _postsContext.Users,
                 p => p.UserId,
                 u => u.Id,
-                p => p.User 
+                p => p.User
             );
     }
 }

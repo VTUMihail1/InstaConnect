@@ -1,13 +1,12 @@
-﻿using Testcontainers.MsSql;
+﻿using Testcontainers.MongoDb;
 
 namespace InstaConnect.Common.Tests.Utilities;
 public static class ContainerFactory
 {
-    public static MsSqlContainer GetMsSqlContainer()
+    public static MongoDbContainer GetMongoContainer()
     {
-        return new MsSqlBuilder()
-            .WithImage("mcr.microsoft.com/mssql/server:2022-latest")
-            .WithPassword("Password123!")
+        return new MongoDbBuilder()
+            .WithImage("mongo:7.0")
             .Build();
     }
 }

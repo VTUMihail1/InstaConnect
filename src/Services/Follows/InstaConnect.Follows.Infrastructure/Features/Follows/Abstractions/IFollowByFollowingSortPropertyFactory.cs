@@ -1,7 +1,4 @@
-﻿using InstaConnect.Follows.Domain.Features.Follows.Models.Requests;
-using InstaConnect.Follows.Infrastructure.Features.Follows.Abstractions;
-
-namespace InstaConnect.Common.Infrastructure.Abstractions;
+﻿namespace InstaConnect.Follows.Infrastructure.Features.Follows.Abstractions;
 
 public interface IFollowByFollowingSortPropertyFactory
 {

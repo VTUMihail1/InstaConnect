@@ -1,20 +1,10 @@
-﻿using AutoMapper;
-
-using InstaConnect.Common.Application.Contracts.Users;
-using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
-using InstaConnect.Posts.Application.Features.Posts.Commands.Update;
-using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
-using InstaConnect.Users.Application.Features.Users.Commands.Add;
-using InstaConnect.Users.Application.Features.Users.Commands.Delete;
-using InstaConnect.Users.Application.Features.Users.Commands.Update;
-using InstaConnect.Users.Application.Features.Users.Queries.GetAll;
-using InstaConnect.Users.Application.Features.Users.Queries.GetById;
-using InstaConnect.Users.Domain.Features.Users.Models.Requests;
-using InstaConnect.Users.Domain.Features.Users.Models.Responses;
+﻿using InstaConnect.Posts.Application.Features.Users.Commands.Add;
+using InstaConnect.Posts.Application.Features.Users.Commands.Delete;
+using InstaConnect.Posts.Application.Features.Users.Commands.Update;
 
 using Mapster;
 
-namespace InstaConnect.Users.Application.Features.Users.Mappings;
+namespace InstaConnect.Posts.Application.Features.Users.Mappings;
 
 public class UserApplicationMappings : IRegister
 {

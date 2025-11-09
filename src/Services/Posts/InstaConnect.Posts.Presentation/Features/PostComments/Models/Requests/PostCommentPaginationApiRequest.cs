@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.PostComments.Presentation.Features.PostComments.Models.Requests;
+﻿namespace InstaConnect.Posts.Presentation.Features.PostComments.Models.Requests;
 
 public record PostCommentPaginationApiRequest(
     [FromQuery(Name = "page")] int Page = 1,

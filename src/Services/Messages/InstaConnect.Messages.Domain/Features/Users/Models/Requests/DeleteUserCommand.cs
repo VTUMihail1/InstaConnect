@@ -1,3 +1,0 @@
-﻿namespace InstaConnect.Posts.Application.Features.Posts.Commands.Add;
-
-public record DeleteUserCommand(string Id);

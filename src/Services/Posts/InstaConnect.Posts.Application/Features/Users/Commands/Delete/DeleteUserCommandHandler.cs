@@ -1,6 +1,4 @@
-﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
-
-namespace InstaConnect.Users.Application.Features.Users.Commands.Delete;
+﻿namespace InstaConnect.Posts.Application.Features.Users.Commands.Delete;
 
 internal class DeleteUserCommandHandler : ICommandHandler<DeleteUserCommandRequest>
 {

@@ -1,9 +1,4 @@
-﻿using InstaConnect.Common.Infrastructure.Abstractions;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Responses;
-using InstaConnect.Posts.Infrastructure.Features.Posts.Abstractions;
-
-namespace InstaConnect.Posts.Infrastructure.Features.Posts.Helpers;
+﻿namespace InstaConnect.Posts.Infrastructure.Features.Posts.Helpers;
 
 internal class PostCollectionFactory : IPostCollectionFactory
 {

@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.PostComments.Application.Features.PostComments.Commands.Update;
+﻿namespace InstaConnect.Posts.Application.Features.PostComments.Commands.Update;
 
 public record UpdatePostCommentCommandRequest(
     string Id,

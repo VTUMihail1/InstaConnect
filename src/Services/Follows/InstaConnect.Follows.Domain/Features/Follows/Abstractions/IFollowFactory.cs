@@ -1,6 +1,4 @@
-﻿using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
-
-namespace InstaConnect.FollowLikes.Domain.Features.FollowLikes.Abstractions;
+﻿namespace InstaConnect.Follows.Domain.Features.Follows.Abstractions;
 
 public interface IFollowFactory
 {

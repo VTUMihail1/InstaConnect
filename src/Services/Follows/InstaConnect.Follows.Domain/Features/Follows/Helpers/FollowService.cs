@@ -1,17 +1,5 @@
-﻿using InstaConnect.Common.Abstractions;
-using InstaConnect.Common.Exceptions.Users;
-using InstaConnect.Common.Extensions;
-using InstaConnect.FollowLikes.Domain.Features.FollowLikes.Abstractions;
-using InstaConnect.Follows.Application.Features.Follows.Commands.Add;
-using InstaConnect.Follows.Application.Features.Follows.Queries.GetById;
-using InstaConnect.Follows.Domain.Features.Follows.Abstractions;
-using InstaConnect.Follows.Domain.Features.Follows.Exceptions;
-using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
-using InstaConnect.Follows.Domain.Features.Follows.Models.Requests;
-using InstaConnect.Follows.Domain.Features.Follows.Models.Responses;
-using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Events;
-using InstaConnect.Posts.Domain.Features.Users.Abstractions;
-using InstaConnect.Posts.Domain.Features.Users.Exceptions;
+﻿using InstaConnect.Common.Domain.Extensions;
+using InstaConnect.Common.Events.Abstractions;
 
 namespace InstaConnect.Follows.Domain.Features.Follows.Helpers;
 internal class FollowService : IFollowService

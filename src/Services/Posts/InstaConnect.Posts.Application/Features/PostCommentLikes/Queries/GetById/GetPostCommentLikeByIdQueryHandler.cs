@@ -1,8 +1,4 @@
-﻿using InstaConnect.PostCommentLikes.Application.Features.PostCommentLikes.Queries.GetAll;
-using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Abstractions;
-using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Requests;
-
-namespace InstaConnect.PostCommentLikes.Application.Features.PostCommentLikes.Queries.GetById;
+﻿namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetById;
 
 internal class GetPostCommentLikeByIdQueryHandler : IQueryHandler<GetPostCommentLikeByIdQueryRequest, GetPostCommentLikeByIdQueryResponse>
 {

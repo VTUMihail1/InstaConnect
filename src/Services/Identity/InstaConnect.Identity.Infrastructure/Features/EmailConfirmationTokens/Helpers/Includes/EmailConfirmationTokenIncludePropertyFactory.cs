@@ -1,18 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using InstaConnect.Common.Extensions;
-using InstaConnect.Common.Infrastructure.Abstractions;
-using InstaConnect.Common.Infrastructure.Exceptions;
-using InstaConnect.Common.Models.Enums;
-using InstaConnect.EmailConfirmationTokens.Domain.Features.EmailConfirmationTokens.Exceptions;
-using InstaConnect.EmailConfirmationTokens.Domain.Features.EmailConfirmationTokens.Models.Requests;
-using InstaConnect.EmailConfirmationTokens.Infrastructure.Features.EmailConfirmationTokens.Abstractions;
-
-namespace InstaConnect.Common.Infrastructure.EmailConfirmationTokenSortPropertys;
+﻿namespace InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Helpers.Includes;
 internal class EmailConfirmationTokenIncludePropertyFactory : IEmailConfirmationTokenIncludePropertyFactory
 {
     private readonly IEnumerable<IEmailConfirmationTokenIncludeProperty> _emailConfirmationTokenIncludeProperty;
@@ -22,7 +8,7 @@ internal class EmailConfirmationTokenIncludePropertyFactory : IEmailConfirmation
         _emailConfirmationTokenIncludeProperty = emailConfirmationTokenIncludeProperty;
     }
 
-    public ICollection<IEmailConfirmationTokenIncludeProperty> Create(ICollection<EmailConfirmationTokenIncludeProperty>? includeProperties)
+    public IEnumerable<IEmailConfirmationTokenIncludeProperty> Create(ICollection<EmailConfirmationTokenIncludeProperty>? includeProperties)
     {
         if (includeProperties == null)
         {
@@ -36,6 +22,6 @@ internal class EmailConfirmationTokenIncludePropertyFactory : IEmailConfirmation
             throw new EmailConfirmationTokenIncludePropertiesNotSupportedException(includeProperties);
         }
 
-        return properties.ToList();
+        return properties;
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.PostCommentLikes.Presentation.Features.PostCommentLikes.Utilities;
+﻿namespace InstaConnect.Posts.Presentation.Features.PostCommentLikes.Utilities;
 
 public static class PostCommentLikeRoutes
 {

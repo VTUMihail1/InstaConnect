@@ -1,16 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using InstaConnect.Common.Infrastructure.Abstractions;
-using InstaConnect.Common.Infrastructure.Exceptions;
-using InstaConnect.Common.Models.Enums;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
-using InstaConnect.Posts.Infrastructure.Features.Posts.Abstractions;
-
-namespace InstaConnect.Common.Infrastructure.PostSortPropertys;
+﻿namespace InstaConnect.Posts.Infrastructure.Features.Posts.Helpers.SortProperties;
 internal class PostSortPropertyFactory : IPostSortPropertyFactory
 {
     private readonly IEnumerable<IPostSortProperty> _postSortProperties;

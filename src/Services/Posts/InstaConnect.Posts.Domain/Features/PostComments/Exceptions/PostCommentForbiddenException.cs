@@ -1,6 +1,6 @@
-﻿using InstaConnect.PostComments.Common.Features.PostComments.Utilities;
+﻿using InstaConnect.Common.Domain.Exceptions;
 
-namespace InstaConnect.Common.Exceptions.Users;
+namespace InstaConnect.Posts.Domain.Features.PostComments.Exceptions;
 
 public class PostCommentForbiddenException : ForbiddenException
 {

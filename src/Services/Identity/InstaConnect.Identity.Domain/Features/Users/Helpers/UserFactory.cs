@@ -1,8 +1,4 @@
-﻿using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
-using InstaConnect.Users.Domain.Features.Users.Abstractions;
-using InstaConnect.Users.Domain.Features.Users.Models.Entities;
-
-namespace InstaConnect.Users.Domain.Features.Users.Helpers;
+﻿namespace InstaConnect.Identity.Domain.Features.Users.Helpers;
 
 internal class UserFactory : IUserFactory
 {

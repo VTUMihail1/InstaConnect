@@ -2,8 +2,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Application\InstaConnect.Common.Application.csproj" />
-    <ProjectReference Include="..\..\..\Common\InstaConnect.Common\InstaConnect.Common.csproj" />
-    <ProjectReference Include="..\InstaConnect.Follows.Common\InstaConnect.Follows.Common.csproj" />
     <ProjectReference Include="..\InstaConnect.Follows.Domain\InstaConnect.Follows.Domain.csproj" />
   </ItemGroup>
 
@@ -16,27 +14,29 @@
   	</AssemblyAttribute>
   </ItemGroup>
 
-  <ItemGroup>
-    <!-- General -->
-    <Using Include="FluentValidation" />
-    <Using Include="Microsoft.Extensions.DependencyInjection" />
-
-    <!-- Follows -->
-    <Using Include="InstaConnect.Follows.Application.Features.Follows.Models" />
-    <Using Include="InstaConnect.Follows.Domain.Features.Follows.Abstractions" />
-    <Using Include="InstaConnect.Follows.Domain.Features.Follows.Exceptions" />
-    <Using Include="InstaConnect.Follows.Domain.Features.Follows.Models.Entities" />
-
-    <!-- Users -->
-    <Using Include="InstaConnect.Follows.Domain.Features.Users.Abstractions" />
-    
-    <!-- Common -->
-    <Using Include="InstaConnect.Follows.Common.Features.Follows.Utilities" />
-    <Using Include="InstaConnect.Follows.Common.Features.Users.Utilities" />
+  <ItemGroup Label="Common">
+    <Using Include="FluentValidation"/>
+    <Using Include="Microsoft.Extensions.DependencyInjection"/>
+    <Using Include="InstaConnect.Common.Domain.Utilities"/>
+    <Using Include="InstaConnect.Common.Domain.Exceptions" />
+    <Using Include="InstaConnect.Common.Domain.Abstractions" />
     <Using Include="InstaConnect.Common.Application.Abstractions" />
-    <Using Include="InstaConnect.Common.Abstractions" />
-    <Using Include="InstaConnect.Common.Exceptions.Users" />
-    <Using Include="InstaConnect.Common.Models.Enums" />
+  </ItemGroup>
+
+  <ItemGroup Label="Users">
+    <Using Include="InstaConnect.Follows.Domain.Features.Users.Utilities" />
+    <Using Include="InstaConnect.Follows.Domain.Features.Users.Abstractions" />
+    <Using Include="InstaConnect.Follows.Domain.Features.Users.Models.Entities" />
+    <Using Include="InstaConnect.Follows.Domain.Features.Users.Models.Requests" />
+  </ItemGroup>
+
+  <ItemGroup Label="Follows">
+    <Using Include="InstaConnect.Follows.Domain.Features.Follows.Utilities" />
+    <Using Include="InstaConnect.Follows.Domain.Features.Follows.Abstractions" />
+    <Using Include="InstaConnect.Follows.Domain.Features.Follows.Models.Entities" />
+    <Using Include="InstaConnect.Follows.Domain.Features.Follows.Models.Requests" />
+    <Using Include="InstaConnect.Follows.Domain.Features.Follows.Models.Responses" />
+    <Using Include="InstaConnect.Follows.Application.Features.Follows.Models" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,8 @@
-﻿namespace InstaConnect.Common.Application.PipelineBehaviors;
+﻿using MediatR;
+
+using Microsoft.Extensions.Logging;
+
+namespace InstaConnect.Common.Application.PipelineBehaviors;
 
 internal class CachingPipelineBehavior<TRequest, TResponse>
     : IPipelineBehavior<TRequest, TResponse>

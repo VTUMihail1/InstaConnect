@@ -1,7 +1,4 @@
-﻿using InstaConnect.EmailConfirmationTokens.Domain.Features.EmailConfirmationTokens.Abstractions;
-using InstaConnect.EmailConfirmationTokens.Domain.Features.EmailConfirmationTokens.Models.Requests;
-
-namespace InstaConnect.EmailConfirmationTokens.Domain.Features.EmailConfirmationTokens.Helpers;
+﻿namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Helpers;
 
 public class EmailConfirmationTokenIncludeQueryBuilder
 {

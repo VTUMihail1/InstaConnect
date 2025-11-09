@@ -1,5 +1,3 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Requests;
+﻿namespace InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Requests;
 
 public record IssueRefreshTokenCommand(string Name, string Password);

@@ -1,8 +1,6 @@
-﻿using InstaConnect.Common.Exceptions;
-using InstaConnect.Identity.Domain.Features.Users.Utilities;
-using InstaConnect.UserClaims.Domain.Features.UserClaims.Models.Requests;
+﻿using InstaConnect.Common.Domain.Exceptions;
 
-namespace InstaConnect.UserClaims.Domain.Features.UserClaims.Exceptions;
+namespace InstaConnect.Identity.Domain.Features.UserClaims.Exceptions;
 
 public class UserClaimIncludePropertiesNotSupportedException : BadRequestException
 {

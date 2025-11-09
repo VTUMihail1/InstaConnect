@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\Services\Messages\InstaConnect.Messages.Common\InstaConnect.Messages.Common.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Services\Messages\InstaConnect.Messages.Domain\InstaConnect.Messages.Domain.csproj" />
+    <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Tests\InstaConnect.Common.Tests.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Messages -->
+    <Using Include="InstaConnect.Messages.Domain.Features.Messages.Models.Entities" />
+
+    <!-- Users -->
+    <Using Include="InstaConnect.Messages.Domain.Features.Users.Models.Entities" />
+
+    <!-- Common -->
+    <Using Include="InstaConnect.Messages.Common.Features.Messages.Utilities" />
+    <Using Include="InstaConnect.Messages.Common.Features.Users.Utilities" />
+    <Using Include="InstaConnect.Common.Utilities" />
+    <Using Include="InstaConnect.Common.Models.Enums" />
+  </ItemGroup>
+
+</Project>

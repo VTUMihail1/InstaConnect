@@ -1,6 +1,4 @@
-﻿using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Requests;
-
-namespace InstaConnect.PostCommentLikes.Application.Features.PostCommentLikes.Queries.GetById;
+﻿namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Requests;
 
 public record GetPostCommentLikeByIdQuery(
     string Id,

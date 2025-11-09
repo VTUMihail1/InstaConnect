@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.PostComments.Presentation.Features.PostComments.Utilities;
+﻿namespace InstaConnect.Posts.Presentation.Features.PostComments.Utilities;
 
 public static class PostCommentRoutes
 {

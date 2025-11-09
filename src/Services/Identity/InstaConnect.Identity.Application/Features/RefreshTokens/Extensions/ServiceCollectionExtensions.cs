@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.RefreshTokens.Application.Features.RefreshTokens.Extensions;
+﻿namespace InstaConnect.Identity.Application.Features.RefreshTokens.Extensions;
 
 internal static class ServiceCollectionExtensions
 {

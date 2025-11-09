@@ -1,6 +1,4 @@
-﻿using InstaConnect.PostComments.Common.Features.PostComments.Utilities;
-
-namespace InstaConnect.PostComments.Application.Features.PostComments.Queries.GetById;
+﻿namespace InstaConnect.Posts.Application.Features.PostComments.Queries.GetById;
 
 public class GetPostCommentByIdQueryRequestValidator : AbstractValidator<GetPostCommentByIdQueryRequest>
 {

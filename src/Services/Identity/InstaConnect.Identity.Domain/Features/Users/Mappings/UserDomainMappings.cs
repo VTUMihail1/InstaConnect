@@ -1,9 +1,6 @@
-﻿using InstaConnect.Common.Application.Contracts.Users;
-using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
+﻿using Mapster;
 
-using Mapster;
-
-namespace InstaConnect.Users.Domain.Features.Users.Mappings;
+namespace InstaConnect.Identity.Domain.Features.Users.Mappings;
 
 internal class UserDomainMappings : IRegister
 {

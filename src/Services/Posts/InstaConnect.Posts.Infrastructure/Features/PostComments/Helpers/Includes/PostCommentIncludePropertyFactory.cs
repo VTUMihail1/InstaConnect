@@ -1,19 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using InstaConnect.Common.Extensions;
-using InstaConnect.Common.Infrastructure.Abstractions;
-using InstaConnect.Common.Infrastructure.Exceptions;
-using InstaConnect.Common.Models.Enums;
-using InstaConnect.PostComments.Domain.Features.PostComments.Exceptions;
-using InstaConnect.PostComments.Domain.Features.PostComments.Models.Requests;
-using InstaConnect.PostComments.Infrastructure.Features.PostComments.Abstractions;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
-
-namespace InstaConnect.Common.Infrastructure.PostCommentSortPropertys;
+﻿namespace InstaConnect.Posts.Infrastructure.Features.PostComments.Helpers.Includes;
 internal class PostCommentIncludePropertyFactory : IPostCommentIncludePropertyFactory
 {
     private readonly IEnumerable<IPostCommentIncludeProperty> _postCommentIncludeProperty;
@@ -23,7 +8,7 @@ internal class PostCommentIncludePropertyFactory : IPostCommentIncludePropertyFa
         _postCommentIncludeProperty = postCommentIncludeProperty;
     }
 
-    public ICollection<IPostCommentIncludeProperty> Create(ICollection<PostCommentIncludeProperty>? includeProperties)
+    public IEnumerable<IPostCommentIncludeProperty> Create(ICollection<PostCommentIncludeProperty>? includeProperties)
     {
         if (includeProperties == null)
         {
@@ -37,6 +22,6 @@ internal class PostCommentIncludePropertyFactory : IPostCommentIncludePropertyFa
             throw new PostCommentIncludePropertiesNotSupportedException(includeProperties);
         }
 
-        return properties.ToList();
+        return properties;
     }
 }

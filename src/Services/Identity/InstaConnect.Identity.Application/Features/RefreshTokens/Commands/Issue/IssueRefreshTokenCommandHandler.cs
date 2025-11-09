@@ -1,8 +1,4 @@
-﻿using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Requests;
-using InstaConnect.Identity.Domain.Features.RefreshTokens.Abstractions;
-using InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Requests;
-
-namespace InstaConnect.RefreshTokens.Application.Features.RefreshTokens.Commands.Add;
+﻿namespace InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Issue;
 
 internal class IssueRefreshTokenCommandHandler : ICommandHandler<IssueRefreshTokenCommandRequest, IssueRefreshTokenCommandResponse>
 {

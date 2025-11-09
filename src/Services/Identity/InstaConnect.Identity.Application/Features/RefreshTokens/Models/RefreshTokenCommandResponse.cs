@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Entities;
+﻿namespace InstaConnect.Identity.Application.Features.RefreshTokens.Models;
 
 public record RefreshTokenCommandResponse(string Id, string Value, DateTimeOffset ExpiresAt);
 

@@ -1,6 +1,4 @@
-﻿using InstaConnect.Users.Application.Features.Users.Models;
-
-namespace InstaConnect.Users.Application.Features.Users.Queries.GetAll;
+﻿namespace InstaConnect.Identity.Application.Features.Users.Queries.GetAll;
 
 public record GetAllUsersQueryResponse(
     ICollection<UserQueryResponse> Data,

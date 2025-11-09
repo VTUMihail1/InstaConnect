@@ -1,7 +1,4 @@
-﻿using InstaConnect.Follows.Domain.Features.Follows.Abstractions;
-using InstaConnect.Follows.Domain.Features.Follows.Models.Requests;
-
-namespace InstaConnect.Follows.Domain.Features.Follows.Helpers;
+﻿namespace InstaConnect.Follows.Domain.Features.Follows.Helpers;
 
 public class FollowIncludeQueryBuilder
 {

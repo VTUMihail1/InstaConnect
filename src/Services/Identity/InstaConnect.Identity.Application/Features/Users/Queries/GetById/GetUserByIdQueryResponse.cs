@@ -1,6 +1,3 @@
-﻿using InstaConnect.Users.Application.Features.Users.Models;
-using InstaConnect.Users.Application.Features.Users.Queries.GetById;
-
-namespace InstaConnect.Users.Application.Features.Users.Queries.GetAll;
+﻿namespace InstaConnect.Identity.Application.Features.Users.Queries.GetById;
 
 public record GetUserByIdQueryResponse(UserQueryResponse Data);

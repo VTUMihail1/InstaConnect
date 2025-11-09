@@ -1,20 +1,7 @@
-﻿using InstaConnect.Common.Abstractions;
-using InstaConnect.Common.Exceptions.Users;
-using InstaConnect.Common.Extensions;
-using InstaConnect.PostComments.Application.Features.PostComments.Commands.Add;
-using InstaConnect.PostComments.Application.Features.PostComments.Queries.GetById;
-using InstaConnect.PostComments.Domain.Features.PostComments.Abstractions;
-using InstaConnect.PostComments.Domain.Features.PostComments.Exceptions;
-using InstaConnect.PostComments.Domain.Features.PostComments.Models.Entities;
-using InstaConnect.PostComments.Domain.Features.PostComments.Models.Events;
-using InstaConnect.PostComments.Domain.Features.PostComments.Models.Requests;
-using InstaConnect.PostComments.Domain.Features.PostComments.Models.Responses;
-using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
-using InstaConnect.Posts.Domain.Features.Posts.Exceptions;
-using InstaConnect.Posts.Domain.Features.Users.Abstractions;
-using InstaConnect.Posts.Domain.Features.Users.Exceptions;
+﻿using InstaConnect.Common.Domain.Extensions;
+using InstaConnect.Common.Events.Abstractions;
 
-namespace InstaConnect.PostComments.Domain.Features.PostComments.Helpers;
+namespace InstaConnect.Posts.Domain.Features.PostComments.Helpers;
 internal class PostCommentService : IPostCommentService
 {
     private readonly IEventPublisher _eventPublisher;

@@ -1,12 +1,6 @@
-﻿using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Entities;
-using InstaConnect.PostComments.Domain.Features.PostComments.Models.Entities;
-using InstaConnect.PostComments.Domain.Features.PostComments.Models.Requests;
-using InstaConnect.PostComments.Infrastructure.Features.PostComments.Abstractions;
-using InstaConnect.Posts.Infrastructure.Abstractions;
+﻿using MongoDB.Driver;
 
-using MongoDB.Driver;
-
-namespace InstaConnect.Common.Infrastructure.SortOrders;
+namespace InstaConnect.Posts.Infrastructure.Features.PostComments.Helpers.Includes;
 
 public class PostCommentLikesIncludeProperty : IPostCommentIncludeProperty
 {

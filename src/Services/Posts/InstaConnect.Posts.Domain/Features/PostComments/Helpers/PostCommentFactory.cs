@@ -1,7 +1,4 @@
-﻿using InstaConnect.PostComments.Domain.Features.PostComments.Abstractions;
-using InstaConnect.PostComments.Domain.Features.PostComments.Models.Entities;
-
-namespace InstaConnect.PostComments.Domain.Features.PostComments.Helpers;
+﻿namespace InstaConnect.Posts.Domain.Features.PostComments.Helpers;
 
 internal class PostCommentFactory : IPostCommentFactory
 {

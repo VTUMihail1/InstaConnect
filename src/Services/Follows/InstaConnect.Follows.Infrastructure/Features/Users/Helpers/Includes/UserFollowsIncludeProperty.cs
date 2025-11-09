@@ -1,12 +1,8 @@
-﻿using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
-using InstaConnect.Follows.Infrastructure.Abstractions;
-using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
-using InstaConnect.Users.Domain.Features.Users.Models.Requests;
-using InstaConnect.Users.Infrastructure.Features.Users.Abstractions;
+﻿using InstaConnect.Follows.Infrastructure.Abstractions;
 
 using MongoDB.Driver;
 
-namespace InstaConnect.Common.Infrastructure.SortOrders;
+namespace InstaConnect.Follows.Infrastructure.Features.Users.Helpers.Includes;
 
 public class UserFollowsIncludeProperty : IUserIncludeProperty
 {

@@ -1,6 +1,4 @@
-﻿using InstaConnect.Posts.Domain.Features.Users.Utilities;
-
-namespace InstaConnect.Users.Application.Features.Users.Commands.Delete;
+﻿namespace InstaConnect.Posts.Application.Features.Users.Commands.Delete;
 public class DeleteUserCommandRequestValidator : AbstractValidator<DeleteUserCommandRequest>
 {
     public DeleteUserCommandRequestValidator()

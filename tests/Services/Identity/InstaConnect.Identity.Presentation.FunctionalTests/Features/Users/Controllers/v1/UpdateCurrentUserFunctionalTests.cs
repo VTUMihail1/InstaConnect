@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Application.Contracts.Users;
+﻿using InstaConnect.Common.Domain.Models.Events.Users;
 
 namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Controllers.v1;
 

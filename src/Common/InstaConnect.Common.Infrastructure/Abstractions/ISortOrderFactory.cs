@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Models.Enums;
+﻿using InstaConnect.Common.Domain.Models;
 
 namespace InstaConnect.Common.Infrastructure.Abstractions;
 public interface ISortOrderFactory

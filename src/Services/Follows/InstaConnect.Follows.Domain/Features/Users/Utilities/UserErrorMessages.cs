@@ -1,7 +1,6 @@
-﻿using InstaConnect.Common.Extensions;
-using InstaConnect.Posts.Domain.Features.Users.Utilities;
+﻿using InstaConnect.Common.Domain.Extensions;
 
-namespace InstaConnect.Posts.Common.Features.Users.Utilities;
+namespace InstaConnect.Follows.Domain.Features.Users.Utilities;
 
 public static class UserErrorMessages
 {
@@ -49,7 +48,7 @@ public static class UserErrorMessages
 
         return Message;
     }
-    
+
     public static string GetFirstNameTooShort(int length)
     {
         const string Format = "First name length is {0} and it must be at least {1} characters long";

@@ -1,6 +1,4 @@
-﻿using InstaConnect.Follows.Domain.Features.Follows.Models.Requests;
-
-namespace InstaConnect.Follows.Application.Features.Follows.Queries.GetById;
+﻿namespace InstaConnect.Follows.Domain.Features.Follows.Models.Requests;
 
 public record GetFollowByIdQuery(string FollowerId, string FollowingId)
 {

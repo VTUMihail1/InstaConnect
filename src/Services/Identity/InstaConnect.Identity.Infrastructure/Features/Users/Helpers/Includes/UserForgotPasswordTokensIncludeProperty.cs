@@ -1,11 +1,8 @@
-﻿using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
-using InstaConnect.Users.Domain.Features.Users.Models.Requests;
-using InstaConnect.Users.Infrastructure.Abstractions;
-using InstaConnect.Users.Infrastructure.Features.Users.Abstractions;
+﻿using InstaConnect.Identity.Infrastructure.Abstractions;
 
 using MongoDB.Driver;
 
-namespace InstaConnect.Common.Infrastructure.SortOrders;
+namespace InstaConnect.Identity.Infrastructure.Features.Users.Helpers.Includes;
 
 public class UserForgotPasswordTokensIncludeProperty : IUserIncludeProperty
 {

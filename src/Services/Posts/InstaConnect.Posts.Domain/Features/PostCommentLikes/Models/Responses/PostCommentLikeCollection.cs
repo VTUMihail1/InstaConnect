@@ -1,6 +1,4 @@
-﻿using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Entities;
-
-namespace InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Responses;
+﻿namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Responses;
 public record PostCommentLikeCollection(
     ICollection<PostCommentLike> Data,
     int Page,

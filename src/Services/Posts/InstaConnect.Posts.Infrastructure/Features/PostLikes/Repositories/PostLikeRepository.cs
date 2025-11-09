@@ -1,17 +1,6 @@
-﻿using InstaConnect.Common.Extensions;
-using InstaConnect.Common.Infrastructure.Abstractions;
-using InstaConnect.Common.Infrastructure.Extensions;
-using InstaConnect.PostLikes.Domain.Features.PostLikes.Abstractions;
-using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Entities;
-using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Requests;
-using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Responses;
-using InstaConnect.PostLikes.Infrastructure.Features.PostLikes.Abstractions;
-using InstaConnect.Posts.Domain.Features.PostLikes.Models.Requests;
-using InstaConnect.Posts.Infrastructure.Abstractions;
+﻿using MongoDB.Driver;
 
-using MongoDB.Driver;
-
-namespace InstaConnect.PostLikes.Infrastructure.Features.PostLikes.Repositories;
+namespace InstaConnect.Posts.Infrastructure.Features.PostLikes.Repositories;
 
 internal class PostLikeRepository : IPostLikeRepository
 {

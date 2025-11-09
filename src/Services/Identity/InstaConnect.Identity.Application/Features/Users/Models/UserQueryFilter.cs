@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Users.Domain.Features.Users.Models;
+﻿namespace InstaConnect.Identity.Application.Features.Users.Models;
 
 public record UserQueryFilter(
     string FirstName,

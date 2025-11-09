@@ -1,12 +1,4 @@
-﻿using InstaConnect.Common.Extensions;
-using InstaConnect.Common.Infrastructure.Abstractions;
-using InstaConnect.Common.Infrastructure.Extensions;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Responses;
-using InstaConnect.Posts.Infrastructure.Abstractions;
-using InstaConnect.Posts.Infrastructure.Features.Posts.Abstractions;
-
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 
 namespace InstaConnect.Posts.Infrastructure.Features.Posts.Repositories;
 

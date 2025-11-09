@@ -1,11 +1,6 @@
-﻿using AutoMapper;
+﻿using Mapster;
 
-using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Entities;
-using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Events;
-
-using Mapster;
-
-namespace InstaConnect.PostLikes.Domain.Features.PostLikes.Mappings;
+namespace InstaConnect.Posts.Domain.Features.PostLikes.Mappings;
 
 internal class PostLikeDomainMappings : IRegister
 {

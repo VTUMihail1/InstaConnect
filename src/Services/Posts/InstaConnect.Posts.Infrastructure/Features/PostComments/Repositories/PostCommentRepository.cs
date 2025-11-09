@@ -1,18 +1,6 @@
-﻿using System.Xml.Linq;
+﻿using MongoDB.Driver;
 
-using InstaConnect.Common.Extensions;
-using InstaConnect.Common.Infrastructure.Abstractions;
-using InstaConnect.Common.Infrastructure.Extensions;
-using InstaConnect.PostComments.Domain.Features.PostComments.Abstractions;
-using InstaConnect.PostComments.Domain.Features.PostComments.Models.Entities;
-using InstaConnect.PostComments.Domain.Features.PostComments.Models.Requests;
-using InstaConnect.PostComments.Domain.Features.PostComments.Models.Responses;
-using InstaConnect.PostComments.Infrastructure.Features.PostComments.Abstractions;
-using InstaConnect.Posts.Infrastructure.Abstractions;
-
-using MongoDB.Driver;
-
-namespace InstaConnect.PostComments.Infrastructure.Features.PostComments.Repositories;
+namespace InstaConnect.Posts.Infrastructure.Features.PostComments.Repositories;
 
 internal class PostCommentRepository : IPostCommentRepository
 {

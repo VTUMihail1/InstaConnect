@@ -1,8 +1,4 @@
-﻿using InstaConnect.Follows.Common.Features.Follows.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Posts.Domain.Features.Users.Utilities;
-
-namespace InstaConnect.Follows.Application.Features.Follows.Commands.Delete;
+﻿namespace InstaConnect.Follows.Application.Features.Follows.Commands.Delete;
 public class DeleteFollowCommandRequestValidator : AbstractValidator<DeleteFollowCommandRequest>
 {
     public DeleteFollowCommandRequestValidator()

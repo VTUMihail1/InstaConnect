@@ -1,7 +1,4 @@
-﻿using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
-using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
-
-namespace InstaConnect.Posts.Domain.Features.Posts.Abstractions;
+﻿namespace InstaConnect.Follows.Domain.Features.Users.Abstractions;
 
 public interface IUserFactory
 {

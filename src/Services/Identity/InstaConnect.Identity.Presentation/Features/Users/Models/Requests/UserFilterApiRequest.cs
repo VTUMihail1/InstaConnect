@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Users.Presentation.Features.Users.Models.Requests;
+﻿namespace InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
 
 public record UserFilterApiRequest(
     [FromQuery(Name = "firstName")] string FirstName = "",

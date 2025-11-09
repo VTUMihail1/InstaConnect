@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.PostLikes.Domain.Features.PostLikes.Models;
+﻿namespace InstaConnect.Posts.Application.Features.PostLikes.Models;
 
 public record PostLikeQueryPagination(
     int Page,

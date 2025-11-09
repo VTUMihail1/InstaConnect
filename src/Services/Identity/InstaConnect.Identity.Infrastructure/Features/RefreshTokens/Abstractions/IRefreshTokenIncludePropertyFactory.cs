@@ -1,9 +1,6 @@
-﻿using InstaConnect.RefreshTokens.Domain.Features.RefreshTokens.Models.Requests;
-using InstaConnect.RefreshTokens.Infrastructure.Features.RefreshTokens.Abstractions;
-
-namespace InstaConnect.Common.Infrastructure.Abstractions;
+﻿namespace InstaConnect.Identity.Infrastructure.Features.RefreshTokens.Abstractions;
 
 public interface IRefreshTokenIncludePropertyFactory
 {
-    ICollection<IRefreshTokenIncludeProperty> Create(ICollection<RefreshTokenIncludeProperty>? includeProperties);
+    IEnumerable<IRefreshTokenIncludeProperty> Create(ICollection<RefreshTokenIncludeProperty>? includeProperties);
 }

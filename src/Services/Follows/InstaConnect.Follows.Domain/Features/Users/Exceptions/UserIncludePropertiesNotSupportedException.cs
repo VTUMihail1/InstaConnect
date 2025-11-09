@@ -1,8 +1,6 @@
-﻿using InstaConnect.Common.Exceptions;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Users.Domain.Features.Users.Models.Requests;
+﻿using InstaConnect.Common.Domain.Exceptions;
 
-namespace InstaConnect.Users.Domain.Features.Users.Exceptions;
+namespace InstaConnect.Follows.Domain.Features.Users.Exceptions;
 
 public class UserIncludePropertiesNotSupportedException : BadRequestException
 {

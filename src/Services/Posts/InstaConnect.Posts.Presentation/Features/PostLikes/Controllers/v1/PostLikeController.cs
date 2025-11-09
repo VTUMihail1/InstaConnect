@@ -1,11 +1,9 @@
-﻿using InstaConnect.PostLikes.Application.Features.PostLikes.Commands.Add;
-using InstaConnect.PostLikes.Application.Features.PostLikes.Commands.Delete;
-using InstaConnect.PostLikes.Application.Features.PostLikes.Queries.GetAll;
-using InstaConnect.PostLikes.Application.Features.PostLikes.Queries.GetById;
-using InstaConnect.PostLikes.Presentation.Features.PostLikes.Models.Requests;
-using InstaConnect.PostLikes.Presentation.Features.PostLikes.Utilities;
+﻿using InstaConnect.Posts.Application.Features.PostLikes.Commands.Add;
+using InstaConnect.Posts.Application.Features.PostLikes.Commands.Delete;
+using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAll;
+using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetById;
 
-namespace InstaConnect.PostLikes.Presentation.Features.PostLikes.Controllers.v1;
+namespace InstaConnect.Posts.Presentation.Features.PostLikes.Controllers.v1;
 
 [ApiVersion(PostLikeRoutes.Version1)]
 [Route(PostLikeRoutes.Resource)]

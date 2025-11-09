@@ -1,9 +1,6 @@
-﻿using InstaConnect.Users.Domain.Features.Users.Models.Requests;
-using InstaConnect.Users.Infrastructure.Features.Users.Abstractions;
-
-namespace InstaConnect.Common.Infrastructure.Abstractions;
+﻿namespace InstaConnect.Follows.Infrastructure.Features.Users.Abstractions;
 
 public interface IUserIncludePropertyFactory
 {
-    ICollection<IUserIncludeProperty> Create(ICollection<UserIncludeProperty>? includeProperties);
+    IEnumerable<IUserIncludeProperty> Create(ICollection<UserIncludeProperty>? includeProperties);
 }

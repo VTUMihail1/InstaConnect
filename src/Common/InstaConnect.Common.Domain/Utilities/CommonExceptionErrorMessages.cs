@@ -1,11 +1,11 @@
-﻿using InstaConnect.Common.Extensions;
-using InstaConnect.Common.Models.Enums;
+﻿using InstaConnect.Common.Domain.Extensions;
+using InstaConnect.Common.Domain.Models;
 
-namespace InstaConnect.Common.Utilities;
+namespace InstaConnect.Common.Domain.Utilities;
 
 public static class CommonExceptionErrorMessages
 {
-    public static readonly string GetSortOrderEmpty()
+    public static string GetSortOrderEmpty()
     {
         const string Message = "Sort order must not be empty.";
 

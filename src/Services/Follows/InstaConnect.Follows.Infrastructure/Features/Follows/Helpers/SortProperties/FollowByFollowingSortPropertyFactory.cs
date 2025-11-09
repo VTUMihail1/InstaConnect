@@ -1,9 +1,4 @@
-﻿using InstaConnect.Common.Infrastructure.Abstractions;
-using InstaConnect.Common.Infrastructure.Exceptions;
-using InstaConnect.Follows.Domain.Features.Follows.Models.Requests;
-using InstaConnect.Follows.Infrastructure.Features.Follows.Abstractions;
-
-namespace InstaConnect.Common.Infrastructure.FollowSortPropertys;
+﻿namespace InstaConnect.Follows.Infrastructure.Features.Follows.Helpers.SortProperties;
 
 internal class FollowByFollowingSortPropertyFactory : IFollowByFollowingSortPropertyFactory
 {

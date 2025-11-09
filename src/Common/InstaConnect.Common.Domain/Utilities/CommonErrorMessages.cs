@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace InstaConnect.Common.Utilities;
+﻿namespace InstaConnect.Common.Domain.Utilities;
 public static class CommonErrorMessages
 {
-    public static readonly string GetSortOrderEmpty()
+    public static string GetSortOrderEmpty()
     {
         const string Message = "Sort order must not be empty.";
 
-        return Message; 
+        return Message;
     }
 }

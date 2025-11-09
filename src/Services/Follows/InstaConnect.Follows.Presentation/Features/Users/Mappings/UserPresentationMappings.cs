@@ -1,9 +1,10 @@
-﻿using InstaConnect.Users.Application.Features.Users.Commands.Add;
-using InstaConnect.Users.Application.Features.Users.Commands.Delete;
+﻿using InstaConnect.Follows.Application.Features.Users.Commands.Add;
+using InstaConnect.Follows.Application.Features.Users.Commands.Delete;
+using InstaConnect.Follows.Application.Features.Users.Commands.Update;
 
 using Mapster;
 
-namespace InstaConnect.Posts.Presentation.Features.Users.Mappings;
+namespace InstaConnect.Follows.Presentation.Features.Users.Mappings;
 
 internal class UserPresentationMappings : IRegister
 {

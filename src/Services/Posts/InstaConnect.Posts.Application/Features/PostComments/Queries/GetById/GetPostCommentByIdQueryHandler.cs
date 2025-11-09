@@ -1,8 +1,4 @@
-﻿using InstaConnect.PostComments.Application.Features.PostComments.Queries.GetAll;
-using InstaConnect.PostComments.Domain.Features.PostComments.Abstractions;
-using InstaConnect.PostComments.Domain.Features.PostComments.Models.Requests;
-
-namespace InstaConnect.PostComments.Application.Features.PostComments.Queries.GetById;
+﻿namespace InstaConnect.Posts.Application.Features.PostComments.Queries.GetById;
 
 internal class GetPostCommentByIdQueryHandler : IQueryHandler<GetPostCommentByIdQueryRequest, GetPostCommentByIdQueryResponse>
 {

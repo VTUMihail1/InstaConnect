@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-namespace InstaConnect.Identity.Domain.Features.RefreshTokens.Extensions;
+﻿namespace InstaConnect.Identity.Domain.Features.RefreshTokens.Extensions;
 
 internal static class ServiceCollectionExtensions
 {

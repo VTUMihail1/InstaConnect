@@ -1,12 +1,10 @@
-﻿using InstaConnect.PostComments.Application.Features.PostComments.Commands.Add;
-using InstaConnect.PostComments.Application.Features.PostComments.Commands.Delete;
-using InstaConnect.PostComments.Application.Features.PostComments.Commands.Update;
-using InstaConnect.PostComments.Application.Features.PostComments.Queries.GetAll;
-using InstaConnect.PostComments.Application.Features.PostComments.Queries.GetById;
-using InstaConnect.PostComments.Presentation.Features.PostComments.Models.Requests;
-using InstaConnect.PostComments.Presentation.Features.PostComments.Utilities;
+﻿using InstaConnect.Posts.Application.Features.PostComments.Commands.Add;
+using InstaConnect.Posts.Application.Features.PostComments.Commands.Delete;
+using InstaConnect.Posts.Application.Features.PostComments.Commands.Update;
+using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAll;
+using InstaConnect.Posts.Application.Features.PostComments.Queries.GetById;
 
-namespace InstaConnect.PostComments.Presentation.Features.PostComments.Controllers.v1;
+namespace InstaConnect.Posts.Presentation.Features.PostComments.Controllers.v1;
 
 [ApiVersion(PostCommentRoutes.Version1)]
 [Route(PostCommentRoutes.Resource)]

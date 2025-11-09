@@ -8,9 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Presentation\InstaConnect.Common.Presentation.csproj" />
-    <ProjectReference Include="..\..\..\Common\InstaConnect.Common\InstaConnect.Common.csproj" />
     <ProjectReference Include="..\InstaConnect.Follows.Application\InstaConnect.Follows.Application.csproj" />
-    <ProjectReference Include="..\InstaConnect.Follows.Common\InstaConnect.Follows.Common.csproj" />
     <ProjectReference Include="..\InstaConnect.Follows.Infrastructure\InstaConnect.Follows.Infrastructure.csproj" />
   </ItemGroup>
 
@@ -23,31 +21,30 @@
   	</AssemblyAttribute>
   </ItemGroup>
 
-  <ItemGroup>
-    <!-- General -->
-    <Using Include="Asp.Versioning" />
+  <ItemGroup Label="Common">
     <Using Include="MassTransit" />
-    <Using Include="Microsoft.AspNetCore.Authorization" />
-    <Using Include="Microsoft.AspNetCore.Mvc" />
-    <Using Include="Microsoft.AspNetCore.RateLimiting" />
+    <Using Include="Microsoft.AspNetCore.Mvc"/>
+    <Using Include="Microsoft.AspNetCore.Authorization"/>
+    <Using Include="Microsoft.Extensions.DependencyInjection"/>
+    <Using Include="Microsoft.Extensions.Configuration" />
+    <Using Include="Microsoft.AspNetCore.RateLimiting"/>
+    <Using Include="Asp.Versioning"/>
+    <Using Include="InstaConnect.Common.Domain.Abstractions" />
+    <Using Include="InstaConnect.Common.Events.Abstractions" />
+    <Using Include="InstaConnect.Common.Application.Abstractions" />
+	  <Using Include="InstaConnect.Common.Presentation.Utilities"/>
+    <Using Include="InstaConnect.Common.Presentation.Abstractions" />
+    <Using Include="InstaConnect.Common.Presentation.Binders.FromClaim"/>
+  </ItemGroup>
 
-    <!-- Follows -->
-    <Using Include="InstaConnect.Follows.Application.Features.Follows.Models" />
+  <ItemGroup Label="Users">
+    <Using Include="InstaConnect.Identity.Events.Features.Users" />
+  </ItemGroup>
+
+  <ItemGroup Label="Chats">
+    <Using Include="InstaConnect.Follows.Presentation.Features.Follows.Utilities" />
     <Using Include="InstaConnect.Follows.Presentation.Features.Follows.Models.Requests" />
     <Using Include="InstaConnect.Follows.Presentation.Features.Follows.Models.Responses" />
-    <Using Include="InstaConnect.Follows.Presentation.Features.Follows.Utilities" />
-
-    <!-- Users -->
-    <Using Include="InstaConnect.Follows.Domain.Features.Users.Abstractions" />
-    <Using Include="InstaConnect.Follows.Domain.Features.Users.Models.Entities" />
-
-    <!-- Common -->
-    <Using Include="InstaConnect.Common.Application.Abstractions" />
-    <Using Include="InstaConnect.Common.Application.Contracts.Users" />
-    <Using Include="InstaConnect.Common.Abstractions" />
-    <Using Include="InstaConnect.Common.Models.Enums" />
-    <Using Include="InstaConnect.Common.Presentation.Utilities" />
-    <Using Include="InstaConnect.Common.Presentation.Binders.FromClaim" />
   </ItemGroup>
 
 </Project>

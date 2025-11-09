@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.PostComments.Domain.Features.PostComments.Models.Requests;
+﻿namespace InstaConnect.Posts.Domain.Features.PostComments.Models.Requests;
 
 public record DeletePostCommentCommand(
     string Id,

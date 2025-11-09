@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Posts.Domain.Features.RefreshTokens.Utilities;
+﻿namespace InstaConnect.Identity.Domain.Features.UserClaims.Utilities;
 
 public abstract class UserClaimConfigurations
 {

@@ -1,7 +1,4 @@
-﻿using InstaConnect.PostLikes.Common.Features.PostLikes.Utilities;
-using InstaConnect.Posts.Domain.Features.Users.Utilities;
-
-namespace InstaConnect.PostLikes.Application.Features.PostLikes.Queries.GetById;
+﻿namespace InstaConnect.Posts.Application.Features.PostLikes.Queries.GetById;
 
 public class GetPostLikeByIdQueryRequestValidator : AbstractValidator<GetPostLikeByIdQueryRequest>
 {

@@ -1,0 +1,58 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Nullable>disable</Nullable>
+
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\Services\Messages\InstaConnect.Messages.Common\InstaConnect.Messages.Common.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Services\Messages\InstaConnect.Messages.Presentation\InstaConnect.Messages.Presentation.csproj" />
+    <ProjectReference Include="..\InstaConnect.Messages.Common.Tests\InstaConnect.Messages.Common.Tests.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- General -->
+    <Using Include="FluentAssertions" />
+    <Using Include="MassTransit" />
+    <Using Include="System.Net" />
+    <Using Include="Xunit" />
+
+    <!-- Messages -->
+    <Using Include="InstaConnect.Messages.Domain.Features.Messages.Models.Entities" />
+    <Using Include="InstaConnect.Messages.Presentation.Features.Messages.Models" />
+    <Using Include="InstaConnect.Messages.Presentation.Features.Messages.Models.Requests" />
+    <Using Include="InstaConnect.Messages.Presentation.Features.Messages.Models.Responses" />
+    <Using Include="InstaConnect.Messages.Presentation.FunctionalTests.Features.Messages.Utilities" />
+
+    <!-- Users -->
+    <Using Include="InstaConnect.Messages.Domain.Features.Users.Models.Entities" />
+    <Using Include="InstaConnect.Messages.Presentation.Features.Users.Consumers" />
+    <Using Include="InstaConnect.Messages.Presentation.FunctionalTests.Features.Users.Utilities" />
+
+    <!-- Common -->
+    <Using Include="InstaConnect.Messages.Common.Features.Messages.Utilities" />
+    <Using Include="InstaConnect.Messages.Common.Features.Users.Utilities" />
+    <Using Include="InstaConnect.Messages.Common.Tests.Features.Messages.Utilities" />
+    <Using Include="InstaConnect.Messages.Common.Tests.Features.Users.Utilities" />
+    <Using Include="InstaConnect.Messages.Presentation.FunctionalTests.Utilities" />
+    <Using Include="InstaConnect.Common.Utilities" />
+    <Using Include="InstaConnect.Common.Tests.Utilities" />
+  </ItemGroup>
+
+</Project>

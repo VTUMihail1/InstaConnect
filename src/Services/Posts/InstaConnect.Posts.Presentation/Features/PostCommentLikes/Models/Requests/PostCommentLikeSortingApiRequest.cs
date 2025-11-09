@@ -1,7 +1,7 @@
-﻿using InstaConnect.Common.Models.Enums;
-using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Requests;
+﻿using InstaConnect.Common.Domain.Models;
+using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Requests;
 
-namespace InstaConnect.PostCommentLikes.Presentation.Features.PostCommentLikes.Models.Requests;
+namespace InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Requests;
 
 public record PostCommentLikeSortingApiRequest(
     [FromQuery(Name = "sortOrder")] SortOrder Order = SortOrder.ASC,

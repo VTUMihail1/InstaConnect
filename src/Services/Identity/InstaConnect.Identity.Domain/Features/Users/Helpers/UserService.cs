@@ -1,16 +1,6 @@
-﻿using InstaConnect.Common.Abstractions;
-using InstaConnect.Common.Application.Abstractions;
-using InstaConnect.Common.Application.Contracts.Users;
-using InstaConnect.Common.Extensions;
-using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Abstractions;
-using InstaConnect.Identity.Domain.Features.Users.Exceptions;
+﻿using InstaConnect.Common.Domain.Extensions;
+using InstaConnect.Common.Events.Abstractions;
 using InstaConnect.Identity.Domain.Helpers;
-using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
-using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
-using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
-using InstaConnect.Users.Domain.Features.Users.Abstractions;
-using InstaConnect.Users.Domain.Features.Users.Models.Responses;
 
 namespace InstaConnect.Identity.Domain.Features.Users.Helpers;
 internal class UserService : IUserService

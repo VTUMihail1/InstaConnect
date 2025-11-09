@@ -1,10 +1,4 @@
-﻿using InstaConnect.PostComments.Application.Features.PostComments.Commands.Add;
-using InstaConnect.PostComments.Application.Features.PostComments.Queries.GetById;
-using InstaConnect.PostComments.Domain.Features.PostComments.Models.Entities;
-using InstaConnect.PostComments.Domain.Features.PostComments.Models.Requests;
-using InstaConnect.PostComments.Domain.Features.PostComments.Models.Responses;
-
-namespace InstaConnect.PostComments.Domain.Features.PostComments.Abstractions;
+﻿namespace InstaConnect.Posts.Domain.Features.PostComments.Abstractions;
 public interface IPostCommentService
 {
     public Task<PostCommentCollection> GetAllAsync(GetAllPostCommentsQuery query, CancellationToken cancellationToken);

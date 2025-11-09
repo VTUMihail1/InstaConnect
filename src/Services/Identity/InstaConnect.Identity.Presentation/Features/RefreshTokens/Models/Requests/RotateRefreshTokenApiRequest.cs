@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Common.Presentation.Binders.FromCookie;
-using InstaConnect.Identity.Presentation.Features.RefreshTokens.Utilities;
 
 namespace InstaConnect.Identity.Presentation.Features.RefreshTokens.Models.Requests;
 

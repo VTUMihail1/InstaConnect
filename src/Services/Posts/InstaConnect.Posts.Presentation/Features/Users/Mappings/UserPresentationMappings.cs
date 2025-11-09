@@ -1,14 +1,6 @@
-﻿using AutoMapper;
-
-using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
-using InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
-using InstaConnect.Posts.Application.Features.Posts.Commands.Update;
-using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
-using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
-using InstaConnect.Posts.Domain.Features.Posts.Models;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
-using InstaConnect.Users.Application.Features.Users.Commands.Add;
-using InstaConnect.Users.Application.Features.Users.Commands.Delete;
+﻿using InstaConnect.Posts.Application.Features.Users.Commands.Add;
+using InstaConnect.Posts.Application.Features.Users.Commands.Delete;
+using InstaConnect.Posts.Application.Features.Users.Commands.Update;
 
 using Mapster;
 

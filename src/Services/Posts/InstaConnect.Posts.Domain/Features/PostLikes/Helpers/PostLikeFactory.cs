@@ -1,8 +1,4 @@
-﻿using InstaConnect.PostLikeLikes.Domain.Features.PostLikeLikes.Abstractions;
-using InstaConnect.PostLikes.Domain.Features.PostLikes.Abstractions;
-using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Entities;
-
-namespace InstaConnect.PostLikes.Domain.Features.PostLikes.Helpers;
+﻿namespace InstaConnect.Posts.Domain.Features.PostLikes.Helpers;
 
 internal class PostLikeFactory : IPostLikeFactory
 {

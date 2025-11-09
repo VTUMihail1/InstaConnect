@@ -1,3 +1,3 @@
-﻿namespace InstaConnect.Posts.Application.Features.Posts.Commands.Add;
+﻿namespace InstaConnect.Follows.Domain.Features.Users.Models.Requests;
 
 public record DeleteUserCommand(string Id);

@@ -1,7 +1,4 @@
-﻿using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
-using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Events;
-
-using Mapster;
+﻿using Mapster;
 
 namespace InstaConnect.Follows.Domain.Features.Follows.Mappings;
 

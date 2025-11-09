@@ -1,18 +1,12 @@
-﻿using AutoMapper;
-
-using InstaConnect.PostComments.Application.Features.PostComments.Commands.Add;
-using InstaConnect.PostComments.Application.Features.PostComments.Commands.Delete;
-using InstaConnect.PostComments.Application.Features.PostComments.Commands.Update;
-using InstaConnect.PostComments.Application.Features.PostComments.Models;
-using InstaConnect.PostComments.Application.Features.PostComments.Queries.GetAll;
-using InstaConnect.PostComments.Application.Features.PostComments.Queries.GetById;
-using InstaConnect.PostComments.Domain.Features.PostComments.Models.Entities;
-using InstaConnect.PostComments.Domain.Features.PostComments.Models.Requests;
-using InstaConnect.PostComments.Domain.Features.PostComments.Models.Responses;
+﻿using InstaConnect.Posts.Application.Features.PostComments.Commands.Add;
+using InstaConnect.Posts.Application.Features.PostComments.Commands.Delete;
+using InstaConnect.Posts.Application.Features.PostComments.Commands.Update;
+using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAll;
+using InstaConnect.Posts.Application.Features.PostComments.Queries.GetById;
 
 using Mapster;
 
-namespace InstaConnect.PostComments.Application.Features.PostComments.Mappings;
+namespace InstaConnect.Posts.Application.Features.PostComments.Mappings;
 
 public class PostCommentApplicationMappings : IRegister
 {

@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Users.Application.Features.Users.Models;
+﻿namespace InstaConnect.Identity.Presentation.Features.Users.Models.Responses;
 
 public record UserApiResponse(
     string Id,

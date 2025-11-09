@@ -1,7 +1,6 @@
-﻿using InstaConnect.Common.Extensions;
-using InstaConnect.Posts.Domain.Features.RefreshTokens.Utilities;
+﻿using InstaConnect.Common.Domain.Extensions;
 
-namespace InstaConnect.Posts.Common.Features.RefreshTokens.Utilities;
+namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Utilities;
 
 public static class ForgotPasswordTokenErrorMessages
 {

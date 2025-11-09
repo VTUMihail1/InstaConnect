@@ -1,9 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Entities;
-using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Requests;
-
-namespace InstaConnect.PostCommentLikes.Infrastructure.Features.PostCommentLikes.Abstractions;
+namespace InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Abstractions;
 
 public interface IPostCommentLikeSortProperty
 {

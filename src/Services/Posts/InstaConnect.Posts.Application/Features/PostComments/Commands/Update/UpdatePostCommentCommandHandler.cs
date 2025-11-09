@@ -1,7 +1,4 @@
-﻿using InstaConnect.PostComments.Domain.Features.PostComments.Abstractions;
-using InstaConnect.PostComments.Domain.Features.PostComments.Models.Requests;
-
-namespace InstaConnect.PostComments.Application.Features.PostComments.Commands.Update;
+﻿namespace InstaConnect.Posts.Application.Features.PostComments.Commands.Update;
 
 public class UpdatePostCommentCommandHandler : ICommandHandler<UpdatePostCommentCommandRequest, UpdatePostCommentCommandResponse>
 {

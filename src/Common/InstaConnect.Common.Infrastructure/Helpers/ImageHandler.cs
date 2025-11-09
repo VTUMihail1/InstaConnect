@@ -2,9 +2,8 @@
 
 using CloudinaryDotNet;
 
-using InstaConnect.Common.Abstractions;
-using InstaConnect.Common.Exceptions;
-using InstaConnect.Common.Exceptions.Base;
+using InstaConnect.Common.Domain.Abstractions;
+using InstaConnect.Common.Domain.Exceptions;
 using InstaConnect.Common.Infrastructure.Abstractions;
 
 using Microsoft.AspNetCore.Http;

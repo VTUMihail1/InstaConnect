@@ -1,6 +1,4 @@
-﻿using InstaConnect.Users.Domain.Features.Users.Models.Requests;
-
-namespace InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
+﻿namespace InstaConnect.Identity.Domain.Features.Users.Models.Requests;
 
 public record GetAllUsersQuery(
     UserFilterQuery Filter,

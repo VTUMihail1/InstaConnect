@@ -1,11 +1,9 @@
-﻿using InstaConnect.Common.Extensions;
+﻿using InstaConnect.Common.Domain.Extensions;
 using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Extensions;
 using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Extensions;
 using InstaConnect.Identity.Domain.Features.RefreshTokens.Extensions;
 using InstaConnect.Identity.Domain.Features.UserClaims.Extensions;
-using InstaConnect.Users.Domain.Features.Users.Extensions;
-
-using Microsoft.Extensions.DependencyInjection;
+using InstaConnect.Identity.Domain.Features.Users.Extensions;
 
 namespace InstaConnect.Identity.Domain.Extensions;
 

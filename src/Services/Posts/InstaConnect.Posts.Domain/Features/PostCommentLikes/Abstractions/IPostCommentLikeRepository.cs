@@ -1,8 +1,4 @@
-﻿using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Entities;
-using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Requests;
-using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Responses;
-
-namespace InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Abstractions;
+﻿namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstractions;
 
 public interface IPostCommentLikeRepository
 {

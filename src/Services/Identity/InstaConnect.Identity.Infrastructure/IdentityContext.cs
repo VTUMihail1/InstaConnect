@@ -1,12 +1,10 @@
 ﻿using InstaConnect.Common.Infrastructure;
-using InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Entities;
-using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
-using InstaConnect.Users.Infrastructure.Abstractions;
-using InstaConnect.Users.Infrastructure.Utilities;
+using InstaConnect.Identity.Infrastructure.Abstractions;
+using InstaConnect.Identity.Infrastructure.Utilities;
 
 using MongoDB.Driver;
 
-namespace InstaConnect.Users.Infrastructure;
+namespace InstaConnect.Identity.Infrastructure;
 public class IdentityContext : MongoDbContext, IIdentityContext
 {
     public IdentityContext(IMongoClient mongoClient, IMongoDatabase mongoDatabase)

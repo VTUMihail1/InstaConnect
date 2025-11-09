@@ -1,12 +1,9 @@
-﻿using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Requests;
-using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
-using InstaConnect.EmailConfirmationTokens.Application.Features.EmailConfirmationTokens.Commands.Add;
-using InstaConnect.EmailConfirmationTokens.Application.Features.EmailConfirmationTokens.Commands.Delete;
-using InstaConnect.EmailConfirmationTokens.Domain.Features.EmailConfirmationTokens.Models.Responses;
+﻿using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Add;
+using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Verify;
 
 using Mapster;
 
-namespace InstaConnect.EmailConfirmationTokens.Application.Features.EmailConfirmationTokens.Mappings;
+namespace InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Mappings;
 
 public class EmailConfirmationTokenApplicationMappings : IRegister
 {

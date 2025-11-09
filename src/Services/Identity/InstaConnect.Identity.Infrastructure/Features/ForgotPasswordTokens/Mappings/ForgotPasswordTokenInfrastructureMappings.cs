@@ -1,6 +1,6 @@
 ﻿using Mapster;
 
-namespace InstaConnect.ForgotPasswordTokens.Infrastructure.Features.ForgotPasswordTokens.Mappings;
+namespace InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Mappings;
 
 internal class ForgotPasswordTokenInfrastructureMappings : IRegister
 {

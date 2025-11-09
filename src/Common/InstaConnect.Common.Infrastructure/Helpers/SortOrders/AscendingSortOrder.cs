@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 
+using InstaConnect.Common.Domain.Models;
 using InstaConnect.Common.Infrastructure.Abstractions;
-using InstaConnect.Common.Models.Enums;
 
 using MongoDB.Driver;
 

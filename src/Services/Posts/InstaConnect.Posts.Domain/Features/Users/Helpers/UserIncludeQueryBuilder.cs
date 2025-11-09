@@ -1,7 +1,4 @@
-﻿using InstaConnect.Users.Domain.Features.Users.Abstractions;
-using InstaConnect.Users.Domain.Features.Users.Models.Requests;
-
-namespace InstaConnect.Users.Domain.Features.Users.Helpers;
+﻿namespace InstaConnect.Posts.Domain.Features.Users.Helpers;
 
 public class UserIncludeQueryBuilder
 {
@@ -12,9 +9,9 @@ public class UserIncludeQueryBuilder
         _includeProperties = includeProperties;
     }
 
-    public UserIncludeQueryBuilder WithFollows()
+    public UserIncludeQueryBuilder WithPosts()
     {
-        _includeProperties.Add(UserIncludeProperty.Follows);
+        _includeProperties.Add(UserIncludeProperty.Posts);
 
         return this;
     }

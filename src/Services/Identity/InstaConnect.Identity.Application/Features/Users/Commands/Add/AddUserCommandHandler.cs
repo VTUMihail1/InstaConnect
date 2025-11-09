@@ -1,8 +1,4 @@
-﻿using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Requests;
-using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
-using InstaConnect.Users.Domain.Features.Users.Abstractions;
-
-namespace InstaConnect.Users.Application.Features.Users.Commands.Add;
+﻿namespace InstaConnect.Identity.Application.Features.Users.Commands.Add;
 
 internal class AddUserCommandHandler : ICommandHandler<AddUserCommandRequest, AddUserCommandResponse>
 {

@@ -1,6 +1,6 @@
 ﻿using Mapster;
 
-namespace InstaConnect.UserClaims.Infrastructure.Features.UserClaims.Mappings;
+namespace InstaConnect.Identity.Infrastructure.Features.UserClaims.Mappings;
 
 internal class UserClaimInfrastructureMappings : IRegister
 {

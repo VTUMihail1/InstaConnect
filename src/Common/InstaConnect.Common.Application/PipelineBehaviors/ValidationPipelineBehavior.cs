@@ -1,6 +1,8 @@
 using FluentValidation;
 
-using InstaConnect.Common.Exceptions;
+using InstaConnect.Common.Domain.Exceptions;
+
+using MediatR;
 
 namespace InstaConnect.Common.Application.PipelineBehaviors;
 

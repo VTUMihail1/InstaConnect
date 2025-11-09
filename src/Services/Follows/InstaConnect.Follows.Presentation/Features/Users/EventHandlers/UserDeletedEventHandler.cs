@@ -1,10 +1,6 @@
-﻿using InstaConnect.Common.Infrastructure.Abstractions;
-using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
-using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
-using InstaConnect.Users.Application.Features.Users.Commands.Add;
-using InstaConnect.Users.Application.Features.Users.Commands.Delete;
+﻿using InstaConnect.Follows.Application.Features.Users.Commands.Delete;
 
-namespace InstaConnect.Posts.Presentation.Features.Users.Consumers;
+namespace InstaConnect.Follows.Presentation.Features.Users.EventHandlers;
 
 internal class UserDeletedEventHandler : IEventHandler<UserDeletedEventRequest>
 {

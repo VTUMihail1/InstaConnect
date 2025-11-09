@@ -1,6 +1,7 @@
 using InstaConnect.Common.Infrastructure.Extensions;
 using InstaConnect.Common.Presentation.Extensions;
 using InstaConnect.Posts.Application.Extensions;
+using InstaConnect.Posts.Domain.Extensions;
 using InstaConnect.Posts.Infrastructure.Extensions;
 using InstaConnect.Posts.Presentation.Extensions;
 

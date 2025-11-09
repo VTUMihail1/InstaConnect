@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Extensions;
+﻿using InstaConnect.Common.Domain.Extensions;
 
 using MongoDB.Driver;
 

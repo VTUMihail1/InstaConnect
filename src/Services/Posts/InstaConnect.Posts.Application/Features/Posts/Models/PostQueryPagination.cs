@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Posts.Domain.Features.Posts.Models;
+﻿namespace InstaConnect.Posts.Application.Features.Posts.Models;
 
 public record PostQueryPagination(
     int Page,

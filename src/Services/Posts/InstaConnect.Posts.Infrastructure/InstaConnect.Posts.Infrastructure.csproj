@@ -2,55 +2,62 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Infrastructure\InstaConnect.Common.Infrastructure.csproj" />
-    <ProjectReference Include="..\..\..\Common\InstaConnect.Common\InstaConnect.Common.csproj" />
     <ProjectReference Include="..\InstaConnect.Posts.Application\InstaConnect.Posts.Application.csproj" />
-    <ProjectReference Include="..\InstaConnect.Posts.Common\InstaConnect.Posts.Common.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <!-- General -->
-    <Using Include="FluentValidation" />
-    <Using Include="Microsoft.EntityFrameworkCore" />
-    <Using Include="Microsoft.EntityFrameworkCore.Metadata.Builders" />
+  <ItemGroup Label="Common">
+    <Using Include="Microsoft.Extensions.DependencyInjection"/>
+    <Using Include="Microsoft.AspNetCore.Hosting" />
     <Using Include="Microsoft.Extensions.Configuration" />
-    <Using Include="Microsoft.Extensions.DependencyInjection" />
+    <Using Include="InstaConnect.Common.Domain.Abstractions" />
+    <Using Include="InstaConnect.Common.Domain.Extensions" />
+    <Using Include="InstaConnect.Common.Infrastructure.Abstractions" />
+    <Using Include="InstaConnect.Common.Infrastructure.Extensions" />
+    <Using Include="InstaConnect.Posts.Infrastructure.Abstractions"/>
+  </ItemGroup>
 
-    <!-- Posts -->
-    <Using Include="InstaConnect.Posts.Domain.Features.Posts.Abstractions" />
-    <Using Include="InstaConnect.Posts.Domain.Features.Posts.Models.Entities" />
-    <Using Include="InstaConnect.Posts.Domain.Features.Posts.Exceptions" />
-    <Using Include="InstaConnect.Posts.Domain.Features.Posts.Models.Filters" />
-
-    <!-- Post Likes -->
-    <Using Include="InstaConnect.Posts.Domain.Features.PostLikes.Abstractions" />
-    <Using Include="InstaConnect.Posts.Domain.Features.PostLikes.Models.Entities" />
-    <Using Include="InstaConnect.Posts.Domain.Features.PostLikes.Exceptions" />
-    <Using Include="InstaConnect.Posts.Domain.Features.PostLikes.Models.Filters" />
-
-    <!-- Post Comments -->
-    <Using Include="InstaConnect.Posts.Domain.Features.PostComments.Abstractions" />
-    <Using Include="InstaConnect.Posts.Domain.Features.PostComments.Models.Entities" />
-    <Using Include="InstaConnect.Posts.Domain.Features.PostComments.Exceptions" />
-    <Using Include="InstaConnect.Posts.Domain.Features.PostComments.Models.Filters" />
-
-    <!-- Post Comment Likes -->
-    <Using Include="InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstractions" />
-    <Using Include="InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entities" />
-    <Using Include="InstaConnect.Posts.Domain.Features.PostCommentLikes.Exceptions" />
-    <Using Include="InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Filters" />
-
-    <!-- Users -->
+  <ItemGroup Label="Users">
+    <Using Include="InstaConnect.Posts.Domain.Features.Users.Exceptions" />
     <Using Include="InstaConnect.Posts.Domain.Features.Users.Abstractions" />
     <Using Include="InstaConnect.Posts.Domain.Features.Users.Models.Entities" />
+    <Using Include="InstaConnect.Posts.Domain.Features.Users.Models.Requests" />
+    <Using Include="InstaConnect.Posts.Infrastructure.Features.Users.Abstractions" />
+  </ItemGroup>
 
-    <!-- Common -->
-    <Using Include="InstaConnect.Posts.Common.Features.Posts.Utilities" />
-    <Using Include="InstaConnect.Posts.Common.Features.PostLikes.Utilities" />
-    <Using Include="InstaConnect.Posts.Common.Features.PostComments.Utilities" />
-    <Using Include="InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities" />
-    <Using Include="InstaConnect.Posts.Common.Features.Users.Utilities" />
-    <Using Include="InstaConnect.Common.Domain.Abstractions" />
-    <Using Include="InstaConnect.Common.Application.Abstractions" />
+  <ItemGroup Label="Posts">
+    <Using Include="InstaConnect.Posts.Domain.Features.Posts.Exceptions" />
+    <Using Include="InstaConnect.Posts.Domain.Features.Posts.Abstractions" />
+    <Using Include="InstaConnect.Posts.Domain.Features.Posts.Models.Entities" />
+    <Using Include="InstaConnect.Posts.Domain.Features.Posts.Models.Requests" />
+    <Using Include="InstaConnect.Posts.Domain.Features.Posts.Models.Responses" />
+    <Using Include="InstaConnect.Posts.Infrastructure.Features.Posts.Abstractions" />
+  </ItemGroup>
+
+  <ItemGroup Label="PostLikes">
+    <Using Include="InstaConnect.Posts.Domain.Features.PostLikes.Exceptions" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostLikes.Abstractions" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostLikes.Models.Entities" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostLikes.Models.Requests" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostLikes.Models.Responses" />
+    <Using Include="InstaConnect.Posts.Infrastructure.Features.PostLikes.Abstractions" />
+  </ItemGroup>
+
+  <ItemGroup Label="PostComments">
+    <Using Include="InstaConnect.Posts.Domain.Features.PostComments.Exceptions" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostComments.Abstractions" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostComments.Models.Entities" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostComments.Models.Requests" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostComments.Models.Responses" />
+    <Using Include="InstaConnect.Posts.Infrastructure.Features.PostComments.Abstractions" />
+  </ItemGroup>
+
+  <ItemGroup Label="PostCommentLikes">
+    <Using Include="InstaConnect.Posts.Domain.Features.PostCommentLikes.Exceptions" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstractions" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entities" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Requests" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Responses" />
+    <Using Include="InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Abstractions" />
   </ItemGroup>
 
 </Project>

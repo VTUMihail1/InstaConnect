@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using InstaConnect.Common.Domain.Exceptions;
+using InstaConnect.Common.Domain.Models;
 using InstaConnect.Common.Infrastructure.Abstractions;
-using InstaConnect.Common.Infrastructure.Exceptions;
-using InstaConnect.Common.Models.Enums;
 
 namespace InstaConnect.Common.Infrastructure.Helpers.SortOrders;
 internal class SortOrderFactory : ISortOrderFactory

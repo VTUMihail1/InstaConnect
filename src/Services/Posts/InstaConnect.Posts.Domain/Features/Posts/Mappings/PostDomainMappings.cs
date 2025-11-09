@@ -1,9 +1,4 @@
-﻿using AutoMapper;
-
-using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Events;
-
-using Mapster;
+﻿using Mapster;
 
 namespace InstaConnect.Posts.Domain.Features.Posts.Mappings;
 

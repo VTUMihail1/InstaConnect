@@ -1,18 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using InstaConnect.Common.Extensions;
-using InstaConnect.Common.Infrastructure.Abstractions;
-using InstaConnect.Common.Infrastructure.Exceptions;
-using InstaConnect.Common.Models.Enums;
-using InstaConnect.Users.Domain.Features.Users.Exceptions;
-using InstaConnect.Users.Domain.Features.Users.Models.Requests;
-using InstaConnect.Users.Infrastructure.Features.Users.Abstractions;
-
-namespace InstaConnect.Common.Infrastructure.UserSortPropertys;
+﻿namespace InstaConnect.Posts.Infrastructure.Features.Users.Helpers.Includes;
 internal class UserIncludePropertyFactory : IUserIncludePropertyFactory
 {
     private readonly IEnumerable<IUserIncludeProperty> _postIncludeProperty;
@@ -22,7 +8,7 @@ internal class UserIncludePropertyFactory : IUserIncludePropertyFactory
         _postIncludeProperty = postIncludeProperty;
     }
 
-    public ICollection<IUserIncludeProperty> Create(ICollection<UserIncludeProperty>? includeProperties)
+    public IEnumerable<IUserIncludeProperty> Create(ICollection<UserIncludeProperty>? includeProperties)
     {
         if (includeProperties == null)
         {
@@ -36,6 +22,6 @@ internal class UserIncludePropertyFactory : IUserIncludePropertyFactory
             throw new UserIncludePropertiesNotSupportedException(includeProperties);
         }
 
-        return properties.ToList();
+        return properties;
     }
 }

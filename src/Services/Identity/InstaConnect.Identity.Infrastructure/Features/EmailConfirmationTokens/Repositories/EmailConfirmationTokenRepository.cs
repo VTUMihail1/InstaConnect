@@ -1,11 +1,8 @@
-﻿using InstaConnect.Common.Infrastructure.Abstractions;
-using InstaConnect.Common.Infrastructure.Extensions;
-using InstaConnect.EmailConfirmationTokens.Domain.Features.EmailConfirmationTokens.Models.Requests;
-using InstaConnect.Users.Infrastructure.Abstractions;
+﻿using InstaConnect.Identity.Infrastructure.Abstractions;
 
 using MongoDB.Driver;
 
-namespace InstaConnect.EmailConfirmationTokens.Infrastructure.Features.EmailConfirmationTokens.Repositories;
+namespace InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Repositories;
 
 internal class EmailConfirmationTokenRepository : IEmailConfirmationTokenRepository
 {
@@ -53,7 +50,7 @@ internal class EmailConfirmationTokenRepository : IEmailConfirmationTokenReposit
             .AddAsync(_identityContext.ClientSessionHandle, entity, cancellationToken);
     }
 
-    public async Task DeleteRangeAsync(ICollection<EmailConfirmationToken> entities, CancellationToken cancellationToken)
+    public async Task DeleteRangeAsync(IEnumerable<EmailConfirmationToken> entities, CancellationToken cancellationToken)
     {
         var ids = entities.Select(e => new { e.Id, e.Value });
 

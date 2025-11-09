@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Posts.Application.Features.Posts.Commands.Add;
+﻿namespace InstaConnect.Posts.Domain.Features.Users.Models.Requests;
 
 public record UpdateUserCommand(
     string Id,

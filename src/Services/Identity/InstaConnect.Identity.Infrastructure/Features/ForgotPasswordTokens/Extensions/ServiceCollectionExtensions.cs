@@ -1,12 +1,10 @@
-﻿using InstaConnect.Common.Extensions;
-using InstaConnect.ForgotPasswordTokens.Infrastructure.Features.ForgotPasswordTokens.Abstractions;
-using InstaConnect.Users.Infrastructure.Extensions;
+﻿using InstaConnect.Identity.Infrastructure.Extensions;
 
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 
-namespace InstaConnect.ForgotPasswordTokens.Infrastructure.Features.ForgotPasswordTokens.Extensions;
+namespace InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Extensions;
 
 internal static class ServiceCollectionExtensions
 {

@@ -1,3 +1,3 @@
-﻿namespace InstaConnect.Posts.Application.Features.Posts.Commands.Add;
+﻿namespace InstaConnect.Posts.Presentation.Features.Posts.Models.Responses;
 
 public record AddPostApiResponse(string Id, DateTimeOffset CreatedAt, DateTimeOffset UpdatedAt);

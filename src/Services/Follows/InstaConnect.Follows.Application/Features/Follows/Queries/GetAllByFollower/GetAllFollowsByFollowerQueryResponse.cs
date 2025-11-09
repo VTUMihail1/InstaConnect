@@ -1,6 +1,4 @@
-﻿using InstaConnect.Follows.Application.Features.Follows.Models;
-
-namespace InstaConnect.Follows.Application.Features.Follows.Queries.GetAll;
+﻿namespace InstaConnect.Follows.Application.Features.Follows.Queries.GetAllByFollower;
 
 public record GetAllFollowsByFollowerQueryResponse(
     ICollection<FollowQueryResponse> Data,

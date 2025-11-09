@@ -1,13 +1,10 @@
-﻿using InstaConnect.Common.Extensions;
-using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Entities;
-using InstaConnect.PostLikes.Infrastructure.Features.PostLikes.Abstractions;
-using InstaConnect.Posts.Infrastructure.Extensions;
+﻿using InstaConnect.Posts.Infrastructure.Extensions;
 
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 
-namespace InstaConnect.PostLikes.Infrastructure.Features.PostLikes.Extensions;
+namespace InstaConnect.Posts.Infrastructure.Features.PostLikes.Extensions;
 
 internal static class ServiceCollectionExtensions
 {

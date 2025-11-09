@@ -1,9 +1,4 @@
-﻿using InstaConnect.Common.Infrastructure.Abstractions;
-using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Entities;
-using InstaConnect.PostComments.Domain.Features.PostComments.Models.Entities;
-using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Entities;
-
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 
 namespace InstaConnect.Posts.Infrastructure.Abstractions;
 public interface IPostsContext : IMongoDbContext

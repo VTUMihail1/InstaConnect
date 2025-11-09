@@ -1,10 +1,6 @@
-﻿using InstaConnect.Common.Infrastructure.Abstractions;
-using InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Entities;
-using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
+﻿using MongoDB.Driver;
 
-using MongoDB.Driver;
-
-namespace InstaConnect.Users.Infrastructure.Abstractions;
+namespace InstaConnect.Identity.Infrastructure.Abstractions;
 public interface IIdentityContext : IMongoDbContext
 {
     public IMongoCollection<User> Users { get; }

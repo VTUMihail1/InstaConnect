@@ -1,7 +1,6 @@
 ﻿using InstaConnect.Identity.Application.Features.Users.Utilities;
-using InstaConnect.Users.Application.Features.Users.Queries.GetAll;
 
-namespace InstaConnect.Users.Application.Features.Users.Queries.GetById;
+namespace InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentDetailsById;
 
 public record GetCurrentUserDetailsByIdQueryRequest(string Id) : IQueryRequest<GetCurrentUserDetailsByIdQueryResponse>, ICachable
 {

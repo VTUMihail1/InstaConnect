@@ -1,14 +1,6 @@
-﻿using InstaConnect.Common.Infrastructure.Abstractions;
-using InstaConnect.Common.Models.Enums;
-using InstaConnect.PostComments.Domain.Features.PostComments.Models.Entities;
-using InstaConnect.PostComments.Domain.Features.PostComments.Models.Requests;
-using InstaConnect.PostComments.Infrastructure.Features.PostComments.Abstractions;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
-using InstaConnect.Posts.Infrastructure.Abstractions;
+﻿using MongoDB.Driver;
 
-using MongoDB.Driver;
-
-namespace InstaConnect.Common.Infrastructure.SortOrders;
+namespace InstaConnect.Posts.Infrastructure.Features.PostComments.Helpers.Includes;
 public class PostCommentUserIncludeProperty : IPostCommentIncludeProperty
 {
     private readonly IPostsContext _postsContext;
@@ -27,7 +19,7 @@ public class PostCommentUserIncludeProperty : IPostCommentIncludeProperty
                 _postsContext.PostComments,
                 p => p.UserId,
                 u => u.Id,
-                p => p.User 
+                p => p.User
             );
     }
 }

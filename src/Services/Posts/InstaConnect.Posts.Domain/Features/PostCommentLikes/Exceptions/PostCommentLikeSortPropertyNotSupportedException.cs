@@ -1,8 +1,6 @@
-﻿using InstaConnect.Common.Exceptions;
-using InstaConnect.PostCommentLikes.Common.Features.PostCommentLikes.Utilities;
-using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Requests;
+﻿using InstaConnect.Common.Domain.Exceptions;
 
-namespace InstaConnect.Common.Infrastructure.Exceptions;
+namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Exceptions;
 
 public class PostCommentLikeSortPropertyNotSupportedException : BadRequestException
 {

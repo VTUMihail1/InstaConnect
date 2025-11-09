@@ -1,8 +1,6 @@
-﻿using InstaConnect.Common.Extensions;
-using InstaConnect.PostComments.Domain.Features.PostComments.Models.Requests;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
+﻿using InstaConnect.Common.Domain.Extensions;
 
-namespace InstaConnect.PostComments.Common.Features.PostComments.Utilities;
+namespace InstaConnect.Posts.Domain.Features.PostComments.Utilities;
 
 public static class PostCommentExceptionErrorMessages
 {

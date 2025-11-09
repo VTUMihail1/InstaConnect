@@ -1,3 +1,3 @@
-﻿namespace InstaConnect.Posts.Application.Features.Posts.Models;
+﻿namespace InstaConnect.Posts.Presentation.Features.Posts.Models.Responses;
 
 public record PostUserApiResponse(string Id, string Name, string? ProfileImage);

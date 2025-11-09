@@ -1,13 +1,10 @@
-﻿using InstaConnect.Common.Extensions;
-using InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Entities;
-using InstaConnect.RefreshTokens.Infrastructure.Features.RefreshTokens.Abstractions;
-using InstaConnect.Users.Infrastructure.Extensions;
+﻿using InstaConnect.Identity.Infrastructure.Extensions;
 
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 
-namespace InstaConnect.RefreshTokens.Infrastructure.Features.RefreshTokens.Extensions;
+namespace InstaConnect.Identity.Infrastructure.Features.RefreshTokens.Extensions;
 
 internal static class ServiceCollectionExtensions
 {

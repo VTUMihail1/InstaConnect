@@ -1,3 +1,3 @@
-﻿namespace InstaConnect.PostLikes.Application.Features.PostLikes.Models;
+﻿namespace InstaConnect.Posts.Presentation.Features.PostLikes.Models.Responses;
 
 public record PostLikeUserApiResponse(string Id, string Name, string? ProfileImage);

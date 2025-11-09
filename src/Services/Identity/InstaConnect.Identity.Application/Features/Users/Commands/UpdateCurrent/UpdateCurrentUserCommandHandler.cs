@@ -1,7 +1,4 @@
-﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
-using InstaConnect.Users.Domain.Features.Users.Abstractions;
-
-namespace InstaConnect.Users.Application.Features.Users.Commands.Update;
+﻿namespace InstaConnect.Identity.Application.Features.Users.Commands.UpdateCurrent;
 
 public class UpdateCurrentUserCommandHandler : ICommandHandler<UpdateCurrentUserCommandRequest, UpdateCurrentUserCommandResponse>
 {

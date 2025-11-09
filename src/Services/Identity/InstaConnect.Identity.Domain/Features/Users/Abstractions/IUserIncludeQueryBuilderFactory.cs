@@ -1,6 +1,6 @@
-﻿using InstaConnect.Users.Domain.Features.Users.Helpers;
+﻿using InstaConnect.Identity.Domain.Features.Users.Helpers;
 
-namespace InstaConnect.Users.Domain.Features.Users.Abstractions;
+namespace InstaConnect.Identity.Domain.Features.Users.Abstractions;
 
 public interface IUserIncludeQueryBuilderFactory
 {

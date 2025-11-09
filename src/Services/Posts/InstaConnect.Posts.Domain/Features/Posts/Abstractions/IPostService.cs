@@ -1,9 +1,4 @@
-﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Responses;
-
-namespace InstaConnect.Posts.Domain.Features.Posts.Abstractions;
+﻿namespace InstaConnect.Posts.Domain.Features.Posts.Abstractions;
 public interface IPostService
 {
     public Task<PostCollection> GetAllAsync(GetAllPostsQuery query, CancellationToken cancellationToken);

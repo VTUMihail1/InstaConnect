@@ -1,12 +1,10 @@
-﻿using InstaConnect.Common.Extensions;
-using InstaConnect.Posts.Infrastructure.Extensions;
-using InstaConnect.Users.Infrastructure.Features.Users.Abstractions;
+﻿using InstaConnect.Posts.Infrastructure.Extensions;
 
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 
-namespace InstaConnect.Users.Infrastructure.Features.Users.Extensions;
+namespace InstaConnect.Posts.Infrastructure.Features.Users.Extensions;
 
 internal static class ServiceCollectionExtensions
 {

@@ -1,7 +1,6 @@
-﻿using InstaConnect.Common.Extensions;
-using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
+﻿using InstaConnect.Common.Domain.Extensions;
 
-namespace InstaConnect.Posts.Domain.Features.Users.Models.Entities;
+namespace InstaConnect.Follows.Domain.Features.Users.Models.Entities;
 
 public class User : IEntity
 {

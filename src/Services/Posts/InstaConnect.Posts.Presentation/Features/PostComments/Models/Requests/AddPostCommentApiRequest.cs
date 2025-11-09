@@ -1,8 +1,8 @@
 ﻿using System.Security.Claims;
 
-using InstaConnect.PostComments.Presentation.Features.PostComments.Models.Bodies;
+using InstaConnect.Posts.Presentation.Features.PostComments.Models.Bodies;
 
-namespace InstaConnect.PostComments.Presentation.Features.PostComments.Models.Requests;
+namespace InstaConnect.Posts.Presentation.Features.PostComments.Models.Requests;
 
 public record AddPostCommentApiRequest(
     [FromRoute] string Id,

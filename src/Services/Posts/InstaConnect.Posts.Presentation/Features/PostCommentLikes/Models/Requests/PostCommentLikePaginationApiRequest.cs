@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.PostCommentLikes.Presentation.Features.PostCommentLikes.Models.Requests;
+﻿namespace InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Requests;
 
 public record PostCommentLikePaginationApiRequest(
     [FromQuery(Name = "page")] int Page = 1,

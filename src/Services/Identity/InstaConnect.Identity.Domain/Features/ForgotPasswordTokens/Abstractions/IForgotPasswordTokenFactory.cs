@@ -1,8 +1,4 @@
-﻿using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entities;
-
-using System;
-
-namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Abstractions;
+﻿namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Abstractions;
 
 public interface IForgotPasswordTokenFactory
 {

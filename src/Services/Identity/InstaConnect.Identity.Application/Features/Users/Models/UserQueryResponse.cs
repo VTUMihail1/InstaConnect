@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Users.Application.Features.Users.Models;
+﻿namespace InstaConnect.Identity.Application.Features.Users.Models;
 
 public record UserQueryResponse(
     string Id,

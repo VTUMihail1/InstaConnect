@@ -1,6 +1,4 @@
-﻿using InstaConnect.Posts.Domain.Features.Users.Utilities;
-
-namespace InstaConnect.Posts.Application.Features.Posts.Commands.Update;
+﻿namespace InstaConnect.Posts.Application.Features.Posts.Commands.Update;
 public class UpdatePostCommandRequestValidator : AbstractValidator<UpdatePostCommandRequest>
 {
     public UpdatePostCommandRequestValidator()

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace InstaConnect.Users.Application.Features.Users.Commands.Update;
+namespace InstaConnect.Identity.Application.Features.Users.Commands.UpdateCurrent;
 
 public record UpdateCurrentUserCommandRequest(
     string Id,

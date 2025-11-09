@@ -1,6 +1,4 @@
-﻿using InstaConnect.PostLikes.Application.Features.PostLikes.Models;
-
-namespace InstaConnect.PostLikes.Application.Features.PostLikes.Queries.GetAll;
+﻿namespace InstaConnect.Posts.Presentation.Features.PostLikes.Models.Responses;
 
 public record GetAllPostLikesApiResponse(
     ICollection<PostLikeApiResponse> Data,

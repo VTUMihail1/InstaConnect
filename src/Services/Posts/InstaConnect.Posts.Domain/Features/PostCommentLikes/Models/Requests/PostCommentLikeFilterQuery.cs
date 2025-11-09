@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Requests;
+﻿namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Requests;
 
 public record PostCommentLikeFilterQuery(
     string Id,

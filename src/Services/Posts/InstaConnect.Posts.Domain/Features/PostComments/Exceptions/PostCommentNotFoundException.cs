@@ -1,7 +1,6 @@
-﻿using InstaConnect.Common.Exceptions;
-using InstaConnect.PostComments.Common.Features.PostComments.Utilities;
+﻿using InstaConnect.Common.Domain.Exceptions;
 
-namespace InstaConnect.PostComments.Domain.Features.PostComments.Exceptions;
+namespace InstaConnect.Posts.Domain.Features.PostComments.Exceptions;
 
 public class PostCommentNotFoundException : NotFoundException
 {

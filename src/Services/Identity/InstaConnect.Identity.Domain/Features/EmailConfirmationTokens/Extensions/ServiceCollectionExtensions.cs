@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Extensions;
+﻿namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Extensions;
 
 internal static class ServiceCollectionExtensions
 {

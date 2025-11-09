@@ -1,9 +1,4 @@
-﻿using InstaConnect.Common.Utilities;
-using InstaConnect.PostCommentLikes.Common.Features.PostCommentLikes.Utilities;
-using InstaConnect.PostComments.Common.Features.PostComments.Utilities;
-using InstaConnect.Posts.Domain.Features.Users.Utilities;
-
-namespace InstaConnect.PostCommentLikes.Application.Features.PostCommentLikes.Queries.GetAll;
+﻿namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAll;
 
 public class GetAllPostCommentLikesQueryRequestValidator : AbstractValidator<GetAllPostCommentLikesQueryRequest>
 {

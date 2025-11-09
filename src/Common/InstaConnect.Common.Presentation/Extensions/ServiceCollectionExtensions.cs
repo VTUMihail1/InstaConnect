@@ -4,9 +4,8 @@ using System.Threading.RateLimiting;
 
 using Asp.Versioning;
 
-using InstaConnect.Common.Extensions;
-using InstaConnect.Common.Infrastructure.Abstractions;
-using InstaConnect.Common.Infrastructure.Extensions;
+using InstaConnect.Common.Domain.Extensions;
+using InstaConnect.Common.Domain.Utilities;
 using InstaConnect.Common.Presentation.Abstractions;
 using InstaConnect.Common.Presentation.Binders.FromClaim;
 using InstaConnect.Common.Presentation.Binders.FromCookie;
@@ -14,8 +13,6 @@ using InstaConnect.Common.Presentation.ExceptionHandlers;
 using InstaConnect.Common.Presentation.Helpers;
 using InstaConnect.Common.Presentation.Models.Options;
 using InstaConnect.Common.Presentation.Utilities;
-using InstaConnect.Common.Utilities;
-using InstaConnect.Posts.Presentation.Extensions;
 using InstaConnect.Shared.Infrastructure.Extensions;
 
 using Microsoft.AspNetCore.Authorization;

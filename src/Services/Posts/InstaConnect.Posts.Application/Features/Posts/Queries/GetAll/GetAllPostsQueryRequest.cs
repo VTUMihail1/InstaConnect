@@ -1,6 +1,4 @@
-﻿using InstaConnect.Posts.Domain.Features.Posts.Models;
-
-namespace InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
+﻿namespace InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
 
 public record GetAllPostsQueryRequest(
     PostQueryFilter Filter,

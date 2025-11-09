@@ -1,3 +1,3 @@
-﻿namespace InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
+﻿namespace InstaConnect.Identity.Domain.Features.Users.Models.Requests;
 
 public record GetUserByNameQuery(string Name);

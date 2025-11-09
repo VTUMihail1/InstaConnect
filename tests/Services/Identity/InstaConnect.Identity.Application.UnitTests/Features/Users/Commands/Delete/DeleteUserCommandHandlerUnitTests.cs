@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Application.Contracts.Users;
+﻿using InstaConnect.Common.Domain.Models.Events.Users;
 using InstaConnect.Identity.Application.Features.Users.Commands.Delete;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.Delete;

@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.PostComments.Domain.Features.PostComments.Models;
+﻿namespace InstaConnect.Posts.Application.Features.PostComments.Models;
 
 public record PostCommentQueryFilter(
     string Id,

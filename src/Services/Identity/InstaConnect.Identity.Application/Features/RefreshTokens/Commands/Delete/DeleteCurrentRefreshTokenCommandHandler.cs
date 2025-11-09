@@ -1,7 +1,4 @@
-﻿using InstaConnect.Identity.Domain.Features.RefreshTokens.Abstractions;
-using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
-
-namespace InstaConnect.RefreshTokens.Application.Features.RefreshTokens.Commands.Delete;
+﻿namespace InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Delete;
 
 internal class DeleteCurrentRefreshTokenCommandHandler : ICommandHandler<DeleteCurrentRefreshTokenCommandRequest>
 {

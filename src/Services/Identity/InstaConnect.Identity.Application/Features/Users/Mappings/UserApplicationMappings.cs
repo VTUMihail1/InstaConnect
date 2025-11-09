@@ -1,18 +1,16 @@
-﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
-using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
-using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
-using InstaConnect.Users.Application.Features.Users.Commands.Add;
-using InstaConnect.Users.Application.Features.Users.Commands.Delete;
-using InstaConnect.Users.Application.Features.Users.Commands.Update;
-using InstaConnect.Users.Application.Features.Users.Models;
-using InstaConnect.Users.Application.Features.Users.Queries.GetAll;
-using InstaConnect.Users.Application.Features.Users.Queries.GetById;
-using InstaConnect.Users.Domain.Features.Users.Models.Responses;
+﻿using InstaConnect.Identity.Application.Features.Users.Commands.Add;
+using InstaConnect.Identity.Application.Features.Users.Commands.Delete;
+using InstaConnect.Identity.Application.Features.Users.Commands.DeleteCurrent;
+using InstaConnect.Identity.Application.Features.Users.Commands.UpdateCurrent;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetAll;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetById;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentById;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentDetailsById;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetDetailsById;
 
 using Mapster;
 
-namespace InstaConnect.Users.Application.Features.Users.Mappings;
+namespace InstaConnect.Identity.Application.Features.Users.Mappings;
 
 public class UserApplicationMappings : IRegister
 {

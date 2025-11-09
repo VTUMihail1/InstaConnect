@@ -1,12 +1,6 @@
-﻿using InstaConnect.Common.Extensions;
-using InstaConnect.Common.Infrastructure.Abstractions;
-using InstaConnect.Common.Infrastructure.Extensions;
-using InstaConnect.Posts.Infrastructure.Abstractions;
-using InstaConnect.Users.Domain.Features.Users.Models.Requests;
+﻿using MongoDB.Driver;
 
-using MongoDB.Driver;
-
-namespace InstaConnect.Users.Infrastructure.Features.Users.Repositories;
+namespace InstaConnect.Posts.Infrastructure.Features.Users.Repositories;
 
 internal class UserRepository : IUserRepository
 {

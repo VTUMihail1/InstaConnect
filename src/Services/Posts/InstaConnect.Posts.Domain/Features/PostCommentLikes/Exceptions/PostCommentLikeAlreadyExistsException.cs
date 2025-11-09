@@ -1,8 +1,6 @@
-﻿using InstaConnect.Common.Exceptions;
-using InstaConnect.PostCommentLikes.Common.Features.PostCommentLikes.Utilities;
-using InstaConnect.PostLikes.Common.Features.PostLikes.Utilities;
+﻿using InstaConnect.Common.Domain.Exceptions;
 
-namespace InstaConnect.PostLikes.Domain.Features.PostLikes.Exceptions;
+namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Exceptions;
 
 public class PostCommentLikeAlreadyExistsException : NotFoundException
 {

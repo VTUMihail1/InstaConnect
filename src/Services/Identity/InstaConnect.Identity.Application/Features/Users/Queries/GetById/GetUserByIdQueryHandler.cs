@@ -1,8 +1,4 @@
-﻿using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
-using InstaConnect.Users.Application.Features.Users.Queries.GetAll;
-using InstaConnect.Users.Domain.Features.Users.Abstractions;
-
-namespace InstaConnect.Users.Application.Features.Users.Queries.GetById;
+﻿namespace InstaConnect.Identity.Application.Features.Users.Queries.GetById;
 
 internal class GetUserByIdQueryHandler : IQueryHandler<GetUserByIdQueryRequest, GetUserByIdQueryResponse>
 {

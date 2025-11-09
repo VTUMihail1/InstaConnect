@@ -1,16 +1,5 @@
-﻿using InstaConnect.Common.Abstractions;
-using InstaConnect.Common.Exceptions.Users;
-using InstaConnect.Common.Extensions;
-using InstaConnect.Common.Helpers;
-using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
-using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
-using InstaConnect.Posts.Domain.Features.Posts.Exceptions;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Events;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Responses;
-using InstaConnect.Posts.Domain.Features.Users.Abstractions;
-using InstaConnect.Posts.Domain.Features.Users.Exceptions;
+﻿using InstaConnect.Common.Domain.Extensions;
+using InstaConnect.Common.Events.Abstractions;
 
 namespace InstaConnect.Posts.Domain.Features.Posts.Helpers;
 internal class PostService : IPostService

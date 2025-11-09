@@ -1,7 +1,6 @@
-﻿using InstaConnect.ForgotPasswordTokens.Domain.Features.ForgotPasswordTokens.Helpers;
-using InstaConnect.UserClaims.Domain.Features.UserClaims.Helpers;
+﻿using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Helpers;
 
-namespace InstaConnect.ForgotPasswordTokens.Domain.Features.ForgotPasswordTokens.Abstractions;
+namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Abstractions;
 
 public interface IForgotPasswordTokenIncludeQueryBuilderFactory
 {

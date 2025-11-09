@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.PostComments.Common.Features.PostComments.Utilities;
+﻿namespace InstaConnect.Posts.Domain.Features.PostComments.Utilities;
 
 public static class PostCommentConfigurations
 {

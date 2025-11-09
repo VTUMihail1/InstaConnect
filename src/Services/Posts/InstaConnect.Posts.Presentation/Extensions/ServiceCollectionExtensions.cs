@@ -1,8 +1,8 @@
-﻿using InstaConnect.Common.Extensions;
+﻿using InstaConnect.Common.Domain.Extensions;
 using InstaConnect.Common.Presentation.Extensions;
-using InstaConnect.PostCommentLikes.Presentation.Features.PostCommentLikes.Extensions;
-using InstaConnect.PostComments.Presentation.Features.PostComments.Extensions;
-using InstaConnect.PostLikes.Presentation.Features.PostLikes.Extensions;
+using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Extensions;
+using InstaConnect.Posts.Presentation.Features.PostComments.Extensions;
+using InstaConnect.Posts.Presentation.Features.PostLikes.Extensions;
 using InstaConnect.Posts.Presentation.Features.Posts.Extensions;
 using InstaConnect.Posts.Presentation.Features.Users.Extensions;
 

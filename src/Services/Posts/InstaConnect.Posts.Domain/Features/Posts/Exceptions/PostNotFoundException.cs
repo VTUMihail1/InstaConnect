@@ -1,5 +1,4 @@
-﻿using InstaConnect.Common.Exceptions;
-using InstaConnect.Posts.Common.Features.Posts.Utilities;
+﻿using InstaConnect.Common.Domain.Exceptions;
 
 namespace InstaConnect.Posts.Domain.Features.Posts.Exceptions;
 

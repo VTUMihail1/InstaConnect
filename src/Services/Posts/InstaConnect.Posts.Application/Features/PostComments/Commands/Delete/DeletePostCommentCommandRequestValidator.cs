@@ -1,8 +1,4 @@
-﻿using InstaConnect.PostComments.Common.Features.PostComments.Utilities;
-using InstaConnect.PostComments.Domain.Features.Users.Utilities;
-using InstaConnect.Posts.Domain.Features.Users.Utilities;
-
-namespace InstaConnect.PostComments.Application.Features.PostComments.Commands.Delete;
+﻿namespace InstaConnect.Posts.Application.Features.PostComments.Commands.Delete;
 public class DeletePostCommentCommandRequestValidator : AbstractValidator<DeletePostCommentCommandRequest>
 {
     public DeletePostCommentCommandRequestValidator()

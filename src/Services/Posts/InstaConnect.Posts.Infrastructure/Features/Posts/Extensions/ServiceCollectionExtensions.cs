@@ -1,7 +1,4 @@
-﻿using InstaConnect.Common.Extensions;
-using InstaConnect.Posts.Infrastructure.Extensions;
-using InstaConnect.Posts.Infrastructure.Features.Posts.Abstractions;
-using InstaConnect.Shared.Infrastructure.Extensions;
+﻿using InstaConnect.Posts.Infrastructure.Extensions;
 
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;

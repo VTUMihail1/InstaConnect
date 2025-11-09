@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\InstaConnect.Common.Tests\InstaConnect.Common.Tests.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Label="Common">
+    <Using Include="InstaConnect.Common.Presentation.Abstractions" />
+	<Using Include="InstaConnect.Common.Tests.Assertions"/>
+  </ItemGroup>
+
+</Project>

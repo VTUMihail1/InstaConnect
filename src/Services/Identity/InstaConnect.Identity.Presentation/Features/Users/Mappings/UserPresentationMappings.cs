@@ -1,14 +1,15 @@
-﻿using InstaConnect.Users.Application.Features.Users.Commands.Add;
-using InstaConnect.Users.Application.Features.Users.Commands.Delete;
-using InstaConnect.Users.Application.Features.Users.Commands.Update;
-using InstaConnect.Users.Application.Features.Users.Models;
-using InstaConnect.Users.Application.Features.Users.Queries.GetAll;
-using InstaConnect.Users.Application.Features.Users.Queries.GetById;
-using InstaConnect.Users.Presentation.Features.Users.Models.Requests;
+﻿using InstaConnect.Identity.Application.Features.Users.Commands.Add;
+using InstaConnect.Identity.Application.Features.Users.Commands.Delete;
+using InstaConnect.Identity.Application.Features.Users.Commands.UpdateCurrent;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetAll;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetById;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentById;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentDetailsById;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetDetailsById;
 
 using Mapster;
 
-namespace InstaConnect.Posts.Presentation.Features.Posts.Mappings;
+namespace InstaConnect.Identity.Presentation.Features.Users.Mappings;
 
 internal class UserPresentationMappings : IRegister
 {

@@ -1,8 +1,6 @@
-﻿using InstaConnect.Common.Extensions;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
-using InstaConnect.Users.Domain.Features.Users.Models.Requests;
+﻿using InstaConnect.Common.Domain.Extensions;
 
-namespace InstaConnect.Posts.Common.Features.Users.Utilities;
+namespace InstaConnect.Follows.Domain.Features.Users.Utilities;
 
 public static class UserExceptionErrorMessages
 {

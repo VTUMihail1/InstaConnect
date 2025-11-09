@@ -2,7 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Infrastructure\InstaConnect.Common.Infrastructure.csproj" />
-    <ProjectReference Include="..\..\..\Common\InstaConnect.Common\InstaConnect.Common.csproj" />
+    <ProjectReference Include="..\..\Identity\InstaConnect.Identity.Events\InstaConnect.Identity.Events.csproj" />
     <ProjectReference Include="..\InstaConnect.Emails.Application\InstaConnect.Emails.Application.csproj" />
   </ItemGroup>
 

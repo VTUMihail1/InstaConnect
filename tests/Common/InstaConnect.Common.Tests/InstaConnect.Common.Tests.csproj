@@ -5,9 +5,9 @@
     <PackageReference Include="Bogus" />
     <PackageReference Include="FluentAssertions" />
     <PackageReference Include="NSubstitute" />
+    <PackageReference Include="Testcontainers.MongoDb" />
     <PackageReference Include="xunit" />
     <PackageReference Include="xunit.extensibility.core" />
-    <PackageReference Include="Testcontainers.MsSql" />
     <PackageReference Include="Testcontainers.RabbitMq" />
     <PackageReference Include="Testcontainers.Redis" />
     <PackageReference Include="WebMotions.Fake.Authentication.JwtBearer" />
@@ -18,7 +18,12 @@
     <ProjectReference Include="..\..\..\src\Common\InstaConnect.Common.Domain\InstaConnect.Common.Domain.csproj" />
     <ProjectReference Include="..\..\..\src\Common\InstaConnect.Common.Infrastructure\InstaConnect.Common.Infrastructure.csproj" />
     <ProjectReference Include="..\..\..\src\Common\InstaConnect.Common.Presentation\InstaConnect.Common.Presentation.csproj" />
-    <ProjectReference Include="..\..\..\src\Common\InstaConnect.Common\InstaConnect.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Label="Common">
+    <Using Include="InstaConnect.Common.Domain.Abstractions" />
+    <Using Include="InstaConnect.Common.Events.Abstractions" />
+    <Using Include="InstaConnect.Common.Application.Abstractions" />
   </ItemGroup>
 
 </Project>

@@ -1,8 +1,4 @@
-﻿using InstaConnect.Follows.Common.Features.Follows.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Posts.Domain.Features.Users.Utilities;
-
-namespace InstaConnect.Follows.Application.Features.Follows.Queries.GetById;
+﻿namespace InstaConnect.Follows.Application.Features.Follows.Queries.GetById;
 
 public class GetFollowByIdQueryRequestValidator : AbstractValidator<GetFollowByIdQueryRequest>
 {

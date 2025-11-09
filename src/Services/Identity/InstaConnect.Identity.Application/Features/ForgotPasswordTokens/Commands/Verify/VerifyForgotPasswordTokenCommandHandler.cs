@@ -1,10 +1,6 @@
-﻿using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Requests;
-using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Abstractions;
-using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Requests;
+﻿namespace InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Verify;
 
-namespace InstaConnect.ForgotPasswordTokens.Application.Features.ForgotPasswordTokens.Commands.Add;
-
-internal class VerifyForgotPasswordTokenCommandHandler : ICommandHandler<VerifyForgotPasswordTokenCommandRequest, VerifyForgotPasswordTokenCommandResponse>
+internal class VerifyForgotPasswordTokenCommandHandler : ICommandHandler<VerifyForgotPasswordTokenCommandRequest>
 {
     private readonly IApplicationMapper _applicationMapper;
     private readonly IForgotPasswordTokenService _forgotPasswordTokenService;

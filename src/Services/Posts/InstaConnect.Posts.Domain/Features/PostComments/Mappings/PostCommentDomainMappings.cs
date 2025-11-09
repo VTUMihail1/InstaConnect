@@ -1,11 +1,6 @@
-﻿using AutoMapper;
+﻿using Mapster;
 
-using InstaConnect.PostComments.Domain.Features.PostComments.Models.Entities;
-using InstaConnect.PostComments.Domain.Features.PostComments.Models.Events;
-
-using Mapster;
-
-namespace InstaConnect.PostComments.Domain.Features.PostComments.Mappings;
+namespace InstaConnect.Posts.Domain.Features.PostComments.Mappings;
 
 internal class PostCommentDomainMappings : IRegister
 {

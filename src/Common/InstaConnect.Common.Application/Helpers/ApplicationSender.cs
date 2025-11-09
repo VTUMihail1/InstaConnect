@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Common.Application.Helpers;
+﻿using MediatR;
+
+namespace InstaConnect.Common.Application.Helpers;
 
 internal class ApplicationSender : IApplicationSender
 {

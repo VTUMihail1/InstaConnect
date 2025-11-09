@@ -1,14 +1,5 @@
-﻿using InstaConnect.Common.Abstractions;
-using InstaConnect.Common.Domain.Events.EmailConfirmationTokens;
-using InstaConnect.Common.Extensions;
-using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Abstractions;
-using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Exceptions;
-using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entities;
-using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Requests;
-using InstaConnect.Identity.Domain.Features.Users.Exceptions;
-using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
-using InstaConnect.Users.Domain.Features.Users.Abstractions;
-using InstaConnect.Users.Domain.Features.Users.Helpers;
+﻿using InstaConnect.Common.Domain.Extensions;
+using InstaConnect.Common.Events.Abstractions;
 
 namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Helpers;
 internal class EmailConfirmationTokenService : IEmailConfirmationTokenService

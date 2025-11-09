@@ -1,9 +1,6 @@
-﻿using InstaConnect.Common.Exceptions;
-using InstaConnect.Identity.Domain.Features.RefreshTokens.Utilities;
-using InstaConnect.RefreshTokens.Common.Features.RefreshTokens.Utilities;
-using InstaConnect.RefreshTokens.Domain.Features.RefreshTokens.Models.Requests;
+﻿using InstaConnect.Common.Domain.Exceptions;
 
-namespace InstaConnect.RefreshTokens.Domain.Features.RefreshTokens.Exceptions;
+namespace InstaConnect.Identity.Domain.Features.RefreshTokens.Exceptions;
 
 public class RefreshTokenIncludePropertiesNotSupportedException : BadRequestException
 {

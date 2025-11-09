@@ -1,7 +1,4 @@
-﻿using InstaConnect.Common.Extensions;
-using InstaConnect.Posts.Domain.Features.Users.Utilities;
-
-namespace InstaConnect.Posts.Application.Features.Posts.Commands.Add;
+﻿namespace InstaConnect.Posts.Application.Features.Posts.Commands.Add;
 public class AddPostCommandRequestValidator : AbstractValidator<AddPostCommandRequest>
 {
     public AddPostCommandRequestValidator()

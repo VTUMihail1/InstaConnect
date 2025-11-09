@@ -1,21 +1,7 @@
-﻿using InstaConnect.Common.Abstractions;
-using InstaConnect.Common.Exceptions.Users;
-using InstaConnect.Common.Extensions;
-using InstaConnect.PostLikeLikes.Domain.Features.PostLikeLikes.Abstractions;
-using InstaConnect.PostLikes.Application.Features.PostLikes.Commands.Add;
-using InstaConnect.PostLikes.Domain.Features.PostLikes.Abstractions;
-using InstaConnect.PostLikes.Domain.Features.PostLikes.Exceptions;
-using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Entities;
-using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Events;
-using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Requests;
-using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Responses;
-using InstaConnect.Posts.Domain.Features.PostLikes.Models.Requests;
-using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
-using InstaConnect.Posts.Domain.Features.Posts.Exceptions;
-using InstaConnect.Posts.Domain.Features.Users.Abstractions;
-using InstaConnect.Posts.Domain.Features.Users.Exceptions;
+﻿using InstaConnect.Common.Domain.Extensions;
+using InstaConnect.Common.Events.Abstractions;
 
-namespace InstaConnect.PostLikes.Domain.Features.PostLikes.Helpers;
+namespace InstaConnect.Posts.Domain.Features.PostLikes.Helpers;
 internal class PostLikeService : IPostLikeService
 {
     private readonly IEventPublisher _eventPublisher;

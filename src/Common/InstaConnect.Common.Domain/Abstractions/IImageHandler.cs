@@ -1,8 +1,6 @@
-﻿using InstaConnect.Common.Application.Models;
+﻿using Microsoft.AspNetCore.Http;
 
-using Microsoft.AspNetCore.Http;
-
-namespace InstaConnect.Common.Application.Abstractions;
+namespace InstaConnect.Common.Domain.Abstractions;
 
 public interface IImageHandler
 {

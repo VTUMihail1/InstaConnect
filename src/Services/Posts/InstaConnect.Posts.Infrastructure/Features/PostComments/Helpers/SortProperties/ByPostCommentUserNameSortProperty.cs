@@ -1,10 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-using InstaConnect.PostComments.Domain.Features.PostComments.Models.Entities;
-using InstaConnect.PostComments.Domain.Features.PostComments.Models.Requests;
-using InstaConnect.PostComments.Infrastructure.Features.PostComments.Abstractions;
-
-namespace InstaConnect.Common.Infrastructure.SortOrders;
+namespace InstaConnect.Posts.Infrastructure.Features.PostComments.Helpers.SortProperties;
 
 public class ByPostCommentUserNameSortProperty : IPostCommentSortProperty
 {

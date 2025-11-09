@@ -1,8 +1,7 @@
-﻿using InstaConnect.Common.Models.Enums;
+﻿using InstaConnect.Common.Domain.Models;
 using InstaConnect.Identity.Domain.Features.Users.Models.Requests;
-using InstaConnect.Users.Domain.Features.Users.Models.Requests;
 
-namespace InstaConnect.Users.Presentation.Features.Users.Models.Requests;
+namespace InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
 
 public record UserSortingApiRequest(
     [FromQuery(Name = "sortOrder")] SortOrder Order = SortOrder.ASC,

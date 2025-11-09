@@ -1,10 +1,4 @@
-﻿using InstaConnect.Common.Infrastructure.Abstractions;
-using InstaConnect.PostComments.Domain.Features.PostComments.Models.Entities;
-using InstaConnect.PostComments.Domain.Features.PostComments.Models.Requests;
-using InstaConnect.PostComments.Domain.Features.PostComments.Models.Responses;
-using InstaConnect.PostComments.Infrastructure.Features.PostComments.Abstractions;
-
-namespace InstaConnect.PostComments.Infrastructure.Features.PostComments.Helpers;
+﻿namespace InstaConnect.Posts.Infrastructure.Features.PostComments.Helpers;
 
 internal class PostCommentCollectionFactory : IPostCommentCollectionFactory
 {

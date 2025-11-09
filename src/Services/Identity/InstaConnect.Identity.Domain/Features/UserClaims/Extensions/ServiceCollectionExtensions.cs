@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-namespace InstaConnect.Identity.Domain.Features.UserClaims.Extensions;
+﻿namespace InstaConnect.Identity.Domain.Features.UserClaims.Extensions;
 
 internal static class ServiceCollectionExtensions
 {

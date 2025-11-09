@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Extensions;
+﻿using InstaConnect.Common.Domain.Extensions;
 using InstaConnect.Common.Presentation.Extensions;
 using InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Extensions;
 using InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Extensions;

@@ -1,8 +1,4 @@
-﻿using InstaConnect.PostComments.Application.Features.PostComments.Commands.Add;
-using InstaConnect.PostComments.Domain.Features.PostComments.Abstractions;
-using InstaConnect.PostComments.Domain.Features.PostComments.Models.Requests;
-
-namespace InstaConnect.PostComments.Application.Features.PostComments.Commands.Delete;
+﻿namespace InstaConnect.Posts.Application.Features.PostComments.Commands.Delete;
 
 internal class DeletePostCommentCommandHandler : ICommandHandler<DeletePostCommentCommandRequest>
 {
@@ -18,7 +14,7 @@ internal class DeletePostCommentCommandHandler : ICommandHandler<DeletePostComme
     }
 
     public async Task Handle(
-        DeletePostCommentCommandRequest request, 
+        DeletePostCommentCommandRequest request,
         CancellationToken cancellationToken)
     {
         var serviceRequest = _applicationMapper.Map<DeletePostCommentCommand>(request);

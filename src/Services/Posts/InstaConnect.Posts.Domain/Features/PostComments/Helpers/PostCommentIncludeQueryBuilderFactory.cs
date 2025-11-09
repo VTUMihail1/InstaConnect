@@ -1,6 +1,4 @@
-﻿using InstaConnect.PostComments.Domain.Features.PostComments.Abstractions;
-
-namespace InstaConnect.PostComments.Domain.Features.PostComments.Helpers;
+﻿namespace InstaConnect.Posts.Domain.Features.PostComments.Helpers;
 
 public class PostCommentIncludeQueryBuilderFactory : IPostCommentIncludeQueryBuilderFactory
 {

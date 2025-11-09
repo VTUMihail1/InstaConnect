@@ -3,7 +3,7 @@ using System.Text;
 
 using Bogus;
 
-using InstaConnect.Common.Models.Enums;
+using InstaConnect.Common.Domain.Models;
 
 using Microsoft.AspNetCore.Http;
 

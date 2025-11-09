@@ -1,10 +1,4 @@
-﻿using InstaConnect.Identity.Domain.Features.RefreshTokens.Utilities;
-using InstaConnect.Identity.Domain.Features.Users.Utilities;
-using InstaConnect.Posts.Common.Features.RefreshTokens.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Posts.Domain.Features.RefreshTokens.Utilities;
-
-namespace InstaConnect.RefreshTokens.Application.Features.RefreshTokens.Commands.Add;
+﻿namespace InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Rotate;
 public class RotateRefreshTokenCommandRequestValidator : AbstractValidator<RotateRefreshTokenCommandRequest>
 {
     public RotateRefreshTokenCommandRequestValidator()

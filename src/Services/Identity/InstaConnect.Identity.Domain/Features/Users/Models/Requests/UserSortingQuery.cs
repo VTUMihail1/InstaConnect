@@ -1,7 +1,6 @@
-﻿using InstaConnect.Common.Models.Enums;
-using InstaConnect.Identity.Domain.Features.Users.Models.Requests;
+﻿using InstaConnect.Common.Domain.Models;
 
-namespace InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
+namespace InstaConnect.Identity.Domain.Features.Users.Models.Requests;
 
 public record UserSortingQuery(
     SortOrder Order,

@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace InstaConnect.PostComments.Presentation.Features.PostComments.Models.Requests;
+namespace InstaConnect.Posts.Presentation.Features.PostComments.Models.Requests;
 
 public record DeletePostCommentApiRequest(
     [FromRoute] string Id,

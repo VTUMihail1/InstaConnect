@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Domain\InstaConnect.Common.Domain.csproj" />
+    <ProjectReference Include="..\InstaConnect.Chats.Events\InstaConnect.Chats.Events.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Label="Common">
+    <Using Include="Microsoft.Extensions.DependencyInjection" />
+    <Using Include="InstaConnect.Common.Domain.Abstractions" />
+  </ItemGroup>
+
+  <ItemGroup Label="Users">
+    <Using Include="InstaConnect.Chats.Domain.Features.Users.Utilities" />
+    <Using Include="InstaConnect.Chats.Domain.Features.Users.Exceptions" />
+    <Using Include="InstaConnect.Chats.Domain.Features.Users.Abstractions" />
+    <Using Include="InstaConnect.Chats.Domain.Features.Users.Models.Entities" />
+    <Using Include="InstaConnect.Chats.Domain.Features.Users.Models.Requests" />
+  </ItemGroup>
+
+  <ItemGroup Label="Chats">
+    <Using Include="InstaConnect.Chats.Events.Features.Chats" />
+    <Using Include="InstaConnect.Chats.Domain.Features.Chats.Utilities" />
+    <Using Include="InstaConnect.Chats.Domain.Features.Chats.Exceptions" />
+    <Using Include="InstaConnect.Chats.Domain.Features.Chats.Abstractions" />
+    <Using Include="InstaConnect.Chats.Domain.Features.Chats.Models.Entities" />
+    <Using Include="InstaConnect.Chats.Domain.Features.Chats.Models.Requests" />
+    <Using Include="InstaConnect.Chats.Domain.Features.Chats.Models.Responses" />
+  </ItemGroup>
+
+  <ItemGroup Label="ChatMessages">
+    <Using Include="InstaConnect.Chats.Domain.Features.ChatMessages.Utilities" />
+    <Using Include="InstaConnect.Chats.Domain.Features.ChatMessages.Exceptions" />
+    <Using Include="InstaConnect.Chats.Domain.Features.ChatMessages.Abstractions" />
+    <Using Include="InstaConnect.Chats.Domain.Features.ChatMessages.Models.Entities" />
+    <Using Include="InstaConnect.Chats.Domain.Features.ChatMessages.Models.Requests" />
+    <Using Include="InstaConnect.Chats.Domain.Features.ChatMessages.Models.Responses" />
+  </ItemGroup>
+
+</Project>

@@ -1,7 +1,4 @@
-﻿using InstaConnect.EmailConfirmationTokens.Domain.Features.EmailConfirmationTokens.Models.Requests;
-using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entities;
-
-namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Abstractions;
+﻿namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Abstractions;
 
 public interface IEmailConfirmationTokenRepository
 {
@@ -18,5 +15,5 @@ public interface IEmailConfirmationTokenRepository
 
     Task AddAsync(EmailConfirmationToken entity, CancellationToken cancellationToken);
 
-    Task DeleteRangeAsync(ICollection<EmailConfirmationToken> entities, CancellationToken cancellationToken);
+    Task DeleteRangeAsync(IEnumerable<EmailConfirmationToken> entities, CancellationToken cancellationToken);
 }

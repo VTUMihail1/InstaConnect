@@ -1,5 +1,5 @@
-﻿using InstaConnect.EmailConfirmationTokens.Application.Features.EmailConfirmationTokens.Commands.Add;
-using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Requests;
+﻿using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Add;
+using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Verify;
 
 namespace InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Controllers.v1;
 

@@ -1,5 +1,5 @@
-﻿using InstaConnect.Common.Application.Contracts.Users;
-using InstaConnect.Common.Application.Models;
+﻿using InstaConnect.Common.Application.Models;
+using InstaConnect.Common.Domain.Models.Events.Users;
 using InstaConnect.Identity.Application.Features.Users.Commands.Update;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.Update;

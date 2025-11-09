@@ -1,7 +1,4 @@
-﻿using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
-using InstaConnect.Users.Domain.Features.Users.Models.Requests;
-
-namespace InstaConnect.Posts.Domain.Features.Users.Abstractions;
+﻿namespace InstaConnect.Follows.Domain.Features.Users.Abstractions;
 public interface IUserRepository
 {
     Task<User?> GetByIdAsync(

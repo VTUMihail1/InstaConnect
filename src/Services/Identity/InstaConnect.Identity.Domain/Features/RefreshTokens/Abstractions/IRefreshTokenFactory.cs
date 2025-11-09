@@ -1,8 +1,4 @@
-﻿using InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Entities;
-
-using System;
-
-namespace InstaConnect.Identity.Domain.Features.RefreshTokens.Abstractions;
+﻿namespace InstaConnect.Identity.Domain.Features.RefreshTokens.Abstractions;
 
 public interface IRefreshTokenFactory
 {

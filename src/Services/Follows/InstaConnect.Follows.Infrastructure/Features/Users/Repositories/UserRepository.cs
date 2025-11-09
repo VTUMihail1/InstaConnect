@@ -1,14 +1,8 @@
-﻿using InstaConnect.Common.Extensions;
-using InstaConnect.Common.Infrastructure.Abstractions;
-using InstaConnect.Common.Infrastructure.Extensions;
-using InstaConnect.Follows.Infrastructure.Abstractions;
-using InstaConnect.Users.Domain.Features.Users.Models.Requests;
+﻿using InstaConnect.Follows.Infrastructure.Abstractions;
 
 using MongoDB.Driver;
-using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
-using InstaConnect.Posts.Domain.Features.Users.Abstractions;
 
-namespace InstaConnect.Users.Infrastructure.Features.Users.Repositories;
+namespace InstaConnect.Follows.Infrastructure.Features.Users.Repositories;
 
 internal class UserRepository : IUserRepository
 {

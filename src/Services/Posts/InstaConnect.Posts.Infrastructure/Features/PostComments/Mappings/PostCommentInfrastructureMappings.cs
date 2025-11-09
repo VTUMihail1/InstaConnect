@@ -1,6 +1,6 @@
 ﻿using Mapster;
 
-namespace InstaConnect.PostComments.Infrastructure.Features.PostComments.Mappings;
+namespace InstaConnect.Posts.Infrastructure.Features.PostComments.Mappings;
 
 internal class PostCommentInfrastructureMappings : IRegister
 {

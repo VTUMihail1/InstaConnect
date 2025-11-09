@@ -1,6 +1,6 @@
-﻿using InstaConnect.Common.Models.Enums;
+﻿using InstaConnect.Common.Domain.Models;
 
-namespace InstaConnect.Common.Exceptions;
+namespace InstaConnect.Common.Domain.Exceptions;
 
 public class BaseException : Exception
 {

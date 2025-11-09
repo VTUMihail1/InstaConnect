@@ -1,6 +1,4 @@
-﻿using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models;
-
-namespace InstaConnect.PostCommentLikes.Application.Features.PostCommentLikes.Queries.GetAll;
+﻿namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAll;
 
 public record GetAllPostCommentLikesQueryRequest(
     PostCommentLikeQueryFilter Filter,

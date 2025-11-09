@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace InstaConnect.RefreshTokens.Application.Features.RefreshTokens.Commands.Add;
+﻿namespace InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Rotate;
 
 public record RotateRefreshTokenCommandRequest(
     string Id,

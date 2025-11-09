@@ -1,14 +1,6 @@
-﻿using InstaConnect.Common.Extensions;
-using InstaConnect.Common.Infrastructure.Abstractions;
-using InstaConnect.Common.Infrastructure.Extensions;
-using InstaConnect.Follows.Domain.Features.Follows.Models.Requests;
-using InstaConnect.Follows.Domain.Features.Follows.Models.Responses;
-using InstaConnect.Follows.Infrastructure.Abstractions;
-using InstaConnect.Follows.Infrastructure.Features.Follows.Abstractions;
+﻿using InstaConnect.Follows.Infrastructure.Abstractions;
 
 using MongoDB.Driver;
-using InstaConnect.Follows.Domain.Features.Follows.Abstractions;
-using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
 
 namespace InstaConnect.Follows.Infrastructure.Features.Follows.Repositories;
 
@@ -40,7 +32,7 @@ internal class FollowRepository : IFollowRepository
         _followByFollowingSortPropertyFactory = followByFollowingSortPropertyFactory;
     }
 
-    public async Task<FollowCollection> GetAllByFollowerIdAsync(
+    public async Task<FollowCollection> GetAllByFollowerAsync(
         FollowByFollowerFilterQuery filter,
         FollowByFollowerSortingQuery sorting,
         FollowPaginationQuery pagination,
@@ -57,7 +49,7 @@ internal class FollowRepository : IFollowRepository
             .Follows
             .Aggregate()
             .Includes(includeProperties)
-            .Match(p =>  p.FollowerId == filter.FollowerId ||
+            .Match(p => p.FollowerId == filter.FollowerId ||
                          isFollowingNameEmpty || p.Following!.Name.StartsWithOrdinalIgnoreCase(filter.FollowingName));
 
         var totalCountsResult = await pipeline.Count().FirstOrDefaultAsync(cancellationToken);
@@ -73,7 +65,7 @@ internal class FollowRepository : IFollowRepository
         return collectionEntities;
     }
 
-    public async Task<FollowCollection> GetAllByFollowingIdAsync(
+    public async Task<FollowCollection> GetAllByFollowingAsync(
         FollowByFollowingFilterQuery filter,
         FollowByFollowingSortingQuery sorting,
         FollowPaginationQuery pagination,

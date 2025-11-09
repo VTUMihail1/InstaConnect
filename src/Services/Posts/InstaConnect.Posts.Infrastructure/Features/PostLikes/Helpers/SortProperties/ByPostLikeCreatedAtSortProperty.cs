@@ -1,12 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-using InstaConnect.Common.Infrastructure.Abstractions;
-using InstaConnect.Common.Models.Enums;
-using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Entities;
-using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Requests;
-using InstaConnect.PostLikes.Infrastructure.Features.PostLikes.Abstractions;
-
-namespace InstaConnect.Common.Infrastructure.SortOrders;
+namespace InstaConnect.Posts.Infrastructure.Features.PostLikes.Helpers.SortProperties;
 public class ByPostLikeCreatedAtSortProperty : IPostLikeSortProperty
 {
     public PostLikeSortProperty SortProperty => PostLikeSortProperty.ByCreatedAt;

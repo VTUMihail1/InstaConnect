@@ -1,10 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Entities;
-using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Requests;
-using InstaConnect.PostLikes.Infrastructure.Features.PostLikes.Abstractions;
-
-namespace InstaConnect.Common.Infrastructure.SortOrders;
+namespace InstaConnect.Posts.Infrastructure.Features.PostLikes.Helpers.SortProperties;
 
 public class ByPostLikeUserNameSortProperty : IPostLikeSortProperty
 {

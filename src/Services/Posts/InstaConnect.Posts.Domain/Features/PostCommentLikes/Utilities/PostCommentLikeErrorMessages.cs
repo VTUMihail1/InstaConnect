@@ -1,6 +1,6 @@
-﻿using InstaConnect.Common.Extensions;
+﻿using InstaConnect.Common.Domain.Extensions;
 
-namespace InstaConnect.PostCommentLikes.Common.Features.PostCommentLikes.Utilities;
+namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Utilities;
 
 public static class PostCommentLikeErrorMessages
 {

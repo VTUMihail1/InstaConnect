@@ -1,6 +1,4 @@
-﻿using InstaConnect.PostComments.Domain.Features.PostComments.Models.Requests;
-
-namespace InstaConnect.PostComments.Application.Features.PostComments.Queries.GetById;
+﻿namespace InstaConnect.Posts.Domain.Features.PostComments.Models.Requests;
 
 public record GetPostCommentByIdQuery(
     string Id,

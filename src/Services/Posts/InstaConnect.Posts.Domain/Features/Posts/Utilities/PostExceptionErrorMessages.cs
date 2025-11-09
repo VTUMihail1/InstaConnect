@@ -1,7 +1,6 @@
-﻿using InstaConnect.Common.Extensions;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
+﻿using InstaConnect.Common.Domain.Extensions;
 
-namespace InstaConnect.Posts.Common.Features.Posts.Utilities;
+namespace InstaConnect.Posts.Domain.Features.Posts.Utilities;
 
 public static class PostExceptionErrorMessages
 {

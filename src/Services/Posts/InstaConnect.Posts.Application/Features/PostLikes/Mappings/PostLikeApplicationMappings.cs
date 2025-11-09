@@ -1,16 +1,11 @@
-﻿using InstaConnect.PostLikes.Application.Features.PostLikes.Commands.Add;
-using InstaConnect.PostLikes.Application.Features.PostLikes.Commands.Delete;
-using InstaConnect.PostLikes.Application.Features.PostLikes.Models;
-using InstaConnect.PostLikes.Application.Features.PostLikes.Queries.GetAll;
-using InstaConnect.PostLikes.Application.Features.PostLikes.Queries.GetById;
-using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Entities;
-using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Requests;
-using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Responses;
-using InstaConnect.Posts.Domain.Features.PostLikes.Models.Requests;
+﻿using InstaConnect.Posts.Application.Features.PostLikes.Commands.Add;
+using InstaConnect.Posts.Application.Features.PostLikes.Commands.Delete;
+using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAll;
+using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetById;
 
 using Mapster;
 
-namespace InstaConnect.PostLikes.Application.Features.PostLikes.Mappings;
+namespace InstaConnect.Posts.Application.Features.PostLikes.Mappings;
 
 public class PostLikeApplicationMappings : IRegister
 {

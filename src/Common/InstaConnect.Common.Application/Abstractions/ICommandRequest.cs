@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Common.Application.Abstractions;
+﻿using MediatR;
+
+namespace InstaConnect.Common.Application.Abstractions;
 
 public interface ICommand;
 

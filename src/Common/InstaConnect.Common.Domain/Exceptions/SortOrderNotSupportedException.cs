@@ -1,8 +1,7 @@
-﻿using InstaConnect.Common.Exceptions;
-using InstaConnect.Common.Models.Enums;
-using InstaConnect.Common.Utilities;
+﻿using InstaConnect.Common.Domain.Models;
+using InstaConnect.Common.Domain.Utilities;
 
-namespace InstaConnect.Common.Infrastructure.Exceptions;
+namespace InstaConnect.Common.Domain.Exceptions;
 public class SortOrderNotSupportedException : BadRequestException
 {
     public SortOrderNotSupportedException(SortOrder sortOrder)

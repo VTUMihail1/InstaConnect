@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace InstaConnect.PostLikes.Presentation.Features.PostLikes.Models.Requests;
+namespace InstaConnect.Posts.Presentation.Features.PostLikes.Models.Requests;
 
 public record AddPostLikeApiRequest(
     [FromRoute] string Id,

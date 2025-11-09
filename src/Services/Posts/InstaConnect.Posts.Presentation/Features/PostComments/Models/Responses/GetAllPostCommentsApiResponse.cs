@@ -1,6 +1,4 @@
-﻿using InstaConnect.PostComments.Application.Features.PostComments.Models;
-
-namespace InstaConnect.PostComments.Application.Features.PostComments.Queries.GetAll;
+﻿namespace InstaConnect.Posts.Presentation.Features.PostComments.Models.Responses;
 
 public record GetAllPostCommentsApiResponse(
     ICollection<PostCommentApiResponse> Data,

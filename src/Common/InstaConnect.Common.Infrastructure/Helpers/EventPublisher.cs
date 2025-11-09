@@ -1,4 +1,6 @@
-﻿using InstaConnect.Common.Domain.Abstractions;
+﻿using InstaConnect.Common.Events.Abstractions;
+
+using MassTransit;
 
 namespace InstaConnect.Common.Infrastructure.Helpers;
 
@@ -11,8 +13,8 @@ public class EventPublisher : IEventPublisher
         _publishEndpoint = publishEndpoint;
     }
 
-    public async Task PublishAsync<T>(T message, CancellationToken cancellationToken)
-        where T : class
+    public async Task PublishAsync<TEvent>(TEvent message, CancellationToken cancellationToken)
+        where TEvent : class, IEventRequest
     {
         await _publishEndpoint.Publish(message, cancellationToken);
     }

@@ -1,8 +1,6 @@
-﻿using InstaConnect.Common.Extensions;
-using InstaConnect.Identity.Domain.Features.Users.Models.Requests;
-using InstaConnect.UserClaims.Domain.Features.UserClaims.Models.Requests;
+﻿using InstaConnect.Common.Domain.Extensions;
 
-namespace InstaConnect.Identity.Domain.Features.Users.Utilities;
+namespace InstaConnect.Identity.Domain.Features.UserClaims.Utilities;
 
 public static class UserClaimExceptionErrorMessages
 {

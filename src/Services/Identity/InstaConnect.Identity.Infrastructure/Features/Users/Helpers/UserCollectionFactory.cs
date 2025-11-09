@@ -1,11 +1,4 @@
-﻿using InstaConnect.Common.Infrastructure.Abstractions;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
-using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
-using InstaConnect.Users.Domain.Features.Users.Models.Requests;
-using InstaConnect.Users.Domain.Features.Users.Models.Responses;
-using InstaConnect.Users.Infrastructure.Features.Users.Abstractions;
-
-namespace InstaConnect.Users.Infrastructure.Features.Users.Helpers;
+﻿namespace InstaConnect.Identity.Infrastructure.Features.Users.Helpers;
 
 internal class UserCollectionFactory : IUserCollectionFactory
 {

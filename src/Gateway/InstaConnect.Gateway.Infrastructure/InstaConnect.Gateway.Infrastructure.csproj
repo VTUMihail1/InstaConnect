@@ -2,7 +2,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Common\InstaConnect.Common.Infrastructure\InstaConnect.Common.Infrastructure.csproj" />
-    <ProjectReference Include="..\..\Common\InstaConnect.Common\InstaConnect.Common.csproj" />
   </ItemGroup>
 
 </Project>

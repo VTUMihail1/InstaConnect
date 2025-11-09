@@ -1,10 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-using InstaConnect.Identity.Domain.Features.Users.Models.Requests;
-using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
-using InstaConnect.Users.Infrastructure.Features.Users.Abstractions;
-
-namespace InstaConnect.Common.Infrastructure.SortOrders;
+namespace InstaConnect.Identity.Infrastructure.Features.Users.Helpers.SortProperties;
 
 public class ByUserFirstNameSortProperty : IUserSortProperty
 {

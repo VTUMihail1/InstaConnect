@@ -1,8 +1,4 @@
-﻿using InstaConnect.Follows.Application.Features.Follows.Commands.Add;
-using InstaConnect.Follows.Domain.Features.Follows.Abstractions;
-using InstaConnect.Follows.Domain.Features.Follows.Models.Requests;
-
-namespace InstaConnect.Follows.Application.Features.Follows.Commands.Delete;
+﻿namespace InstaConnect.Follows.Application.Features.Follows.Commands.Delete;
 
 internal class DeleteFollowCommandHandler : ICommandHandler<DeleteFollowCommandRequest>
 {
@@ -18,7 +14,7 @@ internal class DeleteFollowCommandHandler : ICommandHandler<DeleteFollowCommandR
     }
 
     public async Task Handle(
-        DeleteFollowCommandRequest request, 
+        DeleteFollowCommandRequest request,
         CancellationToken cancellationToken)
     {
         var serviceRequest = _applicationMapper.Map<DeleteFollowCommand>(request);

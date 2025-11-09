@@ -1,10 +1,6 @@
 ﻿using System.Reflection;
 
-using InstaConnect.Common.Abstractions;
-using InstaConnect.Common.Application.Abstractions;
-using InstaConnect.Common.Application.Contracts.Users;
-using InstaConnect.Common.Helpers;
-using InstaConnect.Common.Infrastructure.Abstractions;
+using InstaConnect.Common.Domain.Helpers;
 
 using Mapster;
 

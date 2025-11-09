@@ -1,6 +1,6 @@
 ﻿using Mapster;
 
-namespace InstaConnect.Users.Infrastructure.Features.Users.Mappings;
+namespace InstaConnect.Identity.Infrastructure.Features.Users.Mappings;
 
 internal class UserInfrastructureMappings : IRegister
 {

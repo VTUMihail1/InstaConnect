@@ -1,9 +1,4 @@
-﻿using InstaConnect.Common.Application.Contracts.Users;
-using InstaConnect.Common.Domain.Events.ForgotPasswordTokens;
-using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entities;
-using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
-
-using Mapster;
+﻿using Mapster;
 
 namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Mappings;
 

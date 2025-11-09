@@ -1,8 +1,4 @@
-﻿using InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Entities;
-using InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Responses;
-using InstaConnect.RefreshTokens.Domain.Features.RefreshTokens.Models.Responses;
-
-namespace InstaConnect.RefreshTokens.Application.Features.RefreshTokens.Commands.Add;
+﻿namespace InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Rotate;
 
 public record RotateRefreshTokenCommandResponse(
     RefreshTokenCommandResponse RefreshToken,

@@ -1,6 +1,4 @@
-﻿using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Requests;
-
-namespace InstaConnect.EmailConfirmationTokens.Application.Features.EmailConfirmationTokens.Commands.Add;
+﻿namespace InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Add;
 
 internal class AddEmailConfirmationTokenCommandHandler : ICommandHandler<AddEmailConfirmationTokenCommandRequest>
 {

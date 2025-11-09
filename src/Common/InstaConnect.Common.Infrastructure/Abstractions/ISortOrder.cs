@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-using InstaConnect.Common.Models.Enums;
+using InstaConnect.Common.Domain.Models;
 
 using MongoDB.Driver;
 

@@ -1,11 +1,8 @@
-﻿using InstaConnect.Common.Infrastructure.Abstractions;
-using InstaConnect.Common.Infrastructure.Extensions;
-using InstaConnect.UserClaims.Domain.Features.UserClaims.Models.Requests;
-using InstaConnect.Users.Infrastructure.Abstractions;
+﻿using InstaConnect.Identity.Infrastructure.Abstractions;
 
 using MongoDB.Driver;
 
-namespace InstaConnect.UserClaims.Infrastructure.Features.UserClaims.Repositories;
+namespace InstaConnect.Identity.Infrastructure.Features.UserClaims.Repositories;
 
 internal class UserClaimRepository : IUserClaimRepository
 {

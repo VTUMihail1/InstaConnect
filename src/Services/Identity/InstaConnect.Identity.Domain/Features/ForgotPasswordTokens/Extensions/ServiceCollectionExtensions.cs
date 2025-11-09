@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Extensions;
+﻿namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Extensions;
 
 internal static class ServiceCollectionExtensions
 {

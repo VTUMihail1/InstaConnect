@@ -1,6 +1,4 @@
-﻿using InstaConnect.PostLikes.Domain.Features.PostLikes.Abstractions;
-
-namespace InstaConnect.PostLikes.Domain.Features.PostLikes.Helpers;
+﻿namespace InstaConnect.Posts.Domain.Features.PostLikes.Helpers;
 
 public class PostLikeIncludeQueryBuilderFactory : IPostLikeIncludeQueryBuilderFactory
 {

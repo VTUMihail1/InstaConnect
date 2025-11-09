@@ -1,4 +1,5 @@
-﻿using InstaConnect.ForgotPasswordTokens.Application.Features.ForgotPasswordTokens.Commands.Add;
+﻿using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Add;
+using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Verify;
 
 namespace InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Controllers.v1;
 

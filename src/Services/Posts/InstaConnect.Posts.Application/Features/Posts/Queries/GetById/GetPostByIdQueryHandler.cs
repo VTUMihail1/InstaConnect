@@ -1,7 +1,4 @@
-﻿using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
-
-namespace InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
+﻿namespace InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
 
 internal class GetPostByIdQueryHandler : IQueryHandler<GetPostByIdQueryRequest, GetPostByIdQueryResponse>
 {

@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Users.Application.Features.Users.Extensions;
+﻿namespace InstaConnect.Follows.Application.Features.Users.Extensions;
 
 internal static class ServiceCollectionExtensions
 {

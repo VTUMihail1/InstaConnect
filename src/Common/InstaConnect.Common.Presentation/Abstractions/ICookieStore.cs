@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Common.Infrastructure.Abstractions;
+﻿namespace InstaConnect.Common.Presentation.Abstractions;
 
 public interface ICookieStore
 {

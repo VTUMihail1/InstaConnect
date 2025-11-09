@@ -1,7 +1,4 @@
-﻿using InstaConnect.Common.Extensions;
-using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
-
-namespace InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
+﻿namespace InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
 
 public class Follow : IEntity
 {

@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Posts.Common.Features.Posts.Utilities;
+﻿namespace InstaConnect.Posts.Domain.Features.Posts.Utilities;
 
 public static class PostConfigurations
 {

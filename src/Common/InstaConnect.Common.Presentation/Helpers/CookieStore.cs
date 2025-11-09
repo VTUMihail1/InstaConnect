@@ -1,6 +1,6 @@
 ﻿using InstaConnect.Common.Domain.Abstractions;
-using InstaConnect.Common.Extensions;
-using InstaConnect.Common.Infrastructure.Abstractions;
+using InstaConnect.Common.Domain.Extensions;
+using InstaConnect.Common.Presentation.Abstractions;
 
 using Microsoft.AspNetCore.Http;
 
@@ -10,10 +10,14 @@ namespace InstaConnect.Common.Presentation.Helpers;
 
 public class CookieStore : ICookieStore
 {
+    private readonly IDateTimeProvider _dateTimeProvider;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public CookieStore(IHttpContextAccessor httpContextAccessor)
+    public CookieStore(
+        IDateTimeProvider dateTimeProvider,
+        IHttpContextAccessor httpContextAccessor)
     {
+        _dateTimeProvider = dateTimeProvider;
         _httpContextAccessor = httpContextAccessor;
     }
 

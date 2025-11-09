@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace InstaConnect.Users.Infrastructure.Utilities;
+﻿namespace InstaConnect.Identity.Infrastructure.Utilities;
 public static class IdentityCollectionNames
 {
     public const string Users = "users";

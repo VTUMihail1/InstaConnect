@@ -1,7 +1,4 @@
-﻿using InstaConnect.Identity.Domain.Features.Users.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-
-namespace InstaConnect.Users.Application.Features.Users.Commands.Update;
+﻿namespace InstaConnect.Identity.Application.Features.Users.Commands.UpdateCurrent;
 public class UpdateCurrentUserCommandRequestValidator : AbstractValidator<UpdateCurrentUserCommandRequest>
 {
     public UpdateCurrentUserCommandRequestValidator()

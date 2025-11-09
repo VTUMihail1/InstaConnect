@@ -1,17 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using InstaConnect.Common.Infrastructure.Abstractions;
-using InstaConnect.Common.Infrastructure.Exceptions;
-using InstaConnect.Common.Models.Enums;
-using InstaConnect.Identity.Domain.Features.Users.Models.Requests;
-using InstaConnect.Users.Domain.Features.Users.Models.Requests;
-using InstaConnect.Users.Infrastructure.Features.Users.Abstractions;
-
-namespace InstaConnect.Common.Infrastructure.UserSortPropertys;
+﻿namespace InstaConnect.Identity.Infrastructure.Features.Users.Helpers.SortProperties;
 internal class UserSortPropertyFactory : IUserSortPropertyFactory
 {
     private readonly IEnumerable<IUserSortProperty> _userSortProperties;

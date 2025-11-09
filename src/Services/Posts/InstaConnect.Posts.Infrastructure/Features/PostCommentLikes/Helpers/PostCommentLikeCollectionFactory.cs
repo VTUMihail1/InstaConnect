@@ -1,10 +1,4 @@
-﻿using InstaConnect.Common.Infrastructure.Abstractions;
-using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Entities;
-using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Requests;
-using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Responses;
-using InstaConnect.PostCommentLikes.Infrastructure.Features.PostCommentLikes.Abstractions;
-
-namespace InstaConnect.PostCommentLikes.Infrastructure.Features.PostCommentLikes.Helpers;
+﻿namespace InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Helpers;
 
 internal class PostCommentLikeCollectionFactory : IPostCommentLikeCollectionFactory
 {

@@ -1,11 +1,8 @@
-﻿using InstaConnect.Common.Exceptions;
-using InstaConnect.Common.Models.Enums;
+﻿using InstaConnect.Common.Domain.Models;
 
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Net.Http.Headers;
 
-namespace InstaConnect.Common.Infrastructure.Abstractions;
+namespace InstaConnect.Common.Presentation.Abstractions;
 
 public interface IExceptionStatus
 {

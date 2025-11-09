@@ -1,9 +1,6 @@
-﻿using InstaConnect.Common.Exceptions;
-using InstaConnect.ForgotPasswordTokens.Common.Features.ForgotPasswordTokens.Utilities;
-using InstaConnect.ForgotPasswordTokens.Domain.Features.ForgotPasswordTokens.Models.Requests;
-using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Utilities;
+﻿using InstaConnect.Common.Domain.Exceptions;
 
-namespace InstaConnect.ForgotPasswordTokens.Domain.Features.ForgotPasswordTokens.Exceptions;
+namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Exceptions;
 
 public class ForgotPasswordTokenIncludePropertiesNotSupportedException : BadRequestException
 {

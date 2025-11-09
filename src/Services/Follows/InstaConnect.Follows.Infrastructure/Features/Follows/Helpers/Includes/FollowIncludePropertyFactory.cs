@@ -1,18 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using InstaConnect.Common.Extensions;
-using InstaConnect.Common.Infrastructure.Abstractions;
-using InstaConnect.Common.Infrastructure.Exceptions;
-using InstaConnect.Common.Models.Enums;
-using InstaConnect.Follows.Domain.Features.Follows.Exceptions;
-using InstaConnect.Follows.Domain.Features.Follows.Models.Requests;
-using InstaConnect.Follows.Infrastructure.Features.Follows.Abstractions;
-
-namespace InstaConnect.Common.Infrastructure.FollowSortPropertys;
+﻿namespace InstaConnect.Follows.Infrastructure.Features.Follows.Helpers.Includes;
 internal class FollowIncludePropertyFactory : IFollowIncludePropertyFactory
 {
     private readonly IEnumerable<IFollowIncludeProperty> _followIncludeProperty;
@@ -22,7 +8,7 @@ internal class FollowIncludePropertyFactory : IFollowIncludePropertyFactory
         _followIncludeProperty = followIncludeProperty;
     }
 
-    public ICollection<IFollowIncludeProperty> Create(ICollection<FollowIncludeProperty>? includeProperties)
+    public IEnumerable<IFollowIncludeProperty> Create(ICollection<FollowIncludeProperty>? includeProperties)
     {
         if (includeProperties == null)
         {
@@ -36,6 +22,6 @@ internal class FollowIncludePropertyFactory : IFollowIncludePropertyFactory
             throw new FollowIncludePropertiesNotSupportedException(includeProperties);
         }
 
-        return properties.ToList();
+        return properties;
     }
 }

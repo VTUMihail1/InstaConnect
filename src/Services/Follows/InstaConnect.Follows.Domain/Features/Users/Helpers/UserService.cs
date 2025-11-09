@@ -1,11 +1,6 @@
-﻿using InstaConnect.Common.Extensions;
-using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
-using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
-using InstaConnect.Posts.Domain.Features.Users.Abstractions;
-using InstaConnect.Posts.Domain.Features.Users.Exceptions;
-using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
+﻿using InstaConnect.Common.Domain.Extensions;
 
-namespace InstaConnect.Posts.Domain.Features.Posts.Helpers;
+namespace InstaConnect.Follows.Domain.Features.Users.Helpers;
 internal class UserService : IUserService
 {
     private readonly IUserFactory _userFactory;

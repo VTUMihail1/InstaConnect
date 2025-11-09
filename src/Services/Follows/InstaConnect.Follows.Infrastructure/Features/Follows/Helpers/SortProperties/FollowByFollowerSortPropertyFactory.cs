@@ -1,16 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using InstaConnect.Common.Infrastructure.Abstractions;
-using InstaConnect.Common.Infrastructure.Exceptions;
-using InstaConnect.Common.Models.Enums;
-using InstaConnect.Follows.Domain.Features.Follows.Models.Requests;
-using InstaConnect.Follows.Infrastructure.Features.Follows.Abstractions;
-
-namespace InstaConnect.Common.Infrastructure.FollowSortPropertys;
+﻿namespace InstaConnect.Follows.Infrastructure.Features.Follows.Helpers.SortProperties;
 internal class FollowByFollowerSortPropertyFactory : IFollowByFollowerSortPropertyFactory
 {
     private readonly IEnumerable<IFollowByFollowerSortProperty> _followByFollowerSortProperties;

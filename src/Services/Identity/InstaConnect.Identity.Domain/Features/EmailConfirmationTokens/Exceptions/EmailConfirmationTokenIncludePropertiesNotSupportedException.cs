@@ -1,8 +1,6 @@
-﻿using InstaConnect.Common.Exceptions;
-using InstaConnect.EmailConfirmationTokens.Domain.Features.EmailConfirmationTokens.Models.Requests;
-using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Utilities;
+﻿using InstaConnect.Common.Domain.Exceptions;
 
-namespace InstaConnect.EmailConfirmationTokens.Domain.Features.EmailConfirmationTokens.Exceptions;
+namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Exceptions;
 
 public class EmailConfirmationTokenIncludePropertiesNotSupportedException : BadRequestException
 {

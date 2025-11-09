@@ -1,7 +1,4 @@
-﻿using InstaConnect.Identity.Domain.Features.Users.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-
-namespace InstaConnect.Users.Application.Features.Users.Queries.GetById;
+﻿namespace InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentById;
 
 public class GetCurrentUserByIdQueryRequestValidator : AbstractValidator<GetCurrentUserByIdQueryRequest>
 {

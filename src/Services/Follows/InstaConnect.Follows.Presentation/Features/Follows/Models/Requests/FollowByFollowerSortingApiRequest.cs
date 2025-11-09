@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Models.Enums;
+﻿using InstaConnect.Common.Domain.Models;
 using InstaConnect.Follows.Domain.Features.Follows.Models.Requests;
 
 namespace InstaConnect.Follows.Presentation.Features.Follows.Models.Requests;

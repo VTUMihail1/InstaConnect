@@ -1,6 +1,4 @@
-﻿using InstaConnect.PostComments.Domain.Features.PostComments.Models.Entities;
-
-namespace InstaConnect.PostComments.Domain.Features.PostComments.Abstractions;
+﻿namespace InstaConnect.Posts.Domain.Features.PostComments.Abstractions;
 
 public interface IPostCommentFactory
 {

@@ -1,8 +1,4 @@
-﻿using InstaConnect.PostLikes.Application.Features.PostLikes.Commands.Add;
-using InstaConnect.PostLikes.Domain.Features.PostLikes.Abstractions;
-using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Requests;
-
-namespace InstaConnect.PostLikes.Application.Features.PostLikes.Commands.Delete;
+﻿namespace InstaConnect.Posts.Application.Features.PostLikes.Commands.Delete;
 
 internal class DeletePostLikeCommandHandler : ICommandHandler<DeletePostLikeCommandRequest>
 {
@@ -18,7 +14,7 @@ internal class DeletePostLikeCommandHandler : ICommandHandler<DeletePostLikeComm
     }
 
     public async Task Handle(
-        DeletePostLikeCommandRequest request, 
+        DeletePostLikeCommandRequest request,
         CancellationToken cancellationToken)
     {
         var serviceRequest = _applicationMapper.Map<DeletePostLikeCommand>(request);

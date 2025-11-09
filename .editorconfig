@@ -165,6 +165,7 @@ dotnet_code_quality.ca1802.api_surface = private, internal
 
 # Diagnostics
 [*.{cs,vb}]
+dotnet_diagnostic.CA1024.severity = none
 dotnet_diagnostic.CA1032.severity = none
 dotnet_diagnostic.CA1040.severity = none
 dotnet_diagnostic.CA1052.severity = none
@@ -172,6 +173,7 @@ dotnet_diagnostic.CA1054.severity = none
 dotnet_diagnostic.CA1055.severity = none
 dotnet_diagnostic.CA1056.severity = none
 dotnet_diagnostic.CA1062.severity = none
+dotnet_diagnostic.CA1515.severity = none
 dotnet_diagnostic.CA1707.severity = none
 dotnet_diagnostic.CA1711.severity = none
 dotnet_diagnostic.CA1714.severity = none

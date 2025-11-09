@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Common.Exceptions;
+﻿namespace InstaConnect.Common.Domain.Exceptions;
 public class InvalidValidationException : BadRequestException
 {
     public InvalidValidationException(string message) : base(message)
