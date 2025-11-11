@@ -33,7 +33,6 @@
     <Using Include="InstaConnect.Common.Tests.Assertions" />
     <Using Include="InstaConnect.Common.Application.Tests.Assertions"/>
     <Using Include="InstaConnect.Common.Tests.Utilities" />
-    <Using Include="InstaConnect.Common.Tests.Builders" />
     <Using Include="InstaConnect.Common.Tests.DataAttributes.Enums" />
     <Using Include="InstaConnect.Common.Tests.DataAttributes.Enums.Base" />
     <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.Base" />

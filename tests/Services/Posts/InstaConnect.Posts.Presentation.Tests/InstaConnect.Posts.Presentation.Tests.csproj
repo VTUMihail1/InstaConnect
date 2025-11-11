@@ -6,13 +6,13 @@
 
   <ItemGroup Label="Common">
     <Using Include="Microsoft.AspNetCore.Mvc" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Base"/>
     <Using Include="InstaConnect.Common.Domain.Extensions" />
     <Using Include="InstaConnect.Common.Application.Abstractions" />
     <Using Include="InstaConnect.Common.Domain.Models" />
     <Using Include="InstaConnect.Common.Tests.Events" />
     <Using Include="InstaConnect.Common.Tests.Assertions" />
     <Using Include="InstaConnect.Common.Presentation.Tests.Assertions" />
-    <Using Include="InstaConnect.Common.Tests.Builders" />
     <Using Include="InstaConnect.Common.Tests.Utilities" />
     <Using Include="InstaConnect.Common.Tests.DataAttributes.Enums.Base" />
     <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.Base" />

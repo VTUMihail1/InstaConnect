@@ -4,72 +4,80 @@ namespace InstaConnect.Posts.Presentation.Tests.Features.PostCommentLikes.Builde
 
 public class GetAllPostCommentLikesApiRequestBuilder
 {
-    private readonly ObjectBuilder<GetAllPostCommentLikesApiRequest> _objectBuilder;
+    private string _id;
+    private string _commentId;
+    private string _userName;
+    private int _page;
+    private int _pageSize;
+    private SortOrder _sortOrder;
+    private PostCommentLikeSortProperty _sortProperty;
 
-    public GetAllPostCommentLikesApiRequestBuilder(ObjectBuilder<GetAllPostCommentLikesApiRequest> objectBuilder, PostCommentLike postCommentLike, User user)
+    public GetAllPostCommentLikesApiRequestBuilder(PostCommentLike postCommentLike, User user)
     {
-        _objectBuilder = objectBuilder;
-
-        WithId(postCommentLike.Id);
-        WithCommentId(postCommentLike.CommentId);
-        WithUserName(user.Name);
-        WithPage(PostCommentLikeDataFaker.GetPage());
-        WithPageSize(PostCommentLikeDataFaker.GetPageSize());
-        WithSortOrder(DataFaker.GetSortOrder());
-        WithSortProperty(PostCommentLikeDataFaker.GetSortProperty());
+        _id = postCommentLike.Id;
+        _commentId = postCommentLike.CommentId;
+        _userName = user.Name;
+        _page = PostCommentLikeDataFaker.GetPage();
+        _pageSize = PostCommentLikeDataFaker.GetPageSize();
+        _sortOrder = DataFaker.GetSortOrder();
+        _sortProperty = PostCommentLikeDataFaker.GetSortProperty();
     }
 
     public GetAllPostCommentLikesApiRequestBuilder WithId(string id, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.Filter.Id, id, transformer);
+        _id = transformer.TryTransform(id);
 
         return this;
     }
 
     public GetAllPostCommentLikesApiRequestBuilder WithCommentId(string commentId, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.Filter.CommentId, commentId, transformer);
+        _commentId = transformer.TryTransform(commentId);
 
         return this;
     }
 
     public GetAllPostCommentLikesApiRequestBuilder WithUserName(string userName, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.Filter.UserName, userName, transformer);
+        _userName = transformer.TryTransform(userName);
 
         return this;
     }
 
     public GetAllPostCommentLikesApiRequestBuilder WithPage(int page, IIntTransformer? transformer = null)
     {
-        _objectBuilder.WithInt(p => p.Pagination.Page, page, transformer);
+        _page = transformer?.Transform(page) ?? page;
 
         return this;
     }
 
     public GetAllPostCommentLikesApiRequestBuilder WithPageSize(int pageSize, IIntTransformer? transformer = null)
     {
-        _objectBuilder.WithInt(p => p.Pagination.PageSize, pageSize, transformer);
+        _pageSize = transformer?.Transform(pageSize) ?? pageSize;
 
         return this;
     }
 
     public GetAllPostCommentLikesApiRequestBuilder WithSortOrder(SortOrder order, IEnumTransformer<SortOrder>? transformer = null)
     {
-        _objectBuilder.WithEnum(p => p.Sorting.Order, order, transformer);
+        _sortOrder = transformer?.Transform(order) ?? order;
 
         return this;
     }
 
     public GetAllPostCommentLikesApiRequestBuilder WithSortProperty(PostCommentLikeSortProperty property, IEnumTransformer<PostCommentLikeSortProperty>? transformer = null)
     {
-        _objectBuilder.WithEnum(p => p.Sorting.Property, property, transformer);
+        _sortProperty = transformer?.Transform(property) ?? property;
 
         return this;
     }
 
     public GetAllPostCommentLikesApiRequest Build()
     {
-        return _objectBuilder.Build();
+        return new(
+            new(_id, _commentId, _userName),
+            new(_sortOrder, _sortProperty),
+            new(_page, _pageSize)
+        );
     }
 }

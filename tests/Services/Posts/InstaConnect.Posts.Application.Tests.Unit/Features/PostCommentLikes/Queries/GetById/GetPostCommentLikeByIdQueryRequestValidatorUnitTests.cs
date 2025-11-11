@@ -50,7 +50,7 @@ public class GetPostCommentLikeByIdQueryRequestValidatorUnitTests : BasePostComm
         var result = _requestValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForId(errorMessage);
+        result.ShouldHaveValidationErrorForCommentId(errorMessage);
     }
 
     [Theory]

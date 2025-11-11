@@ -6,14 +6,12 @@ using InstaConnect.Common.Application.Helpers;
 using InstaConnect.Common.Domain.Abstractions;
 using InstaConnect.Common.Domain.Extensions;
 using InstaConnect.Common.Events.Abstractions;
-using InstaConnect.Common.Infrastructure;
 using InstaConnect.Common.Infrastructure.Abstractions;
 using InstaConnect.Common.Infrastructure.Extensions;
 using InstaConnect.Common.Infrastructure.Helpers;
 using InstaConnect.Common.Infrastructure.Helpers.Conventions;
 using InstaConnect.Common.Infrastructure.Helpers.SortOrders;
 using InstaConnect.Common.Infrastructure.Models.Options;
-using InstaConnect.Shared.Infrastructure.Extensions;
 
 using MassTransit;
 
@@ -31,7 +29,7 @@ using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
-namespace InstaConnect.Shared.Infrastructure.Extensions;
+namespace InstaConnect.Common.Infrastructure.Extensions;
 public static partial class ServiceCollectionExtensions
 {
     public static IServiceCollection AddUnitOfWork(this IServiceCollection serviceCollection)

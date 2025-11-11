@@ -2,24 +2,22 @@
 
 public class UserDeletedEventRequestBuilder
 {
-    private readonly ObjectBuilder<UserDeletedEventRequest> _objectBuilder;
+    private string _id;
 
-    public UserDeletedEventRequestBuilder(ObjectBuilder<UserDeletedEventRequest> objectBuilder, User user)
+    public UserDeletedEventRequestBuilder(User user)
     {
-        _objectBuilder = objectBuilder;
-
-        WithId(user.Id);
+        _id = user.Id;
     }
 
     public UserDeletedEventRequestBuilder WithId(string id, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.Id, id, transformer);
+        _id = transformer.TryTransform(id);
 
         return this;
     }
 
     public UserDeletedEventRequest Build()
     {
-        return _objectBuilder.Build();
+        return new(_id);
     }
 }

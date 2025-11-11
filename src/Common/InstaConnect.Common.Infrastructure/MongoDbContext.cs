@@ -12,7 +12,7 @@ public class MongoDbContext : IMongoDbContext
 
     private IClientSessionHandle? _clientSessionHandle;
 
-    protected MongoDbContext(
+    public MongoDbContext(
         IMongoClient mongoClient,
         IMongoDatabase mongoDatabase)
     {

@@ -1,41 +1,43 @@
-﻿namespace InstaConnect.Posts.Application.Tests.Features.PostCommentLikes.Builders;
+﻿using InstaConnect.Common.Tests.DataAttributes.Base;
+
+namespace InstaConnect.Posts.Application.Tests.Features.PostCommentLikes.Builders;
 
 public class GetPostCommentLikeByIdQueryRequestBuilder
 {
-    private readonly ObjectBuilder<GetPostCommentLikeByIdQueryRequest> _objectBuilder;
+    private string _id;
+    private string _commentId;
+    private string _userId;
 
-    public GetPostCommentLikeByIdQueryRequestBuilder(ObjectBuilder<GetPostCommentLikeByIdQueryRequest> objectBuilder, PostCommentLike postCommentLike)
+    public GetPostCommentLikeByIdQueryRequestBuilder(PostCommentLike postCommentLike)
     {
-        _objectBuilder = objectBuilder;
-
-        WithId(postCommentLike.Id);
-        WithCommentId(postCommentLike.CommentId);
-        WithUserId(postCommentLike.UserId);
+        _id = postCommentLike.Id;
+        _commentId = postCommentLike.CommentId;
+        _userId = postCommentLike.UserId;
     }
 
     public GetPostCommentLikeByIdQueryRequestBuilder WithId(string id, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.Id, id, transformer);
+        _id = transformer.TryTransform(id);
 
         return this;
     }
 
     public GetPostCommentLikeByIdQueryRequestBuilder WithCommentId(string commentId, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.CommentId, commentId, transformer);
+        _commentId = transformer.TryTransform(commentId);
 
         return this;
     }
 
     public GetPostCommentLikeByIdQueryRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.UserId, userId, transformer);
+        _userId = transformer.TryTransform(userId);
 
         return this;
     }
 
     public GetPostCommentLikeByIdQueryRequest Build()
     {
-        return _objectBuilder.Build();
+        return new(_id, _commentId, _userId);
     }
 }

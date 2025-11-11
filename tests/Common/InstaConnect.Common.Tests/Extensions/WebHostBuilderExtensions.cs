@@ -15,7 +15,7 @@ public static class WebHostBuilderExtensions
 
     public static void UpdateCacheConnectionString(this IWebHostBuilder webHostBuilder, string connectionString)
     {
-        const string CacheConnectionStringKey = "DatabaseOptions:ConnectionString";
+        const string CacheConnectionStringKey = "CacheOptions:ConnectionString";
 
         webHostBuilder.UseSetting(
             CacheConnectionStringKey,

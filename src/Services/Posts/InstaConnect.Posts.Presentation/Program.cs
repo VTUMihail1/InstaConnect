@@ -19,8 +19,6 @@ builder.Logging.AddLogging(builder.Configuration, builder.Environment);
 
 var app = builder.Build();
 
-await app.SetUpDatabaseAsync(CancellationToken.None);
-
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

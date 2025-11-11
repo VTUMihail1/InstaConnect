@@ -1,40 +1,42 @@
-﻿namespace InstaConnect.Posts.Application.Tests.Features.Posts.Builders;
+﻿using InstaConnect.Common.Tests.DataAttributes.Base;
+
+namespace InstaConnect.Posts.Application.Tests.Features.Posts.Builders;
 public class AddPostCommandRequestBuilder
 {
-    private readonly ObjectBuilder<AddPostCommandRequest> _objectBuilder;
+    private string _userId;
+    private string _title;
+    private string _content;
 
-    public AddPostCommandRequestBuilder(ObjectBuilder<AddPostCommandRequest> objectBuilder, User user)
+    public AddPostCommandRequestBuilder(User user)
     {
-        _objectBuilder = objectBuilder;
-
-        WithUserId(user.Id);
-        WithTitle(PostDataFaker.GetTitle());
-        WithContent(PostDataFaker.GetContent());
+        _userId = user.Id;
+        _title = PostDataFaker.GetTitle();
+        _content = PostDataFaker.GetContent();
     }
 
     public AddPostCommandRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.UserId, userId, transformer);
+        _userId = transformer.TryTransform(userId);
 
         return this;
     }
 
     public AddPostCommandRequestBuilder WithTitle(string title, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.Title, title, transformer);
+        _title = transformer.TryTransform(title);
 
         return this;
     }
 
     public AddPostCommandRequestBuilder WithContent(string content, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.Content, content, transformer);
+        _content = transformer.TryTransform(content);
 
         return this;
     }
 
     public AddPostCommandRequest Build()
     {
-        return _objectBuilder.Build();
+        return new(_userId, _title, _content);
     }
 }

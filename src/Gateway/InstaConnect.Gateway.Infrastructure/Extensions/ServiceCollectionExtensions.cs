@@ -1,4 +1,4 @@
-﻿using InstaConnect.Shared.Infrastructure.Extensions;
+﻿using InstaConnect.Common.Infrastructure.Extensions;
 
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

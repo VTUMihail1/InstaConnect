@@ -1,41 +1,43 @@
-﻿namespace InstaConnect.Posts.Application.Tests.Features.PostComments.Builders;
+﻿using InstaConnect.Common.Tests.DataAttributes.Base;
+
+namespace InstaConnect.Posts.Application.Tests.Features.PostComments.Builders;
 
 public class DeletePostCommentCommandRequestBuilder
 {
-    private readonly ObjectBuilder<DeletePostCommentCommandRequest> _objectBuilder;
+    private string _id;
+    private string _commentId;
+    private string _userId;
 
-    public DeletePostCommentCommandRequestBuilder(ObjectBuilder<DeletePostCommentCommandRequest> objectBuilder, PostComment postComment)
+    public DeletePostCommentCommandRequestBuilder(PostComment postComment)
     {
-        _objectBuilder = objectBuilder;
-
-        WithId(postComment.Id);
-        WithCommentId(postComment.CommentId);
-        WithUserId(postComment.UserId);
+        _id = postComment.Id;
+        _commentId = postComment.CommentId;
+        _userId = postComment.UserId;
     }
 
     public DeletePostCommentCommandRequestBuilder WithId(string id, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.Id, id, transformer);
+        _id = transformer.TryTransform(id);
 
         return this;
     }
 
     public DeletePostCommentCommandRequestBuilder WithCommentId(string commentId, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.CommentId, commentId, transformer);
+        _commentId = transformer.TryTransform(commentId);
 
         return this;
     }
 
     public DeletePostCommentCommandRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.UserId, userId, transformer);
+        _userId = transformer.TryTransform(userId);
 
         return this;
     }
 
     public DeletePostCommentCommandRequest Build()
     {
-        return _objectBuilder.Build();
+        return new(_id, _commentId, _userId);
     }
 }

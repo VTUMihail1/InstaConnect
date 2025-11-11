@@ -1,49 +1,52 @@
-﻿namespace InstaConnect.Posts.Application.Tests.Features.PostComments.Builders;
+﻿using InstaConnect.Common.Tests.DataAttributes.Base;
+
+namespace InstaConnect.Posts.Application.Tests.Features.PostComments.Builders;
 
 public class UpdatePostCommentCommandRequestBuilder
 {
-    private readonly ObjectBuilder<UpdatePostCommentCommandRequest> _objectBuilder;
+    private string _id;
+    private string _commentId;
+    private string _userId;
+    private string _content;
 
-    public UpdatePostCommentCommandRequestBuilder(ObjectBuilder<UpdatePostCommentCommandRequest> objectBuilder, PostComment postComment)
+    public UpdatePostCommentCommandRequestBuilder(PostComment postComment)
     {
-        _objectBuilder = objectBuilder;
-
-        WithId(postComment.Id);
-        WithCommentId(postComment.CommentId);
-        WithUserId(postComment.UserId);
-        WithContent(PostCommentDataFaker.GetContent());
+        _id = postComment.Id;
+        _commentId = postComment.CommentId;
+        _userId = postComment.UserId;
+        _content = PostCommentDataFaker.GetContent();
     }
 
     public UpdatePostCommentCommandRequestBuilder WithId(string id, IStringTransformer? transformer = null)
     {
-        _objectBuilder.With(p => p.Id, id);
+        _id = transformer.TryTransform(id);
 
         return this;
     }
 
     public UpdatePostCommentCommandRequestBuilder WithCommentId(string commentId, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.CommentId, commentId, transformer);
+        _commentId = transformer.TryTransform(commentId);
 
         return this;
     }
 
     public UpdatePostCommentCommandRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)
     {
-        _objectBuilder.With(p => p.UserId, userId);
+        _userId = transformer.TryTransform(userId);
 
         return this;
     }
 
     public UpdatePostCommentCommandRequestBuilder WithContent(string content, IStringTransformer? transformer = null)
     {
-        _objectBuilder.With(p => p.Content, content);
+        _content = transformer.TryTransform(content);
 
         return this;
     }
 
     public UpdatePostCommentCommandRequest Build()
     {
-        return _objectBuilder.Build();
+        return new(_id, _commentId, _userId, _content);
     }
 }

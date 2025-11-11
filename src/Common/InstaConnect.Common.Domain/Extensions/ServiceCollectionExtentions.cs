@@ -13,12 +13,12 @@ using Scrutor;
 namespace InstaConnect.Common.Domain.Extensions;
 public static class ServiceCollectionExtentions
 {
-    public static IServiceCollection AddMapper(this IServiceCollection serviceCollection, Assembly assembly)
+    public static IServiceCollection AddMapper(this IServiceCollection serviceCollection, params Assembly[] assemblies)
     {
         serviceCollection.AddMapster();
 
         var config = TypeAdapterConfig.GlobalSettings;
-        config.Scan(assembly);
+        config.Scan(assemblies);
         serviceCollection.AddSingleton(config);
 
         serviceCollection.AddScoped<IApplicationMapper, ApplicationMapper>();
@@ -26,11 +26,11 @@ public static class ServiceCollectionExtentions
         return serviceCollection;
     }
 
-    public static IServiceCollection AddServicesWithMatchingInterfaces(this IServiceCollection serviceCollection, Assembly assembly)
+    public static IServiceCollection AddServicesWithMatchingInterfaces(this IServiceCollection serviceCollection, params Assembly[] assemblies)
     {
         serviceCollection
             .Scan(selector => selector
-            .FromAssemblies(assembly)
+            .FromAssemblies(assemblies)
             .AddClasses(false)
             .UsingRegistrationStrategy(RegistrationStrategy.Skip)
             .AsMatchingInterface()

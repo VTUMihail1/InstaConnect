@@ -13,7 +13,6 @@ using InstaConnect.Common.Presentation.ExceptionHandlers;
 using InstaConnect.Common.Presentation.Helpers;
 using InstaConnect.Common.Presentation.Models.Options;
 using InstaConnect.Common.Presentation.Utilities;
-using InstaConnect.Shared.Infrastructure.Extensions;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -77,7 +76,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddExceptionHandler(this IServiceCollection serviceCollection)
     {
         serviceCollection
-            .AddScoped<IProblemDetailsFactory, ProblemDetailsFactory>()
+            .AddSingleton<IProblemDetailsFactory, ProblemDetailsFactory>()
             .AddImplementationsOf<IExceptionStatus>(CommonPresentationReference.Assembly);
 
         serviceCollection.AddProblemDetails();

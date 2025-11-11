@@ -2,65 +2,67 @@
 
 public class UserAddedEventRequestBuilder
 {
-    private readonly ObjectBuilder<UserAddedEventRequest> _objectBuilder;
+    private string _id;
+    private string _name;
+    private string _firstName;
+    private string _lastName;
+    private string _email;
+    private string? _profileImage;
 
-    public UserAddedEventRequestBuilder(ObjectBuilder<UserAddedEventRequest> objectBuilder)
+    public UserAddedEventRequestBuilder()
     {
-        _objectBuilder = objectBuilder;
-
-        WithId(UserDataFaker.GetId());
-        WithName(UserDataFaker.GetName());
-        WithFirstName(UserDataFaker.GetFirstName());
-        WithLastName(UserDataFaker.GetLastName());
-        WithEmail(UserDataFaker.GetEmail());
-        WithProfileImage(UserDataFaker.GetProfileImage());
+        _id = UserDataFaker.GetId();
+        _name = UserDataFaker.GetName();
+        _firstName = UserDataFaker.GetFirstName();
+        _lastName = UserDataFaker.GetLastName();
+        _email = UserDataFaker.GetEmail();
+        _profileImage = UserDataFaker.GetProfileImage();
     }
 
     public UserAddedEventRequestBuilder WithId(string id, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.Id, id, transformer);
+        _id = transformer.TryTransform(id);
 
         return this;
     }
 
     public UserAddedEventRequestBuilder WithName(string name, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.Name, name, transformer);
+        _name = transformer.TryTransform(name);
 
         return this;
     }
 
     public UserAddedEventRequestBuilder WithFirstName(string firstName, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.FirstName, firstName, transformer);
+        _firstName = transformer.TryTransform(firstName);
 
         return this;
-
     }
 
     public UserAddedEventRequestBuilder WithLastName(string lastName, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.LastName, lastName, transformer);
+        _lastName = transformer.TryTransform(lastName);
 
         return this;
     }
 
     public UserAddedEventRequestBuilder WithEmail(string email, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.Email, email, transformer);
+        _email = transformer.TryTransform(email);
 
         return this;
     }
 
     public UserAddedEventRequestBuilder WithProfileImage(string? profileImage, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.ProfileImage, profileImage, transformer);
+        _profileImage = transformer.TryTransform(profileImage!);
 
         return this;
     }
 
     public UserAddedEventRequest Build()
     {
-        return _objectBuilder.Build();
+        return new UserAddedEventRequest(_id, _name, _email, _firstName, _lastName, _profileImage);
     }
 }

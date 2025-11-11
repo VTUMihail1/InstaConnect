@@ -1,6 +1,5 @@
 ﻿using InstaConnect.Follows.Infrastructure.Features.Follows.Extensions;
 using InstaConnect.Follows.Infrastructure.Features.Users.Extensions;
-using InstaConnect.Shared.Infrastructure.Extensions;
 
 namespace InstaConnect.Follows.Infrastructure.Extensions;
 
@@ -23,7 +22,9 @@ public static class ServiceCollectionExtensions
             .AddUnitOfWork()
             .AddRabbitMQ(configuration, FollowInfrastructureReference.Assembly)
             .AddJwtBearer(configuration)
-            .AddDateTimeProvider();
+            .AddGuidProvider()
+            .AddDateTimeProvider()
+            .AddSortOrders();
 
         return serviceCollection;
     }

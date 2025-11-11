@@ -1,7 +1,6 @@
 ﻿using InstaConnect.Chats.Infrastructure.Features.ChatMessages.Extensions;
 using InstaConnect.Chats.Infrastructure.Features.Chats.Extensions;
 using InstaConnect.Chats.Infrastructure.Features.Users.Extensions;
-using InstaConnect.Shared.Infrastructure.Extensions;
 
 namespace InstaConnect.Chats.Infrastructure.Extensions;
 
@@ -25,7 +24,9 @@ public static class ServiceCollectionExtensions
             .AddUnitOfWork()
             .AddRabbitMQ(configuration, ChatInfrastructureReference.Assembly)
             .AddJwtBearer(configuration)
-            .AddDateTimeProvider();
+            .AddGuidProvider()
+            .AddDateTimeProvider()
+            .AddSortOrders();
 
         return serviceCollection;
     }

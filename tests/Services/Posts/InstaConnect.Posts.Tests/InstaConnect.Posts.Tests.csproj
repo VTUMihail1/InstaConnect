@@ -12,7 +12,6 @@
     <Using Include="InstaConnect.Common.Tests.Events" />
     <Using Include="InstaConnect.Common.Tests.Assertions" />
     <Using Include="InstaConnect.Common.Tests.Utilities" />
-    <Using Include="InstaConnect.Common.Tests.Builders" />
     <Using Include="InstaConnect.Common.Tests.DataAttributes.DateTimeOffsets.Base" />
     <Using Include="InstaConnect.Common.Tests.DataAttributes.Ints.Base" />
     <Using Include="InstaConnect.Common.Tests.DataAttributes.Ints.Empty" />

@@ -1,8 +1,6 @@
 ﻿using InstaConnect.Posts.Infrastructure.Extensions;
 
-using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.Serializers;
 
 namespace InstaConnect.Posts.Infrastructure.Features.PostLikes.Extensions;
 
@@ -16,9 +14,6 @@ internal static class ServiceCollectionExtensions
         BsonClassMap.RegisterClassMap<PostLike>(cm =>
         {
             cm.AutoMap();
-
-            cm.MapIdMember(c => new { c.Id, c.UserId })
-              .SetSerializer(new StringSerializer(BsonType.ObjectId));
 
             cm.UnmapMember(c => c.User);
         });

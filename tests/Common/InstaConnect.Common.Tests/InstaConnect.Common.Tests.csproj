@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <PackageReference Include="AutoFixture" />
     <PackageReference Include="Bogus" />
     <PackageReference Include="FluentAssertions" />
     <PackageReference Include="NSubstitute" />
@@ -24,6 +23,7 @@
     <Using Include="InstaConnect.Common.Domain.Abstractions" />
     <Using Include="InstaConnect.Common.Events.Abstractions" />
     <Using Include="InstaConnect.Common.Application.Abstractions" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Base" />
   </ItemGroup>
 
 </Project>

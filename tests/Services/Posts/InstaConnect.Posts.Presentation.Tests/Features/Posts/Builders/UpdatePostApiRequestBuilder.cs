@@ -2,48 +2,53 @@
 
 public class UpdatePostApiRequestBuilder
 {
-    private readonly ObjectBuilder<UpdatePostApiRequest> _objectBuilder;
+    private string _id;
+    private string _userId;
+    private string _title;
+    private string _content;
 
-    public UpdatePostApiRequestBuilder(ObjectBuilder<UpdatePostApiRequest> objectBuilder, Post post)
+    public UpdatePostApiRequestBuilder(Post post)
     {
-        _objectBuilder = objectBuilder;
-
-        WithId(post.Id);
-        WithUserId(post.UserId);
-        WithTitle(PostDataFaker.GetTitle());
-        WithContent(PostDataFaker.GetContent());
+        _id = post.Id;
+        _userId = post.UserId;
+        _title = PostDataFaker.GetTitle();
+        _content = PostDataFaker.GetContent();
     }
 
     public UpdatePostApiRequestBuilder WithId(string id, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.Id, id, transformer);
+        _id = transformer.TryTransform(id);
 
         return this;
     }
 
     public UpdatePostApiRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.UserId, userId, transformer);
+        _userId = transformer.TryTransform(userId);
 
         return this;
     }
 
     public UpdatePostApiRequestBuilder WithTitle(string title, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.Body.Title, title, transformer);
+        _title = transformer.TryTransform(title);
 
         return this;
     }
 
     public UpdatePostApiRequestBuilder WithContent(string content, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.Body.Content, content, transformer);
+        _content = transformer.TryTransform(content);
 
         return this;
     }
 
     public UpdatePostApiRequest Build()
     {
-        return _objectBuilder.Build();
+        return new(
+            _id,
+            _userId,
+            new(_title, _content)
+        );
     }
 }

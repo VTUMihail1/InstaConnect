@@ -1,33 +1,34 @@
-﻿namespace InstaConnect.Posts.Application.Tests.Features.PostLikes.Builders;
+﻿using InstaConnect.Common.Tests.DataAttributes.Base;
+
+namespace InstaConnect.Posts.Application.Tests.Features.PostLikes.Builders;
 
 public class DeletePostLikeCommandRequestBuilder
 {
-    private readonly ObjectBuilder<DeletePostLikeCommandRequest> _objectBuilder;
+    private string _id;
+    private string _userId;
 
-    public DeletePostLikeCommandRequestBuilder(ObjectBuilder<DeletePostLikeCommandRequest> objectBuilder, PostLike postLike)
+    public DeletePostLikeCommandRequestBuilder(PostLike postLike)
     {
-        _objectBuilder = objectBuilder;
-
-        WithId(postLike.Id);
-        WithUserId(postLike.UserId);
+        _id = postLike.Id;
+        _userId = postLike.UserId;
     }
 
     public DeletePostLikeCommandRequestBuilder WithId(string id, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.Id, id, transformer);
+        _id = transformer.TryTransform(id);
 
         return this;
     }
 
     public DeletePostLikeCommandRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.UserId, userId, transformer);
+        _userId = transformer.TryTransform(userId);
 
         return this;
     }
 
     public DeletePostLikeCommandRequest Build()
     {
-        return _objectBuilder.Build();
+        return new(_id, _userId);
     }
 }

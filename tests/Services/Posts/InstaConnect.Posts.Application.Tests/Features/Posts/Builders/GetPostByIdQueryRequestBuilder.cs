@@ -1,25 +1,25 @@
-﻿namespace InstaConnect.Posts.Application.Tests.Features.Posts.Builders;
+﻿using InstaConnect.Common.Tests.DataAttributes.Base;
+
+namespace InstaConnect.Posts.Application.Tests.Features.Posts.Builders;
 
 public class GetPostByIdQueryRequestBuilder
 {
-    private readonly ObjectBuilder<GetPostByIdQueryRequest> _objectBuilder;
+    private string _id;
 
-    public GetPostByIdQueryRequestBuilder(ObjectBuilder<GetPostByIdQueryRequest> objectBuilder, Post post)
+    public GetPostByIdQueryRequestBuilder(Post post)
     {
-        _objectBuilder = objectBuilder;
-
-        WithId(post.Id);
+        _id = post.Id;
     }
 
     public GetPostByIdQueryRequestBuilder WithId(string id, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.Id, id, transformer);
+        _id = transformer.TryTransform(id);
 
         return this;
     }
 
     public GetPostByIdQueryRequest Build()
     {
-        return _objectBuilder.Build();
+        return new(_id);
     }
 }

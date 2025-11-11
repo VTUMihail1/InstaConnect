@@ -35,10 +35,10 @@ public static class MockFactory
         return consumeContext;
     }
 
-    public static IApplicationMapper CreateApplicationMapper(Assembly assembly)
+    public static IApplicationMapper CreateApplicationMapper(params Assembly[] assemblies)
     {
         var config = new TypeAdapterConfig();
-        config.Scan(assembly);
+        config.Scan(assemblies);
 
         return new ApplicationMapper(new Mapper(config));
     }

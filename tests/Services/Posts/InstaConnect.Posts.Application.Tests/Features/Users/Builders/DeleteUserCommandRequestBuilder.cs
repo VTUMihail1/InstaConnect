@@ -1,25 +1,25 @@
-﻿namespace InstaConnect.Posts.Application.Tests.Features.Users.Builders;
+﻿using InstaConnect.Common.Tests.DataAttributes.Base;
+
+namespace InstaConnect.Posts.Application.Tests.Features.Users.Builders;
 
 public class DeleteUserCommandRequestBuilder
 {
-    private readonly ObjectBuilder<DeleteUserCommandRequest> _objectBuilder;
+    private string _id;
 
-    public DeleteUserCommandRequestBuilder(ObjectBuilder<DeleteUserCommandRequest> objectBuilder, User user)
+    public DeleteUserCommandRequestBuilder(User user)
     {
-        _objectBuilder = objectBuilder;
-
-        WithId(user.Id);
+        _id = user.Id;
     }
 
     public DeleteUserCommandRequestBuilder WithId(string id, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.Id, id, transformer);
+        _id = transformer.TryTransform(id);
 
         return this;
     }
 
     public DeleteUserCommandRequest Build()
     {
-        return _objectBuilder.Build();
+        return new(_id);
     }
 }

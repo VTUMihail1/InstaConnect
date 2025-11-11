@@ -2,40 +2,40 @@
 
 public class DeletePostCommentApiRequestBuilder
 {
-    private readonly ObjectBuilder<DeletePostCommentApiRequest> _objectBuilder;
+    private string _id;
+    private string _commentId;
+    private string _userId;
 
-    public DeletePostCommentApiRequestBuilder(ObjectBuilder<DeletePostCommentApiRequest> objectBuilder, PostComment postComment)
+    public DeletePostCommentApiRequestBuilder(PostComment postComment)
     {
-        _objectBuilder = objectBuilder;
-
-        WithId(postComment.Id);
-        WithCommentId(postComment.CommentId);
-        WithUserId(postComment.UserId);
+        _id = postComment.Id;
+        _commentId = postComment.CommentId;
+        _userId = postComment.UserId;
     }
 
     public DeletePostCommentApiRequestBuilder WithId(string id, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.Id, id, transformer);
+        _id = transformer.TryTransform(id);
 
         return this;
     }
 
     public DeletePostCommentApiRequestBuilder WithCommentId(string commentId, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.CommentId, commentId, transformer);
+        _commentId = transformer.TryTransform(commentId);
 
         return this;
     }
 
     public DeletePostCommentApiRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.UserId, userId, transformer);
+        _userId = transformer.TryTransform(userId);
 
         return this;
     }
 
     public DeletePostCommentApiRequest Build()
     {
-        return _objectBuilder.Build();
+        return new(_id, _commentId, _userId);
     }
 }

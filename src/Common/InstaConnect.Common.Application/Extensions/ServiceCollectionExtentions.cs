@@ -10,12 +10,12 @@ using Microsoft.Extensions.DependencyInjection;
 namespace InstaConnect.Common.Application.Extensions;
 public static class ServiceCollectionExtentions
 {
-    public static IServiceCollection AddCQRS(this IServiceCollection serviceCollection, Assembly assembly)
+    public static IServiceCollection AddCQRS(this IServiceCollection serviceCollection, params Assembly[] assemblies)
     {
         serviceCollection.AddMediatR(
             cf =>
             {
-                cf.RegisterServicesFromAssembly(assembly);
+                cf.RegisterServicesFromAssemblies(assemblies);
 
                 cf.AddOpenBehavior(typeof(LoggingPipelineBehavior<,>));
                 cf.AddOpenBehavior(typeof(ValidationPipelineBehavior<,>));
@@ -28,11 +28,11 @@ public static class ServiceCollectionExtentions
         return serviceCollection;
     }
 
-    public static IServiceCollection AddValidators(this IServiceCollection serviceCollection, Assembly assembly)
+    public static IServiceCollection AddValidators(this IServiceCollection serviceCollection, params Assembly[] assemblies)
     {
         ValidatorOptions.Global.DefaultRuleLevelCascadeMode = CascadeMode.Stop;
 
-        serviceCollection.AddValidatorsFromAssembly(assembly);
+        serviceCollection.AddValidatorsFromAssemblies(assemblies);
 
         return serviceCollection;
     }

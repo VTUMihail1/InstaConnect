@@ -45,7 +45,7 @@ public static class MatchAssertions
     {
         actionResult.Result
             .Should()
-            .BeOfType<ObjectResult>()
+            .BeOfType<OkObjectResult>()
             .Which
             .Value
             .Should()

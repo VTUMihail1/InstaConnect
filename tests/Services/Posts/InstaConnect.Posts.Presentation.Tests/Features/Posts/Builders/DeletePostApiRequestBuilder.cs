@@ -2,32 +2,31 @@
 
 public class DeletePostApiRequestBuilder
 {
-    private readonly ObjectBuilder<DeletePostApiRequest> _objectBuilder;
+    private string _id;
+    private string _userId;
 
-    public DeletePostApiRequestBuilder(ObjectBuilder<DeletePostApiRequest> objectBuilder, Post post)
+    public DeletePostApiRequestBuilder(Post post)
     {
-        _objectBuilder = objectBuilder;
-
-        WithId(post.Id);
-        WithUserId(post.UserId);
+        _id = post.Id;
+        _userId = post.UserId;
     }
 
     public DeletePostApiRequestBuilder WithId(string id, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.Id, id, transformer);
+        _id = transformer.TryTransform(id);
 
         return this;
     }
 
     public DeletePostApiRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.UserId, userId, transformer);
+        _userId = transformer.TryTransform(userId);
 
         return this;
     }
 
     public DeletePostApiRequest Build()
     {
-        return _objectBuilder.Build();
+        return new(_id, _userId);
     }
 }

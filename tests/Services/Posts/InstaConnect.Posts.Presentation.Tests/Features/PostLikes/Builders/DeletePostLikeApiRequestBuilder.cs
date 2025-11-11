@@ -2,32 +2,31 @@
 
 public class DeletePostLikeApiRequestBuilder
 {
-    private readonly ObjectBuilder<DeletePostLikeApiRequest> _objectBuilder;
+    private string _id;
+    private string _userId;
 
-    public DeletePostLikeApiRequestBuilder(ObjectBuilder<DeletePostLikeApiRequest> objectBuilder, PostLike postLike)
+    public DeletePostLikeApiRequestBuilder(PostLike postLike)
     {
-        _objectBuilder = objectBuilder;
-
-        WithId(postLike.Id);
-        WithUserId(postLike.UserId);
+        _id = postLike.Id;
+        _userId = postLike.UserId;
     }
 
     public DeletePostLikeApiRequestBuilder WithId(string id, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.Id, id, transformer);
+        _id = transformer.TryTransform(id);
 
         return this;
     }
 
     public DeletePostLikeApiRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.UserId, userId, transformer);
+        _userId = transformer.TryTransform(userId);
 
         return this;
     }
 
     public DeletePostLikeApiRequest Build()
     {
-        return _objectBuilder.Build();
+        return new(_id, _userId);
     }
 }

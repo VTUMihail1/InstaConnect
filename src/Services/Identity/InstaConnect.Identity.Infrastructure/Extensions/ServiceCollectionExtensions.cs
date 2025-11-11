@@ -3,7 +3,6 @@ using InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Extensi
 using InstaConnect.Identity.Infrastructure.Features.RefreshTokens.Extensions;
 using InstaConnect.Identity.Infrastructure.Features.UserClaims.Extensions;
 using InstaConnect.Identity.Infrastructure.Features.Users.Extensions;
-using InstaConnect.Shared.Infrastructure.Extensions;
 
 namespace InstaConnect.Identity.Infrastructure.Extensions;
 
@@ -29,7 +28,9 @@ public static class ServiceCollectionExtensions
             .AddUnitOfWork()
             .AddRabbitMQ(configuration, IdentityInfrastructureReference.Assembly)
             .AddJwtBearer(configuration)
-            .AddDateTimeProvider();
+            .AddGuidProvider()
+            .AddDateTimeProvider()
+            .AddSortOrders();
 
         return serviceCollection;
     }

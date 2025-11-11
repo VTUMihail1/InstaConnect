@@ -1,33 +1,34 @@
-﻿namespace InstaConnect.Posts.Application.Tests.Features.PostLikes.Builders;
+﻿using InstaConnect.Common.Tests.DataAttributes.Base;
+
+namespace InstaConnect.Posts.Application.Tests.Features.PostLikes.Builders;
 
 public class GetPostLikeByIdQueryRequestBuilder
 {
-    private readonly ObjectBuilder<GetPostLikeByIdQueryRequest> _objectBuilder;
+    private string _id;
+    private string _userId;
 
-    public GetPostLikeByIdQueryRequestBuilder(ObjectBuilder<GetPostLikeByIdQueryRequest> objectBuilder, PostLike postLike)
+    public GetPostLikeByIdQueryRequestBuilder(PostLike postLike)
     {
-        _objectBuilder = objectBuilder;
-
-        WithId(postLike.Id);
-        WithUserId(postLike.UserId);
+        _id = postLike.Id;
+        _userId = postLike.UserId;
     }
 
     public GetPostLikeByIdQueryRequestBuilder WithId(string id, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.Id, id, transformer);
+        _id = transformer.TryTransform(id);
 
         return this;
     }
 
     public GetPostLikeByIdQueryRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.UserId, userId, transformer);
+        _userId = transformer.TryTransform(userId);
 
         return this;
     }
 
     public GetPostLikeByIdQueryRequest Build()
     {
-        return _objectBuilder.Build();
+        return new(_id, _userId);
     }
 }

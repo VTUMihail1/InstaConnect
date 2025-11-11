@@ -2,32 +2,31 @@
 
 public class GetPostLikeByIdApiRequestBuilder
 {
-    private readonly ObjectBuilder<GetPostLikeByIdApiRequest> _objectBuilder;
+    private string _id;
+    private string _userId;
 
-    public GetPostLikeByIdApiRequestBuilder(ObjectBuilder<GetPostLikeByIdApiRequest> objectBuilder, PostLike postLike)
+    public GetPostLikeByIdApiRequestBuilder(PostLike postLike)
     {
-        _objectBuilder = objectBuilder;
-
-        WithId(postLike.Id);
-        WithUserId(postLike.UserId);
+        _id = postLike.Id;
+        _userId = postLike.UserId;
     }
 
     public GetPostLikeByIdApiRequestBuilder WithId(string id, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.Id, id, transformer);
+        _id = transformer.TryTransform(id);
 
         return this;
     }
 
     public GetPostLikeByIdApiRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.UserId, userId, transformer);
+        _userId = transformer.TryTransform(userId);
 
         return this;
     }
 
     public GetPostLikeByIdApiRequest Build()
     {
-        return _objectBuilder.Build();
+        return new(_id, _userId);
     }
 }

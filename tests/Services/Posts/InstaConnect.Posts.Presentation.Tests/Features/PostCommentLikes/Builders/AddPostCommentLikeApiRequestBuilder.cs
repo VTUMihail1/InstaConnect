@@ -2,40 +2,44 @@
 
 public class AddPostCommentLikeApiRequestBuilder
 {
-    private readonly ObjectBuilder<AddPostCommentLikeApiRequest> _objectBuilder;
+    private string _id;
+    private string _commentId;
+    private string _userId;
 
-    public AddPostCommentLikeApiRequestBuilder(ObjectBuilder<AddPostCommentLikeApiRequest> objectBuilder, Post post, PostComment postComment, User user)
+    public AddPostCommentLikeApiRequestBuilder(Post post, PostComment postComment, User user)
     {
-        _objectBuilder = objectBuilder;
-
-        WithId(post.Id);
-        WithCommentId(postComment.Id);
-        WithUserId(user.Id);
+        _id = post.Id;
+        _commentId = postComment.Id;
+        _userId = user.Id;
     }
 
     public AddPostCommentLikeApiRequestBuilder WithId(string id, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.Id, id, transformer);
+        _id = transformer.TryTransform(id);
 
         return this;
     }
 
     public AddPostCommentLikeApiRequestBuilder WithCommentId(string commentId, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.CommentId, commentId, transformer);
+        _commentId = transformer.TryTransform(commentId);
 
         return this;
     }
 
     public AddPostCommentLikeApiRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)
     {
-        _objectBuilder.WithString(p => p.UserId, userId, transformer);
+        _userId = transformer.TryTransform(userId);
 
         return this;
     }
 
     public AddPostCommentLikeApiRequest Build()
     {
-        return _objectBuilder.Build();
+        return new(
+            _id,
+            _commentId,
+            _userId
+        );
     }
 }

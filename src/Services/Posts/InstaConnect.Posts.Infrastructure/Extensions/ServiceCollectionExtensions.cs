@@ -3,7 +3,6 @@ using InstaConnect.Posts.Infrastructure.Features.PostComments.Extensions;
 using InstaConnect.Posts.Infrastructure.Features.PostLikes.Extensions;
 using InstaConnect.Posts.Infrastructure.Features.Posts.Extensions;
 using InstaConnect.Posts.Infrastructure.Features.Users.Extensions;
-using InstaConnect.Shared.Infrastructure.Extensions;
 
 namespace InstaConnect.Posts.Infrastructure.Extensions;
 
@@ -29,7 +28,9 @@ public static class ServiceCollectionExtensions
             .AddUnitOfWork()
             .AddRabbitMQ(configuration, PostInfrastructureReference.Assembly)
             .AddJwtBearer(configuration)
-            .AddDateTimeProvider();
+            .AddGuidProvider()
+            .AddDateTimeProvider()
+            .AddSortOrders();
 
         return serviceCollection;
     }
