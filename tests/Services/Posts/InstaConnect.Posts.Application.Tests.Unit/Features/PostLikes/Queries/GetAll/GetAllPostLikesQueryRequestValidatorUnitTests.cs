@@ -56,7 +56,7 @@ public class GetAllPostLikesQueryRequestValidatorUnitTests : BasePostLikeApplica
     [Theory]
     [SortOrderEmptyWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenSortOrderIsInvalid(
-        IEnumTransformer<SortOrder> transformer, string errorMessage)
+        IEnumTransformer<CommonSortOrder> transformer, string errorMessage)
     {
         // Arrange
         var request = _requestBuilder.WithSortOrder(_request.Sorting.Order, transformer).Build();

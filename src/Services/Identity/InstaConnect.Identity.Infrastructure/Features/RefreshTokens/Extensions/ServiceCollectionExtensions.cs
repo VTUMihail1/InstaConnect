@@ -12,7 +12,7 @@ internal static class ServiceCollectionExtensions
     {
         serviceCollection.AddImplementationsOf<IRefreshTokenIncludeProperty>(IdentityInfrastructureReference.Assembly);
 
-        BsonClassMap.RegisterClassMap<RefreshToken>(cm =>
+        BsonClassMap.TryRegisterClassMap<RefreshToken>(cm =>
         {
             cm.AutoMap();
 

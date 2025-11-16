@@ -1,8 +1,6 @@
 ﻿namespace InstaConnect.Posts.Domain.Features.PostComments.Models.Requests;
 
-public record GetPostCommentByIdQuery(
-    string Id,
-    string CommentId)
+public record GetPostCommentByIdQuery(PostCommentId Id)
 {
     public PostCommentIncludeQuery? Include { get; private set; }
 

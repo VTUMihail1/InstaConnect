@@ -1,4 +1,4 @@
 ﻿namespace InstaConnect.Posts.Events.Features.PostLikes;
 
-public record PostLikeDeletedEventRequest(string Id, string UserId)
+public record PostLikeDeletedEventRequest(PostLikeIdEventPayload Id)
     : IEventRequest;

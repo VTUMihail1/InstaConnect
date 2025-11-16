@@ -9,7 +9,7 @@ namespace InstaConnect.Common.Infrastructure.Helpers.SortOrders;
 
 public class DescendingSortOrder : ISortOrder
 {
-    public SortOrder SortOrder => SortOrder.DESC;
+    public CommonSortOrder SortOrder => CommonSortOrder.DESC;
 
     public SortDefinition<TDocument> Sort<TDocument>(Expression<Func<TDocument, object>> sortProperty)
     {

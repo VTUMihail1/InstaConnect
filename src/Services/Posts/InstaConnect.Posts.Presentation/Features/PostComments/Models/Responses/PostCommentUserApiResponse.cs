@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Posts.Presentation.Features.PostComments.Models.Responses;
 
-public record PostCommentUserApiResponse(string Id, string Name, string? ProfileImage);
+public record PostCommentUserApiResponse(UserIdApiPayload Id, NameApiPayload Name, ImageApiPayload? ProfileImage);

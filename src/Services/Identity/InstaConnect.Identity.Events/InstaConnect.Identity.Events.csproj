@@ -6,6 +6,7 @@
 
   <ItemGroup Label="Common">
     <Using Include="InstaConnect.Common.Events.Abstractions" />
+    <Using Include="InstaConnect.Common.Events.Models" />
   </ItemGroup>
 
 </Project>

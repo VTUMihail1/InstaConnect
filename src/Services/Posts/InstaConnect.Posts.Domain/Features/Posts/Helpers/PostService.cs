@@ -4,24 +4,24 @@ using InstaConnect.Common.Events.Abstractions;
 namespace InstaConnect.Posts.Domain.Features.Posts.Helpers;
 internal class PostService : IPostService
 {
-    private readonly IPostFactory _postFactory;
+    private readonly IPostFactory _factory;
+    private readonly IPostRepository _repository;
     private readonly IEventPublisher _eventPublisher;
-    private readonly IPostRepository _postRepository;
     private readonly IUserRepository _userRepository;
     private readonly IDateTimeProvider _dateTimeProvider;
     private readonly IApplicationMapper _applicationMapper;
 
     public PostService(
-        IPostFactory postFactory,
+        IPostFactory factory,
+        IPostRepository repository,
         IEventPublisher eventPublisher,
-        IPostRepository postRepository,
         IUserRepository userRepository,
         IDateTimeProvider dateTimeProvider,
         IApplicationMapper applicationMapper)
     {
-        _postFactory = postFactory;
+        _factory = factory;
+        _repository = repository;
         _eventPublisher = eventPublisher;
-        _postRepository = postRepository;
         _userRepository = userRepository;
         _dateTimeProvider = dateTimeProvider;
         _applicationMapper = applicationMapper;
@@ -29,7 +29,7 @@ internal class PostService : IPostService
 
     public async Task<PostCollection> GetAllAsync(GetAllPostsQuery query, CancellationToken cancellationToken)
     {
-        var existingPostCollection = await _postRepository.GetAllAsync(
+        var existingPostCollection = await _repository.GetAllAsync(
             query.Filter,
             query.Sorting,
             query.Pagination,
@@ -41,7 +41,7 @@ internal class PostService : IPostService
 
     public async Task<Post> GetByIdAsync(GetPostByIdQuery query, CancellationToken cancellationToken)
     {
-        var existingPost = await _postRepository.GetByIdAsync(
+        var existingPost = await _repository.GetByIdAsync(
             query.Id,
             query.Include,
             cancellationToken);
@@ -63,8 +63,8 @@ internal class PostService : IPostService
             throw new UserNotFoundException(command.UserId);
         }
 
-        var post = _postFactory.Create(command.UserId, command.Title, command.Content);
-        await _postRepository.AddAsync(post, cancellationToken);
+        var post = _factory.Create(command.UserId, command.Title, command.Content);
+        await _repository.AddAsync(post, cancellationToken);
 
         var eventRequest = _applicationMapper.Map<PostAddedEventRequest>(post);
         await _eventPublisher.PublishAsync(eventRequest, cancellationToken);
@@ -74,7 +74,7 @@ internal class PostService : IPostService
 
     public async Task<Post> UpdateAsync(UpdatePostCommand command, CancellationToken cancellationToken)
     {
-        var existingPost = await _postRepository.GetByIdAsync(command.Id, cancellationToken);
+        var existingPost = await _repository.GetByIdAsync(command.Id, cancellationToken);
 
         if (existingPost.IsNull())
         {
@@ -88,7 +88,7 @@ internal class PostService : IPostService
 
         var utcNow = _dateTimeProvider.GetOffsetUtcNow();
         existingPost.Update(command.Title, command.Content, utcNow);
-        await _postRepository.UpdateAsync(existingPost, cancellationToken);
+        await _repository.UpdateAsync(existingPost, cancellationToken);
 
         var eventRequest = _applicationMapper.Map<PostUpdatedEventRequest>(existingPost);
         await _eventPublisher.PublishAsync(eventRequest, cancellationToken);
@@ -98,7 +98,7 @@ internal class PostService : IPostService
 
     public async Task DeleteAsync(DeletePostCommand command, CancellationToken cancellationToken)
     {
-        var existingPost = await _postRepository.GetByIdAsync(command.Id, cancellationToken);
+        var existingPost = await _repository.GetByIdAsync(command.Id, cancellationToken);
 
         if (existingPost.IsNull())
         {
@@ -110,7 +110,7 @@ internal class PostService : IPostService
             throw new PostForbiddenException(command.Id, command.UserId);
         }
 
-        await _postRepository.DeleteAsync(existingPost, cancellationToken);
+        await _repository.DeleteAsync(existingPost, cancellationToken);
 
         var eventRequest = _applicationMapper.Map<PostDeletedEventRequest>(existingPost);
         await _eventPublisher.PublishAsync(eventRequest, cancellationToken);

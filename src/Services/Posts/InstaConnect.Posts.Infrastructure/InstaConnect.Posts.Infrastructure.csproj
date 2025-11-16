@@ -6,14 +6,14 @@
   </ItemGroup>
 
   <ItemGroup Label="Common">
-    <Using Include="Microsoft.Extensions.DependencyInjection"/>
+    <Using Include="Microsoft.Extensions.DependencyInjection" />
     <Using Include="Microsoft.AspNetCore.Hosting" />
     <Using Include="Microsoft.Extensions.Configuration" />
     <Using Include="InstaConnect.Common.Domain.Abstractions" />
     <Using Include="InstaConnect.Common.Domain.Extensions" />
     <Using Include="InstaConnect.Common.Infrastructure.Abstractions" />
     <Using Include="InstaConnect.Common.Infrastructure.Extensions" />
-    <Using Include="InstaConnect.Posts.Infrastructure.Abstractions"/>
+    <Using Include="InstaConnect.Posts.Infrastructure.Abstractions" />
   </ItemGroup>
 
   <ItemGroup Label="Users">
@@ -21,6 +21,7 @@
     <Using Include="InstaConnect.Posts.Domain.Features.Users.Abstractions" />
     <Using Include="InstaConnect.Posts.Domain.Features.Users.Models.Entities" />
     <Using Include="InstaConnect.Posts.Domain.Features.Users.Models.Requests" />
+    <Using Include="InstaConnect.Posts.Infrastructure.Features.Users.Models" />
     <Using Include="InstaConnect.Posts.Infrastructure.Features.Users.Abstractions" />
   </ItemGroup>
 

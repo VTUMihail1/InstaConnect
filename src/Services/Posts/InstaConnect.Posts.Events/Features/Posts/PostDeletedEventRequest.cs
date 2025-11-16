@@ -1,4 +1,4 @@
 ﻿namespace InstaConnect.Posts.Events.Features.Posts;
 
-public record PostDeletedEventRequest(string Id)
+public record PostDeletedEventRequest(PostIdEventPayload Id)
     : IEventRequest;

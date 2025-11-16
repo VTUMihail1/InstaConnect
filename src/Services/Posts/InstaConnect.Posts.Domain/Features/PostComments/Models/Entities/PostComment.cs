@@ -2,29 +2,26 @@
 
 namespace InstaConnect.Posts.Domain.Features.PostComments.Models.Entities;
 
-public class PostComment : IEntity
+public class PostComment : IEntity<PostCommentId>
 {
     private readonly IList<PostCommentLike> _likes;
 
     private PostComment()
     {
-        Id = string.Empty;
-        CommentId = string.Empty;
+        Id = new(new(string.Empty), string.Empty);
         Content = string.Empty;
-        UserId = string.Empty;
+        UserId = new(string.Empty);
         _likes = [];
     }
 
     public PostComment(
-        string id,
-        string commentId,
+        PostCommentId id,
         string content,
-        string userId,
+        UserId userId,
         DateTimeOffset createdAt,
         DateTimeOffset updatedAt)
     {
         Id = id;
-        CommentId = commentId;
         Content = content;
         UserId = userId;
         _likes = [];
@@ -33,15 +30,13 @@ public class PostComment : IEntity
     }
 
     public PostComment(
-        string id,
-        string commentId,
+        PostCommentId id,
         string content,
         User user,
         DateTimeOffset createdAt,
         DateTimeOffset updatedAt)
     {
         Id = id;
-        CommentId = commentId;
         Content = content;
         UserId = user.Id;
         User = user;
@@ -51,8 +46,7 @@ public class PostComment : IEntity
     }
 
     public PostComment(
-        string id,
-        string commentId,
+        PostCommentId id,
         string content,
         User user,
         IList<PostCommentLike> likes,
@@ -60,7 +54,6 @@ public class PostComment : IEntity
         DateTimeOffset updatedAt)
     {
         Id = id;
-        CommentId = commentId;
         Content = content;
         UserId = user.Id;
         User = user;
@@ -69,13 +62,11 @@ public class PostComment : IEntity
         UpdatedAt = updatedAt;
     }
 
-    public string Id { get; }
-
-    public string CommentId { get; }
+    public PostCommentId Id { get; }
 
     public string Content { get; private set; }
 
-    public string UserId { get; }
+    public UserId UserId { get; }
 
     public User? User { get; private set; }
 
@@ -91,14 +82,14 @@ public class PostComment : IEntity
         UpdatedAt = updatedAt;
     }
 
-    public bool IsOwnedByUser(string userId)
+    public bool IsOwnedByUser(UserId userId)
     {
         var isOwnedByUser = UserId.EqualsOrdinalIgnoreCase(userId);
 
         return isOwnedByUser;
     }
 
-    public bool IsNotOwnedByUser(string userId)
+    public bool IsNotOwnedByUser(UserId userId)
     {
         var isNotOwnedByUser = !IsOwnedByUser(userId);
 

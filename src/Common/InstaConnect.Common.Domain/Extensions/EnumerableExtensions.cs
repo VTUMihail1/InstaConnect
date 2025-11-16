@@ -12,6 +12,11 @@ public static class EnumerableExtensions
         return string.Join(seperator, enumerable);
     }
 
+    public static string JoinAsStringWithComa<T>(this IEnumerable<T> enumerable)
+    {
+        return enumerable.JoinAsString(", ");
+    }
+
     public static string JoinAsStringWithNewLine<T>(this IEnumerable<T> enumerable)
     {
         return enumerable.JoinAsString("\n");

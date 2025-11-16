@@ -164,7 +164,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
     [Theory]
     [SortOrderEmptyData]
     public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenSortOrderIsInvalid(
-        IEnumTransformer<SortOrder> transformer)
+        IEnumTransformer<CommonSortOrder> transformer)
     {
         // Arrange
         var request = _requestBuilder.WithSortOrder(_request.Sorting.Order, transformer).Build();
@@ -179,7 +179,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
     [Theory]
     [SortOrderEmptyWithMessageData]
     public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenSortOrderIsInvalid(
-        IEnumTransformer<SortOrder> transformer, string errorMessage)
+        IEnumTransformer<CommonSortOrder> transformer, string errorMessage)
     {
         // Arrange
         var request = _requestBuilder.WithSortOrder(_request.Sorting.Order, transformer).Build();

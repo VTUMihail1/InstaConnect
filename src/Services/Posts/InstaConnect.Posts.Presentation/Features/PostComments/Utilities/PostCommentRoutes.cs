@@ -8,4 +8,3 @@ public static class PostCommentRoutes
 
     public const string Version1 = "1.0";
 }
-

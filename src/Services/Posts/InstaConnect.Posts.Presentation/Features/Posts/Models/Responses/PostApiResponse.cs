@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Posts.Presentation.Features.Posts.Models.Responses;
 
-public record PostApiResponse(string Id, string Title, string Content, PostUserApiResponse User);
+public record PostApiResponse(PostIdApiPayload Id, string Title, string Content, PostUserApiResponse User);

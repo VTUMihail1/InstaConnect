@@ -12,7 +12,7 @@ internal static class ServiceCollectionExtensions
     {
         serviceCollection.AddImplementationsOf<IEmailConfirmationTokenIncludeProperty>(IdentityInfrastructureReference.Assembly);
 
-        BsonClassMap.RegisterClassMap<EmailConfirmationToken>(cm =>
+        BsonClassMap.TryRegisterClassMap<EmailConfirmationToken>(cm =>
         {
             cm.AutoMap();
 

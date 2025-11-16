@@ -19,7 +19,7 @@ public class PostCommentsIncludeProperty : IPostIncludeProperty
             .Lookup<Post, PostComment, Post>(
                 _postsContext.PostComments,
                 p => p.Id,
-                c => c.Id,
+                c => c.Id.Id,
                 p => p.Comments
             );
     }

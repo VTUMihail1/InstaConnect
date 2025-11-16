@@ -4,52 +4,51 @@ using InstaConnect.Common.Events.Abstractions;
 namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Helpers;
 internal class PostCommentLikeService : IPostCommentLikeService
 {
+    private readonly IPostRepository _repository;
     private readonly IEventPublisher _eventPublisher;
-    private readonly IPostRepository _postRepository;
     private readonly IUserRepository _userRepository;
     private readonly IApplicationMapper _applicationMapper;
-    private readonly IPostCommentRepository _postCommentRepository;
-    private readonly IPostCommentLikeFactory _postCommentLikeFactory;
-    private readonly IPostCommentLikeRepository _postCommentLikeRepository;
+    private readonly IPostCommentRepository _commentRepository;
+    private readonly IPostCommentLikeFactory _commentLikeFactory;
+    private readonly IPostCommentLikeRepository _commentLikeRepository;
 
     public PostCommentLikeService(
+        IPostRepository repository,
         IEventPublisher eventPublisher,
-        IPostRepository postRepository,
         IUserRepository userRepository,
         IApplicationMapper applicationMapper,
-        IPostCommentRepository postCommentRepository,
-        IPostCommentLikeFactory postCommentLikeFactory,
-        IPostCommentLikeRepository postCommentLikeRepository)
+        IPostCommentRepository commentRepository,
+        IPostCommentLikeFactory commentLikeFactory,
+        IPostCommentLikeRepository commentLikeRepository)
     {
+        _repository = repository;
         _eventPublisher = eventPublisher;
-        _postRepository = postRepository;
         _userRepository = userRepository;
         _applicationMapper = applicationMapper;
-        _postCommentRepository = postCommentRepository;
-        _postCommentLikeFactory = postCommentLikeFactory;
-        _postCommentLikeRepository = postCommentLikeRepository;
+        _commentRepository = commentRepository;
+        _commentLikeFactory = commentLikeFactory;
+        _commentLikeRepository = commentLikeRepository;
     }
 
     public async Task<PostCommentLikeCollection> GetAllAsync(GetAllPostCommentLikesQuery query, CancellationToken cancellationToken)
     {
-        var existingPost = await _postRepository.GetByIdAsync(query.Filter.Id, cancellationToken);
+        var existingPost = await _repository.GetByIdAsync(query.Filter.CommentId.Id, cancellationToken);
 
         if (existingPost.IsNull())
         {
-            throw new PostNotFoundException(query.Filter.Id);
+            throw new PostNotFoundException(query.Filter.CommentId.Id);
         }
 
-        var existingPostComment = await _postCommentRepository.GetByIdAsync(
-            query.Filter.Id,
+        var existingPostComment = await _commentRepository.GetByIdAsync(
             query.Filter.CommentId,
             cancellationToken);
 
         if (existingPostComment.IsNull())
         {
-            throw new PostCommentNotFoundException(query.Filter.Id, query.Filter.CommentId);
+            throw new PostCommentNotFoundException(query.Filter.CommentId);
         }
 
-        var existingPostCommentLikeCollection = await _postCommentLikeRepository.GetAllAsync(
+        var existingPostCommentLikeCollection = await _commentLikeRepository.GetAllAsync(
             query.Filter,
             query.Sorting,
             query.Pagination,
@@ -61,30 +60,28 @@ internal class PostCommentLikeService : IPostCommentLikeService
 
     public async Task<PostCommentLike> GetByIdAsync(GetPostCommentLikeByIdQuery query, CancellationToken cancellationToken)
     {
-        var existingPost = await _postRepository.GetByIdAsync(query.Id, cancellationToken);
+        var existingPost = await _repository.GetByIdAsync(query.Id.CommentId.Id, cancellationToken);
 
         if (existingPost.IsNull())
         {
-            throw new PostNotFoundException(query.Id);
+            throw new PostNotFoundException(query.Id.CommentId.Id);
         }
 
-        var existingPostComment = await _postCommentRepository.GetByIdAsync(query.Id, query.CommentId, cancellationToken);
+        var existingPostComment = await _commentRepository.GetByIdAsync(query.Id.CommentId, cancellationToken);
 
         if (existingPostComment.IsNull())
         {
-            throw new PostCommentNotFoundException(query.Id, query.CommentId);
+            throw new PostCommentNotFoundException(query.Id.CommentId);
         }
 
-        var existingPostCommentLike = await _postCommentLikeRepository.GetByIdAsync(
+        var existingPostCommentLike = await _commentLikeRepository.GetByIdAsync(
             query.Id,
-            query.CommentId,
-            query.UserId,
             query.Include,
             cancellationToken);
 
         if (existingPostCommentLike.IsNull())
         {
-            throw new PostCommentLikeNotFoundException(query.Id, query.CommentId, query.UserId);
+            throw new PostCommentLikeNotFoundException(query.Id);
         }
 
         return existingPostCommentLike!;
@@ -92,18 +89,18 @@ internal class PostCommentLikeService : IPostCommentLikeService
 
     public async Task<PostCommentLike> AddAsync(AddPostCommentLikeCommand command, CancellationToken cancellationToken)
     {
-        var existingPost = await _postRepository.GetByIdAsync(command.Id, cancellationToken);
+        var existingPost = await _repository.GetByIdAsync(command.CommentId.Id, cancellationToken);
 
         if (existingPost.IsNull())
         {
-            throw new PostNotFoundException(command.Id);
+            throw new PostNotFoundException(command.CommentId.Id);
         }
 
-        var existingPostComment = await _postCommentRepository.GetByIdAsync(command.Id, command.CommentId, cancellationToken);
+        var existingPostComment = await _commentRepository.GetByIdAsync(command.CommentId, cancellationToken);
 
         if (existingPostComment.IsNull())
         {
-            throw new PostCommentNotFoundException(command.Id, command.CommentId);
+            throw new PostCommentNotFoundException(command.CommentId);
         }
 
         var existingUser = await _userRepository.GetByIdAsync(command.UserId, cancellationToken);
@@ -113,22 +110,17 @@ internal class PostCommentLikeService : IPostCommentLikeService
             throw new UserNotFoundException(command.UserId);
         }
 
-        var existingPostCommentLike = await _postCommentLikeRepository.GetByIdAsync(
-            command.Id,
-            command.CommentId,
-            command.UserId,
+        var postCommentLike = _commentLikeFactory.Create(command.CommentId, command.UserId);
+        var existingPostCommentLike = await _commentLikeRepository.GetByIdAsync(
+            postCommentLike.Id,
             cancellationToken);
 
         if (existingPostCommentLike.IsNotNull())
         {
-            throw new PostCommentLikeAlreadyExistsException(
-                command.Id,
-                command.CommentId,
-                command.UserId);
+            throw new PostCommentLikeAlreadyExistsException(postCommentLike.Id);
         }
 
-        var postCommentLike = _postCommentLikeFactory.Create(command.Id, command.CommentId, command.UserId);
-        await _postCommentLikeRepository.AddAsync(postCommentLike, cancellationToken);
+        await _commentLikeRepository.AddAsync(postCommentLike, cancellationToken);
 
         var eventRequest = _applicationMapper.Map<PostCommentLikeAddedEventRequest>(postCommentLike);
         await _eventPublisher.PublishAsync(eventRequest, cancellationToken);
@@ -138,32 +130,30 @@ internal class PostCommentLikeService : IPostCommentLikeService
 
     public async Task DeleteAsync(DeletePostCommentLikeCommand command, CancellationToken cancellationToken)
     {
-        var existingPost = await _postRepository.GetByIdAsync(command.Id, cancellationToken);
+        var existingPost = await _repository.GetByIdAsync(command.Id.CommentId.Id, cancellationToken);
 
         if (existingPost.IsNull())
         {
-            throw new PostNotFoundException(command.Id);
+            throw new PostNotFoundException(command.Id.CommentId.Id);
         }
 
-        var existingPostComment = await _postCommentRepository.GetByIdAsync(command.Id, command.CommentId, cancellationToken);
+        var existingPostComment = await _commentRepository.GetByIdAsync(command.Id.CommentId, cancellationToken);
 
         if (existingPostComment.IsNull())
         {
-            throw new PostCommentNotFoundException(command.Id, command.CommentId);
+            throw new PostCommentNotFoundException(command.Id.CommentId);
         }
 
-        var existingPostCommentLike = await _postCommentLikeRepository.GetByIdAsync(
+        var existingPostCommentLike = await _commentLikeRepository.GetByIdAsync(
             command.Id,
-            command.CommentId,
-            command.UserId,
             cancellationToken);
 
         if (existingPostCommentLike.IsNull())
         {
-            throw new PostCommentLikeNotFoundException(command.Id, command.CommentId, command.UserId);
+            throw new PostCommentLikeNotFoundException(command.Id);
         }
 
-        await _postCommentLikeRepository.DeleteAsync(existingPostCommentLike!, cancellationToken);
+        await _commentLikeRepository.DeleteAsync(existingPostCommentLike!, cancellationToken);
 
         var eventRequest = _applicationMapper.Map<PostCommentLikeDeletedEventRequest>(existingPostCommentLike!);
         await _eventPublisher.PublishAsync(eventRequest, cancellationToken);

@@ -12,7 +12,7 @@ internal static class ServiceCollectionExtensions
     {
         serviceCollection.AddImplementationsOf<IUserClaimIncludeProperty>(IdentityInfrastructureReference.Assembly);
 
-        BsonClassMap.RegisterClassMap<UserClaim>(cm =>
+        BsonClassMap.TryRegisterClassMap<UserClaim>(cm =>
         {
             cm.AutoMap();
 

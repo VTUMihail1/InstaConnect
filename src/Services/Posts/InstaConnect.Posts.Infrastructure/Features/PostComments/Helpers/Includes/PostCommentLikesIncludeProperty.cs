@@ -18,8 +18,8 @@ public class PostCommentLikesIncludeProperty : IPostCommentIncludeProperty
         return pipeline
             .Lookup<PostComment, PostCommentLike, PostComment>(
                 _postsContext.PostCommentLikes,
-                p => p.CommentId,
-                u => u.CommentId,
+                p => p.Id,
+                u => u.Id.CommentId,
                 p => p.Likes
             );
     }

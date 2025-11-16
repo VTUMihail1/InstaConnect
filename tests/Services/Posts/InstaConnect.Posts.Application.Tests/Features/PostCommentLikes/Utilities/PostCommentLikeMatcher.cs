@@ -3,7 +3,7 @@ public static class PostCommentLikeMatcher
 {
     public static GetAllPostCommentLikesQuery IsGetAllPostCommentLikesQuery(GetAllPostCommentLikesQueryRequest request)
     {
-        return Matcher.Is<GetAllPostCommentLikesQuery>(p => p.Filter.Id == request.Filter.Id &&
+        return Matcher.Is<GetAllPostCommentLikesQuery>(p => p.Filter.CommentId == request.Filter.Id &&
                                                             p.Filter.CommentId == request.Filter.CommentId &&
                                                             p.Filter.UserName == request.Filter.UserName &&
                                                             p.Pagination.Page == request.Pagination.Page &&

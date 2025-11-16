@@ -8,7 +8,7 @@ public class GetAllPostLikesQueryRequestBuilder
     private string _userName;
     private int _page;
     private int _pageSize;
-    private SortOrder _sortOrder;
+    private CommonSortOrder _sortOrder;
     private PostLikeSortProperty _sortProperty;
 
     public GetAllPostLikesQueryRequestBuilder(PostLike postLike, User user)
@@ -49,7 +49,7 @@ public class GetAllPostLikesQueryRequestBuilder
         return this;
     }
 
-    public GetAllPostLikesQueryRequestBuilder WithSortOrder(SortOrder order, IEnumTransformer<SortOrder>? transformer = null)
+    public GetAllPostLikesQueryRequestBuilder WithSortOrder(CommonSortOrder order, IEnumTransformer<CommonSortOrder>? transformer = null)
     {
         _sortOrder = transformer.TryTransform(order);
 

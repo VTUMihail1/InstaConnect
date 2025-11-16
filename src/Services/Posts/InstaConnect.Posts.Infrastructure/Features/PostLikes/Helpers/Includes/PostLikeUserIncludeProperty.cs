@@ -17,7 +17,7 @@ public class PostLikeUserIncludeProperty : IPostLikeIncludeProperty
         return pipeline
             .Lookup<PostLike, PostLike, PostLike>(
                 _postsContext.PostLikes,
-                p => p.UserId,
+                p => p.Id.UserId,
                 u => u.Id,
                 p => p.User
             );

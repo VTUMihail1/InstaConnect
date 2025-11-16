@@ -12,7 +12,7 @@ public class FollowsContext : MongoDbContext, IFollowsContext
     {
     }
 
-    public IMongoCollection<User> Users => Collection<User>(FollowCollectionNames.Users);
+    public IMongoCollection<User> Users => ToCollection<User>(FollowCollectionNames.Users);
 
-    public IMongoCollection<Follow> Follows => Collection<Follow>(FollowCollectionNames.Follows);
+    public IMongoCollection<Follow> Follows => ToCollection<Follow>(FollowCollectionNames.Follows);
 }

@@ -11,9 +11,11 @@ internal static class ServiceCollectionExtensions
         serviceCollection.AddImplementationsOf<IPostSortProperty>(PostInfrastructureReference.Assembly);
         serviceCollection.AddImplementationsOf<IPostIncludeProperty>(PostInfrastructureReference.Assembly);
 
-        BsonClassMap.RegisterClassMap<Post>(cm =>
+        BsonClassMap.TryRegisterClassMap<Post>(cm =>
         {
             cm.AutoMap();
+
+            cm.MapIdMember(c => c.Id);
 
             cm.UnmapMember(c => c.User);
             cm.UnmapMember(c => c.Likes);

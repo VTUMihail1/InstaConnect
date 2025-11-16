@@ -13,7 +13,7 @@ internal static class ServiceCollectionExtensions
         serviceCollection.AddImplementationsOf<IUserSortProperty>(IdentityInfrastructureReference.Assembly);
         serviceCollection.AddImplementationsOf<IUserIncludeProperty>(IdentityInfrastructureReference.Assembly);
 
-        BsonClassMap.RegisterClassMap<User>(cm =>
+        BsonClassMap.TryRegisterClassMap<User>(cm =>
         {
             cm.AutoMap();
 

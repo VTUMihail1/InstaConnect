@@ -1,3 +1,5 @@
-﻿namespace InstaConnect.Posts.Application.Features.Users.Commands.Add;
+﻿using InstaConnect.Posts.Application.Features.Users.Models;
 
-public record AddUserCommandResponse(string Id, DateTimeOffset CreatedAt, DateTimeOffset UpdatedAt);
+namespace InstaConnect.Posts.Application.Features.Users.Commands.Add;
+
+public record AddUserCommandResponse(UserIdPayload Id);

@@ -1,9 +1,6 @@
 ﻿namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Requests;
 
-public record GetPostCommentLikeByIdQuery(
-    string Id,
-    string CommentId,
-    string UserId)
+public record GetPostCommentLikeByIdQuery(PostCommentLikeId Id)
 {
     public PostCommentLikeIncludeQuery? Include { get; private set; }
 

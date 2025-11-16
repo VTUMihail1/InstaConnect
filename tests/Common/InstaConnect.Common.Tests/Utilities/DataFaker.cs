@@ -111,9 +111,9 @@ public abstract class DataFaker
         return emptyEnum!;
     }
 
-    public static SortOrder GetSortOrder()
+    public static CommonSortOrder GetSortOrder()
     {
-        const SortOrder SortOrder = SortOrder.ASC;
+        const CommonSortOrder SortOrder = CommonSortOrder.ASC;
 
         return SortOrder;
     }

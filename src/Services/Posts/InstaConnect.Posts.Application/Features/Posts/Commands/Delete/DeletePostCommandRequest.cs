@@ -1,3 +1,5 @@
-﻿namespace InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
+﻿using InstaConnect.Posts.Application.Features.Users.Models;
 
-public record DeletePostCommandRequest(string Id, string UserId) : ICommandRequest;
+namespace InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
+
+public record DeletePostCommandRequest(PostIdPayload Id, UserIdPayload UserId) : ICommandRequest;

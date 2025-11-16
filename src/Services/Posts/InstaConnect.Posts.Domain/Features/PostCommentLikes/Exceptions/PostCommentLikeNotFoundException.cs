@@ -4,26 +4,13 @@ namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Exceptions;
 
 public class PostCommentLikeNotFoundException : NotFoundException
 {
-    public PostCommentLikeNotFoundException(
-        string id,
-        string commentId,
-        string userId)
-        : base(PostCommentLikeExceptionErrorMessages.GetNotFoundMessage(
-            id,
-            commentId,
-            userId))
+    public PostCommentLikeNotFoundException(PostCommentLikeId id)
+        : base(PostCommentLikeExceptionErrorMessages.GetNotFoundMessage(id))
     {
     }
 
-    public PostCommentLikeNotFoundException(
-        string id,
-        string commentId,
-        string userId,
-        Exception exception)
-        : base(PostCommentLikeExceptionErrorMessages.GetNotFoundMessage(
-            id,
-            commentId,
-            userId), exception)
+    public PostCommentLikeNotFoundException(PostCommentLikeId id, Exception exception)
+        : base(PostCommentLikeExceptionErrorMessages.GetNotFoundMessage(id), exception)
     {
     }
 }

@@ -13,13 +13,12 @@ internal class PostCommentFactory : IPostCommentFactory
         _dateTimeProvider = dateTimeProvider;
     }
 
-    public PostComment Create(string id, string userId, string content)
+    public PostComment Create(PostId id, UserId userId, string content)
     {
         var commentId = _guidProvider.NewGuid().ToString();
         var utcNow = _dateTimeProvider.GetOffsetUtcNow();
         var postComment = new PostComment(
-            id,
-            commentId,
+            new(id, commentId),
             content,
             userId,
             utcNow,

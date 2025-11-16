@@ -1,4 +1,6 @@
-﻿using MongoDB.Driver;
+﻿using InstaConnect.Common.Domain.Abstractions;
+
+using MongoDB.Driver;
 
 namespace InstaConnect.Common.Infrastructure.Abstractions;
 
@@ -6,7 +8,9 @@ public interface IMongoDbContext
 {
     public IClientSessionHandle? ClientSessionHandle { get; }
 
-    public IMongoCollection<TEntity> Collection<TEntity>(string name);
+    public IMongoCollection<TEntity> ToCollection<TEntity, TKey>(string name)
+        where TEntity : IEntity<TKey>
+        where TKey : IEntityId;
 
     public Task AbortAsync(CancellationToken cancellationToken);
 

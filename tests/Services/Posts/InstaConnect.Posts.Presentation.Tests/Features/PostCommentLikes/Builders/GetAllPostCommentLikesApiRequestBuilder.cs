@@ -9,7 +9,7 @@ public class GetAllPostCommentLikesApiRequestBuilder
     private string _userName;
     private int _page;
     private int _pageSize;
-    private SortOrder _sortOrder;
+    private CommonSortOrder _sortOrder;
     private PostCommentLikeSortProperty _sortProperty;
 
     public GetAllPostCommentLikesApiRequestBuilder(PostCommentLike postCommentLike, User user)
@@ -58,7 +58,7 @@ public class GetAllPostCommentLikesApiRequestBuilder
         return this;
     }
 
-    public GetAllPostCommentLikesApiRequestBuilder WithSortOrder(SortOrder order, IEnumTransformer<SortOrder>? transformer = null)
+    public GetAllPostCommentLikesApiRequestBuilder WithSortOrder(CommonSortOrder order, IEnumTransformer<CommonSortOrder>? transformer = null)
     {
         _sortOrder = transformer?.Transform(order) ?? order;
 

@@ -13,12 +13,12 @@ internal class PostFactory : IPostFactory
         _dateTimeProvider = dateTimeProvider;
     }
 
-    public Post Create(string userId, string title, string content)
+    public Post Create(UserId userId, string title, string content)
     {
         var id = _guidProvider.NewGuid().ToString();
         var utcNow = _dateTimeProvider.GetOffsetUtcNow();
         var post = new Post(
-            id,
+            new(id),
             title,
             content,
             userId,

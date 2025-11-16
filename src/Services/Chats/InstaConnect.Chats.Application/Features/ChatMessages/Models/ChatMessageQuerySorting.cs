@@ -3,5 +3,5 @@
 namespace InstaConnect.Chats.Application.Features.ChatMessages.Models;
 
 public record ChatMessageQuerySorting(
-    SortOrder Order,
+    CommonSortOrder Order,
     ChatMessageSortProperty Property);

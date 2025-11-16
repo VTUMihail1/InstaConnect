@@ -79,7 +79,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
     [Theory]
     [SortOrderEmptyWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenSortOrderIsInvalid(
-        IEnumTransformer<SortOrder> transformer, string errorMessage)
+        IEnumTransformer<CommonSortOrder> transformer, string errorMessage)
     {
         // Arrange
         var request = _requestBuilder.WithSortOrder(_request.Sorting.Order, transformer).Build();

@@ -21,6 +21,16 @@ public static class StringExtensions
         return result;
     }
 
+    public static string ToCamelCase(this string str)
+    {
+        if (str.IsNullOrEmptyOrWhiteSpace())
+        {
+            return str;
+        }
+
+        return char.ToLowerInvariant(str[0]) + str.Substring(1);
+    }
+
     public static string ToLowerCurrentCulture(this string a)
     {
         var result = a.ToLower(CultureInfo.CurrentCulture);

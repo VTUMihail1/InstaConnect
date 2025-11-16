@@ -3,43 +3,43 @@
 namespace InstaConnect.Posts.Domain.Features.Users.Helpers;
 internal class UserService : IUserService
 {
-    private readonly IUserFactory _userFactory;
-    private readonly IUserRepository _userRepository;
+    private readonly IUserFactory _factory;
+    private readonly IUserRepository _repository;
     private readonly IDateTimeProvider _dateTimeProvider;
 
     public UserService(
-        IUserFactory userFactory,
-        IUserRepository userRepository,
+        IUserFactory factory,
+        IUserRepository repository,
         IDateTimeProvider dateTimeProvider)
     {
-        _userFactory = userFactory;
-        _userRepository = userRepository;
+        _factory = factory;
+        _repository = repository;
         _dateTimeProvider = dateTimeProvider;
     }
     public async Task<User> AddAsync(AddUserCommand command, CancellationToken cancellationToken)
     {
-        var existingUser = await _userRepository.GetByIdAsync(command.Id, cancellationToken);
+        var existingUser = await _repository.GetByIdAsync(command.Id, cancellationToken);
 
         if (existingUser.IsNotNull())
         {
             throw new UserAlreadyExistsException(command.Id);
         }
 
-        var existingUserByEmail = await _userRepository.GetByEmailAsync(command.Email, cancellationToken);
+        var existingUserByEmail = await _repository.GetByEmailAsync(command.Email, cancellationToken);
 
         if (existingUserByEmail.IsNotNull())
         {
             throw new UserEmailAlreadyExistsException(command.Email);
         }
 
-        var existingUserByName = await _userRepository.GetByNameAsync(command.Name, cancellationToken);
+        var existingUserByName = await _repository.GetByNameAsync(command.Name, cancellationToken);
 
         if (existingUserByName.IsNotNull())
         {
             throw new UserNameAlreadyExistsException(command.Name);
         }
 
-        var user = _userFactory.Create(
+        var user = _factory.Create(
             command.Id,
             command.FirstName,
             command.LastName,
@@ -47,30 +47,30 @@ internal class UserService : IUserService
             command.Email,
             command.ProfileImage);
 
-        await _userRepository.AddAsync(user, cancellationToken);
+        await _repository.AddAsync(user, cancellationToken);
 
         return user;
     }
 
     public async Task<User> UpdateAsync(UpdateUserCommand command, CancellationToken cancellationToken)
     {
-        var existingUser = await _userRepository.GetByIdAsync(command.Id, cancellationToken);
+        var existingUser = await _repository.GetByIdAsync(command.Id, cancellationToken);
 
         if (existingUser.IsNull())
         {
             throw new UserNotFoundException(command.Id);
         }
 
-        var existingUserByEmail = await _userRepository.GetByEmailAsync(command.Email, cancellationToken);
+        var existingUserByEmail = await _repository.GetByEmailAsync(command.Email, cancellationToken);
 
-        if (existingUser!.DoesNotHaveEmail(command.Email) && existingUserByEmail.IsNotNull())
+        if (existingUser!.Email.IsNot(command.Email) && existingUserByEmail.IsNotNull())
         {
             throw new UserEmailAlreadyExistsException(command.Email);
         }
 
-        var existingUserByName = await _userRepository.GetByNameAsync(command.Name, cancellationToken);
+        var existingUserByName = await _repository.GetByNameAsync(command.Name, cancellationToken);
 
-        if (existingUser!.DoesNotHaveName(command.Name) && existingUserByName.IsNotNull())
+        if (existingUser!.Name.IsNot(command.Name) && existingUserByName.IsNotNull())
         {
             throw new UserNameAlreadyExistsException(command.Name);
         }
@@ -83,20 +83,20 @@ internal class UserService : IUserService
             command.Name,
             command.ProfileImage,
            utcNow);
-        await _userRepository.UpdateAsync(existingUser, cancellationToken);
+        await _repository.UpdateAsync(existingUser, cancellationToken);
 
         return existingUser;
     }
 
     public async Task DeleteAsync(DeleteUserCommand command, CancellationToken cancellationToken)
     {
-        var existingUser = await _userRepository.GetByIdAsync(command.Id, cancellationToken);
+        var existingUser = await _repository.GetByIdAsync(command.Id, cancellationToken);
 
         if (existingUser.IsNull())
         {
             throw new UserNotFoundException(command.Id);
         }
 
-        await _userRepository.DeleteAsync(existingUser!, cancellationToken);
+        await _repository.DeleteAsync(existingUser!, cancellationToken);
     }
 }

@@ -10,14 +10,12 @@ public interface IPostCommentRepository
         CancellationToken cancellationToken);
 
     Task<PostComment?> GetByIdAsync(
-        string id,
-        string commentId,
+        PostCommentId id,
         PostCommentIncludeQuery? include,
         CancellationToken cancellationToken);
 
     Task<PostComment?> GetByIdAsync(
-        string id,
-        string commentId,
+        PostCommentId id,
         CancellationToken cancellationToken);
 
     Task AddAsync(PostComment entity, CancellationToken cancellationToken);

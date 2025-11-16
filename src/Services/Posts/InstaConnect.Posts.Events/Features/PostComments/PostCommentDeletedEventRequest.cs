@@ -1,6 +1,4 @@
 ﻿namespace InstaConnect.Posts.Events.Features.PostComments;
 
-public record PostCommentDeletedEventRequest(
-    string Id,
-    string CommentId)
+public record PostCommentDeletedEventRequest(PostCommentIdEventPayload Id)
     : IEventRequest;

@@ -1,4 +1,6 @@
-﻿using Mapster;
+﻿using InstaConnect.Identity.Events.Features.Users;
+
+using Mapster;
 
 namespace InstaConnect.Posts.Domain.Features.PostLikes.Mappings;
 
@@ -7,13 +9,15 @@ internal class PostLikeDomainMappings : IRegister
     public void Register(TypeAdapterConfig config)
     {
         config.NewConfig<PostLike, PostLikeAddedEventRequest>()
-            .ConstructUsing(p => new(
-                p.Id,
-                p.UserId,
-                p.CreatedAt,
-                p.UpdatedAt));
+            .ConstructUsing(src => new(
+                src.Id.Adapt<PostLikeIdEventPayload>(),
+                src.CreatedAt));
 
         config.NewConfig<PostLike, PostLikeDeletedEventRequest>()
-            .ConstructUsing(p => new(p.Id, p.UserId));
+            .ConstructUsing(src => new(src.Id.Adapt<PostLikeIdEventPayload>()));
+
+        config.NewConfig<PostLikeId, PostLikeIdEventPayload>()
+            .ConstructUsing(src => new(src.Id.Adapt<PostIdEventPayload>(),
+                                     src.UserId.Adapt<UserIdEventPayload>()));
     }
 }

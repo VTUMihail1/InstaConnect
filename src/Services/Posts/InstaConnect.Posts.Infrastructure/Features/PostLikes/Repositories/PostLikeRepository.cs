@@ -1,4 +1,6 @@
-﻿using MongoDB.Driver;
+﻿using InstaConnect.Posts.Domain.Features.PostLikes.Models.ValueObjects;
+
+using MongoDB.Driver;
 
 namespace InstaConnect.Posts.Infrastructure.Features.PostLikes.Repositories;
 
@@ -38,14 +40,14 @@ internal class PostLikeRepository : IPostLikeRepository
         var sortProperty = _postLikeSortPropertyFactory.Create(sorting.Property);
         var includeProperties = _postLikeIncludePropertyFactory.Create(include?.Properties);
         var offset = _paginator.GetOffset(pagination.Page, pagination.PageSize);
-        var isUserNameEmpty = filter.UserName.IsNullOrEmptyOrWhiteSpace();
+        var isUserNameEmpty = filter.UserName.IsEmpty();
 
         var pipeline = _postsContext
             .PostLikes
             .Aggregate()
             .Includes(includeProperties)
-            .Match(p => p.Id == filter.Id &&
-                        (isUserNameEmpty || p.User!.Name.StartsWithOrdinalIgnoreCase(filter.UserName)));
+            .Match(p => p.Id.Id == filter.Id &&
+                        (isUserNameEmpty || p.User!.Name.StartsWith(filter.UserName)));
 
         var totalCountsResult = await pipeline.Count().FirstOrDefaultAsync(cancellationToken);
 
@@ -61,8 +63,7 @@ internal class PostLikeRepository : IPostLikeRepository
     }
 
     public async Task<PostLike?> GetByIdAsync(
-        string id,
-        string userId,
+        PostLikeId id,
         PostLikeIncludeQuery? include,
         CancellationToken cancellationToken)
     {
@@ -72,18 +73,17 @@ internal class PostLikeRepository : IPostLikeRepository
             .PostLikes
             .Aggregate()
             .Includes(includeProperties)
-            .Match(p => p.Id == id && p.UserId == userId)
+            .Match(p => p.Id == id)
             .FirstOrDefaultAsync(cancellationToken);
 
         return entity;
     }
 
     public async Task<PostLike?> GetByIdAsync(
-        string id,
-        string userId,
+        PostLikeId id,
         CancellationToken cancellationToken)
     {
-        return await GetByIdAsync(id, userId, null, cancellationToken);
+        return await GetByIdAsync(id, null, cancellationToken);
     }
 
     public async Task AddAsync(PostLike entity, CancellationToken cancellationToken)
@@ -93,17 +93,10 @@ internal class PostLikeRepository : IPostLikeRepository
             .AddAsync(_postsContext.ClientSessionHandle, entity, cancellationToken);
     }
 
-    public async Task UpdateAsync(PostLike entity, CancellationToken cancellationToken)
-    {
-        await _postsContext
-            .PostLikes
-            .UpdateAsync(_postsContext.ClientSessionHandle, x => x.Id == entity.Id && x.UserId == entity.UserId, entity, cancellationToken);
-    }
-
     public async Task DeleteAsync(PostLike entity, CancellationToken cancellationToken)
     {
         await _postsContext
             .PostLikes
-            .DeleteAsync(_postsContext.ClientSessionHandle, x => x.Id == entity.Id && x.UserId == entity.UserId, cancellationToken);
+            .DeleteAsync(_postsContext.ClientSessionHandle, x => x.Id == entity.Id, cancellationToken);
     }
 }

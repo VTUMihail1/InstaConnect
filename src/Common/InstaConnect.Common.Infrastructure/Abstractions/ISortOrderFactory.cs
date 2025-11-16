@@ -3,5 +3,5 @@
 namespace InstaConnect.Common.Infrastructure.Abstractions;
 public interface ISortOrderFactory
 {
-    ISortOrder Create(SortOrder sortOrder);
+    ISortOrder Create(CommonSortOrder sortOrder);
 }

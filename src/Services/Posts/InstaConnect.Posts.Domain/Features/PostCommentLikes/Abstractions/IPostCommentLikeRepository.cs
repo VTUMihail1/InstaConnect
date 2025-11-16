@@ -10,21 +10,15 @@ public interface IPostCommentLikeRepository
         CancellationToken cancellationToken);
 
     Task<PostCommentLike?> GetByIdAsync(
-        string id,
-        string commentId,
-        string userId,
+        PostCommentLikeId id,
         PostCommentLikeIncludeQuery? include,
         CancellationToken cancellationToken);
 
     Task<PostCommentLike?> GetByIdAsync(
-        string id,
-        string commentId,
-        string userId,
+        PostCommentLikeId id,
         CancellationToken cancellationToken);
 
     Task AddAsync(PostCommentLike entity, CancellationToken cancellationToken);
-
-    Task UpdateAsync(PostCommentLike entity, CancellationToken cancellationToken);
 
     Task DeleteAsync(PostCommentLike entity, CancellationToken cancellationToken);
 }

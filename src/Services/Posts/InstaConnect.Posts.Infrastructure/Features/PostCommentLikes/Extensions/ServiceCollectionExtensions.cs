@@ -11,9 +11,11 @@ internal static class ServiceCollectionExtensions
         serviceCollection.AddImplementationsOf<IPostCommentLikeSortProperty>(PostInfrastructureReference.Assembly);
         serviceCollection.AddImplementationsOf<IPostCommentLikeIncludeProperty>(PostInfrastructureReference.Assembly);
 
-        BsonClassMap.RegisterClassMap<PostCommentLike>(cm =>
+        BsonClassMap.TryRegisterClassMap<PostCommentLike>(cm =>
         {
             cm.AutoMap();
+
+            cm.MapIdMember(c => c.Id);
 
             cm.UnmapMember(c => c.User);
         });

@@ -1,3 +1,5 @@
-﻿namespace InstaConnect.Posts.Application.Features.Posts.Commands.Add;
+﻿using InstaConnect.Posts.Application.Features.Users.Models;
 
-public record AddPostCommandRequest(string UserId, string Title, string Content) : ICommandRequest<AddPostCommandResponse>;
+namespace InstaConnect.Posts.Application.Features.Posts.Commands.Add;
+
+public record AddPostCommandRequest(UserIdPayload UserId, string Title, string Content) : ICommandRequest<AddPostCommandResponse>;

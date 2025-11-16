@@ -12,7 +12,7 @@ internal static class ServiceCollectionExtensions
     {
         serviceCollection.AddImplementationsOf<IUserIncludeProperty>(FollowInfrastructureReference.Assembly);
 
-        BsonClassMap.RegisterClassMap<User>(cm =>
+        BsonClassMap.TryRegisterClassMap<User>(cm =>
         {
             cm.AutoMap();
 

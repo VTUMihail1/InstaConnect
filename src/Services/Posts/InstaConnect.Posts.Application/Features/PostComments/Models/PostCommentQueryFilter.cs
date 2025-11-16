@@ -1,6 +1,9 @@
-﻿namespace InstaConnect.Posts.Application.Features.PostComments.Models;
+﻿using InstaConnect.Common.Application.Models;
+using InstaConnect.Posts.Application.Features.Users.Models;
+
+namespace InstaConnect.Posts.Application.Features.PostComments.Models;
 
 public record PostCommentQueryFilter(
-    string Id,
-    string UserId,
-    string UserName);
+    PostIdPayload Id,
+    UserIdPayload UserId,
+    NamePayload UserName);

@@ -1,3 +1,6 @@
-﻿namespace InstaConnect.Posts.Application.Features.Posts.Models;
+﻿using InstaConnect.Common.Application.Models;
+using InstaConnect.Posts.Application.Features.Users.Models;
 
-public record PostUserQueryResponse(string Id, string Name, string? ProfileImage);
+namespace InstaConnect.Posts.Application.Features.Posts.Models;
+
+public record PostUserQueryResponse(UserIdPayload Id, NamePayload Name, ImagePayload? ProfileImage);

@@ -4,12 +4,12 @@ namespace InstaConnect.Posts.Domain.Features.Posts.Exceptions;
 
 public class PostForbiddenException : ForbiddenException
 {
-    public PostForbiddenException(string id, string userId)
+    public PostForbiddenException(PostId id, UserId userId)
         : base(PostExceptionErrorMessages.GetForbiddenMessage(id, userId))
     {
     }
 
-    public PostForbiddenException(string id, string userId, Exception exception)
+    public PostForbiddenException(PostId id, UserId userId, Exception exception)
         : base(PostExceptionErrorMessages.GetForbiddenMessage(id, userId), exception)
     {
     }

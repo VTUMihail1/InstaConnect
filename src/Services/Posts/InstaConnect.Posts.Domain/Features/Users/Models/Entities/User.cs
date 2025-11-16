@@ -1,8 +1,6 @@
-﻿using InstaConnect.Common.Domain.Extensions;
+﻿namespace InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
-namespace InstaConnect.Posts.Domain.Features.Users.Models.Entities;
-
-public class User : IEntity
+public class User : IEntity<UserId>
 {
     private readonly IList<Post> _posts;
     private readonly IList<PostLike> _postLikes;
@@ -11,11 +9,11 @@ public class User : IEntity
 
     private User()
     {
-        Id = string.Empty;
+        Id = new(string.Empty);
         FirstName = string.Empty;
         LastName = string.Empty;
-        Email = string.Empty;
-        Name = string.Empty;
+        Email = new(string.Empty);
+        Name = new(string.Empty);
         _posts = [];
         _postLikes = [];
         _postComments = [];
@@ -23,12 +21,12 @@ public class User : IEntity
     }
 
     public User(
-        string id,
+        UserId id,
         string firstName,
         string lastName,
-        string email,
-        string name,
-        string? profileImage,
+        Email email,
+        Name name,
+        Image? profileImage,
         DateTimeOffset createdAt,
         DateTimeOffset updatedAt)
     {
@@ -47,12 +45,12 @@ public class User : IEntity
     }
 
     public User(
-        string id,
+        UserId id,
         string firstName,
         string lastName,
-        string email,
-        string name,
-        string? profileImage,
+        Email email,
+        Name name,
+        Image? profileImage,
         DateTimeOffset createdAt,
         DateTimeOffset updatedAt,
         IList<Post> posts,
@@ -74,17 +72,17 @@ public class User : IEntity
         _postCommentLikes = postCommentLikes;
     }
 
-    public string Id { get; }
+    public UserId Id { get; }
 
     public string FirstName { get; private set; }
 
     public string LastName { get; private set; }
 
-    public string Email { get; private set; }
+    public Email Email { get; private set; }
 
-    public string Name { get; private set; }
+    public Name Name { get; private set; }
 
-    public string? ProfileImage { get; private set; }
+    public Image? ProfileImage { get; private set; }
 
     public IReadOnlyCollection<Post> Posts => _posts.AsReadOnly();
 
@@ -99,11 +97,11 @@ public class User : IEntity
     public DateTimeOffset UpdatedAt { get; private set; }
 
     public void Update(
-        string email,
+        Email email,
         string firstName,
         string lastName,
-        string name,
-        string? profileImage,
+        Name name,
+        Image? profileImage,
         DateTimeOffset updatedAt)
     {
         Email = email;
@@ -112,34 +110,6 @@ public class User : IEntity
         Name = name;
         ProfileImage = profileImage;
         UpdatedAt = updatedAt;
-    }
-
-    public bool HasEmail(string email)
-    {
-        var hasEmail = Email.EqualsOrdinalIgnoreCase(email);
-
-        return hasEmail;
-    }
-
-    public bool DoesNotHaveEmail(string email)
-    {
-        var hasEmail = !HasEmail(email);
-
-        return hasEmail;
-    }
-
-    public bool HasName(string name)
-    {
-        var hasName = Name.EqualsOrdinalIgnoreCase(name);
-
-        return hasName;
-    }
-
-    public bool DoesNotHaveName(string name)
-    {
-        var hasName = !HasName(name);
-
-        return hasName;
     }
 
     public void AddPost(Post post)

@@ -1,9 +1,12 @@
-﻿namespace InstaConnect.Posts.Application.Features.Users.Commands.Update;
+﻿using InstaConnect.Common.Application.Models;
+using InstaConnect.Posts.Application.Features.Users.Models;
+
+namespace InstaConnect.Posts.Application.Features.Users.Commands.Update;
 
 public record UpdateUserCommandRequest(
-    string Id,
+    UserIdPayload Id,
     string FirstName,
     string LastName,
-    string Name,
-    string Email,
-    string? ProfileImage) : ICommandRequest<UpdateUserCommandResponse>;
+    NamePayload Name,
+    EmailPayload Email,
+    ImagePayload? ProfileImage) : ICommandRequest<UpdateUserCommandResponse>;

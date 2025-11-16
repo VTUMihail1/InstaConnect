@@ -9,7 +9,7 @@ public class GetAllPostCommentsQueryRequestBuilder
     private string _userName;
     private int _page;
     private int _pageSize;
-    private SortOrder _sortOrder;
+    private CommonSortOrder _sortOrder;
     private PostCommentSortProperty _sortProperty;
 
     public GetAllPostCommentsQueryRequestBuilder(PostComment postComment, User user)
@@ -58,7 +58,7 @@ public class GetAllPostCommentsQueryRequestBuilder
         return this;
     }
 
-    public GetAllPostCommentsQueryRequestBuilder WithSortOrder(SortOrder order, IEnumTransformer<SortOrder>? transformer = null)
+    public GetAllPostCommentsQueryRequestBuilder WithSortOrder(CommonSortOrder order, IEnumTransformer<CommonSortOrder>? transformer = null)
     {
         _sortOrder = transformer.TryTransform(order);
 

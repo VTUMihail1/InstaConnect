@@ -1,2 +1,2 @@
 ﻿namespace InstaConnect.Identity.Events.Features.Users;
-public record UserDeletedEventRequest(string Id) : IEventRequest;
+public record UserDeletedEventRequest(UserIdEventPayload Id) : IEventRequest;

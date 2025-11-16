@@ -10,19 +10,15 @@ public interface IPostLikeRepository
         CancellationToken cancellationToken);
 
     Task<PostLike?> GetByIdAsync(
-        string id,
-        string userId,
+        PostLikeId id,
         PostLikeIncludeQuery? include,
         CancellationToken cancellationToken);
 
     Task<PostLike?> GetByIdAsync(
-        string id,
-        string userId,
+        PostLikeId id,
         CancellationToken cancellationToken);
 
     Task AddAsync(PostLike entity, CancellationToken cancellationToken);
-
-    Task UpdateAsync(PostLike entity, CancellationToken cancellationToken);
 
     Task DeleteAsync(PostLike entity, CancellationToken cancellationToken);
 }

@@ -1,6 +1,7 @@
 ﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Update;
+using InstaConnect.Posts.Application.Features.Posts.Models;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
 
@@ -14,21 +15,20 @@ internal class PostPresentationMappings : IRegister
     {
         config.NewConfig<GetAllPostsApiRequest, GetAllPostsQueryRequest>()
             .ConstructUsing(src => new(
-                new(src.Filter.UserId, src.Filter.UserName, src.Filter.Title),
-                new(src.Sorting.Order, src.Sorting.Property),
-                new(src.Pagination.Page, src.Pagination.PageSize)));
+                new(
+                    new(src.UserId),
+                    new(src.UserName),
+                    src.Title),
+                new(
+                    src.SortOrder,
+                    src.SortProperty),
+                new(
+                    src.Page,
+                    src.PageSize)));
 
         config.NewConfig<GetAllPostsQueryResponse, GetAllPostsApiResponse>()
             .ConstructUsing(pc => new(
-                  pc.Data.Select(p => new PostApiResponse(
-                                      p.Id,
-                                      p.Title,
-                                      p.Content,
-                                      new(
-                                          p.User.Id,
-                                          p.User.Name,
-                                          p.User.ProfileImage)))
-                         .ToList(),
+                  pc.Data.Adapt<ICollection<PostApiResponse>>(),
                   pc.Page,
                   pc.PageSize,
                   pc.TotalCount,
@@ -36,31 +36,52 @@ internal class PostPresentationMappings : IRegister
                   pc.HasPreviousPage));
 
         config.NewConfig<GetPostByIdApiRequest, GetPostByIdQueryRequest>()
-            .ConstructUsing(src => new(src.Id));
+            .ConstructUsing(src => new(src.Id.Adapt<PostIdPayload>()));
 
         config.NewConfig<GetPostByIdQueryResponse, GetPostByIdApiResponse>()
+            .ConstructUsing(src => new(src.Adapt<PostApiResponse>()));
+
+        config.NewConfig<PostQueryResponse, PostApiResponse>()
             .ConstructUsing(src => new(
-                new(src.Data.Id,
-                    src.Data.Title,
-                    src.Data.Content,
-                    new(
-                        src.Data.User.Id,
-                        src.Data.User.Name,
-                        src.Data.User.ProfileImage))));
+                    src.Id.Adapt<PostIdApiPayload>(),
+                    src.Title,
+                    src.Content,
+                    src.User.Adapt<PostUserApiResponse>()));
 
         config.NewConfig<AddPostApiRequest, AddPostCommandRequest>()
-            .ConstructUsing(src => new(src.UserId, src.Body.Title, src.Body.Content));
+            .ConstructUsing(src => new(
+                new(src.UserId),
+                src.Body.Title,
+                src.Body.Content));
 
         config.NewConfig<AddPostCommandResponse, AddPostApiResponse>()
-            .ConstructUsing(src => new(src.Id, src.CreatedAt, src.UpdatedAt));
+            .ConstructUsing(src => new(src.Id.Adapt<PostIdApiPayload>()));
 
         config.NewConfig<UpdatePostApiRequest, UpdatePostCommandRequest>()
-            .ConstructUsing(src => new(src.Id, src.UserId, src.Body.Title, src.Body.Content));
+            .ConstructUsing(src => new(
+                new(src.Id),
+                new(src.UserId),
+                src.Body.Title,
+                src.Body.Content));
 
         config.NewConfig<UpdatePostCommandResponse, UpdatePostApiResponse>()
-            .ConstructUsing(src => new(src.Id, src.CreatedAt, src.UpdatedAt));
+            .ConstructUsing(src => new(src.Id.Adapt<PostIdApiPayload>()));
 
         config.NewConfig<DeletePostApiRequest, DeletePostCommandRequest>()
-            .ConstructUsing(src => new(src.Id, src.UserId));
+            .ConstructUsing(src => new(
+                new(src.Id),
+                new(src.UserId)));
+
+        config.NewConfig<PostIdApiPayload, PostIdPayload>()
+            .ConstructUsing(src => new(src.Id));
+
+        config.NewConfig<PostIdPayload, PostIdApiPayload>()
+            .ConstructUsing(src => new(src.Id));
+
+        config.NewConfig<PostUserQueryResponse, PostUserApiResponse>()
+            .ConstructUsing(src => new(
+                src.Id.Adapt<UserIdApiPayload>(),
+                src.Name.Adapt<NameApiPayload>(),
+                src.ProfileImage.Adapt<ImageApiPayload>()));
     }
 }

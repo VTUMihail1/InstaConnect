@@ -10,12 +10,12 @@ public interface IPostRepository
         CancellationToken cancellationToken);
 
     Task<Post?> GetByIdAsync(
-        string id,
+        PostId id,
         PostIncludeQuery? include,
         CancellationToken cancellationToken);
 
     Task<Post?> GetByIdAsync(
-        string id,
+        PostId id,
         CancellationToken cancellationToken);
 
     Task AddAsync(Post entity, CancellationToken cancellationToken);

@@ -4,13 +4,13 @@ namespace InstaConnect.Posts.Domain.Features.PostComments.Exceptions;
 
 public class PostCommentNotFoundException : NotFoundException
 {
-    public PostCommentNotFoundException(string id, string commentId)
-        : base(PostCommentExceptionErrorMessages.GetNotFoundMessage(id, commentId))
+    public PostCommentNotFoundException(PostCommentId id)
+        : base(PostCommentExceptionErrorMessages.GetNotFoundMessage(id))
     {
     }
 
-    public PostCommentNotFoundException(string id, string commentId, Exception exception)
-        : base(PostCommentExceptionErrorMessages.GetNotFoundMessage(id, commentId), exception)
+    public PostCommentNotFoundException(PostCommentId id, Exception exception)
+        : base(PostCommentExceptionErrorMessages.GetNotFoundMessage(id), exception)
     {
     }
 }

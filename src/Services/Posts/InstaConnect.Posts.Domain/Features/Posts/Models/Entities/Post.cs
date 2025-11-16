@@ -2,26 +2,26 @@
 
 namespace InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
 
-public class Post : IEntity
+public class Post : IEntity<PostId>
 {
     private readonly IList<PostLike> _likes;
     private readonly IList<PostComment> _comments;
 
     private Post()
     {
-        Id = string.Empty;
+        Id = new(string.Empty);
         Title = string.Empty;
         Content = string.Empty;
-        UserId = string.Empty;
+        UserId = new(string.Empty);
         _likes = [];
         _comments = [];
     }
 
     public Post(
-        string id,
+        PostId id,
         string title,
         string content,
-        string userId,
+        UserId userId,
         DateTimeOffset createdAt,
         DateTimeOffset updatedAt)
     {
@@ -36,7 +36,7 @@ public class Post : IEntity
     }
 
     public Post(
-        string id,
+        PostId id,
         string title,
         string content,
         User user,
@@ -55,7 +55,7 @@ public class Post : IEntity
     }
 
     public Post(
-        string id,
+        PostId id,
         string title,
         string content,
         User user,
@@ -75,13 +75,13 @@ public class Post : IEntity
         UpdatedAt = updatedAt;
     }
 
-    public string Id { get; }
+    public PostId Id { get; }
 
     public string Title { get; private set; }
 
     public string Content { get; private set; }
 
-    public string UserId { get; }
+    public UserId UserId { get; }
 
     public User? User { get; private set; }
 
@@ -100,14 +100,14 @@ public class Post : IEntity
         UpdatedAt = updatedAt;
     }
 
-    public bool IsOwnedByUser(string userId)
+    public bool IsOwnedByUser(UserId userId)
     {
         var isOwnedByUser = UserId.EqualsOrdinalIgnoreCase(userId);
 
         return isOwnedByUser;
     }
 
-    public bool IsNotOwnedByUser(string userId)
+    public bool IsNotOwnedByUser(UserId userId)
     {
         var isNotOwnedByUser = !IsOwnedByUser(userId);
 

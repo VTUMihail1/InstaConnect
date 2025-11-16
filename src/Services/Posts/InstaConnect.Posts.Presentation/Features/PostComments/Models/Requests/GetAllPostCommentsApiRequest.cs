@@ -1,6 +1,14 @@
-﻿namespace InstaConnect.Posts.Presentation.Features.PostComments.Models.Requests;
+﻿using InstaConnect.Common.Domain.Models;
+using InstaConnect.Posts.Domain.Features.PostComments.Models.Requests;
+using InstaConnect.Posts.Presentation.Features.Users.Utilities;
+
+namespace InstaConnect.Posts.Presentation.Features.PostComments.Models.Requests;
 
 public record GetAllPostCommentsApiRequest(
-    [FromQuery] PostCommentFilterApiRequest Filter,
-    [FromQuery] PostCommentSortingApiRequest Sorting,
-    [FromQuery] PostCommentPaginationApiRequest Pagination);
+    [FromRoute] string Id,
+    [FromQuery] string UserId = UserDefaultValues.Id,
+    [FromQuery] string UserName = UserDefaultValues.Name,
+    [FromQuery] CommonSortOrder SortOrder = CommonDefaultValues.SortOrder,
+    [FromQuery] PostCommentSortProperty SortProperty = PostCommentDefaultValues.SortProperty,
+    [FromQuery] int Page = PostCommentDefaultValues.Page,
+    [FromQuery] int PageSize = PostCommentDefaultValues.PageSize);

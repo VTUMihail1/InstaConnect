@@ -9,7 +9,7 @@ public class GetAllPostCommentLikesQueryRequestBuilder
     private string _userName;
     private int _page;
     private int _pageSize;
-    private SortOrder _sortOrder;
+    private CommonSortOrder _sortOrder;
     private PostCommentLikeSortProperty _sortProperty;
 
     public GetAllPostCommentLikesQueryRequestBuilder(PostCommentLike postCommentLike, User user)
@@ -58,7 +58,7 @@ public class GetAllPostCommentLikesQueryRequestBuilder
         return this;
     }
 
-    public GetAllPostCommentLikesQueryRequestBuilder WithSortOrder(SortOrder order, IEnumTransformer<SortOrder>? transformer = null)
+    public GetAllPostCommentLikesQueryRequestBuilder WithSortOrder(CommonSortOrder order, IEnumTransformer<CommonSortOrder>? transformer = null)
     {
         _sortOrder = transformer.TryTransform(order);
 

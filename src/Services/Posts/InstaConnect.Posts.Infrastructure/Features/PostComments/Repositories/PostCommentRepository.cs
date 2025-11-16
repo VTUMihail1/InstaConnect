@@ -1,4 +1,6 @@
-﻿using MongoDB.Driver;
+﻿using InstaConnect.Posts.Domain.Features.PostComments.Models.ValueObjects;
+
+using MongoDB.Driver;
 
 namespace InstaConnect.Posts.Infrastructure.Features.PostComments.Repositories;
 
@@ -38,16 +40,16 @@ internal class PostCommentRepository : IPostCommentRepository
         var sortProperty = _postCommentSortPropertyFactory.Create(sorting.Property);
         var includeProperties = _postCommentIncludePropertyFactory.Create(include?.Properties);
         var offset = _paginator.GetOffset(pagination.Page, pagination.PageSize);
-        var isUserIdEmpty = filter.UserId.IsNullOrEmptyOrWhiteSpace();
-        var isUserNameEmpty = filter.UserName.IsNullOrEmptyOrWhiteSpace();
+        var isUserIdEmpty = filter.UserId.IsEmpty();
+        var isUserNameEmpty = filter.UserName.IsEmpty();
 
         var pipeline = _postsContext
             .PostComments
             .Aggregate()
             .Includes(includeProperties)
-            .Match(p => p.Id == filter.Id &&
+            .Match(p => p.Id.Id == filter.Id &&
                         (isUserIdEmpty || p.UserId == filter.UserId) &&
-                        (isUserNameEmpty || p.User!.Name.StartsWithOrdinalIgnoreCase(filter.UserName)));
+                        (isUserNameEmpty || p.User!.Name.StartsWith(filter.UserName)));
 
         var totalCountsResult = await pipeline.Count().FirstOrDefaultAsync(cancellationToken);
 
@@ -63,8 +65,7 @@ internal class PostCommentRepository : IPostCommentRepository
     }
 
     public async Task<PostComment?> GetByIdAsync(
-        string id,
-        string commentId,
+        PostCommentId id,
         PostCommentIncludeQuery? include,
         CancellationToken cancellationToken)
     {
@@ -74,18 +75,17 @@ internal class PostCommentRepository : IPostCommentRepository
             .PostComments
             .Aggregate()
             .Includes(includeProperties)
-            .Match(p => p.Id == id && p.CommentId == commentId)
+            .Match(p => p.Id == id)
             .FirstOrDefaultAsync(cancellationToken);
 
         return entity;
     }
 
     public async Task<PostComment?> GetByIdAsync(
-        string id,
-        string commentId,
+        PostCommentId id,
         CancellationToken cancellationToken)
     {
-        return await GetByIdAsync(id, commentId, null, cancellationToken);
+        return await GetByIdAsync(id, null, cancellationToken);
     }
 
     public async Task AddAsync(PostComment entity, CancellationToken cancellationToken)
@@ -101,7 +101,7 @@ internal class PostCommentRepository : IPostCommentRepository
             .PostComments
             .UpdateAsync(
             _postsContext.ClientSessionHandle,
-            x => x.Id == entity.Id && x.CommentId == entity.CommentId,
+            x => x.Id == entity.Id,
             entity,
             cancellationToken);
     }
@@ -112,7 +112,7 @@ internal class PostCommentRepository : IPostCommentRepository
             .PostComments
             .DeleteAsync(
             _postsContext.ClientSessionHandle,
-            x => x.Id == entity.Id && x.CommentId == entity.CommentId,
+            x => x.Id == entity.Id,
             cancellationToken);
     }
 }

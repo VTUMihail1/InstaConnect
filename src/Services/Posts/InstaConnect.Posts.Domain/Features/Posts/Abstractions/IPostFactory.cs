@@ -2,5 +2,5 @@
 
 public interface IPostFactory
 {
-    public Post Create(string userId, string title, string content);
+    public Post Create(UserId userId, string title, string content);
 }

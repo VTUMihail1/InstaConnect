@@ -33,6 +33,7 @@
     <Using Include="InstaConnect.Common.Events.Abstractions" />
     <Using Include="InstaConnect.Common.Application.Abstractions" />
     <Using Include="InstaConnect.Common.Presentation.Utilities"/>
+    <Using Include="InstaConnect.Common.Application.Models" />
     <Using Include="InstaConnect.Common.Presentation.Abstractions" />
     <Using Include="InstaConnect.Common.Presentation.Binders.FromClaim"/>
   </ItemGroup>

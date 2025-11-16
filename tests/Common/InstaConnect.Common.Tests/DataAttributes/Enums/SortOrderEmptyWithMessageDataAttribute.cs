@@ -5,7 +5,7 @@ using InstaConnect.Common.Tests.DataAttributes.Enums.Empty;
 namespace InstaConnect.Common.Tests.DataAttributes.Enums;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-public sealed class SortOrderEmptyWithMessageDataAttribute : EmptyEnumWithMessageDataAttribute<SortOrder>
+public sealed class SortOrderEmptyWithMessageDataAttribute : EmptyEnumWithMessageDataAttribute<CommonSortOrder>
 {
     public SortOrderEmptyWithMessageDataAttribute() : base(CommonErrorMessages.GetSortOrderEmpty())
     {

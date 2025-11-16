@@ -4,7 +4,7 @@ namespace InstaConnect.Posts.Domain.Features.Users.Exceptions;
 
 public class UserNameAlreadyExistsException : BadRequestException
 {
-    public UserNameAlreadyExistsException(string name)
+    public UserNameAlreadyExistsException(Name name)
         : base(UserExceptionErrorMessages.GetNameAlreadyExistsMessage(name))
     {
     }

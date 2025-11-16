@@ -2,5 +2,5 @@
 
 public interface IPostCommentLikeFactory
 {
-    public PostCommentLike Create(string id, string commentId, string userId);
+    public PostCommentLike Create(PostCommentId commentId, UserId userId);
 }

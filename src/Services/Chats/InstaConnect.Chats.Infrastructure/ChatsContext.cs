@@ -11,9 +11,9 @@ public class ChatsContext : MongoDbContext, IChatsContext
     {
     }
 
-    public IMongoCollection<User> Users => Collection<User>(ChatCollectionNames.Users);
+    public IMongoCollection<User> Users => ToCollection<User>(ChatCollectionNames.Users);
 
-    public IMongoCollection<Chat> Chats => Collection<Chat>(ChatCollectionNames.Chats);
+    public IMongoCollection<Chat> Chats => ToCollection<Chat>(ChatCollectionNames.Chats);
 
-    public IMongoCollection<ChatMessage> ChatMessages => Collection<ChatMessage>(ChatCollectionNames.ChatMessages);
+    public IMongoCollection<ChatMessage> ChatMessages => ToCollection<ChatMessage>(ChatCollectionNames.ChatMessages);
 }

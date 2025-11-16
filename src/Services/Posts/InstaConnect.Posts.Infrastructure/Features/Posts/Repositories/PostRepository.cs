@@ -1,4 +1,6 @@
-﻿using MongoDB.Driver;
+﻿using InstaConnect.Posts.Domain.Features.Posts.Models.ValueObjects;
+
+using MongoDB.Driver;
 
 namespace InstaConnect.Posts.Infrastructure.Features.Posts.Repositories;
 
@@ -38,8 +40,8 @@ internal class PostRepository : IPostRepository
         var sortProperty = _postSortPropertyFactory.Create(sorting.Property);
         var includeProperties = _postIncludePropertyFactory.Create(include?.Properties);
         var offset = _paginator.GetOffset(pagination.Page, pagination.PageSize);
-        var isUserIdEmpty = filter.UserId.IsNullOrEmptyOrWhiteSpace();
-        var isUserNameEmpty = filter.UserName.IsNullOrEmptyOrWhiteSpace();
+        var isUserIdEmpty = filter.UserId.IsEmpty();
+        var isUserNameEmpty = filter.UserName.IsEmpty();
         var isTitleEmpty = filter.Title.IsNullOrEmptyOrWhiteSpace();
 
         var pipeline = _postsContext
@@ -47,7 +49,7 @@ internal class PostRepository : IPostRepository
             .Aggregate()
             .Includes(includeProperties)
             .Match(p => (isUserIdEmpty || p.UserId == filter.UserId) &&
-                        (isUserNameEmpty || p.User!.Name.StartsWithOrdinalIgnoreCase(filter.UserName) &&
+                        (isUserNameEmpty || p.User!.Name.StartsWith(filter.UserName) &&
                         (isTitleEmpty || p.Title.StartsWithOrdinalIgnoreCase(filter.Title))));
 
         var totalCountsResult = await pipeline.Count().FirstOrDefaultAsync(cancellationToken);
@@ -64,7 +66,7 @@ internal class PostRepository : IPostRepository
     }
 
     public async Task<Post?> GetByIdAsync(
-        string id,
+        PostId id,
         PostIncludeQuery? include,
         CancellationToken cancellationToken)
     {
@@ -81,7 +83,7 @@ internal class PostRepository : IPostRepository
     }
 
     public async Task<Post?> GetByIdAsync(
-        string id,
+        PostId id,
         CancellationToken cancellationToken)
     {
         return await GetByIdAsync(id, null, cancellationToken);

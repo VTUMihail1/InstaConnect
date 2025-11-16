@@ -3,5 +3,5 @@
 namespace InstaConnect.Chats.Domain.Features.Chats.Models.Requests;
 
 public record ChatByParticipantSortingQuery(
-    SortOrder Order,
+    CommonSortOrder Order,
     ChatByParticipantSortProperty Property);

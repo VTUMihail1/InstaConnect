@@ -1,7 +1,5 @@
-﻿namespace InstaConnect.Posts.Application.Features.PostComments.Commands.Update;
+﻿using InstaConnect.Posts.Domain.Features.PostComments.Models.ValueObjects;
 
-public record UpdatePostCommentCommandResponse(
-    string Id,
-    string CommentId,
-    DateTimeOffset CreatedAt,
-    DateTimeOffset UpdatedAt);
+namespace InstaConnect.Posts.Application.Features.PostComments.Commands.Update;
+
+public record UpdatePostCommentCommandResponse(PostCommentId Id);

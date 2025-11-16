@@ -1,3 +1,6 @@
-﻿namespace InstaConnect.Posts.Application.Features.PostLikes.Models;
+﻿using InstaConnect.Common.Application.Models;
+using InstaConnect.Posts.Application.Features.Users.Models;
 
-public record PostLikeUserQueryResponse(string Id, string Name, string? ProfileImage);
+namespace InstaConnect.Posts.Application.Features.PostLikes.Models;
+
+public record PostLikeUserQueryResponse(UserIdPayload Id, NamePayload Name, ImagePayload? ProfileImage);

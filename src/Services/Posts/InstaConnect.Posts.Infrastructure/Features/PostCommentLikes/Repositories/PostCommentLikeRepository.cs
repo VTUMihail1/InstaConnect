@@ -1,4 +1,6 @@
-﻿using MongoDB.Driver;
+﻿using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.ValueObjects;
+
+using MongoDB.Driver;
 
 namespace InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Repositories;
 
@@ -38,15 +40,14 @@ internal class PostCommentLikeRepository : IPostCommentLikeRepository
         var sortProperty = _postCommentLikeSortPropertyFactory.Create(sorting.Property);
         var includeProperties = _postCommentLikeIncludePropertyFactory.Create(include?.Properties);
         var offset = _paginator.GetOffset(pagination.Page, pagination.PageSize);
-        var isUserNameEmpty = filter.UserName.IsNullOrEmptyOrWhiteSpace();
+        var isUserNameEmpty = filter.UserName.IsEmpty();
 
         var pipeline = _postsContext
             .PostCommentLikes
             .Aggregate()
             .Includes(includeProperties)
-            .Match(p => p.Id == filter.Id &&
-                        p.CommentId == filter.CommentId &&
-                        (isUserNameEmpty || p.User!.Name.StartsWithOrdinalIgnoreCase(filter.UserName)));
+            .Match(p => p.Id.CommentId == filter.CommentId &&
+                        (isUserNameEmpty || p.User!.Name.StartsWith(filter.UserName)));
 
         var totalCountsResult = await pipeline.Count().FirstOrDefaultAsync(cancellationToken);
 
@@ -62,9 +63,7 @@ internal class PostCommentLikeRepository : IPostCommentLikeRepository
     }
 
     public async Task<PostCommentLike?> GetByIdAsync(
-        string id,
-        string commentId,
-        string userId,
+        PostCommentLikeId id,
         PostCommentLikeIncludeQuery? include,
         CancellationToken cancellationToken)
     {
@@ -74,19 +73,17 @@ internal class PostCommentLikeRepository : IPostCommentLikeRepository
             .PostCommentLikes
             .Aggregate()
             .Includes(includeProperties)
-            .Match(p => p.Id == id && p.CommentId == commentId && p.UserId == userId)
+            .Match(p => p.Id == id)
             .FirstOrDefaultAsync(cancellationToken);
 
         return entity;
     }
 
     public async Task<PostCommentLike?> GetByIdAsync(
-        string id,
-        string commentId,
-        string userId,
+        PostCommentLikeId id,
         CancellationToken cancellationToken)
     {
-        return await GetByIdAsync(id, commentId, userId, null, cancellationToken);
+        return await GetByIdAsync(id, null, cancellationToken);
     }
 
     public async Task AddAsync(PostCommentLike entity, CancellationToken cancellationToken)
@@ -96,24 +93,13 @@ internal class PostCommentLikeRepository : IPostCommentLikeRepository
             .AddAsync(_postsContext.ClientSessionHandle, entity, cancellationToken);
     }
 
-    public async Task UpdateAsync(PostCommentLike entity, CancellationToken cancellationToken)
-    {
-        await _postsContext
-            .PostCommentLikes
-            .UpdateAsync(
-            _postsContext.ClientSessionHandle,
-            p => p.Id == entity.Id && p.CommentId == entity.CommentId && p.UserId == entity.UserId,
-            entity,
-            cancellationToken);
-    }
-
     public async Task DeleteAsync(PostCommentLike entity, CancellationToken cancellationToken)
     {
         await _postsContext
             .PostCommentLikes
             .DeleteAsync(
             _postsContext.ClientSessionHandle,
-            p => p.Id == entity.Id && p.CommentId == entity.CommentId && p.UserId == entity.UserId,
+            p => p.Id == entity.Id,
             cancellationToken);
     }
 }

@@ -3,5 +3,5 @@
 namespace InstaConnect.Identity.Application.Features.Users.Models;
 
 public record UserQuerySorting(
-    SortOrder Order,
+    CommonSortOrder Order,
     UserSortProperty Property);

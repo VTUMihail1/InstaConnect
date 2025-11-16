@@ -12,7 +12,7 @@ internal class SortOrderFactory : ISortOrderFactory
         _sortOrders = sortOrders;
     }
 
-    public ISortOrder Create(SortOrder sortOrder)
+    public ISortOrder Create(CommonSortOrder sortOrder)
     {
         var order = _sortOrders.FirstOrDefault(s => s.SortOrder == sortOrder);
 

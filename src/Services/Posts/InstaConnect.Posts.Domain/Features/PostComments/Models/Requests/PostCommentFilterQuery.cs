@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Domain.Features.PostComments.Models.Requests;
 
 public record PostCommentFilterQuery(
-    string Id,
-    string UserId,
-    string UserName);
+    PostId Id,
+    UserId UserId,
+    Name UserName);

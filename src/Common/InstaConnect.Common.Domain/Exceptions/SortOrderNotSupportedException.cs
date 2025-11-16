@@ -4,12 +4,12 @@ using InstaConnect.Common.Domain.Utilities;
 namespace InstaConnect.Common.Domain.Exceptions;
 public class SortOrderNotSupportedException : BadRequestException
 {
-    public SortOrderNotSupportedException(SortOrder sortOrder)
+    public SortOrderNotSupportedException(CommonSortOrder sortOrder)
         : base(CommonExceptionErrorMessages.GetSortOrderNotSupportedMessage(sortOrder))
     {
     }
 
-    public SortOrderNotSupportedException(SortOrder sortOrder, Exception exception)
+    public SortOrderNotSupportedException(CommonSortOrder sortOrder, Exception exception)
         : base(CommonExceptionErrorMessages.GetSortOrderNotSupportedMessage(sortOrder), exception)
     {
     }

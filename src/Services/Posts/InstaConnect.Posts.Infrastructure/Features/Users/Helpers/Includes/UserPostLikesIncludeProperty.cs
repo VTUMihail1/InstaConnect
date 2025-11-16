@@ -19,7 +19,7 @@ public class UserPostLikesIncludeProperty : IUserIncludeProperty
             .Lookup<User, PostLike, User>(
                 _postsContext.PostLikes,
                 p => p.Id,
-                l => l.UserId,
+                l => l.Id.UserId,
                 p => p.PostLikes
             );
     }

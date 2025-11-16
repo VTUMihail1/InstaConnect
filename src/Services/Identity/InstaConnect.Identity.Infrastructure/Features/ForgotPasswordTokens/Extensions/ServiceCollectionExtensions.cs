@@ -12,7 +12,7 @@ internal static class ServiceCollectionExtensions
     {
         serviceCollection.AddImplementationsOf<IForgotPasswordTokenIncludeProperty>(IdentityInfrastructureReference.Assembly);
 
-        BsonClassMap.RegisterClassMap<ForgotPasswordToken>(cm =>
+        BsonClassMap.TryRegisterClassMap<ForgotPasswordToken>(cm =>
         {
             cm.AutoMap();
 

@@ -1,8 +1,10 @@
 ﻿using InstaConnect.Posts.Application.Features.PostComments.Commands.Add;
 using InstaConnect.Posts.Application.Features.PostComments.Commands.Delete;
 using InstaConnect.Posts.Application.Features.PostComments.Commands.Update;
+using InstaConnect.Posts.Application.Features.PostComments.Models;
 using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAll;
 using InstaConnect.Posts.Application.Features.PostComments.Queries.GetById;
+using InstaConnect.Posts.Application.Features.Posts.Models;
 
 using Mapster;
 
@@ -14,53 +16,82 @@ internal class PostCommentPresentationMappings : IRegister
     {
         config.NewConfig<GetAllPostCommentsApiRequest, GetAllPostCommentsQueryRequest>()
             .ConstructUsing(src => new(
-                new(src.Filter.Id, src.Filter.UserId, src.Filter.UserName),
-                new(src.Sorting.Order, src.Sorting.Property),
-                new(src.Pagination.Page, src.Pagination.PageSize)));
+                new(
+                    new(src.Id),
+                    new(src.UserId),
+                    new(src.UserName)),
+                new(
+                    src.SortOrder,
+                    src.SortProperty),
+                new(
+                    src.Page,
+                    src.PageSize)));
 
         config.NewConfig<GetAllPostCommentsQueryResponse, GetAllPostCommentsApiResponse>()
             .ConstructUsing(pc => new(
-                  pc.Data.Select(p => new PostCommentApiResponse(
-                                      p.Id,
-                                      p.CommentId,
-                                      p.Content,
-                                      new(
-                                          p.User.Id,
-                                          p.User.Name,
-                                          p.User.ProfileImage)))
-                         .ToList(),
-                  pc.Page,
-                  pc.PageSize,
-                  pc.TotalCount,
-                  pc.HasNextPage,
-                  pc.HasPreviousPage));
+                pc.Data.Adapt<ICollection<PostCommentApiResponse>>(),
+                pc.Page,
+                pc.PageSize,
+                pc.TotalCount,
+                pc.HasNextPage,
+                pc.HasPreviousPage));
 
         config.NewConfig<GetPostCommentByIdApiRequest, GetPostCommentByIdQueryRequest>()
-            .ConstructUsing(src => new(src.Id, src.CommentId));
+            .ConstructUsing(src => new(
+                                       new(
+                                           new(src.Id),
+                                           src.CommentId)));
 
         config.NewConfig<GetPostCommentByIdQueryResponse, GetPostCommentByIdApiResponse>()
-            .ConstructUsing(src => new(
-                new(src.Data.Id,
-                    src.Data.CommentId,
-                    src.Data.Content,
-                    new(
-                        src.Data.User.Id,
-                        src.Data.User.Name,
-                        src.Data.User.ProfileImage))));
+            .ConstructUsing(src => new(src.Data.Adapt<PostCommentApiResponse>()));
 
         config.NewConfig<AddPostCommentApiRequest, AddPostCommentCommandRequest>()
-            .ConstructUsing(src => new(src.Id, src.Body.Content, src.UserId));
+            .ConstructUsing(src => new(
+                new(src.Id),
+                src.Body.Content,
+                new(src.UserId)));
 
         config.NewConfig<AddPostCommentCommandResponse, AddPostCommentApiResponse>()
-            .ConstructUsing(src => new(src.Id, src.CommentId, src.CreatedAt, src.UpdatedAt));
+            .ConstructUsing(src => new(src.Id.Adapt<PostCommentIdApiPayload>()));
 
         config.NewConfig<UpdatePostCommentApiRequest, UpdatePostCommentCommandRequest>()
-            .ConstructUsing(src => new(src.Id, src.CommentId, src.UserId, src.Body.Content));
+            .ConstructUsing(src => new(
+                                       new(
+                                           new(src.Id),
+                                           src.CommentId),
+                                       new(src.Id),
+                                       src.Body.Content));
 
         config.NewConfig<UpdatePostCommentCommandResponse, UpdatePostCommentApiResponse>()
-            .ConstructUsing(src => new(src.Id, src.CommentId, src.CreatedAt, src.UpdatedAt));
+            .ConstructUsing(src => new(src.Id.Adapt<PostCommentIdApiPayload>()));
 
         config.NewConfig<DeletePostCommentApiRequest, DeletePostCommentCommandRequest>()
-            .ConstructUsing(src => new(src.Id, src.CommentId, src.UserId));
+            .ConstructUsing(src => new(
+                                       new(
+                                           new(src.Id),
+                                           src.CommentId),
+                                       new(src.Id)));
+
+        config.NewConfig<PostCommentQueryResponse, PostCommentApiResponse>()
+            .ConstructUsing(src => new(
+                src.Id.Adapt<PostCommentIdApiPayload>(),
+                src.Content,
+                src.User.Adapt<PostCommentUserApiResponse>()));
+
+        config.NewConfig<PostCommentIdApiPayload, PostCommentIdPayload>()
+            .ConstructUsing(src => new(
+                src.Id.Adapt<PostIdPayload>(),
+                src.CommentId));
+
+        config.NewConfig<PostCommentIdPayload, PostCommentIdApiPayload>()
+            .ConstructUsing(src => new(
+                src.Id.Adapt<PostIdApiPayload>(),
+                src.CommentId));
+
+        config.NewConfig<PostCommentUserQueryResponse, PostCommentUserApiResponse>()
+            .ConstructUsing(src => new(
+                src.Id.Adapt<UserIdApiPayload>(),
+                src.Name.Adapt<NameApiPayload>(),
+                src.ProfileImage.Adapt<ImageApiPayload>()));
     }
 }

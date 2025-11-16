@@ -12,7 +12,7 @@ public static class CommonExceptionErrorMessages
         return Message;
     }
 
-    public static string GetSortOrderNotSupportedMessage(SortOrder sortOrder)
+    public static string GetSortOrderNotSupportedMessage(CommonSortOrder sortOrder)
     {
         const string Format = "SortOrder(type: {0}) is not supported";
         var result = Format.FormatCurrentCulture(sortOrder);

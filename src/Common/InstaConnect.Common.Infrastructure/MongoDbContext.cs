@@ -1,4 +1,5 @@
-﻿using InstaConnect.Common.Infrastructure.Abstractions;
+﻿using InstaConnect.Common.Domain.Abstractions;
+using InstaConnect.Common.Infrastructure.Abstractions;
 using InstaConnect.Common.Infrastructure.Extensions;
 
 using MongoDB.Driver;
@@ -22,7 +23,9 @@ public class MongoDbContext : IMongoDbContext
 
     public IClientSessionHandle? ClientSessionHandle => _clientSessionHandle;
 
-    public IMongoCollection<TEntity> Collection<TEntity>(string name)
+    public IMongoCollection<TEntity> ToCollection<TEntity, TKey>(string name)
+        where TEntity : IEntity<TKey>
+        where TKey : IEntityId
     {
         return _mongoDatabase.GetCollection<TEntity>(name);
     }

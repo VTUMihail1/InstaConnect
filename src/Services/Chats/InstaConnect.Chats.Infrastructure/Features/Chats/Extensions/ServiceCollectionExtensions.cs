@@ -13,7 +13,7 @@ internal static class ServiceCollectionExtensions
         serviceCollection.AddImplementationsOf<IChatByParticipantSortProperty>(ChatInfrastructureReference.Assembly);
         serviceCollection.AddImplementationsOf<IChatIncludeProperty>(ChatInfrastructureReference.Assembly);
 
-        BsonClassMap.RegisterClassMap<Chat>(cm =>
+        BsonClassMap.TryRegisterClassMap<Chat>(cm =>
         {
             cm.AutoMap();
 

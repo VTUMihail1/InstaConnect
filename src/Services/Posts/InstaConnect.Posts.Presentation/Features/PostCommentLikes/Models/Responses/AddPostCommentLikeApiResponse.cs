@@ -1,3 +1,5 @@
-﻿namespace InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Responses;
+﻿using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Payloads;
 
-public record AddPostCommentLikeApiResponse(string Id, string CommentId, string UserId, DateTimeOffset CreatedAt, DateTimeOffset UpdatedAt);
+namespace InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Responses;
+
+public record AddPostCommentLikeApiResponse(PostCommentLikeIdApiPayload Id);

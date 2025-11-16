@@ -10,4 +10,3 @@ public static class PostCommentLikeRoutes
 
     public const string Version1 = "1.0";
 }
-

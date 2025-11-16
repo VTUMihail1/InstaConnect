@@ -3,5 +3,5 @@
 namespace InstaConnect.Posts.Application.Features.PostLikes.Models;
 
 public record PostLikeQuerySorting(
-    SortOrder Order,
+    CommonSortOrder Order,
     PostLikeSortProperty Property);

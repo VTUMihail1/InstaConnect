@@ -14,7 +14,7 @@ internal static class ServiceCollectionExtensions
         serviceCollection.AddImplementationsOf<IFollowByFollowingSortProperty>(FollowInfrastructureReference.Assembly);
         serviceCollection.AddImplementationsOf<IFollowIncludeProperty>(FollowInfrastructureReference.Assembly);
 
-        BsonClassMap.RegisterClassMap<Follow>(cm =>
+        BsonClassMap.TryRegisterClassMap<Follow>(cm =>
         {
             cm.AutoMap();
 

@@ -1,5 +1,7 @@
-﻿namespace InstaConnect.Posts.Application.Features.PostLikes.Models;
+﻿using InstaConnect.Common.Application.Models;
+
+namespace InstaConnect.Posts.Application.Features.PostLikes.Models;
 
 public record PostLikeQueryFilter(
-    string Id,
-    string UserName);
+    PostIdPayload Id,
+    NamePayload UserName);

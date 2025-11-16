@@ -19,7 +19,7 @@ public static class ServiceCollectionExtensions
             .AddPostCommentLikeServices();
 
         serviceCollection
-            .AddMapper(PostDomainReference.Assembly)
+            .AddMapper(PostDomainReference.Assembly, CommonDomainReference.Assembly)
             .AddServicesWithMatchingInterfaces(PostDomainReference.Assembly);
 
         return serviceCollection;

@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Posts.Application.Features.PostLikes.Commands.Add;
 
-public record AddPostLikeCommandResponse(string Id, string UserId, DateTimeOffset CreatedAt, DateTimeOffset UpdatedAt);
+public record AddPostLikeCommandResponse(PostLikeIdPayload Id);

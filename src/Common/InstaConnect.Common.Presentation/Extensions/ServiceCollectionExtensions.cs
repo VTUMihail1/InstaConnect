@@ -9,6 +9,7 @@ using InstaConnect.Common.Domain.Utilities;
 using InstaConnect.Common.Presentation.Abstractions;
 using InstaConnect.Common.Presentation.Binders.FromClaim;
 using InstaConnect.Common.Presentation.Binders.FromCookie;
+using InstaConnect.Common.Presentation.Conventions;
 using InstaConnect.Common.Presentation.ExceptionHandlers;
 using InstaConnect.Common.Presentation.Helpers;
 using InstaConnect.Common.Presentation.Models.Options;
@@ -47,6 +48,7 @@ public static class ServiceCollectionExtensions
             {
                 options.ValueProviderFactories.Add(new FromClaimValueProviderFactory());
                 options.ValueProviderFactories.Add(new FromCookieValueProviderFactory());
+                options.Conventions.Add(new CamelCaseQueryConvention());
             })
             .AddJsonOptions(options =>
             {

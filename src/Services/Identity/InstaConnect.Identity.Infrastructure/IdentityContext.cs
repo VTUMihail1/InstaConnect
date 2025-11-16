@@ -12,13 +12,13 @@ public class IdentityContext : MongoDbContext, IIdentityContext
     {
     }
 
-    public IMongoCollection<User> Users => Collection<User>(IdentityCollectionNames.Users);
+    public IMongoCollection<User> Users => ToCollection<User>(IdentityCollectionNames.Users);
 
-    public IMongoCollection<UserClaim> UserClaims => Collection<UserClaim>(IdentityCollectionNames.UserClaims);
+    public IMongoCollection<UserClaim> UserClaims => ToCollection<UserClaim>(IdentityCollectionNames.UserClaims);
 
-    public IMongoCollection<RefreshToken> RefreshTokens => Collection<RefreshToken>(IdentityCollectionNames.RefreshTokens);
+    public IMongoCollection<RefreshToken> RefreshTokens => ToCollection<RefreshToken>(IdentityCollectionNames.RefreshTokens);
 
-    public IMongoCollection<ForgotPasswordToken> ForgotPasswordTokens => Collection<ForgotPasswordToken>(IdentityCollectionNames.ForgotPasswordTokens);
+    public IMongoCollection<ForgotPasswordToken> ForgotPasswordTokens => ToCollection<ForgotPasswordToken>(IdentityCollectionNames.ForgotPasswordTokens);
 
-    public IMongoCollection<EmailConfirmationToken> EmailConfirmationTokens => Collection<EmailConfirmationToken>(IdentityCollectionNames.EmailConfirmationTokens);
+    public IMongoCollection<EmailConfirmationToken> EmailConfirmationTokens => ToCollection<EmailConfirmationToken>(IdentityCollectionNames.EmailConfirmationTokens);
 }

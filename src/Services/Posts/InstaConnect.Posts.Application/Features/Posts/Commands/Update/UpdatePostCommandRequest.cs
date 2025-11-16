@@ -1,3 +1,5 @@
-﻿namespace InstaConnect.Posts.Application.Features.Posts.Commands.Update;
+﻿using InstaConnect.Posts.Application.Features.Users.Models;
 
-public record UpdatePostCommandRequest(string Id, string UserId, string Title, string Content) : ICommandRequest<UpdatePostCommandResponse>;
+namespace InstaConnect.Posts.Application.Features.Posts.Commands.Update;
+
+public record UpdatePostCommandRequest(PostIdPayload Id, UserIdPayload UserId, string Title, string Content) : ICommandRequest<UpdatePostCommandResponse>;

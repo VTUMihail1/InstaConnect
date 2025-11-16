@@ -3,5 +3,5 @@
 namespace InstaConnect.Follows.Application.Features.Follows.Models;
 
 public record FollowByFollowerQuerySorting(
-    SortOrder Order,
+    CommonSortOrder Order,
     FollowByFollowerSortProperty Property);

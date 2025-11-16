@@ -22,7 +22,7 @@ public static class ServiceCollectionExtensions
         serviceCollection
             .AddServicesWithMatchingInterfaces(PostPresentationReference.Assembly)
             .AddApiControllers()
-            .AddMapper(PostPresentationReference.Assembly)
+            .AddMapper(PostPresentationReference.Assembly, CommonPresentationReference.Assembly)
             .AddAuthorizationPolicies()
             .AddCorsPolicies(configuration)
             .AddSwagger()

@@ -10,9 +10,11 @@ internal static class ServiceCollectionExtensions
     {
         serviceCollection.AddImplementationsOf<IUserIncludeProperty>(PostInfrastructureReference.Assembly);
 
-        BsonClassMap.RegisterClassMap<User>(cm =>
+        BsonClassMap.TryRegisterClassMap<User>(cm =>
         {
             cm.AutoMap();
+
+            cm.MapIdMember(c => c.Id);
 
             cm.UnmapMember(c => c.Posts);
             cm.UnmapMember(c => c.PostLikes);

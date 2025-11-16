@@ -9,7 +9,7 @@ public class GetAllPostsQueryRequestBuilder
     private string _title;
     private int _page;
     private int _pageSize;
-    private SortOrder _sortOrder;
+    private CommonSortOrder _sortOrder;
     private PostSortProperty _sortProperty;
 
     public GetAllPostsQueryRequestBuilder(Post post, User user)
@@ -58,7 +58,7 @@ public class GetAllPostsQueryRequestBuilder
         return this;
     }
 
-    public GetAllPostsQueryRequestBuilder WithSortOrder(SortOrder order, IEnumTransformer<SortOrder>? transformer = null)
+    public GetAllPostsQueryRequestBuilder WithSortOrder(CommonSortOrder order, IEnumTransformer<CommonSortOrder>? transformer = null)
     {
         _sortOrder = transformer.TryTransform(order);
 

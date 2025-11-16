@@ -1,3 +1,5 @@
-﻿namespace InstaConnect.Posts.Application.Features.PostLikes.Commands.Add;
+﻿using InstaConnect.Posts.Application.Features.Users.Models;
 
-public record AddPostLikeCommandRequest(string Id, string UserId) : ICommandRequest<AddPostLikeCommandResponse>;
+namespace InstaConnect.Posts.Application.Features.PostLikes.Commands.Add;
+
+public record AddPostLikeCommandRequest(PostIdPayload Id, UserIdPayload UserId) : ICommandRequest<AddPostLikeCommandResponse>;

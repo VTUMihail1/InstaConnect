@@ -9,14 +9,11 @@ internal class PostCommentLikeFactory : IPostCommentLikeFactory
         _dateTimeProvider = dateTimeProvider;
     }
 
-    public PostCommentLike Create(string id, string commentId, string userId)
+    public PostCommentLike Create(PostCommentId commentId, UserId userId)
     {
         var utcNow = _dateTimeProvider.GetOffsetUtcNow();
         var postCommentLike = new PostCommentLike(
-            id,
-            commentId,
-            userId,
-            utcNow,
+            new(commentId, userId),
             utcNow);
 
         return postCommentLike;

@@ -8,6 +8,7 @@
   <ItemGroup Label="Common">
     <Using Include="Microsoft.Extensions.DependencyInjection" />
     <Using Include="InstaConnect.Common.Domain.Abstractions" />
+    <Using Include="InstaConnect.Common.Domain.Models.ValueObjects" />
   </ItemGroup>
 
   <ItemGroup Label="Users">

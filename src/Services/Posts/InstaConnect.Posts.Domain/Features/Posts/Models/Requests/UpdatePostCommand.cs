@@ -1,7 +1,7 @@
 ﻿namespace InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 
 public record UpdatePostCommand(
-    string Id,
-    string UserId,
+    PostId Id,
+    UserId UserId,
     string Title,
     string Content);

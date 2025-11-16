@@ -9,7 +9,7 @@ public class GetAllPostsApiRequestBuilder
     private string _title;
     private int _page;
     private int _pageSize;
-    private SortOrder _sortOrder;
+    private CommonSortOrder _sortOrder;
     private PostSortProperty _sortProperty;
 
     public GetAllPostsApiRequestBuilder(Post post, User user)
@@ -58,7 +58,7 @@ public class GetAllPostsApiRequestBuilder
         return this;
     }
 
-    public GetAllPostsApiRequestBuilder WithSortOrder(SortOrder order, IEnumTransformer<SortOrder>? transformer = null)
+    public GetAllPostsApiRequestBuilder WithSortOrder(CommonSortOrder order, IEnumTransformer<CommonSortOrder>? transformer = null)
     {
         _sortOrder = transformer.TryTransform(order);
 

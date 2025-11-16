@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Models;
 
-public record PostCommentLikeQueryResponse(string Id, string CommentId, PostCommentLikeUserQueryResponse User);
+public record PostCommentLikeQueryResponse(PostCommentLikeIdPayload Id, PostCommentLikeUserQueryResponse User);

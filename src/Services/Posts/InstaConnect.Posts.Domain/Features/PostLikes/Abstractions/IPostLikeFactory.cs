@@ -2,5 +2,5 @@
 
 public interface IPostLikeFactory
 {
-    public PostLike Create(string id, string userId);
+    public PostLike Create(PostId id, UserId userId);
 }

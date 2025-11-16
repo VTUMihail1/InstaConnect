@@ -3,5 +3,5 @@
 namespace InstaConnect.Posts.Domain.Features.PostComments.Models.Requests;
 
 public record PostCommentSortingQuery(
-    SortOrder Order,
+    CommonSortOrder Order,
     PostCommentSortProperty Property);
