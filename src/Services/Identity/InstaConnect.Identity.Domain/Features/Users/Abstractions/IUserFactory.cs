@@ -3,10 +3,10 @@
 public interface IUserFactory
 {
     public User Create(
-        string name,
+        Name name,
         string firstName,
         string lastName,
-        string email,
+        Email email,
         string passwordHash,
-        string? profileImage);
+        Image? profileImage);
 }

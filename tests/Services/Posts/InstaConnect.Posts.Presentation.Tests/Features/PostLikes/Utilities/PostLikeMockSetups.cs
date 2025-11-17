@@ -56,7 +56,7 @@ public static class PostLikeMockSetups
         PostLike postLike,
         CancellationToken cancellationToken)
     {
-        var response = new AddPostLikeCommandResponse(postLike.Id, postLike.UserId, postLike.CreatedAt, postLike.UpdatedAt);
+        var response = new AddPostLikeCommandResponse(postLike.Id, postLike.UserId, postLike.CreatedAtUtc, postLike.UpdatedAt);
 
         applicationSender
             .SendAsync(PostLikeMatcher.IsAddPostLikeCommandRequest(request), cancellationToken)

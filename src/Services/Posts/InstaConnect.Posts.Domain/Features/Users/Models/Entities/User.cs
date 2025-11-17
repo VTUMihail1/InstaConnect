@@ -2,11 +2,6 @@
 
 public class User : IEntity<UserId>
 {
-    private readonly IList<Post> _posts;
-    private readonly IList<PostLike> _postLikes;
-    private readonly IList<PostComment> _postComments;
-    private readonly IList<PostCommentLike> _postCommentLikes;
-
     private User()
     {
         Id = new(string.Empty);
@@ -14,10 +9,10 @@ public class User : IEntity<UserId>
         LastName = string.Empty;
         Email = new(string.Empty);
         Name = new(string.Empty);
-        _posts = [];
-        _postLikes = [];
-        _postComments = [];
-        _postCommentLikes = [];
+        Posts = [];
+        PostLikes = [];
+        PostComments = [];
+        PostCommentLikes = [];
     }
 
     public User(
@@ -27,8 +22,8 @@ public class User : IEntity<UserId>
         Email email,
         Name name,
         Image? profileImage,
-        DateTimeOffset createdAt,
-        DateTimeOffset updatedAt)
+        DateTimeOffset createdAtUtc,
+        DateTimeOffset updatedAtUtc)
     {
         Id = id;
         FirstName = firstName;
@@ -36,12 +31,12 @@ public class User : IEntity<UserId>
         Email = email;
         Name = name;
         ProfileImage = profileImage;
-        _posts = [];
-        _postLikes = [];
-        _postComments = [];
-        _postCommentLikes = [];
-        CreatedAt = createdAt;
-        UpdatedAt = updatedAt;
+        Posts = [];
+        PostLikes = [];
+        PostComments = [];
+        PostCommentLikes = [];
+        CreatedAtUtc = createdAtUtc;
+        UpdatedAtUtc = updatedAtUtc;
     }
 
     public User(
@@ -51,8 +46,8 @@ public class User : IEntity<UserId>
         Email email,
         Name name,
         Image? profileImage,
-        DateTimeOffset createdAt,
-        DateTimeOffset updatedAt,
+        DateTimeOffset createdAtUtc,
+        DateTimeOffset updatedAtUtc,
         IList<Post> posts,
         IList<PostLike> postLikes,
         IList<PostComment> postComments,
@@ -64,12 +59,12 @@ public class User : IEntity<UserId>
         Email = email;
         Name = name;
         ProfileImage = profileImage;
-        CreatedAt = createdAt;
-        UpdatedAt = updatedAt;
-        _posts = posts;
-        _postLikes = postLikes;
-        _postComments = postComments;
-        _postCommentLikes = postCommentLikes;
+        CreatedAtUtc = createdAtUtc;
+        UpdatedAtUtc = updatedAtUtc;
+        Posts = posts;
+        PostLikes = postLikes;
+        PostComments = postComments;
+        PostCommentLikes = postCommentLikes;
     }
 
     public UserId Id { get; }
@@ -84,17 +79,17 @@ public class User : IEntity<UserId>
 
     public Image? ProfileImage { get; private set; }
 
-    public IReadOnlyCollection<Post> Posts => _posts.AsReadOnly();
+    public ICollection<Post> Posts { get; }
 
-    public IReadOnlyCollection<PostLike> PostLikes => _postLikes.AsReadOnly();
+    public ICollection<PostLike> PostLikes { get; }
 
-    public IReadOnlyCollection<PostComment> PostComments => _postComments.AsReadOnly();
+    public ICollection<PostComment> PostComments { get; }
 
-    public IReadOnlyCollection<PostCommentLike> PostCommentLikes => _postCommentLikes.AsReadOnly();
+    public ICollection<PostCommentLike> PostCommentLikes { get; }
 
-    public DateTimeOffset CreatedAt { get; }
+    public DateTimeOffset CreatedAtUtc { get; }
 
-    public DateTimeOffset UpdatedAt { get; private set; }
+    public DateTimeOffset UpdatedAtUtc { get; private set; }
 
     public void Update(
         Email email,
@@ -102,34 +97,34 @@ public class User : IEntity<UserId>
         string lastName,
         Name name,
         Image? profileImage,
-        DateTimeOffset updatedAt)
+        DateTimeOffset updatedAtUtc)
     {
         Email = email;
         FirstName = firstName;
         LastName = lastName;
         Name = name;
         ProfileImage = profileImage;
-        UpdatedAt = updatedAt;
+        UpdatedAtUtc = updatedAtUtc;
     }
 
     public void AddPost(Post post)
     {
-        _posts.Add(post);
+        Posts.Add(post);
     }
 
     public void AddPostLike(PostLike postLike)
     {
-        _postLikes.Add(postLike);
+        PostLikes.Add(postLike);
     }
 
     public void AddPostComment(PostComment postComment)
     {
-        _postComments.Add(postComment);
+        PostComments.Add(postComment);
     }
 
     public void AddPostCommentLike(PostCommentLike postCommentLike)
     {
-        _postCommentLikes.Add(postCommentLike);
+        PostCommentLikes.Add(postCommentLike);
     }
 }
 

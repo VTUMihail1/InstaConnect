@@ -7,8 +7,7 @@ public static class UserClaimExceptionErrorMessages
     public static string GetInclidePropertyNotSupportedMessage(ICollection<UserClaimIncludeProperty> includeProperties)
     {
         const string Format = "UserClaimIncludeProperties(types: {0}) is not supported";
-        var result = Format.FormatCurrentCulture(string.Join(", ", includeProperties));
 
-        return result;
+        return Format.FormatCurrentCulture(includeProperties.JoinAsStringWithComa());
     }
 }

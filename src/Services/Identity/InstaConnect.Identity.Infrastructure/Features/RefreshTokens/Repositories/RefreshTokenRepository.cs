@@ -1,4 +1,5 @@
-﻿using InstaConnect.Identity.Infrastructure.Abstractions;
+﻿using InstaConnect.Identity.Domain.Features.RefreshTokens.Models.ValueObjects;
+using InstaConnect.Identity.Infrastructure.Abstractions;
 
 using MongoDB.Driver;
 
@@ -18,8 +19,7 @@ internal class RefreshTokenRepository : IRefreshTokenRepository
     }
 
     public async Task<RefreshToken?> GetByIdAsync(
-        string id,
-        string value,
+        RefreshTokenId id,
         RefreshTokenIncludeQuery? include,
         CancellationToken cancellationToken)
     {
@@ -29,18 +29,17 @@ internal class RefreshTokenRepository : IRefreshTokenRepository
             .RefreshTokens
             .Aggregate()
             .Includes(includeProperties)
-            .Match(p => p.Id == id && p.Value == value)
+            .Match(p => p.Id == id)
             .FirstOrDefaultAsync(cancellationToken);
 
         return entity;
     }
 
     public async Task<RefreshToken?> GetByIdAsync(
-        string id,
-        string value,
+        RefreshTokenId id,
         CancellationToken cancellationToken)
     {
-        return await GetByIdAsync(id, value, null, cancellationToken);
+        return await GetByIdAsync(id, null, cancellationToken);
     }
 
     public async Task AddAsync(RefreshToken entity, CancellationToken cancellationToken)
@@ -55,7 +54,7 @@ internal class RefreshTokenRepository : IRefreshTokenRepository
         await _identityContext.RefreshTokens
             .DeleteAsync(
             _identityContext.ClientSessionHandle,
-            x => x.Id == entity.Id && x.Value == entity.Value,
+            x => x.Id == entity.Id,
             cancellationToken);
     }
 }

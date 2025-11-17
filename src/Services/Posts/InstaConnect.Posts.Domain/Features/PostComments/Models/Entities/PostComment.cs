@@ -18,31 +18,31 @@ public class PostComment : IEntity<PostCommentId>
         PostCommentId id,
         string content,
         UserId userId,
-        DateTimeOffset createdAt,
-        DateTimeOffset updatedAt)
+        DateTimeOffset createdAtUtc,
+        DateTimeOffset updatedAtUtc)
     {
         Id = id;
         Content = content;
         UserId = userId;
         _likes = [];
-        CreatedAt = createdAt;
-        UpdatedAt = updatedAt;
+        CreatedAtUtc = createdAtUtc;
+        UpdatedAtUtc = updatedAtUtc;
     }
 
     public PostComment(
         PostCommentId id,
         string content,
         User user,
-        DateTimeOffset createdAt,
-        DateTimeOffset updatedAt)
+        DateTimeOffset createdAtUtc,
+        DateTimeOffset updatedAtUtc)
     {
         Id = id;
         Content = content;
         UserId = user.Id;
         User = user;
         _likes = [];
-        CreatedAt = createdAt;
-        UpdatedAt = updatedAt;
+        CreatedAtUtc = createdAtUtc;
+        UpdatedAtUtc = updatedAtUtc;
     }
 
     public PostComment(
@@ -50,16 +50,16 @@ public class PostComment : IEntity<PostCommentId>
         string content,
         User user,
         IList<PostCommentLike> likes,
-        DateTimeOffset createdAt,
-        DateTimeOffset updatedAt)
+        DateTimeOffset createdAtUtc,
+        DateTimeOffset updatedAtUtc)
     {
         Id = id;
         Content = content;
         UserId = user.Id;
         User = user;
         _likes = likes;
-        CreatedAt = createdAt;
-        UpdatedAt = updatedAt;
+        CreatedAtUtc = createdAtUtc;
+        UpdatedAtUtc = updatedAtUtc;
     }
 
     public PostCommentId Id { get; }
@@ -72,28 +72,14 @@ public class PostComment : IEntity<PostCommentId>
 
     public IReadOnlyCollection<PostCommentLike> Likes => _likes.AsReadOnly();
 
-    public DateTimeOffset CreatedAt { get; }
+    public DateTimeOffset CreatedAtUtc { get; }
 
-    public DateTimeOffset UpdatedAt { get; private set; }
+    public DateTimeOffset UpdatedAtUtc { get; private set; }
 
-    public void Update(string content, DateTimeOffset updatedAt)
+    public void Update(string content, DateTimeOffset updatedAtUtc)
     {
         Content = content;
-        UpdatedAt = updatedAt;
-    }
-
-    public bool IsOwnedByUser(UserId userId)
-    {
-        var isOwnedByUser = UserId.EqualsOrdinalIgnoreCase(userId);
-
-        return isOwnedByUser;
-    }
-
-    public bool IsNotOwnedByUser(UserId userId)
-    {
-        var isNotOwnedByUser = !IsOwnedByUser(userId);
-
-        return isNotOwnedByUser;
+        UpdatedAtUtc = updatedAtUtc;
     }
 
     public void AddUser(User user)

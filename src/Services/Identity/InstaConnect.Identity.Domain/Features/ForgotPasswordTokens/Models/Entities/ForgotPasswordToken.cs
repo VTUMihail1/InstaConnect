@@ -1,40 +1,31 @@
 ﻿namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entities;
 
-public class ForgotPasswordToken : IEntity
+public class ForgotPasswordToken : IEntity<ForgotPasswordTokenId>
 {
     private ForgotPasswordToken()
     {
-        Id = string.Empty;
-        Value = string.Empty;
+        Id = new(new(string.Empty), string.Empty);
     }
 
     public ForgotPasswordToken(
-        string id,
-        string value,
-        DateTimeOffset expiresAt,
-        DateTimeOffset createdAt,
-        DateTimeOffset updatedAt)
+        ForgotPasswordTokenId id,
+        DateTimeOffset expiresAtUtc,
+        DateTimeOffset createdAtUtc)
     {
         Id = id;
-        Value = value;
-        ExpiresAt = expiresAt;
-        CreatedAt = createdAt;
-        UpdatedAt = updatedAt;
+        ExpiresAtUtc = expiresAtUtc;
+        CreatedAtUtc = createdAtUtc;
     }
 
-    public string Id { get; }
+    public ForgotPasswordTokenId Id { get; }
 
-    public string Value { get; }
+    public DateTimeOffset ExpiresAtUtc { get; }
 
-    public DateTimeOffset ExpiresAt { get; }
-
-    public DateTimeOffset CreatedAt { get; }
-
-    public DateTimeOffset UpdatedAt { get; }
+    public DateTimeOffset CreatedAtUtc { get; }
 
     public bool HasExpired(DateTimeOffset utcNow)
     {
-        var hasExpired = ExpiresAt < utcNow;
+        var hasExpired = ExpiresAtUtc < utcNow;
 
         return hasExpired;
     }

@@ -14,8 +14,8 @@ internal class PostDomainMappings : IRegister
                 src.Title,
                 src.Content,
                 src.UserId.Adapt<UserIdEventPayload>(),
-                src.CreatedAt,
-                src.UpdatedAt));
+                src.CreatedAtUtc,
+                src.UpdatedAtUtc));
 
         config.NewConfig<Post, PostUpdatedEventRequest>()
             .ConstructUsing(src => new(
@@ -23,8 +23,8 @@ internal class PostDomainMappings : IRegister
                 src.Title,
                 src.Content,
                 src.UserId.Adapt<UserIdEventPayload>(),
-                src.CreatedAt,
-                src.UpdatedAt));
+                src.CreatedAtUtc,
+                src.UpdatedAtUtc));
 
         config.NewConfig<Post, PostDeletedEventRequest>()
             .ConstructUsing(src => new(src.Id.Adapt<PostIdEventPayload>()));

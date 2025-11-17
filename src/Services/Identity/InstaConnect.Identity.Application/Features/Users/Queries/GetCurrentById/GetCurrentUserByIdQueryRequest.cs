@@ -2,7 +2,7 @@
 
 namespace InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentById;
 
-public record GetCurrentUserByIdQueryRequest(string Id) : IQueryRequest<GetCurrentUserByIdQueryResponse>, ICachable
+public record GetCurrentUserByIdQueryRequest(UserIdPayload Id) : IQueryRequest<GetCurrentUserByIdQueryResponse>, ICachable
 {
     public string Key => UserCacheKeys.GetCurrent;
 

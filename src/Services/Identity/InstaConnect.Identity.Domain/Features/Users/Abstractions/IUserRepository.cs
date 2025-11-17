@@ -10,30 +10,30 @@ public interface IUserRepository
         CancellationToken cancellationToken);
 
     Task<User?> GetByIdAsync(
-        string id,
+        UserId id,
         UserIncludeQuery? include,
         CancellationToken cancellationToken);
 
     Task<User?> GetByIdAsync(
-        string id,
+        UserId id,
         CancellationToken cancellationToken);
 
     Task<User?> GetByNameAsync(
-        string name,
+        Name name,
         UserIncludeQuery? include,
         CancellationToken cancellationToken);
 
     Task<User?> GetByNameAsync(
-        string name,
+        Name name,
         CancellationToken cancellationToken);
 
     Task<User?> GetByEmailAsync(
-        string email,
+        Email email,
         UserIncludeQuery? include,
         CancellationToken cancellationToken);
 
     Task<User?> GetByEmailAsync(
-        string email,
+        Email email,
         CancellationToken cancellationToken);
 
     Task AddAsync(User entity, CancellationToken cancellationToken);

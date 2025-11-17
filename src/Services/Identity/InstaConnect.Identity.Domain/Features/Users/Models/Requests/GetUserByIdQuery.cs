@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Identity.Domain.Features.Users.Models.Requests;
 
-public record GetUserByIdQuery(string Id)
+public record GetUserByIdQuery(UserId Id)
 {
     public UserIncludeQuery? Include { get; private set; }
 

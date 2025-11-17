@@ -1,7 +1,8 @@
-﻿namespace InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Verify;
+﻿using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Models;
+
+namespace InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Verify;
 
 public record VerifyForgotPasswordTokenCommandRequest(
-    string Id,
-    string Value,
+    ForgotPasswordTokenIdPayload Id,
     string Password,
     string ConfirmPassword) : ICommandRequest;

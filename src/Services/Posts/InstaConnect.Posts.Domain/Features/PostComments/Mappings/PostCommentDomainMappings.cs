@@ -13,16 +13,16 @@ internal class PostCommentDomainMappings : IRegister
                 src.Id.Adapt<PostCommentIdEventPayload>(),
                 src.Content,
                 src.UserId.Adapt<UserIdEventPayload>(),
-                src.CreatedAt,
-                src.UpdatedAt));
+                src.CreatedAtUtc,
+                src.UpdatedAtUtc));
 
         config.NewConfig<PostComment, PostCommentUpdatedEventRequest>()
             .ConstructUsing(src => new(
                 src.Id.Adapt<PostCommentIdEventPayload>(),
                 src.Content,
                 src.UserId.Adapt<UserIdEventPayload>(),
-                src.CreatedAt,
-                src.UpdatedAt));
+                src.CreatedAtUtc,
+                src.UpdatedAtUtc));
 
         config.NewConfig<PostComment, PostCommentDeletedEventRequest>()
             .ConstructUsing(src => new(src.Id.Adapt<PostCommentIdEventPayload>()));

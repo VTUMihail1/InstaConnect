@@ -3,14 +3,12 @@
 public interface IEmailConfirmationTokenRepository
 {
     Task<EmailConfirmationToken?> GetByIdAsync(
-        string id,
-        string value,
+        EmailConfirmationTokenId id,
         EmailConfirmationTokenIncludeQuery? include,
         CancellationToken cancellationToken);
 
     Task<EmailConfirmationToken?> GetByIdAsync(
-        string id,
-        string value,
+        EmailConfirmationTokenId id,
         CancellationToken cancellationToken);
 
     Task AddAsync(EmailConfirmationToken entity, CancellationToken cancellationToken);

@@ -1,3 +1,8 @@
 ﻿namespace InstaConnect.Posts.Application.Features.PostComments.Models;
 
-public record PostCommentQueryResponse(PostCommentIdPayload Id, string Content, PostCommentUserQueryResponse User);
+public record PostCommentQueryResponse(
+    PostCommentIdPayload Id,
+    string Content,
+    UserQueryResponse User,
+    DateTimeOffset CreatedAtUtc,
+    DateTimeOffset UpdatedAtUtc);

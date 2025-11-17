@@ -2,4 +2,4 @@
 
 namespace InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Responses;
 
-public record PostCommentLikeApiResponse(PostCommentLikeIdApiPayload Id, PostCommentLikeUserApiResponse User);
+public record PostCommentLikeApiResponse(PostCommentLikeIdApiPayload Id, UserApiResponse User);

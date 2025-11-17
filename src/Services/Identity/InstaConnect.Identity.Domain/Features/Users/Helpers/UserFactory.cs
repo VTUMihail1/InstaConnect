@@ -14,17 +14,17 @@ internal class UserFactory : IUserFactory
     }
 
     public User Create(
-        string name,
+        Name name,
         string firstName,
         string lastName,
-        string email,
+        Email email,
         string passwordHash,
-        string? profileImage)
+        Image? profileImage)
     {
         var id = _guidProvider.NewGuid().ToString();
         var utcNow = _dateTimeProvider.GetOffsetUtcNow();
         var user = new User(
-            id,
+            new(id),
             firstName,
             lastName,
             email,

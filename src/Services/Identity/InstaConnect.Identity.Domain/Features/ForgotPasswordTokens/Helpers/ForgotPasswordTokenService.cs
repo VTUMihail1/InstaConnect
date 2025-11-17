@@ -40,7 +40,7 @@ internal class ForgotPasswordTokenService : IForgotPasswordTokenService
 
         if (existingUser.IsNull())
         {
-            throw new UserNotFoundException(command.Name);
+            throw new UserNameNotFoundException(command.Name);
         }
 
         var forgotPasswordToken = _forgotPasswordTokenFactory.Create(existingUser!.Id);
@@ -55,25 +55,25 @@ internal class ForgotPasswordTokenService : IForgotPasswordTokenService
     public async Task VerifyAsync(VerifyForgotPasswordTokenCommand command, CancellationToken cancellationToken)
     {
         var include = _userIncludeQueryBuilderFactory.Create().WithForgotPasswordTokens().Build();
-        var existingUser = await _userRepository.GetByIdAsync(command.Id, include, cancellationToken);
+        var existingUser = await _userRepository.GetByIdAsync(command.Id.Id, include, cancellationToken);
 
         if (existingUser.IsNull())
         {
-            throw new UserNotFoundException(command.Id);
+            throw new UserNotFoundException(command.Id.Id);
         }
 
-        var existingForgotPasswordToken = await _forgotPasswordTokenRepository.GetByIdAsync(command.Id, command.Value, cancellationToken);
+        var existingForgotPasswordToken = await _forgotPasswordTokenRepository.GetByIdAsync(command.Id, cancellationToken);
 
         if (existingForgotPasswordToken.IsNull())
         {
-            throw new ForgotPasswordTokenNotFoundException(command.Id, command.Value);
+            throw new ForgotPasswordTokenNotFoundException(command.Id);
         }
 
         var utcNow = _dateTimeProvider.GetOffsetUtcNow();
 
         if (existingForgotPasswordToken!.HasExpired(utcNow))
         {
-            throw new ForgotPasswordTokenExpiredException(command.Id, command.Value);
+            throw new ForgotPasswordTokenExpiredException(command.Id);
         }
 
         await _forgotPasswordTokenRepository.DeleteRangeAsync(existingUser!.ForgotPasswordTokens, cancellationToken);

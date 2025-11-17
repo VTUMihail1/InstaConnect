@@ -1,40 +1,31 @@
 ﻿namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entities;
 
-public class EmailConfirmationToken : IEntity
+public class EmailConfirmationToken : IEntity<EmailConfirmationTokenId>
 {
     private EmailConfirmationToken()
     {
-        Id = string.Empty;
-        Value = string.Empty;
+        Id = new(new(string.Empty), string.Empty);
     }
 
     public EmailConfirmationToken(
-        string id,
-        string value,
-        DateTimeOffset expiresAt,
-        DateTimeOffset createdAt,
-        DateTimeOffset updatedAt)
+        EmailConfirmationTokenId id,
+        DateTimeOffset expiresAtUtc,
+        DateTimeOffset createdAtUtc)
     {
         Id = id;
-        Value = value;
-        ExpiresAt = expiresAt;
-        CreatedAt = createdAt;
-        UpdatedAt = updatedAt;
+        ExpiresAtUtc = expiresAtUtc;
+        CreatedAtUtc = createdAtUtc;
     }
 
-    public string Id { get; }
+    public EmailConfirmationTokenId Id { get; }
 
-    public string Value { get; }
+    public DateTimeOffset ExpiresAtUtc { get; }
 
-    public DateTimeOffset ExpiresAt { get; }
-
-    public DateTimeOffset CreatedAt { get; }
-
-    public DateTimeOffset UpdatedAt { get; }
+    public DateTimeOffset CreatedAtUtc { get; }
 
     public bool HasExpired(DateTimeOffset utcNow)
     {
-        var hasExpired = ExpiresAt < utcNow;
+        var hasExpired = ExpiresAtUtc < utcNow;
 
         return hasExpired;
     }

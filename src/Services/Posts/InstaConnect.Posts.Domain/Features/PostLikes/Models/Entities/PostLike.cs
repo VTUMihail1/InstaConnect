@@ -9,27 +9,27 @@ public class PostLike : IEntity<PostLikeId>
 
     public PostLike(
         PostLikeId id,
-        DateTimeOffset createdAt)
+        DateTimeOffset createdAtUtc)
     {
         Id = id;
-        CreatedAt = createdAt;
+        CreatedAtUtc = createdAtUtc;
     }
 
     public PostLike(
         PostLikeId id,
         User user,
-        DateTimeOffset createdAt)
+        DateTimeOffset createdAtUtc)
     {
         Id = id;
         User = user;
-        CreatedAt = createdAt;
+        CreatedAtUtc = createdAtUtc;
     }
 
     public PostLikeId Id { get; }
 
     public User? User { get; private set; }
 
-    public DateTimeOffset CreatedAt { get; }
+    public DateTimeOffset CreatedAtUtc { get; }
 
     public void AddUser(User user)
     {

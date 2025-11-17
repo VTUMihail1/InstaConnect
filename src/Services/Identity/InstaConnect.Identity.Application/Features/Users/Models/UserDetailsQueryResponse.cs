@@ -1,9 +1,13 @@
-﻿namespace InstaConnect.Identity.Application.Features.Users.Models;
+﻿using InstaConnect.Common.Application.Models;
+
+namespace InstaConnect.Identity.Application.Features.Users.Models;
 
 public record UserDetailsQueryResponse(
-    string Id,
+    UserIdPayload Id,
     string FirstName,
     string LastName,
-    string Name,
-    string Email,
-    string? ProfileImage);
+    NamePayload Name,
+    EmailPayload Email,
+    ImagePayload? ProfileImage,
+    DateTimeOffset CreatedAtUtc,
+    DateTimeOffset UpdatedAtUtc);

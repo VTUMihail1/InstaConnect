@@ -3,14 +3,12 @@
 public interface IRefreshTokenRepository
 {
     Task<RefreshToken?> GetByIdAsync(
-        string id,
-        string value,
+        RefreshTokenId id,
         RefreshTokenIncludeQuery include,
         CancellationToken cancellationToken);
 
     Task<RefreshToken?> GetByIdAsync(
-        string id,
-        string value,
+        RefreshTokenId id,
         CancellationToken cancellationToken);
 
     Task AddAsync(RefreshToken entity, CancellationToken cancellationToken);

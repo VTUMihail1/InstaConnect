@@ -8,16 +8,16 @@ public static class PostCommentMatchAssertions
     {
         response.ShouldSatisfy(p => p.Id == postComment.Id &&
                                     p.CommentId == postComment.CommentId &&
-                                    p.CreatedAt == postComment.CreatedAt &&
-                                    p.UpdatedAt == postComment.UpdatedAt);
+                                    p.CreatedAt == postComment.CreatedAtUtc &&
+                                    p.UpdatedAt == postComment.UpdatedAtUtc);
     }
 
     public static void ShouldSatisfy(this UpdatePostCommentCommandResponse response, PostComment postComment)
     {
         response.ShouldSatisfy(p => p.Id == postComment.Id &&
                                     p.CommentId == postComment.CommentId &&
-                                    p.CreatedAt == postComment.CreatedAt &&
-                                    p.UpdatedAt == postComment.UpdatedAt);
+                                    p.CreatedAt == postComment.CreatedAtUtc &&
+                                    p.UpdatedAt == postComment.UpdatedAtUtc);
     }
 
     public static void ShouldSatisfy(this GetPostCommentByIdQueryResponse response, PostComment postComment, User user)

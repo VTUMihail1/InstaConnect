@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using InstaConnect.Common.Application.Models;
+
+using Microsoft.AspNetCore.Http;
 
 namespace InstaConnect.Identity.Application.Features.Users.Commands.Add;
 
 public record AddUserCommandRequest(
-    string Name,
-    string Email,
+    NamePayload Name,
+    EmailPayload Email,
     string Password,
     string ConfirmPassword,
     string FirstName,

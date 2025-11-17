@@ -4,27 +4,24 @@ namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Utilitie
 
 public static class EmailConfirmationTokenExceptionErrorMessages
 {
-    public static string GetNotFoundMessage(string id, string value)
+    public static string GetNotFoundMessage(EmailConfirmationTokenId id)
     {
         const string Format = "EmailConfirmationToken(id: {0}, value: {1}) does not exist";
-        var result = Format.FormatCurrentCulture(id, value);
 
-        return result;
+        return Format.FormatCurrentCulture(id.Id.Id, id.Value);
     }
 
-    public static string GetExpiredMessage(string id, string value)
+    public static string GetExpiredMessage(EmailConfirmationTokenId id)
     {
         const string Format = "EmailConfirmationToken(id: {0}, value: {1}) has expired";
-        var result = Format.FormatCurrentCulture(id, value);
 
-        return result;
+        return Format.FormatCurrentCulture(id.Id.Id, id.Value);
     }
 
     public static string GetInclidePropertyNotSupportedMessage(ICollection<EmailConfirmationTokenIncludeProperty> includeProperties)
     {
         const string Format = "EmailConfirmationTokenIncludeProperties(types: {0}) is not supported";
-        var result = Format.FormatCurrentCulture(string.Join(", ", includeProperties));
 
-        return result;
+        return Format.FormatCurrentCulture(includeProperties.JoinAsStringWithComa());
     }
 }

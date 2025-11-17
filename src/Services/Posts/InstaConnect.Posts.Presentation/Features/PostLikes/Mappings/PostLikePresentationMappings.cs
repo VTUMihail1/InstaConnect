@@ -61,7 +61,8 @@ internal class PostLikePresentationMappings : IRegister
         config.NewConfig<PostLikeQueryResponse, PostLikeApiResponse>()
             .ConstructUsing(src => new(
                 src.Id.Adapt<PostLikeIdApiPayload>(),
-                src.User.Adapt<PostLikeUserApiResponse>()));
+                src.User.Adapt<UserApiResponse>(),
+                src.CreatedAtUtc));
 
         config.NewConfig<PostLikeIdApiPayload, PostLikeIdPayload>()
             .ConstructUsing(src => new(
@@ -72,11 +73,5 @@ internal class PostLikePresentationMappings : IRegister
             .ConstructUsing(src => new(
                 src.Id.Adapt<PostIdApiPayload>(),
                 src.UserId.Adapt<UserIdApiPayload>()));
-
-        config.NewConfig<PostLikeUserQueryResponse, PostLikeUserApiResponse>()
-            .ConstructUsing(src => new(
-                src.Id.Adapt<UserIdApiPayload>(),
-                src.Name.Adapt<NameApiPayload>(),
-                src.ProfileImage.Adapt<ImageApiPayload>()));
     }
 }

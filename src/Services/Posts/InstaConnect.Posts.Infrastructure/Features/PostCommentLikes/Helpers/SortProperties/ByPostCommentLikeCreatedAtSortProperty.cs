@@ -5,5 +5,5 @@ public class ByPostCommentLikeCreatedAtSortProperty : IPostCommentLikeSortProper
 {
     public PostCommentLikeSortProperty SortProperty => PostCommentLikeSortProperty.ByCreatedAt;
 
-    public Expression<Func<PostCommentLike, object>> Property => p => p.CreatedAt;
+    public Expression<Func<PostCommentLike, object>> Property => p => p.CreatedAtUtc;
 }

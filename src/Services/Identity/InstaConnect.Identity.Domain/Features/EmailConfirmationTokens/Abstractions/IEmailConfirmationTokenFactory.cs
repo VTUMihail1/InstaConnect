@@ -2,5 +2,5 @@
 
 public interface IEmailConfirmationTokenFactory
 {
-    public EmailConfirmationToken Create(string id);
+    public EmailConfirmationToken Create(UserId id);
 }

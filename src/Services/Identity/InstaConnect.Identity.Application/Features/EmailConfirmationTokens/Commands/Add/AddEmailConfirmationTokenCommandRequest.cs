@@ -1,3 +1,5 @@
-﻿namespace InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Add;
+﻿using InstaConnect.Common.Application.Models;
 
-public record AddEmailConfirmationTokenCommandRequest(string Name) : ICommandRequest;
+namespace InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Add;
+
+public record AddEmailConfirmationTokenCommandRequest(NamePayload Name) : ICommandRequest;

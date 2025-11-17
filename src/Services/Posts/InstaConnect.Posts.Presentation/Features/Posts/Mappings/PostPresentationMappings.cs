@@ -4,6 +4,8 @@ using InstaConnect.Posts.Application.Features.Posts.Commands.Update;
 using InstaConnect.Posts.Application.Features.Posts.Models;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
+using InstaConnect.Posts.Application.Features.Users.Models;
+using InstaConnect.Posts.Presentation.Features.Users.Models;
 
 using Mapster;
 
@@ -46,7 +48,9 @@ internal class PostPresentationMappings : IRegister
                     src.Id.Adapt<PostIdApiPayload>(),
                     src.Title,
                     src.Content,
-                    src.User.Adapt<PostUserApiResponse>()));
+                    src.User.Adapt<UserApiResponse>(),
+                    src.CreatedAtUtc,
+                    src.UpdatedAtUtc));
 
         config.NewConfig<AddPostApiRequest, AddPostCommandRequest>()
             .ConstructUsing(src => new(
@@ -77,11 +81,5 @@ internal class PostPresentationMappings : IRegister
 
         config.NewConfig<PostIdPayload, PostIdApiPayload>()
             .ConstructUsing(src => new(src.Id));
-
-        config.NewConfig<PostUserQueryResponse, PostUserApiResponse>()
-            .ConstructUsing(src => new(
-                src.Id.Adapt<UserIdApiPayload>(),
-                src.Name.Adapt<NameApiPayload>(),
-                src.ProfileImage.Adapt<ImageApiPayload>()));
     }
 }

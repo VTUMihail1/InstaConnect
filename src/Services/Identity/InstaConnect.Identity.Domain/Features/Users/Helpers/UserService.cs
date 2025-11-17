@@ -80,7 +80,7 @@ internal class UserService : IUserService
             throw new UserNameAlreadyTakenException(command.Name);
         }
 
-        var profileImage = (string?)null;
+        var profileImage = (Image?)null;
 
         if (command.ProfileImage.IsNotNull())
         {
@@ -110,12 +110,12 @@ internal class UserService : IUserService
 
         var existingUserByEmail = await _userRepository.GetByEmailAsync(command.Email, cancellationToken);
 
-        if (existingUser!.DoesNotHaveEmail(command.Email) && existingUserByEmail.IsNotNull())
+        if (existingUser!.Email.IsNot(command.Email) && existingUserByEmail.IsNotNull())
         {
             throw new UserEmailAlreadyTakenException(command.Email);
         }
 
-        if (existingUser.DoesNotHaveEmail(command.Email))
+        if (existingUser.Email.IsNot(command.Email))
         {
             await _emailConfirmationTokenRepository.DeleteRangeAsync(existingUser.EmailConfirmationTokens, cancellationToken);
 
@@ -124,7 +124,7 @@ internal class UserService : IUserService
 
         var existingUserByName = await _userRepository.GetByNameAsync(command.Name, cancellationToken);
 
-        if (existingUser.DoesNotHaveName(command.Name) && existingUserByName.IsNotNull())
+        if (existingUser.Name.IsNot(command.Name) && existingUserByName.IsNotNull())
         {
             throw new UserNameAlreadyTakenException(command.Name);
         }

@@ -1,6 +1,4 @@
 ﻿namespace InstaConnect.Posts.Events.Features.PostCommentLikes;
 
-public record PostCommentLikeAddedEventRequest(
-        PostCommentLikeIdEventPayload Id,
-        DateTimeOffset CreatedAt)
+public record PostCommentLikeAddedEventRequest(PostCommentLikeIdEventPayload Id)
     : IEventRequest;

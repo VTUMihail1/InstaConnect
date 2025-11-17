@@ -9,7 +9,7 @@ public static class PostCommentLikeMatchAssertions
         response.ShouldSatisfy(p => p.Id == postCommentLike.Id &&
                                     p.CommentId == postCommentLike.CommentId &&
                                     p.UserId == postCommentLike.UserId &&
-                                    p.CreatedAt == postCommentLike.CreatedAt &&
+                                    p.CreatedAt == postCommentLike.CreatedAtUtc &&
                                     p.UpdatedAt == postCommentLike.UpdatedAt);
     }
 
@@ -41,7 +41,7 @@ public static class PostCommentLikeMatchAssertions
         response.ShouldBeActionResultAndSatisfy(p => p.Id == postCommentLike.Id &&
                                                      p.CommentId == postCommentLike.CommentId &&
                                                      p.UserId == postCommentLike.UserId &&
-                                                     p.CreatedAt == postCommentLike.CreatedAt &&
+                                                     p.CreatedAt == postCommentLike.CreatedAtUtc &&
                                                      p.UpdatedAt == postCommentLike.UpdatedAt);
     }
 

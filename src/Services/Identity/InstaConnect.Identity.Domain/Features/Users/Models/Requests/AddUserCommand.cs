@@ -3,8 +3,8 @@
 namespace InstaConnect.Identity.Domain.Features.Users.Models.Requests;
 
 public record AddUserCommand(
-    string Name,
-    string Email,
+    Name Name,
+    Email Email,
     string Password,
     string ConfirmPassword,
     string FirstName,

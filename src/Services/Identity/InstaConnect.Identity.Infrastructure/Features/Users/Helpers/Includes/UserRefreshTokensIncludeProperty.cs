@@ -21,7 +21,7 @@ public class UserRefreshTokensIncludeProperty : IUserIncludeProperty
             .Lookup<User, RefreshToken, User>(
                 _usersContext.RefreshTokens,
                 p => p.Id,
-                l => l.Id,
+                l => l.Id.Id,
                 p => p.RefreshTokens
             );
     }

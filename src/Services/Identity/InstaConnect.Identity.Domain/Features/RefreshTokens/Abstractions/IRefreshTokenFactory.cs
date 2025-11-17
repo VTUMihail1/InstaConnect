@@ -2,5 +2,5 @@
 
 public interface IRefreshTokenFactory
 {
-    public RefreshToken Create(string id);
+    public RefreshToken Create(UserId id);
 }

@@ -41,6 +41,7 @@
 
   <ItemGroup Label="Users">
     <Using Include="InstaConnect.Identity.Events.Features.Users" />
+    <Using Include="InstaConnect.Posts.Presentation.Features.Users.Models" />
     <Using Include="InstaConnect.Posts.Presentation.Features.Users.Models.Payloads" />
   </ItemGroup>
 

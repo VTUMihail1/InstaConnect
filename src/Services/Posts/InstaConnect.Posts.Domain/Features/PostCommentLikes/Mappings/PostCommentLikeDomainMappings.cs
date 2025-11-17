@@ -11,7 +11,7 @@ internal class PostCommentLikeDomainMappings : IRegister
         config.NewConfig<PostCommentLike, PostCommentLikeAddedEventRequest>()
             .ConstructUsing(src => new(
                 src.Id.Adapt<PostCommentLikeIdEventPayload>(),
-                src.CreatedAt));
+                src.CreatedAtUtc));
 
         config.NewConfig<PostCommentLike, PostCommentLikeDeletedEventRequest>()
             .ConstructUsing(src => new(src.Id.Adapt<PostCommentLikeIdEventPayload>()));

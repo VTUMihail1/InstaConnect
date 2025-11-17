@@ -1,7 +1,7 @@
 ﻿namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAll;
 
 public record GetAllPostCommentLikesQueryRequest(
-    PostCommentLikeQueryFilter Filter,
-    PostCommentLikeQuerySorting Sorting,
-    PostCommentLikeQueryPagination Pagination)
+    PostCommentLikeFilterQueryRequest Filter,
+    PostCommentLikeSortingQueryRequest Sorting,
+    PostCommentLikePaginationQueryRequest Pagination)
     : IQueryRequest<GetAllPostCommentLikesQueryResponse>;

@@ -12,7 +12,7 @@ public static class PostCommentLikeEventHarness
         var result = await eventHarness.PublishedAsync<PostCommentLikeAddedEventRequest>(p => p.Id == postCommentLike.Id &&
                                                                                    p.CommentId == postCommentLike.CommentId &&
                                                                                    p.UserId == postCommentLike.UserId &&
-                                                                                   p.CreatedAt == postCommentLike.CreatedAt &&
+                                                                                   p.CreatedAtUtc == postCommentLike.CreatedAtUtc &&
                                                                                    p.UpdatedAt == postCommentLike.UpdatedAt, cancellationToken);
 
         return result;

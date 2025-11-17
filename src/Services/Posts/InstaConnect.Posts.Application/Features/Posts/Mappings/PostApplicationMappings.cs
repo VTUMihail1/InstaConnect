@@ -19,25 +19,9 @@ internal class PostApplicationMappings : IRegister
     {
         config.NewConfig<GetAllPostsQueryRequest, GetAllPostsQuery>()
             .ConstructUsing(src => new(
-                src.Adapt<PostFilterQuery>(),
-                src.Adapt<PostSortingQuery>(),
-                src.Adapt<PostPaginationQuery>()));
-
-        config.NewConfig<GetAllPostsQueryRequest, PostFilterQuery>()
-            .ConstructUsing(src => new(
-                src.Filter.UserId.Adapt<UserId>(),
-                src.Filter.UserName.Adapt<Name>(),
-                src.Filter.Title));
-
-        config.NewConfig<GetAllPostsQueryRequest, PostSortingQuery>()
-            .ConstructUsing(src => new(
-                src.Sorting.Order,
-                src.Sorting.Property));
-
-        config.NewConfig<GetAllPostsQueryRequest, PostPaginationQuery>()
-            .ConstructUsing(src => new(
-                src.Pagination.Page,
-                src.Pagination.PageSize));
+                src.Filter.Adapt<PostFilterQuery>(),
+                src.Sorting.Adapt<PostSortingQuery>(),
+                src.Pagination.Adapt<PostPaginationQuery>()));
 
         config.NewConfig<PostCollection, GetAllPostsQueryResponse>()
             .ConstructUsing(pc => new(
@@ -59,7 +43,9 @@ internal class PostApplicationMappings : IRegister
                     src.Id.Adapt<PostIdPayload>(),
                     src.Title,
                     src.Content,
-                    src.User.Adapt<PostUserQueryResponse>()));
+                    src.User.Adapt<UserQueryResponse>(),
+                    src.CreatedAtUtc,
+                    src.UpdatedAtUtc));
 
         config.NewConfig<AddPostCommandRequest, AddPostCommand>()
             .ConstructUsing(src => new(
@@ -91,10 +77,20 @@ internal class PostApplicationMappings : IRegister
         config.NewConfig<PostId, PostIdPayload>()
             .ConstructUsing(src => new(src.Id));
 
-        config.NewConfig<User, PostUserQueryResponse>()
+        config.NewConfig<PostFilterQueryRequest, PostFilterQuery>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<UserIdPayload>(),
-                src.Name.Adapt<NamePayload>(),
-                src.ProfileImage.Adapt<ImagePayload>()));
+                src.UserId.Adapt<UserId>(),
+                src.UserName.Adapt<Name>(),
+                src.Title));
+
+        config.NewConfig<PostSortingQueryRequest, PostSortingQuery>()
+            .ConstructUsing(src => new(
+                src.Order,
+                src.Property));
+
+        config.NewConfig<PostPaginationQueryRequest, PostPaginationQuery>()
+            .ConstructUsing(src => new(
+                src.Page,
+                src.PageSize));
     }
 }

@@ -4,12 +4,12 @@ namespace InstaConnect.Identity.Domain.Features.Users.Exceptions;
 
 public class UserInvalidDetailsException : BadRequestException
 {
-    public UserInvalidDetailsException(string name) : base(
+    public UserInvalidDetailsException(Name name) : base(
         UserExceptionErrorMessages.GetInvalidDetailsMessage(name))
     {
     }
 
-    public UserInvalidDetailsException(string name, Exception exception) : base(
+    public UserInvalidDetailsException(Name name, Exception exception) : base(
         UserExceptionErrorMessages.GetInvalidDetailsMessage(name), exception)
     {
     }

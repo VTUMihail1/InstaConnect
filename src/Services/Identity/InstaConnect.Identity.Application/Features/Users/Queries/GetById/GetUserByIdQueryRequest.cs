@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Identity.Application.Features.Users.Queries.GetById;
 
-public record GetUserByIdQueryRequest(string Id) : IQueryRequest<GetUserByIdQueryResponse>;
+public record GetUserByIdQueryRequest(UserIdPayload Id) : IQueryRequest<GetUserByIdQueryResponse>;

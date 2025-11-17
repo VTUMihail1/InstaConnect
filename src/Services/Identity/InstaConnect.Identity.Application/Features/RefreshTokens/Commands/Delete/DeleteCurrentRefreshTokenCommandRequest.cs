@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Delete;
 
-public record DeleteCurrentRefreshTokenCommandRequest(string Id, string Value) : ICommandRequest;
+public record DeleteCurrentRefreshTokenCommandRequest(RefreshTokenIdPayload Id) : ICommandRequest;

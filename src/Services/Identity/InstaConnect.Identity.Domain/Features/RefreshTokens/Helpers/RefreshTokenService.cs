@@ -62,25 +62,25 @@ internal class RefreshTokenService : IRefreshTokenService
     public async Task<SessionToken> RotateAsync(RotateRefreshTokenCommand command, CancellationToken cancellationToken)
     {
         var include = _userIncludeQueryBuilderFactory.Create().WithClaims().Build();
-        var existingUser = await _userRepository.GetByNameAsync(command.Id, include, cancellationToken);
+        var existingUser = await _userRepository.GetByIdAsync(command.Id.Id, include, cancellationToken);
 
         if (existingUser.IsNull())
         {
-            throw new UserNotFoundException(command.Id);
+            throw new UserNotFoundException(command.Id.Id);
         }
 
-        var existingRefreshToken = await _refreshTokenRepository.GetByIdAsync(command.Id, command.Value, cancellationToken);
+        var existingRefreshToken = await _refreshTokenRepository.GetByIdAsync(command.Id, cancellationToken);
 
         if (existingRefreshToken.IsNull())
         {
-            throw new RefreshTokenNotFoundException(command.Id, command.Value);
+            throw new RefreshTokenNotFoundException(command.Id);
         }
 
         var utcNow = _dateTimeProvider.GetOffsetUtcNow();
 
         if (existingRefreshToken!.HasExpired(utcNow))
         {
-            throw new EmailConfirmationTokenExpiredException(command.Id, command.Value);
+            throw new RefreshTokenExpiredException(command.Id);
         }
 
         await _refreshTokenRepository.DeleteAsync(existingRefreshToken, cancellationToken);
@@ -96,18 +96,18 @@ internal class RefreshTokenService : IRefreshTokenService
 
     public async Task DeleteAsync(DeleteRefreshTokenCommand command, CancellationToken cancellationToken)
     {
-        var existingUser = await _userRepository.GetByIdAsync(command.Id, cancellationToken);
+        var existingUser = await _userRepository.GetByIdAsync(command.Id.Id, cancellationToken);
 
         if (existingUser.IsNull())
         {
-            throw new UserNotFoundException(command.Id);
+            throw new UserNotFoundException(command.Id.Id);
         }
 
-        var existingRefreshToken = await _refreshTokenRepository.GetByIdAsync(command.Id, command.Value, cancellationToken);
+        var existingRefreshToken = await _refreshTokenRepository.GetByIdAsync(command.Id, cancellationToken);
 
         if (existingRefreshToken.IsNull())
         {
-            throw new RefreshTokenNotFoundException(command.Id, command.Value);
+            throw new RefreshTokenNotFoundException(command.Id);
         }
 
         await _refreshTokenRepository.DeleteAsync(existingRefreshToken!, cancellationToken);

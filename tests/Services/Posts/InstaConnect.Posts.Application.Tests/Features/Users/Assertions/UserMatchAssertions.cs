@@ -7,15 +7,15 @@ public static class UserMatchAssertions
     public static void ShouldSatisfy(this AddUserCommandResponse response, User user)
     {
         response.ShouldSatisfy(u => u.Id == user.Id &&
-                                    u.CreatedAt == user.CreatedAt &&
-                                    u.UpdatedAt == user.UpdatedAt);
+                                    u.CreatedAt == user.CreatedAtUtc &&
+                                    u.UpdatedAt == user.UpdatedAtUtc);
     }
 
     public static void ShouldSatisfy(this UpdateUserCommandResponse response, User user)
     {
         response.ShouldSatisfy(u => u.Id == user.Id &&
-                                    u.CreatedAt == user.CreatedAt &&
-                                    u.UpdatedAt == user.UpdatedAt);
+                                    u.CreatedAt == user.CreatedAtUtc &&
+                                    u.UpdatedAt == user.UpdatedAtUtc);
     }
 
     public static void ShouldSatisfy(this User user, AddUserCommandRequest request)

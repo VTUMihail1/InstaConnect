@@ -13,8 +13,8 @@ public static class PostEventHarness
                                                                             p.Title == post.Title &&
                                                                             p.Content == post.Content &&
                                                                             p.UserId == post.UserId &&
-                                                                            p.CreatedAt == post.CreatedAt &&
-                                                                            p.UpdatedAt == post.UpdatedAt, cancellationToken);
+                                                                            p.CreatedAtUtc == post.CreatedAtUtc &&
+                                                                            p.UpdatedAtUtc == post.UpdatedAtUtc, cancellationToken);
 
         return result;
     }
@@ -28,8 +28,8 @@ public static class PostEventHarness
                                                                               p.Title == post.Title &&
                                                                               p.Content == post.Content &&
                                                                               p.UserId == post.UserId &&
-                                                                              p.CreatedAt == post.CreatedAt &&
-                                                                              p.UpdatedAt == post.UpdatedAt, cancellationToken);
+                                                                              p.CreatedAtUtc == post.CreatedAtUtc &&
+                                                                              p.UpdatedAtUtc == post.UpdatedAtUtc, cancellationToken);
 
         return result;
     }

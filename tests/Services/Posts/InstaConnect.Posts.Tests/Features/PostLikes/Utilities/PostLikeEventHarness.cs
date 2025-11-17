@@ -11,7 +11,7 @@ public static class PostLikeEventHarness
     {
         var result = await eventHarness.PublishedAsync<PostLikeAddedEventRequest>(p => p.Id == postLike.Id &&
                                                                                 p.UserId == postLike.UserId &&
-                                                                                p.CreatedAt == postLike.CreatedAt &&
+                                                                                p.CreatedAtUtc == postLike.CreatedAtUtc &&
                                                                                 p.UpdatedAt == postLike.UpdatedAt, cancellationToken);
 
         return result;

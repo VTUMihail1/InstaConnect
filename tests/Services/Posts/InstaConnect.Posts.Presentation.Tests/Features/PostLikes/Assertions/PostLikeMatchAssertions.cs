@@ -8,7 +8,7 @@ public static class PostLikeMatchAssertions
     {
         response.ShouldSatisfy(p => p.Id == postLike.Id &&
                                     p.UserId == postLike.UserId &&
-                                    p.CreatedAt == postLike.CreatedAt &&
+                                    p.CreatedAt == postLike.CreatedAtUtc &&
                                     p.UpdatedAt == postLike.UpdatedAt);
     }
 
@@ -37,7 +37,7 @@ public static class PostLikeMatchAssertions
     {
         response.ShouldBeActionResultAndSatisfy(p => p.Id == postLike.Id &&
                                     p.UserId == postLike.UserId &&
-                                    p.CreatedAt == postLike.CreatedAt &&
+                                    p.CreatedAt == postLike.CreatedAtUtc &&
                                     p.UpdatedAt == postLike.UpdatedAt);
     }
 

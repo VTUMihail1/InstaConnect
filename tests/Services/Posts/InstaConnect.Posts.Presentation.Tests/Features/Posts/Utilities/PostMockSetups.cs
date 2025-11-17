@@ -60,7 +60,7 @@ public static class PostMockSetups
         Post post,
         CancellationToken cancellationToken)
     {
-        var response = new AddPostCommandResponse(post.Id, post.CreatedAt, post.UpdatedAt);
+        var response = new AddPostCommandResponse(post.Id, post.CreatedAtUtc, post.UpdatedAtUtc);
 
         applicationSender
             .SendAsync(PostMatcher.IsAddPostCommandRequest(request), cancellationToken)
@@ -73,7 +73,7 @@ public static class PostMockSetups
         Post post,
         CancellationToken cancellationToken)
     {
-        var response = new UpdatePostCommandResponse(post.Id, post.CreatedAt, post.UpdatedAt);
+        var response = new UpdatePostCommandResponse(post.Id, post.CreatedAtUtc, post.UpdatedAtUtc);
 
         applicationSender
             .SendAsync(PostMatcher.IsUpdatePostCommandRequest(request), cancellationToken)

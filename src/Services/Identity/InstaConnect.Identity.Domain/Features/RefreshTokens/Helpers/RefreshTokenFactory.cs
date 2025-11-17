@@ -20,16 +20,14 @@ internal class RefreshTokenFactory : IRefreshTokenFactory
         _refreshTokenOptions = options.Value;
     }
 
-    public RefreshToken Create(string id)
+    public RefreshToken Create(UserId id)
     {
         var value = _guidProvider.NewGuid().ToString();
         var expiresAt = _dateTimeProvider.GetOffsetUtcNow(_refreshTokenOptions.LifetimeSeconds);
         var utcNow = _dateTimeProvider.GetOffsetUtcNow();
         var refreshToken = new RefreshToken(
-            id,
-            value,
+            new(id, value),
             expiresAt,
-            utcNow,
             utcNow);
 
         return refreshToken;

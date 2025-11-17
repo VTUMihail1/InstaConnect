@@ -2,5 +2,5 @@
 
 public interface IForgotPasswordTokenFactory
 {
-    public ForgotPasswordToken Create(string id);
+    public ForgotPasswordToken Create(UserId id);
 }

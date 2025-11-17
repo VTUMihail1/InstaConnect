@@ -19,24 +19,9 @@ internal class PostCommentLikeApplicationMappings : IRegister
     {
         config.NewConfig<GetAllPostCommentLikesQueryRequest, GetAllPostCommentLikesQuery>()
             .ConstructUsing(src => new(
-                src.Adapt<PostCommentLikeFilterQuery>(),
-                src.Adapt<PostCommentLikeSortingQuery>(),
-                src.Adapt<PostCommentLikePaginationQuery>()));
-
-        config.NewConfig<GetAllPostCommentLikesQueryRequest, PostCommentLikeFilterQuery>()
-            .ConstructUsing(src => new(
-                src.Filter.Id.Adapt<PostCommentId>(),
-                src.Filter.UserName.Adapt<Name>()));
-
-        config.NewConfig<GetAllPostCommentLikesQueryRequest, PostCommentLikeSortingQuery>()
-            .ConstructUsing(src => new(
-                src.Sorting.Order,
-                src.Sorting.Property));
-
-        config.NewConfig<GetAllPostCommentLikesQueryRequest, PostCommentLikePaginationQuery>()
-            .ConstructUsing(src => new(
-                src.Pagination.Page,
-                src.Pagination.PageSize));
+                src.Filter.Adapt<PostCommentLikeFilterQuery>(),
+                src.Sorting.Adapt<PostCommentLikeSortingQuery>(),
+                src.Pagination.Adapt<PostCommentLikePaginationQuery>()));
 
         config.NewConfig<PostCommentLikeCollection, GetAllPostCommentLikesQueryResponse>()
             .ConstructUsing(pc => new(
@@ -56,7 +41,8 @@ internal class PostCommentLikeApplicationMappings : IRegister
         config.NewConfig<PostCommentLike, PostCommentLikeQueryResponse>()
             .ConstructUsing(src => new(
                 src.Id.Adapt<PostCommentLikeIdPayload>(),
-                src.User.Adapt<PostCommentLikeUserQueryResponse>()));
+                src.User.Adapt<UserQueryResponse>(),
+                src.CreatedAtUtc));
 
         config.NewConfig<AddPostCommentLikeCommandRequest, AddPostCommentLikeCommand>()
             .ConstructUsing(src => new(
@@ -79,10 +65,19 @@ internal class PostCommentLikeApplicationMappings : IRegister
                 src.CommentId.Adapt<PostCommentIdPayload>(),
                 src.UserId.Adapt<UserIdPayload>()));
 
-        config.NewConfig<User, PostCommentLikeUserQueryResponse>()
+        config.NewConfig<PostCommentLikeFilterQueryRequest, PostCommentLikeFilterQuery>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<UserIdPayload>(),
-                src.Name.Adapt<NamePayload>(),
-                src.ProfileImage.Adapt<ImagePayload>()));
+                src.Id.Adapt<PostCommentId>(),
+                src.UserName.Adapt<Name>()));
+
+        config.NewConfig<PostCommentLikeSortingQueryRequest, PostCommentLikeSortingQuery>()
+            .ConstructUsing(src => new(
+                src.Order,
+                src.Property));
+
+        config.NewConfig<PostCommentLikePaginationQueryRequest, PostCommentLikePaginationQuery>()
+            .ConstructUsing(src => new(
+                src.Page,
+                src.PageSize));
     }
 }

@@ -1,4 +1,5 @@
-﻿using InstaConnect.Identity.Infrastructure.Abstractions;
+﻿using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.ValueObjects;
+using InstaConnect.Identity.Infrastructure.Abstractions;
 
 using MongoDB.Driver;
 
@@ -18,8 +19,7 @@ internal class ForgotPasswordTokenRepository : IForgotPasswordTokenRepository
     }
 
     public async Task<ForgotPasswordToken?> GetByIdAsync(
-        string id,
-        string value,
+        ForgotPasswordTokenId id,
         ForgotPasswordTokenIncludeQuery? include,
         CancellationToken cancellationToken)
     {
@@ -29,18 +29,17 @@ internal class ForgotPasswordTokenRepository : IForgotPasswordTokenRepository
             .ForgotPasswordTokens
             .Aggregate()
             .Includes(includeProperties)
-            .Match(p => p.Id == id && p.Value == value)
+            .Match(p => p.Id == id)
             .FirstOrDefaultAsync(cancellationToken);
 
         return entity;
     }
 
     public async Task<ForgotPasswordToken?> GetByIdAsync(
-        string id,
-        string value,
+        ForgotPasswordTokenId id,
         CancellationToken cancellationToken)
     {
-        return await GetByIdAsync(id, value, null, cancellationToken);
+        return await GetByIdAsync(id, null, cancellationToken);
     }
 
     public async Task AddAsync(ForgotPasswordToken entity, CancellationToken cancellationToken)
@@ -52,12 +51,12 @@ internal class ForgotPasswordTokenRepository : IForgotPasswordTokenRepository
 
     public async Task DeleteRangeAsync(IEnumerable<ForgotPasswordToken> entities, CancellationToken cancellationToken)
     {
-        var ids = entities.Select(e => new { e.Id, e.Value });
+        var ids = entities.Select(e => e.Id);
 
         await _identityContext.ForgotPasswordTokens
             .DeleteRangeAsync(
             _identityContext.ClientSessionHandle,
-            x => ids.Any(a => a.Id == x.Id && a.Value == x.Value),
+            x => ids.Any(a => a == x.Id),
             cancellationToken);
     }
 }

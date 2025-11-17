@@ -5,15 +5,15 @@ public static class PostMatchAssertions
     public static void ShouldSatisfy(this AddPostCommandResponse response, Post post)
     {
         response.ShouldSatisfy(p => p.Id == post.Id &&
-                                    p.CreatedAt == post.CreatedAt &&
-                                    p.UpdatedAt == post.UpdatedAt);
+                                    p.CreatedAt == post.CreatedAtUtc &&
+                                    p.UpdatedAt == post.UpdatedAtUtc);
     }
 
     public static void ShouldSatisfy(this UpdatePostCommandResponse response, Post post)
     {
         response.ShouldSatisfy(p => p.Id == post.Id &&
-                                    p.CreatedAt == post.CreatedAt &&
-                                    p.UpdatedAt == post.UpdatedAt);
+                                    p.CreatedAt == post.CreatedAtUtc &&
+                                    p.UpdatedAt == post.UpdatedAtUtc);
     }
 
     public static void ShouldSatisfy(this GetPostByIdQueryResponse response, Post post, User user)

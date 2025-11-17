@@ -1,4 +1,6 @@
-﻿using InstaConnect.Identity.Infrastructure.Abstractions;
+﻿using InstaConnect.Common.Domain.Models.ValueObjects;
+using InstaConnect.Identity.Domain.Features.Users.Models.ValueObjects;
+using InstaConnect.Identity.Infrastructure.Abstractions;
 
 using MongoDB.Driver;
 
@@ -40,7 +42,7 @@ internal class UserRepository : IUserRepository
         var sortProperty = _userSortPropertyFactory.Create(sorting.Property);
         var includeProperties = _userIncludePropertyFactory.Create(include?.Properties);
         var offset = _paginator.GetOffset(pagination.Page, pagination.PageSize);
-        var isNameEmpty = filter.Name.IsNullOrEmptyOrWhiteSpace();
+        var isNameEmpty = filter.Name.IsEmpty();
         var isFirstNameEmpty = filter.FirstName.IsNullOrEmptyOrWhiteSpace();
         var isLastNameEmpty = filter.LastName.IsNullOrEmptyOrWhiteSpace();
 
@@ -48,7 +50,7 @@ internal class UserRepository : IUserRepository
             .Users
             .Aggregate()
             .Includes(includeProperties)
-            .Match(p => isNameEmpty || p.Name.StartsWithOrdinalIgnoreCase(filter.Name) &&
+            .Match(p => isNameEmpty || p.Name.StartsWith(filter.Name) &&
                        (isFirstNameEmpty || p.FirstName.StartsWithOrdinalIgnoreCase(filter.FirstName) &&
                        (isLastNameEmpty || p.LastName.StartsWithOrdinalIgnoreCase(filter.LastName))));
 
@@ -66,7 +68,7 @@ internal class UserRepository : IUserRepository
     }
 
     public async Task<User?> GetByIdAsync(
-        string id,
+        UserId id,
         UserIncludeQuery? include,
         CancellationToken cancellationToken)
     {
@@ -83,14 +85,14 @@ internal class UserRepository : IUserRepository
     }
 
     public async Task<User?> GetByIdAsync(
-        string id,
+        UserId id,
         CancellationToken cancellationToken)
     {
         return await GetByIdAsync(id, null, cancellationToken);
     }
 
     public async Task<User?> GetByNameAsync(
-        string name,
+        Name name,
         UserIncludeQuery? include,
         CancellationToken cancellationToken)
     {
@@ -107,14 +109,14 @@ internal class UserRepository : IUserRepository
     }
 
     public async Task<User?> GetByNameAsync(
-        string name,
+        Name name,
         CancellationToken cancellationToken)
     {
         return await GetByNameAsync(name, null, cancellationToken);
     }
 
     public async Task<User?> GetByEmailAsync(
-        string email,
+        Email email,
         UserIncludeQuery? include,
         CancellationToken cancellationToken)
     {
@@ -131,7 +133,7 @@ internal class UserRepository : IUserRepository
     }
 
     public async Task<User?> GetByEmailAsync(
-        string email,
+        Email email,
         CancellationToken cancellationToken)
     {
         return await GetByEmailAsync(email, null, cancellationToken);

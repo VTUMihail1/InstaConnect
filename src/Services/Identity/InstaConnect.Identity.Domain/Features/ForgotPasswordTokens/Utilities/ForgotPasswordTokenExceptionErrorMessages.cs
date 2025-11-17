@@ -4,27 +4,24 @@ namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Utilities;
 
 public static class ForgotPasswordTokenExceptionErrorMessages
 {
-    public static string GetNotFoundMessage(string id, string value)
+    public static string GetNotFoundMessage(ForgotPasswordTokenId id)
     {
         const string Format = "ForgotPasswordToken(id: {0}, value: {1}) does not exist";
-        var result = Format.FormatCurrentCulture(id, value);
 
-        return result;
+        return Format.FormatCurrentCulture(id.Id.Id, id.Value);
     }
 
-    public static string GetExpiredMessage(string id, string value)
+    public static string GetExpiredMessage(ForgotPasswordTokenId id)
     {
         const string Format = "ForgotPasswordToken(id: {0}, value: {1}) has expired";
-        var result = Format.FormatCurrentCulture(id, value);
 
-        return result;
+        return Format.FormatCurrentCulture(id.Id.Id, id.Value);
     }
 
     public static string GetInclidePropertyNotSupportedMessage(ICollection<ForgotPasswordTokenIncludeProperty> includeProperties)
     {
         const string Format = "ForgotPasswordTokenIncludeProperties(types: {0}) is not supported";
-        var result = Format.FormatCurrentCulture(string.Join(", ", includeProperties));
 
-        return result;
+        return Format.FormatCurrentCulture(includeProperties.JoinAsStringWithComa());
     }
 }

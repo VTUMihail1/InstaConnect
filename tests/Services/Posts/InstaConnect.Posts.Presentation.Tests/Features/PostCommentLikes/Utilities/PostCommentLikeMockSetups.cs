@@ -57,7 +57,7 @@ public static class PostCommentLikeMockSetups
         PostCommentLike postCommentLike,
         CancellationToken cancellationToken)
     {
-        var response = new AddPostCommentLikeCommandResponse(postCommentLike.Id, postCommentLike.CommentId, postCommentLike.UserId, postCommentLike.CreatedAt, postCommentLike.UpdatedAt);
+        var response = new AddPostCommentLikeCommandResponse(postCommentLike.Id, postCommentLike.CommentId, postCommentLike.UserId, postCommentLike.CreatedAtUtc, postCommentLike.UpdatedAt);
 
         applicationSender
             .SendAsync(PostCommentLikeMatcher.IsAddPostCommentLikeCommandRequest(request), cancellationToken)

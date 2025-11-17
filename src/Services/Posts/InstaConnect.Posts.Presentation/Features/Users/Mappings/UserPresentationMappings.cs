@@ -43,5 +43,11 @@ internal class UserPresentationMappings : IRegister
 
         config.NewConfig<UserIdEventPayload, UserIdPayload>()
             .ConstructUsing(src => new(src.Id));
+
+        config.NewConfig<UserQueryResponse, UserApiResponse>()
+            .ConstructUsing(src => new(
+                src.Id.Adapt<UserIdApiPayload>(),
+                src.Name.Adapt<NameApiPayload>(),
+                src.ProfileImage.Adapt<ImageApiPayload>()));
     }
 }

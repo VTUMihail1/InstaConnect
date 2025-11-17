@@ -20,16 +20,14 @@ internal class EmailConfirmationTokenFactory : IEmailConfirmationTokenFactory
         _emailConfirmationTokenOptions = options.Value;
     }
 
-    public EmailConfirmationToken Create(string id)
+    public EmailConfirmationToken Create(UserId id)
     {
         var value = _guidProvider.NewGuid().ToString();
         var expiresAt = _dateTimeProvider.GetOffsetUtcNow(_emailConfirmationTokenOptions.LifetimeSeconds);
         var utcNow = _dateTimeProvider.GetOffsetUtcNow();
         var emailConfirmationToken = new EmailConfirmationToken(
-            id,
-            value,
+            new(id, value),
             expiresAt,
-            utcNow,
             utcNow);
 
         return emailConfirmationToken;

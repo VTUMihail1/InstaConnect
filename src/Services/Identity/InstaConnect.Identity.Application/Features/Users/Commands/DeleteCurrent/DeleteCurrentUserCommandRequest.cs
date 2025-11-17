@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Identity.Application.Features.Users.Commands.DeleteCurrent;
 
-public record DeleteCurrentUserCommandRequest(string Id) : ICommandRequest;
+public record DeleteCurrentUserCommandRequest(UserIdPayload Id) : ICommandRequest;

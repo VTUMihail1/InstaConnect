@@ -4,8 +4,8 @@ namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Exceptio
 
 public class EmailConfirmationTokenNotFoundException : NotFoundException
 {
-    public EmailConfirmationTokenNotFoundException(string id, string value)
-        : base(EmailConfirmationTokenExceptionErrorMessages.GetNotFoundMessage(id, value))
+    public EmailConfirmationTokenNotFoundException(EmailConfirmationTokenId id)
+        : base(EmailConfirmationTokenExceptionErrorMessages.GetNotFoundMessage(id))
     {
     }
 }

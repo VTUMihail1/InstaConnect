@@ -36,7 +36,7 @@ internal class EmailConfirmationTokenService : IEmailConfirmationTokenService
 
         if (existingUser.IsNull())
         {
-            throw new UserNotFoundException(command.Name);
+            throw new UserNameNotFoundException(command.Name);
         }
 
         var emailConfirmationToken = _emailConfirmationTokenFactory.Create(existingUser!.Id);
@@ -51,25 +51,25 @@ internal class EmailConfirmationTokenService : IEmailConfirmationTokenService
     public async Task VerifyAsync(VerifyEmailConfirmationTokenCommand command, CancellationToken cancellationToken)
     {
         var include = _userIncludeQueryBuilderFactory.Create().WithEmailConfirmationTokens().Build();
-        var existingUser = await _userRepository.GetByIdAsync(command.Id, include, cancellationToken);
+        var existingUser = await _userRepository.GetByIdAsync(command.Id.Id, include, cancellationToken);
 
         if (existingUser.IsNull())
         {
-            throw new UserNotFoundException(command.Id);
+            throw new UserNotFoundException(command.Id.Id);
         }
 
-        var existingEmailConfirmationToken = await _emailConfirmationTokenRepository.GetByIdAsync(command.Id, command.Value, cancellationToken);
+        var existingEmailConfirmationToken = await _emailConfirmationTokenRepository.GetByIdAsync(command.Id, cancellationToken);
 
         if (existingEmailConfirmationToken.IsNull())
         {
-            throw new EmailConfirmationTokenNotFoundException(command.Id, command.Value);
+            throw new EmailConfirmationTokenNotFoundException(command.Id);
         }
 
         var utcNow = _dateTimeProvider.GetOffsetUtcNow();
 
         if (existingEmailConfirmationToken!.HasExpired(utcNow))
         {
-            throw new EmailConfirmationTokenExpiredException(command.Id, command.Value);
+            throw new EmailConfirmationTokenExpiredException(command.Id);
         }
 
         await _emailConfirmationTokenRepository.DeleteRangeAsync(existingUser!.EmailConfirmationTokens, cancellationToken);

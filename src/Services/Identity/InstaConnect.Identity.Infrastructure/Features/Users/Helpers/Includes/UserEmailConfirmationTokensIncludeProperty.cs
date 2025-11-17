@@ -21,7 +21,7 @@ public class UserEmailConfirmationTokensIncludeProperty : IUserIncludeProperty
             .Lookup<User, EmailConfirmationToken, User>(
                 _usersContext.EmailConfirmationTokens,
                 p => p.Id,
-                l => l.Id,
+                l => l.Id.Id,
                 p => p.EmailConfirmationTokens
             );
     }

@@ -70,7 +70,7 @@ internal class PostCommentLikePresentationMappings : IRegister
         config.NewConfig<PostCommentLikeQueryResponse, PostCommentLikeApiResponse>()
             .ConstructUsing(src => new(
                 src.Id.Adapt<PostCommentLikeIdApiPayload>(),
-                src.User.Adapt<PostCommentLikeUserApiResponse>()));
+                src.User.Adapt<UserApiResponse>()));
 
         config.NewConfig<PostCommentLikeIdApiPayload, PostCommentLikeIdPayload>()
             .ConstructUsing(src => new(
@@ -81,11 +81,5 @@ internal class PostCommentLikePresentationMappings : IRegister
             .ConstructUsing(src => new(
                 src.CommentId.Adapt<PostCommentIdApiPayload>(),
                 src.UserId.Adapt<UserIdApiPayload>()));
-
-        config.NewConfig<PostCommentLikeUserQueryResponse, PostCommentLikeUserApiResponse>()
-            .ConstructUsing(src => new(
-                src.Id.Adapt<UserIdApiPayload>(),
-                src.Name.Adapt<NameApiPayload>(),
-                src.ProfileImage.Adapt<ImageApiPayload>()));
     }
 }

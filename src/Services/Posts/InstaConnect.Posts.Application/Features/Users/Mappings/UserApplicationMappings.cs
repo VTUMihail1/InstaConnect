@@ -1,4 +1,5 @@
-﻿using InstaConnect.Common.Domain.Models.ValueObjects;
+﻿using InstaConnect.Common.Application.Models;
+using InstaConnect.Common.Domain.Models.ValueObjects;
 using InstaConnect.Posts.Application.Features.Users.Commands.Add;
 using InstaConnect.Posts.Application.Features.Users.Commands.Delete;
 using InstaConnect.Posts.Application.Features.Users.Commands.Update;
@@ -45,5 +46,11 @@ internal class UserApplicationMappings : IRegister
 
         config.NewConfig<UserId, UserIdPayload>()
             .ConstructUsing(src => new(src.Id));
+
+        config.NewConfig<User, UserQueryResponse>()
+            .ConstructUsing(src => new(
+                src.Id.Adapt<UserIdPayload>(),
+                src.Name.Adapt<NamePayload>(),
+                src.ProfileImage.Adapt<ImagePayload>()));
     }
 }

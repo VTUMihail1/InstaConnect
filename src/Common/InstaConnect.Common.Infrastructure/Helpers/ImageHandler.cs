@@ -4,6 +4,7 @@ using CloudinaryDotNet;
 
 using InstaConnect.Common.Domain.Abstractions;
 using InstaConnect.Common.Domain.Exceptions;
+using InstaConnect.Common.Domain.Models.ValueObjects;
 using InstaConnect.Common.Infrastructure.Abstractions;
 
 using Microsoft.AspNetCore.Http;
@@ -23,7 +24,7 @@ internal class ImageHandler : IImageHandler
         _imageUploadFactory = imageUploadFactory;
     }
 
-    public async Task<string> UploadAsync(IFormFile formFile, CancellationToken cancellationToken)
+    public async Task<Image> UploadAsync(IFormFile formFile, CancellationToken cancellationToken)
     {
         var imageUploadParams = _imageUploadFactory.GetImageUploadParams(formFile);
         var imageUploadResult = await _cloudinary.UploadAsync(imageUploadParams, cancellationToken);
@@ -33,6 +34,6 @@ internal class ImageHandler : IImageHandler
             throw new BadRequestException(imageUploadResult.Error.Message);
         }
 
-        return imageUploadResult.Url.AbsolutePath;
+        return new(imageUploadResult.Url.AbsolutePath);
     }
 }

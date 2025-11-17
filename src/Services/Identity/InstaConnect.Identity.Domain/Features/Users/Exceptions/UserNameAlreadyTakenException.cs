@@ -4,12 +4,12 @@ namespace InstaConnect.Identity.Domain.Features.Users.Exceptions;
 
 public class UserNameAlreadyTakenException : BadRequestException
 {
-    public UserNameAlreadyTakenException(string name) : base(
+    public UserNameAlreadyTakenException(Name name) : base(
         UserExceptionErrorMessages.GetNameAlreadyTakenMessage(name))
     {
     }
 
-    public UserNameAlreadyTakenException(string name, Exception exception) : base(
+    public UserNameAlreadyTakenException(Name name, Exception exception) : base(
         UserExceptionErrorMessages.GetNameAlreadyTakenMessage(name), exception)
     {
     }

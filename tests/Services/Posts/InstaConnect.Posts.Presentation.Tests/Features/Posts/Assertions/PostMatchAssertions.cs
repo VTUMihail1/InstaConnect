@@ -7,15 +7,15 @@ public static class PostMatchAssertions
     public static void ShouldSatisfy(this AddPostApiResponse response, Post post)
     {
         response.ShouldSatisfy(p => p.Id == post.Id &&
-                                    p.CreatedAt == post.CreatedAt &&
-                                    p.UpdatedAt == post.UpdatedAt);
+                                    p.CreatedAt == post.CreatedAtUtc &&
+                                    p.UpdatedAt == post.UpdatedAtUtc);
     }
 
     public static void ShouldSatisfy(this UpdatePostApiResponse response, Post post)
     {
         response.ShouldSatisfy(p => p.Id == post.Id &&
-                                    p.CreatedAt == post.CreatedAt &&
-                                    p.UpdatedAt == post.UpdatedAt);
+                                    p.CreatedAt == post.CreatedAtUtc &&
+                                    p.UpdatedAt == post.UpdatedAtUtc);
     }
 
     public static void ShouldSatisfy(this GetPostByIdApiResponse response, Post post, User user)
@@ -46,15 +46,15 @@ public static class PostMatchAssertions
     public static void ShouldSatisfy(this ActionResult<AddPostApiResponse> response, Post post)
     {
         response.ShouldBeActionResultAndSatisfy(p => p.Id == post.Id &&
-                                                     p.CreatedAt == post.CreatedAt &&
-                                                     p.UpdatedAt == post.UpdatedAt);
+                                                     p.CreatedAt == post.CreatedAtUtc &&
+                                                     p.UpdatedAt == post.UpdatedAtUtc);
     }
 
     public static void ShouldSatisfy(this ActionResult<UpdatePostApiResponse> response, Post post)
     {
         response.ShouldBeActionResultAndSatisfy(p => p.Id == post.Id &&
-                                                     p.CreatedAt == post.CreatedAt &&
-                                                     p.UpdatedAt == post.UpdatedAt);
+                                                     p.CreatedAt == post.CreatedAtUtc &&
+                                                     p.UpdatedAt == post.UpdatedAtUtc);
     }
 
     public static void ShouldSatisfy(this ActionResult<GetPostByIdApiResponse> response, Post post, User user)

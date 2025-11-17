@@ -21,7 +21,7 @@ public class UserForgotPasswordTokensIncludeProperty : IUserIncludeProperty
             .Lookup<User, ForgotPasswordToken, User>(
                 _usersContext.ForgotPasswordTokens,
                 p => p.Id,
-                l => l.Id,
+                l => l.Id.Id,
                 p => p.ForgotPasswordTokens
             );
     }

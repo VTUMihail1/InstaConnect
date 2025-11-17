@@ -3,14 +3,12 @@
 public interface IForgotPasswordTokenRepository
 {
     Task<ForgotPasswordToken?> GetByIdAsync(
-        string id,
-        string value,
+        ForgotPasswordTokenId id,
         ForgotPasswordTokenIncludeQuery? include,
         CancellationToken cancellationToken);
 
     Task<ForgotPasswordToken?> GetByIdAsync(
-        string id,
-        string value,
+        ForgotPasswordTokenId id,
         CancellationToken cancellationToken);
 
     Task AddAsync(ForgotPasswordToken entity, CancellationToken cancellationToken);

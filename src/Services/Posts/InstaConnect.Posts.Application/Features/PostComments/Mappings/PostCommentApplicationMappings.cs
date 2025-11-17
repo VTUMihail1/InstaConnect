@@ -1,11 +1,9 @@
-﻿using InstaConnect.Common.Application.Models;
-using InstaConnect.Common.Domain.Models.ValueObjects;
+﻿using InstaConnect.Common.Domain.Models.ValueObjects;
 using InstaConnect.Posts.Application.Features.PostComments.Commands.Add;
 using InstaConnect.Posts.Application.Features.PostComments.Commands.Delete;
 using InstaConnect.Posts.Application.Features.PostComments.Commands.Update;
 using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAll;
 using InstaConnect.Posts.Application.Features.PostComments.Queries.GetById;
-using InstaConnect.Posts.Application.Features.Users.Models;
 using InstaConnect.Posts.Domain.Features.PostComments.Models.ValueObjects;
 using InstaConnect.Posts.Domain.Features.Posts.Models.ValueObjects;
 using InstaConnect.Posts.Domain.Features.Users.Models.ValueObjects;
@@ -20,25 +18,9 @@ internal class PostCommentApplicationMappings : IRegister
     {
         config.NewConfig<GetAllPostCommentsQueryRequest, GetAllPostCommentsQuery>()
             .ConstructUsing(src => new(
-                src.Adapt<PostCommentFilterQuery>(),
-                src.Adapt<PostCommentSortingQuery>(),
-                src.Adapt<PostCommentPaginationQuery>()));
-
-        config.NewConfig<GetAllPostCommentsQueryRequest, PostCommentFilterQuery>()
-            .ConstructUsing(src => new(
-                src.Filter.Id.Adapt<PostId>(),
-                src.Filter.UserId.Adapt<UserId>(),
-                src.Filter.UserName.Adapt<Name>()));
-
-        config.NewConfig<GetAllPostCommentsQueryRequest, PostCommentSortingQuery>()
-            .ConstructUsing(src => new(
-                src.Sorting.Order,
-                src.Sorting.Property));
-
-        config.NewConfig<GetAllPostCommentsQueryRequest, PostCommentPaginationQuery>()
-            .ConstructUsing(src => new(
-                src.Pagination.Page,
-                src.Pagination.PageSize));
+                src.Filter.Adapt<PostCommentFilterQuery>(),
+                src.Sorting.Adapt<PostCommentSortingQuery>(),
+                src.Pagination.Adapt<PostCommentPaginationQuery>()));
 
         config.NewConfig<PostCommentCollection, GetAllPostCommentsQueryResponse>()
             .ConstructUsing(pc => new(
@@ -60,7 +42,9 @@ internal class PostCommentApplicationMappings : IRegister
             .ConstructUsing(src => new(
                 src.Id.Adapt<PostCommentIdPayload>(),
                 src.Content,
-                src.User.Adapt<PostCommentUserQueryResponse>()));
+                src.User.Adapt<UserQueryResponse>(),
+                src.CreatedAtUtc,
+                src.UpdatedAtUtc));
 
         config.NewConfig<AddPostCommentCommandRequest, AddPostCommentCommand>()
             .ConstructUsing(src => new(
@@ -95,10 +79,20 @@ internal class PostCommentApplicationMappings : IRegister
                 src.Id.Adapt<PostIdPayload>(),
                 src.CommentId));
 
-        config.NewConfig<User, PostCommentUserQueryResponse>()
+        config.NewConfig<PostCommentFilterQueryRequest, PostCommentFilterQuery>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<UserIdPayload>(),
-                src.Name.Adapt<NamePayload>(),
-                src.ProfileImage.Adapt<ImagePayload>()));
+                src.Id.Adapt<PostId>(),
+                src.UserId.Adapt<UserId>(),
+                src.UserName.Adapt<Name>()));
+
+        config.NewConfig<PostCommentSortingQueryRequest, PostCommentSortingQuery>()
+            .ConstructUsing(src => new(
+                src.Order,
+                src.Property));
+
+        config.NewConfig<PostCommentPaginationQueryRequest, PostCommentPaginationQuery>()
+            .ConstructUsing(src => new(
+                src.Page,
+                src.PageSize));
     }
 }

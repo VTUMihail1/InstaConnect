@@ -112,7 +112,7 @@ internal class PostCommentService : IPostCommentService
             throw new PostCommentNotFoundException(command.Id);
         }
 
-        if (existingPostComment!.IsNotOwnedByUser(command.UserId))
+        if (existingPostComment!.UserId.IsNot(command.UserId))
         {
             throw new PostCommentForbiddenException(command.Id, command.UserId);
         }
@@ -143,7 +143,7 @@ internal class PostCommentService : IPostCommentService
             throw new PostCommentNotFoundException(command.Id);
         }
 
-        if (existingPostComment!.IsNotOwnedByUser(command.UserId))
+        if (existingPostComment!.UserId.IsNot(command.UserId))
         {
             throw new PostCommentForbiddenException(command.Id, command.UserId);
         }

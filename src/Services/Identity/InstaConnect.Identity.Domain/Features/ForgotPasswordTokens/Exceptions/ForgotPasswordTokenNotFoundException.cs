@@ -4,8 +4,8 @@ namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Exceptions;
 
 public class ForgotPasswordTokenNotFoundException : NotFoundException
 {
-    public ForgotPasswordTokenNotFoundException(string id, string value)
-        : base(ForgotPasswordTokenExceptionErrorMessages.GetNotFoundMessage(id, value))
+    public ForgotPasswordTokenNotFoundException(ForgotPasswordTokenId id)
+        : base(ForgotPasswordTokenExceptionErrorMessages.GetNotFoundMessage(id))
     {
     }
 }

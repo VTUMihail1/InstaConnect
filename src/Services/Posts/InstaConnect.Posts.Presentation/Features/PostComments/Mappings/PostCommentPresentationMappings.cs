@@ -76,7 +76,9 @@ internal class PostCommentPresentationMappings : IRegister
             .ConstructUsing(src => new(
                 src.Id.Adapt<PostCommentIdApiPayload>(),
                 src.Content,
-                src.User.Adapt<PostCommentUserApiResponse>()));
+                src.User.Adapt<UserApiResponse>(),
+                src.CreatedAtUtc,
+                src.UpdatedAtUtc));
 
         config.NewConfig<PostCommentIdApiPayload, PostCommentIdPayload>()
             .ConstructUsing(src => new(
@@ -87,11 +89,5 @@ internal class PostCommentPresentationMappings : IRegister
             .ConstructUsing(src => new(
                 src.Id.Adapt<PostIdApiPayload>(),
                 src.CommentId));
-
-        config.NewConfig<PostCommentUserQueryResponse, PostCommentUserApiResponse>()
-            .ConstructUsing(src => new(
-                src.Id.Adapt<UserIdApiPayload>(),
-                src.Name.Adapt<NameApiPayload>(),
-                src.ProfileImage.Adapt<ImageApiPayload>()));
     }
 }

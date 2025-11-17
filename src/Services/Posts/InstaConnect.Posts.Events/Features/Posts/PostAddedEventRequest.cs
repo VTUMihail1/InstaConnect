@@ -4,7 +4,5 @@ public record PostAddedEventRequest(
         PostIdEventPayload Id,
         string Title,
         string Content,
-        UserIdEventPayload UserId,
-        DateTimeOffset CreatedAt,
-        DateTimeOffset UpdatedAt)
+        UserIdEventPayload UserId)
     : IEventRequest;

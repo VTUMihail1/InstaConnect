@@ -4,8 +4,8 @@ namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Exceptio
 
 public class EmailConfirmationTokenExpiredException : BadRequestException
 {
-    public EmailConfirmationTokenExpiredException(string id, string value)
-        : base(EmailConfirmationTokenExceptionErrorMessages.GetExpiredMessage(id, value))
+    public EmailConfirmationTokenExpiredException(EmailConfirmationTokenId id)
+        : base(EmailConfirmationTokenExceptionErrorMessages.GetExpiredMessage(id))
     {
     }
 }

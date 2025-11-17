@@ -8,16 +8,16 @@ public static class PostCommentMatchAssertions
     {
         response.ShouldSatisfy(p => p.Id == postComment.Id &&
                                     p.CommentId == postComment.CommentId &&
-                                    p.CreatedAt == postComment.CreatedAt &&
-                                    p.UpdatedAt == postComment.UpdatedAt);
+                                    p.CreatedAt == postComment.CreatedAtUtc &&
+                                    p.UpdatedAt == postComment.UpdatedAtUtc);
     }
 
     public static void ShouldSatisfy(this UpdatePostCommentApiResponse response, PostComment postComment)
     {
         response.ShouldSatisfy(p => p.Id == postComment.Id &&
                                     p.CommentId == postComment.CommentId &&
-                                    p.CreatedAt == postComment.CreatedAt &&
-                                    p.UpdatedAt == postComment.UpdatedAt);
+                                    p.CreatedAt == postComment.CreatedAtUtc &&
+                                    p.UpdatedAt == postComment.UpdatedAtUtc);
     }
 
     public static void ShouldSatisfy(this GetPostCommentByIdApiResponse response, PostComment postComment, User user)
@@ -49,16 +49,16 @@ public static class PostCommentMatchAssertions
     {
         response.ShouldBeActionResultAndSatisfy(p => p.Id == postComment.Id &&
                                     p.CommentId == postComment.CommentId &&
-                                    p.CreatedAt == postComment.CreatedAt &&
-                                    p.UpdatedAt == postComment.UpdatedAt);
+                                    p.CreatedAt == postComment.CreatedAtUtc &&
+                                    p.UpdatedAt == postComment.UpdatedAtUtc);
     }
 
     public static void ShouldSatisfy(this ActionResult<UpdatePostCommentApiResponse> response, PostComment postComment)
     {
         response.ShouldBeActionResultAndSatisfy(p => p.Id == postComment.Id &&
                                     p.CommentId == postComment.CommentId &&
-                                    p.CreatedAt == postComment.CreatedAt &&
-                                    p.UpdatedAt == postComment.UpdatedAt);
+                                    p.CreatedAt == postComment.CreatedAtUtc &&
+                                    p.UpdatedAt == postComment.UpdatedAtUtc);
     }
 
     public static void ShouldSatisfy(this ActionResult<GetPostCommentByIdApiResponse> response, PostComment postComment, User user)

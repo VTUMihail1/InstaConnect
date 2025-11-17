@@ -1,3 +1,5 @@
-﻿namespace InstaConnect.Posts.Application.Features.PostLikes.Models;
+﻿using InstaConnect.Posts.Application.Features.Users.Models;
 
-public record PostLikeQueryResponse(PostLikeIdPayload Id, PostLikeUserQueryResponse User);
+namespace InstaConnect.Posts.Application.Features.PostLikes.Models;
+
+public record PostLikeQueryResponse(PostLikeIdPayload Id, UserQueryResponse User, DateTimeOffset CreatedAtUtc);

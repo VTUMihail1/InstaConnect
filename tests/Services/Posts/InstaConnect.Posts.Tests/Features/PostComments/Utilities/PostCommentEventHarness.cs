@@ -13,8 +13,8 @@ public static class PostCommentEventHarness
                                                                                    p.CommentId == postComment.CommentId &&
                                                                                    p.Content == postComment.Content &&
                                                                                    p.UserId == postComment.UserId &&
-                                                                                   p.CreatedAt == postComment.CreatedAt &&
-                                                                                   p.UpdatedAt == postComment.UpdatedAt, cancellationToken);
+                                                                                   p.CreatedAtUtc == postComment.CreatedAtUtc &&
+                                                                                   p.UpdatedAtUtc == postComment.UpdatedAtUtc, cancellationToken);
 
         return result;
     }
@@ -28,8 +28,8 @@ public static class PostCommentEventHarness
                                                                                      p.CommentId == postComment.CommentId &&
                                                                                      p.Content == postComment.Content &&
                                                                                      p.UserId == postComment.UserId &&
-                                                                                     p.CreatedAt == postComment.CreatedAt &&
-                                                                                     p.UpdatedAt == postComment.UpdatedAt, cancellationToken);
+                                                                                     p.CreatedAtUtc == postComment.CreatedAtUtc &&
+                                                                                     p.UpdatedAtUtc == postComment.UpdatedAtUtc, cancellationToken);
 
         return result;
     }

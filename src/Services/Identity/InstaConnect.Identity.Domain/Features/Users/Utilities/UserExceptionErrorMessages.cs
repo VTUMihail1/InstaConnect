@@ -4,75 +4,73 @@ namespace InstaConnect.Identity.Domain.Features.Users.Utilities;
 
 public static class UserExceptionErrorMessages
 {
-    public static string GetNotFoundMessage(string id)
+    public static string GetNotFoundMessage(UserId id)
     {
         const string Format = "User(id: {0}) does not exist";
-        var result = Format.FormatCurrentCulture(id);
 
-        return result;
+        return Format.FormatCurrentCulture(id.Id);
     }
 
-    public static string GetEmailNotFoundMessage(string email)
+    public static string GetNameNotFoundMessage(Name name)
+    {
+        const string Format = "User(name: {0}) does not exist";
+
+        return Format.FormatCurrentCulture(name.Value);
+    }
+
+    public static string GetEmailNotFoundMessage(Email email)
     {
         const string Format = "User(email: {0}) does not exist";
-        var result = Format.FormatCurrentCulture(email);
 
-        return result;
+        return Format.FormatCurrentCulture(email.Value);
     }
 
-    public static string GetNameAlreadyTakenMessage(string name)
+    public static string GetNameAlreadyTakenMessage(Name name)
     {
         const string Format = "User(name: {0}) already taken";
-        var result = Format.FormatCurrentCulture(name);
 
-        return result;
+        return Format.FormatCurrentCulture(name.Value);
     }
 
-    public static string GetEmailAlreadyTakenMessage(string email)
+    public static string GetEmailAlreadyTakenMessage(Email email)
     {
         const string Format = "User(email: {0}) already taken";
-        var result = Format.FormatCurrentCulture(email);
 
-        return result;
+        return Format.FormatCurrentCulture(email.Value);
     }
 
-    public static string GetEmailAlreadyConfirmedMessage(string email)
+    public static string GetEmailAlreadyConfirmedMessage(Email email)
     {
         const string Format = "User(email: {0}) already confirmed";
-        var result = Format.FormatCurrentCulture(email);
 
-        return result;
+        return Format.FormatCurrentCulture(email.Value);
     }
 
-    public static string GetEmailNotConfirmedMessage(string email)
+    public static string GetEmailNotConfirmedMessage(Email email)
     {
         const string Format = "User(email: {0}) not confirmed";
-        var result = Format.FormatCurrentCulture(email);
 
-        return result;
+        return Format.FormatCurrentCulture(email.Value);
     }
 
-    public static string GetInvalidDetailsMessage(string name)
+    public static string GetInvalidDetailsMessage(Name name)
     {
         const string Format = "User(name: {0}) has invalid details";
-        var result = Format.FormatCurrentCulture(name);
 
-        return result;
+        return Format.FormatCurrentCulture(name.Value);
     }
 
     public static string GetSortPropertyNotSupportedMessage(UserSortProperty sortProperty)
     {
         const string Format = "UserSortProperty(type: {0}) is not supported";
-        var result = Format.FormatCurrentCulture(sortProperty);
 
-        return result;
+        return Format.FormatCurrentCulture(sortProperty);
     }
 
     public static string GetInclidePropertyNotSupportedMessage(ICollection<UserIncludeProperty> includeProperties)
     {
         const string Format = "UserIncludeProperties(types: {0}) is not supported";
-        var result = Format.FormatCurrentCulture(string.Join(", ", includeProperties));
 
-        return result;
+        return Format.FormatCurrentCulture(includeProperties.JoinAsStringWithComa());
     }
 }

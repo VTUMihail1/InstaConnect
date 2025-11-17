@@ -60,7 +60,7 @@ public static class PostCommentMockSetups
         PostComment postComment,
         CancellationToken cancellationToken)
     {
-        var response = new AddPostCommentCommandResponse(postComment.Id, postComment.CommentId, postComment.CreatedAt, postComment.UpdatedAt);
+        var response = new AddPostCommentCommandResponse(postComment.Id, postComment.CommentId, postComment.CreatedAtUtc, postComment.UpdatedAtUtc);
 
         applicationSender
             .SendAsync(PostCommentMatcher.IsAddPostCommentCommandRequest(request), cancellationToken)
@@ -73,7 +73,7 @@ public static class PostCommentMockSetups
         PostComment postComment,
         CancellationToken cancellationToken)
     {
-        var response = new UpdatePostCommentCommandResponse(postComment.Id, postComment.CommentId, postComment.CreatedAt, postComment.UpdatedAt);
+        var response = new UpdatePostCommentCommandResponse(postComment.Id, postComment.CommentId, postComment.CreatedAtUtc, postComment.UpdatedAtUtc);
 
         applicationSender
             .SendAsync(PostCommentMatcher.IsUpdatePostCommentCommandRequest(request), cancellationToken)

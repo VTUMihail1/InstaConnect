@@ -21,7 +21,7 @@ public class UserClaimsIncludeProperty : IUserIncludeProperty
             .Lookup<User, UserClaim, User>(
                 _usersContext.UserClaims,
                 p => p.Id,
-                l => l.Id,
+                l => l.Id.Id,
                 p => p.Claims
             );
     }

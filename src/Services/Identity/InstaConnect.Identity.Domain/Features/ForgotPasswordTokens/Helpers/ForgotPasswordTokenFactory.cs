@@ -20,16 +20,14 @@ internal class ForgotPasswordTokenFactory : IForgotPasswordTokenFactory
         _forgotPasswordTokenOptions = options.Value;
     }
 
-    public ForgotPasswordToken Create(string id)
+    public ForgotPasswordToken Create(UserId id)
     {
         var value = _guidProvider.NewGuid().ToString();
         var expiresAt = _dateTimeProvider.GetOffsetUtcNow(_forgotPasswordTokenOptions.LifetimeSeconds);
         var utcNow = _dateTimeProvider.GetOffsetUtcNow();
         var forgotPasswordToken = new ForgotPasswordToken(
-            id,
-            value,
+            new(id, value),
             expiresAt,
-            utcNow,
             utcNow);
 
         return forgotPasswordToken;
