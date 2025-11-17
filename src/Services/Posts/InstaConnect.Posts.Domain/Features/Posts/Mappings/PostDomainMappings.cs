@@ -13,18 +13,14 @@ internal class PostDomainMappings : IRegister
                 src.Id.Adapt<PostIdEventPayload>(),
                 src.Title,
                 src.Content,
-                src.UserId.Adapt<UserIdEventPayload>(),
-                src.CreatedAtUtc,
-                src.UpdatedAtUtc));
+                src.UserId.Adapt<UserIdEventPayload>()));
 
         config.NewConfig<Post, PostUpdatedEventRequest>()
             .ConstructUsing(src => new(
                 src.Id.Adapt<PostIdEventPayload>(),
                 src.Title,
                 src.Content,
-                src.UserId.Adapt<UserIdEventPayload>(),
-                src.CreatedAtUtc,
-                src.UpdatedAtUtc));
+                src.UserId.Adapt<UserIdEventPayload>()));
 
         config.NewConfig<Post, PostDeletedEventRequest>()
             .ConstructUsing(src => new(src.Id.Adapt<PostIdEventPayload>()));

@@ -9,9 +9,7 @@ internal class PostLikeDomainMappings : IRegister
     public void Register(TypeAdapterConfig config)
     {
         config.NewConfig<PostLike, PostLikeAddedEventRequest>()
-            .ConstructUsing(src => new(
-                src.Id.Adapt<PostLikeIdEventPayload>(),
-                src.CreatedAtUtc));
+            .ConstructUsing(src => new(src.Id.Adapt<PostLikeIdEventPayload>()));
 
         config.NewConfig<PostLike, PostLikeDeletedEventRequest>()
             .ConstructUsing(src => new(src.Id.Adapt<PostLikeIdEventPayload>()));

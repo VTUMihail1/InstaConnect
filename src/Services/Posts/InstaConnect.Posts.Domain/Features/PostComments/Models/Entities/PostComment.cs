@@ -1,17 +1,13 @@
-﻿using InstaConnect.Common.Domain.Extensions;
-
-namespace InstaConnect.Posts.Domain.Features.PostComments.Models.Entities;
+﻿namespace InstaConnect.Posts.Domain.Features.PostComments.Models.Entities;
 
 public class PostComment : IEntity<PostCommentId>
 {
-    private readonly IList<PostCommentLike> _likes;
-
     private PostComment()
     {
         Id = new(new(string.Empty), string.Empty);
         Content = string.Empty;
         UserId = new(string.Empty);
-        _likes = [];
+        Likes = [];
     }
 
     public PostComment(
@@ -24,7 +20,7 @@ public class PostComment : IEntity<PostCommentId>
         Id = id;
         Content = content;
         UserId = userId;
-        _likes = [];
+        Likes = [];
         CreatedAtUtc = createdAtUtc;
         UpdatedAtUtc = updatedAtUtc;
     }
@@ -40,7 +36,7 @@ public class PostComment : IEntity<PostCommentId>
         Content = content;
         UserId = user.Id;
         User = user;
-        _likes = [];
+        Likes = [];
         CreatedAtUtc = createdAtUtc;
         UpdatedAtUtc = updatedAtUtc;
     }
@@ -57,7 +53,7 @@ public class PostComment : IEntity<PostCommentId>
         Content = content;
         UserId = user.Id;
         User = user;
-        _likes = likes;
+        Likes = likes;
         CreatedAtUtc = createdAtUtc;
         UpdatedAtUtc = updatedAtUtc;
     }
@@ -70,7 +66,7 @@ public class PostComment : IEntity<PostCommentId>
 
     public User? User { get; private set; }
 
-    public IReadOnlyCollection<PostCommentLike> Likes => _likes.AsReadOnly();
+    public ICollection<PostCommentLike> Likes { get; }
 
     public DateTimeOffset CreatedAtUtc { get; }
 
@@ -85,5 +81,10 @@ public class PostComment : IEntity<PostCommentId>
     public void AddUser(User user)
     {
         User = user;
+    }
+
+    public void AddLike(PostCommentLike like)
+    {
+        Likes.Add(like);
     }
 }
