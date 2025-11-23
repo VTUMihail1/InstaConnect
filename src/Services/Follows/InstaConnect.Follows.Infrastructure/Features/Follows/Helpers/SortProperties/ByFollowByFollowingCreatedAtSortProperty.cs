@@ -6,5 +6,5 @@ public class ByFollowByFollowingCreatedAtSortProperty : IFollowByFollowingSortPr
 {
     public FollowByFollowingSortProperty SortProperty => FollowByFollowingSortProperty.ByCreatedAt;
 
-    public Expression<Func<Follow, object>> Property => p => p.CreatedAt;
+    public Expression<Func<Follow, object>> Property => p => p.CreatedAtUtc;
 }

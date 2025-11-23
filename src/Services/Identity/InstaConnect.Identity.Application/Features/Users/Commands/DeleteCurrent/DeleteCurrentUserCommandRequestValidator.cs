@@ -3,12 +3,9 @@ public class DeleteCurrentUserCommandRequestValidator : AbstractValidator<Delete
 {
     public DeleteCurrentUserCommandRequestValidator()
     {
-        RuleFor(r => r.Id)
-            .NotEmpty()
-            .WithMessage(UserErrorMessages.GetIdEmpty())
-            .MinimumLength(UserConfigurations.IdMinLength)
-            .WithMessage(r => UserErrorMessages.GetIdTooShort(r.Id.Length))
-            .MaximumLength(UserConfigurations.IdMaxLength)
-            .WithMessage(r => UserErrorMessages.GetIdTooLong(r.Id.Length));
+        RuleFor(r => r.Id.Id)
+            .NotEmptyWithMessage()
+            .UserIdMinLengthWithMessage()
+            .UserIdMaxLengthWithMessage();
     }
 }

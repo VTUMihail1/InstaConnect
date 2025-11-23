@@ -46,14 +46,13 @@ internal class ChatService : IChatService
     public async Task<Chat> GetByIdAsync(GetChatByIdQuery query, CancellationToken cancellationToken)
     {
         var existingChat = await _chatRepository.GetByIdAsync(
-            query.ParticipantOneId,
-            query.ParticipantTwoId,
+            query.Id,
             query.Include,
             cancellationToken);
 
         if (existingChat.IsNull())
         {
-            throw new ChatNotFoundException(query.ParticipantOneId, query.ParticipantTwoId);
+            throw new ChatNotFoundException(query.Id);
         }
 
         return existingChat!;
@@ -75,14 +74,14 @@ internal class ChatService : IChatService
             throw new UserNotFoundException(command.ParticipantTwoId);
         }
 
-        var existingChat = await _chatRepository.GetByIdAsync(command.ParticipantOneId, command.ParticipantTwoId, cancellationToken);
+        var chat = _chatFactory.Create(command.ParticipantOneId, command.ParticipantTwoId);
+        var existingChat = await _chatRepository.GetByIdAsync(chat.Id, cancellationToken);
 
         if (existingChat.IsNotNull())
         {
-            throw new ChatAlreadyExistsException(command.ParticipantOneId, command.ParticipantTwoId);
+            throw new ChatAlreadyExistsException(chat.Id);
         }
 
-        var chat = _chatFactory.Create(command.ParticipantOneId, command.ParticipantTwoId);
         await _chatRepository.AddAsync(chat, cancellationToken);
 
         var eventRequest = _applicationMapper.Map<ChatAddedEventRequest>(chat);
@@ -93,11 +92,11 @@ internal class ChatService : IChatService
 
     public async Task DeleteAsync(DeleteChatCommand command, CancellationToken cancellationToken)
     {
-        var existingChat = await _chatRepository.GetByIdAsync(command.ParticipantOneId, command.ParticipantTwoId, cancellationToken);
+        var existingChat = await _chatRepository.GetByIdAsync(command.Id, cancellationToken);
 
         if (existingChat.IsNull())
         {
-            throw new ChatNotFoundException(command.ParticipantOneId, command.ParticipantTwoId);
+            throw new ChatNotFoundException(command.Id);
         }
 
         await _chatRepository.DeleteAsync(existingChat!, cancellationToken);

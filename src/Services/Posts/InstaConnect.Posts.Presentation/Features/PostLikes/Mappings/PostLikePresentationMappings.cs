@@ -5,6 +5,7 @@ using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAll;
 using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetById;
 using InstaConnect.Posts.Application.Features.Posts.Models;
 using InstaConnect.Posts.Application.Features.Users.Models;
+using InstaConnect.Posts.Presentation.Features.Users.Models.Responses;
 
 using Mapster;
 

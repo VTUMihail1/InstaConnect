@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Chats.Application.Features.ChatMessages.Commands.Add;
 
-public record AddChatMessageCommandRequest(string ParticipantOneId, string ParticipantTwoId, string Content) : ICommandRequest<AddChatMessageCommandResponse>;
+public record AddChatMessageCommandRequest(ChatIdPayload Id, UserIdPayload SenderId, string Content) : ICommandRequest<AddChatMessageCommandResponse>;

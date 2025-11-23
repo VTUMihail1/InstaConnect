@@ -17,8 +17,7 @@ internal static class ServiceCollectionExtensions
         {
             cm.AutoMap();
 
-            cm.MapIdMember(c => new { c.ParticipantOneId, c.ParticipantTwoId })
-              .SetSerializer(new StringSerializer(BsonType.ObjectId));
+            cm.MapIdMember(c => c.Id);
 
             cm.UnmapMember(c => c.ParticipantOne);
             cm.UnmapMember(c => c.ParticipantTwo);

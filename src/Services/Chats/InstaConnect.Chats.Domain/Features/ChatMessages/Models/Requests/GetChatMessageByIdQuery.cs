@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Chats.Domain.Features.ChatMessages.Models.Requests;
 
-public record GetChatMessageByIdQuery(string ParticipantOneId, string ParticipantTwoId, string MessageId)
+public record GetChatMessageByIdQuery(ChatMessageId Id, UserId SenderId)
 {
     public ChatMessageIncludeQuery? Include { get; private set; }
 

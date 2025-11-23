@@ -78,11 +78,15 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddExceptionHandler(this IServiceCollection serviceCollection)
     {
         serviceCollection
-            .AddSingleton<IProblemDetailsFactory, ProblemDetailsFactory>()
-            .AddImplementationsOf<IExceptionStatus>(CommonPresentationReference.Assembly);
+            .AddSingleton<IApplicationProblemDetailsFactory, ApplicationProblemDetailsFactory>()
+            .AddImplementationsOf<IBaseExceptionStatus>(CommonPresentationReference.Assembly);
 
         serviceCollection.AddProblemDetails();
-        serviceCollection.AddExceptionHandler<ApplicationExceptionHandler>();
+
+        serviceCollection
+            .AddExceptionHandler<InvalidValidationExceptionHandler>()
+            .AddExceptionHandler<BaseExceptionHandler>()
+            .AddExceptionHandler<ExceptionHandler>();
 
         return serviceCollection;
     }

@@ -1,8 +1,8 @@
 ﻿namespace InstaConnect.Chats.Application.Features.ChatMessages.Models;
 
 public record ChatMessageQueryResponse(
-    string ParticipantOneId,
-    string ParticipantTwoId,
-    string MessageId,
+    ChatMessageIdPayload Id,
     string Content,
-    ChatMessageUserQueryResponse Sender);
+    UserQueryResponse Sender,
+    DateTimeOffset CreatedAtUtc,
+    DateTimeOffset UpdatedAtUtc);

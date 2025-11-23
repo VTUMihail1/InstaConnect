@@ -1,6 +1,15 @@
-﻿namespace InstaConnect.Chats.Presentation.Features.ChatMessages.Models.Requests;
+﻿using System.Security.Claims;
+
+using InstaConnect.Chats.Domain.Features.ChatMessages.Models.Requests;
+using InstaConnect.Common.Domain.Models;
+
+namespace InstaConnect.Chats.Presentation.Features.ChatMessages.Models.Requests;
 
 public record GetAllChatMessagesApiRequest(
-    [FromQuery] ChatMessageFilterApiRequest Filter,
-    [FromQuery] ChatMessageSortingApiRequest Sorting,
-    [FromQuery] ChatMessagePaginationApiRequest Pagination);
+    [FromClaim(ClaimTypes.NameIdentifier)] string ParticipantOneId,
+    [FromRoute] string ParticipantTwoId,
+    [FromClaim(ClaimTypes.NameIdentifier)] string SenderId,
+    [FromQuery] CommonSortOrder SortOrder = CommonDefaultValues.SortOrder,
+    [FromQuery] ChatMessageSortProperty SortProperty = ChatMessageDefaultValues.SortProperty,
+    [FromQuery] int Page = ChatMessageDefaultValues.Page,
+    [FromQuery] int PageSize = ChatMessageDefaultValues.PageSize);

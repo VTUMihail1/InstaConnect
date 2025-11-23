@@ -2,6 +2,7 @@
 using InstaConnect.Posts.Application.Features.Users.Commands.Delete;
 using InstaConnect.Posts.Application.Features.Users.Commands.Update;
 using InstaConnect.Posts.Application.Features.Users.Models;
+using InstaConnect.Posts.Presentation.Features.Users.Models.Responses;
 
 using Mapster;
 

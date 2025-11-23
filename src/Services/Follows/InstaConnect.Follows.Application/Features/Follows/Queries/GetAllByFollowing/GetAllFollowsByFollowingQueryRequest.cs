@@ -1,7 +1,7 @@
 ﻿namespace InstaConnect.Follows.Application.Features.Follows.Queries.GetAllByFollowing;
 
 public record GetAllFollowsByFollowingQueryRequest(
-    FollowByFollowingQueryFilter Filter,
-    FollowByFollowingQuerySorting Sorting,
-    FollowQueryPagination Pagination)
+    FollowByFollowingFilterQueryRequest Filter,
+    FollowByFollowingSortingQueryRequest Sorting,
+    FollowPaginationQueryRequest Pagination)
     : IQueryRequest<GetAllFollowsByFollowingQueryResponse>;

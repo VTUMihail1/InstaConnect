@@ -16,7 +16,7 @@ public static class ServiceCollectionExtensions
         serviceCollection
             .AddServicesWithMatchingInterfaces(FollowPresentationReference.Assembly)
             .AddApiControllers()
-            .AddMapper(FollowPresentationReference.Assembly)
+            .AddMapper(FollowPresentationReference.Assembly, CommonPresentationReference.Assembly)
             .AddAuthorizationPolicies()
             .AddCorsPolicies(configuration)
             .AddSwagger()

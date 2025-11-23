@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Follows.Domain.Features.Follows.Models.Requests;
 
-public record GetFollowByIdQuery(string FollowerId, string FollowingId)
+public record GetFollowByIdQuery(FollowId Id)
 {
     public FollowIncludeQuery? Include { get; private set; }
 

@@ -2,5 +2,5 @@
 
 public interface IFollowFactory
 {
-    public Follow Create(string followerId, string followingId);
+    public Follow Create(UserId followerId, UserId followingId);
 }

@@ -22,11 +22,16 @@ internal class ChatMessageService : IChatMessageService
 
     public async Task<ChatMessageCollection> GetAllAsync(GetAllChatMessagesQuery query, CancellationToken cancellationToken)
     {
-        var existingChat = await _chatRepository.GetByIdAsync(query.Filter.ParticipantOneId, query.Filter.ParticipantTwoId, cancellationToken);
+        var existingChat = await _chatRepository.GetByIdAsync(query.Filter.Id, cancellationToken);
 
         if (existingChat.IsNull())
         {
-            throw new ChatNotFoundException(query.Filter.ParticipantOneId, query.Filter.ParticipantTwoId);
+            throw new ChatNotFoundException(query.Filter.Id);
+        }
+
+        if (existingChat!.IsNotParticipant(query.Filter.SenderId))
+        {
+            throw new ChatForbiddenException(query.Filter.Id, query.Filter.SenderId);
         }
 
         var existingChatMessageCollection = await _chatMessageRepository.GetAllAsync(
@@ -41,16 +46,26 @@ internal class ChatMessageService : IChatMessageService
 
     public async Task<ChatMessage> GetByIdAsync(GetChatMessageByIdQuery query, CancellationToken cancellationToken)
     {
+        var existingChat = await _chatRepository.GetByIdAsync(query.Id.Id, cancellationToken);
+
+        if (existingChat.IsNull())
+        {
+            throw new ChatNotFoundException(query.Id.Id);
+        }
+
+        if (existingChat!.IsNotParticipant(query.SenderId))
+        {
+            throw new ChatForbiddenException(query.Id.Id, query.SenderId);
+        }
+
         var existingChatMessage = await _chatMessageRepository.GetByIdAsync(
-            query.ParticipantOneId,
-            query.ParticipantTwoId,
-            query.MessageId,
+            query.Id,
             query.Include,
             cancellationToken);
 
         if (existingChatMessage.IsNull())
         {
-            throw new ChatMessageNotFoundException(query.ParticipantOneId, query.ParticipantTwoId, query.MessageId);
+            throw new ChatMessageNotFoundException(query.Id);
         }
 
         return existingChatMessage!;
@@ -58,14 +73,19 @@ internal class ChatMessageService : IChatMessageService
 
     public async Task<ChatMessage> AddAsync(AddChatMessageCommand command, CancellationToken cancellationToken)
     {
-        var existingChat = await _chatRepository.GetByIdAsync(command.ParticipantOneId, command.ParticipantTwoId, cancellationToken);
+        var existingChat = await _chatRepository.GetByIdAsync(command.Id, cancellationToken);
 
         if (existingChat.IsNull())
         {
-            throw new ChatNotFoundException(command.ParticipantOneId, command.ParticipantTwoId);
+            throw new ChatNotFoundException(command.Id);
         }
 
-        var chatMessage = _chatMessageFactory.Create(command.ParticipantOneId, command.ParticipantTwoId, command.Content);
+        if (existingChat!.IsNotParticipant(command.SenderId))
+        {
+            throw new ChatForbiddenException(command.Id, command.SenderId);
+        }
+
+        var chatMessage = _chatMessageFactory.Create(command.Id, command.SenderId, command.Content);
         await _chatMessageRepository.AddAsync(chatMessage, cancellationToken);
 
         return chatMessage;
@@ -73,18 +93,23 @@ internal class ChatMessageService : IChatMessageService
 
     public async Task<ChatMessage> UpdateAsync(UpdateChatMessageCommand command, CancellationToken cancellationToken)
     {
-        var existingChat = await _chatRepository.GetByIdAsync(command.ParticipantOneId, command.ParticipantTwoId, cancellationToken);
+        var existingChat = await _chatRepository.GetByIdAsync(command.Id.Id, cancellationToken);
 
         if (existingChat.IsNull())
         {
-            throw new ChatNotFoundException(command.ParticipantOneId, command.ParticipantTwoId);
+            throw new ChatNotFoundException(command.Id.Id);
         }
 
-        var existingChatMessage = await _chatMessageRepository.GetByIdAsync(command.ParticipantOneId, command.ParticipantTwoId, command.MessageId, cancellationToken);
+        if (existingChat!.IsNotParticipant(command.SenderId))
+        {
+            throw new ChatForbiddenException(command.Id.Id, command.SenderId);
+        }
+
+        var existingChatMessage = await _chatMessageRepository.GetByIdAsync(command.Id, cancellationToken);
 
         if (existingChatMessage.IsNull())
         {
-            throw new ChatMessageNotFoundException(command.ParticipantOneId, command.ParticipantTwoId, command.MessageId);
+            throw new ChatMessageNotFoundException(command.Id);
         }
 
         var utcNow = _dateTimeProvider.GetOffsetUtcNow();
@@ -96,11 +121,23 @@ internal class ChatMessageService : IChatMessageService
 
     public async Task DeleteAsync(DeleteChatMessageCommand command, CancellationToken cancellationToken)
     {
-        var existingChatMessage = await _chatMessageRepository.GetByIdAsync(command.ParticipantOneId, command.ParticipantTwoId, command.MessageId, cancellationToken);
+        var existingChat = await _chatRepository.GetByIdAsync(command.Id.Id, cancellationToken);
+
+        if (existingChat.IsNull())
+        {
+            throw new ChatNotFoundException(command.Id.Id);
+        }
+
+        if (existingChat!.IsNotParticipant(command.SenderId))
+        {
+            throw new ChatForbiddenException(command.Id.Id, command.SenderId);
+        }
+
+        var existingChatMessage = await _chatMessageRepository.GetByIdAsync(command.Id, cancellationToken);
 
         if (existingChatMessage.IsNull())
         {
-            throw new ChatMessageNotFoundException(command.ParticipantOneId, command.ParticipantTwoId, command.MessageId);
+            throw new ChatMessageNotFoundException(command.Id);
         }
 
         await _chatMessageRepository.DeleteAsync(existingChatMessage!, cancellationToken);

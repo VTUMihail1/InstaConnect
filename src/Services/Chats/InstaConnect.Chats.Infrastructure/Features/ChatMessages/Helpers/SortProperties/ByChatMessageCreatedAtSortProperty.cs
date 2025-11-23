@@ -6,5 +6,5 @@ public class ByChatMessageCreatedAtSortProperty : IChatMessageSortProperty
 {
     public ChatMessageSortProperty SortProperty => ChatMessageSortProperty.ByCreatedAt;
 
-    public Expression<Func<ChatMessage, object>> Property => p => p.CreatedAt;
+    public Expression<Func<ChatMessage, object>> Property => p => p.CreatedAtUtc;
 }

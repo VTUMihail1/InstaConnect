@@ -13,15 +13,13 @@ internal class ChatMessageFactory : IChatMessageFactory
         _dateTimeProvider = dateTimeProvider;
     }
 
-    public ChatMessage Create(string participantOneId, string participantTwoId, string content)
+    public ChatMessage Create(ChatId id, UserId senderId, string content)
     {
         var messageId = _guidProvider.NewGuid().ToString();
         var utcNow = _dateTimeProvider.GetOffsetUtcNow();
         var chatMessage = new ChatMessage(
-            participantOneId,
-            participantTwoId,
-            messageId,
-            participantOneId,
+            new(id, messageId),
+            senderId,
             content,
             utcNow,
             utcNow);

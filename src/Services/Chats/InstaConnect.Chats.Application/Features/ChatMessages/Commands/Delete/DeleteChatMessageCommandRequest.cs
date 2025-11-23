@@ -1,4 +1,3 @@
 ﻿namespace InstaConnect.Chats.Application.Features.ChatMessages.Commands.Delete;
 
-public record DeleteChatMessageCommandRequest(
-    string ParticipantOneId, string ParticipantTwoId, string MessageId) : ICommandRequest;
+public record DeleteChatMessageCommandRequest(ChatMessageId Id, UserId SenderId) : ICommandRequest;

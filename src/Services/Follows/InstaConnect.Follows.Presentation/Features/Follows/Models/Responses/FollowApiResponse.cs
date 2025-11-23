@@ -1,3 +1,7 @@
 ﻿namespace InstaConnect.Follows.Presentation.Features.Follows.Models.Responses;
 
-public record FollowApiResponse(FollowUserApiResponse Follower, FollowUserApiResponse Following);
+public record FollowApiResponse(
+    FollowIdApiPayload Id,
+    UserApiResponse Follower,
+    UserApiResponse Following,
+    DateTimeOffset CreatedAtUtc);

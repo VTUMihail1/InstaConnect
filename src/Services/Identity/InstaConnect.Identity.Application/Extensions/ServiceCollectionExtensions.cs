@@ -20,7 +20,7 @@ public static class ServiceCollectionExtensions
         serviceCollection
             .AddValidators(IdentityApplicationReference.Assembly)
             .AddCQRS(IdentityApplicationReference.Assembly)
-            .AddMapper(IdentityApplicationReference.Assembly);
+            .AddMapper(IdentityApplicationReference.Assembly, CommonApplicationReference.Assembly);
 
         return serviceCollection;
     }

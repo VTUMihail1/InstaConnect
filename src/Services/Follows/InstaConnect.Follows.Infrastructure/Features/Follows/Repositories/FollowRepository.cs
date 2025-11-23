@@ -43,14 +43,14 @@ internal class FollowRepository : IFollowRepository
         var sortProperty = _followByFollowerSortPropertyFactory.Create(sorting.Property);
         var includeProperties = _followIncludePropertyFactory.Create(include?.Properties);
         var offset = _paginator.GetOffset(pagination.Page, pagination.PageSize);
-        var isFollowingNameEmpty = filter.FollowingName.IsNullOrEmptyOrWhiteSpace();
+        var isFollowingNameEmpty = filter.FollowingName.IsEmpty();
 
         var pipeline = _followsContext
             .Follows
             .Aggregate()
             .Includes(includeProperties)
-            .Match(p => p.FollowerId == filter.FollowerId ||
-                         isFollowingNameEmpty || p.Following!.Name.StartsWithOrdinalIgnoreCase(filter.FollowingName));
+            .Match(p => p.Id.FollowerId == filter.FollowerId ||
+                         isFollowingNameEmpty || p.Following!.Name.StartsWith(filter.FollowingName));
 
         var totalCountsResult = await pipeline.Count().FirstOrDefaultAsync(cancellationToken);
 
@@ -76,14 +76,14 @@ internal class FollowRepository : IFollowRepository
         var sortProperty = _followByFollowingSortPropertyFactory.Create(sorting.Property);
         var includeProperties = _followIncludePropertyFactory.Create(include?.Properties);
         var offset = _paginator.GetOffset(pagination.Page, pagination.PageSize);
-        var isFollowerNameEmpty = filter.FollowerName.IsNullOrEmptyOrWhiteSpace();
+        var isFollowerNameEmpty = filter.FollowerName.IsEmpty();
 
         var pipeline = _followsContext
             .Follows
             .Aggregate()
             .Includes(includeProperties)
-            .Match(p => p.FollowerId == filter.FollowingId ||
-                        isFollowerNameEmpty || p.Follower!.Name.StartsWithOrdinalIgnoreCase(filter.FollowerName));
+            .Match(p => p.Id.FollowerId == filter.FollowingId ||
+                        isFollowerNameEmpty || p.Follower!.Name.StartsWith(filter.FollowerName));
 
         var totalCountsResult = await pipeline.Count().FirstOrDefaultAsync(cancellationToken);
 
@@ -99,8 +99,7 @@ internal class FollowRepository : IFollowRepository
     }
 
     public async Task<Follow?> GetByIdAsync(
-        string followerId,
-        string followingId,
+        FollowId id,
         FollowIncludeQuery? include,
         CancellationToken cancellationToken)
     {
@@ -110,18 +109,17 @@ internal class FollowRepository : IFollowRepository
             .Follows
             .Aggregate()
             .Includes(includeProperties)
-            .Match(p => p.FollowerId == followerId && p.FollowingId == followingId)
+            .Match(p => p.Id == id)
             .FirstOrDefaultAsync(cancellationToken);
 
         return entity;
     }
 
     public async Task<Follow?> GetByIdAsync(
-        string followerId,
-        string followingId,
+        FollowId id,
         CancellationToken cancellationToken)
     {
-        return await GetByIdAsync(followerId, followingId, null, cancellationToken);
+        return await GetByIdAsync(id, null, cancellationToken);
     }
 
     public async Task AddAsync(Follow entity, CancellationToken cancellationToken)
@@ -131,24 +129,13 @@ internal class FollowRepository : IFollowRepository
             .AddAsync(_followsContext.ClientSessionHandle, entity, cancellationToken);
     }
 
-    public async Task UpdateAsync(Follow entity, CancellationToken cancellationToken)
-    {
-        await _followsContext
-            .Follows
-            .UpdateAsync(
-            _followsContext.ClientSessionHandle,
-            x => x.FollowerId == entity.FollowerId && x.FollowingId == entity.FollowingId,
-            entity,
-            cancellationToken);
-    }
-
     public async Task DeleteAsync(Follow entity, CancellationToken cancellationToken)
     {
         await _followsContext
             .Follows
             .DeleteAsync(
             _followsContext.ClientSessionHandle,
-            x => x.FollowerId == entity.FollowerId && x.FollowingId == entity.FollowingId,
+            x => x.Id == entity.Id,
             cancellationToken);
     }
 }

@@ -6,5 +6,5 @@ public class ByChatByParticipantCreatedAtSortProperty : IChatByParticipantSortPr
 {
     public ChatByParticipantSortProperty SortProperty => ChatByParticipantSortProperty.ByCreatedAt;
 
-    public Expression<Func<Chat, object>> Property => p => p.CreatedAt;
+    public Expression<Func<Chat, object>> Property => p => p.CreatedAtUtc;
 }

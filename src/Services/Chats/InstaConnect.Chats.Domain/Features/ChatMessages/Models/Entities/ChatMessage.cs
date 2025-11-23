@@ -2,88 +2,60 @@
 
 namespace InstaConnect.Chats.Domain.Features.ChatMessages.Models.Entities;
 
-public class ChatMessage : IEntity
+public class ChatMessage : IEntity<ChatMessageId>
 {
     private ChatMessage()
     {
-        MessageId = string.Empty;
-        ParticipantOneId = string.Empty;
-        ParticipantTwoId = string.Empty;
-        SenderId = string.Empty;
+        Id = new(new(new(string.Empty), new(string.Empty)), string.Empty);
+        SenderId = new(string.Empty);
         Content = string.Empty;
     }
 
     public ChatMessage(
-        string participantOneId,
-        string participantTwoId,
-        string messageId,
-        string senderId,
+        ChatMessageId id,
+        UserId senderId,
         string content,
-        DateTimeOffset createdAt,
-        DateTimeOffset updatedAt)
+        DateTimeOffset createdAtUtc,
+        DateTimeOffset updatedAtUtc)
     {
-        ParticipantOneId = participantOneId;
-        ParticipantTwoId = participantTwoId;
-        MessageId = messageId;
+        Id = id;
         SenderId = senderId;
         Content = content;
-        CreatedAt = createdAt;
-        UpdatedAt = updatedAt;
+        CreatedAtUtc = createdAtUtc;
+        UpdatedAtUtc = updatedAtUtc;
     }
 
     public ChatMessage(
-        string participantOneId,
-        string participantTwoId,
-        string messageId,
+        ChatMessageId id,
         User sender,
         string content,
-        DateTimeOffset createdAt,
-        DateTimeOffset updatedAt)
+        DateTimeOffset createdAtUtc,
+        DateTimeOffset updatedAtUtc)
     {
-        ParticipantOneId = participantOneId;
-        ParticipantTwoId = participantTwoId;
-        MessageId = messageId;
+        Id = id;
         SenderId = sender.Id;
         Sender = sender;
         Content = content;
-        CreatedAt = createdAt;
-        UpdatedAt = updatedAt;
+        CreatedAtUtc = createdAtUtc;
+        UpdatedAtUtc = updatedAtUtc;
     }
+    
+    public ChatMessageId Id { get; }
 
-    public string MessageId { get; }
-
-    public string ParticipantOneId { get; }
-
-    public string ParticipantTwoId { get; }
-
-    public string SenderId { get; }
+    public UserId SenderId { get; }
 
     public User? Sender { get; private set; }
 
     public string Content { get; private set; }
 
-    public DateTimeOffset CreatedAt { get; }
+    public DateTimeOffset CreatedAtUtc { get; }
 
-    public DateTimeOffset UpdatedAt { get; private set; }
+    public DateTimeOffset UpdatedAtUtc { get; private set; }
 
-    public void Update(string content, DateTimeOffset updatedAt)
+    public void Update(string content, DateTimeOffset updatedAtUtc)
     {
         Content = content;
-        UpdatedAt = updatedAt;
-    }
-
-    public bool IsOwnedBySender(string senderId)
-    {
-        var isOwnedBySender = SenderId.EqualsOrdinalIgnoreCase(senderId);
-
-        return isOwnedBySender;
-    }
-
-    public bool IsNotOwnedBySender(string senderId)
-    {
-        var isNotOwnedBySender = !IsOwnedBySender(senderId);
-
-        return isNotOwnedBySender;
+        UpdatedAtUtc = updatedAtUtc;
     }
 
     public void AddSender(User sender)

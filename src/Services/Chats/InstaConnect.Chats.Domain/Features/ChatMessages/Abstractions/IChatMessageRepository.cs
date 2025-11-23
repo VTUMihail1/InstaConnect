@@ -10,16 +10,12 @@ public interface IChatMessageRepository
         CancellationToken cancellationToken);
 
     Task<ChatMessage?> GetByIdAsync(
-        string participantOneId,
-        string participantTwoId,
-        string messageId,
+        ChatMessageId id,
         ChatMessageIncludeQuery? include,
         CancellationToken cancellationToken);
 
     Task<ChatMessage?> GetByIdAsync(
-        string participantOneId,
-        string participantTwoId,
-        string messageId,
+        ChatMessageId id,
         CancellationToken cancellationToken);
 
     Task AddAsync(ChatMessage entity, CancellationToken cancellationToken);

@@ -9,12 +9,11 @@ internal class FollowFactory : IFollowFactory
         _dateTimeProvider = dateTimeProvider;
     }
 
-    public Follow Create(string followerId, string followingId)
+    public Follow Create(UserId followerId, UserId followingId)
     {
         var utcNow = _dateTimeProvider.GetOffsetUtcNow();
         var follow = new Follow(
-            followerId,
-            followingId,
+            new(followerId, followingId),
             utcNow,
             utcNow);
 

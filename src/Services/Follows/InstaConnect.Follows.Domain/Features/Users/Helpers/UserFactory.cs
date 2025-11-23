@@ -10,12 +10,12 @@ internal class UserFactory : IUserFactory
     }
 
     public User Create(
-        string id,
+        UserId id,
         string firstName,
         string lastName,
-        string name,
-        string email,
-        string? profileImage)
+        Name name,
+        Email email,
+        Image? profileImage)
     {
         var utcNow = _dateTimeProvider.GetOffsetUtcNow();
         var user = new User(

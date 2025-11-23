@@ -3,6 +3,8 @@ using InstaConnect.Follows.Application.Features.Follows.Commands.Delete;
 using InstaConnect.Follows.Application.Features.Follows.Queries.GetAllByFollower;
 using InstaConnect.Follows.Application.Features.Follows.Queries.GetAllByFollowing;
 using InstaConnect.Follows.Application.Features.Follows.Queries.GetById;
+using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
+using InstaConnect.Follows.Domain.Features.Follows.Models.ValueObjects;
 
 using Mapster;
 
@@ -14,22 +16,15 @@ internal class FollowPresentationMappings : IRegister
     {
         config.NewConfig<GetAllFollowsByFollowerApiRequest, GetAllFollowsByFollowerQueryRequest>()
             .ConstructUsing(src => new(
-                new(src.Filter.FollowerId, src.Filter.FollowingName),
-                new(src.Sorting.Order, src.Sorting.Property),
-                new(src.Pagination.Page, src.Pagination.PageSize)));
+                new(
+                    new(src.FollowerId),
+                    new(src.FollowingName)),
+                new(src.SortOrder, src.SortProperty),
+                new(src.Page, src.PageSize)));
 
         config.NewConfig<GetAllFollowsByFollowerQueryResponse, GetAllFollowsByFollowerApiResponse>()
             .ConstructUsing(pc => new(
-                  pc.Data.Select(p => new FollowApiResponse(
-                                      new(
-                                          p.Follower.Id,
-                                          p.Follower.Name,
-                                          p.Follower.ProfileImage),
-                                      new(
-                                          p.Following.Id,
-                                          p.Following.Name,
-                                          p.Following.ProfileImage)))
-                         .ToList(),
+                  pc.Data.Adapt<ICollection<FollowApiResponse>>(),
                   pc.Page,
                   pc.PageSize,
                   pc.TotalCount,
@@ -38,22 +33,15 @@ internal class FollowPresentationMappings : IRegister
 
         config.NewConfig<GetAllFollowsByFollowingApiRequest, GetAllFollowsByFollowingQueryRequest>()
             .ConstructUsing(src => new(
-                new(src.Filter.FollowingId, src.Filter.FollowerName),
-                new(src.Sorting.Order, src.Sorting.Property),
-                new(src.Pagination.Page, src.Pagination.PageSize)));
+                new(
+                    new(src.FollowingId),
+                    new(src.FollowerName)),
+                new(src.SortOrder, src.SortProperty),
+                new(src.Page, src.PageSize)));
 
         config.NewConfig<GetAllFollowsByFollowingQueryResponse, GetAllFollowsByFollowingApiResponse>()
             .ConstructUsing(pc => new(
-                  pc.Data.Select(p => new FollowApiResponse(
-                                      new(
-                                          p.Follower.Id,
-                                          p.Follower.Name,
-                                          p.Follower.ProfileImage),
-                                      new(
-                                          p.Following.Id,
-                                          p.Following.Name,
-                                          p.Following.ProfileImage)))
-                         .ToList(),
+                  pc.Data.Adapt<ICollection<FollowApiResponse>>(),
                   pc.Page,
                   pc.PageSize,
                   pc.TotalCount,
@@ -61,26 +49,43 @@ internal class FollowPresentationMappings : IRegister
                   pc.HasPreviousPage));
 
         config.NewConfig<GetFollowByIdApiRequest, GetFollowByIdQueryRequest>()
-            .ConstructUsing(src => new(src.FollowerId, src.FollowingId));
+            .ConstructUsing(src => new(
+                                       new(
+                                           new(src.FollowerId),
+                                           new(src.FollowingId))));
 
         config.NewConfig<GetFollowByIdQueryResponse, GetFollowByIdApiResponse>()
-            .ConstructUsing(src => new(
-                new(new(
-                        src.Data.Follower.Id,
-                        src.Data.Follower.Name,
-                        src.Data.Follower.ProfileImage),
-                    new(
-                        src.Data.Following.Id,
-                        src.Data.Following.Name,
-                        src.Data.Following.ProfileImage))));
+            .ConstructUsing(src => new(src.Data.Adapt<FollowApiResponse>()));
 
         config.NewConfig<AddFollowApiRequest, AddFollowCommandRequest>()
-            .ConstructUsing(src => new(src.FollowerId, src.FollowingId));
+            .ConstructUsing(src => new(
+                                       new(src.FollowerId),
+                                       new(src.FollowingId)));
 
         config.NewConfig<AddFollowCommandResponse, AddFollowApiResponse>()
-            .ConstructUsing(src => new(src.FollowerId, src.FollowingId, src.CreatedAt, src.UpdatedAt));
+            .ConstructUsing(src => new(src.Id.Adapt<FollowIdApiPayload>()));
 
         config.NewConfig<DeleteFollowApiRequest, DeleteFollowCommandRequest>()
-            .ConstructUsing(src => new(src.FollowerId, src.FollowingId));
+            .ConstructUsing(src => new(
+                                       new(
+                                           new(src.FollowerId),
+                                           new(src.FollowingId))));
+
+        config.NewConfig<FollowIdPayload, FollowIdApiPayload>()
+            .ConstructUsing(src => new(
+                src.FollowerId.Adapt<UserIdApiPayload>(),
+                src.FollowingId.Adapt<UserIdApiPayload>()));
+
+        config.NewConfig<FollowIdApiPayload, FollowIdPayload>()
+            .ConstructUsing(src => new(
+                src.FollowerId.Adapt<UserIdPayload>(),
+                src.FollowingId.Adapt<UserIdPayload>()));
+
+        config.NewConfig<FollowQueryResponse, FollowApiResponse>()
+            .ConstructUsing(src => new(
+                src.Id.Adapt<FollowIdApiPayload>(),
+                src.Follower.Adapt<UserApiResponse>(),
+                src.Following.Adapt<UserApiResponse>(),
+                src.CreatedAtUtc));
     }
 }

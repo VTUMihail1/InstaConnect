@@ -2,29 +2,28 @@
 
 namespace InstaConnect.Follows.Domain.Features.Users.Models.Entities;
 
-public class User : IEntity
+public class User : IEntity<UserId>
 {
-    private readonly IList<Follow> _follows;
-
     private User()
     {
-        Id = string.Empty;
+        Id = new(string.Empty);
         FirstName = string.Empty;
         LastName = string.Empty;
-        Email = string.Empty;
-        Name = string.Empty;
-        _follows = [];
+        Email = new(string.Empty);
+        Name = new(string.Empty);
+        FollowerFollows = [];
+        FollowingFollows = [];
     }
 
     public User(
-        string id,
+        UserId id,
         string firstName,
         string lastName,
-        string email,
-        string name,
-        string? profileImage,
-        DateTimeOffset createdAt,
-        DateTimeOffset updatedAt)
+        Email email,
+        Name name,
+        Image? profileImage,
+        DateTimeOffset createdAtUtc,
+        DateTimeOffset updatedAtUtc)
     {
         Id = id;
         FirstName = firstName;
@@ -32,21 +31,23 @@ public class User : IEntity
         Email = email;
         Name = name;
         ProfileImage = profileImage;
-        _follows = [];
-        CreatedAt = createdAt;
-        UpdatedAt = updatedAt;
+        FollowerFollows = [];
+        FollowingFollows = [];
+        CreatedAtUtc = createdAtUtc;
+        UpdatedAtUtc = updatedAtUtc;
     }
 
     public User(
-        string id,
+        UserId id,
         string firstName,
         string lastName,
-        string email,
-        string name,
-        string? profileImage,
-        DateTimeOffset createdAt,
-        DateTimeOffset updatedAt,
-        IList<Follow> follows)
+        Email email,
+        Name name,
+        Image? profileImage,
+        DateTimeOffset createdAtUtc,
+        DateTimeOffset updatedAtUtc,
+        ICollection<Follow> followerFollows,
+        ICollection<Follow> followingFollows)
     {
         Id = id;
         FirstName = firstName;
@@ -54,76 +55,56 @@ public class User : IEntity
         Email = email;
         Name = name;
         ProfileImage = profileImage;
-        CreatedAt = createdAt;
-        UpdatedAt = updatedAt;
-        _follows = follows;
+        CreatedAtUtc = createdAtUtc;
+        UpdatedAtUtc = updatedAtUtc;
+        FollowerFollows = followerFollows;
+        FollowingFollows = followingFollows;
     }
 
-    public string Id { get; }
+    public UserId Id { get; }
 
     public string FirstName { get; private set; }
 
     public string LastName { get; private set; }
 
-    public string Email { get; private set; }
+    public Email Email { get; private set; }
 
-    public string Name { get; private set; }
+    public Name Name { get; private set; }
 
-    public string? ProfileImage { get; private set; }
+    public Image? ProfileImage { get; private set; }
 
-    public IReadOnlyCollection<Follow> Follows => _follows.AsReadOnly();
+    public ICollection<Follow> FollowerFollows { get; }
 
-    public DateTimeOffset CreatedAt { get; }
+    public ICollection<Follow> FollowingFollows { get; }
 
-    public DateTimeOffset UpdatedAt { get; private set; }
+    public DateTimeOffset CreatedAtUtc { get; }
+
+    public DateTimeOffset UpdatedAtUtc { get; private set; }
 
     public void Update(
-        string email,
+        Email email,
         string firstName,
         string lastName,
-        string name,
-        string? profileImage,
-        DateTimeOffset updatedAt)
+        Name name,
+        Image? profileImage,
+        DateTimeOffset updatedAtUtc)
     {
         Email = email;
         FirstName = firstName;
         LastName = lastName;
         Name = name;
         ProfileImage = profileImage;
-        UpdatedAt = updatedAt;
+        UpdatedAtUtc = updatedAtUtc;
     }
 
-    public bool HasEmail(string email)
+    public void AddFollowerFollow(Follow follow)
     {
-        var hasEmail = Email.EqualsOrdinalIgnoreCase(email);
-
-        return hasEmail;
+        FollowerFollows.Add(follow);
     }
 
-    public bool DoesNotHaveEmail(string email)
+    public void AddFollowingFollow(Follow follow)
     {
-        var hasEmail = !HasEmail(email);
-
-        return hasEmail;
-    }
-
-    public bool HasName(string name)
-    {
-        var hasName = Name.EqualsOrdinalIgnoreCase(name);
-
-        return hasName;
-    }
-
-    public bool DoesNotHaveName(string name)
-    {
-        var hasName = !HasName(name);
-
-        return hasName;
-    }
-
-    public void AddPost(Follow follow)
-    {
-        _follows.Add(follow);
+        FollowingFollows.Add(follow);
     }
 }
 

@@ -2,31 +2,28 @@
 
 namespace InstaConnect.Chats.Domain.Features.Users.Models.Entities;
 
-public class User : IEntity
+public class User : IEntity<UserId>
 {
-    private readonly IList<Chat> _chats;
-    private readonly IList<ChatMessage> _chatMessages;
-
     private User()
     {
-        Id = string.Empty;
+        Id = new(string.Empty);
         FirstName = string.Empty;
         LastName = string.Empty;
-        Email = string.Empty;
-        Name = string.Empty;
-        _chats = [];
-        _chatMessages = [];
+        Email = new(string.Empty);
+        Name = new(string.Empty);
+        Chats = [];
+        ChatMessages = [];
     }
 
     public User(
-        string id,
+        UserId id,
         string firstName,
         string lastName,
-        string email,
-        string name,
-        string? profileImage,
-        DateTimeOffset createdAt,
-        DateTimeOffset updatedAt)
+        Email email,
+        Name name,
+        Image? profileImage,
+        DateTimeOffset createdAtUtc,
+        DateTimeOffset updatedAtUtc)
     {
         Id = id;
         FirstName = firstName;
@@ -34,23 +31,23 @@ public class User : IEntity
         Email = email;
         Name = name;
         ProfileImage = profileImage;
-        _chats = [];
-        _chatMessages = [];
-        CreatedAt = createdAt;
-        UpdatedAt = updatedAt;
+        Chats = [];
+        ChatMessages = [];
+        CreatedAtUtc = createdAtUtc;
+        UpdatedAtUtc = updatedAtUtc;
     }
 
     public User(
-        string id,
+        UserId id,
         string firstName,
         string lastName,
-        string email,
-        string name,
-        string? profileImage,
-        DateTimeOffset createdAt,
-        DateTimeOffset updatedAt,
-        IList<Chat> chats,
-        IList<ChatMessage> chatMessages)
+        Email email,
+        Name name,
+        Image? profileImage,
+        DateTimeOffset createdAtUtc,
+        DateTimeOffset updatedAtUtc,
+        ICollection<Chat> chats,
+        ICollection<ChatMessage> chatMessages)
     {
         Id = id;
         FirstName = firstName;
@@ -58,84 +55,56 @@ public class User : IEntity
         Email = email;
         Name = name;
         ProfileImage = profileImage;
-        CreatedAt = createdAt;
-        UpdatedAt = updatedAt;
-        _chats = chats;
-        _chatMessages = chatMessages;
+        CreatedAtUtc = createdAtUtc;
+        UpdatedAtUtc = updatedAtUtc;
+        Chats = chats;
+        ChatMessages = chatMessages;
     }
 
-    public string Id { get; }
+    public UserId Id { get; }
 
     public string FirstName { get; private set; }
 
     public string LastName { get; private set; }
 
-    public string Email { get; private set; }
+    public Email Email { get; private set; }
 
-    public string Name { get; private set; }
+    public Name Name { get; private set; }
 
-    public string? ProfileImage { get; private set; }
+    public Image? ProfileImage { get; private set; }
 
-    public IReadOnlyCollection<Chat> Chats => _chats.AsReadOnly();
+    public ICollection<Chat> Chats { get; }
 
-    public IReadOnlyCollection<ChatMessage> ChatMessages => _chatMessages.AsReadOnly();
+    public ICollection<ChatMessage> ChatMessages { get; }
 
-    public DateTimeOffset CreatedAt { get; }
+    public DateTimeOffset CreatedAtUtc { get; }
 
-    public DateTimeOffset UpdatedAt { get; private set; }
+    public DateTimeOffset UpdatedAtUtc { get; private set; }
 
     public void Update(
-        string email,
+        Email email,
         string firstName,
         string lastName,
-        string name,
-        string? profileImage,
-        DateTimeOffset updatedAt)
+        Name name,
+        Image? profileImage,
+        DateTimeOffset updatedAtUtc)
     {
         Email = email;
         FirstName = firstName;
         LastName = lastName;
         Name = name;
         ProfileImage = profileImage;
-        UpdatedAt = updatedAt;
-    }
-
-    public bool HasEmail(string email)
-    {
-        var hasEmail = Email.EqualsOrdinalIgnoreCase(email);
-
-        return hasEmail;
-    }
-
-    public bool DoesNotHaveEmail(string email)
-    {
-        var hasEmail = !HasEmail(email);
-
-        return hasEmail;
-    }
-
-    public bool HasName(string name)
-    {
-        var hasName = Name.EqualsOrdinalIgnoreCase(name);
-
-        return hasName;
-    }
-
-    public bool DoesNotHaveName(string name)
-    {
-        var hasName = !HasName(name);
-
-        return hasName;
+        UpdatedAtUtc = updatedAtUtc;
     }
 
     public void AddChat(Chat chat)
     {
-        _chats.Add(chat);
+        Chats.Add(chat);
     }
 
     public void AddChatMessage(ChatMessage chatMessage)
     {
-        _chatMessages.Add(chatMessage);
+        ChatMessages.Add(chatMessage);
     }
 }
 

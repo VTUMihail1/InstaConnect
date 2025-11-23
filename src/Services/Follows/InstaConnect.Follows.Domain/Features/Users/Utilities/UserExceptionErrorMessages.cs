@@ -4,43 +4,38 @@ namespace InstaConnect.Follows.Domain.Features.Users.Utilities;
 
 public static class UserExceptionErrorMessages
 {
-    public static string GetNotFoundMessage(string id)
+    public static string GetNotFoundMessage(UserId id)
     {
         const string Format = "User(id: {0}) does not exist";
-        var result = Format.FormatCurrentCulture(id);
 
-        return result;
+        return Format.FormatCurrentCulture(id.Id);
     }
 
-    public static string GetAlreadyExistsMessage(string id)
+    public static string GetAlreadyExistsMessage(UserId id)
     {
         const string Format = "User(id: {0}) already exists";
-        var result = Format.FormatCurrentCulture(id);
 
-        return result;
+        return Format.FormatCurrentCulture(id.Id);
     }
 
-    public static string GetNameAlreadyExistsMessage(string name)
+    public static string GetNameAlreadyExistsMessage(Name name)
     {
         const string Format = "User(name: {0}) already exists";
-        var result = Format.FormatCurrentCulture(name);
 
-        return result;
+        return Format.FormatCurrentCulture(name.Value);
     }
 
-    public static string GetEmailAlreadyExistsMessage(string email)
+    public static string GetEmailAlreadyExistsMessage(Email email)
     {
         const string Format = "User(email: {0}) already exists";
-        var result = Format.FormatCurrentCulture(email);
 
-        return result;
+        return Format.FormatCurrentCulture(email.Value);
     }
 
     public static string GetInclidePropertyNotSupportedMessage(ICollection<UserIncludeProperty> includeProperties)
     {
         const string Format = "UserIncludeProperties(types: {0}) is not supported";
-        var result = Format.FormatCurrentCulture(string.Join(", ", includeProperties));
 
-        return result;
+        return Format.FormatCurrentCulture(includeProperties.JoinAsStringWithComa());
     }
 }

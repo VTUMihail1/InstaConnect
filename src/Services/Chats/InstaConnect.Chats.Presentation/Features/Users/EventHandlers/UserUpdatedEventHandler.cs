@@ -1,4 +1,4 @@
-﻿using InstaConnect.Chats.Application.Features.Users.Commands.Update;
+﻿using InstaConnect.Follows.Application.Features.Users.Commands.Update;
 
 namespace InstaConnect.Chats.Presentation.Features.Users.EventHandlers;
 

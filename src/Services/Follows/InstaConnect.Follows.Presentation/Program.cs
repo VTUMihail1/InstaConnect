@@ -1,12 +1,14 @@
 using InstaConnect.Common.Infrastructure.Extensions;
 using InstaConnect.Common.Presentation.Extensions;
 using InstaConnect.Follows.Application.Extensions;
+using InstaConnect.Follows.Domain.Extensions;
 using InstaConnect.Follows.Infrastructure.Extensions;
 using InstaConnect.Follows.Presentation.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
+    .AddDomain()
     .AddApplication()
     .AddInfrastructure(builder.Configuration, builder.Environment)
     .AddPresentation(builder.Configuration);
@@ -17,22 +19,7 @@ builder.Logging.AddLogging(builder.Configuration, builder.Environment);
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseCors(AppPolicies.CorsPolicy);
-
-app.UseRateLimiter();
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.UseExceptionHandler();
+app.UsePresentation();
 
 await app.RunAsync();
 

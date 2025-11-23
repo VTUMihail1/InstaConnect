@@ -19,22 +19,7 @@ builder.Logging.AddLogging(builder.Configuration, builder.Environment);
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.UseCors(AppPolicies.CorsPolicy);
-
-app.UseRateLimiter();
-
-app.MapControllers();
-
-app.UseExceptionHandler(opt => { });
+app.UsePresentation();
 
 await app.RunAsync();
 

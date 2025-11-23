@@ -1,3 +1,5 @@
-﻿namespace InstaConnect.Follows.Application.Features.Users.Commands.Add;
+﻿using InstaConnect.Follows.Application.Features.Users.Models;
 
-public record AddUserCommandResponse(string Id, DateTimeOffset CreatedAt, DateTimeOffset UpdatedAt);
+namespace InstaConnect.Follows.Application.Features.Users.Commands.Add;
+
+public record AddUserCommandResponse(UserIdPayload Id);

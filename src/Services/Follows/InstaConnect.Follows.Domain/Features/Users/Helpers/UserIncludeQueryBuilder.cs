@@ -11,7 +11,7 @@ public class UserIncludeQueryBuilder
 
     public UserIncludeQueryBuilder WithFollows()
     {
-        _includeProperties.Add(UserIncludeProperty.Follows);
+        _includeProperties.Add(UserIncludeProperty.FollowerFollows);
 
         return this;
     }

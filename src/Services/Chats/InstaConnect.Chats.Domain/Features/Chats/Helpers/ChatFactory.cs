@@ -9,13 +9,11 @@ internal class ChatFactory : IChatFactory
         _dateTimeProvider = dateTimeProvider;
     }
 
-    public Chat Create(string participantOneId, string participantTwoId)
+    public Chat Create(UserId participantOneId, UserId participantTwoId)
     {
         var utcNow = _dateTimeProvider.GetOffsetUtcNow();
         var chat = new Chat(
-            participantOneId,
-            participantTwoId,
-            utcNow,
+            new(participantOneId, participantTwoId),
             utcNow);
 
         return chat;

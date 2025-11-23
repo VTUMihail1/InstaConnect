@@ -4,13 +4,13 @@ namespace InstaConnect.Chats.Domain.Features.Chats.Exceptions;
 
 public class ChatAlreadyExistsException : NotFoundException
 {
-    public ChatAlreadyExistsException(string participantOneId, string participantTwoId)
-        : base(ChatExceptionErrorMessages.GetAlreadyExistsMessage(participantOneId, participantTwoId))
+    public ChatAlreadyExistsException(ChatId id)
+        : base(ChatExceptionErrorMessages.GetAlreadyExistsMessage(id))
     {
     }
 
-    public ChatAlreadyExistsException(string participantOneId, string participantTwoId, Exception exception)
-        : base(ChatExceptionErrorMessages.GetAlreadyExistsMessage(participantOneId, participantTwoId), exception)
+    public ChatAlreadyExistsException(ChatId id, Exception exception)
+        : base(ChatExceptionErrorMessages.GetAlreadyExistsMessage(id), exception)
     {
     }
 }

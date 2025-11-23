@@ -1,4 +1,6 @@
-﻿using MongoDB.Driver;
+﻿using System.Collections.Generic;
+
+using MongoDB.Driver;
 
 namespace InstaConnect.Chats.Infrastructure.Features.Chats.Repositories;
 
@@ -38,26 +40,20 @@ internal class ChatRepository : IChatRepository
         var sortProperty = _chatSortPropertyFactory.Create(sorting.Property);
         var includeProperties = _chatIncludePropertyFactory.Create(include?.Properties);
         var offset = _paginator.GetOffset(pagination.Page, pagination.PageSize);
-        var isParticipantNameEmpty = filter.ParticipantName.IsNullOrEmptyOrWhiteSpace();
+        var isParticipantNameEmpty = filter.ParticipantName.IsEmpty();
 
         var pipeline = _chatsContext
             .Chats
             .Aggregate()
             .Includes(includeProperties)
-            .Match(p => (p.ParticipantOneId == filter.ParticipantId ||
-                         p.ParticipantTwoId == filter.ParticipantId) &&
+            .Match(p =>  p.Id.HasUser(filter.ParticipantId) &&
                          (isParticipantNameEmpty ||
-                         p.ParticipantOne!.Name.StartsWithOrdinalIgnoreCase(filter.ParticipantName) ||
-                         p.ParticipantTwo!.Name.StartsWithOrdinalIgnoreCase(filter.ParticipantName)));
+                         p.ParticipantOne!.Name.StartsWith(filter.ParticipantName) ||
+                         p.ParticipantTwo!.Name.StartsWith(filter.ParticipantName)));
 
         var totalCountsResult = await pipeline.Count().FirstOrDefaultAsync(cancellationToken);
 
         var entities = await pipeline
-            .Project(a => new Chat(
-                a.ParticipantOneId == filter.ParticipantId ? a.ParticipantOne! : a.ParticipantTwo!,
-                a.ParticipantTwoId == filter.ParticipantId ? a.ParticipantTwo! : a.ParticipantOne!,
-                a.CreatedAt,
-                a.UpdatedAt))
             .Sort(sortOrder.Sort(sortProperty.Property))
             .Skip(offset)
             .Limit(pagination.PageSize)
@@ -69,8 +65,7 @@ internal class ChatRepository : IChatRepository
     }
 
     public async Task<Chat?> GetByIdAsync(
-        string participantOneId,
-        string participantTwoId,
+        ChatId id,
         ChatIncludeQuery? include,
         CancellationToken cancellationToken)
     {
@@ -80,23 +75,17 @@ internal class ChatRepository : IChatRepository
             .Chats
             .Aggregate()
             .Includes(includeProperties)
-            .Match(p => p.ParticipantOneId == participantOneId && p.ParticipantTwoId == participantTwoId)
-            .Project(a => new Chat(
-                a.ParticipantOneId == participantOneId ? a.ParticipantOne! : a.ParticipantTwo!,
-                a.ParticipantTwoId == participantOneId ? a.ParticipantTwo! : a.ParticipantOne!,
-                a.CreatedAt,
-                a.UpdatedAt))
+            .Match(p => p.Id.Is(id))
             .FirstOrDefaultAsync(cancellationToken);
 
         return entity;
     }
 
     public async Task<Chat?> GetByIdAsync(
-        string participantOneId,
-        string participantTwoId,
+        ChatId id,
         CancellationToken cancellationToken)
     {
-        return await GetByIdAsync(participantOneId, participantTwoId, null, cancellationToken);
+        return await GetByIdAsync(id, null, cancellationToken);
     }
 
     public async Task AddAsync(Chat entity, CancellationToken cancellationToken)
@@ -106,24 +95,13 @@ internal class ChatRepository : IChatRepository
             .AddAsync(_chatsContext.ClientSessionHandle, entity, cancellationToken);
     }
 
-    public async Task UpdateAsync(Chat entity, CancellationToken cancellationToken)
-    {
-        await _chatsContext
-            .Chats
-            .UpdateAsync(
-            _chatsContext.ClientSessionHandle,
-            x => x.ParticipantOneId == entity.ParticipantOneId && x.ParticipantTwoId == entity.ParticipantTwoId,
-            entity,
-            cancellationToken);
-    }
-
     public async Task DeleteAsync(Chat entity, CancellationToken cancellationToken)
     {
         await _chatsContext
             .Chats
             .DeleteAsync(
             _chatsContext.ClientSessionHandle,
-            x => x.ParticipantOneId == entity.ParticipantOneId && x.ParticipantTwoId == entity.ParticipantTwoId,
+            x => x.Id.Is(entity.Id),
             cancellationToken);
     }
 }

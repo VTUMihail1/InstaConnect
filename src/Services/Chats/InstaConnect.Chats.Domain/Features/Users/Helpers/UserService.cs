@@ -63,14 +63,14 @@ internal class UserService : IUserService
 
         var existingUserByEmail = await _userRepository.GetByEmailAsync(command.Email, cancellationToken);
 
-        if (existingUser!.DoesNotHaveEmail(command.Email) && existingUserByEmail.IsNotNull())
+        if (existingUser!.Email.IsNot(command.Email) && existingUserByEmail.IsNotNull())
         {
             throw new UserEmailAlreadyExistsException(command.Email);
         }
 
         var existingUserByName = await _userRepository.GetByNameAsync(command.Name, cancellationToken);
 
-        if (existingUser!.DoesNotHaveName(command.Name) && existingUserByName.IsNotNull())
+        if (existingUser!.Name.IsNot(command.Name) && existingUserByName.IsNotNull())
         {
             throw new UserNameAlreadyExistsException(command.Name);
         }

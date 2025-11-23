@@ -8,5 +8,6 @@ public record UpdateChatMessageApiRequest(
     [FromClaim(ClaimTypes.NameIdentifier)] string ParticipantOneId,
     [FromRoute] string ParticipantTwoId,
     [FromRoute] string MessageId,
+    [FromClaim(ClaimTypes.NameIdentifier)] string SenderId,
     [FromBody] UpdateChatMessageApiBody Body
 );

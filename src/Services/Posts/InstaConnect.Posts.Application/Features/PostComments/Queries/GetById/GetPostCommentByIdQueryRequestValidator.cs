@@ -4,20 +4,14 @@ public class GetPostCommentByIdQueryRequestValidator : AbstractValidator<GetPost
 {
     public GetPostCommentByIdQueryRequestValidator()
     {
-        RuleFor(c => c.Id)
-            .NotEmpty()
-            .WithMessage(PostErrorMessages.GetIdEmpty())
-            .MinimumLength(PostConfigurations.IdMinLength)
-            .WithMessage(r => PostErrorMessages.GetIdTooShort(r.Id.Length))
-            .MaximumLength(PostConfigurations.IdMaxLength)
-            .WithMessage(r => PostErrorMessages.GetIdTooLong(r.Id.Length));
+        RuleFor(r => r.Id.Id.Id)
+            .NotEmptyWithMessage()
+            .PostIdMinLengthWithMessage()
+            .PostIdMaxLengthWithMessage();
 
-        RuleFor(c => c.CommentId)
-            .NotEmpty()
-            .WithMessage(PostCommentErrorMessages.GetIdEmpty())
-            .MinimumLength(PostCommentConfigurations.IdMinLength)
-            .WithMessage(r => PostCommentErrorMessages.GetIdTooShort(r.CommentId.Length))
-            .MaximumLength(PostCommentConfigurations.IdMaxLength)
-            .WithMessage(r => PostCommentErrorMessages.GetIdTooLong(r.CommentId.Length));
+        RuleFor(r => r.Id.CommentId)
+            .NotEmptyWithMessage()
+            .PostCommentIdMinLengthWithMessage()
+            .PostCommentIdMaxLengthWithMessage();
     }
 }

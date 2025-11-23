@@ -3,20 +3,14 @@ public class DeleteFollowCommandRequestValidator : AbstractValidator<DeleteFollo
 {
     public DeleteFollowCommandRequestValidator()
     {
-        RuleFor(r => r.FollowerId)
-            .NotEmpty()
-            .WithMessage(UserErrorMessages.GetIdEmpty())
-            .MinimumLength(UserConfigurations.IdMinLength)
-            .WithMessage(r => UserErrorMessages.GetIdTooShort(r.FollowerId.Length))
-            .MaximumLength(UserConfigurations.IdMaxLength)
-            .WithMessage(r => UserErrorMessages.GetIdTooLong(r.FollowerId.Length));
+        RuleFor(r => r.Id.FollowerId.Id)
+            .NotEmptyWithMessage()
+            .UserIdMinLengthWithMessage()
+            .UserIdMaxLengthWithMessage();
 
-        RuleFor(r => r.FollowingId)
-            .NotEmpty()
-            .WithMessage(UserErrorMessages.GetIdEmpty())
-            .MinimumLength(UserConfigurations.IdMinLength)
-            .WithMessage(r => UserErrorMessages.GetIdTooShort(r.FollowingId.Length))
-            .MaximumLength(UserConfigurations.IdMaxLength)
-            .WithMessage(r => UserErrorMessages.GetIdTooLong(r.FollowerId.Length));
+        RuleFor(r => r.Id.FollowingId.Id)
+            .NotEmptyWithMessage()
+            .UserIdMinLengthWithMessage()
+            .UserIdMaxLengthWithMessage();
     }
 }

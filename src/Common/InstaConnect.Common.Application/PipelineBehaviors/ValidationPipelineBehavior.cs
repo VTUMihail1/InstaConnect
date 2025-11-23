@@ -34,9 +34,7 @@ internal sealed class ValidationPipelineBehavior<TRequest, TResponse>
 
         if (validationFailures.Any())
         {
-            var errorMessage = string.Join(",\n", validationFailures);
-
-            throw new InvalidValidationException(errorMessage);
+            throw new InvalidValidationException(validationFailures);
         }
 
         return await next();

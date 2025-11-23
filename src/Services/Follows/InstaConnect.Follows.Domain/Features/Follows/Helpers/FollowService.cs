@@ -65,14 +65,13 @@ internal class FollowService : IFollowService
     public async Task<Follow> GetByIdAsync(GetFollowByIdQuery query, CancellationToken cancellationToken)
     {
         var existingFollow = await _followRepository.GetByIdAsync(
-            query.FollowerId,
-            query.FollowingId,
+            query.Id,
             query.Include,
             cancellationToken);
 
         if (existingFollow.IsNull())
         {
-            throw new FollowNotFoundException(query.FollowerId, query.FollowingId);
+            throw new FollowNotFoundException(query.Id);
         }
 
         return existingFollow!;
@@ -94,14 +93,14 @@ internal class FollowService : IFollowService
             throw new UserNotFoundException(command.FollowingId);
         }
 
-        var existingFollow = await _followRepository.GetByIdAsync(command.FollowerId, command.FollowingId, cancellationToken);
+        var follow = _followFactory.Create(command.FollowerId, command.FollowingId);
+        var existingFollow = await _followRepository.GetByIdAsync(follow.Id, cancellationToken);
 
         if (existingFollow.IsNotNull())
         {
-            throw new FollowAlreadyExistsException(command.FollowerId, command.FollowingId);
+            throw new FollowAlreadyExistsException(follow.Id);
         }
 
-        var follow = _followFactory.Create(command.FollowerId, command.FollowingId);
         await _followRepository.AddAsync(follow, cancellationToken);
 
         var eventRequest = _applicationMapper.Map<FollowAddedEventRequest>(follow);
@@ -112,11 +111,11 @@ internal class FollowService : IFollowService
 
     public async Task DeleteAsync(DeleteFollowCommand command, CancellationToken cancellationToken)
     {
-        var existingFollow = await _followRepository.GetByIdAsync(command.FollowerId, command.FollowingId, cancellationToken);
+        var existingFollow = await _followRepository.GetByIdAsync(command.Id, cancellationToken);
 
         if (existingFollow.IsNull())
         {
-            throw new FollowNotFoundException(command.FollowerId, command.FollowingId);
+            throw new FollowNotFoundException(command.Id);
         }
 
         await _followRepository.DeleteAsync(existingFollow!, cancellationToken);

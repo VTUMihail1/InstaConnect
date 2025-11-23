@@ -4,13 +4,13 @@ namespace InstaConnect.Follows.Domain.Features.Follows.Exceptions;
 
 public class FollowAlreadyExistsException : NotFoundException
 {
-    public FollowAlreadyExistsException(string followerId, string followingId)
-        : base(FollowExceptionErrorMessages.GetAlreadyExistsMessage(followerId, followingId))
+    public FollowAlreadyExistsException(FollowId id)
+        : base(FollowExceptionErrorMessages.GetAlreadyExistsMessage(id))
     {
     }
 
-    public FollowAlreadyExistsException(string followerId, string followingId, Exception exception)
-        : base(FollowExceptionErrorMessages.GetAlreadyExistsMessage(followerId, followingId), exception)
+    public FollowAlreadyExistsException(FollowId id, Exception exception)
+        : base(FollowExceptionErrorMessages.GetAlreadyExistsMessage(id), exception)
     {
     }
 }

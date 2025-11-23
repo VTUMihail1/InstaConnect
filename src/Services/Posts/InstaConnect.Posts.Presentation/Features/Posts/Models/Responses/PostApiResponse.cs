@@ -1,4 +1,4 @@
-﻿using InstaConnect.Posts.Presentation.Features.Users.Models;
+﻿using InstaConnect.Posts.Presentation.Features.Users.Models.Responses;
 
 namespace InstaConnect.Posts.Presentation.Features.Posts.Models.Responses;
 

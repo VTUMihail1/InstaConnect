@@ -4,7 +4,7 @@ namespace InstaConnect.Chats.Domain.Features.Users.Exceptions;
 
 public class UserNotFoundException : NotFoundException
 {
-    public UserNotFoundException(string id)
+    public UserNotFoundException(UserId id)
         : base(UserExceptionErrorMessages.GetNotFoundMessage(id))
     {
     }

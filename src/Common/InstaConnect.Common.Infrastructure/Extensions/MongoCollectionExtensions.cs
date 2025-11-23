@@ -1,5 +1,7 @@
 ﻿using System.Linq.Expressions;
 
+using InstaConnect.Common.Domain.Abstractions;
+
 using MongoDB.Driver;
 
 namespace InstaConnect.Common.Infrastructure.Extensions;
@@ -57,7 +59,6 @@ public static class MongoCollectionExtensions
         }
 
         await collection.DeleteOneAsync(session, filter, null, cancellationToken);
-
     }
 
     public static async Task DeleteRangeAsync<T>(

@@ -1,9 +1,9 @@
 ﻿namespace InstaConnect.Follows.Domain.Features.Users.Models.Requests;
 
 public record UpdateUserCommand(
-    string Id,
-    string Email,
+    UserId Id,
     string FirstName,
     string LastName,
-    string Name,
-    string? ProfileImage);
+    Name Name,
+    Email Email,
+    Image? ProfileImage);

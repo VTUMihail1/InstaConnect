@@ -2,5 +2,5 @@
 
 public interface IChatFactory
 {
-    public Chat Create(string participantOneId, string participantTwoId);
+    public Chat Create(UserId participantOneId, UserId participantTwoId);
 }

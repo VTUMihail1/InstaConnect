@@ -3,45 +3,29 @@ public class UpdateCurrentUserCommandRequestValidator : AbstractValidator<Update
 {
     public UpdateCurrentUserCommandRequestValidator()
     {
+        RuleFor(r => r.Id.Id)
+            .NotEmptyWithMessage()
+            .UserIdMinLengthWithMessage()
+            .UserIdMaxLengthWithMessage();
 
-        RuleFor(r => r.Id)
-            .NotEmpty()
-            .WithMessage(UserErrorMessages.GetIdEmpty())
-            .MinimumLength(UserConfigurations.IdMinLength)
-            .WithMessage(r => UserErrorMessages.GetIdTooShort(r.Id.Length))
-            .MaximumLength(UserConfigurations.IdMaxLength)
-            .WithMessage(r => UserErrorMessages.GetIdTooLong(r.Id.Length));
-
-        RuleFor(r => r.Name)
-            .NotEmpty()
-            .WithMessage(UserErrorMessages.GetNameEmpty())
-            .MinimumLength(UserConfigurations.NameMinLength)
-            .WithMessage(r => UserErrorMessages.GetNameTooShort(r.Name.Length))
-            .MaximumLength(UserConfigurations.NameMaxLength)
-            .WithMessage(r => UserErrorMessages.GetNameTooLong(r.Name.Length));
+        RuleFor(r => r.Name.Value)
+            .NotEmptyWithMessage()
+            .UserNameMinLengthWithMessage()
+            .UserNameMaxLengthWithMessage();
 
         RuleFor(r => r.FirstName)
-            .NotEmpty()
-            .WithMessage(UserErrorMessages.GetFirstNameEmpty())
-            .MinimumLength(UserConfigurations.FirstNameMinLength)
-            .WithMessage(r => UserErrorMessages.GetFirstNameTooShort(r.FirstName.Length))
-            .MaximumLength(UserConfigurations.FirstNameMaxLength)
-            .WithMessage(r => UserErrorMessages.GetFirstNameTooLong(r.FirstName.Length));
+            .NotEmptyWithMessage()
+            .UserFirstNameMinLengthWithMessage()
+            .UserFirstNameMaxLengthWithMessage();
 
         RuleFor(r => r.LastName)
-            .NotEmpty()
-            .WithMessage(UserErrorMessages.GetLastNameEmpty())
-            .MinimumLength(UserConfigurations.LastNameMinLength)
-            .WithMessage(r => UserErrorMessages.GetLastNameTooShort(r.LastName.Length))
-            .MaximumLength(UserConfigurations.LastNameMaxLength)
-            .WithMessage(r => UserErrorMessages.GetLastNameTooLong(r.LastName.Length));
+            .NotEmptyWithMessage()
+            .UserLastNameMinLengthWithMessage()
+            .UserLastNameMaxLengthWithMessage();
 
-        RuleFor(r => r.Email)
-            .NotEmpty()
-            .WithMessage(UserErrorMessages.GetEmailEmpty())
-            .MinimumLength(UserConfigurations.EmailMinLength)
-            .WithMessage(r => UserErrorMessages.GetEmailTooShort(r.Email.Length))
-            .MaximumLength(UserConfigurations.EmailMaxLength)
-            .WithMessage(r => UserErrorMessages.GetEmailTooLong(r.Email.Length));
+        RuleFor(r => r.Email.Value)
+            .NotEmptyWithMessage()
+            .UserEmailMinLengthWithMessage()
+            .UserEmailMaxLengthWithMessage();
     }
 }

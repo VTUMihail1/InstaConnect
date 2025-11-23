@@ -1,4 +1,6 @@
-﻿using Mapster;
+﻿using InstaConnect.Identity.Events.Features.Users;
+
+using Mapster;
 
 namespace InstaConnect.Follows.Domain.Features.Follows.Mappings;
 
@@ -7,13 +9,14 @@ internal class FollowDomainMappings : IRegister
     public void Register(TypeAdapterConfig config)
     {
         config.NewConfig<Follow, FollowAddedEventRequest>()
-            .ConstructUsing(p => new(
-                p.FollowerId,
-                p.FollowingId,
-                p.CreatedAt,
-                p.UpdatedAt));
+            .ConstructUsing(src => new(src.Id.Adapt<FollowIdEventPayload>()));
 
         config.NewConfig<Follow, FollowDeletedEventRequest>()
-            .ConstructUsing(p => new(p.FollowerId, p.FollowingId));
+            .ConstructUsing(src => new(src.Id.Adapt<FollowIdEventPayload>()));
+
+        config.NewConfig<FollowId, FollowIdEventPayload>()
+            .ConstructUsing(src => new(
+                src.FollowerId.Adapt<UserIdEventPayload>(),
+                src.FollowingId.Adapt<UserIdEventPayload>()));
     }
 }

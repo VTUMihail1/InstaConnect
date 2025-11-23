@@ -1,4 +1,4 @@
-﻿using InstaConnect.Chats.Application.Features.Users.Commands.Delete;
+﻿using InstaConnect.Follows.Application.Features.Users.Commands.Delete;
 
 namespace InstaConnect.Chats.Presentation.Features.Users.EventHandlers;
 

@@ -43,22 +43,11 @@ internal class ChatMessageRepository : IChatMessageRepository
             .ChatMessages
             .Aggregate()
             .Includes(includeProperties)
-            .Match(p => (p.ParticipantOneId == filter.ParticipantOneId ||
-                         p.ParticipantTwoId == filter.ParticipantOneId) &&
-                        (p.ParticipantOneId == filter.ParticipantTwoId ||
-                         p.ParticipantTwoId == filter.ParticipantTwoId));
+            .Match(p => p.Id.Id.Is(filter.Id));
 
         var totalCountsResult = await pipeline.Count().FirstOrDefaultAsync(cancellationToken);
 
         var entities = await pipeline
-            .Project(a => new ChatMessage(
-                a.ParticipantOneId == filter.ParticipantOneId ? a.ParticipantOneId! : a.ParticipantTwoId!,
-                a.ParticipantTwoId == filter.ParticipantOneId ? a.ParticipantTwoId! : a.ParticipantOneId!,
-                a.MessageId,
-                a.Sender!,
-                a.Content,
-                a.CreatedAt,
-                a.UpdatedAt))
             .Sort(sortOrder.Sort(sortProperty.Property))
             .Skip(offset)
             .Limit(pagination.PageSize)
@@ -70,9 +59,7 @@ internal class ChatMessageRepository : IChatMessageRepository
     }
 
     public async Task<ChatMessage?> GetByIdAsync(
-        string participantOneId,
-        string participantTwoId,
-        string messageId,
+        ChatMessageId id,
         ChatMessageIncludeQuery? include,
         CancellationToken cancellationToken)
     {
@@ -82,29 +69,17 @@ internal class ChatMessageRepository : IChatMessageRepository
             .ChatMessages
             .Aggregate()
             .Includes(includeProperties)
-            .Match(p => p.ParticipantOneId == participantOneId &&
-                        p.ParticipantTwoId == participantTwoId &&
-                        p.MessageId == messageId)
-            .Project(a => new ChatMessage(
-                a.ParticipantOneId == participantOneId ? a.ParticipantOneId! : a.ParticipantTwoId!,
-                a.ParticipantTwoId == participantOneId ? a.ParticipantTwoId! : a.ParticipantOneId!,
-                a.MessageId,
-                a.Sender!,
-                a.Content,
-                a.CreatedAt,
-                a.UpdatedAt))
+            .Match(p => p.Id.Is(id))
             .FirstOrDefaultAsync(cancellationToken);
 
         return entity;
     }
 
     public async Task<ChatMessage?> GetByIdAsync(
-        string participantOneId,
-        string participantTwoId,
-        string messageId,
+        ChatMessageId id,
         CancellationToken cancellationToken)
     {
-        return await GetByIdAsync(participantOneId, participantTwoId, messageId, null, cancellationToken);
+        return await GetByIdAsync(id, null, cancellationToken);
     }
 
     public async Task AddAsync(ChatMessage entity, CancellationToken cancellationToken)
@@ -120,9 +95,7 @@ internal class ChatMessageRepository : IChatMessageRepository
             .ChatMessages
             .UpdateAsync(
             _chatsContext.ClientSessionHandle,
-            x => x.ParticipantOneId == entity.ParticipantOneId &&
-                 x.ParticipantTwoId == entity.ParticipantTwoId &&
-                 x.MessageId == entity.MessageId,
+            x => x.Id.Is(entity.Id),
             entity,
             cancellationToken);
     }
@@ -133,9 +106,7 @@ internal class ChatMessageRepository : IChatMessageRepository
             .ChatMessages
             .DeleteAsync(
             _chatsContext.ClientSessionHandle,
-            x => x.ParticipantOneId == entity.ParticipantOneId &&
-                 x.ParticipantTwoId == entity.ParticipantTwoId &&
-                 x.MessageId == entity.MessageId,
+            x => x.Id.Is(entity.Id),
             cancellationToken);
     }
 }

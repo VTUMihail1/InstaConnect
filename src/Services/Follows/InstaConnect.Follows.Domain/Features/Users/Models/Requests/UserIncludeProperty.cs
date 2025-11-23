@@ -3,5 +3,6 @@
 public enum UserIncludeProperty
 {
     None,
-    Follows
+    FollowerFollows,
+    FollowingFollows
 }

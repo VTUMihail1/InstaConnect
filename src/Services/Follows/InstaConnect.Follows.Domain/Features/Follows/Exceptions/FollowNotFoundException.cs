@@ -4,13 +4,13 @@ namespace InstaConnect.Follows.Domain.Features.Follows.Exceptions;
 
 public class FollowNotFoundException : NotFoundException
 {
-    public FollowNotFoundException(string followerId, string followingId)
-        : base(FollowExceptionErrorMessages.GetNotFoundMessage(followerId, followingId))
+    public FollowNotFoundException(FollowId id)
+        : base(FollowExceptionErrorMessages.GetNotFoundMessage(id))
     {
     }
 
-    public FollowNotFoundException(string followerId, string followingId, Exception exception)
-        : base(FollowExceptionErrorMessages.GetNotFoundMessage(followerId, followingId), exception)
+    public FollowNotFoundException(FollowId id, Exception exception)
+        : base(FollowExceptionErrorMessages.GetNotFoundMessage(id), exception)
     {
     }
 }

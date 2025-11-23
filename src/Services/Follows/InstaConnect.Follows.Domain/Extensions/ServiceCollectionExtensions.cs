@@ -13,7 +13,7 @@ public static class ServiceCollectionExtensions
             .AddFollowServices();
 
         serviceCollection
-            .AddMapper(FollowDomainReference.Assembly)
+            .AddMapper(FollowDomainReference.Assembly, CommonDomainReference.Assembly)
             .AddServicesWithMatchingInterfaces(FollowDomainReference.Assembly);
 
         return serviceCollection;

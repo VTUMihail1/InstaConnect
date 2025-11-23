@@ -1,4 +1,5 @@
-﻿using InstaConnect.Follows.Infrastructure.Abstractions;
+﻿using InstaConnect.Common.Domain.Models.ValueObjects;
+using InstaConnect.Follows.Infrastructure.Abstractions;
 
 using MongoDB.Driver;
 
@@ -18,7 +19,7 @@ internal class UserRepository : IUserRepository
     }
 
     public async Task<User?> GetByIdAsync(
-        string id,
+        UserId id,
         UserIncludeQuery? include,
         CancellationToken cancellationToken)
     {
@@ -35,14 +36,14 @@ internal class UserRepository : IUserRepository
     }
 
     public async Task<User?> GetByIdAsync(
-        string id,
+        UserId id,
         CancellationToken cancellationToken)
     {
         return await GetByIdAsync(id, null, cancellationToken);
     }
 
     public async Task<User?> GetByNameAsync(
-        string name,
+        Name name,
         UserIncludeQuery? include,
         CancellationToken cancellationToken)
     {
@@ -59,14 +60,14 @@ internal class UserRepository : IUserRepository
     }
 
     public async Task<User?> GetByNameAsync(
-        string name,
+        Name name,
         CancellationToken cancellationToken)
     {
         return await GetByNameAsync(name, null, cancellationToken);
     }
 
     public async Task<User?> GetByEmailAsync(
-        string email,
+        Email email,
         UserIncludeQuery? include,
         CancellationToken cancellationToken)
     {
@@ -83,7 +84,7 @@ internal class UserRepository : IUserRepository
     }
 
     public async Task<User?> GetByEmailAsync(
-        string email,
+        Email email,
         CancellationToken cancellationToken)
     {
         return await GetByEmailAsync(email, null, cancellationToken);

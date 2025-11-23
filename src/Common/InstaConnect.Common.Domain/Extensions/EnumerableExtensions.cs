@@ -21,4 +21,9 @@ public static class EnumerableExtensions
     {
         return enumerable.JoinAsString("\n");
     }
+
+    public static string JoinAsStringWithDot<T>(this IEnumerable<T> enumerable)
+    {
+        return enumerable.JoinAsString(".");
+    }
 }

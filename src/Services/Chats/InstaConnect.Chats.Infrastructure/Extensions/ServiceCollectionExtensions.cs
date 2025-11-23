@@ -18,7 +18,7 @@ public static class ServiceCollectionExtensions
 
         serviceCollection
             .AddObservability(configuration, webHostEnvironment)
-            .AddMapper(ChatInfrastructureReference.Assembly)
+            .AddMapper(ChatInfrastructureReference.Assembly, CommonInfrastructureReference.Assembly)
             .AddServicesWithMatchingInterfaces(ChatInfrastructureReference.Assembly)
             .AddMongoDbContext()
             .AddUnitOfWork()

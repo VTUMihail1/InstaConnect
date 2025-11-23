@@ -18,8 +18,8 @@ public class ChatMessageIncludeProperty : IChatIncludeProperty
         return pipeline
             .Lookup<Chat, ChatMessage, Chat>(
                 _chatsContext.ChatMessages,
-                p => new { p.ParticipantOneId, p.ParticipantTwoId },
-                u => new { u.ParticipantOneId, u.ParticipantTwoId },
+                p => p.Id,
+                u => u.Id.Id,
                 p => p.Messages
             );
     }

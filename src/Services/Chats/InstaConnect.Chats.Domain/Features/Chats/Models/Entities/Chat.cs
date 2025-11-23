@@ -1,73 +1,58 @@
 ﻿namespace InstaConnect.Chats.Domain.Features.Chats.Models.Entities;
 
-public class Chat : IEntity
+public class Chat : IEntity<ChatId>
 {
-    private readonly IList<ChatMessage> _messages;
-
     private Chat()
     {
-        ParticipantOneId = string.Empty;
-        ParticipantTwoId = string.Empty;
-        _messages = [];
+        Id = new(new(string.Empty), new(string.Empty));
+        Messages = [];
     }
 
     public Chat(
-        string participantOneId,
-        string participantTwoId,
-        DateTimeOffset createdAt,
-        DateTimeOffset updatedAt)
+        ChatId id,
+        DateTimeOffset createdAtUtc)
     {
-        ParticipantOneId = participantOneId;
-        ParticipantTwoId = participantTwoId;
-        _messages = [];
-        CreatedAt = createdAt;
-        UpdatedAt = updatedAt;
+        Id = id;
+        Messages = [];
+        CreatedAtUtc = createdAtUtc;
     }
 
     public Chat(
+        ChatId id,
         User participantOne,
         User participantTwo,
-        DateTimeOffset createdAt,
-        DateTimeOffset updatedAt)
+        DateTimeOffset createdAtUtc)
     {
+        Id = id;
         ParticipantOne = participantOne;
-        ParticipantOneId = participantOne.Id;
         ParticipantTwo = participantTwo;
-        ParticipantTwoId = participantTwo.Id;
-        _messages = [];
-        CreatedAt = createdAt;
-        UpdatedAt = updatedAt;
+        Messages = [];
+        CreatedAtUtc = createdAtUtc;
     }
 
     public Chat(
+        ChatId id,
         User participantOne,
         User participantTwo,
         IList<ChatMessage> messages,
-        DateTimeOffset createdAt,
-        DateTimeOffset updatedAt)
+        DateTimeOffset createdAtUtc)
     {
+        Id = id;
         ParticipantOne = participantOne;
-        ParticipantOneId = participantOne.Id;
         ParticipantTwo = participantTwo;
-        ParticipantTwoId = participantTwo.Id;
-        _messages = messages;
-        CreatedAt = createdAt;
-        UpdatedAt = updatedAt;
+        Messages = messages;
+        CreatedAtUtc = createdAtUtc;
     }
 
-    public string ParticipantOneId { get; }
+    public ChatId Id { get; }
 
     public User? ParticipantOne { get; private set; }
 
-    public string ParticipantTwoId { get; }
-
     public User? ParticipantTwo { get; private set; }
 
-    public IReadOnlyCollection<ChatMessage> Messages => _messages.AsReadOnly();
+    public ICollection<ChatMessage> Messages { get; }
 
-    public DateTimeOffset CreatedAt { get; }
-
-    public DateTimeOffset UpdatedAt { get; }
+    public DateTimeOffset CreatedAtUtc { get; }
 
     public void AddParticipantOne(User participantOne)
     {
@@ -81,6 +66,11 @@ public class Chat : IEntity
 
     public void AddMessage(ChatMessage message)
     {
-        _messages.Add(message);
+        Messages.Add(message);
+    }
+
+    public bool IsNotParticipant(UserId participantId)
+    {
+        return Id.ParticipantOneId.IsNot(participantId) || Id.ParticipantTwoId.IsNot(participantId);
     }
 }

@@ -14,21 +14,17 @@ internal class ChatMessagePresentationMappings : IRegister
     {
         config.NewConfig<GetAllChatMessagesApiRequest, GetAllChatMessagesQueryRequest>()
             .ConstructUsing(src => new(
-                new(src.Filter.ParticipantOneId, src.Filter.ParticipantTwoId),
-                new(src.Sorting.Order, src.Sorting.Property),
-                new(src.Pagination.Page, src.Pagination.PageSize)));
+                                       new(
+                                           new(
+                                               new(src.ParticipantOneId),
+                                               new(src.ParticipantTwoId)),
+                                           new(src.SenderId)),
+                                       new(src.SortOrder, src.SortProperty),
+                                       new(src.Page, src.PageSize)));
 
         config.NewConfig<GetAllChatMessagesQueryResponse, GetAllChatMessagesApiResponse>()
             .ConstructUsing(pc => new(
-                  pc.Data.Select(p => new ChatMessageApiResponse(
-                                      p.ParticipantOneId,
-                                      p.ParticipantTwoId,
-                                      p.MessageId,
-                                      p.Content,
-                                      new(p.Sender.Id,
-                                          p.Sender.Name,
-                                          p.Sender.ProfileImage)))
-                         .ToList(),
+                  pc.Data.Adapt<ICollection<ChatMessageApiResponse>>(),
                   pc.Page,
                   pc.PageSize,
                   pc.TotalCount,
@@ -36,31 +32,66 @@ internal class ChatMessagePresentationMappings : IRegister
                   pc.HasPreviousPage));
 
         config.NewConfig<GetChatMessageByIdApiRequest, GetChatMessageByIdQueryRequest>()
-            .ConstructUsing(src => new(src.ParticipantOneId, src.ParticipantTwoId, src.MessageId));
+            .ConstructUsing(src => new(
+                                       new(
+                                           new(
+                                               new(src.ParticipantOneId),
+                                               new(src.ParticipantTwoId)),
+                                           src.MessageId),
+                                       new(src.SenderId)));
 
         config.NewConfig<GetChatMessageByIdQueryResponse, GetChatMessageByIdApiResponse>()
-            .ConstructUsing(src => new(
-                new(src.Data.ParticipantOneId,
-                                      src.Data.ParticipantTwoId,
-                                      src.Data.MessageId,
-                                      src.Data.Content,
-                                      new(src.Data.Sender.Id,
-                                          src.Data.Sender.Name,
-                                          src.Data.Sender.ProfileImage))));
+            .ConstructUsing(src => new(src.Data.Adapt<ChatMessageApiResponse>()));
 
         config.NewConfig<AddChatMessageApiRequest, AddChatMessageCommandRequest>()
-            .ConstructUsing(src => new(src.ParticipantOneId, src.ParticipantTwoId, src.Body.Content));
+            .ConstructUsing(src => new(
+                                       new(
+                                           new(src.ParticipantOneId),
+                                           new(src.ParticipantTwoId)),
+                                       new(src.SenderId),
+                                   src.Body.Content));
 
         config.NewConfig<AddChatMessageCommandResponse, AddChatMessageApiResponse>()
-            .ConstructUsing(src => new(src.ParticipantOneId, src.ParticipantTwoId, src.MessageId, src.Content, src.CreatedAt, src.UpdatedAt));
+            .ConstructUsing(src => new(src.Id.Adapt<ChatMessageIdApiPayload>()));
 
         config.NewConfig<UpdateChatMessageApiRequest, UpdateChatMessageCommandRequest>()
-            .ConstructUsing(src => new(src.ParticipantOneId, src.ParticipantTwoId, src.MessageId, src.Body.Content));
+            .ConstructUsing(src => new(
+                                       new(
+                                           new(
+                                               new(src.ParticipantOneId),
+                                               new(src.ParticipantTwoId)),
+                                           src.MessageId),
+                                       new(src.SenderId),
+                                       src.Body.Content));
 
         config.NewConfig<UpdateChatMessageCommandResponse, UpdateChatMessageApiResponse>()
-            .ConstructUsing(src => new(src.ParticipantOneId, src.ParticipantTwoId, src.MessageId, src.Content, src.CreatedAt, src.UpdatedAt));
+            .ConstructUsing(src => new(src.Id.Adapt<ChatMessageIdApiPayload>()));
 
         config.NewConfig<DeleteChatMessageApiRequest, DeleteChatMessageCommandRequest>()
-            .ConstructUsing(src => new(src.ParticipantOneId, src.ParticipantTwoId, src.MessageId));
+            .ConstructUsing(src => new(
+                                       new(
+                                           new(
+                                               new(src.ParticipantOneId),
+                                               new(src.ParticipantTwoId)),
+                                           src.MessageId),
+                                       new(src.SenderId)));
+
+        config.NewConfig<ChatMessageIdPayload, ChatMessageIdApiPayload>()
+            .ConstructUsing(src => new(
+                src.Id.Adapt<ChatIdApiPayload>(),
+                src.MessageId));
+
+        config.NewConfig<ChatMessageIdApiPayload, ChatMessageIdPayload>()
+            .ConstructUsing(src => new(
+                src.Id.Adapt<ChatIdPayload>(),
+                src.MessageId));
+
+        config.NewConfig<ChatMessageQueryResponse, ChatMessageApiResponse>()
+            .ConstructUsing(src => new(
+                src.Id.Adapt<ChatMessageIdApiPayload>(),
+                src.Content,
+                src.Sender.Adapt<UserApiResponse>(),
+                src.CreatedAtUtc,
+                src.UpdatedAtUtc));
     }
 }

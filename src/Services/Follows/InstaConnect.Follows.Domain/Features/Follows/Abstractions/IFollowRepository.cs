@@ -17,19 +17,15 @@ public interface IFollowRepository
         CancellationToken cancellationToken);
 
     Task<Follow?> GetByIdAsync(
-        string followerId,
-        string followingId,
+        FollowId id,
         FollowIncludeQuery? include,
         CancellationToken cancellationToken);
 
     Task<Follow?> GetByIdAsync(
-        string followerId,
-        string followingId,
+        FollowId id,
         CancellationToken cancellationToken);
 
     Task AddAsync(Follow entity, CancellationToken cancellationToken);
-
-    Task UpdateAsync(Follow entity, CancellationToken cancellationToken);
 
     Task DeleteAsync(Follow entity, CancellationToken cancellationToken);
 }

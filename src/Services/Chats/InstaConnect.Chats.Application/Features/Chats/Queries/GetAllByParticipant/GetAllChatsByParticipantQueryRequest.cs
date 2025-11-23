@@ -1,7 +1,7 @@
 ﻿namespace InstaConnect.Chats.Application.Features.Chats.Queries.GetAllByParticipant;
 
 public record GetAllChatsByParticipantQueryRequest(
-    ChatByParticipantQueryFilter Filter,
-    ChatByParticipantQuerySorting Sorting,
-    ChatQueryPagination Pagination)
+    ChatByParticipantFilterQueryRequest Filter,
+    ChatByParticipantSortingQueryRequest Sorting,
+    ChatPaginationQueryRequest Pagination)
     : IQueryRequest<GetAllChatsByParticipantQueryResponse>;

@@ -4,13 +4,13 @@ namespace InstaConnect.Chats.Domain.Features.Chats.Exceptions;
 
 public class ChatNotFoundException : NotFoundException
 {
-    public ChatNotFoundException(string participantOneId, string participantTwoId)
-        : base(ChatExceptionErrorMessages.GetNotFoundMessage(participantOneId, participantTwoId))
+    public ChatNotFoundException(ChatId id)
+        : base(ChatExceptionErrorMessages.GetNotFoundMessage(id))
     {
     }
 
-    public ChatNotFoundException(string participantOneId, string participantTwoId, Exception exception)
-        : base(ChatExceptionErrorMessages.GetNotFoundMessage(participantOneId, participantTwoId), exception)
+    public ChatNotFoundException(ChatId id, Exception exception)
+        : base(ChatExceptionErrorMessages.GetNotFoundMessage(id), exception)
     {
     }
 }

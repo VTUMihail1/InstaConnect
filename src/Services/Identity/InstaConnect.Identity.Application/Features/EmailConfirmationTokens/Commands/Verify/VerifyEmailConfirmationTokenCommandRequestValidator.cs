@@ -3,20 +3,14 @@ public class VerifyEmailConfirmationTokenCommandRequestValidator : AbstractValid
 {
     public VerifyEmailConfirmationTokenCommandRequestValidator()
     {
-        RuleFor(r => r.Id)
-            .NotEmpty()
-            .WithMessage(UserErrorMessages.GetIdEmpty())
-            .MinimumLength(UserConfigurations.IdMinLength)
-            .WithMessage(r => UserErrorMessages.GetIdTooShort(r.Id.Length))
-            .MaximumLength(UserConfigurations.IdMaxLength)
-            .WithMessage(r => UserErrorMessages.GetIdTooLong(r.Id.Length));
+        RuleFor(r => r.Id.Id.Id)
+            .NotEmptyWithMessage()
+            .UserIdMinLengthWithMessage()
+            .UserIdMaxLengthWithMessage();
 
-        RuleFor(r => r.Value)
-            .NotEmpty()
-            .WithMessage(EmailConfirmationTokenErrorMessages.GetValueEmpty())
-            .MinimumLength(EmailConfirmationTokenConfigurations.ValueMinLength)
-            .WithMessage(r => EmailConfirmationTokenErrorMessages.GetValueTooShort(r.Value.Length))
-            .MaximumLength(EmailConfirmationTokenConfigurations.ValueMaxLength)
-            .WithMessage(r => EmailConfirmationTokenErrorMessages.GetValueTooLong(r.Value.Length));
+        RuleFor(r => r.Id.Value)
+            .NotEmptyWithMessage()
+            .EmailConfirmationTokenValueMinLengthWithMessage()
+            .EmailConfirmationTokenValueMaxLengthWithMessage();
     }
 }

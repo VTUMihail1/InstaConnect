@@ -17,7 +17,7 @@ public class ChatParticipantOneIncludeProperty : IChatIncludeProperty
         return pipeline
             .Lookup<Chat, User, Chat>(
                 _chatsContext.Users,
-                p => p.ParticipantOneId,
+                p => p.Id.ParticipantOneId,
                 u => u.Id,
                 p => p.ParticipantOne
             );
