@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
 
+using InstaConnect.Common.Presentation.Models;
 using InstaConnect.Posts.Presentation.Features.PostComments.Models.Bodies;
 
 namespace InstaConnect.Posts.Presentation.Tests.Features.PostComments.Utilities;
@@ -18,7 +19,7 @@ public static class PostCommentClient
         return response;
     }
 
-    public static async Task<ProblemDetails> GetAllPostCommentsProblemDetailsAsync(
+    public static async Task<ApplicationProblemDetails> GetAllPostCommentsProblemDetailsAsync(
         this HttpClient httpClient,
         GetAllPostCommentsApiRequest request,
         CancellationToken cancellationToken)
@@ -66,7 +67,7 @@ public static class PostCommentClient
         return response;
     }
 
-    public static async Task<ProblemDetails> GetPostCommentByIdProblemDetailsAsync(
+    public static async Task<ApplicationProblemDetails> GetPostCommentByIdProblemDetailsAsync(
         this HttpClient httpClient,
         GetPostCommentByIdApiRequest request,
         CancellationToken cancellationToken)
@@ -115,7 +116,7 @@ public static class PostCommentClient
         return response;
     }
 
-    public static async Task<ProblemDetails> AddPostCommentProblemDetailsAsync(
+    public static async Task<ApplicationProblemDetails> AddPostCommentProblemDetailsAsync(
         this HttpClient httpClient,
         AddPostCommentApiRequest request,
         CancellationToken cancellationToken)
@@ -128,7 +129,7 @@ public static class PostCommentClient
         return response!;
     }
 
-    public static async Task<ProblemDetails> AddPostCommentProblemDetailsUnauthorizedAsync(
+    public static async Task<ApplicationProblemDetails> AddPostCommentProblemDetailsUnauthorizedAsync(
         this HttpClient httpClient,
         AddPostCommentApiRequest request,
         CancellationToken cancellationToken)
@@ -178,7 +179,7 @@ public static class PostCommentClient
         return response;
     }
 
-    public static async Task<ProblemDetails> UpdatePostCommentProblemDetailsAsync(
+    public static async Task<ApplicationProblemDetails> UpdatePostCommentProblemDetailsAsync(
         this HttpClient httpClient,
         UpdatePostCommentApiRequest request,
         CancellationToken cancellationToken)
@@ -191,7 +192,7 @@ public static class PostCommentClient
         return response!;
     }
 
-    public static async Task<ProblemDetails> UpdatePostCommentProblemDetailsUnauthorizedAsync(
+    public static async Task<ApplicationProblemDetails> UpdatePostCommentProblemDetailsUnauthorizedAsync(
         this HttpClient httpClient,
         UpdatePostCommentApiRequest request,
         CancellationToken cancellationToken)
@@ -241,7 +242,7 @@ public static class PostCommentClient
         return response;
     }
 
-    public static async Task<ProblemDetails> DeletePostCommentProblemDetailsAsync(
+    public static async Task<ApplicationProblemDetails> DeletePostCommentProblemDetailsAsync(
         this HttpClient httpClient,
         DeletePostCommentApiRequest request,
         CancellationToken cancellationToken)
@@ -254,7 +255,7 @@ public static class PostCommentClient
         return response!;
     }
 
-    public static async Task<ProblemDetails> DeletePostCommentProblemDetailsUnauthorizedAsync(
+    public static async Task<ApplicationProblemDetails> DeletePostCommentProblemDetailsUnauthorizedAsync(
         this HttpClient httpClient,
         DeletePostCommentApiRequest request,
         CancellationToken cancellationToken)

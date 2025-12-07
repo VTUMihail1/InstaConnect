@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Domain.Features.Posts.Models.Responses;
 public record PostCollection(
-    ICollection<Post> Data,
+    ICollection<Post> Entities,
     int Page,
     int PageSize,
     int TotalCount,

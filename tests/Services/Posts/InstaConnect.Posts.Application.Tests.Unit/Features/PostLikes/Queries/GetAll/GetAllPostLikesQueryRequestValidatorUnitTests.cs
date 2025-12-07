@@ -26,93 +26,93 @@ public class GetAllPostLikesQueryRequestValidatorUnitTests : BasePostLikeApplica
     [PostIdTooShortWithMessageData]
     [PostIdTooLongWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Filter.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForId(errorMessage);
+        result.ShouldHaveValidationErrorForId(messageTransformer, request);
     }
 
     [Theory]
     [UserNameTooLongWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenUserNameIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Build();
+        var request = _requestBuilder.WithUserName(transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForUserName(errorMessage);
+        result.ShouldHaveValidationErrorForUserName(messageTransformer, request);
     }
 
     [Theory]
     [SortOrderEmptyWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenSortOrderIsInvalid(
-        IEnumTransformer<CommonSortOrder> transformer, string errorMessage)
+        IEnumTransformer<CommonSortOrder> transformer, IEnumMessageTransformer<CommonSortOrder> messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortOrder(_request.Sorting.Order, transformer).Build();
+        var request = _requestBuilder.WithSortOrder(transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForSortOrder(errorMessage);
+        result.ShouldHaveValidationErrorForSortOrder(messageTransformer, request);
     }
 
     [Theory]
     [PostLikeSortPropertyEmptyWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenSortPropertyIsInvalid(
-        IEnumTransformer<PostLikeSortProperty> transformer, string errorMessage)
+        IEnumTransformer<PostLikeSortProperty> transformer, IEnumMessageTransformer<PostLikeSortProperty> messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(_request.Sorting.Property, transformer).Build();
+        var request = _requestBuilder.WithSortProperty(transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForSortProperty(errorMessage);
+        result.ShouldHaveValidationErrorForSortProperty(messageTransformer, request);
     }
 
     [Theory]
     [PostLikePageTooSmallWithMessageData]
     [PostLikePageTooLargeWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenPageIsInvalid(
-        IIntTransformer transformer, string errorMessage)
+        IIntTransformer transformer, IIntMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithPage(_request.Pagination.Page, transformer).Build();
+        var request = _requestBuilder.WithPage(transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForPage(errorMessage);
+        result.ShouldHaveValidationErrorForPage(messageTransformer, request);
     }
 
     [Theory]
     [PostLikePageSizeTooSmallWithMessageData]
     [PostLikePageSizeTooLargeWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenPageSizeIsInvalid(
-        IIntTransformer transformer, string errorMessage)
+        IIntTransformer transformer, IIntMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithPageSize(_request.Pagination.PageSize, transformer).Build();
+        var request = _requestBuilder.WithPageSize(transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForPageSize(errorMessage);
+        result.ShouldHaveValidationErrorForPageSize(messageTransformer, request);
     }
 
     [Theory]
@@ -122,7 +122,7 @@ public class GetAllPostLikesQueryRequestValidatorUnitTests : BasePostLikeApplica
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Build();
+        var request = _requestBuilder.WithUserName(transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);

@@ -16,7 +16,7 @@ public class GetAllPostCommentsQueryHandlerUnitTests : BasePostCommentApplicatio
 
         _handler = new(ApplicationMapper, PostCommentService, PostCommentIncludeQueryBuilderFactory);
 
-        PostCommentService.SetupGetAllQuery(_request, PostComment, User, CancellationToken);
+        PostCommentService.SetupGetAllQuery(_request, PostComment, CancellationToken);
     }
 
     [Fact]

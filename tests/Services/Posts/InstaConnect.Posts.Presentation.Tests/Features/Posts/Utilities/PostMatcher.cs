@@ -3,13 +3,13 @@ public static class PostMatcher
 {
     public static GetAllPostsQueryRequest IsGetAllPostsQueryRequest(GetAllPostsApiRequest request)
     {
-        return Matcher.Is<GetAllPostsQueryRequest>(p => p.Filter.UserId == request.Filter.UserId &&
-                                                        p.Filter.UserName == request.Filter.UserName &&
-                                                        p.Filter.Title == request.Filter.Title &&
-                                                        p.Pagination.Page == request.Pagination.Page &&
-                                                        p.Pagination.PageSize == request.Pagination.PageSize &&
-                                                        p.Sorting.Order == request.Sorting.Order &&
-                                                        p.Sorting.Property == request.Sorting.Property);
+        return Matcher.Is<GetAllPostsQueryRequest>(p => p.UserId == request.UserId &&
+                                                        p.UserName == request.UserName &&
+                                                        p.Title == request.Title &&
+                                                        p.Page == request.Page &&
+                                                        p.PageSize == request.PageSize &&
+                                                        p.SortOrder == request.SortOrder &&
+                                                        p.SortProperty == request.SortProperty);
     }
 
     public static GetPostByIdQueryRequest IsGetPostByIdQueryRequest(GetPostByIdApiRequest request)

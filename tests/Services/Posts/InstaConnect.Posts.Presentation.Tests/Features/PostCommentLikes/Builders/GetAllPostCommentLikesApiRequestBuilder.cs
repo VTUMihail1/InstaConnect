@@ -14,70 +14,80 @@ public class GetAllPostCommentLikesApiRequestBuilder
 
     public GetAllPostCommentLikesApiRequestBuilder(PostCommentLike postCommentLike, User user)
     {
-        _id = postCommentLike.Id;
-        _commentId = postCommentLike.CommentId;
-        _userName = user.Name;
+        _id = postCommentLike.Id.CommentId.Id.Id;
+        _commentId = postCommentLike.Id.CommentId.CommentId;
+        _userName = user.Name.Value;
         _page = PostCommentLikeDataFaker.GetPage();
         _pageSize = PostCommentLikeDataFaker.GetPageSize();
         _sortOrder = DataFaker.GetSortOrder();
         _sortProperty = PostCommentLikeDataFaker.GetSortProperty();
     }
 
-    public GetAllPostCommentLikesApiRequestBuilder WithId(string id, IStringTransformer? transformer = null)
+    public GetAllPostCommentLikesApiRequestBuilder WithId(Post post, IStringTransformer? transformer = null)
     {
-        _id = transformer.TryTransform(id);
+        _id = transformer.TryTransform(post.Id.Id);
 
         return this;
     }
 
-    public GetAllPostCommentLikesApiRequestBuilder WithCommentId(string commentId, IStringTransformer? transformer = null)
+    public GetAllPostCommentLikesApiRequestBuilder WithId(IStringTransformer transformer)
     {
-        _commentId = transformer.TryTransform(commentId);
+        _id = transformer.Transform(_id);
 
         return this;
     }
 
-    public GetAllPostCommentLikesApiRequestBuilder WithUserName(string userName, IStringTransformer? transformer = null)
+    public GetAllPostCommentLikesApiRequestBuilder WithCommentId(PostComment postComment, IStringTransformer? transformer = null)
     {
-        _userName = transformer.TryTransform(userName);
+        _commentId = transformer.TryTransform(postComment.Id.CommentId);
 
         return this;
     }
 
-    public GetAllPostCommentLikesApiRequestBuilder WithPage(int page, IIntTransformer? transformer = null)
+    public GetAllPostCommentLikesApiRequestBuilder WithCommentId(IStringTransformer transformer)
     {
-        _page = transformer?.Transform(page) ?? page;
+        _commentId = transformer.Transform(_commentId);
 
         return this;
     }
 
-    public GetAllPostCommentLikesApiRequestBuilder WithPageSize(int pageSize, IIntTransformer? transformer = null)
+    public GetAllPostCommentLikesApiRequestBuilder WithUserName(IStringTransformer transformer)
     {
-        _pageSize = transformer?.Transform(pageSize) ?? pageSize;
+        _userName = transformer.Transform(_userName);
 
         return this;
     }
 
-    public GetAllPostCommentLikesApiRequestBuilder WithSortOrder(CommonSortOrder order, IEnumTransformer<CommonSortOrder>? transformer = null)
+    public GetAllPostCommentLikesApiRequestBuilder WithPage(IIntTransformer transformer)
     {
-        _sortOrder = transformer?.Transform(order) ?? order;
+        _page = transformer.Transform(_page);
 
         return this;
     }
 
-    public GetAllPostCommentLikesApiRequestBuilder WithSortProperty(PostCommentLikeSortProperty property, IEnumTransformer<PostCommentLikeSortProperty>? transformer = null)
+    public GetAllPostCommentLikesApiRequestBuilder WithPageSize(IIntTransformer transformer)
     {
-        _sortProperty = transformer?.Transform(property) ?? property;
+        _pageSize = transformer.Transform(_pageSize);
+
+        return this;
+    }
+
+    public GetAllPostCommentLikesApiRequestBuilder WithSortOrder(IEnumTransformer<CommonSortOrder> transformer)
+    {
+        _sortOrder = transformer.Transform(_sortOrder);
+
+        return this;
+    }
+
+    public GetAllPostCommentLikesApiRequestBuilder WithSortProperty(IEnumTransformer<PostCommentLikeSortProperty> transformer)
+    {
+        _sortProperty = transformer.Transform(_sortProperty);
 
         return this;
     }
 
     public GetAllPostCommentLikesApiRequest Build()
     {
-        return new(
-            new(_id, _commentId, _userName),
-            new(_sortOrder, _sortProperty),
-            new(_page, _pageSize)
-        );
+        return new(_id, _commentId, _userName, _sortOrder, _sortProperty, _page, _pageSize);
     }
 }

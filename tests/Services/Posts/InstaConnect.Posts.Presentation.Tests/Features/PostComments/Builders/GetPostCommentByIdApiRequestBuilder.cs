@@ -7,20 +7,34 @@ public class GetPostCommentByIdApiRequestBuilder
 
     public GetPostCommentByIdApiRequestBuilder(PostComment postComment)
     {
-        _id = postComment.Id;
-        _commentId = postComment.CommentId;
+        _id = postComment.Id.Id.Id;
+        _commentId = postComment.Id.CommentId;
     }
 
-    public GetPostCommentByIdApiRequestBuilder WithId(string id, IStringTransformer? transformer = null)
+    public GetPostCommentByIdApiRequestBuilder WithId(Post post, IStringTransformer? transformer = null)
     {
-        _id = transformer.TryTransform(id);
+        _id = transformer.TryTransform(post.Id.Id);
 
         return this;
     }
 
-    public GetPostCommentByIdApiRequestBuilder WithCommentId(string commentId, IStringTransformer? transformer = null)
+    public GetPostCommentByIdApiRequestBuilder WithId(IStringTransformer transformer)
     {
-        _commentId = transformer.TryTransform(commentId);
+        _id = transformer.Transform(_id);
+
+        return this;
+    }
+
+    public GetPostCommentByIdApiRequestBuilder WithCommentId(PostComment postComment, IStringTransformer? transformer = null)
+    {
+        _commentId = transformer.TryTransform(postComment.Id.CommentId);
+
+        return this;
+    }
+
+    public GetPostCommentByIdApiRequestBuilder WithCommentId(IStringTransformer transformer)
+    {
+        _commentId = transformer.Transform(_commentId);
 
         return this;
     }

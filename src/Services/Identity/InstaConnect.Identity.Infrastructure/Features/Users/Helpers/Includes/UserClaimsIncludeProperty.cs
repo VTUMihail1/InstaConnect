@@ -1,6 +1,4 @@
-﻿using InstaConnect.Identity.Infrastructure.Abstractions;
-
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 
 namespace InstaConnect.Identity.Infrastructure.Features.Users.Helpers.Includes;
 
@@ -18,7 +16,7 @@ public class UserClaimsIncludeProperty : IUserIncludeProperty
     public IAggregateFluent<User> Include(IAggregateFluent<User> pipeline)
     {
         return pipeline
-            .Lookup<User, UserClaim, User>(
+            .IncludeMany(
                 _usersContext.UserClaims,
                 p => p.Id,
                 l => l.Id.Id,

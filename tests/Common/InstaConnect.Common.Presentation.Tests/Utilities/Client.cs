@@ -3,8 +3,7 @@ using System.Net.Http.Json;
 using System.Security.Claims;
 
 using InstaConnect.Common.Domain.Utilities;
-
-using Microsoft.AspNetCore.Mvc;
+using InstaConnect.Common.Presentation.Models;
 
 namespace InstaConnect.Common.Presentation.Tests.Utilities;
 
@@ -17,7 +16,7 @@ public static class Client
         return response.StatusCode;
     }
 
-    public static async Task<ProblemDetails> GetProblemDetailsAsync(
+    public static async Task<ApplicationProblemDetails> GetProblemDetailsAsync(
         this HttpClient httpClient,
         string route,
         CancellationToken cancellationToken)
@@ -49,7 +48,7 @@ public static class Client
         return response.StatusCode;
     }
 
-    public static async Task<ProblemDetails> PostProblemDetailsAsync<T>(
+    public static async Task<ApplicationProblemDetails> PostProblemDetailsAsync<T>(
         this HttpClient httpClient,
         string route,
         T request,
@@ -61,12 +60,17 @@ public static class Client
         return response!;
     }
 
-    public static async Task<ProblemDetails> PostProblemDetailsAsync(
+    public static async Task<ApplicationProblemDetails> PostProblemDetailsAsync(
         this HttpClient httpClient,
         string route,
         CancellationToken cancellationToken)
     {
         var responseMessage = await httpClient.PostAsync(route, null, cancellationToken);
+
+        var s = await responseMessage.Content.ReadAsStringAsync(cancellationToken);
+
+        Console.WriteLine(s);
+
         var response = await responseMessage.ReadProblemDetailsFromJsonAsync(cancellationToken);
 
         return response!;
@@ -95,7 +99,7 @@ public static class Client
         return response!;
     }
 
-    public static async Task<ProblemDetails> PutProblemDetailsAsync<T>(
+    public static async Task<ApplicationProblemDetails> PutProblemDetailsAsync<T>(
         this HttpClient httpClient,
         string route,
         T request,
@@ -129,7 +133,7 @@ public static class Client
         return response.StatusCode;
     }
 
-    public static async Task<ProblemDetails> DeleteProblemDetailsAsync(
+    public static async Task<ApplicationProblemDetails> DeleteProblemDetailsAsync(
         this HttpClient httpClient,
         string route,
         CancellationToken cancellationToken)
@@ -169,11 +173,11 @@ public static class Client
         return response!;
     }
 
-    public static async Task<ProblemDetails> ReadProblemDetailsFromJsonAsync(
+    public static async Task<ApplicationProblemDetails> ReadProblemDetailsFromJsonAsync(
         this HttpResponseMessage httpResponseMessage,
         CancellationToken cancellationToken)
     {
-        var response = await httpResponseMessage.ReadContentFromJsonAsync<ProblemDetails>(cancellationToken);
+        var response = await httpResponseMessage.ReadContentFromJsonAsync<ApplicationProblemDetails>(cancellationToken);
 
         return response!;
     }

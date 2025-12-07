@@ -1,5 +1,3 @@
-﻿using InstaConnect.Common.Application.Models;
+﻿namespace InstaConnect.Follows.Application.Features.Users.Models;
 
-namespace InstaConnect.Follows.Application.Features.Users.Models;
-
-public record UserQueryResponse(UserIdPayload Id, NamePayload Name, ImagePayload? ProfileImage);
+public record UserQueryResponse(string Id, string Name, string? ProfileImageUrl);

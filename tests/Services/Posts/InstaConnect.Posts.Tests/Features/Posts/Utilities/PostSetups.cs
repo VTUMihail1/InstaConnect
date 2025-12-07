@@ -1,5 +1,6 @@
 ﻿using InstaConnect.Common.Tests.Extensions;
 using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
+using InstaConnect.Posts.Domain.Features.Posts.Models.ValueObjects;
 using InstaConnect.Posts.Infrastructure.Abstractions;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -16,13 +17,12 @@ public static class PostSetups
 
     public static async Task<Post?> GetPostByIdAsync(
         this IServiceScope serviceScope,
-        string id,
+        PostId id,
         CancellationToken cancellationToken)
     {
         var postRepository = serviceScope.GetPostRepository();
-        var post = await postRepository.GetByIdAsync(id, cancellationToken);
 
-        return post;
+        return await postRepository.GetByIdAsync(id, cancellationToken);
     }
 
     public static async Task AddPostAsync(

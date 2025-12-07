@@ -3,12 +3,12 @@ public class DeleteFollowCommandRequestValidator : AbstractValidator<DeleteFollo
 {
     public DeleteFollowCommandRequestValidator()
     {
-        RuleFor(r => r.Id.FollowerId.Id)
+        RuleFor(r => r.FollowerId)
             .NotEmptyWithMessage()
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();
 
-        RuleFor(r => r.Id.FollowingId.Id)
+        RuleFor(r => r.FollowingId)
             .NotEmptyWithMessage()
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();

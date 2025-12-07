@@ -16,7 +16,7 @@ public class UserPostsIncludeProperty : IUserIncludeProperty
     public IAggregateFluent<User> Include(IAggregateFluent<User> pipeline)
     {
         return pipeline
-            .Lookup<User, Post, User>(
+            .IncludeMany(
                 _postsContext.Posts,
                 p => p.Id,
                 l => l.UserId,

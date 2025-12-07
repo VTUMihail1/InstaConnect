@@ -1,6 +1,4 @@
-﻿using InstaConnect.Follows.Infrastructure.Abstractions;
-
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 
 namespace InstaConnect.Follows.Infrastructure.Features.Follows.Repositories;
 
@@ -39,18 +37,20 @@ internal class FollowRepository : IFollowRepository
         FollowIncludeQuery? include,
         CancellationToken cancellationToken)
     {
+        var match = Builders<Follow>.Filter.Empty
+            .AndEqualsCaseInsensitive(p => p.Id.FollowerId.Id, filter.FollowerId.Id)
+            .AndOptionalStartsWithCaseInsensitive(p => p.Following!.Name.Value, filter.FollowingName.IsEmpty(), filter.FollowingName.Value);
+
         var sortOrder = _sortOrderFactory.Create(sorting.Order);
         var sortProperty = _followByFollowerSortPropertyFactory.Create(sorting.Property);
         var includeProperties = _followIncludePropertyFactory.Create(include?.Properties);
         var offset = _paginator.GetOffset(pagination.Page, pagination.PageSize);
-        var isFollowingNameEmpty = filter.FollowingName.IsEmpty();
 
         var pipeline = _followsContext
             .Follows
             .Aggregate()
             .Includes(includeProperties)
-            .Match(p => p.Id.FollowerId == filter.FollowerId ||
-                         isFollowingNameEmpty || p.Following!.Name.StartsWith(filter.FollowingName));
+            .Match(match);
 
         var totalCountsResult = await pipeline.Count().FirstOrDefaultAsync(cancellationToken);
 
@@ -72,18 +72,20 @@ internal class FollowRepository : IFollowRepository
         FollowIncludeQuery? include,
         CancellationToken cancellationToken)
     {
+        var match = Builders<Follow>.Filter.Empty
+            .AndEqualsCaseInsensitive(p => p.Id.FollowingId.Id, filter.FollowingId.Id)
+            .AndOptionalStartsWithCaseInsensitive(p => p.Follower!.Name.Value, filter.FollowerName.IsEmpty(), filter.FollowerName.Value);
+
         var sortOrder = _sortOrderFactory.Create(sorting.Order);
         var sortProperty = _followByFollowingSortPropertyFactory.Create(sorting.Property);
         var includeProperties = _followIncludePropertyFactory.Create(include?.Properties);
         var offset = _paginator.GetOffset(pagination.Page, pagination.PageSize);
-        var isFollowerNameEmpty = filter.FollowerName.IsEmpty();
 
         var pipeline = _followsContext
             .Follows
             .Aggregate()
             .Includes(includeProperties)
-            .Match(p => p.Id.FollowerId == filter.FollowingId ||
-                        isFollowerNameEmpty || p.Follower!.Name.StartsWith(filter.FollowerName));
+            .Match(match);
 
         var totalCountsResult = await pipeline.Count().FirstOrDefaultAsync(cancellationToken);
 
@@ -103,13 +105,17 @@ internal class FollowRepository : IFollowRepository
         FollowIncludeQuery? include,
         CancellationToken cancellationToken)
     {
+        var match = Builders<Follow>.Filter.Empty
+            .AndEqualsCaseInsensitive(p => p.Id.FollowerId.Id, id.FollowerId.Id)
+            .AndEqualsCaseInsensitive(p => p.Id.FollowingId.Id, id.FollowingId.Id);
+
         var includeProperties = _followIncludePropertyFactory.Create(include?.Properties);
 
         var entity = await _followsContext
             .Follows
             .Aggregate()
             .Includes(includeProperties)
-            .Match(p => p.Id == id)
+            .Match(match)
             .FirstOrDefaultAsync(cancellationToken);
 
         return entity;
@@ -131,11 +137,15 @@ internal class FollowRepository : IFollowRepository
 
     public async Task DeleteAsync(Follow entity, CancellationToken cancellationToken)
     {
+        var match = Builders<Follow>.Filter.Empty
+            .AndEqualsCaseInsensitive(p => p.Id.FollowerId.Id, entity.Id.FollowerId.Id)
+            .AndEqualsCaseInsensitive(p => p.Id.FollowingId.Id, entity.Id.FollowingId.Id);
+
         await _followsContext
             .Follows
             .DeleteAsync(
             _followsContext.ClientSessionHandle,
-            x => x.Id == entity.Id,
+            match,
             cancellationToken);
     }
 }

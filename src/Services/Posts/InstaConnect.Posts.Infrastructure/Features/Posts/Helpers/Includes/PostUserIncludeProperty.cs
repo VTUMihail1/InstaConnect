@@ -15,11 +15,11 @@ public class PostUserIncludeProperty : IPostIncludeProperty
     public IAggregateFluent<Post> Include(IAggregateFluent<Post> pipeline)
     {
         return pipeline
-            .Lookup<Post, User, Post>(
+            .IncludeOne(
                 _postsContext.Users,
                 p => p.UserId,
                 u => u.Id,
-                p => p.User
+                p => p.User!
             );
     }
 }

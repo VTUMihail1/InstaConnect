@@ -7,6 +7,6 @@ public static class MongoCollectionTestsExtensions
             this IMongoCollection<TDocument> collection,
             CancellationToken cancellationToken = default)
     {
-        await collection.DeleteManyAsync(FilterDefinition<TDocument>.Empty, cancellationToken);
+        await collection.DeleteManyAsync(d => true, cancellationToken);
     }
 }

@@ -11,7 +11,7 @@ public class AddPostCommentLikeCommandHandlerUnitTests : BasePostCommentLikeAppl
     public AddPostCommentLikeCommandHandlerUnitTests()
     {
         _requestBuilderFactory = new();
-        _requestBuilder = _requestBuilderFactory.Create(Post, PostComment, User);
+        _requestBuilder = _requestBuilderFactory.Create(PostComment, User);
         _request = _requestBuilder.Build();
 
         _handler = new(ApplicationMapper, PostCommentLikeService);

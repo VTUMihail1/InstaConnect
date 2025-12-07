@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Domain.Features.PostComments.Models.Responses;
 public record PostCommentCollection(
-    ICollection<PostComment> Data,
+    ICollection<PostComment> Entities,
     int Page,
     int PageSize,
     int TotalCount,

@@ -1,6 +1,8 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
 
+using InstaConnect.Common.Presentation.Models;
+
 namespace InstaConnect.Posts.Presentation.Tests.Features.PostCommentLikes.Utilities;
 public static class PostCommentLikeClient
 {
@@ -16,7 +18,7 @@ public static class PostCommentLikeClient
         return response;
     }
 
-    public static async Task<ProblemDetails> GetAllPostCommentLikesProblemDetailsAsync(
+    public static async Task<ApplicationProblemDetails> GetAllPostCommentLikesProblemDetailsAsync(
         this HttpClient httpClient,
         GetAllPostCommentLikesApiRequest request,
         CancellationToken cancellationToken)
@@ -65,7 +67,7 @@ public static class PostCommentLikeClient
         return response;
     }
 
-    public static async Task<ProblemDetails> GetPostCommentLikeByIdProblemDetailsAsync(
+    public static async Task<ApplicationProblemDetails> GetPostCommentLikeByIdProblemDetailsAsync(
         this HttpClient httpClient,
         GetPostCommentLikeByIdApiRequest request,
         CancellationToken cancellationToken)
@@ -114,7 +116,7 @@ public static class PostCommentLikeClient
         return response;
     }
 
-    public static async Task<ProblemDetails> AddPostCommentLikeProblemDetailsAsync(
+    public static async Task<ApplicationProblemDetails> AddPostCommentLikeProblemDetailsAsync(
         this HttpClient httpClient,
         AddPostCommentLikeApiRequest request,
         CancellationToken cancellationToken)
@@ -127,7 +129,7 @@ public static class PostCommentLikeClient
         return response!;
     }
 
-    public static async Task<ProblemDetails> AddPostCommentLikeProblemDetailsUnauthorizedAsync(
+    public static async Task<ApplicationProblemDetails> AddPostCommentLikeProblemDetailsUnauthorizedAsync(
         this HttpClient httpClient,
         AddPostCommentLikeApiRequest request,
         CancellationToken cancellationToken)
@@ -177,7 +179,7 @@ public static class PostCommentLikeClient
         return response;
     }
 
-    public static async Task<ProblemDetails> DeletePostCommentLikeProblemDetailsAsync(
+    public static async Task<ApplicationProblemDetails> DeletePostCommentLikeProblemDetailsAsync(
         this HttpClient httpClient,
         DeletePostCommentLikeApiRequest request,
         CancellationToken cancellationToken)
@@ -190,7 +192,7 @@ public static class PostCommentLikeClient
         return response!;
     }
 
-    public static async Task<ProblemDetails> DeletePostCommentLikeProblemDetailsUnauthorizedAsync(
+    public static async Task<ApplicationProblemDetails> DeletePostCommentLikeProblemDetailsUnauthorizedAsync(
         this HttpClient httpClient,
         DeletePostCommentLikeApiRequest request,
         CancellationToken cancellationToken)

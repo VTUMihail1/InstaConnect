@@ -3,12 +3,12 @@ public class DeleteChatCommandRequestValidator : AbstractValidator<DeleteChatCom
 {
     public DeleteChatCommandRequestValidator()
     {
-        RuleFor(r => r.Id.ParticipantOneId.Id)
+        RuleFor(r => r.ParticipantOneId)
             .NotEmptyWithMessage()
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();
 
-        RuleFor(r => r.Id.ParticipantTwoId.Id)
+        RuleFor(r => r.ParticipantTwoId)
             .NotEmptyWithMessage()
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();

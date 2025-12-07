@@ -4,32 +4,30 @@ public class GetAllPostCommentLikesQueryRequestValidator : AbstractValidator<Get
 {
     public GetAllPostCommentLikesQueryRequestValidator()
     {
-        RuleFor(r => r.Filter.Id.Id.Id)
+        RuleFor(r => r.Id)
             .NotEmptyWithMessage()
             .PostIdMinLengthWithMessage()
             .PostIdMaxLengthWithMessage();
 
-        RuleFor(r => r.Filter.Id.CommentId)
+        RuleFor(r => r.CommentId)
             .NotEmptyWithMessage()
             .PostIdMinLengthWithMessage()
             .PostIdMaxLengthWithMessage();
 
-        RuleFor(c => c.Filter.UserName.Value)
+        RuleFor(c => c.UserName)
             .UserNameMaxLengthWithMessage();
 
-        RuleFor(q => q.Sorting.Order)
+        RuleFor(q => q.SortOrder)
             .NotEmptyWithMessage();
 
-        RuleFor(q => q.Sorting.Property)
+        RuleFor(q => q.SortProperty)
             .NotEmptyWithMessage();
 
-        RuleFor(q => q.Pagination.Page)
-            .NotEmptyWithMessage()
+        RuleFor(q => q.Page)
             .PostLikePageMinValueWithMessage()
             .PostLikePageMaxValueWithMessage();
 
-        RuleFor(q => q.Pagination.PageSize)
-            .NotEmptyWithMessage()
+        RuleFor(q => q.PageSize)
             .PostCommentLikePageSizeMinValueWithMessage()
             .PostCommentLikePageSizeMaxValueWithMessage();
     }

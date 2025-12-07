@@ -1,6 +1,4 @@
-﻿using InstaConnect.Follows.Infrastructure.Abstractions;
-
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 
 namespace InstaConnect.Follows.Infrastructure.Features.Follows.Helpers.Includes;
 
@@ -18,11 +16,11 @@ public class FollowFollowingIncludeProperty : IFollowIncludeProperty
     public IAggregateFluent<Follow> Include(IAggregateFluent<Follow> pipeline)
     {
         return pipeline
-            .Lookup<Follow, User, Follow>(
+            .IncludeOne(
                 _followsContext.Users,
-                p => p.FollowingId,
+                p => p.Id.FollowingId,
                 u => u.Id,
-                p => p.Following
+                p => p.Following!
             );
     }
 }

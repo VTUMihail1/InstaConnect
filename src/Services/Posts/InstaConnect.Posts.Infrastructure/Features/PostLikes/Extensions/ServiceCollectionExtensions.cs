@@ -13,11 +13,20 @@ internal static class ServiceCollectionExtensions
 
         BsonClassMap.TryRegisterClassMap<PostLike>(cm =>
         {
-            cm.AutoMap();
-
             cm.MapIdMember(c => c.Id);
 
-            cm.UnmapMember(c => c.User);
+            cm.MapMember(c => c.Id);
+            cm.MapMember(c => c.CreatedAtUtc);
+
+            cm.MapMember(c => c.User);
+
+            cm.MapCreator(c => new PostLike(
+                new(
+                    new(c.Id.Id.Id),
+                    new(c.Id.UserId.Id)),
+                c.CreatedAtUtc));
+
+            cm.SetIgnoreExtraElements(true);
         });
 
         return serviceCollection;

@@ -27,16 +27,14 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentApplicationInteg
     [PostIdTooShortWithMessageData]
     [PostIdTooLongWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Assert
-        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
+        await ApplicationSender.ShouldThrowInvalidValidationExceptionForIdAsync(
+            messageTransformer, request, CancellationToken);
     }
 
     [Theory]
@@ -45,16 +43,14 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentApplicationInteg
     [PostCommentIdTooShortWithMessageData]
     [PostCommentIdTooLongWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenCommentIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Build();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var request = _requestBuilder.WithCommentId(transformer).Build();
 
         // Assert
-        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
+        await ApplicationSender.ShouldThrowInvalidValidationExceptionForCommentIdAsync(
+            messageTransformer, request, CancellationToken);
     }
 
     [Theory]
@@ -63,16 +59,14 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentApplicationInteg
     [UserIdTooShortWithMessageData]
     [UserIdTooLongWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenUserIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Assert
-        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
+        await ApplicationSender.ShouldThrowInvalidValidationExceptionForUserIdAsync(
+            messageTransformer, request, CancellationToken);
     }
 
     [Theory]
@@ -81,16 +75,14 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentApplicationInteg
     [PostCommentContentTooShortWithMessageData]
     [PostCommentContentTooLongWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenContentIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithContent(_request.Content, transformer).Build();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var request = _requestBuilder.WithContent(transformer).Build();
 
         // Assert
-        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
+        await ApplicationSender.ShouldThrowInvalidValidationExceptionForContentAsync(
+            messageTransformer, request, CancellationToken);
     }
 
     [Fact]
@@ -99,11 +91,8 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentApplicationInteg
         // Arrange
         await ServiceScope.DeletePostAsync(Post, CancellationToken);
 
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(_request, CancellationToken);
-
         // Assert
-        await action.ShouldThrowPostNotFoundExceptionAsync(_request.Id);
+        await ApplicationSender.ShouldThrowPostNotFoundExceptionAsync(_request, CancellationToken);
     }
 
     [Fact]
@@ -112,11 +101,8 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentApplicationInteg
         // Arrange
         await ServiceScope.DeletePostCommentAsync(PostComment, CancellationToken);
 
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(_request, CancellationToken);
-
         // Assert
-        await action.ShouldThrowPostCommentNotFoundExceptionAsync(_request.Id, _request.CommentId);
+        await ApplicationSender.ShouldThrowPostCommentNotFoundExceptionAsync(_request, CancellationToken);
     }
 
     [Fact]
@@ -125,13 +111,11 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentApplicationInteg
         // Arrange
         var user = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(user, CancellationToken);
-        var request = _requestBuilder.WithUserId(user.Id).Build();
 
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var request = _requestBuilder.WithUserId(user).Build();
 
         // Assert
-        await action.ShouldThrowPostCommentForbiddenExceptionAsync(request.Id, request.CommentId, request.UserId);
+        await ApplicationSender.ShouldThrowPostCommentForbiddenExceptionAsync(request, CancellationToken);
     }
 
     [Fact]
@@ -139,7 +123,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentApplicationInteg
     {
         // Act
         var response = await ApplicationSender.SendAsync(_request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Id, response.CommentId, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(postComment);
@@ -151,11 +135,11 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentApplicationInteg
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(PostComment.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Id, response.CommentId, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(postComment);
@@ -167,11 +151,11 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentApplicationInteg
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(PostComment.CommentId, transformer).Build();
+        var request = _requestBuilder.WithCommentId(transformer).Build();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Id, response.CommentId, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(postComment);
@@ -183,11 +167,11 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentApplicationInteg
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(User.Id, transformer).Build();
+        var request = _requestBuilder.WithUserId(User, transformer).Build();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Id, response.CommentId, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(postComment);
@@ -198,7 +182,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentApplicationInteg
     {
         // Act
         var response = await ApplicationSender.SendAsync(_request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Id, response.CommentId, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
 
         // Assert
         postComment.ShouldSatisfy(_request);
@@ -210,11 +194,11 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentApplicationInteg
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(PostComment.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Id, response.CommentId, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
 
         // Assert
         postComment.ShouldSatisfy(_request);
@@ -226,11 +210,11 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentApplicationInteg
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(PostComment.CommentId, transformer).Build();
+        var request = _requestBuilder.WithCommentId(transformer).Build();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Id, response.CommentId, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
 
         // Assert
         postComment.ShouldSatisfy(_request);
@@ -242,11 +226,11 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentApplicationInteg
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(User.Id, transformer).Build();
+        var request = _requestBuilder.WithUserId(User, transformer).Build();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Id, response.CommentId, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
 
         // Assert
         postComment.ShouldSatisfy(_request);
@@ -257,11 +241,10 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentApplicationInteg
     {
         // Act
         var response = await ApplicationSender.SendAsync(_request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Id, response.CommentId, CancellationToken);
-        var hasPublished = await EventHarness.HasPublishPostCommentUpdatedEventAsync(postComment, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
 
         // Assert
-        hasPublished.ShouldBeTrue();
+        await EventHarness.ShouldHavePublishedUpdatedAsync(postComment, CancellationToken);
     }
 
     [Theory]
@@ -270,15 +253,14 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentApplicationInteg
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(PostComment.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Id, response.CommentId, CancellationToken);
-        var hasPublished = await EventHarness.HasPublishPostCommentUpdatedEventAsync(postComment, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
 
         // Assert
-        hasPublished.ShouldBeTrue();
+        await EventHarness.ShouldHavePublishedUpdatedAsync(postComment, CancellationToken);
     }
 
     [Theory]
@@ -287,15 +269,14 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentApplicationInteg
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(PostComment.CommentId, transformer).Build();
+        var request = _requestBuilder.WithCommentId(transformer).Build();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Id, response.CommentId, CancellationToken);
-        var hasPublished = await EventHarness.HasPublishPostCommentUpdatedEventAsync(postComment, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
 
         // Assert
-        hasPublished.ShouldBeTrue();
+        await EventHarness.ShouldHavePublishedUpdatedAsync(postComment, CancellationToken);
     }
 
     [Theory]
@@ -304,14 +285,13 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentApplicationInteg
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(User.Id, transformer).Build();
+        var request = _requestBuilder.WithUserId(User, transformer).Build();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Id, response.CommentId, CancellationToken);
-        var hasPublished = await EventHarness.HasPublishPostCommentUpdatedEventAsync(postComment, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
 
         // Assert
-        hasPublished.ShouldBeTrue();
+        await EventHarness.ShouldHavePublishedUpdatedAsync(postComment, CancellationToken);
     }
 }

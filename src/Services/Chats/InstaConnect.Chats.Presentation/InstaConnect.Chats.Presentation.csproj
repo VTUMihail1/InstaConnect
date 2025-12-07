@@ -40,14 +40,12 @@
   <ItemGroup Label="Users">
     <Using Include="InstaConnect.Identity.Events.Features.Users" />
     <Using Include="InstaConnect.Chats.Application.Features.Users.Models" />
-    <Using Include="InstaConnect.Chats.Presentation.Features.Users.Models.Payloads" />
     <Using Include="InstaConnect.Chats.Presentation.Features.Users.Models.Responses" />
   </ItemGroup>
 
   <ItemGroup Label="Chats">
     <Using Include="InstaConnect.Chats.Application.Features.Chats.Models" />
     <Using Include="InstaConnect.Chats.Presentation.Features.Chats.Utilities" />
-    <Using Include="InstaConnect.Chats.Presentation.Features.Chats.Models.Payloads" />
     <Using Include="InstaConnect.Chats.Presentation.Features.Chats.Models.Requests" />
     <Using Include="InstaConnect.Chats.Presentation.Features.Chats.Models.Responses" />
   </ItemGroup>
@@ -55,7 +53,6 @@
   <ItemGroup Label="ChatMessages">
     <Using Include="InstaConnect.Chats.Application.Features.ChatMessages.Models" />
     <Using Include="InstaConnect.Chats.Presentation.Features.ChatMessages.Utilities" />
-    <Using Include="InstaConnect.Chats.Presentation.Features.ChatMessages.Models.Payloads" />
     <Using Include="InstaConnect.Chats.Presentation.Features.ChatMessages.Models.Requests" />
     <Using Include="InstaConnect.Chats.Presentation.Features.ChatMessages.Models.Responses" />
   </ItemGroup>

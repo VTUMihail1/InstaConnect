@@ -7,20 +7,34 @@ public class AddPostLikeApiRequestBuilder
 
     public AddPostLikeApiRequestBuilder(Post post, User user)
     {
-        _id = post.Id;
-        _userId = user.Id;
+        _id = post.Id.Id;
+        _userId = user.Id.Id;
     }
 
-    public AddPostLikeApiRequestBuilder WithId(string id, IStringTransformer? transformer = null)
+    public AddPostLikeApiRequestBuilder WithId(Post post, IStringTransformer? transformer = null)
     {
-        _id = transformer.TryTransform(id);
+        _id = transformer.TryTransform(post.Id.Id);
 
         return this;
     }
 
-    public AddPostLikeApiRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)
+    public AddPostLikeApiRequestBuilder WithId(IStringTransformer transformer)
     {
-        _userId = transformer.TryTransform(userId);
+        _id = transformer.Transform(_id);
+
+        return this;
+    }
+
+    public AddPostLikeApiRequestBuilder WithUserId(User user, IStringTransformer? transformer = null)
+    {
+        _userId = transformer.TryTransform(user.Id.Id);
+
+        return this;
+    }
+
+    public AddPostLikeApiRequestBuilder WithUserId(IStringTransformer transformer)
+    {
+        _userId = transformer.Transform(_userId);
 
         return this;
     }

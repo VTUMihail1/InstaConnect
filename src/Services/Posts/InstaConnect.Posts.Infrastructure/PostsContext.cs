@@ -1,9 +1,4 @@
 ﻿using InstaConnect.Common.Infrastructure;
-using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.ValueObjects;
-using InstaConnect.Posts.Domain.Features.PostComments.Models.ValueObjects;
-using InstaConnect.Posts.Domain.Features.PostLikes.Models.ValueObjects;
-using InstaConnect.Posts.Domain.Features.Posts.Models.ValueObjects;
-using InstaConnect.Posts.Domain.Features.Users.Models.ValueObjects;
 using InstaConnect.Posts.Infrastructure.Utilities;
 
 using MongoDB.Driver;

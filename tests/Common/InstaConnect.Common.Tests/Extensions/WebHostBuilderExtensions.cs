@@ -6,7 +6,7 @@ public static class WebHostBuilderExtensions
 {
     public static void UpdateDatabaseConnectionString(this IWebHostBuilder webHostBuilder, string connectionString)
     {
-        const string DatabaseConnectionStringKey = "DatabaseOptions:ConnectionString";
+        const string DatabaseConnectionStringKey = "MongoDatabaseOptions:ConnectionString";
 
         webHostBuilder.UseSetting(
             DatabaseConnectionStringKey,

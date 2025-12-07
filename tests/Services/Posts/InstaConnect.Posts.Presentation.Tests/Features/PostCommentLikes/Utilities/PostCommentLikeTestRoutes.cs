@@ -3,7 +3,7 @@ public static class PostCommentLikeTestRoutes
 {
     public static string GetDefault(string id, string commentId)
     {
-        const string Format = "api/v1/posts/{0}/comments{1}/likes";
+        const string Format = "api/v1/posts/{0}/comments/{1}/likes";
         var route = Format.FormatCurrentCulture(id, commentId);
 
         return route;
@@ -11,14 +11,14 @@ public static class PostCommentLikeTestRoutes
 
     public static string GetAll(GetAllPostCommentLikesApiRequest request)
     {
-        const string Format = "{0}?&userId={1}&userName={2}&sortOrder={3}&sortProperty={4}&page={5}&pageSize={6}";
+        const string Format = "{0}?userName={1}&sortOrder={2}&sortProperty={3}&page={4}&pageSize={5}";
         var route = Format.FormatCurrentCulture(
-            GetDefault(request.Filter.Id, request.Filter.CommentId),
-            request.Filter.UserName,
-            request.Sorting.Order,
-            request.Sorting.Property,
-            request.Pagination.Page,
-            request.Pagination.PageSize);
+            GetDefault(request.Id, request.CommentId),
+            request.UserName,
+            request.SortOrder,
+            request.SortProperty,
+            request.Page,
+            request.PageSize);
 
         return route;
     }

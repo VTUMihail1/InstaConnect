@@ -3,40 +3,42 @@ public static class PostCommentMatcher
 {
     public static GetAllPostCommentsQuery IsGetAllPostCommentsQuery(GetAllPostCommentsQueryRequest request)
     {
-        return Matcher.Is<GetAllPostCommentsQuery>(p => p.Filter.Id == request.Filter.Id &&
-                                                        p.Filter.UserId == request.Filter.UserId &&
-                                                        p.Filter.UserName == request.Filter.UserName &&
-                                                        p.Pagination.Page == request.Pagination.Page &&
-                                                        p.Pagination.PageSize == request.Pagination.PageSize &&
-                                                        p.Sorting.Order == request.Sorting.Order &&
-                                                        p.Sorting.Property == request.Sorting.Property);
+        return Matcher.Is<GetAllPostCommentsQuery>(p => p.Filter.Id.Id == request.Id &&
+                                                        p.Filter.UserId.Id == request.UserId &&
+                                                        p.Filter.UserName.Value == request.UserName &&
+                                                        p.Pagination.Page == request.Page &&
+                                                        p.Pagination.PageSize == request.PageSize &&
+                                                        p.Sorting.Order == request.SortOrder &&
+                                                        p.Sorting.Property == request.SortProperty &&
+                                                        p.Include!.Properties.All(a => a == PostCommentIncludeProperty.User));
     }
 
     public static GetPostCommentByIdQuery IsGetPostCommentByIdQuery(GetPostCommentByIdQueryRequest request)
     {
-        return Matcher.Is<GetPostCommentByIdQuery>(p => p.Id == request.Id &&
-                                                        p.CommentId == request.CommentId);
+        return Matcher.Is<GetPostCommentByIdQuery>(p => p.Id.Id.Id == request.Id &&
+                                                        p.Id.CommentId == request.CommentId &&
+                                                        p.Include!.Properties.All(a => a == PostCommentIncludeProperty.User));
     }
 
     public static AddPostCommentCommand IsAddPostCommentCommand(AddPostCommentCommandRequest request)
     {
-        return Matcher.Is<AddPostCommentCommand>(p => p.Id == request.Id &&
+        return Matcher.Is<AddPostCommentCommand>(p => p.Id.Id == request.Id &&
                                                       p.Content == request.Content &&
-                                                      p.UserId == request.UserId);
+                                                      p.UserId.Id == request.UserId);
     }
 
     public static UpdatePostCommentCommand IsUpdatePostCommentCommand(UpdatePostCommentCommandRequest request)
     {
-        return Matcher.Is<UpdatePostCommentCommand>(p => p.Id == request.Id &&
-                                                         p.CommentId == request.CommentId &&
+        return Matcher.Is<UpdatePostCommentCommand>(p => p.Id.Id.Id == request.Id &&
+                                                         p.Id.CommentId == request.CommentId &&
                                                          p.Content == request.Content &&
-                                                         p.UserId == request.UserId);
+                                                         p.UserId.Id == request.UserId);
     }
 
     public static DeletePostCommentCommand IsDeletePostCommentCommand(DeletePostCommentCommandRequest request)
     {
-        return Matcher.Is<DeletePostCommentCommand>(p => p.Id == request.Id &&
-                                                         p.CommentId == request.CommentId &&
-                                                         p.UserId == request.UserId);
+        return Matcher.Is<DeletePostCommentCommand>(p => p.Id.Id.Id == request.Id &&
+                                                         p.Id.CommentId == request.CommentId &&
+                                                         p.UserId.Id == request.UserId);
     }
 }

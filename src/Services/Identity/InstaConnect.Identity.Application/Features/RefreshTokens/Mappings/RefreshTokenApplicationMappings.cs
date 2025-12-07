@@ -1,9 +1,6 @@
-﻿using InstaConnect.Common.Domain.Models.ValueObjects;
-using InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Delete;
+﻿using InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Delete;
 using InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Issue;
 using InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Rotate;
-using InstaConnect.Identity.Domain.Features.RefreshTokens.Models.ValueObjects;
-using InstaConnect.Identity.Domain.Features.Users.Models.ValueObjects;
 
 using Mapster;
 
@@ -16,39 +13,37 @@ public class RefreshTokenApplicationMappings : IRegister
 
         config.NewConfig<IssueRefreshTokenCommandRequest, IssueRefreshTokenCommand>()
             .ConstructUsing(src => new(
-                src.Name.Adapt<Name>(),
+                new(src.Name),
                 src.Password));
 
         config.NewConfig<SessionToken, IssueRefreshTokenCommandResponse>()
-            .ConstructUsing(src => new(
-                src.RefreshToken.Adapt<RefreshTokenCommandResponse>(),
-                src.AccessToken.Adapt<AccessTokenCommandResponse>()));
+            .ConstructUsing(src => new(src.Adapt<RefreshTokenCommandResponse>(config)));
 
         config.NewConfig<RotateRefreshTokenCommandRequest, RotateRefreshTokenCommand>()
-            .ConstructUsing(src => new(src.Id.Adapt<RefreshTokenId>()));
+            .ConstructUsing(src => new(
+                                       new(
+                                           new(src.Id),
+                                           src.Value)));
 
         config.NewConfig<SessionToken, RotateRefreshTokenCommandResponse>()
-            .ConstructUsing(src => new(
-                src.RefreshToken.Adapt<RefreshTokenCommandResponse>(),
-                src.AccessToken.Adapt<AccessTokenCommandResponse>()));
+            .ConstructUsing(src => new(src.Adapt<RefreshTokenCommandResponse>(config)));
 
         config.NewConfig<DeleteCurrentRefreshTokenCommandRequest, DeleteRefreshTokenCommand>()
-            .ConstructUsing(src => new(src.Id.Adapt<RefreshTokenId>()));
-
-        config.NewConfig<RefreshTokenId, RefreshTokenIdPayload>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<UserIdPayload>(),
+                                       new(
+                                           new(src.Id),
+                                           src.Value)));
+
+        config.NewConfig<RefreshTokenId, RefreshTokenIdCommandResponse>()
+            .ConstructUsing(src => new(
+                src.Id.Id,
                 src.Value));
 
-        config.NewConfig<RefreshTokenIdPayload, RefreshTokenId>()
+        config.NewConfig<SessionToken, RefreshTokenCommandResponse>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<UserId>(),
-                src.Value));
-
-        config.NewConfig<RefreshToken, RefreshTokenCommandResponse>()
-            .ConstructUsing(src => new(
-                src.Id.Adapt<RefreshTokenIdPayload>(),
-                src.ExpiresAtUtc));
+                src.RefreshToken.Id.Adapt<RefreshTokenIdCommandResponse>(config),
+                src.AccessToken.Adapt<AccessTokenCommandResponse>(config),
+                src.RefreshToken.ExpiresAtUtc));
 
         config.NewConfig<AccessToken, AccessTokenCommandResponse>()
             .ConstructUsing(src => new(

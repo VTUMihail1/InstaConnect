@@ -14,8 +14,8 @@ public class GetAllPostsApiRequestBuilder
 
     public GetAllPostsApiRequestBuilder(Post post, User user)
     {
-        _userId = user.Id;
-        _userName = user.Name;
+        _userId = user.Id.Id;
+        _userName = user.Name.Value;
         _title = post.Title;
         _page = PostDataFaker.GetPage();
         _pageSize = PostDataFaker.GetPageSize();
@@ -23,61 +23,57 @@ public class GetAllPostsApiRequestBuilder
         _sortProperty = PostDataFaker.GetSortProperty();
     }
 
-    public GetAllPostsApiRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)
+    public GetAllPostsApiRequestBuilder WithUserId(IStringTransformer transformer)
     {
-        _userId = transformer.TryTransform(userId);
+        _userId = transformer.Transform(_userId);
 
         return this;
     }
 
-    public GetAllPostsApiRequestBuilder WithUserName(string userName, IStringTransformer? transformer = null)
+    public GetAllPostsApiRequestBuilder WithUserName(IStringTransformer transformer)
     {
-        _userName = transformer.TryTransform(userName);
+        _userName = transformer.Transform(_userName);
 
         return this;
     }
 
-    public GetAllPostsApiRequestBuilder WithTitle(string title, IStringTransformer? transformer = null)
+    public GetAllPostsApiRequestBuilder WithTitle(IStringTransformer transformer)
     {
-        _title = transformer.TryTransform(title);
+        _title = transformer.Transform(_title);
 
         return this;
     }
 
-    public GetAllPostsApiRequestBuilder WithPage(int page, IIntTransformer? transformer = null)
+    public GetAllPostsApiRequestBuilder WithPage(IIntTransformer transformer)
     {
-        _page = transformer.TryTransform(page);
+        _page = transformer.Transform(_page);
 
         return this;
     }
 
-    public GetAllPostsApiRequestBuilder WithPageSize(int pageSize, IIntTransformer? transformer = null)
+    public GetAllPostsApiRequestBuilder WithPageSize(IIntTransformer transformer)
     {
-        _pageSize = transformer.TryTransform(pageSize);
+        _pageSize = transformer.Transform(_pageSize);
 
         return this;
     }
 
-    public GetAllPostsApiRequestBuilder WithSortOrder(CommonSortOrder order, IEnumTransformer<CommonSortOrder>? transformer = null)
+    public GetAllPostsApiRequestBuilder WithSortOrder(IEnumTransformer<CommonSortOrder> transformer)
     {
-        _sortOrder = transformer.TryTransform(order);
+        _sortOrder = transformer.Transform(_sortOrder);
 
         return this;
     }
 
-    public GetAllPostsApiRequestBuilder WithSortProperty(PostSortProperty property, IEnumTransformer<PostSortProperty>? transformer = null)
+    public GetAllPostsApiRequestBuilder WithSortProperty(IEnumTransformer<PostSortProperty> transformer)
     {
-        _sortProperty = transformer.TryTransform(property);
+        _sortProperty = transformer.Transform(_sortProperty);
 
         return this;
     }
 
     public GetAllPostsApiRequest Build()
     {
-        return new(
-            new(_userId, _userName, _title),
-            new(_sortOrder, _sortProperty),
-            new(_page, _pageSize)
-        );
+        return new(_userId, _userName, _title, _sortOrder, _sortProperty, _page, _pageSize);
     }
 }

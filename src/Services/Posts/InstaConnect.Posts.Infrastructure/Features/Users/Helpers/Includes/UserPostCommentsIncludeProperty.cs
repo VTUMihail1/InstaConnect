@@ -16,7 +16,7 @@ public class UserPostCommentsIncludeProperty : IUserIncludeProperty
     public IAggregateFluent<User> Include(IAggregateFluent<User> pipeline)
     {
         return pipeline
-            .Lookup<User, PostComment, User>(
+            .IncludeMany(
                 _postsContext.PostComments,
                 p => p.Id,
                 l => l.UserId,

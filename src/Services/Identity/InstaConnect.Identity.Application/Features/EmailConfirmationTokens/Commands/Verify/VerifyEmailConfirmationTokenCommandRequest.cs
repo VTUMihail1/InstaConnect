@@ -1,5 +1,3 @@
-﻿using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Models;
+﻿namespace InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Verify;
 
-namespace InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Verify;
-
-public record VerifyEmailConfirmationTokenCommandRequest(EmailConfirmationTokenIdPayload Id) : ICommandRequest;
+public record VerifyEmailConfirmationTokenCommandRequest(string Id, string Value) : ICommandRequest;

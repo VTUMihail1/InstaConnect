@@ -1,12 +1,10 @@
-﻿using InstaConnect.Posts.Tests.Features.Users.Utilities;
-
-namespace InstaConnect.Posts.Tests.Features.Users.DataAttributes.FirstName;
+﻿namespace InstaConnect.Posts.Tests.Features.Users.DataAttributes.FirstName;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-public sealed class UserFirstNameTooShortWithMessageDataAttribute : LengthStringWithMessageDataAttribute
+public sealed class UserFirstNameTooShortWithMessageDataAttribute : TooShortStringWithMessageDataAttribute
 {
     public UserFirstNameTooShortWithMessageDataAttribute()
-        : base(UserOutOfBoundsUtilities.FirstNameTooShort, UserErrorMessages.GetFirstNameTooShort(UserOutOfBoundsUtilities.FirstNameTooShort))
+        : base(UserConfigurations.FirstNameMinLength)
     {
     }
 }

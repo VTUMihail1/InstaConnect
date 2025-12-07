@@ -20,9 +20,9 @@ public abstract class BasePostCommentWebTest : BasePostCommentTest, IClassFixtur
 
     public async Task InitializeAsync()
     {
+        await EventHarness.StartAsync(CancellationToken);
         await ServiceScope.ResetPostCommentDatabase(CancellationToken);
         await OnInitializeAsync();
-        await EventHarness.StartAsync(CancellationToken);
     }
 
     public async Task DisposeAsync()

@@ -4,12 +4,12 @@ public class GetFollowByIdQueryRequestValidator : AbstractValidator<GetFollowByI
 {
     public GetFollowByIdQueryRequestValidator()
     {
-        RuleFor(r => r.Id.FollowerId.Id)
+        RuleFor(r => r.FollowerId)
             .NotEmptyWithMessage()
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();
 
-        RuleFor(r => r.Id.FollowingId.Id)
+        RuleFor(r => r.FollowingId)
             .NotEmptyWithMessage()
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();

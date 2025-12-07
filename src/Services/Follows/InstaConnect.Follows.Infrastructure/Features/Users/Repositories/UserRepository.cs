@@ -1,21 +1,18 @@
-﻿using InstaConnect.Common.Domain.Models.ValueObjects;
-using InstaConnect.Follows.Infrastructure.Abstractions;
-
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 
 namespace InstaConnect.Follows.Infrastructure.Features.Users.Repositories;
 
 internal class UserRepository : IUserRepository
 {
     private readonly IFollowsContext _followsContext;
-    private readonly IUserIncludePropertyFactory _followIncludePropertyFactory;
+    private readonly IUserIncludePropertyFactory _userIncludePropertyFactory;
 
     public UserRepository(
         IFollowsContext followsContext,
-        IUserIncludePropertyFactory followIncludePropertyFactory)
+        IUserIncludePropertyFactory userIncludePropertyFactory)
     {
         _followsContext = followsContext;
-        _followIncludePropertyFactory = followIncludePropertyFactory;
+        _userIncludePropertyFactory = userIncludePropertyFactory;
     }
 
     public async Task<User?> GetByIdAsync(
@@ -23,13 +20,16 @@ internal class UserRepository : IUserRepository
         UserIncludeQuery? include,
         CancellationToken cancellationToken)
     {
-        var includeProperties = _followIncludePropertyFactory.Create(include?.Properties);
+        var match = Builders<User>.Filter.Empty
+            .AndEqualsCaseInsensitive(p => p.Id.Id, id.Id);
+
+        var includeProperties = _userIncludePropertyFactory.Create(include?.Properties);
 
         var entity = await _followsContext
             .Users
             .Aggregate()
             .Includes(includeProperties)
-            .Match(p => p.Id == id)
+            .Match(match)
             .FirstOrDefaultAsync(cancellationToken);
 
         return entity;
@@ -47,13 +47,16 @@ internal class UserRepository : IUserRepository
         UserIncludeQuery? include,
         CancellationToken cancellationToken)
     {
-        var includeProperties = _followIncludePropertyFactory.Create(include?.Properties);
+        var match = Builders<User>.Filter.Empty
+            .AndEqualsCaseInsensitive(p => p.Name.Value, name.Value);
+
+        var includeProperties = _userIncludePropertyFactory.Create(include?.Properties);
 
         var entity = await _followsContext
             .Users
             .Aggregate()
             .Includes(includeProperties)
-            .Match(p => p.Name == name)
+            .Match(match)
             .FirstOrDefaultAsync(cancellationToken);
 
         return entity;
@@ -71,13 +74,16 @@ internal class UserRepository : IUserRepository
         UserIncludeQuery? include,
         CancellationToken cancellationToken)
     {
-        var includeProperties = _followIncludePropertyFactory.Create(include?.Properties);
+        var match = Builders<User>.Filter.Empty
+            .AndEqualsCaseInsensitive(p => p.Email.Value, email.Value);
+
+        var includeProperties = _userIncludePropertyFactory.Create(include?.Properties);
 
         var entity = await _followsContext
             .Users
             .Aggregate()
             .Includes(includeProperties)
-            .Match(p => p.Email == email)
+            .Match(match)
             .FirstOrDefaultAsync(cancellationToken);
 
         return entity;
@@ -99,15 +105,21 @@ internal class UserRepository : IUserRepository
 
     public async Task UpdateAsync(User entity, CancellationToken cancellationToken)
     {
+        var match = Builders<User>.Filter.Empty
+            .AndEqualsCaseInsensitive(p => p.Id.Id, entity.Id.Id);
+
         await _followsContext
             .Users
-            .UpdateAsync(_followsContext.ClientSessionHandle, x => x.Id == entity.Id, entity, cancellationToken);
+            .UpdateAsync(_followsContext.ClientSessionHandle, match, entity, cancellationToken);
     }
 
     public async Task DeleteAsync(User entity, CancellationToken cancellationToken)
     {
+        var match = Builders<User>.Filter.Empty
+            .AndEqualsCaseInsensitive(p => p.Id.Id, entity.Id.Id);
+
         await _followsContext
             .Users
-            .DeleteAsync(_followsContext.ClientSessionHandle, x => x.Id == entity.Id, cancellationToken);
+            .DeleteAsync(_followsContext.ClientSessionHandle, match, cancellationToken);
     }
 }

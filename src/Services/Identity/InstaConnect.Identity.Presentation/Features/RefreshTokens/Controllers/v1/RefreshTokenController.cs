@@ -34,8 +34,8 @@ public class RefreshTokenController : ControllerBase
         var commandRequest = _applicationMapper.Map<IssueRefreshTokenCommandRequest>(request);
         var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
 
-        _cookieStore.SetHttpOnly(RefreshTokenCookieKeys.Id, commandResponse.RefreshToken.Id.Id.Id, commandResponse.RefreshToken.ExpiresAt);
-        _cookieStore.SetHttpOnly(RefreshTokenCookieKeys.Value, commandResponse.RefreshToken.Id.Value, commandResponse.RefreshToken.ExpiresAt);
+        _cookieStore.SetHttpOnly(RefreshTokenCookieKeys.Id, commandResponse.Response.Id.Id, commandResponse.Response.ExpiresAt);
+        _cookieStore.SetHttpOnly(RefreshTokenCookieKeys.Value, commandResponse.Response.Id.Value, commandResponse.Response.ExpiresAt);
 
         var response = _applicationMapper.Map<IssueRefreshTokenApiResponse>(commandResponse);
 
@@ -53,8 +53,8 @@ public class RefreshTokenController : ControllerBase
         var commandRequest = _applicationMapper.Map<RotateRefreshTokenCommandRequest>(request);
         var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
 
-        _cookieStore.SetHttpOnly(RefreshTokenCookieKeys.Id, commandResponse.RefreshToken.Id.Id.Id, commandResponse.RefreshToken.ExpiresAt);
-        _cookieStore.SetHttpOnly(RefreshTokenCookieKeys.Value, commandResponse.RefreshToken.Id.Value, commandResponse.RefreshToken.ExpiresAt);
+        _cookieStore.SetHttpOnly(RefreshTokenCookieKeys.Id, commandResponse.Response.Id.Id, commandResponse.Response.ExpiresAt);
+        _cookieStore.SetHttpOnly(RefreshTokenCookieKeys.Value, commandResponse.Response.Id.Value, commandResponse.Response.ExpiresAt);
 
         var response = _applicationMapper.Map<RotateRefreshTokenApiResponse>(commandResponse);
 

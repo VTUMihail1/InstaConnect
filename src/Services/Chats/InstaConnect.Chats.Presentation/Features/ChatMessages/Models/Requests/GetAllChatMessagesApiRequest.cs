@@ -8,7 +8,7 @@ namespace InstaConnect.Chats.Presentation.Features.ChatMessages.Models.Requests;
 public record GetAllChatMessagesApiRequest(
     [FromClaim(ClaimTypes.NameIdentifier)] string ParticipantOneId,
     [FromRoute] string ParticipantTwoId,
-    [FromClaim(ClaimTypes.NameIdentifier)] string SenderId,
+    [FromClaim(ClaimTypes.NameIdentifier)] string UserId,
     [FromQuery] CommonSortOrder SortOrder = CommonDefaultValues.SortOrder,
     [FromQuery] ChatMessageSortProperty SortProperty = ChatMessageDefaultValues.SortProperty,
     [FromQuery] int Page = ChatMessageDefaultValues.Page,

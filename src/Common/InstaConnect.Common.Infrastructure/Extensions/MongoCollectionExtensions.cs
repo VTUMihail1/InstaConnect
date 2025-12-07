@@ -1,8 +1,4 @@
-﻿using System.Linq.Expressions;
-
-using InstaConnect.Common.Domain.Abstractions;
-
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 
 namespace InstaConnect.Common.Infrastructure.Extensions;
 
@@ -28,7 +24,7 @@ public static class MongoCollectionExtensions
     public static async Task UpdateAsync<T>(
         this IMongoCollection<T> collection,
         IClientSessionHandle? session,
-        Expression<Func<T, bool>> filter,
+        FilterDefinition<T> filter,
         T entity,
         CancellationToken cancellationToken)
     {
@@ -48,7 +44,7 @@ public static class MongoCollectionExtensions
     public static async Task DeleteAsync<T>(
         this IMongoCollection<T> collection,
         IClientSessionHandle? session,
-        Expression<Func<T, bool>> filter,
+        FilterDefinition<T> filter,
         CancellationToken cancellationToken)
     {
         if (session.IsNotInTransaction())
@@ -64,7 +60,7 @@ public static class MongoCollectionExtensions
     public static async Task DeleteRangeAsync<T>(
         this IMongoCollection<T> collection,
         IClientSessionHandle? session,
-        Expression<Func<T, bool>> filter,
+        FilterDefinition<T> filter,
         CancellationToken cancellationToken)
     {
         if (session.IsNotInTransaction())

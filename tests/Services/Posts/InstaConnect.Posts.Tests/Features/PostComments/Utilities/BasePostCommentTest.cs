@@ -1,5 +1,5 @@
 ﻿namespace InstaConnect.Posts.Tests.Features.PostComments.Utilities;
-public abstract class BasePostCommentTest
+public abstract class BasePostCommentTest : BaseTest
 {
     protected UserBuilderFactory UserBuilderFactory { get; }
     protected UserBuilder UserBuilder { get; }

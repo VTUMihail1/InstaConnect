@@ -3,17 +3,17 @@ public class AddPostCommentLikeCommandRequestValidator : AbstractValidator<AddPo
 {
     public AddPostCommentLikeCommandRequestValidator()
     {
-        RuleFor(r => r.Id.Id.Id)
+        RuleFor(r => r.Id)
             .NotEmptyWithMessage()
             .PostIdMinLengthWithMessage()
             .PostIdMaxLengthWithMessage();
 
-        RuleFor(r => r.Id.CommentId)
+        RuleFor(r => r.CommentId)
             .NotEmptyWithMessage()
             .PostCommentIdMinLengthWithMessage()
             .PostCommentIdMaxLengthWithMessage();
 
-        RuleFor(r => r.UserId.Id)
+        RuleFor(r => r.UserId)
             .NotEmptyWithMessage()
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();

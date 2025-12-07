@@ -27,16 +27,14 @@ public class DeletePostCommentIntegrationTests : BasePostCommentApplicationInteg
     [PostIdTooShortWithMessageData]
     [PostIdTooLongWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Assert
-        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
+        await ApplicationSender.ShouldThrowInvalidValidationExceptionForIdAsync(
+            messageTransformer, request, CancellationToken);
     }
 
     [Theory]
@@ -45,16 +43,14 @@ public class DeletePostCommentIntegrationTests : BasePostCommentApplicationInteg
     [PostCommentIdTooShortWithMessageData]
     [PostCommentIdTooLongWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenCommentIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Build();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var request = _requestBuilder.WithCommentId(transformer).Build();
 
         // Assert
-        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
+        await ApplicationSender.ShouldThrowInvalidValidationExceptionForCommentIdAsync(
+            messageTransformer, request, CancellationToken);
     }
 
     [Theory]
@@ -63,16 +59,14 @@ public class DeletePostCommentIntegrationTests : BasePostCommentApplicationInteg
     [UserIdTooShortWithMessageData]
     [UserIdTooLongWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenUserIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Assert
-        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
+        await ApplicationSender.ShouldThrowInvalidValidationExceptionForUserIdAsync(
+            messageTransformer, request, CancellationToken);
     }
 
     [Fact]
@@ -81,11 +75,8 @@ public class DeletePostCommentIntegrationTests : BasePostCommentApplicationInteg
         // Arrange
         await ServiceScope.DeletePostAsync(Post, CancellationToken);
 
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(_request, CancellationToken);
-
         // Assert
-        await action.ShouldThrowPostNotFoundExceptionAsync(_request.Id);
+        await ApplicationSender.ShouldThrowPostNotFoundExceptionAsync(_request, CancellationToken);
     }
 
     [Fact]
@@ -94,11 +85,8 @@ public class DeletePostCommentIntegrationTests : BasePostCommentApplicationInteg
         // Arrange
         await ServiceScope.DeletePostCommentAsync(PostComment, CancellationToken);
 
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(_request, CancellationToken);
-
         // Assert
-        await action.ShouldThrowPostCommentNotFoundExceptionAsync(_request.Id, _request.CommentId);
+        await ApplicationSender.ShouldThrowPostCommentNotFoundExceptionAsync(_request, CancellationToken);
     }
 
     [Fact]
@@ -107,13 +95,10 @@ public class DeletePostCommentIntegrationTests : BasePostCommentApplicationInteg
         // Arrange
         var user = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(user, CancellationToken);
-        var request = _requestBuilder.WithUserId(user.Id).Build();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var request = _requestBuilder.WithUserId(user).Build();
 
         // Assert
-        await action.ShouldThrowPostCommentForbiddenExceptionAsync(request.Id, request.CommentId, request.UserId);
+        await ApplicationSender.ShouldThrowPostCommentForbiddenExceptionAsync(request, CancellationToken);
     }
 
     [Fact]
@@ -121,7 +106,7 @@ public class DeletePostCommentIntegrationTests : BasePostCommentApplicationInteg
     {
         // Act
         await ApplicationSender.SendAsync(_request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(_request.Id, _request.CommentId, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(PostComment.Id, CancellationToken);
 
         // Assert
         postComment.ShouldBeNull();
@@ -133,11 +118,11 @@ public class DeletePostCommentIntegrationTests : BasePostCommentApplicationInteg
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         await ApplicationSender.SendAsync(request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(request.Id, request.CommentId, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(PostComment.Id, CancellationToken);
 
         // Assert
         postComment.ShouldBeNull();
@@ -149,11 +134,11 @@ public class DeletePostCommentIntegrationTests : BasePostCommentApplicationInteg
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Build();
+        var request = _requestBuilder.WithCommentId(transformer).Build();
 
         // Act
         await ApplicationSender.SendAsync(request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(request.Id, request.CommentId, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(PostComment.Id, CancellationToken);
 
         // Assert
         postComment.ShouldBeNull();
@@ -165,11 +150,11 @@ public class DeletePostCommentIntegrationTests : BasePostCommentApplicationInteg
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         await ApplicationSender.SendAsync(request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(request.Id, request.CommentId, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(PostComment.Id, CancellationToken);
 
         // Assert
         postComment.ShouldBeNull();
@@ -180,10 +165,9 @@ public class DeletePostCommentIntegrationTests : BasePostCommentApplicationInteg
     {
         // Act
         await ApplicationSender.SendAsync(_request, CancellationToken);
-        var hasPublshed = await EventHarness.HasPublishPostCommentDeletedEventAsync(PostComment, CancellationToken);
 
         // Assert
-        hasPublshed.ShouldBeTrue();
+        await EventHarness.ShouldHavePublishedDeletedAsync(PostComment, CancellationToken);
     }
 
     [Theory]
@@ -192,14 +176,13 @@ public class DeletePostCommentIntegrationTests : BasePostCommentApplicationInteg
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         await ApplicationSender.SendAsync(request, CancellationToken);
-        var hasPublshed = await EventHarness.HasPublishPostCommentDeletedEventAsync(PostComment, CancellationToken);
 
         // Assert
-        hasPublshed.ShouldBeTrue();
+        await EventHarness.ShouldHavePublishedDeletedAsync(PostComment, CancellationToken);
     }
 
     [Theory]
@@ -208,14 +191,13 @@ public class DeletePostCommentIntegrationTests : BasePostCommentApplicationInteg
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Build();
+        var request = _requestBuilder.WithCommentId(transformer).Build();
 
         // Act
         await ApplicationSender.SendAsync(request, CancellationToken);
-        var hasPublshed = await EventHarness.HasPublishPostCommentDeletedEventAsync(PostComment, CancellationToken);
 
         // Assert
-        hasPublshed.ShouldBeTrue();
+        await EventHarness.ShouldHavePublishedDeletedAsync(PostComment, CancellationToken);
     }
 
     [Theory]
@@ -224,13 +206,12 @@ public class DeletePostCommentIntegrationTests : BasePostCommentApplicationInteg
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         await ApplicationSender.SendAsync(request, CancellationToken);
-        var hasPublshed = await EventHarness.HasPublishPostCommentDeletedEventAsync(PostComment, CancellationToken);
 
         // Assert
-        hasPublshed.ShouldBeTrue();
+        await EventHarness.ShouldHavePublishedDeletedAsync(PostComment, CancellationToken);
     }
 }

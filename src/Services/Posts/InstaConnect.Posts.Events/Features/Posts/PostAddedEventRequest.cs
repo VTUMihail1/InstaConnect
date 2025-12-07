@@ -1,8 +1,10 @@
 ﻿namespace InstaConnect.Posts.Events.Features.Posts;
 
 public record PostAddedEventRequest(
-        PostIdEventPayload Id,
+        string Id,
         string Title,
         string Content,
-        UserIdEventPayload UserId)
+        string UserId,
+        DateTimeOffset CreatedAtUtc,
+        DateTimeOffset UpdatedAtUtc)
     : IEventRequest;

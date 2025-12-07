@@ -13,12 +13,12 @@ public static class PostLikeTestRoutes
     {
         const string Format = "{0}?userName={1}&sortOrder={2}&sortProperty={3}&page={4}&pageSize={5}";
         var route = Format.FormatCurrentCulture(
-            GetDefault(request.Filter.Id),
-            request.Filter.UserName,
-            request.Sorting.Order,
-            request.Sorting.Property,
-            request.Pagination.Page,
-            request.Pagination.PageSize);
+            GetDefault(request.Id),
+            request.UserName,
+            request.SortOrder,
+            request.SortProperty,
+            request.Page,
+            request.PageSize);
 
         return route;
     }

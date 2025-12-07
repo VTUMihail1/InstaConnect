@@ -1,9 +1,11 @@
 ﻿namespace InstaConnect.Identity.Events.Features.Users;
 public record UserAddedEventRequest(
-    UserIdEventPayload Id,
-    NameEventPayload Name,
-    EmailEventPayload Email,
+    string Id,
+    string Name,
+    string Email,
     string FirstName,
     string LastName,
-    ImageEventPayload? ProfileImage)
+    string? ProfileImageUrl,
+    DateTimeOffset CreatedAtUtc,
+    DateTimeOffset UpdatedAtUtc)
     : IEventRequest;

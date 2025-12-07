@@ -5,25 +5,27 @@ public static class PostLikeMockSetups
         this IApplicationSender applicationSender,
         GetAllPostLikesApiRequest request,
         PostLike postLike,
-        User user,
         CancellationToken cancellationToken)
     {
-
         var postLikeQueryResponse = new PostLikeQueryResponse(
-            postLike.Id,
-            new(
-                user.Id,
-                user.Name,
-                user.ProfileImage));
+            postLike.Id.Id.Id,
+                new(
+                    postLike.User!.Id.Id,
+                    postLike.User.Name.Value,
+                    postLike.User.ProfileImage?.Url),
+                postLike.CreatedAtUtc);
+
         var postLikeQueryResponses = new List<PostLikeQueryResponse>() { postLikeQueryResponse };
 
-        var response = new GetAllPostLikesQueryResponse(
+        var postLikeCollectionQueryResponse = new PostLikeCollectionQueryResponse(
             postLikeQueryResponses,
-            request.Pagination.Page,
-            request.Pagination.PageSize,
+            request.Page,
+            request.PageSize,
             postLikeQueryResponses.Count,
             false,
             false);
+
+        var response = new GetAllPostLikesQueryResponse(postLikeCollectionQueryResponse);
 
         applicationSender
             .SendAsync(PostLikeMatcher.IsGetAllPostLikesQueryRequest(request), cancellationToken)
@@ -34,16 +36,16 @@ public static class PostLikeMockSetups
         this IApplicationSender applicationSender,
         GetPostLikeByIdApiRequest request,
         PostLike postLike,
-        User user,
         CancellationToken cancellationToken)
     {
         var response = new GetPostLikeByIdQueryResponse(
             new(
-                postLike.Id,
+                postLike.Id.Id.Id,
                 new(
-                    user.Id,
-                    user.Name,
-                    user.ProfileImage)));
+                    postLike.User!.Id.Id,
+                    postLike.User.Name.Value,
+                    postLike.User.ProfileImage?.Url),
+                postLike.CreatedAtUtc));
 
         applicationSender
             .SendAsync(PostLikeMatcher.IsGetPostLikeByIdQueryRequest(request), cancellationToken)
@@ -56,7 +58,7 @@ public static class PostLikeMockSetups
         PostLike postLike,
         CancellationToken cancellationToken)
     {
-        var response = new AddPostLikeCommandResponse(postLike.Id, postLike.UserId, postLike.CreatedAtUtc, postLike.UpdatedAt);
+        var response = new AddPostLikeCommandResponse(new(postLike.Id.Id.Id, postLike.Id.UserId.Id));
 
         applicationSender
             .SendAsync(PostLikeMatcher.IsAddPostLikeCommandRequest(request), cancellationToken)

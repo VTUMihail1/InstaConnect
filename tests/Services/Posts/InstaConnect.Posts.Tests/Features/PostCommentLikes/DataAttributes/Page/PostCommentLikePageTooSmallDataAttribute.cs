@@ -1,12 +1,10 @@
-﻿using InstaConnect.Posts.Tests.Features.PostCommentLikes.Utilities;
-
-namespace InstaConnect.Posts.Tests.Features.PostCommentLikes.DataAttributes.Page;
+﻿namespace InstaConnect.Posts.Tests.Features.PostCommentLikes.DataAttributes.Page;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-public sealed class PostCommentLikePageTooSmallDataAttribute : ValueIntDataAttribute
+public sealed class PostCommentLikePageTooSmallDataAttribute : TooSmallValueIntDataAttribute
 {
     public PostCommentLikePageTooSmallDataAttribute()
-        : base(PostCommentLikeOutOfBoundsUtilities.PageTooSmall)
+        : base(PostCommentLikeConfigurations.PageMinValue)
     {
     }
 }

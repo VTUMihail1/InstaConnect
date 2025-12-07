@@ -1,12 +1,11 @@
-﻿using InstaConnect.Common.Application.Models;
-using InstaConnect.Follows.Application.Features.Users.Models;
-
-namespace InstaConnect.Follows.Application.Features.Users.Commands.Add;
+﻿namespace InstaConnect.Follows.Application.Features.Users.Commands.Add;
 
 public record AddUserCommandRequest(
-    UserIdPayload Id,
+    string Id,
     string FirstName,
     string LastName,
-    NamePayload Name,
-    EmailPayload Email,
-    ImagePayload? ProfileImage) : ICommandRequest<AddUserCommandResponse>;
+    string Name,
+    string Email,
+    string? ProfileImageUrl,
+    DateTimeOffset CreatedAtUtc,
+    DateTimeOffset UpdatedAtUtc) : ICommandRequest<AddUserCommandResponse>;

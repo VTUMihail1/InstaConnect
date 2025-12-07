@@ -1,7 +1,9 @@
 ﻿namespace InstaConnect.Chats.Presentation.Features.ChatMessages.Models.Responses;
 
 public record ChatMessageApiResponse(
-    ChatMessageIdApiPayload Id,
+    string ParticipantOneId,
+    string ParticipantTwoId,
+    string MessageId,
     string Content,
     UserApiResponse Sender,
     DateTimeOffset CreatedAtUtc,

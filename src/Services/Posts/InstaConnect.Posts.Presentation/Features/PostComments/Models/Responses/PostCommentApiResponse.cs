@@ -1,9 +1,8 @@
-﻿using InstaConnect.Posts.Presentation.Features.Users.Models.Responses;
-
-namespace InstaConnect.Posts.Presentation.Features.PostComments.Models.Responses;
+﻿namespace InstaConnect.Posts.Presentation.Features.PostComments.Models.Responses;
 
 public record PostCommentApiResponse(
-    PostCommentIdApiPayload Id,
+    string Id,
+    string CommentId,
     string Content,
     UserApiResponse User,
     DateTimeOffset CreatedAtUtc,

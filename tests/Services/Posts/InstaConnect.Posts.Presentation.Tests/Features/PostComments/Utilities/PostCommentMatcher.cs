@@ -3,13 +3,13 @@ public static class PostCommentMatcher
 {
     public static GetAllPostCommentsQueryRequest IsGetAllPostCommentsQueryRequest(GetAllPostCommentsApiRequest request)
     {
-        return Matcher.Is<GetAllPostCommentsQueryRequest>(p => p.Filter.Id == request.Filter.Id &&
-                                                               p.Filter.UserId == request.Filter.UserId &&
-                                                               p.Filter.UserName == request.Filter.UserName &&
-                                                               p.Pagination.Page == request.Pagination.Page &&
-                                                               p.Pagination.PageSize == request.Pagination.PageSize &&
-                                                               p.Sorting.Order == request.Sorting.Order &&
-                                                               p.Sorting.Property == request.Sorting.Property);
+        return Matcher.Is<GetAllPostCommentsQueryRequest>(p => p.Id == request.Id &&
+                                                               p.UserId == request.UserId &&
+                                                               p.UserName == request.UserName &&
+                                                               p.Page == request.Page &&
+                                                               p.PageSize == request.PageSize &&
+                                                               p.SortOrder == request.SortOrder &&
+                                                               p.SortProperty == request.SortProperty);
     }
 
     public static GetPostCommentByIdQueryRequest IsGetPostCommentByIdQueryRequest(GetPostCommentByIdApiRequest request)

@@ -8,20 +8,34 @@ public class AddPostLikeCommandRequestBuilder
 
     public AddPostLikeCommandRequestBuilder(Post post, User user)
     {
-        _id = post.Id;
-        _userId = user.Id;
+        _id = post.Id.Id;
+        _userId = user.Id.Id;
     }
 
-    public AddPostLikeCommandRequestBuilder WithId(string id, IStringTransformer? transformer = null)
+    public AddPostLikeCommandRequestBuilder WithId(Post post, IStringTransformer? transformer = null)
     {
-        _id = transformer.TryTransform(id);
+        _id = transformer.TryTransform(post.Id.Id);
 
         return this;
     }
 
-    public AddPostLikeCommandRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)
+    public AddPostLikeCommandRequestBuilder WithId(IStringTransformer transformer)
     {
-        _userId = transformer.TryTransform(userId);
+        _id = transformer.Transform(_id);
+
+        return this;
+    }
+
+    public AddPostLikeCommandRequestBuilder WithUserId(User user, IStringTransformer? transformer = null)
+    {
+        _userId = transformer.TryTransform(user.Id.Id);
+
+        return this;
+    }
+
+    public AddPostLikeCommandRequestBuilder WithUserId(IStringTransformer transformer)
+    {
+        _userId = transformer.Transform(_userId);
 
         return this;
     }

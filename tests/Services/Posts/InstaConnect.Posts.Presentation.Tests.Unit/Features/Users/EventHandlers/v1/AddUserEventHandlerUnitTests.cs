@@ -11,7 +11,7 @@ public class AddUserEventHandlerUnitTests : BaseUserPresentationUnitTest
     public AddUserEventHandlerUnitTests()
     {
         _requestBuilderFactory = new();
-        _requestBuilder = _requestBuilderFactory.Create();
+        _requestBuilder = _requestBuilderFactory.Create(User);
         _request = _requestBuilder.Build();
 
         _handler = new(ApplicationMapper, ApplicationSender);

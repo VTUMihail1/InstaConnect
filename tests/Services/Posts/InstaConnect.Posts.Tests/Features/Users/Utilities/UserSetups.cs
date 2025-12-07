@@ -1,5 +1,6 @@
 ﻿using InstaConnect.Common.Tests.Extensions;
 using InstaConnect.Posts.Domain.Features.Users.Abstractions;
+using InstaConnect.Posts.Domain.Features.Users.Models.ValueObjects;
 using InstaConnect.Posts.Infrastructure.Abstractions;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -16,13 +17,12 @@ public static class UserSetups
 
     public static async Task<User?> GetUserByIdAsync(
         this IServiceScope serviceScope,
-        string id,
+        UserId id,
         CancellationToken cancellationToken)
     {
         var userRepository = serviceScope.GetUserRepository();
-        var user = await userRepository.GetByIdAsync(id, cancellationToken);
 
-        return user;
+        return await userRepository.GetByIdAsync(id, cancellationToken);
     }
 
     public static async Task AddUserAsync(

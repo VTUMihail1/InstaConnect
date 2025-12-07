@@ -23,16 +23,16 @@ public class UpdateUserCommandRequestValidatorUnitTests : BaseUserApplicationUni
     [UserIdTooShortWithMessageData]
     [UserIdTooLongWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForId(errorMessage);
+        result.ShouldHaveValidationErrorForId(messageTransformer, request);
     }
 
     [Theory]
@@ -41,16 +41,16 @@ public class UpdateUserCommandRequestValidatorUnitTests : BaseUserApplicationUni
     [UserNameTooShortWithMessageData]
     [UserNameTooLongWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenNameIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithName(_request.Name, transformer).Build();
+        var request = _requestBuilder.WithName(transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForName(errorMessage);
+        result.ShouldHaveValidationErrorForName(messageTransformer, request);
     }
 
     [Theory]
@@ -59,16 +59,16 @@ public class UpdateUserCommandRequestValidatorUnitTests : BaseUserApplicationUni
     [UserFirstNameTooShortWithMessageData]
     [UserFirstNameTooLongWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenFirstNameIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithFirstName(_request.FirstName, transformer).Build();
+        var request = _requestBuilder.WithFirstName(transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForFirstName(errorMessage);
+        result.ShouldHaveValidationErrorForFirstName(messageTransformer, request);
     }
 
     [Theory]
@@ -77,16 +77,16 @@ public class UpdateUserCommandRequestValidatorUnitTests : BaseUserApplicationUni
     [UserLastNameTooShortWithMessageData]
     [UserLastNameTooLongWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenLastNameIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithLastName(_request.LastName, transformer).Build();
+        var request = _requestBuilder.WithLastName(transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForLastName(errorMessage);
+        result.ShouldHaveValidationErrorForLastName(messageTransformer, request);
     }
 
     [Theory]
@@ -95,31 +95,46 @@ public class UpdateUserCommandRequestValidatorUnitTests : BaseUserApplicationUni
     [UserEmailTooShortWithMessageData]
     [UserEmailTooLongWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenEmailIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithEmail(_request.Email, transformer).Build();
+        var request = _requestBuilder.WithEmail(transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForEmail(errorMessage);
+        result.ShouldHaveValidationErrorForEmail(messageTransformer, request);
     }
 
     [Theory]
     [UserProfileImageTooLongWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenProfileImageIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithProfileImage(_request.ProfileImage, transformer).Build();
+        var request = _requestBuilder.WithProfileImage(transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForProfileImage(errorMessage);
+        result.ShouldHaveValidationErrorForProfileImage(messageTransformer, request);
+    }
+
+    [Theory]
+    [UserUpdatedAtUtcEmptyWithMessageData]
+    public void TestValidate_ShouldHaveAnError_WhenUpdatedAtUtcIsInvalid(
+        IDateTimeOffsetTransformer transformer, IDateTimeOffsetMessageTransformer messageTransformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithUpdatedAtUtc(transformer).Build();
+
+        // Act
+        var result = _requestValidator.TestValidate(request);
+
+        // Assert
+        result.ShouldHaveValidationErrorForUpdatedAtUtc(messageTransformer, request);
     }
 
     [Fact]
@@ -139,7 +154,7 @@ public class UpdateUserCommandRequestValidatorUnitTests : BaseUserApplicationUni
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithProfileImage(_request.ProfileImage, transformer).Build();
+        var request = _requestBuilder.WithProfileImage(transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);

@@ -4,28 +4,26 @@ public class GetAllUsersQueryRequestValidator : AbstractValidator<GetAllUsersQue
 {
     public GetAllUsersQueryRequestValidator()
     {
-        RuleFor(c => c.Filter.Name.Value)
+        RuleFor(c => c.Name)
             .UserNameMaxLengthWithMessage();
 
-        RuleFor(c => c.Filter.FirstName)
+        RuleFor(c => c.FirstName)
             .UserFirstNameMaxLengthWithMessage();
 
-        RuleFor(c => c.Filter.LastName)
+        RuleFor(c => c.LastName)
             .UserLastNameMaxLengthWithMessage();
 
-        RuleFor(q => q.Sorting.Order)
+        RuleFor(q => q.SortOrder)
             .NotEmptyWithMessage();
 
-        RuleFor(q => q.Sorting.Property)
+        RuleFor(q => q.SortProperty)
             .NotEmptyWithMessage();
 
-        RuleFor(q => q.Pagination.Page)
-            .NotEmptyWithMessage()
+        RuleFor(q => q.Page)
             .UserPageMinValueWithMessage()
             .UserPageMaxValueWithMessage();
 
-        RuleFor(q => q.Pagination.PageSize)
-            .NotEmptyWithMessage()
+        RuleFor(q => q.PageSize)
             .UserPageSizeMinValueWithMessage()
             .UserPageSizeMaxValueWithMessage();
     }

@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentDetailsById;
 
-public record GetCurrentUserDetailsByIdQueryResponse(UserDetailsQueryResponse Data);
+public record GetCurrentUserDetailsByIdQueryResponse(UserDetailsQueryResponse Response);

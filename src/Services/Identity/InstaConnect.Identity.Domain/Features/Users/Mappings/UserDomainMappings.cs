@@ -1,6 +1,4 @@
-﻿using System.Xml.Serialization;
-
-using InstaConnect.Common.Events.Models;
+﻿using InstaConnect.Common.Domain.Extensions;
 
 using Mapster;
 
@@ -12,26 +10,26 @@ internal class UserDomainMappings : IRegister
     {
         config.NewConfig<User, UserAddedEventRequest>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<UserIdEventPayload>(),
-                src.Name.Adapt<NameEventPayload>(),
-                src.Email.Adapt<EmailEventPayload>(),
+                src.Id.Id,
+                src.Name.Value,
+                src.Email.Value,
                 src.FirstName,
                 src.LastName,
-                src.ProfileImage.Adapt<ImageEventPayload>()));
+                src.ProfileImage.IsNull() ? null : src.ProfileImage!.Url,
+                src.CreatedAtUtc,
+                src.UpdatedAtUtc));
 
         config.NewConfig<User, UserUpdatedEventRequest>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<UserIdEventPayload>(),
-                src.Name.Adapt<NameEventPayload>(),
-                src.Email.Adapt<EmailEventPayload>(),
+                src.Id.Id,
+                src.Name.Value,
+                src.Email.Value,
                 src.FirstName,
                 src.LastName,
-                src.ProfileImage.Adapt<ImageEventPayload>()));
+                src.ProfileImage.IsNull() ? null : src.ProfileImage!.Url,
+                src.UpdatedAtUtc));
 
         config.NewConfig<User, UserDeletedEventRequest>()
-            .ConstructUsing(src => new(src.Id.Adapt<UserIdEventPayload>()));
-
-        config.NewConfig<UserId, UserIdEventPayload>()
-            .ConstructUsing(src => new(src.Id));
+            .ConstructUsing(src => new(src.Id.Id));
     }
 }

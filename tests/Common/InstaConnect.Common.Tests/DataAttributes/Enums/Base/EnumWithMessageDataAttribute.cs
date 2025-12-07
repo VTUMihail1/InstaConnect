@@ -6,15 +6,16 @@ namespace InstaConnect.Common.Tests.DataAttributes.Enums.Base;
 public abstract class EnumWithMessageDataAttribute<TEnum> : EnumDataAttribute<TEnum>
     where TEnum : Enum
 {
-    public string Message { get; }
+    public IEnumMessageTransformer<TEnum> MessageTransformer { get; }
 
-    protected EnumWithMessageDataAttribute(IEnumTransformer<TEnum> transformer, string message) : base(transformer)
+    protected EnumWithMessageDataAttribute(
+        IEnumTransformer<TEnum> transformer, IEnumMessageTransformer<TEnum> messageTransformer) : base(transformer)
     {
-        Message = message;
+        MessageTransformer = messageTransformer;
     }
 
     public override IEnumerable<object[]> GetData(MethodInfo testMethod)
     {
-        yield return new object[] { Transformer, Message };
+        yield return new object[] { Transformer, MessageTransformer };
     }
 }

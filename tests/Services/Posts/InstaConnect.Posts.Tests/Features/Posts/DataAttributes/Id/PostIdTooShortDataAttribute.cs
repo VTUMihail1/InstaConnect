@@ -1,12 +1,10 @@
-﻿using InstaConnect.Posts.Tests.Features.Posts.Utilities;
-
-namespace InstaConnect.Posts.Tests.Features.Posts.DataAttributes.Id;
+﻿namespace InstaConnect.Posts.Tests.Features.Posts.DataAttributes.Id;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-public sealed class PostIdTooShortDataAttribute : LengthStringDataAttribute
+public sealed class PostIdTooShortDataAttribute : TooShortStringDataAttribute
 {
     public PostIdTooShortDataAttribute()
-        : base(PostOutOfBoundsUtilities.IdTooShort)
+        : base(PostConfigurations.IdMinLength)
     {
     }
 }

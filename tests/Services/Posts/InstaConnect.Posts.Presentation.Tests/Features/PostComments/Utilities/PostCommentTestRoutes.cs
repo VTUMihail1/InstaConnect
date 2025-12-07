@@ -11,15 +11,15 @@ public static class PostCommentTestRoutes
 
     public static string GetAll(GetAllPostCommentsApiRequest request)
     {
-        const string Format = "{0}?&userId={1}&userName={2}&sortOrder={3}&sortProperty={4}&page={5}&pageSize={6}";
+        const string Format = "{0}?userId={1}&userName={2}&sortOrder={3}&sortProperty={4}&page={5}&pageSize={6}";
         var route = Format.FormatCurrentCulture(
-            GetDefault(request.Filter.Id),
-            request.Filter.UserId,
-            request.Filter.UserName,
-            request.Sorting.Order,
-            request.Sorting.Property,
-            request.Pagination.Page,
-            request.Pagination.PageSize);
+            GetDefault(request.Id),
+            request.UserId,
+            request.UserName,
+            request.SortOrder,
+            request.SortProperty,
+            request.Page,
+            request.PageSize);
 
         return route;
     }

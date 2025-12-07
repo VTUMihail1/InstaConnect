@@ -39,34 +39,6 @@ public class User : IEntity<UserId>
         UpdatedAtUtc = updatedAtUtc;
     }
 
-    public User(
-        UserId id,
-        string firstName,
-        string lastName,
-        Email email,
-        Name name,
-        Image? profileImage,
-        DateTimeOffset createdAtUtc,
-        DateTimeOffset updatedAtUtc,
-        IList<Post> posts,
-        IList<PostLike> postLikes,
-        IList<PostComment> postComments,
-        IList<PostCommentLike> postCommentLikes)
-    {
-        Id = id;
-        FirstName = firstName;
-        LastName = lastName;
-        Email = email;
-        Name = name;
-        ProfileImage = profileImage;
-        CreatedAtUtc = createdAtUtc;
-        UpdatedAtUtc = updatedAtUtc;
-        Posts = posts;
-        PostLikes = postLikes;
-        PostComments = postComments;
-        PostCommentLikes = postCommentLikes;
-    }
-
     public UserId Id { get; }
 
     public string FirstName { get; private set; }

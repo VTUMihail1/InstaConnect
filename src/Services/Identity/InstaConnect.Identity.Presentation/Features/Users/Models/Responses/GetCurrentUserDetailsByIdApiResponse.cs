@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Identity.Presentation.Features.Users.Models.Responses;
 
-public record GetCurrentUserDetailsByIdApiResponse(UserDetailsApiResponse Data);
+public record GetCurrentUserDetailsByIdApiResponse(UserDetailsApiResponse Response);

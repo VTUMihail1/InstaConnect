@@ -3,18 +3,18 @@ public class AddPostCommentCommandRequestValidator : AbstractValidator<AddPostCo
 {
     public AddPostCommentCommandRequestValidator()
     {
-        RuleFor(r => r.Id.Id)
+        RuleFor(r => r.Id)
             .NotEmptyWithMessage()
             .PostIdMinLengthWithMessage()
             .PostIdMaxLengthWithMessage();
 
-        RuleFor(r => r.UserId.Id)
+        RuleFor(r => r.UserId)
             .NotEmptyWithMessage()
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();
 
         RuleFor(c => c.Content)
-            .NotEmpty()
+            .NotEmptyWithMessage()
             .PostTitleMinLengthWithMessage()
             .PostTitleMaxLengthWithMessage();
     }

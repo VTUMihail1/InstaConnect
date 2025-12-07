@@ -1,5 +1,5 @@
 ﻿namespace InstaConnect.Posts.Tests.Features.PostLikes.Utilities;
-public abstract class BasePostLikeTest
+public abstract class BasePostLikeTest : BaseTest
 {
     protected UserBuilderFactory UserBuilderFactory { get; }
     protected UserBuilder UserBuilder { get; }

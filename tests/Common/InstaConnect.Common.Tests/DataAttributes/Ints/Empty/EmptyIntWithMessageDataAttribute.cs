@@ -5,7 +5,7 @@ namespace InstaConnect.Common.Tests.DataAttributes.Ints.Empty;
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public abstract class EmptyIntWithMessageDataAttribute : IntWithMessageDataAttribute
 {
-    protected EmptyIntWithMessageDataAttribute(string message) : base(new EmptyIntTransformer(), message)
+    protected EmptyIntWithMessageDataAttribute() : base(new EmptyIntTransformer(), new EmptyIntMessageTransformer())
     {
     }
 }

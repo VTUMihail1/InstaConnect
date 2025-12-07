@@ -1,5 +1,4 @@
-﻿using InstaConnect.Common.Application.Models;
-using InstaConnect.Common.Domain.Models.ValueObjects;
+﻿using InstaConnect.Common.Domain.Extensions;
 using InstaConnect.Identity.Application.Features.Users.Commands.Add;
 using InstaConnect.Identity.Application.Features.Users.Commands.Delete;
 using InstaConnect.Identity.Application.Features.Users.Commands.DeleteCurrent;
@@ -9,7 +8,6 @@ using InstaConnect.Identity.Application.Features.Users.Queries.GetById;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentById;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentDetailsById;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetDetailsById;
-using InstaConnect.Identity.Domain.Features.Users.Models.ValueObjects;
 
 using Mapster;
 
@@ -21,54 +19,51 @@ public class UserApplicationMappings : IRegister
     {
         config.NewConfig<GetAllUsersQueryRequest, GetAllUsersQuery>()
             .ConstructUsing(src => new(
-                src.Filter.Adapt<UserFilterQuery>(),
-                src.Sorting.Adapt<UserSortingQuery>(),
-                src.Pagination.Adapt<UserPaginationQuery>()));
+                                       new(src.FirstName,
+                                           src.LastName,
+                                           new(src.Name)),
+                                       new(
+                                           src.SortOrder,
+                                           src.SortProperty),
+                                       new(
+                                           src.Page,
+                                           src.PageSize)));
 
         config.NewConfig<UserCollection, GetAllUsersQueryResponse>()
-            .ConstructUsing(pc => new(
-                  pc.Data.Adapt<ICollection<UserQueryResponse>>(),
-                  pc.Page,
-                  pc.PageSize,
-                  pc.TotalCount,
-                  pc.HasNextPage,
-                  pc.HasPreviousPage));
+            .ConstructUsing(src => new(src.Adapt<UserCollectionQueryResponse>(config)));
 
         config.NewConfig<GetUserByIdQueryRequest, GetUserByIdQuery>()
-            .ConstructUsing(src => new(src.Id.Adapt<UserId>()));
+            .ConstructUsing(src => new(
+                                       new(src.Id)));
 
         config.NewConfig<User, GetUserByIdQueryResponse>()
-            .ConstructUsing(src => new(
-                new(src.Id.Adapt<UserIdPayload>(),
-                    src.FirstName,
-                    src.LastName,
-                    src.Name.Adapt<NamePayload>(),
-                    src.ProfileImage.Adapt<ImagePayload>(),
-                    src.CreatedAtUtc,
-                    src.UpdatedAtUtc)));
+            .ConstructUsing(src => new(src.Adapt<UserQueryResponse>(config)));
 
         config.NewConfig<GetCurrentUserByIdQueryRequest, GetUserByIdQuery>()
-            .ConstructUsing(src => new(src.Id.Adapt<UserId>()));
+            .ConstructUsing(src => new(
+                                       new(src.Id)));
 
         config.NewConfig<User, GetCurrentUserByIdQueryResponse>()
-            .ConstructUsing(src => new(src.Adapt<UserQueryResponse>()));
+            .ConstructUsing(src => new(src.Adapt<UserQueryResponse>(config)));
 
         config.NewConfig<GetUserDetailsByIdQueryRequest, GetUserByIdQuery>()
-            .ConstructUsing(src => new(src.Id.Adapt<UserId>()));
+            .ConstructUsing(src => new(
+                                       new(src.Id)));
 
         config.NewConfig<User, GetUserDetailsByIdQueryResponse>()
-            .ConstructUsing(src => new(src.Adapt<UserDetailsQueryResponse>()));
+            .ConstructUsing(src => new(src.Adapt<UserDetailsQueryResponse>(config)));
 
         config.NewConfig<GetCurrentUserDetailsByIdQueryRequest, GetUserByIdQuery>()
-            .ConstructUsing(src => new(src.Id.Adapt<UserId>()));
+            .ConstructUsing(src => new(
+                                       new(src.Id)));
 
         config.NewConfig<User, GetCurrentUserDetailsByIdQueryResponse>()
-            .ConstructUsing(src => new(src.Adapt<UserDetailsQueryResponse>())));
+            .ConstructUsing(src => new(src.Adapt<UserDetailsQueryResponse>(config)));
 
         config.NewConfig<AddUserCommandRequest, AddUserCommand>()
             .ConstructUsing(src => new(
-                src.Name.Adapt<Name>(),
-                src.Email.Adapt<Email>(),
+                new(src.Name),
+                new(src.Email),
                 src.Password,
                 src.ConfirmPassword,
                 src.FirstName,
@@ -76,67 +71,59 @@ public class UserApplicationMappings : IRegister
                 src.ProfileImage));
 
         config.NewConfig<User, AddUserCommandResponse>()
-            .ConstructUsing(src => new(src.Id.Adapt<UserIdPayload>()));
+            .ConstructUsing(src => new(src.Id.Adapt<UserIdCommandResponse>(config)));
 
         config.NewConfig<UpdateCurrentUserCommandRequest, UpdateUserCommand>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<UserId>(),
-                src.Email.Adapt<Email>(),
+                new(src.Id),
+                new(src.Email),
                 src.FirstName,
                 src.LastName,
-                src.Name.Adapt<Name>(),
+                new(src.Name),
                 src.ProfileImage));
 
         config.NewConfig<User, UpdateCurrentUserCommandResponse>()
-            .ConstructUsing(src => new(src.Id.Adapt<UserIdPayload>()));
+            .ConstructUsing(src => new(src.Id.Adapt<UserIdCommandResponse>(config)));
 
         config.NewConfig<DeleteUserCommandRequest, DeleteUserCommand>()
-            .ConstructUsing(src => new(src.Id.Adapt<UserId>()));
+            .ConstructUsing(src => new(
+                                       new(src.Id)));
 
         config.NewConfig<DeleteCurrentUserCommandRequest, DeleteUserCommand>()
-            .ConstructUsing(src => new(src.Id.Adapt<UserId>()));
+            .ConstructUsing(src => new(
+                                       new(src.Id)));
 
-        config.NewConfig<UserId, UserIdPayload>()
-            .ConstructUsing(src => new(src.Id));
-
-        config.NewConfig<UserIdPayload, UserId>()
+        config.NewConfig<UserId, UserIdCommandResponse>()
             .ConstructUsing(src => new(src.Id));
 
         config.NewConfig<User, UserQueryResponse>()
             .ConstructUsing(src => new(
-                    src.Id.Adapt<UserIdPayload>(),
+                    src.Id.Id,
                     src.FirstName,
                     src.LastName,
-                    src.Name.Adapt<NamePayload>(),
-                    src.ProfileImage.Adapt<ImagePayload>(),
+                    src.Name.Value,
+                    src.ProfileImage.IsNull() ? null : src.ProfileImage!.Url,
                     src.CreatedAtUtc,
                     src.UpdatedAtUtc));
 
         config.NewConfig<User, UserDetailsQueryResponse>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<UserIdPayload>(),
-                    src.FirstName,
-                    src.LastName,
-                    src.Name.Adapt<NamePayload>(),
-                    src.Email.Adapt<EmailPayload>(),
-                    src.ProfileImage.Adapt<ImagePayload>(),
-                    src.CreatedAtUtc,
-                    src.UpdatedAtUtc));
+                  src.Id.Id,
+                  src.FirstName,
+                  src.LastName,
+                  src.Name.Value,
+                  src.Email.Value,
+                  src.ProfileImage.IsNull() ? null : src.ProfileImage!.Url,
+                  src.CreatedAtUtc,
+                  src.UpdatedAtUtc));
 
-        config.NewConfig<UserFilterQueryRequest, UserFilterQuery>()
+        config.NewConfig<UserCollection, UserCollectionQueryResponse>()
             .ConstructUsing(src => new(
-                src.FirstName,
-                src.LastName,
-                src.Name.Adapt<Name>()));
-
-        config.NewConfig<UserSortingQueryRequest, UserSortingQuery>()
-            .ConstructUsing(src => new(
-                src.Order,
-                src.Property));
-
-        config.NewConfig<UserPaginationQueryRequest, UserPaginationQuery>()
-            .ConstructUsing(src => new(
-                src.Page,
-                src.PageSize));
+                  src.Entities.Adapt<ICollection<UserQueryResponse>>(config),
+                  src.Page,
+                  src.PageSize,
+                  src.TotalCount,
+                  src.HasNextPage,
+                  src.HasPreviousPage));
     }
 }

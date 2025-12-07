@@ -2,14 +2,9 @@
 
 public static class PostLikeDataFaker
 {
-    public static DateTimeOffset GetCreatedAt()
+    public static DateTimeOffset GetCreatedAtUtc()
     {
-        return DataFaker.GetMaxDate();
-    }
-
-    public static DateTimeOffset GetUpdatedAt()
-    {
-        return DataFaker.GetMaxDate();
+        return DataFaker.GetRecentDate();
     }
 
     public static int GetPage()

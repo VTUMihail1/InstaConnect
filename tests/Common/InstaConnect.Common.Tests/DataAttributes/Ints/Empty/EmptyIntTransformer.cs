@@ -9,4 +9,3 @@ internal class EmptyIntTransformer : IIntTransformer
         return default;
     }
 }
-

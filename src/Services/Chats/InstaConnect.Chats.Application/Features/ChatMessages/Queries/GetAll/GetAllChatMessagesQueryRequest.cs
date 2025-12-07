@@ -1,7 +1,13 @@
-﻿namespace InstaConnect.Chats.Application.Features.ChatMessages.Queries.GetAll;
+﻿using InstaConnect.Common.Domain.Models;
+
+namespace InstaConnect.Chats.Application.Features.ChatMessages.Queries.GetAll;
 
 public record GetAllChatMessagesQueryRequest(
-    ChatMessageFilterQueryRequest Filter,
-    ChatMessageSortingQueryRequest Sorting,
-    ChatMessagePaginationQueryRequest Pagination)
+    string ParticipantOneId,
+    string ParticipantTwoId,
+    string UserId,
+    CommonSortOrder SortOrder,
+    ChatMessageSortProperty SortProperty,
+    int Page,
+    int PageSize)
     : IQueryRequest<GetAllChatMessagesQueryResponse>;

@@ -8,7 +8,9 @@ public static class UserMatcher
                                                       u.Name == request.Name &&
                                                       u.FirstName == request.FirstName &&
                                                       u.LastName == request.LastName &&
-                                                      u.ProfileImage == request.ProfileImage);
+                                                      u.ProfileImageUrl == request.ProfileImageUrl &&
+                                                      u.CreatedAtUtc == request.CreatedAtUtc &&
+                                                      u.UpdatedAtUtc == request.UpdatedAtUtc);
     }
 
     public static UpdateUserCommandRequest IsUpdateUserCommandRequest(UserUpdatedEventRequest request)
@@ -18,7 +20,8 @@ public static class UserMatcher
                                                          u.Name == request.Name &&
                                                          u.FirstName == request.FirstName &&
                                                          u.LastName == request.LastName &&
-                                                         u.ProfileImage == request.ProfileImage);
+                                                         u.ProfileImageUrl == request.ProfileImageUrl &&
+                                                         u.UpdatedAtUtc == request.UpdatedAtUtc);
     }
 
     public static DeleteUserCommandRequest IsDeleteUserCommandRequest(UserDeletedEventRequest request)

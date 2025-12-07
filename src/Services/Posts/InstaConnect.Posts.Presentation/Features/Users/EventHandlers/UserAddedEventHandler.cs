@@ -2,7 +2,7 @@
 
 namespace InstaConnect.Posts.Presentation.Features.Users.EventHandlers;
 
-internal class UserAddedEventHandler : IEventHandler<UserAddedEventRequest>
+public class UserAddedEventHandler : IEventHandler<UserAddedEventRequest>
 {
     private readonly IApplicationMapper _applicationMapper;
     private readonly IApplicationSender _applicationSender;

@@ -5,27 +5,29 @@ public static class PostCommentMockSetups
         this IApplicationSender applicationSender,
         GetAllPostCommentsApiRequest request,
         PostComment postComment,
-        User user,
         CancellationToken cancellationToken)
     {
 
         var postCommentQueryResponse = new PostCommentQueryResponse(
-            postComment.Id,
-            postComment.CommentId,
+            postComment.Id.Id.Id,
+            postComment.Id.CommentId,
             postComment.Content,
             new(
-                user.Id,
-                user.Name,
-                user.ProfileImage));
+                postComment.User!.Id.Id,
+                postComment.User.Name.Value,
+                postComment.User.ProfileImage?.Url),
+            postComment.CreatedAtUtc,
+            postComment.UpdatedAtUtc);
         var postCommentQueryResponses = new List<PostCommentQueryResponse>() { postCommentQueryResponse };
-
-        var response = new GetAllPostCommentsQueryResponse(
+        var postCommentCollectionQueryResponse = new PostCommentCollectionQueryResponse(
             postCommentQueryResponses,
-            request.Pagination.Page,
-            request.Pagination.PageSize,
+            request.Page,
+            request.PageSize,
             postCommentQueryResponses.Count,
             false,
             false);
+
+        var response = new GetAllPostCommentsQueryResponse(postCommentCollectionQueryResponse);
 
         applicationSender
             .SendAsync(PostCommentMatcher.IsGetAllPostCommentsQueryRequest(request), cancellationToken)
@@ -36,18 +38,18 @@ public static class PostCommentMockSetups
         this IApplicationSender applicationSender,
         GetPostCommentByIdApiRequest request,
         PostComment postComment,
-        User user,
         CancellationToken cancellationToken)
     {
         var response = new GetPostCommentByIdQueryResponse(
-            new(
-                postComment.Id,
-                postComment.CommentId,
+            new(postComment.Id.Id.Id,
+                postComment.Id.CommentId,
                 postComment.Content,
                 new(
-                    user.Id,
-                    user.Name,
-                    user.ProfileImage)));
+                    postComment.User!.Id.Id,
+                    postComment.User.Name.Value,
+                    postComment.User.ProfileImage?.Url),
+                postComment.CreatedAtUtc,
+                postComment.UpdatedAtUtc));
 
         applicationSender
             .SendAsync(PostCommentMatcher.IsGetPostCommentByIdQueryRequest(request), cancellationToken)
@@ -60,7 +62,7 @@ public static class PostCommentMockSetups
         PostComment postComment,
         CancellationToken cancellationToken)
     {
-        var response = new AddPostCommentCommandResponse(postComment.Id, postComment.CommentId, postComment.CreatedAtUtc, postComment.UpdatedAtUtc);
+        var response = new AddPostCommentCommandResponse(new(postComment.Id.Id.Id, postComment.Id.CommentId));
 
         applicationSender
             .SendAsync(PostCommentMatcher.IsAddPostCommentCommandRequest(request), cancellationToken)
@@ -73,7 +75,7 @@ public static class PostCommentMockSetups
         PostComment postComment,
         CancellationToken cancellationToken)
     {
-        var response = new UpdatePostCommentCommandResponse(postComment.Id, postComment.CommentId, postComment.CreatedAtUtc, postComment.UpdatedAtUtc);
+        var response = new UpdatePostCommentCommandResponse(new(postComment.Id.Id.Id, postComment.Id.CommentId));
 
         applicationSender
             .SendAsync(PostCommentMatcher.IsUpdatePostCommentCommandRequest(request), cancellationToken)

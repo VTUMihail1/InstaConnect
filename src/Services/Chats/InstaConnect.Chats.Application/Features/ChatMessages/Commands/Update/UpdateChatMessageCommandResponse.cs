@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Chats.Application.Features.ChatMessages.Commands.Update;
 
-public record UpdateChatMessageCommandResponse(ChatMessageIdPayload Id);
+public record UpdateChatMessageCommandResponse(ChatMessageIdCommandResponse Response);

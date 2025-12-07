@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Chats.Application.Features.Users.Commands.Add;
 
-public record AddUserCommandResponse(UserIdPayload Id);
+public record AddUserCommandResponse(UserIdCommandResponse Response);

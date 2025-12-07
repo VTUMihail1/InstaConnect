@@ -3,17 +3,22 @@ public class UpdateChatMessageCommandRequestValidator : AbstractValidator<Update
 {
     public UpdateChatMessageCommandRequestValidator()
     {
-        RuleFor(r => r.Id.Id.ParticipantOneId.Id)
+        RuleFor(r => r.ParticipantOneId)
             .NotEmptyWithMessage()
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();
 
-        RuleFor(r => r.Id.Id.ParticipantTwoId.Id)
+        RuleFor(r => r.ParticipantTwoId)
             .NotEmptyWithMessage()
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();
 
-        RuleFor(r => r.Id.MessageId)
+        RuleFor(r => r.SenderId)
+            .NotEmptyWithMessage()
+            .UserIdMinLengthWithMessage()
+            .UserIdMaxLengthWithMessage();
+
+        RuleFor(r => r.MessageId)
             .NotEmptyWithMessage()
             .ChatMessageIdMinLengthWithMessage()
             .ChatMessageIdMaxLengthWithMessage();

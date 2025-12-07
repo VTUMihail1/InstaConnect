@@ -9,28 +9,35 @@ public class AddPostCommandRequestBuilder
 
     public AddPostCommandRequestBuilder(User user)
     {
-        _userId = user.Id;
+        _userId = user.Id.Id;
         _title = PostDataFaker.GetTitle();
         _content = PostDataFaker.GetContent();
     }
 
-    public AddPostCommandRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)
+    public AddPostCommandRequestBuilder WithUserId(User user, IStringTransformer? transformer = null)
     {
-        _userId = transformer.TryTransform(userId);
+        _userId = transformer.TryTransform(user.Id.Id);
 
         return this;
     }
 
-    public AddPostCommandRequestBuilder WithTitle(string title, IStringTransformer? transformer = null)
+    public AddPostCommandRequestBuilder WithUserId(IStringTransformer transformer)
     {
-        _title = transformer.TryTransform(title);
+        _userId = transformer.Transform(_userId);
 
         return this;
     }
 
-    public AddPostCommandRequestBuilder WithContent(string content, IStringTransformer? transformer = null)
+    public AddPostCommandRequestBuilder WithTitle(IStringTransformer transformer)
     {
-        _content = transformer.TryTransform(content);
+        _title = transformer.Transform(_title);
+
+        return this;
+    }
+
+    public AddPostCommandRequestBuilder WithContent(IStringTransformer transformer)
+    {
+        _content = transformer.Transform(_content);
 
         return this;
     }

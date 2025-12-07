@@ -16,7 +16,7 @@ public class GetPostCommentLikeByIdControllerUnitTests : BasePostCommentLikePres
 
         _postCommentLikeController = new(ApplicationMapper, ApplicationSender);
 
-        ApplicationSender.SetupGetByIdQueryRequest(_request, PostCommentLike, User, CancellationToken);
+        ApplicationSender.SetupGetByIdQueryRequest(_request, PostCommentLike, CancellationToken);
     }
 
     [Fact]

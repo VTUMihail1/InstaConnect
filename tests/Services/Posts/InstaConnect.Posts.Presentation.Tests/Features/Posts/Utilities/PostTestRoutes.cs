@@ -10,16 +10,16 @@ public static class PostTestRoutes
 
     public static string GetAll(GetAllPostsApiRequest request)
     {
-        const string Format = "{0}?&userId={1}&userName={2}&title={3}&sortOrder={4}&sortProperty={5}&page={6}&pageSize={7}";
+        const string Format = "{0}?userId={1}&userName={2}&title={3}&sortOrder={4}&sortProperty={5}&page={6}&pageSize={7}";
         var route = Format.FormatCurrentCulture(
             GetDefault(),
-            request.Filter.UserId,
-            request.Filter.UserName,
-            request.Filter.Title,
-            request.Sorting.Order,
-            request.Sorting.Property,
-            request.Pagination.Page,
-            request.Pagination.PageSize);
+            request.UserId,
+            request.UserName,
+            request.Title,
+            request.SortOrder,
+            request.SortProperty,
+            request.Page,
+            request.PageSize);
 
         return route;
     }

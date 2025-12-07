@@ -26,16 +26,14 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
     [PostIdTooShortWithMessageData]
     [PostIdTooLongWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Assert
-        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
+        await ApplicationSender.ShouldThrowInvalidValidationExceptionForIdAsync(
+            messageTransformer, request, CancellationToken);
     }
 
     [Theory]
@@ -44,16 +42,14 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
     [UserIdTooShortWithMessageData]
     [UserIdTooLongWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenUserIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Assert
-        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
+        await ApplicationSender.ShouldThrowInvalidValidationExceptionForUserIdAsync(
+            messageTransformer, request, CancellationToken);
     }
 
     [Theory]
@@ -62,16 +58,14 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
     [PostTitleTooShortWithMessageData]
     [PostTitleTooLongWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenTitleIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithTitle(_request.Title, transformer).Build();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var request = _requestBuilder.WithTitle(transformer).Build();
 
         // Assert
-        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
+        await ApplicationSender.ShouldThrowInvalidValidationExceptionForTitleAsync(
+            messageTransformer, request, CancellationToken);
     }
 
     [Theory]
@@ -80,16 +74,14 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
     [PostContentTooShortWithMessageData]
     [PostContentTooLongWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenContentIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithContent(_request.Content, transformer).Build();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var request = _requestBuilder.WithContent(transformer).Build();
 
         // Assert
-        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
+        await ApplicationSender.ShouldThrowInvalidValidationExceptionForContentAsync(
+            messageTransformer, request, CancellationToken);
     }
 
     [Fact]
@@ -98,11 +90,8 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
         // Arrange
         await ServiceScope.DeletePostAsync(Post, CancellationToken);
 
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(_request, CancellationToken);
-
         // Assert
-        await action.ShouldThrowPostNotFoundExceptionAsync(_request.Id);
+        await ApplicationSender.ShouldThrowPostNotFoundExceptionAsync(_request, CancellationToken);
     }
 
     [Fact]
@@ -111,13 +100,10 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
         // Arrange
         var user = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(user, CancellationToken);
-        var request = _requestBuilder.WithUserId(user.Id).Build();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var request = _requestBuilder.WithUserId(user).Build();
 
         // Assert
-        await action.ShouldThrowPostForbiddenExceptionAsync(request.Id, request.UserId);
+        await ApplicationSender.ShouldThrowPostForbiddenExceptionAsync(request, CancellationToken);
     }
 
     [Fact]
@@ -125,7 +111,7 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
     {
         // Act
         var response = await ApplicationSender.SendAsync(_request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(post);
@@ -137,11 +123,11 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(Post.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(post);
@@ -153,11 +139,11 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(User.Id, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(post);
@@ -168,7 +154,7 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
     {
         // Act
         var response = await ApplicationSender.SendAsync(_request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
 
         // Assert
         post.ShouldSatisfy(_request);
@@ -180,11 +166,11 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(Post.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
 
         // Assert
         post.ShouldSatisfy(_request);
@@ -196,11 +182,11 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(User.Id, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
 
         // Assert
         post.ShouldSatisfy(_request);
@@ -211,11 +197,10 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
     {
         // Act
         var response = await ApplicationSender.SendAsync(_request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
-        var hasPublished = await EventHarness.HasPublishPostUpdatedEventAsync(post, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
 
         // Assert
-        hasPublished.ShouldBeTrue();
+        await EventHarness.ShouldHavePublishedUpdatedAsync(post, CancellationToken);
     }
 
     [Theory]
@@ -224,15 +209,14 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(Post.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
-        var hasPublished = await EventHarness.HasPublishPostUpdatedEventAsync(post, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
 
         // Assert
-        hasPublished.ShouldBeTrue();
+        await EventHarness.ShouldHavePublishedUpdatedAsync(post, CancellationToken);
     }
 
     [Theory]
@@ -241,14 +225,13 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(User.Id, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
-        var hasPublished = await EventHarness.HasPublishPostUpdatedEventAsync(post, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
 
         // Assert
-        hasPublished.ShouldBeTrue();
+        await EventHarness.ShouldHavePublishedUpdatedAsync(post, CancellationToken);
     }
 }

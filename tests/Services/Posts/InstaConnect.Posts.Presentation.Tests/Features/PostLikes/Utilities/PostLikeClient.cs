@@ -1,6 +1,8 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
 
+using InstaConnect.Common.Presentation.Models;
+
 namespace InstaConnect.Posts.Presentation.Tests.Features.PostLikes.Utilities;
 public static class PostLikeClient
 {
@@ -16,7 +18,7 @@ public static class PostLikeClient
         return response;
     }
 
-    public static async Task<ProblemDetails> GetAllPostLikesProblemDetailsAsync(
+    public static async Task<ApplicationProblemDetails> GetAllPostLikesProblemDetailsAsync(
         this HttpClient httpClient,
         GetAllPostLikesApiRequest request,
         CancellationToken cancellationToken)
@@ -64,7 +66,7 @@ public static class PostLikeClient
         return response;
     }
 
-    public static async Task<ProblemDetails> GetPostLikeByIdProblemDetailsAsync(
+    public static async Task<ApplicationProblemDetails> GetPostLikeByIdProblemDetailsAsync(
         this HttpClient httpClient,
         GetPostLikeByIdApiRequest request,
         CancellationToken cancellationToken)
@@ -113,7 +115,7 @@ public static class PostLikeClient
         return response;
     }
 
-    public static async Task<ProblemDetails> AddPostLikeProblemDetailsAsync(
+    public static async Task<ApplicationProblemDetails> AddPostLikeProblemDetailsAsync(
         this HttpClient httpClient,
         AddPostLikeApiRequest request,
         CancellationToken cancellationToken)
@@ -126,7 +128,7 @@ public static class PostLikeClient
         return response!;
     }
 
-    public static async Task<ProblemDetails> AddPostLikeProblemDetailsUnauthorizedAsync(
+    public static async Task<ApplicationProblemDetails> AddPostLikeProblemDetailsUnauthorizedAsync(
         this HttpClient httpClient,
         AddPostLikeApiRequest request,
         CancellationToken cancellationToken)
@@ -176,7 +178,7 @@ public static class PostLikeClient
         return response;
     }
 
-    public static async Task<ProblemDetails> DeletePostLikeProblemDetailsAsync(
+    public static async Task<ApplicationProblemDetails> DeletePostLikeProblemDetailsAsync(
         this HttpClient httpClient,
         DeletePostLikeApiRequest request,
         CancellationToken cancellationToken)
@@ -189,7 +191,7 @@ public static class PostLikeClient
         return response!;
     }
 
-    public static async Task<ProblemDetails> DeletePostLikeProblemDetailsUnauthorizedAsync(
+    public static async Task<ApplicationProblemDetails> DeletePostLikeProblemDetailsUnauthorizedAsync(
         this HttpClient httpClient,
         DeletePostLikeApiRequest request,
         CancellationToken cancellationToken)

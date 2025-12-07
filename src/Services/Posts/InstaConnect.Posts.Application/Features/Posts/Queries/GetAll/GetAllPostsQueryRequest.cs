@@ -1,7 +1,13 @@
-﻿namespace InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
+﻿using InstaConnect.Common.Domain.Models;
+
+namespace InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
 
 public record GetAllPostsQueryRequest(
-    PostFilterQueryRequest Filter,
-    PostSortingQueryRequest Sorting,
-    PostPaginationQueryRequest Pagination)
+    string UserId,
+    string UserName,
+    string Title,
+    CommonSortOrder SortOrder,
+    PostSortProperty SortProperty,
+    int Page,
+    int PageSize)
     : IQueryRequest<GetAllPostsQueryResponse>;

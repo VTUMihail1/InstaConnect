@@ -1,6 +1,4 @@
-﻿using InstaConnect.Identity.Infrastructure.Abstractions;
-
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 
 namespace InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Repositories;
 
@@ -18,29 +16,31 @@ internal class EmailConfirmationTokenRepository : IEmailConfirmationTokenReposit
     }
 
     public async Task<EmailConfirmationToken?> GetByIdAsync(
-        string id,
-        string value,
+        EmailConfirmationTokenId id,
         EmailConfirmationTokenIncludeQuery? include,
         CancellationToken cancellationToken)
     {
+        var match = Builders<EmailConfirmationToken>.Filter.Empty
+            .AndEqualsCaseInsensitive(p => p.Id.Id.Id, id.Id.Id)
+            .AndEqualsCaseInsensitive(p => p.Id.Value, id.Value);
+
         var includeProperties = _emailConfirmationTokenIncludePropertyFactory.Create(include?.Properties);
 
         var entity = await _identityContext
             .EmailConfirmationTokens
             .Aggregate()
             .Includes(includeProperties)
-            .Match(p => p.Id == id && p.Value == value)
+            .Match(match)
             .FirstOrDefaultAsync(cancellationToken);
 
         return entity;
     }
 
     public async Task<EmailConfirmationToken?> GetByIdAsync(
-        string id,
-        string value,
+        EmailConfirmationTokenId id,
         CancellationToken cancellationToken)
     {
-        return await GetByIdAsync(id, value, null, cancellationToken);
+        return await GetByIdAsync(id, null, cancellationToken);
     }
 
     public async Task AddAsync(EmailConfirmationToken entity, CancellationToken cancellationToken)
@@ -52,12 +52,17 @@ internal class EmailConfirmationTokenRepository : IEmailConfirmationTokenReposit
 
     public async Task DeleteRangeAsync(IEnumerable<EmailConfirmationToken> entities, CancellationToken cancellationToken)
     {
-        var ids = entities.Select(e => new { e.Id, e.Value });
+        var ids = entities.Select(e => e.Id.Id.Id);
+        var values = entities.Select(e => e.Id.Value);
+
+        var match = Builders<EmailConfirmationToken>.Filter.Empty
+            .AndInCaseInsensitive(p => p.Id.Id.Id, ids)
+            .AndInCaseInsensitive(p => p.Id.Value, values);
 
         await _identityContext.EmailConfirmationTokens
             .DeleteRangeAsync(
             _identityContext.ClientSessionHandle,
-            x => ids.Any(a => a.Id == x.Id && a.Value == x.Value),
+            match,
             cancellationToken);
     }
 }

@@ -1,12 +1,10 @@
-﻿using InstaConnect.Posts.Tests.Features.Users.Utilities;
-
-namespace InstaConnect.Posts.Tests.Features.Users.DataAttributes.LastName;
+﻿namespace InstaConnect.Posts.Tests.Features.Users.DataAttributes.LastName;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-public sealed class UserLastNameTooLongWithMessageDataAttribute : LengthStringWithMessageDataAttribute
+public sealed class UserLastNameTooLongWithMessageDataAttribute : TooLongStringWithMessageDataAttribute
 {
     public UserLastNameTooLongWithMessageDataAttribute()
-        : base(UserOutOfBoundsUtilities.LastNameTooLong, UserErrorMessages.GetLastNameTooLong(UserOutOfBoundsUtilities.LastNameTooLong))
+        : base(UserConfigurations.LastNameMaxLength)
     {
     }
 }

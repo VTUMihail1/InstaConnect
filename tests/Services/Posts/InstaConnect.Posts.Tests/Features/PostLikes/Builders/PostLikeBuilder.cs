@@ -1,5 +1,4 @@
-﻿using InstaConnect.Common.Tests.DataAttributes.Base;
-using InstaConnect.Posts.Tests.Features.PostLikes.Utilities;
+﻿using InstaConnect.Posts.Tests.Features.PostLikes.Utilities;
 
 namespace InstaConnect.Posts.Tests.Features.PostLikes.Builders;
 
@@ -7,67 +6,48 @@ public class PostLikeBuilder
 {
     private string _id;
     private string _userId;
-    private User? _user;
-    private DateTimeOffset _createdAt;
-    private DateTimeOffset _updatedAt;
+    private User _user;
+    private DateTimeOffset _createdAtUtc;
 
     public PostLikeBuilder(Post post, User user)
     {
-        _id = post.Id;
+        _id = post.Id.Id;
+        _userId = user.Id.Id;
         _user = user;
-        _userId = user.Id;
-        _createdAt = PostLikeDataFaker.GetCreatedAt();
-        _updatedAt = PostLikeDataFaker.GetUpdatedAt();
+        _createdAtUtc = PostLikeDataFaker.GetCreatedAtUtc();
     }
 
-    public PostLikeBuilder WithId(string id, IStringTransformer? transformer = null)
+    public PostLikeBuilder WithId(IStringTransformer transformer)
     {
-        _id = transformer.TryTransform(id);
+        _id = transformer.Transform(_id);
 
         return this;
     }
 
-    public PostLikeBuilder WithUserId(string userId, IStringTransformer? transformer = null)
+    public PostLikeBuilder WithUserId(IStringTransformer transformer)
     {
-        if (userId != _user?.Id)
-        {
-            _user = null;
-        }
-
-        _userId = transformer.TryTransform(userId);
+        _userId = transformer.Transform(_userId);
 
         return this;
     }
 
-    public PostLikeBuilder WithUser(User user)
+    public PostLikeBuilder WithCreatedAtUtc(IDateTimeOffsetTransformer transformer)
     {
-        _user = user;
-        _userId = user.Id;
-
-        return this;
-    }
-
-    public PostLikeBuilder WithCreatedAt(DateTimeOffset createdAt, IDateTimeOffsetTransformer? transformer = null)
-    {
-        _createdAt = transformer.TryTransform(createdAt);
-
-        return this;
-    }
-
-    public PostLikeBuilder WithUpdatedAt(DateTimeOffset updatedAt, IDateTimeOffsetTransformer? transformer = null)
-    {
-        _updatedAt = transformer.TryTransform(updatedAt);
+        _createdAtUtc = transformer.Transform(_createdAtUtc);
 
         return this;
     }
 
     public PostLike Build()
     {
-        if (_user == null)
-        {
-            return new(_id, _userId, _createdAt, _updatedAt);
-        }
+        var postLike = new PostLike(
+                new(
+                    new(_id),
+                    new(_userId)),
+                _createdAtUtc);
 
-        return new(_id, _user, _createdAt, _updatedAt);
+        postLike.AddUser(_user);
+
+        return postLike;
     }
 }

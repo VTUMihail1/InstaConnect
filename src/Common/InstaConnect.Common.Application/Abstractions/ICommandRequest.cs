@@ -2,7 +2,7 @@
 
 namespace InstaConnect.Common.Application.Abstractions;
 
-public interface ICommand;
+public interface ICommand : IBaseRequest;
 
 public interface ICommandRequest : IRequest, ICommand;
 

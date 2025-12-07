@@ -1,5 +1,5 @@
 ﻿namespace InstaConnect.Posts.Tests.Features.Posts.Utilities;
-public abstract class BasePostTest
+public abstract class BasePostTest : BaseTest
 {
     protected UserBuilderFactory UserBuilderFactory { get; }
     protected UserBuilder UserBuilder { get; }

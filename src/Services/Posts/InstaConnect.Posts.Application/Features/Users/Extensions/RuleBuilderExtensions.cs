@@ -52,8 +52,8 @@ internal static class RuleBuilderExtensions
         return ruleBuilder.MaxLengthWithMessage(UserConfigurations.NameMaxLength);
     }
 
-    public static IRuleBuilderOptions<T, string> UserProfileImageMaxLengthWithMessage<T>(this IRuleBuilder<T, string> ruleBuilder)
+    public static IRuleBuilderOptions<T, string?> UserProfileImageUrlMaxLengthWithMessage<T>(this IRuleBuilder<T, string?> ruleBuilder)
     {
-        return ruleBuilder.MaxLengthWithMessage(UserConfigurations.ProfileImageMaxLength);
+        return ruleBuilder!.MaxLengthWithMessage(UserConfigurations.ProfileImageUrlMaxLength);
     }
 }

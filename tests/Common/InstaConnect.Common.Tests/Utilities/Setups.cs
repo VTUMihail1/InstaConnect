@@ -8,15 +8,11 @@ public static class Setups
 {
     public static IEventHarness GetEventHarness(this IServiceScope serviceScope)
     {
-        var eventHarness = serviceScope.ServiceProvider.GetRequiredService<IEventHarness>();
-
-        return eventHarness;
+        return serviceScope.ServiceProvider.GetRequiredService<IEventHarness>();
     }
 
     public static IApplicationSender GetApplicationSender(this IServiceScope serviceScope)
     {
-        var applicationSender = serviceScope.ServiceProvider.GetRequiredService<IApplicationSender>();
-
-        return applicationSender;
+        return serviceScope.ServiceProvider.GetRequiredService<IApplicationSender>();
     }
 }

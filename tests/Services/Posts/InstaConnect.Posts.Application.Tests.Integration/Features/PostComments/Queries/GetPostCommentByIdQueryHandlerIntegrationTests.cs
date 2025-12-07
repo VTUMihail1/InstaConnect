@@ -27,16 +27,14 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentApp
     [PostIdTooShortWithMessageData]
     [PostIdTooLongWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Assert
-        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
+        await ApplicationSender.ShouldThrowInvalidValidationExceptionForIdAsync(
+            messageTransformer, request, CancellationToken);
     }
 
     [Theory]
@@ -45,16 +43,14 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentApp
     [PostCommentIdTooShortWithMessageData]
     [PostCommentIdTooLongWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenCommentIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Build();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var request = _requestBuilder.WithCommentId(transformer).Build();
 
         // Assert
-        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
+        await ApplicationSender.ShouldThrowInvalidValidationExceptionForCommentIdAsync(
+            messageTransformer, request, CancellationToken);
     }
 
     [Fact]
@@ -63,11 +59,8 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentApp
         // Arrange
         await ServiceScope.DeletePostAsync(Post, CancellationToken);
 
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(_request, CancellationToken);
-
         // Assert
-        await action.ShouldThrowPostNotFoundExceptionAsync(_request.Id);
+        await ApplicationSender.ShouldThrowPostNotFoundExceptionAsync(_request, CancellationToken);
     }
 
     [Fact]
@@ -76,11 +69,8 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentApp
         // Arrange
         await ServiceScope.DeletePostCommentAsync(PostComment, CancellationToken);
 
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(_request, CancellationToken);
-
         // Assert
-        await action.ShouldThrowPostCommentNotFoundExceptionAsync(_request.Id, _request.CommentId);
+        await ApplicationSender.ShouldThrowPostCommentNotFoundExceptionAsync(_request, CancellationToken);
     }
 
 
@@ -100,7 +90,7 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentApp
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
@@ -115,7 +105,7 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentApp
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Build();
+        var request = _requestBuilder.WithCommentId(transformer).Build();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);

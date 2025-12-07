@@ -14,70 +14,73 @@ public class GetAllPostCommentsQueryRequestBuilder
 
     public GetAllPostCommentsQueryRequestBuilder(PostComment postComment, User user)
     {
-        _id = postComment.Id;
-        _userId = user.Id;
-        _userName = user.Name;
+        _id = postComment.Id.Id.Id;
+        _userId = user.Id.Id;
+        _userName = user.Name.Value;
         _page = PostCommentDataFaker.GetPage();
         _pageSize = PostCommentDataFaker.GetPageSize();
         _sortOrder = DataFaker.GetSortOrder();
         _sortProperty = PostCommentDataFaker.GetSortProperty();
     }
 
-    public GetAllPostCommentsQueryRequestBuilder WithId(string id, IStringTransformer? transformer = null)
+    public GetAllPostCommentsQueryRequestBuilder WithId(Post post, IStringTransformer? transformer = null)
     {
-        _id = transformer.TryTransform(id);
+        _id = transformer.TryTransform(post.Id.Id);
 
         return this;
     }
 
-    public GetAllPostCommentsQueryRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)
+    public GetAllPostCommentsQueryRequestBuilder WithId(IStringTransformer transformer)
     {
-        _userId = transformer.TryTransform(userId);
+        _id = transformer.Transform(_id);
 
         return this;
     }
 
-    public GetAllPostCommentsQueryRequestBuilder WithUserName(string userName, IStringTransformer? transformer = null)
+    public GetAllPostCommentsQueryRequestBuilder WithUserId(IStringTransformer transformer)
     {
-        _userName = transformer.TryTransform(userName);
+        _userId = transformer.Transform(_userId);
 
         return this;
     }
 
-    public GetAllPostCommentsQueryRequestBuilder WithPage(int page, IIntTransformer? transformer = null)
+    public GetAllPostCommentsQueryRequestBuilder WithUserName(IStringTransformer transformer)
     {
-        _page = transformer.TryTransform(page);
+        _userName = transformer.Transform(_userName);
 
         return this;
     }
 
-    public GetAllPostCommentsQueryRequestBuilder WithPageSize(int pageSize, IIntTransformer? transformer = null)
+    public GetAllPostCommentsQueryRequestBuilder WithPage(IIntTransformer transformer)
     {
-        _pageSize = transformer.TryTransform(pageSize);
+        _page = transformer.Transform(_page);
 
         return this;
     }
 
-    public GetAllPostCommentsQueryRequestBuilder WithSortOrder(CommonSortOrder order, IEnumTransformer<CommonSortOrder>? transformer = null)
+    public GetAllPostCommentsQueryRequestBuilder WithPageSize(IIntTransformer transformer)
     {
-        _sortOrder = transformer.TryTransform(order);
+        _pageSize = transformer.Transform(_pageSize);
 
         return this;
     }
 
-    public GetAllPostCommentsQueryRequestBuilder WithSortProperty(PostCommentSortProperty property, IEnumTransformer<PostCommentSortProperty>? transformer = null)
+    public GetAllPostCommentsQueryRequestBuilder WithSortOrder(IEnumTransformer<CommonSortOrder> transformer)
     {
-        _sortProperty = transformer.TryTransform(property);
+        _sortOrder = transformer.Transform(_sortOrder);
+
+        return this;
+    }
+
+    public GetAllPostCommentsQueryRequestBuilder WithSortProperty(IEnumTransformer<PostCommentSortProperty> transformer)
+    {
+        _sortProperty = transformer.Transform(_sortProperty);
 
         return this;
     }
 
     public GetAllPostCommentsQueryRequest Build()
     {
-        return new(
-            new(_id, _userId, _userName),
-            new(_sortOrder, _sortProperty),
-            new(_page, _pageSize)
-        );
+        return new(_id, _userId, _userName, _sortOrder, _sortProperty, _page, _pageSize);
     }
 }

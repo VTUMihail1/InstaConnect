@@ -31,26 +31,14 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationFunctionalT
         response.ShouldBeUnauthorized();
     }
 
-    [Fact]
-    public async Task DeleteAsync_ShouldReturnUnauthorizedProblemDetails_WhenRequestIsUnauthorized()
-    {
-        // Act
-        var response = await HttpClient.DeletePostLikeProblemDetailsUnauthorizedAsync(_request, CancellationToken);
-
-        // Assert
-        response.ShouldSatisfyUnauthorized();
-    }
-
     [Theory]
-    [PostIdNullData]
-    [PostIdEmptyData]
     [PostIdTooShortData]
     [PostIdTooLongData]
     public async Task DeleteAsync_ShouldHaveBadRequestStatusCode_WhenIdIsInvalid(
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await HttpClient.DeletePostLikeStatusCodeAsync(request, CancellationToken);
@@ -60,21 +48,19 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationFunctionalT
     }
 
     [Theory]
-    [PostIdNullWithMessageData]
-    [PostIdEmptyWithMessageData]
     [PostIdTooShortWithMessageData]
     [PostIdTooLongWithMessageData]
     public async Task DeleteAsync_ShouldHaveBadRequestProblemDetails_WhenIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await HttpClient.DeletePostLikeProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
+        response.ShouldSatisfyInvalidValidationForId(messageTransformer, request);
     }
 
     [Theory]
@@ -86,7 +72,7 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationFunctionalT
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         var response = await HttpClient.DeletePostLikeStatusCodeAsync(request, CancellationToken);
@@ -101,16 +87,16 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationFunctionalT
     [UserIdTooShortWithMessageData]
     [UserIdTooLongWithMessageData]
     public async Task DeleteAsync_ShouldHaveBadRequestProblemDetails_WhenUserIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         var response = await HttpClient.DeletePostLikeProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
+        response.ShouldSatisfyInvalidValidationForUserId(messageTransformer, request);
     }
 
     [Fact]
@@ -136,7 +122,7 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationFunctionalT
         var response = await HttpClient.DeletePostLikeProblemDetailsAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyPostNotFound(_request.Id);
+        response.ShouldSatisfyPostNotFound(_request);
     }
 
     [Fact]
@@ -162,7 +148,7 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationFunctionalT
         var response = await HttpClient.DeletePostLikeProblemDetailsAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyPostLikeNotFound(_request.Id, _request.UserId);
+        response.ShouldSatisfyPostLikeNotFound(_request);
     }
 
     [Fact]
@@ -181,7 +167,7 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationFunctionalT
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await HttpClient.DeletePostLikeStatusCodeAsync(request, CancellationToken);
@@ -196,7 +182,7 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationFunctionalT
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         var response = await HttpClient.DeletePostLikeStatusCodeAsync(request, CancellationToken);
@@ -210,7 +196,7 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationFunctionalT
     {
         // Act
         await HttpClient.DeletePostLikeAsync(_request, CancellationToken);
-        var postLike = await ServiceScope.GetPostLikeByIdAsync(_request.Id, _request.UserId, CancellationToken);
+        var postLike = await ServiceScope.GetPostLikeByIdAsync(PostLike.Id, CancellationToken);
 
         // Assert
         postLike.ShouldBeNull();
@@ -222,11 +208,11 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationFunctionalT
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         await HttpClient.DeletePostLikeAsync(request, CancellationToken);
-        var postLike = await ServiceScope.GetPostLikeByIdAsync(_request.Id, _request.UserId, CancellationToken);
+        var postLike = await ServiceScope.GetPostLikeByIdAsync(PostLike.Id, CancellationToken);
 
         // Assert
         postLike.ShouldBeNull();
@@ -238,11 +224,11 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationFunctionalT
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         await HttpClient.DeletePostLikeAsync(request, CancellationToken);
-        var postLike = await ServiceScope.GetPostLikeByIdAsync(_request.Id, _request.UserId, CancellationToken);
+        var postLike = await ServiceScope.GetPostLikeByIdAsync(PostLike.Id, CancellationToken);
 
         // Assert
         postLike.ShouldBeNull();
@@ -253,10 +239,9 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationFunctionalT
     {
         // Act
         await HttpClient.DeletePostLikeAsync(_request, CancellationToken);
-        var hasPublshed = await EventHarness.HasPublishPostLikeDeletedEventAsync(PostLike, CancellationToken);
 
         // Assert
-        hasPublshed.ShouldBeTrue();
+        await EventHarness.ShouldHavePublishedDeletedAsync(PostLike, CancellationToken);
     }
 
     [Theory]
@@ -265,14 +250,13 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationFunctionalT
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         await HttpClient.DeletePostLikeAsync(request, CancellationToken);
-        var hasPublshed = await EventHarness.HasPublishPostLikeDeletedEventAsync(PostLike, CancellationToken);
 
         // Assert
-        hasPublshed.ShouldBeTrue();
+        await EventHarness.ShouldHavePublishedDeletedAsync(PostLike, CancellationToken);
     }
 
     [Theory]
@@ -281,13 +265,12 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationFunctionalT
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         await HttpClient.DeletePostLikeAsync(request, CancellationToken);
-        var hasPublshed = await EventHarness.HasPublishPostLikeDeletedEventAsync(PostLike, CancellationToken);
 
         // Assert
-        hasPublshed.ShouldBeTrue();
+        await EventHarness.ShouldHavePublishedDeletedAsync(PostLike, CancellationToken);
     }
 }

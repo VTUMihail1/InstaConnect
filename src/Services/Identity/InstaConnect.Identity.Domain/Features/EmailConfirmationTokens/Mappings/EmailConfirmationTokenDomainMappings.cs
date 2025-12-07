@@ -1,6 +1,4 @@
-﻿using InstaConnect.Identity.Events.Features.EmailConfirmationTokens;
-
-using Mapster;
+﻿using Mapster;
 
 namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Mappings;
 
@@ -10,12 +8,9 @@ internal class EmailConfirmationTokenDomainMappings : IRegister
     {
         config.NewConfig<EmailConfirmationToken, EmailConfirmationTokenAddedEventRequest>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<EmailConfirmationTokenIdEventPayload>(),
-                src.ExpiresAtUtc));
-
-        config.NewConfig<EmailConfirmationTokenId, EmailConfirmationTokenIdEventPayload>()
-            .ConstructUsing(src => new(
-                src.Id.Adapt<UserIdEventPayload>(),
-                src.Value));
+                src.Id.Id.Id,
+                src.Id.Value,
+                src.ExpiresAtUtc,
+                src.CreatedAtUtc));
     }
 }

@@ -25,15 +25,13 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationFunc
     }
 
     [Theory]
-    [PostIdNullData]
-    [PostIdEmptyData]
     [PostIdTooShortData]
     [PostIdTooLongData]
     public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenIdIsInvalid(
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Filter.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentsStatusCodeAsync(request, CancellationToken);
@@ -43,21 +41,19 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationFunc
     }
 
     [Theory]
-    [PostIdNullWithMessageData]
-    [PostIdEmptyWithMessageData]
     [PostIdTooShortWithMessageData]
     [PostIdTooLongWithMessageData]
     public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Filter.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentsProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
+        response.ShouldSatisfyInvalidValidationForId(messageTransformer, request);
     }
 
     [Theory]
@@ -66,7 +62,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationFunc
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentsStatusCodeAsync(request, CancellationToken);
@@ -78,16 +74,16 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationFunc
     [Theory]
     [UserIdTooLongWithMessageData]
     public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenUserIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentsProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
+        response.ShouldSatisfyInvalidValidationForUserId(messageTransformer, request);
     }
 
     [Theory]
@@ -96,7 +92,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationFunc
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Build();
+        var request = _requestBuilder.WithUserName(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentsStatusCodeAsync(request, CancellationToken);
@@ -108,50 +104,16 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationFunc
     [Theory]
     [UserNameTooLongWithMessageData]
     public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenUserNameIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Build();
+        var request = _requestBuilder.WithUserName(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentsProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
-    }
-
-    [Theory]
-    [PostCommentPageEmptyData]
-    [PostCommentPageTooSmallData]
-    [PostCommentPageTooLargeData]
-    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenPageIsInvalid(
-        IIntTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithPage(_request.Pagination.Page, transformer).Build();
-
-        // Act
-        var response = await HttpClient.GetAllPostCommentsStatusCodeAsync(request, CancellationToken);
-
-        // Assert
-        response.ShouldBeBadRequest();
-    }
-
-    [Theory]
-    [PostCommentPageEmptyWithMessageData]
-    [PostCommentPageTooSmallWithMessageData]
-    [PostCommentPageTooLargeWithMessageData]
-    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenPageIsInvalid(
-        IIntTransformer transformer, string errorMessage)
-    {
-        // Arrange
-        var request = _requestBuilder.WithPage(_request.Pagination.Page, transformer).Build();
-
-        // Act
-        var response = await HttpClient.GetAllPostCommentsProblemDetailsAsync(request, CancellationToken);
-
-        // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
+        response.ShouldSatisfyInvalidValidationForUserName(messageTransformer, request);
     }
 
     [Theory]
@@ -160,7 +122,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationFunc
         IEnumTransformer<CommonSortOrder> transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortOrder(_request.Sorting.Order, transformer).Build();
+        var request = _requestBuilder.WithSortOrder(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentsStatusCodeAsync(request, CancellationToken);
@@ -172,16 +134,17 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationFunc
     [Theory]
     [SortOrderEmptyWithMessageData]
     public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenSortOrderIsInvalid(
-        IEnumTransformer<CommonSortOrder> transformer, string errorMessage)
+        IEnumTransformer<CommonSortOrder> transformer,
+        IEnumMessageTransformer<CommonSortOrder> messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortOrder(_request.Sorting.Order, transformer).Build();
+        var request = _requestBuilder.WithSortOrder(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentsProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
+        response.ShouldSatisfyInvalidValidationForSortOrder(messageTransformer, request);
     }
 
     [Theory]
@@ -190,7 +153,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationFunc
         IEnumTransformer<PostCommentSortProperty> transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(_request.Sorting.Property, transformer).Build();
+        var request = _requestBuilder.WithSortProperty(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentsStatusCodeAsync(request, CancellationToken);
@@ -202,27 +165,27 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationFunc
     [Theory]
     [PostCommentSortPropertyEmptyWithMessageData]
     public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenSortPropertyIsInvalid(
-        IEnumTransformer<PostCommentSortProperty> transformer, string errorMessage)
+        IEnumTransformer<PostCommentSortProperty> transformer,
+        IEnumMessageTransformer<PostCommentSortProperty> messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(_request.Sorting.Property, transformer).Build();
+        var request = _requestBuilder.WithSortProperty(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentsProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
+        response.ShouldSatisfyInvalidValidationForSortProperty(messageTransformer, request);
     }
 
     [Theory]
-    [PostCommentPageSizeEmptyData]
-    [PostCommentPageSizeTooSmallData]
-    [PostCommentPageSizeTooLargeData]
-    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenPageSizeIsInvalid(
+    [PostCommentPageTooSmallData]
+    [PostCommentPageTooLargeData]
+    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenPageIsInvalid(
         IIntTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithPageSize(_request.Pagination.Page, transformer).Build();
+        var request = _requestBuilder.WithPage(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentsStatusCodeAsync(request, CancellationToken);
@@ -232,20 +195,51 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationFunc
     }
 
     [Theory]
-    [PostCommentPageSizeEmptyWithMessageData]
-    [PostCommentPageSizeTooSmallWithMessageData]
-    [PostCommentPageSizeTooLargeWithMessageData]
-    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenPageSizeIsInvalid(
-        IIntTransformer transformer, string errorMessage)
+    [PostCommentPageTooSmallWithMessageData]
+    [PostCommentPageTooLargeWithMessageData]
+    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenPageIsInvalid(
+        IIntTransformer transformer, IIntMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithPageSize(_request.Pagination.Page, transformer).Build();
+        var request = _requestBuilder.WithPage(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentsProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
+        response.ShouldSatisfyInvalidValidationForPage(messageTransformer, request);
+    }
+
+    [Theory]
+    [PostCommentPageSizeTooSmallData]
+    [PostCommentPageSizeTooLargeData]
+    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenPageSizeIsInvalid(
+        IIntTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithPageSize(transformer).Build();
+
+        // Act
+        var response = await HttpClient.GetAllPostCommentsStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeBadRequest();
+    }
+
+    [Theory]
+    [PostCommentPageSizeTooSmallWithMessageData]
+    [PostCommentPageSizeTooLargeWithMessageData]
+    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenPageSizeIsInvalid(
+        IIntTransformer transformer, IIntMessageTransformer messageTransformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithPageSize(transformer).Build();
+
+        // Act
+        var response = await HttpClient.GetAllPostCommentsProblemDetailsAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfyInvalidValidationForPageSize(messageTransformer, request);
     }
 
     [Fact]
@@ -264,7 +258,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationFunc
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Filter.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentsStatusCodeAsync(request, CancellationToken);
@@ -281,7 +275,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationFunc
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentsStatusCodeAsync(request, CancellationToken);
@@ -298,7 +292,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationFunc
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Build();
+        var request = _requestBuilder.WithUserName(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentsStatusCodeAsync(request, CancellationToken);
@@ -330,7 +324,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationFunc
         var response = await HttpClient.GetAllPostCommentsProblemDetailsAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyPostNotFound(_request.Filter.Id);
+        response.ShouldSatisfyPostNotFound(_request);
     }
 
     [Fact]
@@ -349,7 +343,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationFunc
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Filter.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentsAsync(request, CancellationToken);
@@ -366,7 +360,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationFunc
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentsAsync(request, CancellationToken);
@@ -383,7 +377,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationFunc
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Build();
+        var request = _requestBuilder.WithUserName(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentsAsync(request, CancellationToken);

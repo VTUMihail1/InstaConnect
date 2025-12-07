@@ -1,10 +1,12 @@
 ﻿using InstaConnect.Common.Tests.Extensions;
+using InstaConnect.Posts.Presentation.Extensions;
 
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 
 using Testcontainers.MongoDb;
+using Testcontainers.RabbitMq;
 
 using Xunit;
 
@@ -13,10 +15,12 @@ namespace InstaConnect.Posts.Tests.Utilities;
 public class PostsWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
     private readonly MongoDbContainer _mongoDbContainer;
+    private readonly RabbitMqContainer _rabbitMqContainer;
 
     public PostsWebApplicationFactory()
     {
-        _mongoDbContainer = ContainerFactory.GetMongoContainer();
+        _mongoDbContainer = ContainerFactory.GetMongoDbContainer();
+        _rabbitMqContainer = ContainerFactory.GetRabbitMqContainer();
     }
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -24,18 +28,21 @@ public class PostsWebApplicationFactory : WebApplicationFactory<Program>, IAsync
         builder.ConfigureTestServices(serviceCollection =>
         {
             serviceCollection.AddTestJwtAuth();
+            serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), PostPresentationReference.Assembly);
         });
 
         builder.UpdateDatabaseConnectionString(_mongoDbContainer.GetConnectionString());
     }
 
-    public Task InitializeAsync()
+    public async Task InitializeAsync()
     {
-        return _mongoDbContainer.StartAsync();
+        await _mongoDbContainer.StartAsync();
+        await _rabbitMqContainer.StartAsync();
     }
 
-    public new Task DisposeAsync()
+    public new async Task DisposeAsync()
     {
-        return _mongoDbContainer.DisposeAsync().AsTask();
+        await _mongoDbContainer.DisposeAsync().AsTask();
+        await _rabbitMqContainer.DisposeAsync().AsTask();
     }
 }

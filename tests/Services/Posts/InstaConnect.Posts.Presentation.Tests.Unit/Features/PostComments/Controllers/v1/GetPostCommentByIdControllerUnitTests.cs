@@ -16,7 +16,7 @@ public class GetPostCommentByIdControllerUnitTests : BasePostCommentPresentation
 
         _postCommentController = new(ApplicationMapper, ApplicationSender);
 
-        ApplicationSender.SetupGetByIdQueryRequest(_request, PostComment, User, CancellationToken);
+        ApplicationSender.SetupGetByIdQueryRequest(_request, PostComment, CancellationToken);
     }
 
     [Fact]

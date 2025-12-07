@@ -3,7 +3,7 @@ public class AddPostCommandRequestValidator : AbstractValidator<AddPostCommandRe
 {
     public AddPostCommandRequestValidator()
     {
-        RuleFor(r => r.UserId.Id)
+        RuleFor(r => r.UserId)
             .NotEmptyWithMessage()
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();

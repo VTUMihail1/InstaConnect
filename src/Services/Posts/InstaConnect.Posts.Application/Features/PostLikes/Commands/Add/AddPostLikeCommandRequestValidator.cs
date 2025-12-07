@@ -3,12 +3,12 @@ public class AddPostLikeCommandRequestValidator : AbstractValidator<AddPostLikeC
 {
     public AddPostLikeCommandRequestValidator()
     {
-        RuleFor(r => r.Id.Id)
+        RuleFor(r => r.Id)
             .NotEmptyWithMessage()
             .PostIdMinLengthWithMessage()
             .PostIdMaxLengthWithMessage();
 
-        RuleFor(r => r.UserId.Id)
+        RuleFor(r => r.UserId)
             .NotEmptyWithMessage()
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();

@@ -8,61 +8,100 @@ public class UserAddedEventRequestBuilder
     private string _lastName;
     private string _email;
     private string? _profileImage;
+    private DateTimeOffset _createdAtUtc;
+    private DateTimeOffset _updatedAtUtc;
 
-    public UserAddedEventRequestBuilder()
+    public UserAddedEventRequestBuilder(User user)
     {
-        _id = UserDataFaker.GetId();
-        _name = UserDataFaker.GetName();
-        _firstName = UserDataFaker.GetFirstName();
-        _lastName = UserDataFaker.GetLastName();
-        _email = UserDataFaker.GetEmail();
-        _profileImage = UserDataFaker.GetProfileImage();
+        _id = user.Id.Id;
+        _name = user.Name.Value;
+        _firstName = user.FirstName;
+        _lastName = user.LastName;
+        _email = user.Email.Value;
+        _profileImage = user.ProfileImage?.Url;
+        _createdAtUtc = user.CreatedAtUtc;
+        _updatedAtUtc = user.UpdatedAtUtc;
     }
 
-    public UserAddedEventRequestBuilder WithId(string id, IStringTransformer? transformer = null)
+    public UserAddedEventRequestBuilder WithId(User user, IStringTransformer? transformer = null)
     {
-        _id = transformer.TryTransform(id);
+        _id = transformer.TryTransform(user.Id.Id);
 
         return this;
     }
 
-    public UserAddedEventRequestBuilder WithName(string name, IStringTransformer? transformer = null)
+    public UserAddedEventRequestBuilder WithId(IStringTransformer transformer)
     {
-        _name = transformer.TryTransform(name);
+        _id = transformer.Transform(_id);
 
         return this;
     }
 
-    public UserAddedEventRequestBuilder WithFirstName(string firstName, IStringTransformer? transformer = null)
+    public UserAddedEventRequestBuilder WithName(User user, IStringTransformer? transformer = null)
     {
-        _firstName = transformer.TryTransform(firstName);
+        _name = transformer.TryTransform(user.Name.Value);
 
         return this;
     }
 
-    public UserAddedEventRequestBuilder WithLastName(string lastName, IStringTransformer? transformer = null)
+    public UserAddedEventRequestBuilder WithName(IStringTransformer transformer)
     {
-        _lastName = transformer.TryTransform(lastName);
+        _name = transformer.Transform(_name);
 
         return this;
     }
 
-    public UserAddedEventRequestBuilder WithEmail(string email, IStringTransformer? transformer = null)
+    public UserAddedEventRequestBuilder WithFirstName(IStringTransformer transformer)
     {
-        _email = transformer.TryTransform(email);
+        _firstName = transformer.Transform(_firstName);
 
         return this;
     }
 
-    public UserAddedEventRequestBuilder WithProfileImage(string? profileImage, IStringTransformer? transformer = null)
+    public UserAddedEventRequestBuilder WithLastName(IStringTransformer transformer)
     {
-        _profileImage = transformer.TryTransform(profileImage!);
+        _lastName = transformer.Transform(_lastName);
+
+        return this;
+    }
+
+    public UserAddedEventRequestBuilder WithEmail(User user, IStringTransformer? transformer = null)
+    {
+        _email = transformer.TryTransform(user.Email.Value);
+
+        return this;
+    }
+
+    public UserAddedEventRequestBuilder WithEmail(IStringTransformer transformer)
+    {
+        _email = transformer.Transform(_email);
+
+        return this;
+    }
+
+    public UserAddedEventRequestBuilder WithProfileImage(IStringTransformer transformer)
+    {
+        _profileImage = transformer.Transform(_profileImage ?? string.Empty);
+
+        return this;
+    }
+
+    public UserAddedEventRequestBuilder WithCreatedAtUtc(IDateTimeOffsetTransformer transformer)
+    {
+        _createdAtUtc = transformer.Transform(_createdAtUtc);
+
+        return this;
+    }
+
+    public UserAddedEventRequestBuilder WithUpdatedAtUtc(IDateTimeOffsetTransformer transformer)
+    {
+        _updatedAtUtc = transformer.Transform(_updatedAtUtc);
 
         return this;
     }
 
     public UserAddedEventRequest Build()
     {
-        return new UserAddedEventRequest(_id, _name, _email, _firstName, _lastName, _profileImage);
+        return new UserAddedEventRequest(_id, _name, _email, _firstName, _lastName, _profileImage, _createdAtUtc, _updatedAtUtc);
     }
 }

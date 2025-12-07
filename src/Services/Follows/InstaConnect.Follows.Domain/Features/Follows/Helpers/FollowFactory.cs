@@ -14,7 +14,6 @@ internal class FollowFactory : IFollowFactory
         var utcNow = _dateTimeProvider.GetOffsetUtcNow();
         var follow = new Follow(
             new(followerId, followingId),
-            utcNow,
             utcNow);
 
         return follow;

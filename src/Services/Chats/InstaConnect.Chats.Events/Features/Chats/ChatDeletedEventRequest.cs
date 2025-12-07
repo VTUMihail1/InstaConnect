@@ -1,4 +1,4 @@
 ﻿namespace InstaConnect.Chats.Events.Features.Chats;
 
-public record ChatDeletedEventRequest(ChatIdEventPayload Id)
+public record ChatDeletedEventRequest(string ParticipantOne, string ParticipantTwo)
     : IEventRequest;

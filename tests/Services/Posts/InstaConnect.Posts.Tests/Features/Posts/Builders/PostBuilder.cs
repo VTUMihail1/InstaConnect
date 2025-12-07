@@ -1,5 +1,4 @@
-﻿using InstaConnect.Common.Tests.DataAttributes.Base;
-using InstaConnect.Posts.Tests.Features.Posts.Utilities;
+﻿using InstaConnect.Posts.Tests.Features.Posts.Utilities;
 
 namespace InstaConnect.Posts.Tests.Features.Posts.Builders;
 
@@ -9,83 +8,75 @@ public class PostBuilder
     private string _title;
     private string _content;
     private string _userId;
-    private User? _user;
-    private DateTimeOffset _createdAt;
-    private DateTimeOffset _updatedAt;
+    private User _user;
+    private DateTimeOffset _createdAtUtc;
+    private DateTimeOffset _updatedAtUtc;
 
     public PostBuilder(User user)
     {
         _id = PostDataFaker.GetId();
+        _userId = user.Id.Id;
         _user = user;
-        _userId = user.Id;
         _title = PostDataFaker.GetTitle();
         _content = PostDataFaker.GetContent();
-        _createdAt = PostDataFaker.GetCreatedAt();
-        _updatedAt = PostDataFaker.GetUpdatedAt();
+        _createdAtUtc = PostDataFaker.GetCreatedAtUtc();
+        _updatedAtUtc = PostDataFaker.GetUpdatedAtUtc();
     }
 
-    public PostBuilder WithId(string id, IStringTransformer? transformer = null)
+    public PostBuilder WithId(IStringTransformer transformer)
     {
-        _id = transformer.TryTransform(id);
+        _id = transformer.Transform(_id);
 
         return this;
     }
 
-    public PostBuilder WithTitle(string title, IStringTransformer? transformer = null)
+    public PostBuilder WithTitle(IStringTransformer transformer)
     {
-        _title = transformer.TryTransform(title);
+        _title = transformer.Transform(_title);
 
         return this;
     }
 
-    public PostBuilder WithContent(string content, IStringTransformer? transformer = null)
+    public PostBuilder WithContent(IStringTransformer transformer)
     {
-        _content = transformer.TryTransform(content);
+        _content = transformer.Transform(_content);
 
         return this;
     }
 
-    public PostBuilder WithUserId(string userId, IStringTransformer? transformer = null)
+    public PostBuilder WithUserId(IStringTransformer transformer)
     {
-        if (userId != _user?.Id)
-        {
-            _user = null;
-        }
-
-        _userId = transformer.TryTransform(userId);
+        _userId = transformer.Transform(_userId);
 
         return this;
     }
 
-    public PostBuilder WithUser(User user)
+    public PostBuilder WithCreatedAtUtc(IDateTimeOffsetTransformer transformer)
     {
-        _user = user;
-        _userId = user.Id;
+        _createdAtUtc = transformer.Transform(_createdAtUtc);
 
         return this;
     }
 
-    public PostBuilder WithCreatedAt(DateTimeOffset createdAt, IDateTimeOffsetTransformer? transformer = null)
+    public PostBuilder WithUpdatedAtUtc(IDateTimeOffsetTransformer transformer)
     {
-        _createdAt = transformer.TryTransform(createdAt);
-
-        return this;
-    }
-
-    public PostBuilder WithUpdatedAt(DateTimeOffset updatedAt, IDateTimeOffsetTransformer? transformer = null)
-    {
-        _updatedAt = transformer.TryTransform(updatedAt);
+        _updatedAtUtc = transformer.Transform(_updatedAtUtc);
 
         return this;
     }
 
     public Post Build()
     {
-        if (_user == null)
-        {
-            return new(_id, _title, _content, _userId, _createdAt, _updatedAt);
-        }
+        var post = new Post(
+                new(_id),
+                _title,
+                _content,
+                new(_userId),
+                _createdAtUtc,
+                _updatedAtUtc);
 
-        return new(_id, _title, _content, _user, _createdAt, _updatedAt);
+        post.AddUser(_user);
+
+        return post;
     }
 }

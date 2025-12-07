@@ -36,7 +36,7 @@ public class PostCommentLikeController : ControllerBase
         return Ok(response);
     }
 
-    // GET: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+    // GET: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/comments/5f0f2dd0-e957-4d72-8141-767a36fc6e95/likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95
     [HttpGet(PostCommentLikeRoutes.Id)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -51,7 +51,7 @@ public class PostCommentLikeController : ControllerBase
         return Ok(response);
     }
 
-    // POST: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/likes/current
+    // POST: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/comments/5f0f2dd0-e957-4d72-8141-767a36fc6e95/likes/current
     [HttpPost(PostCommentLikeRoutes.Current)]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -68,7 +68,7 @@ public class PostCommentLikeController : ControllerBase
         return Ok(response);
     }
 
-    // DELETE: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/likes/current
+    // DELETE: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/comments/5f0f2dd0-e957-4d72-8141-767a36fc6e95/likes/current
     [HttpDelete(PostCommentLikeRoutes.Current)]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]

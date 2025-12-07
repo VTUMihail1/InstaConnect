@@ -11,36 +11,57 @@ public class UpdatePostCommentCommandRequestBuilder
 
     public UpdatePostCommentCommandRequestBuilder(PostComment postComment)
     {
-        _id = postComment.Id;
-        _commentId = postComment.CommentId;
-        _userId = postComment.UserId;
+        _id = postComment.Id.Id.Id;
+        _commentId = postComment.Id.CommentId;
+        _userId = postComment.UserId.Id;
         _content = PostCommentDataFaker.GetContent();
     }
 
-    public UpdatePostCommentCommandRequestBuilder WithId(string id, IStringTransformer? transformer = null)
+    public UpdatePostCommentCommandRequestBuilder WithId(Post post, IStringTransformer? transformer = null)
     {
-        _id = transformer.TryTransform(id);
+        _id = transformer.TryTransform(post.Id.Id);
 
         return this;
     }
 
-    public UpdatePostCommentCommandRequestBuilder WithCommentId(string commentId, IStringTransformer? transformer = null)
+    public UpdatePostCommentCommandRequestBuilder WithId(IStringTransformer transformer)
     {
-        _commentId = transformer.TryTransform(commentId);
+        _id = transformer.Transform(_id);
 
         return this;
     }
 
-    public UpdatePostCommentCommandRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)
+    public UpdatePostCommentCommandRequestBuilder WithCommentId(PostComment postComment, IStringTransformer? transformer = null)
     {
-        _userId = transformer.TryTransform(userId);
+        _commentId = transformer.TryTransform(postComment.Id.CommentId);
 
         return this;
     }
 
-    public UpdatePostCommentCommandRequestBuilder WithContent(string content, IStringTransformer? transformer = null)
+    public UpdatePostCommentCommandRequestBuilder WithCommentId(IStringTransformer transformer)
     {
-        _content = transformer.TryTransform(content);
+        _commentId = transformer.Transform(_commentId);
+
+        return this;
+    }
+
+    public UpdatePostCommentCommandRequestBuilder WithUserId(User user, IStringTransformer? transformer = null)
+    {
+        _userId = transformer.TryTransform(user.Id.Id);
+
+        return this;
+    }
+
+    public UpdatePostCommentCommandRequestBuilder WithUserId(IStringTransformer transformer)
+    {
+        _userId = transformer.Transform(_userId);
+
+        return this;
+    }
+
+    public UpdatePostCommentCommandRequestBuilder WithContent(IStringTransformer transformer)
+    {
+        _content = transformer.Transform(_content);
 
         return this;
     }

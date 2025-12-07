@@ -5,14 +5,13 @@ public static class PostCommentLikeMockSetups
         this IPostCommentLikeService postCommentLikeService,
         GetAllPostCommentLikesQueryRequest request,
         PostCommentLike postCommentLike,
-        User user,
         CancellationToken cancellationToken)
     {
         var postCommentLikes = new List<PostCommentLike>() { postCommentLike };
         var response = new PostCommentLikeCollection(
             postCommentLikes,
-            request.Pagination.Page,
-            request.Pagination.PageSize,
+            request.Page,
+            request.PageSize,
             postCommentLikes.Count,
             false,
             false);
@@ -26,7 +25,6 @@ public static class PostCommentLikeMockSetups
         this IPostCommentLikeService postCommentLikeService,
         GetPostCommentLikeByIdQueryRequest request,
         PostCommentLike postCommentLike,
-        User user,
         CancellationToken cancellationToken)
     {
         postCommentLikeService

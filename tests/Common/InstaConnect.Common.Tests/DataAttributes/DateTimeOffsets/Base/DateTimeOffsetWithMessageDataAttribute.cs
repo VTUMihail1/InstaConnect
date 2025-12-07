@@ -5,16 +5,17 @@ namespace InstaConnect.Common.Tests.DataAttributes.DateTimeOffsets.Base;
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public abstract class DateTimeOffsetWithMessageDataAttribute : DateTimeOffsetDataAttribute
 {
-    public string Message { get; }
+    public IDateTimeOffsetMessageTransformer MessageTransformer { get; }
 
-    protected DateTimeOffsetWithMessageDataAttribute(IDateTimeOffsetTransformer transformer, string message)
+    protected DateTimeOffsetWithMessageDataAttribute(
+        IDateTimeOffsetTransformer transformer, IDateTimeOffsetMessageTransformer messageTransformer)
         : base(transformer)
     {
-        Message = message;
+        MessageTransformer = messageTransformer;
     }
 
     public override IEnumerable<object[]> GetData(MethodInfo testMethod)
     {
-        yield return new object[] { Transformer, Message };
+        yield return new object[] { Transformer, MessageTransformer };
     }
 }

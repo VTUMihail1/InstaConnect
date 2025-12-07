@@ -3,12 +3,12 @@ public class AddChatCommandRequestValidator : AbstractValidator<AddChatCommandRe
 {
     public AddChatCommandRequestValidator()
     {
-        RuleFor(r => r.ParticipantOneId.Id)
+        RuleFor(r => r.ParticipantOneId)
             .NotEmptyWithMessage()
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();
 
-        RuleFor(r => r.ParticipantTwoId.Id)
+        RuleFor(r => r.ParticipantTwoId)
             .NotEmptyWithMessage()
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();

@@ -2,7 +2,6 @@
 using InstaConnect.Chats.Application.Features.Chats.Commands.Delete;
 using InstaConnect.Chats.Application.Features.Chats.Queries.GetAllByParticipant;
 using InstaConnect.Chats.Application.Features.Chats.Queries.GetById;
-using InstaConnect.Common.Domain.Models.ValueObjects;
 
 using Mapster;
 
@@ -14,66 +13,60 @@ public class ChatApplicationMappings : IRegister
     {
         config.NewConfig<GetAllChatsByParticipantQueryRequest, GetAllChatsByParticipantQuery>()
             .ConstructUsing(src => new(
-                src.Filter.Adapt<ChatByParticipantFilterQuery>(),
-                src.Sorting.Adapt<ChatByParticipantSortingQuery>(),
-                src.Pagination.Adapt<ChatPaginationQuery>()));
+                                       new(
+                                           new(src.ParticipantId),
+                                           new(src.ParticipantName)),
+                                       new(
+                                           src.SortOrder,
+                                           src.SortProperty),
+                                       new(
+                                           src.Page,
+                                           src.PageSize)));
 
         config.NewConfig<ChatCollection, GetAllChatsByParticipantQueryResponse>()
-            .ConstructUsing(pc => new(
-                  pc.Data.Adapt<ICollection<ChatQueryResponse>>(),
-                  pc.Page,
-                  pc.PageSize,
-                  pc.TotalCount,
-                  pc.HasNextPage,
-                  pc.HasPreviousPage));
+            .ConstructUsing(src => new(src.Adapt<ChatCollectionQueryResponse>(config)));
 
         config.NewConfig<GetChatByIdQueryRequest, GetChatByIdQuery>()
-            .ConstructUsing(src => new(src.Id.Adapt<ChatId>()));
+            .ConstructUsing(src => new(
+                                       new(
+                                           new(src.ParticipantOneId),
+                                           new(src.ParticipantTwoId))));
 
         config.NewConfig<Chat, GetChatByIdQueryResponse>()
-            .ConstructUsing(src => new(src.Adapt<ChatQueryResponse>()));
+            .ConstructUsing(src => new(src.Adapt<ChatQueryResponse>(config)));
 
         config.NewConfig<AddChatCommandRequest, AddChatCommand>()
             .ConstructUsing(src => new(
-                src.ParticipantOneId.Adapt<UserId>(),
-                src.ParticipantTwoId.Adapt<UserId>()));
+                                       new(src.ParticipantOneId),
+                                       new(src.ParticipantTwoId)));
 
         config.NewConfig<Chat, AddChatCommandResponse>()
-            .ConstructUsing(src => new(src.Id.Adapt<ChatIdPayload>()));
+            .ConstructUsing(src => new(src.Id.Adapt<ChatIdCommandResponse>(config)));
 
         config.NewConfig<DeleteChatCommandRequest, DeleteChatCommand>()
-            .ConstructUsing(src => new(src.Id.Adapt<ChatId>()));
-
-        config.NewConfig<ChatIdPayload, ChatId>()
             .ConstructUsing(src => new(
-                src.ParticipantOneId.Adapt<UserId>(),
-                src.ParticipantTwoId.Adapt<UserId>()));
+                                       new(
+                                           new(src.ParticipantOneId),
+                                           new(src.ParticipantTwoId))));
 
-        config.NewConfig<ChatId, ChatIdPayload>()
+        config.NewConfig<ChatId, ChatIdCommandResponse>()
             .ConstructUsing(src => new(
-                src.ParticipantOneId.Adapt<UserIdPayload>(),
-                src.ParticipantTwoId.Adapt<UserIdPayload>()));
+                src.ParticipantOneId.Id,
+                src.ParticipantTwoId.Id));
 
         config.NewConfig<Chat, ChatQueryResponse>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<ChatIdPayload>(),
-                src.ParticipantOne.Adapt<UserQueryResponse>(),
-                src.ParticipantTwo.Adapt<UserQueryResponse>(),
+                src.ParticipantOne.Adapt<UserQueryResponse>(config),
+                src.ParticipantTwo.Adapt<UserQueryResponse>(config),
                 src.CreatedAtUtc));
 
-        config.NewConfig<ChatByParticipantFilterQueryRequest, ChatByParticipantFilterQuery>()
+        config.NewConfig<ChatCollection, ChatCollectionQueryResponse>()
             .ConstructUsing(src => new(
-                src.ParticipantId.Adapt<UserId>(),
-                src.ParticipantName.Adapt<Name>()));
-
-        config.NewConfig<ChatByParticipantSortingQueryRequest, ChatByParticipantSortingQuery>()
-            .ConstructUsing(src => new(
-                src.Order,
-                src.Property));
-
-        config.NewConfig<ChatPaginationQueryRequest, ChatPaginationQuery>()
-            .ConstructUsing(src => new(
-                src.Page,
-                src.PageSize));
+                  src.Entities.Adapt<ICollection<ChatQueryResponse>>(config),
+                  src.Page,
+                  src.PageSize,
+                  src.TotalCount,
+                  src.HasNextPage,
+                  src.HasPreviousPage));
     }
 }

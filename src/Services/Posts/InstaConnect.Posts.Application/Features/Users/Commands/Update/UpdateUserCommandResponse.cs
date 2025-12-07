@@ -1,5 +1,3 @@
-﻿using InstaConnect.Posts.Application.Features.Users.Models;
+﻿namespace InstaConnect.Posts.Application.Features.Users.Commands.Update;
 
-namespace InstaConnect.Posts.Application.Features.Users.Commands.Update;
-
-public record UpdateUserCommandResponse(UserIdPayload Id);
+public record UpdateUserCommandResponse(UserIdCommandResponse Response);

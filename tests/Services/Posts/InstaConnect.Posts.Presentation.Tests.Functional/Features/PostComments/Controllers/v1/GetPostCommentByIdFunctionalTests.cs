@@ -22,15 +22,13 @@ public class GetPostCommentByIdFunctionalTests : BasePostCommentPresentationFunc
     }
 
     [Theory]
-    [PostIdNullData]
-    [PostIdEmptyData]
     [PostIdTooShortData]
     [PostIdTooLongData]
     public async Task GetByIdAsync_ShouldHaveBadRequestStatusCode_WhenIdIsInvalid(
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await HttpClient.GetPostCommentByIdStatusCodeAsync(request, CancellationToken);
@@ -40,33 +38,29 @@ public class GetPostCommentByIdFunctionalTests : BasePostCommentPresentationFunc
     }
 
     [Theory]
-    [PostIdNullWithMessageData]
-    [PostIdEmptyWithMessageData]
     [PostIdTooShortWithMessageData]
     [PostIdTooLongWithMessageData]
     public async Task GetByIdAsync_ShouldHaveBadRequestProblemDetails_WhenIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await HttpClient.GetPostCommentByIdProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
+        response.ShouldSatisfyInvalidValidationForId(messageTransformer, request);
     }
 
     [Theory]
-    [PostCommentIdNullData]
-    [PostCommentIdEmptyData]
     [PostCommentIdTooShortData]
     [PostCommentIdTooLongData]
     public async Task GetByIdAsync_ShouldHaveBadRequestStatusCode_WhenCommentIdIsInvalid(
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Build();
+        var request = _requestBuilder.WithCommentId(transformer).Build();
 
         // Act
         var response = await HttpClient.GetPostCommentByIdStatusCodeAsync(request, CancellationToken);
@@ -76,21 +70,19 @@ public class GetPostCommentByIdFunctionalTests : BasePostCommentPresentationFunc
     }
 
     [Theory]
-    [PostCommentIdNullWithMessageData]
-    [PostCommentIdEmptyWithMessageData]
     [PostCommentIdTooShortWithMessageData]
     [PostCommentIdTooLongWithMessageData]
     public async Task GetByIdAsync_ShouldHaveBadRequestProblemDetails_WhenCommentIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Build();
+        var request = _requestBuilder.WithCommentId(transformer).Build();
 
         // Act
         var response = await HttpClient.GetPostCommentByIdProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
+        response.ShouldSatisfyInvalidValidationForCommentId(messageTransformer, request);
     }
 
     [Fact]
@@ -116,7 +108,7 @@ public class GetPostCommentByIdFunctionalTests : BasePostCommentPresentationFunc
         var response = await HttpClient.GetPostCommentByIdProblemDetailsAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyPostNotFound(_request.Id);
+        response.ShouldSatisfyPostNotFound(_request);
     }
 
     [Fact]
@@ -142,7 +134,7 @@ public class GetPostCommentByIdFunctionalTests : BasePostCommentPresentationFunc
         var response = await HttpClient.GetPostCommentByIdProblemDetailsAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyPostCommentNotFound(_request.Id, _request.CommentId);
+        response.ShouldSatisfyPostCommentNotFound(_request);
     }
 
     [Fact]
@@ -161,7 +153,7 @@ public class GetPostCommentByIdFunctionalTests : BasePostCommentPresentationFunc
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await HttpClient.GetPostCommentByIdStatusCodeAsync(request, CancellationToken);
@@ -176,7 +168,7 @@ public class GetPostCommentByIdFunctionalTests : BasePostCommentPresentationFunc
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Build();
+        var request = _requestBuilder.WithCommentId(transformer).Build();
 
         // Act
         var response = await HttpClient.GetPostCommentByIdStatusCodeAsync(request, CancellationToken);
@@ -201,7 +193,7 @@ public class GetPostCommentByIdFunctionalTests : BasePostCommentPresentationFunc
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await HttpClient.GetPostCommentByIdAsync(request, CancellationToken);
@@ -216,7 +208,7 @@ public class GetPostCommentByIdFunctionalTests : BasePostCommentPresentationFunc
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Build();
+        var request = _requestBuilder.WithCommentId(transformer).Build();
 
         // Act
         var response = await HttpClient.GetPostCommentByIdAsync(request, CancellationToken);

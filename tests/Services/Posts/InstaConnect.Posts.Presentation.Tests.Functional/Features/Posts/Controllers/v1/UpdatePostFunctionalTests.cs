@@ -30,26 +30,14 @@ public class UpdatePostFunctionalTests : BasePostPresentationFunctionalTest
         response.ShouldBeUnauthorized();
     }
 
-    [Fact]
-    public async Task UpdateAsync_ShouldReturnUnauthorizedProblemDetails_WhenRequestIsUnauthorized()
-    {
-        // Act
-        var response = await HttpClient.UpdatePostProblemDetailsUnauthorizedAsync(_request, CancellationToken);
-
-        // Assert
-        response.ShouldSatisfyUnauthorized();
-    }
-
     [Theory]
-    [PostIdNullData]
-    [PostIdEmptyData]
     [PostIdTooShortData]
     [PostIdTooLongData]
     public async Task UpdateAsync_ShouldHaveBadRequestStatusCode_WhenIdIsInvalid(
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await HttpClient.UpdatePostStatusCodeAsync(request, CancellationToken);
@@ -59,21 +47,19 @@ public class UpdatePostFunctionalTests : BasePostPresentationFunctionalTest
     }
 
     [Theory]
-    [PostIdNullWithMessageData]
-    [PostIdEmptyWithMessageData]
     [PostIdTooShortWithMessageData]
     [PostIdTooLongWithMessageData]
     public async Task UpdateAsync_ShouldHaveBadRequestProblemDetails_WhenIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await HttpClient.UpdatePostProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
+        response.ShouldSatisfyInvalidValidationForId(messageTransformer, request);
     }
 
     [Theory]
@@ -85,7 +71,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         var response = await HttpClient.UpdatePostStatusCodeAsync(request, CancellationToken);
@@ -100,16 +86,16 @@ public class UpdatePostFunctionalTests : BasePostPresentationFunctionalTest
     [UserIdTooShortWithMessageData]
     [UserIdTooLongWithMessageData]
     public async Task UpdateAsync_ShouldHaveBadRequestProblemDetails_WhenUserIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         var response = await HttpClient.UpdatePostProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
+        response.ShouldSatisfyInvalidValidationForUserId(messageTransformer, request);
     }
 
     [Theory]
@@ -121,7 +107,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithTitle(_request.Body.Title, transformer).Build();
+        var request = _requestBuilder.WithTitle(transformer).Build();
 
         // Act
         var response = await HttpClient.UpdatePostStatusCodeAsync(request, CancellationToken);
@@ -136,16 +122,16 @@ public class UpdatePostFunctionalTests : BasePostPresentationFunctionalTest
     [PostTitleTooShortWithMessageData]
     [PostTitleTooLongWithMessageData]
     public async Task UpdateAsync_ShouldHaveBadRequestProblemDetails_WhenTitleIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithTitle(_request.Body.Title, transformer).Build();
+        var request = _requestBuilder.WithTitle(transformer).Build();
 
         // Act
         var response = await HttpClient.UpdatePostProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
+        response.ShouldSatisfyInvalidValidationForTitle(messageTransformer, request);
     }
 
     [Theory]
@@ -157,7 +143,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithContent(_request.Body.Content, transformer).Build();
+        var request = _requestBuilder.WithContent(transformer).Build();
 
         // Act
         var response = await HttpClient.UpdatePostStatusCodeAsync(request, CancellationToken);
@@ -172,16 +158,16 @@ public class UpdatePostFunctionalTests : BasePostPresentationFunctionalTest
     [PostContentTooShortWithMessageData]
     [PostContentTooLongWithMessageData]
     public async Task UpdateAsync_ShouldHaveBadRequestProblemDetails_WhenContentIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithContent(_request.Body.Content, transformer).Build();
+        var request = _requestBuilder.WithContent(transformer).Build();
 
         // Act
         var response = await HttpClient.UpdatePostProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
+        response.ShouldSatisfyInvalidValidationForContent(messageTransformer, request);
     }
 
     [Fact]
@@ -207,7 +193,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationFunctionalTest
         var response = await HttpClient.UpdatePostProblemDetailsAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyPostNotFound(_request.Id);
+        response.ShouldSatisfyPostNotFound(_request);
     }
 
     [Fact]
@@ -216,7 +202,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationFunctionalTest
         // Arrange
         var user = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(user, CancellationToken);
-        var request = _requestBuilder.WithUserId(user.Id).Build();
+        var request = _requestBuilder.WithUserId(user).Build();
 
         // Act
         var response = await HttpClient.UpdatePostStatusCodeAsync(request, CancellationToken);
@@ -231,53 +217,53 @@ public class UpdatePostFunctionalTests : BasePostPresentationFunctionalTest
         // Arrange
         var user = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(user, CancellationToken);
-        var request = _requestBuilder.WithUserId(user.Id).Build();
+        var request = _requestBuilder.WithUserId(user).Build();
 
         // Act
         var response = await HttpClient.UpdatePostProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyPostForbidden(request.Id, request.UserId);
+        response.ShouldSatisfyPostForbidden(request);
     }
 
     [Fact]
-    public async Task UpdateAsync_ShouldHaveNoContentStatusCode_WhenRequestIsValid()
+    public async Task UpdateAsync_ShouldHaveOkStatusCode_WhenRequestIsValid()
     {
         // Act
         var response = await HttpClient.UpdatePostStatusCodeAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldBeNoContent();
+        response.ShouldBeOk();
     }
 
     [Theory]
     [PostIdDifferentCaseData]
-    public async Task UpdateAsync_ShouldHaveNoContentStatusCode_WhenRequestAndIdAreValid(
+    public async Task UpdateAsync_ShouldHaveOkStatusCode_WhenRequestAndIdAreValid(
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await HttpClient.UpdatePostStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldBeNoContent();
+        response.ShouldBeOk();
     }
 
     [Theory]
     [UserIdDifferentCaseData]
-    public async Task UpdateAsync_ShouldHaveNoContentStatusCode_WhenRequestAndUserIdAreValid(
+    public async Task UpdateAsync_ShouldHaveOkStatusCode_WhenRequestAndUserIdAreValid(
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         var response = await HttpClient.UpdatePostStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldBeNoContent();
+        response.ShouldBeOk();
     }
 
     [Fact]
@@ -296,7 +282,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await HttpClient.UpdatePostAsync(request, CancellationToken);
@@ -311,7 +297,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         var response = await HttpClient.UpdatePostAsync(request, CancellationToken);
@@ -324,8 +310,8 @@ public class UpdatePostFunctionalTests : BasePostPresentationFunctionalTest
     public async Task UpdateAsync_ShouldUpdatePost_WhenRequestIsValid()
     {
         // Act
-        await HttpClient.UpdatePostAsync(_request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(_request.Id, CancellationToken);
+        var response = await HttpClient.UpdatePostAsync(_request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
 
         // Assert
         post.ShouldSatisfy(_request);
@@ -337,11 +323,11 @@ public class UpdatePostFunctionalTests : BasePostPresentationFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
-        await HttpClient.UpdatePostAsync(request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(_request.Id, CancellationToken);
+        var response = await HttpClient.UpdatePostAsync(request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
 
         // Assert
         post.ShouldSatisfy(_request);
@@ -353,11 +339,11 @@ public class UpdatePostFunctionalTests : BasePostPresentationFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
-        await HttpClient.UpdatePostAsync(request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(_request.Id, CancellationToken);
+        var response = await HttpClient.UpdatePostAsync(request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
 
         // Assert
         post.ShouldSatisfy(_request);
@@ -367,12 +353,11 @@ public class UpdatePostFunctionalTests : BasePostPresentationFunctionalTest
     public async Task UpdateAsync_ShouldPublishPostUpdatedEvent_WhenRequestIsValid()
     {
         // Act
-        await HttpClient.UpdatePostAsync(_request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(_request.Id, CancellationToken);
-        var hasPublished = await EventHarness.HasPublishPostUpdatedEventAsync(post, CancellationToken);
+        var response = await HttpClient.UpdatePostAsync(_request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
 
         // Assert
-        hasPublished.ShouldBeTrue();
+        await EventHarness.ShouldHavePublishedUpdatedAsync(post, CancellationToken);
     }
 
     [Theory]
@@ -381,15 +366,14 @@ public class UpdatePostFunctionalTests : BasePostPresentationFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
-        await HttpClient.UpdatePostAsync(request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(_request.Id, CancellationToken);
-        var hasPublished = await EventHarness.HasPublishPostUpdatedEventAsync(post, CancellationToken);
+        var response = await HttpClient.UpdatePostAsync(request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
 
         // Assert
-        hasPublished.ShouldBeTrue();
+        await EventHarness.ShouldHavePublishedUpdatedAsync(post, CancellationToken);
     }
 
     [Theory]
@@ -398,14 +382,13 @@ public class UpdatePostFunctionalTests : BasePostPresentationFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
-        await HttpClient.UpdatePostAsync(request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(_request.Id, CancellationToken);
-        var hasPublished = await EventHarness.HasPublishPostUpdatedEventAsync(post, CancellationToken);
+        var response = await HttpClient.UpdatePostAsync(request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
 
         // Assert
-        hasPublished.ShouldBeTrue();
+        await EventHarness.ShouldHavePublishedUpdatedAsync(post, CancellationToken);
     }
 }

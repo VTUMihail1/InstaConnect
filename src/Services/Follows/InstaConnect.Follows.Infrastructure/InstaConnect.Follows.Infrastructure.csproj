@@ -14,6 +14,7 @@
     <Using Include="InstaConnect.Common.Domain.Models.ValueObjects" />
     <Using Include="InstaConnect.Common.Infrastructure.Abstractions" />
     <Using Include="InstaConnect.Common.Infrastructure.Extensions" />
+    <Using Include="InstaConnect.Follows.Infrastructure.Abstractions"/>
   </ItemGroup>
 
   <ItemGroup Label="Users">
@@ -22,7 +23,7 @@
     <Using Include="InstaConnect.Follows.Domain.Features.Users.Models.Entities" />
     <Using Include="InstaConnect.Follows.Domain.Features.Users.Models.ValueObjects" />
     <Using Include="InstaConnect.Follows.Domain.Features.Users.Models.Requests" />
-    <Using Include="InstaConnect.Follows.Infrastructure.Features.Users.Models" />
+    <Using Include="InstaConnect.Follows.Application.Features.Users.Models" />
     <Using Include="InstaConnect.Follows.Infrastructure.Features.Users.Abstractions" />
   </ItemGroup>
 
@@ -33,7 +34,7 @@
     <Using Include="InstaConnect.Follows.Domain.Features.Follows.Models.ValueObjects" />
     <Using Include="InstaConnect.Follows.Domain.Features.Follows.Models.Requests" />
     <Using Include="InstaConnect.Follows.Domain.Features.Follows.Models.Responses" />
-    <Using Include="InstaConnect.Follows.Infrastructure.Features.Follows.Models" />
+    <Using Include="InstaConnect.Follows.Application.Features.Follows.Models" />
     <Using Include="InstaConnect.Follows.Infrastructure.Features.Follows.Abstractions" />
   </ItemGroup>
 

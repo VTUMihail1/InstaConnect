@@ -26,15 +26,13 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
     }
 
     [Theory]
-    [PostIdNullData]
-    [PostIdEmptyData]
     [PostIdTooShortData]
     [PostIdTooLongData]
     public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenIdIsInvalid(
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Filter.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentLikesStatusCodeAsync(request, CancellationToken);
@@ -44,33 +42,29 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
     }
 
     [Theory]
-    [PostIdNullWithMessageData]
-    [PostIdEmptyWithMessageData]
     [PostIdTooShortWithMessageData]
     [PostIdTooLongWithMessageData]
     public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Filter.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentLikesProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
+        response.ShouldSatisfyInvalidValidationForId(messageTransformer, request);
     }
 
     [Theory]
-    [PostCommentIdNullData]
-    [PostCommentIdEmptyData]
     [PostCommentIdTooShortData]
     [PostCommentIdTooLongData]
     public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenCommentIdIsInvalid(
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.Filter.CommentId, transformer).Build();
+        var request = _requestBuilder.WithCommentId(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentLikesStatusCodeAsync(request, CancellationToken);
@@ -80,21 +74,19 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
     }
 
     [Theory]
-    [PostCommentIdNullWithMessageData]
-    [PostCommentIdEmptyWithMessageData]
     [PostCommentIdTooShortWithMessageData]
     [PostCommentIdTooLongWithMessageData]
     public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenCommentIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.Filter.CommentId, transformer).Build();
+        var request = _requestBuilder.WithCommentId(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentLikesProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
+        response.ShouldSatisfyInvalidValidationForCommentId(messageTransformer, request);
     }
 
     [Theory]
@@ -103,7 +95,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Build();
+        var request = _requestBuilder.WithUserName(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentLikesStatusCodeAsync(request, CancellationToken);
@@ -115,50 +107,16 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
     [Theory]
     [UserNameTooLongWithMessageData]
     public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenUserNameIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Build();
+        var request = _requestBuilder.WithUserName(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentLikesProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
-    }
-
-    [Theory]
-    [PostCommentLikePageEmptyData]
-    [PostCommentLikePageTooSmallData]
-    [PostCommentLikePageTooLargeData]
-    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenPageIsInvalid(
-        IIntTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithPage(_request.Pagination.Page, transformer).Build();
-
-        // Act
-        var response = await HttpClient.GetAllPostCommentLikesStatusCodeAsync(request, CancellationToken);
-
-        // Assert
-        response.ShouldBeBadRequest();
-    }
-
-    [Theory]
-    [PostCommentLikePageEmptyWithMessageData]
-    [PostCommentLikePageTooSmallWithMessageData]
-    [PostCommentLikePageTooLargeWithMessageData]
-    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenPageIsInvalid(
-        IIntTransformer transformer, string errorMessage)
-    {
-        // Arrange
-        var request = _requestBuilder.WithPage(_request.Pagination.Page, transformer).Build();
-
-        // Act
-        var response = await HttpClient.GetAllPostCommentLikesProblemDetailsAsync(request, CancellationToken);
-
-        // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
+        response.ShouldSatisfyInvalidValidationForUserName(messageTransformer, request);
     }
 
     [Theory]
@@ -167,7 +125,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
         IEnumTransformer<CommonSortOrder> transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortOrder(_request.Sorting.Order, transformer).Build();
+        var request = _requestBuilder.WithSortOrder(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentLikesStatusCodeAsync(request, CancellationToken);
@@ -179,16 +137,17 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
     [Theory]
     [SortOrderEmptyWithMessageData]
     public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenSortOrderIsInvalid(
-        IEnumTransformer<CommonSortOrder> transformer, string errorMessage)
+        IEnumTransformer<CommonSortOrder> transformer,
+        IEnumMessageTransformer<CommonSortOrder> messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortOrder(_request.Sorting.Order, transformer).Build();
+        var request = _requestBuilder.WithSortOrder(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentLikesProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
+        response.ShouldSatisfyInvalidValidationForSortOrder(messageTransformer, request);
     }
 
     [Theory]
@@ -197,7 +156,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
         IEnumTransformer<PostCommentLikeSortProperty> transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(_request.Sorting.Property, transformer).Build();
+        var request = _requestBuilder.WithSortProperty(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentLikesStatusCodeAsync(request, CancellationToken);
@@ -209,27 +168,27 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
     [Theory]
     [PostCommentLikeSortPropertyEmptyWithMessageData]
     public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenSortPropertyIsInvalid(
-        IEnumTransformer<PostCommentLikeSortProperty> transformer, string errorMessage)
+        IEnumTransformer<PostCommentLikeSortProperty> transformer,
+        IEnumMessageTransformer<PostCommentLikeSortProperty> messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(_request.Sorting.Property, transformer).Build();
+        var request = _requestBuilder.WithSortProperty(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentLikesProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
+        response.ShouldSatisfyInvalidValidationForSortProperty(messageTransformer, request);
     }
 
     [Theory]
-    [PostCommentLikePageSizeEmptyData]
-    [PostCommentLikePageSizeTooSmallData]
-    [PostCommentLikePageSizeTooLargeData]
-    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenPageSizeIsInvalid(
+    [PostCommentLikePageTooSmallData]
+    [PostCommentLikePageTooLargeData]
+    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenPageIsInvalid(
         IIntTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithPageSize(_request.Pagination.Page, transformer).Build();
+        var request = _requestBuilder.WithPage(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentLikesStatusCodeAsync(request, CancellationToken);
@@ -239,20 +198,51 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
     }
 
     [Theory]
-    [PostCommentLikePageSizeEmptyWithMessageData]
-    [PostCommentLikePageSizeTooSmallWithMessageData]
-    [PostCommentLikePageSizeTooLargeWithMessageData]
-    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenPageSizeIsInvalid(
-        IIntTransformer transformer, string errorMessage)
+    [PostCommentLikePageTooSmallWithMessageData]
+    [PostCommentLikePageTooLargeWithMessageData]
+    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenPageIsInvalid(
+        IIntTransformer transformer, IIntMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithPageSize(_request.Pagination.Page, transformer).Build();
+        var request = _requestBuilder.WithPage(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentLikesProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
+        response.ShouldSatisfyInvalidValidationForPage(messageTransformer, request);
+    }
+
+    [Theory]
+    [PostCommentLikePageSizeTooSmallData]
+    [PostCommentLikePageSizeTooLargeData]
+    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenPageSizeIsInvalid(
+        IIntTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithPageSize(transformer).Build();
+
+        // Act
+        var response = await HttpClient.GetAllPostCommentLikesStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeBadRequest();
+    }
+
+    [Theory]
+    [PostCommentLikePageSizeTooSmallWithMessageData]
+    [PostCommentLikePageSizeTooLargeWithMessageData]
+    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenPageSizeIsInvalid(
+        IIntTransformer transformer, IIntMessageTransformer messageTransformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithPageSize(transformer).Build();
+
+        // Act
+        var response = await HttpClient.GetAllPostCommentLikesProblemDetailsAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfyInvalidValidationForPageSize(messageTransformer, request);
     }
 
     [Fact]
@@ -278,7 +268,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
         var response = await HttpClient.GetAllPostCommentLikesProblemDetailsAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyPostNotFound(_request.Filter.Id);
+        response.ShouldSatisfyPostNotFound(_request);
     }
 
     [Fact]
@@ -304,7 +294,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
         var response = await HttpClient.GetAllPostCommentLikesProblemDetailsAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyPostCommentNotFound(_request.Filter.Id, _request.Filter.CommentId);
+        response.ShouldSatisfyPostCommentNotFound(_request);
     }
 
     [Fact]
@@ -323,7 +313,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Filter.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentLikesStatusCodeAsync(request, CancellationToken);
@@ -338,7 +328,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.Filter.CommentId, transformer).Build();
+        var request = _requestBuilder.WithCommentId(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentLikesStatusCodeAsync(request, CancellationToken);
@@ -355,7 +345,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Build();
+        var request = _requestBuilder.WithUserName(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentLikesStatusCodeAsync(request, CancellationToken);
@@ -380,7 +370,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Filter.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentLikesAsync(request, CancellationToken);
@@ -395,7 +385,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.Filter.CommentId, transformer).Build();
+        var request = _requestBuilder.WithCommentId(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentLikesAsync(request, CancellationToken);
@@ -412,7 +402,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Build();
+        var request = _requestBuilder.WithUserName(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentLikesAsync(request, CancellationToken);

@@ -2,7 +2,7 @@
 
 namespace InstaConnect.Posts.Presentation.Features.Users.EventHandlers;
 
-internal class UserDeletedEventHandler : IEventHandler<UserDeletedEventRequest>
+public class UserDeletedEventHandler : IEventHandler<UserDeletedEventRequest>
 {
     private readonly IApplicationMapper _applicationMapper;
     private readonly IApplicationSender _applicationSender;

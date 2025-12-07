@@ -79,6 +79,7 @@ public static class ServiceCollectionExtensions
     {
         serviceCollection
             .AddSingleton<IApplicationProblemDetailsFactory, ApplicationProblemDetailsFactory>()
+            .AddSingleton<IApplicationProblemDetailsService, ApplicationProblemDetailsService>()
             .AddImplementationsOf<IBaseExceptionStatus>(CommonPresentationReference.Assembly);
 
         serviceCollection.AddProblemDetails();

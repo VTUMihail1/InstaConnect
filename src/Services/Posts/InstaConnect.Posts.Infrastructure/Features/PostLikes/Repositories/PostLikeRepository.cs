@@ -1,6 +1,4 @@
-﻿using InstaConnect.Posts.Domain.Features.PostLikes.Models.ValueObjects;
-
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 
 namespace InstaConnect.Posts.Infrastructure.Features.PostLikes.Repositories;
 
@@ -36,18 +34,20 @@ internal class PostLikeRepository : IPostLikeRepository
         PostLikeIncludeQuery? include,
         CancellationToken cancellationToken)
     {
+        var match = Builders<PostLike>.Filter.Empty
+            .AndEqualsCaseInsensitive(p => p.Id.Id.Id, filter.Id.Id)
+            .AndOptionalStartsWithCaseInsensitive(p => p.User!.Name.Value, filter.UserName.IsEmpty(), filter.UserName.Value);
+
         var sortOrder = _sortOrderFactory.Create(sorting.Order);
         var sortProperty = _postLikeSortPropertyFactory.Create(sorting.Property);
         var includeProperties = _postLikeIncludePropertyFactory.Create(include?.Properties);
         var offset = _paginator.GetOffset(pagination.Page, pagination.PageSize);
-        var isUserNameEmpty = filter.UserName.IsEmpty();
 
         var pipeline = _postsContext
             .PostLikes
             .Aggregate()
             .Includes(includeProperties)
-            .Match(p => p.Id.Id == filter.Id &&
-                        (isUserNameEmpty || p.User!.Name.StartsWith(filter.UserName)));
+            .Match(match);
 
         var totalCountsResult = await pipeline.Count().FirstOrDefaultAsync(cancellationToken);
 
@@ -67,13 +67,17 @@ internal class PostLikeRepository : IPostLikeRepository
         PostLikeIncludeQuery? include,
         CancellationToken cancellationToken)
     {
+        var match = Builders<PostLike>.Filter.Empty
+            .AndEqualsCaseInsensitive(p => p.Id.Id.Id, id.Id.Id)
+            .AndEqualsCaseInsensitive(p => p.Id.UserId.Id, id.UserId.Id);
+
         var includeProperties = _postLikeIncludePropertyFactory.Create(include?.Properties);
 
         var entity = await _postsContext
             .PostLikes
             .Aggregate()
             .Includes(includeProperties)
-            .Match(p => p.Id == id)
+            .Match(match)
             .FirstOrDefaultAsync(cancellationToken);
 
         return entity;
@@ -95,8 +99,12 @@ internal class PostLikeRepository : IPostLikeRepository
 
     public async Task DeleteAsync(PostLike entity, CancellationToken cancellationToken)
     {
+        var match = Builders<PostLike>.Filter.Empty
+            .AndEqualsCaseInsensitive(p => p.Id.Id.Id, entity.Id.Id.Id)
+            .AndEqualsCaseInsensitive(p => p.Id.UserId.Id, entity.Id.UserId.Id);
+
         await _postsContext
             .PostLikes
-            .DeleteAsync(_postsContext.ClientSessionHandle, x => x.Id == entity.Id, cancellationToken);
+            .DeleteAsync(_postsContext.ClientSessionHandle, match, cancellationToken);
     }
 }

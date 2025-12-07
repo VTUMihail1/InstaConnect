@@ -1,5 +1,3 @@
-﻿using InstaConnect.Posts.Application.Features.Users.Models;
+﻿namespace InstaConnect.Posts.Application.Features.PostComments.Commands.Add;
 
-namespace InstaConnect.Posts.Application.Features.PostComments.Commands.Add;
-
-public record AddPostCommentCommandRequest(PostIdPayload Id, string Content, UserIdPayload UserId) : ICommandRequest<AddPostCommentCommandResponse>;
+public record AddPostCommentCommandRequest(string Id, string Content, string UserId) : ICommandRequest<AddPostCommentCommandResponse>;

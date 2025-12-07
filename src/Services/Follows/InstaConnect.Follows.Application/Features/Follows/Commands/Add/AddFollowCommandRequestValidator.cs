@@ -3,12 +3,12 @@ public class AddFollowCommandRequestValidator : AbstractValidator<AddFollowComma
 {
     public AddFollowCommandRequestValidator()
     {
-        RuleFor(r => r.FollowerId.Id)
+        RuleFor(r => r.FollowerId)
             .NotEmptyWithMessage()
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();
 
-        RuleFor(r => r.FollowingId.Id)
+        RuleFor(r => r.FollowingId)
             .NotEmptyWithMessage()
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();

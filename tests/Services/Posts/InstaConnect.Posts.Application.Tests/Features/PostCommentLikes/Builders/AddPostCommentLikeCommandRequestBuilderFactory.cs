@@ -2,8 +2,8 @@
 
 public class AddPostCommentLikeCommandRequestBuilderFactory
 {
-    public AddPostCommentLikeCommandRequestBuilder Create(Post post, PostComment postComment, User user)
+    public AddPostCommentLikeCommandRequestBuilder Create(PostComment postComment, User user)
     {
-        return new(post, postComment, user);
+        return new(postComment, user);
     }
 }

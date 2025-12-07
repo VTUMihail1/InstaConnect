@@ -16,7 +16,7 @@ public class ChatMessageIncludeProperty : IChatIncludeProperty
     public IAggregateFluent<Chat> Include(IAggregateFluent<Chat> pipeline)
     {
         return pipeline
-            .Lookup<Chat, ChatMessage, Chat>(
+            .IncludeMany(
                 _chatsContext.ChatMessages,
                 p => p.Id,
                 u => u.Id.Id,

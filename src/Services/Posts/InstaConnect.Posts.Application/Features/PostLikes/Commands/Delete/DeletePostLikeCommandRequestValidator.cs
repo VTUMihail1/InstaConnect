@@ -3,12 +3,12 @@ public class DeletePostLikeCommandRequestValidator : AbstractValidator<DeletePos
 {
     public DeletePostLikeCommandRequestValidator()
     {
-        RuleFor(r => r.Id.Id.Id)
+        RuleFor(r => r.Id)
             .NotEmptyWithMessage()
             .PostIdMinLengthWithMessage()
             .PostIdMaxLengthWithMessage();
 
-        RuleFor(r => r.Id.UserId.Id)
+        RuleFor(r => r.UserId)
             .NotEmptyWithMessage()
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();

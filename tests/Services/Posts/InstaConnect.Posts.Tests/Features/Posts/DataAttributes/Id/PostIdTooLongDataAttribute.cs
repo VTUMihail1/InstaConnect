@@ -1,12 +1,10 @@
-﻿using InstaConnect.Posts.Tests.Features.Posts.Utilities;
-
-namespace InstaConnect.Posts.Tests.Features.Posts.DataAttributes.Id;
+﻿namespace InstaConnect.Posts.Tests.Features.Posts.DataAttributes.Id;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-public sealed class PostIdTooLongDataAttribute : LengthStringDataAttribute
+public sealed class PostIdTooLongDataAttribute : TooLongStringDataAttribute
 {
     public PostIdTooLongDataAttribute()
-        : base(PostOutOfBoundsUtilities.IdTooLong)
+        : base(PostConfigurations.IdMaxLength)
     {
     }
 }

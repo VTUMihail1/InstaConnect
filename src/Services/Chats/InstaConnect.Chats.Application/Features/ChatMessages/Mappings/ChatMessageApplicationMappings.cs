@@ -3,7 +3,6 @@ using InstaConnect.Chats.Application.Features.ChatMessages.Commands.Delete;
 using InstaConnect.Chats.Application.Features.ChatMessages.Commands.Update;
 using InstaConnect.Chats.Application.Features.ChatMessages.Queries.GetAll;
 using InstaConnect.Chats.Application.Features.ChatMessages.Queries.GetById;
-using InstaConnect.Common.Domain.Models.ValueObjects;
 
 using Mapster;
 
@@ -15,81 +14,89 @@ public class ChatMessageApplicationMappings : IRegister
     {
         config.NewConfig<GetAllChatMessagesQueryRequest, GetAllChatMessagesQuery>()
             .ConstructUsing(src => new(
-                src.Filter.Adapt<ChatMessageFilterQuery>(),
-                src.Sorting.Adapt<ChatMessageSortingQuery>(),
-                src.Pagination.Adapt<ChatMessagePaginationQuery>()));
+                                       new(
+                                           new(
+                                               new(src.ParticipantOneId),
+                                               new(src.ParticipantTwoId)),
+                                           new(src.UserId)),
+                                        new(
+                                            src.SortOrder,
+                                            src.SortProperty),
+                                        new(
+                                            src.Page,
+                                            src.PageSize)));
 
         config.NewConfig<ChatMessageCollection, GetAllChatMessagesQueryResponse>()
-            .ConstructUsing(pc => new(
-                  pc.Data.Adapt<ICollection<ChatMessageQueryResponse>>(),
-                  pc.Page,
-                  pc.PageSize,
-                  pc.TotalCount,
-                  pc.HasNextPage,
-                  pc.HasPreviousPage));
+            .ConstructUsing(src => new(src.Adapt<ChatMessageCollectionQueryResponse>(config)));
 
         config.NewConfig<GetChatMessageByIdQueryRequest, GetChatMessageByIdQuery>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<ChatMessageId>(),
-                src.SenderId.Adapt<UserId>()));
+                                       new(
+                                           new(
+                                               new(src.ParticipantOneId),
+                                               new(src.ParticipantTwoId)),
+                                           src.MessageId),
+                                       new(src.UserId)));
 
         config.NewConfig<ChatMessage, GetChatMessageByIdQueryResponse>()
-            .ConstructUsing(src => new(src.Adapt<ChatMessageQueryResponse>()));
+            .ConstructUsing(src => new(src.Adapt<ChatMessageQueryResponse>(config)));
 
         config.NewConfig<AddChatMessageCommandRequest, AddChatMessageCommand>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<ChatId>(),
-                src.SenderId.Adapt<UserId>(),
-                src.Content));
+                                       new(
+                                               new(src.ParticipantOneId),
+                                               new(src.ParticipantTwoId)),
+                                       new(src.SenderId),
+                                       src.Content));
 
         config.NewConfig<ChatMessage, AddChatMessageCommandResponse>()
-            .ConstructUsing(src => new(src.Id.Adapt<ChatMessageIdPayload>()));
+            .ConstructUsing(src => new(src.Id.Adapt<ChatMessageIdCommandResponse>(config)));
 
         config.NewConfig<UpdateChatMessageCommandRequest, UpdateChatMessageCommand>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<ChatMessageId>(),
-                src.SenderId.Adapt<UserId>(),
-                src.Content));
+                                       new(
+                                           new(
+                                               new(src.ParticipantOneId),
+                                               new(src.ParticipantTwoId)),
+                                           src.MessageId),
+                                       new(src.SenderId),
+                                       src.Content));
 
         config.NewConfig<ChatMessage, UpdateChatMessageCommandResponse>()
-            .ConstructUsing(src => new(src.Id.Adapt<ChatMessageIdPayload>()));
+            .ConstructUsing(src => new(src.Id.Adapt<ChatMessageIdCommandResponse>(config)));
 
         config.NewConfig<DeleteChatMessageCommandRequest, DeleteChatMessageCommand>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<ChatMessageId>(),
-                src.SenderId.Adapt<UserId>()));
+                                       new(
+                                           new(
+                                               new(src.ParticipantOneId),
+                                               new(src.ParticipantTwoId)),
+                                           src.MessageId),
+                                       new(src.SenderId)));
 
-        config.NewConfig<ChatMessageIdPayload, ChatMessageId>()
+        config.NewConfig<ChatMessageId, ChatMessageIdCommandResponse>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<ChatId>(),
-                src.MessageId));
-
-        config.NewConfig<ChatMessageId, ChatMessageIdPayload>()
-            .ConstructUsing(src => new(
-                src.Id.Adapt<ChatIdPayload>(),
+                src.Id.ParticipantOneId.Id,
+                src.Id.ParticipantTwoId.Id,
                 src.MessageId));
 
         config.NewConfig<ChatMessage, ChatMessageQueryResponse>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<ChatMessageIdPayload>(),
+                src.Id.Id.ParticipantOneId.Id,
+                src.Id.Id.ParticipantTwoId.Id,
+                src.Id.MessageId,
                 src.Content,
-                src.Sender.Adapt<UserQueryResponse>(),
+                src.Sender.Adapt<UserQueryResponse>(config),
                 src.CreatedAtUtc,
                 src.UpdatedAtUtc));
 
-        config.NewConfig<ChatMessageFilterQueryRequest, ChatMessageFilterQuery>()
-            .ConstructUsing(src => new(
-                src.Id.Adapt<ChatId>(),
-                src.SenderId.Adapt<UserId>()));
-
-        config.NewConfig<ChatMessageSortingQueryRequest, ChatMessageSortingQuery>()
-            .ConstructUsing(src => new(
-                src.Order,
-                src.Property));
-
-        config.NewConfig<ChatPaginationQueryRequest, ChatPaginationQuery>()
-            .ConstructUsing(src => new(
-                src.Page,
-                src.PageSize));
+        config.NewConfig<ChatMessageCollection, ChatMessageCollectionQueryResponse>()
+            .ConstructUsing(pc => new(
+                pc.Entities.Adapt<ICollection<ChatMessageQueryResponse>>(),
+                pc.Page,
+                pc.PageSize,
+                pc.TotalCount,
+                pc.HasNextPage,
+                pc.HasPreviousPage));
     }
 }

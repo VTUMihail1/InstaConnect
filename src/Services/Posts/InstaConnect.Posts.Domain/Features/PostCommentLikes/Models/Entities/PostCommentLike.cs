@@ -19,16 +19,6 @@ public class PostCommentLike : IEntity<PostCommentLikeId>
         CreatedAtUtc = createdAtUtc;
     }
 
-    public PostCommentLike(
-        PostCommentLikeId id,
-        User user,
-        DateTimeOffset createdAtUtc)
-    {
-        Id = id;
-        User = user;
-        CreatedAtUtc = createdAtUtc;
-    }
-
     public PostCommentLikeId Id { get; }
 
     public User? User { get; private set; }

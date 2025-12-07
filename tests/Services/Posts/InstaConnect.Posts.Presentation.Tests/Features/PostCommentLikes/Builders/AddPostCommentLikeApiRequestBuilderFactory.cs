@@ -2,8 +2,8 @@
 
 public class AddPostCommentLikeApiRequestBuilderFactory
 {
-    public AddPostCommentLikeApiRequestBuilder Create(Post post, PostComment postComment, User user)
+    public AddPostCommentLikeApiRequestBuilder Create(PostComment postComment, User user)
     {
-        return new(post, postComment, user);
+        return new(postComment, user);
     }
 }

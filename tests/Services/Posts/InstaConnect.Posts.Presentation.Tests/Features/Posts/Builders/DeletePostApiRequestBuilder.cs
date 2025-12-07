@@ -7,20 +7,34 @@ public class DeletePostApiRequestBuilder
 
     public DeletePostApiRequestBuilder(Post post)
     {
-        _id = post.Id;
-        _userId = post.UserId;
+        _id = post.Id.Id;
+        _userId = post.UserId.Id;
     }
 
-    public DeletePostApiRequestBuilder WithId(string id, IStringTransformer? transformer = null)
+    public DeletePostApiRequestBuilder WithId(Post post, IStringTransformer? transformer = null)
     {
-        _id = transformer.TryTransform(id);
+        _id = transformer.TryTransform(post.Id.Id);
 
         return this;
     }
 
-    public DeletePostApiRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)
+    public DeletePostApiRequestBuilder WithId(IStringTransformer transformer)
     {
-        _userId = transformer.TryTransform(userId);
+        _id = transformer.Transform(_id);
+
+        return this;
+    }
+
+    public DeletePostApiRequestBuilder WithUserId(User user, IStringTransformer? transformer = null)
+    {
+        _userId = transformer.TryTransform(user.Id.Id);
+
+        return this;
+    }
+
+    public DeletePostApiRequestBuilder WithUserId(IStringTransformer transformer)
+    {
+        _userId = transformer.Transform(_userId);
 
         return this;
     }

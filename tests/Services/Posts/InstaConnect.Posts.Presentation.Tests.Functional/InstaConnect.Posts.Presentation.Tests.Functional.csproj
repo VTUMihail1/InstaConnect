@@ -50,7 +50,6 @@
     <Using Include="InstaConnect.Posts.Application.Features.Users.Commands.Update" />
     <Using Include="InstaConnect.Posts.Application.Features.Users.Commands.Delete" />
     <Using Include="InstaConnect.Posts.Presentation.Tests.Functional.Features.Users.Utilities" />
-    <Using Include="InstaConnect.Posts.Tests.Features.Users.Assertions"/>
     <Using Include="InstaConnect.Posts.Presentation.Tests.Features.Users.Assertions"/>
     <Using Include="InstaConnect.Posts.Tests.Features.Users.Builders"/>
     <Using Include="InstaConnect.Posts.Tests.Features.Users.Utilities"/>
@@ -60,6 +59,8 @@
     <Using Include="InstaConnect.Posts.Tests.Features.Users.DataAttributes.Name" />
     <Using Include="InstaConnect.Posts.Tests.Features.Users.DataAttributes.Email" />
     <Using Include="InstaConnect.Posts.Tests.Features.Users.DataAttributes.ProfileImage" />
+    <Using Include="InstaConnect.Posts.Tests.Features.Users.DataAttributes.CreatedAtUtc" />
+    <Using Include="InstaConnect.Posts.Tests.Features.Users.DataAttributes.UpdatedAtUtc" />
   </ItemGroup>
 
   <ItemGroup Label="Posts">

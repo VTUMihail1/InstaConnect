@@ -1,8 +1,6 @@
 ﻿using InstaConnect.Chats.Infrastructure.Extensions;
 
-using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.Serializers;
 
 namespace InstaConnect.Chats.Infrastructure.Features.ChatMessages.Extensions;
 
@@ -15,11 +13,29 @@ internal static class ServiceCollectionExtensions
 
         BsonClassMap.TryRegisterClassMap<ChatMessage>(cm =>
         {
-            cm.AutoMap();
-
             cm.MapIdMember(c => c.Id);
 
-            cm.UnmapMember(c => c.Sender);
+            cm.MapMember(c => c.Id);
+            cm.MapMember(c => c.SenderId);
+
+            cm.MapMember(c => c.Content);
+            cm.MapMember(c => c.CreatedAtUtc);
+            cm.MapMember(c => c.UpdatedAtUtc);
+
+            cm.MapMember(c => c.Sender);
+
+            cm.MapCreator(c => new ChatMessage(
+                new(
+                    new(
+                        new(c.Id.Id.ParticipantOneId.Id),
+                        new(c.Id.Id.ParticipantTwoId.Id)),
+                    c.Id.MessageId),
+                new(c.SenderId.Id),
+                c.Content,
+                c.CreatedAtUtc,
+                c.UpdatedAtUtc));
+
+            cm.SetIgnoreExtraElements(true);
         });
 
         return serviceCollection;

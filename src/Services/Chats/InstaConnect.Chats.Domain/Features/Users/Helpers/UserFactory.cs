@@ -2,22 +2,16 @@
 
 internal class UserFactory : IUserFactory
 {
-    private readonly IDateTimeProvider _dateTimeProvider;
-
-    public UserFactory(IDateTimeProvider dateTimeProvider)
-    {
-        _dateTimeProvider = dateTimeProvider;
-    }
-
     public User Create(
         UserId id,
         string firstName,
         string lastName,
         Name name,
         Email email,
-        Image? profileImage)
+        Image? profileImage,
+        DateTimeOffset createdAtUtc,
+        DateTimeOffset updatedAtUtc)
     {
-        var utcNow = _dateTimeProvider.GetOffsetUtcNow();
         var user = new User(
             id,
             firstName,
@@ -25,8 +19,8 @@ internal class UserFactory : IUserFactory
             email,
             name,
             profileImage,
-            utcNow,
-            utcNow);
+            createdAtUtc,
+            updatedAtUtc);
 
         return user;
     }

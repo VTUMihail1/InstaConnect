@@ -5,15 +5,15 @@ namespace InstaConnect.Common.Tests.DataAttributes.Ints.Base;
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public abstract class IntWithMessageDataAttribute : IntDataAttribute
 {
-    public string Message { get; }
+    public IIntMessageTransformer MessageTransformer { get; }
 
-    protected IntWithMessageDataAttribute(IIntTransformer transformer, string message) : base(transformer)
+    protected IntWithMessageDataAttribute(IIntTransformer transformer, IIntMessageTransformer messageTransformer) : base(transformer)
     {
-        Message = message;
+        MessageTransformer = messageTransformer;
     }
 
     public override IEnumerable<object[]> GetData(MethodInfo testMethod)
     {
-        yield return new object[] { Transformer, Message };
+        yield return new object[] { Transformer, MessageTransformer };
     }
 }

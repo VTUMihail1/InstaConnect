@@ -5,16 +5,13 @@ internal class UserService : IUserService
 {
     private readonly IUserFactory _userFactory;
     private readonly IUserRepository _userRepository;
-    private readonly IDateTimeProvider _dateTimeProvider;
 
     public UserService(
         IUserFactory userFactory,
-        IUserRepository userRepository,
-        IDateTimeProvider dateTimeProvider)
+        IUserRepository userRepository)
     {
         _userFactory = userFactory;
         _userRepository = userRepository;
-        _dateTimeProvider = dateTimeProvider;
     }
     public async Task<User> AddAsync(AddUserCommand command, CancellationToken cancellationToken)
     {
@@ -45,7 +42,9 @@ internal class UserService : IUserService
             command.LastName,
             command.Name,
             command.Email,
-            command.ProfileImage);
+            command.ProfileImage,
+            command.CreatedAtUtc,
+            command.UpdatedAtUtc);
 
         await _userRepository.AddAsync(user, cancellationToken);
 
@@ -75,14 +74,13 @@ internal class UserService : IUserService
             throw new UserNameAlreadyExistsException(command.Name);
         }
 
-        var utcNow = _dateTimeProvider.GetOffsetUtcNow();
         existingUser!.Update(
             command.Email,
             command.FirstName,
             command.LastName,
             command.Name,
             command.ProfileImage,
-           utcNow);
+            command.UpdatedAtUtc);
         await _userRepository.UpdateAsync(existingUser, cancellationToken);
 
         return existingUser;

@@ -3,7 +3,7 @@ public class AddEmailConfirmationTokenCommandRequestValidator : AbstractValidato
 {
     public AddEmailConfirmationTokenCommandRequestValidator()
     {
-        RuleFor(r => r.Name.Value)
+        RuleFor(r => r.Name)
             .NotEmptyWithMessage()
             .UserNameMinLengthWithMessage()
             .UserNameMaxLengthWithMessage();

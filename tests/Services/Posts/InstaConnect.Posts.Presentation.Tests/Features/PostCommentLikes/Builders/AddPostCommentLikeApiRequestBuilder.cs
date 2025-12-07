@@ -6,30 +6,51 @@ public class AddPostCommentLikeApiRequestBuilder
     private string _commentId;
     private string _userId;
 
-    public AddPostCommentLikeApiRequestBuilder(Post post, PostComment postComment, User user)
+    public AddPostCommentLikeApiRequestBuilder(PostComment postComment, User user)
     {
-        _id = post.Id;
-        _commentId = postComment.Id;
-        _userId = user.Id;
+        _id = postComment.Id.Id.Id;
+        _commentId = postComment.Id.CommentId;
+        _userId = user.Id.Id;
     }
 
-    public AddPostCommentLikeApiRequestBuilder WithId(string id, IStringTransformer? transformer = null)
+    public AddPostCommentLikeApiRequestBuilder WithId(Post post, IStringTransformer? transformer = null)
     {
-        _id = transformer.TryTransform(id);
+        _id = transformer.TryTransform(post.Id.Id);
 
         return this;
     }
 
-    public AddPostCommentLikeApiRequestBuilder WithCommentId(string commentId, IStringTransformer? transformer = null)
+    public AddPostCommentLikeApiRequestBuilder WithId(IStringTransformer transformer)
     {
-        _commentId = transformer.TryTransform(commentId);
+        _id = transformer.Transform(_id);
 
         return this;
     }
 
-    public AddPostCommentLikeApiRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)
+    public AddPostCommentLikeApiRequestBuilder WithCommentId(PostComment postComment, IStringTransformer? transformer = null)
     {
-        _userId = transformer.TryTransform(userId);
+        _commentId = transformer.TryTransform(postComment.Id.CommentId);
+
+        return this;
+    }
+
+    public AddPostCommentLikeApiRequestBuilder WithCommentId(IStringTransformer transformer)
+    {
+        _commentId = transformer.Transform(_commentId);
+
+        return this;
+    }
+
+    public AddPostCommentLikeApiRequestBuilder WithUserId(User user, IStringTransformer? transformer = null)
+    {
+        _userId = transformer.TryTransform(user.Id.Id);
+
+        return this;
+    }
+
+    public AddPostCommentLikeApiRequestBuilder WithUserId(IStringTransformer transformer)
+    {
+        _userId = transformer.Transform(_userId);
 
         return this;
     }

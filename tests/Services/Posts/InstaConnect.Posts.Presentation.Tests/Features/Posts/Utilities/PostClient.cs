@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
 
+using InstaConnect.Common.Presentation.Models;
 using InstaConnect.Posts.Presentation.Features.Posts.Models.Bodies;
 
 namespace InstaConnect.Posts.Presentation.Tests.Features.Posts.Utilities;
@@ -18,7 +19,7 @@ public static class PostClient
         return response;
     }
 
-    public static async Task<ProblemDetails> GetAllPostsProblemDetailsAsync(
+    public static async Task<ApplicationProblemDetails> GetAllPostsProblemDetailsAsync(
         this HttpClient httpClient,
         GetAllPostsApiRequest request,
         CancellationToken cancellationToken)
@@ -65,7 +66,7 @@ public static class PostClient
         return response;
     }
 
-    public static async Task<ProblemDetails> GetPostByIdProblemDetailsAsync(
+    public static async Task<ApplicationProblemDetails> GetPostByIdProblemDetailsAsync(
         this HttpClient httpClient,
         GetPostByIdApiRequest request,
         CancellationToken cancellationToken)
@@ -114,7 +115,7 @@ public static class PostClient
         return response;
     }
 
-    public static async Task<ProblemDetails> AddPostProblemDetailsAsync(
+    public static async Task<ApplicationProblemDetails> AddPostProblemDetailsAsync(
         this HttpClient httpClient,
         AddPostApiRequest request,
         CancellationToken cancellationToken)
@@ -127,7 +128,7 @@ public static class PostClient
         return response!;
     }
 
-    public static async Task<ProblemDetails> AddPostProblemDetailsUnauthorizedAsync(
+    public static async Task<ApplicationProblemDetails> AddPostProblemDetailsUnauthorizedAsync(
         this HttpClient httpClient,
         AddPostApiRequest request,
         CancellationToken cancellationToken)
@@ -177,7 +178,7 @@ public static class PostClient
         return response;
     }
 
-    public static async Task<ProblemDetails> UpdatePostProblemDetailsAsync(
+    public static async Task<ApplicationProblemDetails> UpdatePostProblemDetailsAsync(
         this HttpClient httpClient,
         UpdatePostApiRequest request,
         CancellationToken cancellationToken)
@@ -190,7 +191,7 @@ public static class PostClient
         return response!;
     }
 
-    public static async Task<ProblemDetails> UpdatePostProblemDetailsUnauthorizedAsync(
+    public static async Task<ApplicationProblemDetails> UpdatePostProblemDetailsUnauthorizedAsync(
         this HttpClient httpClient,
         UpdatePostApiRequest request,
         CancellationToken cancellationToken)
@@ -240,7 +241,7 @@ public static class PostClient
         return response;
     }
 
-    public static async Task<ProblemDetails> DeletePostProblemDetailsAsync(
+    public static async Task<ApplicationProblemDetails> DeletePostProblemDetailsAsync(
         this HttpClient httpClient,
         DeletePostApiRequest request,
         CancellationToken cancellationToken)
@@ -253,7 +254,7 @@ public static class PostClient
         return response!;
     }
 
-    public static async Task<ProblemDetails> DeletePostProblemDetailsUnauthorizedAsync(
+    public static async Task<ApplicationProblemDetails> DeletePostProblemDetailsUnauthorizedAsync(
         this HttpClient httpClient,
         DeletePostApiRequest request,
         CancellationToken cancellationToken)

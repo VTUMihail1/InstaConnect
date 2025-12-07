@@ -8,61 +8,91 @@ public class UserUpdatedEventRequestBuilder
     private string _lastName;
     private string _email;
     private string? _profileImage;
+    private DateTimeOffset _updatedAtUtc;
 
     public UserUpdatedEventRequestBuilder(User user)
     {
-        _id = user.Id;
+        _id = user.Id.Id;
         _name = UserDataFaker.GetName();
         _firstName = UserDataFaker.GetFirstName();
         _lastName = UserDataFaker.GetLastName();
         _email = UserDataFaker.GetEmail();
         _profileImage = UserDataFaker.GetProfileImage();
+        _updatedAtUtc = UserDataFaker.GetUpdatedAtUtc();
     }
 
-    public UserUpdatedEventRequestBuilder WithId(string id, IStringTransformer? transformer = null)
+    public UserUpdatedEventRequestBuilder WithId(User user, IStringTransformer? transformer = null)
     {
-        _id = transformer.TryTransform(id);
+        _id = transformer.TryTransform(user.Id.Id);
 
         return this;
     }
 
-    public UserUpdatedEventRequestBuilder WithName(string name, IStringTransformer? transformer = null)
+    public UserUpdatedEventRequestBuilder WithId(IStringTransformer transformer)
     {
-        _name = transformer.TryTransform(name);
+        _id = transformer.Transform(_id);
 
         return this;
     }
 
-    public UserUpdatedEventRequestBuilder WithFirstName(string firstName, IStringTransformer? transformer = null)
+    public UserUpdatedEventRequestBuilder WithName(User user, IStringTransformer? transformer = null)
     {
-        _firstName = transformer.TryTransform(firstName);
+        _name = transformer.TryTransform(user.Name.Value);
 
         return this;
     }
 
-    public UserUpdatedEventRequestBuilder WithLastName(string lastName, IStringTransformer? transformer = null)
+    public UserUpdatedEventRequestBuilder WithName(IStringTransformer transformer)
     {
-        _lastName = transformer.TryTransform(lastName);
+        _name = transformer.Transform(_name);
 
         return this;
     }
 
-    public UserUpdatedEventRequestBuilder WithEmail(string email, IStringTransformer? transformer = null)
+    public UserUpdatedEventRequestBuilder WithFirstName(IStringTransformer transformer)
     {
-        _email = transformer.TryTransform(email);
+        _firstName = transformer.Transform(_firstName);
 
         return this;
     }
 
-    public UserUpdatedEventRequestBuilder WithProfileImage(string? profileImage, IStringTransformer? transformer = null)
+    public UserUpdatedEventRequestBuilder WithLastName(IStringTransformer transformer)
     {
-        _profileImage = transformer.TryTransform(profileImage!);
+        _lastName = transformer.Transform(_lastName);
+
+        return this;
+    }
+
+    public UserUpdatedEventRequestBuilder WithEmail(User user, IStringTransformer? transformer = null)
+    {
+        _email = transformer.TryTransform(user.Email.Value);
+
+        return this;
+    }
+
+    public UserUpdatedEventRequestBuilder WithEmail(IStringTransformer transformer)
+    {
+        _email = transformer.Transform(_email);
+
+        return this;
+    }
+
+    public UserUpdatedEventRequestBuilder WithProfileImage(IStringTransformer transformer)
+    {
+        _profileImage = transformer.Transform(_profileImage ?? string.Empty);
+
+        return this;
+    }
+
+    public UserUpdatedEventRequestBuilder WithUpdatedAtUtc(IDateTimeOffsetTransformer transformer)
+    {
+        _updatedAtUtc = transformer.Transform(_updatedAtUtc);
 
         return this;
     }
 
     public UserUpdatedEventRequest Build()
     {
-        return new UserUpdatedEventRequest(_id, _name, _email, _firstName, _lastName, _profileImage);
+        return new UserUpdatedEventRequest(_id, _name, _email, _firstName, _lastName, _profileImage, _updatedAtUtc);
     }
 }

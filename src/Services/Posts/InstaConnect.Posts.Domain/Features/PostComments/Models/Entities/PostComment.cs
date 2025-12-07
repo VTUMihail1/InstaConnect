@@ -25,39 +25,6 @@ public class PostComment : IEntity<PostCommentId>
         UpdatedAtUtc = updatedAtUtc;
     }
 
-    public PostComment(
-        PostCommentId id,
-        string content,
-        User user,
-        DateTimeOffset createdAtUtc,
-        DateTimeOffset updatedAtUtc)
-    {
-        Id = id;
-        Content = content;
-        UserId = user.Id;
-        User = user;
-        Likes = [];
-        CreatedAtUtc = createdAtUtc;
-        UpdatedAtUtc = updatedAtUtc;
-    }
-
-    public PostComment(
-        PostCommentId id,
-        string content,
-        User user,
-        IList<PostCommentLike> likes,
-        DateTimeOffset createdAtUtc,
-        DateTimeOffset updatedAtUtc)
-    {
-        Id = id;
-        Content = content;
-        UserId = user.Id;
-        User = user;
-        Likes = likes;
-        CreatedAtUtc = createdAtUtc;
-        UpdatedAtUtc = updatedAtUtc;
-    }
-
     public PostCommentId Id { get; }
 
     public string Content { get; private set; }

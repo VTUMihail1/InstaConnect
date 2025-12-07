@@ -1,12 +1,10 @@
-﻿using InstaConnect.Posts.Tests.Features.Users.Utilities;
-
-namespace InstaConnect.Posts.Tests.Features.Users.DataAttributes.Email;
+﻿namespace InstaConnect.Posts.Tests.Features.Users.DataAttributes.Email;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-public sealed class UserEmailTooLongWithMessageDataAttribute : LengthStringWithMessageDataAttribute
+public sealed class UserEmailTooLongWithMessageDataAttribute : TooLongStringWithMessageDataAttribute
 {
     public UserEmailTooLongWithMessageDataAttribute()
-        : base(UserOutOfBoundsUtilities.EmailTooLong, UserErrorMessages.GetEmailTooLong(UserOutOfBoundsUtilities.EmailTooLong))
+        : base(UserConfigurations.EmailMaxLength)
     {
     }
 }

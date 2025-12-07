@@ -15,11 +15,11 @@ public class PostLikeUserIncludeProperty : IPostLikeIncludeProperty
     public IAggregateFluent<PostLike> Include(IAggregateFluent<PostLike> pipeline)
     {
         return pipeline
-            .Lookup<PostLike, PostLike, PostLike>(
-                _postsContext.PostLikes,
+            .IncludeOne(
+                _postsContext.Users,
                 p => p.Id.UserId,
                 u => u.Id,
-                p => p.User
+                p => p.User!
             );
     }
 }

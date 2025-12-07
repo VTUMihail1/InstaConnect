@@ -5,26 +5,27 @@ public static class PostCommentLikeMockSetups
         this IApplicationSender applicationSender,
         GetAllPostCommentLikesApiRequest request,
         PostCommentLike postCommentLike,
-        User user,
         CancellationToken cancellationToken)
     {
 
         var postCommentLikeQueryResponse = new PostCommentLikeQueryResponse(
-            postCommentLike.Id,
-            postCommentLike.CommentId,
+            postCommentLike.Id.CommentId.Id.Id,
+            postCommentLike.Id.CommentId.CommentId,
             new(
-                user.Id,
-                user.Name,
-                user.ProfileImage));
+                postCommentLike.User!.Id.Id,
+                postCommentLike.User.Name.Value,
+                postCommentLike.User.ProfileImage?.Url),
+            postCommentLike.CreatedAtUtc);
         var postCommentLikeQueryResponses = new List<PostCommentLikeQueryResponse>() { postCommentLikeQueryResponse };
-
-        var response = new GetAllPostCommentLikesQueryResponse(
+        var postCommentLikeCollectionQueryResponse = new PostCommentLikeCollectionQueryResponse(
             postCommentLikeQueryResponses,
-            request.Pagination.Page,
-            request.Pagination.PageSize,
+            request.Page,
+            request.PageSize,
             postCommentLikeQueryResponses.Count,
             false,
             false);
+
+        var response = new GetAllPostCommentLikesQueryResponse(postCommentLikeCollectionQueryResponse);
 
         applicationSender
             .SendAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesQueryRequest(request), cancellationToken)
@@ -35,16 +36,17 @@ public static class PostCommentLikeMockSetups
         this IApplicationSender applicationSender,
         GetPostCommentLikeByIdApiRequest request,
         PostCommentLike postCommentLike,
-        User user,
         CancellationToken cancellationToken)
     {
         var response = new GetPostCommentLikeByIdQueryResponse(
-            new(postCommentLike.Id,
-                postCommentLike.CommentId,
+            new(
+                postCommentLike.Id.CommentId.Id.Id,
+                postCommentLike.Id.CommentId.CommentId,
                 new(
-                    user.Id,
-                    user.Name,
-                    user.ProfileImage)));
+                    postCommentLike.User!.Id.Id,
+                    postCommentLike.User.Name.Value,
+                    postCommentLike.User.ProfileImage?.Url),
+                postCommentLike.CreatedAtUtc));
 
         applicationSender
             .SendAsync(PostCommentLikeMatcher.IsGetPostCommentLikeByIdQueryRequest(request), cancellationToken)
@@ -57,7 +59,7 @@ public static class PostCommentLikeMockSetups
         PostCommentLike postCommentLike,
         CancellationToken cancellationToken)
     {
-        var response = new AddPostCommentLikeCommandResponse(postCommentLike.Id, postCommentLike.CommentId, postCommentLike.UserId, postCommentLike.CreatedAtUtc, postCommentLike.UpdatedAt);
+        var response = new AddPostCommentLikeCommandResponse(new(postCommentLike.Id.CommentId.Id.Id, postCommentLike.Id.CommentId.CommentId, postCommentLike.Id.UserId.Id));
 
         applicationSender
             .SendAsync(PostCommentLikeMatcher.IsAddPostCommentLikeCommandRequest(request), cancellationToken)

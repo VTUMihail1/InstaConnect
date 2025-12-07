@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Domain.Extensions;
-
-namespace InstaConnect.Identity.Domain.Features.Users.Models.Entities;
+﻿namespace InstaConnect.Identity.Domain.Features.Users.Models.Entities;
 
 public class User : IEntity<UserId>
 {

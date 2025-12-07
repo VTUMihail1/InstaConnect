@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Domain.Extensions;
-
-namespace InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
+﻿namespace InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
 
 public class Post : IEntity<PostId>
 {
@@ -28,46 +26,6 @@ public class Post : IEntity<PostId>
         UserId = userId;
         Likes = [];
         Comments = [];
-        CreatedAtUtc = createdAtUtc;
-        UpdatedAtUtc = updatedAtUtc;
-    }
-
-    public Post(
-        PostId id,
-        string title,
-        string content,
-        User user,
-        DateTimeOffset createdAtUtc,
-        DateTimeOffset updatedAtUtc)
-    {
-        Id = id;
-        Title = title;
-        Content = content;
-        UserId = user.Id;
-        User = user;
-        Likes = [];
-        Comments = [];
-        CreatedAtUtc = createdAtUtc;
-        UpdatedAtUtc = updatedAtUtc;
-    }
-
-    public Post(
-        PostId id,
-        string title,
-        string content,
-        User user,
-        IList<PostLike> likes,
-        IList<PostComment> comments,
-        DateTimeOffset createdAtUtc,
-        DateTimeOffset updatedAtUtc)
-    {
-        Id = id;
-        Title = title;
-        Content = content;
-        UserId = user.Id;
-        User = user;
-        Likes = likes;
-        Comments = comments;
         CreatedAtUtc = createdAtUtc;
         UpdatedAtUtc = updatedAtUtc;
     }

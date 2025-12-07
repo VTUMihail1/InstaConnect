@@ -19,6 +19,7 @@
     <Using Include="InstaConnect.Common.Domain.Models.ValueObjects" />
     <Using Include="InstaConnect.Common.Infrastructure.Abstractions" />
     <Using Include="InstaConnect.Common.Infrastructure.Extensions" />
+    <Using Include="InstaConnect.Identity.Infrastructure.Abstractions"/>
   </ItemGroup>
 
   <ItemGroup Label="Users">
@@ -28,7 +29,7 @@
     <Using Include="InstaConnect.Identity.Domain.Features.Users.Models.ValueObjects" />
     <Using Include="InstaConnect.Identity.Domain.Features.Users.Models.Requests" />
     <Using Include="InstaConnect.Identity.Domain.Features.Users.Models.Responses" />
-    <Using Include="InstaConnect.Identity.Infrastructure.Features.Users.Models" />
+    <Using Include="InstaConnect.Identity.Application.Features.Users.Models" />
     <Using Include="InstaConnect.Identity.Infrastructure.Features.Users.Abstractions" />
   </ItemGroup>
   
@@ -38,7 +39,6 @@
     <Using Include="InstaConnect.Identity.Domain.Features.UserClaims.Models.Entities" />
     <Using Include="InstaConnect.Identity.Domain.Features.UserClaims.Models.ValueObjects" />
     <Using Include="InstaConnect.Identity.Domain.Features.UserClaims.Models.Requests" />
-    <Using Include="InstaConnect.Identity.Infrastructure.Features.UserClaims.Models" />
     <Using Include="InstaConnect.Identity.Infrastructure.Features.UserClaims.Abstractions" />
   </ItemGroup>
 
@@ -49,7 +49,7 @@
     <Using Include="InstaConnect.Identity.Domain.Features.RefreshTokens.Models.ValueObjects" />
     <Using Include="InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Requests" />
     <Using Include="InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Responses" />
-    <Using Include="InstaConnect.Identity.Infrastructure.Features.RefreshTokens.Models" />
+    <Using Include="InstaConnect.Identity.Application.Features.RefreshTokens.Models" />
     <Using Include="InstaConnect.Identity.Infrastructure.Features.RefreshTokens.Abstractions" />
   </ItemGroup>
 
@@ -59,7 +59,6 @@
     <Using Include="InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entities" />
     <Using Include="InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.ValueObjects" />
     <Using Include="InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Requests" />
-    <Using Include="InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Models" />
     <Using Include="InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Abstractions" />
   </ItemGroup>
 
@@ -69,7 +68,6 @@
     <Using Include="InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entities" />
     <Using Include="InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.ValueObjects" />
     <Using Include="InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Requests" />
-    <Using Include="InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Models" />
     <Using Include="InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Abstractions" />
   </ItemGroup>
 

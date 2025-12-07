@@ -3,7 +3,7 @@ public class IssueRefreshTokenCommandRequestValidator : AbstractValidator<IssueR
 {
     public IssueRefreshTokenCommandRequestValidator()
     {
-        RuleFor(r => r.Name.Value)
+        RuleFor(r => r.Name)
             .NotEmptyWithMessage()
             .UserNameMinLengthWithMessage()
             .UserNameMaxLengthWithMessage();

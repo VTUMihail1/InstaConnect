@@ -1,6 +1,4 @@
-﻿using InstaConnect.Identity.Events.Features.Users;
-
-using Mapster;
+﻿using Mapster;
 
 namespace InstaConnect.Posts.Domain.Features.Posts.Mappings;
 
@@ -10,22 +8,22 @@ internal class PostDomainMappings : IRegister
     {
         config.NewConfig<Post, PostAddedEventRequest>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<PostIdEventPayload>(),
+                src.Id.Id,
                 src.Title,
                 src.Content,
-                src.UserId.Adapt<UserIdEventPayload>()));
+                src.UserId.Id,
+                src.CreatedAtUtc,
+                src.UpdatedAtUtc));
 
         config.NewConfig<Post, PostUpdatedEventRequest>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<PostIdEventPayload>(),
+                src.Id.Id,
                 src.Title,
                 src.Content,
-                src.UserId.Adapt<UserIdEventPayload>()));
+                src.UserId.Id,
+                src.UpdatedAtUtc));
 
         config.NewConfig<Post, PostDeletedEventRequest>()
-            .ConstructUsing(src => new(src.Id.Adapt<PostIdEventPayload>()));
-
-        config.NewConfig<PostId, PostIdEventPayload>()
-            .ConstructUsing(src => new(src.Id));
+            .ConstructUsing(src => new(src.Id.Id));
     }
 }

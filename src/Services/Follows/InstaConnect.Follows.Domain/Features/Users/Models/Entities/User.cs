@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Domain.Extensions;
-
-namespace InstaConnect.Follows.Domain.Features.Users.Models.Entities;
+﻿namespace InstaConnect.Follows.Domain.Features.Users.Models.Entities;
 
 public class User : IEntity<UserId>
 {
@@ -35,30 +33,6 @@ public class User : IEntity<UserId>
         FollowingFollows = [];
         CreatedAtUtc = createdAtUtc;
         UpdatedAtUtc = updatedAtUtc;
-    }
-
-    public User(
-        UserId id,
-        string firstName,
-        string lastName,
-        Email email,
-        Name name,
-        Image? profileImage,
-        DateTimeOffset createdAtUtc,
-        DateTimeOffset updatedAtUtc,
-        ICollection<Follow> followerFollows,
-        ICollection<Follow> followingFollows)
-    {
-        Id = id;
-        FirstName = firstName;
-        LastName = lastName;
-        Email = email;
-        Name = name;
-        ProfileImage = profileImage;
-        CreatedAtUtc = createdAtUtc;
-        UpdatedAtUtc = updatedAtUtc;
-        FollowerFollows = followerFollows;
-        FollowingFollows = followingFollows;
     }
 
     public UserId Id { get; }

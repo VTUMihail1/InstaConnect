@@ -26,110 +26,94 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationIntegr
     [Theory]
     [UserIdTooLongWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenUserIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Build();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Assert
-        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
+        await ApplicationSender.ShouldThrowInvalidValidationExceptionForUserIdAsync(
+            messageTransformer, request, CancellationToken);
     }
 
     [Theory]
     [UserNameTooLongWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenUserNameIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Build();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var request = _requestBuilder.WithUserName(transformer).Build();
 
         // Assert
-        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
+        await ApplicationSender.ShouldThrowInvalidValidationExceptionForUserNameAsync(
+            messageTransformer, request, CancellationToken);
     }
 
     [Theory]
     [PostTitleTooLongWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenTitleIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithTitle(_request.Filter.Title, transformer).Build();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var request = _requestBuilder.WithTitle(transformer).Build();
 
         // Assert
-        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
+        await ApplicationSender.ShouldThrowInvalidValidationExceptionForTitleAsync(
+            messageTransformer, request, CancellationToken);
     }
 
     [Theory]
     [SortOrderEmptyWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenSortOrderIsInvalid(
-        IEnumTransformer<CommonSortOrder> transformer, string errorMessage)
+        IEnumTransformer<CommonSortOrder> transformer, IEnumMessageTransformer<CommonSortOrder> messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortOrder(_request.Sorting.Order, transformer).Build();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var request = _requestBuilder.WithSortOrder(transformer).Build();
 
         // Assert
-        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
+        await ApplicationSender.ShouldThrowInvalidValidationExceptionForSortOrderAsync(
+            messageTransformer, request, CancellationToken);
     }
 
     [Theory]
     [PostSortPropertyEmptyWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenSortPropertyIsInvalid(
-        IEnumTransformer<PostSortProperty> transformer, string errorMessage)
+        IEnumTransformer<PostSortProperty> transformer, IEnumMessageTransformer<PostSortProperty> messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(_request.Sorting.Property, transformer).Build();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var request = _requestBuilder.WithSortProperty(transformer).Build();
 
         // Assert
-        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
+        await ApplicationSender.ShouldThrowInvalidValidationExceptionForSortPropertyAsync(
+            messageTransformer, request, CancellationToken);
     }
 
     [Theory]
-    [PostPageEmptyWithMessageData]
     [PostPageTooSmallWithMessageData]
     [PostPageTooLargeWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenPageIsInvalid(
-        IIntTransformer transformer, string errorMessage)
+        IIntTransformer transformer, IIntMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithPage(_request.Pagination.Page, transformer).Build();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var request = _requestBuilder.WithPage(transformer).Build();
 
         // Assert
-        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
+        await ApplicationSender.ShouldThrowInvalidValidationExceptionForPageAsync(
+            messageTransformer, request, CancellationToken);
     }
 
     [Theory]
-    [PostPageSizeEmptyWithMessageData]
     [PostPageSizeTooSmallWithMessageData]
     [PostPageSizeTooLargeWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenPageSizeIsInvalid(
-        IIntTransformer transformer, string errorMessage)
+        IIntTransformer transformer, IIntMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithPageSize(_request.Pagination.PageSize, transformer).Build();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var request = _requestBuilder.WithPageSize(transformer).Build();
 
         // Assert
-        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
+        await ApplicationSender.ShouldThrowInvalidValidationExceptionForPageSizeAsync(
+            messageTransformer, request, CancellationToken);
     }
 
     [Fact]
@@ -150,7 +134,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationIntegr
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
@@ -167,7 +151,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationIntegr
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Build();
+        var request = _requestBuilder.WithUserName(transformer).Build();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
@@ -184,7 +168,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationIntegr
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithTitle(_request.Filter.Title, transformer).Build();
+        var request = _requestBuilder.WithTitle(transformer).Build();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);

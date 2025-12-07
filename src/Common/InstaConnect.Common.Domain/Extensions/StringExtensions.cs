@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace InstaConnect.Common.Domain.Extensions;
 public static class StringExtensions
@@ -19,6 +20,14 @@ public static class StringExtensions
                      .ToLowerCurrentCulture();
 
         return result;
+    }
+
+    public static string ToSpaceBetweenWordsCase(this string str)
+    {
+        const string OldCharsRegex = "([a-z])([A-Z])";
+        const string NewCharsRegex = "$1 $2";
+
+        return Regex.Replace(str, OldCharsRegex, NewCharsRegex);
     }
 
     public static string ToCamelCase(this string str)

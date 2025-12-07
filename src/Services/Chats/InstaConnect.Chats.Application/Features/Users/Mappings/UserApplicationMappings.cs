@@ -1,55 +1,54 @@
 ﻿using InstaConnect.Chats.Application.Features.Users.Commands.Add;
 using InstaConnect.Chats.Application.Features.Users.Commands.Delete;
 using InstaConnect.Chats.Application.Features.Users.Commands.Update;
-using InstaConnect.Common.Application.Models;
-using InstaConnect.Common.Domain.Models.ValueObjects;
-using InstaConnect.Follows.Domain.Features.Users.Models.ValueObjects;
+using InstaConnect.Common.Domain.Extensions;
 
 using Mapster;
 
 namespace InstaConnect.Chats.Application.Features.Users.Mappings;
 
-public class UserApplicationMappings : IRegister
+internal class UserApplicationMappings : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
         config.NewConfig<AddUserCommandRequest, AddUserCommand>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<UserId>(),
+                new(src.Id),
                 src.FirstName,
                 src.LastName,
-                src.Name.Adapt<Name>(),
-                src.Email.Adapt<Email>(),
-                src.ProfileImage.Adapt<Image>()));
+                new(src.Name),
+                new(src.Email),
+                new(src.ProfileImageUrl),
+                src.CreatedAtUtc,
+                src.UpdatedAtUtc));
 
         config.NewConfig<User, AddUserCommandResponse>()
-            .ConstructUsing(src => new(src.Id.Adapt<UserIdPayload>()));
+            .ConstructUsing(src => new(src.Id.Adapt<UserIdCommandResponse>(config)));
 
         config.NewConfig<UpdateUserCommandRequest, UpdateUserCommand>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<UserId>(),
+                new(src.Id),
                 src.FirstName,
                 src.LastName,
-                src.Name.Adapt<Name>(),
-                src.Email.Adapt<Email>(),
-                src.ProfileImage.Adapt<Image>()));
+                new(src.Name),
+                new(src.Email),
+                new(src.ProfileImageUrl),
+                src.UpdatedAtUtc));
 
         config.NewConfig<User, UpdateUserCommandResponse>()
-            .ConstructUsing(src => new(src.Id.Adapt<UserIdPayload>()));
+            .ConstructUsing(src => new(src.Id.Adapt<UserIdCommandResponse>(config)));
 
         config.NewConfig<DeleteUserCommandRequest, DeleteUserCommand>()
-            .ConstructUsing(src => new(src.Id.Adapt<UserId>()));
+            .ConstructUsing(src => new(
+                                       new(src.Id)));
 
-        config.NewConfig<UserIdPayload, UserId>()
-            .ConstructUsing(src => new(src.Id));
-
-        config.NewConfig<UserId, UserIdPayload>()
+        config.NewConfig<UserId, UserIdCommandResponse>()
             .ConstructUsing(src => new(src.Id));
 
         config.NewConfig<User, UserQueryResponse>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<UserIdPayload>(),
-                src.Name.Adapt<NamePayload>(),
-                src.ProfileImage.Adapt<ImagePayload>()));
+                src.Id.Id,
+                src.Name.Value,
+                src.ProfileImage.IsNull() ? null : src.ProfileImage!.Url));
     }
 }

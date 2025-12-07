@@ -14,84 +14,78 @@ internal class ChatMessagePresentationMappings : IRegister
     {
         config.NewConfig<GetAllChatMessagesApiRequest, GetAllChatMessagesQueryRequest>()
             .ConstructUsing(src => new(
-                                       new(
-                                           new(
-                                               new(src.ParticipantOneId),
-                                               new(src.ParticipantTwoId)),
-                                           new(src.SenderId)),
-                                       new(src.SortOrder, src.SortProperty),
-                                       new(src.Page, src.PageSize)));
+                src.ParticipantOneId,
+                src.ParticipantTwoId,
+                src.UserId,
+                src.SortOrder,
+                src.SortProperty,
+                src.Page,
+                src.PageSize));
 
         config.NewConfig<GetAllChatMessagesQueryResponse, GetAllChatMessagesApiResponse>()
-            .ConstructUsing(pc => new(
-                  pc.Data.Adapt<ICollection<ChatMessageApiResponse>>(),
-                  pc.Page,
-                  pc.PageSize,
-                  pc.TotalCount,
-                  pc.HasNextPage,
-                  pc.HasPreviousPage));
+            .ConstructUsing(src => new(src.Response.Adapt<ChatMessageCollectionApiResponse>(config)));
 
         config.NewConfig<GetChatMessageByIdApiRequest, GetChatMessageByIdQueryRequest>()
             .ConstructUsing(src => new(
-                                       new(
-                                           new(
-                                               new(src.ParticipantOneId),
-                                               new(src.ParticipantTwoId)),
-                                           src.MessageId),
-                                       new(src.SenderId)));
+                src.ParticipantOneId,
+                src.ParticipantTwoId,
+                src.MessageId,
+                src.UserId));
 
         config.NewConfig<GetChatMessageByIdQueryResponse, GetChatMessageByIdApiResponse>()
-            .ConstructUsing(src => new(src.Data.Adapt<ChatMessageApiResponse>()));
+            .ConstructUsing(src => new(src.Response.Adapt<ChatMessageApiResponse>(config)));
 
         config.NewConfig<AddChatMessageApiRequest, AddChatMessageCommandRequest>()
             .ConstructUsing(src => new(
-                                       new(
-                                           new(src.ParticipantOneId),
-                                           new(src.ParticipantTwoId)),
-                                       new(src.SenderId),
-                                   src.Body.Content));
+                src.ParticipantOneId,
+                src.ParticipantTwoId,
+                src.SenderId,
+                src.Body.Content));
 
         config.NewConfig<AddChatMessageCommandResponse, AddChatMessageApiResponse>()
-            .ConstructUsing(src => new(src.Id.Adapt<ChatMessageIdApiPayload>()));
+            .ConstructUsing(src => new(src.Response.Adapt<ChatMessageIdApiResponse>(config)));
 
         config.NewConfig<UpdateChatMessageApiRequest, UpdateChatMessageCommandRequest>()
             .ConstructUsing(src => new(
-                                       new(
-                                           new(
-                                               new(src.ParticipantOneId),
-                                               new(src.ParticipantTwoId)),
-                                           src.MessageId),
-                                       new(src.SenderId),
-                                       src.Body.Content));
+                src.ParticipantOneId,
+                src.ParticipantTwoId,
+                src.MessageId,
+                src.SenderId,
+                src.Body.Content));
 
         config.NewConfig<UpdateChatMessageCommandResponse, UpdateChatMessageApiResponse>()
-            .ConstructUsing(src => new(src.Id.Adapt<ChatMessageIdApiPayload>()));
+            .ConstructUsing(src => new(src.Response.Adapt<ChatMessageIdApiResponse>(config)));
 
         config.NewConfig<DeleteChatMessageApiRequest, DeleteChatMessageCommandRequest>()
             .ConstructUsing(src => new(
-                                       new(
-                                           new(
-                                               new(src.ParticipantOneId),
-                                               new(src.ParticipantTwoId)),
-                                           src.MessageId),
-                                       new(src.SenderId)));
+                src.ParticipantOneId,
+                src.ParticipantTwoId,
+                src.MessageId,
+                src.SenderId));
 
-        config.NewConfig<ChatMessageIdPayload, ChatMessageIdApiPayload>()
+        config.NewConfig<ChatMessageIdCommandResponse, ChatMessageIdApiResponse>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<ChatIdApiPayload>(),
-                src.MessageId));
-
-        config.NewConfig<ChatMessageIdApiPayload, ChatMessageIdPayload>()
-            .ConstructUsing(src => new(
-                src.Id.Adapt<ChatIdPayload>(),
+                src.ParticipantOneId,
+                src.ParticipantTwoId,
                 src.MessageId));
 
         config.NewConfig<ChatMessageQueryResponse, ChatMessageApiResponse>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<ChatMessageIdApiPayload>(),
+                src.ParticipantOneId,
+                src.ParticipantTwoId,
+                src.MessageId,
                 src.Content,
-                src.Sender.Adapt<UserApiResponse>(),
+                src.Sender.Adapt<UserApiResponse>(config),
                 src.CreatedAtUtc,
                 src.UpdatedAtUtc));
+
+        config.NewConfig<ChatMessageCollectionQueryResponse, ChatMessageCollectionApiResponse>()
+            .ConstructUsing(src => new(
+                  src.Entities.Adapt<ICollection<ChatMessageApiResponse>>(config),
+                  src.Page,
+                  src.PageSize,
+                  src.TotalCount,
+                  src.HasNextPage,
+                  src.HasPreviousPage));
     }
 }

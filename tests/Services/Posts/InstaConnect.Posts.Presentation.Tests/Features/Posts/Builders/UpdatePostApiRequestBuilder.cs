@@ -9,36 +9,50 @@ public class UpdatePostApiRequestBuilder
 
     public UpdatePostApiRequestBuilder(Post post)
     {
-        _id = post.Id;
-        _userId = post.UserId;
+        _id = post.Id.Id;
+        _userId = post.UserId.Id;
         _title = PostDataFaker.GetTitle();
         _content = PostDataFaker.GetContent();
     }
 
-    public UpdatePostApiRequestBuilder WithId(string id, IStringTransformer? transformer = null)
+    public UpdatePostApiRequestBuilder WithId(Post post, IStringTransformer? transformer = null)
     {
-        _id = transformer.TryTransform(id);
+        _id = transformer.TryTransform(post.Id.Id);
 
         return this;
     }
 
-    public UpdatePostApiRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)
+    public UpdatePostApiRequestBuilder WithId(IStringTransformer transformer)
     {
-        _userId = transformer.TryTransform(userId);
+        _id = transformer.Transform(_id);
 
         return this;
     }
 
-    public UpdatePostApiRequestBuilder WithTitle(string title, IStringTransformer? transformer = null)
+    public UpdatePostApiRequestBuilder WithUserId(User user, IStringTransformer? transformer = null)
     {
-        _title = transformer.TryTransform(title);
+        _userId = transformer.TryTransform(user.Id.Id);
 
         return this;
     }
 
-    public UpdatePostApiRequestBuilder WithContent(string content, IStringTransformer? transformer = null)
+    public UpdatePostApiRequestBuilder WithUserId(IStringTransformer transformer)
     {
-        _content = transformer.TryTransform(content);
+        _userId = transformer.Transform(_userId);
+
+        return this;
+    }
+
+    public UpdatePostApiRequestBuilder WithTitle(IStringTransformer transformer)
+    {
+        _title = transformer.Transform(_title);
+
+        return this;
+    }
+
+    public UpdatePostApiRequestBuilder WithContent(IStringTransformer transformer)
+    {
+        _content = transformer.Transform(_content);
 
         return this;
     }

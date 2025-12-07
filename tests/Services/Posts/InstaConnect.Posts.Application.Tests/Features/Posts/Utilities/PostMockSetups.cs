@@ -5,14 +5,13 @@ public static class PostMockSetups
         this IPostService postService,
         GetAllPostsQueryRequest request,
         Post post,
-        User user,
         CancellationToken cancellationToken)
     {
         var posts = new List<Post>() { post };
         var response = new PostCollection(
             posts,
-            request.Pagination.Page,
-            request.Pagination.PageSize,
+            request.Page,
+            request.PageSize,
             posts.Count,
             false,
             false);
@@ -26,7 +25,6 @@ public static class PostMockSetups
         this IPostService postService,
         GetPostByIdQueryRequest request,
         Post post,
-        User user,
         CancellationToken cancellationToken)
     {
         postService

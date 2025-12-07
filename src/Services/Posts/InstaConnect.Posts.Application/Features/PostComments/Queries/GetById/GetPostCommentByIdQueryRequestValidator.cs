@@ -4,12 +4,12 @@ public class GetPostCommentByIdQueryRequestValidator : AbstractValidator<GetPost
 {
     public GetPostCommentByIdQueryRequestValidator()
     {
-        RuleFor(r => r.Id.Id.Id)
+        RuleFor(r => r.Id)
             .NotEmptyWithMessage()
             .PostIdMinLengthWithMessage()
             .PostIdMaxLengthWithMessage();
 
-        RuleFor(r => r.Id.CommentId)
+        RuleFor(r => r.CommentId)
             .NotEmptyWithMessage()
             .PostCommentIdMinLengthWithMessage()
             .PostCommentIdMaxLengthWithMessage();

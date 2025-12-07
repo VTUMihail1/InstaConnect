@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.Users.EventHandlers;
+﻿using InstaConnect.Posts.Tests.Features.Users.Assertions;
+
+namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.Users.EventHandlers;
 
 public class AddUserPresentationTests : BaseUserPresentationFunctionalTest
 {
@@ -10,256 +12,273 @@ public class AddUserPresentationTests : BaseUserPresentationFunctionalTest
         : base(webApplicationFactory)
     {
         _requestBuilderFactory = new();
-        _requestBuilder = _requestBuilderFactory.Create();
+        _requestBuilder = _requestBuilderFactory.Create(User);
         _request = _requestBuilder.Build();
     }
 
-    protected override async Task OnInitializeAsync()
-    {
-        await Task.CompletedTask;
-    }
-
     [Theory]
-    [UserIdNullWithMessageData]
-    [UserIdEmptyWithMessageData]
-    [UserIdTooShortWithMessageData]
-    [UserIdTooLongWithMessageData]
-    public async Task SendAsync_ShouldHaveErrorMessage_WhenIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+    [UserIdNullData]
+    [UserIdEmptyData]
+    [UserIdTooShortData]
+    [UserIdTooLongData]
+    public async Task PublishAsync_ShouldFaultUserAddedEvent_WhenIdIsInvalid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
-        var eventWasFaulted = await EventHarness.HasFaultedUserAddedEventRequestAsync(request, errorMessage, CancellationToken);
 
         // Assert
-        eventWasFaulted.ShouldBeTrue();
+        await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
     }
 
     [Theory]
-    [UserNameNullWithMessageData]
-    [UserNameEmptyWithMessageData]
-    [UserNameTooShortWithMessageData]
-    [UserNameTooLongWithMessageData]
-    public async Task SendAsync_ShouldHaveErrorMessage_WhenNameIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+    [UserNameNullData]
+    [UserNameEmptyData]
+    [UserNameTooShortData]
+    [UserNameTooLongData]
+    public async Task PublishAsync_ShouldFaultUserAddedEvent_WhenNameIsInvalid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithName(_request.Name, transformer).Build();
+        var request = _requestBuilder.WithName(transformer).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
-        var eventWasFaulted = await EventHarness.HasFaultedUserAddedEventRequestAsync(request, errorMessage, CancellationToken);
 
         // Assert
-        eventWasFaulted.ShouldBeTrue();
+        await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
     }
 
     [Theory]
-    [UserFirstNameNullWithMessageData]
-    [UserFirstNameEmptyWithMessageData]
-    [UserFirstNameTooShortWithMessageData]
-    [UserFirstNameTooLongWithMessageData]
-    public async Task SendAsync_ShouldHaveErrorMessage_WhenFirstNameIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+    [UserFirstNameNullData]
+    [UserFirstNameEmptyData]
+    [UserFirstNameTooShortData]
+    [UserFirstNameTooLongData]
+    public async Task PublishAsync_ShouldFaultUserAddedEvent_WhenFirstNameIsInvalid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithFirstName(_request.FirstName, transformer).Build();
+        var request = _requestBuilder.WithFirstName(transformer).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
-        var eventWasFaulted = await EventHarness.HasFaultedUserAddedEventRequestAsync(request, errorMessage, CancellationToken);
 
         // Assert
-        eventWasFaulted.ShouldBeTrue();
+        await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
     }
 
     [Theory]
-    [UserLastNameNullWithMessageData]
-    [UserLastNameEmptyWithMessageData]
-    [UserLastNameTooShortWithMessageData]
-    [UserLastNameTooLongWithMessageData]
-    public async Task SendAsync_ShouldHaveErrorMessage_WhenLastNameIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+    [UserLastNameNullData]
+    [UserLastNameEmptyData]
+    [UserLastNameTooShortData]
+    [UserLastNameTooLongData]
+    public async Task PublishAsync_ShouldFaultUserAddedEvent_WhenLastNameIsInvalid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithLastName(_request.LastName, transformer).Build();
+        var request = _requestBuilder.WithLastName(transformer).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
-        var eventWasFaulted = await EventHarness.HasFaultedUserAddedEventRequestAsync(request, errorMessage, CancellationToken);
 
         // Assert
-        eventWasFaulted.ShouldBeTrue();
+        await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
     }
 
     [Theory]
-    [UserEmailNullWithMessageData]
-    [UserEmailEmptyWithMessageData]
-    [UserEmailTooShortWithMessageData]
-    [UserEmailTooLongWithMessageData]
-    public async Task SendAsync_ShouldHaveErrorMessage_WhenEmailIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+    [UserEmailNullData]
+    [UserEmailEmptyData]
+    [UserEmailTooShortData]
+    [UserEmailTooLongData]
+    public async Task PublishAsync_ShouldFaultUserAddedEvent_WhenEmailIsInvalid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithEmail(_request.Email, transformer).Build();
+        var request = _requestBuilder.WithEmail(transformer).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
-        var eventWasFaulted = await EventHarness.HasFaultedUserAddedEventRequestAsync(request, errorMessage, CancellationToken);
 
         // Assert
-        eventWasFaulted.ShouldBeTrue();
+        await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
     }
 
     [Theory]
-    [UserProfileImageTooLongWithMessageData]
-    public async Task SendAsync_ShouldHaveErrorMessage_WhenProfileImageIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+    [UserProfileImageTooLongData]
+    public async Task PublishAsync_ShouldFaultUserAddedEvent_WhenProfileImageIsInvalid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithProfileImage(_request.ProfileImage, transformer).Build();
+        var request = _requestBuilder.WithProfileImage(transformer).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
-        var eventWasFaulted = await EventHarness.HasFaultedUserAddedEventRequestAsync(request, errorMessage, CancellationToken);
 
         // Assert
-        eventWasFaulted.ShouldBeTrue();
+        await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
+    }
+
+    [Theory]
+    [UserCreatedAtUtcEmptyData]
+    public async Task PublishAsync_ShouldFaultUserAddedEvent_WhenCreatedAtUtcIsInvalid(
+        IDateTimeOffsetTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCreatedAtUtc(transformer).Build();
+
+        // Act
+        await EventHarness.PublishAsync(request, CancellationToken);
+
+        // Assert
+        await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
+    }
+
+    [Theory]
+    [UserUpdatedAtUtcEmptyData]
+    public async Task PublishAsync_ShouldFaultUserAddedEvent_WhenUpdatedAtUtcIsInvalid(
+        IDateTimeOffsetTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithUpdatedAtUtc(transformer).Build();
+
+        // Act
+        await EventHarness.PublishAsync(request, CancellationToken);
+
+        // Assert
+        await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
     }
 
     [Fact]
-    public async Task SendAsync_ShouldHaveUserAlreadyExistsErrorMessage_WhenRequestIsInvalid()
+    public async Task PublishAsync_ShouldFaultUserAddedEvent_WhenIdAlreadyExists()
     {
         // Arrange
-        await ServiceScope.AddUserAsync(User, CancellationToken);
-        var request = _requestBuilder.WithProfileImage(User.Id).Build();
+        var user = UserBuilderFactory.Create().Build();
+        await ServiceScope.AddUserAsync(user, CancellationToken);
+        var request = _requestBuilder.WithId(user).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
-        var eventWasFaulted = await EventHarness.HasFaultedUserAddedEventRequestWithAlreadyExistsMessageAsync(request, CancellationToken);
 
         // Assert
-        eventWasFaulted.ShouldBeTrue();
+        await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
     }
 
     [Theory]
     [UserIdDifferentCaseData]
-    public async Task SendAsync_ShouldHaveUserAlreadyExistsErrorMessage_WhenIdIsInvalid(
+    public async Task PublishAsync_ShouldFaultUserAddedEvent_WhenIdIsInvalidAndAlreadyExists(
         IStringTransformer transformer)
     {
         // Arrange
-        await ServiceScope.AddUserAsync(User, CancellationToken);
-        var request = _requestBuilder.WithId(User.Id, transformer).Build();
+        var user = UserBuilderFactory.Create().Build();
+        await ServiceScope.AddUserAsync(user, CancellationToken);
+        var request = _requestBuilder.WithId(user, transformer).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
-        var eventWasFaulted = await EventHarness.HasFaultedUserAddedEventRequestWithAlreadyExistsMessageAsync(request, CancellationToken);
 
         // Assert
-        eventWasFaulted.ShouldBeTrue();
+        await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
     }
 
     [Fact]
-    public async Task SendAsync_ShouldHaveUserEmailAlreadyExistsErrorMessage_WhenRequestIsInvalid()
+    public async Task PublishAsync_ShouldFaultUserAddedEvent_WhenEmailAlreadyExists()
     {
         // Arrange
-        await ServiceScope.AddUserAsync(User, CancellationToken);
-        var request = _requestBuilder.WithEmail(User.Email).Build();
+        var user = UserBuilderFactory.Create().Build();
+        await ServiceScope.AddUserAsync(user, CancellationToken);
+        var request = _requestBuilder.WithEmail(user).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
-        var eventWasFaulted = await EventHarness.HasFaultedUserAddedEventRequestWithEmailAlreadyExistsMessageAsync(request, CancellationToken);
 
         // Assert
-        eventWasFaulted.ShouldBeTrue();
+        await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
     }
 
     [Theory]
     [UserEmailDifferentCaseData]
-    public async Task SendAsync_ShouldHaveUserEmailAlreadyExistsErrorMessage_WhenEmailIsInvalid(
+    public async Task PublishAsync_ShouldFaultUserAddedEvent_WhenEmailIsInvalidAndAlreadyExists(
         IStringTransformer transformer)
     {
         // Arrange
-        await ServiceScope.AddUserAsync(User, CancellationToken);
-        var request = _requestBuilder.WithEmail(User.Email, transformer).Build();
+        var user = UserBuilderFactory.Create().Build();
+        await ServiceScope.AddUserAsync(user, CancellationToken);
+        var request = _requestBuilder.WithEmail(user, transformer).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
-        var eventWasFaulted = await EventHarness.HasFaultedUserAddedEventRequestWithEmailAlreadyExistsMessageAsync(request, CancellationToken);
 
         // Assert
-        eventWasFaulted.ShouldBeTrue();
+        await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
     }
 
     [Fact]
-    public async Task SendAsync_ShouldHaveUserNameAlreadyExistsErrorMessage_WhenRequestIsInvalid()
+    public async Task PublishAsync_ShouldFaultUserAddedEvent_WhenNameAlreadyExists()
     {
         // Arrange
-        await ServiceScope.AddUserAsync(User, CancellationToken);
-        var request = _requestBuilder.WithName(User.Name).Build();
+        var user = UserBuilderFactory.Create().Build();
+        await ServiceScope.AddUserAsync(user, CancellationToken);
+        var request = _requestBuilder.WithName(user).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
-        var eventWasFaulted = await EventHarness.HasFaultedUserAddedEventRequestWithNameAlreadyExistsMessageAsync(request, CancellationToken);
 
         // Assert
-        eventWasFaulted.ShouldBeTrue();
+        await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
     }
 
     [Theory]
     [UserNameDifferentCaseData]
-    public async Task SendAsync_ShouldHaveUserNameAlreadyExistsErrorMessage_WhenNameIsInvalid(
+    public async Task PublishAsync_ShouldFaultUserAddedEvent_WhenNameIsInvalidAndAlreadyExists(
         IStringTransformer transformer)
     {
         // Arrange
-        await ServiceScope.AddUserAsync(User, CancellationToken);
-        var request = _requestBuilder.WithName(User.Name, transformer).Build();
+        var user = UserBuilderFactory.Create().Build();
+        await ServiceScope.AddUserAsync(user, CancellationToken);
+        var request = _requestBuilder.WithName(user, transformer).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
-        var eventWasFaulted = await EventHarness.HasFaultedUserAddedEventRequestWithNameAlreadyExistsMessageAsync(request, CancellationToken);
 
         // Assert
-        eventWasFaulted.ShouldBeTrue();
+        await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
     }
 
     [Fact]
-    public async Task SendAsync_ShouldConsumeUserAddedEvent_WhenRequestIsValid()
+    public async Task PublishAsync_ShouldConsumeUserAddedEvent_WhenRequestIsValid()
     {
         // Act
         await EventHarness.PublishAsync(_request, CancellationToken);
-        var eventWasConsumed = await EventHarness.HasConsumedUserAddedEventRequestAsync(_request, CancellationToken);
 
         // Assert
-        eventWasConsumed.ShouldBeTrue();
+        await EventHarness.ShouldHaveConsumedAsync(_request, CancellationToken);
     }
 
     [Theory]
     [UserProfileImageNullData]
     [UserProfileImageEmptyData]
-    public async Task SendAsync_ShouldConsumeUserAddedEvent_WhenProfileImageIsValid(
+    public async Task PublishAsync_ShouldConsumeUserAddedEvent_WhenProfileImageIsValid(
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithProfileImage(_request.ProfileImage, transformer).Build();
+        var request = _requestBuilder.WithProfileImage(transformer).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
-        var eventWasConsumed = await EventHarness.HasConsumedUserAddedEventRequestAsync(request, CancellationToken);
 
         // Assert
-        eventWasConsumed.ShouldBeTrue();
+        await EventHarness.ShouldHaveConsumedAsync(request, CancellationToken);
     }
 
     [Fact]
-    public async Task SendAsync_ShouldAddUser_WhenRequestIsValid()
+    public async Task PublishAsync_ShouldAddUser_WhenRequestIsValid()
     {
         // Act
         await EventHarness.PublishAsync(_request, CancellationToken);
-        var user = await ServiceScope.GetUserByIdAsync(_request.Id, CancellationToken);
+        var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
 
         // Assert
         user.ShouldSatisfy(_request);
@@ -268,17 +287,17 @@ public class AddUserPresentationTests : BaseUserPresentationFunctionalTest
     [Theory]
     [UserProfileImageNullData]
     [UserProfileImageEmptyData]
-    public async Task SendAsync_ShouldAddUser_WhenProfileImageIsValid(
+    public async Task PublishAsync_ShouldAddUser_WhenProfileImageIsValid(
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithProfileImage(_request.ProfileImage, transformer).Build();
+        var request = _requestBuilder.WithProfileImage(transformer).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
-        var user = await ServiceScope.GetUserByIdAsync(_request.Id, CancellationToken);
+        var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
 
         // Assert
-        user.ShouldSatisfy(_request);
+        user.ShouldSatisfy(request);
     }
 }

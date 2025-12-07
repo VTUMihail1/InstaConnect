@@ -1,12 +1,10 @@
-﻿using InstaConnect.Posts.Tests.Features.Posts.Utilities;
-
-namespace InstaConnect.Posts.Tests.Features.Posts.DataAttributes.PageSize;
+﻿namespace InstaConnect.Posts.Tests.Features.Posts.DataAttributes.PageSize;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-public sealed class PostPageSizeTooSmallDataAttribute : ValueIntDataAttribute
+public sealed class PostPageSizeTooSmallDataAttribute : TooSmallValueIntDataAttribute
 {
     public PostPageSizeTooSmallDataAttribute()
-        : base(PostOutOfBoundsUtilities.PageSizeTooSmall)
+        : base(PostConfigurations.PageSizeMinValue)
     {
     }
 }

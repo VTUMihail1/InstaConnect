@@ -5,14 +5,13 @@ public static class PostCommentMockSetups
         this IPostCommentService postCommentService,
         GetAllPostCommentsQueryRequest request,
         PostComment postComment,
-        User user,
         CancellationToken cancellationToken)
     {
         var postComments = new List<PostComment>() { postComment };
         var response = new PostCommentCollection(
             postComments,
-            request.Pagination.Page,
-            request.Pagination.PageSize,
+            request.Page,
+            request.PageSize,
             postComments.Count,
             false,
             false);
@@ -26,7 +25,6 @@ public static class PostCommentMockSetups
         this IPostCommentService postCommentService,
         GetPostCommentByIdQueryRequest request,
         PostComment postComment,
-        User user,
         CancellationToken cancellationToken)
     {
         postCommentService

@@ -1,12 +1,10 @@
-﻿using InstaConnect.Posts.Tests.Features.PostComments.Utilities;
-
-namespace InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.Page;
+﻿namespace InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.Page;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-public sealed class PostCommentPageTooSmallWithMessageDataAttribute : ValueIntWithMessageDataAttribute
+public sealed class PostCommentPageTooSmallWithMessageDataAttribute : TooSmallIntWithMessageDataAttribute
 {
     public PostCommentPageTooSmallWithMessageDataAttribute()
-        : base(PostCommentOutOfBoundsUtilities.PageTooSmall, PostCommentErrorMessages.GetPageTooSmall(PostCommentOutOfBoundsUtilities.PageTooSmall))
+        : base(PostCommentConfigurations.PageMinValue)
     {
     }
 }

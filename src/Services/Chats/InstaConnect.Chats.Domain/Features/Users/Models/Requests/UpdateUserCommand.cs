@@ -6,4 +6,5 @@ public record UpdateUserCommand(
     string LastName,
     Name Name,
     Email Email,
-    Image? ProfileImage);
+    Image? ProfileImage,
+    DateTimeOffset UpdatedAtUtc);

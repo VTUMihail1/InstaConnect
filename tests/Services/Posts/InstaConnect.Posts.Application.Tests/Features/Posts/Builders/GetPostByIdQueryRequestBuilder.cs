@@ -8,12 +8,19 @@ public class GetPostByIdQueryRequestBuilder
 
     public GetPostByIdQueryRequestBuilder(Post post)
     {
-        _id = post.Id;
+        _id = post.Id.Id;
     }
 
-    public GetPostByIdQueryRequestBuilder WithId(string id, IStringTransformer? transformer = null)
+    public GetPostByIdQueryRequestBuilder WithId(Post post, IStringTransformer? transformer = null)
     {
-        _id = transformer.TryTransform(id);
+        _id = transformer.TryTransform(post.Id.Id);
+
+        return this;
+    }
+
+    public GetPostByIdQueryRequestBuilder WithId(IStringTransformer transformer)
+    {
+        _id = transformer.Transform(_id);
 
         return this;
     }

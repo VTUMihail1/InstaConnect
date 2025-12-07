@@ -4,6 +4,4 @@ using InstaConnect.Common.Tests.DataAttributes.Enums.Empty;
 namespace InstaConnect.Common.Tests.DataAttributes.Enums;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-public sealed class SortOrderEmptyDataAttribute : EmptyEnumDataAttribute<CommonSortOrder>
-{
-}
+public sealed class SortOrderEmptyDataAttribute : EmptyEnumDataAttribute<CommonSortOrder>;

@@ -1,12 +1,10 @@
-﻿using InstaConnect.Posts.Tests.Features.PostComments.Utilities;
-
-namespace InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.Content;
+﻿namespace InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.Content;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-public sealed class PostCommentContentTooShortWithMessageDataAttribute : LengthStringWithMessageDataAttribute
+public sealed class PostCommentContentTooShortWithMessageDataAttribute : TooShortStringWithMessageDataAttribute
 {
     public PostCommentContentTooShortWithMessageDataAttribute()
-        : base(PostCommentOutOfBoundsUtilities.ContentTooShort, PostCommentErrorMessages.GetContentTooShort(PostCommentOutOfBoundsUtilities.ContentTooShort))
+        : base(PostCommentConfigurations.ContentMinLength)
     {
     }
 }

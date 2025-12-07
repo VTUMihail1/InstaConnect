@@ -1,11 +1,7 @@
 ﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
-using InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Update;
-using InstaConnect.Posts.Application.Features.Posts.Models;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
-using InstaConnect.Posts.Application.Features.Users.Models;
-using InstaConnect.Posts.Presentation.Features.Users.Models.Responses;
 
 using Mapster;
 
@@ -17,69 +13,61 @@ internal class PostPresentationMappings : IRegister
     {
         config.NewConfig<GetAllPostsApiRequest, GetAllPostsQueryRequest>()
             .ConstructUsing(src => new(
-                new(
-                    new(src.UserId),
-                    new(src.UserName),
-                    src.Title),
-                new(
+                    src.UserId,
+                    src.UserName,
+                    src.Title,
                     src.SortOrder,
-                    src.SortProperty),
-                new(
+                    src.SortProperty,
                     src.Page,
-                    src.PageSize)));
+                    src.PageSize));
 
         config.NewConfig<GetAllPostsQueryResponse, GetAllPostsApiResponse>()
-            .ConstructUsing(pc => new(
-                  pc.Data.Adapt<ICollection<PostApiResponse>>(),
-                  pc.Page,
-                  pc.PageSize,
-                  pc.TotalCount,
-                  pc.HasNextPage,
-                  pc.HasPreviousPage));
+            .ConstructUsing(src => new(src.Response.Adapt<PostCollectionApiResponse>(config)));
 
         config.NewConfig<GetPostByIdApiRequest, GetPostByIdQueryRequest>()
-            .ConstructUsing(src => new(src.Id.Adapt<PostIdPayload>()));
+            .ConstructUsing(src => new(src.Id));
 
         config.NewConfig<GetPostByIdQueryResponse, GetPostByIdApiResponse>()
-            .ConstructUsing(src => new(src.Adapt<PostApiResponse>()));
-
-        config.NewConfig<PostQueryResponse, PostApiResponse>()
-            .ConstructUsing(src => new(
-                    src.Id.Adapt<PostIdApiPayload>(),
-                    src.Title,
-                    src.Content,
-                    src.User.Adapt<UserApiResponse>(),
-                    src.CreatedAtUtc,
-                    src.UpdatedAtUtc));
+            .ConstructUsing(src => new(src.Response.Adapt<PostApiResponse>(config)));
 
         config.NewConfig<AddPostApiRequest, AddPostCommandRequest>()
             .ConstructUsing(src => new(
-                new(src.UserId),
+                src.UserId,
                 src.Body.Title,
                 src.Body.Content));
 
         config.NewConfig<AddPostCommandResponse, AddPostApiResponse>()
-            .ConstructUsing(src => new(src.Id.Adapt<PostIdApiPayload>()));
+            .ConstructUsing(src => new(src.Response.Adapt<PostIdApiResponse>(config)));
 
         config.NewConfig<UpdatePostApiRequest, UpdatePostCommandRequest>()
             .ConstructUsing(src => new(
-                new(src.Id),
-                new(src.UserId),
+                src.Id,
+                src.UserId,
                 src.Body.Title,
                 src.Body.Content));
 
         config.NewConfig<UpdatePostCommandResponse, UpdatePostApiResponse>()
-            .ConstructUsing(src => new(src.Id.Adapt<PostIdApiPayload>()));
+            .ConstructUsing(src => new(src.Response.Adapt<PostIdApiResponse>(config)));
 
-        config.NewConfig<DeletePostApiRequest, DeletePostCommandRequest>()
+        config.NewConfig<PostIdCommandResponse, PostIdApiResponse>()
+            .ConstructUsing(src => new(src.Id));
+
+        config.NewConfig<PostCollectionQueryResponse, PostCollectionApiResponse>()
             .ConstructUsing(src => new(
-                new(src.Id),
-                new(src.UserId)));
+                  src.Entities.Adapt<ICollection<PostApiResponse>>(config),
+                  src.Page,
+                  src.PageSize,
+                  src.TotalCount,
+                  src.HasNextPage,
+                  src.HasPreviousPage));
 
-        config.NewConfig<PostIdApiPayload, PostIdPayload>()
-            .ConstructUsing(src => new(src.Id));
-
-        config.NewConfig<PostIdPayload, PostIdApiPayload>()
-            .ConstructUsing(src => new(src.Id));
+        config.NewConfig<PostQueryResponse, PostApiResponse>()
+            .ConstructUsing(src => new(
+                    src.Id,
+                    src.Title,
+                    src.Content,
+                    src.User.Adapt<UserApiResponse>(config),
+                    src.CreatedAtUtc,
+                    src.UpdatedAtUtc));
     }
 }

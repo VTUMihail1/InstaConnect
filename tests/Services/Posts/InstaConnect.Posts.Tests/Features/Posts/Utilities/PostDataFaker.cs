@@ -17,14 +17,14 @@ public static class PostDataFaker
         return DataFaker.GetAverageString(PostConfigurations.ContentMaxLength, PostConfigurations.ContentMinLength);
     }
 
-    public static DateTimeOffset GetCreatedAt()
+    public static DateTimeOffset GetCreatedAtUtc()
     {
-        return DataFaker.GetMaxDate();
+        return DataFaker.GetRecentDate();
     }
 
-    public static DateTimeOffset GetUpdatedAt()
+    public static DateTimeOffset GetUpdatedAtUtc()
     {
-        return DataFaker.GetMaxDate();
+        return DataFaker.GetRecentDate();
     }
 
     public static int GetPage()

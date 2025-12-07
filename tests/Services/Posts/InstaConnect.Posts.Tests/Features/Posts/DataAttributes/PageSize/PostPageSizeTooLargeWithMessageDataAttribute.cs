@@ -1,12 +1,10 @@
-﻿using InstaConnect.Posts.Tests.Features.Posts.Utilities;
-
-namespace InstaConnect.Posts.Tests.Features.Posts.DataAttributes.PageSize;
+﻿namespace InstaConnect.Posts.Tests.Features.Posts.DataAttributes.PageSize;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-public sealed class PostPageSizeTooLargeWithMessageDataAttribute : ValueIntWithMessageDataAttribute
+public sealed class PostPageSizeTooLargeWithMessageDataAttribute : TooLargeIntWithMessageDataAttribute
 {
     public PostPageSizeTooLargeWithMessageDataAttribute()
-        : base(PostOutOfBoundsUtilities.PageSizeTooLarge, PostErrorMessages.GetPageSizeTooLarge(PostOutOfBoundsUtilities.PageSizeTooLarge))
+        : base(PostConfigurations.PageSizeMaxValue)
     {
     }
 }

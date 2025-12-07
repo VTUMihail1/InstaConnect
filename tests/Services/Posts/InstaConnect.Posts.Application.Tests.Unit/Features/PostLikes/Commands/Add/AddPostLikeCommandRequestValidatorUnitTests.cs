@@ -23,16 +23,16 @@ public class AddPostLikeCommandRequestValidatorUnitTests : BasePostLikeApplicati
     [PostIdTooShortWithMessageData]
     [PostIdTooLongWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForId(errorMessage);
+        result.ShouldHaveValidationErrorForId(messageTransformer, request);
     }
 
     [Theory]
@@ -41,16 +41,16 @@ public class AddPostLikeCommandRequestValidatorUnitTests : BasePostLikeApplicati
     [UserIdTooShortWithMessageData]
     [UserIdTooLongWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenUserIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForUserId(errorMessage);
+        result.ShouldHaveValidationErrorForUserId(messageTransformer, request);
     }
 
     [Fact]

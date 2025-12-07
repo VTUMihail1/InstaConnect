@@ -2,7 +2,7 @@
 
 namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Exceptions;
 
-public class PostCommentLikeAlreadyExistsException : NotFoundException
+public class PostCommentLikeAlreadyExistsException : BadRequestException
 {
     public PostCommentLikeAlreadyExistsException(PostCommentLikeId id)
         : base(PostCommentLikeExceptionErrorMessages.GetAlreadyExistsMessage(id))

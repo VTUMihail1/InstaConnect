@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Chats.Domain.Features.ChatMessages.Models.Responses;
 public record ChatMessageCollection(
-    ICollection<ChatMessage> Data,
+    ICollection<ChatMessage> Entities,
     int Page,
     int PageSize,
     int TotalCount,

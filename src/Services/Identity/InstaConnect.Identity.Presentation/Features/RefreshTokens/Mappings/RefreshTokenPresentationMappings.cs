@@ -1,10 +1,6 @@
-﻿using AutoMapper;
-
-using InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Delete;
+﻿using InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Delete;
 using InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Issue;
 using InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Rotate;
-using InstaConnect.Identity.Application.Features.RefreshTokens.Models;
-using InstaConnect.Identity.Application.Features.Users.Models;
 
 using Mapster;
 
@@ -16,37 +12,34 @@ internal class RefreshTokenPresentationMappings : IRegister
     {
         config.NewConfig<IssueRefreshTokenApiRequest, IssueRefreshTokenCommandRequest>()
             .ConstructUsing(src => new(
-                                       new(src.Name),
+                                       src.Name,
                                        src.Body.Password));
 
         config.NewConfig<IssueRefreshTokenCommandResponse, IssueRefreshTokenApiResponse>()
-            .ConstructUsing(src => new(
-                new(
-                    src.AccessToken.Id,
-                    src.AccessToken.Value,
-                    src.AccessToken.ExpiresAt)));
+            .ConstructUsing(src => new(src.Response.AccessToken.Adapt<AccessTokenApiResponse>(config)));
 
         config.NewConfig<RotateRefreshTokenApiRequest, RotateRefreshTokenCommandRequest>()
-            .ConstructUsing(src => new(src.Id.Adapt<RefreshTokenIdPayload>()));
+            .ConstructUsing(src => new(
+                src.Id,
+                src.Value));
 
         config.NewConfig<RotateRefreshTokenCommandResponse, RotateRefreshTokenApiResponse>()
-            .ConstructUsing(src => new(
-                new(
-                    src.AccessToken.Id,
-                    src.AccessToken.Value,
-                    src.AccessToken.ExpiresAt)));
+            .ConstructUsing(src => new(src.Response.AccessToken.Adapt<AccessTokenApiResponse>(config)));
 
         config.NewConfig<DeleteCurrentRefreshTokenApiRequest, DeleteCurrentRefreshTokenCommandRequest>()
-            .ConstructUsing(src => new(src.Id.Adapt<RefreshTokenIdPayload>()));
-
-        config.NewConfig<RefreshTokenIdApiPayload, RefreshTokenIdPayload>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<UserIdPayload>(),
+                src.Id,
                 src.Value));
 
-        config.NewConfig<RefreshTokenIdPayload, RefreshTokenIdApiPayload>()
+        config.NewConfig<RefreshTokenIdCommandResponse, RefreshTokenIdApiResponse>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<UserIdApiPayload>(),
+                src.Id,
                 src.Value));
+
+        config.NewConfig<AccessTokenCommandResponse, AccessTokenApiResponse>()
+            .ConstructUsing(src => new(
+                src.Id,
+                src.Value,
+                src.ExpiresAt));
     }
 }

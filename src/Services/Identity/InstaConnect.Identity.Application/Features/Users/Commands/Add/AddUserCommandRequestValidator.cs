@@ -3,7 +3,7 @@ public class AddUserCommandRequestValidator : AbstractValidator<AddUserCommandRe
 {
     public AddUserCommandRequestValidator()
     {
-        RuleFor(r => r.Name.Value)
+        RuleFor(r => r.Name)
             .NotEmptyWithMessage()
             .UserNameMinLengthWithMessage()
             .UserNameMaxLengthWithMessage();
@@ -18,7 +18,7 @@ public class AddUserCommandRequestValidator : AbstractValidator<AddUserCommandRe
             .UserLastNameMinLengthWithMessage()
             .UserLastNameMaxLengthWithMessage();
 
-        RuleFor(r => r.Email.Value)
+        RuleFor(r => r.Email)
             .NotEmptyWithMessage()
             .UserEmailMinLengthWithMessage()
             .UserEmailMaxLengthWithMessage();

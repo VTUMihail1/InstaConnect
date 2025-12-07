@@ -31,26 +31,14 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationFunct
         response.ShouldBeUnauthorized();
     }
 
-    [Fact]
-    public async Task UpdateAsync_ShouldReturnUnauthorizedProblemDetails_WhenRequestIsUnauthorized()
-    {
-        // Act
-        var response = await HttpClient.UpdatePostCommentProblemDetailsUnauthorizedAsync(_request, CancellationToken);
-
-        // Assert
-        response.ShouldSatisfyUnauthorized();
-    }
-
     [Theory]
-    [PostIdNullData]
-    [PostIdEmptyData]
     [PostIdTooShortData]
     [PostIdTooLongData]
     public async Task UpdateAsync_ShouldHaveBadRequestStatusCode_WhenIdIsInvalid(
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await HttpClient.UpdatePostCommentStatusCodeAsync(request, CancellationToken);
@@ -60,33 +48,29 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationFunct
     }
 
     [Theory]
-    [PostIdNullWithMessageData]
-    [PostIdEmptyWithMessageData]
     [PostIdTooShortWithMessageData]
     [PostIdTooLongWithMessageData]
     public async Task UpdateAsync_ShouldHaveBadRequestProblemDetails_WhenIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await HttpClient.UpdatePostCommentProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
+        response.ShouldSatisfyInvalidValidationForId(messageTransformer, request);
     }
 
     [Theory]
-    [PostCommentIdNullData]
-    [PostCommentIdEmptyData]
     [PostCommentIdTooShortData]
     [PostCommentIdTooLongData]
     public async Task UpdateAsync_ShouldHaveBadRequestStatusCode_WhenCommentIdIsInvalid(
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Build();
+        var request = _requestBuilder.WithCommentId(transformer).Build();
 
         // Act
         var response = await HttpClient.UpdatePostCommentStatusCodeAsync(request, CancellationToken);
@@ -96,21 +80,19 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationFunct
     }
 
     [Theory]
-    [PostCommentIdNullWithMessageData]
-    [PostCommentIdEmptyWithMessageData]
     [PostCommentIdTooShortWithMessageData]
     [PostCommentIdTooLongWithMessageData]
     public async Task UpdateAsync_ShouldHaveBadRequestProblemDetails_WhenCommentIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Build();
+        var request = _requestBuilder.WithCommentId(transformer).Build();
 
         // Act
         var response = await HttpClient.UpdatePostCommentProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
+        response.ShouldSatisfyInvalidValidationForCommentId(messageTransformer, request);
     }
 
     [Theory]
@@ -122,7 +104,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationFunct
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         var response = await HttpClient.UpdatePostCommentStatusCodeAsync(request, CancellationToken);
@@ -137,16 +119,16 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationFunct
     [UserIdTooShortWithMessageData]
     [UserIdTooLongWithMessageData]
     public async Task UpdateAsync_ShouldHaveBadRequestProblemDetails_WhenUserIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         var response = await HttpClient.UpdatePostCommentProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
+        response.ShouldSatisfyInvalidValidationForUserId(messageTransformer, request);
     }
 
     [Theory]
@@ -158,7 +140,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationFunct
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithContent(_request.Body.Content, transformer).Build();
+        var request = _requestBuilder.WithContent(transformer).Build();
 
         // Act
         var response = await HttpClient.UpdatePostCommentStatusCodeAsync(request, CancellationToken);
@@ -173,16 +155,16 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationFunct
     [PostCommentContentTooShortWithMessageData]
     [PostCommentContentTooLongWithMessageData]
     public async Task UpdateAsync_ShouldHaveBadRequestProblemDetails_WhenContentIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithContent(_request.Body.Content, transformer).Build();
+        var request = _requestBuilder.WithContent(transformer).Build();
 
         // Act
         var response = await HttpClient.UpdatePostCommentProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
+        response.ShouldSatisfyInvalidValidationForContent(messageTransformer, request);
     }
 
     [Fact]
@@ -208,7 +190,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationFunct
         var response = await HttpClient.UpdatePostCommentProblemDetailsAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyPostNotFound(_request.Id);
+        response.ShouldSatisfyPostNotFound(_request);
     }
 
     [Fact]
@@ -234,7 +216,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationFunct
         var response = await HttpClient.UpdatePostCommentProblemDetailsAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyPostCommentNotFound(_request.Id, _request.CommentId);
+        response.ShouldSatisfyPostCommentNotFound(_request);
     }
 
     [Fact]
@@ -243,7 +225,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationFunct
         // Arrange
         var user = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(user, CancellationToken);
-        var request = _requestBuilder.WithUserId(user.Id).Build();
+        var request = _requestBuilder.WithUserId(user).Build();
 
         // Act
         var response = await HttpClient.UpdatePostCommentStatusCodeAsync(request, CancellationToken);
@@ -258,68 +240,68 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationFunct
         // Arrange
         var user = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(user, CancellationToken);
-        var request = _requestBuilder.WithUserId(user.Id).Build();
+        var request = _requestBuilder.WithUserId(user).Build();
 
         // Act
         var response = await HttpClient.UpdatePostCommentProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyPostCommentForbidden(request.Id, request.CommentId, request.UserId);
+        response.ShouldSatisfyPostCommentForbidden(request);
     }
 
     [Fact]
-    public async Task UpdateAsync_ShouldHaveNoContentStatusCode_WhenRequestIsValid()
+    public async Task UpdateAsync_ShouldHaveOkStatusCode_WhenRequestIsValid()
     {
         // Act
         var response = await HttpClient.UpdatePostCommentStatusCodeAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldBeNoContent();
+        response.ShouldBeOk();
     }
 
     [Theory]
     [PostIdDifferentCaseData]
-    public async Task UpdateAsync_ShouldHaveNoContentStatusCode_WhenRequestAndIdAreValid(
+    public async Task UpdateAsync_ShouldHaveOkStatusCode_WhenRequestAndIdAreValid(
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await HttpClient.UpdatePostCommentStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldBeNoContent();
+        response.ShouldBeOk();
     }
 
     [Theory]
     [PostCommentIdDifferentCaseData]
-    public async Task UpdateAsync_ShouldHaveNoContentStatusCode_WhenRequestAndCommentIdAreValid(
+    public async Task UpdateAsync_ShouldHaveOkStatusCode_WhenRequestAndCommentIdAreValid(
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Build();
+        var request = _requestBuilder.WithCommentId(transformer).Build();
 
         // Act
         var response = await HttpClient.UpdatePostCommentStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldBeNoContent();
+        response.ShouldBeOk();
     }
 
     [Theory]
     [UserIdDifferentCaseData]
-    public async Task UpdateAsync_ShouldHaveNoContentStatusCode_WhenRequestAndUserIdAreValid(
+    public async Task UpdateAsync_ShouldHaveOkStatusCode_WhenRequestAndUserIdAreValid(
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         var response = await HttpClient.UpdatePostCommentStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldBeNoContent();
+        response.ShouldBeOk();
     }
 
     [Fact]
@@ -338,7 +320,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationFunct
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await HttpClient.UpdatePostCommentAsync(request, CancellationToken);
@@ -353,7 +335,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationFunct
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Build();
+        var request = _requestBuilder.WithCommentId(transformer).Build();
 
         // Act
         var response = await HttpClient.UpdatePostCommentAsync(request, CancellationToken);
@@ -368,7 +350,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationFunct
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         var response = await HttpClient.UpdatePostCommentAsync(request, CancellationToken);
@@ -381,8 +363,8 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationFunct
     public async Task UpdateAsync_ShouldUpdatePostComment_WhenRequestIsValid()
     {
         // Act
-        await HttpClient.UpdatePostCommentAsync(_request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(_request.Id, _request.CommentId, CancellationToken);
+        var response = await HttpClient.UpdatePostCommentAsync(_request, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
 
         // Assert
         postComment.ShouldSatisfy(_request);
@@ -394,11 +376,11 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationFunct
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
-        await HttpClient.UpdatePostCommentAsync(request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(_request.Id, _request.CommentId, CancellationToken);
+        var response = await HttpClient.UpdatePostCommentAsync(request, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
 
         // Assert
         postComment.ShouldSatisfy(_request);
@@ -410,11 +392,11 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationFunct
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Build();
+        var request = _requestBuilder.WithCommentId(transformer).Build();
 
         // Act
-        await HttpClient.UpdatePostCommentAsync(request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(_request.Id, _request.CommentId, CancellationToken);
+        var response = await HttpClient.UpdatePostCommentAsync(request, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
 
         // Assert
         postComment.ShouldSatisfy(_request);
@@ -426,11 +408,11 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationFunct
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
-        await HttpClient.UpdatePostCommentAsync(request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(_request.Id, _request.CommentId, CancellationToken);
+        var response = await HttpClient.UpdatePostCommentAsync(request, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
 
         // Assert
         postComment.ShouldSatisfy(_request);
@@ -440,12 +422,11 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationFunct
     public async Task UpdateAsync_ShouldPublishPostCommentUpdatedEvent_WhenRequestIsValid()
     {
         // Act
-        await HttpClient.UpdatePostCommentAsync(_request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(_request.Id, _request.CommentId, CancellationToken);
-        var hasPublished = await EventHarness.HasPublishPostCommentUpdatedEventAsync(postComment, CancellationToken);
+        var response = await HttpClient.UpdatePostCommentAsync(_request, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
 
         // Assert
-        hasPublished.ShouldBeTrue();
+        await EventHarness.ShouldHavePublishedUpdatedAsync(postComment, CancellationToken);
     }
 
     [Theory]
@@ -454,15 +435,14 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationFunct
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
-        await HttpClient.UpdatePostCommentAsync(request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(_request.Id, _request.CommentId, CancellationToken);
-        var hasPublished = await EventHarness.HasPublishPostCommentUpdatedEventAsync(postComment, CancellationToken);
+        var response = await HttpClient.UpdatePostCommentAsync(request, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
 
         // Assert
-        hasPublished.ShouldBeTrue();
+        await EventHarness.ShouldHavePublishedUpdatedAsync(postComment, CancellationToken);
     }
 
     [Theory]
@@ -471,15 +451,14 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationFunct
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Build();
+        var request = _requestBuilder.WithCommentId(transformer).Build();
 
         // Act
-        await HttpClient.UpdatePostCommentAsync(request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(_request.Id, _request.CommentId, CancellationToken);
-        var hasPublished = await EventHarness.HasPublishPostCommentUpdatedEventAsync(postComment, CancellationToken);
+        var response = await HttpClient.UpdatePostCommentAsync(request, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
 
         // Assert
-        hasPublished.ShouldBeTrue();
+        await EventHarness.ShouldHavePublishedUpdatedAsync(postComment, CancellationToken);
     }
 
     [Theory]
@@ -488,14 +467,13 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationFunct
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
-        await HttpClient.UpdatePostCommentAsync(request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(_request.Id, _request.CommentId, CancellationToken);
-        var hasPublished = await EventHarness.HasPublishPostCommentUpdatedEventAsync(postComment, CancellationToken);
+        var response = await HttpClient.UpdatePostCommentAsync(request, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
 
         // Assert
-        hasPublished.ShouldBeTrue();
+        await EventHarness.ShouldHavePublishedUpdatedAsync(postComment, CancellationToken);
     }
 }

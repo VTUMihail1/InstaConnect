@@ -25,16 +25,13 @@ public class DeleteUserIntegrationTests : BaseUserApplicationIntegrationTest
     [UserIdTooShortWithMessageData]
     [UserIdTooLongWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Assert
-        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
+        await ApplicationSender.ShouldThrowInvalidValidationExceptionForIdAsync(messageTransformer, request, CancellationToken);
     }
 
     [Fact]
@@ -43,11 +40,8 @@ public class DeleteUserIntegrationTests : BaseUserApplicationIntegrationTest
         // Arrange
         await ServiceScope.DeleteUserAsync(User, CancellationToken);
 
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(_request, CancellationToken);
-
         // Assert
-        await action.ShouldThrowUserAlreadyExistsExceptionAsync(_request.Id);
+        await ApplicationSender.ShouldThrowUserNotFoundExceptionAsync(_request, CancellationToken);
     }
 
     [Fact]
@@ -55,7 +49,7 @@ public class DeleteUserIntegrationTests : BaseUserApplicationIntegrationTest
     {
         // Act
         await ApplicationSender.SendAsync(_request, CancellationToken);
-        var user = await ServiceScope.GetUserByIdAsync(_request.Id, CancellationToken);
+        var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
 
         // Assert
         user.ShouldBeNull();
@@ -67,11 +61,11 @@ public class DeleteUserIntegrationTests : BaseUserApplicationIntegrationTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         await ApplicationSender.SendAsync(request, CancellationToken);
-        var user = await ServiceScope.GetUserByIdAsync(request.Id, CancellationToken);
+        var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
 
         // Assert
         user.ShouldBeNull();

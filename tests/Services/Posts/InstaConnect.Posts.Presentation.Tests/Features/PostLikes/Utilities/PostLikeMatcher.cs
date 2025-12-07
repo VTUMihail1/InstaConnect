@@ -3,12 +3,12 @@ public static class PostLikeMatcher
 {
     public static GetAllPostLikesQueryRequest IsGetAllPostLikesQueryRequest(GetAllPostLikesApiRequest request)
     {
-        return Matcher.Is<GetAllPostLikesQueryRequest>(p => p.Filter.Id == request.Filter.Id &&
-                                                            p.Filter.UserName == request.Filter.UserName &&
-                                                            p.Pagination.Page == request.Pagination.Page &&
-                                                            p.Pagination.PageSize == request.Pagination.PageSize &&
-                                                            p.Sorting.Order == request.Sorting.Order &&
-                                                            p.Sorting.Property == request.Sorting.Property);
+        return Matcher.Is<GetAllPostLikesQueryRequest>(p => p.Id == request.Id &&
+                                                            p.UserName == request.UserName &&
+                                                            p.Page == request.Page &&
+                                                            p.PageSize == request.PageSize &&
+                                                            p.SortOrder == request.SortOrder &&
+                                                            p.SortProperty == request.SortProperty);
     }
 
     public static GetPostLikeByIdQueryRequest IsGetPostLikeByIdQueryRequest(GetPostLikeByIdApiRequest request)

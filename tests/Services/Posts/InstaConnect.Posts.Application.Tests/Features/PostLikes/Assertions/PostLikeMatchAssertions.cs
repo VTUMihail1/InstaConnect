@@ -1,41 +1,39 @@
-﻿using InstaConnect.Posts.Application.Tests.Features.PostLikes.Assertions;
-
-namespace InstaConnect.Posts.Application.Tests.Features.PostLikes.Assertions;
+﻿namespace InstaConnect.Posts.Application.Tests.Features.PostLikes.Assertions;
 
 public static class PostLikeMatchAssertions
 {
     public static void ShouldSatisfy(this AddPostLikeCommandResponse response, PostLike postLike)
     {
-        response.ShouldSatisfy(p => p.Id == postLike.Id &&
-                                    p.UserId == postLike.UserId &&
-                                    p.CreatedAt == postLike.CreatedAtUtc &&
-                                    p.UpdatedAt == postLike.UpdatedAt);
+        response.ShouldSatisfy(p => p.Response.Id == postLike.Id.Id.Id &&
+                                    p.Response.UserId == postLike.Id.UserId.Id);
     }
 
     public static void ShouldSatisfy(this GetPostLikeByIdQueryResponse response, PostLike postLike, User user)
     {
-        response.ShouldSatisfy(p => p.Data.Id == postLike.Id &&
-                                    p.Data.User.Id == user.Id &&
-                                    p.Data.User.Name == user.Name &&
-                                    p.Data.User.ProfileImage == user.ProfileImage);
+        response.ShouldSatisfy(p => p.Response.Id == postLike.Id.Id.Id &&
+                                    p.Response.User.Id == user.Id.Id &&
+                                    p.Response.User.Name == user.Name.Value &&
+                                    (user.ProfileImage.IsNull() || user.ProfileImage!.Url == p.Response.User.ProfileImageUrl) &&
+                                    p.Response.CreatedAtUtc == postLike.CreatedAtUtc);
     }
 
     public static void ShouldSatisfy(this GetAllPostLikesQueryResponse response, PostLike postLike, User user, GetAllPostLikesQueryRequest request)
     {
-        response.ShouldSatisfy(pp => pp.Data.All(p => p.Id == postLike.Id &&
-                                                      p.User.Id == user.Id &&
-                                                      p.User.Name == user.Name &&
-                                                      p.User.ProfileImage == user.ProfileImage) &&
-                                     pp.Page == request.Pagination.Page &&
-                                     pp.PageSize == request.Pagination.PageSize &&
-                                     pp.TotalCount == pp.Data.Count &&
-                                     pp.HasPreviousPage == pp.Page > 1 &&
-                                     pp.HasNextPage == pp.Page * pp.PageSize < pp.TotalCount);
+        response.ShouldSatisfy(pp => pp.Response.Entities.All(p => p.Id == postLike.Id.Id.Id &&
+                                                 p.User.Id == user.Id.Id &&
+                                                 p.User.Name == user.Name.Value &&
+                                                 (user.ProfileImage.IsNull() || user.ProfileImage!.Url == p.User.ProfileImageUrl) &&
+                                                 p.CreatedAtUtc == postLike.CreatedAtUtc) &&
+                                     pp.Response.Page == request.Page &&
+                                     pp.Response.PageSize == request.PageSize &&
+                                     pp.Response.TotalCount == pp.Response.Entities.Count &&
+                                     pp.Response.HasPreviousPage == pp.Response.Page > 1 &&
+                                     pp.Response.HasNextPage == pp.Response.Page * pp.Response.PageSize < pp.Response.TotalCount);
     }
 
     public static void ShouldSatisfy(this PostLike postLike, AddPostLikeCommandRequest request)
     {
-        postLike.ShouldSatisfy(p => p.Id == request.Id &&
-                                    p.UserId == request.UserId);
+        postLike.ShouldSatisfy(p => p.Id.Id.Id == request.Id &&
+                                    p.Id.UserId.Id == request.UserId);
     }
 }

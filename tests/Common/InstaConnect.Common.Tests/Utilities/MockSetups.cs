@@ -12,12 +12,10 @@ public static class MockSetups
         response.Returns(returnThis);
     }
 
-    public static Task ReturnsResponse<TResponse>(this Task<TResponse> response, TResponse returnThis)
+    public static void ReturnsResponse<TResponse>(this Task<TResponse> response, TResponse returnThis)
         where TResponse : class?
     {
         response.Returns(returnThis);
-
-        return Task.CompletedTask;
     }
 
     public static void WhenDo<T>(this T obj, Action<T> setup, Action callback)

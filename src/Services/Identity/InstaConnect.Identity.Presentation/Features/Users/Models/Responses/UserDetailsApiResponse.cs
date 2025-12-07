@@ -1,11 +1,11 @@
 ﻿namespace InstaConnect.Identity.Presentation.Features.Users.Models.Responses;
 
 public record UserDetailsApiResponse(
-    UserIdApiPayload Id,
+    string Id,
     string FirstName,
     string LastName,
-    NameApiPayload Name,
-    EmailApiPayload Email,
-    ImageApiPayload? ProfileImage,
+    string Name,
+    string Email,
+    string? ProfileImageUrl,
     DateTimeOffset CreatedAtUtc,
     DateTimeOffset UpdatedAtUtc);

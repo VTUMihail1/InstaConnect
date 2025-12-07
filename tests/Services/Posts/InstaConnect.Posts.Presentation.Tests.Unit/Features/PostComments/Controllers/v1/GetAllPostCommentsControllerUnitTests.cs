@@ -16,7 +16,7 @@ public class GetAllPostCommentsControllerUnitTests : BasePostCommentPresentation
 
         _postCommentController = new(ApplicationMapper, ApplicationSender);
 
-        ApplicationSender.SetupGetAllQueryRequest(_request, PostComment, User, CancellationToken);
+        ApplicationSender.SetupGetAllQueryRequest(_request, PostComment, CancellationToken);
     }
 
     [Fact]

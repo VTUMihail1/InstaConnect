@@ -1,8 +1,6 @@
 ﻿using InstaConnect.Follows.Infrastructure.Extensions;
 
-using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.Serializers;
 
 namespace InstaConnect.Follows.Infrastructure.Features.Follows.Extensions;
 
@@ -16,12 +14,21 @@ internal static class ServiceCollectionExtensions
 
         BsonClassMap.TryRegisterClassMap<Follow>(cm =>
         {
-            cm.AutoMap();
-
             cm.MapIdMember(c => c.Id);
 
-            cm.UnmapMember(c => c.Follower);
-            cm.UnmapMember(c => c.Following);
+            cm.MapMember(c => c.Id);
+            cm.MapMember(c => c.CreatedAtUtc);
+
+            cm.MapMember(c => c.Follower);
+            cm.MapMember(c => c.Following);
+
+            cm.MapCreator(c => new Follow(
+                new(
+                    new(c.Id.FollowerId.Id),
+                    new(c.Id.FollowingId.Id)),
+                c.CreatedAtUtc));
+
+            cm.SetIgnoreExtraElements(true);
         });
 
         return serviceCollection;

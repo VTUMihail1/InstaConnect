@@ -33,7 +33,6 @@
     <Using Include="InstaConnect.Common.Events.Abstractions" />
     <Using Include="InstaConnect.Common.Application.Abstractions" />
     <Using Include="InstaConnect.Common.Application.Models" />
-    <Using Include="InstaConnect.Common.Presentation.Models.Payloads" />
 	<Using Include="InstaConnect.Common.Presentation.Utilities" />
     <Using Include="InstaConnect.Common.Presentation.Abstractions" />
     <Using Include="InstaConnect.Common.Presentation.Binders.FromClaim" />
@@ -42,14 +41,12 @@
   <ItemGroup Label="Users">
     <Using Include="InstaConnect.Identity.Events.Features.Users" />
     <Using Include="InstaConnect.Follows.Application.Features.Users.Models" />
-    <Using Include="InstaConnect.Follows.Presentation.Features.Users.Models.Payloads" />
     <Using Include="InstaConnect.Follows.Presentation.Features.Users.Models.Responses" />
   </ItemGroup>
 
   <ItemGroup Label="Follows">
     <Using Include="InstaConnect.Follows.Application.Features.Follows.Models" />
     <Using Include="InstaConnect.Follows.Presentation.Features.Follows.Utilities" />
-    <Using Include="InstaConnect.Follows.Presentation.Features.Follows.Models.Payloads" />
     <Using Include="InstaConnect.Follows.Presentation.Features.Follows.Models.Requests" />
     <Using Include="InstaConnect.Follows.Presentation.Features.Follows.Models.Responses" />
   </ItemGroup>

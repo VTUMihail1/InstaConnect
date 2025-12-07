@@ -4,7 +4,7 @@ public class GetPostByIdQueryRequestValidator : AbstractValidator<GetPostByIdQue
 {
     public GetPostByIdQueryRequestValidator()
     {
-        RuleFor(r => r.Id.Id)
+        RuleFor(r => r.Id)
             .NotEmptyWithMessage()
             .PostIdMinLengthWithMessage()
             .PostIdMaxLengthWithMessage();

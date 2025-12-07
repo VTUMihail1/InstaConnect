@@ -5,14 +5,14 @@ namespace InstaConnect.Chats.Infrastructure.Features.Users.Repositories;
 internal class UserRepository : IUserRepository
 {
     private readonly IChatsContext _chatsContext;
-    private readonly IUserIncludePropertyFactory _chatIncludePropertyFactory;
+    private readonly IUserIncludePropertyFactory _userIncludePropertyFactory;
 
     public UserRepository(
         IChatsContext chatsContext,
-        IUserIncludePropertyFactory chatIncludePropertyFactory)
+        IUserIncludePropertyFactory userIncludePropertyFactory)
     {
         _chatsContext = chatsContext;
-        _chatIncludePropertyFactory = chatIncludePropertyFactory;
+        _userIncludePropertyFactory = userIncludePropertyFactory;
     }
 
     public async Task<User?> GetByIdAsync(
@@ -20,13 +20,16 @@ internal class UserRepository : IUserRepository
         UserIncludeQuery? include,
         CancellationToken cancellationToken)
     {
-        var includeProperties = _chatIncludePropertyFactory.Create(include?.Properties);
+        var match = Builders<User>.Filter.Empty
+            .AndEqualsCaseInsensitive(p => p.Id.Id, id.Id);
+
+        var includeProperties = _userIncludePropertyFactory.Create(include?.Properties);
 
         var entity = await _chatsContext
             .Users
             .Aggregate()
             .Includes(includeProperties)
-            .Match(p => p.Id == id)
+            .Match(match)
             .FirstOrDefaultAsync(cancellationToken);
 
         return entity;
@@ -44,13 +47,16 @@ internal class UserRepository : IUserRepository
         UserIncludeQuery? include,
         CancellationToken cancellationToken)
     {
-        var includeProperties = _chatIncludePropertyFactory.Create(include?.Properties);
+        var match = Builders<User>.Filter.Empty
+            .AndEqualsCaseInsensitive(p => p.Name.Value, name.Value);
+
+        var includeProperties = _userIncludePropertyFactory.Create(include?.Properties);
 
         var entity = await _chatsContext
             .Users
             .Aggregate()
             .Includes(includeProperties)
-            .Match(p => p.Name == name)
+            .Match(match)
             .FirstOrDefaultAsync(cancellationToken);
 
         return entity;
@@ -68,13 +74,16 @@ internal class UserRepository : IUserRepository
         UserIncludeQuery? include,
         CancellationToken cancellationToken)
     {
-        var includeProperties = _chatIncludePropertyFactory.Create(include?.Properties);
+        var match = Builders<User>.Filter.Empty
+            .AndEqualsCaseInsensitive(p => p.Email.Value, email.Value);
+
+        var includeProperties = _userIncludePropertyFactory.Create(include?.Properties);
 
         var entity = await _chatsContext
             .Users
             .Aggregate()
             .Includes(includeProperties)
-            .Match(p => p.Email == email)
+            .Match(match)
             .FirstOrDefaultAsync(cancellationToken);
 
         return entity;
@@ -96,15 +105,21 @@ internal class UserRepository : IUserRepository
 
     public async Task UpdateAsync(User entity, CancellationToken cancellationToken)
     {
+        var match = Builders<User>.Filter.Empty
+            .AndEqualsCaseInsensitive(p => p.Id.Id, entity.Id.Id);
+
         await _chatsContext
             .Users
-            .UpdateAsync(_chatsContext.ClientSessionHandle, x => x.Id == entity.Id, entity, cancellationToken);
+            .UpdateAsync(_chatsContext.ClientSessionHandle, match, entity, cancellationToken);
     }
 
     public async Task DeleteAsync(User entity, CancellationToken cancellationToken)
     {
+        var match = Builders<User>.Filter.Empty
+            .AndEqualsCaseInsensitive(p => p.Id.Id, entity.Id.Id);
+
         await _chatsContext
             .Users
-            .DeleteAsync(_chatsContext.ClientSessionHandle, x => x.Id == entity.Id, cancellationToken);
+            .DeleteAsync(_chatsContext.ClientSessionHandle, match, cancellationToken);
     }
 }

@@ -4,54 +4,52 @@ public static class PostMatchAssertions
 {
     public static void ShouldSatisfy(this AddPostCommandResponse response, Post post)
     {
-        response.ShouldSatisfy(p => p.Id == post.Id &&
-                                    p.CreatedAt == post.CreatedAtUtc &&
-                                    p.UpdatedAt == post.UpdatedAtUtc);
+        response.ShouldSatisfy(p => p.Response.Id == post.Id.Id);
     }
 
     public static void ShouldSatisfy(this UpdatePostCommandResponse response, Post post)
     {
-        response.ShouldSatisfy(p => p.Id == post.Id &&
-                                    p.CreatedAt == post.CreatedAtUtc &&
-                                    p.UpdatedAt == post.UpdatedAtUtc);
+        response.ShouldSatisfy(p => p.Response.Id == post.Id.Id);
     }
 
     public static void ShouldSatisfy(this GetPostByIdQueryResponse response, Post post, User user)
     {
-        response.ShouldSatisfy(p => p.Data.Id == post.Id &&
-                                    p.Data.Title == post.Title &&
-                                    p.Data.Content == post.Content &&
-                                    p.Data.User.Id == user.Id &&
-                                    p.Data.User.Name == user.Name &&
-                                    p.Data.User.ProfileImage == user.ProfileImage);
+        response.ShouldSatisfy(p => p.Response.Id == post.Id.Id &&
+                                    p.Response.Title == post.Title &&
+                                    p.Response.Content == post.Content &&
+                                    p.Response.User.Id == user.Id.Id &&
+                                    p.Response.User.Name == user.Name.Value &&
+                                    (user.ProfileImage.IsNull() || user.ProfileImage!.Url == p.Response.User.ProfileImageUrl) &&
+                                    p.Response.CreatedAtUtc == post.CreatedAtUtc &&
+                                    p.Response.UpdatedAtUtc == post.UpdatedAtUtc);
     }
 
     public static void ShouldSatisfy(this GetAllPostsQueryResponse response, Post post, User user, GetAllPostsQueryRequest request)
     {
-        response.ShouldSatisfy(pp => pp.Data.All(p => p.Id == post.Id &&
+        response.ShouldSatisfy(pp => pp.Response.Entities.All(p => p.Id == post.Id.Id &&
                                                       p.Title == post.Title &&
                                                       p.Content == post.Content &&
-                                                      p.User.Id == user.Id &&
-                                                      p.User.Name == user.Name &&
-                                                      p.User.ProfileImage == user.ProfileImage) &&
-                                     pp.Page == request.Pagination.Page &&
-                                     pp.PageSize == request.Pagination.PageSize &&
-                                     pp.TotalCount == pp.Data.Count &&
-                                     pp.HasPreviousPage == pp.Page > 1 &&
-                                     pp.HasNextPage == pp.Page * pp.PageSize < pp.TotalCount);
+                                                      p.User.Id == user.Id.Id &&
+                                                      p.User.Name == user.Name.Value &&
+                                                      (user.ProfileImage.IsNull() || user.ProfileImage!.Url == p.User.ProfileImageUrl) &&
+                                     pp.Response.Page == request.Page &&
+                                     pp.Response.PageSize == request.PageSize &&
+                                     pp.Response.TotalCount == pp.Response.Entities.Count &&
+                                     pp.Response.HasPreviousPage == pp.Response.Page > 1 &&
+                                     pp.Response.HasNextPage == pp.Response.Page * pp.Response.PageSize < pp.Response.TotalCount));
     }
 
     public static void ShouldSatisfy(this Post post, AddPostCommandRequest request)
     {
-        post.ShouldSatisfy(p => p.UserId == request.UserId &&
+        post.ShouldSatisfy(p => p.UserId.Id == request.UserId &&
                                 p.Title == request.Title &&
                                 p.Content == request.Content);
     }
 
     public static void ShouldSatisfy(this Post post, UpdatePostCommandRequest request)
     {
-        post.ShouldSatisfy(p => p.Id == request.Id &&
-                                p.UserId == request.UserId &&
+        post.ShouldSatisfy(p => p.Id.Id == request.Id &&
+                                p.UserId.Id == request.UserId &&
                                 p.Title == request.Title &&
                                 p.Content == request.Content);
     }

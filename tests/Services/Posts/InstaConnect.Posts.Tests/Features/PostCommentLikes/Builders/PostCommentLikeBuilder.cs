@@ -1,5 +1,4 @@
-﻿using InstaConnect.Common.Tests.DataAttributes.Base;
-using InstaConnect.Posts.Tests.Features.PostCommentLikes.Utilities;
+﻿using InstaConnect.Posts.Tests.Features.PostCommentLikes.Utilities;
 
 namespace InstaConnect.Posts.Tests.Features.PostCommentLikes.Builders;
 
@@ -8,75 +7,58 @@ public class PostCommentLikeBuilder
     private string _id;
     private string _commentId;
     private string _userId;
-    private User? _user;
-    private DateTimeOffset _createdAt;
-    private DateTimeOffset _updatedAt;
+    private User _user;
+    private DateTimeOffset _createdAtUtc;
 
-    public PostCommentLikeBuilder(Post post, PostComment postComment, User user)
+    public PostCommentLikeBuilder(PostComment postComment, User user)
     {
-        _id = post.Id;
-        _commentId = postComment.Id;
+        _id = postComment.Id.Id.Id;
+        _commentId = postComment.Id.CommentId;
+        _userId = user.Id.Id;
         _user = user;
-        _userId = user.Id;
-        _createdAt = PostCommentLikeDataFaker.GetCreatedAt();
-        _updatedAt = PostCommentLikeDataFaker.GetUpdatedAt();
+        _createdAtUtc = PostCommentLikeDataFaker.GetCreatedAtUtc();
     }
 
-    public PostCommentLikeBuilder WithId(string id, IStringTransformer? transformer = null)
+    public PostCommentLikeBuilder WithId(IStringTransformer transformer)
     {
-        _id = transformer.TryTransform(id);
+        _id = transformer.Transform(_id);
 
         return this;
     }
 
-    public PostCommentLikeBuilder WithCommentId(string commentId, IStringTransformer? transformer = null)
+    public PostCommentLikeBuilder WithCommentId(IStringTransformer transformer)
     {
-        _commentId = transformer.TryTransform(commentId);
+        _commentId = transformer.Transform(_commentId);
 
         return this;
     }
 
-    public PostCommentLikeBuilder WithUserId(string userId, IStringTransformer? transformer = null)
+    public PostCommentLikeBuilder WithUserId(IStringTransformer transformer)
     {
-        if (userId != _user?.Id)
-        {
-            _user = null;
-        }
-
-        _userId = transformer.TryTransform(userId);
+        _userId = transformer.Transform(_userId);
 
         return this;
     }
 
-    public PostCommentLikeBuilder WithUser(User user)
+    public PostCommentLikeBuilder WithCreatedAtUtc(IDateTimeOffsetTransformer transformer)
     {
-        _user = user;
-        _userId = user.Id;
-
-        return this;
-    }
-
-    public PostCommentLikeBuilder WithCreatedAt(DateTimeOffset createdAt, IDateTimeOffsetTransformer? transformer = null)
-    {
-        _createdAt = transformer.TryTransform(createdAt);
-
-        return this;
-    }
-
-    public PostCommentLikeBuilder WithUpdatedAt(DateTimeOffset updatedAt, IDateTimeOffsetTransformer? transformer = null)
-    {
-        _updatedAt = transformer.TryTransform(updatedAt);
+        _createdAtUtc = transformer.Transform(_createdAtUtc);
 
         return this;
     }
 
     public PostCommentLike Build()
     {
-        if (_user == null)
-        {
-            return new(_id, _commentId, _userId, _createdAt, _updatedAt);
-        }
+        var postCommentLike = new PostCommentLike(
+                new(
+                    new(
+                        new(_id),
+                        _commentId),
+                    new(_userId)),
+                _createdAtUtc);
 
-        return new(_id, _commentId, _user, _createdAt, _updatedAt);
+        postCommentLike.AddUser(_user);
+
+        return postCommentLike;
     }
 }

@@ -29,9 +29,9 @@ internal class ChatMessageService : IChatMessageService
             throw new ChatNotFoundException(query.Filter.Id);
         }
 
-        if (existingChat!.IsNotParticipant(query.Filter.SenderId))
+        if (existingChat!.IsNotParticipant(query.Filter.UserId))
         {
-            throw new ChatForbiddenException(query.Filter.Id, query.Filter.SenderId);
+            throw new ChatForbiddenException(query.Filter.Id, query.Filter.UserId);
         }
 
         var existingChatMessageCollection = await _chatMessageRepository.GetAllAsync(
@@ -53,9 +53,9 @@ internal class ChatMessageService : IChatMessageService
             throw new ChatNotFoundException(query.Id.Id);
         }
 
-        if (existingChat!.IsNotParticipant(query.SenderId))
+        if (existingChat!.IsNotParticipant(query.UserId))
         {
-            throw new ChatForbiddenException(query.Id.Id, query.SenderId);
+            throw new ChatForbiddenException(query.Id.Id, query.UserId);
         }
 
         var existingChatMessage = await _chatMessageRepository.GetByIdAsync(

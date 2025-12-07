@@ -25,15 +25,13 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationFunctional
     }
 
     [Theory]
-    [PostIdNullData]
-    [PostIdEmptyData]
     [PostIdTooShortData]
     [PostIdTooLongData]
     public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenIdIsInvalid(
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Filter.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostLikesStatusCodeAsync(request, CancellationToken);
@@ -43,21 +41,19 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationFunctional
     }
 
     [Theory]
-    [PostIdNullWithMessageData]
-    [PostIdEmptyWithMessageData]
     [PostIdTooShortWithMessageData]
     [PostIdTooLongWithMessageData]
     public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Filter.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostLikesProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
+        response.ShouldSatisfyInvalidValidationForId(messageTransformer, request);
     }
 
     [Theory]
@@ -66,7 +62,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationFunctional
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Build();
+        var request = _requestBuilder.WithUserName(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostLikesStatusCodeAsync(request, CancellationToken);
@@ -78,50 +74,16 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationFunctional
     [Theory]
     [UserNameTooLongWithMessageData]
     public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenUserNameIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Build();
+        var request = _requestBuilder.WithUserName(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostLikesProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
-    }
-
-    [Theory]
-    [PostLikePageEmptyData]
-    [PostLikePageTooSmallData]
-    [PostLikePageTooLargeData]
-    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenPageIsInvalid(
-        IIntTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithPage(_request.Pagination.Page, transformer).Build();
-
-        // Act
-        var response = await HttpClient.GetAllPostLikesStatusCodeAsync(request, CancellationToken);
-
-        // Assert
-        response.ShouldBeBadRequest();
-    }
-
-    [Theory]
-    [PostLikePageEmptyWithMessageData]
-    [PostLikePageTooSmallWithMessageData]
-    [PostLikePageTooLargeWithMessageData]
-    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenPageIsInvalid(
-        IIntTransformer transformer, string errorMessage)
-    {
-        // Arrange
-        var request = _requestBuilder.WithPage(_request.Pagination.Page, transformer).Build();
-
-        // Act
-        var response = await HttpClient.GetAllPostLikesProblemDetailsAsync(request, CancellationToken);
-
-        // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
+        response.ShouldSatisfyInvalidValidationForUserName(messageTransformer, request);
     }
 
     [Theory]
@@ -130,7 +92,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationFunctional
         IEnumTransformer<CommonSortOrder> transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortOrder(_request.Sorting.Order, transformer).Build();
+        var request = _requestBuilder.WithSortOrder(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostLikesStatusCodeAsync(request, CancellationToken);
@@ -142,16 +104,17 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationFunctional
     [Theory]
     [SortOrderEmptyWithMessageData]
     public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenSortOrderIsInvalid(
-        IEnumTransformer<CommonSortOrder> transformer, string errorMessage)
+        IEnumTransformer<CommonSortOrder> transformer,
+        IEnumMessageTransformer<CommonSortOrder> messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortOrder(_request.Sorting.Order, transformer).Build();
+        var request = _requestBuilder.WithSortOrder(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostLikesProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
+        response.ShouldSatisfyInvalidValidationForSortOrder(messageTransformer, request);
     }
 
     [Theory]
@@ -160,7 +123,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationFunctional
         IEnumTransformer<PostLikeSortProperty> transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(_request.Sorting.Property, transformer).Build();
+        var request = _requestBuilder.WithSortProperty(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostLikesStatusCodeAsync(request, CancellationToken);
@@ -172,27 +135,27 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationFunctional
     [Theory]
     [PostLikeSortPropertyEmptyWithMessageData]
     public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenSortPropertyIsInvalid(
-        IEnumTransformer<PostLikeSortProperty> transformer, string errorMessage)
+        IEnumTransformer<PostLikeSortProperty> transformer,
+        IEnumMessageTransformer<PostLikeSortProperty> messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(_request.Sorting.Property, transformer).Build();
+        var request = _requestBuilder.WithSortProperty(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostLikesProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
+        response.ShouldSatisfyInvalidValidationForSortProperty(messageTransformer, request);
     }
 
     [Theory]
-    [PostLikePageSizeEmptyData]
-    [PostLikePageSizeTooSmallData]
-    [PostLikePageSizeTooLargeData]
-    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenPageSizeIsInvalid(
+    [PostLikePageTooSmallData]
+    [PostLikePageTooLargeData]
+    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenPageIsInvalid(
         IIntTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithPageSize(_request.Pagination.Page, transformer).Build();
+        var request = _requestBuilder.WithPage(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostLikesStatusCodeAsync(request, CancellationToken);
@@ -202,20 +165,51 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationFunctional
     }
 
     [Theory]
-    [PostLikePageSizeEmptyWithMessageData]
-    [PostLikePageSizeTooSmallWithMessageData]
-    [PostLikePageSizeTooLargeWithMessageData]
-    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenPageSizeIsInvalid(
-        IIntTransformer transformer, string errorMessage)
+    [PostLikePageTooSmallWithMessageData]
+    [PostLikePageTooLargeWithMessageData]
+    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenPageIsInvalid(
+        IIntTransformer transformer, IIntMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithPageSize(_request.Pagination.Page, transformer).Build();
+        var request = _requestBuilder.WithPage(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostLikesProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
+        response.ShouldSatisfyInvalidValidationForPage(messageTransformer, request);
+    }
+
+    [Theory]
+    [PostLikePageSizeTooSmallData]
+    [PostLikePageSizeTooLargeData]
+    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenPageSizeIsInvalid(
+        IIntTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithPageSize(transformer).Build();
+
+        // Act
+        var response = await HttpClient.GetAllPostLikesStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeBadRequest();
+    }
+
+    [Theory]
+    [PostLikePageSizeTooSmallWithMessageData]
+    [PostLikePageSizeTooLargeWithMessageData]
+    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenPageSizeIsInvalid(
+        IIntTransformer transformer, IIntMessageTransformer messageTransformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithPageSize(transformer).Build();
+
+        // Act
+        var response = await HttpClient.GetAllPostLikesProblemDetailsAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfyInvalidValidationForPageSize(messageTransformer, request);
     }
 
     [Fact]
@@ -241,7 +235,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationFunctional
         var response = await HttpClient.GetAllPostLikesProblemDetailsAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyPostNotFound(_request.Filter.Id);
+        response.ShouldSatisfyPostNotFound(_request);
     }
 
     [Fact]
@@ -260,7 +254,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationFunctional
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Filter.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostLikesStatusCodeAsync(request, CancellationToken);
@@ -277,7 +271,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationFunctional
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Build();
+        var request = _requestBuilder.WithUserName(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostLikesStatusCodeAsync(request, CancellationToken);
@@ -302,7 +296,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationFunctional
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Filter.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostLikesAsync(request, CancellationToken);
@@ -319,7 +313,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationFunctional
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Build();
+        var request = _requestBuilder.WithUserName(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostLikesAsync(request, CancellationToken);

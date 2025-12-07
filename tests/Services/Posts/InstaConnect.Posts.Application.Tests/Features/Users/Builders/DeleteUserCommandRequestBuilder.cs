@@ -8,12 +8,19 @@ public class DeleteUserCommandRequestBuilder
 
     public DeleteUserCommandRequestBuilder(User user)
     {
-        _id = user.Id;
+        _id = user.Id.Id;
     }
 
-    public DeleteUserCommandRequestBuilder WithId(string id, IStringTransformer? transformer = null)
+    public DeleteUserCommandRequestBuilder WithId(User user, IStringTransformer? transformer = null)
     {
-        _id = transformer.TryTransform(id);
+        _id = transformer.TryTransform(user.Id.Id);
+
+        return this;
+    }
+
+    public DeleteUserCommandRequestBuilder WithId(IStringTransformer transformer)
+    {
+        _id = transformer.Transform(_id);
 
         return this;
     }

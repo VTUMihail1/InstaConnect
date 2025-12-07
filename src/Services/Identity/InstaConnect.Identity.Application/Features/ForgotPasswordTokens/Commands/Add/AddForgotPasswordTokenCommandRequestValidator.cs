@@ -3,7 +3,7 @@ public class AddForgotPasswordTokenCommandRequestValidator : AbstractValidator<A
 {
     public AddForgotPasswordTokenCommandRequestValidator()
     {
-        RuleFor(r => r.Name.Value)
+        RuleFor(r => r.Name)
             .NotEmptyWithMessage()
             .UserNameMinLengthWithMessage()
             .UserNameMaxLengthWithMessage();

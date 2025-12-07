@@ -6,7 +6,9 @@ namespace InstaConnect.Common.Tests.DataAttributes.Enums.Empty;
 public abstract class EmptyEnumWithMessageDataAttribute<TEnum> : EnumWithMessageDataAttribute<TEnum>
     where TEnum : Enum
 {
-    protected EmptyEnumWithMessageDataAttribute(string message) : base(new EmptyEnumTransformer<TEnum>(), message)
+    protected EmptyEnumWithMessageDataAttribute() : base(
+        new EmptyEnumTransformer<TEnum>(),
+        new EmptyEnumMessageTransformer<TEnum>())
     {
 
     }

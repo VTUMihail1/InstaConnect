@@ -3,17 +3,17 @@ public class DeletePostCommentLikeCommandRequestValidator : AbstractValidator<De
 {
     public DeletePostCommentLikeCommandRequestValidator()
     {
-        RuleFor(r => r.Id.CommentId.Id.Id)
+        RuleFor(r => r.Id)
             .NotEmptyWithMessage()
             .PostIdMinLengthWithMessage()
             .PostIdMaxLengthWithMessage();
 
-        RuleFor(r => r.Id.CommentId.CommentId)
+        RuleFor(r => r.CommentId)
             .NotEmptyWithMessage()
             .PostCommentIdMinLengthWithMessage()
             .PostCommentIdMaxLengthWithMessage();
 
-        RuleFor(r => r.Id.UserId.Id)
+        RuleFor(r => r.UserId)
             .NotEmptyWithMessage()
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();

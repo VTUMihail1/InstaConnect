@@ -1,12 +1,10 @@
-﻿using InstaConnect.Posts.Tests.Features.PostLikes.Utilities;
-
-namespace InstaConnect.Posts.Tests.Features.PostLikes.DataAttributes.PageSize;
+﻿namespace InstaConnect.Posts.Tests.Features.PostLikes.DataAttributes.PageSize;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-public sealed class PostLikePageSizeTooLargeWithMessageDataAttribute : ValueIntWithMessageDataAttribute
+public sealed class PostLikePageSizeTooLargeWithMessageDataAttribute : TooLargeIntWithMessageDataAttribute
 {
     public PostLikePageSizeTooLargeWithMessageDataAttribute()
-        : base(PostLikeOutOfBoundsUtilities.PageSizeTooLarge, PostLikeErrorMessages.GetPageSizeTooLarge(PostLikeOutOfBoundsUtilities.PageSizeTooLarge))
+        : base(PostLikeConfigurations.PageSizeMaxValue)
     {
     }
 }

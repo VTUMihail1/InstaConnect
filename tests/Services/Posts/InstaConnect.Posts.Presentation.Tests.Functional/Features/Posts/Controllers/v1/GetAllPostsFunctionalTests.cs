@@ -29,7 +29,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
@@ -41,16 +41,16 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
     [Theory]
     [UserIdTooLongWithMessageData]
     public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenUserIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
+        response.ShouldSatisfyInvalidValidationForUserId(messageTransformer, request);
     }
 
     [Theory]
@@ -59,7 +59,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Build();
+        var request = _requestBuilder.WithUserName(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
@@ -71,16 +71,16 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
     [Theory]
     [UserNameTooLongWithMessageData]
     public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenUserNameIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Build();
+        var request = _requestBuilder.WithUserName(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
+        response.ShouldSatisfyInvalidValidationForUserName(messageTransformer, request);
     }
 
     [Theory]
@@ -89,7 +89,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithTitle(_request.Filter.Title, transformer).Build();
+        var request = _requestBuilder.WithTitle(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
@@ -101,50 +101,16 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
     [Theory]
     [PostTitleTooLongWithMessageData]
     public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenTitleIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithTitle(_request.Filter.Title, transformer).Build();
+        var request = _requestBuilder.WithTitle(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
-    }
-
-    [Theory]
-    [PostPageEmptyData]
-    [PostPageTooSmallData]
-    [PostPageTooLargeData]
-    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenPageIsInvalid(
-        IIntTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithPage(_request.Pagination.Page, transformer).Build();
-
-        // Act
-        var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
-
-        // Assert
-        response.ShouldBeBadRequest();
-    }
-
-    [Theory]
-    [PostPageEmptyWithMessageData]
-    [PostPageTooSmallWithMessageData]
-    [PostPageTooLargeWithMessageData]
-    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenPageIsInvalid(
-        IIntTransformer transformer, string errorMessage)
-    {
-        // Arrange
-        var request = _requestBuilder.WithPage(_request.Pagination.Page, transformer).Build();
-
-        // Act
-        var response = await HttpClient.GetAllPostsProblemDetailsAsync(request, CancellationToken);
-
-        // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
+        response.ShouldSatisfyInvalidValidationForTitle(messageTransformer, request);
     }
 
     [Theory]
@@ -153,7 +119,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
         IEnumTransformer<CommonSortOrder> transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortOrder(_request.Sorting.Order, transformer).Build();
+        var request = _requestBuilder.WithSortOrder(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
@@ -165,16 +131,16 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
     [Theory]
     [SortOrderEmptyWithMessageData]
     public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenSortOrderIsInvalid(
-        IEnumTransformer<CommonSortOrder> transformer, string errorMessage)
+        IEnumTransformer<CommonSortOrder> transformer, IEnumMessageTransformer<CommonSortOrder> messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortOrder(_request.Sorting.Order, transformer).Build();
+        var request = _requestBuilder.WithSortOrder(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
+        response.ShouldSatisfyInvalidValidationForSortOrder(messageTransformer, request);
     }
 
     [Theory]
@@ -183,7 +149,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
         IEnumTransformer<PostSortProperty> transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(_request.Sorting.Property, transformer).Build();
+        var request = _requestBuilder.WithSortProperty(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
@@ -195,27 +161,26 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
     [Theory]
     [PostSortPropertyEmptyWithMessageData]
     public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenSortPropertyIsInvalid(
-        IEnumTransformer<PostSortProperty> transformer, string errorMessage)
+        IEnumTransformer<PostSortProperty> transformer, IEnumMessageTransformer<PostSortProperty> messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(_request.Sorting.Property, transformer).Build();
+        var request = _requestBuilder.WithSortProperty(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
+        response.ShouldSatisfyInvalidValidationForSortProperty(messageTransformer, request);
     }
 
     [Theory]
-    [PostPageSizeEmptyData]
-    [PostPageSizeTooSmallData]
-    [PostPageSizeTooLargeData]
-    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenPageSizeIsInvalid(
+    [PostPageTooSmallData]
+    [PostPageTooLargeData]
+    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenPageIsInvalid(
         IIntTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithPageSize(_request.Pagination.Page, transformer).Build();
+        var request = _requestBuilder.WithPage(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
@@ -225,20 +190,51 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
     }
 
     [Theory]
-    [PostPageSizeEmptyWithMessageData]
-    [PostPageSizeTooSmallWithMessageData]
-    [PostPageSizeTooLargeWithMessageData]
-    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenPageSizeIsInvalid(
-        IIntTransformer transformer, string errorMessage)
+    [PostPageTooSmallWithMessageData]
+    [PostPageTooLargeWithMessageData]
+    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenPageIsInvalid(
+        IIntTransformer transformer, IIntMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithPageSize(_request.Pagination.Page, transformer).Build();
+        var request = _requestBuilder.WithPage(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
+        response.ShouldSatisfyInvalidValidationForPage(messageTransformer, request);
+    }
+
+    [Theory]
+    [PostPageSizeTooSmallData]
+    [PostPageSizeTooLargeData]
+    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenPageSizeIsInvalid(
+        IIntTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithPageSize(transformer).Build();
+
+        // Act
+        var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeBadRequest();
+    }
+
+    [Theory]
+    [PostPageSizeTooSmallWithMessageData]
+    [PostPageSizeTooLargeWithMessageData]
+    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenPageSizeIsInvalid(
+        IIntTransformer transformer, IIntMessageTransformer messageTransformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithPageSize(transformer).Build();
+
+        // Act
+        var response = await HttpClient.GetAllPostsProblemDetailsAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfyInvalidValidationForPageSize(messageTransformer, request);
     }
 
     [Fact]
@@ -259,7 +255,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
@@ -276,7 +272,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Build();
+        var request = _requestBuilder.WithUserName(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
@@ -293,7 +289,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithTitle(_request.Filter.Title, transformer).Build();
+        var request = _requestBuilder.WithTitle(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
@@ -320,7 +316,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsAsync(request, CancellationToken);
@@ -337,7 +333,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Build();
+        var request = _requestBuilder.WithUserName(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsAsync(request, CancellationToken);
@@ -354,7 +350,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithTitle(_request.Filter.Title, transformer).Build();
+        var request = _requestBuilder.WithTitle(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsAsync(request, CancellationToken);

@@ -39,44 +39,32 @@ public abstract class DataFaker
 
     public static string GetGuid()
     {
-        var result = _faker.Random.Guid().ToString();
-
-        return result;
+        return _faker.Random.Guid().ToString();
     }
 
-    public static DateTimeOffset GetMaxDate()
+    public static DateTimeOffset GetRecentDate()
     {
-        var result = _faker.Date.Future();
-
-        return result;
+        return _faker.Date.Recent();
     }
 
     public static string GetUrl()
     {
-        var result = _faker.Internet.Url();
-
-        return result;
+        return _faker.Internet.Url();
     }
 
     public static string GetString(int length = DefaultStringLength)
     {
-        var result = _faker.Random.AlphaNumeric(length);
-
-        return result;
+        return _faker.Random.AlphaNumeric(length);
     }
 
     public static string GetAverageString(int maxLength, int minLength = default)
     {
-        var result = _faker.Random.AlphaNumeric(GetAverageNumber(maxLength, minLength));
-
-        return result;
+        return _faker.Random.AlphaNumeric(GetAverageNumber(maxLength, minLength));
     }
 
     public static int GetAverageNumber(int maxLength, int minLength)
     {
-        var result = (maxLength + minLength) / 2;
-
-        return result;
+        return (maxLength + minLength) / 2;
     }
 
     public static string GetPrefixString(string? value)
@@ -86,9 +74,7 @@ public abstract class DataFaker
             return string.Empty;
         }
 
-        var result = value[..(value.Length / 2)];
-
-        return result;
+        return value[..(value.Length / 2)];
     }
 
     public static string GetDifferentCaseString(string? value)
@@ -98,17 +84,13 @@ public abstract class DataFaker
             return string.Empty;
         }
 
-        var result = value.ToUpper(CultureInfo.CurrentCulture);
-
-        return result;
+        return value.ToUpper(CultureInfo.CurrentCulture);
     }
 
     public static TEnum GetEmptyEnum<TEnum>()
         where TEnum : Enum
     {
-        var emptyEnum = default(TEnum);
-
-        return emptyEnum!;
+        return default!;
     }
 
     public static CommonSortOrder GetSortOrder()

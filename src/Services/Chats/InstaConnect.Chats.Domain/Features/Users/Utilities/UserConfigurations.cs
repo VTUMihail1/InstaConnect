@@ -17,5 +17,5 @@ public abstract class UserConfigurations
     public const int NameMinLength = 7;
     public const int NameMaxLength = 100;
 
-    public const int ProfileImageMaxLength = 100;
+    public const int ProfileImageUrlMaxLength = 100;
 }

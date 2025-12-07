@@ -8,28 +8,35 @@ public class AddPostApiRequestBuilder
 
     public AddPostApiRequestBuilder(User user)
     {
-        _userId = user.Id;
+        _userId = user.Id.Id;
         _title = PostDataFaker.GetTitle();
         _content = PostDataFaker.GetContent();
     }
 
-    public AddPostApiRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)
+    public AddPostApiRequestBuilder WithUserId(User user, IStringTransformer? transformer = null)
     {
-        _userId = transformer.TryTransform(userId);
+        _userId = transformer.TryTransform(user.Id.Id);
 
         return this;
     }
 
-    public AddPostApiRequestBuilder WithTitle(string title, IStringTransformer? transformer = null)
+    public AddPostApiRequestBuilder WithUserId(IStringTransformer transformer)
     {
-        _title = transformer.TryTransform(title);
+        _userId = transformer.Transform(_userId);
 
         return this;
     }
 
-    public AddPostApiRequestBuilder WithContent(string content, IStringTransformer? transformer = null)
+    public AddPostApiRequestBuilder WithTitle(IStringTransformer transformer)
     {
-        _content = transformer.TryTransform(content);
+        _title = transformer.Transform(_title);
+
+        return this;
+    }
+
+    public AddPostApiRequestBuilder WithContent(IStringTransformer transformer)
+    {
+        _content = transformer.Transform(_content);
 
         return this;
     }

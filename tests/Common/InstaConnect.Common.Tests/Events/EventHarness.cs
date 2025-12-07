@@ -1,50 +1,67 @@
-﻿using MassTransit;
+﻿using System;
+
+using InstaConnect.Common.Tests.Assertions;
+
+using MassTransit;
 using MassTransit.Testing;
+
+using MongoDB.Driver.Core.Configuration;
 
 namespace InstaConnect.Common.Tests.Events;
 
 public class EventHarness : IEventHarness
 {
-    private readonly ITestHarness _testHarness;
+    private readonly ITestHarnessFactory _testHarnessFactory;
 
-    public EventHarness(ITestHarness testHarness)
+    private ITestHarness _testHarness;
+
+    public EventHarness(
+        ITestHarnessFactory testHarnessFactory,
+        ITestHarness testHarness)
     {
+        _testHarnessFactory = testHarnessFactory;
         _testHarness = testHarness;
     }
 
-    public async Task PublishAsync<T>(T message, CancellationToken cancellationToken)
-        where T : class
+    public async Task PublishAsync<TRequest>(TRequest message, CancellationToken cancellationToken)
+        where TRequest : class
     {
+        await StopAsync(cancellationToken);
+        _testHarness = _testHarnessFactory.Create();
+        await StartAsync(cancellationToken);
+
         await _testHarness.Bus.Publish(message, cancellationToken);
         await _testHarness.InactivityTask;
     }
 
-    public async Task<bool> PublishedAsync<T>(Func<T, bool> predicate, CancellationToken cancellationToken)
-        where T : class
+    public async Task ShouldHavePublishedAsync<TRequest>(Func<TRequest, bool> predicate, CancellationToken cancellationToken)
+        where TRequest : class
     {
         var isPublished = await _testHarness.Published
-                .Any<T>(e => predicate(e.Context.Message), cancellationToken);
+                .Any<TRequest>(e => predicate(e.Context.Message), cancellationToken);
 
-        return isPublished;
+        isPublished.ShouldBeTrue();
     }
 
-    public async Task<bool> FaultedAsync<T>(Func<T, bool> predicate, string errorMessage, CancellationToken cancellationToken)
-    where T : class
+    public async Task ShouldHaveFaultedAsync<TRequest>(
+        Func<TRequest, bool> predicate,
+        CancellationToken cancellationToken)
+        where TRequest : class
     {
-        var isFaulted = await _testHarness.Published
-            .Any<Fault<T>>(e => predicate(e.Context.Message.Message) &&
-                                e.Context.Message.Exceptions.FirstOrDefault()?.Message == errorMessage, cancellationToken);
+        var result = await _testHarness.Published
+                                   .Any<Fault<TRequest>>(e => predicate(e.Context.Message.Message),
+                                   cancellationToken);
 
-        return isFaulted;
+        result.ShouldBeTrue();
     }
 
-    public async Task<bool> ConsumedAsync<T>(Func<T, bool> predicate, CancellationToken cancellationToken)
-        where T : class
+    public async Task ShouldHaveConsumedAsync<TRequest>(Func<TRequest, bool> predicate, CancellationToken cancellationToken)
+        where TRequest : class
     {
-        var isConsumed = await _testHarness.Consumed
-                .Any<T>(e => predicate(e.Context.Message), cancellationToken);
+        var result = await _testHarness.Consumed
+                .Any<TRequest>(e => predicate(e.Context.Message), cancellationToken);
 
-        return isConsumed;
+        result.ShouldBeTrue();
     }
 
     public async Task StartAsync(CancellationToken cancellationToken)

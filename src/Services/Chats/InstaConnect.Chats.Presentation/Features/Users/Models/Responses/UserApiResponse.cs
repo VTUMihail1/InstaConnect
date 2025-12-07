@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Chats.Presentation.Features.Users.Models.Responses;
 
-public record UserApiResponse(UserIdApiPayload Id, NameApiPayload Name, ImageApiPayload? ProfileImage);
+public record UserApiResponse(string Id, string Name, string? ProfileImageUrl);

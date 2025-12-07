@@ -1,12 +1,10 @@
-﻿using InstaConnect.Posts.Tests.Features.Users.Utilities;
-
-namespace InstaConnect.Posts.Tests.Features.Users.DataAttributes.Name;
+﻿namespace InstaConnect.Posts.Tests.Features.Users.DataAttributes.Name;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-public sealed class UserNameTooLongDataAttribute : LengthStringDataAttribute
+public sealed class UserNameTooLongDataAttribute : TooLongStringDataAttribute
 {
     public UserNameTooLongDataAttribute()
-        : base(UserOutOfBoundsUtilities.NameTooLong)
+        : base(UserConfigurations.NameMaxLength)
     {
     }
 }

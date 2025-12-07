@@ -2,82 +2,131 @@
 
 public static class PostCommentLikeValidationAssertions
 {
-    public static void ShouldHaveValidationErrorForId(this TestValidationResult<DeletePostCommentLikeCommandRequest> result, string errorMessage)
+    public static void ShouldHaveValidationErrorForId(
+        this TestValidationResult<DeletePostCommentLikeCommandRequest> result,
+        IStringMessageTransformer messageTransformer,
+        DeletePostCommentLikeCommandRequest request)
     {
-        result.ShouldHaveValidationErrorForProperty(p => p.Id, errorMessage);
+        result.ShouldHaveValidationErrorForProperty(p => p.Id, messageTransformer, request);
     }
 
-    public static void ShouldHaveValidationErrorForId(this TestValidationResult<GetPostCommentLikeByIdQueryRequest> result, string errorMessage)
+    public static void ShouldHaveValidationErrorForId(
+        this TestValidationResult<GetPostCommentLikeByIdQueryRequest> result,
+        IStringMessageTransformer messageTransformer,
+        GetPostCommentLikeByIdQueryRequest request)
     {
-        result.ShouldHaveValidationErrorForProperty(p => p.Id, errorMessage);
-    }
-    public static void ShouldHaveValidationErrorForId(this TestValidationResult<AddPostCommentLikeCommandRequest> result, string errorMessage)
-    {
-        result.ShouldHaveValidationErrorForProperty(p => p.Id, errorMessage);
-    }
-
-    public static void ShouldHaveValidationErrorForId(this TestValidationResult<GetAllPostCommentLikesQueryRequest> result, string errorMessage)
-    {
-        result.ShouldHaveValidationErrorForProperty(p => p.Filter.Id, errorMessage);
+        result.ShouldHaveValidationErrorForProperty(p => p.Id, messageTransformer, request);
     }
 
-    public static void ShouldHaveValidationErrorForCommentId(this TestValidationResult<DeletePostCommentLikeCommandRequest> result, string errorMessage)
+    public static void ShouldHaveValidationErrorForId(
+        this TestValidationResult<AddPostCommentLikeCommandRequest> result,
+        IStringMessageTransformer messageTransformer,
+        AddPostCommentLikeCommandRequest request)
     {
-        result.ShouldHaveValidationErrorForProperty(p => p.CommentId, errorMessage);
+        result.ShouldHaveValidationErrorForProperty(p => p.Id, messageTransformer, request);
     }
 
-    public static void ShouldHaveValidationErrorForCommentId(this TestValidationResult<GetPostCommentLikeByIdQueryRequest> result, string errorMessage)
+    public static void ShouldHaveValidationErrorForId(
+        this TestValidationResult<GetAllPostCommentLikesQueryRequest> result,
+        IStringMessageTransformer messageTransformer,
+        GetAllPostCommentLikesQueryRequest request)
     {
-        result.ShouldHaveValidationErrorForProperty(p => p.CommentId, errorMessage);
-    }
-    public static void ShouldHaveValidationErrorForCommentId(this TestValidationResult<AddPostCommentLikeCommandRequest> result, string errorMessage)
-    {
-        result.ShouldHaveValidationErrorForProperty(p => p.CommentId, errorMessage);
-    }
-
-    public static void ShouldHaveValidationErrorForCommentId(this TestValidationResult<GetAllPostCommentLikesQueryRequest> result, string errorMessage)
-    {
-        result.ShouldHaveValidationErrorForProperty(p => p.Filter.CommentId, errorMessage);
+        result.ShouldHaveValidationErrorForProperty(p => p.Id, messageTransformer, request);
     }
 
-    public static void ShouldHaveValidationErrorForUserId(this TestValidationResult<GetPostCommentLikeByIdQueryRequest> result, string errorMessage)
+    public static void ShouldHaveValidationErrorForCommentId(
+        this TestValidationResult<DeletePostCommentLikeCommandRequest> result,
+        IStringMessageTransformer messageTransformer,
+        DeletePostCommentLikeCommandRequest request)
     {
-        result.ShouldHaveValidationErrorForProperty(p => p.UserId, errorMessage);
+        result.ShouldHaveValidationErrorForProperty(p => p.CommentId, messageTransformer, request);
     }
 
-    public static void ShouldHaveValidationErrorForUserId(this TestValidationResult<AddPostCommentLikeCommandRequest> result, string errorMessage)
+    public static void ShouldHaveValidationErrorForCommentId(
+        this TestValidationResult<GetPostCommentLikeByIdQueryRequest> result,
+        IStringMessageTransformer messageTransformer,
+        GetPostCommentLikeByIdQueryRequest request)
     {
-        result.ShouldHaveValidationErrorForProperty(p => p.UserId, errorMessage);
+        result.ShouldHaveValidationErrorForProperty(p => p.CommentId, messageTransformer, request);
     }
 
-    public static void ShouldHaveValidationErrorForUserId(this TestValidationResult<DeletePostCommentLikeCommandRequest> result, string errorMessage)
+    public static void ShouldHaveValidationErrorForCommentId(
+        this TestValidationResult<AddPostCommentLikeCommandRequest> result,
+        IStringMessageTransformer messageTransformer,
+        AddPostCommentLikeCommandRequest request)
     {
-        result.ShouldHaveValidationErrorForProperty(p => p.UserId, errorMessage);
+        result.ShouldHaveValidationErrorForProperty(p => p.CommentId, messageTransformer, request);
     }
 
-    public static void ShouldHaveValidationErrorForUserName(this TestValidationResult<GetAllPostCommentLikesQueryRequest> result, string errorMessage)
+    public static void ShouldHaveValidationErrorForCommentId(
+        this TestValidationResult<GetAllPostCommentLikesQueryRequest> result,
+        IStringMessageTransformer messageTransformer,
+        GetAllPostCommentLikesQueryRequest request)
     {
-        result.ShouldHaveValidationErrorForProperty(p => p.Filter.UserName, errorMessage);
+        result.ShouldHaveValidationErrorForProperty(p => p.CommentId, messageTransformer, request);
     }
 
-    public static void ShouldHaveValidationErrorForPage(this TestValidationResult<GetAllPostCommentLikesQueryRequest> result, string errorMessage)
+    public static void ShouldHaveValidationErrorForUserId(
+        this TestValidationResult<GetPostCommentLikeByIdQueryRequest> result,
+        IStringMessageTransformer messageTransformer,
+        GetPostCommentLikeByIdQueryRequest request)
     {
-        result.ShouldHaveValidationErrorForProperty(p => p.Pagination.Page, errorMessage);
+        result.ShouldHaveValidationErrorForProperty(p => p.UserId, messageTransformer, request);
     }
 
-    public static void ShouldHaveValidationErrorForPageSize(this TestValidationResult<GetAllPostCommentLikesQueryRequest> result, string errorMessage)
+    public static void ShouldHaveValidationErrorForUserId(
+        this TestValidationResult<AddPostCommentLikeCommandRequest> result,
+        IStringMessageTransformer messageTransformer,
+        AddPostCommentLikeCommandRequest request)
     {
-        result.ShouldHaveValidationErrorForProperty(p => p.Pagination.PageSize, errorMessage);
+        result.ShouldHaveValidationErrorForProperty(p => p.UserId, messageTransformer, request);
     }
 
-    public static void ShouldHaveValidationErrorForSortOrder(this TestValidationResult<GetAllPostCommentLikesQueryRequest> result, string errorMessage)
+    public static void ShouldHaveValidationErrorForUserId(
+        this TestValidationResult<DeletePostCommentLikeCommandRequest> result,
+        IStringMessageTransformer messageTransformer,
+        DeletePostCommentLikeCommandRequest request)
     {
-        result.ShouldHaveValidationErrorForProperty(p => p.Sorting.Order, errorMessage);
+        result.ShouldHaveValidationErrorForProperty(p => p.UserId, messageTransformer, request);
     }
 
-    public static void ShouldHaveValidationErrorForSortProperty(this TestValidationResult<GetAllPostCommentLikesQueryRequest> result, string errorMessage)
+    public static void ShouldHaveValidationErrorForUserName(
+        this TestValidationResult<GetAllPostCommentLikesQueryRequest> result,
+        IStringMessageTransformer messageTransformer,
+        GetAllPostCommentLikesQueryRequest request)
     {
-        result
-            .ShouldHaveValidationErrorForProperty(p => p.Sorting.Property, errorMessage);
+        result.ShouldHaveValidationErrorForProperty(p => p.UserName, messageTransformer, request);
+    }
+
+    public static void ShouldHaveValidationErrorForPage(
+        this TestValidationResult<GetAllPostCommentLikesQueryRequest> result,
+        IIntMessageTransformer messageTransformer,
+        GetAllPostCommentLikesQueryRequest request)
+    {
+        result.ShouldHaveValidationErrorForProperty(p => p.Page, messageTransformer, request);
+    }
+
+    public static void ShouldHaveValidationErrorForPageSize(
+        this TestValidationResult<GetAllPostCommentLikesQueryRequest> result,
+        IIntMessageTransformer messageTransformer,
+        GetAllPostCommentLikesQueryRequest request)
+    {
+        result.ShouldHaveValidationErrorForProperty(p => p.PageSize, messageTransformer, request);
+    }
+
+    public static void ShouldHaveValidationErrorForSortOrder(
+        this TestValidationResult<GetAllPostCommentLikesQueryRequest> result,
+        IEnumMessageTransformer<CommonSortOrder> messageTransformer,
+        GetAllPostCommentLikesQueryRequest request)
+    {
+        result.ShouldHaveValidationErrorForProperty(p => p.SortOrder, messageTransformer, request);
+    }
+
+    public static void ShouldHaveValidationErrorForSortProperty(
+        this TestValidationResult<GetAllPostCommentLikesQueryRequest> result,
+        IEnumMessageTransformer<PostCommentLikeSortProperty> messageTransformer,
+        GetAllPostCommentLikesQueryRequest request)
+    {
+        result.ShouldHaveValidationErrorForProperty(p => p.SortProperty, messageTransformer, request);
     }
 }

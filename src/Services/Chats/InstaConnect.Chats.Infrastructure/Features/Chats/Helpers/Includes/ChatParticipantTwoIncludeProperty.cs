@@ -16,11 +16,11 @@ public class ChatParticipantTwoIncludeProperty : IChatIncludeProperty
     public IAggregateFluent<Chat> Include(IAggregateFluent<Chat> pipeline)
     {
         return pipeline
-            .Lookup<Chat, User, Chat>(
+            .IncludeOne(
                 _chatsContext.Users,
                 p => p.Id.ParticipantTwoId,
                 u => u.Id,
-                p => p.ParticipantTwo
+                p => p.ParticipantTwo!
             );
     }
 }

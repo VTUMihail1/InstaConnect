@@ -10,28 +10,49 @@ public class DeletePostCommentLikeCommandRequestBuilder
 
     public DeletePostCommentLikeCommandRequestBuilder(PostCommentLike postCommentLike)
     {
-        _id = postCommentLike.Id;
-        _commentId = postCommentLike.CommentId;
-        _userId = postCommentLike.UserId;
+        _id = postCommentLike.Id.CommentId.Id.Id;
+        _commentId = postCommentLike.Id.CommentId.CommentId;
+        _userId = postCommentLike.Id.UserId.Id;
     }
 
-    public DeletePostCommentLikeCommandRequestBuilder WithId(string id, IStringTransformer? transformer = null)
+    public DeletePostCommentLikeCommandRequestBuilder WithId(Post post, IStringTransformer? transformer = null)
     {
-        _id = transformer.TryTransform(id);
+        _id = transformer.TryTransform(post.Id.Id);
 
         return this;
     }
 
-    public DeletePostCommentLikeCommandRequestBuilder WithCommentId(string commentId, IStringTransformer? transformer = null)
+    public DeletePostCommentLikeCommandRequestBuilder WithId(IStringTransformer transformer)
     {
-        _commentId = transformer.TryTransform(commentId);
+        _id = transformer.Transform(_id);
 
         return this;
     }
 
-    public DeletePostCommentLikeCommandRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)
+    public DeletePostCommentLikeCommandRequestBuilder WithCommentId(PostComment postComment, IStringTransformer? transformer = null)
     {
-        _userId = transformer.TryTransform(userId);
+        _commentId = transformer.TryTransform(postComment.Id.CommentId);
+
+        return this;
+    }
+
+    public DeletePostCommentLikeCommandRequestBuilder WithCommentId(IStringTransformer transformer)
+    {
+        _commentId = transformer.Transform(_commentId);
+
+        return this;
+    }
+
+    public DeletePostCommentLikeCommandRequestBuilder WithUserId(User user, IStringTransformer? transformer = null)
+    {
+        _userId = transformer.TryTransform(user.Id.Id);
+
+        return this;
+    }
+
+    public DeletePostCommentLikeCommandRequestBuilder WithUserId(IStringTransformer transformer)
+    {
+        _userId = transformer.Transform(_userId);
 
         return this;
     }

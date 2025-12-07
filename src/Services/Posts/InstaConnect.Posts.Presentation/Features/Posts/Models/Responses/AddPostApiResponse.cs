@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Posts.Presentation.Features.Posts.Models.Responses;
 
-public record AddPostApiResponse(PostIdApiPayload Id);
+public record AddPostApiResponse(PostIdApiResponse Response);

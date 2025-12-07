@@ -1,5 +1,4 @@
-﻿using InstaConnect.Common.Tests.DataAttributes.Base;
-using InstaConnect.Posts.Tests.Features.Users.Utilities;
+﻿using InstaConnect.Posts.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Posts.Tests.Features.Users.Builders;
 
@@ -11,8 +10,8 @@ public class UserBuilder
     private string _lastName;
     private string _email;
     private string? _profileImage;
-    private DateTimeOffset _createdAt;
-    private DateTimeOffset _updatedAt;
+    private DateTimeOffset _createdAtUtc;
+    private DateTimeOffset _updatedAtUtc;
 
     public UserBuilder()
     {
@@ -22,68 +21,76 @@ public class UserBuilder
         _lastName = UserDataFaker.GetLastName();
         _email = UserDataFaker.GetEmail();
         _profileImage = UserDataFaker.GetProfileImage();
-        _createdAt = UserDataFaker.GetCreatedAt();
-        _updatedAt = UserDataFaker.GetUpdatedAt();
+        _createdAtUtc = UserDataFaker.GetCreatedAtUtc();
+        _updatedAtUtc = UserDataFaker.GetUpdatedAtUtc();
     }
 
-    public UserBuilder WithId(string id, IStringTransformer? transformer = null)
+    public UserBuilder WithId(IStringTransformer transformer)
     {
-        _id = transformer.TryTransform(id);
+        _id = transformer.Transform(_id);
 
         return this;
     }
 
-    public UserBuilder WithName(string name, IStringTransformer? transformer = null)
+    public UserBuilder WithName(IStringTransformer transformer)
     {
-        _name = transformer.TryTransform(name);
+        _name = transformer.Transform(_name);
 
         return this;
     }
 
-    public UserBuilder WithFirstName(string firstName, IStringTransformer? transformer = null)
+    public UserBuilder WithFirstName(IStringTransformer transformer)
     {
-        _firstName = transformer.TryTransform(firstName);
+        _firstName = transformer.Transform(_firstName);
 
         return this;
     }
 
-    public UserBuilder WithLastName(string lastName, IStringTransformer? transformer = null)
+    public UserBuilder WithLastName(IStringTransformer transformer)
     {
-        _lastName = transformer.TryTransform(lastName);
+        _lastName = transformer.Transform(_lastName);
 
         return this;
     }
 
-    public UserBuilder WithEmail(string email, IStringTransformer? transformer = null)
+    public UserBuilder WithEmail(IStringTransformer transformer)
     {
-        _email = transformer.TryTransform(email);
+        _email = transformer.Transform(_email);
 
         return this;
     }
 
-    public UserBuilder WithProfileImage(string? profileImage, IStringTransformer? transformer = null)
+    public UserBuilder WithProfileImage(IStringTransformer transformer)
     {
-        _profileImage = transformer.TryTransform(profileImage!);
+        _profileImage = transformer.Transform(_profileImage ?? string.Empty);
 
         return this;
     }
 
-    public UserBuilder WithCreatedAt(DateTimeOffset createdAt, IDateTimeOffsetTransformer? transformer = null)
+    public UserBuilder WithCreatedAtUtc(IDateTimeOffsetTransformer transformer)
     {
-        _createdAt = transformer.TryTransform(createdAt);
+        _createdAtUtc = transformer.Transform(_createdAtUtc);
 
         return this;
     }
 
-    public UserBuilder WithUpdatedAt(DateTimeOffset updatedAt, IDateTimeOffsetTransformer? transformer = null)
+    public UserBuilder WithUpdatedAtUtc(IDateTimeOffsetTransformer transformer)
     {
-        _updatedAt = transformer.TryTransform(updatedAt);
+        _updatedAtUtc = transformer.Transform(_updatedAtUtc);
 
         return this;
     }
 
     public User Build()
     {
-        return new(_id, _name, _firstName, _lastName, _email, _profileImage, _createdAt, _updatedAt);
+        return new(
+            new(_id),
+            _firstName,
+            _lastName,
+            new(_email),
+            new(_name),
+            new(_profileImage),
+            _createdAtUtc,
+            _updatedAtUtc);
     }
 }

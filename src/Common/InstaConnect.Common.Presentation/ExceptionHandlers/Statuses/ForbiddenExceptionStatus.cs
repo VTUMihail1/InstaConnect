@@ -4,7 +4,6 @@ using InstaConnect.Common.Presentation.Abstractions;
 using InstaConnect.Common.Presentation.Models;
 
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 
 namespace InstaConnect.Common.Presentation.ExceptionHandlers.Statuses;
 

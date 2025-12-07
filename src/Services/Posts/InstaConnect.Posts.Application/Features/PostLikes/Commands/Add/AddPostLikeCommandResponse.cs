@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Posts.Application.Features.PostLikes.Commands.Add;
 
-public record AddPostLikeCommandResponse(PostLikeIdPayload Id);
+public record AddPostLikeCommandResponse(PostLikeIdCommandResponse Response);

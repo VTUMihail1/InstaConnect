@@ -12,14 +12,33 @@ internal static class ServiceCollectionExtensions
 
         BsonClassMap.TryRegisterClassMap<User>(cm =>
         {
-            cm.AutoMap();
-
             cm.MapIdMember(c => c.Id);
 
-            cm.UnmapMember(c => c.Posts);
-            cm.UnmapMember(c => c.PostLikes);
-            cm.UnmapMember(c => c.PostComments);
-            cm.UnmapMember(c => c.PostCommentLikes);
+            cm.MapMember(c => c.Id);
+            cm.MapMember(c => c.FirstName);
+            cm.MapMember(c => c.LastName);
+            cm.MapMember(c => c.Name);
+            cm.MapMember(c => c.Email);
+            cm.MapMember(c => c.ProfileImage);
+            cm.MapMember(c => c.CreatedAtUtc);
+            cm.MapMember(c => c.UpdatedAtUtc);
+
+            cm.MapMember(c => c.Posts);
+            cm.MapMember(c => c.PostLikes);
+            cm.MapMember(c => c.PostComments);
+            cm.MapMember(c => c.PostCommentLikes);
+
+            cm.MapCreator(c => new User(
+                new(c.Id.Id),
+                c.FirstName,
+                c.LastName,
+                new(c.Email.Value),
+                new(c.Name.Value),
+                c.ProfileImage == null ? null : new(c.ProfileImage.Url),
+                c.CreatedAtUtc,
+                c.UpdatedAtUtc));
+
+            cm.SetIgnoreExtraElements(true);
         });
 
         return serviceCollection;

@@ -4,27 +4,25 @@ public class GetAllChatsByParticipantQueryRequestValidator : AbstractValidator<G
 {
     public GetAllChatsByParticipantQueryRequestValidator()
     {
-        RuleFor(c => c.Filter.ParticipantId.Id)
+        RuleFor(c => c.ParticipantId)
             .NotEmptyWithMessage()
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();
 
-        RuleFor(c => c.Filter.ParticipantName.Value)
+        RuleFor(c => c.ParticipantName)
             .UserNameMaxLengthWithMessage();
 
-        RuleFor(q => q.Sorting.Order)
+        RuleFor(q => q.SortOrder)
             .NotEmptyWithMessage();
 
-        RuleFor(q => q.Sorting.Property)
+        RuleFor(q => q.SortProperty)
             .NotEmptyWithMessage();
 
-        RuleFor(q => q.Pagination.Page)
-            .NotEmptyWithMessage()
+        RuleFor(q => q.Page)
             .ChatPageMinValueWithMessage()
             .ChatPageMaxValueWithMessage();
 
-        RuleFor(q => q.Pagination.PageSize)
-            .NotEmptyWithMessage()
+        RuleFor(q => q.PageSize)
             .ChatPageSizeMinValueWithMessage()
             .ChatPageSizeMaxValueWithMessage();
     }

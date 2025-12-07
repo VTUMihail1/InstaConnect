@@ -6,12 +6,19 @@ public class UserDeletedEventRequestBuilder
 
     public UserDeletedEventRequestBuilder(User user)
     {
-        _id = user.Id;
+        _id = user.Id.Id;
     }
 
-    public UserDeletedEventRequestBuilder WithId(string id, IStringTransformer? transformer = null)
+    public UserDeletedEventRequestBuilder WithId(User user, IStringTransformer? transformer = null)
     {
-        _id = transformer.TryTransform(id);
+        _id = transformer.TryTransform(user.Id.Id);
+
+        return this;
+    }
+
+    public UserDeletedEventRequestBuilder WithId(IStringTransformer transformer)
+    {
+        _id = transformer.Transform(_id);
 
         return this;
     }

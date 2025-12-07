@@ -1,3 +1,7 @@
 ﻿namespace InstaConnect.Chats.Application.Features.ChatMessages.Queries.GetById;
 
-public record GetChatMessageByIdQueryRequest(ChatMessageIdPayload Id, UserIdPayload SenderId) : IQueryRequest<GetChatMessageByIdQueryResponse>;
+public record GetChatMessageByIdQueryRequest(
+    string ParticipantOneId,
+    string ParticipantTwoId,
+    string MessageId,
+    string UserId) : IQueryRequest<GetChatMessageByIdQueryResponse>;

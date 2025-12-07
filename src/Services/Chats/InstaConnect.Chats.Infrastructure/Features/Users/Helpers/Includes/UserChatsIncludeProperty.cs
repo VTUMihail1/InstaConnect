@@ -16,16 +16,16 @@ public class UserChatsIncludeProperty : IUserIncludeProperty
     public IAggregateFluent<User> Include(IAggregateFluent<User> pipeline)
     {
         return pipeline
-            .Lookup<User, Chat, User>(
+            .IncludeMany(
                 _chatsContext.Chats,
                 p => p.Id,
-                l => l.ParticipantOne,
+                l => l.Id.ParticipantOneId,
                 p => p.Chats
             )
-            .Lookup<User, Chat, User>(
+            .IncludeMany(
                 _chatsContext.Chats,
                 p => p.Id,
-                l => l.ParticipantTwo,
+                l => l.Id.ParticipantTwoId,
                 p => p.Chats
             );
     }

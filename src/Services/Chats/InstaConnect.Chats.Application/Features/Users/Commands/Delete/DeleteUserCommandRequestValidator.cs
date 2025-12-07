@@ -3,7 +3,7 @@ public class DeleteUserCommandRequestValidator : AbstractValidator<DeleteUserCom
 {
     public DeleteUserCommandRequestValidator()
     {
-        RuleFor(r => r.Id.Id)
+        RuleFor(r => r.Id)
             .NotEmptyWithMessage()
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();

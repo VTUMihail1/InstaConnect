@@ -1,7 +1,6 @@
 ﻿using InstaConnect.Identity.Application.Features.Users.Commands.Add;
 using InstaConnect.Identity.Application.Features.Users.Commands.Delete;
 using InstaConnect.Identity.Application.Features.Users.Commands.UpdateCurrent;
-using InstaConnect.Identity.Application.Features.Users.Models;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetAll;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetById;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentById;
@@ -18,54 +17,45 @@ internal class UserPresentationMappings : IRegister
     {
         config.NewConfig<GetAllUsersApiRequest, GetAllUsersQueryRequest>()
             .ConstructUsing(src => new(
-                                       new(
-                                           src.FirstName,
-                                           src.LastName,
-                                           src.Name.Adapt<NamePayload>()),
-                                       new(
-                                           src.SortOrder,
-                                           src.SortProperty),
-                                       new(
-                                           src.Page,
-                                           src.PageSize)));
+                src.FirstName,
+                src.LastName,
+                src.Name,
+                src.SortOrder,
+                src.SortProperty,
+                src.Page,
+                src.PageSize));
 
         config.NewConfig<GetAllUsersQueryResponse, GetAllUsersApiResponse>()
-            .ConstructUsing(pc => new(
-                  pc.Data.Adapt<ICollection<UserApiResponse>>(),
-                  pc.Page,
-                  pc.PageSize,
-                  pc.TotalCount,
-                  pc.HasNextPage,
-                  pc.HasPreviousPage));
+            .ConstructUsing(src => new(src.Response.Adapt<UserCollectionApiResponse>(config)));
 
         config.NewConfig<GetUserByIdApiRequest, GetUserByIdQueryRequest>()
-            .ConstructUsing(src => new(src.Id.Adapt<UserIdPayload>()));
+            .ConstructUsing(src => new(src.Id));
 
         config.NewConfig<GetUserByIdQueryResponse, GetUserByIdApiResponse>()
-            .ConstructUsing(src => new(src.Data.Adapt<UserApiResponse>()));
+            .ConstructUsing(src => new(src.Response.Adapt<UserApiResponse>(config)));
 
         config.NewConfig<GetCurrentUserByIdApiRequest, GetUserByIdQueryRequest>()
-            .ConstructUsing(src => new(src.Id.Adapt<UserIdPayload>()));
+            .ConstructUsing(src => new(src.Id));
 
         config.NewConfig<GetCurrentUserByIdQueryResponse, GetCurrentUserByIdApiResponse>()
-            .ConstructUsing(src => new(src.Data.Adapt<UserApiResponse>()));
+            .ConstructUsing(src => new(src.Response.Adapt<UserApiResponse>(config)));
 
         config.NewConfig<GetUserDetailsByIdApiRequest, GetUserByIdQueryRequest>()
-            .ConstructUsing(src => new(src.Id.Adapt<UserIdPayload>()));
+            .ConstructUsing(src => new(src.Id));
 
         config.NewConfig<GetUserDetailsByIdQueryResponse, GetUserDetailsByIdApiResponse>()
-            .ConstructUsing(src => new(src.Data.Adapt<UserDetailsApiResponse>()));
+            .ConstructUsing(src => new(src.Response.Adapt<UserDetailsApiResponse>(config)));
 
         config.NewConfig<GetCurrentUserByIdApiRequest, GetUserByIdQueryRequest>()
-            .ConstructUsing(src => new(src.Id.Adapt<UserIdPayload>()));
+            .ConstructUsing(src => new(src.Id));
 
         config.NewConfig<GetCurrentUserDetailsByIdQueryResponse, GetCurrentUserDetailsByIdApiResponse>()
-            .ConstructUsing(src => new(src.Data.Adapt<UserDetailsApiResponse>()));
+            .ConstructUsing(src => new(src.Response.Adapt<UserDetailsApiResponse>(config)));
 
         config.NewConfig<AddUserApiRequest, AddUserCommandRequest>()
             .ConstructUsing(src => new(
-                src.Form.Name.Adapt<NamePayload>(),
-                src.Form.Email.Adapt<EmailPayload>(),
+                src.Form.Name,
+                src.Form.Email,
                 src.Form.Password,
                 src.Form.ConfirmPassword,
                 src.Form.FirstName,
@@ -73,51 +63,57 @@ internal class UserPresentationMappings : IRegister
                 src.Form.ProfileImage));
 
         config.NewConfig<AddUserCommandResponse, AddUserApiResponse>()
-            .ConstructUsing(src => new(src.Id.Adapt<UserIdApiPayload>()));
+            .ConstructUsing(src => new(src.Response.Adapt<UserIdApiResponse>(config)));
 
         config.NewConfig<UpdateCurrentUserApiRequest, UpdateCurrentUserCommandRequest>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<UserIdPayload>(),
-                src.Form.Email.Adapt<EmailPayload>(),
+                src.Id,
+                src.Form.Email,
                 src.Form.FirstName,
                 src.Form.LastName,
-                src.Form.Name.Adapt<NamePayload>(),
+                src.Form.Name,
                 src.Form.ProfileImage));
 
         config.NewConfig<UpdateCurrentUserCommandResponse, UpdateCurrentUserApiResponse>()
-            .ConstructUsing(src => new(src.Id.Adapt<UserIdApiPayload>()));
+            .ConstructUsing(src => new(src.Response.Adapt<UserIdApiResponse>(config)));
 
         config.NewConfig<DeleteUserApiRequest, DeleteUserCommandRequest>()
-            .ConstructUsing(src => new(src.Id.Adapt<UserIdPayload>()));
-
-        config.NewConfig<DeleteCurrentUserApiRequest, DeleteUserCommandRequest>()
-            .ConstructUsing(src => new(src.Id.Adapt<UserIdPayload>()));
-
-        config.NewConfig<UserIdApiPayload, UserIdPayload>()
             .ConstructUsing(src => new(src.Id));
 
-        config.NewConfig<UserIdPayload, UserIdApiPayload>()
+        config.NewConfig<DeleteCurrentUserApiRequest, DeleteUserCommandRequest>()
+            .ConstructUsing(src => new(src.Id));
+
+        config.NewConfig<UserIdCommandResponse, UserIdApiResponse>()
             .ConstructUsing(src => new(src.Id));
 
         config.NewConfig<UserQueryResponse, UserApiResponse>()
             .ConstructUsing(src => new(
-                    src.Id.Adapt<UserIdApiPayload>(),
-                    src.FirstName,
-                    src.LastName,
-                    src.Name.Adapt<NameApiPayload>(),
-                    src.ProfileImage.Adapt<ImageApiPayload>(),
-                    src.CreatedAtUtc,
-                    src.UpdatedAtUtc));
+                  src.Id,
+                  src.FirstName,
+                  src.LastName,
+                  src.Name,
+                  src.ProfileImageUrl,
+                  src.CreatedAtUtc,
+                  src.UpdatedAtUtc));
 
         config.NewConfig<UserDetailsQueryResponse, UserDetailsApiResponse>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<UserIdApiPayload>(),
-                    src.FirstName,
-                    src.LastName,
-                    src.Name.Adapt<NameApiPayload>(),
-                    src.Email.Adapt<EmailApiPayload>(),
-                    src.ProfileImage.Adapt<ImageApiPayload>(),
-                    src.CreatedAtUtc,
-                    src.UpdatedAtUtc));
+                  src.Id,
+                  src.FirstName,
+                  src.LastName,
+                  src.Name,
+                  src.Email,
+                  src.ProfileImageUrl,
+                  src.CreatedAtUtc,
+                  src.UpdatedAtUtc));
+
+        config.NewConfig<UserCollectionQueryResponse, UserCollectionApiResponse>()
+            .ConstructUsing(src => new(
+                  src.Entities.Adapt<ICollection<UserApiResponse>>(config),
+                  src.Page,
+                  src.PageSize,
+                  src.TotalCount,
+                  src.HasNextPage,
+                  src.HasPreviousPage));
     }
 }

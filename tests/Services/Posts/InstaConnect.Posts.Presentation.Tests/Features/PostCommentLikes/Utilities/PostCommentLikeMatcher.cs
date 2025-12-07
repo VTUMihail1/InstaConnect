@@ -3,13 +3,13 @@ public static class PostCommentLikeMatcher
 {
     public static GetAllPostCommentLikesQueryRequest IsGetAllPostCommentLikesQueryRequest(GetAllPostCommentLikesApiRequest request)
     {
-        return Matcher.Is<GetAllPostCommentLikesQueryRequest>(p => p.Filter.Id == request.Filter.Id &&
-                                                                   p.Filter.CommentId == request.Filter.CommentId &&
-                                                                   p.Filter.UserName == request.Filter.UserName &&
-                                                                   p.Pagination.Page == request.Pagination.Page &&
-                                                                   p.Pagination.PageSize == request.Pagination.PageSize &&
-                                                                   p.Sorting.Order == request.Sorting.Order &&
-                                                                   p.Sorting.Property == request.Sorting.Property);
+        return Matcher.Is<GetAllPostCommentLikesQueryRequest>(p => p.Id == request.Id &&
+                                                                   p.CommentId == request.CommentId &&
+                                                                   p.UserName == request.UserName &&
+                                                                   p.Page == request.Page &&
+                                                                   p.PageSize == request.PageSize &&
+                                                                   p.SortOrder == request.SortOrder &&
+                                                                   p.SortProperty == request.SortProperty);
     }
 
     public static GetPostCommentLikeByIdQueryRequest IsGetPostCommentLikeByIdQueryRequest(GetPostCommentLikeByIdApiRequest request)

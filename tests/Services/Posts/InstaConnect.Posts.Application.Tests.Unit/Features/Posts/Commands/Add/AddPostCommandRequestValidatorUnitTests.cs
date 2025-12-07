@@ -23,16 +23,16 @@ public class AddPostCommandRequestValidatorUnitTests : BasePostApplicationUnitTe
     [UserIdTooShortWithMessageData]
     [UserIdTooLongWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenUserIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForUserId(errorMessage);
+        result.ShouldHaveValidationErrorForUserId(messageTransformer, request);
     }
 
     [Theory]
@@ -41,16 +41,16 @@ public class AddPostCommandRequestValidatorUnitTests : BasePostApplicationUnitTe
     [PostTitleTooShortWithMessageData]
     [PostTitleTooLongWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenTitleIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithTitle(_request.Title, transformer).Build();
+        var request = _requestBuilder.WithTitle(transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForTitle(errorMessage);
+        result.ShouldHaveValidationErrorForTitle(messageTransformer, request);
     }
 
     [Theory]
@@ -59,16 +59,16 @@ public class AddPostCommandRequestValidatorUnitTests : BasePostApplicationUnitTe
     [PostContentTooShortWithMessageData]
     [PostContentTooLongWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenContentIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithContent(_request.Content, transformer).Build();
+        var request = _requestBuilder.WithContent(transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForContent(errorMessage);
+        result.ShouldHaveValidationErrorForContent(messageTransformer, request);
     }
 
     [Fact]

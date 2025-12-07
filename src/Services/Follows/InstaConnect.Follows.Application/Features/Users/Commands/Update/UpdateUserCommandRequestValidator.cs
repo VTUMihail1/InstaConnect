@@ -3,12 +3,12 @@ public class UpdateUserCommandRequestValidator : AbstractValidator<UpdateUserCom
 {
     public UpdateUserCommandRequestValidator()
     {
-        RuleFor(r => r.Id.Id)
+        RuleFor(r => r.Id)
             .NotEmptyWithMessage()
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();
 
-        RuleFor(r => r.Name.Value)
+        RuleFor(r => r.Name)
             .NotEmptyWithMessage()
             .UserNameMinLengthWithMessage()
             .UserNameMaxLengthWithMessage();
@@ -23,12 +23,15 @@ public class UpdateUserCommandRequestValidator : AbstractValidator<UpdateUserCom
             .UserLastNameMinLengthWithMessage()
             .UserLastNameMaxLengthWithMessage();
 
-        RuleFor(r => r.Email.Value)
+        RuleFor(r => r.Email)
             .NotEmptyWithMessage()
             .UserEmailMinLengthWithMessage()
             .UserEmailMaxLengthWithMessage();
 
-        RuleFor(r => r.ProfileImage!.Url)
-            .UserProfileImageMaxLengthWithMessage();
+        RuleFor(r => r.ProfileImageUrl)
+            .UserProfileImageUrlMaxLengthWithMessage();
+
+        RuleFor(r => r.UpdatedAtUtc)
+            .NotEmptyWithMessage();
     }
 }

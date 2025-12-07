@@ -1,5 +1,5 @@
 ﻿namespace InstaConnect.Posts.Tests.Features.PostCommentLikes.Utilities;
-public abstract class BasePostCommentLikeTest
+public abstract class BasePostCommentLikeTest : BaseTest
 {
     protected UserBuilderFactory UserBuilderFactory { get; }
     protected UserBuilder UserBuilder { get; }
@@ -34,7 +34,7 @@ public abstract class BasePostCommentLikeTest
         PostComment = PostCommentBuilder.Build();
 
         PostCommentLikeBuilderFactory = new();
-        PostCommentLikeBuilder = PostCommentLikeBuilderFactory.Create(Post, PostComment, User);
+        PostCommentLikeBuilder = PostCommentLikeBuilderFactory.Create(PostComment, User);
         PostCommentLike = PostCommentLikeBuilder.Build();
 
         CancellationToken = MockFactory.CreateCancellationToken();

@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Domain.Extensions;
-
-namespace InstaConnect.Chats.Domain.Features.ChatMessages.Models.Entities;
+﻿namespace InstaConnect.Chats.Domain.Features.ChatMessages.Models.Entities;
 
 public class ChatMessage : IEntity<ChatMessageId>
 {
@@ -25,21 +23,6 @@ public class ChatMessage : IEntity<ChatMessageId>
         UpdatedAtUtc = updatedAtUtc;
     }
 
-    public ChatMessage(
-        ChatMessageId id,
-        User sender,
-        string content,
-        DateTimeOffset createdAtUtc,
-        DateTimeOffset updatedAtUtc)
-    {
-        Id = id;
-        SenderId = sender.Id;
-        Sender = sender;
-        Content = content;
-        CreatedAtUtc = createdAtUtc;
-        UpdatedAtUtc = updatedAtUtc;
-    }
-    
     public ChatMessageId Id { get; }
 
     public UserId SenderId { get; }

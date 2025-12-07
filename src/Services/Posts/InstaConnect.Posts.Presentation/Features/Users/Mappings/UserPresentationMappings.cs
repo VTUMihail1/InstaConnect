@@ -2,7 +2,6 @@
 using InstaConnect.Posts.Application.Features.Users.Commands.Delete;
 using InstaConnect.Posts.Application.Features.Users.Commands.Update;
 using InstaConnect.Posts.Application.Features.Users.Models;
-using InstaConnect.Posts.Presentation.Features.Users.Models.Responses;
 
 using Mapster;
 
@@ -14,41 +13,32 @@ internal class UserPresentationMappings : IRegister
     {
         config.NewConfig<UserAddedEventRequest, AddUserCommandRequest>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<UserIdPayload>(),
+                src.Id,
                 src.FirstName,
                 src.LastName,
-                src.Name.Adapt<NamePayload>(),
-                src.Email.Adapt<EmailPayload>(),
-                src.ProfileImage.Adapt<ImagePayload>()));
+                src.Name,
+                src.Email,
+                src.ProfileImageUrl,
+                src.CreatedAtUtc,
+                src.UpdatedAtUtc));
 
         config.NewConfig<UserUpdatedEventRequest, UpdateUserCommandRequest>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<UserIdPayload>(),
+                src.Id,
                 src.FirstName,
                 src.LastName,
-                src.Name.Adapt<NamePayload>(),
-                src.Email.Adapt<EmailPayload>(),
-                src.ProfileImage.Adapt<ImagePayload>()));
+                src.Name,
+                src.Email,
+                src.ProfileImageUrl,
+                src.UpdatedAtUtc));
 
         config.NewConfig<UserDeletedEventRequest, DeleteUserCommandRequest>()
-            .ConstructUsing(src => new(src.Id.Adapt<UserIdPayload>()));
-
-        config.NewConfig<UserIdPayload, UserIdApiPayload>()
-            .ConstructUsing(src => new(src.Id));
-
-        config.NewConfig<UserIdApiPayload, UserIdPayload>()
-            .ConstructUsing(src => new(src.Id));
-
-        config.NewConfig<UserIdPayload, UserIdEventPayload>()
-            .ConstructUsing(src => new(src.Id));
-
-        config.NewConfig<UserIdEventPayload, UserIdPayload>()
             .ConstructUsing(src => new(src.Id));
 
         config.NewConfig<UserQueryResponse, UserApiResponse>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<UserIdApiPayload>(),
-                src.Name.Adapt<NameApiPayload>(),
-                src.ProfileImage.Adapt<ImageApiPayload>()));
+                src.Id,
+                src.Name,
+                src.ProfileImageUrl));
     }
 }

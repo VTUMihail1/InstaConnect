@@ -8,12 +8,9 @@ internal class ForgotPasswordTokenDomainMappings : IRegister
     {
         config.NewConfig<ForgotPasswordToken, ForgotPasswordTokenAddedEventRequest>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<ForgotPasswordTokenIdEventPayload>(),
-                src.ExpiresAtUtc));
-
-        config.NewConfig<ForgotPasswordTokenId, ForgotPasswordTokenIdEventPayload>()
-            .ConstructUsing(src => new(
-                src.Id.Adapt<UserIdEventPayload>(),
-                src.Value));
+                src.Id.Id.Id,
+                src.Id.Value,
+                src.ExpiresAtUtc,
+                src.CreatedAtUtc));
     }
 }

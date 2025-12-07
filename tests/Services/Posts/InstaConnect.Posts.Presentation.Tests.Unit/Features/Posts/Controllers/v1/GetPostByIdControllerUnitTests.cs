@@ -16,7 +16,7 @@ public class GetPostByIdControllerUnitTests : BasePostPresentationUnitTest
 
         _postController = new(ApplicationMapper, ApplicationSender);
 
-        ApplicationSender.SetupGetByIdQueryRequest(_request, Post, User, CancellationToken);
+        ApplicationSender.SetupGetByIdQueryRequest(_request, Post, CancellationToken);
     }
 
     [Fact]

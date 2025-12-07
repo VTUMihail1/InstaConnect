@@ -13,62 +13,65 @@ public class GetAllPostLikesQueryRequestBuilder
 
     public GetAllPostLikesQueryRequestBuilder(PostLike postLike, User user)
     {
-        _id = postLike.Id;
-        _userName = user.Name;
+        _id = postLike.Id.Id.Id;
+        _userName = user.Name.Value;
         _page = PostLikeDataFaker.GetPage();
         _pageSize = PostLikeDataFaker.GetPageSize();
         _sortOrder = DataFaker.GetSortOrder();
         _sortProperty = PostLikeDataFaker.GetSortProperty();
     }
 
-    public GetAllPostLikesQueryRequestBuilder WithId(string id, IStringTransformer? transformer = null)
+    public GetAllPostLikesQueryRequestBuilder WithId(Post post, IStringTransformer? transformer = null)
     {
-        _id = transformer.TryTransform(id);
+        _id = transformer.TryTransform(post.Id.Id);
 
         return this;
     }
 
-    public GetAllPostLikesQueryRequestBuilder WithUserName(string userName, IStringTransformer? transformer = null)
+    public GetAllPostLikesQueryRequestBuilder WithId(IStringTransformer transformer)
     {
-        _userName = transformer.TryTransform(userName);
+        _id = transformer.Transform(_id);
 
         return this;
     }
 
-    public GetAllPostLikesQueryRequestBuilder WithPage(int page, IIntTransformer? transformer = null)
+    public GetAllPostLikesQueryRequestBuilder WithUserName(IStringTransformer transformer)
     {
-        _page = transformer.TryTransform(page);
+        _userName = transformer.Transform(_userName);
 
         return this;
     }
 
-    public GetAllPostLikesQueryRequestBuilder WithPageSize(int pageSize, IIntTransformer? transformer = null)
+    public GetAllPostLikesQueryRequestBuilder WithPage(IIntTransformer transformer)
     {
-        _pageSize = transformer.TryTransform(pageSize);
+        _page = transformer.Transform(_page);
 
         return this;
     }
 
-    public GetAllPostLikesQueryRequestBuilder WithSortOrder(CommonSortOrder order, IEnumTransformer<CommonSortOrder>? transformer = null)
+    public GetAllPostLikesQueryRequestBuilder WithPageSize(IIntTransformer transformer)
     {
-        _sortOrder = transformer.TryTransform(order);
+        _pageSize = transformer.Transform(_pageSize);
 
         return this;
     }
 
-    public GetAllPostLikesQueryRequestBuilder WithSortProperty(PostLikeSortProperty property, IEnumTransformer<PostLikeSortProperty>? transformer = null)
+    public GetAllPostLikesQueryRequestBuilder WithSortOrder(IEnumTransformer<CommonSortOrder> transformer)
     {
-        _sortProperty = transformer.TryTransform(property);
+        _sortOrder = transformer.Transform(_sortOrder);
+
+        return this;
+    }
+
+    public GetAllPostLikesQueryRequestBuilder WithSortProperty(IEnumTransformer<PostLikeSortProperty> transformer)
+    {
+        _sortProperty = transformer.Transform(_sortProperty);
 
         return this;
     }
 
     public GetAllPostLikesQueryRequest Build()
     {
-        return new(
-            new(_id, _userName),
-            new(_sortOrder, _sortProperty),
-            new(_page, _pageSize)
-        );
+        return new(_id, _userName, _sortOrder, _sortProperty, _page, _pageSize);
     }
 }

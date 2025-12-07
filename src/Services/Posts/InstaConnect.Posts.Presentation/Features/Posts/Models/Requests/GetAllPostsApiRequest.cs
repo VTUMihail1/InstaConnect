@@ -5,11 +5,11 @@ using InstaConnect.Posts.Presentation.Features.Users.Utilities;
 namespace InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 
 public record GetAllPostsApiRequest(
-    [FromQuery(Name = "userId")] string UserId = UserDefaultValues.Id,
-    [FromQuery(Name = "userName")] string UserName = UserDefaultValues.Name,
-    [FromQuery(Name = "title")] string Title = PostDefaultValues.Title,
-    [FromQuery(Name = "sortOrder")] CommonSortOrder SortOrder = CommonDefaultValues.SortOrder,
-    [FromQuery(Name = "sortProperty")] PostSortProperty SortProperty = PostDefaultValues.SortProperty,
-    [FromQuery(Name = "page")] int Page = PostDefaultValues.Page,
-    [FromQuery(Name = "pageSize")] int PageSize = PostDefaultValues.PageSize);
+    [FromQuery] string UserId = UserDefaultValues.Id,
+    [FromQuery] string UserName = UserDefaultValues.Name,
+    [FromQuery] string Title = PostDefaultValues.Title,
+    [FromQuery] CommonSortOrder SortOrder = CommonDefaultValues.SortOrder,
+    [FromQuery] PostSortProperty SortProperty = PostDefaultValues.SortProperty,
+    [FromQuery] int Page = PostDefaultValues.Page,
+    [FromQuery] int PageSize = PostDefaultValues.PageSize);
 

@@ -1,12 +1,7 @@
 ﻿using InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Add;
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Delete;
-using InstaConnect.Posts.Application.Features.PostCommentLikes.Models;
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAll;
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetById;
-using InstaConnect.Posts.Application.Features.PostComments.Models;
-using InstaConnect.Posts.Application.Features.Users.Models;
-using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Payloads;
-using InstaConnect.Posts.Presentation.Features.Users.Models.Responses;
 
 using Mapster;
 
@@ -18,69 +13,61 @@ internal class PostCommentLikePresentationMappings : IRegister
     {
         config.NewConfig<GetAllPostCommentLikesApiRequest, GetAllPostCommentLikesQueryRequest>()
             .ConstructUsing(src => new(
-                new(
-                    new(
-                        new(src.Id),
-                        src.CommentId),
-                    new(src.UserName)),
-                new(
-                    src.SortOrder,
-                    src.SortProperty),
-                new(
-                    src.Page,
-                    src.PageSize)));
+                src.Id,
+                src.CommentId,
+                src.UserName,
+                src.SortOrder,
+                src.SortProperty,
+                src.Page,
+                src.PageSize));
 
         config.NewConfig<GetAllPostCommentLikesQueryResponse, GetAllPostCommentLikesApiResponse>()
-            .ConstructUsing(pc => new(
-                pc.Data.Adapt<ICollection<PostCommentLikeApiResponse>>(),
-                pc.Page,
-                pc.PageSize,
-                pc.TotalCount,
-                pc.HasNextPage,
-                pc.HasPreviousPage));
+            .ConstructUsing(src => new(src.Response.Adapt<PostCommentLikeCollectionApiResponse>(config)));
 
         config.NewConfig<GetPostCommentLikeByIdApiRequest, GetPostCommentLikeByIdQueryRequest>()
             .ConstructUsing(src => new(
-                                       new(
-                                           new(
-                                               new(src.Id),
-                                               src.CommentId),
-                                           new(src.UserId))));
+                src.Id,
+                src.CommentId,
+                src.UserId));
 
         config.NewConfig<GetPostCommentLikeByIdQueryResponse, GetPostCommentLikeByIdApiResponse>()
-            .ConstructUsing(src => new(src.Data.Adapt<PostCommentLikeApiResponse>()));
+            .ConstructUsing(src => new(src.Response.Adapt<PostCommentLikeApiResponse>(config)));
 
         config.NewConfig<AddPostCommentLikeApiRequest, AddPostCommentLikeCommandRequest>()
             .ConstructUsing(src => new(
-                                       new(
-                                           new(src.Id),
-                                           src.CommentId),
-                                       new(src.UserId)));
+                src.Id,
+                src.CommentId,
+                src.UserId));
 
         config.NewConfig<AddPostCommentLikeCommandResponse, AddPostCommentLikeApiResponse>()
-            .ConstructUsing(src => new(src.Id.Adapt<PostCommentLikeIdApiPayload>()));
+            .ConstructUsing(src => new(src.Response.Adapt<PostCommentLikeIdApiResponse>(config)));
 
         config.NewConfig<DeletePostCommentLikeApiRequest, DeletePostCommentLikeCommandRequest>()
             .ConstructUsing(src => new(
-                                       new(
-                                           new(
-                                               new(src.Id),
-                                               src.CommentId),
-                                           new(src.UserId))));
+                src.Id,
+                src.CommentId,
+                src.UserId));
+
+        config.NewConfig<PostCommentLikeIdCommandResponse, PostCommentLikeIdApiResponse>()
+            .ConstructUsing(src => new(
+                src.Id,
+                src.CommentId,
+                src.UserId));
+
+        config.NewConfig<PostCommentLikeCollectionQueryResponse, PostCommentLikeCollectionApiResponse>()
+            .ConstructUsing(src => new(
+                src.Entities.Adapt<ICollection<PostCommentLikeApiResponse>>(config),
+                src.Page,
+                src.PageSize,
+                src.TotalCount,
+                src.HasNextPage,
+                src.HasPreviousPage));
 
         config.NewConfig<PostCommentLikeQueryResponse, PostCommentLikeApiResponse>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<PostCommentLikeIdApiPayload>(),
-                src.User.Adapt<UserApiResponse>()));
-
-        config.NewConfig<PostCommentLikeIdApiPayload, PostCommentLikeIdPayload>()
-            .ConstructUsing(src => new(
-                src.CommentId.Adapt<PostCommentIdPayload>(),
-                src.UserId.Adapt<UserIdPayload>()));
-
-        config.NewConfig<PostCommentLikeIdPayload, PostCommentLikeIdApiPayload>()
-            .ConstructUsing(src => new(
-                src.CommentId.Adapt<PostCommentIdApiPayload>(),
-                src.UserId.Adapt<UserIdApiPayload>()));
+                src.Id,
+                src.CommentId,
+                src.User.Adapt<UserApiResponse>(config),
+                src.CreatedAtUtc));
     }
 }

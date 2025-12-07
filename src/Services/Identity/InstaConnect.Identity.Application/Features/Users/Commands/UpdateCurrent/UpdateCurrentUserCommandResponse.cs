@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Identity.Application.Features.Users.Commands.UpdateCurrent;
 
-public record UpdateCurrentUserCommandResponse(UserIdPayload Id);
+public record UpdateCurrentUserCommandResponse(UserIdCommandResponse Response);

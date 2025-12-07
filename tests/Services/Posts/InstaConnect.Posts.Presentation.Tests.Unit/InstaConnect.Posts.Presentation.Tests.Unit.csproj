@@ -52,7 +52,6 @@
     <Using Include="InstaConnect.Posts.Application.Features.Users.Commands.Update" />
     <Using Include="InstaConnect.Posts.Application.Features.Users.Commands.Delete" />
     <Using Include="InstaConnect.Posts.Presentation.Tests.Unit.Features.Users.Utilities" />
-    <Using Include="InstaConnect.Posts.Tests.Features.Users.Assertions"/>
     <Using Include="InstaConnect.Posts.Presentation.Tests.Features.Users.Assertions"/>
     <Using Include="InstaConnect.Posts.Tests.Features.Users.Builders"/>
     <Using Include="InstaConnect.Posts.Tests.Features.Users.Utilities"/>
@@ -72,7 +71,6 @@
     <Using Include="InstaConnect.Posts.Application.Features.Posts.Commands.Delete" />
     <Using Include="InstaConnect.Posts.Presentation.Features.Posts.Controllers.v1"/>
     <Using Include="InstaConnect.Posts.Presentation.Tests.Unit.Features.Posts.Utilities" />
-    <Using Include="InstaConnect.Posts.Tests.Features.Posts.Assertions"/>
     <Using Include="InstaConnect.Posts.Presentation.Tests.Features.Posts.Assertions"/>
     <Using Include="InstaConnect.Posts.Tests.Features.Posts.Builders"/>
     <Using Include="InstaConnect.Posts.Tests.Features.Posts.Utilities"/>
@@ -91,7 +89,6 @@
     <Using Include="InstaConnect.Posts.Application.Features.PostLikes.Commands.Delete" />
     <Using Include="InstaConnect.Posts.Presentation.Features.PostLikes.Controllers.v1"/>
     <Using Include="InstaConnect.Posts.Presentation.Tests.Unit.Features.PostLikes.Utilities" />
-    <Using Include="InstaConnect.Posts.Tests.Features.PostLikes.Assertions"/>
     <Using Include="InstaConnect.Posts.Presentation.Tests.Features.PostLikes.Assertions"/>
     <Using Include="InstaConnect.Posts.Tests.Features.PostLikes.Builders"/>
     <Using Include="InstaConnect.Posts.Tests.Features.PostLikes.Utilities"/>
@@ -111,7 +108,6 @@
     <Using Include="InstaConnect.Posts.Application.Features.PostComments.Commands.Delete" />
     <Using Include="InstaConnect.Posts.Presentation.Features.PostComments.Controllers.v1"/>
     <Using Include="InstaConnect.Posts.Presentation.Tests.Unit.Features.PostComments.Utilities" />
-    <Using Include="InstaConnect.Posts.Tests.Features.PostComments.Assertions"/>
     <Using Include="InstaConnect.Posts.Presentation.Tests.Features.PostComments.Assertions"/>
     <Using Include="InstaConnect.Posts.Tests.Features.PostComments.Builders"/>
     <Using Include="InstaConnect.Posts.Tests.Features.PostComments.Utilities"/>
@@ -130,7 +126,6 @@
     <Using Include="InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Delete" />
     <Using Include="InstaConnect.Posts.Presentation.Features.PostCommentLikes.Controllers.v1"/>
     <Using Include="InstaConnect.Posts.Presentation.Tests.Unit.Features.PostCommentLikes.Utilities" />
-    <Using Include="InstaConnect.Posts.Tests.Features.PostCommentLikes.Assertions"/>
     <Using Include="InstaConnect.Posts.Presentation.Tests.Features.PostCommentLikes.Assertions"/>
     <Using Include="InstaConnect.Posts.Tests.Features.PostCommentLikes.Builders"/>
     <Using Include="InstaConnect.Posts.Tests.Features.PostCommentLikes.Utilities"/>

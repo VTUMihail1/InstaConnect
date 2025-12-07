@@ -26,16 +26,14 @@ public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
     [PostIdTooShortWithMessageData]
     [PostIdTooLongWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Assert
-        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
+        await ApplicationSender.ShouldThrowInvalidValidationExceptionForIdAsync(
+            messageTransformer, request, CancellationToken);
     }
 
     [Theory]
@@ -44,16 +42,14 @@ public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
     [UserIdTooShortWithMessageData]
     [UserIdTooLongWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenUserIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Assert
-        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
+        await ApplicationSender.ShouldThrowInvalidValidationExceptionForUserIdAsync(
+            messageTransformer, request, CancellationToken);
     }
 
     [Fact]
@@ -62,11 +58,8 @@ public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
         // Arrange
         await ServiceScope.DeletePostAsync(Post, CancellationToken);
 
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(_request, CancellationToken);
-
         // Assert
-        await action.ShouldThrowPostNotFoundExceptionAsync(_request.Id);
+        await ApplicationSender.ShouldThrowPostNotFoundExceptionAsync(_request, CancellationToken);
     }
 
     [Fact]
@@ -75,13 +68,10 @@ public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
         // Arrange
         var user = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(user, CancellationToken);
-        var request = _requestBuilder.WithUserId(user.Id).Build();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var request = _requestBuilder.WithUserId(user).Build();
 
         // Assert
-        await action.ShouldThrowPostForbiddenExceptionAsync(request.Id, request.UserId);
+        await ApplicationSender.ShouldThrowPostForbiddenExceptionAsync(request, CancellationToken);
     }
 
     [Fact]
@@ -89,7 +79,7 @@ public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
     {
         // Act
         await ApplicationSender.SendAsync(_request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(_request.Id, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(Post.Id, CancellationToken);
 
         // Assert
         post.ShouldBeNull();
@@ -101,11 +91,11 @@ public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         await ApplicationSender.SendAsync(request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(request.Id, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(Post.Id, CancellationToken);
 
         // Assert
         post.ShouldBeNull();
@@ -117,11 +107,11 @@ public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         await ApplicationSender.SendAsync(request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(request.Id, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(Post.Id, CancellationToken);
 
         // Assert
         post.ShouldBeNull();
@@ -132,10 +122,9 @@ public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
     {
         // Act
         await ApplicationSender.SendAsync(_request, CancellationToken);
-        var hasPublshed = await EventHarness.HasPublishPostDeletedEventAsync(Post, CancellationToken);
 
         // Assert
-        hasPublshed.ShouldBeTrue();
+        await EventHarness.ShouldHavePublishedDeletedAsync(Post, CancellationToken);
     }
 
     [Theory]
@@ -144,14 +133,13 @@ public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         await ApplicationSender.SendAsync(request, CancellationToken);
-        var hasPublshed = await EventHarness.HasPublishPostDeletedEventAsync(Post, CancellationToken);
 
         // Assert
-        hasPublshed.ShouldBeTrue();
+        await EventHarness.ShouldHavePublishedDeletedAsync(Post, CancellationToken);
     }
 
     [Theory]
@@ -160,13 +148,12 @@ public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         await ApplicationSender.SendAsync(request, CancellationToken);
-        var hasPublshed = await EventHarness.HasPublishPostDeletedEventAsync(Post, CancellationToken);
 
         // Assert
-        hasPublshed.ShouldBeTrue();
+        await EventHarness.ShouldHavePublishedDeletedAsync(Post, CancellationToken);
     }
 }

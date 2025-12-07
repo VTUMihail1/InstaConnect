@@ -17,33 +17,6 @@ public class Chat : IEntity<ChatId>
         CreatedAtUtc = createdAtUtc;
     }
 
-    public Chat(
-        ChatId id,
-        User participantOne,
-        User participantTwo,
-        DateTimeOffset createdAtUtc)
-    {
-        Id = id;
-        ParticipantOne = participantOne;
-        ParticipantTwo = participantTwo;
-        Messages = [];
-        CreatedAtUtc = createdAtUtc;
-    }
-
-    public Chat(
-        ChatId id,
-        User participantOne,
-        User participantTwo,
-        IList<ChatMessage> messages,
-        DateTimeOffset createdAtUtc)
-    {
-        Id = id;
-        ParticipantOne = participantOne;
-        ParticipantTwo = participantTwo;
-        Messages = messages;
-        CreatedAtUtc = createdAtUtc;
-    }
-
     public ChatId Id { get; }
 
     public User? ParticipantOne { get; private set; }

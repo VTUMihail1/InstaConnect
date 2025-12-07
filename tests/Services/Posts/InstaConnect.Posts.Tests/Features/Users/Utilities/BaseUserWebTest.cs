@@ -20,9 +20,9 @@ public abstract class BaseUserWebTest : BaseUserTest, IClassFixture<PostsWebAppl
 
     public async Task InitializeAsync()
     {
+        await EventHarness.StartAsync(CancellationToken);
         await ServiceScope.ResetUserDatabase(CancellationToken);
         await OnInitializeAsync();
-        await EventHarness.StartAsync(CancellationToken);
     }
 
     public async Task DisposeAsync()
@@ -31,5 +31,8 @@ public abstract class BaseUserWebTest : BaseUserTest, IClassFixture<PostsWebAppl
         await EventHarness.StopAsync(CancellationToken);
     }
 
-    protected abstract Task OnInitializeAsync();
+    protected virtual Task OnInitializeAsync()
+    {
+        return Task.CompletedTask;
+    }
 }

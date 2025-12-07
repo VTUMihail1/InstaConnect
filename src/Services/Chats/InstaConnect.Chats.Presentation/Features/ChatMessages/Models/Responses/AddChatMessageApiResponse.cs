@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Chats.Presentation.Features.ChatMessages.Models.Responses;
 
-public record AddChatMessageApiResponse(ChatMessageIdApiPayload Id);
+public record AddChatMessageApiResponse(ChatMessageIdApiResponse Response);

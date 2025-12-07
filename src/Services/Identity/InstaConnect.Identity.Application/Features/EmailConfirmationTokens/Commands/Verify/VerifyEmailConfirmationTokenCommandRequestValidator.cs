@@ -3,12 +3,12 @@ public class VerifyEmailConfirmationTokenCommandRequestValidator : AbstractValid
 {
     public VerifyEmailConfirmationTokenCommandRequestValidator()
     {
-        RuleFor(r => r.Id.Id.Id)
+        RuleFor(r => r.Id)
             .NotEmptyWithMessage()
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();
 
-        RuleFor(r => r.Id.Value)
+        RuleFor(r => r.Value)
             .NotEmptyWithMessage()
             .EmailConfirmationTokenValueMinLengthWithMessage()
             .EmailConfirmationTokenValueMaxLengthWithMessage();

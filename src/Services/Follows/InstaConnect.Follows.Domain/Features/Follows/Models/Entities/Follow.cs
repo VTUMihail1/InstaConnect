@@ -9,22 +9,9 @@ public class Follow : IEntity<FollowId>
 
     public Follow(
         FollowId followId,
-        DateTimeOffset createdAtUtc,
-        DateTimeOffset updatedAtUtc)
-    {
-        Id = followId;
-        CreatedAtUtc = createdAtUtc;
-    }
-
-    public Follow(
-        FollowId followId,
-        User follower,
-        User following,
         DateTimeOffset createdAtUtc)
     {
         Id = followId;
-        Follower = follower;
-        Following = following;
         CreatedAtUtc = createdAtUtc;
     }
 

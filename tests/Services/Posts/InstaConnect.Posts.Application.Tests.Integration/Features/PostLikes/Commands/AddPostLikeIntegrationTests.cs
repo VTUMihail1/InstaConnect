@@ -26,16 +26,14 @@ public class AddPostLikeIntegrationTests : BasePostLikeApplicationIntegrationTes
     [PostIdTooShortWithMessageData]
     [PostIdTooLongWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Assert
-        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
+        await ApplicationSender.ShouldThrowInvalidValidationExceptionForIdAsync(
+            messageTransformer, request, CancellationToken);
     }
 
     [Theory]
@@ -44,16 +42,14 @@ public class AddPostLikeIntegrationTests : BasePostLikeApplicationIntegrationTes
     [UserIdTooShortWithMessageData]
     [UserIdTooLongWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenUserIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Assert
-        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
+        await ApplicationSender.ShouldThrowInvalidValidationExceptionForUserIdAsync(
+            messageTransformer, request, CancellationToken);
     }
 
     [Fact]
@@ -62,11 +58,8 @@ public class AddPostLikeIntegrationTests : BasePostLikeApplicationIntegrationTes
         // Arrange
         await ServiceScope.DeletePostAsync(Post, CancellationToken);
 
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(_request, CancellationToken);
-
         // Assert
-        await action.ShouldThrowPostNotFoundExceptionAsync(_request.Id);
+        await ApplicationSender.ShouldThrowPostNotFoundExceptionAsync(_request, CancellationToken);
     }
 
     [Fact]
@@ -75,11 +68,8 @@ public class AddPostLikeIntegrationTests : BasePostLikeApplicationIntegrationTes
         // Arrange
         await ServiceScope.DeleteUserAsync(User, CancellationToken);
 
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(_request, CancellationToken);
-
         // Assert
-        await action.ShouldThrowUserNotFoundExceptionAsync(_request.UserId);
+        await ApplicationSender.ShouldThrowUserNotFoundExceptionAsync(_request, CancellationToken);
     }
 
     [Fact]
@@ -88,11 +78,8 @@ public class AddPostLikeIntegrationTests : BasePostLikeApplicationIntegrationTes
         // Arrange
         await ServiceScope.AddPostLikeAsync(PostLike, CancellationToken);
 
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(_request, CancellationToken);
-
         // Assert
-        await action.ShouldThrowPostLikeAlreadyExistsExceptionAsync(_request.Id, _request.UserId);
+        await ApplicationSender.ShouldThrowPostLikeAlreadyExistsExceptionAsync(_request, CancellationToken);
     }
 
     [Theory]
@@ -102,13 +89,10 @@ public class AddPostLikeIntegrationTests : BasePostLikeApplicationIntegrationTes
     {
         // Arrange
         await ServiceScope.AddPostLikeAsync(PostLike, CancellationToken);
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Assert
-        await action.ShouldThrowPostLikeAlreadyExistsExceptionAsync(request.Id, request.UserId);
+        await ApplicationSender.ShouldThrowPostLikeAlreadyExistsExceptionAsync(request, CancellationToken);
     }
 
     [Theory]
@@ -118,13 +102,10 @@ public class AddPostLikeIntegrationTests : BasePostLikeApplicationIntegrationTes
     {
         // Arrange
         await ServiceScope.AddPostLikeAsync(PostLike, CancellationToken);
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Assert
-        await action.ShouldThrowPostLikeAlreadyExistsExceptionAsync(request.Id, request.UserId);
+        await ApplicationSender.ShouldThrowPostLikeAlreadyExistsExceptionAsync(request, CancellationToken);
     }
 
     [Fact]
@@ -132,7 +113,7 @@ public class AddPostLikeIntegrationTests : BasePostLikeApplicationIntegrationTes
     {
         // Act
         var response = await ApplicationSender.SendAsync(_request, CancellationToken);
-        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Id, response.UserId, CancellationToken);
+        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Response, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(postLike);
@@ -144,11 +125,11 @@ public class AddPostLikeIntegrationTests : BasePostLikeApplicationIntegrationTes
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Id, response.UserId, CancellationToken);
+        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Response, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(postLike);
@@ -160,11 +141,11 @@ public class AddPostLikeIntegrationTests : BasePostLikeApplicationIntegrationTes
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(User.Id, transformer).Build();
+        var request = _requestBuilder.WithUserId(User, transformer).Build();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Id, response.UserId, CancellationToken);
+        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Response, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(postLike);
@@ -175,7 +156,7 @@ public class AddPostLikeIntegrationTests : BasePostLikeApplicationIntegrationTes
     {
         // Act
         var response = await ApplicationSender.SendAsync(_request, CancellationToken);
-        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Id, response.UserId, CancellationToken);
+        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Response, CancellationToken);
 
         // Assert
         postLike.ShouldSatisfy(_request);
@@ -187,14 +168,14 @@ public class AddPostLikeIntegrationTests : BasePostLikeApplicationIntegrationTes
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Id, response.UserId, CancellationToken);
+        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Response, CancellationToken);
 
         // Assert
-        postLike.ShouldSatisfy(_request);
+        postLike.ShouldSatisfy(request);
     }
 
     [Theory]
@@ -203,14 +184,14 @@ public class AddPostLikeIntegrationTests : BasePostLikeApplicationIntegrationTes
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Id, response.UserId, CancellationToken);
+        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Response, CancellationToken);
 
         // Assert
-        postLike.ShouldSatisfy(_request);
+        postLike.ShouldSatisfy(request);
     }
 
     [Fact]
@@ -218,11 +199,10 @@ public class AddPostLikeIntegrationTests : BasePostLikeApplicationIntegrationTes
     {
         // Act
         var response = await ApplicationSender.SendAsync(_request, CancellationToken);
-        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Id, response.UserId, CancellationToken);
-        var eventWasPublished = await EventHarness.HasPublishPostLikeAddedEventAsync(postLike, CancellationToken);
+        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Response, CancellationToken);
 
         // Assert
-        eventWasPublished.ShouldBeTrue();
+        await EventHarness.ShouldHavePublishedAddedAsync(postLike, CancellationToken);
     }
 
     [Theory]
@@ -231,15 +211,14 @@ public class AddPostLikeIntegrationTests : BasePostLikeApplicationIntegrationTes
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Id, response.UserId, CancellationToken);
-        var eventWasPublished = await EventHarness.HasPublishPostLikeAddedEventAsync(postLike, CancellationToken);
+        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Response, CancellationToken);
 
         // Assert
-        eventWasPublished.ShouldBeTrue();
+        await EventHarness.ShouldHavePublishedAddedAsync(postLike, CancellationToken);
     }
 
     [Theory]
@@ -248,14 +227,13 @@ public class AddPostLikeIntegrationTests : BasePostLikeApplicationIntegrationTes
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Id, response.UserId, CancellationToken);
-        var eventWasPublished = await EventHarness.HasPublishPostLikeAddedEventAsync(postLike, CancellationToken);
+        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Response, CancellationToken);
 
         // Assert
-        eventWasPublished.ShouldBeTrue();
+        await EventHarness.ShouldHavePublishedAddedAsync(postLike, CancellationToken);
     }
 }

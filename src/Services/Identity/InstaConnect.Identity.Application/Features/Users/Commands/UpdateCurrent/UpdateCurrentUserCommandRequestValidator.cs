@@ -3,12 +3,12 @@ public class UpdateCurrentUserCommandRequestValidator : AbstractValidator<Update
 {
     public UpdateCurrentUserCommandRequestValidator()
     {
-        RuleFor(r => r.Id.Id)
+        RuleFor(r => r.Id)
             .NotEmptyWithMessage()
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();
 
-        RuleFor(r => r.Name.Value)
+        RuleFor(r => r.Name)
             .NotEmptyWithMessage()
             .UserNameMinLengthWithMessage()
             .UserNameMaxLengthWithMessage();
@@ -23,7 +23,7 @@ public class UpdateCurrentUserCommandRequestValidator : AbstractValidator<Update
             .UserLastNameMinLengthWithMessage()
             .UserLastNameMaxLengthWithMessage();
 
-        RuleFor(r => r.Email.Value)
+        RuleFor(r => r.Email)
             .NotEmptyWithMessage()
             .UserEmailMinLengthWithMessage()
             .UserEmailMaxLengthWithMessage();

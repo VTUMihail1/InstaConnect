@@ -1,5 +1,4 @@
-﻿using InstaConnect.Common.Domain.Models;
-using InstaConnect.Common.Domain.Utilities;
+﻿using InstaConnect.Common.Domain.Utilities;
 
 namespace InstaConnect.Common.Domain.Exceptions;
 public class InvalidValidationException : Exception
@@ -17,5 +16,4 @@ public class InvalidValidationException : Exception
     {
         Errors = errors;
     }
-
 }

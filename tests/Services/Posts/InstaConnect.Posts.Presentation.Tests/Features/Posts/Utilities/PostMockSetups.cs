@@ -5,27 +5,30 @@ public static class PostMockSetups
         this IApplicationSender applicationSender,
         GetAllPostsApiRequest request,
         Post post,
-        User user,
         CancellationToken cancellationToken)
     {
 
         var postQueryResponse = new PostQueryResponse(
-            post.Id,
+            post.Id.Id,
             post.Title,
             post.Content,
             new(
-                user.Id,
-                user.Name,
-                user.ProfileImage));
-        var postQueryResponses = new List<PostQueryResponse>() { postQueryResponse };
+                post.User!.Id.Id,
+                post.User.Name.Value,
+                post.User.ProfileImage?.Url),
+            post.CreatedAtUtc,
+            post.UpdatedAtUtc);
 
-        var response = new GetAllPostsQueryResponse(
+        var postQueryResponses = new List<PostQueryResponse>() { postQueryResponse };
+        var postQueryCollectionResponses = new PostCollectionQueryResponse(
             postQueryResponses,
-            request.Pagination.Page,
-            request.Pagination.PageSize,
+            request.Page,
+            request.PageSize,
             postQueryResponses.Count,
             false,
             false);
+
+        var response = new GetAllPostsQueryResponse(postQueryCollectionResponses);
 
         applicationSender
             .SendAsync(PostMatcher.IsGetAllPostsQueryRequest(request), cancellationToken)
@@ -36,18 +39,19 @@ public static class PostMockSetups
         this IApplicationSender applicationSender,
         GetPostByIdApiRequest request,
         Post post,
-        User user,
         CancellationToken cancellationToken)
     {
         var response = new GetPostByIdQueryResponse(
             new(
-                post.Id,
+                post.Id.Id,
                 post.Title,
                 post.Content,
                 new(
-                    user.Id,
-                    user.Name,
-                    user.ProfileImage)));
+                    post.User!.Id.Id,
+                    post.User.Name.Value,
+                    post.User.ProfileImage?.Url),
+                post.CreatedAtUtc,
+                post.UpdatedAtUtc));
 
         applicationSender
             .SendAsync(PostMatcher.IsGetPostByIdQueryRequest(request), cancellationToken)
@@ -60,7 +64,7 @@ public static class PostMockSetups
         Post post,
         CancellationToken cancellationToken)
     {
-        var response = new AddPostCommandResponse(post.Id, post.CreatedAtUtc, post.UpdatedAtUtc);
+        var response = new AddPostCommandResponse(new(post.Id.Id));
 
         applicationSender
             .SendAsync(PostMatcher.IsAddPostCommandRequest(request), cancellationToken)
@@ -73,7 +77,7 @@ public static class PostMockSetups
         Post post,
         CancellationToken cancellationToken)
     {
-        var response = new UpdatePostCommandResponse(post.Id, post.CreatedAtUtc, post.UpdatedAtUtc);
+        var response = new UpdatePostCommandResponse(new(post.Id.Id));
 
         applicationSender
             .SendAsync(PostMatcher.IsUpdatePostCommandRequest(request), cancellationToken)

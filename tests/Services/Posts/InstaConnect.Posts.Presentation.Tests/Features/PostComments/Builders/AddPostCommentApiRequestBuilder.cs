@@ -8,28 +8,42 @@ public class AddPostCommentApiRequestBuilder
 
     public AddPostCommentApiRequestBuilder(Post post, User user)
     {
-        _id = post.Id;
-        _userId = user.Id;
+        _id = post.Id.Id;
+        _userId = user.Id.Id;
         _content = PostCommentDataFaker.GetContent();
     }
 
-    public AddPostCommentApiRequestBuilder WithId(string id, IStringTransformer? transformer = null)
+    public AddPostCommentApiRequestBuilder WithId(Post post, IStringTransformer? transformer = null)
     {
-        _id = transformer.TryTransform(id);
+        _id = transformer.TryTransform(post.Id.Id);
 
         return this;
     }
 
-    public AddPostCommentApiRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)
+    public AddPostCommentApiRequestBuilder WithId(IStringTransformer transformer)
     {
-        _userId = transformer.TryTransform(userId);
+        _id = transformer.Transform(_id);
 
         return this;
     }
 
-    public AddPostCommentApiRequestBuilder WithContent(string content, IStringTransformer? transformer = null)
+    public AddPostCommentApiRequestBuilder WithUserId(User user, IStringTransformer? transformer = null)
     {
-        _content = transformer.TryTransform(content);
+        _userId = transformer.TryTransform(user.Id.Id);
+
+        return this;
+    }
+
+    public AddPostCommentApiRequestBuilder WithUserId(IStringTransformer transformer)
+    {
+        _userId = transformer.Transform(_userId);
+
+        return this;
+    }
+
+    public AddPostCommentApiRequestBuilder WithContent(IStringTransformer transformer)
+    {
+        _content = transformer.Transform(_content);
 
         return this;
     }

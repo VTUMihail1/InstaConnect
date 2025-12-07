@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.Users.EventHandlers;
+﻿using InstaConnect.Posts.Tests.Features.Users.Assertions;
+
+namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.Users.EventHandlers;
 
 public class DeleteUserPresentationTests : BaseUserPresentationFunctionalTest
 {
@@ -20,71 +22,67 @@ public class DeleteUserPresentationTests : BaseUserPresentationFunctionalTest
     }
 
     [Theory]
-    [UserIdNullWithMessageData]
-    [UserIdEmptyWithMessageData]
-    [UserIdTooShortWithMessageData]
-    [UserIdTooLongWithMessageData]
-    public async Task SendAsync_ShouldHaveErrorMessage_WhenIdIsInvalid(
-        IStringTransformer transformer, string errorMessage)
+    [UserIdNullData]
+    [UserIdEmptyData]
+    [UserIdTooShortData]
+    [UserIdTooLongData]
+    public async Task PublishAsync_ShouldFaultUserDeletedEvent_WhenIdIsInvalid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
-        var eventWasFaulted = await EventHarness.HasFaultedUserDeletedEventRequestAsync(request, errorMessage, CancellationToken);
 
         // Assert
-        eventWasFaulted.ShouldBeTrue();
+        await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
     }
 
     [Fact]
-    public async Task SendAsync_ShouldHaveUserNotFoundErrorMessage_WhenRequestIsInvalid()
+    public async Task PublishAsync_ShouldFaultUserDeletedEvent_WhenIdNotFound()
     {
         // Arrange
         await ServiceScope.DeleteUserAsync(User, CancellationToken);
 
         // Act
         await EventHarness.PublishAsync(_request, CancellationToken);
-        var eventWasFaulted = await EventHarness.HasFaultedUserDeletedEventRequestWithNotFoundMessageAsync(_request, CancellationToken);
 
         // Assert
-        eventWasFaulted.ShouldBeTrue();
+        await EventHarness.ShouldHaveFaultedAsync(_request, CancellationToken);
     }
 
     [Fact]
-    public async Task SendAsync_ShouldConsumeUserDeletedEvent_WhenRequestIsValid()
+    public async Task PublishAsync_ShouldConsumeUserDeletedEvent_WhenRequestIsValid()
     {
         // Act
         await EventHarness.PublishAsync(_request, CancellationToken);
-        var eventWasConsumed = await EventHarness.HasConsumedUserDeletedEventRequestAsync(_request, CancellationToken);
 
         // Assert
-        eventWasConsumed.ShouldBeTrue();
+        await EventHarness.ShouldHaveConsumedAsync(_request, CancellationToken);
     }
 
     [Theory]
     [UserIdDifferentCaseData]
-    public async Task SendAsync_ShouldConsumeUserDeletedEvent_WhenIdIsValid(
+    public async Task PublishAsync_ShouldConsumeUserDeletedEvent_WhenIdIsValid(
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
-        var eventWasConsumed = await EventHarness.HasConsumedUserDeletedEventRequestAsync(request, CancellationToken);
 
         // Assert
-        eventWasConsumed.ShouldBeTrue();
+        await EventHarness.ShouldHaveConsumedAsync(request, CancellationToken);
     }
 
     [Fact]
-    public async Task SendAsync_ShouldDeleteUser_WhenRequestIsValid()
+    public async Task PublishAsync_ShouldDeleteUser_WhenRequestIsValid()
     {
         // Act
         await EventHarness.PublishAsync(_request, CancellationToken);
-        var user = await ServiceScope.GetUserByIdAsync(_request.Id, CancellationToken);
+        var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
 
         // Assert
         user.ShouldBeNull();
@@ -92,15 +90,15 @@ public class DeleteUserPresentationTests : BaseUserPresentationFunctionalTest
 
     [Theory]
     [UserIdDifferentCaseData]
-    public async Task SendAsync_ShouldDeleteUser_WhenIdIsValid(
+    public async Task PublishAsync_ShouldDeleteUser_WhenIdIsValid(
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.Id, transformer).Build();
+        var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
-        await EventHarness.PublishAsync(_request, CancellationToken);
-        var user = await ServiceScope.GetUserByIdAsync(request.Id, CancellationToken);
+        await EventHarness.PublishAsync(request, CancellationToken);
+        var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
 
         // Assert
         user.ShouldBeNull();

@@ -2,8 +2,8 @@
 
 public class UserAddedEventRequestBuilderFactory
 {
-    public UserAddedEventRequestBuilder Create()
+    public UserAddedEventRequestBuilder Create(User user)
     {
-        return new();
+        return new(user);
     }
 }

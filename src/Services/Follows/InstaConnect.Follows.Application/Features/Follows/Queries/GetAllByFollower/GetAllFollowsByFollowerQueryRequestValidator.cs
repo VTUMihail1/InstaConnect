@@ -4,27 +4,25 @@ public class GetAllFollowsByFollowerQueryRequestValidator : AbstractValidator<Ge
 {
     public GetAllFollowsByFollowerQueryRequestValidator()
     {
-        RuleFor(c => c.Filter.FollowerId.Id)
+        RuleFor(c => c.FollowerId)
             .NotEmptyWithMessage()
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();
 
-        RuleFor(c => c.Filter.FollowingName.Value)
+        RuleFor(c => c.FollowingName)
             .UserNameMaxLengthWithMessage();
 
-        RuleFor(q => q.Sorting.Order)
+        RuleFor(q => q.SortOrder)
             .NotEmptyWithMessage();
 
-        RuleFor(q => q.Sorting.Property)
+        RuleFor(q => q.SortProperty)
             .NotEmptyWithMessage();
 
-        RuleFor(q => q.Pagination.Page)
-            .NotEmptyWithMessage()
+        RuleFor(q => q.Page)
             .FollowPageMinValueWithMessage()
             .FollowPageMaxValueWithMessage();
 
-        RuleFor(q => q.Pagination.PageSize)
-            .NotEmptyWithMessage()
+        RuleFor(q => q.PageSize)
             .FollowPageSizeMinValueWithMessage()
             .FollowPageSizeMaxValueWithMessage();
     }

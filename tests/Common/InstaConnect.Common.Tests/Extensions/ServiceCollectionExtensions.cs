@@ -1,6 +1,9 @@
-﻿using InstaConnect.Common.Tests.Events;
+﻿using System.Reflection;
+
+using InstaConnect.Common.Tests.Events;
 
 using MassTransit;
+using MassTransit.Testing;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -9,10 +12,29 @@ using WebMotions.Fake.Authentication.JwtBearer;
 namespace InstaConnect.Common.Tests.Extensions;
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddTestEventHarness(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddTestEventHarness(this IServiceCollection serviceCollection, string connectionString, params Assembly[] currentAssemblies)
     {
-        serviceCollection.AddMassTransitTestHarness();
+        serviceCollection.AddMassTransitTestEventHarness(connectionString, currentAssemblies);
+
+        serviceCollection.AddScoped<ITestHarnessFactory>(_ => new TestHarnessFactory(connectionString, currentAssemblies));
         serviceCollection.AddScoped<IEventHarness, EventHarness>();
+
+        return serviceCollection;
+    }
+
+    internal static IServiceCollection AddMassTransitTestEventHarness(this IServiceCollection serviceCollection, string connectionString, params Assembly[] currentAssemblies)
+    {
+        serviceCollection.AddMassTransitTestHarness(busConfigurator =>
+        {
+            busConfigurator.AddConsumers(currentAssemblies);
+
+            busConfigurator.UsingRabbitMq((context, configurator) =>
+            {
+                configurator.Host(new Uri(connectionString));
+
+                configurator.ConfigureEndpoints(context);
+            });
+        });
 
         return serviceCollection;
     }

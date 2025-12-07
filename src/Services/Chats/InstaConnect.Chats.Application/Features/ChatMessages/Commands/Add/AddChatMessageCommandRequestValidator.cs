@@ -1,16 +1,19 @@
-﻿using InstaConnect.Common.Application.Extensions;
-
-namespace InstaConnect.Chats.Application.Features.ChatMessages.Commands.Add;
+﻿namespace InstaConnect.Chats.Application.Features.ChatMessages.Commands.Add;
 public class AddChatMessageCommandRequestValidator : AbstractValidator<AddChatMessageCommandRequest>
 {
     public AddChatMessageCommandRequestValidator()
     {
-        RuleFor(r => r.Id.ParticipantOneId.Id)
+        RuleFor(r => r.ParticipantOneId)
             .NotEmptyWithMessage()
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();
 
-        RuleFor(r => r.Id.ParticipantTwoId.Id)
+        RuleFor(r => r.ParticipantTwoId)
+            .NotEmptyWithMessage()
+            .UserIdMinLengthWithMessage()
+            .UserIdMaxLengthWithMessage();
+
+        RuleFor(r => r.SenderId)
             .NotEmptyWithMessage()
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();

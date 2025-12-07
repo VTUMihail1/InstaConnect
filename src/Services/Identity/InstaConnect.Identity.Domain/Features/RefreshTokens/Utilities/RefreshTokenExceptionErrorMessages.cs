@@ -23,7 +23,7 @@ public static class RefreshTokenExceptionErrorMessages
     public static string GetInclidePropertyNotSupportedMessage(ICollection<RefreshTokenIncludeProperty> includeProperties)
     {
         const string Format = "RefreshTokenIncludeProperties(types: {0}) is not supported";
-        var result = Format.FormatCurrentCulture(includeProperties.JoinAsStringWithComa()));
+        var result = Format.FormatCurrentCulture(includeProperties.JoinAsStringWithComa());
 
         return result;
     }

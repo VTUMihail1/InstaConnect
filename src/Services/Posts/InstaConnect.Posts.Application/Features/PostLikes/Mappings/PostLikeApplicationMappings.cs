@@ -1,13 +1,7 @@
-﻿using InstaConnect.Common.Application.Models;
-using InstaConnect.Common.Domain.Models.ValueObjects;
-using InstaConnect.Posts.Application.Features.PostLikes.Commands.Add;
+﻿using InstaConnect.Posts.Application.Features.PostLikes.Commands.Add;
 using InstaConnect.Posts.Application.Features.PostLikes.Commands.Delete;
 using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAll;
 using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetById;
-using InstaConnect.Posts.Application.Features.Users.Models;
-using InstaConnect.Posts.Domain.Features.PostLikes.Models.ValueObjects;
-using InstaConnect.Posts.Domain.Features.Posts.Models.ValueObjects;
-using InstaConnect.Posts.Domain.Features.Users.Models.ValueObjects;
 
 using Mapster;
 
@@ -19,66 +13,60 @@ internal class PostLikeApplicationMappings : IRegister
     {
         config.NewConfig<GetAllPostLikesQueryRequest, GetAllPostLikesQuery>()
             .ConstructUsing(src => new(
-                src.Filter.Adapt<PostLikeFilterQuery>(),
-                src.Sorting.Adapt<PostLikeSortingQuery>(),
-                src.Pagination.Adapt<PostLikePaginationQuery>()));
+                new(
+                    new(src.Id),
+                    new(src.UserName)),
+                new(
+                    src.SortOrder,
+                    src.SortProperty),
+                new(
+                    src.Page,
+                    src.PageSize)));
 
         config.NewConfig<PostLikeCollection, GetAllPostLikesQueryResponse>()
-            .ConstructUsing(pc => new(
-                pc.Data.Adapt<ICollection<PostLikeQueryResponse>>(),
-                pc.Page,
-                pc.PageSize,
-                pc.TotalCount,
-                pc.HasNextPage,
-                pc.HasPreviousPage));
+            .ConstructUsing(src => new(src.Adapt<PostLikeCollectionQueryResponse>(config)));
 
         config.NewConfig<GetPostLikeByIdQueryRequest, GetPostLikeByIdQuery>()
-            .ConstructUsing(src => new(src.Id.Adapt<PostLikeId>()));
+            .ConstructUsing(src => new(
+                                       new(
+                                           new(src.Id),
+                                           new(src.UserId))));
 
         config.NewConfig<PostLike, GetPostLikeByIdQueryResponse>()
-            .ConstructUsing(src => new(
-                src.Adapt<PostLikeQueryResponse>()));
+            .ConstructUsing(src => new(src.Adapt<PostLikeQueryResponse>(config)));
 
         config.NewConfig<PostLike, PostLikeQueryResponse>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<PostLikeIdPayload>(),
-                src.User.Adapt<UserQueryResponse>(),
+                src.Id.Id.Id,
+                src.User.Adapt<UserQueryResponse>(config),
                 src.CreatedAtUtc));
 
         config.NewConfig<AddPostLikeCommandRequest, AddPostLikeCommand>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<PostId>(),
-                src.UserId.Adapt<UserId>()));
+                                       new(src.Id),
+                                       new(src.UserId)));
 
         config.NewConfig<PostLike, AddPostLikeCommandResponse>()
-            .ConstructUsing(src => new(src.Id.Adapt<PostLikeIdPayload>()));
+            .ConstructUsing(src => new(src.Id.Adapt<PostLikeIdCommandResponse>(config)));
 
         config.NewConfig<DeletePostLikeCommandRequest, DeletePostLikeCommand>()
-            .ConstructUsing(src => new(src.Id.Adapt<PostLikeId>()));
-
-        config.NewConfig<PostLikeIdPayload, PostLikeId>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<PostId>(),
-                src.UserId.Adapt<UserId>()));
+                                       new(
+                                           new(src.Id),
+                                           new(src.UserId))));
 
-        config.NewConfig<PostLikeId, PostLikeIdPayload>()
+        config.NewConfig<PostLikeId, PostLikeIdCommandResponse>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<PostIdPayload>(),
-                src.UserId.Adapt<UserIdPayload>()));
+                src.Id.Id,
+                src.UserId.Id));
 
-        config.NewConfig<PostLikeFilterQueryRequest, PostLikeFilterQuery>()
+        config.NewConfig<PostLikeCollection, PostLikeCollectionQueryResponse>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<PostId>(),
-                src.UserName.Adapt<Name>()));
-
-        config.NewConfig<PostLikeSortingQueryRequest, PostLikeSortingQuery>()
-            .ConstructUsing(src => new(
-                src.Order,
-                src.Property));
-
-        config.NewConfig<PostLikePaginationQueryRequest, PostLikePaginationQuery>()
-            .ConstructUsing(src => new(
+                src.Entities.Adapt<ICollection<PostLikeQueryResponse>>(config),
                 src.Page,
-                src.PageSize));
+                src.PageSize,
+                src.TotalCount,
+                src.HasNextPage,
+                src.HasPreviousPage));
     }
 }

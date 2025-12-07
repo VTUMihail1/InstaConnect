@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Domain.Extensions;
-
-namespace InstaConnect.Chats.Domain.Features.Users.Models.Entities;
+﻿namespace InstaConnect.Chats.Domain.Features.Users.Models.Entities;
 
 public class User : IEntity<UserId>
 {
@@ -35,30 +33,6 @@ public class User : IEntity<UserId>
         ChatMessages = [];
         CreatedAtUtc = createdAtUtc;
         UpdatedAtUtc = updatedAtUtc;
-    }
-
-    public User(
-        UserId id,
-        string firstName,
-        string lastName,
-        Email email,
-        Name name,
-        Image? profileImage,
-        DateTimeOffset createdAtUtc,
-        DateTimeOffset updatedAtUtc,
-        ICollection<Chat> chats,
-        ICollection<ChatMessage> chatMessages)
-    {
-        Id = id;
-        FirstName = firstName;
-        LastName = lastName;
-        Email = email;
-        Name = name;
-        ProfileImage = profileImage;
-        CreatedAtUtc = createdAtUtc;
-        UpdatedAtUtc = updatedAtUtc;
-        Chats = chats;
-        ChatMessages = chatMessages;
     }
 
     public UserId Id { get; }

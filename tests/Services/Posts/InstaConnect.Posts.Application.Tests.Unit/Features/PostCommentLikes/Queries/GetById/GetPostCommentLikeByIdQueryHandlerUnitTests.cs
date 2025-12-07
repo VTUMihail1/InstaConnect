@@ -16,7 +16,7 @@ public class GetPostCommentLikeByIdQueryHandlerUnitTests : BasePostCommentLikeAp
 
         _handler = new(ApplicationMapper, PostCommentLikeService, PostCommentLikeIncludeQueryBuilderFactory);
 
-        PostCommentLikeService.SetupGetByIdQuery(_request, PostCommentLike, User, CancellationToken);
+        PostCommentLikeService.SetupGetByIdQuery(_request, PostCommentLike, CancellationToken);
     }
 
     [Fact]
