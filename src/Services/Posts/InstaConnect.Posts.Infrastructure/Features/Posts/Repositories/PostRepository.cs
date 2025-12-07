@@ -70,6 +70,7 @@ internal class PostRepository : IPostRepository
     {
         var match = Builders<Post>.Filter.Empty
             .AndEqualsCaseInsensitive(p => p.Id.Id, id.Id);
+
         var includeProperties = _postIncludePropertyFactory.Create(include?.Properties);
 
         var entity = await _postsContext

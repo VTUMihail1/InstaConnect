@@ -41,7 +41,7 @@ internal class ChatRepository : IChatRepository
             .OrOptionalStartsWithCaseInsensitive(p => p.ParticipantTwo!.Name.Value, filter.ParticipantName.IsEmpty(), filter.ParticipantName.Value);
 
         var projection = Builders<Chat>.Projection.Expression(
-            c => new Chat(c.Id.ParticipantOneId.Id.Equals(filter.ParticipantId.Id, StringComparison.OrdinalIgnoreCase)
+            c => new Chat(c.Id.ParticipantOneId.Id.ToLower() == filter.ParticipantId.Id.ToLower()
                                               ? c.Id : new(c.Id.ParticipantTwoId, c.Id.ParticipantOneId),
                           c.CreatedAtUtc));
 
@@ -82,7 +82,7 @@ internal class ChatRepository : IChatRepository
             .OrEqualsCaseInsensitive(p => p.Id.ParticipantTwoId.Id, id.ParticipantTwoId.Id);
 
         var projection = Builders<Chat>.Projection.Expression(
-            c => new Chat(c.Id.ParticipantOneId.Id.Equals(id.ParticipantOneId.Id, StringComparison.OrdinalIgnoreCase)
+            c => new Chat(c.Id.ParticipantOneId.Id.ToLower() == id.ParticipantOneId.Id.ToLower()
                                               ? c.Id : new(c.Id.ParticipantTwoId, c.Id.ParticipantOneId),
                           c.CreatedAtUtc));
 
