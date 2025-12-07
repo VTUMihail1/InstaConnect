@@ -1,11 +1,7 @@
-﻿using System;
-
-using InstaConnect.Common.Tests.Assertions;
+﻿using InstaConnect.Common.Tests.Assertions;
 
 using MassTransit;
 using MassTransit.Testing;
-
-using MongoDB.Driver.Core.Configuration;
 
 namespace InstaConnect.Common.Tests.Events;
 

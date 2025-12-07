@@ -3,7 +3,6 @@
 using InstaConnect.Common.Tests.Events;
 
 using MassTransit;
-using MassTransit.Testing;
 
 using Microsoft.Extensions.DependencyInjection;
 
