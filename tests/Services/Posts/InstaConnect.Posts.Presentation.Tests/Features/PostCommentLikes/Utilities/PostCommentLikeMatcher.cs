@@ -3,33 +3,21 @@ public static class PostCommentLikeMatcher
 {
     public static GetAllPostCommentLikesQueryRequest IsGetAllPostCommentLikesQueryRequest(GetAllPostCommentLikesApiRequest request)
     {
-        return Matcher.Is<GetAllPostCommentLikesQueryRequest>(p => p.Id == request.Id &&
-                                                                   p.CommentId == request.CommentId &&
-                                                                   p.UserName == request.UserName &&
-                                                                   p.Page == request.Page &&
-                                                                   p.PageSize == request.PageSize &&
-                                                                   p.SortOrder == request.SortOrder &&
-                                                                   p.SortProperty == request.SortProperty);
+        return Matcher.Is<GetAllPostCommentLikesQueryRequest>(p => p.Matches(request));
     }
 
     public static GetPostCommentLikeByIdQueryRequest IsGetPostCommentLikeByIdQueryRequest(GetPostCommentLikeByIdApiRequest request)
     {
-        return Matcher.Is<GetPostCommentLikeByIdQueryRequest>(p => p.Id == request.Id &&
-                                                                   p.CommentId == request.CommentId &&
-                                                                   p.UserId == request.UserId);
+        return Matcher.Is<GetPostCommentLikeByIdQueryRequest>(p => p.Matches(request));
     }
 
     public static AddPostCommentLikeCommandRequest IsAddPostCommentLikeCommandRequest(AddPostCommentLikeApiRequest request)
     {
-        return Matcher.Is<AddPostCommentLikeCommandRequest>(p => p.Id == request.Id &&
-                                                                 p.CommentId == request.CommentId &&
-                                                                 p.UserId == request.UserId);
+        return Matcher.Is<AddPostCommentLikeCommandRequest>(p => p.Matches(request));
     }
 
     public static DeletePostCommentLikeCommandRequest IsDeletePostCommentLikeCommandRequest(DeletePostCommentLikeApiRequest request)
     {
-        return Matcher.Is<DeletePostCommentLikeCommandRequest>(p => p.Id == request.Id &&
-                                                                    p.CommentId == request.CommentId &&
-                                                                    p.UserId == request.UserId);
+        return Matcher.Is<DeletePostCommentLikeCommandRequest>(p => p.Matches(request));
     }
 }

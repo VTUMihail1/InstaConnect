@@ -29,12 +29,12 @@ internal static class ServiceCollectionExtensions
             cm.MapMember(c => c.PostCommentLikes);
 
             cm.MapCreator(c => new User(
-                new(c.Id.Id),
+                c.Id,
                 c.FirstName,
                 c.LastName,
-                new(c.Email.Value),
-                new(c.Name.Value),
-                c.ProfileImage == null ? null : new(c.ProfileImage.Url),
+                c.Email,
+                c.Name,
+                c.ProfileImage,
                 c.CreatedAtUtc,
                 c.UpdatedAtUtc));
 

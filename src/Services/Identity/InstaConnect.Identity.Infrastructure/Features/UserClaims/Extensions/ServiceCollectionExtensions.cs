@@ -18,9 +18,7 @@ internal static class ServiceCollectionExtensions
             cm.MapMember(c => c.CreatedAtUtc);
 
             cm.MapCreator(c => new UserClaim(
-                new(
-                    new(c.Id.Id.Id),
-                    c.Id.Claim),
+                c.Id,
                 c.CreatedAtUtc));
 
             cm.SetIgnoreExtraElements(true);

@@ -21,9 +21,7 @@ internal static class ServiceCollectionExtensions
             cm.MapMember(c => c.User);
 
             cm.MapCreator(c => new PostLike(
-                new(
-                    new(c.Id.Id.Id),
-                    new(c.Id.UserId.Id)),
+                c.Id,
                 c.CreatedAtUtc));
 
             cm.SetIgnoreExtraElements(true);

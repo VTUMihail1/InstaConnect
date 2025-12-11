@@ -25,11 +25,9 @@ internal static class ServiceCollectionExtensions
             cm.MapMember(c => c.Likes);
 
             cm.MapCreator(c => new PostComment(
-                new(
-                    new(c.Id.Id.Id),
-                    new(c.Id.CommentId)),
+                c.Id,
                 c.Content,
-                new(c.UserId.Id),
+                c.UserId,
                 c.CreatedAtUtc,
                 c.UpdatedAtUtc));
 

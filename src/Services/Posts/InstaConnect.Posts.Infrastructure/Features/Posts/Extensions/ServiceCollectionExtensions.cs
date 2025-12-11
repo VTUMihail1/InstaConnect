@@ -27,10 +27,10 @@ internal static class ServiceCollectionExtensions
             cm.MapMember(c => c.Comments);
 
             cm.MapCreator(c => new Post(
-                new(c.Id.Id),
+                c.Id,
                 c.Title,
                 c.Content,
-                new(c.UserId.Id),
+                c.UserId,
                 c.CreatedAtUtc,
                 c.UpdatedAtUtc));
 

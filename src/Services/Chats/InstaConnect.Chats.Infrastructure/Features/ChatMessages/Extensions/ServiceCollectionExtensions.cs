@@ -25,12 +25,8 @@ internal static class ServiceCollectionExtensions
             cm.MapMember(c => c.Sender);
 
             cm.MapCreator(c => new ChatMessage(
-                new(
-                    new(
-                        new(c.Id.Id.ParticipantOneId.Id),
-                        new(c.Id.Id.ParticipantTwoId.Id)),
-                    c.Id.MessageId),
-                new(c.SenderId.Id),
+                c.Id,
+                c.SenderId,
                 c.Content,
                 c.CreatedAtUtc,
                 c.UpdatedAtUtc));

@@ -23,9 +23,7 @@ internal static class ServiceCollectionExtensions
             cm.MapMember(c => c.Following);
 
             cm.MapCreator(c => new Follow(
-                new(
-                    new(c.Id.FollowerId.Id),
-                    new(c.Id.FollowingId.Id)),
+                c.Id,
                 c.CreatedAtUtc));
 
             cm.SetIgnoreExtraElements(true);

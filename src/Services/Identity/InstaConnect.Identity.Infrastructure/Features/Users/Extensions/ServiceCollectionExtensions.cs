@@ -32,14 +32,14 @@ internal static class ServiceCollectionExtensions
             cm.MapMember(c => c.EmailConfirmationTokens);
 
             cm.MapCreator(c => new User(
-                new(c.Id.Id),
+                c.Id,
                 c.FirstName,
                 c.LastName,
-                new(c.Email.Value),
-                new(c.Name.Value),
+                c.Email,
+                c.Name,
                 c.PasswordHash,
                 c.IsEmailConfirmed,
-                c.ProfileImage == null ? null : new(c.ProfileImage.Url),
+                c.ProfileImage,
                 c.CreatedAtUtc,
                 c.UpdatedAtUtc));
 

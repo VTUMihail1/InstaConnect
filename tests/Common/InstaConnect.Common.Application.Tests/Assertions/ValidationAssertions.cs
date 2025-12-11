@@ -2,6 +2,7 @@
 
 using FluentValidation.TestHelper;
 
+using InstaConnect.Common.Application.Tests.Utilities;
 using InstaConnect.Common.Tests.DataAttributes.Base;
 
 namespace InstaConnect.Common.Application.Tests.Assertions;
@@ -16,7 +17,7 @@ public static class ValidationAssertions
     {
         testValidationResult
             .ShouldHaveValidationErrorFor(memberAccessor)
-            .ShouldContain(p => p.ErrorMessage == messageTransformer.Transform(memberAccessor, memberAccessor.Compile()(request)));
+            .ShouldContain(p => p.Matches(messageTransformer.Transform(memberAccessor, memberAccessor.Compile()(request))));
     }
 
     public static void ShouldNotHaveAnyValidationErrorProperties<T>(this TestValidationResult<T> testValidationResult)

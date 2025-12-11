@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Posts.Events.Features.PostCommentLikes;
+using InstaConnect.Posts.Tests.Features.PostCommentLikes.Utilities;
 
 namespace InstaConnect.Posts.Tests.Features.PostCommentLikes.Assertions;
 
@@ -9,10 +10,9 @@ public static class PostCommentLikeEventHarnessAssertions
         PostCommentLike entity,
         CancellationToken cancellationToken)
     {
-        await eventHarness.ShouldHavePublishedAsync<PostCommentLikeAddedEventRequest>(p => p.Id == entity.Id.CommentId.Id.Id &&
-                                                                                           p.CommentId == entity.Id.CommentId.CommentId &&
-                                                                                           p.UserId == entity.Id.UserId.Id &&
-                                                                                           p.CreatedAtUtc == entity.CreatedAtUtc, cancellationToken);
+        await eventHarness.ShouldHavePublishedAsync<PostCommentLikeAddedEventRequest>(
+            p => p.Matches(entity),
+            cancellationToken);
     }
 
     public static async Task ShouldHavePublishedDeletedAsync(
@@ -20,8 +20,8 @@ public static class PostCommentLikeEventHarnessAssertions
         PostCommentLike entity,
         CancellationToken cancellationToken)
     {
-        await eventHarness.ShouldHavePublishedAsync<PostCommentLikeDeletedEventRequest>(p => p.Id == entity.Id.CommentId.Id.Id &&
-                                                                                           p.CommentId == entity.Id.CommentId.CommentId &&
-                                                                                           p.UserId == entity.Id.UserId.Id, cancellationToken);
+        await eventHarness.ShouldHavePublishedAsync<PostCommentLikeDeletedEventRequest>(
+            p => p.Matches(entity),
+            cancellationToken);
     }
 }

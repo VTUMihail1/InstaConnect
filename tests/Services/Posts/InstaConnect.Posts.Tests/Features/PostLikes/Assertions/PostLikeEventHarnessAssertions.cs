@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Posts.Events.Features.PostLikes;
+using InstaConnect.Posts.Tests.Features.PostLikes.Utilities;
 
 namespace InstaConnect.Posts.Tests.Features.PostLikes.Assertions;
 
@@ -9,9 +10,9 @@ public static class PostLikeEventHarnessAssertions
         PostLike entity,
         CancellationToken cancellationToken)
     {
-        await eventHarness.ShouldHavePublishedAsync<PostLikeAddedEventRequest>(p => p.Id == entity.Id.Id.Id &&
-                                                                                    p.UserId == entity.Id.UserId.Id &&
-                                                                                    p.CreatedAtUtc == entity.CreatedAtUtc, cancellationToken);
+        await eventHarness.ShouldHavePublishedAsync<PostLikeAddedEventRequest>(
+            p => p.Matches(entity),
+            cancellationToken);
     }
 
     public static async Task ShouldHavePublishedDeletedAsync(
@@ -19,7 +20,8 @@ public static class PostLikeEventHarnessAssertions
         PostLike entity,
         CancellationToken cancellationToken)
     {
-        await eventHarness.ShouldHavePublishedAsync<PostLikeDeletedEventRequest>(p => p.Id == entity.Id.Id.Id &&
-                                                                                      p.UserId == entity.Id.UserId.Id, cancellationToken);
+        await eventHarness.ShouldHavePublishedAsync<PostLikeDeletedEventRequest>(
+            p => p.Matches(entity),
+            cancellationToken);
     }
 }

@@ -3,6 +3,8 @@ using System.Net;
 
 using FluentAssertions;
 
+using InstaConnect.Common.Presentation.Tests.Utilities;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -58,14 +60,14 @@ public static class MatchAssertions
         actionResult
             .Result
             .Should()
-            .Match<ObjectResult>(m => m.StatusCode == statusCode);
+            .Match<ObjectResult>(m => m.Matches(statusCode));
     }
 
     internal static void ShouldBeActionResultWithStatusCode(this ActionResult actionResult, int statusCode)
     {
         actionResult
             .Should()
-            .Match<StatusCodeResult>(m => m.StatusCode == statusCode);
+            .Match<StatusCodeResult>(m => m.Matches(statusCode));
     }
 
     public static void ShouldBeActionResultWithOkStatusCode<T>(this ActionResult<T> actionResult)

@@ -2,6 +2,7 @@
 
 using InstaConnect.Common.Domain.Utilities;
 using InstaConnect.Common.Presentation.Models;
+using InstaConnect.Common.Presentation.Tests.Utilities;
 using InstaConnect.Common.Tests.DataAttributes.Base;
 
 using Microsoft.AspNetCore.Http;
@@ -10,15 +11,9 @@ namespace InstaConnect.Common.Presentation.Tests.Assertions;
 
 public static class ProblemDetailsAssertions
 {
-    internal static void ShouldSatisfy(this ApplicationProblemDetails problemDetails, int statusCode)
-    {
-        problemDetails.ShouldSatisfy(d => d.Status == statusCode);
-    }
-
     internal static void ShouldSatisfy(this ApplicationProblemDetails problemDetails, int statusCode, string errorMessage)
     {
-        problemDetails.ShouldSatisfy(d => d.Status == statusCode &&
-                                          d.Detail == errorMessage);
+        problemDetails.ShouldSatisfy(d => d.Matches(statusCode, errorMessage));
     }
 
     public static void ShouldSatisfyInvalidValidation<TRequest, TProperty>(
@@ -27,9 +22,10 @@ public static class ProblemDetailsAssertions
         IMessageTransformer<TProperty> messageTransformer,
         TRequest request)
     {
-        problemDetails.ShouldSatisfy(d => d.Status == StatusCodes.Status400BadRequest &&
-                                   d.Detail == CommonExceptionErrorMessages.GetInvalidValidation() &&
-                                   d.Errors!.All(e => e == messageTransformer.Transform(propertyExpression, propertyExpression.Compile()(request))));
+        problemDetails.ShouldSatisfy(d => d.Matches(
+            StatusCodes.Status400BadRequest,
+            CommonExceptionErrorMessages.GetInvalidValidation(),
+            messageTransformer.Transform(propertyExpression, propertyExpression.Compile()(request))));
     }
 
     public static void ShouldSatisfyBadRequest(

@@ -18,9 +18,7 @@ internal static class ServiceCollectionExtensions
             cm.MapMember(c => c.CreatedAtUtc);
 
             cm.MapCreator(c => new RefreshToken(
-                new(
-                    new(c.Id.Id.Id),
-                    c.Id.Value),
+                c.Id,
                 c.ExpiresAtUtc,
                 c.CreatedAtUtc));
 
