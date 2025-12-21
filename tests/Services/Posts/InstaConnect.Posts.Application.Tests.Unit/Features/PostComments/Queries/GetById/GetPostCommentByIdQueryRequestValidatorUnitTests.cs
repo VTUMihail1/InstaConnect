@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Application.Tests.Unit.Features.PostComments.Queries.GetById;
 
-public class GetPostCommentByIdQueryRequestValidatorUnitTests : BasePostCommentApplicationUnitTest
+public class GetPostCommentByIdQueryRequestValidatorUnitTests : BasePostCommentApplicationQueryUnitTest
 {
     private readonly GetPostCommentByIdQueryRequestBuilderFactory _requestBuilderFactory;
     private readonly GetPostCommentByIdQueryRequestBuilder _requestBuilder;

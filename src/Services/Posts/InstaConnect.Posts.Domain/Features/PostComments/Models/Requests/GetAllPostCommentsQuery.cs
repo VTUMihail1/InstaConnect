@@ -1,13 +1,16 @@
-﻿namespace InstaConnect.Posts.Domain.Features.PostComments.Models.Requests;
+﻿using InstaConnect.Common.Domain.Models;
+
+namespace InstaConnect.Posts.Domain.Features.PostComments.Models.Requests;
 
 public record GetAllPostCommentsQuery(
     PostCommentFilterQuery Filter,
-    PostCommentSortingQuery Sorting,
-    PostCommentPaginationQuery Pagination)
+    CommonSortingQuery<PostCommentSortProperty> Sorting,
+    CommonPaginationQuery Pagination)
+    : ISortableQuery<PostCommentSortProperty>, IPaginatableQuery, IIncludableQuery<PostCommentIncludeProperty>
 {
-    public PostCommentIncludeQuery? Include { get; private set; }
+    public CommonIncludeQuery<PostCommentIncludeProperty>? Include { get; private set; }
 
-    public GetAllPostCommentsQuery AddInclude(PostCommentIncludeQuery include)
+    public GetAllPostCommentsQuery AddInclude(CommonIncludeQuery<PostCommentIncludeProperty> include)
     {
         Include = include;
 

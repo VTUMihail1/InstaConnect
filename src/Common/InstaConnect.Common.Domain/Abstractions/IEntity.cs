@@ -1,7 +1,6 @@
 ﻿namespace InstaConnect.Common.Domain.Abstractions;
 
-public interface IEntity<out TKey>
-    where TKey : IEntityId
+public interface IEntity
 {
-    public TKey Id { get; }
+    public DateTimeOffset CreatedAtUtc { get; }
 }

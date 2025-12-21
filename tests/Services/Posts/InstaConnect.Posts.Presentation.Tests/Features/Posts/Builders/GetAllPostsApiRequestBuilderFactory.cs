@@ -2,8 +2,8 @@
 
 public class GetAllPostsApiRequestBuilderFactory
 {
-    public GetAllPostsApiRequestBuilder Create(Post post, User user)
+    public GetAllPostsApiRequestBuilder Create(Post post)
     {
-        return new(post, user);
+        return new(post);
     }
 }

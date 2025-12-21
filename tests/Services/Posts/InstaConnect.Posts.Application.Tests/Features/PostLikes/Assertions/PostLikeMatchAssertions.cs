@@ -1,4 +1,6 @@
-﻿using InstaConnect.Posts.Application.Tests.Features.PostLikes.Utilities;
+﻿using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
+using InstaConnect.Posts.Application.Tests.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Application.Tests.Features.Posts.Utilities;
 
 namespace InstaConnect.Posts.Application.Tests.Features.PostLikes.Assertions;
 
@@ -9,14 +11,26 @@ public static class PostLikeMatchAssertions
         response.ShouldSatisfy(p => p.Matches(postLike));
     }
 
-    public static void ShouldSatisfy(this GetPostLikeByIdQueryResponse response, PostLike postLike, User user)
+    public static void ShouldSatisfy(this GetPostLikeByIdQueryResponse response, PostLike postLike)
     {
-        response.ShouldSatisfy(p => p.Matches(postLike, user));
+        response.ShouldSatisfy(p => p.Matches(postLike));
     }
 
-    public static void ShouldSatisfy(this GetAllPostLikesQueryResponse response, PostLike postLike, User user, GetAllPostLikesQueryRequest request)
+    public static void ShouldSatisfy(
+        this GetAllPostLikesQueryResponse response,
+        ICollection<PostLike> postLikes,
+        GetAllPostLikesQueryRequest request)
     {
-        response.ShouldSatisfy(p => p.Matches(postLike, user, request));
+        response.ShouldSatisfy(p => p.Matches(postLikes, request));
+    }
+
+    public static void ShouldSatisfy(
+        this GetAllPostLikesQueryResponse response,
+        ICollection<PostLike> postLikes,
+        GetAllPostLikesQueryRequest request,
+        ISortEnumTermTransformer<PostLike> termTransformer)
+    {
+        response.ShouldSatisfy(p => p.Matches(postLikes, request, termTransformer));
     }
 
     public static void ShouldSatisfy(this PostLike postLike, AddPostLikeCommandRequest request)

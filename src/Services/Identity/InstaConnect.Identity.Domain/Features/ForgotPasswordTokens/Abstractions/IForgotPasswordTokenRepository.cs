@@ -1,10 +1,12 @@
-﻿namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Abstractions;
+﻿using InstaConnect.Common.Domain.Models;
+
+namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Abstractions;
 
 public interface IForgotPasswordTokenRepository
 {
     Task<ForgotPasswordToken?> GetByIdAsync(
         ForgotPasswordTokenId id,
-        ForgotPasswordTokenIncludeQuery? include,
+        CommonIncludeQuery<ForgotPasswordTokenIncludeProperty>? include,
         CancellationToken cancellationToken);
 
     Task<ForgotPasswordToken?> GetByIdAsync(

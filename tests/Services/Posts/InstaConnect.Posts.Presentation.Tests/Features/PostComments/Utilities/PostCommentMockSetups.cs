@@ -1,31 +1,40 @@
-﻿namespace InstaConnect.Posts.Presentation.Tests.Features.PostComments.Utilities;
+﻿using InstaConnect.Common.Infrastructure.Helpers;
+
+namespace InstaConnect.Posts.Presentation.Tests.Features.PostComments.Utilities;
 public static class PostCommentMockSetups
 {
     public static void SetupGetAllQueryRequest(
         this IApplicationSender applicationSender,
         GetAllPostCommentsApiRequest request,
-        PostComment postComment,
+        ICollection<PostComment> postComments,
         CancellationToken cancellationToken)
     {
+        var paginator = PaginatorFactory.Create();
+        var offset = paginator.GetOffset(request.Page, request.PageSize);
+        var postCommentQueryResponses = postComments
+            .Where(a => a.MatchesFilter(request))
+            .Select(postComment => new PostCommentQueryResponse(
+                                       postComment.Id.Id.Id,
+                                       postComment.Id.CommentId,
+                                       postComment.Content,
+                                       new(
+                                           postComment.User!.Id.Id,
+                                           postComment.User.Name.Value,
+                                           postComment.User.ProfileImage?.Url),
+                                       postComment.CreatedAtUtc,
+                                       postComment.UpdatedAtUtc))
+            .OrderBy(a => a.CreatedAtUtc)
+            .Skip(offset)
+            .Take(request.PageSize)
+            .ToList();
 
-        var postCommentQueryResponse = new PostCommentQueryResponse(
-            postComment.Id.Id.Id,
-            postComment.Id.CommentId,
-            postComment.Content,
-            new(
-                postComment.User!.Id.Id,
-                postComment.User.Name.Value,
-                postComment.User.ProfileImage?.Url),
-            postComment.CreatedAtUtc,
-            postComment.UpdatedAtUtc);
-        var postCommentQueryResponses = new List<PostCommentQueryResponse>() { postCommentQueryResponse };
         var postCommentCollectionQueryResponse = new PostCommentCollectionQueryResponse(
             postCommentQueryResponses,
             request.Page,
             request.PageSize,
-            postCommentQueryResponses.Count,
-            false,
-            false);
+            postComments.Count,
+            paginator.HasNextPage(request.Page, request.PageSize, postComments.Count),
+            paginator.HasPreviousPage(request.Page));
 
         var response = new GetAllPostCommentsQueryResponse(postCommentCollectionQueryResponse);
 

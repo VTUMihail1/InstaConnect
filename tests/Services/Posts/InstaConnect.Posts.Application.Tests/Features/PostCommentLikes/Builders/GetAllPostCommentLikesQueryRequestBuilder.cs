@@ -16,7 +16,7 @@ public class GetAllPostCommentLikesQueryRequestBuilder
     {
         _id = postCommentLike.Id.CommentId.Id.Id;
         _commentId = postCommentLike.Id.CommentId.CommentId;
-        _userName = user.Name.Value;
+        _userName = DataFaker.GetPrefixString(user.Name.Value);
         _page = PostCommentLikeDataFaker.GetPage();
         _pageSize = PostCommentLikeDataFaker.GetPageSize();
         _sortOrder = DataFaker.GetSortOrder();

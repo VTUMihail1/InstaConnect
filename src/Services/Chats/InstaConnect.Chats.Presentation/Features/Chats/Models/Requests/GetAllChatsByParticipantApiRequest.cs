@@ -10,4 +10,4 @@ public record GetAllChatsByParticipantApiRequest(
     [FromQuery] CommonSortOrder SortOrder = CommonDefaultValues.SortOrder,
     [FromQuery] ChatByParticipantSortProperty SortProperty = ChatDefaultValues.ByParticipantSortProperty,
     [FromQuery] int Page = ChatDefaultValues.Page,
-    [FromQuery] int PageSize = ChatDefaultValues.PageSize);
+    [FromQuery] int PageSize = ChatDefaultValues.PageSize) : ISortableApiRequest<ChatByParticipantSortProperty>, IPaginatableApiRequest;

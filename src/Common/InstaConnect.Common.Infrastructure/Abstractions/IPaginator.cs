@@ -4,7 +4,7 @@ public interface IPaginator
 {
     int GetOffset(int page, int pageSize);
 
-    bool HasNextPage(int page, int pageSize, long totalCount);
+    bool HasNextPage(int page, int pageSize, int totalCount);
 
     bool HasPreviousPage(int page);
 }

@@ -9,4 +9,4 @@ public record GetAllFollowsByFollowingQueryRequest(
     FollowByFollowingSortProperty SortProperty,
     int Page,
     int PageSize)
-    : IQueryRequest<GetAllFollowsByFollowingQueryResponse>;
+    : IQueryRequest<GetAllFollowsByFollowingQueryResponse>, ISortableQueryRequest<FollowByFollowingSortProperty>, IPaginatableQueryRequest;

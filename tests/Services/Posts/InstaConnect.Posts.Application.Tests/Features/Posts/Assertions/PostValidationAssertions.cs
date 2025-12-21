@@ -90,14 +90,6 @@ public static class PostValidationAssertions
         result.ShouldHaveValidationErrorForProperty(p => p.UserId, messageTransformer, request);
     }
 
-    public static void ShouldHaveValidationErrorForUserId(
-        this TestValidationResult<GetAllPostsQueryRequest> result,
-        IStringMessageTransformer messageTransformer,
-        GetAllPostsQueryRequest request)
-    {
-        result.ShouldHaveValidationErrorForProperty(p => p.UserId, messageTransformer, request);
-    }
-
     public static void ShouldHaveValidationErrorForUserName(
         this TestValidationResult<GetAllPostsQueryRequest> result,
         IStringMessageTransformer messageTransformer,

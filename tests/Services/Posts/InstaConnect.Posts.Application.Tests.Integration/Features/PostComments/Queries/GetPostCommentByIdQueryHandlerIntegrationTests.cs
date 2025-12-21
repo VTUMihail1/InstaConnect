@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Application.Tests.Integration.Features.PostComments.Queries;
 
-public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentApplicationIntegrationTest
+public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentApplicationQueryIntegrationTest
 {
     private readonly GetPostCommentByIdQueryRequestBuilderFactory _requestBuilderFactory;
     private readonly GetPostCommentByIdQueryRequestBuilder _requestBuilder;
@@ -81,7 +81,7 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentApp
         var response = await ApplicationSender.SendAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostComment, User);
+        response.ShouldSatisfy(PostComment);
     }
 
     [Theory]
@@ -96,7 +96,7 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentApp
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostComment, User);
+        response.ShouldSatisfy(PostComment);
     }
 
     [Theory]
@@ -111,6 +111,6 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentApp
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostComment, User);
+        response.ShouldSatisfy(PostComment);
     }
 }

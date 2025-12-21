@@ -15,7 +15,6 @@ internal class PostApplicationMappings : IRegister
         config.NewConfig<GetAllPostsQueryRequest, GetAllPostsQuery>()
             .ConstructUsing(src => new(
                 new(
-                    new(src.UserId),
                     new(src.UserName),
                     src.Title),
                 new(

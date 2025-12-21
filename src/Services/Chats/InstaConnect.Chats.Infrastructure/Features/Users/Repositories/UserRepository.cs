@@ -1,4 +1,6 @@
-﻿using MongoDB.Driver;
+﻿using InstaConnect.Common.Domain.Models;
+
+using MongoDB.Driver;
 
 namespace InstaConnect.Chats.Infrastructure.Features.Users.Repositories;
 
@@ -17,7 +19,7 @@ internal class UserRepository : IUserRepository
 
     public async Task<User?> GetByIdAsync(
         UserId id,
-        UserIncludeQuery? include,
+        CommonIncludeQuery<UserIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
         var match = Builders<User>.Filter.Empty
@@ -44,7 +46,7 @@ internal class UserRepository : IUserRepository
 
     public async Task<User?> GetByNameAsync(
         Name name,
-        UserIncludeQuery? include,
+        CommonIncludeQuery<UserIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
         var match = Builders<User>.Filter.Empty
@@ -71,7 +73,7 @@ internal class UserRepository : IUserRepository
 
     public async Task<User?> GetByEmailAsync(
         Email email,
-        UserIncludeQuery? include,
+        CommonIncludeQuery<UserIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
         var match = Builders<User>.Filter.Empty
@@ -101,6 +103,13 @@ internal class UserRepository : IUserRepository
         await _chatsContext
             .Users
             .AddAsync(_chatsContext.ClientSessionHandle, entity, cancellationToken);
+    }
+
+    public async Task AddRangeAsync(IEnumerable<User> entities, CancellationToken cancellationToken)
+    {
+        await _chatsContext
+            .Users
+            .AddRangeAsync(_chatsContext.ClientSessionHandle, entities, cancellationToken);
     }
 
     public async Task UpdateAsync(User entity, CancellationToken cancellationToken)

@@ -18,4 +18,12 @@ public static class CommonEquals
     {
         return p.IsNull() || p!.Url == url;
     }
+
+    public static bool MatchesCollection<T>(
+        this ICollection<T> expected,
+        ICollection<T> actual)
+    {
+        return expected.Count == actual.Count &&
+               expected.All(actual.Contains);
+    }
 }

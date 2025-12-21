@@ -7,17 +7,19 @@ public static class PostCommentMockAssertions
     public static async Task ShouldReceiveOneGetAllAsync(
         this IPostCommentService postCommentService,
         GetAllPostCommentsQueryRequest request,
+        CommonIncludeQuery<PostCommentIncludeProperty> include,
         CancellationToken cancellationToken)
     {
-        await postCommentService.ShouldHaveReceived(1).GetAllAsync(PostCommentMatcher.IsGetAllPostCommentsQuery(request), cancellationToken);
+        await postCommentService.ShouldHaveReceived(1).GetAllAsync(PostCommentMatcher.IsGetAllPostCommentsQuery(request, include), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneGetByIdAsync(
         this IPostCommentService postCommentService,
         GetPostCommentByIdQueryRequest request,
+        CommonIncludeQuery<PostCommentIncludeProperty> include,
         CancellationToken cancellationToken)
     {
-        await postCommentService.ShouldHaveReceived(1).GetByIdAsync(PostCommentMatcher.IsGetPostCommentByIdQuery(request), cancellationToken);
+        await postCommentService.ShouldHaveReceived(1).GetByIdAsync(PostCommentMatcher.IsGetPostCommentByIdQuery(request, include), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneAddAsync(

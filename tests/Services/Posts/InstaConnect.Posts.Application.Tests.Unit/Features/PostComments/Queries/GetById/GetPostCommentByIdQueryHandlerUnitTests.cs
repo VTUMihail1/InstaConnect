@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Application.Tests.Unit.Features.PostComments.Queries.GetById;
 
-public class GetPostCommentByIdQueryHandlerUnitTests : BasePostCommentApplicationUnitTest
+public class GetPostCommentByIdQueryHandlerUnitTests : BasePostCommentApplicationQueryUnitTest
 {
     private readonly GetPostCommentByIdQueryRequestBuilderFactory _requestBuilderFactory;
     private readonly GetPostCommentByIdQueryRequestBuilder _requestBuilder;
@@ -16,7 +16,7 @@ public class GetPostCommentByIdQueryHandlerUnitTests : BasePostCommentApplicatio
 
         _handler = new(ApplicationMapper, PostCommentService, PostCommentIncludeQueryBuilderFactory);
 
-        PostCommentService.SetupGetByIdQuery(_request, PostComment, CancellationToken);
+        PostCommentService.SetupGetByIdQuery(_request, PostComment, Include, CancellationToken);
     }
 
     [Fact]
@@ -26,7 +26,7 @@ public class GetPostCommentByIdQueryHandlerUnitTests : BasePostCommentApplicatio
         var response = await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostComment, User);
+        response.ShouldSatisfy(PostComment);
     }
 
     [Fact]
@@ -36,6 +36,6 @@ public class GetPostCommentByIdQueryHandlerUnitTests : BasePostCommentApplicatio
         await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        await PostCommentService.ShouldReceiveOneGetByIdAsync(_request, CancellationToken);
+        await PostCommentService.ShouldReceiveOneGetByIdAsync(_request, Include, CancellationToken);
     }
 }

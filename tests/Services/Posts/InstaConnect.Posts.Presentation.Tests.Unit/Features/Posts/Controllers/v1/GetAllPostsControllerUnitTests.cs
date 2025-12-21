@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Presentation.Tests.Unit.Features.Posts.Controllers.v1;
 
-public class GetAllPostsControllerUnitTests : BasePostPresentationUnitTest
+public class GetAllPostsControllerUnitTests : BasePostPresentationQueryUnitTest
 {
     private readonly GetAllPostsApiRequestBuilderFactory _requestBuilderFactory;
     private readonly GetAllPostsApiRequestBuilder _requestBuilder;
@@ -11,12 +11,12 @@ public class GetAllPostsControllerUnitTests : BasePostPresentationUnitTest
     public GetAllPostsControllerUnitTests()
     {
         _requestBuilderFactory = new();
-        _requestBuilder = _requestBuilderFactory.Create(Post, User);
+        _requestBuilder = _requestBuilderFactory.Create(Post);
         _request = _requestBuilder.Build();
 
         _postController = new(ApplicationMapper, ApplicationSender);
 
-        ApplicationSender.SetupGetAllQueryRequest(_request, Post, CancellationToken);
+        ApplicationSender.SetupGetAllQueryRequest(_request, Posts, CancellationToken);
     }
 
     [Fact]
@@ -36,7 +36,7 @@ public class GetAllPostsControllerUnitTests : BasePostPresentationUnitTest
         var response = await _postController.GetAllAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(Post, User, _request);
+        response.ShouldSatisfy(Posts, _request);
     }
 
     [Fact]

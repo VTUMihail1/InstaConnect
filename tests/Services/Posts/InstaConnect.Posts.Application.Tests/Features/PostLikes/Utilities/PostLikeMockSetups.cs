@@ -1,23 +1,34 @@
-﻿namespace InstaConnect.Posts.Application.Tests.Features.PostLikes.Utilities;
+﻿using InstaConnect.Common.Infrastructure.Helpers;
+
+namespace InstaConnect.Posts.Application.Tests.Features.PostLikes.Utilities;
 public static class PostLikeMockSetups
 {
     public static void SetupGetAllQuery(
         this IPostLikeService postLikeService,
         GetAllPostLikesQueryRequest request,
-        PostLike postLike,
+        ICollection<PostLike> postLikes,
+        CommonIncludeQuery<PostLikeIncludeProperty> include,
         CancellationToken cancellationToken)
     {
-        var postLikes = new List<PostLike>() { postLike };
+        var paginator = PaginatorFactory.Create();
+        var offset = paginator.GetOffset(request.Page, request.PageSize);
+        var postLikesPaginated = postLikes
+            .Where(a => a.MatchesFilter(request))
+            .OrderBy(a => a.CreatedAtUtc)
+            .Skip(offset)
+            .Take(request.PageSize)
+            .ToList();
+
         var response = new PostLikeCollection(
-            postLikes,
+            postLikesPaginated,
             request.Page,
             request.PageSize,
             postLikes.Count,
-            false,
-            false);
+            paginator.HasNextPage(request.Page, request.PageSize, postLikes.Count),
+            paginator.HasPreviousPage(request.Page));
 
         postLikeService
-            .GetAllAsync(PostLikeMatcher.IsGetAllPostLikesQuery(request), cancellationToken)
+            .GetAllAsync(PostLikeMatcher.IsGetAllPostLikesQuery(request, include), cancellationToken)
             .ReturnsResponse(response);
     }
 
@@ -25,10 +36,11 @@ public static class PostLikeMockSetups
         this IPostLikeService postLikeService,
         GetPostLikeByIdQueryRequest request,
         PostLike postLike,
+        CommonIncludeQuery<PostLikeIncludeProperty> include,
         CancellationToken cancellationToken)
     {
         postLikeService
-            .GetByIdAsync(PostLikeMatcher.IsGetPostLikeByIdQuery(request), cancellationToken)
+            .GetByIdAsync(PostLikeMatcher.IsGetPostLikeByIdQuery(request, include), cancellationToken)
             .ReturnsResponse(postLike);
     }
 

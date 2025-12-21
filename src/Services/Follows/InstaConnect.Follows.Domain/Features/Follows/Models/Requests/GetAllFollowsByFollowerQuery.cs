@@ -1,13 +1,16 @@
-﻿namespace InstaConnect.Follows.Domain.Features.Follows.Models.Requests;
+﻿using InstaConnect.Common.Domain.Models;
+
+namespace InstaConnect.Follows.Domain.Features.Follows.Models.Requests;
 
 public record GetAllFollowsByFollowerQuery(
     FollowByFollowerFilterQuery Filter,
-    FollowByFollowerSortingQuery Sorting,
-    FollowPaginationQuery Pagination)
+    CommonSortingQuery<FollowByFollowerSortProperty> Sorting,
+    CommonPaginationQuery Pagination)
+    : ISortableQuery<FollowByFollowerSortProperty>, IPaginatableQuery, IIncludableQuery<FollowIncludeProperty>
 {
-    public FollowIncludeQuery? Include { get; private set; }
+    public CommonIncludeQuery<FollowIncludeProperty>? Include { get; private set; }
 
-    public GetAllFollowsByFollowerQuery AddInclude(FollowIncludeQuery include)
+    public GetAllFollowsByFollowerQuery AddInclude(CommonIncludeQuery<FollowIncludeProperty> include)
     {
         Include = include;
 

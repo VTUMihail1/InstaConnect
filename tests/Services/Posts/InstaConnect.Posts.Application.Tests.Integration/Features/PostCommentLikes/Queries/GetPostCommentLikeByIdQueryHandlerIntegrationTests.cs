@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Application.Tests.Integration.Features.PostCommentLikes.Queries;
 
-public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommentLikeApplicationIntegrationTest
+public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommentLikeApplicationQueryIntegrationTest
 {
     private readonly GetPostCommentLikeByIdQueryRequestBuilderFactory _requestBuilderFactory;
     private readonly GetPostCommentLikeByIdQueryRequestBuilder _requestBuilder;
@@ -107,7 +107,7 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
         var response = await ApplicationSender.SendAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostCommentLike, User);
+        response.ShouldSatisfy(PostCommentLike);
     }
 
     [Theory]
@@ -122,7 +122,7 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostCommentLike, User);
+        response.ShouldSatisfy(PostCommentLike);
     }
 
     [Theory]
@@ -137,7 +137,7 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostCommentLike, User);
+        response.ShouldSatisfy(PostCommentLike);
     }
 
     [Theory]
@@ -152,6 +152,6 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostCommentLike, User);
+        response.ShouldSatisfy(PostCommentLike);
     }
 }

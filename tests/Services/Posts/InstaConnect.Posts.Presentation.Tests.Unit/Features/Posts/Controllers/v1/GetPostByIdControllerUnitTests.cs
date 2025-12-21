@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Presentation.Tests.Unit.Features.Posts.Controllers.v1;
 
-public class GetPostByIdControllerUnitTests : BasePostPresentationUnitTest
+public class GetPostByIdControllerUnitTests : BasePostPresentationQueryUnitTest
 {
     private readonly GetPostByIdApiRequestBuilderFactory _requestBuilderFactory;
     private readonly GetPostByIdApiRequestBuilder _requestBuilder;
@@ -36,7 +36,7 @@ public class GetPostByIdControllerUnitTests : BasePostPresentationUnitTest
         var response = await _postController.GetByIdAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(Post, User);
+        response.ShouldSatisfy(Post);
     }
 
     [Fact]

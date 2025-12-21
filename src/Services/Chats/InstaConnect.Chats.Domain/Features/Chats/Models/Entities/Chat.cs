@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Chats.Domain.Features.Chats.Models.Entities;
 
-public class Chat : IEntity<ChatId>
+public class Chat : IEntityWithId<ChatId>
 {
     private Chat()
     {

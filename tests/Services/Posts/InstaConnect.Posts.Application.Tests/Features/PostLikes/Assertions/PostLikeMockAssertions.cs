@@ -7,17 +7,19 @@ public static class PostLikeMockAssertions
     public static async Task ShouldReceiveOneGetAllAsync(
         this IPostLikeService postLikeService,
         GetAllPostLikesQueryRequest request,
+        CommonIncludeQuery<PostLikeIncludeProperty> include,
         CancellationToken cancellationToken)
     {
-        await postLikeService.ShouldHaveReceived(1).GetAllAsync(PostLikeMatcher.IsGetAllPostLikesQuery(request), cancellationToken);
+        await postLikeService.ShouldHaveReceived(1).GetAllAsync(PostLikeMatcher.IsGetAllPostLikesQuery(request, include), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneGetByIdAsync(
         this IPostLikeService postLikeService,
         GetPostLikeByIdQueryRequest request,
+        CommonIncludeQuery<PostLikeIncludeProperty> include,
         CancellationToken cancellationToken)
     {
-        await postLikeService.ShouldHaveReceived(1).GetByIdAsync(PostLikeMatcher.IsGetPostLikeByIdQuery(request), cancellationToken);
+        await postLikeService.ShouldHaveReceived(1).GetByIdAsync(PostLikeMatcher.IsGetPostLikeByIdQuery(request, include), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneAddAsync(

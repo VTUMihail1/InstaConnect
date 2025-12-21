@@ -24,9 +24,9 @@
     <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.TooShort" />
     <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.TooLong" />
     <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.Null" />
-    <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.Prefix" />
     <Using Include="InstaConnect.Common.Tests.DataAttributes.Enums.Base" />
     <Using Include="InstaConnect.Common.Tests.DataAttributes.Enums.Empty" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Enums.Sort" />
   </ItemGroup>
 
   <ItemGroup Label="Users">

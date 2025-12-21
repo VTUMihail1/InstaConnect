@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Helpers;
+﻿using InstaConnect.Common.Domain.Models;
+
+namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Helpers;
 
 public class ForgotPasswordTokenIncludeQueryBuilder
 {
@@ -9,8 +11,8 @@ public class ForgotPasswordTokenIncludeQueryBuilder
         _includeProperties = includeProperties;
     }
 
-    public ForgotPasswordTokenIncludeQuery Build()
+    public CommonIncludeQuery<ForgotPasswordTokenIncludeProperty> Build()
     {
-        return new ForgotPasswordTokenIncludeQuery(_includeProperties);
+        return new(_includeProperties);
     }
 }

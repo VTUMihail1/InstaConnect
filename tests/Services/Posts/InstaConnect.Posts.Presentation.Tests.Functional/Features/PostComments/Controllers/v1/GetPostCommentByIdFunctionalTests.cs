@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.PostComments.Controllers.v1;
 
-public class GetPostCommentByIdFunctionalTests : BasePostCommentPresentationFunctionalTest
+public class GetPostCommentByIdFunctionalTests : BasePostCommentPresentationQueryFunctionalTest
 {
     private readonly GetPostCommentByIdApiRequestBuilderFactory _requestBuilderFactory;
     private readonly GetPostCommentByIdApiRequestBuilder _requestBuilder;
@@ -184,7 +184,7 @@ public class GetPostCommentByIdFunctionalTests : BasePostCommentPresentationFunc
         var response = await HttpClient.GetPostCommentByIdAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostComment, User);
+        response.ShouldSatisfy(PostComment);
     }
 
     [Theory]
@@ -199,7 +199,7 @@ public class GetPostCommentByIdFunctionalTests : BasePostCommentPresentationFunc
         var response = await HttpClient.GetPostCommentByIdAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostComment, User);
+        response.ShouldSatisfy(PostComment);
     }
 
     [Theory]
@@ -214,6 +214,6 @@ public class GetPostCommentByIdFunctionalTests : BasePostCommentPresentationFunc
         var response = await HttpClient.GetPostCommentByIdAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostComment, User);
+        response.ShouldSatisfy(PostComment);
     }
 }

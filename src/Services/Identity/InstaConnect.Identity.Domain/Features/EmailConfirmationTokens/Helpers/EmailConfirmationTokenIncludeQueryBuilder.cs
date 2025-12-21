@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Helpers;
+﻿using InstaConnect.Common.Domain.Models;
+
+namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Helpers;
 
 public class EmailConfirmationTokenIncludeQueryBuilder
 {
@@ -9,8 +11,8 @@ public class EmailConfirmationTokenIncludeQueryBuilder
         _includeProperties = includeProperties;
     }
 
-    public EmailConfirmationTokenIncludeQuery Build()
+    public CommonIncludeQuery<EmailConfirmationTokenIncludeProperty> Build()
     {
-        return new EmailConfirmationTokenIncludeQuery(_includeProperties);
+        return new(_includeProperties);
     }
 }

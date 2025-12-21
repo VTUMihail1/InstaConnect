@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Chats.Domain.Features.ChatMessages.Helpers;
+﻿using InstaConnect.Common.Domain.Models;
+
+namespace InstaConnect.Chats.Domain.Features.ChatMessages.Helpers;
 
 public class ChatMessageIncludeQueryBuilder
 {
@@ -16,8 +18,8 @@ public class ChatMessageIncludeQueryBuilder
         return this;
     }
 
-    public ChatMessageIncludeQuery Build()
+    public CommonIncludeQuery<ChatMessageIncludeProperty> Build()
     {
-        return new ChatMessageIncludeQuery(_includeProperties);
+        return new(_includeProperties);
     }
 }

@@ -1,10 +1,13 @@
-﻿namespace InstaConnect.Follows.Domain.Features.Follows.Models.Requests;
+﻿using InstaConnect.Common.Domain.Models;
+
+namespace InstaConnect.Follows.Domain.Features.Follows.Models.Requests;
 
 public record GetFollowByIdQuery(FollowId Id)
+    : IIncludableQuery<FollowIncludeProperty>
 {
-    public FollowIncludeQuery? Include { get; private set; }
+    public CommonIncludeQuery<FollowIncludeProperty>? Include { get; private set; }
 
-    public GetFollowByIdQuery AddInclude(FollowIncludeQuery include)
+    public GetFollowByIdQuery AddInclude(CommonIncludeQuery<FollowIncludeProperty> include)
     {
         Include = include;
 

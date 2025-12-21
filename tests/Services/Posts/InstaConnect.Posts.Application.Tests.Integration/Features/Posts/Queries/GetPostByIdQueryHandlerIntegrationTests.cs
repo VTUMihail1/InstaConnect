@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Application.Tests.Integration.Features.Posts.Queries;
 
-public class GetPostByIdQueryHandlerIntegrationTests : BasePostApplicationIntegrationTest
+public class GetPostByIdQueryHandlerIntegrationTests : BasePostApplicationQueryIntegrationTest
 {
     private readonly GetPostByIdQueryRequestBuilderFactory _requestBuilderFactory;
     private readonly GetPostByIdQueryRequestBuilder _requestBuilder;
@@ -53,7 +53,7 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostApplicationIntegr
         var response = await ApplicationSender.SendAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(Post, User);
+        response.ShouldSatisfy(Post);
     }
 
     [Theory]
@@ -68,6 +68,6 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostApplicationIntegr
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(Post, User);
+        response.ShouldSatisfy(Post);
     }
 }

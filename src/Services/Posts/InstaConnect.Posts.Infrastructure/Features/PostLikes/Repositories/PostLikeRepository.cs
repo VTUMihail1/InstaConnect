@@ -1,4 +1,6 @@
-﻿using MongoDB.Driver;
+﻿using InstaConnect.Common.Domain.Models;
+
+using MongoDB.Driver;
 
 namespace InstaConnect.Posts.Infrastructure.Features.PostLikes.Repositories;
 
@@ -29,9 +31,9 @@ internal class PostLikeRepository : IPostLikeRepository
 
     public async Task<PostLikeCollection> GetAllAsync(
         PostLikeFilterQuery filter,
-        PostLikeSortingQuery sorting,
-        PostLikePaginationQuery pagination,
-        PostLikeIncludeQuery? include,
+        CommonSortingQuery<PostLikeSortProperty> sorting,
+        CommonPaginationQuery pagination,
+        CommonIncludeQuery<PostLikeIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
         var match = Builders<PostLike>.Filter.Empty
@@ -49,7 +51,7 @@ internal class PostLikeRepository : IPostLikeRepository
             .Includes(includeProperties)
             .Match(match);
 
-        var totalCountsResult = await pipeline.Count().FirstOrDefaultAsync(cancellationToken);
+        var totalCount = (int)await _postsContext.PostLikes.CountDocumentsAsync(match, cancellationToken: cancellationToken);
 
         var entities = await pipeline
             .Sort(sortOrder.Sort(sortProperty.Property))
@@ -57,14 +59,14 @@ internal class PostLikeRepository : IPostLikeRepository
             .Limit(pagination.PageSize)
             .ToListAsync(cancellationToken);
 
-        var collectionEntities = _postLikeCollectionFactory.Create(entities, (int)totalCountsResult.Count, pagination);
+        var collectionEntities = _postLikeCollectionFactory.Create(entities, totalCount, pagination);
 
         return collectionEntities;
     }
 
     public async Task<PostLike?> GetByIdAsync(
         PostLikeId id,
-        PostLikeIncludeQuery? include,
+        CommonIncludeQuery<PostLikeIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
         var match = Builders<PostLike>.Filter.Empty
@@ -95,6 +97,13 @@ internal class PostLikeRepository : IPostLikeRepository
         await _postsContext
             .PostLikes
             .AddAsync(_postsContext.ClientSessionHandle, entity, cancellationToken);
+    }
+
+    public async Task AddRangeAsync(IEnumerable<PostLike> entities, CancellationToken cancellationToken)
+    {
+        await _postsContext
+            .PostLikes
+            .AddRangeAsync(_postsContext.ClientSessionHandle, entities, cancellationToken);
     }
 
     public async Task DeleteAsync(PostLike entity, CancellationToken cancellationToken)

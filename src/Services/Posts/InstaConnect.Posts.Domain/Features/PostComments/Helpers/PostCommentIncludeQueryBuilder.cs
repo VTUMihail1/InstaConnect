@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Domain.Features.PostComments.Helpers;
+﻿using InstaConnect.Common.Domain.Models;
+
+namespace InstaConnect.Posts.Domain.Features.PostComments.Helpers;
 
 public class PostCommentIncludeQueryBuilder
 {
@@ -23,8 +25,8 @@ public class PostCommentIncludeQueryBuilder
         return this;
     }
 
-    public PostCommentIncludeQuery Build()
+    public CommonIncludeQuery<PostCommentIncludeProperty> Build()
     {
-        return new PostCommentIncludeQuery(_includeProperties);
+        return new(_includeProperties);
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.PostCommentLikes.Controllers.v1;
 
-public class GetPostCommentLikeByIdFunctionalTests : BasePostCommentLikePresentationFunctionalTest
+public class GetPostCommentLikeByIdFunctionalTests : BasePostCommentLikePresentationQueryFunctionalTest
 {
     private readonly GetPostCommentLikeByIdApiRequestBuilderFactory _requestBuilderFactory;
     private readonly GetPostCommentLikeByIdApiRequestBuilder _requestBuilder;
@@ -258,7 +258,7 @@ public class GetPostCommentLikeByIdFunctionalTests : BasePostCommentLikePresenta
         var response = await HttpClient.GetPostCommentLikeByIdAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostCommentLike, User);
+        response.ShouldSatisfy(PostCommentLike);
     }
 
     [Theory]
@@ -273,7 +273,7 @@ public class GetPostCommentLikeByIdFunctionalTests : BasePostCommentLikePresenta
         var response = await HttpClient.GetPostCommentLikeByIdAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostCommentLike, User);
+        response.ShouldSatisfy(PostCommentLike);
     }
 
     [Theory]
@@ -288,7 +288,7 @@ public class GetPostCommentLikeByIdFunctionalTests : BasePostCommentLikePresenta
         var response = await HttpClient.GetPostCommentLikeByIdAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostCommentLike, User);
+        response.ShouldSatisfy(PostCommentLike);
     }
 
     [Theory]
@@ -303,6 +303,6 @@ public class GetPostCommentLikeByIdFunctionalTests : BasePostCommentLikePresenta
         var response = await HttpClient.GetPostCommentLikeByIdAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostCommentLike, User);
+        response.ShouldSatisfy(PostCommentLike);
     }
 }

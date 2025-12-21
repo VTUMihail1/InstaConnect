@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Domain.Features.Posts.Helpers;
+﻿using InstaConnect.Common.Domain.Models;
+
+namespace InstaConnect.Posts.Domain.Features.Posts.Helpers;
 
 public class PostIncludeQueryBuilder
 {
@@ -30,8 +32,8 @@ public class PostIncludeQueryBuilder
         return this;
     }
 
-    public PostIncludeQuery Build()
+    public CommonIncludeQuery<PostIncludeProperty> Build()
     {
-        return new PostIncludeQuery(_includeProperties);
+        return new(_includeProperties);
     }
 }

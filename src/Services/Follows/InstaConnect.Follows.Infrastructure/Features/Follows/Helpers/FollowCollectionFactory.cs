@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Follows.Infrastructure.Features.Follows.Helpers;
+﻿using InstaConnect.Common.Domain.Models;
+
+namespace InstaConnect.Follows.Infrastructure.Features.Follows.Helpers;
 
 internal class FollowCollectionFactory : IFollowCollectionFactory
 {
@@ -9,7 +11,7 @@ internal class FollowCollectionFactory : IFollowCollectionFactory
         _paginator = paginator;
     }
 
-    public FollowCollection Create(ICollection<Follow> follows, int totalCount, FollowPaginationQuery pagination)
+    public FollowCollection Create(ICollection<Follow> follows, int totalCount, CommonPaginationQuery pagination)
     {
         var hasNextPage = _paginator.HasNextPage(pagination.Page, pagination.PageSize, totalCount);
         var hasPreviousPage = _paginator.HasPreviousPage(pagination.Page);

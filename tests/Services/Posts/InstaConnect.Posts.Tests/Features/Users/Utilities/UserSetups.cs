@@ -35,6 +35,16 @@ public static class UserSetups
         await userRepository.AddAsync(user, cancellationToken);
     }
 
+    public static async Task AddUserRangeAsync(
+        this IServiceScope serviceScope,
+        IEnumerable<User> users,
+        CancellationToken cancellationToken)
+    {
+        var userRepository = serviceScope.GetUserRepository();
+
+        await userRepository.AddRangeAsync(users, cancellationToken);
+    }
+
     public static async Task DeleteUserAsync(
         this IServiceScope serviceScope,
         User user,

@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Application.Tests.Unit.Features.PostCommentLikes.Queries.GetById;
 
-public class GetPostCommentLikeByIdQueryHandlerUnitTests : BasePostCommentLikeApplicationUnitTest
+public class GetPostCommentLikeByIdQueryHandlerUnitTests : BasePostCommentLikeApplicationQueryUnitTest
 {
     private readonly GetPostCommentLikeByIdQueryRequestBuilderFactory _requestBuilderFactory;
     private readonly GetPostCommentLikeByIdQueryRequestBuilder _requestBuilder;
@@ -16,7 +16,7 @@ public class GetPostCommentLikeByIdQueryHandlerUnitTests : BasePostCommentLikeAp
 
         _handler = new(ApplicationMapper, PostCommentLikeService, PostCommentLikeIncludeQueryBuilderFactory);
 
-        PostCommentLikeService.SetupGetByIdQuery(_request, PostCommentLike, CancellationToken);
+        PostCommentLikeService.SetupGetByIdQuery(_request, PostCommentLike, Include, CancellationToken);
     }
 
     [Fact]
@@ -26,7 +26,7 @@ public class GetPostCommentLikeByIdQueryHandlerUnitTests : BasePostCommentLikeAp
         var response = await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostCommentLike, User);
+        response.ShouldSatisfy(PostCommentLike);
     }
 
     [Fact]
@@ -36,6 +36,6 @@ public class GetPostCommentLikeByIdQueryHandlerUnitTests : BasePostCommentLikeAp
         await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        await PostCommentLikeService.ShouldReceiveOneGetByIdAsync(_request, CancellationToken);
+        await PostCommentLikeService.ShouldReceiveOneGetByIdAsync(_request, Include, CancellationToken);
     }
 }

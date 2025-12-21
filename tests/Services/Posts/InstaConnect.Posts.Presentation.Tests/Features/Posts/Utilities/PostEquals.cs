@@ -1,4 +1,6 @@
-﻿using InstaConnect.Posts.Domain.Features.Posts.Models.ValueObjects;
+﻿using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
+using InstaConnect.Posts.Domain.Features.Posts.Models.ValueObjects;
 using InstaConnect.Posts.Presentation.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Posts.Presentation.Tests.Features.Posts.Utilities;
@@ -7,13 +9,9 @@ public static class PostEquals
 {
     public static bool Matches(this GetAllPostsQueryRequest query, GetAllPostsApiRequest request)
     {
-        return query.UserId == request.UserId &&
-               query.UserName == request.UserName &&
-               query.Title == request.Title &&
-               query.Page == request.Page &&
-               query.PageSize == request.PageSize &&
-               query.SortOrder == request.SortOrder &&
-               query.SortProperty == request.SortProperty;
+        return query.MatchesFilter(request) &&
+               query.MatchesSortable<GetAllPostsQueryRequest, GetAllPostsApiRequest, PostSortProperty>(request) &&
+               query.MatchesPaginatable(request);
     }
 
     public static bool Matches(this GetPostByIdQueryRequest query, GetPostByIdApiRequest request)
@@ -52,19 +50,37 @@ public static class PostEquals
         return response.Response.Matches(post.Id);
     }
 
-    public static bool Matches(this GetPostByIdApiResponse response, Post post, User user)
+    public static bool Matches(this GetPostByIdApiResponse response, Post post)
     {
-        return response.Response.Matches(post, user);
+        return response.Response.Matches(post);
     }
 
-    public static bool Matches(this GetAllPostsApiResponse response, Post post, User user, GetAllPostsApiRequest request)
+    public static bool Matches(
+        this GetAllPostsApiResponse response,
+        ICollection<Post> posts,
+        GetAllPostsApiRequest request)
     {
-        return response.Response.Entities.All(p => p.Matches(post, user)) &&
-               response.Response.Page == request.Page &&
-               response.Response.PageSize == request.PageSize &&
-               response.Response.TotalCount == response.Response.Entities.Count &&
-               response.Response.HasPreviousPage == response.Response.Page > 1 &&
-               response.Response.HasNextPage == response.Response.Page * response.Response.PageSize < response.Response.TotalCount;
+        return response.Response.MatchesCollectionResponse(posts.Count, request) &&
+               response.Response.Entities.MatchesCollection(posts,
+                                                            response => response.Id,
+                                                            post => post.Id.Id,
+                                                            (response, post) => response.Matches(post),
+                                                            request,
+                                                            post => post.MatchesFilter(request));
+    }
+
+    public static bool Matches(
+        this GetAllPostsApiResponse response,
+        ICollection<Post> posts,
+        GetAllPostsApiRequest request,
+        ISortEnumTermTransformer<Post> termTransformer)
+    {
+        return response.Response.MatchesCollectionResponse(posts.Count, request) &&
+               response.Response.Entities.MatchesSortedCollection(posts,
+                                                                  (response, post) => response.Matches(post),
+                                                                  termTransformer,
+                                                                  request,
+                                                                  post => post.MatchesFilter(request));
     }
 
     public static bool Matches(this Post post, AddPostApiRequest request)
@@ -87,13 +103,25 @@ public static class PostEquals
         return id.Matches(response.Id);
     }
 
-    public static bool Matches(this PostApiResponse response, Post post, User user)
+    public static bool Matches(this PostApiResponse response, Post post)
     {
         return post.Id.Matches(response.Id) &&
                post.Title == response.Title &&
                post.Content == response.Content &&
-               response.User.Matches(user) &&
+               response.User.Matches(post.User!) &&
                post.CreatedAtUtc == response.CreatedAtUtc &&
                post.UpdatedAtUtc == response.UpdatedAtUtc;
+    }
+
+    public static bool MatchesFilter(this GetAllPostsQueryRequest query, GetAllPostsApiRequest request)
+    {
+        return query.UserName == request.UserName &&
+               query.Title == request.Title;
+    }
+
+    public static bool MatchesFilter(this Post post, GetAllPostsApiRequest request)
+    {
+        return post.User!.Name.Value.StartsWithOrdinalIgnoreCase(request.UserName) &&
+               post.Title.StartsWithOrdinalIgnoreCase(request.Title);
     }
 }

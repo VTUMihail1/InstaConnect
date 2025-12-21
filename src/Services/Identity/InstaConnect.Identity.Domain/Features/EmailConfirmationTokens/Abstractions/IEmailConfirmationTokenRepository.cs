@@ -1,10 +1,12 @@
-﻿namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Abstractions;
+﻿using InstaConnect.Common.Domain.Models;
+
+namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Abstractions;
 
 public interface IEmailConfirmationTokenRepository
 {
     Task<EmailConfirmationToken?> GetByIdAsync(
         EmailConfirmationTokenId id,
-        EmailConfirmationTokenIncludeQuery? include,
+        CommonIncludeQuery<EmailConfirmationTokenIncludeProperty>? include,
         CancellationToken cancellationToken);
 
     Task<EmailConfirmationToken?> GetByIdAsync(

@@ -35,6 +35,16 @@ public static class PostCommentSetups
         await postCommentRepository.AddAsync(postComment, cancellationToken);
     }
 
+    public static async Task AddPostCommentRangeAsync(
+        this IServiceScope serviceScope,
+        IEnumerable<PostComment> postComments,
+        CancellationToken cancellationToken)
+    {
+        var postCommentRepository = serviceScope.GetPostCommentRepository();
+
+        await postCommentRepository.AddRangeAsync(postComments, cancellationToken);
+    }
+
     public static async Task DeletePostCommentAsync(
         this IServiceScope serviceScope,
         PostComment postComment,

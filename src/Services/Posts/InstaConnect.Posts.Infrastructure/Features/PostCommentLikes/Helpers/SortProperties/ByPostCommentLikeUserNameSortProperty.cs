@@ -6,5 +6,5 @@ public class ByPostCommentLikeUserNameSortProperty : IPostCommentLikeSortPropert
 {
     public PostCommentLikeSortProperty SortProperty => PostCommentLikeSortProperty.ByUserName;
 
-    public Expression<Func<PostCommentLike, object>> Property => p => p.User!.Name;
+    public Expression<Func<PostCommentLike, object>> Property => p => p.User!.Name.Value;
 }

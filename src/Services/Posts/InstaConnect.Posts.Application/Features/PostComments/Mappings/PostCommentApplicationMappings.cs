@@ -16,7 +16,6 @@ internal class PostCommentApplicationMappings : IRegister
             .ConstructUsing(src => new(
                 new(
                     new(src.Id),
-                    new(src.UserId),
                     new(src.UserName)),
                 new(
                     src.SortOrder,

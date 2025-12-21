@@ -1,13 +1,16 @@
-﻿namespace InstaConnect.Identity.Domain.Features.Users.Models.Requests;
+﻿using InstaConnect.Common.Domain.Models;
+
+namespace InstaConnect.Identity.Domain.Features.Users.Models.Requests;
 
 public record GetAllUsersQuery(
     UserFilterQuery Filter,
-    UserSortingQuery Sorting,
-    UserPaginationQuery Pagination)
+    CommonSortingQuery<UserSortProperty> Sorting,
+    CommonPaginationQuery Pagination)
+    : ISortableQuery<UserSortProperty>, IPaginatableQuery, IIncludableQuery<UserIncludeProperty>
 {
-    public UserIncludeQuery? Include { get; private set; }
+    public CommonIncludeQuery<UserIncludeProperty>? Include { get; private set; }
 
-    public GetAllUsersQuery AddInclude(UserIncludeQuery include)
+    public GetAllUsersQuery AddInclude(CommonIncludeQuery<UserIncludeProperty> include)
     {
         Include = include;
 

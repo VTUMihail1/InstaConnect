@@ -1,17 +1,19 @@
-﻿namespace InstaConnect.Identity.Domain.Features.Users.Abstractions;
+﻿using InstaConnect.Common.Domain.Models;
+
+namespace InstaConnect.Identity.Domain.Features.Users.Abstractions;
 
 public interface IUserRepository
 {
     Task<UserCollection> GetAllAsync(
         UserFilterQuery filter,
-        UserSortingQuery sorting,
-        UserPaginationQuery pagination,
-        UserIncludeQuery? include,
+        CommonSortingQuery<UserSortProperty> sorting,
+        CommonPaginationQuery pagination,
+        CommonIncludeQuery<UserIncludeProperty>? include,
         CancellationToken cancellationToken);
 
     Task<User?> GetByIdAsync(
         UserId id,
-        UserIncludeQuery? include,
+        CommonIncludeQuery<UserIncludeProperty>? include,
         CancellationToken cancellationToken);
 
     Task<User?> GetByIdAsync(
@@ -20,7 +22,7 @@ public interface IUserRepository
 
     Task<User?> GetByNameAsync(
         Name name,
-        UserIncludeQuery? include,
+        CommonIncludeQuery<UserIncludeProperty>? include,
         CancellationToken cancellationToken);
 
     Task<User?> GetByNameAsync(
@@ -29,7 +31,7 @@ public interface IUserRepository
 
     Task<User?> GetByEmailAsync(
         Email email,
-        UserIncludeQuery? include,
+        CommonIncludeQuery<UserIncludeProperty>? include,
         CancellationToken cancellationToken);
 
     Task<User?> GetByEmailAsync(
@@ -37,6 +39,8 @@ public interface IUserRepository
         CancellationToken cancellationToken);
 
     Task AddAsync(User entity, CancellationToken cancellationToken);
+
+    Task AddRangeAsync(IEnumerable<User> entities, CancellationToken cancellationToken);
 
     Task UpdateAsync(User entity, CancellationToken cancellationToken);
 

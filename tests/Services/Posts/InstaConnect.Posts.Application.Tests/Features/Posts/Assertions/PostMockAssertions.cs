@@ -7,17 +7,19 @@ public static class PostMockAssertions
     public static async Task ShouldReceiveOneGetAllAsync(
         this IPostService postService,
         GetAllPostsQueryRequest request,
+        CommonIncludeQuery<PostIncludeProperty> include,
         CancellationToken cancellationToken)
     {
-        await postService.ShouldHaveReceived(1).GetAllAsync(PostMatcher.IsGetAllPostsQuery(request), cancellationToken);
+        await postService.ShouldHaveReceived(1).GetAllAsync(PostMatcher.IsGetAllPostsQuery(request, include), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneGetByIdAsync(
         this IPostService postService,
         GetPostByIdQueryRequest request,
+        CommonIncludeQuery<PostIncludeProperty> include,
         CancellationToken cancellationToken)
     {
-        await postService.ShouldHaveReceived(1).GetByIdAsync(PostMatcher.IsGetPostByIdQuery(request), cancellationToken);
+        await postService.ShouldHaveReceived(1).GetByIdAsync(PostMatcher.IsGetPostByIdQuery(request, include), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneAddAsync(

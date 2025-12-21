@@ -1,4 +1,6 @@
-﻿using MongoDB.Driver;
+﻿using InstaConnect.Common.Domain.Models;
+
+using MongoDB.Driver;
 
 namespace InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Repositories;
 
@@ -29,9 +31,9 @@ internal class PostCommentLikeRepository : IPostCommentLikeRepository
 
     public async Task<PostCommentLikeCollection> GetAllAsync(
         PostCommentLikeFilterQuery filter,
-        PostCommentLikeSortingQuery sorting,
-        PostCommentLikePaginationQuery pagination,
-        PostCommentLikeIncludeQuery? include,
+        CommonSortingQuery<PostCommentLikeSortProperty> sorting,
+        CommonPaginationQuery pagination,
+        CommonIncludeQuery<PostCommentLikeIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
         var match = Builders<PostCommentLike>.Filter.Empty
@@ -50,7 +52,7 @@ internal class PostCommentLikeRepository : IPostCommentLikeRepository
             .Includes(includeProperties)
             .Match(match);
 
-        var totalCountsResult = await pipeline.Count().FirstOrDefaultAsync(cancellationToken);
+        var totalCount = (int)await _postsContext.PostCommentLikes.CountDocumentsAsync(match, cancellationToken: cancellationToken);
 
         var entities = await pipeline
             .Sort(sortOrder.Sort(sortProperty.Property))
@@ -58,14 +60,14 @@ internal class PostCommentLikeRepository : IPostCommentLikeRepository
             .Limit(pagination.PageSize)
             .ToListAsync(cancellationToken);
 
-        var collectionEntities = _postCommentLikeCollectionFactory.Create(entities, (int)totalCountsResult.Count, pagination);
+        var collectionEntities = _postCommentLikeCollectionFactory.Create(entities, totalCount, pagination);
 
         return collectionEntities;
     }
 
     public async Task<PostCommentLike?> GetByIdAsync(
         PostCommentLikeId id,
-        PostCommentLikeIncludeQuery? include,
+        CommonIncludeQuery<PostCommentLikeIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
         var match = Builders<PostCommentLike>.Filter.Empty
@@ -97,6 +99,13 @@ internal class PostCommentLikeRepository : IPostCommentLikeRepository
         await _postsContext
             .PostCommentLikes
             .AddAsync(_postsContext.ClientSessionHandle, entity, cancellationToken);
+    }
+
+    public async Task AddRangeAsync(IEnumerable<PostCommentLike> entities, CancellationToken cancellationToken)
+    {
+        await _postsContext
+            .PostCommentLikes
+            .AddRangeAsync(_postsContext.ClientSessionHandle, entities, cancellationToken);
     }
 
     public async Task DeleteAsync(PostCommentLike entity, CancellationToken cancellationToken)

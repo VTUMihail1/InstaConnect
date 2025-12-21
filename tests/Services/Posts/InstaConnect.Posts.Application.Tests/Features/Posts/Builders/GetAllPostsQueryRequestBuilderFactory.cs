@@ -2,8 +2,8 @@
 
 public class GetAllPostsQueryRequestBuilderFactory
 {
-    public GetAllPostsQueryRequestBuilder Create(Post post, User user)
+    public GetAllPostsQueryRequestBuilder Create(Post post)
     {
-        return new(post, user);
+        return new(post);
     }
 }

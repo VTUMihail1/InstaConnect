@@ -12,11 +12,11 @@ public class GetAllPostCommentLikesApiRequestBuilder
     private CommonSortOrder _sortOrder;
     private PostCommentLikeSortProperty _sortProperty;
 
-    public GetAllPostCommentLikesApiRequestBuilder(PostCommentLike postCommentLike, User user)
+    public GetAllPostCommentLikesApiRequestBuilder(PostCommentLike postCommentLike)
     {
         _id = postCommentLike.Id.CommentId.Id.Id;
         _commentId = postCommentLike.Id.CommentId.CommentId;
-        _userName = user.Name.Value;
+        _userName = DataFaker.GetPrefixString(postCommentLike.User!.Name.Value);
         _page = PostCommentLikeDataFaker.GetPage();
         _pageSize = PostCommentLikeDataFaker.GetPageSize();
         _sortOrder = DataFaker.GetSortOrder();

@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
 
-public class Post : IEntity<PostId>
+public class Post : IEntityWithId<PostId>
 {
     private Post()
     {

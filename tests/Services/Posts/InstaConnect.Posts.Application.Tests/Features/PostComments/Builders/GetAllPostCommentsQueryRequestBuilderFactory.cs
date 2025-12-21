@@ -2,8 +2,8 @@
 
 public class GetAllPostCommentsQueryRequestBuilderFactory
 {
-    public GetAllPostCommentsQueryRequestBuilder Create(PostComment postComment, User user)
+    public GetAllPostCommentsQueryRequestBuilder Create(PostComment postComment)
     {
-        return new(postComment, user);
+        return new(postComment);
     }
 }

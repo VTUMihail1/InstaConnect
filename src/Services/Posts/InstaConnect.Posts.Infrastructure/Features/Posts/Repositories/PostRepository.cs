@@ -1,4 +1,6 @@
-﻿using MongoDB.Driver;
+﻿using InstaConnect.Common.Domain.Models;
+
+using MongoDB.Driver;
 
 namespace InstaConnect.Posts.Infrastructure.Features.Posts.Repositories;
 
@@ -29,13 +31,12 @@ internal class PostRepository : IPostRepository
 
     public async Task<PostCollection> GetAllAsync(
         PostFilterQuery filter,
-        PostSortingQuery sorting,
-        PostPaginationQuery pagination,
-        PostIncludeQuery? include,
+        CommonSortingQuery<PostSortProperty> sorting,
+        CommonPaginationQuery pagination,
+        CommonIncludeQuery<PostIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
         var match = Builders<Post>.Filter.Empty
-            .AndOptionalEqualsCaseInsensitive(p => p.UserId.Id, filter.UserId.IsEmpty(), filter.UserId.Id)
             .AndOptionalStartsWithCaseInsensitive(p => p.User!.Name.Value, filter.UserName.IsEmpty(), filter.UserName.Value)
             .AndOptionalStartsWithCaseInsensitive(p => p.Title, filter.Title.IsNullOrEmptyOrWhiteSpace(), filter.Title);
 
@@ -50,7 +51,7 @@ internal class PostRepository : IPostRepository
             .Includes(includeProperties)
             .Match(match);
 
-        var totalCountsResult = await pipeline.Count().FirstOrDefaultAsync(cancellationToken);
+        var totalCount = (int)await _postsContext.Posts.CountDocumentsAsync(match, cancellationToken: cancellationToken);
 
         var entities = await pipeline
             .Sort(sortOrder.Sort(sortProperty.Property))
@@ -58,14 +59,14 @@ internal class PostRepository : IPostRepository
             .Limit(pagination.PageSize)
             .ToListAsync(cancellationToken);
 
-        var collectionEntities = _postCollectionFactory.Create(entities, (int)totalCountsResult.Count, pagination);
+        var collectionEntities = _postCollectionFactory.Create(entities, totalCount, pagination);
 
         return collectionEntities;
     }
 
     public async Task<Post?> GetByIdAsync(
         PostId id,
-        PostIncludeQuery? include,
+        CommonIncludeQuery<PostIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
         var match = Builders<Post>.Filter.Empty
@@ -95,6 +96,13 @@ internal class PostRepository : IPostRepository
         await _postsContext
             .Posts
             .AddAsync(_postsContext.ClientSessionHandle, entity, cancellationToken);
+    }
+
+    public async Task AddRangeAsync(IEnumerable<Post> entities, CancellationToken cancellationToken)
+    {
+        await _postsContext
+            .Posts
+            .AddRangeAsync(_postsContext.ClientSessionHandle, entities, cancellationToken);
     }
 
     public async Task UpdateAsync(Post entity, CancellationToken cancellationToken)

@@ -6,4 +6,4 @@ public record ChatMessageCollectionQueryResponse(
     int PageSize,
     int TotalCount,
     bool HasNextPage,
-    bool HasPreviousPage);
+    bool HasPreviousPage) : ICollectionQueryResponse;

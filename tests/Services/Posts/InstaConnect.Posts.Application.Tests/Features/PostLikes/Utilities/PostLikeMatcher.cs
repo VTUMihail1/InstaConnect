@@ -1,14 +1,14 @@
 ﻿namespace InstaConnect.Posts.Application.Tests.Features.PostLikes.Utilities;
 public static class PostLikeMatcher
 {
-    public static GetAllPostLikesQuery IsGetAllPostLikesQuery(GetAllPostLikesQueryRequest request)
+    public static GetAllPostLikesQuery IsGetAllPostLikesQuery(GetAllPostLikesQueryRequest request, CommonIncludeQuery<PostLikeIncludeProperty> include)
     {
-        return Matcher.Is<GetAllPostLikesQuery>(p => p.Matches(request));
+        return Matcher.Is<GetAllPostLikesQuery>(p => p.Matches(request, include));
     }
 
-    public static GetPostLikeByIdQuery IsGetPostLikeByIdQuery(GetPostLikeByIdQueryRequest request)
+    public static GetPostLikeByIdQuery IsGetPostLikeByIdQuery(GetPostLikeByIdQueryRequest request, CommonIncludeQuery<PostLikeIncludeProperty> include)
     {
-        return Matcher.Is<GetPostLikeByIdQuery>(p => p.Matches(request));
+        return Matcher.Is<GetPostLikeByIdQuery>(p => p.Matches(request, include));
     }
 
     public static AddPostLikeCommand IsAddPostLikeCommand(AddPostLikeCommandRequest request)

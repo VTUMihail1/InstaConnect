@@ -105,14 +105,6 @@ public static class PostCommentValidationAssertions
         result.ShouldHaveValidationErrorForProperty(p => p.UserId, messageTransformer, request);
     }
 
-    public static void ShouldHaveValidationErrorForUserId(
-        this TestValidationResult<GetAllPostCommentsQueryRequest> result,
-        IStringMessageTransformer messageTransformer,
-        GetAllPostCommentsQueryRequest request)
-    {
-        result.ShouldHaveValidationErrorForProperty(p => p.UserId, messageTransformer, request);
-    }
-
     public static void ShouldHaveValidationErrorForUserName(
         this TestValidationResult<GetAllPostCommentsQueryRequest> result,
         IStringMessageTransformer messageTransformer,

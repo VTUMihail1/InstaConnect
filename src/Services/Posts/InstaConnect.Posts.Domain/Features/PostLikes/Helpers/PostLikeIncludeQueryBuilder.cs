@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Domain.Features.PostLikes.Helpers;
+﻿using InstaConnect.Common.Domain.Models;
+
+namespace InstaConnect.Posts.Domain.Features.PostLikes.Helpers;
 
 public class PostLikeIncludeQueryBuilder
 {
@@ -16,8 +18,8 @@ public class PostLikeIncludeQueryBuilder
         return this;
     }
 
-    public PostLikeIncludeQuery Build()
+    public CommonIncludeQuery<PostLikeIncludeProperty> Build()
     {
-        return new PostLikeIncludeQuery(_includeProperties);
+        return new(_includeProperties);
     }
 }

@@ -1,9 +1,10 @@
 ﻿using InstaConnect.Common.Domain.Models;
+using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 
 namespace InstaConnect.Posts.Application.Tests.Integration.Features.Posts.Queries;
 
-public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationIntegrationTest
+public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationQueryIntegrationTest
 {
     private readonly GetAllPostsQueryRequestBuilderFactory _requestBuilderFactory;
     private readonly GetAllPostsQueryRequestBuilder _requestBuilder;
@@ -13,27 +14,15 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationIntegr
         : base(webApplicationFactory)
     {
         _requestBuilderFactory = new();
-        _requestBuilder = _requestBuilderFactory.Create(Post, User);
+        _requestBuilder = _requestBuilderFactory.Create(Post);
         _request = _requestBuilder.Build();
     }
 
     protected override async Task OnInitializeAsync()
     {
         await ServiceScope.AddUserAsync(User, CancellationToken);
-        await ServiceScope.AddPostAsync(Post, CancellationToken);
-    }
-
-    [Theory]
-    [UserIdTooLongWithMessageData]
-    public async Task SendAsync_ShouldThrowValidationException_WhenUserIdIsInvalid(
-        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithUserId(transformer).Build();
-
-        // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForUserIdAsync(
-            messageTransformer, request, CancellationToken);
+        await ServiceScope.AddUserRangeAsync(Users, CancellationToken);
+        await ServiceScope.AddPostRangeAsync(Posts, CancellationToken);
     }
 
     [Theory]
@@ -63,7 +52,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationIntegr
     }
 
     [Theory]
-    [SortOrderEmptyWithMessageData]
+    [PostSortOrderEmptyWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenSortOrderIsInvalid(
         IEnumTransformer<CommonSortOrder> transformer, IEnumMessageTransformer<CommonSortOrder> messageTransformer)
     {
@@ -123,24 +112,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationIntegr
         var response = await ApplicationSender.SendAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(Post, User, _request);
-    }
-
-    [Theory]
-    [UserIdNullData]
-    [UserIdEmptyData]
-    [UserIdDifferentCaseData]
-    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndUserIdAreValid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithUserId(transformer).Build();
-
-        // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
-
-        // Assert
-        response.ShouldSatisfy(Post, User, _request);
+        response.ShouldSatisfy(Posts, _request);
     }
 
     [Theory]
@@ -157,7 +129,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationIntegr
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(Post, User, _request);
+        response.ShouldSatisfy(Posts, _request);
     }
 
     [Theory]
@@ -174,6 +146,39 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationIntegr
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(Post, User, _request);
+        response.ShouldSatisfy(Posts, _request);
+    }
+
+    [Theory]
+    [PostSortOrderWithAscendingTermData]
+    [PostSortOrderWithDescendingTermData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortOrderAreValid(
+        IEnumTransformer<CommonSortOrder> transformer, ISortEnumTermTransformer<Post> termTransformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithSortOrder(transformer).Build();
+
+        // Act
+        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfy(Posts, _request, termTransformer);
+    }
+
+    [Theory]
+    [PostSortPropertyWithCreatedAtTermData]
+    [PostSortPropertyWithTitleTermData]
+    [PostSortPropertyWithUserNameTermData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortPropertyAreValid(
+        IEnumTransformer<PostSortProperty> transformer, ISortEnumTermTransformer<Post> termTransformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithSortProperty(transformer).Build();
+
+        // Act
+        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfy(Posts, _request, termTransformer);
     }
 }

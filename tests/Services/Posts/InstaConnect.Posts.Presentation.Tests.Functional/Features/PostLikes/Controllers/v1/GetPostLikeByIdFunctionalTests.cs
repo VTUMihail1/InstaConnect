@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.PostLikes.Controllers.v1;
 
-public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationFunctionalTest
+public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationQueryFunctionalTest
 {
     private readonly GetPostLikeByIdApiRequestBuilderFactory _requestBuilderFactory;
     private readonly GetPostLikeByIdApiRequestBuilder _requestBuilder;
@@ -184,7 +184,7 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationFunctional
         var response = await HttpClient.GetPostLikeByIdAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostLike, User);
+        response.ShouldSatisfy(PostLike);
     }
 
     [Theory]
@@ -199,7 +199,7 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationFunctional
         var response = await HttpClient.GetPostLikeByIdAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostLike, User);
+        response.ShouldSatisfy(PostLike);
     }
 
     [Theory]
@@ -214,6 +214,6 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationFunctional
         var response = await HttpClient.GetPostLikeByIdAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostLike, User);
+        response.ShouldSatisfy(PostLike);
     }
 }

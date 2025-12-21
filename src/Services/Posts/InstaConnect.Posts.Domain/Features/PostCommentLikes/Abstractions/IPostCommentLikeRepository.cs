@@ -1,17 +1,19 @@
-﻿namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstractions;
+﻿using InstaConnect.Common.Domain.Models;
+
+namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstractions;
 
 public interface IPostCommentLikeRepository
 {
     Task<PostCommentLikeCollection> GetAllAsync(
         PostCommentLikeFilterQuery filter,
-        PostCommentLikeSortingQuery sorting,
-        PostCommentLikePaginationQuery pagination,
-        PostCommentLikeIncludeQuery? include,
+        CommonSortingQuery<PostCommentLikeSortProperty> sorting,
+        CommonPaginationQuery pagination,
+        CommonIncludeQuery<PostCommentLikeIncludeProperty>? include,
         CancellationToken cancellationToken);
 
     Task<PostCommentLike?> GetByIdAsync(
         PostCommentLikeId id,
-        PostCommentLikeIncludeQuery? include,
+        CommonIncludeQuery<PostCommentLikeIncludeProperty>? include,
         CancellationToken cancellationToken);
 
     Task<PostCommentLike?> GetByIdAsync(
@@ -19,6 +21,8 @@ public interface IPostCommentLikeRepository
         CancellationToken cancellationToken);
 
     Task AddAsync(PostCommentLike entity, CancellationToken cancellationToken);
+
+    Task AddRangeAsync(IEnumerable<PostCommentLike> entities, CancellationToken cancellationToken);
 
     Task DeleteAsync(PostCommentLike entity, CancellationToken cancellationToken);
 }

@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Chats.Domain.Features.ChatMessages.Models.Entities;
 
-public class ChatMessage : IEntity<ChatMessageId>
+public class ChatMessage : IEntityWithId<ChatMessageId>
 {
     private ChatMessage()
     {

@@ -4,7 +4,6 @@ namespace InstaConnect.Posts.Presentation.Tests.Features.Posts.Builders;
 
 public class GetAllPostsApiRequestBuilder
 {
-    private string _userId;
     private string _userName;
     private string _title;
     private int _page;
@@ -12,22 +11,14 @@ public class GetAllPostsApiRequestBuilder
     private CommonSortOrder _sortOrder;
     private PostSortProperty _sortProperty;
 
-    public GetAllPostsApiRequestBuilder(Post post, User user)
+    public GetAllPostsApiRequestBuilder(Post post)
     {
-        _userId = user.Id.Id;
-        _userName = user.Name.Value;
-        _title = post.Title;
+        _userName = DataFaker.GetPrefixString(post.User!.Name.Value);
+        _title = DataFaker.GetPrefixString(post.Title);
         _page = PostDataFaker.GetPage();
         _pageSize = PostDataFaker.GetPageSize();
         _sortOrder = DataFaker.GetSortOrder();
         _sortProperty = PostDataFaker.GetSortProperty();
-    }
-
-    public GetAllPostsApiRequestBuilder WithUserId(IStringTransformer transformer)
-    {
-        _userId = transformer.Transform(_userId);
-
-        return this;
     }
 
     public GetAllPostsApiRequestBuilder WithUserName(IStringTransformer transformer)
@@ -74,6 +65,6 @@ public class GetAllPostsApiRequestBuilder
 
     public GetAllPostsApiRequest Build()
     {
-        return new(_userId, _userName, _title, _sortOrder, _sortProperty, _page, _pageSize);
+        return new(_userName, _title, _sortOrder, _sortProperty, _page, _pageSize);
     }
 }

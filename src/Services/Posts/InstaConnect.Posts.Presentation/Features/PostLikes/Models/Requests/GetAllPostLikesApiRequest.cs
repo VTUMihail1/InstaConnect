@@ -10,4 +10,4 @@ public record GetAllPostLikesApiRequest(
     [FromQuery] CommonSortOrder SortOrder = CommonDefaultValues.SortOrder,
     [FromQuery] PostLikeSortProperty SortProperty = PostLikeDefaultValues.SortProperty,
     [FromQuery] int Page = PostLikeDefaultValues.Page,
-    [FromQuery] int PageSize = PostLikeDefaultValues.PageSize);
+    [FromQuery] int PageSize = PostLikeDefaultValues.PageSize) : ISortableApiRequest<PostLikeSortProperty>, IPaginatableApiRequest;

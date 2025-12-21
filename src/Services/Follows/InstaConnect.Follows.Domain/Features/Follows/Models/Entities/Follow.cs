@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
 
-public class Follow : IEntity<FollowId>
+public class Follow : IEntityWithId<FollowId>
 {
     private Follow()
     {

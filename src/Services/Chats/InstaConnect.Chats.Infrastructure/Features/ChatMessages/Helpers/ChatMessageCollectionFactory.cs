@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Chats.Infrastructure.Features.ChatMessages.Helpers;
+﻿using InstaConnect.Common.Domain.Models;
+
+namespace InstaConnect.Chats.Infrastructure.Features.ChatMessages.Helpers;
 
 internal class ChatMessageCollectionFactory : IChatMessageCollectionFactory
 {
@@ -9,7 +11,7 @@ internal class ChatMessageCollectionFactory : IChatMessageCollectionFactory
         _paginator = paginator;
     }
 
-    public ChatMessageCollection Create(ICollection<ChatMessage> chatMessages, int totalCount, ChatMessagePaginationQuery pagination)
+    public ChatMessageCollection Create(ICollection<ChatMessage> chatMessages, int totalCount, CommonPaginationQuery pagination)
     {
         var hasNextPage = _paginator.HasNextPage(pagination.Page, pagination.PageSize, totalCount);
         var hasPreviousPage = _paginator.HasPreviousPage(pagination.Page);

@@ -5,18 +5,16 @@ namespace InstaConnect.Posts.Presentation.Tests.Features.PostComments.Builders;
 public class GetAllPostCommentsApiRequestBuilder
 {
     private string _id;
-    private string _userId;
     private string _userName;
     private int _page;
     private int _pageSize;
     private CommonSortOrder _sortOrder;
     private PostCommentSortProperty _sortProperty;
 
-    public GetAllPostCommentsApiRequestBuilder(PostComment postComment, User user)
+    public GetAllPostCommentsApiRequestBuilder(PostComment postComment)
     {
         _id = postComment.Id.Id.Id;
-        _userId = user.Id.Id;
-        _userName = user.Name.Value;
+        _userName = DataFaker.GetPrefixString(postComment.User!.Name.Value);
         _page = PostCommentDataFaker.GetPage();
         _pageSize = PostCommentDataFaker.GetPageSize();
         _sortOrder = DataFaker.GetSortOrder();
@@ -33,13 +31,6 @@ public class GetAllPostCommentsApiRequestBuilder
     public GetAllPostCommentsApiRequestBuilder WithId(IStringTransformer transformer)
     {
         _id = transformer.Transform(_id);
-
-        return this;
-    }
-
-    public GetAllPostCommentsApiRequestBuilder WithUserId(IStringTransformer transformer)
-    {
-        _userId = transformer.Transform(_userId);
 
         return this;
     }
@@ -81,6 +72,6 @@ public class GetAllPostCommentsApiRequestBuilder
 
     public GetAllPostCommentsApiRequest Build()
     {
-        return new(_id, _userId, _userName, _sortOrder, _sortProperty, _page, _pageSize);
+        return new(_id, _userName, _sortOrder, _sortProperty, _page, _pageSize);
     }
 }

@@ -15,7 +15,6 @@ internal class PostCommentPresentationMappings : IRegister
         config.NewConfig<GetAllPostCommentsApiRequest, GetAllPostCommentsQueryRequest>()
             .ConstructUsing(src => new(
                 src.Id,
-                src.UserId,
                 src.UserName,
                 src.SortOrder,
                 src.SortProperty,

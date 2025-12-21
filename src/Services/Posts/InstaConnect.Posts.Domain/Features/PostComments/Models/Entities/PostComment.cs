@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Domain.Features.PostComments.Models.Entities;
 
-public class PostComment : IEntity<PostCommentId>
+public class PostComment : IEntityWithId<PostCommentId>
 {
     private PostComment()
     {

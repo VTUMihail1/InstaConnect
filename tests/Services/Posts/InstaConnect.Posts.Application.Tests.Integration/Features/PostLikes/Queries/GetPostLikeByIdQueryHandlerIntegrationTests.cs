@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Application.Tests.Integration.Features.PostLikes.Queries;
 
-public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeApplicationIntegrationTest
+public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeApplicationQueryIntegrationTest
 {
     private readonly GetPostLikeByIdQueryRequestBuilderFactory _requestBuilderFactory;
     private readonly GetPostLikeByIdQueryRequestBuilder _requestBuilder;
@@ -80,7 +80,7 @@ public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeApplicati
         var response = await ApplicationSender.SendAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostLike, User);
+        response.ShouldSatisfy(PostLike);
     }
 
     [Theory]
@@ -95,7 +95,7 @@ public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeApplicati
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostLike, User);
+        response.ShouldSatisfy(PostLike);
     }
 
     [Theory]
@@ -110,6 +110,6 @@ public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeApplicati
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostLike, User);
+        response.ShouldSatisfy(PostLike);
     }
 }

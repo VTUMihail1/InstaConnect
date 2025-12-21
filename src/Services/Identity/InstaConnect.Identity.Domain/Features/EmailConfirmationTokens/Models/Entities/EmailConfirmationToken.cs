@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entities;
 
-public class EmailConfirmationToken : IEntity<EmailConfirmationTokenId>
+public class EmailConfirmationToken : IEntityWithId<EmailConfirmationTokenId>
 {
     private EmailConfirmationToken()
     {

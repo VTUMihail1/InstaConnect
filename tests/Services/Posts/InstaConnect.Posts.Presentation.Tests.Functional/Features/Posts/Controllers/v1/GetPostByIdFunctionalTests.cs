@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.Posts.Controllers.v1;
 
-public class GetPostByIdFunctionalTests : BasePostPresentationFunctionalTest
+public class GetPostByIdFunctionalTests : BasePostPresentationQueryFunctionalTest
 {
     private readonly GetPostByIdApiRequestBuilderFactory _requestBuilderFactory;
     private readonly GetPostByIdApiRequestBuilder _requestBuilder;
@@ -110,7 +110,7 @@ public class GetPostByIdFunctionalTests : BasePostPresentationFunctionalTest
         var response = await HttpClient.GetPostByIdAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(Post, User);
+        response.ShouldSatisfy(Post);
     }
 
     [Theory]
@@ -125,6 +125,6 @@ public class GetPostByIdFunctionalTests : BasePostPresentationFunctionalTest
         var response = await HttpClient.GetPostByIdAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(Post, User);
+        response.ShouldSatisfy(Post);
     }
 }

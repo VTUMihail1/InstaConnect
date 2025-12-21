@@ -1,4 +1,6 @@
-﻿using MongoDB.Driver;
+﻿using InstaConnect.Common.Domain.Models;
+
+using MongoDB.Driver;
 
 namespace InstaConnect.Identity.Infrastructure.Features.RefreshTokens.Repositories;
 
@@ -17,7 +19,7 @@ internal class RefreshTokenRepository : IRefreshTokenRepository
 
     public async Task<RefreshToken?> GetByIdAsync(
         RefreshTokenId id,
-        RefreshTokenIncludeQuery? include,
+        CommonIncludeQuery<RefreshTokenIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
         var match = Builders<RefreshToken>.Filter.Empty

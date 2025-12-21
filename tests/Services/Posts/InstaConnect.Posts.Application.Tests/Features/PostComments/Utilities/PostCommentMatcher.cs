@@ -1,14 +1,14 @@
 ﻿namespace InstaConnect.Posts.Application.Tests.Features.PostComments.Utilities;
 public static class PostCommentMatcher
 {
-    public static GetAllPostCommentsQuery IsGetAllPostCommentsQuery(GetAllPostCommentsQueryRequest request)
+    public static GetAllPostCommentsQuery IsGetAllPostCommentsQuery(GetAllPostCommentsQueryRequest request, CommonIncludeQuery<PostCommentIncludeProperty> include)
     {
-        return Matcher.Is<GetAllPostCommentsQuery>(p => p.Matches(request));
+        return Matcher.Is<GetAllPostCommentsQuery>(p => p.Matches(request, include));
     }
 
-    public static GetPostCommentByIdQuery IsGetPostCommentByIdQuery(GetPostCommentByIdQueryRequest request)
+    public static GetPostCommentByIdQuery IsGetPostCommentByIdQuery(GetPostCommentByIdQueryRequest request, CommonIncludeQuery<PostCommentIncludeProperty> include)
     {
-        return Matcher.Is<GetPostCommentByIdQuery>(p => p.Matches(request));
+        return Matcher.Is<GetPostCommentByIdQuery>(p => p.Matches(request, include));
     }
 
     public static AddPostCommentCommand IsAddPostCommentCommand(AddPostCommentCommandRequest request)

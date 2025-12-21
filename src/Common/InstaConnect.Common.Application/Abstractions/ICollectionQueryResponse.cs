@@ -1,0 +1,14 @@
+﻿namespace InstaConnect.Common.Application.Abstractions;
+
+public interface ICollectionQueryResponse
+{
+    public int Page { get; }
+
+    public int PageSize { get; }
+
+    public int TotalCount { get; }
+
+    public bool HasNextPage { get; }
+
+    public bool HasPreviousPage { get; }
+}

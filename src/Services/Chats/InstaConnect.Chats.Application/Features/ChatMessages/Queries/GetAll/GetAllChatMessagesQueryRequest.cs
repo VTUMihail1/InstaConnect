@@ -10,4 +10,4 @@ public record GetAllChatMessagesQueryRequest(
     ChatMessageSortProperty SortProperty,
     int Page,
     int PageSize)
-    : IQueryRequest<GetAllChatMessagesQueryResponse>;
+    : IQueryRequest<GetAllChatMessagesQueryResponse>, ISortableQueryRequest<ChatMessageSortProperty>, IPaginatableQueryRequest;

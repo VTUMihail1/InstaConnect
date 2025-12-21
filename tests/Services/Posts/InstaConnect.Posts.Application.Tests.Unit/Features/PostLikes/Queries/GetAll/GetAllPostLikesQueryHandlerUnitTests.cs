@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Application.Tests.Unit.Features.PostLikes.Queries.GetAll;
 
-public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeApplicationUnitTest
+public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeApplicationQueryUnitTest
 {
     private readonly GetAllPostLikesQueryRequestBuilderFactory _requestBuilderFactory;
     private readonly GetAllPostLikesQueryRequestBuilder _requestBuilder;
@@ -11,12 +11,12 @@ public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeApplicationUnitT
     public GetAllPostLikesQueryHandlerUnitTests()
     {
         _requestBuilderFactory = new();
-        _requestBuilder = _requestBuilderFactory.Create(PostLike, User);
+        _requestBuilder = _requestBuilderFactory.Create(PostLike);
         _request = _requestBuilder.Build();
 
         _handler = new(PostLikeService, ApplicationMapper, PostLikeIncludeQueryBuilderFactory);
 
-        PostLikeService.SetupGetAllQuery(_request, PostLike, CancellationToken);
+        PostLikeService.SetupGetAllQuery(_request, PostLikes, Include, CancellationToken);
     }
 
     [Fact]
@@ -26,7 +26,7 @@ public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeApplicationUnitT
         var response = await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostLike, User, _request);
+        response.ShouldSatisfy(PostLikes, _request);
     }
 
     [Fact]
@@ -36,6 +36,6 @@ public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeApplicationUnitT
         await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        await PostLikeService.ShouldReceiveOneGetAllAsync(_request, CancellationToken);
+        await PostLikeService.ShouldReceiveOneGetAllAsync(_request, Include, CancellationToken);
     }
 }

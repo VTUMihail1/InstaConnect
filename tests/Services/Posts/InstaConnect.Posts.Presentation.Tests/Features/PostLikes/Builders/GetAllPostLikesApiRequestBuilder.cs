@@ -11,10 +11,10 @@ public class GetAllPostLikesApiRequestBuilder
     private CommonSortOrder _sortOrder;
     private PostLikeSortProperty _sortProperty;
 
-    public GetAllPostLikesApiRequestBuilder(PostLike postLike, User user)
+    public GetAllPostLikesApiRequestBuilder(PostLike postLike)
     {
         _id = postLike.Id.Id.Id;
-        _userName = user.Name.Value;
+        _userName = DataFaker.GetPrefixString(postLike.User!.Name.Value);
         _page = PostLikeDataFaker.GetPage();
         _pageSize = PostLikeDataFaker.GetPageSize();
         _sortOrder = DataFaker.GetSortOrder();

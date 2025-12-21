@@ -1,4 +1,6 @@
-﻿using MongoDB.Driver;
+﻿using InstaConnect.Common.Domain.Models;
+
+using MongoDB.Driver;
 
 namespace InstaConnect.Identity.Infrastructure.Features.Users.Repositories;
 
@@ -29,9 +31,9 @@ internal class UserRepository : IUserRepository
 
     public async Task<UserCollection> GetAllAsync(
         UserFilterQuery filter,
-        UserSortingQuery sorting,
-        UserPaginationQuery pagination,
-        UserIncludeQuery? include,
+        CommonSortingQuery<UserSortProperty> sorting,
+        CommonPaginationQuery pagination,
+        CommonIncludeQuery<UserIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
         var match = Builders<User>.Filter.Empty
@@ -50,7 +52,7 @@ internal class UserRepository : IUserRepository
             .Includes(includeProperties)
             .Match(match);
 
-        var totalCountsResult = await pipeline.Count().FirstOrDefaultAsync(cancellationToken);
+        var totalCount = (int)await _identityContext.Users.CountDocumentsAsync(match, cancellationToken: cancellationToken);
 
         var entities = await pipeline
             .Sort(sortOrder.Sort(sortProperty.Property))
@@ -58,14 +60,14 @@ internal class UserRepository : IUserRepository
             .Limit(pagination.PageSize)
             .ToListAsync(cancellationToken);
 
-        var collectionEntities = _userCollectionFactory.Create(entities, (int)totalCountsResult.Count, pagination);
+        var collectionEntities = _userCollectionFactory.Create(entities, totalCount, pagination);
 
         return collectionEntities;
     }
 
     public async Task<User?> GetByIdAsync(
         UserId id,
-        UserIncludeQuery? include,
+        CommonIncludeQuery<UserIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
         var match = Builders<User>.Filter.Empty
@@ -92,7 +94,7 @@ internal class UserRepository : IUserRepository
 
     public async Task<User?> GetByNameAsync(
         Name name,
-        UserIncludeQuery? include,
+        CommonIncludeQuery<UserIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
         var match = Builders<User>.Filter.Empty
@@ -119,7 +121,7 @@ internal class UserRepository : IUserRepository
 
     public async Task<User?> GetByEmailAsync(
         Email email,
-        UserIncludeQuery? include,
+        CommonIncludeQuery<UserIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
         var match = Builders<User>.Filter.Empty
@@ -149,6 +151,13 @@ internal class UserRepository : IUserRepository
         await _identityContext
             .Users
             .AddAsync(_identityContext.ClientSessionHandle, entity, cancellationToken);
+    }
+
+    public async Task AddRangeAsync(IEnumerable<User> entities, CancellationToken cancellationToken)
+    {
+        await _identityContext
+            .Users
+            .AddRangeAsync(_identityContext.ClientSessionHandle, entities, cancellationToken);
     }
 
     public async Task UpdateAsync(User entity, CancellationToken cancellationToken)

@@ -2,8 +2,8 @@
 
 public class GetAllPostLikesApiRequestBuilderFactory
 {
-    public GetAllPostLikesApiRequestBuilder Create(PostLike postLike, User user)
+    public GetAllPostLikesApiRequestBuilder Create(PostLike postLike)
     {
-        return new(postLike, user);
+        return new(postLike);
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Application.Tests.Unit.Features.Posts.Queries.GetAll;
 
-public class GetAllPostsQueryHandlerUnitTests : BasePostApplicationUnitTest
+public class GetAllPostsQueryHandlerUnitTests : BasePostApplicationQueryUnitTest
 {
     private readonly GetAllPostsQueryRequestBuilderFactory _requestBuilderFactory;
     private readonly GetAllPostsQueryRequestBuilder _requestBuilder;
@@ -11,12 +11,12 @@ public class GetAllPostsQueryHandlerUnitTests : BasePostApplicationUnitTest
     public GetAllPostsQueryHandlerUnitTests()
     {
         _requestBuilderFactory = new();
-        _requestBuilder = _requestBuilderFactory.Create(Post, User);
+        _requestBuilder = _requestBuilderFactory.Create(Post);
         _request = _requestBuilder.Build();
 
         _handler = new(PostService, ApplicationMapper, PostIncludeQueryBuilderFactory);
 
-        PostService.SetupGetAllQuery(_request, Post, CancellationToken);
+        PostService.SetupGetAllQuery(_request, Posts, Include, CancellationToken);
     }
 
     [Fact]
@@ -26,7 +26,7 @@ public class GetAllPostsQueryHandlerUnitTests : BasePostApplicationUnitTest
         var response = await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(Post, User, _request);
+        response.ShouldSatisfy(Posts, _request);
     }
 
     [Fact]
@@ -36,6 +36,6 @@ public class GetAllPostsQueryHandlerUnitTests : BasePostApplicationUnitTest
         await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        await PostService.ShouldReceiveOneGetAllAsync(_request, CancellationToken);
+        await PostService.ShouldReceiveOneGetAllAsync(_request, Include, CancellationToken);
     }
 }

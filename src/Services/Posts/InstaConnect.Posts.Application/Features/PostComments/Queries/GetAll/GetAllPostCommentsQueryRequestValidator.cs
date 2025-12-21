@@ -9,9 +9,6 @@ public class GetAllPostCommentsQueryRequestValidator : AbstractValidator<GetAllP
             .PostIdMinLengthWithMessage()
             .PostIdMaxLengthWithMessage();
 
-        RuleFor(r => r.UserId)
-            .UserIdMaxLengthWithMessage();
-
         RuleFor(c => c.UserName)
             .UserNameMaxLengthWithMessage();
 

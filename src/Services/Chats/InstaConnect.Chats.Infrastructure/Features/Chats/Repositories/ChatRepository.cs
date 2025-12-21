@@ -1,4 +1,6 @@
-﻿using MongoDB.Driver;
+﻿using InstaConnect.Common.Domain.Models;
+
+using MongoDB.Driver;
 
 namespace InstaConnect.Chats.Infrastructure.Features.Chats.Repositories;
 
@@ -29,9 +31,9 @@ internal class ChatRepository : IChatRepository
 
     public async Task<ChatCollection> GetAllByParticipantAsync(
         ChatByParticipantFilterQuery filter,
-        ChatByParticipantSortingQuery sorting,
-        ChatPaginationQuery pagination,
-        ChatIncludeQuery? include,
+        CommonSortingQuery<ChatByParticipantSortProperty> sorting,
+        CommonPaginationQuery pagination,
+        CommonIncludeQuery<ChatIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
         var match = Builders<Chat>.Filter.Empty
@@ -47,6 +49,9 @@ internal class ChatRepository : IChatRepository
 
         var sortOrder = _sortOrderFactory.Create(sorting.Order);
         var sortProperty = _chatSortPropertyFactory.Create(sorting.Property);
+        var sort = Builders<Chat>.Sort.Combine(
+            Builders<Chat>.Sort.Ascending(c => c.CreatedAtUtc),
+            sortOrder.Sort(sortProperty.Property));
         var includeProperties = _chatIncludePropertyFactory.Create(include?.Properties);
         var offset = _paginator.GetOffset(pagination.Page, pagination.PageSize);
 
@@ -56,23 +61,23 @@ internal class ChatRepository : IChatRepository
             .Includes(includeProperties)
             .Match(match);
 
-        var totalCountsResult = await pipeline.Count().FirstOrDefaultAsync(cancellationToken);
+        var totalCount = (int)await _chatsContext.Chats.CountDocumentsAsync(match, cancellationToken: cancellationToken);
 
         var entities = await pipeline
             .Project(projection)
-            .Sort(sortOrder.Sort(sortProperty.Property))
+            .Sort(sort)
             .Skip(offset)
             .Limit(pagination.PageSize)
             .ToListAsync(cancellationToken);
 
-        var collectionEntities = _chatCollectionFactory.Create(entities, (int)totalCountsResult.Count, pagination);
+        var collectionEntities = _chatCollectionFactory.Create(entities, totalCount, pagination);
 
         return collectionEntities;
     }
 
     public async Task<Chat?> GetByIdAsync(
         ChatId id,
-        ChatIncludeQuery? include,
+        CommonIncludeQuery<ChatIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
         var match = Builders<Chat>.Filter.Empty
@@ -111,6 +116,13 @@ internal class ChatRepository : IChatRepository
         await _chatsContext
             .Chats
             .AddAsync(_chatsContext.ClientSessionHandle, entity, cancellationToken);
+    }
+
+    public async Task AddRangeAsync(IEnumerable<Chat> entities, CancellationToken cancellationToken)
+    {
+        await _chatsContext
+            .Chats
+            .AddRangeAsync(_chatsContext.ClientSessionHandle, entities, cancellationToken);
     }
 
     public async Task DeleteAsync(Chat entity, CancellationToken cancellationToken)

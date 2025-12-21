@@ -10,4 +10,4 @@ public record GetAllUsersQueryRequest(
     UserSortProperty SortProperty,
     int Page,
     int PageSize)
-    : IQueryRequest<GetAllUsersQueryResponse>;
+    : IQueryRequest<GetAllUsersQueryResponse>, ISortableQueryRequest<UserSortProperty>, IPaginatableQueryRequest;

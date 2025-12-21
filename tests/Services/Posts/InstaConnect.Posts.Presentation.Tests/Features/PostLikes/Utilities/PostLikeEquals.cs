@@ -1,5 +1,8 @@
-﻿using InstaConnect.Posts.Domain.Features.PostLikes.Models.ValueObjects;
+﻿using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
+using InstaConnect.Posts.Domain.Features.PostLikes.Models.Requests;
+using InstaConnect.Posts.Domain.Features.PostLikes.Models.ValueObjects;
 using InstaConnect.Posts.Presentation.Tests.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Presentation.Tests.Features.Posts.Utilities;
 using InstaConnect.Posts.Presentation.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Posts.Presentation.Tests.Features.PostLikes.Utilities;
@@ -8,12 +11,9 @@ public static class PostLikeEquals
 {
     public static bool Matches(this GetAllPostLikesQueryRequest query, GetAllPostLikesApiRequest request)
     {
-        return query.Id == request.Id &&
-               query.UserName == request.UserName &&
-               query.Page == request.Page &&
-               query.PageSize == request.PageSize &&
-               query.SortOrder == request.SortOrder &&
-               query.SortProperty == request.SortProperty;
+        return query.MatchesFilter(request) &&
+               query.MatchesSortable<GetAllPostLikesQueryRequest, GetAllPostLikesApiRequest, PostLikeSortProperty>(request) &&
+               query.MatchesPaginatable(request);
     }
 
     public static bool Matches(this GetPostLikeByIdQueryRequest query, GetPostLikeByIdApiRequest request)
@@ -39,19 +39,37 @@ public static class PostLikeEquals
         return response.Response.Matches(postLike.Id);
     }
 
-    public static bool Matches(this GetPostLikeByIdApiResponse response, PostLike postLike, User user)
+    public static bool Matches(this GetPostLikeByIdApiResponse response, PostLike postLike)
     {
-        return response.Response.Matches(postLike, user);
+        return response.Response.Matches(postLike);
     }
 
-    public static bool Matches(this GetAllPostLikesApiResponse response, PostLike postLike, User user, GetAllPostLikesApiRequest request)
+    public static bool Matches(
+        this GetAllPostLikesApiResponse response,
+        ICollection<PostLike> postLikes,
+        GetAllPostLikesApiRequest request)
     {
-        return response.Response.Entities.All(p => p.Matches(postLike, user)) &&
-               response.Response.Page == request.Page &&
-               response.Response.PageSize == request.PageSize &&
-               response.Response.TotalCount == response.Response.Entities.Count &&
-               response.Response.HasPreviousPage == response.Response.Page > 1 &&
-               response.Response.HasNextPage == response.Response.Page * response.Response.PageSize < response.Response.TotalCount;
+        return response.Response.MatchesCollectionResponse(postLikes.Count, request) &&
+               response.Response.Entities.MatchesCollection(postLikes,
+                                                            response => response.User.Id,
+                                                            postLike => postLike.Id.UserId.Id,
+                                                            (response, postLike) => response.Matches(postLike),
+                                                            request,
+                                                            postLike => postLike.MatchesFilter(request));
+    }
+
+    public static bool Matches(
+        this GetAllPostLikesApiResponse response,
+        ICollection<PostLike> postLikes,
+        GetAllPostLikesApiRequest request,
+        ISortEnumTermTransformer<PostLike> termTransformer)
+    {
+        return response.Response.MatchesCollectionResponse(postLikes.Count, request) &&
+               response.Response.Entities.MatchesSortedCollection(postLikes,
+                                                                  (response, postLike) => response.Matches(postLike),
+                                                                  termTransformer,
+                                                                  request,
+                                                                  postLike => postLike.MatchesFilter(request));
     }
 
     public static bool Matches(this PostLike postLike, AddPostLikeApiRequest request)
@@ -64,10 +82,22 @@ public static class PostLikeEquals
         return id.Matches(response.Id, response.UserId);
     }
 
-    public static bool Matches(this PostLikeApiResponse response, PostLike postLike, User user)
+    public static bool Matches(this PostLikeApiResponse response, PostLike postLike)
     {
         return postLike.Id.Matches(response.Id, response.User.Id) &&
-               response.User.Matches(user) &&
+               response.User.Matches(postLike.User!) &&
                response.CreatedAtUtc == postLike.CreatedAtUtc;
+    }
+
+    public static bool MatchesFilter(this GetAllPostLikesQueryRequest query, GetAllPostLikesApiRequest request)
+    {
+        return query.Id == request.Id &&
+               query.UserName == request.UserName;
+    }
+
+    public static bool MatchesFilter(this PostLike postLike, GetAllPostLikesApiRequest request)
+    {
+        return postLike.Id.Id.Id.EqualsOrdinalIgnoreCase(request.Id) &&
+               postLike.User!.Name.Value.StartsWithOrdinalIgnoreCase(request.UserName);
     }
 }

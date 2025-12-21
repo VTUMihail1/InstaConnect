@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Helpers;
+﻿using InstaConnect.Common.Domain.Models;
+
+namespace InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Helpers;
 
 internal class PostCommentLikeCollectionFactory : IPostCommentLikeCollectionFactory
 {
@@ -9,7 +11,7 @@ internal class PostCommentLikeCollectionFactory : IPostCommentLikeCollectionFact
         _paginator = paginator;
     }
 
-    public PostCommentLikeCollection Create(ICollection<PostCommentLike> entities, int totalCount, PostCommentLikePaginationQuery pagination)
+    public PostCommentLikeCollection Create(ICollection<PostCommentLike> entities, int totalCount, CommonPaginationQuery pagination)
     {
         var hasNextPage = _paginator.HasNextPage(pagination.Page, pagination.PageSize, totalCount);
         var hasPreviousPage = _paginator.HasPreviousPage(pagination.Page);

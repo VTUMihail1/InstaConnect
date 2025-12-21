@@ -2,8 +2,8 @@
 
 public class GetAllPostLikesQueryRequestBuilderFactory
 {
-    public GetAllPostLikesQueryRequestBuilder Create(PostLike postLike, User user)
+    public GetAllPostLikesQueryRequestBuilder Create(PostLike postLike)
     {
-        return new(postLike, user);
+        return new(postLike);
     }
 }

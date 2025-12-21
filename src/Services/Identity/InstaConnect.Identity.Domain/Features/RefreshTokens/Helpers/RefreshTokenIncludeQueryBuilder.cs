@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Domain.Features.RefreshTokens.Helpers;
+﻿using InstaConnect.Common.Domain.Models;
+
+namespace InstaConnect.Identity.Domain.Features.RefreshTokens.Helpers;
 
 public class RefreshTokenIncludeQueryBuilder
 {
@@ -9,8 +11,8 @@ public class RefreshTokenIncludeQueryBuilder
         _includeProperties = includeProperties;
     }
 
-    public RefreshTokenIncludeQuery Build()
+    public CommonIncludeQuery<RefreshTokenIncludeProperty> Build()
     {
-        return new RefreshTokenIncludeQuery(_includeProperties);
+        return new(_includeProperties);
     }
 }

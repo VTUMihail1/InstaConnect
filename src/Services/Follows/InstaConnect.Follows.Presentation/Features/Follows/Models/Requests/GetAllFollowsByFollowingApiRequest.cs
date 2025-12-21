@@ -10,4 +10,4 @@ public record GetAllFollowsByFollowingApiRequest(
     [FromQuery] CommonSortOrder SortOrder = CommonDefaultValues.SortOrder,
     [FromQuery] FollowByFollowingSortProperty SortProperty = FollowDefaultValues.ByFollowingSortProperty,
     [FromQuery] int Page = FollowDefaultValues.Page,
-    [FromQuery] int PageSize = FollowDefaultValues.PageSize);
+    [FromQuery] int PageSize = FollowDefaultValues.PageSize) : ISortableApiRequest<FollowByFollowingSortProperty>, IPaginatableApiRequest;

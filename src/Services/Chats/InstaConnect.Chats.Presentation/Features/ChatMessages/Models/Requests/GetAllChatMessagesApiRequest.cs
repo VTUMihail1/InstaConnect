@@ -12,4 +12,4 @@ public record GetAllChatMessagesApiRequest(
     [FromQuery] CommonSortOrder SortOrder = CommonDefaultValues.SortOrder,
     [FromQuery] ChatMessageSortProperty SortProperty = ChatMessageDefaultValues.SortProperty,
     [FromQuery] int Page = ChatMessageDefaultValues.Page,
-    [FromQuery] int PageSize = ChatMessageDefaultValues.PageSize);
+    [FromQuery] int PageSize = ChatMessageDefaultValues.PageSize) : ISortableApiRequest<ChatMessageSortProperty>, IPaginatableApiRequest;

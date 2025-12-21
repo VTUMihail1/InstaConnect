@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Infrastructure.Features.Posts.Helpers;
+﻿using InstaConnect.Common.Domain.Models;
+
+namespace InstaConnect.Posts.Infrastructure.Features.Posts.Helpers;
 
 internal class PostCollectionFactory : IPostCollectionFactory
 {
@@ -9,7 +11,7 @@ internal class PostCollectionFactory : IPostCollectionFactory
         _paginator = paginator;
     }
 
-    public PostCollection Create(ICollection<Post> posts, int totalCount, PostPaginationQuery pagination)
+    public PostCollection Create(ICollection<Post> posts, int totalCount, CommonPaginationQuery pagination)
     {
         var hasNextPage = _paginator.HasNextPage(pagination.Page, pagination.PageSize, totalCount);
         var hasPreviousPage = _paginator.HasPreviousPage(pagination.Page);

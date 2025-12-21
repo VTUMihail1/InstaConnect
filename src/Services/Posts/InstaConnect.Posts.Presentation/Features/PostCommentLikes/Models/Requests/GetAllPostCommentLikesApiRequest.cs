@@ -11,4 +11,4 @@ public record GetAllPostCommentLikesApiRequest(
     [FromQuery] CommonSortOrder SortOrder = CommonDefaultValues.SortOrder,
     [FromQuery] PostCommentLikeSortProperty SortProperty = PostCommentLikeDefaultValues.SortProperty,
     [FromQuery] int Page = PostCommentLikeDefaultValues.Page,
-    [FromQuery] int PageSize = PostCommentLikeDefaultValues.PageSize);
+    [FromQuery] int PageSize = PostCommentLikeDefaultValues.PageSize) : ISortableApiRequest<PostCommentLikeSortProperty>, IPaginatableApiRequest;

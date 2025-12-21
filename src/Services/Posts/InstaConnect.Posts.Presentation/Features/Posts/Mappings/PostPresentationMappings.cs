@@ -13,7 +13,6 @@ internal class PostPresentationMappings : IRegister
     {
         config.NewConfig<GetAllPostsApiRequest, GetAllPostsQueryRequest>()
             .ConstructUsing(src => new(
-                    src.UserId,
                     src.UserName,
                     src.Title,
                     src.SortOrder,

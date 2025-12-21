@@ -8,7 +8,7 @@ using MongoDB.Driver;
 namespace InstaConnect.Common.Infrastructure.Helpers.SortOrders;
 public class AscendingSortOrder : ISortOrder
 {
-    public CommonSortOrder SortOrder => CommonSortOrder.ASC;
+    public CommonSortOrder SortOrder => CommonSortOrder.Ascending;
 
     public SortDefinition<TDocument> Sort<TDocument>(Expression<Func<TDocument, object>> sortProperty)
     {

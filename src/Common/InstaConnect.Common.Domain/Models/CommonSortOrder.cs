@@ -3,6 +3,6 @@
 public enum CommonSortOrder
 {
     None,
-    ASC,
-    DESC
+    Ascending,
+    Descending
 }

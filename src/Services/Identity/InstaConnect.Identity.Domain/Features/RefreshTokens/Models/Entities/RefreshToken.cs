@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Entities;
 
-public class RefreshToken : IEntity<RefreshTokenId>
+public class RefreshToken : IEntityWithId<RefreshTokenId>
 {
     private RefreshToken()
     {

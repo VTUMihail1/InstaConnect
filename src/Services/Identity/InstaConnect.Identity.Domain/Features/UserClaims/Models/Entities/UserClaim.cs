@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Identity.Domain.Features.UserClaims.Models.Entities;
 
-public class UserClaim : IEntity<UserClaimId>
+public class UserClaim : IEntityWithId<UserClaimId>
 {
     public UserClaim()
     {

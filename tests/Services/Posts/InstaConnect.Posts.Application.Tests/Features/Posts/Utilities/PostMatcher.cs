@@ -1,14 +1,14 @@
 ﻿namespace InstaConnect.Posts.Application.Tests.Features.Posts.Utilities;
 public static class PostMatcher
 {
-    public static GetAllPostsQuery IsGetAllPostsQuery(GetAllPostsQueryRequest request)
+    public static GetAllPostsQuery IsGetAllPostsQuery(GetAllPostsQueryRequest request, CommonIncludeQuery<PostIncludeProperty> include)
     {
-        return Matcher.Is<GetAllPostsQuery>(p => p.Matches(request));
+        return Matcher.Is<GetAllPostsQuery>(p => p.Matches(request, include));
     }
 
-    public static GetPostByIdQuery IsGetPostByIdQuery(GetPostByIdQueryRequest request)
+    public static GetPostByIdQuery IsGetPostByIdQuery(GetPostByIdQueryRequest request, CommonIncludeQuery<PostIncludeProperty> include)
     {
-        return Matcher.Is<GetPostByIdQuery>(p => p.Matches(request));
+        return Matcher.Is<GetPostByIdQuery>(p => p.Matches(request, include));
     }
 
     public static AddPostCommand IsAddPostCommand(AddPostCommandRequest request)

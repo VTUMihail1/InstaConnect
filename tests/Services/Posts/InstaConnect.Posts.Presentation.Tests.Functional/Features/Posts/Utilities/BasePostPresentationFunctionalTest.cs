@@ -9,3 +9,4 @@ public abstract class BasePostPresentationFunctionalTest : BasePostWebTest
         HttpClient = webApplicationFactory.CreateClient();
     }
 }
+

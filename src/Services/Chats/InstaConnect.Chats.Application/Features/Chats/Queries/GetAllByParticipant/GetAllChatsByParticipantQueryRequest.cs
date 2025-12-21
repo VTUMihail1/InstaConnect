@@ -9,4 +9,4 @@ public record GetAllChatsByParticipantQueryRequest(
     ChatByParticipantSortProperty SortProperty,
     int Page,
     int PageSize)
-    : IQueryRequest<GetAllChatsByParticipantQueryResponse>;
+    : IQueryRequest<GetAllChatsByParticipantQueryResponse>, ISortableQueryRequest<ChatByParticipantSortProperty>, IPaginatableQueryRequest;

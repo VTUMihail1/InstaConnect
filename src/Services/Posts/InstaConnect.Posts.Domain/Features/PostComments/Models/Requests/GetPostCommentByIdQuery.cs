@@ -1,13 +1,16 @@
-﻿namespace InstaConnect.Posts.Domain.Features.PostComments.Models.Requests;
+﻿using InstaConnect.Common.Domain.Models;
+
+namespace InstaConnect.Posts.Domain.Features.PostComments.Models.Requests;
 
 public record GetPostCommentByIdQuery(PostCommentId Id)
+    : IIncludableQuery<PostCommentIncludeProperty>
 {
-    public PostCommentIncludeQuery? Include { get; private set; }
+    public CommonIncludeQuery<PostCommentIncludeProperty>? Include { get; private set; }
 
-    public GetPostCommentByIdQuery AddInclude(PostCommentIncludeQuery include)
+    public GetPostCommentByIdQuery AddInclude(CommonIncludeQuery<PostCommentIncludeProperty> include)
     {
         Include = include;
 
         return this;
     }
-}
+};

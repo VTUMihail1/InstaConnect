@@ -1,4 +1,6 @@
-﻿using MongoDB.Driver;
+﻿using InstaConnect.Common.Domain.Models;
+
+using MongoDB.Driver;
 
 namespace InstaConnect.Follows.Infrastructure.Features.Follows.Repositories;
 
@@ -32,9 +34,9 @@ internal class FollowRepository : IFollowRepository
 
     public async Task<FollowCollection> GetAllByFollowerAsync(
         FollowByFollowerFilterQuery filter,
-        FollowByFollowerSortingQuery sorting,
-        FollowPaginationQuery pagination,
-        FollowIncludeQuery? include,
+        CommonSortingQuery<FollowByFollowerSortProperty> sorting,
+        CommonPaginationQuery pagination,
+        CommonIncludeQuery<FollowIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
         var match = Builders<Follow>.Filter.Empty
@@ -52,7 +54,7 @@ internal class FollowRepository : IFollowRepository
             .Includes(includeProperties)
             .Match(match);
 
-        var totalCountsResult = await pipeline.Count().FirstOrDefaultAsync(cancellationToken);
+        var totalCount = (int)await _followsContext.Follows.CountDocumentsAsync(match, cancellationToken: cancellationToken);
 
         var entities = await pipeline
             .Sort(sortOrder.Sort(sortProperty.Property))
@@ -60,16 +62,16 @@ internal class FollowRepository : IFollowRepository
             .Limit(pagination.PageSize)
             .ToListAsync(cancellationToken);
 
-        var collectionEntities = _followCollectionFactory.Create(entities, (int)totalCountsResult.Count, pagination);
+        var collectionEntities = _followCollectionFactory.Create(entities, totalCount, pagination);
 
         return collectionEntities;
     }
 
     public async Task<FollowCollection> GetAllByFollowingAsync(
         FollowByFollowingFilterQuery filter,
-        FollowByFollowingSortingQuery sorting,
-        FollowPaginationQuery pagination,
-        FollowIncludeQuery? include,
+        CommonSortingQuery<FollowByFollowingSortProperty> sorting,
+        CommonPaginationQuery pagination,
+        CommonIncludeQuery<FollowIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
         var match = Builders<Follow>.Filter.Empty
@@ -87,7 +89,7 @@ internal class FollowRepository : IFollowRepository
             .Includes(includeProperties)
             .Match(match);
 
-        var totalCountsResult = await pipeline.Count().FirstOrDefaultAsync(cancellationToken);
+        var totalCount = (int)await _followsContext.Follows.CountDocumentsAsync(match, cancellationToken: cancellationToken);
 
         var entities = await pipeline
             .Sort(sortOrder.Sort(sortProperty.Property))
@@ -95,14 +97,14 @@ internal class FollowRepository : IFollowRepository
             .Limit(pagination.PageSize)
             .ToListAsync(cancellationToken);
 
-        var collectionEntities = _followCollectionFactory.Create(entities, (int)totalCountsResult.Count, pagination);
+        var collectionEntities = _followCollectionFactory.Create(entities, totalCount, pagination);
 
         return collectionEntities;
     }
 
     public async Task<Follow?> GetByIdAsync(
         FollowId id,
-        FollowIncludeQuery? include,
+        CommonIncludeQuery<FollowIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
         var match = Builders<Follow>.Filter.Empty
@@ -133,6 +135,13 @@ internal class FollowRepository : IFollowRepository
         await _followsContext
             .Follows
             .AddAsync(_followsContext.ClientSessionHandle, entity, cancellationToken);
+    }
+
+    public async Task AddRangeAsync(IEnumerable<Follow> entities, CancellationToken cancellationToken)
+    {
+        await _followsContext
+            .Follows
+            .AddRangeAsync(_followsContext.ClientSessionHandle, entities, cancellationToken);
     }
 
     public async Task DeleteAsync(Follow entity, CancellationToken cancellationToken)

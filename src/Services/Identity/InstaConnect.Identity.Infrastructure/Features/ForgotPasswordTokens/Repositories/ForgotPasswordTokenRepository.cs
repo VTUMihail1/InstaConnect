@@ -1,4 +1,6 @@
-﻿using MongoDB.Driver;
+﻿using InstaConnect.Common.Domain.Models;
+
+using MongoDB.Driver;
 
 namespace InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Repositories;
 
@@ -17,7 +19,7 @@ internal class ForgotPasswordTokenRepository : IForgotPasswordTokenRepository
 
     public async Task<ForgotPasswordToken?> GetByIdAsync(
         ForgotPasswordTokenId id,
-        ForgotPasswordTokenIncludeQuery? include,
+        CommonIncludeQuery<ForgotPasswordTokenIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
         var match = Builders<ForgotPasswordToken>.Filter.Empty

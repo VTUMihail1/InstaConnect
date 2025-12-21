@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Follows.Domain.Features.Follows.Helpers;
+﻿using InstaConnect.Common.Domain.Models;
+
+namespace InstaConnect.Follows.Domain.Features.Follows.Helpers;
 
 public class FollowIncludeQueryBuilder
 {
@@ -23,8 +25,8 @@ public class FollowIncludeQueryBuilder
         return this;
     }
 
-    public FollowIncludeQuery Build()
+    public CommonIncludeQuery<FollowIncludeProperty> Build()
     {
-        return new FollowIncludeQuery(_includeProperties);
+        return new(_includeProperties);
     }
 }

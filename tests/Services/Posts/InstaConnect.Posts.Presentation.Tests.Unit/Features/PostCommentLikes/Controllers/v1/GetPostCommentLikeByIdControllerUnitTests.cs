@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Presentation.Tests.Unit.Features.PostCommentLikes.Controllers.v1;
 
-public class GetPostCommentLikeByIdControllerUnitTests : BasePostCommentLikePresentationUnitTest
+public class GetPostCommentLikeByIdControllerUnitTests : BasePostCommentLikePresentationQueryUnitTest
 {
     private readonly GetPostCommentLikeByIdApiRequestBuilderFactory _requestBuilderFactory;
     private readonly GetPostCommentLikeByIdApiRequestBuilder _requestBuilder;
@@ -36,7 +36,7 @@ public class GetPostCommentLikeByIdControllerUnitTests : BasePostCommentLikePres
         var response = await _postCommentLikeController.GetByIdAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostCommentLike, User);
+        response.ShouldSatisfy(PostCommentLike);
     }
 
     [Fact]

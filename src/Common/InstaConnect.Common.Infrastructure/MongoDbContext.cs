@@ -24,7 +24,7 @@ public class MongoDbContext : IMongoDbContext
     public IClientSessionHandle? ClientSessionHandle => _clientSessionHandle;
 
     public IMongoCollection<TEntity> ToCollection<TEntity, TKey>(string name)
-        where TEntity : IEntity<TKey>
+        where TEntity : IEntityWithId<TKey>
         where TKey : IEntityId
     {
         return _mongoDatabase.GetCollection<TEntity>(name);

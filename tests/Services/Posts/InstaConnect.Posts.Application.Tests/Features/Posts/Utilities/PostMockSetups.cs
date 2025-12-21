@@ -1,23 +1,34 @@
-﻿namespace InstaConnect.Posts.Application.Tests.Features.Posts.Utilities;
+﻿using InstaConnect.Common.Infrastructure.Helpers;
+
+namespace InstaConnect.Posts.Application.Tests.Features.Posts.Utilities;
 public static class PostMockSetups
 {
     public static void SetupGetAllQuery(
         this IPostService postService,
         GetAllPostsQueryRequest request,
-        Post post,
+        ICollection<Post> posts,
+        CommonIncludeQuery<PostIncludeProperty> include,
         CancellationToken cancellationToken)
     {
-        var posts = new List<Post>() { post };
+        var paginator = PaginatorFactory.Create();
+        var offset = paginator.GetOffset(request.Page, request.PageSize);
+        var postsPaginated = posts
+            .Where(a => a.MatchesFilter(request))
+            .OrderBy(a => a.CreatedAtUtc)
+            .Skip(offset)
+            .Take(request.PageSize)
+            .ToList();
+
         var response = new PostCollection(
-            posts,
+            postsPaginated,
             request.Page,
             request.PageSize,
             posts.Count,
-            false,
-            false);
+            paginator.HasNextPage(request.Page, request.PageSize, posts.Count),
+            paginator.HasPreviousPage(request.Page));
 
         postService
-            .GetAllAsync(PostMatcher.IsGetAllPostsQuery(request), cancellationToken)
+            .GetAllAsync(PostMatcher.IsGetAllPostsQuery(request, include), cancellationToken)
             .ReturnsResponse(response);
     }
 
@@ -25,10 +36,11 @@ public static class PostMockSetups
         this IPostService postService,
         GetPostByIdQueryRequest request,
         Post post,
+        CommonIncludeQuery<PostIncludeProperty> include,
         CancellationToken cancellationToken)
     {
         postService
-            .GetByIdAsync(PostMatcher.IsGetPostByIdQuery(request), cancellationToken)
+            .GetByIdAsync(PostMatcher.IsGetPostByIdQuery(request, include), cancellationToken)
             .ReturnsResponse(post);
     }
 

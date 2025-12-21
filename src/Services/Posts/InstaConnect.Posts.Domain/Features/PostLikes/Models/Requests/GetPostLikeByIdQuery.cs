@@ -1,13 +1,16 @@
-﻿namespace InstaConnect.Posts.Domain.Features.PostLikes.Models.Requests;
+﻿using InstaConnect.Common.Domain.Models;
+
+namespace InstaConnect.Posts.Domain.Features.PostLikes.Models.Requests;
 
 public record GetPostLikeByIdQuery(PostLikeId Id)
+    : IIncludableQuery<PostLikeIncludeProperty>
 {
-    public PostLikeIncludeQuery? Include { get; private set; }
+    public CommonIncludeQuery<PostLikeIncludeProperty>? Include { get; private set; }
 
-    public GetPostLikeByIdQuery AddInclude(PostLikeIncludeQuery include)
+    public GetPostLikeByIdQuery AddInclude(CommonIncludeQuery<PostLikeIncludeProperty> include)
     {
         Include = include;
 
         return this;
     }
-}
+};

@@ -10,4 +10,4 @@ public record GetAllUsersApiRequest(
     [FromQuery] CommonSortOrder SortOrder = CommonDefaultValues.SortOrder,
     [FromQuery] UserSortProperty SortProperty = UserDefaultValues.SortProperty,
     [FromQuery] int Page = UserDefaultValues.Page,
-    [FromQuery] int PageSize = UserDefaultValues.PageSize);
+    [FromQuery] int PageSize = UserDefaultValues.PageSize) : ISortableApiRequest<UserSortProperty>, IPaginatableApiRequest;

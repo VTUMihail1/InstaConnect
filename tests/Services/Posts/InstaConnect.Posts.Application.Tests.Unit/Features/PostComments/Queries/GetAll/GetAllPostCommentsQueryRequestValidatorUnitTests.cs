@@ -3,7 +3,7 @@ using InstaConnect.Posts.Domain.Features.PostComments.Models.Requests;
 
 namespace InstaConnect.Posts.Application.Tests.Unit.Features.PostComments.Queries.GetAll;
 
-public class GetAllPostCommentsQueryRequestValidatorUnitTests : BasePostCommentApplicationUnitTest
+public class GetAllPostCommentsQueryRequestValidatorUnitTests : BasePostCommentApplicationQueryUnitTest
 {
     private readonly GetAllPostCommentsQueryRequestBuilderFactory _requestBuilderFactory;
     private readonly GetAllPostCommentsQueryRequestBuilder _requestBuilder;
@@ -14,7 +14,7 @@ public class GetAllPostCommentsQueryRequestValidatorUnitTests : BasePostCommentA
     public GetAllPostCommentsQueryRequestValidatorUnitTests()
     {
         _requestBuilderFactory = new();
-        _requestBuilder = _requestBuilderFactory.Create(PostComment, User);
+        _requestBuilder = _requestBuilderFactory.Create(PostComment);
         _request = _requestBuilder.Build();
 
         _requestValidator = new();
@@ -39,21 +39,6 @@ public class GetAllPostCommentsQueryRequestValidatorUnitTests : BasePostCommentA
     }
 
     [Theory]
-    [UserIdTooLongWithMessageData]
-    public void TestValidate_ShouldHaveAnError_WhenUserIdIsInvalid(
-        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithUserId(transformer).Build();
-
-        // Act
-        var result = _requestValidator.TestValidate(request);
-
-        // Assert
-        result.ShouldHaveValidationErrorForUserId(messageTransformer, request);
-    }
-
-    [Theory]
     [UserNameTooLongWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenUserNameIsInvalid(
         IStringTransformer transformer, IStringMessageTransformer messageTransformer)
@@ -69,7 +54,7 @@ public class GetAllPostCommentsQueryRequestValidatorUnitTests : BasePostCommentA
     }
 
     [Theory]
-    [SortOrderEmptyWithMessageData]
+    [PostCommentSortOrderEmptyWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenSortOrderIsInvalid(
         IEnumTransformer<CommonSortOrder> transformer, IEnumMessageTransformer<CommonSortOrder> messageTransformer)
     {
@@ -128,22 +113,6 @@ public class GetAllPostCommentsQueryRequestValidatorUnitTests : BasePostCommentA
 
         // Assert
         result.ShouldHaveValidationErrorForPageSize(messageTransformer, request);
-    }
-
-    [Theory]
-    [UserIdEmptyData]
-    [UserIdNullData]
-    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenUserIdIsValid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithUserId(transformer).Build();
-
-        // Act
-        var result = _requestValidator.TestValidate(request);
-
-        // Assert
-        result.ShouldNotHaveAnyValidationErrorProperties();
     }
 
     [Theory]

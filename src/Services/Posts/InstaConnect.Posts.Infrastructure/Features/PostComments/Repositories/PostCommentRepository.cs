@@ -1,4 +1,6 @@
-﻿using MongoDB.Driver;
+﻿using InstaConnect.Common.Domain.Models;
+
+using MongoDB.Driver;
 
 namespace InstaConnect.Posts.Infrastructure.Features.PostComments.Repositories;
 
@@ -29,14 +31,13 @@ internal class PostCommentRepository : IPostCommentRepository
 
     public async Task<PostCommentCollection> GetAllAsync(
         PostCommentFilterQuery filter,
-        PostCommentSortingQuery sorting,
-        PostCommentPaginationQuery pagination,
-        PostCommentIncludeQuery? include,
+        CommonSortingQuery<PostCommentSortProperty> sorting,
+        CommonPaginationQuery pagination,
+        CommonIncludeQuery<PostCommentIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
         var match = Builders<PostComment>.Filter.Empty
             .AndEqualsCaseInsensitive(p => p.Id.Id.Id, filter.Id.Id)
-            .AndOptionalEqualsCaseInsensitive(p => p.UserId.Id, filter.UserId.IsEmpty(), filter.UserId.Id)
             .AndOptionalStartsWithCaseInsensitive(p => p.User!.Name.Value, filter.UserName.IsEmpty(), filter.UserName.Value);
 
         var sortOrder = _sortOrderFactory.Create(sorting.Order);
@@ -50,7 +51,7 @@ internal class PostCommentRepository : IPostCommentRepository
             .Includes(includeProperties)
             .Match(match);
 
-        var totalCountsResult = await pipeline.Count().FirstOrDefaultAsync(cancellationToken);
+        var totalCount = (int)await _postsContext.PostComments.CountDocumentsAsync(match, cancellationToken: cancellationToken);
 
         var entities = await pipeline
             .Sort(sortOrder.Sort(sortProperty.Property))
@@ -58,14 +59,14 @@ internal class PostCommentRepository : IPostCommentRepository
             .Limit(pagination.PageSize)
             .ToListAsync(cancellationToken);
 
-        var collectionEntities = _postCommentCollectionFactory.Create(entities, (int)totalCountsResult.Count, pagination);
+        var collectionEntities = _postCommentCollectionFactory.Create(entities, totalCount, pagination);
 
         return collectionEntities;
     }
 
     public async Task<PostComment?> GetByIdAsync(
         PostCommentId id,
-        PostCommentIncludeQuery? include,
+        CommonIncludeQuery<PostCommentIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
         var match = Builders<PostComment>.Filter.Empty
@@ -96,6 +97,13 @@ internal class PostCommentRepository : IPostCommentRepository
         await _postsContext
             .PostComments
             .AddAsync(_postsContext.ClientSessionHandle, entity, cancellationToken);
+    }
+
+    public async Task AddRangeAsync(IEnumerable<PostComment> entities, CancellationToken cancellationToken)
+    {
+        await _postsContext
+            .PostComments
+            .AddRangeAsync(_postsContext.ClientSessionHandle, entities, cancellationToken);
     }
 
     public async Task UpdateAsync(PostComment entity, CancellationToken cancellationToken)

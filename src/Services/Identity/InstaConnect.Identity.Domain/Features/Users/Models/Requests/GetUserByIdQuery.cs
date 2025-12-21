@@ -1,10 +1,13 @@
-﻿namespace InstaConnect.Identity.Domain.Features.Users.Models.Requests;
+﻿using InstaConnect.Common.Domain.Models;
+
+namespace InstaConnect.Identity.Domain.Features.Users.Models.Requests;
 
 public record GetUserByIdQuery(UserId Id)
+    : IIncludableQuery<UserIncludeProperty>
 {
-    public UserIncludeQuery? Include { get; private set; }
+    public CommonIncludeQuery<UserIncludeProperty>? Include { get; private set; }
 
-    public GetUserByIdQuery AddInclude(UserIncludeQuery include)
+    public GetUserByIdQuery AddInclude(CommonIncludeQuery<UserIncludeProperty> include)
     {
         Include = include;
 

@@ -1,4 +1,5 @@
-﻿using InstaConnect.Posts.Application.Tests.Features.Posts.Utilities;
+﻿using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
+using InstaConnect.Posts.Application.Tests.Features.Posts.Utilities;
 
 namespace InstaConnect.Posts.Application.Tests.Features.Posts.Assertions;
 
@@ -14,14 +15,26 @@ public static class PostMatchAssertions
         response.ShouldSatisfy(p => p.Matches(post));
     }
 
-    public static void ShouldSatisfy(this GetPostByIdQueryResponse response, Post post, User user)
+    public static void ShouldSatisfy(this GetPostByIdQueryResponse response, Post post)
     {
-        response.ShouldSatisfy(p => p.Matches(post, user));
+        response.ShouldSatisfy(p => p.Matches(post));
     }
 
-    public static void ShouldSatisfy(this GetAllPostsQueryResponse response, Post post, User user, GetAllPostsQueryRequest request)
+    public static void ShouldSatisfy(
+        this GetAllPostsQueryResponse response,
+        ICollection<Post> posts,
+        GetAllPostsQueryRequest request)
     {
-        response.ShouldSatisfy(p => p.Matches(post, user, request));
+        response.ShouldSatisfy(p => p.Matches(posts, request));
+    }
+
+    public static void ShouldSatisfy(
+        this GetAllPostsQueryResponse response,
+        ICollection<Post> posts,
+        GetAllPostsQueryRequest request,
+        ISortEnumTermTransformer<Post> termTransformer)
+    {
+        response.ShouldSatisfy(p => p.Matches(posts, request, termTransformer));
     }
 
     public static void ShouldSatisfy(this Post post, AddPostCommandRequest request)

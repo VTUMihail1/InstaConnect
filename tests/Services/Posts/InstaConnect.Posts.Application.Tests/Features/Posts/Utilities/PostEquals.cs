@@ -1,28 +1,27 @@
-﻿using InstaConnect.Posts.Application.Features.Posts.Models;
+﻿using InstaConnect.Common.Application.Tests.Utilities;
+using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
+using InstaConnect.Posts.Application.Features.Posts.Models;
 using InstaConnect.Posts.Application.Tests.Features.Posts.Utilities;
 using InstaConnect.Posts.Application.Tests.Features.Users.Utilities;
 using InstaConnect.Posts.Domain.Features.Posts.Models.ValueObjects;
+using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 
 namespace InstaConnect.Posts.Application.Tests.Features.Posts.Utilities;
 
 public static class PostEquals
 {
-    public static bool Matches(this GetAllPostsQuery query, GetAllPostsQueryRequest request)
+    public static bool Matches(this GetAllPostsQuery query, GetAllPostsQueryRequest request, CommonIncludeQuery<PostIncludeProperty> include)
     {
-        return query.Filter.UserId.Matches(request.UserId) &&
-               query.Filter.UserName.Matches(request.UserName) &&
-               query.Filter.Title == request.Title &&
-               query.Pagination.Page == request.Page &&
-               query.Pagination.PageSize == request.PageSize &&
-               query.Sorting.Order == request.SortOrder &&
-               query.Sorting.Property == request.SortProperty &&
-               query.Include!.Properties.All(a => a == PostIncludeProperty.User);
+        return query.MatchesFilter(request) &&
+               query.MatchesSortable<GetAllPostsQuery, GetAllPostsQueryRequest, PostSortProperty>(request) &&
+               query.MatchesPaginatable(request) &&
+               query.MatchesIncludable(include);
     }
 
-    public static bool Matches(this GetPostByIdQuery query, GetPostByIdQueryRequest request)
+    public static bool Matches(this GetPostByIdQuery query, GetPostByIdQueryRequest request, CommonIncludeQuery<PostIncludeProperty> include)
     {
         return query.Id.Matches(request.Id) &&
-               query.Include!.Properties.All(a => a == PostIncludeProperty.User);
+               query.MatchesIncludable(include);
     }
 
     public static bool Matches(this AddPostCommand command, AddPostCommandRequest request)
@@ -56,19 +55,37 @@ public static class PostEquals
         return response.Response.Matches(post.Id);
     }
 
-    public static bool Matches(this GetPostByIdQueryResponse response, Post post, User user)
+    public static bool Matches(this GetPostByIdQueryResponse response, Post post)
     {
-        return response.Response.Matches(post, user);
+        return response.Response.Matches(post);
     }
 
-    public static bool Matches(this GetAllPostsQueryResponse response, Post post, User user, GetAllPostsQueryRequest request)
+    public static bool Matches(
+        this GetAllPostsQueryResponse response,
+        ICollection<Post> posts,
+        GetAllPostsQueryRequest request)
     {
-        return response.Response.Entities.All(p => p.Matches(post, user)) &&
-               response.Response.Page == request.Page &&
-               response.Response.PageSize == request.PageSize &&
-               response.Response.TotalCount == response.Response.Entities.Count &&
-               response.Response.HasPreviousPage == response.Response.Page > 1 &&
-               response.Response.HasNextPage == response.Response.Page * response.Response.PageSize < response.Response.TotalCount;
+        return response.Response.MatchesCollectionResponse(posts.Count, request) &&
+               response.Response.Entities.MatchesCollection(posts,
+                                                            response => response.Id,
+                                                            post => post.Id.Id,
+                                                            (response, post) => response.Matches(post),
+                                                            request,
+                                                            post => post.MatchesFilter(request));
+    }
+
+    public static bool Matches(
+        this GetAllPostsQueryResponse response,
+        ICollection<Post> posts,
+        GetAllPostsQueryRequest request,
+        ISortEnumTermTransformer<Post> termTransformer)
+    {
+        return response.Response.MatchesCollectionResponse(posts.Count, request) &&
+               response.Response.Entities.MatchesSortedCollection(posts,
+                                                                  (response, post) => response.Matches(post),
+                                                                  termTransformer,
+                                                                  request,
+                                                                  post => post.MatchesFilter(request));
     }
 
     public static bool Matches(this Post post, AddPostCommandRequest request)
@@ -91,13 +108,25 @@ public static class PostEquals
         return id.Matches(response.Id);
     }
 
-    public static bool Matches(this PostQueryResponse response, Post post, User user)
+    public static bool Matches(this PostQueryResponse response, Post post)
     {
         return post.Id.Matches(response.Id) &&
                post.Title == response.Title &&
                post.Content == response.Content &&
-               response.User.Matches(user) &&
+               response.User.Matches(post.User!) &&
                post.CreatedAtUtc == response.CreatedAtUtc &&
                post.UpdatedAtUtc == response.UpdatedAtUtc;
+    }
+
+    public static bool MatchesFilter(this GetAllPostsQuery query, GetAllPostsQueryRequest request)
+    {
+        return query.Filter.UserName.Value == request.UserName &&
+               query.Filter.Title == request.Title;
+    }
+
+    public static bool MatchesFilter(this Post post, GetAllPostsQueryRequest request)
+    {
+        return post.User!.Name.Value.StartsWithOrdinalIgnoreCase(request.UserName) &&
+               post.Title.StartsWithOrdinalIgnoreCase(request.Title);
     }
 }

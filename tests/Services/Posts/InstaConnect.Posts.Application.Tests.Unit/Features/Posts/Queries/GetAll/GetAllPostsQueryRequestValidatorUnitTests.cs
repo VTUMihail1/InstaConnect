@@ -3,7 +3,7 @@ using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 
 namespace InstaConnect.Posts.Application.Tests.Unit.Features.Posts.Queries.GetAll;
 
-public class GetAllPostsQueryRequestValidatorUnitTests : BasePostApplicationUnitTest
+public class GetAllPostsQueryRequestValidatorUnitTests : BasePostApplicationQueryUnitTest
 {
     private readonly GetAllPostsQueryRequestBuilderFactory _requestBuilderFactory;
     private readonly GetAllPostsQueryRequestBuilder _requestBuilder;
@@ -14,25 +14,10 @@ public class GetAllPostsQueryRequestValidatorUnitTests : BasePostApplicationUnit
     public GetAllPostsQueryRequestValidatorUnitTests()
     {
         _requestBuilderFactory = new();
-        _requestBuilder = _requestBuilderFactory.Create(Post, User);
+        _requestBuilder = _requestBuilderFactory.Create(Post);
         _request = _requestBuilder.Build();
 
         _requestValidator = new();
-    }
-
-    [Theory]
-    [UserIdTooLongWithMessageData]
-    public void TestValidate_ShouldHaveAnError_WhenUserIdIsInvalid(
-        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithUserId(transformer).Build();
-
-        // Act
-        var result = _requestValidator.TestValidate(request);
-
-        // Assert
-        result.ShouldHaveValidationErrorForUserId(messageTransformer, request);
     }
 
     [Theory]
@@ -66,7 +51,7 @@ public class GetAllPostsQueryRequestValidatorUnitTests : BasePostApplicationUnit
     }
 
     [Theory]
-    [SortOrderEmptyWithMessageData]
+    [PostSortOrderEmptyWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenSortOrderIsInvalid(
         IEnumTransformer<CommonSortOrder> transformer, IEnumMessageTransformer<CommonSortOrder> messageTransformer)
     {
@@ -125,22 +110,6 @@ public class GetAllPostsQueryRequestValidatorUnitTests : BasePostApplicationUnit
 
         // Assert
         result.ShouldHaveValidationErrorForPageSize(messageTransformer, request);
-    }
-
-    [Theory]
-    [UserIdEmptyData]
-    [UserIdNullData]
-    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenUserIdIsValid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithUserId(transformer).Build();
-
-        // Act
-        var result = _requestValidator.TestValidate(request);
-
-        // Assert
-        result.ShouldNotHaveAnyValidationErrorProperties();
     }
 
     [Theory]

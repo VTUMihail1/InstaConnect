@@ -1,10 +1,13 @@
-﻿namespace InstaConnect.Chats.Domain.Features.ChatMessages.Models.Requests;
+﻿using InstaConnect.Common.Domain.Models;
+
+namespace InstaConnect.Chats.Domain.Features.ChatMessages.Models.Requests;
 
 public record GetChatMessageByIdQuery(ChatMessageId Id, UserId UserId)
+    : IIncludableQuery<ChatMessageIncludeProperty>
 {
-    public ChatMessageIncludeQuery? Include { get; private set; }
+    public CommonIncludeQuery<ChatMessageIncludeProperty>? Include { get; private set; }
 
-    public GetChatMessageByIdQuery AddInclude(ChatMessageIncludeQuery include)
+    public GetChatMessageByIdQuery AddInclude(CommonIncludeQuery<ChatMessageIncludeProperty> include)
     {
         Include = include;
 

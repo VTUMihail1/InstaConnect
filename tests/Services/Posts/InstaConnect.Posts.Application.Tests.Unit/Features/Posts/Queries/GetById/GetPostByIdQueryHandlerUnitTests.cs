@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Application.Tests.Unit.Features.Posts.Queries.GetById;
 
-public class GetPostByIdQueryHandlerUnitTests : BasePostApplicationUnitTest
+public class GetPostByIdQueryHandlerUnitTests : BasePostApplicationQueryUnitTest
 {
     private readonly GetPostByIdQueryRequestBuilderFactory _requestBuilderFactory;
     private readonly GetPostByIdQueryRequestBuilder _requestBuilder;
@@ -16,7 +16,7 @@ public class GetPostByIdQueryHandlerUnitTests : BasePostApplicationUnitTest
 
         _handler = new(PostService, ApplicationMapper, PostIncludeQueryBuilderFactory);
 
-        PostService.SetupGetByIdQuery(_request, Post, CancellationToken);
+        PostService.SetupGetByIdQuery(_request, Post, Include, CancellationToken);
     }
 
     [Fact]
@@ -26,7 +26,7 @@ public class GetPostByIdQueryHandlerUnitTests : BasePostApplicationUnitTest
         var response = await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(Post, User);
+        response.ShouldSatisfy(Post);
     }
 
     [Fact]
@@ -36,6 +36,6 @@ public class GetPostByIdQueryHandlerUnitTests : BasePostApplicationUnitTest
         await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        await PostService.ShouldReceiveOneGetByIdAsync(_request, CancellationToken);
+        await PostService.ShouldReceiveOneGetByIdAsync(_request, Include, CancellationToken);
     }
 }

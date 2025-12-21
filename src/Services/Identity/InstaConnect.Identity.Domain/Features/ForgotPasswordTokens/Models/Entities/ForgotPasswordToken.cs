@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entities;
 
-public class ForgotPasswordToken : IEntity<ForgotPasswordTokenId>
+public class ForgotPasswordToken : IEntityWithId<ForgotPasswordTokenId>
 {
     private ForgotPasswordToken()
     {

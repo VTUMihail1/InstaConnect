@@ -6,5 +6,5 @@ public class ByUserNameSortProperty : IUserSortProperty
 {
     public UserSortProperty SortProperty => UserSortProperty.ByName;
 
-    public Expression<Func<User, object>> Property => p => p.Name;
+    public Expression<Func<User, object>> Property => p => p.Name.Value;
 }

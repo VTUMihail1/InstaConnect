@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entities;
 
-public class PostCommentLike : IEntity<PostCommentLikeId>
+public class PostCommentLike : IEntityWithId<PostCommentLikeId>
 {
     private PostCommentLike()
     {

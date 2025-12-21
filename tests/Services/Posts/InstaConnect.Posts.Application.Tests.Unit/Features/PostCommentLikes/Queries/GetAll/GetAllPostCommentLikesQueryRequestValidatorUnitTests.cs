@@ -3,7 +3,7 @@ using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Requests;
 
 namespace InstaConnect.Posts.Application.Tests.Unit.Features.PostCommentLikes.Queries.GetAll;
 
-public class GetAllPostCommentLikesQueryRequestValidatorUnitTests : BasePostCommentLikeApplicationUnitTest
+public class GetAllPostCommentLikesQueryRequestValidatorUnitTests : BasePostCommentLikeApplicationQueryUnitTest
 {
     private readonly GetAllPostCommentLikesQueryRequestBuilderFactory _requestBuilderFactory;
     private readonly GetAllPostCommentLikesQueryRequestBuilder _requestBuilder;
@@ -72,7 +72,7 @@ public class GetAllPostCommentLikesQueryRequestValidatorUnitTests : BasePostComm
     }
 
     [Theory]
-    [SortOrderEmptyWithMessageData]
+    [PostCommentLikeSortOrderEmptyWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenSortOrderIsInvalid(
         IEnumTransformer<CommonSortOrder> transformer,
         IEnumMessageTransformer<CommonSortOrder> messageTransformer)

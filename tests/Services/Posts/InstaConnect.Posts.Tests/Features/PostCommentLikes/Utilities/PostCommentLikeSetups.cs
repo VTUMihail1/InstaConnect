@@ -35,6 +35,16 @@ public static class PostCommentLikeSetups
         await postCommentLikeRepository.AddAsync(postCommentLike, cancellationToken);
     }
 
+    public static async Task AddPostCommentLikeRangeAsync(
+        this IServiceScope serviceScope,
+        IEnumerable<PostCommentLike> postCommentLikes,
+        CancellationToken cancellationToken)
+    {
+        var postCommentLikeRepository = serviceScope.GetPostCommentLikeRepository();
+
+        await postCommentLikeRepository.AddRangeAsync(postCommentLikes, cancellationToken);
+    }
+
     public static async Task DeletePostCommentLikeAsync(
         this IServiceScope serviceScope,
         PostCommentLike postCommentLike,

@@ -1,4 +1,6 @@
-﻿using MongoDB.Driver;
+﻿using InstaConnect.Common.Domain.Models;
+
+using MongoDB.Driver;
 
 namespace InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Repositories;
 
@@ -17,7 +19,7 @@ internal class EmailConfirmationTokenRepository : IEmailConfirmationTokenReposit
 
     public async Task<EmailConfirmationToken?> GetByIdAsync(
         EmailConfirmationTokenId id,
-        EmailConfirmationTokenIncludeQuery? include,
+        CommonIncludeQuery<EmailConfirmationTokenIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
         var match = Builders<EmailConfirmationToken>.Filter.Empty

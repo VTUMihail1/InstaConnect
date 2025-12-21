@@ -148,17 +148,6 @@ public static class PostCommentValidationProblemDetailsAssertions
             request);
     }
 
-    public static void ShouldSatisfyInvalidValidationForUserId(
-        this ApplicationProblemDetails problemDetails,
-        IStringMessageTransformer messageTransformer,
-        GetAllPostCommentsApiRequest request)
-    {
-        problemDetails.ShouldSatisfyInvalidValidation(
-            p => p.UserId,
-            messageTransformer,
-            request);
-    }
-
     public static void ShouldSatisfyInvalidValidationForUserName(
         this ApplicationProblemDetails problemDetails,
         IStringMessageTransformer messageTransformer,

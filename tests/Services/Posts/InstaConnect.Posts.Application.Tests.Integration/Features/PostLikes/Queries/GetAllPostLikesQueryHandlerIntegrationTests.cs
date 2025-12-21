@@ -1,9 +1,10 @@
 ﻿using InstaConnect.Common.Domain.Models;
+using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
 using InstaConnect.Posts.Domain.Features.PostLikes.Models.Requests;
 
 namespace InstaConnect.Posts.Application.Tests.Integration.Features.PostLikes.Queries;
 
-public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeApplicationIntegrationTest
+public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeApplicationQueryIntegrationTest
 {
     private readonly GetAllPostLikesQueryRequestBuilderFactory _requestBuilderFactory;
     private readonly GetAllPostLikesQueryRequestBuilder _requestBuilder;
@@ -13,15 +14,16 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeApplicati
         : base(webApplicationFactory)
     {
         _requestBuilderFactory = new();
-        _requestBuilder = _requestBuilderFactory.Create(PostLike, User);
+        _requestBuilder = _requestBuilderFactory.Create(PostLike);
         _request = _requestBuilder.Build();
     }
 
     protected override async Task OnInitializeAsync()
     {
         await ServiceScope.AddUserAsync(User, CancellationToken);
+        await ServiceScope.AddUserRangeAsync(Users, CancellationToken);
         await ServiceScope.AddPostAsync(Post, CancellationToken);
-        await ServiceScope.AddPostLikeAsync(PostLike, CancellationToken);
+        await ServiceScope.AddPostLikeRangeAsync(PostLikes, CancellationToken);
     }
 
     [Theory]
@@ -54,7 +56,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeApplicati
     }
 
     [Theory]
-    [SortOrderEmptyWithMessageData]
+    [PostLikeSortOrderEmptyWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenSortOrderIsInvalid(
         IEnumTransformer<CommonSortOrder> transformer, IEnumMessageTransformer<CommonSortOrder> messageTransformer)
     {
@@ -124,7 +126,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeApplicati
         var response = await ApplicationSender.SendAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostLike, User, _request);
+        response.ShouldSatisfy(PostLikes, _request);
     }
 
     [Theory]
@@ -139,7 +141,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeApplicati
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostLike, User, _request);
+        response.ShouldSatisfy(PostLikes, _request);
     }
 
     [Theory]
@@ -156,6 +158,38 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeApplicati
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostLike, User, _request);
+        response.ShouldSatisfy(PostLikes, _request);
+    }
+
+    [Theory]
+    [PostLikeSortOrderWithAscendingTermData]
+    [PostLikeSortOrderWithDescendingTermData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortOrderAreValid(
+        IEnumTransformer<CommonSortOrder> transformer, ISortEnumTermTransformer<PostLike> termTransformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithSortOrder(transformer).Build();
+
+        // Act
+        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfy(PostLikes, _request, termTransformer);
+    }
+
+    [Theory]
+    [PostLikeSortPropertyWithCreatedAtTermData]
+    [PostLikeSortPropertyWithUserNameTermData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortPropertyAreValid(
+        IEnumTransformer<PostLikeSortProperty> transformer, ISortEnumTermTransformer<PostLike> termTransformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithSortProperty(transformer).Build();
+
+        // Act
+        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfy(PostLikes, _request, termTransformer);
     }
 }

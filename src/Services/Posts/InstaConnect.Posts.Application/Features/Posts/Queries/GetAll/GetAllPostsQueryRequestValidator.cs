@@ -4,9 +4,6 @@ public class GetAllPostsQueryRequestValidator : AbstractValidator<GetAllPostsQue
 {
     public GetAllPostsQueryRequestValidator()
     {
-        RuleFor(c => c.UserId)
-            .UserIdMaxLengthWithMessage();
-
         RuleFor(c => c.UserName)
             .UserNameMaxLengthWithMessage();
 

@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Infrastructure.Features.Users.Helpers;
+﻿using InstaConnect.Common.Domain.Models;
+
+namespace InstaConnect.Identity.Infrastructure.Features.Users.Helpers;
 
 internal class UserCollectionFactory : IUserCollectionFactory
 {
@@ -9,7 +11,7 @@ internal class UserCollectionFactory : IUserCollectionFactory
         _paginator = paginator;
     }
 
-    public UserCollection Create(ICollection<User> users, int totalCount, UserPaginationQuery pagination)
+    public UserCollection Create(ICollection<User> users, int totalCount, CommonPaginationQuery pagination)
     {
         var hasNextPage = _paginator.HasNextPage(pagination.Page, pagination.PageSize, totalCount);
         var hasPreviousPage = _paginator.HasPreviousPage(pagination.Page);

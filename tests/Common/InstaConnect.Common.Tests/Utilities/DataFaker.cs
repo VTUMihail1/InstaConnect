@@ -77,6 +77,23 @@ public abstract class DataFaker
         return value[..(value.Length / 2)];
     }
 
+    public static string GetAverageWithPrefixString(string? value, int maxLength, int minLength = default)
+    {
+        var average = GetAverageString(maxLength, minLength);
+
+        if (string.IsNullOrEmpty(value))
+        {
+            return average;
+        }
+
+        var mid = value.Length / 2;
+
+        return string.Concat(
+            value.AsSpan(0, mid),
+            average.AsSpan(mid)
+        );
+    }
+
     public static string GetDifferentCaseString(string? value)
     {
         if (string.IsNullOrEmpty(value))
@@ -95,7 +112,7 @@ public abstract class DataFaker
 
     public static CommonSortOrder GetSortOrder()
     {
-        const CommonSortOrder SortOrder = CommonSortOrder.ASC;
+        const CommonSortOrder SortOrder = CommonSortOrder.Ascending;
 
         return SortOrder;
     }

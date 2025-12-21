@@ -4,7 +4,6 @@ namespace InstaConnect.Posts.Application.Tests.Features.Posts.Builders;
 
 public class GetAllPostsQueryRequestBuilder
 {
-    private string _userId;
     private string _userName;
     private string _title;
     private int _page;
@@ -12,29 +11,14 @@ public class GetAllPostsQueryRequestBuilder
     private CommonSortOrder _sortOrder;
     private PostSortProperty _sortProperty;
 
-    public GetAllPostsQueryRequestBuilder(Post post, User user)
+    public GetAllPostsQueryRequestBuilder(Post post)
     {
-        _userId = user.Id.Id;
-        _userName = user.Name.Value;
-        _title = post.Title;
+        _userName = DataFaker.GetPrefixString(post.User!.Name.Value);
+        _title = DataFaker.GetPrefixString(post.Title);
         _page = PostDataFaker.GetPage();
         _pageSize = PostDataFaker.GetPageSize();
         _sortOrder = DataFaker.GetSortOrder();
         _sortProperty = PostDataFaker.GetSortProperty();
-    }
-
-    public GetAllPostsQueryRequestBuilder WithUserId(User user, IStringTransformer? transformer = null)
-    {
-        _userId = transformer.TryTransform(user.Id.Id);
-
-        return this;
-    }
-
-    public GetAllPostsQueryRequestBuilder WithUserId(IStringTransformer transformer)
-    {
-        _userId = transformer.Transform(_userId);
-
-        return this;
     }
 
     public GetAllPostsQueryRequestBuilder WithUserName(IStringTransformer transformer)
@@ -81,6 +65,6 @@ public class GetAllPostsQueryRequestBuilder
 
     public GetAllPostsQueryRequest Build()
     {
-        return new(_userId, _userName, _title, _sortOrder, _sortProperty, _page, _pageSize);
+        return new(_userName, _title, _sortOrder, _sortProperty, _page, _pageSize);
     }
 }

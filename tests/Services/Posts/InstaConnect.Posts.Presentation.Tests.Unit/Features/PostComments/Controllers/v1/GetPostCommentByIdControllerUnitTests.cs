@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Presentation.Tests.Unit.Features.PostComments.Controllers.v1;
 
-public class GetPostCommentByIdControllerUnitTests : BasePostCommentPresentationUnitTest
+public class GetPostCommentByIdControllerUnitTests : BasePostCommentPresentationQueryUnitTest
 {
     private readonly GetPostCommentByIdApiRequestBuilderFactory _requestBuilderFactory;
     private readonly GetPostCommentByIdApiRequestBuilder _requestBuilder;
@@ -36,7 +36,7 @@ public class GetPostCommentByIdControllerUnitTests : BasePostCommentPresentation
         var response = await _postCommentController.GetByIdAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostComment, User);
+        response.ShouldSatisfy(PostComment);
     }
 
     [Fact]

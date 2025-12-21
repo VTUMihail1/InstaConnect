@@ -6,5 +6,5 @@ public class ByFollowByFollowerNameSortProperty : IFollowByFollowingSortProperty
 {
     public FollowByFollowingSortProperty SortProperty => FollowByFollowingSortProperty.ByFollowerName;
 
-    public Expression<Func<Follow, object>> Property => p => p.Follower!.Name;
+    public Expression<Func<Follow, object>> Property => p => p.Follower!.Name.Value;
 }

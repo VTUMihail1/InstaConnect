@@ -12,9 +12,19 @@ public static class UserDataFaker
         return DataFaker.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength);
     }
 
+    public static string GetNameWithPrefix(string name)
+    {
+        return DataFaker.GetAverageWithPrefixString(name, UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength);
+    }
+
     public static string GetFirstName()
     {
         return DataFaker.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength);
+    }
+
+    public static string GetFirstNameWithPrefix(string firstName)
+    {
+        return DataFaker.GetAverageWithPrefixString(firstName, UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength);
     }
 
     public static string GetLastName()
@@ -22,9 +32,19 @@ public static class UserDataFaker
         return DataFaker.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength);
     }
 
+    public static string GetLastNameWithPrefix(string lastName)
+    {
+        return DataFaker.GetAverageWithPrefixString(lastName, UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength);
+    }
+
     public static string GetEmail()
     {
         return DataFaker.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength);
+    }
+
+    public static string GetEmailWithPrefix(string email)
+    {
+        return DataFaker.GetAverageWithPrefixString(email, UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength);
     }
 
     public static string GetProfileImage()

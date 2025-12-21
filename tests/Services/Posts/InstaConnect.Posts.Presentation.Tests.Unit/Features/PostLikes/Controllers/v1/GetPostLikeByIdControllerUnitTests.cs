@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Presentation.Tests.Unit.Features.PostLikes.Controllers.v1;
 
-public class GetPostLikeByIdControllerUnitTests : BasePostLikePresentationUnitTest
+public class GetPostLikeByIdControllerUnitTests : BasePostLikePresentationQueryUnitTest
 {
     private readonly GetPostLikeByIdApiRequestBuilderFactory _requestBuilderFactory;
     private readonly GetPostLikeByIdApiRequestBuilder _requestBuilder;
@@ -36,7 +36,7 @@ public class GetPostLikeByIdControllerUnitTests : BasePostLikePresentationUnitTe
         var response = await _postLikeController.GetByIdAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostLike, User);
+        response.ShouldSatisfy(PostLike);
     }
 
     [Fact]

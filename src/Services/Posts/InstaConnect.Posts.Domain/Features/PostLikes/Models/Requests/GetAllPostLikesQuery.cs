@@ -1,13 +1,16 @@
-﻿namespace InstaConnect.Posts.Domain.Features.PostLikes.Models.Requests;
+﻿using InstaConnect.Common.Domain.Models;
+
+namespace InstaConnect.Posts.Domain.Features.PostLikes.Models.Requests;
 
 public record GetAllPostLikesQuery(
     PostLikeFilterQuery Filter,
-    PostLikeSortingQuery Sorting,
-    PostLikePaginationQuery Pagination)
+    CommonSortingQuery<PostLikeSortProperty> Sorting,
+    CommonPaginationQuery Pagination)
+    : ISortableQuery<PostLikeSortProperty>, IPaginatableQuery, IIncludableQuery<PostLikeIncludeProperty>
 {
-    public PostLikeIncludeQuery? Include { get; private set; }
+    public CommonIncludeQuery<PostLikeIncludeProperty>? Include { get; private set; }
 
-    public GetAllPostLikesQuery AddInclude(PostLikeIncludeQuery include)
+    public GetAllPostLikesQuery AddInclude(CommonIncludeQuery<PostLikeIncludeProperty> include)
     {
         Include = include;
 

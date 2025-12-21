@@ -21,6 +21,23 @@ public static class MongoCollectionExtensions
 
     }
 
+    public static async Task AddRangeAsync<T>(
+        this IMongoCollection<T> collection,
+        IClientSessionHandle? session,
+        IEnumerable<T> entities,
+        CancellationToken cancellationToken)
+    {
+        if (session.IsNotInTransaction())
+        {
+            await collection.InsertManyAsync(entities, null, cancellationToken);
+
+            return;
+        }
+
+        await collection.InsertManyAsync(session, entities, null, cancellationToken);
+
+    }
+
     public static async Task UpdateAsync<T>(
         this IMongoCollection<T> collection,
         IClientSessionHandle? session,

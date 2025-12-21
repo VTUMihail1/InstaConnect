@@ -6,22 +6,16 @@ internal class Paginator : IPaginator
 {
     public int GetOffset(int page, int pageSize)
     {
-        var offset = (page - 1) * pageSize;
-
-        return offset;
+        return (page - 1) * pageSize;
     }
 
-    public bool HasNextPage(int page, int pageSize, long totalCount)
+    public bool HasNextPage(int page, int pageSize, int totalCount)
     {
-        var hasNextPage = page * pageSize < totalCount;
-
-        return hasNextPage;
+        return (page * pageSize) < totalCount;
     }
 
     public bool HasPreviousPage(int page)
     {
-        var hasPreviousPage = page > 1;
-
-        return hasPreviousPage;
+        return page > 1;
     }
 }

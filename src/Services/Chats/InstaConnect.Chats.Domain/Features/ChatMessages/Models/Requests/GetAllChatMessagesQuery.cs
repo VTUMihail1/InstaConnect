@@ -1,13 +1,16 @@
-﻿namespace InstaConnect.Chats.Domain.Features.ChatMessages.Models.Requests;
+﻿using InstaConnect.Common.Domain.Models;
+
+namespace InstaConnect.Chats.Domain.Features.ChatMessages.Models.Requests;
 
 public record GetAllChatMessagesQuery(
     ChatMessageFilterQuery Filter,
-    ChatMessageSortingQuery Sorting,
-    ChatMessagePaginationQuery Pagination)
+    CommonSortingQuery<ChatMessageSortProperty> Sorting,
+    CommonPaginationQuery Pagination)
+    : ISortableQuery<ChatMessageSortProperty>, IPaginatableQuery, IIncludableQuery<ChatMessageIncludeProperty>
 {
-    public ChatMessageIncludeQuery? Include { get; private set; }
+    public CommonIncludeQuery<ChatMessageIncludeProperty>? Include { get; private set; }
 
-    public GetAllChatMessagesQuery AddInclude(ChatMessageIncludeQuery include)
+    public GetAllChatMessagesQuery AddInclude(CommonIncludeQuery<ChatMessageIncludeProperty> include)
     {
         Include = include;
 

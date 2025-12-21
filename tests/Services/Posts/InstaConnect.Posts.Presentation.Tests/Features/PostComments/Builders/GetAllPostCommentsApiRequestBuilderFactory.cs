@@ -2,8 +2,8 @@
 
 public class GetAllPostCommentsApiRequestBuilderFactory
 {
-    public GetAllPostCommentsApiRequestBuilder Create(PostComment postComment, User user)
+    public GetAllPostCommentsApiRequestBuilder Create(PostComment postComment)
     {
-        return new(postComment, user);
+        return new(postComment);
     }
 }

@@ -2,5 +2,4 @@
 
 public record PostCommentFilterQuery(
     PostId Id,
-    UserId UserId,
     Name UserName);

@@ -1,10 +1,13 @@
-﻿namespace InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
+﻿using InstaConnect.Common.Domain.Models;
+
+namespace InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 
 public record GetPostByIdQuery(PostId Id)
+    : IIncludableQuery<PostIncludeProperty>
 {
-    public PostIncludeQuery? Include { get; private set; }
+    public CommonIncludeQuery<PostIncludeProperty>? Include { get; private set; }
 
-    public GetPostByIdQuery AddInclude(PostIncludeQuery include)
+    public GetPostByIdQuery AddInclude(CommonIncludeQuery<PostIncludeProperty> include)
     {
         Include = include;
 

@@ -1,10 +1,12 @@
-﻿namespace InstaConnect.Identity.Domain.Features.RefreshTokens.Abstractions;
+﻿using InstaConnect.Common.Domain.Models;
+
+namespace InstaConnect.Identity.Domain.Features.RefreshTokens.Abstractions;
 
 public interface IRefreshTokenRepository
 {
     Task<RefreshToken?> GetByIdAsync(
         RefreshTokenId id,
-        RefreshTokenIncludeQuery include,
+        CommonIncludeQuery<RefreshTokenIncludeProperty>? include,
         CancellationToken cancellationToken);
 
     Task<RefreshToken?> GetByIdAsync(

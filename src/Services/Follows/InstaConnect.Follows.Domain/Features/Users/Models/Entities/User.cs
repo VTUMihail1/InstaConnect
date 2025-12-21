@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Follows.Domain.Features.Users.Models.Entities;
 
-public class User : IEntity<UserId>
+public class User : IEntityWithId<UserId>
 {
     private User()
     {

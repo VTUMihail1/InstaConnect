@@ -1,9 +1,11 @@
-﻿namespace InstaConnect.Chats.Domain.Features.Users.Abstractions;
+﻿using InstaConnect.Common.Domain.Models;
+
+namespace InstaConnect.Chats.Domain.Features.Users.Abstractions;
 public interface IUserRepository
 {
     Task<User?> GetByIdAsync(
         UserId id,
-        UserIncludeQuery? include,
+        CommonIncludeQuery<UserIncludeProperty>? include,
         CancellationToken cancellationToken);
 
     Task<User?> GetByIdAsync(
@@ -12,7 +14,7 @@ public interface IUserRepository
 
     Task<User?> GetByNameAsync(
         Name name,
-        UserIncludeQuery? include,
+        CommonIncludeQuery<UserIncludeProperty>? include,
         CancellationToken cancellationToken);
 
     Task<User?> GetByNameAsync(
@@ -21,7 +23,7 @@ public interface IUserRepository
 
     Task<User?> GetByEmailAsync(
         Email email,
-        UserIncludeQuery? include,
+        CommonIncludeQuery<UserIncludeProperty>? include,
         CancellationToken cancellationToken);
 
     Task<User?> GetByEmailAsync(
@@ -29,6 +31,8 @@ public interface IUserRepository
         CancellationToken cancellationToken);
 
     Task AddAsync(User entity, CancellationToken cancellationToken);
+
+    Task AddRangeAsync(IEnumerable<User> entities, CancellationToken cancellationToken);
 
     Task DeleteAsync(User entity, CancellationToken cancellationToken);
 

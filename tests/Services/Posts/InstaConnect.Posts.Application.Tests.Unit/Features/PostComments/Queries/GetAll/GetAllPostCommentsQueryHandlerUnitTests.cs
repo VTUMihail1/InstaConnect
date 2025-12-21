@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Application.Tests.Unit.Features.PostComments.Queries.GetAll;
 
-public class GetAllPostCommentsQueryHandlerUnitTests : BasePostCommentApplicationUnitTest
+public class GetAllPostCommentsQueryHandlerUnitTests : BasePostCommentApplicationQueryUnitTest
 {
     private readonly GetAllPostCommentsQueryRequestBuilderFactory _requestBuilderFactory;
     private readonly GetAllPostCommentsQueryRequestBuilder _requestBuilder;
@@ -11,12 +11,12 @@ public class GetAllPostCommentsQueryHandlerUnitTests : BasePostCommentApplicatio
     public GetAllPostCommentsQueryHandlerUnitTests()
     {
         _requestBuilderFactory = new();
-        _requestBuilder = _requestBuilderFactory.Create(PostComment, User);
+        _requestBuilder = _requestBuilderFactory.Create(PostComment);
         _request = _requestBuilder.Build();
 
         _handler = new(ApplicationMapper, PostCommentService, PostCommentIncludeQueryBuilderFactory);
 
-        PostCommentService.SetupGetAllQuery(_request, PostComment, CancellationToken);
+        PostCommentService.SetupGetAllQuery(_request, PostComments, Include, CancellationToken);
     }
 
     [Fact]
@@ -26,7 +26,7 @@ public class GetAllPostCommentsQueryHandlerUnitTests : BasePostCommentApplicatio
         var response = await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostComment, User, _request);
+        response.ShouldSatisfy(PostComments, _request);
     }
 
     [Fact]
@@ -36,6 +36,6 @@ public class GetAllPostCommentsQueryHandlerUnitTests : BasePostCommentApplicatio
         await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        await PostCommentService.ShouldReceiveOneGetAllAsync(_request, CancellationToken);
+        await PostCommentService.ShouldReceiveOneGetAllAsync(_request, Include, CancellationToken);
     }
 }

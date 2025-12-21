@@ -6,4 +6,4 @@ public record PostLikeCollectionQueryResponse(
     int PageSize,
     int TotalCount,
     bool HasNextPage,
-    bool HasPreviousPage);
+    bool HasPreviousPage) : ICollectionQueryResponse;

@@ -12,6 +12,11 @@ public static class PostDataFaker
         return DataFaker.GetAverageString(PostConfigurations.TitleMaxLength, PostConfigurations.TitleMinLength);
     }
 
+    public static string GetTitleWithPrefix(string title)
+    {
+        return DataFaker.GetAverageWithPrefixString(title, PostConfigurations.TitleMaxLength, PostConfigurations.TitleMinLength);
+    }
+
     public static string GetContent()
     {
         return DataFaker.GetAverageString(PostConfigurations.ContentMaxLength, PostConfigurations.ContentMinLength);

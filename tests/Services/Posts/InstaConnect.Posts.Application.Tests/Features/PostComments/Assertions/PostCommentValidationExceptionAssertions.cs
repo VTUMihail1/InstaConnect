@@ -173,19 +173,6 @@ public static class PostCommentValidationExceptionAssertions
             cancellationToken);
     }
 
-    public static async Task ShouldThrowInvalidValidationExceptionForUserIdAsync(
-        this IApplicationSender sender,
-        IStringMessageTransformer messageTransformer,
-        GetAllPostCommentsQueryRequest request,
-        CancellationToken cancellationToken)
-    {
-        await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostCommentsQueryRequest, string, GetAllPostCommentsQueryResponse>(
-            p => p.UserId,
-            messageTransformer,
-            request,
-            cancellationToken);
-    }
-
     public static async Task ShouldThrowInvalidValidationExceptionForUserNameAsync(
         this IApplicationSender sender,
         IStringMessageTransformer messageTransformer,

@@ -1,4 +1,6 @@
-﻿using MongoDB.Driver;
+﻿using InstaConnect.Common.Domain.Models;
+
+using MongoDB.Driver;
 
 namespace InstaConnect.Chats.Infrastructure.Features.ChatMessages.Repositories;
 
@@ -29,9 +31,9 @@ internal class ChatMessageRepository : IChatMessageRepository
 
     public async Task<ChatMessageCollection> GetAllAsync(
         ChatMessageFilterQuery filter,
-        ChatMessageSortingQuery sorting,
-        ChatMessagePaginationQuery pagination,
-        ChatMessageIncludeQuery? include,
+        CommonSortingQuery<ChatMessageSortProperty> sorting,
+        CommonPaginationQuery pagination,
+        CommonIncludeQuery<ChatMessageIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
         var match = Builders<ChatMessage>.Filter.Empty
@@ -64,7 +66,7 @@ internal class ChatMessageRepository : IChatMessageRepository
             .Includes(includeProperties)
             .Match(match);
 
-        var totalCountsResult = await pipeline.Count().FirstOrDefaultAsync(cancellationToken);
+        var totalCount = (int)await _chatsContext.ChatMessages.CountDocumentsAsync(match, cancellationToken: cancellationToken);
 
         var entities = await pipeline
             .Project(projection)
@@ -73,14 +75,14 @@ internal class ChatMessageRepository : IChatMessageRepository
             .Limit(pagination.PageSize)
             .ToListAsync(cancellationToken);
 
-        var collectionEntities = _chatMessageCollectionFactory.Create(entities, (int)totalCountsResult.Count, pagination);
+        var collectionEntities = _chatMessageCollectionFactory.Create(entities, totalCount, pagination);
 
         return collectionEntities;
     }
 
     public async Task<ChatMessage?> GetByIdAsync(
         ChatMessageId id,
-        ChatMessageIncludeQuery? include,
+        CommonIncludeQuery<ChatMessageIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
         var match = Builders<ChatMessage>.Filter.Empty
@@ -127,6 +129,13 @@ internal class ChatMessageRepository : IChatMessageRepository
         await _chatsContext
             .ChatMessages
             .AddAsync(_chatsContext.ClientSessionHandle, entity, cancellationToken);
+    }
+
+    public async Task AddRangeAsync(IEnumerable<ChatMessage> entities, CancellationToken cancellationToken)
+    {
+        await _chatsContext
+            .ChatMessages
+            .AddRangeAsync(_chatsContext.ClientSessionHandle, entities, cancellationToken);
     }
 
     public async Task UpdateAsync(ChatMessage entity, CancellationToken cancellationToken)

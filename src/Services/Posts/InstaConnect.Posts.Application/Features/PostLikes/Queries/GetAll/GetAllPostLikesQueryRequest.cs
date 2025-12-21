@@ -9,4 +9,4 @@ public record GetAllPostLikesQueryRequest(
     PostLikeSortProperty SortProperty,
     int Page,
     int PageSize)
-    : IQueryRequest<GetAllPostLikesQueryResponse>;
+    : IQueryRequest<GetAllPostLikesQueryResponse>, ISortableQueryRequest<PostLikeSortProperty>, IPaginatableQueryRequest;

@@ -1,4 +1,7 @@
-﻿using InstaConnect.Posts.Domain.Features.PostComments.Models.ValueObjects;
+﻿using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
+using InstaConnect.Posts.Domain.Features.PostComments.Models.Requests;
+using InstaConnect.Posts.Domain.Features.PostComments.Models.ValueObjects;
+using InstaConnect.Posts.Presentation.Tests.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Presentation.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Posts.Presentation.Tests.Features.PostComments.Utilities;
@@ -7,13 +10,9 @@ public static class PostCommentEquals
 {
     public static bool Matches(this GetAllPostCommentsQueryRequest query, GetAllPostCommentsApiRequest request)
     {
-        return query.Id == request.Id &&
-               query.UserId == request.UserId &&
-               query.UserName == request.UserName &&
-               query.Page == request.Page &&
-               query.PageSize == request.PageSize &&
-               query.SortOrder == request.SortOrder &&
-               query.SortProperty == request.SortProperty;
+        return query.MatchesFilter(request) &&
+               query.MatchesSortable<GetAllPostCommentsQueryRequest, GetAllPostCommentsApiRequest, PostCommentSortProperty>(request) &&
+               query.MatchesPaginatable(request);
     }
 
     public static bool Matches(this GetPostCommentByIdQueryRequest query, GetPostCommentByIdApiRequest request)
@@ -54,19 +53,37 @@ public static class PostCommentEquals
         return response.Response.Matches(postComment.Id);
     }
 
-    public static bool Matches(this GetPostCommentByIdApiResponse response, PostComment postComment, User user)
+    public static bool Matches(this GetPostCommentByIdApiResponse response, PostComment postComment)
     {
-        return response.Response.Matches(postComment, user);
+        return response.Response.Matches(postComment);
     }
 
-    public static bool Matches(this GetAllPostCommentsApiResponse response, PostComment postComment, User user, GetAllPostCommentsApiRequest request)
+    public static bool Matches(
+        this GetAllPostCommentsApiResponse response,
+        ICollection<PostComment> postComments,
+        GetAllPostCommentsApiRequest request)
     {
-        return response.Response.Entities.All(p => p.Matches(postComment, user)) &&
-               response.Response.Page == request.Page &&
-               response.Response.PageSize == request.PageSize &&
-               response.Response.TotalCount == response.Response.Entities.Count &&
-               response.Response.HasPreviousPage == response.Response.Page > 1 &&
-               response.Response.HasNextPage == response.Response.Page * response.Response.PageSize < response.Response.TotalCount;
+        return response.Response.MatchesCollectionResponse(postComments.Count, request) &&
+               response.Response.Entities.MatchesCollection(postComments,
+                                                            response => response.CommentId,
+                                                            postComment => postComment.Id.CommentId,
+                                                            (response, postComment) => response.Matches(postComment),
+                                                            request,
+                                                            postComment => postComment.MatchesFilter(request));
+    }
+
+    public static bool Matches(
+        this GetAllPostCommentsApiResponse response,
+        ICollection<PostComment> postComments,
+        GetAllPostCommentsApiRequest request,
+        ISortEnumTermTransformer<PostComment> termTransformer)
+    {
+        return response.Response.MatchesCollectionResponse(postComments.Count, request) &&
+               response.Response.Entities.MatchesSortedCollection(postComments,
+                                                                  (response, postComment) => response.Matches(postComment),
+                                                                  termTransformer,
+                                                                  request,
+                                                                  postComment => postComment.MatchesFilter(request));
     }
 
     public static bool Matches(this PostComment postComment, AddPostCommentApiRequest request)
@@ -88,12 +105,24 @@ public static class PostCommentEquals
         return id.Matches(response.Id, response.CommentId);
     }
 
-    public static bool Matches(this PostCommentApiResponse response, PostComment postComment, User user)
+    public static bool Matches(this PostCommentApiResponse response, PostComment postComment)
     {
         return postComment.Id.Matches(response.Id, response.CommentId) &&
                response.Content == postComment.Content &&
-               response.User.Matches(user) &&
+               response.User.Matches(postComment.User!) &&
                response.CreatedAtUtc == postComment.CreatedAtUtc &&
                response.UpdatedAtUtc == postComment.UpdatedAtUtc;
+    }
+
+    public static bool MatchesFilter(this GetAllPostCommentsQueryRequest query, GetAllPostCommentsApiRequest request)
+    {
+        return query.Id == request.Id &&
+               query.UserName == request.UserName;
+    }
+
+    public static bool MatchesFilter(this PostComment postComment, GetAllPostCommentsApiRequest request)
+    {
+        return postComment.Id.Id.Id.EqualsOrdinalIgnoreCase(request.Id) &&
+               postComment.User!.Name.Value.StartsWithOrdinalIgnoreCase(request.UserName);
     }
 }

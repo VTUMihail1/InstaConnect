@@ -1,29 +1,38 @@
-﻿namespace InstaConnect.Posts.Presentation.Tests.Features.PostLikes.Utilities;
+﻿using InstaConnect.Common.Infrastructure.Helpers;
+using InstaConnect.Posts.Application.Features.PostComments.Models;
+
+namespace InstaConnect.Posts.Presentation.Tests.Features.PostLikes.Utilities;
 public static class PostLikeMockSetups
 {
     public static void SetupGetAllQueryRequest(
         this IApplicationSender applicationSender,
         GetAllPostLikesApiRequest request,
-        PostLike postLike,
+        ICollection<PostLike> postLikes,
         CancellationToken cancellationToken)
     {
-        var postLikeQueryResponse = new PostLikeQueryResponse(
-            postLike.Id.Id.Id,
+        var paginator = PaginatorFactory.Create();
+        var offset = paginator.GetOffset(request.Page, request.PageSize);
+        var postLikeQueryResponses = postLikes
+            .Where(a => a.MatchesFilter(request))
+            .Select(postLike => new PostLikeQueryResponse(
+                     postLike.Id.Id.Id,
                 new(
                     postLike.User!.Id.Id,
                     postLike.User.Name.Value,
                     postLike.User.ProfileImage?.Url),
-                postLike.CreatedAtUtc);
-
-        var postLikeQueryResponses = new List<PostLikeQueryResponse>() { postLikeQueryResponse };
+                postLike.CreatedAtUtc))
+            .OrderBy(a => a.CreatedAtUtc)
+            .Skip(offset)
+            .Take(request.PageSize)
+            .ToList();
 
         var postLikeCollectionQueryResponse = new PostLikeCollectionQueryResponse(
             postLikeQueryResponses,
             request.Page,
             request.PageSize,
-            postLikeQueryResponses.Count,
-            false,
-            false);
+            postLikes.Count,
+            paginator.HasNextPage(request.Page, request.PageSize, postLikes.Count),
+            paginator.HasPreviousPage(request.Page));
 
         var response = new GetAllPostLikesQueryResponse(postLikeCollectionQueryResponse);
 

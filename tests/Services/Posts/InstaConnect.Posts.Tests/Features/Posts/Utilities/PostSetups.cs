@@ -35,6 +35,16 @@ public static class PostSetups
         await postRepository.AddAsync(post, cancellationToken);
     }
 
+    public static async Task AddPostRangeAsync(
+        this IServiceScope serviceScope,
+        IEnumerable<Post> posts,
+        CancellationToken cancellationToken)
+    {
+        var postRepository = serviceScope.GetPostRepository();
+
+        await postRepository.AddRangeAsync(posts, cancellationToken);
+    }
+
     public static async Task DeletePostAsync(
         this IServiceScope serviceScope,
         Post post,
