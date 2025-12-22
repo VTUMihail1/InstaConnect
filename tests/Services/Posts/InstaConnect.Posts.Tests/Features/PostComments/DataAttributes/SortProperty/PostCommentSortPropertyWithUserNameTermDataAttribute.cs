@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Domain.Models.ValueObjects;
-
-namespace InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.SortProperty;
+﻿namespace InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.SortProperty;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public sealed class PostCommentSortPropertyWithUserNameTermDataAttribute

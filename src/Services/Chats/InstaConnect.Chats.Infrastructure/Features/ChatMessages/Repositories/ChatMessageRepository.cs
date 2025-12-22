@@ -1,4 +1,5 @@
-﻿using InstaConnect.Common.Domain.Models;
+﻿using InstaConnect.Chats.Infrastructure.Features.ChatMessages.Extensions;
+using InstaConnect.Common.Domain.Models;
 
 using MongoDB.Driver;
 
@@ -36,25 +37,7 @@ internal class ChatMessageRepository : IChatMessageRepository
         CommonIncludeQuery<ChatMessageIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
-        var match = Builders<ChatMessage>.Filter.Empty
-            .AndEqualsCaseInsensitive(p => p.Id.Id.ParticipantOneId.Id, filter.Id.ParticipantOneId.Id)
-            .OrEqualsCaseInsensitive(p => p.Id.Id.ParticipantTwoId.Id, filter.Id.ParticipantOneId.Id)
-            .AndEqualsCaseInsensitive(p => p.Id.Id.ParticipantOneId.Id, filter.Id.ParticipantTwoId.Id)
-            .OrEqualsCaseInsensitive(p => p.Id.Id.ParticipantTwoId.Id, filter.Id.ParticipantTwoId.Id);
-
-        var projection = Builders<ChatMessage>.Projection.Expression(
-            c => new ChatMessage(c.Id.Id.ParticipantOneId.Id.ToLower() == filter.Id.ParticipantOneId.Id.ToLower()
-                                  ? c.Id : new(
-                                               new(
-                                                   c.Id.Id.ParticipantTwoId,
-                                                   c.Id.Id.ParticipantOneId),
-                                               c.Id.MessageId),
-                                    c.SenderId,
-                                    c.Content,
-                                    c.CreatedAtUtc,
-                                    c.UpdatedAtUtc));
-
-
+        var match = filter.GetFilter();
         var sortOrder = _sortOrderFactory.Create(sorting.Order);
         var sortProperty = _chatMessageSortPropertyFactory.Create(sorting.Property);
         var includeProperties = _chatMessageIncludePropertyFactory.Create(include?.Properties);
@@ -66,15 +49,14 @@ internal class ChatMessageRepository : IChatMessageRepository
             .Includes(includeProperties)
             .Match(match);
 
-        var totalCount = (int)await _chatsContext.ChatMessages.CountDocumentsAsync(match, cancellationToken: cancellationToken);
-
         var entities = await pipeline
-            .Project(projection)
+            .Project(filter.Id.GetChatMessageProjection())
             .Sort(sortOrder.Sort(sortProperty.Property))
             .Skip(offset)
             .Limit(pagination.PageSize)
             .ToListAsync(cancellationToken);
 
+        var totalCount = await _chatsContext.ChatMessages.GetCount(match, cancellationToken);
         var collectionEntities = _chatMessageCollectionFactory.Create(entities, totalCount, pagination);
 
         return collectionEntities;
@@ -85,33 +67,14 @@ internal class ChatMessageRepository : IChatMessageRepository
         CommonIncludeQuery<ChatMessageIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
-        var match = Builders<ChatMessage>.Filter.Empty
-            .AndEqualsCaseInsensitive(p => p.Id.Id.ParticipantOneId.Id, id.Id.ParticipantOneId.Id)
-            .OrEqualsCaseInsensitive(p => p.Id.Id.ParticipantTwoId.Id, id.Id.ParticipantOneId.Id)
-            .AndEqualsCaseInsensitive(p => p.Id.Id.ParticipantOneId.Id, id.Id.ParticipantTwoId.Id)
-            .OrEqualsCaseInsensitive(p => p.Id.Id.ParticipantTwoId.Id, id.Id.ParticipantTwoId.Id)
-            .AndEqualsCaseInsensitive(p => p.Id.MessageId, id.MessageId);
-
-        var projection = Builders<ChatMessage>.Projection.Expression(
-            c => new ChatMessage(c.Id.Id.ParticipantOneId.Id.ToLower() == id.Id.ParticipantOneId.Id.ToLower()
-                                  ? c.Id : new(
-                                               new(
-                                                   c.Id.Id.ParticipantTwoId,
-                                                   c.Id.Id.ParticipantOneId),
-                                               c.Id.MessageId),
-                                    c.SenderId,
-                                    c.Content,
-                                    c.CreatedAtUtc,
-                                    c.UpdatedAtUtc));
-
         var includeProperties = _chatMessageIncludePropertyFactory.Create(include?.Properties);
 
         var entity = await _chatsContext
             .ChatMessages
             .Aggregate()
             .Includes(includeProperties)
-            .Match(match)
-            .Project(projection)
+            .Match(id.GetFilter())
+            .Project(id.Id.GetChatMessageProjection())
             .FirstOrDefaultAsync(cancellationToken);
 
         return entity;
@@ -140,36 +103,22 @@ internal class ChatMessageRepository : IChatMessageRepository
 
     public async Task UpdateAsync(ChatMessage entity, CancellationToken cancellationToken)
     {
-        var match = Builders<ChatMessage>.Filter.Empty
-            .AndEqualsCaseInsensitive(p => p.Id.Id.ParticipantOneId.Id, entity.Id.Id.ParticipantOneId.Id)
-            .OrEqualsCaseInsensitive(p => p.Id.Id.ParticipantTwoId.Id, entity.Id.Id.ParticipantOneId.Id)
-            .AndEqualsCaseInsensitive(p => p.Id.Id.ParticipantOneId.Id, entity.Id.Id.ParticipantTwoId.Id)
-            .OrEqualsCaseInsensitive(p => p.Id.Id.ParticipantTwoId.Id, entity.Id.Id.ParticipantTwoId.Id)
-            .AndEqualsCaseInsensitive(p => p.Id.MessageId, entity.Id.MessageId);
-
         await _chatsContext
             .ChatMessages
             .UpdateAsync(
             _chatsContext.ClientSessionHandle,
-            match,
+            entity.Id.GetFilter(),
             entity,
             cancellationToken);
     }
 
     public async Task DeleteAsync(ChatMessage entity, CancellationToken cancellationToken)
     {
-        var match = Builders<ChatMessage>.Filter.Empty
-            .AndEqualsCaseInsensitive(p => p.Id.Id.ParticipantOneId.Id, entity.Id.Id.ParticipantOneId.Id)
-            .OrEqualsCaseInsensitive(p => p.Id.Id.ParticipantTwoId.Id, entity.Id.Id.ParticipantOneId.Id)
-            .AndEqualsCaseInsensitive(p => p.Id.Id.ParticipantOneId.Id, entity.Id.Id.ParticipantTwoId.Id)
-            .OrEqualsCaseInsensitive(p => p.Id.Id.ParticipantTwoId.Id, entity.Id.Id.ParticipantTwoId.Id)
-            .AndEqualsCaseInsensitive(p => p.Id.MessageId, entity.Id.MessageId);
-
         await _chatsContext
             .ChatMessages
             .DeleteAsync(
             _chatsContext.ClientSessionHandle,
-            match,
+            entity.Id.GetFilter(),
             cancellationToken);
     }
 }

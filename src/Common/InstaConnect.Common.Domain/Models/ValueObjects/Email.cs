@@ -14,4 +14,9 @@ public record Email(string Value) : IValueObject
     {
         return !Is(email);
     }
+
+    public bool IsEmpty()
+    {
+        return Value.IsNullOrEmptyOrWhiteSpace();
+    }
 }

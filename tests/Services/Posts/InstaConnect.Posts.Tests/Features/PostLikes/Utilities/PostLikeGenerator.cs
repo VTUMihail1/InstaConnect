@@ -11,9 +11,9 @@ public static class PostLikeGenerator
                         template.Id.Id,
                         user.Id),
                     PostLikeDataFaker.GetCreatedAtUtc());
-            
+
                 postLike.AddUser(user);
-            
+
                 return postLike;
             })];
     }

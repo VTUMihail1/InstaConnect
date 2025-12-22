@@ -1,6 +1,4 @@
-﻿using InstaConnect.Posts.Tests.Features.PostLikes.Utilities;
-
-namespace InstaConnect.Posts.Tests.Features.Posts.Utilities;
+﻿namespace InstaConnect.Posts.Tests.Features.Posts.Utilities;
 public static class PostGenerator
 {
     public static ICollection<Post> GenerateRange(this Post template, IEnumerable<User> users)

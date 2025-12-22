@@ -4,42 +4,42 @@ using InstaConnect.Common.Events.Abstractions;
 namespace InstaConnect.Posts.Domain.Features.PostComments.Helpers;
 internal class PostCommentService : IPostCommentService
 {
-    private readonly IPostRepository _repository;
+    private readonly IPostRepository _postRepository;
     private readonly IEventPublisher _eventPublisher;
     private readonly IUserRepository _userRepository;
-    private readonly IPostCommentFactory _commentFactory;
     private readonly IDateTimeProvider _dateTimeProvider;
     private readonly IApplicationMapper _applicationMapper;
-    private readonly IPostCommentRepository _commentRepository;
+    private readonly IPostCommentFactory _postCommentFactory;
+    private readonly IPostCommentRepository _postCommentRepository;
 
     public PostCommentService(
-        IPostRepository repository,
+        IPostRepository postRepository,
         IEventPublisher eventPublisher,
         IUserRepository userRepository,
-        IPostCommentFactory commentFactory,
         IDateTimeProvider dateTimeProvider,
         IApplicationMapper applicationMapper,
-        IPostCommentRepository commentRepository)
+        IPostCommentFactory postCommentFactory,
+        IPostCommentRepository postCommentRepository)
     {
-        _repository = repository;
+        _postRepository = postRepository;
         _eventPublisher = eventPublisher;
         _userRepository = userRepository;
-        _commentFactory = commentFactory;
         _dateTimeProvider = dateTimeProvider;
         _applicationMapper = applicationMapper;
-        _commentRepository = commentRepository;
+        _postCommentFactory = postCommentFactory;
+        _postCommentRepository = postCommentRepository;
     }
 
     public async Task<PostCommentCollection> GetAllAsync(GetAllPostCommentsQuery query, CancellationToken cancellationToken)
     {
-        var existingPost = await _repository.GetByIdAsync(query.Filter.Id, cancellationToken);
+        var existingPost = await _postRepository.GetByIdAsync(query.Filter.Id, cancellationToken);
 
         if (existingPost.IsNull())
         {
             throw new PostNotFoundException(query.Filter.Id);
         }
 
-        var existingPostCommentCollection = await _commentRepository.GetAllAsync(
+        var existingPostCommentCollection = await _postCommentRepository.GetAllAsync(
             query.Filter,
             query.Sorting,
             query.Pagination,
@@ -51,14 +51,14 @@ internal class PostCommentService : IPostCommentService
 
     public async Task<PostComment> GetByIdAsync(GetPostCommentByIdQuery query, CancellationToken cancellationToken)
     {
-        var existingPost = await _repository.GetByIdAsync(query.Id.Id, cancellationToken);
+        var existingPost = await _postRepository.GetByIdAsync(query.Id.Id, cancellationToken);
 
         if (existingPost.IsNull())
         {
             throw new PostNotFoundException(query.Id.Id);
         }
 
-        var existingPostComment = await _commentRepository.GetByIdAsync(
+        var existingPostComment = await _postCommentRepository.GetByIdAsync(
             query.Id,
             query.Include,
             cancellationToken);
@@ -73,7 +73,7 @@ internal class PostCommentService : IPostCommentService
 
     public async Task<PostComment> AddAsync(AddPostCommentCommand command, CancellationToken cancellationToken)
     {
-        var existingPost = await _repository.GetByIdAsync(command.Id, cancellationToken);
+        var existingPost = await _postRepository.GetByIdAsync(command.Id, cancellationToken);
 
         if (existingPost.IsNull())
         {
@@ -87,8 +87,8 @@ internal class PostCommentService : IPostCommentService
             throw new UserNotFoundException(command.UserId);
         }
 
-        var postComment = _commentFactory.Create(command.Id, command.UserId, command.Content);
-        await _commentRepository.AddAsync(postComment, cancellationToken);
+        var postComment = _postCommentFactory.Create(command.Id, command.UserId, command.Content);
+        await _postCommentRepository.AddAsync(postComment, cancellationToken);
 
         var eventRequest = _applicationMapper.Map<PostCommentAddedEventRequest>(postComment);
         await _eventPublisher.PublishAsync(eventRequest, cancellationToken);
@@ -98,14 +98,14 @@ internal class PostCommentService : IPostCommentService
 
     public async Task<PostComment> UpdateAsync(UpdatePostCommentCommand command, CancellationToken cancellationToken)
     {
-        var existingPost = await _repository.GetByIdAsync(command.Id.Id, cancellationToken);
+        var existingPost = await _postRepository.GetByIdAsync(command.Id.Id, cancellationToken);
 
         if (existingPost.IsNull())
         {
             throw new PostNotFoundException(command.Id.Id);
         }
 
-        var existingPostComment = await _commentRepository.GetByIdAsync(command.Id, cancellationToken);
+        var existingPostComment = await _postCommentRepository.GetByIdAsync(command.Id, cancellationToken);
 
         if (existingPostComment.IsNull())
         {
@@ -119,7 +119,7 @@ internal class PostCommentService : IPostCommentService
 
         var utcNow = _dateTimeProvider.GetOffsetUtcNow();
         existingPostComment.Update(command.Content, utcNow);
-        await _commentRepository.UpdateAsync(existingPostComment, cancellationToken);
+        await _postCommentRepository.UpdateAsync(existingPostComment, cancellationToken);
 
         var eventRequest = _applicationMapper.Map<PostCommentUpdatedEventRequest>(existingPostComment);
         await _eventPublisher.PublishAsync(eventRequest, cancellationToken);
@@ -129,14 +129,14 @@ internal class PostCommentService : IPostCommentService
 
     public async Task DeleteAsync(DeletePostCommentCommand command, CancellationToken cancellationToken)
     {
-        var existingPost = await _repository.GetByIdAsync(command.Id.Id, cancellationToken);
+        var existingPost = await _postRepository.GetByIdAsync(command.Id.Id, cancellationToken);
 
         if (existingPost.IsNull())
         {
             throw new PostNotFoundException(command.Id.Id);
         }
 
-        var existingPostComment = await _commentRepository.GetByIdAsync(command.Id, cancellationToken);
+        var existingPostComment = await _postCommentRepository.GetByIdAsync(command.Id, cancellationToken);
 
         if (existingPostComment.IsNull())
         {
@@ -148,7 +148,7 @@ internal class PostCommentService : IPostCommentService
             throw new PostCommentForbiddenException(command.Id, command.UserId);
         }
 
-        await _commentRepository.DeleteAsync(existingPostComment, cancellationToken);
+        await _postCommentRepository.DeleteAsync(existingPostComment, cancellationToken);
 
         var eventRequest = _applicationMapper.Map<PostCommentDeletedEventRequest>(existingPostComment);
         await _eventPublisher.PublishAsync(eventRequest, cancellationToken);

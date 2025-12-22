@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Domain.Models;
+using InstaConnect.Identity.Infrastructure.Features.Users.Extensions;
 
 using MongoDB.Driver;
 
@@ -36,11 +37,7 @@ internal class UserRepository : IUserRepository
         CommonIncludeQuery<UserIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
-        var match = Builders<User>.Filter.Empty
-            .AndOptionalStartsWithCaseInsensitive(p => p.Name.Value, filter.Name.IsEmpty(), filter.Name.Value)
-            .AndOptionalStartsWithCaseInsensitive(p => p.FirstName, filter.FirstName.IsNullOrEmptyOrWhiteSpace(), filter.FirstName)
-            .AndOptionalStartsWithCaseInsensitive(p => p.LastName, filter.LastName.IsNullOrEmptyOrWhiteSpace(), filter.LastName);
-
+        var match = filter.GetFilter();
         var sortOrder = _sortOrderFactory.Create(sorting.Order);
         var sortProperty = _userSortPropertyFactory.Create(sorting.Property);
         var includeProperties = _userIncludePropertyFactory.Create(include?.Properties);
@@ -52,14 +49,13 @@ internal class UserRepository : IUserRepository
             .Includes(includeProperties)
             .Match(match);
 
-        var totalCount = (int)await _identityContext.Users.CountDocumentsAsync(match, cancellationToken: cancellationToken);
-
         var entities = await pipeline
             .Sort(sortOrder.Sort(sortProperty.Property))
             .Skip(offset)
             .Limit(pagination.PageSize)
             .ToListAsync(cancellationToken);
 
+        var totalCount = await _identityContext.Users.GetCount(match, cancellationToken);
         var collectionEntities = _userCollectionFactory.Create(entities, totalCount, pagination);
 
         return collectionEntities;
@@ -70,16 +66,13 @@ internal class UserRepository : IUserRepository
         CommonIncludeQuery<UserIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
-        var match = Builders<User>.Filter.Empty
-            .AndEqualsCaseInsensitive(p => p.Id.Id, id.Id);
-
         var includeProperties = _userIncludePropertyFactory.Create(include?.Properties);
 
         var entity = await _identityContext
             .Users
             .Aggregate()
             .Includes(includeProperties)
-            .Match(match)
+            .Match(id.GetFilter())
             .FirstOrDefaultAsync(cancellationToken);
 
         return entity;
@@ -97,16 +90,13 @@ internal class UserRepository : IUserRepository
         CommonIncludeQuery<UserIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
-        var match = Builders<User>.Filter.Empty
-            .AndEqualsCaseInsensitive(p => p.Name.Value, name.Value);
-
         var includeProperties = _userIncludePropertyFactory.Create(include?.Properties);
 
         var entity = await _identityContext
             .Users
             .Aggregate()
             .Includes(includeProperties)
-            .Match(match)
+            .Match(name.GetFilter())
             .FirstOrDefaultAsync(cancellationToken);
 
         return entity;
@@ -124,16 +114,13 @@ internal class UserRepository : IUserRepository
         CommonIncludeQuery<UserIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
-        var match = Builders<User>.Filter.Empty
-            .AndEqualsCaseInsensitive(p => p.Email.Value, email.Value);
-
         var includeProperties = _userIncludePropertyFactory.Create(include?.Properties);
 
         var entity = await _identityContext
             .Users
             .Aggregate()
             .Includes(includeProperties)
-            .Match(match)
+            .Match(email.GetFilter())
             .FirstOrDefaultAsync(cancellationToken);
 
         return entity;
@@ -162,21 +149,15 @@ internal class UserRepository : IUserRepository
 
     public async Task UpdateAsync(User entity, CancellationToken cancellationToken)
     {
-        var match = Builders<User>.Filter.Empty
-            .AndEqualsCaseInsensitive(p => p.Id.Id, entity.Id.Id);
-
         await _identityContext
             .Users
-            .UpdateAsync(_identityContext.ClientSessionHandle, match, entity, cancellationToken);
+            .UpdateAsync(_identityContext.ClientSessionHandle, entity.Id.GetFilter(), entity, cancellationToken);
     }
 
     public async Task DeleteAsync(User entity, CancellationToken cancellationToken)
     {
-        var match = Builders<User>.Filter.Empty
-            .AndEqualsCaseInsensitive(p => p.Id.Id, entity.Id.Id);
-
         await _identityContext
             .Users
-            .DeleteAsync(_identityContext.ClientSessionHandle, match, cancellationToken);
+            .DeleteAsync(_identityContext.ClientSessionHandle, entity.Id.GetFilter(), cancellationToken);
     }
 }

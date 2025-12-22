@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Domain.Models;
+using InstaConnect.Posts.Infrastructure.Features.Posts.Extensions;
 
 using MongoDB.Driver;
 
@@ -36,10 +37,7 @@ internal class PostRepository : IPostRepository
         CommonIncludeQuery<PostIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
-        var match = Builders<Post>.Filter.Empty
-            .AndOptionalStartsWithCaseInsensitive(p => p.User!.Name.Value, filter.UserName.IsEmpty(), filter.UserName.Value)
-            .AndOptionalStartsWithCaseInsensitive(p => p.Title, filter.Title.IsNullOrEmptyOrWhiteSpace(), filter.Title);
-
+        var match = filter.GetFilter();
         var sortOrder = _sortOrderFactory.Create(sorting.Order);
         var sortProperty = _postSortPropertyFactory.Create(sorting.Property);
         var includeProperties = _postIncludePropertyFactory.Create(include?.Properties);
@@ -51,14 +49,13 @@ internal class PostRepository : IPostRepository
             .Includes(includeProperties)
             .Match(match);
 
-        var totalCount = (int)await _postsContext.Posts.CountDocumentsAsync(match, cancellationToken: cancellationToken);
-
         var entities = await pipeline
             .Sort(sortOrder.Sort(sortProperty.Property))
             .Skip(offset)
             .Limit(pagination.PageSize)
             .ToListAsync(cancellationToken);
 
+        var totalCount = await _postsContext.Posts.GetCount(match, cancellationToken);
         var collectionEntities = _postCollectionFactory.Create(entities, totalCount, pagination);
 
         return collectionEntities;
@@ -69,16 +66,13 @@ internal class PostRepository : IPostRepository
         CommonIncludeQuery<PostIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
-        var match = Builders<Post>.Filter.Empty
-            .AndEqualsCaseInsensitive(p => p.Id.Id, id.Id);
-
         var includeProperties = _postIncludePropertyFactory.Create(include?.Properties);
 
         var entity = await _postsContext
             .Posts
             .Aggregate()
             .Includes(includeProperties)
-            .Match(match)
+            .Match(id.GetFilter())
             .FirstOrDefaultAsync(cancellationToken);
 
         return entity;
@@ -107,21 +101,15 @@ internal class PostRepository : IPostRepository
 
     public async Task UpdateAsync(Post entity, CancellationToken cancellationToken)
     {
-        var match = Builders<Post>.Filter.Empty
-            .AndEqualsCaseInsensitive(p => p.Id.Id, entity.Id.Id);
-
         await _postsContext
             .Posts
-            .UpdateAsync(_postsContext.ClientSessionHandle, match, entity, cancellationToken);
+            .UpdateAsync(_postsContext.ClientSessionHandle, entity.Id.GetFilter(), entity, cancellationToken);
     }
 
     public async Task DeleteAsync(Post entity, CancellationToken cancellationToken)
     {
-        var match = Builders<Post>.Filter.Empty
-            .AndEqualsCaseInsensitive(p => p.Id.Id, entity.Id.Id);
-
         await _postsContext
             .Posts
-            .DeleteAsync(_postsContext.ClientSessionHandle, match, cancellationToken);
+            .DeleteAsync(_postsContext.ClientSessionHandle, entity.Id.GetFilter(), cancellationToken);
     }
 }

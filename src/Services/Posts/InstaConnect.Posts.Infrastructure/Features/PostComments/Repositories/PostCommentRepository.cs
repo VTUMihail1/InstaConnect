@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Domain.Models;
+using InstaConnect.Posts.Infrastructure.Features.PostComments.Extensions;
 
 using MongoDB.Driver;
 
@@ -36,9 +37,7 @@ internal class PostCommentRepository : IPostCommentRepository
         CommonIncludeQuery<PostCommentIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
-        var match = Builders<PostComment>.Filter.Empty
-            .AndEqualsCaseInsensitive(p => p.Id.Id.Id, filter.Id.Id)
-            .AndOptionalStartsWithCaseInsensitive(p => p.User!.Name.Value, filter.UserName.IsEmpty(), filter.UserName.Value);
+        var match = filter.GetFilter();
 
         var sortOrder = _sortOrderFactory.Create(sorting.Order);
         var sortProperty = _postCommentSortPropertyFactory.Create(sorting.Property);
@@ -50,15 +49,13 @@ internal class PostCommentRepository : IPostCommentRepository
             .Aggregate()
             .Includes(includeProperties)
             .Match(match);
-
-        var totalCount = (int)await _postsContext.PostComments.CountDocumentsAsync(match, cancellationToken: cancellationToken);
-
         var entities = await pipeline
             .Sort(sortOrder.Sort(sortProperty.Property))
             .Skip(offset)
             .Limit(pagination.PageSize)
             .ToListAsync(cancellationToken);
 
+        var totalCount = await _postsContext.PostComments.GetCount(match, cancellationToken);
         var collectionEntities = _postCommentCollectionFactory.Create(entities, totalCount, pagination);
 
         return collectionEntities;
@@ -69,17 +66,13 @@ internal class PostCommentRepository : IPostCommentRepository
         CommonIncludeQuery<PostCommentIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
-        var match = Builders<PostComment>.Filter.Empty
-            .AndEqualsCaseInsensitive(p => p.Id.Id.Id, id.Id.Id)
-            .AndEqualsCaseInsensitive(p => p.Id.CommentId, id.CommentId);
-
         var includeProperties = _postCommentIncludePropertyFactory.Create(include?.Properties);
 
         var entity = await _postsContext
             .PostComments
             .Aggregate()
             .Includes(includeProperties)
-            .Match(match)
+            .Match(id.GetFilter())
             .FirstOrDefaultAsync(cancellationToken);
 
         return entity;
@@ -108,30 +101,22 @@ internal class PostCommentRepository : IPostCommentRepository
 
     public async Task UpdateAsync(PostComment entity, CancellationToken cancellationToken)
     {
-        var match = Builders<PostComment>.Filter.Empty
-            .AndEqualsCaseInsensitive(p => p.Id.Id.Id, entity.Id.Id.Id)
-            .AndEqualsCaseInsensitive(p => p.Id.CommentId, entity.Id.CommentId);
-
         await _postsContext
             .PostComments
             .UpdateAsync(
             _postsContext.ClientSessionHandle,
-            match,
+            entity.Id.GetFilter(),
             entity,
             cancellationToken);
     }
 
     public async Task DeleteAsync(PostComment entity, CancellationToken cancellationToken)
     {
-        var match = Builders<PostComment>.Filter.Empty
-            .AndEqualsCaseInsensitive(p => p.Id.Id.Id, entity.Id.Id.Id)
-            .AndEqualsCaseInsensitive(p => p.Id.CommentId, entity.Id.CommentId);
-
         await _postsContext
             .PostComments
             .DeleteAsync(
             _postsContext.ClientSessionHandle,
-            match,
+            entity.Id.GetFilter(),
             cancellationToken);
     }
 }

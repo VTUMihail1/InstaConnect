@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Domain.Models;
+using InstaConnect.Posts.Infrastructure.Features.Users.Extensions;
 
 using MongoDB.Driver;
 
@@ -22,16 +23,13 @@ internal class UserRepository : IUserRepository
         CommonIncludeQuery<UserIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
-        var match = Builders<User>.Filter.Empty
-            .AndEqualsCaseInsensitive(p => p.Id.Id, id.Id);
-
         var includeProperties = _userIncludePropertyFactory.Create(include?.Properties);
 
         var entity = await _postsContext
             .Users
             .Aggregate()
             .Includes(includeProperties)
-            .Match(match)
+            .Match(id.GetFilter())
             .FirstOrDefaultAsync(cancellationToken);
 
         return entity;
@@ -49,16 +47,13 @@ internal class UserRepository : IUserRepository
         CommonIncludeQuery<UserIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
-        var match = Builders<User>.Filter.Empty
-            .AndEqualsCaseInsensitive(p => p.Name.Value, name.Value);
-
         var includeProperties = _userIncludePropertyFactory.Create(include?.Properties);
 
         var entity = await _postsContext
             .Users
             .Aggregate()
             .Includes(includeProperties)
-            .Match(match)
+            .Match(name.GetFilter())
             .FirstOrDefaultAsync(cancellationToken);
 
         return entity;
@@ -76,16 +71,13 @@ internal class UserRepository : IUserRepository
         CommonIncludeQuery<UserIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
-        var match = Builders<User>.Filter.Empty
-            .AndEqualsCaseInsensitive(p => p.Email.Value, email.Value);
-
         var includeProperties = _userIncludePropertyFactory.Create(include?.Properties);
 
         var entity = await _postsContext
             .Users
             .Aggregate()
             .Includes(includeProperties)
-            .Match(match)
+            .Match(email.GetFilter())
             .FirstOrDefaultAsync(cancellationToken);
 
         return entity;
@@ -114,21 +106,15 @@ internal class UserRepository : IUserRepository
 
     public async Task UpdateAsync(User entity, CancellationToken cancellationToken)
     {
-        var match = Builders<User>.Filter.Empty
-            .AndEqualsCaseInsensitive(p => p.Id.Id, entity.Id.Id);
-
         await _postsContext
             .Users
-            .UpdateAsync(_postsContext.ClientSessionHandle, match, entity, cancellationToken);
+            .UpdateAsync(_postsContext.ClientSessionHandle, entity.Id.GetFilter(), entity, cancellationToken);
     }
 
     public async Task DeleteAsync(User entity, CancellationToken cancellationToken)
     {
-        var match = Builders<User>.Filter.Empty
-            .AndEqualsCaseInsensitive(p => p.Id.Id, entity.Id.Id);
-
         await _postsContext
             .Users
-            .DeleteAsync(_postsContext.ClientSessionHandle, match, cancellationToken);
+            .DeleteAsync(_postsContext.ClientSessionHandle, entity.Id.GetFilter(), cancellationToken);
     }
 }

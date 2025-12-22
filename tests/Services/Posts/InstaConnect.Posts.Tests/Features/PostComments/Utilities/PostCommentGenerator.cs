@@ -1,8 +1,4 @@
-﻿using System.Linq;
-
-using InstaConnect.Posts.Tests.Features.Posts.Utilities;
-
-namespace InstaConnect.Posts.Tests.Features.PostComments.Utilities;
+﻿namespace InstaConnect.Posts.Tests.Features.PostComments.Utilities;
 public static class PostCommentGenerator
 {
     public static ICollection<PostComment> GenerateRange(this PostComment template, IEnumerable<User> users)

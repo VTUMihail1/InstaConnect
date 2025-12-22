@@ -63,7 +63,7 @@ public static class CommonEquals
             .Skip(offset)
             .Take(request.PageSize)
             .ToDictionary(entityKey);
-            
+
         return expected.Count == entitiesByKey.Count &&
                expected.All(e =>
                entitiesByKey.TryGetValue(expectedKey(e), out var a) &&

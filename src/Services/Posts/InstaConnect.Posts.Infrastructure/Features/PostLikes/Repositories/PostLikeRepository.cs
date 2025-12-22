@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Domain.Models;
+using InstaConnect.Posts.Infrastructure.Features.PostLikes.Extensions;
 
 using MongoDB.Driver;
 
@@ -36,10 +37,7 @@ internal class PostLikeRepository : IPostLikeRepository
         CommonIncludeQuery<PostLikeIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
-        var match = Builders<PostLike>.Filter.Empty
-            .AndEqualsCaseInsensitive(p => p.Id.Id.Id, filter.Id.Id)
-            .AndOptionalStartsWithCaseInsensitive(p => p.User!.Name.Value, filter.UserName.IsEmpty(), filter.UserName.Value);
-
+        var match = filter.GetFilter();
         var sortOrder = _sortOrderFactory.Create(sorting.Order);
         var sortProperty = _postLikeSortPropertyFactory.Create(sorting.Property);
         var includeProperties = _postLikeIncludePropertyFactory.Create(include?.Properties);
@@ -51,14 +49,13 @@ internal class PostLikeRepository : IPostLikeRepository
             .Includes(includeProperties)
             .Match(match);
 
-        var totalCount = (int)await _postsContext.PostLikes.CountDocumentsAsync(match, cancellationToken: cancellationToken);
-
         var entities = await pipeline
             .Sort(sortOrder.Sort(sortProperty.Property))
             .Skip(offset)
             .Limit(pagination.PageSize)
             .ToListAsync(cancellationToken);
 
+        var totalCount = await _postsContext.PostLikes.GetCount(match, cancellationToken);
         var collectionEntities = _postLikeCollectionFactory.Create(entities, totalCount, pagination);
 
         return collectionEntities;
@@ -69,17 +66,13 @@ internal class PostLikeRepository : IPostLikeRepository
         CommonIncludeQuery<PostLikeIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
-        var match = Builders<PostLike>.Filter.Empty
-            .AndEqualsCaseInsensitive(p => p.Id.Id.Id, id.Id.Id)
-            .AndEqualsCaseInsensitive(p => p.Id.UserId.Id, id.UserId.Id);
-
         var includeProperties = _postLikeIncludePropertyFactory.Create(include?.Properties);
 
         var entity = await _postsContext
             .PostLikes
             .Aggregate()
             .Includes(includeProperties)
-            .Match(match)
+            .Match(id.GetFilter())
             .FirstOrDefaultAsync(cancellationToken);
 
         return entity;
@@ -108,12 +101,8 @@ internal class PostLikeRepository : IPostLikeRepository
 
     public async Task DeleteAsync(PostLike entity, CancellationToken cancellationToken)
     {
-        var match = Builders<PostLike>.Filter.Empty
-            .AndEqualsCaseInsensitive(p => p.Id.Id.Id, entity.Id.Id.Id)
-            .AndEqualsCaseInsensitive(p => p.Id.UserId.Id, entity.Id.UserId.Id);
-
         await _postsContext
             .PostLikes
-            .DeleteAsync(_postsContext.ClientSessionHandle, match, cancellationToken);
+            .DeleteAsync(_postsContext.ClientSessionHandle, entity.Id.GetFilter(), cancellationToken);
     }
 }

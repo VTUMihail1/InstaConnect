@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Domain.Models;
+using InstaConnect.Identity.Infrastructure.Features.RefreshTokens.Extensions;
 
 using MongoDB.Driver;
 
@@ -22,17 +23,13 @@ internal class RefreshTokenRepository : IRefreshTokenRepository
         CommonIncludeQuery<RefreshTokenIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
-        var match = Builders<RefreshToken>.Filter.Empty
-            .AndEqualsCaseInsensitive(p => p.Id.Id.Id, id.Id.Id)
-            .AndEqualsCaseInsensitive(p => p.Id.Value, id.Value);
-
         var includeProperties = _refreshTokenIncludePropertyFactory.Create(include?.Properties);
 
         var entity = await _identityContext
             .RefreshTokens
             .Aggregate()
             .Includes(includeProperties)
-            .Match(match)
+            .Match(id.GetFilter())
             .FirstOrDefaultAsync(cancellationToken);
 
         return entity;
@@ -54,14 +51,10 @@ internal class RefreshTokenRepository : IRefreshTokenRepository
 
     public async Task DeleteAsync(RefreshToken entity, CancellationToken cancellationToken)
     {
-        var match = Builders<RefreshToken>.Filter.Empty
-            .AndEqualsCaseInsensitive(p => p.Id.Id.Id, entity.Id.Id.Id)
-            .AndEqualsCaseInsensitive(p => p.Id.Value, entity.Id.Value);
-
         await _identityContext.RefreshTokens
             .DeleteAsync(
             _identityContext.ClientSessionHandle,
-            match,
+            entity.Id.GetFilter(),
             cancellationToken);
     }
 }

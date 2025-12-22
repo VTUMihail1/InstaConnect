@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Common.Infrastructure.Helpers;
-using InstaConnect.Posts.Application.Features.PostLikes.Models;
 
 namespace InstaConnect.Posts.Presentation.Tests.Features.Posts.Utilities;
 public static class PostMockSetups

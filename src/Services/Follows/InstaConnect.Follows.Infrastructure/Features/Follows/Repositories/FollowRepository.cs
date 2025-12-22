@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Domain.Models;
+using InstaConnect.Follows.Infrastructure.Features.Follows.Extensions;
 
 using MongoDB.Driver;
 
@@ -39,10 +40,7 @@ internal class FollowRepository : IFollowRepository
         CommonIncludeQuery<FollowIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
-        var match = Builders<Follow>.Filter.Empty
-            .AndEqualsCaseInsensitive(p => p.Id.FollowerId.Id, filter.FollowerId.Id)
-            .AndOptionalStartsWithCaseInsensitive(p => p.Following!.Name.Value, filter.FollowingName.IsEmpty(), filter.FollowingName.Value);
-
+        var match = filter.GetFilter();
         var sortOrder = _sortOrderFactory.Create(sorting.Order);
         var sortProperty = _followByFollowerSortPropertyFactory.Create(sorting.Property);
         var includeProperties = _followIncludePropertyFactory.Create(include?.Properties);
@@ -54,14 +52,13 @@ internal class FollowRepository : IFollowRepository
             .Includes(includeProperties)
             .Match(match);
 
-        var totalCount = (int)await _followsContext.Follows.CountDocumentsAsync(match, cancellationToken: cancellationToken);
-
         var entities = await pipeline
             .Sort(sortOrder.Sort(sortProperty.Property))
             .Skip(offset)
             .Limit(pagination.PageSize)
             .ToListAsync(cancellationToken);
 
+        var totalCount = await _followsContext.Follows.GetCount(match, cancellationToken);
         var collectionEntities = _followCollectionFactory.Create(entities, totalCount, pagination);
 
         return collectionEntities;
@@ -74,10 +71,7 @@ internal class FollowRepository : IFollowRepository
         CommonIncludeQuery<FollowIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
-        var match = Builders<Follow>.Filter.Empty
-            .AndEqualsCaseInsensitive(p => p.Id.FollowingId.Id, filter.FollowingId.Id)
-            .AndOptionalStartsWithCaseInsensitive(p => p.Follower!.Name.Value, filter.FollowerName.IsEmpty(), filter.FollowerName.Value);
-
+        var match = filter.GetFilter();
         var sortOrder = _sortOrderFactory.Create(sorting.Order);
         var sortProperty = _followByFollowingSortPropertyFactory.Create(sorting.Property);
         var includeProperties = _followIncludePropertyFactory.Create(include?.Properties);
@@ -89,14 +83,13 @@ internal class FollowRepository : IFollowRepository
             .Includes(includeProperties)
             .Match(match);
 
-        var totalCount = (int)await _followsContext.Follows.CountDocumentsAsync(match, cancellationToken: cancellationToken);
-
         var entities = await pipeline
             .Sort(sortOrder.Sort(sortProperty.Property))
             .Skip(offset)
             .Limit(pagination.PageSize)
             .ToListAsync(cancellationToken);
 
+        var totalCount = await _followsContext.Follows.GetCount(match, cancellationToken);
         var collectionEntities = _followCollectionFactory.Create(entities, totalCount, pagination);
 
         return collectionEntities;
@@ -107,17 +100,13 @@ internal class FollowRepository : IFollowRepository
         CommonIncludeQuery<FollowIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
-        var match = Builders<Follow>.Filter.Empty
-            .AndEqualsCaseInsensitive(p => p.Id.FollowerId.Id, id.FollowerId.Id)
-            .AndEqualsCaseInsensitive(p => p.Id.FollowingId.Id, id.FollowingId.Id);
-
         var includeProperties = _followIncludePropertyFactory.Create(include?.Properties);
 
         var entity = await _followsContext
             .Follows
             .Aggregate()
             .Includes(includeProperties)
-            .Match(match)
+            .Match(id.GetFilter())
             .FirstOrDefaultAsync(cancellationToken);
 
         return entity;
@@ -146,15 +135,11 @@ internal class FollowRepository : IFollowRepository
 
     public async Task DeleteAsync(Follow entity, CancellationToken cancellationToken)
     {
-        var match = Builders<Follow>.Filter.Empty
-            .AndEqualsCaseInsensitive(p => p.Id.FollowerId.Id, entity.Id.FollowerId.Id)
-            .AndEqualsCaseInsensitive(p => p.Id.FollowingId.Id, entity.Id.FollowingId.Id);
-
         await _followsContext
             .Follows
             .DeleteAsync(
             _followsContext.ClientSessionHandle,
-            match,
+            entity.Id.GetFilter(),
             cancellationToken);
     }
 }

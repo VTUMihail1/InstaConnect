@@ -11,9 +11,9 @@ public static class PostCommentLikeGenerator
                         template.Id.CommentId,
                         user.Id),
                     PostCommentLikeDataFaker.GetCreatedAtUtc());
-            
+
                 postCommentLike.AddUser(user);
-            
+
                 return postCommentLike;
             })];
     }

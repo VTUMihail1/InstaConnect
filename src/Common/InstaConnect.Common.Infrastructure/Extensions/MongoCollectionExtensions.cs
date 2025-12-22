@@ -4,6 +4,14 @@ namespace InstaConnect.Common.Infrastructure.Extensions;
 
 public static class MongoCollectionExtensions
 {
+    public static async Task<int> GetCount<T>(
+        this IMongoCollection<T> collection,
+        FilterDefinition<T> filter,
+        CancellationToken cancellationToken)
+    {
+        return (int)await collection.CountDocumentsAsync(filter, cancellationToken: cancellationToken);
+    }
+
     public static async Task AddAsync<T>(
         this IMongoCollection<T> collection,
         IClientSessionHandle? session,
@@ -18,7 +26,6 @@ public static class MongoCollectionExtensions
         }
 
         await collection.InsertOneAsync(session, entity, null, cancellationToken);
-
     }
 
     public static async Task AddRangeAsync<T>(

@@ -4,7 +4,6 @@ using InstaConnect.Posts.Application.Features.Posts.Models;
 using InstaConnect.Posts.Application.Tests.Features.Posts.Utilities;
 using InstaConnect.Posts.Application.Tests.Features.Users.Utilities;
 using InstaConnect.Posts.Domain.Features.Posts.Models.ValueObjects;
-using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 
 namespace InstaConnect.Posts.Application.Tests.Features.Posts.Utilities;
 
