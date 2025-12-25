@@ -10,30 +10,24 @@ public static class PostLikeMockSetups
         CancellationToken cancellationToken)
     {
         var paginator = PaginatorFactory.Create();
-        var offset = paginator.GetOffset(request.Page, request.PageSize);
-        var postLikeQueryResponses = postLikes
-            .Where(a => a.MatchesFilter(request))
-            .Select(postLike => new PostLikeQueryResponse(
-                     postLike.Id.Id.Id,
+        var filteredPostLikes = postLikes.Filter(
+            a => a.MatchesFilter(request), request, p => new PostLikeQueryResponse(
+                p.Id.Id.Id,
                 new(
-                    postLike.User!.Id.Id,
-                    postLike.User.Name.Value,
-                    postLike.User.ProfileImage?.Url),
-                postLike.CreatedAtUtc))
-            .OrderBy(a => a.CreatedAtUtc)
-            .Skip(offset)
-            .Take(request.PageSize)
-            .ToList();
+                    p.User!.Id.Id,
+                    p.User.Name.Value,
+                    p.User.ProfileImage?.Url),
+                p.CreatedAtUtc));
 
-        var postLikeCollectionQueryResponse = new PostLikeCollectionQueryResponse(
-            postLikeQueryResponses,
+        var postLikeResponse = new PostLikeCollectionQueryResponse(
+            filteredPostLikes,
             request.Page,
             request.PageSize,
             postLikes.Count,
             paginator.HasNextPage(request.Page, request.PageSize, postLikes.Count),
             paginator.HasPreviousPage(request.Page));
 
-        var response = new GetAllPostLikesQueryResponse(postLikeCollectionQueryResponse);
+        var response = new GetAllPostLikesQueryResponse(postLikeResponse);
 
         applicationSender
             .SendAsync(PostLikeMatcher.IsGetAllPostLikesQueryRequest(request), cancellationToken)

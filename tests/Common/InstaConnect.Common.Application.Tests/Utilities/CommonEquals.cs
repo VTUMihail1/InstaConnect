@@ -28,14 +28,7 @@ public static class CommonEquals
         where TEntity : IEntity
         where TKey : notnull
     {
-        var paginator = PaginatorFactory.Create();
-        var offset = paginator.GetOffset(request.Page, request.PageSize);
-        var entitiesByKey = entities
-            .Where(filter)
-            .OrderBy(a => a.CreatedAtUtc)
-            .Skip(offset)
-            .Take(request.PageSize)
-            .ToDictionary(entityKey);
+        var entitiesByKey = entities.FilterToDictionary(filter, request, entityKey);
 
         return expected.Count == entitiesByKey.Count &&
                expected.All(e =>
@@ -53,14 +46,7 @@ public static class CommonEquals
         where TRequest : IPaginatableQueryRequest
         where TEntity : IEntity
     {
-        var paginator = PaginatorFactory.Create();
-        var offset = paginator.GetOffset(request.Page, request.PageSize);
-        var filteredEntities = entities.Where(filter);
-        var sortedEntities = termTransformer
-            .Transform(filteredEntities)
-            .Skip(offset)
-            .Take(request.PageSize)
-            .ToList();
+        var sortedEntities = entities.Filter(termTransformer, request, filter);
 
         return expected.Count == sortedEntities.Count &&
                expected.Zip(sortedEntities, (e, a) => matcher(e, a))

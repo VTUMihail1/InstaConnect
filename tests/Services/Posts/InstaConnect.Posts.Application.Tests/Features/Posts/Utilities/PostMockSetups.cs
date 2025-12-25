@@ -1,4 +1,5 @@
-﻿using InstaConnect.Common.Infrastructure.Helpers;
+﻿using InstaConnect.Common.Application.Tests.Utilities;
+using InstaConnect.Common.Infrastructure.Helpers;
 
 namespace InstaConnect.Posts.Application.Tests.Features.Posts.Utilities;
 public static class PostMockSetups
@@ -11,16 +12,10 @@ public static class PostMockSetups
         CancellationToken cancellationToken)
     {
         var paginator = PaginatorFactory.Create();
-        var offset = paginator.GetOffset(request.Page, request.PageSize);
-        var postsPaginated = posts
-            .Where(a => a.MatchesFilter(request))
-            .OrderBy(a => a.CreatedAtUtc)
-            .Skip(offset)
-            .Take(request.PageSize)
-            .ToList();
+        var filteredPosts = posts.Filter(a => a.MatchesFilter(request), request);
 
         var response = new PostCollection(
-            postsPaginated,
+            filteredPosts,
             request.Page,
             request.PageSize,
             posts.Count,

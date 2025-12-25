@@ -10,33 +10,27 @@ public static class PostCommentMockSetups
         CancellationToken cancellationToken)
     {
         var paginator = PaginatorFactory.Create();
-        var offset = paginator.GetOffset(request.Page, request.PageSize);
-        var postCommentQueryResponses = postComments
-            .Where(a => a.MatchesFilter(request))
-            .Select(postComment => new PostCommentQueryResponse(
-                                       postComment.Id.Id.Id,
-                                       postComment.Id.CommentId,
-                                       postComment.Content,
+        var filteredPostComments = postComments.Filter(
+            a => a.MatchesFilter(request), request, p => new PostCommentQueryResponse(
+                                       p.Id.Id.Id,
+                                       p.Id.CommentId,
+                                       p.Content,
                                        new(
-                                           postComment.User!.Id.Id,
-                                           postComment.User.Name.Value,
-                                           postComment.User.ProfileImage?.Url),
-                                       postComment.CreatedAtUtc,
-                                       postComment.UpdatedAtUtc))
-            .OrderBy(a => a.CreatedAtUtc)
-            .Skip(offset)
-            .Take(request.PageSize)
-            .ToList();
+                                           p.User!.Id.Id,
+                                           p.User.Name.Value,
+                                           p.User.ProfileImage?.Url),
+                                       p.CreatedAtUtc,
+                                       p.UpdatedAtUtc));
 
-        var postCommentCollectionQueryResponse = new PostCommentCollectionQueryResponse(
-            postCommentQueryResponses,
+        var postCommentResponse = new PostCommentCollectionQueryResponse(
+            filteredPostComments,
             request.Page,
             request.PageSize,
             postComments.Count,
             paginator.HasNextPage(request.Page, request.PageSize, postComments.Count),
             paginator.HasPreviousPage(request.Page));
 
-        var response = new GetAllPostCommentsQueryResponse(postCommentCollectionQueryResponse);
+        var response = new GetAllPostCommentsQueryResponse(postCommentResponse);
 
         applicationSender
             .SendAsync(PostCommentMatcher.IsGetAllPostCommentsQueryRequest(request), cancellationToken)

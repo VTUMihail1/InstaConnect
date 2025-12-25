@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Scrutor;
 
 namespace InstaConnect.Common.Domain.Extensions;
+
 public static class ServiceCollectionExtentions
 {
     public static IServiceCollection AddMapper(this IServiceCollection serviceCollection, params Assembly[] assemblies)

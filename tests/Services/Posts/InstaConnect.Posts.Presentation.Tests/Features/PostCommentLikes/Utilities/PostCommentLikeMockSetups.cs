@@ -10,31 +10,25 @@ public static class PostCommentLikeMockSetups
         CancellationToken cancellationToken)
     {
         var paginator = PaginatorFactory.Create();
-        var offset = paginator.GetOffset(request.Page, request.PageSize);
-        var postCommentLikeQueryResponses = postCommentLikes
-            .Where(a => a.MatchesFilter(request))
-            .Select(postComment => new PostCommentLikeQueryResponse(
-                                       postComment.Id.CommentId.Id.Id,
-                                       postComment.Id.CommentId.CommentId,
+        var filteredPostCommentLikes = postCommentLikes.Filter(
+            a => a.MatchesFilter(request), request, p => new PostCommentLikeQueryResponse(
+                                       p.Id.CommentId.Id.Id,
+                                       p.Id.CommentId.CommentId,
                                        new(
-                                           postComment.User!.Id.Id,
-                                           postComment.User.Name.Value,
-                                           postComment.User.ProfileImage?.Url),
-                                       postComment.CreatedAtUtc))
-            .OrderBy(a => a.CreatedAtUtc)
-            .Skip(offset)
-            .Take(request.PageSize)
-            .ToList();
+                                           p.User!.Id.Id,
+                                           p.User.Name.Value,
+                                           p.User.ProfileImage?.Url),
+                                       p.CreatedAtUtc));
 
-        var postCommentLikeCollectionQueryResponse = new PostCommentLikeCollectionQueryResponse(
-            postCommentLikeQueryResponses,
+        var postCommentLikeResponse = new PostCommentLikeCollectionQueryResponse(
+            filteredPostCommentLikes,
             request.Page,
             request.PageSize,
             postCommentLikes.Count,
             paginator.HasNextPage(request.Page, request.PageSize, postCommentLikes.Count),
             paginator.HasPreviousPage(request.Page));
 
-        var response = new GetAllPostCommentLikesQueryResponse(postCommentLikeCollectionQueryResponse);
+        var response = new GetAllPostCommentLikesQueryResponse(postCommentLikeResponse);
 
         applicationSender
             .SendAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesQueryRequest(request), cancellationToken)

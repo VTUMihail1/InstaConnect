@@ -1,4 +1,5 @@
-﻿using InstaConnect.Common.Infrastructure.Helpers;
+﻿using InstaConnect.Common.Application.Tests.Utilities;
+using InstaConnect.Common.Infrastructure.Helpers;
 
 namespace InstaConnect.Posts.Application.Tests.Features.PostCommentLikes.Utilities;
 public static class PostCommentLikeMockSetups
@@ -11,16 +12,10 @@ public static class PostCommentLikeMockSetups
         CancellationToken cancellationToken)
     {
         var paginator = PaginatorFactory.Create();
-        var offset = paginator.GetOffset(request.Page, request.PageSize);
-        var postCommentLikesPaginated = postCommentLikes
-            .Where(a => a.MatchesFilter(request))
-            .OrderBy(a => a.CreatedAtUtc)
-            .Skip(offset)
-            .Take(request.PageSize)
-            .ToList();
+        var filteredPostCommentLikes = postCommentLikes.Filter(a => a.MatchesFilter(request), request);
 
         var response = new PostCommentLikeCollection(
-            postCommentLikesPaginated,
+            filteredPostCommentLikes,
             request.Page,
             request.PageSize,
             postCommentLikes.Count,

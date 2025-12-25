@@ -10,10 +10,8 @@ public static class PostMockSetups
         CancellationToken cancellationToken)
     {
         var paginator = PaginatorFactory.Create();
-        var offset = paginator.GetOffset(request.Page, request.PageSize);
-        var postQueryResponses = posts
-            .Where(a => a.MatchesFilter(request))
-            .Select(p => new PostQueryResponse(
+        var filteredPosts = posts.Filter(
+            a => a.MatchesFilter(request), request, p => new PostQueryResponse(
                      p.Id.Id,
                      p.Title,
                      p.Content,
@@ -22,21 +20,17 @@ public static class PostMockSetups
                          p.User.Name.Value,
                          p.User.ProfileImage?.Url),
                      p.CreatedAtUtc,
-                     p.UpdatedAtUtc))
-            .OrderBy(a => a.CreatedAtUtc)
-            .Skip(offset)
-            .Take(request.PageSize)
-            .ToList();
+                     p.UpdatedAtUtc));
 
-        var postQueryCollectionResponses = new PostCollectionQueryResponse(
-            postQueryResponses,
+        var postResponse = new PostCollectionQueryResponse(
+            filteredPosts,
             request.Page,
             request.PageSize,
             posts.Count,
             paginator.HasNextPage(request.Page, request.PageSize, posts.Count),
             paginator.HasPreviousPage(request.Page));
 
-        var response = new GetAllPostsQueryResponse(postQueryCollectionResponses);
+        var response = new GetAllPostsQueryResponse(postResponse);
 
         applicationSender
             .SendAsync(PostMatcher.IsGetAllPostsQueryRequest(request), cancellationToken)

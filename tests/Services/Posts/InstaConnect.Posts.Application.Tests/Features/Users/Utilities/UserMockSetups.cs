@@ -2,24 +2,24 @@
 public static class UserMockSetups
 {
     public static void SetupAddCommand(
-        this IUserService UserService,
+        this IUserService userService,
         AddUserCommandRequest request,
-        User User,
+        User user,
         CancellationToken cancellationToken)
     {
-        UserService
+        userService
             .AddAsync(UserMatcher.IsAddUserCommand(request), cancellationToken)
-            .ReturnsResponse(User);
+            .ReturnsResponse(user);
     }
 
     public static void SetupUpdateCommand(
-        this IUserService UserService,
+        this IUserService userService,
         UpdateUserCommandRequest request,
-        User User,
+        User user,
         CancellationToken cancellationToken)
     {
-        UserService
+        userService
             .UpdateAsync(UserMatcher.IsUpdateUserCommand(request), cancellationToken)
-            .ReturnsResponse(User);
+            .ReturnsResponse(user);
     }
 }
