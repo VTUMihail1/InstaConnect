@@ -14,9 +14,9 @@ public class GetAllPostCommentsControllerUnitTests : BasePostCommentPresentation
         _requestBuilder = _requestBuilderFactory.Create(PostComment);
         _request = _requestBuilder.Build();
 
-        _postCommentController = new(ApplicationMapper, ApplicationSender);
+        _postCommentController = new(Mapper, Sender);
 
-        ApplicationSender.SetupGetAllQueryRequest(_request, PostComments, CancellationToken);
+        Sender.SetupGetAllQueryRequest(_request, PostComments, CancellationToken);
     }
 
     [Fact]
@@ -46,6 +46,6 @@ public class GetAllPostCommentsControllerUnitTests : BasePostCommentPresentation
         await _postCommentController.GetAllAsync(_request, CancellationToken);
 
         // Assert
-        await ApplicationSender.ShouldReceiveOneSendAsync(_request, CancellationToken);
+        await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);
     }
 }

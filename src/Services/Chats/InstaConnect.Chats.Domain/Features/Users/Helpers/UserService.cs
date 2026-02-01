@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Domain.Extensions;
-
-namespace InstaConnect.Chats.Domain.Features.Users.Helpers;
+﻿namespace InstaConnect.Chats.Domain.Features.Users.Helpers;
 internal class UserService : IUserService
 {
     private readonly IUserFactory _userFactory;

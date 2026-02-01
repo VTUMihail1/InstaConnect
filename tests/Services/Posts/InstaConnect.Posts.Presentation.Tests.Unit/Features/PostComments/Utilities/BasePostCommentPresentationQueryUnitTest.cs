@@ -1,14 +1,16 @@
-﻿namespace InstaConnect.Posts.Presentation.Tests.Unit.Features.PostComments.Utilities;
+﻿using InstaConnect.Posts.Presentation.Extensions;
 
-public abstract class BasePostCommentPresentationQueryUnitTest : BasePostCommentPresentationUnitTest
+namespace InstaConnect.Posts.Presentation.Tests.Unit.Features.PostComments.Utilities;
+
+public abstract class BasePostCommentPresentationQueryUnitTest : BasePostCommentTest
 {
-    protected ICollection<User> Users { get; }
+    protected IApplicationSender Sender { get; }
 
-    protected ICollection<PostComment> PostComments { get; }
+    protected IApplicationMapper Mapper { get; }
 
     protected BasePostCommentPresentationQueryUnitTest()
     {
-        Users = User.GenerateRange();
-        PostComments = PostComment.GenerateRange(Users);
+        Sender = MockFactory.CreateApplicationSender();
+        Mapper = MockFactory.CreateMapper(PostPresentationReference.Assembly);
     }
 }

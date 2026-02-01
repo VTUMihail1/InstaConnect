@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.Posts.Controllers.v1;
 
-public class UpdatePostFunctionalTests : BasePostPresentationFunctionalTest
+public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTest
 {
     private readonly UpdatePostApiRequestBuilderFactory _requestBuilderFactory;
     private readonly UpdatePostApiRequestBuilder _requestBuilder;
@@ -273,7 +273,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationFunctionalTest
         var response = await HttpClient.UpdatePostAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(Post);
+        response.ShouldSatisfy(Post, _request);
     }
 
     [Theory]
@@ -288,7 +288,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationFunctionalTest
         var response = await HttpClient.UpdatePostAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(Post);
+        response.ShouldSatisfy(Post, request);
     }
 
     [Theory]
@@ -303,7 +303,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationFunctionalTest
         var response = await HttpClient.UpdatePostAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(Post);
+        response.ShouldSatisfy(Post, request);
     }
 
     [Fact]
@@ -311,7 +311,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationFunctionalTest
     {
         // Act
         var response = await HttpClient.UpdatePostAsync(_request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
 
         // Assert
         post.ShouldSatisfy(_request);
@@ -327,7 +327,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationFunctionalTest
 
         // Act
         var response = await HttpClient.UpdatePostAsync(request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
 
         // Assert
         post.ShouldSatisfy(_request);
@@ -343,7 +343,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationFunctionalTest
 
         // Act
         var response = await HttpClient.UpdatePostAsync(request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
 
         // Assert
         post.ShouldSatisfy(_request);
@@ -354,7 +354,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationFunctionalTest
     {
         // Act
         var response = await HttpClient.UpdatePostAsync(_request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedUpdatedAsync(post, CancellationToken);
@@ -370,7 +370,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationFunctionalTest
 
         // Act
         var response = await HttpClient.UpdatePostAsync(request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedUpdatedAsync(post, CancellationToken);
@@ -386,7 +386,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationFunctionalTest
 
         // Act
         var response = await HttpClient.UpdatePostAsync(request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedUpdatedAsync(post, CancellationToken);

@@ -1,48 +1,55 @@
-﻿using InstaConnect.Posts.Application.Tests.Features.Posts.Utilities;
+﻿using InstaConnect.Posts.Application.Features.Posts.Queries.GetAllForUser;
+using InstaConnect.Posts.Application.Tests.Features.Posts.Utilities;
 
 namespace InstaConnect.Posts.Application.Tests.Features.Posts.Assertions;
 
 public static class PostMockAssertions
 {
     public static async Task ShouldReceiveOneGetAllAsync(
-        this IPostService postService,
+        this IPostQueryService postService,
         GetAllPostsQueryRequest request,
-        CommonIncludeQuery<PostIncludeProperty> include,
         CancellationToken cancellationToken)
     {
-        await postService.ShouldHaveReceived(1).GetAllAsync(PostMatcher.IsGetAllPostsQuery(request, include), cancellationToken);
+        await postService.ShouldHaveReceivedOne().GetAllAsync(PostMatcher.IsGetAllPostsQuery(request), cancellationToken);
+    }
+
+    public static async Task ShouldReceiveOneGetAllForUserAsync(
+        this IPostQueryService postService,
+        GetAllPostsForUserQueryRequest request,
+        CancellationToken cancellationToken)
+    {
+        await postService.ShouldHaveReceivedOne().GetAllForUserAsync(PostMatcher.IsGetAllPostsForUserQuery(request), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneGetByIdAsync(
-        this IPostService postService,
+        this IPostQueryService postService,
         GetPostByIdQueryRequest request,
-        CommonIncludeQuery<PostIncludeProperty> include,
         CancellationToken cancellationToken)
     {
-        await postService.ShouldHaveReceived(1).GetByIdAsync(PostMatcher.IsGetPostByIdQuery(request, include), cancellationToken);
+        await postService.ShouldHaveReceivedOne().GetByIdAsync(PostMatcher.IsGetPostByIdQuery(request), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneAddAsync(
-        this IPostService postService,
+        this IPostCommandService postService,
         AddPostCommandRequest request,
         CancellationToken cancellationToken)
     {
-        await postService.ShouldHaveReceived(1).AddAsync(PostMatcher.IsAddPostCommand(request), cancellationToken);
+        await postService.ShouldHaveReceivedOne().AddAsync(PostMatcher.IsAddPostCommand(request), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneUpdateAsync(
-        this IPostService postService,
+        this IPostCommandService postService,
         UpdatePostCommandRequest request,
         CancellationToken cancellationToken)
     {
-        await postService.ShouldHaveReceived(1).UpdateAsync(PostMatcher.IsUpdatePostCommand(request), cancellationToken);
+        await postService.ShouldHaveReceivedOne().UpdateAsync(PostMatcher.IsUpdatePostCommand(request), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneDeleteAsync(
-        this IPostService postService,
+        this IPostCommandService postService,
         DeletePostCommandRequest request,
         CancellationToken cancellationToken)
     {
-        await postService.ShouldHaveReceived(1).DeleteAsync(PostMatcher.IsDeletePostCommand(request), cancellationToken);
+        await postService.ShouldHaveReceivedOne().DeleteAsync(PostMatcher.IsDeletePostCommand(request), cancellationToken);
     }
 }

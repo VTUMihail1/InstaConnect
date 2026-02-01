@@ -14,6 +14,7 @@ public static class PostClient
     {
         var route = PostTestRoutes.GetAll(request);
         var response = await httpClient
+            .AddUserId(request.CurrentUserId)
             .GetStatusCodeAsync(route, cancellationToken);
 
         return response;
@@ -26,6 +27,7 @@ public static class PostClient
     {
         var route = PostTestRoutes.GetAll(request);
         var response = await httpClient
+            .AddUserId(request.CurrentUserId)
             .GetProblemDetailsAsync(route, cancellationToken);
 
         return response!;
@@ -38,18 +40,47 @@ public static class PostClient
     {
         var route = PostTestRoutes.GetAll(request);
         var response = await httpClient
+            .AddUserId(request.CurrentUserId)
             .GetFromJsonAsync<GetAllPostsApiResponse>(route, cancellationToken);
 
         return response!;
     }
 
-    public static async Task<GetAllPostsApiResponse> GetAllPostsAsync(
+    public static async Task<HttpStatusCode> GetAllPostsForUserStatusCodeAsync(
         this HttpClient httpClient,
+        GetAllPostsForUserApiRequest request,
         CancellationToken cancellationToken)
     {
-        var route = PostTestRoutes.GetDefault();
+        var route = PostTestRoutes.GetAllForUser(request);
         var response = await httpClient
-            .GetFromJsonAsync<GetAllPostsApiResponse>(route, cancellationToken);
+            .AddUserId(request.CurrentUserId)
+            .GetStatusCodeAsync(route, cancellationToken);
+
+        return response;
+    }
+
+    public static async Task<ApplicationProblemDetails> GetAllPostsForUserProblemDetailsAsync(
+        this HttpClient httpClient,
+        GetAllPostsForUserApiRequest request,
+        CancellationToken cancellationToken)
+    {
+        var route = PostTestRoutes.GetAllForUser(request);
+        var response = await httpClient
+            .AddUserId(request.CurrentUserId)
+            .GetProblemDetailsAsync(route, cancellationToken);
+
+        return response!;
+    }
+
+    public static async Task<GetAllPostsForUserApiResponse> GetAllPostsForUserAsync(
+        this HttpClient httpClient,
+        GetAllPostsForUserApiRequest request,
+        CancellationToken cancellationToken)
+    {
+        var route = PostTestRoutes.GetAllForUser(request);
+        var response = await httpClient
+            .AddUserId(request.CurrentUserId)
+            .GetFromJsonAsync<GetAllPostsForUserApiResponse>(route, cancellationToken);
 
         return response!;
     }
@@ -61,6 +92,7 @@ public static class PostClient
     {
         var route = PostTestRoutes.GetId(request.Id);
         var response = await httpClient
+            .AddUserId(request.CurrentUserId)
             .GetStatusCodeAsync(route, cancellationToken);
 
         return response;
@@ -73,6 +105,7 @@ public static class PostClient
     {
         var route = PostTestRoutes.GetId(request.Id);
         var response = await httpClient
+            .AddUserId(request.CurrentUserId)
             .GetProblemDetailsAsync(route, cancellationToken);
 
         return response!;
@@ -85,6 +118,7 @@ public static class PostClient
     {
         var route = PostTestRoutes.GetId(request.Id);
         var response = await httpClient
+            .AddUserId(request.CurrentUserId)
             .GetFromJsonAsync<GetPostByIdApiResponse>(route, cancellationToken);
 
         return response!;

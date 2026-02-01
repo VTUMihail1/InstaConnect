@@ -3,5 +3,7 @@
 public record PostCommentLikeQueryResponse(
     string Id,
     string CommentId,
-    UserQueryResponse User,
+    string UserId,
+    UserQueryResponse? User,
+    PostCommentQueryResponse? PostComment,
     DateTimeOffset CreatedAtUtc);

@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.PostComments.Controllers.v1;
 
-public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationFunctionalTest
+public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationCommandFunctionalTest
 {
     private readonly UpdatePostCommentApiRequestBuilderFactory _requestBuilderFactory;
     private readonly UpdatePostCommentApiRequestBuilder _requestBuilder;
@@ -311,7 +311,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationFunct
         var response = await HttpClient.UpdatePostCommentAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostComment);
+        response.ShouldSatisfy(PostComment, _request);
     }
 
     [Theory]
@@ -326,7 +326,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationFunct
         var response = await HttpClient.UpdatePostCommentAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostComment);
+        response.ShouldSatisfy(PostComment, request);
     }
 
     [Theory]
@@ -341,7 +341,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationFunct
         var response = await HttpClient.UpdatePostCommentAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostComment);
+        response.ShouldSatisfy(PostComment, request);
     }
 
     [Theory]
@@ -356,7 +356,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationFunct
         var response = await HttpClient.UpdatePostCommentAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostComment);
+        response.ShouldSatisfy(PostComment, request);
     }
 
     [Fact]
@@ -364,7 +364,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationFunct
     {
         // Act
         var response = await HttpClient.UpdatePostCommentAsync(_request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Id, CancellationToken);
 
         // Assert
         postComment.ShouldSatisfy(_request);
@@ -380,7 +380,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationFunct
 
         // Act
         var response = await HttpClient.UpdatePostCommentAsync(request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Id, CancellationToken);
 
         // Assert
         postComment.ShouldSatisfy(_request);
@@ -396,7 +396,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationFunct
 
         // Act
         var response = await HttpClient.UpdatePostCommentAsync(request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Id, CancellationToken);
 
         // Assert
         postComment.ShouldSatisfy(_request);
@@ -412,7 +412,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationFunct
 
         // Act
         var response = await HttpClient.UpdatePostCommentAsync(request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Id, CancellationToken);
 
         // Assert
         postComment.ShouldSatisfy(_request);
@@ -423,7 +423,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationFunct
     {
         // Act
         var response = await HttpClient.UpdatePostCommentAsync(_request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Id, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedUpdatedAsync(postComment, CancellationToken);
@@ -439,7 +439,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationFunct
 
         // Act
         var response = await HttpClient.UpdatePostCommentAsync(request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Id, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedUpdatedAsync(postComment, CancellationToken);
@@ -455,7 +455,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationFunct
 
         // Act
         var response = await HttpClient.UpdatePostCommentAsync(request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Id, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedUpdatedAsync(postComment, CancellationToken);
@@ -471,7 +471,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationFunct
 
         // Act
         var response = await HttpClient.UpdatePostCommentAsync(request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Id, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedUpdatedAsync(postComment, CancellationToken);

@@ -1,52 +1,49 @@
-﻿using InstaConnect.Common.Application.Tests.Utilities;
-using InstaConnect.Common.Infrastructure.Helpers;
+﻿using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAllForUser;
 
 namespace InstaConnect.Posts.Application.Tests.Features.PostCommentLikes.Utilities;
 public static class PostCommentLikeMockSetups
 {
     public static void SetupGetAllQuery(
-        this IPostCommentLikeService postCommentLikeService,
+        this IPostCommentLikeQueryService commentLikeService,
         GetAllPostCommentLikesQueryRequest request,
         ICollection<PostCommentLike> postCommentLikes,
-        CommonIncludeQuery<PostCommentLikeIncludeProperty> include,
         CancellationToken cancellationToken)
     {
-        var paginator = PaginatorFactory.Create();
-        var filteredPostCommentLikes = postCommentLikes.Filter(a => a.MatchesFilter(request), request);
+        commentLikeService
+            .GetAllAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesQuery(request), cancellationToken)
+            .ReturnsResponse(postCommentLikes.ToResponse(request));
+    }
 
-        var response = new PostCommentLikeCollection(
-            filteredPostCommentLikes,
-            request.Page,
-            request.PageSize,
-            postCommentLikes.Count,
-            paginator.HasNextPage(request.Page, request.PageSize, postCommentLikes.Count),
-            paginator.HasPreviousPage(request.Page));
-
-        postCommentLikeService
-            .GetAllAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesQuery(request, include), cancellationToken)
-            .ReturnsResponse(response);
+    public static void SetupGetAllForUserQuery(
+        this IPostCommentLikeQueryService commentLikeService,
+        GetAllPostCommentLikesForUserQueryRequest request,
+        ICollection<PostCommentLike> postCommentLikes,
+        CancellationToken cancellationToken)
+    {
+        commentLikeService
+            .GetAllForUserAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesForUserQuery(request), cancellationToken)
+            .ReturnsResponse(postCommentLikes.ToResponse(request));
     }
 
     public static void SetupGetByIdQuery(
-        this IPostCommentLikeService postCommentLikeService,
+        this IPostCommentLikeQueryService commentLikeService,
         GetPostCommentLikeByIdQueryRequest request,
         PostCommentLike postCommentLike,
-        CommonIncludeQuery<PostCommentLikeIncludeProperty> include,
         CancellationToken cancellationToken)
     {
-        postCommentLikeService
-            .GetByIdAsync(PostCommentLikeMatcher.IsGetPostCommentLikeByIdQuery(request, include), cancellationToken)
-            .ReturnsResponse(postCommentLike);
+        commentLikeService
+            .GetByIdAsync(PostCommentLikeMatcher.IsGetPostCommentLikeByIdQuery(request), cancellationToken)
+            .ReturnsResponse(postCommentLike.ToResponse(request));
     }
 
     public static void SetupAddCommand(
-        this IPostCommentLikeService postCommentLikeService,
+        this IPostCommentLikeCommandService commentLikeService,
         AddPostCommentLikeCommandRequest request,
         PostCommentLike postCommentLike,
         CancellationToken cancellationToken)
     {
-        postCommentLikeService
+        commentLikeService
             .AddAsync(PostCommentLikeMatcher.IsAddPostCommentLikeCommand(request), cancellationToken)
-            .ReturnsResponse(postCommentLike);
+            .ReturnsResponse(postCommentLike.ToResponse(request));
     }
 }

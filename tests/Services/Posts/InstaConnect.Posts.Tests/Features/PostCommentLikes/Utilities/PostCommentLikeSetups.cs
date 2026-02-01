@@ -8,11 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 namespace InstaConnect.Posts.Tests.Features.PostCommentLikes.Utilities;
 public static class PostCommentLikeSetups
 {
-    public static IPostCommentLikeRepository GetPostCommentLikeRepository(this IServiceScope serviceScope)
+    public static IPostCommentLikeCommandRepository GetPostCommentLikeCommandRepository(this IServiceScope serviceScope)
     {
-        var postCommentLikeRepository = serviceScope.ServiceProvider.GetRequiredService<IPostCommentLikeRepository>();
-
-        return postCommentLikeRepository;
+        return serviceScope.ServiceProvider.GetRequiredService<IPostCommentLikeCommandRepository>();
     }
 
     public static async Task<PostCommentLike?> GetPostCommentLikeByIdAsync(
@@ -20,7 +18,7 @@ public static class PostCommentLikeSetups
         PostCommentLikeId id,
         CancellationToken cancellationToken)
     {
-        var postCommentLikeRepository = serviceScope.GetPostCommentLikeRepository();
+        var postCommentLikeRepository = serviceScope.GetPostCommentLikeCommandRepository();
 
         return await postCommentLikeRepository.GetByIdAsync(id, cancellationToken);
     }
@@ -30,7 +28,7 @@ public static class PostCommentLikeSetups
         PostCommentLike postCommentLike,
         CancellationToken cancellationToken)
     {
-        var postCommentLikeRepository = serviceScope.GetPostCommentLikeRepository();
+        var postCommentLikeRepository = serviceScope.GetPostCommentLikeCommandRepository();
 
         await postCommentLikeRepository.AddAsync(postCommentLike, cancellationToken);
     }
@@ -40,7 +38,7 @@ public static class PostCommentLikeSetups
         IEnumerable<PostCommentLike> postCommentLikes,
         CancellationToken cancellationToken)
     {
-        var postCommentLikeRepository = serviceScope.GetPostCommentLikeRepository();
+        var postCommentLikeRepository = serviceScope.GetPostCommentLikeCommandRepository();
 
         await postCommentLikeRepository.AddRangeAsync(postCommentLikes, cancellationToken);
     }
@@ -50,7 +48,7 @@ public static class PostCommentLikeSetups
         PostCommentLike postCommentLike,
         CancellationToken cancellationToken)
     {
-        var postCommentLikeRepository = serviceScope.GetPostCommentLikeRepository();
+        var postCommentLikeRepository = serviceScope.GetPostCommentLikeCommandRepository();
 
         await postCommentLikeRepository.DeleteAsync(postCommentLike, cancellationToken);
     }
@@ -63,6 +61,7 @@ public static class PostCommentLikeSetups
 
         await context.PostCommentLikes.ResetAsync(cancellationToken);
         await context.PostComments.ResetAsync(cancellationToken);
+        await context.PostLikes.ResetAsync(cancellationToken);
         await context.Posts.ResetAsync(cancellationToken);
         await context.Users.ResetAsync(cancellationToken);
     }

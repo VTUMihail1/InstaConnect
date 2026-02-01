@@ -1,4 +1,6 @@
 ﻿using InstaConnect.Common.Presentation.Models;
+using InstaConnect.Posts.Application.Features.Posts.Queries.GetAllForUser;
+using InstaConnect.Posts.Domain.Features.PostLikes.Models.Requests;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 
 namespace InstaConnect.Posts.Presentation.Tests.Features.Posts.Assertions;
@@ -93,6 +95,61 @@ public static class PostValidationProblemDetailsAssertions
             request);
     }
 
+    public static void ShouldSatisfyInvalidValidationForTitle(
+        this ApplicationProblemDetails problemDetails,
+        IStringMessageTransformer messageTransformer,
+        GetAllPostsForUserApiRequest request)
+    {
+        problemDetails.ShouldSatisfyInvalidValidation(
+            p => p.Title,
+            messageTransformer,
+            request);
+    }
+
+    public static async Task ShouldSatisfyInvalidValidationForCurrentUserId(
+        this ApplicationProblemDetails problemDetails,
+        IStringMessageTransformer messageTransformer,
+        GetPostByIdApiRequest request)
+    {
+         problemDetails.ShouldSatisfyInvalidValidation(
+             p => p.CurrentUserId,
+            messageTransformer,
+            request);
+    }
+
+    public static async Task ShouldSatisfyInvalidValidationForCurrentUserId(
+        this ApplicationProblemDetails problemDetails,
+        IStringMessageTransformer messageTransformer,
+        GetAllPostsApiRequest request)
+    {
+        problemDetails.ShouldSatisfyInvalidValidation(
+            p => p.CurrentUserId,
+           messageTransformer,
+           request);
+    }
+
+    public static async Task ShouldSatisfyInvalidValidationForCurrentUserId(
+        this ApplicationProblemDetails problemDetails,
+        IStringMessageTransformer messageTransformer,
+        GetAllPostsForUserApiRequest request)
+    {
+        problemDetails.ShouldSatisfyInvalidValidation(
+            p => p.CurrentUserId,
+           messageTransformer,
+           request);
+    }
+
+    public static void ShouldSatisfyInvalidValidationForUserId(
+        this ApplicationProblemDetails problemDetails,
+        IStringMessageTransformer messageTransformer,
+        GetAllPostsForUserApiRequest request)
+    {
+        problemDetails.ShouldSatisfyInvalidValidation(
+            p => p.UserId,
+            messageTransformer,
+            request);
+    }
+
     public static void ShouldSatisfyInvalidValidationForUserId(
         this ApplicationProblemDetails problemDetails,
         IStringMessageTransformer messageTransformer,
@@ -148,10 +205,32 @@ public static class PostValidationProblemDetailsAssertions
             request);
     }
 
+    public static void ShouldSatisfyInvalidValidationForPage(
+        this ApplicationProblemDetails problemDetails,
+        IIntMessageTransformer messageTransformer,
+        GetAllPostsForUserApiRequest request)
+    {
+        problemDetails.ShouldSatisfyInvalidValidation(
+            p => p.Page,
+            messageTransformer,
+            request);
+    }
+
     public static void ShouldSatisfyInvalidValidationForPageSize(
         this ApplicationProblemDetails problemDetails,
         IIntMessageTransformer messageTransformer,
         GetAllPostsApiRequest request)
+    {
+        problemDetails.ShouldSatisfyInvalidValidation(
+            p => p.PageSize,
+            messageTransformer,
+            request);
+    }
+
+    public static void ShouldSatisfyInvalidValidationForPageSize(
+        this ApplicationProblemDetails problemDetails,
+        IIntMessageTransformer messageTransformer,
+        GetAllPostsForUserApiRequest request)
     {
         problemDetails.ShouldSatisfyInvalidValidation(
             p => p.PageSize,
@@ -170,13 +249,35 @@ public static class PostValidationProblemDetailsAssertions
             request);
     }
 
+    public static void ShouldSatisfyInvalidValidationForSortOrder(
+        this ApplicationProblemDetails problemDetails,
+        IEnumMessageTransformer<CommonSortOrder> messageTransformer,
+        GetAllPostsForUserApiRequest request)
+    {
+        problemDetails.ShouldSatisfyInvalidValidation(
+            p => p.SortOrder,
+            messageTransformer,
+            request);
+    }
+
     public static void ShouldSatisfyInvalidValidationForSortProperty(
         this ApplicationProblemDetails problemDetails,
-        IEnumMessageTransformer<PostSortProperty> messageTransformer,
+        IEnumMessageTransformer<PostsSortTerm> messageTransformer,
         GetAllPostsApiRequest request)
     {
         problemDetails.ShouldSatisfyInvalidValidation(
-            p => p.SortProperty,
+            p => p.SortTerm,
+            messageTransformer,
+            request);
+    }
+
+    public static void ShouldSatisfyInvalidValidationForSortProperty(
+        this ApplicationProblemDetails problemDetails,
+        IEnumMessageTransformer<PostsSortTerm> messageTransformer,
+        GetAllPostsForUserApiRequest request)
+    {
+        problemDetails.ShouldSatisfyInvalidValidation(
+            p => p.SortTerm,
             messageTransformer,
             request);
     }

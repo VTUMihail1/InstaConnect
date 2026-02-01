@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Domain.Models;
-
-namespace InstaConnect.Chats.Infrastructure.Features.Chats.Helpers;
+﻿namespace InstaConnect.Chats.Infrastructure.Features.Chats.Helpers;
 
 internal class ChatCollectionFactory : IChatCollectionFactory
 {

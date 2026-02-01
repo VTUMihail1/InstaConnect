@@ -2,23 +2,23 @@
 
 internal class AddPostCommentCommandHandler : ICommandHandler<AddPostCommentCommandRequest, AddPostCommentCommandResponse>
 {
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly IPostCommentService _postCommentService;
+    private readonly IApplicationMapper _mapper;
+    private readonly IPostCommentCommandService _commentService;
 
     public AddPostCommentCommandHandler(
-        IApplicationMapper applicationMapper,
-        IPostCommentService postCommentService)
+        IApplicationMapper mapper,
+        IPostCommentCommandService commentService)
     {
-        _applicationMapper = applicationMapper;
-        _postCommentService = postCommentService;
+        _mapper = mapper;
+        _commentService = commentService;
     }
 
     public async Task<AddPostCommentCommandResponse> Handle(AddPostCommentCommandRequest request, CancellationToken cancellationToken)
     {
-        var serviceRequest = _applicationMapper.Map<AddPostCommentCommand>(request);
-        var postComment = await _postCommentService.AddAsync(serviceRequest, cancellationToken);
+        var serviceRequest = _mapper.Map<AddPostCommentCommand>(request);
+        var serviceResponse = await _commentService.AddAsync(serviceRequest, cancellationToken);
 
-        var response = _applicationMapper.Map<AddPostCommentCommandResponse>(postComment);
+        var response = _mapper.Map<AddPostCommentCommandResponse>(serviceResponse);
 
         return response;
     }

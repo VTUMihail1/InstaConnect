@@ -4,11 +4,13 @@ public class GetPostLikeByIdApiRequestBuilder
 {
     private string _id;
     private string _userId;
+    private string _currentUserId;
 
     public GetPostLikeByIdApiRequestBuilder(PostLike postLike)
     {
         _id = postLike.Id.Id.Id;
         _userId = postLike.Id.UserId.Id;
+        _currentUserId = postLike.Id.UserId.Id;
     }
 
     public GetPostLikeByIdApiRequestBuilder WithId(Post post, IStringTransformer? transformer = null)
@@ -39,8 +41,22 @@ public class GetPostLikeByIdApiRequestBuilder
         return this;
     }
 
+    public GetPostLikeByIdApiRequestBuilder WithCurrentUserId(User user, IStringTransformer? transformer = null)
+    {
+        _currentUserId = transformer.TryTransform(user.Id.Id);
+
+        return this;
+    }
+
+    public GetPostLikeByIdApiRequestBuilder WithCurrentUserId(IStringTransformer transformer)
+    {
+        _currentUserId = transformer.Transform(_currentUserId);
+
+        return this;
+    }
+
     public GetPostLikeByIdApiRequest Build()
     {
-        return new(_id, _userId);
+        return new(_id, _currentUserId, _userId);
     }
 }

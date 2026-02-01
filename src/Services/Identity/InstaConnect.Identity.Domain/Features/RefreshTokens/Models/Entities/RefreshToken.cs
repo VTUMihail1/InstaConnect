@@ -23,6 +23,15 @@ public class RefreshToken : IEntityWithId<RefreshTokenId>
 
     public DateTimeOffset CreatedAtUtc { get; }
 
+    public User? User { get; private set; }
+
+    public RefreshToken AddUser(User user)
+    {
+        User = user;
+
+        return this;
+    }
+
     public bool HasExpired(DateTimeOffset utcNow)
     {
         var hasExpired = ExpiresAtUtc < utcNow;

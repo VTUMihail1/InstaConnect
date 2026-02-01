@@ -2,25 +2,25 @@
 
 public class UpdateCurrentUserCommandHandler : ICommandHandler<UpdateCurrentUserCommandRequest, UpdateCurrentUserCommandResponse>
 {
-    private readonly IUserService _userService;
-    private readonly IApplicationMapper _applicationMapper;
+    private readonly IApplicationMapper _mapper;
+    private readonly IUserCommandService _service;
 
     public UpdateCurrentUserCommandHandler(
-        IUserService userService,
-        IApplicationMapper applicationMapper)
+        IApplicationMapper mapper,
+        IUserCommandService service)
     {
-        _userService = userService;
-        _applicationMapper = applicationMapper;
+        _mapper = mapper;
+        _service = service;
     }
 
     public async Task<UpdateCurrentUserCommandResponse> Handle(
         UpdateCurrentUserCommandRequest request,
         CancellationToken cancellationToken)
     {
-        var serviceRequest = _applicationMapper.Map<UpdateUserCommand>(request);
-        var user = await _userService.UpdateAsync(serviceRequest, cancellationToken);
+        var serviceRequest = _mapper.Map<UpdateUserCommand>(request);
+        var serviceResponse = await _service.UpdateAsync(serviceRequest, cancellationToken);
 
-        var response = _applicationMapper.Map<UpdateCurrentUserCommandResponse>(user);
+        var response = _mapper.Map<UpdateCurrentUserCommandResponse>(serviceResponse);
 
         return response;
     }

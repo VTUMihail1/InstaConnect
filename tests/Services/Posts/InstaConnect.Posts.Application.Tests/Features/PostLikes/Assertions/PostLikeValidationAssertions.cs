@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Application.Tests.Features.PostLikes.Assertions;
+﻿using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAllForUser;
+
+namespace InstaConnect.Posts.Application.Tests.Features.PostLikes.Assertions;
 public static class PostLikeValidationAssertions
 {
     public static void ShouldHaveValidationErrorForId(
@@ -34,6 +36,14 @@ public static class PostLikeValidationAssertions
     }
 
     public static void ShouldHaveValidationErrorForUserId(
+        this TestValidationResult<GetAllPostLikesForUserQueryRequest> result,
+        IStringMessageTransformer messageTransformer,
+        GetAllPostLikesForUserQueryRequest request)
+    {
+        result.ShouldHaveValidationErrorForProperty(p => p.UserId, messageTransformer, request);
+    }
+
+    public static void ShouldHaveValidationErrorForUserId(
         this TestValidationResult<GetPostLikeByIdQueryRequest> result,
         IStringMessageTransformer messageTransformer,
         GetPostLikeByIdQueryRequest request)
@@ -57,6 +67,30 @@ public static class PostLikeValidationAssertions
         result.ShouldHaveValidationErrorForProperty(p => p.UserId, messageTransformer, request);
     }
 
+    public static void ShouldHaveValidationErrorForCurrentUserId(
+        this TestValidationResult<GetPostLikeByIdQueryRequest> result,
+        IStringMessageTransformer messageTransformer,
+        GetPostLikeByIdQueryRequest request)
+    {
+        result.ShouldHaveValidationErrorForProperty(p => p.CurrentUserId, messageTransformer, request);
+    }
+
+    public static void ShouldHaveValidationErrorForCurrentUserId(
+        this TestValidationResult<GetAllPostLikesQueryRequest> result,
+        IStringMessageTransformer messageTransformer,
+        GetAllPostLikesQueryRequest request)
+    {
+        result.ShouldHaveValidationErrorForProperty(p => p.CurrentUserId, messageTransformer, request);
+    }
+
+    public static void ShouldHaveValidationErrorForCurrentUserId(
+        this TestValidationResult<GetAllPostLikesForUserQueryRequest> result,
+        IStringMessageTransformer messageTransformer,
+        GetAllPostLikesForUserQueryRequest request)
+    {
+        result.ShouldHaveValidationErrorForProperty(p => p.CurrentUserId, messageTransformer, request);
+    }
+
     public static void ShouldHaveValidationErrorForUserName(
         this TestValidationResult<GetAllPostLikesQueryRequest> result,
         IStringMessageTransformer messageTransformer,
@@ -73,10 +107,26 @@ public static class PostLikeValidationAssertions
         result.ShouldHaveValidationErrorForProperty(p => p.Page, messageTransformer, request);
     }
 
+    public static void ShouldHaveValidationErrorForPage(
+        this TestValidationResult<GetAllPostLikesForUserQueryRequest> result,
+        IIntMessageTransformer messageTransformer,
+        GetAllPostLikesForUserQueryRequest request)
+    {
+        result.ShouldHaveValidationErrorForProperty(p => p.Page, messageTransformer, request);
+    }
+
     public static void ShouldHaveValidationErrorForPageSize(
         this TestValidationResult<GetAllPostLikesQueryRequest> result,
         IIntMessageTransformer messageTransformer,
         GetAllPostLikesQueryRequest request)
+    {
+        result.ShouldHaveValidationErrorForProperty(p => p.PageSize, messageTransformer, request);
+    }
+
+    public static void ShouldHaveValidationErrorForPageSize(
+        this TestValidationResult<GetAllPostLikesForUserQueryRequest> result,
+        IIntMessageTransformer messageTransformer,
+        GetAllPostLikesForUserQueryRequest request)
     {
         result.ShouldHaveValidationErrorForProperty(p => p.PageSize, messageTransformer, request);
     }
@@ -89,11 +139,27 @@ public static class PostLikeValidationAssertions
         result.ShouldHaveValidationErrorForProperty(p => p.SortOrder, messageTransformer, request);
     }
 
-    public static void ShouldHaveValidationErrorForSortProperty(
+    public static void ShouldHaveValidationErrorForSortOrder(
+        this TestValidationResult<GetAllPostLikesForUserQueryRequest> result,
+        IEnumMessageTransformer<CommonSortOrder> messageTransformer,
+        GetAllPostLikesForUserQueryRequest request)
+    {
+        result.ShouldHaveValidationErrorForProperty(p => p.SortOrder, messageTransformer, request);
+    }
+
+    public static void ShouldHaveValidationErrorForSortTerm(
+        this TestValidationResult<GetAllPostLikesForUserQueryRequest> result,
+        IEnumMessageTransformer<PostLikesSortTerm> messageTransformer,
+        GetAllPostLikesForUserQueryRequest request)
+    {
+        result.ShouldHaveValidationErrorForProperty(p => p.SortTerm, messageTransformer, request);
+    }
+
+    public static void ShouldHaveValidationErrorForSortTerm(
         this TestValidationResult<GetAllPostLikesQueryRequest> result,
-        IEnumMessageTransformer<PostLikeSortProperty> messageTransformer,
+        IEnumMessageTransformer<PostLikesSortTerm> messageTransformer,
         GetAllPostLikesQueryRequest request)
     {
-        result.ShouldHaveValidationErrorForProperty(p => p.SortProperty, messageTransformer, request);
+        result.ShouldHaveValidationErrorForProperty(p => p.SortTerm, messageTransformer, request);
     }
 }

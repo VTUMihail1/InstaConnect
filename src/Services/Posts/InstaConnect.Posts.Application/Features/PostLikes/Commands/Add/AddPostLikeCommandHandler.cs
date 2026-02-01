@@ -2,23 +2,23 @@
 
 internal class AddPostLikeCommandHandler : ICommandHandler<AddPostLikeCommandRequest, AddPostLikeCommandResponse>
 {
-    private readonly IPostLikeService _postLikeService;
-    private readonly IApplicationMapper _applicationMapper;
+    private readonly IApplicationMapper _mapper;
+    private readonly IPostLikeCommandService _likeService;
 
     public AddPostLikeCommandHandler(
-        IPostLikeService postLikeService,
-        IApplicationMapper applicationMapper)
+        IApplicationMapper mapper,
+        IPostLikeCommandService likeService)
     {
-        _postLikeService = postLikeService;
-        _applicationMapper = applicationMapper;
+        _mapper = mapper;
+        _likeService = likeService;
     }
 
     public async Task<AddPostLikeCommandResponse> Handle(AddPostLikeCommandRequest request, CancellationToken cancellationToken)
     {
-        var serviceRequest = _applicationMapper.Map<AddPostLikeCommand>(request);
-        var postLike = await _postLikeService.AddAsync(serviceRequest, cancellationToken);
+        var serviceRequest = _mapper.Map<AddPostLikeCommand>(request);
+        var serviceResponse = await _likeService.AddAsync(serviceRequest, cancellationToken);
 
-        var response = _applicationMapper.Map<AddPostLikeCommandResponse>(postLike);
+        var response = _mapper.Map<AddPostLikeCommandResponse>(serviceResponse);
 
         return response;
     }

@@ -2,29 +2,25 @@
 
 internal class GetAllPostCommentLikesQueryHandler : IQueryHandler<GetAllPostCommentLikesQueryRequest, GetAllPostCommentLikesQueryResponse>
 {
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly IPostCommentLikeService _postCommentLikeService;
-    private readonly IPostCommentLikeIncludeQueryBuilderFactory _postCommentLikeIncludeQueryBuilderFactory;
+    private readonly IApplicationMapper _mapper;
+    private readonly IPostCommentLikeQueryService _commentLikeService;
 
     public GetAllPostCommentLikesQueryHandler(
-        IApplicationMapper applicationMapper,
-        IPostCommentLikeService postCommentLikeService,
-        IPostCommentLikeIncludeQueryBuilderFactory postCommentLikeIncludeQueryBuilderFactory)
+        IApplicationMapper mapper,
+        IPostCommentLikeQueryService commentLikeService)
     {
-        _applicationMapper = applicationMapper;
-        _postCommentLikeService = postCommentLikeService;
-        _postCommentLikeIncludeQueryBuilderFactory = postCommentLikeIncludeQueryBuilderFactory;
+        _mapper = mapper;
+        _commentLikeService = commentLikeService;
     }
 
     public async Task<GetAllPostCommentLikesQueryResponse> Handle(
         GetAllPostCommentLikesQueryRequest request,
         CancellationToken cancellationToken)
     {
-        var include = _postCommentLikeIncludeQueryBuilderFactory.Create().WithUser().Build();
-        var serviceRequest = _applicationMapper.Map<GetAllPostCommentLikesQuery>(request).AddInclude(include);
-        var collection = await _postCommentLikeService.GetAllAsync(serviceRequest, cancellationToken);
+        var serviceRequest = _mapper.Map<GetAllPostCommentLikesQuery>(request);
+        var serviceResponse = await _commentLikeService.GetAllAsync(serviceRequest, cancellationToken);
 
-        var response = _applicationMapper.Map<GetAllPostCommentLikesQueryResponse>(collection);
+        var response = _mapper.Map<GetAllPostCommentLikesQueryResponse>(serviceResponse);
 
         return response;
     }

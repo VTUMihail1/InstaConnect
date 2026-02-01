@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Domain.Extensions;
+using InstaConnect.Posts.Domain.Models.Requests;
 
 namespace InstaConnect.Posts.Domain.Features.PostComments.Utilities;
 
@@ -18,17 +19,18 @@ public static class PostCommentExceptionErrorMessages
         return Format.FormatCurrentCulture(id.Id.Id, id.CommentId, userId.Id);
     }
 
-    public static string GetSortPropertyNotSupportedMessage(PostCommentSortProperty sortProperty)
+    public static string GetSortTermNotSupportedMessage(PostCommentsSortTerm sortTerm)
     {
-        const string Format = "PostCommentSortProperty(type: {0}) is not supported";
+        const string Format = "PostCommentSortTerm(type: {0}) is not supported";
 
-        return Format.FormatCurrentCulture(sortProperty);
+        return Format.FormatCurrentCulture(sortTerm);
     }
 
-    public static string GetInclidePropertyNotSupportedMessage(ICollection<PostCommentIncludeProperty> includeProperties)
+    public static string GetInclidePropertyNotSupportedMessage(ICollection<PostsIncludeDescriptor> descriptors)
     {
-        const string Format = "PostCommentIncludeProperties(types: {0}) is not supported";
+        const string Format = "PostCommentIncludeDescriptors({0}) is not supported";
 
-        return Format.FormatCurrentCulture(includeProperties.JoinAsStringWithComa());
+        return Format.FormatCurrentCulture(descriptors
+            .JoinIncludeDescriptorsAsStringWithComa<PostsDestinationType, PostsIncludeType, PostsIncludeDescriptor>());
     }
 }

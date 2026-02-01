@@ -4,6 +4,8 @@ public static class PostLikeRoutes
 {
     public const string Resource = "api/v{version:apiVersion}/posts/{id}/likes";
 
+    public const string UserResource = "api/v{version:apiVersion}/users/{userId}/post-likes";
+
     public const string Id = "{userId}";
 
     public const string Current = "current";

@@ -8,6 +8,6 @@ public record GetAllFollowsByFollowingApiRequest(
     [FromRoute] string FollowingId,
     [FromQuery] string FollowerName = UserDefaultValues.Name,
     [FromQuery] CommonSortOrder SortOrder = CommonDefaultValues.SortOrder,
-    [FromQuery] FollowByFollowingSortProperty SortProperty = FollowDefaultValues.ByFollowingSortProperty,
+    [FromQuery] FollowByFollowingSortProperty SortTerm = FollowDefaultValues.ByFollowingSortProperty,
     [FromQuery] int Page = FollowDefaultValues.Page,
     [FromQuery] int PageSize = FollowDefaultValues.PageSize) : ISortableApiRequest<FollowByFollowingSortProperty>, IPaginatableApiRequest;

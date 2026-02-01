@@ -8,6 +8,11 @@ internal class EmailConfirmationTokenDomainMappings : IRegister
     {
         config.NewConfig<EmailConfirmationToken, EmailConfirmationTokenAddedEventRequest>()
             .ConstructUsing(src => new(
+                src.User.Adapt<UserEventRequest>(),
+                src.Adapt<EmailConfirmationTokenEventRequest>()));
+
+        config.NewConfig<EmailConfirmationToken, EmailConfirmationTokenEventRequest>()
+            .ConstructUsing(src => new(
                 src.Id.Id.Id,
                 src.Id.Value,
                 src.ExpiresAtUtc,

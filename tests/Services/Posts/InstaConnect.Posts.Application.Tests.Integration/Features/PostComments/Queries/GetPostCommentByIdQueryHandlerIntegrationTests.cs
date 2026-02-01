@@ -18,7 +18,9 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentApp
     {
         await ServiceScope.AddUserAsync(User, CancellationToken);
         await ServiceScope.AddPostAsync(Post, CancellationToken);
+        await ServiceScope.AddPostLikeAsync(PostLike, CancellationToken);
         await ServiceScope.AddPostCommentAsync(PostComment, CancellationToken);
+        await ServiceScope.AddPostCommentLikeAsync(PostCommentLike, CancellationToken);
     }
 
     [Theory]
@@ -33,7 +35,7 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentApp
         var request = _requestBuilder.WithId(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForIdAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForIdAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -49,7 +51,7 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentApp
         var request = _requestBuilder.WithCommentId(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForCommentIdAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForCommentIdAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -60,7 +62,7 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentApp
         await ServiceScope.DeletePostAsync(Post, CancellationToken);
 
         // Assert
-        await ApplicationSender.ShouldThrowPostNotFoundExceptionAsync(_request, CancellationToken);
+        await Sender.ShouldThrowPostNotFoundExceptionAsync(_request, CancellationToken);
     }
 
     [Fact]
@@ -70,7 +72,7 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentApp
         await ServiceScope.DeletePostCommentAsync(PostComment, CancellationToken);
 
         // Assert
-        await ApplicationSender.ShouldThrowPostCommentNotFoundExceptionAsync(_request, CancellationToken);
+        await Sender.ShouldThrowPostCommentNotFoundExceptionAsync(_request, CancellationToken);
     }
 
 
@@ -78,10 +80,10 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentApp
     public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValid()
     {
         // Act
-        var response = await ApplicationSender.SendAsync(_request, CancellationToken);
+        var response = await Sender.SendAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostComment);
+        response.ShouldSatisfy(PostComment, _request);
     }
 
     [Theory]
@@ -93,10 +95,10 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentApp
         var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostComment);
+        response.ShouldSatisfy(PostComment, request);
     }
 
     [Theory]
@@ -108,9 +110,9 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentApp
         var request = _requestBuilder.WithCommentId(transformer).Build();
 
         // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostComment);
+        response.ShouldSatisfy(PostComment, request);
     }
 }

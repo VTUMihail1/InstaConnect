@@ -1,8 +1,7 @@
-﻿using InstaConnect.Common.Domain.Models;
+﻿namespace InstaConnect.Common.Domain.Abstractions;
 
-namespace InstaConnect.Common.Domain.Abstractions;
-
-public interface IPaginatableQuery
+public interface IPaginatableQuery<out TPaginationQuery>
+    where TPaginationQuery : IPaginationQuery
 {
-    public CommonPaginationQuery Pagination { get; }
+    public TPaginationQuery Pagination { get; }
 }

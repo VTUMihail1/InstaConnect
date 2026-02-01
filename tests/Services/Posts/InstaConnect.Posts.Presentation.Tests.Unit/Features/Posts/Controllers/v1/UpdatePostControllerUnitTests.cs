@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Presentation.Tests.Unit.Features.Posts.Controllers.v1;
 
-public class UpdatePostControllerUnitTests : BasePostPresentationUnitTest
+public class UpdatePostControllerUnitTests : BasePostPresentationCommandUnitTest
 {
     private readonly UpdatePostApiRequestBuilderFactory _requestBuilderFactory;
     private readonly UpdatePostApiRequestBuilder _requestBuilder;
@@ -14,9 +14,9 @@ public class UpdatePostControllerUnitTests : BasePostPresentationUnitTest
         _requestBuilder = _requestBuilderFactory.Create(Post);
         _request = _requestBuilder.Build();
 
-        _postController = new(ApplicationMapper, ApplicationSender);
+        _postController = new(Mapper, Sender);
 
-        ApplicationSender.SetupUpdateCommandRequest(_request, Post, CancellationToken);
+        Sender.SetupUpdateCommandRequest(_request, Post, CancellationToken);
     }
 
     [Fact]
@@ -36,7 +36,7 @@ public class UpdatePostControllerUnitTests : BasePostPresentationUnitTest
         var response = await _postController.UpdateAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(Post);
+        response.ShouldSatisfy(Post, _request);
     }
 
     [Fact]
@@ -46,6 +46,6 @@ public class UpdatePostControllerUnitTests : BasePostPresentationUnitTest
         await _postController.UpdateAsync(_request, CancellationToken);
 
         // Assert
-        await ApplicationSender.ShouldReceiveOneSendAsync(_request, CancellationToken);
+        await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);
     }
 }

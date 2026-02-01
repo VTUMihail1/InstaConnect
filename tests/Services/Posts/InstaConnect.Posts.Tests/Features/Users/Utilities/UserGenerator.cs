@@ -1,11 +1,11 @@
 ﻿namespace InstaConnect.Posts.Tests.Features.Users.Utilities;
 public static class UserGenerator
 {
-    public static ICollection<User> GenerateRange(this User template)
+    public static ICollection<User> GenerateUsersRange(this User template)
     {
-        const int Count = 50;
+        const int NumberOfIterations = 50;
 
-        return [.. Enumerable.Range(default, Count)
+        return [.. Enumerable.Range(default, NumberOfIterations)
             .Select(_ => new User(new(UserDataFaker.GetId()),
                                   UserDataFaker.GetFirstNameWithPrefix(template.FirstName),
                                   UserDataFaker.GetLastNameWithPrefix(template.LastName),

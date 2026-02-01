@@ -1,5 +1,4 @@
-﻿using InstaConnect.Common.Domain.Models;
-using InstaConnect.Follows.Infrastructure.Features.Follows.Extensions;
+﻿using InstaConnect.Follows.Infrastructure.Features.Follows.Extensions;
 
 using MongoDB.Driver;
 
@@ -9,7 +8,7 @@ internal class FollowRepository : IFollowRepository
 {
     private readonly IPaginator _paginator;
     private readonly IFollowsContext _followsContext;
-    private readonly ISortOrderFactory _sortOrderFactory;
+    private readonly ISortOrdererFactory _sortOrderFactory;
     private readonly IFollowCollectionFactory _followCollectionFactory;
     private readonly IFollowIncludePropertyFactory _followIncludePropertyFactory;
     private readonly IFollowByFollowerSortPropertyFactory _followByFollowerSortPropertyFactory;
@@ -18,7 +17,7 @@ internal class FollowRepository : IFollowRepository
     public FollowRepository(
         IPaginator paginator,
         IFollowsContext followsContext,
-        ISortOrderFactory sortOrderFactory,
+        ISortOrdererFactory sortOrderFactory,
         IFollowCollectionFactory followCollectionFactory,
         IFollowIncludePropertyFactory followIncludePropertyFactory,
         IFollowByFollowerSortPropertyFactory followByFollowerSortPropertyFactory,
@@ -35,9 +34,9 @@ internal class FollowRepository : IFollowRepository
 
     public async Task<FollowCollection> GetAllByFollowerAsync(
         FollowByFollowerFilterQuery filter,
-        CommonSortingQuery<FollowByFollowerSortProperty> sorting,
+        FollowByFollowerSortingQuery sorting,
         CommonPaginationQuery pagination,
-        CommonIncludeQuery<FollowIncludeProperty>? include,
+        FollowInclude include,
         CancellationToken cancellationToken)
     {
         var match = filter.GetFilter();
@@ -66,9 +65,9 @@ internal class FollowRepository : IFollowRepository
 
     public async Task<FollowCollection> GetAllByFollowingAsync(
         FollowByFollowingFilterQuery filter,
-        CommonSortingQuery<FollowByFollowingSortProperty> sorting,
+        FollowByFollowingSortingQuery sorting,
         CommonPaginationQuery pagination,
-        CommonIncludeQuery<FollowIncludeProperty>? include,
+        FollowInclude include,
         CancellationToken cancellationToken)
     {
         var match = filter.GetFilter();
@@ -97,7 +96,7 @@ internal class FollowRepository : IFollowRepository
 
     public async Task<Follow?> GetByIdAsync(
         FollowId id,
-        CommonIncludeQuery<FollowIncludeProperty>? include,
+        FollowInclude include,
         CancellationToken cancellationToken)
     {
         var includeProperties = _followIncludePropertyFactory.Create(include?.Properties);

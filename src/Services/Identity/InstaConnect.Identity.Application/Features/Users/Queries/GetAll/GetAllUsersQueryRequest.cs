@@ -6,8 +6,9 @@ public record GetAllUsersQueryRequest(
     string FirstName,
     string LastName,
     string Name,
+    string CurrentId,
     CommonSortOrder SortOrder,
-    UserSortProperty SortProperty,
+    UserSortProperty SortTerm,
     int Page,
     int PageSize)
     : IQueryRequest<GetAllUsersQueryResponse>, ISortableQueryRequest<UserSortProperty>, IPaginatableQueryRequest;

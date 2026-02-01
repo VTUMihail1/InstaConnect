@@ -2,22 +2,20 @@
 
 internal class DeletePostCommandHandler : ICommandHandler<DeletePostCommandRequest>
 {
-    private readonly IPostService _postService;
-    private readonly IApplicationMapper _applicationMapper;
+    private readonly IApplicationMapper _mapper;
+    private readonly IPostCommandService _service;
 
-    public DeletePostCommandHandler(
-        IPostService postService,
-        IApplicationMapper applicationMapper)
+    public DeletePostCommandHandler(IApplicationMapper mapper, IPostCommandService service)
     {
-        _postService = postService;
-        _applicationMapper = applicationMapper;
+        _mapper = mapper;
+        _service = service;
     }
 
     public async Task Handle(
         DeletePostCommandRequest request,
         CancellationToken cancellationToken)
     {
-        var serviceRequest = _applicationMapper.Map<DeletePostCommand>(request);
-        await _postService.DeleteAsync(serviceRequest, cancellationToken);
+        var serviceRequest = _mapper.Map<DeletePostCommand>(request);
+        await _service.DeleteAsync(serviceRequest, cancellationToken);
     }
 }

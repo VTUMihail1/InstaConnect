@@ -1,9 +1,8 @@
-﻿using InstaConnect.Common.Domain.Models;
+﻿namespace InstaConnect.Common.Domain.Abstractions;
 
-namespace InstaConnect.Common.Domain.Abstractions;
-
-public interface ISortableQuery<TSortProperty>
+public interface ISortableQuery<TSortingQuery, TSortProperty>
+    where TSortingQuery : ISortingQuery<TSortProperty>
     where TSortProperty : Enum
 {
-    public CommonSortingQuery<TSortProperty> Sorting { get; }
+    public TSortingQuery Sorting { get; }
 }

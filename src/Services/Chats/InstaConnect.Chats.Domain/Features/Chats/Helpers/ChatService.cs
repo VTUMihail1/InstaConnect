@@ -1,5 +1,4 @@
-﻿using InstaConnect.Common.Domain.Extensions;
-using InstaConnect.Common.Events.Abstractions;
+﻿using InstaConnect.Common.Events.Abstractions;
 
 namespace InstaConnect.Chats.Domain.Features.Chats.Helpers;
 internal class ChatService : IChatService

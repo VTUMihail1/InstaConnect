@@ -10,15 +10,15 @@ namespace InstaConnect.Posts.Presentation.Features.PostCommentLikes.Controllers.
 [EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class PostCommentLikeController : ControllerBase
 {
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly IApplicationSender _applicationSender;
+    private readonly IApplicationMapper _mapper;
+    private readonly IApplicationSender _sender;
 
     public PostCommentLikeController(
-        IApplicationMapper applicationMapper,
-        IApplicationSender applicationSender)
+        IApplicationMapper mapper,
+        IApplicationSender sender)
     {
-        _applicationMapper = applicationMapper;
-        _applicationSender = applicationSender;
+        _mapper = mapper;
+        _sender = sender;
     }
 
     // GET: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/comments/5f0f2dd0-e957-4d72-8141-767a36fc6e95/likes
@@ -29,9 +29,9 @@ public class PostCommentLikeController : ControllerBase
         GetAllPostCommentLikesApiRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _applicationMapper.Map<GetAllPostCommentLikesQueryRequest>(request);
-        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
-        var response = _applicationMapper.Map<GetAllPostCommentLikesApiResponse>(queryResponse);
+        var queryRequest = _mapper.Map<GetAllPostCommentLikesQueryRequest>(request);
+        var queryResponse = await _sender.SendAsync(queryRequest, cancellationToken);
+        var response = _mapper.Map<GetAllPostCommentLikesApiResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -44,9 +44,9 @@ public class PostCommentLikeController : ControllerBase
         GetPostCommentLikeByIdApiRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _applicationMapper.Map<GetPostCommentLikeByIdQueryRequest>(request);
-        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
-        var response = _applicationMapper.Map<GetPostCommentLikeByIdApiResponse>(queryResponse);
+        var queryRequest = _mapper.Map<GetPostCommentLikeByIdQueryRequest>(request);
+        var queryResponse = await _sender.SendAsync(queryRequest, cancellationToken);
+        var response = _mapper.Map<GetPostCommentLikeByIdApiResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -61,9 +61,9 @@ public class PostCommentLikeController : ControllerBase
         AddPostCommentLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<AddPostCommentLikeCommandRequest>(request);
-        var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
-        var response = _applicationMapper.Map<AddPostCommentLikeApiResponse>(commandResponse);
+        var commandRequest = _mapper.Map<AddPostCommentLikeCommandRequest>(request);
+        var commandResponse = await _sender.SendAsync(commandRequest, cancellationToken);
+        var response = _mapper.Map<AddPostCommentLikeApiResponse>(commandResponse);
 
         return Ok(response);
     }
@@ -78,8 +78,8 @@ public class PostCommentLikeController : ControllerBase
         DeletePostCommentLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<DeletePostCommentLikeCommandRequest>(request);
-        await _applicationSender.SendAsync(commandRequest, cancellationToken);
+        var commandRequest = _mapper.Map<DeletePostCommentLikeCommandRequest>(request);
+        await _sender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }

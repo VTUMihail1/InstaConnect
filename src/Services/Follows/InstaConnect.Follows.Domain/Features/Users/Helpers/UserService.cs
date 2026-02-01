@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Domain.Extensions;
-
-namespace InstaConnect.Follows.Domain.Features.Users.Helpers;
+﻿namespace InstaConnect.Follows.Domain.Features.Users.Helpers;
 internal class UserService : IUserService
 {
     private readonly IUserFactory _userFactory;

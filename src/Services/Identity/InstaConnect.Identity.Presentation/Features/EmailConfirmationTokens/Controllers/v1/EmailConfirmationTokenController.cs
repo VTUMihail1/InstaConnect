@@ -8,15 +8,15 @@ namespace InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Co
 [EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class EmailConfirmationTokenController : ControllerBase
 {
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly IApplicationSender _applicationSender;
+    private readonly IApplicationMapper _mapper;
+    private readonly IApplicationSender _sender;
 
     public EmailConfirmationTokenController(
-        IApplicationMapper applicationMapper,
-        IApplicationSender applicationSender)
+        IApplicationMapper mapper,
+        IApplicationSender sender)
     {
-        _applicationMapper = applicationMapper;
-        _applicationSender = applicationSender;
+        _mapper = mapper;
+        _sender = sender;
     }
 
     // POST: api/users/name/email-confirmation-tokens
@@ -27,8 +27,8 @@ public class EmailConfirmationTokenController : ControllerBase
         AddEmailConfirmationTokenApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<AddEmailConfirmationTokenCommandRequest>(request);
-        await _applicationSender.SendAsync(commandRequest, cancellationToken);
+        var commandRequest = _mapper.Map<AddEmailConfirmationTokenCommandRequest>(request);
+        await _sender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }
@@ -41,8 +41,8 @@ public class EmailConfirmationTokenController : ControllerBase
         VerifyEmailConfirmationTokenApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<VerifyEmailConfirmationTokenCommandRequest>(request);
-        await _applicationSender.SendAsync(commandRequest, cancellationToken);
+        var commandRequest = _mapper.Map<VerifyEmailConfirmationTokenCommandRequest>(request);
+        await _sender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }

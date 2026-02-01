@@ -21,7 +21,7 @@ public class ChatMessageApplicationMappings : IRegister
                                            new(src.UserId)),
                                         new(
                                             src.SortOrder,
-                                            src.SortProperty),
+                                            src.SortTerm),
                                         new(
                                             src.Page,
                                             src.PageSize)));

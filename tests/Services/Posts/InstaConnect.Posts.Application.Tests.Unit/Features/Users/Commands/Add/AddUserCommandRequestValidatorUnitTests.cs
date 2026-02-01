@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Application.Tests.Unit.Features.Users.Commands.Add;
 
-public class AddUserCommandRequestValidatorUnitTests : BaseUserApplicationUnitTest
+public class AddUserCommandRequestValidatorUnitTests : BaseUserApplicationCommandUnitTest
 {
     private readonly AddUserCommandRequestBuilderFactory _requestBuilderFactory;
     private readonly AddUserCommandRequestBuilder _requestBuilder;

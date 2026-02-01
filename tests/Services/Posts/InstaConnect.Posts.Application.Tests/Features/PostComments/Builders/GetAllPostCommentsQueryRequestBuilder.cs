@@ -6,19 +6,21 @@ public class GetAllPostCommentsQueryRequestBuilder
 {
     private string _id;
     private string _userName;
+    private string _currentUserId;
     private int _page;
     private int _pageSize;
     private CommonSortOrder _sortOrder;
-    private PostCommentSortProperty _sortProperty;
+    private PostCommentsSortTerm _sortProperty;
 
     public GetAllPostCommentsQueryRequestBuilder(PostComment postComment)
     {
         _id = postComment.Id.Id.Id;
         _userName = DataFaker.GetPrefixString(postComment.User!.Name.Value);
+        _currentUserId = DataFaker.GetPrefixString(postComment.UserId.Id);
         _page = PostCommentDataFaker.GetPage();
         _pageSize = PostCommentDataFaker.GetPageSize();
         _sortOrder = DataFaker.GetSortOrder();
-        _sortProperty = PostCommentDataFaker.GetSortProperty();
+        _sortProperty = PostCommentDataFaker.GetSortTerm();
     }
 
     public GetAllPostCommentsQueryRequestBuilder WithId(Post post, IStringTransformer? transformer = null)
@@ -38,6 +40,20 @@ public class GetAllPostCommentsQueryRequestBuilder
     public GetAllPostCommentsQueryRequestBuilder WithUserName(IStringTransformer transformer)
     {
         _userName = transformer.Transform(_userName);
+
+        return this;
+    }
+
+    public GetAllPostCommentsQueryRequestBuilder WithCurrentUserId(User user, IStringTransformer? transformer = null)
+    {
+        _currentUserId = transformer.TryTransform(user.Id.Id);
+
+        return this;
+    }
+
+    public GetAllPostCommentsQueryRequestBuilder WithCurrentUserId(IStringTransformer transformer)
+    {
+        _currentUserId = transformer.Transform(_currentUserId);
 
         return this;
     }
@@ -63,7 +79,7 @@ public class GetAllPostCommentsQueryRequestBuilder
         return this;
     }
 
-    public GetAllPostCommentsQueryRequestBuilder WithSortProperty(IEnumTransformer<PostCommentSortProperty> transformer)
+    public GetAllPostCommentsQueryRequestBuilder WithSortProperty(IEnumTransformer<PostCommentsSortTerm> transformer)
     {
         _sortProperty = transformer.Transform(_sortProperty);
 
@@ -72,6 +88,6 @@ public class GetAllPostCommentsQueryRequestBuilder
 
     public GetAllPostCommentsQueryRequest Build()
     {
-        return new(_id, _userName, _sortOrder, _sortProperty, _page, _pageSize);
+        return new(_id, _userName, _currentUserId, _sortOrder, _sortProperty, _page, _pageSize);
     }
 }

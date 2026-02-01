@@ -1,14 +1,16 @@
-﻿namespace InstaConnect.Posts.Presentation.Tests.Unit.Features.PostLikes.Utilities;
+﻿using InstaConnect.Posts.Presentation.Extensions;
 
-public abstract class BasePostLikePresentationQueryUnitTest : BasePostLikePresentationUnitTest
+namespace InstaConnect.Posts.Presentation.Tests.Unit.Features.PostLikes.Utilities;
+
+public abstract class BasePostLikePresentationQueryUnitTest : BasePostLikeTest
 {
-    protected ICollection<User> Users { get; }
+    protected IApplicationSender Sender { get; }
 
-    protected ICollection<PostLike> PostLikes { get; }
+    protected IApplicationMapper Mapper { get; }
 
     protected BasePostLikePresentationQueryUnitTest()
     {
-        Users = User.GenerateRange();
-        PostLikes = PostLike.GenerateRange(Users);
+        Sender = MockFactory.CreateApplicationSender();
+        Mapper = MockFactory.CreateMapper(PostPresentationReference.Assembly);
     }
 }

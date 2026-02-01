@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Domain.Extensions;
+using InstaConnect.Posts.Domain.Models.Requests;
 
 namespace InstaConnect.Posts.Domain.Features.Posts.Utilities;
 
@@ -18,17 +19,18 @@ public static class PostExceptionErrorMessages
         return Format.FormatCurrentCulture(id.Id, userId.Id);
     }
 
-    public static string GetSortPropertyNotSupportedMessage(PostSortProperty sortProperty)
+    public static string GetSortTermNotSupportedMessage(PostsSortTerm sortTerm)
     {
-        const string Format = "PostSortProperty(type: {0}) is not supported";
+        const string Format = "PostsSortTerm(type: {0}) is not supported";
 
-        return Format.FormatCurrentCulture(sortProperty);
+        return Format.FormatCurrentCulture(sortTerm);
     }
 
-    public static string GetInclidePropertyNotSupportedMessage(ICollection<PostIncludeProperty> includeProperties)
+    public static string GetInclideDescriptorsNotSupportedMessage(ICollection<PostsIncludeDescriptor> descriptors)
     {
-        const string Format = "PostIncludeProperties(types: {0}) is not supported";
+        const string Format = "PostIncludeDescriptors({0}) is not supported";
 
-        return Format.FormatCurrentCulture(includeProperties.JoinAsStringWithComa());
+        return Format.FormatCurrentCulture(descriptors
+            .JoinIncludeDescriptorsAsStringWithComa<PostsDestinationType, PostsIncludeType, PostsIncludeDescriptor>());
     }
 }

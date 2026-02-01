@@ -1,6 +1,7 @@
 ﻿using InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Delete;
 using InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Issue;
 using InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Rotate;
+using InstaConnect.Identity.Presentation.Features.RefreshTokens.Abstractions;
 
 namespace InstaConnect.Identity.Presentation.Features.RefreshTokens.Controllers.v1;
 
@@ -9,18 +10,18 @@ namespace InstaConnect.Identity.Presentation.Features.RefreshTokens.Controllers.
 [EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class RefreshTokenController : ControllerBase
 {
-    private readonly ICookieStore _cookieStore;
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly IApplicationSender _applicationSender;
+    private readonly IApplicationMapper _mapper;
+    private readonly IApplicationSender _sender;
+    private readonly IRefreshTokenCookieStore _refreshTokenCookieStore;
 
     public RefreshTokenController(
-        ICookieStore cookieStore,
-        IApplicationMapper applicationMapper,
-        IApplicationSender applicationSender)
+        IApplicationMapper mapper,
+        IApplicationSender sender,
+        IRefreshTokenCookieStore refreshTokenCookieStore)
     {
-        _cookieStore = cookieStore;
-        _applicationMapper = applicationMapper;
-        _applicationSender = applicationSender;
+        _mapper = mapper;
+        _sender = sender;
+        _refreshTokenCookieStore = refreshTokenCookieStore;
     }
 
     // POST: api/users/name/refresh-tokens/issue
@@ -31,13 +32,12 @@ public class RefreshTokenController : ControllerBase
         IssueRefreshTokenApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<IssueRefreshTokenCommandRequest>(request);
-        var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
+        var commandRequest = _mapper.Map<IssueRefreshTokenCommandRequest>(request);
+        var commandResponse = await _sender.SendAsync(commandRequest, cancellationToken);
 
-        _cookieStore.SetHttpOnly(RefreshTokenCookieKeys.Id, commandResponse.Response.Id.Id, commandResponse.Response.ExpiresAt);
-        _cookieStore.SetHttpOnly(RefreshTokenCookieKeys.Value, commandResponse.Response.Id.Value, commandResponse.Response.ExpiresAt);
+        _refreshTokenCookieStore.Set(commandResponse.Id.Id, commandResponse.Id.Value, commandResponse.ExpiresAtUtc);
 
-        var response = _applicationMapper.Map<IssueRefreshTokenApiResponse>(commandResponse);
+        var response = _mapper.Map<IssueRefreshTokenApiResponse>(commandResponse);
 
         return Ok(response);
     }
@@ -50,13 +50,12 @@ public class RefreshTokenController : ControllerBase
         RotateRefreshTokenApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<RotateRefreshTokenCommandRequest>(request);
-        var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
+        var commandRequest = _mapper.Map<RotateRefreshTokenCommandRequest>(request);
+        var commandResponse = await _sender.SendAsync(commandRequest, cancellationToken);
 
-        _cookieStore.SetHttpOnly(RefreshTokenCookieKeys.Id, commandResponse.Response.Id.Id, commandResponse.Response.ExpiresAt);
-        _cookieStore.SetHttpOnly(RefreshTokenCookieKeys.Value, commandResponse.Response.Id.Value, commandResponse.Response.ExpiresAt);
+        _refreshTokenCookieStore.Set(commandResponse.Id.Id, commandResponse.Id.Value, commandResponse.ExpiresAtUtc);
 
-        var response = _applicationMapper.Map<RotateRefreshTokenApiResponse>(commandResponse);
+        var response = _mapper.Map<RotateRefreshTokenApiResponse>(commandResponse);
 
         return Ok(response);
     }
@@ -70,8 +69,10 @@ public class RefreshTokenController : ControllerBase
         DeleteCurrentRefreshTokenApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<DeleteCurrentRefreshTokenCommandRequest>(request);
-        await _applicationSender.SendAsync(commandRequest, cancellationToken);
+        var commandRequest = _mapper.Map<DeleteCurrentRefreshTokenCommandRequest>(request);
+        await _sender.SendAsync(commandRequest, cancellationToken);
+
+        _refreshTokenCookieStore.Delete();
 
         return NoContent();
     }

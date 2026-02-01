@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Application.Tests.Unit.Features.PostCommentLikes.Commands.Delete;
 
-public class DeletePostCommentLikeCommandHandlerUnitTests : BasePostCommentLikeApplicationUnitTest
+public class DeletePostCommentLikeCommandHandlerUnitTests : BasePostCommentLikeApplicationCommandUnitTest
 {
     private readonly DeletePostCommentLikeCommandRequestBuilderFactory _requestBuilderFactory;
     private readonly DeletePostCommentLikeCommandRequestBuilder _requestBuilder;
@@ -14,7 +14,7 @@ public class DeletePostCommentLikeCommandHandlerUnitTests : BasePostCommentLikeA
         _requestBuilder = _requestBuilderFactory.Create(PostCommentLike);
         _request = _requestBuilder.Build();
 
-        _handler = new(ApplicationMapper, PostCommentLikeService);
+        _handler = new(Mapper, CommentLikeService);
     }
 
     [Fact]
@@ -24,6 +24,6 @@ public class DeletePostCommentLikeCommandHandlerUnitTests : BasePostCommentLikeA
         await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        await PostCommentLikeService.ShouldReceiveOneDeleteAsync(_request, CancellationToken);
+        await CommentLikeService.ShouldReceiveOneDeleteAsync(_request, CancellationToken);
     }
 }

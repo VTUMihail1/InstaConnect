@@ -36,9 +36,9 @@ public static class PostCommentDataFaker
         return PageSize;
     }
 
-    public static PostCommentSortProperty GetSortProperty()
+    public static PostCommentsSortTerm GetSortTerm()
     {
-        const PostCommentSortProperty SortProperty = PostCommentSortProperty.ByCreatedAt;
+        const PostCommentsSortTerm SortProperty = PostCommentsSortTerm.ByCreatedAt;
 
         return SortProperty;
     }

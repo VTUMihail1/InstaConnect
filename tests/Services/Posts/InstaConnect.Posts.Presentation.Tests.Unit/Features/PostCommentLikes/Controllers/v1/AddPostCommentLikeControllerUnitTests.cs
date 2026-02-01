@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Presentation.Tests.Unit.Features.PostCommentLikes.Controllers.v1;
 
-public class AddPostCommentLikeControllerUnitTests : BasePostCommentLikePresentationUnitTest
+public class AddPostCommentLikeControllerUnitTests : BasePostCommentLikePresentationCommandUnitTest
 {
     private readonly AddPostCommentLikeApiRequestBuilderFactory _requestBuilderFactory;
     private readonly AddPostCommentLikeApiRequestBuilder _requestBuilder;
@@ -14,9 +14,9 @@ public class AddPostCommentLikeControllerUnitTests : BasePostCommentLikePresenta
         _requestBuilder = _requestBuilderFactory.Create(PostComment, User);
         _request = _requestBuilder.Build();
 
-        _postCommentLikeController = new(ApplicationMapper, ApplicationSender);
+        _postCommentLikeController = new(Mapper, Sender);
 
-        ApplicationSender.SetupAddCommandRequest(_request, PostCommentLike, CancellationToken);
+        Sender.SetupAddCommandRequest(_request, PostCommentLike, CancellationToken);
     }
 
     [Fact]
@@ -36,7 +36,7 @@ public class AddPostCommentLikeControllerUnitTests : BasePostCommentLikePresenta
         var response = await _postCommentLikeController.AddAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostCommentLike);
+        response.ShouldSatisfy(PostCommentLike, _request);
     }
 
     [Fact]
@@ -46,6 +46,6 @@ public class AddPostCommentLikeControllerUnitTests : BasePostCommentLikePresenta
         await _postCommentLikeController.AddAsync(_request, CancellationToken);
 
         // Assert
-        await ApplicationSender.ShouldReceiveOneSendAsync(_request, CancellationToken);
+        await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.Posts.Controllers.v1;
 
-public class DeletePostFunctionalTests : BasePostPresentationFunctionalTest
+public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTest
 {
     private readonly DeletePostApiRequestBuilderFactory _requestBuilderFactory;
     private readonly DeletePostApiRequestBuilder _requestBuilder;

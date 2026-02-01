@@ -2,20 +2,20 @@
 
 internal class VerifyEmailConfirmationTokenCommandHandler : ICommandHandler<VerifyEmailConfirmationTokenCommandRequest>
 {
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly IEmailConfirmationTokenService _emailConfirmationTokenService;
+    private readonly IApplicationMapper _mapper;
+    private readonly IEmailConfirmationTokenCommandService _emailConfirmationTokenService;
 
     public VerifyEmailConfirmationTokenCommandHandler(
-        IApplicationMapper applicationMapper,
-        IEmailConfirmationTokenService emailConfirmationTokenService)
+        IApplicationMapper mapper,
+        IEmailConfirmationTokenCommandService emailConfirmationTokenService)
     {
-        _applicationMapper = applicationMapper;
+        _mapper = mapper;
         _emailConfirmationTokenService = emailConfirmationTokenService;
     }
 
     public async Task Handle(VerifyEmailConfirmationTokenCommandRequest request, CancellationToken cancellationToken)
     {
-        var serviceRequest = _applicationMapper.Map<VerifyEmailConfirmationTokenCommand>(request);
+        var serviceRequest = _mapper.Map<VerifyEmailConfirmationTokenCommand>(request);
         await _emailConfirmationTokenService.VerifyAsync(serviceRequest, cancellationToken);
     }
 }

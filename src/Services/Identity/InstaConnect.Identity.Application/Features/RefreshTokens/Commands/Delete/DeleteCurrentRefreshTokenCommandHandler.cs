@@ -2,14 +2,14 @@
 
 internal class DeleteCurrentRefreshTokenCommandHandler : ICommandHandler<DeleteCurrentRefreshTokenCommandRequest>
 {
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly IRefreshTokenService _refreshTokenService;
+    private readonly IApplicationMapper _mapper;
+    private readonly IRefreshTokenCommandService _refreshTokenService;
 
     public DeleteCurrentRefreshTokenCommandHandler(
-        IApplicationMapper applicationMapper,
-        IRefreshTokenService refreshTokenService)
+        IApplicationMapper mapper,
+        IRefreshTokenCommandService refreshTokenService)
     {
-        _applicationMapper = applicationMapper;
+        _mapper = mapper;
         _refreshTokenService = refreshTokenService;
     }
 
@@ -17,7 +17,7 @@ internal class DeleteCurrentRefreshTokenCommandHandler : ICommandHandler<DeleteC
         DeleteCurrentRefreshTokenCommandRequest request,
         CancellationToken cancellationToken)
     {
-        var serviceRequest = _applicationMapper.Map<DeleteRefreshTokenCommand>(request);
+        var serviceRequest = _mapper.Map<DeleteRefreshTokenCommand>(request);
         await _refreshTokenService.DeleteAsync(serviceRequest, cancellationToken);
     }
 }

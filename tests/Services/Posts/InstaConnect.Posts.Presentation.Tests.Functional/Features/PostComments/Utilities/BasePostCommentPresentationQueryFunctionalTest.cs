@@ -1,16 +1,11 @@
-﻿using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
+﻿namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.PostComments.Utilities;
 
-namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.PostComments.Utilities;
-
-public abstract class BasePostCommentPresentationQueryFunctionalTest : BasePostCommentPresentationFunctionalTest
+public abstract class BasePostCommentPresentationQueryFunctionalTest : BasePostCommentWebTest
 {
-    protected ICollection<User> Users { get; }
-
-    protected ICollection<PostComment> PostComments { get; }
+    protected HttpClient HttpClient { get; }
 
     protected BasePostCommentPresentationQueryFunctionalTest(PostsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
     {
-        Users = User.GenerateRange();
-        PostComments = PostComment.GenerateRange(Users);
+        HttpClient = webApplicationFactory.CreateClient();
     }
 }

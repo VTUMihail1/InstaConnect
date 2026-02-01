@@ -1,0 +1,6 @@
+﻿using InstaConnect.Posts.Domain.Models.Requests;
+
+namespace InstaConnect.Posts.Infrastructure.Features.PostComments.Abstractions;
+
+internal interface IPostCommentIncluderFactory
+    : IIncluderFactory<PostsIncludeType, PostsDestinationType, PostsIncludeDescriptor, IPostCommentIncluder, PostComment>;

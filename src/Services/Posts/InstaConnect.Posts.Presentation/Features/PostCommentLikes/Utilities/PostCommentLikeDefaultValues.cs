@@ -4,7 +4,7 @@ namespace InstaConnect.Posts.Presentation.Features.PostCommentLikes.Utilities;
 
 public static class PostCommentLikeDefaultValues
 {
-    public const PostCommentLikeSortProperty SortProperty = PostCommentLikeSortProperty.ByCreatedAt;
+    public const PostCommentLikesSortTerm SortTerm = PostCommentLikesSortTerm.ByCreatedAt;
 
     public const int Page = 1;
 

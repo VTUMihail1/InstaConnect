@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Application.Tests.Unit.Features.Posts.Commands.Delete;
 
-public class DeletePostCommandHandlerUnitTests : BasePostApplicationUnitTest
+public class DeletePostCommandHandlerUnitTests : BasePostApplicationCommandUnitTest
 {
     private readonly DeletePostCommandRequestBuilderFactory _requestBuilderFactory;
     private readonly DeletePostCommandRequestBuilder _requestBuilder;
@@ -14,7 +14,7 @@ public class DeletePostCommandHandlerUnitTests : BasePostApplicationUnitTest
         _requestBuilder = _requestBuilderFactory.Create(Post);
         _request = _requestBuilder.Build();
 
-        _handler = new(PostService, ApplicationMapper);
+        _handler = new(Mapper, Service);
     }
 
     [Fact]
@@ -24,6 +24,6 @@ public class DeletePostCommandHandlerUnitTests : BasePostApplicationUnitTest
         await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        await PostService.ShouldReceiveOneDeleteAsync(_request, CancellationToken);
+        await Service.ShouldReceiveOneDeleteAsync(_request, CancellationToken);
     }
 }

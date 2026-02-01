@@ -15,24 +15,25 @@ public class PostLike : IEntityWithId<PostLikeId>
         CreatedAtUtc = createdAtUtc;
     }
 
-    public PostLike(
-        PostLikeId id,
-        User user,
-        DateTimeOffset createdAtUtc)
-    {
-        Id = id;
-        User = user;
-        CreatedAtUtc = createdAtUtc;
-    }
-
     public PostLikeId Id { get; }
+
+    public Post? Post { get; private set; }
 
     public User? User { get; private set; }
 
     public DateTimeOffset CreatedAtUtc { get; }
 
-    public void AddUser(User user)
+    public PostLike AddUser(User user)
     {
         User = user;
+
+        return this;
+    }
+
+    public PostLike AddPost(Post post)
+    {
+        Post = post;
+
+        return this;
     }
 }

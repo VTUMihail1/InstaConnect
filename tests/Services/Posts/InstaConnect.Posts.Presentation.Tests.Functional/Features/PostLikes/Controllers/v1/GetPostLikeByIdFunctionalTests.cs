@@ -184,7 +184,7 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationQueryFunct
         var response = await HttpClient.GetPostLikeByIdAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostLike);
+        response.ShouldSatisfy(PostLike, _request);
     }
 
     [Theory]
@@ -199,7 +199,7 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationQueryFunct
         var response = await HttpClient.GetPostLikeByIdAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostLike);
+        response.ShouldSatisfy(PostLike, request);
     }
 
     [Theory]
@@ -214,6 +214,6 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationQueryFunct
         var response = await HttpClient.GetPostLikeByIdAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostLike);
+        response.ShouldSatisfy(PostLike, request);
     }
 }

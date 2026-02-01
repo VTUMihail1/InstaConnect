@@ -1,4 +1,5 @@
-﻿using InstaConnect.Posts.Presentation.Tests.Features.PostComments.Utilities;
+﻿using InstaConnect.Posts.Presentation.Tests.Features.PostCommentLikes.Utilities;
+using InstaConnect.Posts.Presentation.Tests.Features.PostComments.Utilities;
 
 namespace InstaConnect.Posts.Presentation.Tests.Features.PostComments.Assertions;
 
@@ -9,7 +10,15 @@ public static class PostCommentMockAssertions
         GetAllPostCommentsApiRequest request,
         CancellationToken cancellationToken)
     {
-        await applicationSender.ShouldHaveReceived(1).SendAsync(PostCommentMatcher.IsGetAllPostCommentsQueryRequest(request), cancellationToken);
+        await applicationSender.ShouldHaveReceivedOne().SendAsync(PostCommentMatcher.IsGetAllPostCommentsQueryRequest(request), cancellationToken);
+    }
+
+    public static async Task ShouldReceiveOneSendAsync(
+        this IApplicationSender applicationSender,
+        GetAllPostCommentsForUserApiRequest request,
+        CancellationToken cancellationToken)
+    {
+        await applicationSender.ShouldHaveReceivedOne().SendAsync(PostCommentMatcher.IsGetAllPostCommentsForUserQueryRequest(request), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneSendAsync(
@@ -17,7 +26,7 @@ public static class PostCommentMockAssertions
         GetPostCommentByIdApiRequest request,
         CancellationToken cancellationToken)
     {
-        await applicationSender.ShouldHaveReceived(1).SendAsync(PostCommentMatcher.IsGetPostCommentByIdQueryRequest(request), cancellationToken);
+        await applicationSender.ShouldHaveReceivedOne().SendAsync(PostCommentMatcher.IsGetPostCommentByIdQueryRequest(request), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneSendAsync(
@@ -25,7 +34,7 @@ public static class PostCommentMockAssertions
         AddPostCommentApiRequest request,
         CancellationToken cancellationToken)
     {
-        await applicationSender.ShouldHaveReceived(1).SendAsync(PostCommentMatcher.IsAddPostCommentCommandRequest(request), cancellationToken);
+        await applicationSender.ShouldHaveReceivedOne().SendAsync(PostCommentMatcher.IsAddPostCommentCommandRequest(request), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneSendAsync(
@@ -33,7 +42,7 @@ public static class PostCommentMockAssertions
         UpdatePostCommentApiRequest request,
         CancellationToken cancellationToken)
     {
-        await applicationSender.ShouldHaveReceived(1).SendAsync(PostCommentMatcher.IsUpdatePostCommentCommandRequest(request), cancellationToken);
+        await applicationSender.ShouldHaveReceivedOne().SendAsync(PostCommentMatcher.IsUpdatePostCommentCommandRequest(request), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneSendAsync(
@@ -41,6 +50,6 @@ public static class PostCommentMockAssertions
         DeletePostCommentApiRequest request,
         CancellationToken cancellationToken)
     {
-        await applicationSender.ShouldHaveReceived(1).SendAsync(PostCommentMatcher.IsDeletePostCommentCommandRequest(request), cancellationToken);
+        await applicationSender.ShouldHaveReceivedOne().SendAsync(PostCommentMatcher.IsDeletePostCommentCommandRequest(request), cancellationToken);
     }
 }

@@ -1,16 +1,14 @@
-﻿using InstaConnect.Posts.Domain.Features.PostCommentLikes.Helpers;
-
-namespace InstaConnect.Posts.Application.Tests.Features.PostCommentLikes.Utilities;
+﻿namespace InstaConnect.Posts.Application.Tests.Features.PostCommentLikes.Utilities;
 
 public static class PostCommentLikeMockFactory
 {
-    public static IPostCommentLikeService CreateService()
+    public static IPostCommentLikeCommandService CreateCommandService()
     {
-        return Mocker.Mock<IPostCommentLikeService>();
+        return Mocker.Mock<IPostCommentLikeCommandService>();
     }
 
-    public static IPostCommentLikeIncludeQueryBuilderFactory CreateIncludeQueryBuilderFactory()
+    public static IPostCommentLikeQueryService CreateQueryService()
     {
-        return new PostCommentLikeIncludeQueryBuilderFactory();
+        return Mocker.Mock<IPostCommentLikeQueryService>();
     }
 }

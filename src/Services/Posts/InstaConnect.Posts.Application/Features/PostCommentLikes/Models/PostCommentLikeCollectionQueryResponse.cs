@@ -1,9 +1,11 @@
 ﻿namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Models;
 
 public record PostCommentLikeCollectionQueryResponse(
-    ICollection<PostCommentLikeQueryResponse> Entities,
+    PostCommentQueryResponse? PostComment,
+    UserQueryResponse? User,
+    ICollection<PostCommentLikeQueryResponse> PostCommentLikes,
     int Page,
     int PageSize,
-    int TotalCount,
+    long TotalCount,
     bool HasNextPage,
     bool HasPreviousPage) : ICollectionQueryResponse;

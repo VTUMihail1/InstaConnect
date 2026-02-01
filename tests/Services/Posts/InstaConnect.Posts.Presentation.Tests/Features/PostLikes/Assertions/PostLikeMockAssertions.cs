@@ -9,7 +9,15 @@ public static class PostLikeMockAssertions
         GetAllPostLikesApiRequest request,
         CancellationToken cancellationToken)
     {
-        await applicationSender.ShouldHaveReceived(1).SendAsync(PostLikeMatcher.IsGetAllPostLikesQueryRequest(request), cancellationToken);
+        await applicationSender.ShouldHaveReceivedOne().SendAsync(PostLikeMatcher.IsGetAllPostLikesQueryRequest(request), cancellationToken);
+    }
+
+    public static async Task ShouldReceiveOneSendAsync(
+        this IApplicationSender applicationSender,
+        GetAllPostLikesForUserApiRequest request,
+        CancellationToken cancellationToken)
+    {
+        await applicationSender.ShouldHaveReceivedOne().SendAsync(PostLikeMatcher.IsGetAllPostLikesForUserQueryRequest(request), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneSendAsync(
@@ -17,7 +25,7 @@ public static class PostLikeMockAssertions
         GetPostLikeByIdApiRequest request,
         CancellationToken cancellationToken)
     {
-        await applicationSender.ShouldHaveReceived(1).SendAsync(PostLikeMatcher.IsGetPostLikeByIdQueryRequest(request), cancellationToken);
+        await applicationSender.ShouldHaveReceivedOne().SendAsync(PostLikeMatcher.IsGetPostLikeByIdQueryRequest(request), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneSendAsync(
@@ -25,7 +33,7 @@ public static class PostLikeMockAssertions
         AddPostLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        await applicationSender.ShouldHaveReceived(1).SendAsync(PostLikeMatcher.IsAddPostLikeCommandRequest(request), cancellationToken);
+        await applicationSender.ShouldHaveReceivedOne().SendAsync(PostLikeMatcher.IsAddPostLikeCommandRequest(request), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneSendAsync(
@@ -33,6 +41,6 @@ public static class PostLikeMockAssertions
         DeletePostLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        await applicationSender.ShouldHaveReceived(1).SendAsync(PostLikeMatcher.IsDeletePostLikeCommandRequest(request), cancellationToken);
+        await applicationSender.ShouldHaveReceivedOne().SendAsync(PostLikeMatcher.IsDeletePostLikeCommandRequest(request), cancellationToken);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Application.Abstractions;
+using InstaConnect.Posts.Application.Features.Posts.Queries.GetAllForUser;
 using InstaConnect.Posts.Domain.Features.Posts.Exceptions;
 
 using MediatR;
@@ -7,6 +8,17 @@ namespace InstaConnect.Posts.Application.Tests.Features.Posts.Assertions;
 
 public static class PostExceptionAssertions
 {
+    public static async Task ShouldThrowUserNotFoundExceptionAsync(
+        this IApplicationSender sender,
+        GetAllPostsForUserQueryRequest request,
+        CancellationToken cancellationToken)
+    {
+        await sender.ShouldThrowUserNotFoundExceptionAsync<GetAllPostsForUserQueryRequest, GetAllPostsForUserQueryResponse>(
+            r => r.UserId,
+            request,
+            cancellationToken);
+    }
+
     public static async Task ShouldThrowUserNotFoundExceptionAsync(
         this IApplicationSender sender,
         AddPostCommandRequest request,

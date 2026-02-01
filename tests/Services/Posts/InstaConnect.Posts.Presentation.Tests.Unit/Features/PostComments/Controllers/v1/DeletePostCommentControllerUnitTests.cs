@@ -1,7 +1,7 @@
 ﻿namespace InstaConnect.Posts.Presentation.Tests.Unit.Features.PostComments.Controllers.v1;
 
 
-public class DeletePostCommentControllerUnitTests : BasePostCommentPresentationUnitTest
+public class DeletePostCommentControllerUnitTests : BasePostCommentPresentationCommandUnitTest
 {
     private readonly DeletePostCommentApiRequestBuilderFactory _requestBuilderFactory;
     private readonly DeletePostCommentApiRequestBuilder _requestBuilder;
@@ -15,7 +15,7 @@ public class DeletePostCommentControllerUnitTests : BasePostCommentPresentationU
         _requestBuilder = _requestBuilderFactory.Create(PostComment);
         _request = _requestBuilder.Build();
 
-        _postCommentController = new(ApplicationMapper, ApplicationSender);
+        _postCommentController = new(Mapper, Sender);
     }
 
     [Fact]
@@ -35,6 +35,6 @@ public class DeletePostCommentControllerUnitTests : BasePostCommentPresentationU
         await _postCommentController.DeleteAsync(_request, CancellationToken);
 
         // Assert
-        await ApplicationSender.ShouldReceiveOneSendAsync(_request, CancellationToken);
+        await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);
     }
 }

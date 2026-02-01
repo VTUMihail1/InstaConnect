@@ -1,10 +1,10 @@
 ﻿using InstaConnect.Common.Domain.Models;
 
 namespace InstaConnect.Common.Presentation.Abstractions;
-public interface ISortableApiRequest<out TSortProperty>
-    where TSortProperty : Enum
+public interface ISortableApiRequest<out TSortTerm>
+    where TSortTerm : Enum
 {
     public CommonSortOrder SortOrder { get; }
 
-    public TSortProperty SortProperty { get; }
+    public TSortTerm SortTerm { get; }
 }

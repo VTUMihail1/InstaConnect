@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Domain.Extensions;
+using InstaConnect.Posts.Domain.Models.Requests;
 
 namespace InstaConnect.Posts.Domain.Features.PostLikes.Utilities;
 
@@ -18,17 +19,18 @@ public static class PostLikeExceptionErrorMessages
         return Format.FormatCurrentCulture(id.Id.Id, id.UserId.Id);
     }
 
-    public static string GetSortPropertyNotSupportedMessage(PostLikeSortProperty sortProperty)
+    public static string GetSortTermNotSupportedMessage(PostLikesSortTerm sortTerm)
     {
-        const string Format = "PostLikeSortProperty(type: {0}) is not supported";
+        const string Format = "PostLikeSortTerm(type: {0}) is not supported";
 
-        return Format.FormatCurrentCulture(sortProperty);
+        return Format.FormatCurrentCulture(sortTerm);
     }
 
-    public static string GetInclidePropertyNotSupportedMessage(ICollection<PostLikeIncludeProperty> includeProperties)
+    public static string GetInclideDescriptorsNotSupportedMessage(ICollection<PostsIncludeDescriptor> descriptors)
     {
-        const string Format = "PostLikeIncludeProperties(types: {0}) is not supported";
+        const string Format = "PostLikeDescriptors({0}) is not supported";
 
-        return Format.FormatCurrentCulture(includeProperties.JoinAsStringWithComa());
+        return Format.FormatCurrentCulture(descriptors
+            .JoinIncludeDescriptorsAsStringWithComa<PostsDestinationType, PostsIncludeType, PostsIncludeDescriptor>());
     }
 }

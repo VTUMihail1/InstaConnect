@@ -15,7 +15,7 @@ public class GetAllPostCommentsQueryRequestValidator : AbstractValidator<GetAllP
         RuleFor(q => q.SortOrder)
             .NotEmptyWithMessage();
 
-        RuleFor(q => q.SortProperty)
+        RuleFor(q => q.SortTerm)
             .NotEmptyWithMessage();
 
         RuleFor(q => q.Page)
@@ -25,5 +25,8 @@ public class GetAllPostCommentsQueryRequestValidator : AbstractValidator<GetAllP
         RuleFor(q => q.PageSize)
             .PostCommentPageSizeMinValueWithMessage()
             .PostCommentPageSizeMaxValueWithMessage();
+
+        RuleFor(c => c.CurrentUserId)
+            .UserIdMaxLengthWithMessage();
     }
 }

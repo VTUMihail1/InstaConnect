@@ -9,7 +9,15 @@ public static class PostCommentLikeMockAssertions
         GetAllPostCommentLikesApiRequest request,
         CancellationToken cancellationToken)
     {
-        await applicationSender.ShouldHaveReceived(1).SendAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesQueryRequest(request), cancellationToken);
+        await applicationSender.ShouldHaveReceivedOne().SendAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesQueryRequest(request), cancellationToken);
+    }
+
+    public static async Task ShouldReceiveOneSendAsync(
+        this IApplicationSender applicationSender,
+        GetAllPostCommentLikesForUserApiRequest request,
+        CancellationToken cancellationToken)
+    {
+        await applicationSender.ShouldHaveReceivedOne().SendAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesForUserQueryRequest(request), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneSendAsync(
@@ -17,7 +25,7 @@ public static class PostCommentLikeMockAssertions
         GetPostCommentLikeByIdApiRequest request,
         CancellationToken cancellationToken)
     {
-        await applicationSender.ShouldHaveReceived(1).SendAsync(PostCommentLikeMatcher.IsGetPostCommentLikeByIdQueryRequest(request), cancellationToken);
+        await applicationSender.ShouldHaveReceivedOne().SendAsync(PostCommentLikeMatcher.IsGetPostCommentLikeByIdQueryRequest(request), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneSendAsync(
@@ -25,7 +33,7 @@ public static class PostCommentLikeMockAssertions
         AddPostCommentLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        await applicationSender.ShouldHaveReceived(1).SendAsync(PostCommentLikeMatcher.IsAddPostCommentLikeCommandRequest(request), cancellationToken);
+        await applicationSender.ShouldHaveReceivedOne().SendAsync(PostCommentLikeMatcher.IsAddPostCommentLikeCommandRequest(request), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneSendAsync(
@@ -33,6 +41,6 @@ public static class PostCommentLikeMockAssertions
         DeletePostCommentLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        await applicationSender.ShouldHaveReceived(1).SendAsync(PostCommentLikeMatcher.IsDeletePostCommentLikeCommandRequest(request), cancellationToken);
+        await applicationSender.ShouldHaveReceivedOne().SendAsync(PostCommentLikeMatcher.IsDeletePostCommentLikeCommandRequest(request), cancellationToken);
     }
 }

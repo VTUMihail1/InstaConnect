@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Domain.Models;
-
-namespace InstaConnect.Follows.Infrastructure.Features.Follows.Helpers;
+﻿namespace InstaConnect.Follows.Infrastructure.Features.Follows.Helpers;
 
 internal class FollowCollectionFactory : IFollowCollectionFactory
 {

@@ -1,26 +1,24 @@
-﻿using InstaConnect.Common.Domain.Models;
-
-namespace InstaConnect.Follows.Domain.Features.Follows.Abstractions;
+﻿namespace InstaConnect.Follows.Domain.Features.Follows.Abstractions;
 
 public interface IFollowRepository
 {
     Task<FollowCollection> GetAllByFollowerAsync(
         FollowByFollowerFilterQuery filter,
-        CommonSortingQuery<FollowByFollowerSortProperty> sorting,
+        FollowByFollowerSortingQuery sorting,
         CommonPaginationQuery pagination,
-        CommonIncludeQuery<FollowIncludeProperty>? include,
+        FollowInclude include,
         CancellationToken cancellationToken);
 
     Task<FollowCollection> GetAllByFollowingAsync(
         FollowByFollowingFilterQuery filter,
-        CommonSortingQuery<FollowByFollowingSortProperty> sorting,
+        FollowByFollowingSortingQuery sorting,
         CommonPaginationQuery pagination,
-        CommonIncludeQuery<FollowIncludeProperty>? include,
+        FollowInclude include,
         CancellationToken cancellationToken);
 
     Task<Follow?> GetByIdAsync(
         FollowId id,
-        CommonIncludeQuery<FollowIncludeProperty>? include,
+        FollowInclude include,
         CancellationToken cancellationToken);
 
     Task<Follow?> GetByIdAsync(

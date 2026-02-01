@@ -86,7 +86,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
     }
 
     [Theory]
-    [PostSortOrderEmptyData]
+    [PostsSortOrderEmptyData]
     public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenSortOrderIsInvalid(
         IEnumTransformer<CommonSortOrder> transformer)
     {
@@ -101,7 +101,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
     }
 
     [Theory]
-    [PostSortOrderEmptyWithMessageData]
+    [PostsSortOrderEmptyWithMessageData]
     public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenSortOrderIsInvalid(
         IEnumTransformer<CommonSortOrder> transformer, IEnumMessageTransformer<CommonSortOrder> messageTransformer)
     {
@@ -116,12 +116,12 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
     }
 
     [Theory]
-    [PostSortPropertyEmptyData]
+    [PostsSortTermEmptyData]
     public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenSortPropertyIsInvalid(
-        IEnumTransformer<PostSortProperty> transformer)
+        IEnumTransformer<PostsSortTerm> transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(transformer).Build();
+        var request = _requestBuilder.WithSortTerm(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
@@ -131,12 +131,12 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
     }
 
     [Theory]
-    [PostSortPropertyEmptyWithMessageData]
+    [PostsSortTermEmptyWithMessageData]
     public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenSortPropertyIsInvalid(
-        IEnumTransformer<PostSortProperty> transformer, IEnumMessageTransformer<PostSortProperty> messageTransformer)
+        IEnumTransformer<PostsSortTerm> transformer, IEnumMessageTransformer<PostsSortTerm> messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(transformer).Build();
+        var request = _requestBuilder.WithSortTerm(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsProblemDetailsAsync(request, CancellationToken);
@@ -254,8 +254,8 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
     }
 
     [Theory]
-    [PostSortOrderAscendingData]
-    [PostSortOrderDescendingData]
+    [PostsSortOrderAscendingData]
+    [PostsSortOrderDescendingData]
     public async Task SendAsync_ShouldHaveOkStatusCode_WhenRequestAndSortOrderAreValid(
         IEnumTransformer<CommonSortOrder> transformer)
     {
@@ -270,14 +270,14 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
     }
 
     [Theory]
-    [PostSortPropertyCreatedAtData]
-    [PostSortPropertyTitleData]
-    [PostSortPropertyUserNameData]
+    [PostsSortTermCreatedAtData]
+    [PostsSortTermTitleData]
+    [PostsSortTermUserNameData]
     public async Task SendAsync_ShouldHaveOkStatusCode_WhenRequestAndSortPropertyAreValid(
-        IEnumTransformer<PostSortProperty> transformer)
+        IEnumTransformer<PostsSortTerm> transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(transformer).Build();
+        var request = _requestBuilder.WithSortTerm(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
@@ -331,8 +331,8 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
     }
 
     [Theory]
-    [PostSortOrderWithAscendingTermData]
-    [PostSortOrderWithDescendingTermData]
+    [PostsSortOrderWithAscendingTermData]
+    [PostsSortOrderWithDescendingTermData]
     public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortOrderAreValid(
         IEnumTransformer<CommonSortOrder> transformer, ISortEnumTermTransformer<Post> termTransformer)
     {
@@ -347,14 +347,14 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
     }
 
     [Theory]
-    [PostSortPropertyWithCreatedAtTermData]
-    [PostSortPropertyWithTitleTermData]
-    [PostSortPropertyWithUserNameTermData]
+    [PostsSortTermWithCreatedAtTermData]
+    [PostsSortTermWithTitleTermData]
+    [PostsSortTermWithUserNameTermData]
     public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortPropertyAreValid(
-        IEnumTransformer<PostSortProperty> transformer, ISortEnumTermTransformer<Post> termTransformer)
+        IEnumTransformer<PostsSortTerm> transformer, ISortEnumTermTransformer<Post> termTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(transformer).Build();
+        var request = _requestBuilder.WithSortTerm(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostsAsync(request, CancellationToken);

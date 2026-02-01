@@ -6,24 +6,40 @@ public class GetAllPostsApiRequestBuilder
 {
     private string _userName;
     private string _title;
+    private string _currentUserId;
     private int _page;
     private int _pageSize;
     private CommonSortOrder _sortOrder;
-    private PostSortProperty _sortProperty;
+    private PostsSortTerm _sortTerm;
 
     public GetAllPostsApiRequestBuilder(Post post)
     {
         _userName = DataFaker.GetPrefixString(post.User!.Name.Value);
         _title = DataFaker.GetPrefixString(post.Title);
+        _currentUserId = post.UserId.Id;
         _page = PostDataFaker.GetPage();
         _pageSize = PostDataFaker.GetPageSize();
         _sortOrder = DataFaker.GetSortOrder();
-        _sortProperty = PostDataFaker.GetSortProperty();
+        _sortTerm = PostDataFaker.GetSortTerm();
     }
 
     public GetAllPostsApiRequestBuilder WithUserName(IStringTransformer transformer)
     {
         _userName = transformer.Transform(_userName);
+
+        return this;
+    }
+
+    public GetAllPostsApiRequestBuilder WithCurrentUserId(User user, IStringTransformer? transformer = null)
+    {
+        _currentUserId = transformer.TryTransform(user.Id.Id);
+
+        return this;
+    }
+
+    public GetAllPostsApiRequestBuilder WithCurrentUserId(IStringTransformer transformer)
+    {
+        _currentUserId = transformer.Transform(_currentUserId);
 
         return this;
     }
@@ -56,15 +72,15 @@ public class GetAllPostsApiRequestBuilder
         return this;
     }
 
-    public GetAllPostsApiRequestBuilder WithSortProperty(IEnumTransformer<PostSortProperty> transformer)
+    public GetAllPostsApiRequestBuilder WithSortTerm(IEnumTransformer<PostsSortTerm> transformer)
     {
-        _sortProperty = transformer.Transform(_sortProperty);
+        _sortTerm = transformer.Transform(_sortTerm);
 
         return this;
     }
 
     public GetAllPostsApiRequest Build()
     {
-        return new(_userName, _title, _sortOrder, _sortProperty, _page, _pageSize);
+        return new(_userName, _title, _currentUserId, _sortOrder, _sortTerm, _page, _pageSize);
     }
 }

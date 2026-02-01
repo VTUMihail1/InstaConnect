@@ -4,7 +4,7 @@ namespace InstaConnect.Identity.Infrastructure.Features.Users.Helpers.SortProper
 
 public class ByUserCreatedAtSortProperty : IUserSortProperty
 {
-    public UserSortProperty SortProperty => UserSortProperty.ByCreatedAt;
+    public UserSortProperty SortTerm => UserSortProperty.ByCreatedAt;
 
-    public Expression<Func<User, object>> Property => p => p.CreatedAtUtc;
+    public Expression<Func<UserResponse, object>> Term => p => p.CreatedAtUtc;
 }

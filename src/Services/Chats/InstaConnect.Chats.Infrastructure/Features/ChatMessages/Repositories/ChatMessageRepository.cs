@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Chats.Infrastructure.Features.ChatMessages.Extensions;
-using InstaConnect.Common.Domain.Models;
 
 using MongoDB.Driver;
 
@@ -9,7 +8,7 @@ internal class ChatMessageRepository : IChatMessageRepository
 {
     private readonly IPaginator _paginator;
     private readonly IChatsContext _chatsContext;
-    private readonly ISortOrderFactory _sortOrderFactory;
+    private readonly ISortOrdererFactory _sortOrderFactory;
     private readonly IChatMessageCollectionFactory _chatMessageCollectionFactory;
     private readonly IChatMessageSortPropertyFactory _chatMessageSortPropertyFactory;
     private readonly IChatMessageIncludePropertyFactory _chatMessageIncludePropertyFactory;
@@ -17,7 +16,7 @@ internal class ChatMessageRepository : IChatMessageRepository
     public ChatMessageRepository(
         IPaginator paginator,
         IChatsContext chatsContext,
-        ISortOrderFactory sortOrderFactory,
+        ISortOrdererFactory sortOrderFactory,
         IChatMessageCollectionFactory chatMessageCollectionFactory,
         IChatMessageSortPropertyFactory chatMessageSortPropertyFactory,
         IChatMessageIncludePropertyFactory chatMessageIncludePropertyFactory)
@@ -32,9 +31,9 @@ internal class ChatMessageRepository : IChatMessageRepository
 
     public async Task<ChatMessageCollection> GetAllAsync(
         ChatMessageFilterQuery filter,
-        CommonSortingQuery<ChatMessageSortProperty> sorting,
+        ChatMessageSortingQuery sorting,
         CommonPaginationQuery pagination,
-        CommonIncludeQuery<ChatMessageIncludeProperty>? include,
+        ChatMessageInclude include,
         CancellationToken cancellationToken)
     {
         var match = filter.GetFilter();
@@ -64,7 +63,7 @@ internal class ChatMessageRepository : IChatMessageRepository
 
     public async Task<ChatMessage?> GetByIdAsync(
         ChatMessageId id,
-        CommonIncludeQuery<ChatMessageIncludeProperty>? include,
+        ChatMessageInclude include,
         CancellationToken cancellationToken)
     {
         var includeProperties = _chatMessageIncludePropertyFactory.Create(include?.Properties);

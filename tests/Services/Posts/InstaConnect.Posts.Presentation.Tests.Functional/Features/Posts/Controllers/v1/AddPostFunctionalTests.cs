@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.Posts.Controllers.v1;
 
-public class AddPostFunctionalTests : BasePostPresentationFunctionalTest
+public class AddPostFunctionalTests : BasePostPresentationCommandFunctionalTest
 {
     private readonly AddPostApiRequestBuilderFactory _requestBuilderFactory;
     private readonly AddPostApiRequestBuilder _requestBuilder;
@@ -193,10 +193,10 @@ public class AddPostFunctionalTests : BasePostPresentationFunctionalTest
     {
         // Act
         var response = await HttpClient.AddPostAsync(_request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(post);
+        response.ShouldSatisfy(post, _request);
     }
 
     [Theory]
@@ -209,10 +209,10 @@ public class AddPostFunctionalTests : BasePostPresentationFunctionalTest
 
         // Act
         var response = await HttpClient.AddPostAsync(request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(post);
+        response.ShouldSatisfy(post, request);
     }
 
     [Fact]
@@ -220,7 +220,7 @@ public class AddPostFunctionalTests : BasePostPresentationFunctionalTest
     {
         // Act
         var response = await HttpClient.AddPostAsync(_request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
 
         // Assert
         post.ShouldSatisfy(_request);
@@ -236,7 +236,7 @@ public class AddPostFunctionalTests : BasePostPresentationFunctionalTest
 
         // Act
         var response = await HttpClient.AddPostAsync(request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
 
         // Assert
         post.ShouldSatisfy(request);
@@ -247,7 +247,7 @@ public class AddPostFunctionalTests : BasePostPresentationFunctionalTest
     {
         // Act
         var response = await HttpClient.AddPostAsync(_request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedAddedAsync(post, CancellationToken);
@@ -263,7 +263,7 @@ public class AddPostFunctionalTests : BasePostPresentationFunctionalTest
 
         // Act
         var response = await HttpClient.AddPostAsync(request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedAddedAsync(post, CancellationToken);

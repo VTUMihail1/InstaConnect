@@ -1,18 +1,21 @@
-﻿namespace InstaConnect.Posts.Application.Tests.Features.PostCommentLikes.Utilities;
+﻿using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAllForUser;
+
+namespace InstaConnect.Posts.Application.Tests.Features.PostCommentLikes.Utilities;
 public static class PostCommentLikeMatcher
 {
-    public static GetAllPostCommentLikesQuery IsGetAllPostCommentLikesQuery(
-        GetAllPostCommentLikesQueryRequest request,
-        CommonIncludeQuery<PostCommentLikeIncludeProperty> include)
+    public static GetAllPostCommentLikesQuery IsGetAllPostCommentLikesQuery(GetAllPostCommentLikesQueryRequest request)
     {
-        return Matcher.Is<GetAllPostCommentLikesQuery>(p => p.Matches(request, include));
+        return Matcher.Is<GetAllPostCommentLikesQuery>(p => p.Matches(request));
     }
 
-    public static GetPostCommentLikeByIdQuery IsGetPostCommentLikeByIdQuery(
-        GetPostCommentLikeByIdQueryRequest request,
-        CommonIncludeQuery<PostCommentLikeIncludeProperty> include)
+    public static GetAllPostCommentLikesForUserQuery IsGetAllPostCommentLikesForUserQuery(GetAllPostCommentLikesForUserQueryRequest request)
     {
-        return Matcher.Is<GetPostCommentLikeByIdQuery>(p => p.Matches(request, include));
+        return Matcher.Is<GetAllPostCommentLikesForUserQuery>(p => p.Matches(request));
+    }
+
+    public static GetPostCommentLikeByIdQuery IsGetPostCommentLikeByIdQuery(GetPostCommentLikeByIdQueryRequest request)
+    {
+        return Matcher.Is<GetPostCommentLikeByIdQuery>(p => p.Matches(request));
     }
 
     public static AddPostCommentLikeCommand IsAddPostCommentLikeCommand(AddPostCommentLikeCommandRequest request)

@@ -6,7 +6,7 @@ public record GetAllFollowsByFollowingQueryRequest(
     string FollowingId,
     string FollowerName,
     CommonSortOrder SortOrder,
-    FollowByFollowingSortProperty SortProperty,
+    FollowByFollowingSortProperty SortTerm,
     int Page,
     int PageSize)
     : IQueryRequest<GetAllFollowsByFollowingQueryResponse>, ISortableQueryRequest<FollowByFollowingSortProperty>, IPaginatableQueryRequest;

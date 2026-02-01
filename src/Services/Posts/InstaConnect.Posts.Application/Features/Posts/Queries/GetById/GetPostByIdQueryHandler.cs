@@ -2,29 +2,23 @@
 
 internal class GetPostByIdQueryHandler : IQueryHandler<GetPostByIdQueryRequest, GetPostByIdQueryResponse>
 {
-    private readonly IPostService _postService;
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly IPostIncludeQueryBuilderFactory _postIncludeQueryBuilderFactory;
+    private readonly IApplicationMapper _mapper;
+    private readonly IPostQueryService _service;
 
-    public GetPostByIdQueryHandler(
-        IPostService postService,
-        IApplicationMapper applicationMapper,
-        IPostIncludeQueryBuilderFactory postIncludeQueryBuilderFactory)
+    public GetPostByIdQueryHandler(IApplicationMapper mapper, IPostQueryService service)
     {
-        _postService = postService;
-        _applicationMapper = applicationMapper;
-        _postIncludeQueryBuilderFactory = postIncludeQueryBuilderFactory;
+        _mapper = mapper;
+        _service = service;
     }
 
     public async Task<GetPostByIdQueryResponse> Handle(
         GetPostByIdQueryRequest request,
         CancellationToken cancellationToken)
     {
-        var include = _postIncludeQueryBuilderFactory.Create().WithUser().Build();
-        var serviceRequest = _applicationMapper.Map<GetPostByIdQuery>(request).AddInclude(include);
-        var post = await _postService.GetByIdAsync(serviceRequest, cancellationToken);
+        var serviceRequest = _mapper.Map<GetPostByIdQuery>(request);
+        var serviceResponse = await _service.GetByIdAsync(serviceRequest, cancellationToken);
 
-        var response = _applicationMapper.Map<GetPostByIdQueryResponse>(post);
+        var response = _mapper.Map<GetPostByIdQueryResponse>(serviceResponse);
 
         return response;
     }

@@ -54,7 +54,7 @@ public class GetAllPostLikesQueryRequestValidatorUnitTests : BasePostLikeApplica
     }
 
     [Theory]
-    [PostLikeSortOrderEmptyWithMessageData]
+    [PostLikesSortOrderEmptyWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenSortOrderIsInvalid(
         IEnumTransformer<CommonSortOrder> transformer, IEnumMessageTransformer<CommonSortOrder> messageTransformer)
     {
@@ -69,18 +69,18 @@ public class GetAllPostLikesQueryRequestValidatorUnitTests : BasePostLikeApplica
     }
 
     [Theory]
-    [PostLikeSortPropertyEmptyWithMessageData]
+    [PostLikesSortTermEmptyWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenSortPropertyIsInvalid(
-        IEnumTransformer<PostLikeSortProperty> transformer, IEnumMessageTransformer<PostLikeSortProperty> messageTransformer)
+        IEnumTransformer<PostLikesSortTerm> transformer, IEnumMessageTransformer<PostLikesSortTerm> messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(transformer).Build();
+        var request = _requestBuilder.WithSortTerm(transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForSortProperty(messageTransformer, request);
+        result.ShouldHaveValidationErrorForSortTerm(messageTransformer, request);
     }
 
     [Theory]

@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Abstractions;
 
-public interface IEmailConfirmationTokenIncludeProperty : IIncludeProperty<EmailConfirmationToken>
+public interface IEmailConfirmationTokenIncludeProperty : IIncluder<EmailConfirmationToken>
 {
     public EmailConfirmationTokenIncludeProperty IncludeProperty { get; }
 }

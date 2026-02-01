@@ -14,9 +14,9 @@ public class GetPostLikeByIdQueryHandlerUnitTests : BasePostLikeApplicationQuery
         _requestBuilder = _requestBuilderFactory.Create(PostLike);
         _request = _requestBuilder.Build();
 
-        _handler = new(PostLikeService, ApplicationMapper, PostLikeIncludeQueryBuilderFactory);
+        _handler = new(Mapper, LikeService);
 
-        PostLikeService.SetupGetByIdQuery(_request, PostLike, Include, CancellationToken);
+        LikeService.SetupGetByIdQuery(_request, PostLike, CancellationToken);
     }
 
     [Fact]
@@ -26,7 +26,7 @@ public class GetPostLikeByIdQueryHandlerUnitTests : BasePostLikeApplicationQuery
         var response = await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostLike);
+        response.ShouldSatisfy(PostLike, _request);
     }
 
     [Fact]
@@ -36,6 +36,6 @@ public class GetPostLikeByIdQueryHandlerUnitTests : BasePostLikeApplicationQuery
         await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        await PostLikeService.ShouldReceiveOneGetByIdAsync(_request, Include, CancellationToken);
+        await LikeService.ShouldReceiveOneGetByIdAsync(_request, CancellationToken);
     }
 }

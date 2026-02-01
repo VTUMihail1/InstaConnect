@@ -23,6 +23,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationQueryI
         await ServiceScope.AddUserAsync(User, CancellationToken);
         await ServiceScope.AddUserRangeAsync(Users, CancellationToken);
         await ServiceScope.AddPostRangeAsync(Posts, CancellationToken);
+        await ServiceScope.AddPostLikeRangeAsync(PostLikes, CancellationToken);
     }
 
     [Theory]
@@ -34,7 +35,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationQueryI
         var request = _requestBuilder.WithUserName(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForUserNameAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForUserNameAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -47,12 +48,12 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationQueryI
         var request = _requestBuilder.WithTitle(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForTitleAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForTitleAsync(
             messageTransformer, request, CancellationToken);
     }
 
     [Theory]
-    [PostSortOrderEmptyWithMessageData]
+    [PostsSortOrderEmptyWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenSortOrderIsInvalid(
         IEnumTransformer<CommonSortOrder> transformer, IEnumMessageTransformer<CommonSortOrder> messageTransformer)
     {
@@ -60,20 +61,20 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationQueryI
         var request = _requestBuilder.WithSortOrder(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForSortOrderAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForSortOrderAsync(
             messageTransformer, request, CancellationToken);
     }
 
     [Theory]
-    [PostSortPropertyEmptyWithMessageData]
+    [PostsSortTermEmptyWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenSortPropertyIsInvalid(
-        IEnumTransformer<PostSortProperty> transformer, IEnumMessageTransformer<PostSortProperty> messageTransformer)
+        IEnumTransformer<PostsSortTerm> transformer, IEnumMessageTransformer<PostsSortTerm> messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(transformer).Build();
+        var request = _requestBuilder.WithSortTerm(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForSortPropertyAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForSortPropertyAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -87,7 +88,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationQueryI
         var request = _requestBuilder.WithPage(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForPageAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForPageAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -101,7 +102,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationQueryI
         var request = _requestBuilder.WithPageSize(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForPageSizeAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForPageSizeAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -109,7 +110,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationQueryI
     public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValid()
     {
         // Act
-        var response = await ApplicationSender.SendAsync(_request, CancellationToken);
+        var response = await Sender.SendAsync(_request, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(Posts, _request);
@@ -126,7 +127,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationQueryI
         var request = _requestBuilder.WithUserName(transformer).Build();
 
         // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(Posts, _request);
@@ -143,15 +144,15 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationQueryI
         var request = _requestBuilder.WithTitle(transformer).Build();
 
         // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(Posts, _request);
     }
 
     [Theory]
-    [PostSortOrderWithAscendingTermData]
-    [PostSortOrderWithDescendingTermData]
+    [PostsSortOrderWithAscendingTermData]
+    [PostsSortOrderWithDescendingTermData]
     public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortOrderAreValid(
         IEnumTransformer<CommonSortOrder> transformer, ISortEnumTermTransformer<Post> termTransformer)
     {
@@ -159,24 +160,24 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationQueryI
         var request = _requestBuilder.WithSortOrder(transformer).Build();
 
         // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(Posts, _request, termTransformer);
     }
 
     [Theory]
-    [PostSortPropertyWithCreatedAtTermData]
-    [PostSortPropertyWithTitleTermData]
-    [PostSortPropertyWithUserNameTermData]
+    [PostsSortTermWithCreatedAtTermData]
+    [PostsSortTermWithTitleTermData]
+    [PostsSortTermWithUserNameTermData]
     public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortPropertyAreValid(
-        IEnumTransformer<PostSortProperty> transformer, ISortEnumTermTransformer<Post> termTransformer)
+        IEnumTransformer<PostsSortTerm> transformer, ISortEnumTermTransformer<Post> termTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(transformer).Build();
+        var request = _requestBuilder.WithSortTerm(transformer).Build();
 
         // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(Posts, _request, termTransformer);

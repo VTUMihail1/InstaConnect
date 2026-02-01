@@ -6,7 +6,7 @@ public static class PostDefaultValues
 {
     public const string Title = "";
 
-    public const PostSortProperty SortProperty = PostSortProperty.ByCreatedAt;
+    public const PostsSortTerm SortTerm = PostsSortTerm.ByCreatedAt;
 
     public const int Page = 1;
 

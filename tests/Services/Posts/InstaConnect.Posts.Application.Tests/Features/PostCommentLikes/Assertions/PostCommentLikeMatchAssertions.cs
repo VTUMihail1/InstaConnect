@@ -5,14 +5,20 @@ namespace InstaConnect.Posts.Application.Tests.Features.PostCommentLikes.Asserti
 
 public static class PostCommentLikeMatchAssertions
 {
-    public static void ShouldSatisfy(this AddPostCommentLikeCommandResponse response, PostCommentLike postCommentLike)
+    public static void ShouldSatisfy(
+        this AddPostCommentLikeCommandResponse response,
+        PostCommentLike postCommentLike,
+        AddPostCommentLikeCommandRequest request)
     {
-        response.ShouldSatisfy(p => p.Matches(postCommentLike));
+        response.ShouldSatisfy(p => p.Matches(postCommentLike, request));
     }
 
-    public static void ShouldSatisfy(this GetPostCommentLikeByIdQueryResponse response, PostCommentLike postCommentLike)
+    public static void ShouldSatisfy(
+        this GetPostCommentLikeByIdQueryResponse response,
+        PostCommentLike postCommentLike,
+        GetPostCommentLikeByIdQueryRequest request)
     {
-        response.ShouldSatisfy(p => p.Matches(postCommentLike));
+        response.ShouldSatisfy(p => p.Matches(postCommentLike, request));
     }
 
     public static void ShouldSatisfy(
@@ -27,6 +33,23 @@ public static class PostCommentLikeMatchAssertions
         this GetAllPostCommentLikesQueryResponse response,
         ICollection<PostCommentLike> postCommentLikes,
         GetAllPostCommentLikesQueryRequest request,
+        ISortEnumTermTransformer<PostCommentLike> termTransformer)
+    {
+        response.ShouldSatisfy(p => p.Matches(postCommentLikes, request, termTransformer));
+    }
+
+    public static void ShouldSatisfy(
+        this GetAllPostCommentLikesForUserQueryResponse response,
+        ICollection<PostCommentLike> postCommentLikes,
+        GetAllPostCommentLikesForUserQueryRequest request)
+    {
+        response.ShouldSatisfy(p => p.Matches(postCommentLikes, request));
+    }
+
+    public static void ShouldSatisfy(
+        this GetAllPostCommentLikesForUserQueryResponse response,
+        ICollection<PostCommentLike> postCommentLikes,
+        GetAllPostCommentLikesForUserQueryRequest request,
         ISortEnumTermTransformer<PostCommentLike> termTransformer)
     {
         response.ShouldSatisfy(p => p.Matches(postCommentLikes, request, termTransformer));

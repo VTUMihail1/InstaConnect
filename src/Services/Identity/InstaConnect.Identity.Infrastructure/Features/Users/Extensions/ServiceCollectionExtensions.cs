@@ -26,7 +26,7 @@ internal static class ServiceCollectionExtensions
             cm.MapMember(c => c.CreatedAtUtc);
             cm.MapMember(c => c.UpdatedAtUtc);
 
-            cm.MapMember(c => c.Claims);
+            cm.MapMember(c => c.UserClaims);
             cm.MapMember(c => c.RefreshTokens);
             cm.MapMember(c => c.ForgotPasswordTokens);
             cm.MapMember(c => c.EmailConfirmationTokens);

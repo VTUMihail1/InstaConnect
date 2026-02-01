@@ -3,6 +3,7 @@ using System.Net.Http.Json;
 
 using InstaConnect.Common.Presentation.Models;
 using InstaConnect.Posts.Presentation.Features.PostComments.Models.Bodies;
+using InstaConnect.Posts.Presentation.Tests.Features.PostLikes.Utilities;
 
 namespace InstaConnect.Posts.Presentation.Tests.Features.PostComments.Utilities;
 public static class PostCommentClient
@@ -14,6 +15,7 @@ public static class PostCommentClient
     {
         var route = PostCommentTestRoutes.GetAll(request);
         var response = await httpClient
+            .AddUserId(request.CurrentUserId)
             .GetStatusCodeAsync(route, cancellationToken);
 
         return response;
@@ -26,6 +28,7 @@ public static class PostCommentClient
     {
         var route = PostCommentTestRoutes.GetAll(request);
         var response = await httpClient
+            .AddUserId(request.CurrentUserId)
             .GetProblemDetailsAsync(route, cancellationToken);
 
         return response!;
@@ -38,19 +41,47 @@ public static class PostCommentClient
     {
         var route = PostCommentTestRoutes.GetAll(request);
         var response = await httpClient
+            .AddUserId(request.CurrentUserId)
             .GetFromJsonAsync<GetAllPostCommentsApiResponse>(route, cancellationToken);
 
         return response!;
     }
 
-    public static async Task<GetAllPostCommentsApiResponse> GetAllPostCommentsAsync(
+    public static async Task<HttpStatusCode> GetAllPostCommentsForUserStatusCodeAsync(
         this HttpClient httpClient,
-        string id,
+        GetAllPostCommentsForUserApiRequest request,
         CancellationToken cancellationToken)
     {
-        var route = PostCommentTestRoutes.GetDefault(id);
+        var route = PostCommentTestRoutes.GetAllForUser(request);
         var response = await httpClient
-            .GetFromJsonAsync<GetAllPostCommentsApiResponse>(route, cancellationToken);
+            .AddUserId(request.CurrentUserId)
+            .GetStatusCodeAsync(route, cancellationToken);
+
+        return response;
+    }
+
+    public static async Task<ApplicationProblemDetails> GetAllPostCommentsForUserProblemDetailsAsync(
+        this HttpClient httpClient,
+        GetAllPostCommentsForUserApiRequest request,
+        CancellationToken cancellationToken)
+    {
+        var route = PostCommentTestRoutes.GetAllForUser(request);
+        var response = await httpClient
+            .AddUserId(request.CurrentUserId)
+            .GetProblemDetailsAsync(route, cancellationToken);
+
+        return response!;
+    }
+
+    public static async Task<GetAllPostCommentsForUserApiResponse> GetAllPostCommentsForUserAsync(
+        this HttpClient httpClient,
+        GetAllPostCommentsForUserApiRequest request,
+        CancellationToken cancellationToken)
+    {
+        var route = PostCommentTestRoutes.GetAllForUser(request);
+        var response = await httpClient
+            .AddUserId(request.CurrentUserId)
+            .GetFromJsonAsync<GetAllPostCommentsForUserApiResponse>(route, cancellationToken);
 
         return response!;
     }
@@ -62,6 +93,7 @@ public static class PostCommentClient
     {
         var route = PostCommentTestRoutes.GetId(request.Id, request.CommentId);
         var response = await httpClient
+            .AddUserId(request.CurrentUserId)
             .GetStatusCodeAsync(route, cancellationToken);
 
         return response;
@@ -74,6 +106,7 @@ public static class PostCommentClient
     {
         var route = PostCommentTestRoutes.GetId(request.Id, request.CommentId);
         var response = await httpClient
+            .AddUserId(request.CurrentUserId)
             .GetProblemDetailsAsync(route, cancellationToken);
 
         return response!;
@@ -86,6 +119,7 @@ public static class PostCommentClient
     {
         var route = PostCommentTestRoutes.GetId(request.Id, request.CommentId);
         var response = await httpClient
+            .AddUserId(request.CurrentUserId)
             .GetFromJsonAsync<GetPostCommentByIdApiResponse>(route, cancellationToken);
 
         return response!;

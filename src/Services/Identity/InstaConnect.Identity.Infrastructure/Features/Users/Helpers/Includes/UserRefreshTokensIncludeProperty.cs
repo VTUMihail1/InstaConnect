@@ -4,20 +4,20 @@ namespace InstaConnect.Identity.Infrastructure.Features.Users.Helpers.Includes;
 
 public class UserRefreshTokensIncludeProperty : IUserIncludeProperty
 {
-    private readonly IIdentityContext _usersContext;
+    private readonly IIdentityContext _context;
 
-    public UserRefreshTokensIncludeProperty(IIdentityContext usersContext)
+    public UserRefreshTokensIncludeProperty(IIdentityContext context)
     {
-        _usersContext = usersContext;
+        _context = context;
     }
 
     public UserIncludeProperty IncludeProperty => UserIncludeProperty.RefreshTokens;
 
-    public IAggregateFluent<User> Include(IAggregateFluent<User> pipeline)
+    public IAggregateFluent<User> Include(IAggregateFluent<User> aggregate)
     {
-        return pipeline
+        return aggregate
             .IncludeMany(
-                _usersContext.RefreshTokens,
+                _context.RefreshTokens,
                 p => p.Id,
                 l => l.Id.Id,
                 p => p.RefreshTokens

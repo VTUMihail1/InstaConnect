@@ -2,6 +2,7 @@
 using System.Net.Http.Json;
 
 using InstaConnect.Common.Presentation.Models;
+using InstaConnect.Posts.Presentation.Tests.Features.Posts.Utilities;
 
 namespace InstaConnect.Posts.Presentation.Tests.Features.PostLikes.Utilities;
 public static class PostLikeClient
@@ -13,6 +14,7 @@ public static class PostLikeClient
     {
         var route = PostLikeTestRoutes.GetAll(request);
         var response = await httpClient
+            .AddUserId(request.CurrentUserId)
             .GetStatusCodeAsync(route, cancellationToken);
 
         return response;
@@ -25,6 +27,7 @@ public static class PostLikeClient
     {
         var route = PostLikeTestRoutes.GetAll(request);
         var response = await httpClient
+            .AddUserId(request.CurrentUserId)
             .GetProblemDetailsAsync(route, cancellationToken);
 
         return response!;
@@ -37,19 +40,47 @@ public static class PostLikeClient
     {
         var route = PostLikeTestRoutes.GetAll(request);
         var response = await httpClient
+            .AddUserId(request.CurrentUserId)
             .GetFromJsonAsync<GetAllPostLikesApiResponse>(route, cancellationToken);
 
         return response!;
     }
 
-    public static async Task<GetAllPostLikesApiResponse> GetAllPostLikesAsync(
+    public static async Task<HttpStatusCode> GetAllPostLikesForUserStatusCodeAsync(
         this HttpClient httpClient,
-        string id,
+        GetAllPostLikesForUserApiRequest request,
         CancellationToken cancellationToken)
     {
-        var route = PostLikeTestRoutes.GetDefault(id);
+        var route = PostLikeTestRoutes.GetAllForUser(request);
         var response = await httpClient
-            .GetFromJsonAsync<GetAllPostLikesApiResponse>(route, cancellationToken);
+            .AddUserId(request.CurrentUserId)
+            .GetStatusCodeAsync(route, cancellationToken);
+
+        return response;
+    }
+
+    public static async Task<ApplicationProblemDetails> GetAllPostLikesForUserProblemDetailsAsync(
+        this HttpClient httpClient,
+        GetAllPostLikesForUserApiRequest request,
+        CancellationToken cancellationToken)
+    {
+        var route = PostLikeTestRoutes.GetAllForUser(request);
+        var response = await httpClient
+            .AddUserId(request.CurrentUserId)
+            .GetProblemDetailsAsync(route, cancellationToken);
+
+        return response!;
+    }
+
+    public static async Task<GetAllPostLikesForUserApiResponse> GetAllPostLikesForUserAsync(
+        this HttpClient httpClient,
+        GetAllPostLikesForUserApiRequest request,
+        CancellationToken cancellationToken)
+    {
+        var route = PostLikeTestRoutes.GetAllForUser(request);
+        var response = await httpClient
+            .AddUserId(request.CurrentUserId)
+            .GetFromJsonAsync<GetAllPostLikesForUserApiResponse>(route, cancellationToken);
 
         return response!;
     }
@@ -61,6 +92,7 @@ public static class PostLikeClient
     {
         var route = PostLikeTestRoutes.GetId(request.Id, request.UserId);
         var response = await httpClient
+            .AddUserId(request.CurrentUserId)
             .GetStatusCodeAsync(route, cancellationToken);
 
         return response;
@@ -73,6 +105,7 @@ public static class PostLikeClient
     {
         var route = PostLikeTestRoutes.GetId(request.Id, request.UserId);
         var response = await httpClient
+            .AddUserId(request.CurrentUserId)
             .GetProblemDetailsAsync(route, cancellationToken);
 
         return response!;
@@ -85,6 +118,7 @@ public static class PostLikeClient
     {
         var route = PostLikeTestRoutes.GetId(request.Id, request.UserId);
         var response = await httpClient
+            .AddUserId(request.CurrentUserId)
             .GetFromJsonAsync<GetPostLikeByIdApiResponse>(route, cancellationToken);
 
         return response!;

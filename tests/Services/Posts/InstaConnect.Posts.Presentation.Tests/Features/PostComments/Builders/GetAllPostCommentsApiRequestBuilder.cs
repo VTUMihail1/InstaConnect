@@ -6,19 +6,21 @@ public class GetAllPostCommentsApiRequestBuilder
 {
     private string _id;
     private string _userName;
+    private string _currentUserId;
     private int _page;
     private int _pageSize;
     private CommonSortOrder _sortOrder;
-    private PostCommentSortProperty _sortProperty;
+    private PostCommentsSortTerm _sortTerm;
 
     public GetAllPostCommentsApiRequestBuilder(PostComment postComment)
     {
         _id = postComment.Id.Id.Id;
         _userName = DataFaker.GetPrefixString(postComment.User!.Name.Value);
+        _currentUserId = postComment.UserId.Id;
         _page = PostCommentDataFaker.GetPage();
         _pageSize = PostCommentDataFaker.GetPageSize();
         _sortOrder = DataFaker.GetSortOrder();
-        _sortProperty = PostCommentDataFaker.GetSortProperty();
+        _sortTerm = PostCommentDataFaker.GetSortTerm();
     }
 
     public GetAllPostCommentsApiRequestBuilder WithId(Post post, IStringTransformer? transformer = null)
@@ -38,6 +40,20 @@ public class GetAllPostCommentsApiRequestBuilder
     public GetAllPostCommentsApiRequestBuilder WithUserName(IStringTransformer transformer)
     {
         _userName = transformer.Transform(_userName);
+
+        return this;
+    }
+
+    public GetAllPostCommentsApiRequestBuilder WithCurrentUserId(User user, IStringTransformer? transformer = null)
+    {
+        _currentUserId = transformer.TryTransform(user.Id.Id);
+
+        return this;
+    }
+
+    public GetAllPostCommentsApiRequestBuilder WithCurrentUserId(IStringTransformer transformer)
+    {
+        _currentUserId = transformer.Transform(_currentUserId);
 
         return this;
     }
@@ -63,15 +79,15 @@ public class GetAllPostCommentsApiRequestBuilder
         return this;
     }
 
-    public GetAllPostCommentsApiRequestBuilder WithSortProperty(IEnumTransformer<PostCommentSortProperty> transformer)
+    public GetAllPostCommentsApiRequestBuilder WithSortTerm(IEnumTransformer<PostCommentsSortTerm> transformer)
     {
-        _sortProperty = transformer.Transform(_sortProperty);
+        _sortTerm = transformer.Transform(_sortTerm);
 
         return this;
     }
 
     public GetAllPostCommentsApiRequest Build()
     {
-        return new(_id, _userName, _sortOrder, _sortProperty, _page, _pageSize);
+        return new(_id, _userName, _currentUserId, _sortOrder, _sortTerm, _page, _pageSize);
     }
 }

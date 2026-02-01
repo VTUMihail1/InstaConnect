@@ -8,6 +8,7 @@ public class UserUpdatedEventRequestBuilder
     private string _lastName;
     private string _email;
     private string? _profileImage;
+    private DateTimeOffset _createdAtUtc;
     private DateTimeOffset _updatedAtUtc;
 
     public UserUpdatedEventRequestBuilder(User user)
@@ -18,6 +19,7 @@ public class UserUpdatedEventRequestBuilder
         _lastName = UserDataFaker.GetLastName();
         _email = UserDataFaker.GetEmail();
         _profileImage = UserDataFaker.GetProfileImage();
+        _createdAtUtc = UserDataFaker.GetCreatedAtUtc();
         _updatedAtUtc = UserDataFaker.GetUpdatedAtUtc();
     }
 
@@ -93,6 +95,6 @@ public class UserUpdatedEventRequestBuilder
 
     public UserUpdatedEventRequest Build()
     {
-        return new UserUpdatedEventRequest(_id, _name, _email, _firstName, _lastName, _profileImage, _updatedAtUtc);
+        return new(new(_id, _name, _email, _firstName, _lastName, _profileImage, _createdAtUtc, _updatedAtUtc));
     }
 }

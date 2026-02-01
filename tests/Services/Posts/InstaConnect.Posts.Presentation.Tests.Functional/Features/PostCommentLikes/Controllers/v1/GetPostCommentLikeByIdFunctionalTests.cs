@@ -258,7 +258,7 @@ public class GetPostCommentLikeByIdFunctionalTests : BasePostCommentLikePresenta
         var response = await HttpClient.GetPostCommentLikeByIdAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostCommentLike);
+        response.ShouldSatisfy(PostCommentLike, _request);
     }
 
     [Theory]
@@ -273,7 +273,7 @@ public class GetPostCommentLikeByIdFunctionalTests : BasePostCommentLikePresenta
         var response = await HttpClient.GetPostCommentLikeByIdAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostCommentLike);
+        response.ShouldSatisfy(PostCommentLike, request);
     }
 
     [Theory]
@@ -288,7 +288,7 @@ public class GetPostCommentLikeByIdFunctionalTests : BasePostCommentLikePresenta
         var response = await HttpClient.GetPostCommentLikeByIdAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostCommentLike);
+        response.ShouldSatisfy(PostCommentLike, request);
     }
 
     [Theory]
@@ -303,6 +303,6 @@ public class GetPostCommentLikeByIdFunctionalTests : BasePostCommentLikePresenta
         var response = await HttpClient.GetPostCommentLikeByIdAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostCommentLike);
+        response.ShouldSatisfy(PostCommentLike, request);
     }
 }

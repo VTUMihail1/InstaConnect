@@ -1,22 +1,26 @@
-﻿namespace InstaConnect.Posts.Application.Tests.Features.Posts.Builders;
+﻿using InstaConnect.Common.Tests.DataAttributes.Base;
+
+namespace InstaConnect.Posts.Application.Tests.Features.Posts.Builders;
 
 public class GetAllPostsQueryRequestBuilder
 {
     private string _userName;
     private string _title;
+    private string _currentUserId;
     private int _page;
     private int _pageSize;
     private CommonSortOrder _sortOrder;
-    private PostSortProperty _sortProperty;
+    private PostsSortTerm _sortTerm;
 
     public GetAllPostsQueryRequestBuilder(Post post)
     {
         _userName = DataFaker.GetPrefixString(post.User!.Name.Value);
         _title = DataFaker.GetPrefixString(post.Title);
+        _currentUserId = post.UserId.Id;
         _page = PostDataFaker.GetPage();
         _pageSize = PostDataFaker.GetPageSize();
         _sortOrder = DataFaker.GetSortOrder();
-        _sortProperty = PostDataFaker.GetSortProperty();
+        _sortTerm = PostDataFaker.GetSortTerm();
     }
 
     public GetAllPostsQueryRequestBuilder WithUserName(IStringTransformer transformer)
@@ -29,6 +33,20 @@ public class GetAllPostsQueryRequestBuilder
     public GetAllPostsQueryRequestBuilder WithTitle(IStringTransformer transformer)
     {
         _title = transformer.Transform(_title);
+
+        return this;
+    }
+
+    public GetAllPostsQueryRequestBuilder WithCurrentUserId(User user, IStringTransformer? transformer = null)
+    {
+        _currentUserId = transformer.TryTransform(user.Id.Id);
+
+        return this;
+    }
+
+    public GetAllPostsQueryRequestBuilder WithCurrentUserId(IStringTransformer transformer)
+    {
+        _currentUserId = transformer.Transform(_currentUserId);
 
         return this;
     }
@@ -54,15 +72,15 @@ public class GetAllPostsQueryRequestBuilder
         return this;
     }
 
-    public GetAllPostsQueryRequestBuilder WithSortProperty(IEnumTransformer<PostSortProperty> transformer)
+    public GetAllPostsQueryRequestBuilder WithSortTerm(IEnumTransformer<PostsSortTerm> transformer)
     {
-        _sortProperty = transformer.Transform(_sortProperty);
+        _sortTerm = transformer.Transform(_sortTerm);
 
         return this;
     }
 
     public GetAllPostsQueryRequest Build()
     {
-        return new(_userName, _title, _sortOrder, _sortProperty, _page, _pageSize);
+        return new(_userName, _currentUserId, _title, _sortOrder, _sortTerm, _page, _pageSize);
     }
 }

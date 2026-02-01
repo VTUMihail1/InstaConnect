@@ -8,8 +8,8 @@ internal static class ServiceCollectionExtensions
 {
     internal static IServiceCollection AddPostServices(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddImplementationsOf<IPostSortProperty>(PostInfrastructureReference.Assembly);
-        serviceCollection.AddImplementationsOf<IPostIncludeProperty>(PostInfrastructureReference.Assembly);
+        serviceCollection.AddImplementationsOf<IPostsSortTermer>(PostInfrastructureReference.Assembly);
+        serviceCollection.AddImplementationsOf<IPostIncluder>(PostInfrastructureReference.Assembly);
 
         BsonClassMap.TryRegisterClassMap<Post>(cm =>
         {
@@ -23,8 +23,8 @@ internal static class ServiceCollectionExtensions
             cm.MapMember(c => c.UpdatedAtUtc);
 
             cm.MapMember(c => c.User);
-            cm.MapMember(c => c.Likes);
-            cm.MapMember(c => c.Comments);
+            cm.MapMember(c => c.PostLikes);
+            cm.MapMember(c => c.PostComments);
 
             cm.MapCreator(c => new Post(
                 c.Id,

@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Domain.Extensions;
+using InstaConnect.Posts.Domain.Models.Requests;
 
 namespace InstaConnect.Posts.Domain.Features.Users.Utilities;
 
@@ -32,10 +33,11 @@ public static class UserExceptionErrorMessages
         return Format.FormatCurrentCulture(email.Value);
     }
 
-    public static string GetInclidePropertyNotSupportedMessage(ICollection<UserIncludeProperty> includeProperties)
+    public static string GetIncludeDescriptorsNotSupportedMessage(ICollection<PostsIncludeDescriptor> includeProperties)
     {
-        const string Format = "UserIncludeProperties(types: {0}) is not supported";
+        const string Format = "PostIncludeDescriptors({0}) is not supported";
 
-        return Format.FormatCurrentCulture(includeProperties.JoinAsStringWithComa());
+        return Format.FormatCurrentCulture(includeProperties
+            .JoinIncludeDescriptorsAsStringWithComa<PostsDestinationType, PostsIncludeType, PostsIncludeDescriptor>());
     }
 }

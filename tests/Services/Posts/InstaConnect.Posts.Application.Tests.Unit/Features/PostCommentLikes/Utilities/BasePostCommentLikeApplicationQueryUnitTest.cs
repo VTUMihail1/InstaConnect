@@ -1,26 +1,16 @@
-﻿using InstaConnect.Common.Domain.Models;
-using InstaConnect.Posts.Domain.Features.PostCommentLikes.Helpers;
-using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Requests;
+﻿using InstaConnect.Posts.Application.Extensions;
 
 namespace InstaConnect.Posts.Application.Tests.Unit.Features.PostCommentLikes.Utilities;
 
-public abstract class BasePostCommentLikeApplicationQueryUnitTest : BasePostCommentLikeApplicationUnitTest
+public abstract class BasePostCommentLikeApplicationQueryUnitTest : BasePostCommentLikeTest
 {
-    protected PostCommentLikeIncludeQueryBuilderFactory IncludeBuilderFactory { get; }
-    protected PostCommentLikeIncludeQueryBuilder IncludeBuilder { get; }
-    protected CommonIncludeQuery<PostCommentLikeIncludeProperty> Include { get; }
+    protected IApplicationMapper Mapper { get; }
 
-    protected ICollection<User> Users { get; }
-
-    protected ICollection<PostCommentLike> PostCommentLikes { get; }
+    protected IPostCommentLikeQueryService CommentLikeService { get; }
 
     protected BasePostCommentLikeApplicationQueryUnitTest()
     {
-        IncludeBuilderFactory = new();
-        IncludeBuilder = IncludeBuilderFactory.Create();
-        Include = IncludeBuilder.WithUser().Build();
-
-        Users = User.GenerateRange();
-        PostCommentLikes = PostCommentLike.GenerateRange(Users);
+        Mapper = MockFactory.CreateMapper(PostApplicationReference.Assembly);
+        CommentLikeService = PostCommentLikeMockFactory.CreateQueryService();
     }
 }

@@ -1,10 +1,6 @@
-﻿namespace InstaConnect.Posts.Events.Features.PostComments;
+﻿using InstaConnect.Posts.Events.Features.Posts;
 
-public record PostCommentAddedEventRequest(
-        string Id,
-        string CommentId,
-        string Content,
-        string UserId,
-        DateTimeOffset CreatedAtUtc,
-        DateTimeOffset UpdatedAtUtc)
+namespace InstaConnect.Posts.Events.Features.PostComments;
+
+public record PostCommentAddedEventRequest(PostCommentEventRequest PostComment)
     : IEventRequest;

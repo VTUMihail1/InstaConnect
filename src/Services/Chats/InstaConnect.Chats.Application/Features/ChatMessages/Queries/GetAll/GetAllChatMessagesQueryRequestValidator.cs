@@ -17,7 +17,7 @@ public class GetAllChatMessagesQueryRequestValidator : AbstractValidator<GetAllC
         RuleFor(q => q.SortOrder)
             .NotEmptyWithMessage();
 
-        RuleFor(q => q.SortProperty)
+        RuleFor(q => q.SortTerm)
             .NotEmptyWithMessage();
 
         RuleFor(q => q.Page)

@@ -9,7 +9,15 @@ public static class PostMockAssertions
         GetAllPostsApiRequest request,
         CancellationToken cancellationToken)
     {
-        await applicationSender.ShouldHaveReceived(1).SendAsync(PostMatcher.IsGetAllPostsQueryRequest(request), cancellationToken);
+        await applicationSender.ShouldHaveReceivedOne().SendAsync(PostMatcher.IsGetAllPostsQueryRequest(request), cancellationToken);
+    }
+
+    public static async Task ShouldReceiveOneSendAsync(
+        this IApplicationSender applicationSender,
+        GetAllPostsForUserApiRequest request,
+        CancellationToken cancellationToken)
+    {
+        await applicationSender.ShouldHaveReceivedOne().SendAsync(PostMatcher.IsGetAllPostsForUserQueryRequest(request), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneSendAsync(
@@ -17,7 +25,7 @@ public static class PostMockAssertions
         GetPostByIdApiRequest request,
         CancellationToken cancellationToken)
     {
-        await applicationSender.ShouldHaveReceived(1).SendAsync(PostMatcher.IsGetPostByIdQueryRequest(request), cancellationToken);
+        await applicationSender.ShouldHaveReceivedOne().SendAsync(PostMatcher.IsGetPostByIdQueryRequest(request), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneSendAsync(
@@ -25,7 +33,7 @@ public static class PostMockAssertions
         AddPostApiRequest request,
         CancellationToken cancellationToken)
     {
-        await applicationSender.ShouldHaveReceived(1).SendAsync(PostMatcher.IsAddPostCommandRequest(request), cancellationToken);
+        await applicationSender.ShouldHaveReceivedOne().SendAsync(PostMatcher.IsAddPostCommandRequest(request), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneSendAsync(
@@ -33,7 +41,7 @@ public static class PostMockAssertions
         UpdatePostApiRequest request,
         CancellationToken cancellationToken)
     {
-        await applicationSender.ShouldHaveReceived(1).SendAsync(PostMatcher.IsUpdatePostCommandRequest(request), cancellationToken);
+        await applicationSender.ShouldHaveReceivedOne().SendAsync(PostMatcher.IsUpdatePostCommandRequest(request), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneSendAsync(
@@ -41,6 +49,6 @@ public static class PostMockAssertions
         DeletePostApiRequest request,
         CancellationToken cancellationToken)
     {
-        await applicationSender.ShouldHaveReceived(1).SendAsync(PostMatcher.IsDeletePostCommandRequest(request), cancellationToken);
+        await applicationSender.ShouldHaveReceivedOne().SendAsync(PostMatcher.IsDeletePostCommandRequest(request), cancellationToken);
     }
 }

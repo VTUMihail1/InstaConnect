@@ -1,4 +1,6 @@
 ﻿using InstaConnect.Common.Application.Abstractions;
+using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAllForUser;
+using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAllForUser;
 using InstaConnect.Posts.Domain.Features.PostComments.Exceptions;
 
 using MediatR;
@@ -13,6 +15,17 @@ public static class PostCommentExceptionAssertions
         CancellationToken cancellationToken)
     {
         await sender.ShouldThrowUserNotFoundExceptionAsync<AddPostCommentCommandRequest, AddPostCommentCommandResponse>(
+            r => r.UserId,
+            request,
+            cancellationToken);
+    }
+
+    public static async Task ShouldThrowUserNotFoundExceptionAsync(
+        this IApplicationSender sender,
+        GetAllPostCommentsForUserQueryRequest request,
+        CancellationToken cancellationToken)
+    {
+        await sender.ShouldThrowUserNotFoundExceptionAsync<GetAllPostCommentsForUserQueryRequest, GetAllPostCommentsForUserQueryResponse>(
             r => r.UserId,
             request,
             cancellationToken);

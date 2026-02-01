@@ -33,7 +33,7 @@ public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeApplicati
         var request = _requestBuilder.WithId(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForIdAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForIdAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -49,7 +49,7 @@ public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeApplicati
         var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForUserIdAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForUserIdAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -60,7 +60,7 @@ public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeApplicati
         await ServiceScope.DeletePostAsync(Post, CancellationToken);
 
         // Assert
-        await ApplicationSender.ShouldThrowPostNotFoundExceptionAsync(_request, CancellationToken);
+        await Sender.ShouldThrowPostNotFoundExceptionAsync(_request, CancellationToken);
     }
 
     [Fact]
@@ -70,17 +70,17 @@ public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeApplicati
         await ServiceScope.DeletePostLikeAsync(PostLike, CancellationToken);
 
         // Assert
-        await ApplicationSender.ShouldThrowPostLikeNotFoundExceptionAsync(_request, CancellationToken);
+        await Sender.ShouldThrowPostLikeNotFoundExceptionAsync(_request, CancellationToken);
     }
 
     [Fact]
     public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValid()
     {
         // Act
-        var response = await ApplicationSender.SendAsync(_request, CancellationToken);
+        var response = await Sender.SendAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostLike);
+        response.ShouldSatisfy(PostLike, _request);
     }
 
     [Theory]
@@ -92,10 +92,10 @@ public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeApplicati
         var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostLike);
+        response.ShouldSatisfy(PostLike, request);
     }
 
     [Theory]
@@ -107,9 +107,9 @@ public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeApplicati
         var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostLike);
+        response.ShouldSatisfy(PostLike, request);
     }
 }

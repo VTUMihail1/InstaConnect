@@ -89,7 +89,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
     }
 
     [Theory]
-    [PostLikeSortOrderEmptyData]
+    [PostLikesSortOrderEmptyData]
     public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenSortOrderIsInvalid(
         IEnumTransformer<CommonSortOrder> transformer)
     {
@@ -104,7 +104,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
     }
 
     [Theory]
-    [PostLikeSortOrderEmptyWithMessageData]
+    [PostLikesSortOrderEmptyWithMessageData]
     public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenSortOrderIsInvalid(
         IEnumTransformer<CommonSortOrder> transformer,
         IEnumMessageTransformer<CommonSortOrder> messageTransformer)
@@ -120,12 +120,12 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
     }
 
     [Theory]
-    [PostLikeSortPropertyEmptyData]
+    [PostLikesSortTermEmptyData]
     public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenSortPropertyIsInvalid(
-        IEnumTransformer<PostLikeSortProperty> transformer)
+        IEnumTransformer<PostLikesSortTerm> transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(transformer).Build();
+        var request = _requestBuilder.WithSortTerm(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostLikesStatusCodeAsync(request, CancellationToken);
@@ -135,13 +135,13 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
     }
 
     [Theory]
-    [PostLikeSortPropertyEmptyWithMessageData]
+    [PostLikesSortTermEmptyWithMessageData]
     public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenSortPropertyIsInvalid(
-        IEnumTransformer<PostLikeSortProperty> transformer,
-        IEnumMessageTransformer<PostLikeSortProperty> messageTransformer)
+        IEnumTransformer<PostLikesSortTerm> transformer,
+        IEnumMessageTransformer<PostLikesSortTerm> messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(transformer).Build();
+        var request = _requestBuilder.WithSortTerm(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostLikesProblemDetailsAsync(request, CancellationToken);
@@ -283,8 +283,8 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
     }
 
     [Theory]
-    [PostLikeSortOrderAscendingData]
-    [PostLikeSortOrderDescendingData]
+    [PostLikesSortOrderAscendingData]
+    [PostLikesSortOrderDescendingData]
     public async Task SendAsync_ShouldHaveOkStatusCode_WhenRequestAndSortOrderAreValid(
         IEnumTransformer<CommonSortOrder> transformer)
     {
@@ -299,13 +299,13 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
     }
 
     [Theory]
-    [PostLikeSortPropertyCreatedAtData]
-    [PostLikeSortPropertyUserNameData]
+    [PostLikesSortTermCreatedAtData]
+    [PostLikesSortTermUserNameData]
     public async Task SendAsync_ShouldHaveOkStatusCode_WhenRequestAndSortPropertyAreValid(
-        IEnumTransformer<PostLikeSortProperty> transformer)
+        IEnumTransformer<PostLikesSortTerm> transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(transformer).Build();
+        var request = _requestBuilder.WithSortTerm(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostLikesStatusCodeAsync(request, CancellationToken);
@@ -357,8 +357,8 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
     }
 
     [Theory]
-    [PostLikeSortOrderWithAscendingTermData]
-    [PostLikeSortOrderWithDescendingTermData]
+    [PostLikesSortOrderWithAscendingTermData]
+    [PostLikesSortOrderWithDescendingTermData]
     public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortOrderAreValid(
         IEnumTransformer<CommonSortOrder> transformer, ISortEnumTermTransformer<PostLike> termTransformer)
     {
@@ -373,13 +373,13 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
     }
 
     [Theory]
-    [PostLikeSortPropertyWithCreatedAtTermData]
-    [PostLikeSortPropertyWithUserNameTermData]
+    [PostLikesSortTermWithCreatedAtTermData]
+    [PostLikesSortTermWithUserNameTermData]
     public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortPropertyAreValid(
-        IEnumTransformer<PostLikeSortProperty> transformer, ISortEnumTermTransformer<PostLike> termTransformer)
+        IEnumTransformer<PostLikesSortTerm> transformer, ISortEnumTermTransformer<PostLike> termTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(transformer).Build();
+        var request = _requestBuilder.WithSortTerm(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostLikesAsync(request, CancellationToken);

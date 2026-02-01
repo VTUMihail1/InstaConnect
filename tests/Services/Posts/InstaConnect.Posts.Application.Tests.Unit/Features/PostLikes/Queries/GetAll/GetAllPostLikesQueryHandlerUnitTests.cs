@@ -14,9 +14,9 @@ public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeApplicationQuery
         _requestBuilder = _requestBuilderFactory.Create(PostLike);
         _request = _requestBuilder.Build();
 
-        _handler = new(PostLikeService, ApplicationMapper, PostLikeIncludeQueryBuilderFactory);
+        _handler = new(Mapper, LikeService);
 
-        PostLikeService.SetupGetAllQuery(_request, PostLikes, Include, CancellationToken);
+        LikeService.SetupGetAllQuery(_request, PostLikes, CancellationToken);
     }
 
     [Fact]
@@ -36,6 +36,6 @@ public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeApplicationQuery
         await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        await PostLikeService.ShouldReceiveOneGetAllAsync(_request, Include, CancellationToken);
+        await LikeService.ShouldReceiveOneGetAllAsync(_request, CancellationToken);
     }
 }

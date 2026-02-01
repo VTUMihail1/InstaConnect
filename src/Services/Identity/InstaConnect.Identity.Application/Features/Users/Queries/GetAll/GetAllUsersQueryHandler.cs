@@ -2,25 +2,25 @@
 
 internal class GetAllUsersQueryHandler : IQueryHandler<GetAllUsersQueryRequest, GetAllUsersQueryResponse>
 {
-    private readonly IUserService _userService;
-    private readonly IApplicationMapper _applicationMapper;
+    private readonly IApplicationMapper _mapper;
+    private readonly IUserQueryService _service;
 
     public GetAllUsersQueryHandler(
-        IUserService userService,
-        IApplicationMapper applicationMapper)
+        IApplicationMapper mapper,
+        IUserQueryService service)
     {
-        _userService = userService;
-        _applicationMapper = applicationMapper;
+        _mapper = mapper;
+        _service = service;
     }
 
     public async Task<GetAllUsersQueryResponse> Handle(
         GetAllUsersQueryRequest request,
         CancellationToken cancellationToken)
     {
-        var serviceRequest = _applicationMapper.Map<GetAllUsersQuery>(request);
-        var collection = await _userService.GetAllAsync(serviceRequest, cancellationToken);
+        var serviceRequest = _mapper.Map<GetAllUsersQuery>(request);
+        var serviceResponse = await _service.GetAllAsync(serviceRequest, cancellationToken);
 
-        var response = _applicationMapper.Map<GetAllUsersQueryResponse>(collection);
+        var response = _mapper.Map<GetAllUsersQueryResponse>(serviceResponse);
 
         return response;
     }

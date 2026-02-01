@@ -13,10 +13,13 @@ public class GetAllUsersQueryRequestValidator : AbstractValidator<GetAllUsersQue
         RuleFor(c => c.LastName)
             .UserLastNameMaxLengthWithMessage();
 
+        RuleFor(c => c.CurrentId)
+            .UserIdMaxLengthWithMessage();
+
         RuleFor(q => q.SortOrder)
             .NotEmptyWithMessage();
 
-        RuleFor(q => q.SortProperty)
+        RuleFor(q => q.SortTerm)
             .NotEmptyWithMessage();
 
         RuleFor(q => q.Page)

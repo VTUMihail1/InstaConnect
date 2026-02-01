@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Posts.Application.Features.Posts.Commands.Update;
 
-public record UpdatePostCommandResponse(PostIdCommandResponse Response);
+public record UpdatePostCommandResponse(PostIdCommandResponse Id);

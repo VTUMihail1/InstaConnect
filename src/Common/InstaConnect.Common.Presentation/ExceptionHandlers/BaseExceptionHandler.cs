@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Common.Domain.Exceptions;
-using InstaConnect.Common.Domain.Extensions;
 using InstaConnect.Common.Presentation.Abstractions;
 
 using Microsoft.AspNetCore.Diagnostics;
@@ -27,12 +26,12 @@ public sealed class BaseExceptionHandler : IExceptionHandler
     {
         var baseException = exception as BaseException;
 
-        if (baseException.IsNull())
+        if (baseException == null)
         {
             return false;
         }
 
-        var applicationProblemDetails = _applicationProblemDetailsFactory.Create(baseException!);
+        var applicationProblemDetails = _applicationProblemDetailsFactory.Create(baseException);
         await _applicationProblemDetailsService.WriteAsync(httpContext, exception, applicationProblemDetails, cancellationToken);
 
         return true;

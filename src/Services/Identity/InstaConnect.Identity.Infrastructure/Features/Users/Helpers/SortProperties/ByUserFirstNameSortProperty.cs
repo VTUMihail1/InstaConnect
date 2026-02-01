@@ -4,7 +4,7 @@ namespace InstaConnect.Identity.Infrastructure.Features.Users.Helpers.SortProper
 
 public class ByUserFirstNameSortProperty : IUserSortProperty
 {
-    public UserSortProperty SortProperty => UserSortProperty.ByFirstName;
+    public UserSortProperty SortTerm => UserSortProperty.ByFirstName;
 
-    public Expression<Func<User, object>> Property => p => p.FirstName;
+    public Expression<Func<UserResponse, object>> Term => p => p.FirstName;
 }

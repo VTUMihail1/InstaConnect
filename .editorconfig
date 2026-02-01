@@ -172,6 +172,7 @@ csharp_prefer_system_threading_lock = true:suggestion
 dotnet_diagnostic.S2234.severity = none
 dotnet_diagnostic.S2325.severity = none
 dotnet_diagnostic.S2933.severity = none
+dotnet_diagnostic.S3358.severity = none
 dotnet_diagnostic.CA1024.severity = none
 dotnet_diagnostic.CA1032.severity = none
 dotnet_diagnostic.CA1040.severity = none

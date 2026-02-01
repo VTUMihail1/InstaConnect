@@ -10,6 +10,6 @@ public record GetAllChatMessagesApiRequest(
     [FromRoute] string ParticipantTwoId,
     [FromClaim(ClaimTypes.NameIdentifier)] string UserId,
     [FromQuery] CommonSortOrder SortOrder = CommonDefaultValues.SortOrder,
-    [FromQuery] ChatMessageSortProperty SortProperty = ChatMessageDefaultValues.SortProperty,
+    [FromQuery] ChatMessageSortProperty SortTerm = ChatMessageDefaultValues.SortProperty,
     [FromQuery] int Page = ChatMessageDefaultValues.Page,
     [FromQuery] int PageSize = ChatMessageDefaultValues.PageSize) : ISortableApiRequest<ChatMessageSortProperty>, IPaginatableApiRequest;

@@ -2,29 +2,25 @@
 
 internal class GetPostCommentLikeByIdQueryHandler : IQueryHandler<GetPostCommentLikeByIdQueryRequest, GetPostCommentLikeByIdQueryResponse>
 {
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly IPostCommentLikeService _postCommentLikeService;
-    private readonly IPostCommentLikeIncludeQueryBuilderFactory _postCommentLikeIncludeQueryBuilderFactory;
+    private readonly IApplicationMapper _mapper;
+    private readonly IPostCommentLikeQueryService _commentLikeService;
 
     public GetPostCommentLikeByIdQueryHandler(
-        IApplicationMapper applicationMapper,
-        IPostCommentLikeService postCommentLikeService,
-        IPostCommentLikeIncludeQueryBuilderFactory postCommentLikeIncludeQueryBuilderFactory)
+        IApplicationMapper mapper,
+        IPostCommentLikeQueryService commentLikeService)
     {
-        _applicationMapper = applicationMapper;
-        _postCommentLikeService = postCommentLikeService;
-        _postCommentLikeIncludeQueryBuilderFactory = postCommentLikeIncludeQueryBuilderFactory;
+        _mapper = mapper;
+        _commentLikeService = commentLikeService;
     }
 
     public async Task<GetPostCommentLikeByIdQueryResponse> Handle(
         GetPostCommentLikeByIdQueryRequest request,
         CancellationToken cancellationToken)
     {
-        var include = _postCommentLikeIncludeQueryBuilderFactory.Create().WithUser().Build();
-        var serviceRequest = _applicationMapper.Map<GetPostCommentLikeByIdQuery>(request).AddInclude(include);
-        var postCommentLike = await _postCommentLikeService.GetByIdAsync(serviceRequest, cancellationToken);
+        var serviceRequest = _mapper.Map<GetPostCommentLikeByIdQuery>(request);
+        var serviceResponse = await _commentLikeService.GetByIdAsync(serviceRequest, cancellationToken);
 
-        var response = _applicationMapper.Map<GetPostCommentLikeByIdQueryResponse>(postCommentLike);
+        var response = _mapper.Map<GetPostCommentLikeByIdQueryResponse>(serviceResponse);
 
         return response;
     }

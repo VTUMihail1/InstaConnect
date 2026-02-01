@@ -21,12 +21,23 @@ public class PostCommentLike : IEntityWithId<PostCommentLikeId>
 
     public PostCommentLikeId Id { get; }
 
+    public PostComment? PostComment { get; private set; }
+
     public User? User { get; private set; }
 
     public DateTimeOffset CreatedAtUtc { get; }
 
-    public void AddUser(User user)
+    public PostCommentLike AddUser(User user)
     {
         User = user;
+
+        return this;
+    }
+
+    public PostCommentLike AddPostComment(PostComment postComment)
+    {
+        PostComment = postComment;
+
+        return this;
     }
 }

@@ -1,20 +1,23 @@
-﻿namespace InstaConnect.Posts.Tests.Features.PostCommentLikes.Utilities;
+﻿using InstaConnect.Posts.Tests.Features.PostLikes.Utilities;
+
+namespace InstaConnect.Posts.Tests.Features.PostCommentLikes.Utilities;
 public static class PostCommentLikeGenerator
 {
-    public static ICollection<PostCommentLike> GenerateRange(this PostCommentLike template, IEnumerable<User> users)
+    public static ICollection<PostCommentLike> GeneratePostCommentLikesRange(this ICollection<PostComment> postComments, IEnumerable<User> users)
     {
-        return [.. users
-            .Select(user =>
-            {
-                var postCommentLike = new PostCommentLike(
-                    new(
-                        template.Id.CommentId,
-                        user.Id),
-                    PostCommentLikeDataFaker.GetCreatedAtUtc());
+        return [.. postComments
+              .SelectMany(postComment =>
+                  users.Select(user =>
+                  {
+                      var postCommentLike = new PostCommentLike(
+                          new(
+                              postComment.Id,
+                              user.Id),
+                          PostCommentLikeDataFaker.GetCreatedAtUtc());
 
-                postCommentLike.AddUser(user);
+                      postCommentLike.AddUser(user);
 
-                return postCommentLike;
-            })];
+                      return postCommentLike;
+                  }))];
     }
 }

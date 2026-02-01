@@ -173,6 +173,45 @@ public static class PostCommentValidationExceptionAssertions
             cancellationToken);
     }
 
+    public static async Task ShouldThrowInvalidValidationExceptionForCurrentUserIdAsync(
+        this IApplicationSender sender,
+        IStringMessageTransformer messageTransformer,
+        GetPostCommentByIdQueryRequest request,
+        CancellationToken cancellationToken)
+    {
+        await sender.ShouldThrowInvalidValidationExceptionAsync<GetPostCommentByIdQueryRequest, string, GetPostCommentByIdQueryResponse>(
+            p => p.CurrentUserId,
+            messageTransformer,
+            request,
+            cancellationToken);
+    }
+
+    public static async Task ShouldThrowInvalidValidationExceptionForCurrentUserIdAsync(
+        this IApplicationSender sender,
+        IStringMessageTransformer messageTransformer,
+        GetAllPostCommentsQueryRequest request,
+        CancellationToken cancellationToken)
+    {
+        await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostCommentsQueryRequest, string, GetAllPostCommentsQueryResponse>(
+            p => p.CurrentUserId,
+            messageTransformer,
+            request,
+            cancellationToken);
+    }
+
+    public static async Task ShouldThrowInvalidValidationExceptionForCurrentUserIdAsync(
+        this IApplicationSender sender,
+        IStringMessageTransformer messageTransformer,
+        GetAllPostCommentsForUserQueryRequest request,
+        CancellationToken cancellationToken)
+    {
+        await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostCommentsForUserQueryRequest, string, GetAllPostCommentsForUserQueryResponse>(
+            p => p.CurrentUserId,
+            messageTransformer,
+            request,
+            cancellationToken);
+    }
+
     public static async Task ShouldThrowInvalidValidationExceptionForUserNameAsync(
         this IApplicationSender sender,
         IStringMessageTransformer messageTransformer,
@@ -227,12 +266,12 @@ public static class PostCommentValidationExceptionAssertions
 
     public static async Task ShouldThrowInvalidValidationExceptionForSortPropertyAsync(
         this IApplicationSender sender,
-        IEnumMessageTransformer<PostCommentSortProperty> messageTransformer,
+        IEnumMessageTransformer<PostCommentsSortTerm> messageTransformer,
         GetAllPostCommentsQueryRequest request,
         CancellationToken cancellationToken)
     {
-        await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostCommentsQueryRequest, PostCommentSortProperty, GetAllPostCommentsQueryResponse>(
-            p => p.SortProperty,
+        await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostCommentsQueryRequest, PostCommentsSortTerm, GetAllPostCommentsQueryResponse>(
+            p => p.SortTerm,
             messageTransformer,
             request,
             cancellationToken);

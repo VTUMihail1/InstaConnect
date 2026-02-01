@@ -1,3 +1,7 @@
-﻿namespace InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
+﻿using System.Security.Claims;
 
-public record GetUserDetailsByIdApiRequest([FromRoute] string Id);
+namespace InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
+
+public record GetUserDetailsByIdApiRequest(
+    [FromRoute] string Id,
+    [FromClaim(ClaimTypes.NameIdentifier)] string CurrentId);

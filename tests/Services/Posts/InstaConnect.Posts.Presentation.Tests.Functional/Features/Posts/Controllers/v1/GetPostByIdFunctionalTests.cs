@@ -110,7 +110,7 @@ public class GetPostByIdFunctionalTests : BasePostPresentationQueryFunctionalTes
         var response = await HttpClient.GetPostByIdAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(Post);
+        response.ShouldSatisfy(Post, _request);
     }
 
     [Theory]
@@ -125,6 +125,6 @@ public class GetPostByIdFunctionalTests : BasePostPresentationQueryFunctionalTes
         var response = await HttpClient.GetPostByIdAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(Post);
+        response.ShouldSatisfy(Post, request);
     }
 }

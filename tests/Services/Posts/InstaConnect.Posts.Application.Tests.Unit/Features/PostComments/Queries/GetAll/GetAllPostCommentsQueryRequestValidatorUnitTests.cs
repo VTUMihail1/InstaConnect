@@ -54,7 +54,7 @@ public class GetAllPostCommentsQueryRequestValidatorUnitTests : BasePostCommentA
     }
 
     [Theory]
-    [PostCommentSortOrderEmptyWithMessageData]
+    [PostCommentsSortOrderEmptyWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenSortOrderIsInvalid(
         IEnumTransformer<CommonSortOrder> transformer, IEnumMessageTransformer<CommonSortOrder> messageTransformer)
     {
@@ -69,9 +69,9 @@ public class GetAllPostCommentsQueryRequestValidatorUnitTests : BasePostCommentA
     }
 
     [Theory]
-    [PostCommentSortPropertyEmptyWithMessageData]
+    [PostCommentsSortTermEmptyWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenSortPropertyIsInvalid(
-        IEnumTransformer<PostCommentSortProperty> transformer, IEnumMessageTransformer<PostCommentSortProperty> messageTransformer)
+        IEnumTransformer<PostCommentsSortTerm> transformer, IEnumMessageTransformer<PostCommentsSortTerm> messageTransformer)
     {
         // Arrange
         var request = _requestBuilder.WithSortProperty(transformer).Build();

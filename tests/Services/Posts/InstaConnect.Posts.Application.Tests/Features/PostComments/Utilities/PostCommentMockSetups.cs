@@ -1,63 +1,60 @@
-﻿using InstaConnect.Common.Application.Tests.Utilities;
-using InstaConnect.Common.Infrastructure.Helpers;
+﻿using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAllForUser;
 
 namespace InstaConnect.Posts.Application.Tests.Features.PostComments.Utilities;
 public static class PostCommentMockSetups
 {
     public static void SetupGetAllQuery(
-        this IPostCommentService postCommentService,
+        this IPostCommentQueryService commentService,
         GetAllPostCommentsQueryRequest request,
         ICollection<PostComment> postComments,
-        CommonIncludeQuery<PostCommentIncludeProperty> include,
         CancellationToken cancellationToken)
     {
-        var paginator = PaginatorFactory.Create();
-        var filteredPostComments = postComments.Filter(a => a.MatchesFilter(request), request);
+        commentService
+            .GetAllAsync(PostCommentMatcher.IsGetAllPostCommentsQuery(request), cancellationToken)
+            .ReturnsResponse(postComments.ToResponse(request));
+    }
 
-        var response = new PostCommentCollection(
-            filteredPostComments,
-            request.Page,
-            request.PageSize,
-            postComments.Count,
-            paginator.HasNextPage(request.Page, request.PageSize, postComments.Count),
-            paginator.HasPreviousPage(request.Page));
-
-        postCommentService
-            .GetAllAsync(PostCommentMatcher.IsGetAllPostCommentsQuery(request, include), cancellationToken)
-            .ReturnsResponse(response);
+    public static void SetupGetAllForUserQuery(
+        this IPostCommentQueryService commentService,
+        GetAllPostCommentsForUserQueryRequest request,
+        ICollection<PostComment> postComments,
+        CancellationToken cancellationToken)
+    {
+        commentService
+            .GetAllForUserAsync(PostCommentMatcher.IsGetAllPostCommentsForUserQuery(request), cancellationToken)
+            .ReturnsResponse(postComments.ToResponse(request));
     }
 
     public static void SetupGetByIdQuery(
-        this IPostCommentService postCommentService,
+        this IPostCommentQueryService commentService,
         GetPostCommentByIdQueryRequest request,
         PostComment postComment,
-        CommonIncludeQuery<PostCommentIncludeProperty> include,
         CancellationToken cancellationToken)
     {
-        postCommentService
-            .GetByIdAsync(PostCommentMatcher.IsGetPostCommentByIdQuery(request, include), cancellationToken)
-            .ReturnsResponse(postComment);
+        commentService
+            .GetByIdAsync(PostCommentMatcher.IsGetPostCommentByIdQuery(request), cancellationToken)
+            .ReturnsResponse(postComment.ToResponse(request));
     }
 
     public static void SetupAddCommand(
-        this IPostCommentService postCommentService,
+        this IPostCommentCommandService commentService,
         AddPostCommentCommandRequest request,
         PostComment postComment,
         CancellationToken cancellationToken)
     {
-        postCommentService
+        commentService
             .AddAsync(PostCommentMatcher.IsAddPostCommentCommand(request), cancellationToken)
-            .ReturnsResponse(postComment);
+            .ReturnsResponse(postComment.ToResponse(request));
     }
 
     public static void SetupUpdateCommand(
-        this IPostCommentService postCommentService,
+        this IPostCommentCommandService commentService,
         UpdatePostCommentCommandRequest request,
         PostComment postComment,
         CancellationToken cancellationToken)
     {
-        postCommentService
+        commentService
             .UpdateAsync(PostCommentMatcher.IsUpdatePostCommentCommand(request), cancellationToken)
-            .ReturnsResponse(postComment);
+            .ReturnsResponse(postComment.ToResponse(request));
     }
 }

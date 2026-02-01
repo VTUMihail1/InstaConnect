@@ -2,8 +2,10 @@
 
 public record PostQueryResponse(
     string Id,
+    string UserId,
     string Title,
     string Content,
-    UserQueryResponse User,
+    UserQueryResponse? User,
+    bool IsLikedByCurrentUser,
     DateTimeOffset CreatedAtUtc,
     DateTimeOffset UpdatedAtUtc);

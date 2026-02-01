@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Domain.Models;
-
-namespace InstaConnect.Follows.Domain.Features.Users.Helpers;
+﻿namespace InstaConnect.Follows.Domain.Features.Users.Helpers;
 
 public class UserIncludeQueryBuilder
 {
@@ -18,7 +16,7 @@ public class UserIncludeQueryBuilder
         return this;
     }
 
-    public CommonIncludeQuery<UserIncludeProperty> Build()
+    public CommonInclude<UserIncludeProperty> Build()
     {
         return new(_includeProperties);
     }

@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Common.Domain.Abstractions;
-using InstaConnect.Common.Domain.Extensions;
 using InstaConnect.Common.Presentation.Abstractions;
 
 using Microsoft.AspNetCore.Http;
@@ -25,7 +24,7 @@ public class CookieStore : ICookieStore
     {
         var response = _httpContextAccessor.HttpContext?.Response;
 
-        if (response.IsNull())
+        if (response == null)
         {
             return;
         }
@@ -38,14 +37,14 @@ public class CookieStore : ICookieStore
             Expires = expiresAt
         };
 
-        response!.Cookies.Append(key, value, options);
+        response.Cookies.Append(key, value, options);
     }
 
     public void Set(string key, string value, int expireSeconds)
     {
         var response = _httpContextAccessor.HttpContext?.Response;
 
-        if (response.IsNull())
+        if (response == null)
         {
             return;
         }
@@ -58,19 +57,19 @@ public class CookieStore : ICookieStore
             Expires = _dateTimeProvider.GetOffsetUtcNow(expireSeconds)
         };
 
-        response!.Cookies.Append(key, value, options);
+        response.Cookies.Append(key, value, options);
     }
 
     public string? Get(string key)
     {
         var request = _httpContextAccessor.HttpContext?.Request;
 
-        if (request.IsNull())
+        if (request == null)
         {
             return null;
         }
 
-        request!.Cookies.TryGetValue(key, out var value);
+        request.Cookies.TryGetValue(key, out var value);
 
         return value;
     }
@@ -79,11 +78,11 @@ public class CookieStore : ICookieStore
     {
         var response = _httpContextAccessor.HttpContext?.Response;
 
-        if (response.IsNull())
+        if (response == null)
         {
             return;
         }
 
-        response!.Cookies.Delete(key);
+        response.Cookies.Delete(key);
     }
 }

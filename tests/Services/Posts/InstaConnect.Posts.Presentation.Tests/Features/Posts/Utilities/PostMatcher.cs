@@ -1,9 +1,16 @@
-﻿namespace InstaConnect.Posts.Presentation.Tests.Features.Posts.Utilities;
+﻿using InstaConnect.Posts.Application.Features.Posts.Queries.GetAllForUser;
+
+namespace InstaConnect.Posts.Presentation.Tests.Features.Posts.Utilities;
 public static class PostMatcher
 {
     public static GetAllPostsQueryRequest IsGetAllPostsQueryRequest(GetAllPostsApiRequest request)
     {
         return Matcher.Is<GetAllPostsQueryRequest>(p => p.Matches(request));
+    }
+
+    public static GetAllPostsForUserQueryRequest IsGetAllPostsForUserQueryRequest(GetAllPostsForUserApiRequest request)
+    {
+        return Matcher.Is<GetAllPostsForUserQueryRequest>(p => p.Matches(request));
     }
 
     public static GetPostByIdQueryRequest IsGetPostByIdQueryRequest(GetPostByIdApiRequest request)

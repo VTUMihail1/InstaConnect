@@ -8,7 +8,7 @@ internal static class ServiceCollectionExtensions
 {
     internal static IServiceCollection AddUserServices(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddImplementationsOf<IUserIncludeProperty>(PostInfrastructureReference.Assembly);
+        serviceCollection.AddImplementationsOf<IUserIncluder>(PostInfrastructureReference.Assembly);
 
         BsonClassMap.TryRegisterClassMap<User>(cm =>
         {
@@ -37,8 +37,6 @@ internal static class ServiceCollectionExtensions
                 c.ProfileImage,
                 c.CreatedAtUtc,
                 c.UpdatedAtUtc));
-
-            cm.SetIgnoreExtraElements(true);
         });
 
         return serviceCollection;

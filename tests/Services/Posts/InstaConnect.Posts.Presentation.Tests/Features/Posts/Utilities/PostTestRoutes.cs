@@ -8,28 +8,46 @@ public static class PostTestRoutes
         return Route;
     }
 
+    public static string GetForUserDefault(string userId)
+    {
+        const string Format = "api/v1/users/{0}/posts";
+
+        return Format.FormatCurrentCulture(userId);
+    }
+
     public static string GetAll(GetAllPostsApiRequest request)
     {
         const string Format = "{0}?userName={1}&title={2}&sortOrder={3}&sortProperty={4}&page={5}&pageSize={6}";
-        var route = Format.FormatCurrentCulture(
+
+        return Format.FormatCurrentCulture(
             GetDefault(),
             request.UserName,
             request.Title,
             request.SortOrder,
-            request.SortProperty,
+            request.SortTerm,
             request.Page,
             request.PageSize);
+    }
 
-        return route;
+    public static string GetAllForUser(GetAllPostsForUserApiRequest request)
+    {
+        const string Format = "{0}?title={1}&sortOrder={2}&sortProperty={3}&page={4}&pageSize={5}";
+
+        return Format.FormatCurrentCulture(
+            GetForUserDefault(request.UserId),
+            request.Title,
+            request.SortOrder,
+            request.SortTerm,
+            request.Page,
+            request.PageSize);
     }
 
     public static string GetId(string id)
     {
         const string Format = "{0}/{1}";
-        var route = Format.FormatCurrentCulture(
+
+        return Format.FormatCurrentCulture(
             GetDefault(),
             id);
-
-        return route;
     }
 }

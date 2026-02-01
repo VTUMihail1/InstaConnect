@@ -1,10 +1,8 @@
 ﻿using FluentValidation.Results;
 
 using InstaConnect.Common.Domain.Abstractions;
-using InstaConnect.Common.Domain.Models;
 using InstaConnect.Common.Infrastructure.Helpers;
 using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
-using InstaConnect.Common.Tests.Utilities;
 
 namespace InstaConnect.Common.Application.Tests.Utilities;
 public static class CommonEquals
@@ -60,7 +58,7 @@ public static class CommonEquals
             where TRequest : IPaginatableQueryRequest
             where TResponse : ICollectionQueryResponse
     {
-        var paginator = PaginatorFactory.Create();
+        var paginator = new Paginator();
 
         return response.Page == request.Page &&
                response.PageSize == request.PageSize &&
@@ -69,27 +67,22 @@ public static class CommonEquals
                response.HasNextPage == paginator.HasNextPage(response.Page, response.PageSize, response.TotalCount);
     }
 
-    public static bool MatchesSortable<TQuery, TQueryRequest, TSortProperty>(this TQuery query, TQueryRequest request)
-        where TQuery : ISortableQuery<TSortProperty>
+    public static bool MatchesSortable<TQuery, TQueryRequest, TSortProperty, TSortingQuery>(this TQuery query, TQueryRequest request)
+        where TQuery : ISortableQuery<TSortingQuery, TSortProperty>
         where TQueryRequest : ISortableQueryRequest<TSortProperty>
+        where TSortingQuery : ISortingQuery<TSortProperty>
         where TSortProperty : Enum
     {
         return query.Sorting.Order == request.SortOrder &&
-               query.Sorting.Property.Equals(request.SortProperty);
+               query.Sorting.Term.Equals(request.SortTerm);
     }
 
-    public static bool MatchesPaginatable<TQuery, TQueryRequest>(this TQuery query, TQueryRequest request)
-        where TQuery : IPaginatableQuery
+    public static bool MatchesPaginatable<TQuery, TQueryRequest, TPaginationQuery>(this TQuery query, TQueryRequest request)
+        where TQuery : IPaginatableQuery<TPaginationQuery>
+        where TPaginationQuery : IPaginationQuery
         where TQueryRequest : IPaginatableQueryRequest
     {
         return query.Pagination.Page == request.Page &&
                query.Pagination.PageSize == request.PageSize;
-    }
-
-    public static bool MatchesIncludable<TQuery, TIncludeProperty>(this TQuery query, CommonIncludeQuery<TIncludeProperty> include)
-        where TQuery : IIncludableQuery<TIncludeProperty>
-        where TIncludeProperty : Enum
-    {
-        return query.Include!.Properties.MatchesCollection(include.Properties);
     }
 }

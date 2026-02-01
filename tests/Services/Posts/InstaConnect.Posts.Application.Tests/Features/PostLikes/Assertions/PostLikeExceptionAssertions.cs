@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Application.Abstractions;
+using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAllForUser;
 using InstaConnect.Posts.Domain.Features.PostLikes.Exceptions;
 
 using MediatR;
@@ -7,6 +8,17 @@ namespace InstaConnect.Posts.Application.Tests.Features.PostLikes.Assertions;
 
 public static class PostLikeExceptionAssertions
 {
+    public static async Task ShouldThrowUserNotFoundExceptionAsync(
+        this IApplicationSender sender,
+        GetAllPostLikesForUserQueryRequest request,
+        CancellationToken cancellationToken)
+    {
+        await sender.ShouldThrowUserNotFoundExceptionAsync<GetAllPostLikesForUserQueryRequest, GetAllPostLikesForUserQueryResponse>(
+            r => r.UserId,
+            request,
+            cancellationToken);
+    }
+
     public static async Task ShouldThrowUserNotFoundExceptionAsync(
         this IApplicationSender sender,
         AddPostLikeCommandRequest request,

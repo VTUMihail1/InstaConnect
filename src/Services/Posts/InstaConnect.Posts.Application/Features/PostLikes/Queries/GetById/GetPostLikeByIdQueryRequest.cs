@@ -1,3 +1,8 @@
-﻿namespace InstaConnect.Posts.Application.Features.PostLikes.Queries.GetById;
+﻿using InstaConnect.Posts.Application.Features.Users.Abstractions;
 
-public record GetPostLikeByIdQueryRequest(string Id, string UserId) : IQueryRequest<GetPostLikeByIdQueryResponse>;
+namespace InstaConnect.Posts.Application.Features.PostLikes.Queries.GetById;
+
+public record GetPostLikeByIdQueryRequest(
+    string Id,
+    string UserId,
+    string CurrentUserId) : IQueryRequest<GetPostLikeByIdQueryResponse>, ICurrentUserableQueryRequest;

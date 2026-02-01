@@ -1,7 +1,6 @@
-﻿namespace InstaConnect.Posts.Events.Features.PostLikes;
+﻿using InstaConnect.Posts.Events.Features.Posts;
 
-public record PostLikeAddedEventRequest(
-        string Id,
-        string UserId,
-        DateTimeOffset CreatedAtUtc)
+namespace InstaConnect.Posts.Events.Features.PostLikes;
+
+public record PostLikeAddedEventRequest(PostLikeEventRequest PostLike)
     : IEventRequest;

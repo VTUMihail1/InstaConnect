@@ -1,16 +1,9 @@
-﻿using InstaConnect.Posts.Domain.Features.Users.Helpers;
-
-namespace InstaConnect.Posts.Application.Tests.Features.Users.Utilities;
+﻿namespace InstaConnect.Posts.Application.Tests.Features.Users.Utilities;
 
 public static class UserMockFactory
 {
-    public static IUserService CreateService()
+    public static IUserCommandService CreateCommandService()
     {
-        return Mocker.Mock<IUserService>();
-    }
-
-    public static IUserIncludeQueryBuilderFactory CreateIncludeQueryBuilderFactory()
-    {
-        return new UserIncludeQueryBuilderFactory();
+        return Mocker.Mock<IUserCommandService>();
     }
 }

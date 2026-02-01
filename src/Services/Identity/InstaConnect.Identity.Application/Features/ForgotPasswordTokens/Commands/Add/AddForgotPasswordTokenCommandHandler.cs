@@ -2,20 +2,20 @@
 
 internal class AddForgotPasswordTokenCommandHandler : ICommandHandler<AddForgotPasswordTokenCommandRequest>
 {
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly IForgotPasswordTokenService _forgotPasswordTokenService;
+    private readonly IApplicationMapper _mapper;
+    private readonly IForgotPasswordTokenCommandService _forgotPasswordTokenService;
 
     public AddForgotPasswordTokenCommandHandler(
-        IApplicationMapper applicationMapper,
-        IForgotPasswordTokenService forgotPasswordTokenService)
+        IApplicationMapper mapper,
+        IForgotPasswordTokenCommandService forgotPasswordTokenService)
     {
-        _applicationMapper = applicationMapper;
+        _mapper = mapper;
         _forgotPasswordTokenService = forgotPasswordTokenService;
     }
 
     public async Task Handle(AddForgotPasswordTokenCommandRequest request, CancellationToken cancellationToken)
     {
-        var serviceRequest = _applicationMapper.Map<AddForgotPasswordTokenCommand>(request);
+        var serviceRequest = _mapper.Map<AddForgotPasswordTokenCommand>(request);
         await _forgotPasswordTokenService.AddAsync(serviceRequest, cancellationToken);
     }
 }

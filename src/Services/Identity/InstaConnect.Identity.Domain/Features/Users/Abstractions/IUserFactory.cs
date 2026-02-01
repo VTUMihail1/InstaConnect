@@ -7,6 +7,5 @@ public interface IUserFactory
         string firstName,
         string lastName,
         Email email,
-        string passwordHash,
-        Image? profileImage);
+        string passwordHash);
 }

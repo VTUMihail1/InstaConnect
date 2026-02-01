@@ -2,6 +2,7 @@
 using System.Net.Http.Json;
 
 using InstaConnect.Common.Presentation.Models;
+using InstaConnect.Posts.Presentation.Tests.Features.PostComments.Utilities;
 
 namespace InstaConnect.Posts.Presentation.Tests.Features.PostCommentLikes.Utilities;
 public static class PostCommentLikeClient
@@ -13,6 +14,7 @@ public static class PostCommentLikeClient
     {
         var route = PostCommentLikeTestRoutes.GetAll(request);
         var response = await httpClient
+            .AddUserId(request.CurrentUserId)
             .GetStatusCodeAsync(route, cancellationToken);
 
         return response;
@@ -25,6 +27,7 @@ public static class PostCommentLikeClient
     {
         var route = PostCommentLikeTestRoutes.GetAll(request);
         var response = await httpClient
+            .AddUserId(request.CurrentUserId)
             .GetProblemDetailsAsync(route, cancellationToken);
 
         return response!;
@@ -37,20 +40,47 @@ public static class PostCommentLikeClient
     {
         var route = PostCommentLikeTestRoutes.GetAll(request);
         var response = await httpClient
+            .AddUserId(request.CurrentUserId)
             .GetFromJsonAsync<GetAllPostCommentLikesApiResponse>(route, cancellationToken);
 
         return response!;
     }
 
-    public static async Task<GetAllPostCommentLikesApiResponse> GetAllPostCommentLikesAsync(
+    public static async Task<HttpStatusCode> GetAllPostCommentLikesForUserStatusCodeAsync(
         this HttpClient httpClient,
-        string id,
-        string commentId,
+        GetAllPostCommentLikesForUserApiRequest request,
         CancellationToken cancellationToken)
     {
-        var route = PostCommentLikeTestRoutes.GetDefault(id, commentId);
+        var route = PostCommentLikeTestRoutes.GetAllForUser(request);
         var response = await httpClient
-            .GetFromJsonAsync<GetAllPostCommentLikesApiResponse>(route, cancellationToken);
+            .AddUserId(request.CurrentUserId)
+            .GetStatusCodeAsync(route, cancellationToken);
+
+        return response;
+    }
+
+    public static async Task<ApplicationProblemDetails> GetAllPostCommentLikesForUserProblemDetailsAsync(
+        this HttpClient httpClient,
+        GetAllPostCommentLikesForUserApiRequest request,
+        CancellationToken cancellationToken)
+    {
+        var route = PostCommentLikeTestRoutes.GetAllForUser(request);
+        var response = await httpClient
+            .AddUserId(request.CurrentUserId)
+            .GetProblemDetailsAsync(route, cancellationToken);
+
+        return response!;
+    }
+
+    public static async Task<GetAllPostCommentLikesForUserApiResponse> GetAllPostCommentLikesForUserAsync(
+        this HttpClient httpClient,
+        GetAllPostCommentLikesForUserApiRequest request,
+        CancellationToken cancellationToken)
+    {
+        var route = PostCommentLikeTestRoutes.GetAllForUser(request);
+        var response = await httpClient
+            .AddUserId(request.CurrentUserId)
+            .GetFromJsonAsync<GetAllPostCommentLikesForUserApiResponse>(route, cancellationToken);
 
         return response!;
     }
@@ -62,6 +92,7 @@ public static class PostCommentLikeClient
     {
         var route = PostCommentLikeTestRoutes.GetId(request.Id, request.CommentId, request.UserId);
         var response = await httpClient
+            .AddUserId(request.CurrentUserId)
             .GetStatusCodeAsync(route, cancellationToken);
 
         return response;
@@ -74,6 +105,7 @@ public static class PostCommentLikeClient
     {
         var route = PostCommentLikeTestRoutes.GetId(request.Id, request.CommentId, request.UserId);
         var response = await httpClient
+            .AddUserId(request.CurrentUserId)
             .GetProblemDetailsAsync(route, cancellationToken);
 
         return response!;
@@ -86,6 +118,7 @@ public static class PostCommentLikeClient
     {
         var route = PostCommentLikeTestRoutes.GetId(request.Id, request.CommentId, request.UserId);
         var response = await httpClient
+            .AddUserId(request.CurrentUserId)
             .GetFromJsonAsync<GetPostCommentLikeByIdApiResponse>(route, cancellationToken);
 
         return response!;

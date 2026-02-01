@@ -8,5 +8,8 @@ public class GetUserByIdQueryRequestValidator : AbstractValidator<GetUserByIdQue
             .NotEmptyWithMessage()
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();
+
+        RuleFor(c => c.CurrentId)
+            .UserIdMaxLengthWithMessage();
     }
 }

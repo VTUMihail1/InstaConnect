@@ -2,22 +2,22 @@
 
 internal class DeletePostCommentCommandHandler : ICommandHandler<DeletePostCommentCommandRequest>
 {
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly IPostCommentService _postCommentService;
+    private readonly IApplicationMapper _mapper;
+    private readonly IPostCommentCommandService _commentService;
 
     public DeletePostCommentCommandHandler(
-        IApplicationMapper applicationMapper,
-        IPostCommentService postCommentService)
+        IApplicationMapper mapper,
+        IPostCommentCommandService commentService)
     {
-        _applicationMapper = applicationMapper;
-        _postCommentService = postCommentService;
+        _mapper = mapper;
+        _commentService = commentService;
     }
 
     public async Task Handle(
         DeletePostCommentCommandRequest request,
         CancellationToken cancellationToken)
     {
-        var serviceRequest = _applicationMapper.Map<DeletePostCommentCommand>(request);
-        await _postCommentService.DeleteAsync(serviceRequest, cancellationToken);
+        var serviceRequest = _mapper.Map<DeletePostCommentCommand>(request);
+        await _commentService.DeleteAsync(serviceRequest, cancellationToken);
     }
 }

@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Domain.Models;
-
-namespace InstaConnect.Chats.Domain.Features.Chats.Abstractions;
+﻿namespace InstaConnect.Chats.Domain.Features.Chats.Abstractions;
 
 public interface IChatRepository
 {
@@ -8,7 +6,7 @@ public interface IChatRepository
         ChatByParticipantFilterQuery filter,
         CommonSortingQuery<ChatByParticipantSortProperty> sorting,
         CommonPaginationQuery pagination,
-        CommonIncludeQuery<ChatIncludeProperty>? include,
+        ChatInclude include,
         CancellationToken cancellationToken);
 
     Task<Chat?> GetByIdAsync(
@@ -17,7 +15,7 @@ public interface IChatRepository
 
     Task<Chat?> GetByIdAsync(
         ChatId id,
-        CommonIncludeQuery<ChatIncludeProperty>? include,
+        ChatInclude include,
         CancellationToken cancellationToken);
 
     Task AddAsync(Chat entity, CancellationToken cancellationToken);

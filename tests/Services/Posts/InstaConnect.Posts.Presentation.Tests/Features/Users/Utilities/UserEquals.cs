@@ -1,60 +1,65 @@
-﻿using InstaConnect.Posts.Presentation.Features.Users.Models.Responses;
+﻿using InstaConnect.Posts.Application.Features.Users.Abstractions;
+using InstaConnect.Posts.Domain.Features.Users.Abstractions;
+using InstaConnect.Posts.Presentation.Features.Users.Abstractions;
+using InstaConnect.Posts.Presentation.Features.Users.Models.Responses;
 
 namespace InstaConnect.Posts.Presentation.Tests.Features.Users.Utilities;
 public static class UserEquals
 {
     public static bool Matches(this User user, UserAddedEventRequest request)
     {
-        return user.Id.Matches(request.Id) &&
-               user.FirstName == request.FirstName &&
-               user.LastName == request.LastName &&
-               user.Name.Matches(request.Name) &&
-               user.Email.Matches(request.Email) &&
-               user.ProfileImage.Matches(request.ProfileImageUrl) &&
-               user.CreatedAtUtc == request.CreatedAtUtc &&
-               user.UpdatedAtUtc == request.UpdatedAtUtc;
+        return user.Matches(request.User);
     }
 
     public static bool Matches(this User user, UserUpdatedEventRequest request)
     {
-        return user.Id.Matches(request.Id) &&
-               user.FirstName == request.FirstName &&
-               user.LastName == request.LastName &&
-               user.Name.Matches(request.Name) &&
-               user.Email.Matches(request.Email) &&
-               user.ProfileImage.Matches(request.ProfileImageUrl) &&
-               user.UpdatedAtUtc == request.UpdatedAtUtc;
+        return user.Matches(request.User);
     }
 
     public static bool Matches(this AddUserCommandRequest command, UserAddedEventRequest request)
     {
-        return command.Id == request.Id &&
-               command.Email == request.Email &&
-               command.Name == request.Name &&
-               command.FirstName == request.FirstName &&
-               command.LastName == request.LastName &&
-               command.ProfileImageUrl == request.ProfileImageUrl;
+        return command.Id == request.User.Id &&
+               command.Email == request.User.Email &&
+               command.Name == request.User.Name &&
+               command.FirstName == request.User.FirstName &&
+               command.LastName == request.User.LastName &&
+               command.ProfileImageUrl == request.User.ProfileImageUrl;
     }
 
     public static bool Matches(this UpdateUserCommandRequest command, UserUpdatedEventRequest request)
     {
-        return command.Id == request.Id &&
-               command.Email == request.Email &&
-               command.Name == request.Name &&
-               command.FirstName == request.FirstName &&
-               command.LastName == request.LastName &&
-               (command.ProfileImageUrl == request.ProfileImageUrl);
+        return command.Id == request.User.Id &&
+               command.Email == request.User.Email &&
+               command.Name == request.User.Name &&
+               command.FirstName == request.User.FirstName &&
+               command.LastName == request.User.LastName &&
+               command.ProfileImageUrl == request.User.ProfileImageUrl;
     }
 
     public static bool Matches(this DeleteUserCommandRequest command, UserDeletedEventRequest request)
     {
-        return command.Id == request.Id;
+        return command.Id == request.User.Id;
     }
 
-    public static bool Matches(this UserApiResponse response, User user)
+    public static bool MatchesFull(this UserApiResponse? response, User? user)
     {
-        return user.Id.Matches(response.Id) &&
+        return response != null &&
+               user != null &&
+               user.Id.Matches(response.Id) &&
+               user.FirstName == response.FirstName &&
+               user.LastName == response.LastName &&
                user.Name.Matches(response.Name) &&
-               user.ProfileImage.Matches(response.ProfileImageUrl);
+               user.ProfileImage.Matches(response.ProfileImageUrl) &&
+               user.CreatedAtUtc == response.CreatedAtUtc &&
+               user.UpdatedAtUtc == response.UpdatedAtUtc;
+    }
+
+    public static bool MatchesCurrentUserable<TQueryRequest, TApiRequest>(
+        this TQueryRequest query,
+        TApiRequest request)
+        where TQueryRequest : ICurrentUserableQueryRequest
+        where TApiRequest : ICurrentUserableApiRequest
+    {
+        return query.CurrentUserId == request.CurrentUserId;
     }
 }

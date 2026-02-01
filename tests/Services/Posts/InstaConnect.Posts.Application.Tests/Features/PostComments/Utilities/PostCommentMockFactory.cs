@@ -1,16 +1,14 @@
-﻿using InstaConnect.Posts.Domain.Features.PostComments.Helpers;
-
-namespace InstaConnect.Posts.Application.Tests.Features.PostComments.Utilities;
+﻿namespace InstaConnect.Posts.Application.Tests.Features.PostComments.Utilities;
 
 public static class PostCommentMockFactory
 {
-    public static IPostCommentService CreateService()
+    public static IPostCommentCommandService CreateCommandService()
     {
-        return Mocker.Mock<IPostCommentService>();
+        return Mocker.Mock<IPostCommentCommandService>();
     }
 
-    public static IPostCommentIncludeQueryBuilderFactory CreateIncludeQueryBuilderFactory()
+    public static IPostCommentQueryService CreateQueryService()
     {
-        return new PostCommentIncludeQueryBuilderFactory();
+        return Mocker.Mock<IPostCommentQueryService>();
     }
 }

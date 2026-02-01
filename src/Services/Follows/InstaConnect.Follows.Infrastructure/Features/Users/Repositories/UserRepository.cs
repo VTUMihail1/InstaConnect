@@ -1,5 +1,4 @@
-﻿using InstaConnect.Common.Domain.Models;
-using InstaConnect.Follows.Infrastructure.Features.Users.Extensions;
+﻿using InstaConnect.Follows.Infrastructure.Features.Users.Extensions;
 
 using MongoDB.Driver;
 
@@ -20,7 +19,7 @@ internal class UserRepository : IUserRepository
 
     public async Task<User?> GetByIdAsync(
         UserId id,
-        CommonIncludeQuery<UserIncludeProperty>? include,
+        CommonInclude<UserIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
         var includeProperties = _userIncludePropertyFactory.Create(include?.Properties);
@@ -44,7 +43,7 @@ internal class UserRepository : IUserRepository
 
     public async Task<User?> GetByNameAsync(
         Name name,
-        CommonIncludeQuery<UserIncludeProperty>? include,
+        CommonInclude<UserIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
         var includeProperties = _userIncludePropertyFactory.Create(include?.Properties);
@@ -68,7 +67,7 @@ internal class UserRepository : IUserRepository
 
     public async Task<User?> GetByEmailAsync(
         Email email,
-        CommonIncludeQuery<UserIncludeProperty>? include,
+        CommonInclude<UserIncludeProperty>? include,
         CancellationToken cancellationToken)
     {
         var includeProperties = _userIncludePropertyFactory.Create(include?.Properties);

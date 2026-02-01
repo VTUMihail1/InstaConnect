@@ -6,7 +6,7 @@ public interface ICollectionApiResponse
 
     public int PageSize { get; }
 
-    public int TotalCount { get; }
+    public long TotalCount { get; }
 
     public bool HasNextPage { get; }
 

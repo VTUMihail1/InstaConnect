@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Domain.Extensions;
+using InstaConnect.Posts.Domain.Models.Requests;
 
 namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Utilities;
 
@@ -7,32 +8,29 @@ public static class PostCommentLikeExceptionErrorMessages
     public static string GetNotFoundMessage(PostCommentLikeId id)
     {
         const string Format = "PostCommentLike(id: {0}, commentId: {1}, userId: {2}) with that id does not exist";
-        var result = Format.FormatCurrentCulture(id.CommentId.Id.Id, id.CommentId.CommentId, id.UserId.Id);
 
-        return result;
+        return Format.FormatCurrentCulture(id.CommentId.Id.Id, id.CommentId.CommentId, id.UserId.Id);
     }
 
     public static string GetAlreadyExistsMessage(PostCommentLikeId id)
     {
         const string Format = "PostCommentLike(id: {0}, commentId: {1}, userId: {2}) already exists";
-        var result = Format.FormatCurrentCulture(id.CommentId.Id.Id, id.CommentId.CommentId, id.UserId.Id);
 
-        return result;
+        return Format.FormatCurrentCulture(id.CommentId.Id.Id, id.CommentId.CommentId, id.UserId.Id);
     }
 
-    public static string GetSortPropertyNotSupportedMessage(PostCommentLikeSortProperty sortProperty)
+    public static string GetSortPropertyNotSupportedMessage(PostCommentLikesSortTerm sortTerm)
     {
-        const string Format = "PostCommentLikeSortProperty(type: {0}) is not supported";
-        var result = Format.FormatCurrentCulture(sortProperty);
+        const string Format = "PostCommentLikeSortTerm(type: {0}) is not supported";
 
-        return result;
+        return Format.FormatCurrentCulture(sortTerm);
     }
 
-    public static string GetInclidePropertyNotSupportedMessage(ICollection<PostCommentLikeIncludeProperty> includeProperties)
+    public static string GetIncludeDescriptorsNotSupportedMessage(ICollection<PostsIncludeDescriptor> descriptors)
     {
-        const string Format = "PostCommentLikeIncludeProperties(types: {0}) is not supported";
-        var result = Format.FormatCurrentCulture(includeProperties.JoinAsStringWithComa());
+        const string Format = "PostCommentLikeDescriptors({0}) is not supported";
 
-        return result;
+        return Format.FormatCurrentCulture(descriptors
+            .JoinIncludeDescriptorsAsStringWithComa<PostsDestinationType, PostsIncludeType, PostsIncludeDescriptor>());
     }
 }

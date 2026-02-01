@@ -2,23 +2,23 @@
 
 internal class RotateRefreshTokenCommandHandler : ICommandHandler<RotateRefreshTokenCommandRequest, RotateRefreshTokenCommandResponse>
 {
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly IRefreshTokenService _refreshTokenService;
+    private readonly IApplicationMapper _mapper;
+    private readonly IRefreshTokenCommandService _refreshTokenService;
 
     public RotateRefreshTokenCommandHandler(
-        IApplicationMapper applicationMapper,
-        IRefreshTokenService refreshTokenService)
+        IApplicationMapper mapper,
+        IRefreshTokenCommandService refreshTokenService)
     {
-        _applicationMapper = applicationMapper;
+        _mapper = mapper;
         _refreshTokenService = refreshTokenService;
     }
 
     public async Task<RotateRefreshTokenCommandResponse> Handle(RotateRefreshTokenCommandRequest request, CancellationToken cancellationToken)
     {
-        var serviceRequest = _applicationMapper.Map<RotateRefreshTokenCommand>(request);
-        var refreshToken = await _refreshTokenService.RotateAsync(serviceRequest, cancellationToken);
+        var serviceRequest = _mapper.Map<RotateRefreshTokenCommand>(request);
+        var serviceResponse = await _refreshTokenService.RotateAsync(serviceRequest, cancellationToken);
 
-        var response = _applicationMapper.Map<RotateRefreshTokenCommandResponse>(refreshToken);
+        var response = _mapper.Map<RotateRefreshTokenCommandResponse>(serviceResponse);
 
         return response;
     }

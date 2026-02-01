@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Application.Tests.Integration.Features.Posts.Commands;
 
-public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
+public class DeletePostIntegrationTests : BasePostApplicationCommandIntegrationTest
 {
     private readonly DeletePostCommandRequestBuilderFactory _requestBuilderFactory;
     private readonly DeletePostCommandRequestBuilder _requestBuilder;
@@ -32,7 +32,7 @@ public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
         var request = _requestBuilder.WithId(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForIdAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForIdAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -48,7 +48,7 @@ public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
         var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForUserIdAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForUserIdAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -59,7 +59,7 @@ public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
         await ServiceScope.DeletePostAsync(Post, CancellationToken);
 
         // Assert
-        await ApplicationSender.ShouldThrowPostNotFoundExceptionAsync(_request, CancellationToken);
+        await Sender.ShouldThrowPostNotFoundExceptionAsync(_request, CancellationToken);
     }
 
     [Fact]
@@ -71,14 +71,14 @@ public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
         var request = _requestBuilder.WithUserId(user).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowPostForbiddenExceptionAsync(request, CancellationToken);
+        await Sender.ShouldThrowPostForbiddenExceptionAsync(request, CancellationToken);
     }
 
     [Fact]
     public async Task SendAsync_ShouldDeletePost_WhenRequestIsValid()
     {
         // Act
-        await ApplicationSender.SendAsync(_request, CancellationToken);
+        await Sender.SendAsync(_request, CancellationToken);
         var post = await ServiceScope.GetPostByIdAsync(Post.Id, CancellationToken);
 
         // Assert
@@ -94,7 +94,7 @@ public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
         var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
-        await ApplicationSender.SendAsync(request, CancellationToken);
+        await Sender.SendAsync(request, CancellationToken);
         var post = await ServiceScope.GetPostByIdAsync(Post.Id, CancellationToken);
 
         // Assert
@@ -110,7 +110,7 @@ public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
         var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
-        await ApplicationSender.SendAsync(request, CancellationToken);
+        await Sender.SendAsync(request, CancellationToken);
         var post = await ServiceScope.GetPostByIdAsync(Post.Id, CancellationToken);
 
         // Assert
@@ -121,7 +121,7 @@ public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
     public async Task SendAsync_ShouldPublishPostDeletedEvent_WhenRequestIsValid()
     {
         // Act
-        await ApplicationSender.SendAsync(_request, CancellationToken);
+        await Sender.SendAsync(_request, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedDeletedAsync(Post, CancellationToken);
@@ -136,7 +136,7 @@ public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
         var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
-        await ApplicationSender.SendAsync(request, CancellationToken);
+        await Sender.SendAsync(request, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedDeletedAsync(Post, CancellationToken);
@@ -151,7 +151,7 @@ public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
         var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
-        await ApplicationSender.SendAsync(request, CancellationToken);
+        await Sender.SendAsync(request, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedDeletedAsync(Post, CancellationToken);

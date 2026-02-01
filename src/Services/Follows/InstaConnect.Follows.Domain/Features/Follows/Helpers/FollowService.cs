@@ -1,5 +1,4 @@
-﻿using InstaConnect.Common.Domain.Extensions;
-using InstaConnect.Common.Events.Abstractions;
+﻿using InstaConnect.Common.Events.Abstractions;
 
 namespace InstaConnect.Follows.Domain.Features.Follows.Helpers;
 internal class FollowService : IFollowService

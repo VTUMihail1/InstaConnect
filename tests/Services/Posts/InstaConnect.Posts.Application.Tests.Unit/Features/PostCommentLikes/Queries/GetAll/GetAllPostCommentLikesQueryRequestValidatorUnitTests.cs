@@ -14,7 +14,7 @@ public class GetAllPostCommentLikesQueryRequestValidatorUnitTests : BasePostComm
     public GetAllPostCommentLikesQueryRequestValidatorUnitTests()
     {
         _requestBuilderFactory = new();
-        _requestBuilder = _requestBuilderFactory.Create(PostCommentLike, User);
+        _requestBuilder = _requestBuilderFactory.Create(PostCommentLike);
         _request = _requestBuilder.Build();
 
         _requestValidator = new();
@@ -72,7 +72,7 @@ public class GetAllPostCommentLikesQueryRequestValidatorUnitTests : BasePostComm
     }
 
     [Theory]
-    [PostCommentLikeSortOrderEmptyWithMessageData]
+    [PostCommentLikesSortOrderEmptyWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenSortOrderIsInvalid(
         IEnumTransformer<CommonSortOrder> transformer,
         IEnumMessageTransformer<CommonSortOrder> messageTransformer)
@@ -88,10 +88,10 @@ public class GetAllPostCommentLikesQueryRequestValidatorUnitTests : BasePostComm
     }
 
     [Theory]
-    [PostCommentLikeSortPropertyEmptyWithMessageData]
+    [PostCommentLikesSortTermEmptyWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenSortPropertyIsInvalid(
-        IEnumTransformer<PostCommentLikeSortProperty> transformer,
-        IEnumMessageTransformer<PostCommentLikeSortProperty> messageTransformer)
+        IEnumTransformer<PostCommentLikesSortTerm> transformer,
+        IEnumMessageTransformer<PostCommentLikesSortTerm> messageTransformer)
     {
         // Arrange
         var request = _requestBuilder.WithSortProperty(transformer).Build();

@@ -192,14 +192,14 @@ public static partial class ServiceCollectionExtensions
         serviceCollection.AddScoped<IEncoder, Encoder>();
 
         serviceCollection
-        .AddOptions<AccessTokenOptions>()
-        .BindConfiguration(nameof(AccessTokenOptions))
+        .AddOptions<SessionTokenOptions>()
+        .BindConfiguration(nameof(SessionTokenOptions))
         .ValidateDataAnnotations()
         .ValidateOnStart();
 
         var accessTokenOptions = configuration
-            .GetSection(nameof(AccessTokenOptions))
-            .Get<AccessTokenOptions>()!;
+            .GetSection(nameof(SessionTokenOptions))
+            .Get<SessionTokenOptions>()!;
 
         serviceCollection
             .AddAuthentication(opt =>
@@ -285,8 +285,8 @@ public static partial class ServiceCollectionExtensions
     public static IServiceCollection AddSortOrders(this IServiceCollection serviceCollection)
     {
         serviceCollection
-            .AddScoped<ISortOrderFactory, SortOrderFactory>()
-            .AddImplementationsOf<ISortOrder>(CommonInfrastructureReference.Assembly);
+            .AddScoped<ISortOrdererFactory, SortOrdererFactory>()
+            .AddImplementationsOf<ISortOrderer>(CommonInfrastructureReference.Assembly);
 
         return serviceCollection;
     }

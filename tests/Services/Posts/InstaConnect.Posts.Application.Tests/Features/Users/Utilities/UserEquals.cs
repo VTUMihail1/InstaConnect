@@ -1,18 +1,25 @@
-﻿using InstaConnect.Posts.Application.Features.Users.Models;
+﻿using InstaConnect.Posts.Application.Features.Users.Abstractions;
+using InstaConnect.Posts.Application.Features.Users.Models;
 using InstaConnect.Posts.Application.Tests.Features.Users.Utilities;
 using InstaConnect.Posts.Domain.Features.Users.Models.ValueObjects;
 
 namespace InstaConnect.Posts.Application.Tests.Features.Users.Utilities;
 public static class UserEquals
 {
-    public static bool Matches(this AddUserCommandResponse response, User user)
+    public static bool Matches(
+        this AddUserCommandResponse response,
+        User user,
+        AddUserCommandRequest request)
     {
-        return response.Response.Matches(user.Id);
+        return response.Id.Matches(user.Id);
     }
 
-    public static bool Matches(this UpdateUserCommandResponse response, User user)
+    public static bool Matches(
+        this UpdateUserCommandResponse response,
+        User user,
+        UpdateUserCommandRequest request)
     {
-        return response.Response.Matches(user.Id);
+        return response.Id.Matches(user.Id);
     }
 
     public static bool Matches(this User user, AddUserCommandRequest request)
@@ -71,10 +78,25 @@ public static class UserEquals
         return id.Matches(response.Id);
     }
 
-    public static bool Matches(this UserQueryResponse response, User user)
+    public static bool MatchesFull(this UserQueryResponse? response, User? user)
     {
-        return user.Id.Matches(response.Id) &&
+        return response != null &&
+               user != null &&
+               user.Id.Matches(response.Id) &&
+               user.FirstName == response.FirstName &&
+               user.LastName == response.LastName &&
                user.Name.Matches(response.Name) &&
-               user.ProfileImage.Matches(response.ProfileImageUrl);
+               user.ProfileImage.Matches(response.ProfileImageUrl) &&
+               user.CreatedAtUtc == response.CreatedAtUtc &&
+               user.UpdatedAtUtc == response.UpdatedAtUtc;
+    }
+
+    public static bool MatchesCurrentUserable<TQuery, TQueryRequest>(
+        this TQuery query,
+        TQueryRequest request)
+        where TQuery : ICurrentUserableQuery
+        where TQueryRequest : ICurrentUserableQueryRequest
+    {
+        return query.CurrentUser.Id.Matches(request.CurrentUserId);
     }
 }

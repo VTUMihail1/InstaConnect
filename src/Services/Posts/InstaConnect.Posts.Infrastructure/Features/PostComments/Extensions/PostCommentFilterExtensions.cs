@@ -1,18 +1,25 @@
 ﻿using System.Linq.Expressions;
 
 using InstaConnect.Posts.Infrastructure.Features.Posts.Extensions;
+using InstaConnect.Posts.Infrastructure.Features.Users.Extensions;
 
 using MongoDB.Driver;
 
 namespace InstaConnect.Posts.Infrastructure.Features.PostComments.Extensions;
-public static class PostCommentFilterExtensions
+
+internal static class PostCommentFilterExtensions
 {
-    public static FilterDefinition<PostComment> GetFilter(this PostCommentFilterQuery filter)
+    public static FilterDefinition<PostComment> GetFilter(this PostCommentsFilterQuery filter)
     {
         var id = filter.Id.GetFilterForIdEquals<PostComment>(p => p.Id.Id.Id);
         var userName = filter.UserName.GetFilterForNameStartsWith<PostComment>(p => p.User!.Name.Value);
 
         return Builders<PostComment>.Filter.And(id, userName);
+    }
+
+    public static FilterDefinition<PostComment> GetFilter(this PostCommentsForUserFilterQuery filter)
+    {
+        return filter.UserId.GetFilterForIdEquals<PostComment>(p => p.UserId.Id);
     }
 
     public static FilterDefinition<PostComment> GetFilter(this PostCommentId filter)

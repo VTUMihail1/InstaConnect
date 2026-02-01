@@ -23,6 +23,15 @@ public class ForgotPasswordToken : IEntityWithId<ForgotPasswordTokenId>
 
     public DateTimeOffset CreatedAtUtc { get; }
 
+    public User? User { get; private set; }
+
+    public ForgotPasswordToken AddUser(User user)
+    {
+        User = user;
+
+        return this;
+    }
+
     public bool HasExpired(DateTimeOffset utcNow)
     {
         var hasExpired = ExpiresAtUtc < utcNow;

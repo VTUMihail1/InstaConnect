@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Application.Tests.Unit.Features.PostCommentLikes.Commands.Delete;
 
-public class DeletePostCommentLikeCommandRequestValidatorUnitTests : BasePostCommentLikeApplicationUnitTest
+public class DeletePostCommentLikeCommandRequestValidatorUnitTests : BasePostCommentLikeApplicationCommandUnitTest
 {
     private readonly DeletePostCommentLikeCommandRequestBuilderFactory _requestBuilderFactory;
     private readonly DeletePostCommentLikeCommandRequestBuilder _requestBuilder;

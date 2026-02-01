@@ -1,11 +1,11 @@
 ﻿namespace InstaConnect.Identity.Infrastructure.Features.RefreshTokens.Helpers.Includes;
 internal class RefreshTokenIncludePropertyFactory : IRefreshTokenIncludePropertyFactory
 {
-    private readonly IEnumerable<IRefreshTokenIncludeProperty> _refreshTokenIncludeProperty;
+    private readonly IEnumerable<IRefreshTokenIncludeProperty> _includeProperty;
 
-    public RefreshTokenIncludePropertyFactory(IEnumerable<IRefreshTokenIncludeProperty> refreshTokenIncludeProperty)
+    public RefreshTokenIncludePropertyFactory(IEnumerable<IRefreshTokenIncludeProperty> includeProperty)
     {
-        _refreshTokenIncludeProperty = refreshTokenIncludeProperty;
+        _includeProperty = includeProperty;
     }
 
     public IEnumerable<IRefreshTokenIncludeProperty> Create(ICollection<RefreshTokenIncludeProperty>? includeProperties)
@@ -15,7 +15,7 @@ internal class RefreshTokenIncludePropertyFactory : IRefreshTokenIncludeProperty
             return [];
         }
 
-        var properties = _refreshTokenIncludeProperty.Where(s => includeProperties.Contains(s.IncludeProperty));
+        var properties = _includeProperty.Where(s => includeProperties.Contains(s.IncludeProperty));
 
         if (properties.IsEmpty())
         {

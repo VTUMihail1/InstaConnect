@@ -1,6 +1,0 @@
-﻿namespace InstaConnect.Posts.Tests.Features.PostLikes.DataAttributes.SortProperty;
-
-[AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-public sealed class PostLikeSortPropertyEmptyDataAttribute : EmptyEnumDataAttribute<PostLikeSortProperty>
-{
-}

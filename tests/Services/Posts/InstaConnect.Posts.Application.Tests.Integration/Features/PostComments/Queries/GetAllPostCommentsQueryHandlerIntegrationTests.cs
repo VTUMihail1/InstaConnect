@@ -23,7 +23,9 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentApp
         await ServiceScope.AddUserAsync(User, CancellationToken);
         await ServiceScope.AddUserRangeAsync(Users, CancellationToken);
         await ServiceScope.AddPostAsync(Post, CancellationToken);
+        await ServiceScope.AddPostLikeAsync(PostLike, CancellationToken);
         await ServiceScope.AddPostCommentRangeAsync(PostComments, CancellationToken);
+        await ServiceScope.AddPostCommentLikeRangeAsync(PostCommentLikes, CancellationToken);
     }
 
     [Theory]
@@ -41,7 +43,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentApp
 
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForIdAsync(messageTransformer, request, CancellationToken);
+        await Sender.ShouldThrowInvalidValidationExceptionForIdAsync(messageTransformer, request, CancellationToken);
     }
 
     [Theory]
@@ -53,12 +55,12 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentApp
         var request = _requestBuilder.WithUserName(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForUserNameAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForUserNameAsync(
             messageTransformer, request, CancellationToken);
     }
 
     [Theory]
-    [PostCommentSortOrderEmptyWithMessageData]
+    [PostCommentsSortOrderEmptyWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenSortOrderIsInvalid(
         IEnumTransformer<CommonSortOrder> transformer, IEnumMessageTransformer<CommonSortOrder> messageTransformer)
     {
@@ -66,20 +68,20 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentApp
         var request = _requestBuilder.WithSortOrder(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForSortOrderAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForSortOrderAsync(
             messageTransformer, request, CancellationToken);
     }
 
     [Theory]
-    [PostCommentSortPropertyEmptyWithMessageData]
+    [PostCommentsSortTermEmptyWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenSortPropertyIsInvalid(
-        IEnumTransformer<PostCommentSortProperty> transformer, IEnumMessageTransformer<PostCommentSortProperty> messageTransformer)
+        IEnumTransformer<PostCommentsSortTerm> transformer, IEnumMessageTransformer<PostCommentsSortTerm> messageTransformer)
     {
         // Arrange
         var request = _requestBuilder.WithSortProperty(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForSortPropertyAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForSortPropertyAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -93,7 +95,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentApp
         var request = _requestBuilder.WithPage(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForPageAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForPageAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -107,7 +109,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentApp
         var request = _requestBuilder.WithPageSize(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForPageSizeAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForPageSizeAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -118,14 +120,14 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentApp
         await ServiceScope.DeletePostAsync(Post, CancellationToken);
 
         // Assert
-        await ApplicationSender.ShouldThrowPostNotFoundExceptionAsync(_request, CancellationToken);
+        await Sender.ShouldThrowPostNotFoundExceptionAsync(_request, CancellationToken);
     }
 
     [Fact]
     public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValid()
     {
         // Act
-        var response = await ApplicationSender.SendAsync(_request, CancellationToken);
+        var response = await Sender.SendAsync(_request, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(PostComments, _request);
@@ -140,7 +142,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentApp
         var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(PostComments, _request);
@@ -157,15 +159,15 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentApp
         var request = _requestBuilder.WithUserName(transformer).Build();
 
         // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(PostComments, _request);
     }
 
     [Theory]
-    [PostCommentSortOrderWithAscendingTermData]
-    [PostCommentSortOrderWithDescendingTermData]
+    [PostCommentsSortOrderWithAscendingTermData]
+    [PostCommentsSortOrderWithDescendingTermData]
     public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortOrderAreValid(
         IEnumTransformer<CommonSortOrder> transformer, ISortEnumTermTransformer<PostComment> termTransformer)
     {
@@ -173,23 +175,23 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentApp
         var request = _requestBuilder.WithSortOrder(transformer).Build();
 
         // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(PostComments, _request, termTransformer);
     }
 
     [Theory]
-    [PostCommentSortPropertyWithCreatedAtTermData]
-    [PostCommentSortPropertyWithUserNameTermData]
+    [PostCommentsSortTermWithCreatedAtTermData]
+    [PostCommentsSortTermWithUserNameTermData]
     public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortPropertyAreValid(
-        IEnumTransformer<PostCommentSortProperty> transformer, ISortEnumTermTransformer<PostComment> termTransformer)
+        IEnumTransformer<PostCommentsSortTerm> transformer, ISortEnumTermTransformer<PostComment> termTransformer)
     {
         // Arrange
         var request = _requestBuilder.WithSortProperty(transformer).Build();
 
         // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(PostComments, _request, termTransformer);

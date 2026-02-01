@@ -5,4 +5,4 @@ public record FollowCollection(
     int PageSize,
     int TotalCount,
     bool HasNextPage,
-    bool HasPreviousPage) : IEntityCollection;
+    bool HasPreviousPage) : IEntityCollectionResponse;

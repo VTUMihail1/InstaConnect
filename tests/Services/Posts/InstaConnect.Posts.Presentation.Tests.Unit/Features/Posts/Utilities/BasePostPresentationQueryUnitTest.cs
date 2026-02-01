@@ -1,14 +1,16 @@
-﻿namespace InstaConnect.Posts.Presentation.Tests.Unit.Features.Posts.Utilities;
+﻿using InstaConnect.Posts.Presentation.Extensions;
 
-public abstract class BasePostPresentationQueryUnitTest : BasePostPresentationUnitTest
+namespace InstaConnect.Posts.Presentation.Tests.Unit.Features.Posts.Utilities;
+
+public abstract class BasePostPresentationQueryUnitTest : BasePostTest
 {
-    protected ICollection<User> Users { get; }
+    protected IApplicationSender Sender { get; }
 
-    protected ICollection<Post> Posts { get; }
+    protected IApplicationMapper Mapper { get; }
 
     protected BasePostPresentationQueryUnitTest()
     {
-        Users = User.GenerateRange();
-        Posts = Post.GenerateRange(Users);
+        Sender = MockFactory.CreateApplicationSender();
+        Mapper = MockFactory.CreateMapper(PostPresentationReference.Assembly);
     }
 }

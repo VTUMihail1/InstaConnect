@@ -184,7 +184,7 @@ public class GetPostCommentByIdFunctionalTests : BasePostCommentPresentationQuer
         var response = await HttpClient.GetPostCommentByIdAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostComment);
+        response.ShouldSatisfy(PostComment, _request);
     }
 
     [Theory]
@@ -199,7 +199,7 @@ public class GetPostCommentByIdFunctionalTests : BasePostCommentPresentationQuer
         var response = await HttpClient.GetPostCommentByIdAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostComment);
+        response.ShouldSatisfy(PostComment, request);
     }
 
     [Theory]
@@ -214,6 +214,6 @@ public class GetPostCommentByIdFunctionalTests : BasePostCommentPresentationQuer
         var response = await HttpClient.GetPostCommentByIdAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostComment);
+        response.ShouldSatisfy(PostComment, request);
     }
 }

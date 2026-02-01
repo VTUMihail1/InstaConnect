@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Identity.Application.Features.Users.Queries.GetDetailsById;
 
-public record GetUserDetailsByIdQueryResponse(UserDetailsQueryResponse Response);
+public record GetUserDetailsByIdQueryResponse(UserDetailsQueryResponse User);

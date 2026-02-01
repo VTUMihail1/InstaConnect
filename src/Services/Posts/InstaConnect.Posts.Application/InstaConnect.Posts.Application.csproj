@@ -23,7 +23,7 @@
     <Using Include="InstaConnect.Common.Domain.Models.ValueObjects" />
     <Using Include="InstaConnect.Common.Application.Abstractions" />
     <Using Include="InstaConnect.Common.Application.Models" />
-    <Using Include="InstaConnect.Common.Application.Extensions"/>
+    <Using Include="InstaConnect.Common.Application.Extensions" />
   </ItemGroup>
 
   <ItemGroup Label="Users">

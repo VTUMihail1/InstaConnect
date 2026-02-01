@@ -6,19 +6,21 @@ public class GetAllPostLikesApiRequestBuilder
 {
     private string _id;
     private string _userName;
+    private string _currentUserId;
     private int _page;
     private int _pageSize;
     private CommonSortOrder _sortOrder;
-    private PostLikeSortProperty _sortProperty;
+    private PostLikesSortTerm _sortTerm;
 
     public GetAllPostLikesApiRequestBuilder(PostLike postLike)
     {
         _id = postLike.Id.Id.Id;
         _userName = DataFaker.GetPrefixString(postLike.User!.Name.Value);
+        _currentUserId = postLike.Id.UserId.Id;
         _page = PostLikeDataFaker.GetPage();
         _pageSize = PostLikeDataFaker.GetPageSize();
         _sortOrder = DataFaker.GetSortOrder();
-        _sortProperty = PostLikeDataFaker.GetSortProperty();
+        _sortTerm = PostLikeDataFaker.GetSortTerm();
     }
 
     public GetAllPostLikesApiRequestBuilder WithId(Post post, IStringTransformer? transformer = null)
@@ -38,6 +40,20 @@ public class GetAllPostLikesApiRequestBuilder
     public GetAllPostLikesApiRequestBuilder WithUserName(IStringTransformer transformer)
     {
         _userName = transformer.Transform(_userName);
+
+        return this;
+    }
+
+    public GetAllPostLikesApiRequestBuilder WithCurrentUserId(User user, IStringTransformer? transformer = null)
+    {
+        _currentUserId = transformer.TryTransform(user.Id.Id);
+
+        return this;
+    }
+
+    public GetAllPostLikesApiRequestBuilder WithCurrentUserId(IStringTransformer transformer)
+    {
+        _currentUserId = transformer.Transform(_currentUserId);
 
         return this;
     }
@@ -63,15 +79,15 @@ public class GetAllPostLikesApiRequestBuilder
         return this;
     }
 
-    public GetAllPostLikesApiRequestBuilder WithSortProperty(IEnumTransformer<PostLikeSortProperty> transformer)
+    public GetAllPostLikesApiRequestBuilder WithSortTerm(IEnumTransformer<PostLikesSortTerm> transformer)
     {
-        _sortProperty = transformer.Transform(_sortProperty);
+        _sortTerm = transformer.Transform(_sortTerm);
 
         return this;
     }
 
     public GetAllPostLikesApiRequest Build()
     {
-        return new(_id, _userName, _sortOrder, _sortProperty, _page, _pageSize);
+        return new(_id, _userName, _currentUserId, _sortOrder, _sortTerm, _page, _pageSize);
     }
 }

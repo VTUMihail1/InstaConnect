@@ -4,12 +4,15 @@ namespace InstaConnect.Common.Infrastructure.Extensions;
 
 public static class MongoCollectionExtensions
 {
-    public static async Task<int> GetCount<T>(
-        this IMongoCollection<T> collection,
-        FilterDefinition<T> filter,
+    public static async Task<long> GetCount<T>(
+        this IAggregateFluent<T> fluent,
         CancellationToken cancellationToken)
     {
-        return (int)await collection.CountDocumentsAsync(filter, cancellationToken: cancellationToken);
+        var result = await fluent
+                           .Count()
+                           .FirstOrDefaultAsync(cancellationToken);
+
+        return result?.Count ?? default;
     }
 
     public static async Task AddAsync<T>(

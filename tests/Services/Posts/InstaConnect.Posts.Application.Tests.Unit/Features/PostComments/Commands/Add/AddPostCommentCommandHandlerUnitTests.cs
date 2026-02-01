@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Application.Tests.Unit.Features.PostComments.Commands.Add;
 
-public class AddPostCommentCommandHandlerUnitTests : BasePostCommentApplicationUnitTest
+public class AddPostCommentCommandHandlerUnitTests : BasePostCommentApplicationCommandUnitTest
 {
     private readonly AddPostCommentCommandRequestBuilderFactory _requestBuilderFactory;
     private readonly AddPostCommentCommandRequestBuilder _requestBuilder;
@@ -14,9 +14,9 @@ public class AddPostCommentCommandHandlerUnitTests : BasePostCommentApplicationU
         _requestBuilder = _requestBuilderFactory.Create(Post, User);
         _request = _requestBuilder.Build();
 
-        _handler = new(ApplicationMapper, PostCommentService);
+        _handler = new(Mapper, CommentService);
 
-        PostCommentService.SetupAddCommand(_request, PostComment, CancellationToken);
+        CommentService.SetupAddCommand(_request, PostComment, CancellationToken);
     }
 
     [Fact]
@@ -26,7 +26,7 @@ public class AddPostCommentCommandHandlerUnitTests : BasePostCommentApplicationU
         var response = await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostComment);
+        response.ShouldSatisfy(PostComment, _request);
     }
 
     [Fact]
@@ -36,6 +36,6 @@ public class AddPostCommentCommandHandlerUnitTests : BasePostCommentApplicationU
         await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        await PostCommentService.ShouldReceiveOneAddAsync(_request, CancellationToken);
+        await CommentService.ShouldReceiveOneAddAsync(_request, CancellationToken);
     }
 }

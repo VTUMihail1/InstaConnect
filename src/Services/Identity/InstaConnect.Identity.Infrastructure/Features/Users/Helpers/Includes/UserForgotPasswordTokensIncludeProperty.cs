@@ -4,20 +4,20 @@ namespace InstaConnect.Identity.Infrastructure.Features.Users.Helpers.Includes;
 
 public class UserForgotPasswordTokensIncludeProperty : IUserIncludeProperty
 {
-    private readonly IIdentityContext _usersContext;
+    private readonly IIdentityContext _context;
 
-    public UserForgotPasswordTokensIncludeProperty(IIdentityContext usersContext)
+    public UserForgotPasswordTokensIncludeProperty(IIdentityContext context)
     {
-        _usersContext = usersContext;
+        _context = context;
     }
 
     public UserIncludeProperty IncludeProperty => UserIncludeProperty.ForgotPasswordTokens;
 
-    public IAggregateFluent<User> Include(IAggregateFluent<User> pipeline)
+    public IAggregateFluent<User> Include(IAggregateFluent<User> aggregate)
     {
-        return pipeline
+        return aggregate
             .IncludeMany(
-                _usersContext.ForgotPasswordTokens,
+                _context.ForgotPasswordTokens,
                 p => p.Id,
                 l => l.Id.Id,
                 p => p.ForgotPasswordTokens

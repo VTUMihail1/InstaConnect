@@ -1,9 +1,16 @@
-﻿namespace InstaConnect.Posts.Presentation.Tests.Features.PostCommentLikes.Utilities;
+﻿using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAllForUser;
+
+namespace InstaConnect.Posts.Presentation.Tests.Features.PostCommentLikes.Utilities;
 public static class PostCommentLikeMatcher
 {
     public static GetAllPostCommentLikesQueryRequest IsGetAllPostCommentLikesQueryRequest(GetAllPostCommentLikesApiRequest request)
     {
         return Matcher.Is<GetAllPostCommentLikesQueryRequest>(p => p.Matches(request));
+    }
+
+    public static GetAllPostCommentLikesForUserQueryRequest IsGetAllPostCommentLikesForUserQueryRequest(GetAllPostCommentLikesForUserApiRequest request)
+    {
+        return Matcher.Is<GetAllPostCommentLikesForUserQueryRequest>(p => p.Matches(request));
     }
 
     public static GetPostCommentLikeByIdQueryRequest IsGetPostCommentLikeByIdQueryRequest(GetPostCommentLikeByIdApiRequest request)

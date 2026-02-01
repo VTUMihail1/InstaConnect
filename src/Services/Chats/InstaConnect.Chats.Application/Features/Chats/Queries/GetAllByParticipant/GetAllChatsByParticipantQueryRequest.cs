@@ -6,7 +6,7 @@ public record GetAllChatsByParticipantQueryRequest(
     string ParticipantId,
     string ParticipantName,
     CommonSortOrder SortOrder,
-    ChatByParticipantSortProperty SortProperty,
+    ChatByParticipantSortProperty SortTerm,
     int Page,
     int PageSize)
     : IQueryRequest<GetAllChatsByParticipantQueryResponse>, ISortableQueryRequest<ChatByParticipantSortProperty>, IPaginatableQueryRequest;

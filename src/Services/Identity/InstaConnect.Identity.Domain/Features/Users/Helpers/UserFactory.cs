@@ -18,8 +18,7 @@ internal class UserFactory : IUserFactory
         string firstName,
         string lastName,
         Email email,
-        string passwordHash,
-        Image? profileImage)
+        string passwordHash)
     {
         var id = _guidProvider.NewGuid().ToString();
         var utcNow = _dateTimeProvider.GetOffsetUtcNow();
@@ -31,7 +30,7 @@ internal class UserFactory : IUserFactory
             name,
             passwordHash,
             false,
-            profileImage,
+            null,
             utcNow,
             utcNow);
 

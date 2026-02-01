@@ -18,5 +18,8 @@ public class GetPostCommentLikeByIdQueryRequestValidator : AbstractValidator<Get
             .NotEmptyWithMessage()
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();
+
+        RuleFor(c => c.CurrentUserId)
+            .UserIdMaxLengthWithMessage();
     }
 }

@@ -14,9 +14,9 @@ public class GetAllPostCommentLikesControllerUnitTests : BasePostCommentLikePres
         _requestBuilder = _requestBuilderFactory.Create(PostCommentLike);
         _request = _requestBuilder.Build();
 
-        _postCommentLikeController = new(ApplicationMapper, ApplicationSender);
+        _postCommentLikeController = new(Mapper, Sender);
 
-        ApplicationSender.SetupGetAllQueryRequest(_request, PostCommentLikes, CancellationToken);
+        Sender.SetupGetAllQueryRequest(_request, PostCommentLikes, CancellationToken);
     }
 
     [Fact]
@@ -46,6 +46,6 @@ public class GetAllPostCommentLikesControllerUnitTests : BasePostCommentLikePres
         await _postCommentLikeController.GetAllAsync(_request, CancellationToken);
 
         // Assert
-        await ApplicationSender.ShouldReceiveOneSendAsync(_request, CancellationToken);
+        await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);
     }
 }

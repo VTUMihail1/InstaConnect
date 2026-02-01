@@ -2,29 +2,23 @@
 
 internal class AddUserCommandHandler : ICommandHandler<AddUserCommandRequest, AddUserCommandResponse>
 {
-    private readonly IUserService _userService;
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly IEmailConfirmationTokenService _emailConfirmationTokenService;
+    private readonly IApplicationMapper _mapper;
+    private readonly IUserCommandService _service;
 
     public AddUserCommandHandler(
-        IUserService userService,
-        IApplicationMapper applicationMapper,
-        IEmailConfirmationTokenService emailConfirmationTokenService)
+        IApplicationMapper mapper,
+        IUserCommandService service)
     {
-        _userService = userService;
-        _applicationMapper = applicationMapper;
-        _emailConfirmationTokenService = emailConfirmationTokenService;
+        _mapper = mapper;
+        _service = service;
     }
 
     public async Task<AddUserCommandResponse> Handle(AddUserCommandRequest request, CancellationToken cancellationToken)
     {
-        var serviceRequest = _applicationMapper.Map<AddUserCommand>(request);
-        var user = await _userService.AddAsync(serviceRequest, cancellationToken);
+        var serviceRequest = _mapper.Map<AddUserCommand>(request);
+        var serviceResponse = await _service.AddAsync(serviceRequest, cancellationToken);
 
-        var tokenServiceRequest = _applicationMapper.Map<AddEmailConfirmationTokenCommand>(user);
-        await _emailConfirmationTokenService.AddAsync(tokenServiceRequest, cancellationToken);
-
-        var response = _applicationMapper.Map<AddUserCommandResponse>(user);
+        var response = _mapper.Map<AddUserCommandResponse>(serviceResponse);
 
         return response;
     }

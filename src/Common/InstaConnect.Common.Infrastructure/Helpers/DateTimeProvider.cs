@@ -5,15 +5,21 @@ public class DateTimeProvider : IDateTimeProvider
 {
     public DateTimeOffset GetOffsetUtcNow()
     {
-        var currentDateTime = DateTimeOffset.UtcNow;
-
-        return currentDateTime;
+        return DateTimeOffset.UtcNow;
     }
 
     public DateTimeOffset GetOffsetUtcNow(int seconds)
     {
-        var currentDateTime = DateTimeOffset.UtcNow.AddSeconds(seconds);
+        return DateTimeOffset.UtcNow.AddSeconds(seconds);
+    }
 
-        return currentDateTime;
+    public DateTime GetUtcNow()
+    {
+        return DateTime.UtcNow;
+    }
+
+    public DateTime GetUtcNow(int seconds)
+    {
+        return DateTime.UtcNow.AddSeconds(seconds);
     }
 }

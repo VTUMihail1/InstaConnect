@@ -7,20 +7,22 @@ public class GetAllPostCommentLikesApiRequestBuilder
     private string _id;
     private string _commentId;
     private string _userName;
+    private string _currentUserId;
     private int _page;
     private int _pageSize;
     private CommonSortOrder _sortOrder;
-    private PostCommentLikeSortProperty _sortProperty;
+    private PostCommentLikesSortTerm _sortTerm;
 
     public GetAllPostCommentLikesApiRequestBuilder(PostCommentLike postCommentLike)
     {
         _id = postCommentLike.Id.CommentId.Id.Id;
         _commentId = postCommentLike.Id.CommentId.CommentId;
         _userName = DataFaker.GetPrefixString(postCommentLike.User!.Name.Value);
+        _currentUserId = postCommentLike.Id.UserId.Id;
         _page = PostCommentLikeDataFaker.GetPage();
         _pageSize = PostCommentLikeDataFaker.GetPageSize();
         _sortOrder = DataFaker.GetSortOrder();
-        _sortProperty = PostCommentLikeDataFaker.GetSortProperty();
+        _sortTerm = PostCommentLikeDataFaker.GetSortTerm();
     }
 
     public GetAllPostCommentLikesApiRequestBuilder WithId(Post post, IStringTransformer? transformer = null)
@@ -58,6 +60,20 @@ public class GetAllPostCommentLikesApiRequestBuilder
         return this;
     }
 
+    public GetAllPostCommentLikesApiRequestBuilder WithCurrentUserId(User user, IStringTransformer? transformer = null)
+    {
+        _currentUserId = transformer.TryTransform(user.Id.Id);
+
+        return this;
+    }
+
+    public GetAllPostCommentLikesApiRequestBuilder WithCurrentUserId(IStringTransformer transformer)
+    {
+        _currentUserId = transformer.Transform(_currentUserId);
+
+        return this;
+    }
+
     public GetAllPostCommentLikesApiRequestBuilder WithPage(IIntTransformer transformer)
     {
         _page = transformer.Transform(_page);
@@ -79,15 +95,15 @@ public class GetAllPostCommentLikesApiRequestBuilder
         return this;
     }
 
-    public GetAllPostCommentLikesApiRequestBuilder WithSortProperty(IEnumTransformer<PostCommentLikeSortProperty> transformer)
+    public GetAllPostCommentLikesApiRequestBuilder WithSortTerm(IEnumTransformer<PostCommentLikesSortTerm> transformer)
     {
-        _sortProperty = transformer.Transform(_sortProperty);
+        _sortTerm = transformer.Transform(_sortTerm);
 
         return this;
     }
 
     public GetAllPostCommentLikesApiRequest Build()
     {
-        return new(_id, _commentId, _userName, _sortOrder, _sortProperty, _page, _pageSize);
+        return new(_id, _commentId, _userName, _currentUserId, _sortOrder, _sortTerm, _page, _pageSize);
     }
 }

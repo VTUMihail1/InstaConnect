@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Common.Domain.Exceptions;
-using InstaConnect.Common.Domain.Extensions;
 using InstaConnect.Common.Presentation.Abstractions;
 
 using Microsoft.AspNetCore.Diagnostics;
@@ -27,12 +26,12 @@ public sealed class InvalidValidationExceptionHandler : IExceptionHandler
     {
         var invalidValidationException = exception as InvalidValidationException;
 
-        if (invalidValidationException.IsNull())
+        if (invalidValidationException == null)
         {
             return false;
         }
 
-        var applicationProblemDetails = _applicationProblemDetailsFactory.Create(invalidValidationException!);
+        var applicationProblemDetails = _applicationProblemDetailsFactory.Create(invalidValidationException);
         await _applicationProblemDetailsService.WriteAsync(httpContext, exception, applicationProblemDetails, cancellationToken);
 
         return true;

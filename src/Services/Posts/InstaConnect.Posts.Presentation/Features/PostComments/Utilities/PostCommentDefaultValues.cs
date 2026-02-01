@@ -4,7 +4,7 @@ namespace InstaConnect.Posts.Presentation.Features.PostComments.Utilities;
 
 public static class PostCommentDefaultValues
 {
-    public const PostCommentSortProperty SortProperty = PostCommentSortProperty.ByCreatedAt;
+    public const PostCommentsSortTerm SortTerm = PostCommentsSortTerm.ByCreatedAt;
 
     public const int Page = 1;
 

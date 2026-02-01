@@ -1,11 +1,11 @@
 ﻿namespace InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Helpers.Includes;
 internal class EmailConfirmationTokenIncludePropertyFactory : IEmailConfirmationTokenIncludePropertyFactory
 {
-    private readonly IEnumerable<IEmailConfirmationTokenIncludeProperty> _emailConfirmationTokenIncludeProperty;
+    private readonly IEnumerable<IEmailConfirmationTokenIncludeProperty> _includeProperty;
 
-    public EmailConfirmationTokenIncludePropertyFactory(IEnumerable<IEmailConfirmationTokenIncludeProperty> emailConfirmationTokenIncludeProperty)
+    public EmailConfirmationTokenIncludePropertyFactory(IEnumerable<IEmailConfirmationTokenIncludeProperty> includeProperty)
     {
-        _emailConfirmationTokenIncludeProperty = emailConfirmationTokenIncludeProperty;
+        _includeProperty = includeProperty;
     }
 
     public IEnumerable<IEmailConfirmationTokenIncludeProperty> Create(ICollection<EmailConfirmationTokenIncludeProperty>? includeProperties)
@@ -15,7 +15,7 @@ internal class EmailConfirmationTokenIncludePropertyFactory : IEmailConfirmation
             return [];
         }
 
-        var properties = _emailConfirmationTokenIncludeProperty.Where(s => includeProperties.Contains(s.IncludeProperty));
+        var properties = _includeProperty.Where(s => includeProperties.Contains(s.IncludeProperty));
 
         if (properties.IsEmpty())
         {

@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Application.Tests.Integration.Features.Users.Commands;
 
-public class AddUserIntegrationTests : BaseUserApplicationIntegrationTest
+public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 {
     private readonly AddUserCommandRequestBuilderFactory _requestBuilderFactory;
     private readonly AddUserCommandRequestBuilder _requestBuilder;
@@ -12,11 +12,6 @@ public class AddUserIntegrationTests : BaseUserApplicationIntegrationTest
         _requestBuilderFactory = new();
         _requestBuilder = _requestBuilderFactory.Create();
         _request = _requestBuilder.Build();
-    }
-
-    protected override async Task OnInitializeAsync()
-    {
-        await Task.CompletedTask;
     }
 
     [Theory]
@@ -31,7 +26,7 @@ public class AddUserIntegrationTests : BaseUserApplicationIntegrationTest
         var request = _requestBuilder.WithId(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForIdAsync(messageTransformer, request, CancellationToken);
+        await Sender.ShouldThrowInvalidValidationExceptionForIdAsync(messageTransformer, request, CancellationToken);
     }
 
     [Theory]
@@ -46,7 +41,7 @@ public class AddUserIntegrationTests : BaseUserApplicationIntegrationTest
         var request = _requestBuilder.WithName(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForNameAsync(messageTransformer, request, CancellationToken);
+        await Sender.ShouldThrowInvalidValidationExceptionForNameAsync(messageTransformer, request, CancellationToken);
     }
 
     [Theory]
@@ -61,7 +56,7 @@ public class AddUserIntegrationTests : BaseUserApplicationIntegrationTest
         var request = _requestBuilder.WithFirstName(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForFirstNameAsync(messageTransformer, request, CancellationToken);
+        await Sender.ShouldThrowInvalidValidationExceptionForFirstNameAsync(messageTransformer, request, CancellationToken);
     }
 
     [Theory]
@@ -76,7 +71,7 @@ public class AddUserIntegrationTests : BaseUserApplicationIntegrationTest
         var request = _requestBuilder.WithLastName(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForLastNameAsync(messageTransformer, request, CancellationToken);
+        await Sender.ShouldThrowInvalidValidationExceptionForLastNameAsync(messageTransformer, request, CancellationToken);
     }
 
     [Theory]
@@ -91,7 +86,7 @@ public class AddUserIntegrationTests : BaseUserApplicationIntegrationTest
         var request = _requestBuilder.WithEmail(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForEmailAsync(messageTransformer, request, CancellationToken);
+        await Sender.ShouldThrowInvalidValidationExceptionForEmailAsync(messageTransformer, request, CancellationToken);
     }
 
     [Theory]
@@ -103,7 +98,7 @@ public class AddUserIntegrationTests : BaseUserApplicationIntegrationTest
         var request = _requestBuilder.WithProfileImage(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForProfileImageAsync(messageTransformer, request, CancellationToken);
+        await Sender.ShouldThrowInvalidValidationExceptionForProfileImageAsync(messageTransformer, request, CancellationToken);
     }
 
     [Theory]
@@ -115,7 +110,7 @@ public class AddUserIntegrationTests : BaseUserApplicationIntegrationTest
         var request = _requestBuilder.WithCreatedAtUtc(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForCreatedAtUtcAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForCreatedAtUtcAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -128,7 +123,7 @@ public class AddUserIntegrationTests : BaseUserApplicationIntegrationTest
         var request = _requestBuilder.WithUpdatedAtUtc(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForUpdatedAtUtcAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForUpdatedAtUtcAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -140,7 +135,7 @@ public class AddUserIntegrationTests : BaseUserApplicationIntegrationTest
         var request = _requestBuilder.WithId(User).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowUserAlreadyExistsExceptionAsync(request, CancellationToken);
+        await Sender.ShouldThrowUserAlreadyExistsExceptionAsync(request, CancellationToken);
     }
 
     [Theory]
@@ -153,7 +148,7 @@ public class AddUserIntegrationTests : BaseUserApplicationIntegrationTest
         var request = _requestBuilder.WithId(User, transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowUserAlreadyExistsExceptionAsync(request, CancellationToken);
+        await Sender.ShouldThrowUserAlreadyExistsExceptionAsync(request, CancellationToken);
     }
 
     [Fact]
@@ -164,7 +159,7 @@ public class AddUserIntegrationTests : BaseUserApplicationIntegrationTest
         var request = _requestBuilder.WithEmail(User).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowUserEmailAlreadyExistsExceptionAsync(request, CancellationToken);
+        await Sender.ShouldThrowUserEmailAlreadyExistsExceptionAsync(request, CancellationToken);
     }
 
     [Theory]
@@ -177,7 +172,7 @@ public class AddUserIntegrationTests : BaseUserApplicationIntegrationTest
         var request = _requestBuilder.WithEmail(User, transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowUserEmailAlreadyExistsExceptionAsync(request, CancellationToken);
+        await Sender.ShouldThrowUserEmailAlreadyExistsExceptionAsync(request, CancellationToken);
     }
 
     [Fact]
@@ -188,7 +183,7 @@ public class AddUserIntegrationTests : BaseUserApplicationIntegrationTest
         var request = _requestBuilder.WithName(User).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowUserNameAlreadyExistsExceptionAsync(request, CancellationToken);
+        await Sender.ShouldThrowUserNameAlreadyExistsExceptionAsync(request, CancellationToken);
     }
 
     [Theory]
@@ -201,18 +196,18 @@ public class AddUserIntegrationTests : BaseUserApplicationIntegrationTest
         var request = _requestBuilder.WithName(User, transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowUserNameAlreadyExistsExceptionAsync(request, CancellationToken);
+        await Sender.ShouldThrowUserNameAlreadyExistsExceptionAsync(request, CancellationToken);
     }
 
     [Fact]
     public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValid()
     {
         // Act
-        var response = await ApplicationSender.SendAsync(_request, CancellationToken);
-        var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
+        var response = await Sender.SendAsync(_request, CancellationToken);
+        var user = await ServiceScope.GetUserByIdAsync(response.Id, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(user);
+        response.ShouldSatisfy(user, _request);
     }
 
     [Theory]
@@ -225,19 +220,19 @@ public class AddUserIntegrationTests : BaseUserApplicationIntegrationTest
         var request = _requestBuilder.WithProfileImage(transformer).Build();
 
         // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
+        var response = await Sender.SendAsync(request, CancellationToken);
+        var user = await ServiceScope.GetUserByIdAsync(response.Id, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(user);
+        response.ShouldSatisfy(user, request);
     }
 
     [Fact]
     public async Task SendAsync_ShouldAddUser_WhenRequestIsValid()
     {
         // Act
-        var response = await ApplicationSender.SendAsync(_request, CancellationToken);
-        var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
+        var response = await Sender.SendAsync(_request, CancellationToken);
+        var user = await ServiceScope.GetUserByIdAsync(response.Id, CancellationToken);
 
         // Assert
         user.ShouldSatisfy(_request);
@@ -253,8 +248,8 @@ public class AddUserIntegrationTests : BaseUserApplicationIntegrationTest
         var request = _requestBuilder.WithProfileImage(transformer).Build();
 
         // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
+        var response = await Sender.SendAsync(request, CancellationToken);
+        var user = await ServiceScope.GetUserByIdAsync(response.Id, CancellationToken);
 
         // Assert
         user.ShouldSatisfy(request);

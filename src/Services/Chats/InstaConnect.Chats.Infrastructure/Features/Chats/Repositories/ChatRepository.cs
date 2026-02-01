@@ -1,6 +1,5 @@
 ﻿using InstaConnect.Chats.Infrastructure.Features.ChatMessages.Extensions;
 using InstaConnect.Chats.Infrastructure.Features.Chats.Extensions;
-using InstaConnect.Common.Domain.Models;
 
 using MongoDB.Driver;
 
@@ -10,7 +9,7 @@ internal class ChatRepository : IChatRepository
 {
     private readonly IPaginator _paginator;
     private readonly IChatsContext _chatsContext;
-    private readonly ISortOrderFactory _sortOrderFactory;
+    private readonly ISortOrdererFactory _sortOrderFactory;
     private readonly IChatCollectionFactory _chatCollectionFactory;
     private readonly IChatIncludePropertyFactory _chatIncludePropertyFactory;
     private readonly IChatByParticipantSortPropertyFactory _chatSortPropertyFactory;
@@ -18,7 +17,7 @@ internal class ChatRepository : IChatRepository
     public ChatRepository(
         IPaginator paginator,
         IChatsContext chatsContext,
-        ISortOrderFactory sortOrderFactory,
+        ISortOrdererFactory sortOrderFactory,
         IChatCollectionFactory chatCollectionFactory,
         IChatIncludePropertyFactory chatIncludePropertyFactory,
         IChatByParticipantSortPropertyFactory chatSortPropertyFactory)
@@ -35,7 +34,7 @@ internal class ChatRepository : IChatRepository
         ChatByParticipantFilterQuery filter,
         CommonSortingQuery<ChatByParticipantSortProperty> sorting,
         CommonPaginationQuery pagination,
-        CommonIncludeQuery<ChatIncludeProperty>? include,
+        ChatInclude include,
         CancellationToken cancellationToken)
     {
         var match = filter.GetFilter();
@@ -66,7 +65,7 @@ internal class ChatRepository : IChatRepository
 
     public async Task<Chat?> GetByIdAsync(
         ChatId id,
-        CommonIncludeQuery<ChatIncludeProperty>? include,
+        ChatInclude include,
         CancellationToken cancellationToken)
     {
         var includeProperties = _chatIncludePropertyFactory.Create(include?.Properties);

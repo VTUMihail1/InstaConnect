@@ -1,16 +1,14 @@
-﻿using InstaConnect.Posts.Domain.Features.Posts.Helpers;
-
-namespace InstaConnect.Posts.Application.Tests.Features.Posts.Utilities;
+﻿namespace InstaConnect.Posts.Application.Tests.Features.Posts.Utilities;
 
 public static class PostMockFactory
 {
-    public static IPostService CreateService()
+    public static IPostCommandService CreateCommandService()
     {
-        return Mocker.Mock<IPostService>();
+        return Mocker.Mock<IPostCommandService>();
     }
 
-    public static IPostIncludeQueryBuilderFactory CreateIncludeQueryBuilderFactory()
+    public static IPostQueryService CreateQueryService()
     {
-        return new PostIncludeQueryBuilderFactory();
+        return Mocker.Mock<IPostQueryService>();
     }
 }

@@ -13,6 +13,15 @@ public static class PostCommentLikeProblemDetailsAssertions
             request);
     }
 
+    public static void ShouldSatisfyUserNotFound(
+        this ApplicationProblemDetails problemDetails,
+        GetAllPostCommentLikesForUserApiRequest request)
+    {
+        problemDetails.ShouldSatisfyUserNotFound(
+            r => r.UserId,
+            request);
+    }
+
     public static void ShouldSatisfyPostNotFound(
         this ApplicationProblemDetails problemDetails,
         AddPostCommentLikeApiRequest request)

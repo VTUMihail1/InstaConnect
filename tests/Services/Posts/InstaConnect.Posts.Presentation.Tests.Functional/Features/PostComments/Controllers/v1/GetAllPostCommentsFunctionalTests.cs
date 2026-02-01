@@ -89,7 +89,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
     }
 
     [Theory]
-    [PostCommentSortOrderEmptyData]
+    [PostCommentsSortOrderEmptyData]
     public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenSortOrderIsInvalid(
         IEnumTransformer<CommonSortOrder> transformer)
     {
@@ -104,7 +104,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
     }
 
     [Theory]
-    [PostCommentSortOrderEmptyWithMessageData]
+    [PostCommentsSortOrderEmptyWithMessageData]
     public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenSortOrderIsInvalid(
         IEnumTransformer<CommonSortOrder> transformer,
         IEnumMessageTransformer<CommonSortOrder> messageTransformer)
@@ -120,12 +120,12 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
     }
 
     [Theory]
-    [PostCommentSortPropertyEmptyData]
+    [PostCommentsSortTermEmptyData]
     public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenSortPropertyIsInvalid(
-        IEnumTransformer<PostCommentSortProperty> transformer)
+        IEnumTransformer<PostCommentsSortTerm> transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(transformer).Build();
+        var request = _requestBuilder.WithSortTerm(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentsStatusCodeAsync(request, CancellationToken);
@@ -135,13 +135,13 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
     }
 
     [Theory]
-    [PostCommentSortPropertyEmptyWithMessageData]
+    [PostCommentsSortTermEmptyWithMessageData]
     public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenSortPropertyIsInvalid(
-        IEnumTransformer<PostCommentSortProperty> transformer,
-        IEnumMessageTransformer<PostCommentSortProperty> messageTransformer)
+        IEnumTransformer<PostCommentsSortTerm> transformer,
+        IEnumMessageTransformer<PostCommentsSortTerm> messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(transformer).Build();
+        var request = _requestBuilder.WithSortTerm(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentsProblemDetailsAsync(request, CancellationToken);
@@ -270,8 +270,8 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
     }
 
     [Theory]
-    [PostCommentSortOrderAscendingData]
-    [PostCommentSortOrderDescendingData]
+    [PostCommentsSortOrderAscendingData]
+    [PostCommentsSortOrderDescendingData]
     public async Task SendAsync_ShouldHaveOkStatusCode_WhenRequestAndSortOrderAreValid(
         IEnumTransformer<CommonSortOrder> transformer)
     {
@@ -286,13 +286,13 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
     }
 
     [Theory]
-    [PostCommentSortPropertyCreatedAtData]
-    [PostCommentSortPropertyUserNameData]
+    [PostCommentsSortTermCreatedAtData]
+    [PostCommentsSortTermUserNameData]
     public async Task SendAsync_ShouldHaveOkStatusCode_WhenRequestAndSortPropertyAreValid(
-        IEnumTransformer<PostCommentSortProperty> transformer)
+        IEnumTransformer<PostCommentsSortTerm> transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(transformer).Build();
+        var request = _requestBuilder.WithSortTerm(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentsStatusCodeAsync(request, CancellationToken);
@@ -357,8 +357,8 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
     }
 
     [Theory]
-    [PostCommentSortOrderWithAscendingTermData]
-    [PostCommentSortOrderWithDescendingTermData]
+    [PostCommentsSortOrderWithAscendingTermData]
+    [PostCommentsSortOrderWithDescendingTermData]
     public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortOrderAreValid(
         IEnumTransformer<CommonSortOrder> transformer, ISortEnumTermTransformer<PostComment> termTransformer)
     {
@@ -373,13 +373,13 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
     }
 
     [Theory]
-    [PostCommentSortPropertyWithCreatedAtTermData]
-    [PostCommentSortPropertyWithUserNameTermData]
+    [PostCommentsSortTermWithCreatedAtTermData]
+    [PostCommentsSortTermWithUserNameTermData]
     public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortPropertyAreValid(
-        IEnumTransformer<PostCommentSortProperty> transformer, ISortEnumTermTransformer<PostComment> termTransformer)
+        IEnumTransformer<PostCommentsSortTerm> transformer, ISortEnumTermTransformer<PostComment> termTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(transformer).Build();
+        var request = _requestBuilder.WithSortTerm(transformer).Build();
 
         // Act
         var response = await HttpClient.GetAllPostCommentsAsync(request, CancellationToken);

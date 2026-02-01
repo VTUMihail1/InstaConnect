@@ -14,9 +14,9 @@ public class GetAllPostCommentsQueryHandlerUnitTests : BasePostCommentApplicatio
         _requestBuilder = _requestBuilderFactory.Create(PostComment);
         _request = _requestBuilder.Build();
 
-        _handler = new(ApplicationMapper, PostCommentService, PostCommentIncludeQueryBuilderFactory);
+        _handler = new(Mapper, CommentService);
 
-        PostCommentService.SetupGetAllQuery(_request, PostComments, Include, CancellationToken);
+        CommentService.SetupGetAllQuery(_request, PostComments, CancellationToken);
     }
 
     [Fact]
@@ -36,6 +36,6 @@ public class GetAllPostCommentsQueryHandlerUnitTests : BasePostCommentApplicatio
         await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        await PostCommentService.ShouldReceiveOneGetAllAsync(_request, Include, CancellationToken);
+        await CommentService.ShouldReceiveOneGetAllAsync(_request, CancellationToken);
     }
 }

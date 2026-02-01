@@ -2,29 +2,25 @@
 
 internal class GetPostLikeByIdQueryHandler : IQueryHandler<GetPostLikeByIdQueryRequest, GetPostLikeByIdQueryResponse>
 {
-    private readonly IPostLikeService _postLikeService;
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly IPostLikeIncludeQueryBuilderFactory _postLikeIncludeQueryBuilderFactory;
+    private readonly IApplicationMapper _mapper;
+    private readonly IPostLikeQueryService _likeService;
 
     public GetPostLikeByIdQueryHandler(
-        IPostLikeService postLikeService,
-        IApplicationMapper applicationMapper,
-        IPostLikeIncludeQueryBuilderFactory postLikeIncludeQueryBuilderFactory)
+        IApplicationMapper mapper,
+        IPostLikeQueryService likeService)
     {
-        _postLikeService = postLikeService;
-        _applicationMapper = applicationMapper;
-        _postLikeIncludeQueryBuilderFactory = postLikeIncludeQueryBuilderFactory;
+        _mapper = mapper;
+        _likeService = likeService;
     }
 
     public async Task<GetPostLikeByIdQueryResponse> Handle(
         GetPostLikeByIdQueryRequest request,
         CancellationToken cancellationToken)
     {
-        var include = _postLikeIncludeQueryBuilderFactory.Create().WithUser().Build();
-        var serviceRequest = _applicationMapper.Map<GetPostLikeByIdQuery>(request).AddInclude(include);
-        var postLike = await _postLikeService.GetByIdAsync(serviceRequest, cancellationToken);
+        var serviceRequest = _mapper.Map<GetPostLikeByIdQuery>(request);
+        var serviceResponse = await _likeService.GetByIdAsync(serviceRequest, cancellationToken);
 
-        var response = _applicationMapper.Map<GetPostLikeByIdQueryResponse>(postLike);
+        var response = _mapper.Map<GetPostLikeByIdQueryResponse>(serviceResponse);
 
         return response;
     }

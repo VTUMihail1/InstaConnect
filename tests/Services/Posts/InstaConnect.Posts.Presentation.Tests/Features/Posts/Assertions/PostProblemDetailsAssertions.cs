@@ -13,6 +13,15 @@ public static class PostProblemDetailsAssertions
             request);
     }
 
+    public static void ShouldSatisfyUserNotFound(
+        this ApplicationProblemDetails problemDetails,
+        GetAllPostsForUserApiRequest request)
+    {
+        problemDetails.ShouldSatisfyUserNotFound(
+            r => r.UserId,
+            request);
+    }
+
     public static void ShouldSatisfyPostNotFound(
         this ApplicationProblemDetails problemDetails,
         UpdatePostApiRequest request)

@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Domain.Extensions;
-
-namespace InstaConnect.Chats.Domain.Features.ChatMessages.Helpers;
+﻿namespace InstaConnect.Chats.Domain.Features.ChatMessages.Helpers;
 internal class ChatMessageService : IChatMessageService
 {
     private readonly IChatRepository _chatRepository;

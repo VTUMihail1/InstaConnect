@@ -2,20 +2,20 @@
 
 internal class VerifyForgotPasswordTokenCommandHandler : ICommandHandler<VerifyForgotPasswordTokenCommandRequest>
 {
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly IForgotPasswordTokenService _forgotPasswordTokenService;
+    private readonly IApplicationMapper _mapper;
+    private readonly IForgotPasswordTokenCommandService _forgotPasswordTokenService;
 
     public VerifyForgotPasswordTokenCommandHandler(
-        IApplicationMapper applicationMapper,
-        IForgotPasswordTokenService forgotPasswordTokenService)
+        IApplicationMapper mapper,
+        IForgotPasswordTokenCommandService forgotPasswordTokenService)
     {
-        _applicationMapper = applicationMapper;
+        _mapper = mapper;
         _forgotPasswordTokenService = forgotPasswordTokenService;
     }
 
     public async Task Handle(VerifyForgotPasswordTokenCommandRequest request, CancellationToken cancellationToken)
     {
-        var serviceRequest = _applicationMapper.Map<VerifyForgotPasswordTokenCommand>(request);
+        var serviceRequest = _mapper.Map<VerifyForgotPasswordTokenCommand>(request);
         await _forgotPasswordTokenService.VerifyAsync(serviceRequest, cancellationToken);
     }
 }

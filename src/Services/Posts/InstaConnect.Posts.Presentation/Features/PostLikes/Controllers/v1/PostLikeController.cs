@@ -10,15 +10,15 @@ namespace InstaConnect.Posts.Presentation.Features.PostLikes.Controllers.v1;
 [EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class PostLikeController : ControllerBase
 {
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly IApplicationSender _applicationSender;
+    private readonly IApplicationMapper _mapper;
+    private readonly IApplicationSender _sender;
 
     public PostLikeController(
-        IApplicationMapper applicationMapper,
-        IApplicationSender applicationSender)
+        IApplicationMapper mapper,
+        IApplicationSender sender)
     {
-        _applicationMapper = applicationMapper;
-        _applicationSender = applicationSender;
+        _mapper = mapper;
+        _sender = sender;
     }
 
     // GET: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/likes
@@ -29,9 +29,9 @@ public class PostLikeController : ControllerBase
         GetAllPostLikesApiRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _applicationMapper.Map<GetAllPostLikesQueryRequest>(request);
-        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
-        var response = _applicationMapper.Map<GetAllPostLikesApiResponse>(queryResponse);
+        var queryRequest = _mapper.Map<GetAllPostLikesQueryRequest>(request);
+        var queryResponse = await _sender.SendAsync(queryRequest, cancellationToken);
+        var response = _mapper.Map<GetAllPostLikesApiResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -44,9 +44,9 @@ public class PostLikeController : ControllerBase
         GetPostLikeByIdApiRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _applicationMapper.Map<GetPostLikeByIdQueryRequest>(request);
-        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
-        var response = _applicationMapper.Map<GetPostLikeByIdApiResponse>(queryResponse);
+        var queryRequest = _mapper.Map<GetPostLikeByIdQueryRequest>(request);
+        var queryResponse = await _sender.SendAsync(queryRequest, cancellationToken);
+        var response = _mapper.Map<GetPostLikeByIdApiResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -61,9 +61,9 @@ public class PostLikeController : ControllerBase
         AddPostLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<AddPostLikeCommandRequest>(request);
-        var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
-        var response = _applicationMapper.Map<AddPostLikeApiResponse>(commandResponse);
+        var commandRequest = _mapper.Map<AddPostLikeCommandRequest>(request);
+        var commandResponse = await _sender.SendAsync(commandRequest, cancellationToken);
+        var response = _mapper.Map<AddPostLikeApiResponse>(commandResponse);
 
         return Ok(response);
     }
@@ -78,8 +78,8 @@ public class PostLikeController : ControllerBase
         DeletePostLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<DeletePostLikeCommandRequest>(request);
-        await _applicationSender.SendAsync(commandRequest, cancellationToken);
+        var commandRequest = _mapper.Map<DeletePostLikeCommandRequest>(request);
+        await _sender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }

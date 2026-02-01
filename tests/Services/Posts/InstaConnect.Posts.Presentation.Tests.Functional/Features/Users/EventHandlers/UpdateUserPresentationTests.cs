@@ -2,7 +2,7 @@
 
 namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.Users.EventHandlers;
 
-public class UpdateUserPresentationTests : BaseUserPresentationFunctionalTest
+public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctionalTest
 {
     private readonly UserUpdatedEventRequestBuilderFactory _requestBuilderFactory;
     private readonly UserUpdatedEventRequestBuilder _requestBuilder;

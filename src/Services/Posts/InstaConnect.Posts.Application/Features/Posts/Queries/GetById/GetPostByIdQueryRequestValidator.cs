@@ -8,5 +8,8 @@ public class GetPostByIdQueryRequestValidator : AbstractValidator<GetPostByIdQue
             .NotEmptyWithMessage()
             .PostIdMinLengthWithMessage()
             .PostIdMaxLengthWithMessage();
+
+        RuleFor(c => c.CurrentUserId)
+            .UserIdMaxLengthWithMessage();
     }
 }

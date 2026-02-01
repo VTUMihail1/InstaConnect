@@ -6,19 +6,21 @@ public class GetAllPostLikesQueryRequestBuilder
 {
     private string _id;
     private string _userName;
+    private string _currentUserId;
     private int _page;
     private int _pageSize;
     private CommonSortOrder _sortOrder;
-    private PostLikeSortProperty _sortProperty;
+    private PostLikesSortTerm _sortTerm;
 
     public GetAllPostLikesQueryRequestBuilder(PostLike postLike)
     {
         _id = postLike.Id.Id.Id;
         _userName = DataFaker.GetPrefixString(postLike.User!.Name.Value);
+        _currentUserId = postLike.Id.UserId.Id;
         _page = PostLikeDataFaker.GetPage();
         _pageSize = PostLikeDataFaker.GetPageSize();
         _sortOrder = DataFaker.GetSortOrder();
-        _sortProperty = PostLikeDataFaker.GetSortProperty();
+        _sortTerm = PostLikeDataFaker.GetSortTerm();
     }
 
     public GetAllPostLikesQueryRequestBuilder WithId(Post post, IStringTransformer? transformer = null)
@@ -38,6 +40,20 @@ public class GetAllPostLikesQueryRequestBuilder
     public GetAllPostLikesQueryRequestBuilder WithUserName(IStringTransformer transformer)
     {
         _userName = transformer.Transform(_userName);
+
+        return this;
+    }
+
+    public GetAllPostLikesQueryRequestBuilder WithCurrentUserId(User user, IStringTransformer? transformer = null)
+    {
+        _currentUserId = transformer.TryTransform(user.Id.Id);
+
+        return this;
+    }
+
+    public GetAllPostLikesQueryRequestBuilder WithCurrentUserId(IStringTransformer transformer)
+    {
+        _currentUserId = transformer.Transform(_currentUserId);
 
         return this;
     }
@@ -63,15 +79,15 @@ public class GetAllPostLikesQueryRequestBuilder
         return this;
     }
 
-    public GetAllPostLikesQueryRequestBuilder WithSortProperty(IEnumTransformer<PostLikeSortProperty> transformer)
+    public GetAllPostLikesQueryRequestBuilder WithSortTerm(IEnumTransformer<PostLikesSortTerm> transformer)
     {
-        _sortProperty = transformer.Transform(_sortProperty);
+        _sortTerm = transformer.Transform(_sortTerm);
 
         return this;
     }
 
     public GetAllPostLikesQueryRequest Build()
     {
-        return new(_id, _userName, _sortOrder, _sortProperty, _page, _pageSize);
+        return new(_id, _userName, _currentUserId, _sortOrder, _sortTerm, _page, _pageSize);
     }
 }

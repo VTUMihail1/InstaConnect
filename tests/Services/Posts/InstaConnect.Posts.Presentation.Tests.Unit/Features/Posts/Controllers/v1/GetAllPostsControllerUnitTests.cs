@@ -14,9 +14,9 @@ public class GetAllPostsControllerUnitTests : BasePostPresentationQueryUnitTest
         _requestBuilder = _requestBuilderFactory.Create(Post);
         _request = _requestBuilder.Build();
 
-        _postController = new(ApplicationMapper, ApplicationSender);
+        _postController = new(Mapper, Sender);
 
-        ApplicationSender.SetupGetAllQueryRequest(_request, Posts, CancellationToken);
+        Sender.SetupGetAllQueryRequest(_request, Posts, CancellationToken);
     }
 
     [Fact]
@@ -46,6 +46,6 @@ public class GetAllPostsControllerUnitTests : BasePostPresentationQueryUnitTest
         await _postController.GetAllAsync(_request, CancellationToken);
 
         // Assert
-        await ApplicationSender.ShouldReceiveOneSendAsync(_request, CancellationToken);
+        await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);
     }
 }

@@ -1,4 +1,5 @@
-﻿using InstaConnect.Common.Domain.Extensions;
+﻿using InstaConnect.Common.Domain.Abstractions;
+using InstaConnect.Common.Domain.Extensions;
 using InstaConnect.Common.Domain.Models;
 
 namespace InstaConnect.Common.Domain.Utilities;
@@ -22,8 +23,7 @@ public static class CommonExceptionErrorMessages
     public static string GetSortOrderNotSupportedMessage(CommonSortOrder sortOrder)
     {
         const string Format = "SortOrder(type: {0}) is not supported";
-        var result = Format.FormatCurrentCulture(sortOrder);
 
-        return result;
+        return Format.FormatCurrentCulture(sortOrder);
     }
 }

@@ -38,7 +38,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeApplicati
         var request = _requestBuilder.WithId(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForIdAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForIdAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -51,12 +51,12 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeApplicati
         var request = _requestBuilder.WithUserName(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForUserNameAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForUserNameAsync(
             messageTransformer, request, CancellationToken);
     }
 
     [Theory]
-    [PostLikeSortOrderEmptyWithMessageData]
+    [PostLikesSortOrderEmptyWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenSortOrderIsInvalid(
         IEnumTransformer<CommonSortOrder> transformer, IEnumMessageTransformer<CommonSortOrder> messageTransformer)
     {
@@ -64,20 +64,20 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeApplicati
         var request = _requestBuilder.WithSortOrder(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForSortOrderAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForSortOrderAsync(
             messageTransformer, request, CancellationToken);
     }
 
     [Theory]
-    [PostLikeSortPropertyEmptyWithMessageData]
+    [PostLikesSortTermEmptyWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenSortPropertyIsInvalid(
-        IEnumTransformer<PostLikeSortProperty> transformer, IEnumMessageTransformer<PostLikeSortProperty> messageTransformer)
+        IEnumTransformer<PostLikesSortTerm> transformer, IEnumMessageTransformer<PostLikesSortTerm> messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(transformer).Build();
+        var request = _requestBuilder.WithSortTerm(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForSortPropertyAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForSortPropertyAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -91,7 +91,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeApplicati
         var request = _requestBuilder.WithPage(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForPageAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForPageAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -105,7 +105,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeApplicati
         var request = _requestBuilder.WithPageSize(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForPageSizeAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForPageSizeAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -116,14 +116,14 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeApplicati
         await ServiceScope.DeletePostAsync(Post, CancellationToken);
 
         // Assert
-        await ApplicationSender.ShouldThrowPostNotFoundExceptionAsync(_request, CancellationToken);
+        await Sender.ShouldThrowPostNotFoundExceptionAsync(_request, CancellationToken);
     }
 
     [Fact]
     public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValid()
     {
         // Act
-        var response = await ApplicationSender.SendAsync(_request, CancellationToken);
+        var response = await Sender.SendAsync(_request, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(PostLikes, _request);
@@ -138,7 +138,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeApplicati
         var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(PostLikes, _request);
@@ -155,15 +155,15 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeApplicati
         var request = _requestBuilder.WithUserName(transformer).Build();
 
         // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(PostLikes, _request);
     }
 
     [Theory]
-    [PostLikeSortOrderWithAscendingTermData]
-    [PostLikeSortOrderWithDescendingTermData]
+    [PostLikesSortOrderWithAscendingTermData]
+    [PostLikesSortOrderWithDescendingTermData]
     public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortOrderAreValid(
         IEnumTransformer<CommonSortOrder> transformer, ISortEnumTermTransformer<PostLike> termTransformer)
     {
@@ -171,23 +171,23 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeApplicati
         var request = _requestBuilder.WithSortOrder(transformer).Build();
 
         // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(PostLikes, _request, termTransformer);
     }
 
     [Theory]
-    [PostLikeSortPropertyWithCreatedAtTermData]
-    [PostLikeSortPropertyWithUserNameTermData]
+    [PostLikesSortTermWithCreatedAtTermData]
+    [PostLikesSortTermWithUserNameTermData]
     public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortPropertyAreValid(
-        IEnumTransformer<PostLikeSortProperty> transformer, ISortEnumTermTransformer<PostLike> termTransformer)
+        IEnumTransformer<PostLikesSortTerm> transformer, ISortEnumTermTransformer<PostLike> termTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(transformer).Build();
+        var request = _requestBuilder.WithSortTerm(transformer).Build();
 
         // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(PostLikes, _request, termTransformer);

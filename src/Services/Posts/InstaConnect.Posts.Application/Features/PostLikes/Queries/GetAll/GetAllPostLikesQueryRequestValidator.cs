@@ -4,6 +4,9 @@ public class GetAllPostLikesQueryRequestValidator : AbstractValidator<GetAllPost
 {
     public GetAllPostLikesQueryRequestValidator()
     {
+        RuleFor(c => c.CurrentUserId)
+            .UserIdMaxLengthWithMessage();
+
         RuleFor(r => r.Id)
             .NotEmptyWithMessage()
             .PostIdMinLengthWithMessage()
@@ -15,7 +18,7 @@ public class GetAllPostLikesQueryRequestValidator : AbstractValidator<GetAllPost
         RuleFor(q => q.SortOrder)
             .NotEmptyWithMessage();
 
-        RuleFor(q => q.SortProperty)
+        RuleFor(q => q.SortTerm)
             .NotEmptyWithMessage();
 
         RuleFor(q => q.Page)

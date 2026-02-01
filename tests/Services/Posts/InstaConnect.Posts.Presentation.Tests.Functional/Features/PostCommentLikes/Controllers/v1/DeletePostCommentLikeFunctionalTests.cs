@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.PostCommentLikes.Controllers.v1;
 
-public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentationFunctionalTest
+public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentationCommandFunctionalTest
 {
     private readonly DeletePostCommentLikeApiRequestBuilderFactory _requestBuilderFactory;
     private readonly DeletePostCommentLikeApiRequestBuilder _requestBuilder;

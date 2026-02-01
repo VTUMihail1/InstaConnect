@@ -11,12 +11,12 @@ public class GetAllPostCommentLikesQueryHandlerUnitTests : BasePostCommentLikeAp
     public GetAllPostCommentLikesQueryHandlerUnitTests()
     {
         _requestBuilderFactory = new();
-        _requestBuilder = _requestBuilderFactory.Create(PostCommentLike, User);
+        _requestBuilder = _requestBuilderFactory.Create(PostCommentLike);
         _request = _requestBuilder.Build();
 
-        _handler = new(ApplicationMapper, PostCommentLikeService, PostCommentLikeIncludeQueryBuilderFactory);
+        _handler = new(Mapper, CommentLikeService);
 
-        PostCommentLikeService.SetupGetAllQuery(_request, PostCommentLikes, Include, CancellationToken);
+        CommentLikeService.SetupGetAllQuery(_request, PostCommentLikes, CancellationToken);
     }
 
     [Fact]
@@ -36,6 +36,6 @@ public class GetAllPostCommentLikesQueryHandlerUnitTests : BasePostCommentLikeAp
         await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        await PostCommentLikeService.ShouldReceiveOneGetAllAsync(_request, Include, CancellationToken);
+        await CommentLikeService.ShouldReceiveOneGetAllAsync(_request, CancellationToken);
     }
 }

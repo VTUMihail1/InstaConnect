@@ -2,20 +2,20 @@
 
 internal class AddEmailConfirmationTokenCommandHandler : ICommandHandler<AddEmailConfirmationTokenCommandRequest>
 {
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly IEmailConfirmationTokenService _emailConfirmationTokenService;
+    private readonly IApplicationMapper _mapper;
+    private readonly IEmailConfirmationTokenCommandService _emailConfirmationTokenService;
 
     public AddEmailConfirmationTokenCommandHandler(
-        IApplicationMapper applicationMapper,
-        IEmailConfirmationTokenService emailConfirmationTokenService)
+        IApplicationMapper mapper,
+        IEmailConfirmationTokenCommandService emailConfirmationTokenService)
     {
-        _applicationMapper = applicationMapper;
+        _mapper = mapper;
         _emailConfirmationTokenService = emailConfirmationTokenService;
     }
 
     public async Task Handle(AddEmailConfirmationTokenCommandRequest request, CancellationToken cancellationToken)
     {
-        var serviceRequest = _applicationMapper.Map<AddEmailConfirmationTokenCommand>(request);
+        var serviceRequest = _mapper.Map<AddEmailConfirmationTokenCommand>(request);
         await _emailConfirmationTokenService.AddAsync(serviceRequest, cancellationToken);
     }
 }

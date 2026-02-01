@@ -19,7 +19,7 @@ public class FollowApplicationMappings : IRegister
                                            new(src.FollowingName)),
                                        new(
                                            src.SortOrder,
-                                           src.SortProperty),
+                                           src.SortTerm),
                                        new(
                                            src.Page,
                                            src.PageSize)));
@@ -34,7 +34,7 @@ public class FollowApplicationMappings : IRegister
                                            new(src.FollowerName)),
                                        new(
                                            src.SortOrder,
-                                           src.SortProperty),
+                                           src.SortTerm),
                                        new(
                                            src.Page,
                                            src.PageSize)));

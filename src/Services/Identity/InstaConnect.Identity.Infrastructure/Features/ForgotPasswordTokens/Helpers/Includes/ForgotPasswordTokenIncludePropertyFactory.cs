@@ -1,11 +1,11 @@
 ﻿namespace InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Helpers.Includes;
 internal class ForgotPasswordTokenIncludePropertyFactory : IForgotPasswordTokenIncludePropertyFactory
 {
-    private readonly IEnumerable<IForgotPasswordTokenIncludeProperty> _forgotPasswordTokenIncludeProperty;
+    private readonly IEnumerable<IForgotPasswordTokenIncludeProperty> _includeProperty;
 
-    public ForgotPasswordTokenIncludePropertyFactory(IEnumerable<IForgotPasswordTokenIncludeProperty> forgotPasswordTokenIncludeProperty)
+    public ForgotPasswordTokenIncludePropertyFactory(IEnumerable<IForgotPasswordTokenIncludeProperty> includeProperty)
     {
-        _forgotPasswordTokenIncludeProperty = forgotPasswordTokenIncludeProperty;
+        _includeProperty = includeProperty;
     }
 
     public IEnumerable<IForgotPasswordTokenIncludeProperty> Create(ICollection<ForgotPasswordTokenIncludeProperty>? includeProperties)
@@ -15,7 +15,7 @@ internal class ForgotPasswordTokenIncludePropertyFactory : IForgotPasswordTokenI
             return [];
         }
 
-        var properties = _forgotPasswordTokenIncludeProperty.Where(s => includeProperties.Contains(s.IncludeProperty));
+        var properties = _includeProperty.Where(s => includeProperties.Contains(s.IncludeProperty));
 
         if (properties.IsEmpty())
         {

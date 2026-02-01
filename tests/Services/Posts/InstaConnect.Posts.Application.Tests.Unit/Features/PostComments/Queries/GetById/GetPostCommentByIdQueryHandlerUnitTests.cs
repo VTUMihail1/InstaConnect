@@ -14,9 +14,9 @@ public class GetPostCommentByIdQueryHandlerUnitTests : BasePostCommentApplicatio
         _requestBuilder = _requestBuilderFactory.Create(PostComment);
         _request = _requestBuilder.Build();
 
-        _handler = new(ApplicationMapper, PostCommentService, PostCommentIncludeQueryBuilderFactory);
+        _handler = new(Mapper, CommentService);
 
-        PostCommentService.SetupGetByIdQuery(_request, PostComment, Include, CancellationToken);
+        CommentService.SetupGetByIdQuery(_request, PostComment, CancellationToken);
     }
 
     [Fact]
@@ -26,7 +26,7 @@ public class GetPostCommentByIdQueryHandlerUnitTests : BasePostCommentApplicatio
         var response = await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostComment);
+        response.ShouldSatisfy(PostComment, _request);
     }
 
     [Fact]
@@ -36,6 +36,6 @@ public class GetPostCommentByIdQueryHandlerUnitTests : BasePostCommentApplicatio
         await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        await PostCommentService.ShouldReceiveOneGetByIdAsync(_request, Include, CancellationToken);
+        await CommentService.ShouldReceiveOneGetByIdAsync(_request, CancellationToken);
     }
 }

@@ -102,6 +102,6 @@ public class UserAddedEventRequestBuilder
 
     public UserAddedEventRequest Build()
     {
-        return new UserAddedEventRequest(_id, _name, _email, _firstName, _lastName, _profileImage, _createdAtUtc, _updatedAtUtc);
+        return new(new(_id, _name, _email, _firstName, _lastName, _profileImage, _createdAtUtc, _updatedAtUtc));
     }
 }

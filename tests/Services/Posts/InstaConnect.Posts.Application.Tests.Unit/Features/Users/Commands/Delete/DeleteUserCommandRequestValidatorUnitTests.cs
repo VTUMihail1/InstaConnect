@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Application.Tests.Unit.Features.Users.Commands.Delete;
 
-public class DeleteUserCommandRequestValidatorUnitTests : BaseUserApplicationUnitTest
+public class DeleteUserCommandRequestValidatorUnitTests : BaseUserApplicationCommandUnitTest
 {
     private readonly DeleteUserCommandRequestBuilderFactory _requestBuilderFactory;
     private readonly DeleteUserCommandRequestBuilder _requestBuilder;

@@ -4,6 +4,9 @@ public class GetAllPostsQueryRequestValidator : AbstractValidator<GetAllPostsQue
 {
     public GetAllPostsQueryRequestValidator()
     {
+        RuleFor(c => c.CurrentUserId)
+            .UserIdMaxLengthWithMessage();
+
         RuleFor(c => c.UserName)
             .UserNameMaxLengthWithMessage();
 
@@ -13,7 +16,7 @@ public class GetAllPostsQueryRequestValidator : AbstractValidator<GetAllPostsQue
         RuleFor(q => q.SortOrder)
             .NotEmptyWithMessage();
 
-        RuleFor(q => q.SortProperty)
+        RuleFor(q => q.SortTerm)
             .NotEmptyWithMessage();
 
         RuleFor(q => q.Page)

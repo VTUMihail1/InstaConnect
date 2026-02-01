@@ -8,14 +8,20 @@ using InstaConnect.Posts.Infrastructure.Features.Users.Extensions;
 using MongoDB.Driver;
 
 namespace InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Extensions;
-public static class PostCommentLikeFilterExtensions
+
+internal static class PostCommentLikeFilterExtensions
 {
-    public static FilterDefinition<PostCommentLike> GetFilter(this PostCommentLikeFilterQuery filter)
+    public static FilterDefinition<PostCommentLike> GetFilter(this PostCommentLikesFilterQuery filter)
     {
         var commentId = filter.CommentId.GetFilterForIdEquals<PostCommentLike>(p => p.Id.CommentId.Id.Id, p => p.Id.CommentId.CommentId);
         var userName = filter.UserName.GetFilterForNameStartsWith<PostCommentLike>(p => p.User!.Name.Value);
 
         return Builders<PostCommentLike>.Filter.And(commentId, userName);
+    }
+
+    public static FilterDefinition<PostCommentLike> GetFilter(this PostCommentLikesForUserFilterQuery filter)
+    {
+        return filter.UserId.GetFilterForIdEquals<PostCommentLike>(p => p.Id.UserId.Id);
     }
 
     public static FilterDefinition<PostCommentLike> GetFilter(this PostCommentLikeId filter)

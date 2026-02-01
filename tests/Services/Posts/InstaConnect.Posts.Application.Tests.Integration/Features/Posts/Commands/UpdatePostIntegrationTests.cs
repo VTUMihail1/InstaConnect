@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Application.Tests.Integration.Features.Posts.Commands;
 
-public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
+public class UpdatePostIntegrationTests : BasePostApplicationCommandIntegrationTest
 {
     private readonly UpdatePostCommandRequestBuilderFactory _requestBuilderFactory;
     private readonly UpdatePostCommandRequestBuilder _requestBuilder;
@@ -32,7 +32,7 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
         var request = _requestBuilder.WithId(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForIdAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForIdAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -48,7 +48,7 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
         var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForUserIdAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForUserIdAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -64,7 +64,7 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
         var request = _requestBuilder.WithTitle(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForTitleAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForTitleAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -80,7 +80,7 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
         var request = _requestBuilder.WithContent(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForContentAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForContentAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -91,7 +91,7 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
         await ServiceScope.DeletePostAsync(Post, CancellationToken);
 
         // Assert
-        await ApplicationSender.ShouldThrowPostNotFoundExceptionAsync(_request, CancellationToken);
+        await Sender.ShouldThrowPostNotFoundExceptionAsync(_request, CancellationToken);
     }
 
     [Fact]
@@ -103,18 +103,18 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
         var request = _requestBuilder.WithUserId(user).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowPostForbiddenExceptionAsync(request, CancellationToken);
+        await Sender.ShouldThrowPostForbiddenExceptionAsync(request, CancellationToken);
     }
 
     [Fact]
     public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValid()
     {
         // Act
-        var response = await ApplicationSender.SendAsync(_request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
+        var response = await Sender.SendAsync(_request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(post);
+        response.ShouldSatisfy(post, _request);
     }
 
     [Theory]
@@ -126,11 +126,11 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
         var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
+        var response = await Sender.SendAsync(request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(post);
+        response.ShouldSatisfy(post, request);
     }
 
     [Theory]
@@ -142,19 +142,19 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
         var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
+        var response = await Sender.SendAsync(request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(post);
+        response.ShouldSatisfy(post, request);
     }
 
     [Fact]
     public async Task SendAsync_ShouldUpdatePost_WhenRequestIsValid()
     {
         // Act
-        var response = await ApplicationSender.SendAsync(_request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
+        var response = await Sender.SendAsync(_request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
 
         // Assert
         post.ShouldSatisfy(_request);
@@ -169,8 +169,8 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
         var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
+        var response = await Sender.SendAsync(request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
 
         // Assert
         post.ShouldSatisfy(_request);
@@ -185,8 +185,8 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
         var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
+        var response = await Sender.SendAsync(request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
 
         // Assert
         post.ShouldSatisfy(_request);
@@ -196,8 +196,8 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
     public async Task SendAsync_ShouldPublishPostUpdatedEvent_WhenRequestIsValid()
     {
         // Act
-        var response = await ApplicationSender.SendAsync(_request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
+        var response = await Sender.SendAsync(_request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedUpdatedAsync(post, CancellationToken);
@@ -212,8 +212,8 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
         var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
+        var response = await Sender.SendAsync(request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedUpdatedAsync(post, CancellationToken);
@@ -228,8 +228,8 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
         var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
-        var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
+        var response = await Sender.SendAsync(request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedUpdatedAsync(post, CancellationToken);

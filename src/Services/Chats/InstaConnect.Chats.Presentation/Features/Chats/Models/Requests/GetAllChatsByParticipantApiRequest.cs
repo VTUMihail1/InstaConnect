@@ -8,6 +8,6 @@ public record GetAllChatsByParticipantApiRequest(
     [FromRoute] string ParticipantId,
     [FromQuery] string ParticipantName = UserDefaultValues.Name,
     [FromQuery] CommonSortOrder SortOrder = CommonDefaultValues.SortOrder,
-    [FromQuery] ChatByParticipantSortProperty SortProperty = ChatDefaultValues.ByParticipantSortProperty,
+    [FromQuery] ChatByParticipantSortProperty SortTerm = ChatDefaultValues.ByParticipantSortProperty,
     [FromQuery] int Page = ChatDefaultValues.Page,
     [FromQuery] int PageSize = ChatDefaultValues.PageSize) : ISortableApiRequest<ChatByParticipantSortProperty>, IPaginatableApiRequest;

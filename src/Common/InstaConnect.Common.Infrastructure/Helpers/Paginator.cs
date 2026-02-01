@@ -1,17 +1,17 @@
-﻿using InstaConnect.Common.Infrastructure.Abstractions;
+﻿using InstaConnect.Common.Domain.Abstractions;
 
 namespace InstaConnect.Common.Infrastructure.Helpers;
 
-internal class Paginator : IPaginator
+public class Paginator : IPaginator
 {
     public int GetOffset(int page, int pageSize)
     {
         return (page - 1) * pageSize;
     }
 
-    public bool HasNextPage(int page, int pageSize, int totalCount)
+    public bool HasNextPage(int page, int pageSize, long totalCount)
     {
-        return (page * pageSize) < totalCount;
+        return page * pageSize < totalCount;
     }
 
     public bool HasPreviousPage(int page)

@@ -1,7 +1,7 @@
 ﻿namespace InstaConnect.Posts.Presentation.Tests.Unit.Features.PostLikes.Controllers.v1;
 
 
-public class DeletePostLikeControllerUnitTests : BasePostLikePresentationUnitTest
+public class DeletePostLikeControllerUnitTests : BasePostLikePresentationCommandUnitTest
 {
     private readonly DeletePostLikeApiRequestBuilderFactory _requestBuilderFactory;
     private readonly DeletePostLikeApiRequestBuilder _requestBuilder;
@@ -15,7 +15,7 @@ public class DeletePostLikeControllerUnitTests : BasePostLikePresentationUnitTes
         _requestBuilder = _requestBuilderFactory.Create(PostLike);
         _request = _requestBuilder.Build();
 
-        _postLikeController = new(ApplicationMapper, ApplicationSender);
+        _postLikeController = new(Mapper, Sender);
     }
 
     [Fact]
@@ -35,6 +35,6 @@ public class DeletePostLikeControllerUnitTests : BasePostLikePresentationUnitTes
         await _postLikeController.DeleteAsync(_request, CancellationToken);
 
         // Assert
-        await ApplicationSender.ShouldReceiveOneSendAsync(_request, CancellationToken);
+        await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);
     }
 }

@@ -1,6 +1,3 @@
 ﻿namespace InstaConnect.Identity.Infrastructure.Features.Users.Abstractions;
 
-public interface IUserIncludePropertyFactory
-{
-    IEnumerable<IUserIncludeProperty> Create(ICollection<UserIncludeProperty>? includeProperties);
-}
+public interface IUserIncludePropertyFactory : IIncluderFactory<UserIncludeProperty, IUserIncludeProperty, User>;

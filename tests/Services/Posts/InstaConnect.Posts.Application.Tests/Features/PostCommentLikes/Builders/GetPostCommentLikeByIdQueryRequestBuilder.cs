@@ -7,12 +7,14 @@ public class GetPostCommentLikeByIdQueryRequestBuilder
     private string _id;
     private string _commentId;
     private string _userId;
+    private string _currentUserId;
 
     public GetPostCommentLikeByIdQueryRequestBuilder(PostCommentLike postCommentLike)
     {
         _id = postCommentLike.Id.CommentId.Id.Id;
         _commentId = postCommentLike.Id.CommentId.CommentId;
         _userId = postCommentLike.Id.UserId.Id;
+        _currentUserId = postCommentLike.Id.UserId.Id;
     }
 
     public GetPostCommentLikeByIdQueryRequestBuilder WithId(Post post, IStringTransformer? transformer = null)
@@ -57,8 +59,22 @@ public class GetPostCommentLikeByIdQueryRequestBuilder
         return this;
     }
 
+    public GetPostCommentLikeByIdQueryRequestBuilder WithCurrentUserId(User user, IStringTransformer? transformer = null)
+    {
+        _currentUserId = transformer.TryTransform(user.Id.Id);
+
+        return this;
+    }
+
+    public GetPostCommentLikeByIdQueryRequestBuilder WithCurrentUserId(IStringTransformer transformer)
+    {
+        _currentUserId = transformer.Transform(_currentUserId);
+
+        return this;
+    }
+
     public GetPostCommentLikeByIdQueryRequest Build()
     {
-        return new(_id, _commentId, _userId);
+        return new(_id, _commentId, _userId, _currentUserId);
     }
 }

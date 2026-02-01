@@ -2,25 +2,23 @@
 
 public class UpdatePostCommandHandler : ICommandHandler<UpdatePostCommandRequest, UpdatePostCommandResponse>
 {
-    private readonly IPostService _postService;
-    private readonly IApplicationMapper _applicationMapper;
+    private readonly IApplicationMapper _mapper;
+    private readonly IPostCommandService _service;
 
-    public UpdatePostCommandHandler(
-        IPostService postService,
-        IApplicationMapper applicationMapper)
+    public UpdatePostCommandHandler(IApplicationMapper mapper, IPostCommandService service)
     {
-        _postService = postService;
-        _applicationMapper = applicationMapper;
+        _mapper = mapper;
+        _service = service;
     }
 
     public async Task<UpdatePostCommandResponse> Handle(
         UpdatePostCommandRequest request,
         CancellationToken cancellationToken)
     {
-        var serviceRequest = _applicationMapper.Map<UpdatePostCommand>(request);
-        var post = await _postService.UpdateAsync(serviceRequest, cancellationToken);
+        var serviceRequest = _mapper.Map<UpdatePostCommand>(request);
+        var serviceResponse = await _service.UpdateAsync(serviceRequest, cancellationToken);
 
-        var response = _applicationMapper.Map<UpdatePostCommandResponse>(post);
+        var response = _mapper.Map<UpdatePostCommandResponse>(serviceResponse);
 
         return response;
     }

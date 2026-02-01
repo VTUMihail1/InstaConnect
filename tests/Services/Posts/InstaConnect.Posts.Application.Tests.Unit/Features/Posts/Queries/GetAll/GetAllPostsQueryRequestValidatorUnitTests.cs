@@ -51,7 +51,7 @@ public class GetAllPostsQueryRequestValidatorUnitTests : BasePostApplicationQuer
     }
 
     [Theory]
-    [PostSortOrderEmptyWithMessageData]
+    [PostsSortOrderEmptyWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenSortOrderIsInvalid(
         IEnumTransformer<CommonSortOrder> transformer, IEnumMessageTransformer<CommonSortOrder> messageTransformer)
     {
@@ -66,12 +66,12 @@ public class GetAllPostsQueryRequestValidatorUnitTests : BasePostApplicationQuer
     }
 
     [Theory]
-    [PostSortPropertyEmptyWithMessageData]
+    [PostsSortTermEmptyWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenSortPropertyIsInvalid(
-        IEnumTransformer<PostSortProperty> transformer, IEnumMessageTransformer<PostSortProperty> messageTransformer)
+        IEnumTransformer<PostsSortTerm> transformer, IEnumMessageTransformer<PostsSortTerm> messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(transformer).Build();
+        var request = _requestBuilder.WithSortTerm(transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);

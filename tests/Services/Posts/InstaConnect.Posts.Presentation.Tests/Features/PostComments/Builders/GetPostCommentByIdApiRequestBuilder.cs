@@ -4,11 +4,13 @@ public class GetPostCommentByIdApiRequestBuilder
 {
     private string _id;
     private string _commentId;
+    private string _currentUserId;
 
     public GetPostCommentByIdApiRequestBuilder(PostComment postComment)
     {
         _id = postComment.Id.Id.Id;
         _commentId = postComment.Id.CommentId;
+        _currentUserId = postComment.UserId.Id;
     }
 
     public GetPostCommentByIdApiRequestBuilder WithId(Post post, IStringTransformer? transformer = null)
@@ -39,8 +41,22 @@ public class GetPostCommentByIdApiRequestBuilder
         return this;
     }
 
+    public GetPostCommentByIdApiRequestBuilder WithCurrentUserId(User user, IStringTransformer? transformer = null)
+    {
+        _currentUserId = transformer.TryTransform(user.Id.Id);
+
+        return this;
+    }
+
+    public GetPostCommentByIdApiRequestBuilder WithCurrentUserId(IStringTransformer transformer)
+    {
+        _currentUserId = transformer.Transform(_currentUserId);
+
+        return this;
+    }
+
     public GetPostCommentByIdApiRequest Build()
     {
-        return new(_id, _commentId);
+        return new(_id, _commentId, _currentUserId);
     }
 }

@@ -1,7 +1,6 @@
 ﻿using InstaConnect.Chats.Application.Features.Users.Commands.Add;
 using InstaConnect.Chats.Application.Features.Users.Commands.Delete;
 using InstaConnect.Chats.Application.Features.Users.Commands.Update;
-using InstaConnect.Common.Domain.Extensions;
 
 using Mapster;
 

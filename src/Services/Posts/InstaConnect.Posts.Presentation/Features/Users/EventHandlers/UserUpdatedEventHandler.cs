@@ -4,20 +4,20 @@ namespace InstaConnect.Posts.Presentation.Features.Users.EventHandlers;
 
 public class UserUpdatedEventHandler : IEventHandler<UserUpdatedEventRequest>
 {
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly IApplicationSender _applicationSender;
+    private readonly IApplicationMapper _mapper;
+    private readonly IApplicationSender _sender;
 
     public UserUpdatedEventHandler(
-        IApplicationMapper applicationMapper,
-        IApplicationSender applicationSender)
+        IApplicationMapper mapper,
+        IApplicationSender sender)
     {
-        _applicationMapper = applicationMapper;
-        _applicationSender = applicationSender;
+        _mapper = mapper;
+        _sender = sender;
     }
 
     public async Task Consume(ConsumeContext<UserUpdatedEventRequest> context)
     {
-        var request = _applicationMapper.Map<UpdateUserCommandRequest>(context.Message);
-        await _applicationSender.SendAsync(request, context.CancellationToken);
+        var request = _mapper.Map<UpdateUserCommandRequest>(context.Message);
+        await _sender.SendAsync(request, context.CancellationToken);
     }
 }

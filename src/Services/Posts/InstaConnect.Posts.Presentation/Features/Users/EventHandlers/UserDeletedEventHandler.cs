@@ -4,20 +4,20 @@ namespace InstaConnect.Posts.Presentation.Features.Users.EventHandlers;
 
 public class UserDeletedEventHandler : IEventHandler<UserDeletedEventRequest>
 {
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly IApplicationSender _applicationSender;
+    private readonly IApplicationMapper _mapper;
+    private readonly IApplicationSender _sender;
 
     public UserDeletedEventHandler(
-        IApplicationMapper applicationMapper,
-        IApplicationSender applicationSender)
+        IApplicationMapper mapper,
+        IApplicationSender sender)
     {
-        _applicationMapper = applicationMapper;
-        _applicationSender = applicationSender;
+        _mapper = mapper;
+        _sender = sender;
     }
 
     public async Task Consume(ConsumeContext<UserDeletedEventRequest> context)
     {
-        var request = _applicationMapper.Map<DeleteUserCommandRequest>(context.Message);
-        await _applicationSender.SendAsync(request, context.CancellationToken);
+        var request = _mapper.Map<DeleteUserCommandRequest>(context.Message);
+        await _sender.SendAsync(request, context.CancellationToken);
     }
 }

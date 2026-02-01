@@ -8,4 +8,9 @@ public static class MockAssertions
     {
         return substitute.Received(numberOfCalls);
     }
+
+    public static T ShouldHaveReceivedOne<T>(this T substitute) where T : class
+    {
+        return substitute.ShouldHaveReceived(1);
+    }
 }

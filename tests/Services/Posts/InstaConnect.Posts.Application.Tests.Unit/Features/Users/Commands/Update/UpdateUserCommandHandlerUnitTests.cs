@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Application.Tests.Unit.Features.Users.Commands.Update;
 
-public class UpdateUserCommandHandlerUnitTests : BaseUserApplicationUnitTest
+public class UpdateUserCommandHandlerUnitTests : BaseUserApplicationCommandUnitTest
 {
     private readonly UpdateUserCommandRequestBuilderFactory _requestBuilderFactory;
     private readonly UpdateUserCommandRequestBuilder _requestBuilder;
@@ -14,7 +14,7 @@ public class UpdateUserCommandHandlerUnitTests : BaseUserApplicationUnitTest
         _requestBuilder = _requestBuilderFactory.Create(User);
         _request = _requestBuilder.Build();
 
-        _handler = new(UserService, ApplicationMapper);
+        _handler = new(Mapper, UserService);
 
         UserService.SetupUpdateCommand(_request, User, CancellationToken);
     }
@@ -26,7 +26,7 @@ public class UpdateUserCommandHandlerUnitTests : BaseUserApplicationUnitTest
         var response = await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(User);
+        response.ShouldSatisfy(User, _request);
     }
 
     [Fact]

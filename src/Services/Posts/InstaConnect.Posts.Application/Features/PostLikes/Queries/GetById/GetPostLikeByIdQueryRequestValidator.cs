@@ -13,5 +13,8 @@ public class GetPostLikeByIdQueryRequestValidator : AbstractValidator<GetPostLik
             .NotEmptyWithMessage()
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();
+
+        RuleFor(c => c.CurrentUserId)
+            .UserIdMaxLengthWithMessage();
     }
 }

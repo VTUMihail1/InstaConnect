@@ -8,11 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 namespace InstaConnect.Posts.Tests.Features.Posts.Utilities;
 public static class PostSetups
 {
-    public static IPostRepository GetPostRepository(this IServiceScope serviceScope)
+    public static IPostCommandRepository GetPostCommandRepository(this IServiceScope serviceScope)
     {
-        var postRepository = serviceScope.ServiceProvider.GetRequiredService<IPostRepository>();
-
-        return postRepository;
+        return serviceScope.ServiceProvider.GetRequiredService<IPostCommandRepository>();
     }
 
     public static async Task<Post?> GetPostByIdAsync(
@@ -20,7 +18,7 @@ public static class PostSetups
         PostId id,
         CancellationToken cancellationToken)
     {
-        var postRepository = serviceScope.GetPostRepository();
+        var postRepository = serviceScope.GetPostCommandRepository();
 
         return await postRepository.GetByIdAsync(id, cancellationToken);
     }
@@ -30,7 +28,7 @@ public static class PostSetups
         Post post,
         CancellationToken cancellationToken)
     {
-        var postRepository = serviceScope.GetPostRepository();
+        var postRepository = serviceScope.GetPostCommandRepository();
 
         await postRepository.AddAsync(post, cancellationToken);
     }
@@ -40,7 +38,7 @@ public static class PostSetups
         IEnumerable<Post> posts,
         CancellationToken cancellationToken)
     {
-        var postRepository = serviceScope.GetPostRepository();
+        var postRepository = serviceScope.GetPostCommandRepository();
 
         await postRepository.AddRangeAsync(posts, cancellationToken);
     }
@@ -50,7 +48,7 @@ public static class PostSetups
         Post post,
         CancellationToken cancellationToken)
     {
-        var postRepository = serviceScope.GetPostRepository();
+        var postRepository = serviceScope.GetPostCommandRepository();
 
         await postRepository.DeleteAsync(post, cancellationToken);
     }
@@ -61,6 +59,7 @@ public static class PostSetups
     {
         var context = serviceScope.ServiceProvider.GetRequiredService<IPostsContext>();
 
+        await context.PostLikes.ResetAsync(cancellationToken);
         await context.Posts.ResetAsync(cancellationToken);
         await context.Users.ResetAsync(cancellationToken);
     }

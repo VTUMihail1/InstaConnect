@@ -20,37 +20,41 @@ internal class UserPresentationMappings : IRegister
                 src.FirstName,
                 src.LastName,
                 src.Name,
+                src.CurrentId,
                 src.SortOrder,
-                src.SortProperty,
+                src.SortTerm,
                 src.Page,
                 src.PageSize));
 
         config.NewConfig<GetAllUsersQueryResponse, GetAllUsersApiResponse>()
-            .ConstructUsing(src => new(src.Response.Adapt<UserCollectionApiResponse>(config)));
+            .ConstructUsing(src => new(
+                  src.Users.Adapt<ICollection<UserApiResponse>>(config),
+                  src.Page,
+                  src.PageSize,
+                  src.TotalCount,
+                  src.HasNextPage,
+                  src.HasPreviousPage));
 
         config.NewConfig<GetUserByIdApiRequest, GetUserByIdQueryRequest>()
-            .ConstructUsing(src => new(src.Id));
+            .ConstructUsing(src => new(src.Id, src.CurrentId));
 
         config.NewConfig<GetUserByIdQueryResponse, GetUserByIdApiResponse>()
-            .ConstructUsing(src => new(src.Response.Adapt<UserApiResponse>(config)));
+            .ConstructUsing(src => new(src.User.Adapt<UserApiResponse>(config)));
 
-        config.NewConfig<GetCurrentUserByIdApiRequest, GetUserByIdQueryRequest>()
+        config.NewConfig<GetCurrentUserByIdApiRequest, GetCurrentUserByIdQueryRequest>()
             .ConstructUsing(src => new(src.Id));
 
         config.NewConfig<GetCurrentUserByIdQueryResponse, GetCurrentUserByIdApiResponse>()
-            .ConstructUsing(src => new(src.Response.Adapt<UserApiResponse>(config)));
+            .ConstructUsing(src => new(src.User.Adapt<UserApiResponse>(config)));
 
-        config.NewConfig<GetUserDetailsByIdApiRequest, GetUserByIdQueryRequest>()
-            .ConstructUsing(src => new(src.Id));
+        config.NewConfig<GetUserDetailsByIdApiRequest, GetUserDetailsByIdQueryRequest>()
+            .ConstructUsing(src => new(src.Id, src.CurrentId));
 
         config.NewConfig<GetUserDetailsByIdQueryResponse, GetUserDetailsByIdApiResponse>()
-            .ConstructUsing(src => new(src.Response.Adapt<UserDetailsApiResponse>(config)));
-
-        config.NewConfig<GetCurrentUserByIdApiRequest, GetUserByIdQueryRequest>()
-            .ConstructUsing(src => new(src.Id));
+            .ConstructUsing(src => new(src.User.Adapt<UserDetailsApiResponse>(config)));
 
         config.NewConfig<GetCurrentUserDetailsByIdQueryResponse, GetCurrentUserDetailsByIdApiResponse>()
-            .ConstructUsing(src => new(src.Response.Adapt<UserDetailsApiResponse>(config)));
+            .ConstructUsing(src => new(src.User.Adapt<UserDetailsApiResponse>(config)));
 
         config.NewConfig<AddUserApiRequest, AddUserCommandRequest>()
             .ConstructUsing(src => new(
@@ -63,7 +67,7 @@ internal class UserPresentationMappings : IRegister
                 src.Form.ProfileImage));
 
         config.NewConfig<AddUserCommandResponse, AddUserApiResponse>()
-            .ConstructUsing(src => new(src.Response.Adapt<UserIdApiResponse>(config)));
+            .ConstructUsing(src => new(src.Id.Adapt<UserIdApiResponse>(config)));
 
         config.NewConfig<UpdateCurrentUserApiRequest, UpdateCurrentUserCommandRequest>()
             .ConstructUsing(src => new(
@@ -75,7 +79,7 @@ internal class UserPresentationMappings : IRegister
                 src.Form.ProfileImage));
 
         config.NewConfig<UpdateCurrentUserCommandResponse, UpdateCurrentUserApiResponse>()
-            .ConstructUsing(src => new(src.Response.Adapt<UserIdApiResponse>(config)));
+            .ConstructUsing(src => new(src.Id.Adapt<UserIdApiResponse>(config)));
 
         config.NewConfig<DeleteUserApiRequest, DeleteUserCommandRequest>()
             .ConstructUsing(src => new(src.Id));
@@ -106,14 +110,5 @@ internal class UserPresentationMappings : IRegister
                   src.ProfileImageUrl,
                   src.CreatedAtUtc,
                   src.UpdatedAtUtc));
-
-        config.NewConfig<UserCollectionQueryResponse, UserCollectionApiResponse>()
-            .ConstructUsing(src => new(
-                  src.Entities.Adapt<ICollection<UserApiResponse>>(config),
-                  src.Page,
-                  src.PageSize,
-                  src.TotalCount,
-                  src.HasNextPage,
-                  src.HasPreviousPage));
     }
 }

@@ -1,11 +1,11 @@
 ﻿namespace InstaConnect.Identity.Infrastructure.Features.UserClaims.Helpers.Includes;
 internal class UserClaimIncludePropertyFactory : IUserClaimIncludePropertyFactory
 {
-    private readonly IEnumerable<IUserClaimIncludeProperty> _userClaimIncludeProperty;
+    private readonly IEnumerable<IUserClaimIncludeProperty> _includeProperty;
 
-    public UserClaimIncludePropertyFactory(IEnumerable<IUserClaimIncludeProperty> userClaimIncludeProperty)
+    public UserClaimIncludePropertyFactory(IEnumerable<IUserClaimIncludeProperty> includeProperty)
     {
-        _userClaimIncludeProperty = userClaimIncludeProperty;
+        _includeProperty = includeProperty;
     }
 
     public IEnumerable<IUserClaimIncludeProperty> Create(ICollection<UserClaimIncludeProperty>? includeProperties)
@@ -15,7 +15,7 @@ internal class UserClaimIncludePropertyFactory : IUserClaimIncludePropertyFactor
             return [];
         }
 
-        var properties = _userClaimIncludeProperty.Where(s => includeProperties.Contains(s.IncludeProperty));
+        var properties = _includeProperty.Where(s => includeProperties.Contains(s.IncludeProperty));
 
         if (properties.IsEmpty())
         {

@@ -8,11 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 namespace InstaConnect.Posts.Tests.Features.Users.Utilities;
 public static class UserSetups
 {
-    public static IUserRepository GetUserRepository(this IServiceScope serviceScope)
+    public static IUserCommandRepository GetUserCommandRepository(this IServiceScope serviceScope)
     {
-        var userRepository = serviceScope.ServiceProvider.GetRequiredService<IUserRepository>();
-
-        return userRepository;
+        return serviceScope.ServiceProvider.GetRequiredService<IUserCommandRepository>();
     }
 
     public static async Task<User?> GetUserByIdAsync(
@@ -20,9 +18,7 @@ public static class UserSetups
         UserId id,
         CancellationToken cancellationToken)
     {
-        var userRepository = serviceScope.GetUserRepository();
-
-        return await userRepository.GetByIdAsync(id, cancellationToken);
+        return await serviceScope.GetUserCommandRepository().GetByIdAsync(id, cancellationToken);
     }
 
     public static async Task AddUserAsync(
@@ -30,7 +26,7 @@ public static class UserSetups
         User user,
         CancellationToken cancellationToken)
     {
-        var userRepository = serviceScope.GetUserRepository();
+        var userRepository = serviceScope.GetUserCommandRepository();
 
         await userRepository.AddAsync(user, cancellationToken);
     }
@@ -40,7 +36,7 @@ public static class UserSetups
         IEnumerable<User> users,
         CancellationToken cancellationToken)
     {
-        var userRepository = serviceScope.GetUserRepository();
+        var userRepository = serviceScope.GetUserCommandRepository();
 
         await userRepository.AddRangeAsync(users, cancellationToken);
     }
@@ -50,7 +46,7 @@ public static class UserSetups
         User user,
         CancellationToken cancellationToken)
     {
-        var userRepository = serviceScope.GetUserRepository();
+        var userRepository = serviceScope.GetUserCommandRepository();
 
         await userRepository.DeleteAsync(user, cancellationToken);
     }

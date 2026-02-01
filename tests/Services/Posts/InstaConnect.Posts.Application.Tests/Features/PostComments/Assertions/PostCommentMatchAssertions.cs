@@ -5,19 +5,28 @@ namespace InstaConnect.Posts.Application.Tests.Features.PostComments.Assertions;
 
 public static class PostCommentMatchAssertions
 {
-    public static void ShouldSatisfy(this AddPostCommentCommandResponse response, PostComment postComment)
+    public static void ShouldSatisfy(
+        this AddPostCommentCommandResponse response,
+        PostComment postComment,
+        AddPostCommentCommandRequest request)
     {
-        response.ShouldSatisfy(p => p.Matches(postComment));
+        response.ShouldSatisfy(p => p.Matches(postComment, request));
     }
 
-    public static void ShouldSatisfy(this UpdatePostCommentCommandResponse response, PostComment postComment)
+    public static void ShouldSatisfy(
+        this UpdatePostCommentCommandResponse response,
+        PostComment postComment,
+        UpdatePostCommentCommandRequest request)
     {
-        response.ShouldSatisfy(p => p.Matches(postComment));
+        response.ShouldSatisfy(p => p.Matches(postComment, request));
     }
 
-    public static void ShouldSatisfy(this GetPostCommentByIdQueryResponse response, PostComment postComment)
+    public static void ShouldSatisfy(
+        this GetPostCommentByIdQueryResponse response,
+        PostComment postComment,
+        GetPostCommentByIdQueryRequest request)
     {
-        response.ShouldSatisfy(p => p.Matches(postComment));
+        response.ShouldSatisfy(p => p.Matches(postComment, request));
     }
 
     public static void ShouldSatisfy(
@@ -32,6 +41,23 @@ public static class PostCommentMatchAssertions
         this GetAllPostCommentsQueryResponse response,
         ICollection<PostComment> postComments,
         GetAllPostCommentsQueryRequest request,
+        ISortEnumTermTransformer<PostComment> termTransformer)
+    {
+        response.ShouldSatisfy(p => p.Matches(postComments, request, termTransformer));
+    }
+
+    public static void ShouldSatisfy(
+        this GetAllPostCommentsForUserQueryResponse response,
+        ICollection<PostComment> postComments,
+        GetAllPostCommentsForUserQueryRequest request)
+    {
+        response.ShouldSatisfy(p => p.Matches(postComments, request));
+    }
+
+    public static void ShouldSatisfy(
+        this GetAllPostCommentsForUserQueryResponse response,
+        ICollection<PostComment> postComments,
+        GetAllPostCommentsForUserQueryRequest request,
         ISortEnumTermTransformer<PostComment> termTransformer)
     {
         response.ShouldSatisfy(p => p.Matches(postComments, request, termTransformer));

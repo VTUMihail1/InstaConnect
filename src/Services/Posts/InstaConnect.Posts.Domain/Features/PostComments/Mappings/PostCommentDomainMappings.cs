@@ -1,4 +1,6 @@
-﻿using Mapster;
+﻿using InstaConnect.Identity.Events.Features.Users;
+
+using Mapster;
 
 namespace InstaConnect.Posts.Domain.Features.PostComments.Mappings;
 
@@ -8,24 +10,25 @@ internal class PostCommentDomainMappings : IRegister
     {
         config.NewConfig<PostComment, PostCommentAddedEventRequest>()
             .ConstructUsing(src => new(
-                src.Id.Id.Id,
-                src.Id.CommentId,
-                src.Content,
-                src.UserId.Id,
-                src.CreatedAtUtc,
-                src.UpdatedAtUtc));
+                src.Adapt<PostCommentEventRequest>(config)));
 
         config.NewConfig<PostComment, PostCommentUpdatedEventRequest>()
             .ConstructUsing(src => new(
-                src.Id.Id.Id,
-                src.Id.CommentId,
-                src.Content,
-                src.UserId.Id,
-                src.UpdatedAtUtc));
+                src.Adapt<PostCommentEventRequest>(config)));
 
         config.NewConfig<PostComment, PostCommentDeletedEventRequest>()
             .ConstructUsing(src => new(
+                src.Adapt<PostCommentEventRequest>(config)));
+
+        config.NewConfig<PostComment, PostCommentEventRequest>()
+            .ConstructUsing(src => new(
                 src.Id.Id.Id,
-                src.Id.CommentId));
+                src.Id.CommentId,
+                src.UserId.Id,
+                src.Content,
+                src.User.Adapt<UserEventRequest>(config),
+                src.Post.Adapt<PostEventRequest>(config),
+                src.CreatedAtUtc,
+                src.UpdatedAtUtc));
     }
 }

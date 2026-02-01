@@ -1,7 +1,7 @@
-﻿using InstaConnect.Common.Domain.Extensions;
-using InstaConnect.Posts.Application.Features.Users.Commands.Add;
+﻿using InstaConnect.Posts.Application.Features.Users.Commands.Add;
 using InstaConnect.Posts.Application.Features.Users.Commands.Delete;
 using InstaConnect.Posts.Application.Features.Users.Commands.Update;
+using InstaConnect.Posts.Domain.Features.Users.Models.Responses;
 
 using Mapster;
 
@@ -22,8 +22,8 @@ internal class UserApplicationMappings : IRegister
                 src.CreatedAtUtc,
                 src.UpdatedAtUtc));
 
-        config.NewConfig<User, AddUserCommandResponse>()
-            .ConstructUsing(src => new(src.Id.Adapt<UserIdCommandResponse>(config)));
+        config.NewConfig<UserId, AddUserCommandResponse>()
+            .ConstructUsing(src => new(src.Adapt<UserIdCommandResponse>(config)));
 
         config.NewConfig<UpdateUserCommandRequest, UpdateUserCommand>()
             .ConstructUsing(src => new(
@@ -35,8 +35,8 @@ internal class UserApplicationMappings : IRegister
                 new(src.ProfileImageUrl),
                 src.UpdatedAtUtc));
 
-        config.NewConfig<User, UpdateUserCommandResponse>()
-            .ConstructUsing(src => new(src.Id.Adapt<UserIdCommandResponse>(config)));
+        config.NewConfig<UserId, UpdateUserCommandResponse>()
+            .ConstructUsing(src => new(src.Adapt<UserIdCommandResponse>(config)));
 
         config.NewConfig<DeleteUserCommandRequest, DeleteUserCommand>()
             .ConstructUsing(src => new(
@@ -45,10 +45,14 @@ internal class UserApplicationMappings : IRegister
         config.NewConfig<UserId, UserIdCommandResponse>()
             .ConstructUsing(src => new(src.Id));
 
-        config.NewConfig<User, UserQueryResponse>()
+        config.NewConfig<UserResponse, UserQueryResponse>()
             .ConstructUsing(src => new(
                 src.Id.Id,
+                src.FirstName,
+                src.LastName,
                 src.Name.Value,
-                src.ProfileImage.IsNull() ? null : src.ProfileImage!.Url));
+                src.ProfileImage == null ? null : src.ProfileImage!.Url,
+                src.CreatedAtUtc,
+                src.UpdatedAtUtc));
     }
 }

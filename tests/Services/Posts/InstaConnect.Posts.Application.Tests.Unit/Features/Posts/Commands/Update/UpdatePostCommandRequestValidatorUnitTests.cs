@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Application.Tests.Unit.Features.Posts.Commands.Update;
 
-public class UpdatePostCommandRequestValidatorUnitTests : BasePostApplicationUnitTest
+public class UpdatePostCommandRequestValidatorUnitTests : BasePostApplicationCommandUnitTest
 {
     private readonly UpdatePostCommandRequestBuilderFactory _requestBuilderFactory;
     private readonly UpdatePostCommandRequestBuilder _requestBuilder;

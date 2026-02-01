@@ -79,24 +79,32 @@ public class User : IEntityWithId<UserId>
         UpdatedAtUtc = updatedAtUtc;
     }
 
-    public void AddPost(Post post)
+    public User AddPost(Post post)
     {
         Posts.Add(post);
+
+        return this;
     }
 
-    public void AddPostLike(PostLike postLike)
+    public User AddPostLike(PostLike postLike)
     {
         PostLikes.Add(postLike);
+
+        return this;
     }
 
-    public void AddPostComment(PostComment postComment)
+    public User AddPostComment(PostComment postComment)
     {
         PostComments.Add(postComment);
+
+        return this;
     }
 
-    public void AddPostCommentLike(PostCommentLike postCommentLike)
+    public User AddPostCommentLike(PostCommentLike postCommentLike)
     {
         PostCommentLikes.Add(postCommentLike);
+
+        return this;
     }
 }
 

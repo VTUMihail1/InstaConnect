@@ -14,9 +14,9 @@ public class GetPostCommentLikeByIdControllerUnitTests : BasePostCommentLikePres
         _requestBuilder = _requestBuilderFactory.Create(PostCommentLike);
         _request = _requestBuilder.Build();
 
-        _postCommentLikeController = new(ApplicationMapper, ApplicationSender);
+        _postCommentLikeController = new(Mapper, Sender);
 
-        ApplicationSender.SetupGetByIdQueryRequest(_request, PostCommentLike, CancellationToken);
+        Sender.SetupGetByIdQueryRequest(_request, PostCommentLike, CancellationToken);
     }
 
     [Fact]
@@ -36,7 +36,7 @@ public class GetPostCommentLikeByIdControllerUnitTests : BasePostCommentLikePres
         var response = await _postCommentLikeController.GetByIdAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostCommentLike);
+        response.ShouldSatisfy(PostCommentLike, _request);
     }
 
     [Fact]
@@ -46,6 +46,6 @@ public class GetPostCommentLikeByIdControllerUnitTests : BasePostCommentLikePres
         await _postCommentLikeController.GetByIdAsync(_request, CancellationToken);
 
         // Assert
-        await ApplicationSender.ShouldReceiveOneSendAsync(_request, CancellationToken);
+        await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);
     }
 }

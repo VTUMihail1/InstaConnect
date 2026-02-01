@@ -13,7 +13,7 @@ public class CamelCaseQueryConvention : IParameterModelConvention
             return;
         }
 
-        if (parameter.BindingInfo.IsNull())
+        if (parameter.BindingInfo == null)
         {
             parameter.BindingInfo = new BindingInfo();
         }

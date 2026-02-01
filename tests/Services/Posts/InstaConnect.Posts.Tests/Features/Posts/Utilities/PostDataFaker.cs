@@ -46,9 +46,9 @@ public static class PostDataFaker
         return PageSize;
     }
 
-    public static PostSortProperty GetSortProperty()
+    public static PostsSortTerm GetSortTerm()
     {
-        const PostSortProperty SortProperty = PostSortProperty.ByCreatedAt;
+        const PostsSortTerm SortProperty = PostsSortTerm.ByCreatedAt;
 
         return SortProperty;
     }

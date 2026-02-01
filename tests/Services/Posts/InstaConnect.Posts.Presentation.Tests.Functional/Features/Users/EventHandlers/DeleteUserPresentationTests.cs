@@ -2,7 +2,7 @@
 
 namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.Users.EventHandlers;
 
-public class DeleteUserPresentationTests : BaseUserPresentationFunctionalTest
+public class DeleteUserPresentationTests : BaseUserPresentationCommandFunctionalTest
 {
     private readonly UserDeletedEventRequestBuilderFactory _requestBuilderFactory;
     private readonly UserDeletedEventRequestBuilder _requestBuilder;

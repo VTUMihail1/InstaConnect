@@ -14,9 +14,9 @@ public class GetAllPostsQueryHandlerUnitTests : BasePostApplicationQueryUnitTest
         _requestBuilder = _requestBuilderFactory.Create(Post);
         _request = _requestBuilder.Build();
 
-        _handler = new(PostService, ApplicationMapper, PostIncludeQueryBuilderFactory);
+        _handler = new(Mapper, Service);
 
-        PostService.SetupGetAllQuery(_request, Posts, Include, CancellationToken);
+        Service.SetupGetAllQuery(_request, Posts, CancellationToken);
     }
 
     [Fact]
@@ -36,6 +36,6 @@ public class GetAllPostsQueryHandlerUnitTests : BasePostApplicationQueryUnitTest
         await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        await PostService.ShouldReceiveOneGetAllAsync(_request, Include, CancellationToken);
+        await Service.ShouldReceiveOneGetAllAsync(_request, CancellationToken);
     }
 }

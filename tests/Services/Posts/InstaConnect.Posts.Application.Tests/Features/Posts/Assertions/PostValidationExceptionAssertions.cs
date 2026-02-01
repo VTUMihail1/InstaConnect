@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Application.Abstractions;
+using InstaConnect.Posts.Application.Features.Posts.Queries.GetAllForUser;
 
 namespace InstaConnect.Posts.Application.Tests.Features.Posts.Assertions;
 
@@ -72,6 +73,19 @@ public static class PostValidationExceptionAssertions
     public static async Task ShouldThrowInvalidValidationExceptionForTitleAsync(
         this IApplicationSender sender,
         IStringMessageTransformer messageTransformer,
+        GetAllPostsForUserQueryRequest request,
+        CancellationToken cancellationToken)
+    {
+        await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostsForUserQueryRequest, string, GetAllPostsForUserQueryResponse>(
+            p => p.Title,
+            messageTransformer,
+            request,
+            cancellationToken);
+    }
+
+    public static async Task ShouldThrowInvalidValidationExceptionForTitleAsync(
+        this IApplicationSender sender,
+        IStringMessageTransformer messageTransformer,
         AddPostCommandRequest request,
         CancellationToken cancellationToken)
     {
@@ -103,6 +117,19 @@ public static class PostValidationExceptionAssertions
     {
         await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostsQueryRequest, string, GetAllPostsQueryResponse>(
             p => p.Title,
+            messageTransformer,
+            request,
+            cancellationToken);
+    }
+
+    public static async Task ShouldThrowInvalidValidationExceptionForUserIdAsync(
+        this IApplicationSender sender,
+        IStringMessageTransformer messageTransformer,
+        GetAllPostsForUserQueryRequest request,
+        CancellationToken cancellationToken)
+    {
+        await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostsForUserQueryRequest, string, GetAllPostsForUserQueryResponse>(
+            p => p.UserId,
             messageTransformer,
             request,
             cancellationToken);
@@ -147,6 +174,45 @@ public static class PostValidationExceptionAssertions
             cancellationToken);
     }
 
+    public static async Task ShouldThrowInvalidValidationExceptionForCurrentUserIdAsync(
+        this IApplicationSender sender,
+        IStringMessageTransformer messageTransformer,
+        GetPostByIdQueryRequest request,
+        CancellationToken cancellationToken)
+    {
+        await sender.ShouldThrowInvalidValidationExceptionAsync<GetPostByIdQueryRequest, string, GetPostByIdQueryResponse>(
+            p => p.CurrentUserId,
+            messageTransformer,
+            request,
+            cancellationToken);
+    }
+
+    public static async Task ShouldThrowInvalidValidationExceptionForCurrentUserIdAsync(
+        this IApplicationSender sender,
+        IStringMessageTransformer messageTransformer,
+        GetAllPostsQueryRequest request,
+        CancellationToken cancellationToken)
+    {
+        await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostsQueryRequest, string, GetAllPostsQueryResponse>(
+            p => p.CurrentUserId,
+            messageTransformer,
+            request,
+            cancellationToken);
+    }
+
+    public static async Task ShouldThrowInvalidValidationExceptionForCurrentUserIdAsync(
+        this IApplicationSender sender,
+        IStringMessageTransformer messageTransformer,
+        GetAllPostsForUserQueryRequest request,
+        CancellationToken cancellationToken)
+    {
+        await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostsForUserQueryRequest, string, GetAllPostsForUserQueryResponse>(
+            p => p.CurrentUserId,
+            messageTransformer,
+            request,
+            cancellationToken);
+    }
+
     public static async Task ShouldThrowInvalidValidationExceptionForUserNameAsync(
         this IApplicationSender sender,
         IStringMessageTransformer messageTransformer,
@@ -173,6 +239,19 @@ public static class PostValidationExceptionAssertions
             cancellationToken);
     }
 
+    public static async Task ShouldThrowInvalidValidationExceptionForPageAsync(
+        this IApplicationSender sender,
+        IIntMessageTransformer messageTransformer,
+        GetAllPostsForUserQueryRequest request,
+        CancellationToken cancellationToken)
+    {
+        await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostsForUserQueryRequest, int, GetAllPostsForUserQueryResponse>(
+            p => p.Page,
+            messageTransformer,
+            request,
+            cancellationToken);
+    }
+
     public static async Task ShouldThrowInvalidValidationExceptionForPageSizeAsync(
         this IApplicationSender sender,
         IIntMessageTransformer messageTransformer,
@@ -180,6 +259,19 @@ public static class PostValidationExceptionAssertions
         CancellationToken cancellationToken)
     {
         await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostsQueryRequest, int, GetAllPostsQueryResponse>(
+            p => p.PageSize,
+            messageTransformer,
+            request,
+            cancellationToken);
+    }
+
+    public static async Task ShouldThrowInvalidValidationExceptionForPageSizeAsync(
+        this IApplicationSender sender,
+        IIntMessageTransformer messageTransformer,
+        GetAllPostsForUserQueryRequest request,
+        CancellationToken cancellationToken)
+    {
+        await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostsForUserQueryRequest, int, GetAllPostsForUserQueryResponse>(
             p => p.PageSize,
             messageTransformer,
             request,
@@ -199,14 +291,40 @@ public static class PostValidationExceptionAssertions
             cancellationToken);
     }
 
+    public static async Task ShouldThrowInvalidValidationExceptionForSortOrderAsync(
+        this IApplicationSender sender,
+        IEnumMessageTransformer<CommonSortOrder> messageTransformer,
+        GetAllPostsForUserQueryRequest request,
+        CancellationToken cancellationToken)
+    {
+        await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostsForUserQueryRequest, CommonSortOrder, GetAllPostsForUserQueryResponse>(
+            p => p.SortOrder,
+            messageTransformer,
+            request,
+            cancellationToken);
+    }
+
     public static async Task ShouldThrowInvalidValidationExceptionForSortPropertyAsync(
         this IApplicationSender sender,
-        IEnumMessageTransformer<PostSortProperty> messageTransformer,
+        IEnumMessageTransformer<PostsSortTerm> messageTransformer,
         GetAllPostsQueryRequest request,
         CancellationToken cancellationToken)
     {
-        await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostsQueryRequest, PostSortProperty, GetAllPostsQueryResponse>(
-            p => p.SortProperty,
+        await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostsQueryRequest, PostsSortTerm, GetAllPostsQueryResponse>(
+            p => p.SortTerm,
+            messageTransformer,
+            request,
+            cancellationToken);
+    }
+
+    public static async Task ShouldThrowInvalidValidationExceptionForSortPropertyAsync(
+        this IApplicationSender sender,
+        IEnumMessageTransformer<PostsSortTerm> messageTransformer,
+        GetAllPostsForUserQueryRequest request,
+        CancellationToken cancellationToken)
+    {
+        await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostsForUserQueryRequest, PostsSortTerm, GetAllPostsForUserQueryResponse>(
+            p => p.SortTerm,
             messageTransformer,
             request,
             cancellationToken);

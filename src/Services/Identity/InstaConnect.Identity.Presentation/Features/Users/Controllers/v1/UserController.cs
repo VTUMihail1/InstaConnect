@@ -14,15 +14,15 @@ namespace InstaConnect.Identity.Presentation.Features.Users.Controllers.v1;
 [EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class UserController : ControllerBase
 {
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly IApplicationSender _applicationSender;
+    private readonly IApplicationMapper _mapper;
+    private readonly IApplicationSender _sender;
 
     public UserController(
-        IApplicationMapper applicationMapper,
-        IApplicationSender applicationSender)
+        IApplicationMapper mapper,
+        IApplicationSender sender)
     {
-        _applicationMapper = applicationMapper;
-        _applicationSender = applicationSender;
+        _mapper = mapper;
+        _sender = sender;
     }
 
     // GET: api/users
@@ -32,10 +32,10 @@ public class UserController : ControllerBase
         GetAllUsersApiRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _applicationMapper.Map<GetAllUsersQueryRequest>(request);
-        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
+        var queryRequest = _mapper.Map<GetAllUsersQueryRequest>(request);
+        var queryResponse = await _sender.SendAsync(queryRequest, cancellationToken);
 
-        var response = _applicationMapper.Map<GetAllUsersApiResponse>(queryResponse);
+        var response = _mapper.Map<GetAllUsersApiResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -50,10 +50,10 @@ public class UserController : ControllerBase
         GetCurrentUserDetailsApiRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _applicationMapper.Map<GetCurrentUserByIdQueryRequest>(request);
-        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
+        var queryRequest = _mapper.Map<GetCurrentUserByIdQueryRequest>(request);
+        var queryResponse = await _sender.SendAsync(queryRequest, cancellationToken);
 
-        var response = _applicationMapper.Map<GetCurrentUserByIdApiResponse>(queryResponse);
+        var response = _mapper.Map<GetCurrentUserByIdApiResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -68,10 +68,10 @@ public class UserController : ControllerBase
         GetUserDetailsByIdApiRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _applicationMapper.Map<GetUserDetailsByIdQueryRequest>(request);
-        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
+        var queryRequest = _mapper.Map<GetUserDetailsByIdQueryRequest>(request);
+        var queryResponse = await _sender.SendAsync(queryRequest, cancellationToken);
 
-        var response = _applicationMapper.Map<GetUserDetailsByIdApiResponse>(queryResponse);
+        var response = _mapper.Map<GetUserDetailsByIdApiResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -85,10 +85,10 @@ public class UserController : ControllerBase
         GetCurrentUserByIdApiRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _applicationMapper.Map<GetCurrentUserByIdQueryRequest>(request);
-        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
+        var queryRequest = _mapper.Map<GetCurrentUserByIdQueryRequest>(request);
+        var queryResponse = await _sender.SendAsync(queryRequest, cancellationToken);
 
-        var response = _applicationMapper.Map<GetCurrentUserByIdApiResponse>(queryResponse);
+        var response = _mapper.Map<GetCurrentUserByIdApiResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -101,10 +101,10 @@ public class UserController : ControllerBase
         GetUserByIdApiRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _applicationMapper.Map<GetUserByIdQueryRequest>(request);
-        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
+        var queryRequest = _mapper.Map<GetUserByIdQueryRequest>(request);
+        var queryResponse = await _sender.SendAsync(queryRequest, cancellationToken);
 
-        var response = _applicationMapper.Map<GetUserByIdApiResponse>(queryResponse);
+        var response = _mapper.Map<GetUserByIdApiResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -117,9 +117,9 @@ public class UserController : ControllerBase
         AddUserApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<AddUserCommandRequest>(request);
-        var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
-        var response = _applicationMapper.Map<AddUserApiResponse>(commandResponse);
+        var commandRequest = _mapper.Map<AddUserCommandRequest>(request);
+        var commandResponse = await _sender.SendAsync(commandRequest, cancellationToken);
+        var response = _mapper.Map<AddUserApiResponse>(commandResponse);
 
         return Ok(response);
     }
@@ -134,9 +134,9 @@ public class UserController : ControllerBase
         UpdateCurrentUserApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<UpdateCurrentUserCommandRequest>(request);
-        var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
-        var response = _applicationMapper.Map<UpdateCurrentUserApiResponse>(commandResponse);
+        var commandRequest = _mapper.Map<UpdateCurrentUserCommandRequest>(request);
+        var commandResponse = await _sender.SendAsync(commandRequest, cancellationToken);
+        var response = _mapper.Map<UpdateCurrentUserApiResponse>(commandResponse);
 
         return Ok(response);
     }
@@ -150,8 +150,8 @@ public class UserController : ControllerBase
         DeleteCurrentUserApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<DeleteCurrentUserCommandRequest>(request);
-        await _applicationSender.SendAsync(commandRequest, cancellationToken);
+        var commandRequest = _mapper.Map<DeleteCurrentUserCommandRequest>(request);
+        await _sender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }
@@ -165,8 +165,8 @@ public class UserController : ControllerBase
         DeleteUserApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<DeleteUserCommandRequest>(request);
-        await _applicationSender.SendAsync(commandRequest, cancellationToken);
+        var commandRequest = _mapper.Map<DeleteUserCommandRequest>(request);
+        await _sender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }

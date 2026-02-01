@@ -1,9 +1,10 @@
 ﻿namespace InstaConnect.Posts.Presentation.Features.Posts.Models.Responses;
 
 public record PostCollectionApiResponse(
-    ICollection<PostApiResponse> Entities,
+    UserApiResponse? User,
+    ICollection<PostApiResponse> Posts,
     int Page,
     int PageSize,
-    int TotalCount,
+    long TotalCount,
     bool HasNextPage,
     bool HasPreviousPage) : ICollectionApiResponse;

@@ -4,20 +4,20 @@ namespace InstaConnect.Identity.Infrastructure.Features.Users.Helpers.Includes;
 
 public class UserEmailConfirmationTokensIncludeProperty : IUserIncludeProperty
 {
-    private readonly IIdentityContext _usersContext;
+    private readonly IIdentityContext _context;
 
-    public UserEmailConfirmationTokensIncludeProperty(IIdentityContext usersContext)
+    public UserEmailConfirmationTokensIncludeProperty(IIdentityContext context)
     {
-        _usersContext = usersContext;
+        _context = context;
     }
 
     public UserIncludeProperty IncludeProperty => UserIncludeProperty.EmailConfirmationTokens;
 
-    public IAggregateFluent<User> Include(IAggregateFluent<User> pipeline)
+    public IAggregateFluent<User> Include(IAggregateFluent<User> aggregate)
     {
-        return pipeline
+        return aggregate
             .IncludeMany(
-                _usersContext.EmailConfirmationTokens,
+                _context.EmailConfirmationTokens,
                 p => p.Id,
                 l => l.Id.Id,
                 p => p.EmailConfirmationTokens

@@ -16,7 +16,7 @@ internal class ChatPresentationMappings : IRegister
                 src.ParticipantId,
                 src.ParticipantName,
                 src.SortOrder,
-                src.SortProperty,
+                src.SortTerm,
                 src.Page,
                 src.PageSize));
 

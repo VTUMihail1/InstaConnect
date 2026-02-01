@@ -11,15 +11,15 @@ namespace InstaConnect.Posts.Presentation.Features.Posts.Controllers.v1;
 [EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class PostController : ControllerBase
 {
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly IApplicationSender _applicationSender;
+    private readonly IApplicationMapper _mapper;
+    private readonly IApplicationSender _sender;
 
     public PostController(
-        IApplicationMapper applicationMapper,
-        IApplicationSender applicationSender)
+        IApplicationMapper mapper,
+        IApplicationSender sender)
     {
-        _applicationMapper = applicationMapper;
-        _applicationSender = applicationSender;
+        _mapper = mapper;
+        _sender = sender;
     }
 
     // GET: api/posts
@@ -30,9 +30,9 @@ public class PostController : ControllerBase
         GetAllPostsApiRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _applicationMapper.Map<GetAllPostsQueryRequest>(request);
-        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
-        var response = _applicationMapper.Map<GetAllPostsApiResponse>(queryResponse);
+        var queryRequest = _mapper.Map<GetAllPostsQueryRequest>(request);
+        var queryResponse = await _sender.SendAsync(queryRequest, cancellationToken);
+        var response = _mapper.Map<GetAllPostsApiResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -45,9 +45,9 @@ public class PostController : ControllerBase
         GetPostByIdApiRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _applicationMapper.Map<GetPostByIdQueryRequest>(request);
-        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
-        var response = _applicationMapper.Map<GetPostByIdApiResponse>(queryResponse);
+        var queryRequest = _mapper.Map<GetPostByIdQueryRequest>(request);
+        var queryResponse = await _sender.SendAsync(queryRequest, cancellationToken);
+        var response = _mapper.Map<GetPostByIdApiResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -62,9 +62,9 @@ public class PostController : ControllerBase
         AddPostApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<AddPostCommandRequest>(request);
-        var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
-        var response = _applicationMapper.Map<AddPostApiResponse>(commandResponse);
+        var commandRequest = _mapper.Map<AddPostCommandRequest>(request);
+        var commandResponse = await _sender.SendAsync(commandRequest, cancellationToken);
+        var response = _mapper.Map<AddPostApiResponse>(commandResponse);
 
         return Ok(response);
     }
@@ -79,9 +79,9 @@ public class PostController : ControllerBase
         UpdatePostApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<UpdatePostCommandRequest>(request);
-        var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
-        var response = _applicationMapper.Map<UpdatePostApiResponse>(commandResponse);
+        var commandRequest = _mapper.Map<UpdatePostCommandRequest>(request);
+        var commandResponse = await _sender.SendAsync(commandRequest, cancellationToken);
+        var response = _mapper.Map<UpdatePostApiResponse>(commandResponse);
 
         return Ok(response);
     }
@@ -96,8 +96,8 @@ public class PostController : ControllerBase
         DeletePostApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<DeletePostCommandRequest>(request);
-        await _applicationSender.SendAsync(commandRequest, cancellationToken);
+        var commandRequest = _mapper.Map<DeletePostCommandRequest>(request);
+        await _sender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }

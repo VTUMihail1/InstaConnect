@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Presentation.Tests.Unit.Features.PostComments.Controllers.v1;
 
-public class AddPostCommentControllerUnitTests : BasePostCommentPresentationUnitTest
+public class AddPostCommentControllerUnitTests : BasePostCommentPresentationCommandUnitTest
 {
     private readonly AddPostCommentApiRequestBuilderFactory _requestBuilderFactory;
     private readonly AddPostCommentApiRequestBuilder _requestBuilder;
@@ -14,9 +14,9 @@ public class AddPostCommentControllerUnitTests : BasePostCommentPresentationUnit
         _requestBuilder = _requestBuilderFactory.Create(Post, User);
         _request = _requestBuilder.Build();
 
-        _postCommentController = new(ApplicationMapper, ApplicationSender);
+        _postCommentController = new(Mapper, Sender);
 
-        ApplicationSender.SetupAddCommandRequest(_request, PostComment, CancellationToken);
+        Sender.SetupAddCommandRequest(_request, PostComment, CancellationToken);
     }
 
     [Fact]
@@ -36,7 +36,7 @@ public class AddPostCommentControllerUnitTests : BasePostCommentPresentationUnit
         var response = await _postCommentController.AddAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostComment);
+        response.ShouldSatisfy(PostComment, _request);
     }
 
     [Fact]
@@ -46,6 +46,6 @@ public class AddPostCommentControllerUnitTests : BasePostCommentPresentationUnit
         await _postCommentController.AddAsync(_request, CancellationToken);
 
         // Assert
-        await ApplicationSender.ShouldReceiveOneSendAsync(_request, CancellationToken);
+        await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);
     }
 }

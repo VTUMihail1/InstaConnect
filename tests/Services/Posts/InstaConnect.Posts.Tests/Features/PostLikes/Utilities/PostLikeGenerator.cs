@@ -1,20 +1,20 @@
 ﻿namespace InstaConnect.Posts.Tests.Features.PostLikes.Utilities;
 public static class PostLikeGenerator
 {
-    public static ICollection<PostLike> GenerateRange(this PostLike template, IEnumerable<User> users)
+    public static ICollection<PostLike> GeneratePostLikesRange(this IEnumerable<Post> posts, IEnumerable<User> users)
     {
-        return [.. users
-            .Select(user =>
-            {
-                var postLike = new PostLike(
-                    new(
-                        template.Id.Id,
-                        user.Id),
-                    PostLikeDataFaker.GetCreatedAtUtc());
-
-                postLike.AddUser(user);
-
-                return postLike;
-            })];
+        return [.. posts
+              .SelectMany(post =>
+                  users.Select(user =>
+                  {
+                      var postLike = new PostLike(
+                          new(post.Id, user.Id),
+                          PostLikeDataFaker.GetCreatedAtUtc());
+              
+                      postLike.AddUser(user);
+                      postLike.AddPost(post);
+              
+                      return postLike;
+                  }))];
     }
 }

@@ -11,7 +11,7 @@ public static class Setups
         return serviceScope.ServiceProvider.GetRequiredService<IEventHarness>();
     }
 
-    public static IApplicationSender GetApplicationSender(this IServiceScope serviceScope)
+    public static IApplicationSender GetSender(this IServiceScope serviceScope)
     {
         return serviceScope.ServiceProvider.GetRequiredService<IApplicationSender>();
     }

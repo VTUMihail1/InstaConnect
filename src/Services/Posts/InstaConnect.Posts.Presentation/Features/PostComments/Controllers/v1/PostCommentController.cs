@@ -11,15 +11,15 @@ namespace InstaConnect.Posts.Presentation.Features.PostComments.Controllers.v1;
 [EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class PostCommentController : ControllerBase
 {
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly IApplicationSender _applicationSender;
+    private readonly IApplicationMapper _mapper;
+    private readonly IApplicationSender _sender;
 
     public PostCommentController(
-        IApplicationMapper applicationMapper,
-        IApplicationSender applicationSender)
+        IApplicationMapper mapper,
+        IApplicationSender sender)
     {
-        _applicationMapper = applicationMapper;
-        _applicationSender = applicationSender;
+        _mapper = mapper;
+        _sender = sender;
     }
 
     // GET: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/comments
@@ -30,9 +30,9 @@ public class PostCommentController : ControllerBase
         GetAllPostCommentsApiRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _applicationMapper.Map<GetAllPostCommentsQueryRequest>(request);
-        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
-        var response = _applicationMapper.Map<GetAllPostCommentsApiResponse>(queryResponse);
+        var queryRequest = _mapper.Map<GetAllPostCommentsQueryRequest>(request);
+        var queryResponse = await _sender.SendAsync(queryRequest, cancellationToken);
+        var response = _mapper.Map<GetAllPostCommentsApiResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -45,9 +45,9 @@ public class PostCommentController : ControllerBase
         GetPostCommentByIdApiRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _applicationMapper.Map<GetPostCommentByIdQueryRequest>(request);
-        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
-        var response = _applicationMapper.Map<GetPostCommentByIdApiResponse>(queryResponse);
+        var queryRequest = _mapper.Map<GetPostCommentByIdQueryRequest>(request);
+        var queryResponse = await _sender.SendAsync(queryRequest, cancellationToken);
+        var response = _mapper.Map<GetPostCommentByIdApiResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -62,9 +62,9 @@ public class PostCommentController : ControllerBase
         AddPostCommentApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<AddPostCommentCommandRequest>(request);
-        var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
-        var response = _applicationMapper.Map<AddPostCommentApiResponse>(commandResponse);
+        var commandRequest = _mapper.Map<AddPostCommentCommandRequest>(request);
+        var commandResponse = await _sender.SendAsync(commandRequest, cancellationToken);
+        var response = _mapper.Map<AddPostCommentApiResponse>(commandResponse);
 
         return Ok(response);
     }
@@ -79,9 +79,9 @@ public class PostCommentController : ControllerBase
         UpdatePostCommentApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<UpdatePostCommentCommandRequest>(request);
-        var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
-        var response = _applicationMapper.Map<UpdatePostCommentApiResponse>(commandResponse);
+        var commandRequest = _mapper.Map<UpdatePostCommentCommandRequest>(request);
+        var commandResponse = await _sender.SendAsync(commandRequest, cancellationToken);
+        var response = _mapper.Map<UpdatePostCommentApiResponse>(commandResponse);
 
         return Ok(response);
     }
@@ -96,8 +96,8 @@ public class PostCommentController : ControllerBase
         DeletePostCommentApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<DeletePostCommentCommandRequest>(request);
-        await _applicationSender.SendAsync(commandRequest, cancellationToken);
+        var commandRequest = _mapper.Map<DeletePostCommentCommandRequest>(request);
+        await _sender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }

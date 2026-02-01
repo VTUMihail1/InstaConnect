@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Posts.Presentation.Features.PostComments.Models.Responses;
 
-public record UpdatePostCommentApiResponse(PostCommentIdApiResponse Response);
+public record UpdatePostCommentApiResponse(PostCommentIdApiResponse Id);

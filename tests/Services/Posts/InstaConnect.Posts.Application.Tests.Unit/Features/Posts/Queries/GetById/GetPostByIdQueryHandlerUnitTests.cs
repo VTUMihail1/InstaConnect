@@ -14,9 +14,9 @@ public class GetPostByIdQueryHandlerUnitTests : BasePostApplicationQueryUnitTest
         _requestBuilder = _requestBuilderFactory.Create(Post);
         _request = _requestBuilder.Build();
 
-        _handler = new(PostService, ApplicationMapper, PostIncludeQueryBuilderFactory);
+        _handler = new(Mapper, Service);
 
-        PostService.SetupGetByIdQuery(_request, Post, Include, CancellationToken);
+        Service.SetupGetByIdQuery(_request, Post, CancellationToken);
     }
 
     [Fact]
@@ -26,7 +26,7 @@ public class GetPostByIdQueryHandlerUnitTests : BasePostApplicationQueryUnitTest
         var response = await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(Post);
+        response.ShouldSatisfy(Post, _request);
     }
 
     [Fact]
@@ -36,6 +36,6 @@ public class GetPostByIdQueryHandlerUnitTests : BasePostApplicationQueryUnitTest
         await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        await PostService.ShouldReceiveOneGetByIdAsync(_request, Include, CancellationToken);
+        await Service.ShouldReceiveOneGetByIdAsync(_request, CancellationToken);
     }
 }

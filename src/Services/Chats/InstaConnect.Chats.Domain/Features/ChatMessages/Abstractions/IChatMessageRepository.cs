@@ -1,19 +1,17 @@
-﻿using InstaConnect.Common.Domain.Models;
-
-namespace InstaConnect.Chats.Domain.Features.ChatMessages.Abstractions;
+﻿namespace InstaConnect.Chats.Domain.Features.ChatMessages.Abstractions;
 
 public interface IChatMessageRepository
 {
     Task<ChatMessageCollection> GetAllAsync(
         ChatMessageFilterQuery filter,
-        CommonSortingQuery<ChatMessageSortProperty> sorting,
-        CommonPaginationQuery pagination,
-        CommonIncludeQuery<ChatMessageIncludeProperty>? include,
+        ChatMessageSortingQuery sorting,
+        ChatPaginationQuery pagination,
+        ChatMessageInclude include,
         CancellationToken cancellationToken);
 
     Task<ChatMessage?> GetByIdAsync(
         ChatMessageId id,
-        CommonIncludeQuery<ChatMessageIncludeProperty>? include,
+        ChatMessageInclude include,
         CancellationToken cancellationToken);
 
     Task<ChatMessage?> GetByIdAsync(

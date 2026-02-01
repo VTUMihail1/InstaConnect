@@ -2,29 +2,25 @@
 
 internal class GetAllPostCommentsQueryHandler : IQueryHandler<GetAllPostCommentsQueryRequest, GetAllPostCommentsQueryResponse>
 {
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly IPostCommentService _postCommentService;
-    private readonly IPostCommentIncludeQueryBuilderFactory _postCommentIncludeQueryBuilderFactory;
+    private readonly IApplicationMapper _mapper;
+    private readonly IPostCommentQueryService _commentService;
 
     public GetAllPostCommentsQueryHandler(
-        IApplicationMapper applicationMapper,
-        IPostCommentService postCommentService,
-        IPostCommentIncludeQueryBuilderFactory postCommentIncludeQueryBuilderFactory)
+        IApplicationMapper mapper,
+        IPostCommentQueryService commentService)
     {
-        _applicationMapper = applicationMapper;
-        _postCommentService = postCommentService;
-        _postCommentIncludeQueryBuilderFactory = postCommentIncludeQueryBuilderFactory;
+        _mapper = mapper;
+        _commentService = commentService;
     }
 
     public async Task<GetAllPostCommentsQueryResponse> Handle(
         GetAllPostCommentsQueryRequest request,
         CancellationToken cancellationToken)
     {
-        var include = _postCommentIncludeQueryBuilderFactory.Create().WithUser().Build();
-        var serviceRequest = _applicationMapper.Map<GetAllPostCommentsQuery>(request).AddInclude(include);
-        var collection = await _postCommentService.GetAllAsync(serviceRequest, cancellationToken);
+        var serviceRequest = _mapper.Map<GetAllPostCommentsQuery>(request);
+        var collection = await _commentService.GetAllAsync(serviceRequest, cancellationToken);
 
-        var response = _applicationMapper.Map<GetAllPostCommentsQueryResponse>(collection);
+        var response = _mapper.Map<GetAllPostCommentsQueryResponse>(collection);
 
         return response;
     }

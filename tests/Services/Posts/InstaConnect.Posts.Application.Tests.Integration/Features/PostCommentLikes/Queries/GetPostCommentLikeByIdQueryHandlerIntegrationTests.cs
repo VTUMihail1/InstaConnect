@@ -18,6 +18,7 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
     {
         await ServiceScope.AddUserAsync(User, CancellationToken);
         await ServiceScope.AddPostAsync(Post, CancellationToken);
+        await ServiceScope.AddPostLikeAsync(PostLike, CancellationToken);
         await ServiceScope.AddPostCommentAsync(PostComment, CancellationToken);
         await ServiceScope.AddPostCommentLikeAsync(PostCommentLike, CancellationToken);
     }
@@ -34,7 +35,7 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
         var request = _requestBuilder.WithId(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForIdAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForIdAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -50,7 +51,7 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
         var request = _requestBuilder.WithCommentId(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForCommentIdAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForCommentIdAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -66,7 +67,7 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
         var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForUserIdAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForUserIdAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -77,7 +78,7 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
         await ServiceScope.DeletePostAsync(Post, CancellationToken);
 
         // Assert
-        await ApplicationSender.ShouldThrowPostNotFoundExceptionAsync(_request, CancellationToken);
+        await Sender.ShouldThrowPostNotFoundExceptionAsync(_request, CancellationToken);
     }
 
     [Fact]
@@ -87,7 +88,7 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
         await ServiceScope.DeletePostCommentAsync(PostComment, CancellationToken);
 
         // Assert
-        await ApplicationSender.ShouldThrowPostCommentNotFoundExceptionAsync(_request, CancellationToken);
+        await Sender.ShouldThrowPostCommentNotFoundExceptionAsync(_request, CancellationToken);
     }
 
     [Fact]
@@ -97,17 +98,17 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
         await ServiceScope.DeletePostCommentLikeAsync(PostCommentLike, CancellationToken);
 
         // Assert
-        await ApplicationSender.ShouldThrowPostCommentLikeNotFoundExceptionAsync(_request, CancellationToken);
+        await Sender.ShouldThrowPostCommentLikeNotFoundExceptionAsync(_request, CancellationToken);
     }
 
     [Fact]
     public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValid()
     {
         // Act
-        var response = await ApplicationSender.SendAsync(_request, CancellationToken);
+        var response = await Sender.SendAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostCommentLike);
+        response.ShouldSatisfy(PostCommentLike, _request);
     }
 
     [Theory]
@@ -119,10 +120,10 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
         var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostCommentLike);
+        response.ShouldSatisfy(PostCommentLike, request);
     }
 
     [Theory]
@@ -134,10 +135,10 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
         var request = _requestBuilder.WithCommentId(transformer).Build();
 
         // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostCommentLike);
+        response.ShouldSatisfy(PostCommentLike, request);
     }
 
     [Theory]
@@ -149,9 +150,9 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
         var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostCommentLike);
+        response.ShouldSatisfy(PostCommentLike, request);
     }
 }

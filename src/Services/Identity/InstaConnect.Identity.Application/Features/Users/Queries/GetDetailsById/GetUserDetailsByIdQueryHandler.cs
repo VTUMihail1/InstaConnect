@@ -2,25 +2,25 @@
 
 internal class GetUserDetailsByIdQueryHandler : IQueryHandler<GetUserDetailsByIdQueryRequest, GetUserDetailsByIdQueryResponse>
 {
-    private readonly IUserService _userService;
-    private readonly IApplicationMapper _applicationMapper;
+    private readonly IApplicationMapper _mapper;
+    private readonly IUserQueryService _service;
 
     public GetUserDetailsByIdQueryHandler(
-        IUserService userService,
-        IApplicationMapper applicationMapper)
+        IApplicationMapper mapper,
+        IUserQueryService service)
     {
-        _userService = userService;
-        _applicationMapper = applicationMapper;
+        _mapper = mapper;
+        _service = service;
     }
 
     public async Task<GetUserDetailsByIdQueryResponse> Handle(
         GetUserDetailsByIdQueryRequest request,
         CancellationToken cancellationToken)
     {
-        var serviceRequest = _applicationMapper.Map<GetUserByIdQuery>(request);
-        var user = await _userService.GetByIdAsync(serviceRequest, cancellationToken);
+        var serviceRequest = _mapper.Map<GetUserByIdQuery>(request);
+        var serviceResponse = await _service.GetByIdAsync(serviceRequest, cancellationToken);
 
-        var response = _applicationMapper.Map<GetUserDetailsByIdQueryResponse>(user);
+        var response = _mapper.Map<GetUserDetailsByIdQueryResponse>(serviceResponse);
 
         return response;
     }

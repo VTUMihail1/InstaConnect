@@ -21,9 +21,9 @@ public static class PostLikeDataFaker
         return PageSize;
     }
 
-    public static PostLikeSortProperty GetSortProperty()
+    public static PostLikesSortTerm GetSortTerm()
     {
-        const PostLikeSortProperty SortProperty = PostLikeSortProperty.ByCreatedAt;
+        const PostLikesSortTerm SortProperty = PostLikesSortTerm.ByCreatedAt;
 
         return SortProperty;
     }

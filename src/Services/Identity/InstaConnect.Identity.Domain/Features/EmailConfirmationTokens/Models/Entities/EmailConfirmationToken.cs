@@ -23,6 +23,15 @@ public class EmailConfirmationToken : IEntityWithId<EmailConfirmationTokenId>
 
     public DateTimeOffset CreatedAtUtc { get; }
 
+    public User? User { get; private set; }
+
+    public EmailConfirmationToken AddUser(User user)
+    {
+        User = user;
+
+        return this;
+    }
+
     public bool HasExpired(DateTimeOffset utcNow)
     {
         var hasExpired = ExpiresAtUtc < utcNow;

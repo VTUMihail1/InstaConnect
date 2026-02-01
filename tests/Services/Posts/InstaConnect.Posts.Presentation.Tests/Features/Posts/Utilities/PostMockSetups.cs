@@ -1,88 +1,58 @@
-﻿using InstaConnect.Common.Infrastructure.Helpers;
-
-namespace InstaConnect.Posts.Presentation.Tests.Features.Posts.Utilities;
+﻿namespace InstaConnect.Posts.Presentation.Tests.Features.Posts.Utilities;
 public static class PostMockSetups
 {
     public static void SetupGetAllQueryRequest(
-        this IApplicationSender applicationSender,
+        this IApplicationSender sender,
         GetAllPostsApiRequest request,
         ICollection<Post> posts,
         CancellationToken cancellationToken)
     {
-        var paginator = PaginatorFactory.Create();
-        var filteredPosts = posts.Filter(
-            a => a.MatchesFilter(request), request, p => new PostQueryResponse(
-                     p.Id.Id,
-                     p.Title,
-                     p.Content,
-                     new(
-                         p.User!.Id.Id,
-                         p.User.Name.Value,
-                         p.User.ProfileImage?.Url),
-                     p.CreatedAtUtc,
-                     p.UpdatedAtUtc));
-
-        var postResponse = new PostCollectionQueryResponse(
-            filteredPosts,
-            request.Page,
-            request.PageSize,
-            posts.Count,
-            paginator.HasNextPage(request.Page, request.PageSize, posts.Count),
-            paginator.HasPreviousPage(request.Page));
-
-        var response = new GetAllPostsQueryResponse(postResponse);
-
-        applicationSender
+        sender
             .SendAsync(PostMatcher.IsGetAllPostsQueryRequest(request), cancellationToken)
-            .ReturnsResponse(response);
+            .ReturnsResponse(posts.ToResponse(request));
+    }
+
+    public static void SetupGetAllForUserQueryRequest(
+        this IApplicationSender sender,
+        GetAllPostsForUserApiRequest request,
+        ICollection<Post> posts,
+        CancellationToken cancellationToken)
+    {
+        sender
+            .SendAsync(PostMatcher.IsGetAllPostsForUserQueryRequest(request), cancellationToken)
+            .ReturnsResponse(posts.ToResponse(request));
     }
 
     public static void SetupGetByIdQueryRequest(
-        this IApplicationSender applicationSender,
+        this IApplicationSender sender,
         GetPostByIdApiRequest request,
         Post post,
         CancellationToken cancellationToken)
     {
-        var response = new GetPostByIdQueryResponse(
-            new(
-                post.Id.Id,
-                post.Title,
-                post.Content,
-                new(
-                    post.User!.Id.Id,
-                    post.User.Name.Value,
-                    post.User.ProfileImage?.Url),
-                post.CreatedAtUtc,
-                post.UpdatedAtUtc));
-
-        applicationSender
+        sender
             .SendAsync(PostMatcher.IsGetPostByIdQueryRequest(request), cancellationToken)
-            .ReturnsResponse(response);
+            .ReturnsResponse(post.ToResponse(request));
     }
 
     public static void SetupAddCommandRequest(
-        this IApplicationSender applicationSender,
+        this IApplicationSender sender,
         AddPostApiRequest request,
         Post post,
         CancellationToken cancellationToken)
     {
-        var response = new AddPostCommandResponse(new(post.Id.Id));
-
-        applicationSender
+        sender
             .SendAsync(PostMatcher.IsAddPostCommandRequest(request), cancellationToken)
-            .ReturnsResponse(response);
+            .ReturnsResponse(post.ToResponse(request));
     }
 
     public static void SetupUpdateCommandRequest(
-        this IApplicationSender applicationSender,
+        this IApplicationSender sender,
         UpdatePostApiRequest request,
         Post post,
         CancellationToken cancellationToken)
     {
-        var response = new UpdatePostCommandResponse(new(post.Id.Id));
-
-        applicationSender
+        sender
             .SendAsync(PostMatcher.IsUpdatePostCommandRequest(request), cancellationToken)
-            .ReturnsResponse(response);
+            .ReturnsResponse(post.ToResponse(request));
     }
 }

@@ -14,9 +14,9 @@ public class GetPostLikeByIdControllerUnitTests : BasePostLikePresentationQueryU
         _requestBuilder = _requestBuilderFactory.Create(PostLike);
         _request = _requestBuilder.Build();
 
-        _postLikeController = new(ApplicationMapper, ApplicationSender);
+        _postLikeController = new(Mapper, Sender);
 
-        ApplicationSender.SetupGetByIdQueryRequest(_request, PostLike, CancellationToken);
+        Sender.SetupGetByIdQueryRequest(_request, PostLike, CancellationToken);
     }
 
     [Fact]
@@ -36,7 +36,7 @@ public class GetPostLikeByIdControllerUnitTests : BasePostLikePresentationQueryU
         var response = await _postLikeController.GetByIdAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostLike);
+        response.ShouldSatisfy(PostLike, _request);
     }
 
     [Fact]
@@ -46,6 +46,6 @@ public class GetPostLikeByIdControllerUnitTests : BasePostLikePresentationQueryU
         await _postLikeController.GetByIdAsync(_request, CancellationToken);
 
         // Assert
-        await ApplicationSender.ShouldReceiveOneSendAsync(_request, CancellationToken);
+        await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);
     }
 }

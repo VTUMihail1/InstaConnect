@@ -1,52 +1,49 @@
-﻿using InstaConnect.Common.Application.Tests.Utilities;
-using InstaConnect.Common.Infrastructure.Helpers;
+﻿using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAllForUser;
 
 namespace InstaConnect.Posts.Application.Tests.Features.PostLikes.Utilities;
 public static class PostLikeMockSetups
 {
     public static void SetupGetAllQuery(
-        this IPostLikeService postLikeService,
+        this IPostLikeQueryService likeService,
         GetAllPostLikesQueryRequest request,
         ICollection<PostLike> postLikes,
-        CommonIncludeQuery<PostLikeIncludeProperty> include,
         CancellationToken cancellationToken)
     {
-        var paginator = PaginatorFactory.Create();
-        var filteredPostLikes = postLikes.Filter(a => a.MatchesFilter(request), request);
+        likeService
+            .GetAllAsync(PostLikeMatcher.IsGetAllPostLikesQuery(request), cancellationToken)
+            .ReturnsResponse(postLikes.ToResponse(request));
+    }
 
-        var response = new PostLikeCollection(
-            filteredPostLikes,
-            request.Page,
-            request.PageSize,
-            postLikes.Count,
-            paginator.HasNextPage(request.Page, request.PageSize, postLikes.Count),
-            paginator.HasPreviousPage(request.Page));
-
-        postLikeService
-            .GetAllAsync(PostLikeMatcher.IsGetAllPostLikesQuery(request, include), cancellationToken)
-            .ReturnsResponse(response);
+    public static void SetupGetAllForUserQuery(
+        this IPostLikeQueryService likeService,
+        GetAllPostLikesForUserQueryRequest request,
+        ICollection<PostLike> postLikes,
+        CancellationToken cancellationToken)
+    {
+        likeService
+            .GetAllForUserAsync(PostLikeMatcher.IsGetAllPostLikesForUserQuery(request), cancellationToken)
+            .ReturnsResponse(postLikes.ToResponse(request));
     }
 
     public static void SetupGetByIdQuery(
-        this IPostLikeService postLikeService,
+        this IPostLikeQueryService likeService,
         GetPostLikeByIdQueryRequest request,
         PostLike postLike,
-        CommonIncludeQuery<PostLikeIncludeProperty> include,
         CancellationToken cancellationToken)
     {
-        postLikeService
-            .GetByIdAsync(PostLikeMatcher.IsGetPostLikeByIdQuery(request, include), cancellationToken)
-            .ReturnsResponse(postLike);
+        likeService
+            .GetByIdAsync(PostLikeMatcher.IsGetPostLikeByIdQuery(request), cancellationToken)
+            .ReturnsResponse(postLike.ToResponse(request));
     }
 
     public static void SetupAddCommand(
-        this IPostLikeService postLikeService,
+        this IPostLikeCommandService likeService,
         AddPostLikeCommandRequest request,
         PostLike postLike,
         CancellationToken cancellationToken)
     {
-        postLikeService
+        likeService
             .AddAsync(PostLikeMatcher.IsAddPostLikeCommand(request), cancellationToken)
-            .ReturnsResponse(postLike);
+            .ReturnsResponse(postLike.ToResponse(request));
     }
 }

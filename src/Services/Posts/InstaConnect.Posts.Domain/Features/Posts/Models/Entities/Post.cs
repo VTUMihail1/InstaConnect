@@ -8,8 +8,8 @@ public class Post : IEntityWithId<PostId>
         Title = string.Empty;
         Content = string.Empty;
         UserId = new(string.Empty);
-        Likes = [];
-        Comments = [];
+        PostLikes = [];
+        PostComments = [];
     }
 
     public Post(
@@ -24,8 +24,8 @@ public class Post : IEntityWithId<PostId>
         Title = title;
         Content = content;
         UserId = userId;
-        Likes = [];
-        Comments = [];
+        PostLikes = [];
+        PostComments = [];
         CreatedAtUtc = createdAtUtc;
         UpdatedAtUtc = updatedAtUtc;
     }
@@ -40,13 +40,18 @@ public class Post : IEntityWithId<PostId>
 
     public User? User { get; private set; }
 
-    public ICollection<PostLike> Likes { get; }
+    public ICollection<PostLike> PostLikes { get; }
 
-    public ICollection<PostComment> Comments { get; }
+    public ICollection<PostComment> PostComments { get; }
 
     public DateTimeOffset CreatedAtUtc { get; }
 
     public DateTimeOffset UpdatedAtUtc { get; private set; }
+
+    public bool IsNotOwnedByUser(UserId userId)
+    {
+        return UserId.IsNot(userId);
+    }
 
     public void Update(string title, string content, DateTimeOffset updatedAtUtc)
     {
@@ -55,18 +60,24 @@ public class Post : IEntityWithId<PostId>
         UpdatedAtUtc = updatedAtUtc;
     }
 
-    public void AddUser(User user)
+    public Post AddUser(User user)
     {
         User = user;
+
+        return this;
     }
 
-    public void AddComment(PostComment comment)
+    public Post AddPostLike(PostLike postLike)
     {
-        Comments.Add(comment);
+        PostLikes.Add(postLike);
+
+        return this;
     }
 
-    public void AddLike(PostLike like)
+    public Post AddPostComment(PostComment postComment)
     {
-        Likes.Add(like);
+        PostComments.Add(postComment);
+
+        return this;
     }
 }

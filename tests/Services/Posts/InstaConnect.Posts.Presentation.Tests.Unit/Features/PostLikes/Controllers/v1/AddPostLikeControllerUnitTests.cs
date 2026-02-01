@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Presentation.Tests.Unit.Features.PostLikes.Controllers.v1;
 
-public class AddPostLikeControllerUnitTests : BasePostLikePresentationUnitTest
+public class AddPostLikeControllerUnitTests : BasePostLikePresentationCommandUnitTest
 {
     private readonly AddPostLikeApiRequestBuilderFactory _requestBuilderFactory;
     private readonly AddPostLikeApiRequestBuilder _requestBuilder;
@@ -14,9 +14,9 @@ public class AddPostLikeControllerUnitTests : BasePostLikePresentationUnitTest
         _requestBuilder = _requestBuilderFactory.Create(Post, User);
         _request = _requestBuilder.Build();
 
-        _postLikeController = new(ApplicationMapper, ApplicationSender);
+        _postLikeController = new(Mapper, Sender);
 
-        ApplicationSender.SetupAddCommandRequest(_request, PostLike, CancellationToken);
+        Sender.SetupAddCommandRequest(_request, PostLike, CancellationToken);
     }
 
     [Fact]
@@ -36,7 +36,7 @@ public class AddPostLikeControllerUnitTests : BasePostLikePresentationUnitTest
         var response = await _postLikeController.AddAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostLike);
+        response.ShouldSatisfy(PostLike, _request);
     }
 
     [Fact]
@@ -46,6 +46,6 @@ public class AddPostLikeControllerUnitTests : BasePostLikePresentationUnitTest
         await _postLikeController.AddAsync(_request, CancellationToken);
 
         // Assert
-        await ApplicationSender.ShouldReceiveOneSendAsync(_request, CancellationToken);
+        await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);
     }
 }

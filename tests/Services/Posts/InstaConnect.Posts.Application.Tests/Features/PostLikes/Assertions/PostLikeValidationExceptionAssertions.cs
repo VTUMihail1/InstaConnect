@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Application.Abstractions;
+using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAllForUser;
 
 namespace InstaConnect.Posts.Application.Tests.Features.PostLikes.Assertions;
 
@@ -56,6 +57,20 @@ public static class PostLikeValidationExceptionAssertions
             cancellationToken);
     }
 
+
+    public static async Task ShouldThrowInvalidValidationExceptionForUserIdAsync(
+        this IApplicationSender sender,
+        IStringMessageTransformer messageTransformer,
+        GetAllPostLikesForUserQueryRequest request,
+        CancellationToken cancellationToken)
+    {
+        await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostLikesForUserQueryRequest, string, GetAllPostLikesForUserQueryResponse>(
+            p => p.UserId,
+            messageTransformer,
+            request,
+            cancellationToken);
+    }
+
     public static async Task ShouldThrowInvalidValidationExceptionForUserIdAsync(
         this IApplicationSender sender,
         IStringMessageTransformer messageTransformer,
@@ -95,6 +110,45 @@ public static class PostLikeValidationExceptionAssertions
             cancellationToken);
     }
 
+    public static async Task ShouldThrowInvalidValidationExceptionForCurrentUserIdAsync(
+        this IApplicationSender sender,
+        IStringMessageTransformer messageTransformer,
+        GetPostLikeByIdQueryRequest request,
+        CancellationToken cancellationToken)
+    {
+        await sender.ShouldThrowInvalidValidationExceptionAsync<GetPostLikeByIdQueryRequest, string, GetPostLikeByIdQueryResponse>(
+            p => p.CurrentUserId,
+            messageTransformer,
+            request,
+            cancellationToken);
+    }
+
+    public static async Task ShouldThrowInvalidValidationExceptionForCurrentUserIdAsync(
+        this IApplicationSender sender,
+        IStringMessageTransformer messageTransformer,
+        GetAllPostLikesQueryRequest request,
+        CancellationToken cancellationToken)
+    {
+        await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostLikesQueryRequest, string, GetAllPostLikesQueryResponse>(
+            p => p.CurrentUserId,
+            messageTransformer,
+            request,
+            cancellationToken);
+    }
+
+    public static async Task ShouldThrowInvalidValidationExceptionForCurrentUserIdAsync(
+        this IApplicationSender sender,
+        IStringMessageTransformer messageTransformer,
+        GetAllPostLikesForUserQueryRequest request,
+        CancellationToken cancellationToken)
+    {
+        await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostLikesForUserQueryRequest, string, GetAllPostLikesForUserQueryResponse>(
+            p => p.CurrentUserId,
+            messageTransformer,
+            request,
+            cancellationToken);
+    }
+
     public static async Task ShouldThrowInvalidValidationExceptionForUserNameAsync(
         this IApplicationSender sender,
         IStringMessageTransformer messageTransformer,
@@ -121,6 +175,19 @@ public static class PostLikeValidationExceptionAssertions
             cancellationToken);
     }
 
+    public static async Task ShouldThrowInvalidValidationExceptionForPageAsync(
+        this IApplicationSender sender,
+        IIntMessageTransformer messageTransformer,
+        GetAllPostLikesForUserQueryRequest request,
+        CancellationToken cancellationToken)
+    {
+        await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostLikesForUserQueryRequest, int, GetAllPostLikesForUserQueryResponse>(
+            p => p.Page,
+            messageTransformer,
+            request,
+            cancellationToken);
+    }
+
     public static async Task ShouldThrowInvalidValidationExceptionForPageSizeAsync(
         this IApplicationSender sender,
         IIntMessageTransformer messageTransformer,
@@ -128,6 +195,19 @@ public static class PostLikeValidationExceptionAssertions
         CancellationToken cancellationToken)
     {
         await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostLikesQueryRequest, int, GetAllPostLikesQueryResponse>(
+            p => p.PageSize,
+            messageTransformer,
+            request,
+            cancellationToken);
+    }
+
+    public static async Task ShouldThrowInvalidValidationExceptionForPageSizeAsync(
+        this IApplicationSender sender,
+        IIntMessageTransformer messageTransformer,
+        GetAllPostLikesForUserQueryRequest request,
+        CancellationToken cancellationToken)
+    {
+        await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostLikesForUserQueryRequest, int, GetAllPostLikesForUserQueryResponse>(
             p => p.PageSize,
             messageTransformer,
             request,
@@ -147,14 +227,40 @@ public static class PostLikeValidationExceptionAssertions
             cancellationToken);
     }
 
+    public static async Task ShouldThrowInvalidValidationExceptionForSortOrderAsync(
+        this IApplicationSender sender,
+        IEnumMessageTransformer<CommonSortOrder> messageTransformer,
+        GetAllPostLikesForUserQueryRequest request,
+        CancellationToken cancellationToken)
+    {
+        await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostLikesForUserQueryRequest, CommonSortOrder, GetAllPostLikesForUserQueryResponse>(
+            p => p.SortOrder,
+            messageTransformer,
+            request,
+            cancellationToken);
+    }
+
     public static async Task ShouldThrowInvalidValidationExceptionForSortPropertyAsync(
         this IApplicationSender sender,
-        IEnumMessageTransformer<PostLikeSortProperty> messageTransformer,
+        IEnumMessageTransformer<PostLikesSortTerm> messageTransformer,
         GetAllPostLikesQueryRequest request,
         CancellationToken cancellationToken)
     {
-        await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostLikesQueryRequest, PostLikeSortProperty, GetAllPostLikesQueryResponse>(
-            p => p.SortProperty,
+        await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostLikesQueryRequest, PostLikesSortTerm, GetAllPostLikesQueryResponse>(
+            p => p.SortTerm,
+            messageTransformer,
+            request,
+            cancellationToken);
+    }
+
+    public static async Task ShouldThrowInvalidValidationExceptionForSortPropertyAsync(
+        this IApplicationSender sender,
+        IEnumMessageTransformer<PostLikesSortTerm> messageTransformer,
+        GetAllPostLikesForUserQueryRequest request,
+        CancellationToken cancellationToken)
+    {
+        await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostLikesForUserQueryRequest, PostLikesSortTerm, GetAllPostLikesForUserQueryResponse>(
+            p => p.SortTerm,
             messageTransformer,
             request,
             cancellationToken);

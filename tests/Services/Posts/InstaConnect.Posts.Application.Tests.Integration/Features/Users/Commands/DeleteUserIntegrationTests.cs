@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Application.Tests.Integration.Features.Users.Commands;
 
-public class DeleteUserIntegrationTests : BaseUserApplicationIntegrationTest
+public class DeleteUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 {
     private readonly DeleteUserCommandRequestBuilderFactory _requestBuilderFactory;
     private readonly DeleteUserCommandRequestBuilder _requestBuilder;
@@ -31,7 +31,7 @@ public class DeleteUserIntegrationTests : BaseUserApplicationIntegrationTest
         var request = _requestBuilder.WithId(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForIdAsync(messageTransformer, request, CancellationToken);
+        await Sender.ShouldThrowInvalidValidationExceptionForIdAsync(messageTransformer, request, CancellationToken);
     }
 
     [Fact]
@@ -41,14 +41,14 @@ public class DeleteUserIntegrationTests : BaseUserApplicationIntegrationTest
         await ServiceScope.DeleteUserAsync(User, CancellationToken);
 
         // Assert
-        await ApplicationSender.ShouldThrowUserNotFoundExceptionAsync(_request, CancellationToken);
+        await Sender.ShouldThrowUserNotFoundExceptionAsync(_request, CancellationToken);
     }
 
     [Fact]
     public async Task SendAsync_ShouldDeleteUser_WhenRequestIsValid()
     {
         // Act
-        await ApplicationSender.SendAsync(_request, CancellationToken);
+        await Sender.SendAsync(_request, CancellationToken);
         var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
 
         // Assert
@@ -64,7 +64,7 @@ public class DeleteUserIntegrationTests : BaseUserApplicationIntegrationTest
         var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
-        await ApplicationSender.SendAsync(request, CancellationToken);
+        await Sender.SendAsync(request, CancellationToken);
         var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
 
         // Assert

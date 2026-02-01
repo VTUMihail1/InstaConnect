@@ -8,15 +8,15 @@ namespace InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Contr
 [EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class ForgotPasswordTokenController : ControllerBase
 {
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly IApplicationSender _applicationSender;
+    private readonly IApplicationMapper _mapper;
+    private readonly IApplicationSender _sender;
 
     public ForgotPasswordTokenController(
-        IApplicationMapper applicationMapper,
-        IApplicationSender applicationSender)
+        IApplicationMapper mapper,
+        IApplicationSender sender)
     {
-        _applicationMapper = applicationMapper;
-        _applicationSender = applicationSender;
+        _mapper = mapper;
+        _sender = sender;
     }
 
     // POST: api/users/user@example.com/forgot-password-tokens
@@ -27,8 +27,8 @@ public class ForgotPasswordTokenController : ControllerBase
         AddForgotPasswordTokenApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<AddForgotPasswordTokenCommandRequest>(request);
-        await _applicationSender.SendAsync(commandRequest, cancellationToken);
+        var commandRequest = _mapper.Map<AddForgotPasswordTokenCommandRequest>(request);
+        await _sender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }
@@ -41,8 +41,8 @@ public class ForgotPasswordTokenController : ControllerBase
         VerifyForgotPasswordTokenApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<VerifyForgotPasswordTokenCommandRequest>(request);
-        await _applicationSender.SendAsync(commandRequest, cancellationToken);
+        var commandRequest = _mapper.Map<VerifyForgotPasswordTokenCommandRequest>(request);
+        await _sender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }

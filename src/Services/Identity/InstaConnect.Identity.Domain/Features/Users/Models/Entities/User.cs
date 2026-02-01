@@ -11,7 +11,7 @@ public class User : IEntityWithId<UserId>
         Name = new(string.Empty);
         PasswordHash = string.Empty;
         IsEmailConfirmed = false;
-        Claims = [];
+        UserClaims = [];
         RefreshTokens = [];
         ForgotPasswordTokens = [];
         EmailConfirmationTokens = [];
@@ -37,7 +37,7 @@ public class User : IEntityWithId<UserId>
         PasswordHash = passwordHash;
         IsEmailConfirmed = isEmailConfirmed;
         ProfileImage = profileImage;
-        Claims = [];
+        UserClaims = [];
         RefreshTokens = [];
         ForgotPasswordTokens = [];
         EmailConfirmationTokens = [];
@@ -71,7 +71,7 @@ public class User : IEntityWithId<UserId>
         ProfileImage = profileImage;
         CreatedAtUtc = createdAtUtc;
         UpdatedAtUtc = updatedAtUtc;
-        Claims = claims;
+        UserClaims = claims;
         RefreshTokens = refreshTokens;
         ForgotPasswordTokens = forgotPasswordTokens;
         EmailConfirmationTokens = emailConfirmationTokens;
@@ -93,7 +93,7 @@ public class User : IEntityWithId<UserId>
 
     public Image? ProfileImage { get; private set; }
 
-    public ICollection<UserClaim> Claims { get; }
+    public ICollection<UserClaim> UserClaims { get; }
 
     public ICollection<RefreshToken> RefreshTokens { get; }
 
@@ -124,6 +124,16 @@ public class User : IEntityWithId<UserId>
     public void UpdatePasswordHash(string passwordHash)
     {
         PasswordHash = passwordHash;
+    }
+
+    public bool DoesNotHaveEmail(Email email)
+    {
+        return Email.IsNot(email);
+    }
+
+    public bool DoesNotHaveName(Name name)
+    {
+        return Name.IsNot(name);
     }
 
     public void Update(

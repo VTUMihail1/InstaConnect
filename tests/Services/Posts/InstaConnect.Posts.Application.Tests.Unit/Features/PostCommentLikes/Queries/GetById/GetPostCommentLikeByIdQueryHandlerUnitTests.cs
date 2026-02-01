@@ -14,9 +14,9 @@ public class GetPostCommentLikeByIdQueryHandlerUnitTests : BasePostCommentLikeAp
         _requestBuilder = _requestBuilderFactory.Create(PostCommentLike);
         _request = _requestBuilder.Build();
 
-        _handler = new(ApplicationMapper, PostCommentLikeService, PostCommentLikeIncludeQueryBuilderFactory);
+        _handler = new(Mapper, CommentLikeService);
 
-        PostCommentLikeService.SetupGetByIdQuery(_request, PostCommentLike, Include, CancellationToken);
+        CommentLikeService.SetupGetByIdQuery(_request, PostCommentLike, CancellationToken);
     }
 
     [Fact]
@@ -26,7 +26,7 @@ public class GetPostCommentLikeByIdQueryHandlerUnitTests : BasePostCommentLikeAp
         var response = await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostCommentLike);
+        response.ShouldSatisfy(PostCommentLike, _request);
     }
 
     [Fact]
@@ -36,6 +36,6 @@ public class GetPostCommentLikeByIdQueryHandlerUnitTests : BasePostCommentLikeAp
         await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        await PostCommentLikeService.ShouldReceiveOneGetByIdAsync(_request, Include, CancellationToken);
+        await CommentLikeService.ShouldReceiveOneGetByIdAsync(_request, CancellationToken);
     }
 }

@@ -8,8 +8,8 @@ internal static class ServiceCollectionExtensions
 {
     internal static IServiceCollection AddPostCommentLikeServices(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddImplementationsOf<IPostCommentLikeSortProperty>(PostInfrastructureReference.Assembly);
-        serviceCollection.AddImplementationsOf<IPostCommentLikeIncludeProperty>(PostInfrastructureReference.Assembly);
+        serviceCollection.AddImplementationsOf<IPostCommentLikesSortTermer>(PostInfrastructureReference.Assembly);
+        serviceCollection.AddImplementationsOf<IPostCommentLikeIncluder>(PostInfrastructureReference.Assembly);
 
         BsonClassMap.TryRegisterClassMap<PostCommentLike>(cm =>
         {

@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Presentation.Tests.Unit.Features.Users.EventHandlers.v1;
 
-public class AddUserEventHandlerUnitTests : BaseUserPresentationUnitTest
+public class AddUserEventHandlerUnitTests : BaseUserPresentationCommandUnitTest
 {
     private readonly UserAddedEventRequestBuilderFactory _requestBuilderFactory;
     private readonly UserAddedEventRequestBuilder _requestBuilder;
@@ -14,7 +14,7 @@ public class AddUserEventHandlerUnitTests : BaseUserPresentationUnitTest
         _requestBuilder = _requestBuilderFactory.Create(User);
         _request = _requestBuilder.Build();
 
-        _handler = new(ApplicationMapper, ApplicationSender);
+        _handler = new(Mapper, Sender);
     }
 
     [Fact]
@@ -24,6 +24,6 @@ public class AddUserEventHandlerUnitTests : BaseUserPresentationUnitTest
         await _handler.Consume(_request, CancellationToken);
 
         // Assert
-        await ApplicationSender.ShouldReceiveOneSendAsync(_request, CancellationToken);
+        await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);
     }
 }

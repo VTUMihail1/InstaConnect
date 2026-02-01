@@ -14,9 +14,9 @@ public class GetPostCommentByIdControllerUnitTests : BasePostCommentPresentation
         _requestBuilder = _requestBuilderFactory.Create(PostComment);
         _request = _requestBuilder.Build();
 
-        _postCommentController = new(ApplicationMapper, ApplicationSender);
+        _postCommentController = new(Mapper, Sender);
 
-        ApplicationSender.SetupGetByIdQueryRequest(_request, PostComment, CancellationToken);
+        Sender.SetupGetByIdQueryRequest(_request, PostComment, CancellationToken);
     }
 
     [Fact]
@@ -36,7 +36,7 @@ public class GetPostCommentByIdControllerUnitTests : BasePostCommentPresentation
         var response = await _postCommentController.GetByIdAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostComment);
+        response.ShouldSatisfy(PostComment, _request);
     }
 
     [Fact]
@@ -46,6 +46,6 @@ public class GetPostCommentByIdControllerUnitTests : BasePostCommentPresentation
         await _postCommentController.GetByIdAsync(_request, CancellationToken);
 
         // Assert
-        await ApplicationSender.ShouldReceiveOneSendAsync(_request, CancellationToken);
+        await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);
     }
 }

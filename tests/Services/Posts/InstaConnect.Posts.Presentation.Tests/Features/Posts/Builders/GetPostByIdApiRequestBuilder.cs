@@ -3,10 +3,12 @@
 public class GetPostByIdApiRequestBuilder
 {
     private string _id;
+    private string _currentUserId;
 
     public GetPostByIdApiRequestBuilder(Post post)
     {
         _id = post.Id.Id;
+        _currentUserId = post.UserId.Id;
     }
 
     public GetPostByIdApiRequestBuilder WithId(Post post, IStringTransformer? transformer = null)
@@ -23,8 +25,22 @@ public class GetPostByIdApiRequestBuilder
         return this;
     }
 
+    public GetPostByIdApiRequestBuilder WithCurrentUserId(User user, IStringTransformer? transformer = null)
+    {
+        _currentUserId = transformer.TryTransform(user.Id.Id);
+
+        return this;
+    }
+
+    public GetPostByIdApiRequestBuilder WithCurrentUserId(IStringTransformer transformer)
+    {
+        _currentUserId = transformer.Transform(_currentUserId);
+
+        return this;
+    }
+
     public GetPostByIdApiRequest Build()
     {
-        return new(_id);
+        return new(_id, _currentUserId);
     }
 }

@@ -7,7 +7,7 @@ public record GetAllChatMessagesQueryRequest(
     string ParticipantTwoId,
     string UserId,
     CommonSortOrder SortOrder,
-    ChatMessageSortProperty SortProperty,
+    ChatMessageSortProperty SortTerm,
     int Page,
     int PageSize)
     : IQueryRequest<GetAllChatMessagesQueryResponse>, ISortableQueryRequest<ChatMessageSortProperty>, IPaginatableQueryRequest;

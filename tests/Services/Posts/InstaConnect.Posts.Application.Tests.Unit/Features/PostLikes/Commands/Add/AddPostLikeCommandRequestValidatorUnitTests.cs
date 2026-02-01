@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Application.Tests.Unit.Features.PostLikes.Commands.Add;
 
-public class AddPostLikeCommandRequestValidatorUnitTests : BasePostLikeApplicationUnitTest
+public class AddPostLikeCommandRequestValidatorUnitTests : BasePostLikeApplicationCommandUnitTest
 {
     private readonly AddPostLikeCommandRequestBuilderFactory _requestBuilderFactory;
     private readonly AddPostLikeCommandRequestBuilder _requestBuilder;

@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Posts.Presentation.Features.Posts.Models.Responses;
 
-public record GetAllPostsApiResponse(PostCollectionApiResponse Response);
+public record GetAllPostsApiResponse(PostCollectionApiResponse PostCollection);

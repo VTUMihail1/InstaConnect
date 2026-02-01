@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Application.Tests.Integration.Features.PostLikes.Commands;
 
-public class DeletePostLikeIntegrationTests : BasePostLikeApplicationIntegrationTest
+public class DeletePostLikeIntegrationTests : BasePostLikeApplicationCommandIntegrationTest
 {
     private readonly DeletePostLikeCommandRequestBuilderFactory _requestBuilderFactory;
     private readonly DeletePostLikeCommandRequestBuilder _requestBuilder;
@@ -33,7 +33,7 @@ public class DeletePostLikeIntegrationTests : BasePostLikeApplicationIntegration
         var request = _requestBuilder.WithId(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForIdAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForIdAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -49,7 +49,7 @@ public class DeletePostLikeIntegrationTests : BasePostLikeApplicationIntegration
         var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForUserIdAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForUserIdAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -60,7 +60,7 @@ public class DeletePostLikeIntegrationTests : BasePostLikeApplicationIntegration
         await ServiceScope.DeletePostAsync(Post, CancellationToken);
 
         // Assert
-        await ApplicationSender.ShouldThrowPostNotFoundExceptionAsync(_request, CancellationToken);
+        await Sender.ShouldThrowPostNotFoundExceptionAsync(_request, CancellationToken);
     }
 
     [Fact]
@@ -70,14 +70,14 @@ public class DeletePostLikeIntegrationTests : BasePostLikeApplicationIntegration
         await ServiceScope.DeletePostLikeAsync(PostLike, CancellationToken);
 
         // Assert
-        await ApplicationSender.ShouldThrowPostLikeNotFoundExceptionAsync(_request, CancellationToken);
+        await Sender.ShouldThrowPostLikeNotFoundExceptionAsync(_request, CancellationToken);
     }
 
     [Fact]
     public async Task SendAsync_ShouldDeletePostLike_WhenRequestIsValid()
     {
         // Act
-        await ApplicationSender.SendAsync(_request, CancellationToken);
+        await Sender.SendAsync(_request, CancellationToken);
         var postLike = await ServiceScope.GetPostLikeByIdAsync(PostLike.Id, CancellationToken);
 
         // Assert
@@ -93,7 +93,7 @@ public class DeletePostLikeIntegrationTests : BasePostLikeApplicationIntegration
         var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
-        await ApplicationSender.SendAsync(request, CancellationToken);
+        await Sender.SendAsync(request, CancellationToken);
         var postLike = await ServiceScope.GetPostLikeByIdAsync(PostLike.Id, CancellationToken);
 
         // Assert
@@ -109,7 +109,7 @@ public class DeletePostLikeIntegrationTests : BasePostLikeApplicationIntegration
         var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
-        await ApplicationSender.SendAsync(request, CancellationToken);
+        await Sender.SendAsync(request, CancellationToken);
         var postLike = await ServiceScope.GetPostLikeByIdAsync(PostLike.Id, CancellationToken);
 
         // Assert
@@ -120,7 +120,7 @@ public class DeletePostLikeIntegrationTests : BasePostLikeApplicationIntegration
     public async Task SendAsync_ShouldPublishPostLikeDeletedEvent_WhenRequestIsValid()
     {
         // Act
-        await ApplicationSender.SendAsync(_request, CancellationToken);
+        await Sender.SendAsync(_request, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedDeletedAsync(PostLike, CancellationToken);
@@ -135,7 +135,7 @@ public class DeletePostLikeIntegrationTests : BasePostLikeApplicationIntegration
         var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
-        await ApplicationSender.SendAsync(request, CancellationToken);
+        await Sender.SendAsync(request, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedDeletedAsync(PostLike, CancellationToken);
@@ -150,7 +150,7 @@ public class DeletePostLikeIntegrationTests : BasePostLikeApplicationIntegration
         var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
-        await ApplicationSender.SendAsync(request, CancellationToken);
+        await Sender.SendAsync(request, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedDeletedAsync(PostLike, CancellationToken);

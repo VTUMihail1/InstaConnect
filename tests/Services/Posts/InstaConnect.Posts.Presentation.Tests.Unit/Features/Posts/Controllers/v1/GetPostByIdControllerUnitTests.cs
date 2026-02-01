@@ -14,9 +14,9 @@ public class GetPostByIdControllerUnitTests : BasePostPresentationQueryUnitTest
         _requestBuilder = _requestBuilderFactory.Create(Post);
         _request = _requestBuilder.Build();
 
-        _postController = new(ApplicationMapper, ApplicationSender);
+        _postController = new(Mapper, Sender);
 
-        ApplicationSender.SetupGetByIdQueryRequest(_request, Post, CancellationToken);
+        Sender.SetupGetByIdQueryRequest(_request, Post, CancellationToken);
     }
 
     [Fact]
@@ -36,7 +36,7 @@ public class GetPostByIdControllerUnitTests : BasePostPresentationQueryUnitTest
         var response = await _postController.GetByIdAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(Post);
+        response.ShouldSatisfy(Post, _request);
     }
 
     [Fact]
@@ -46,6 +46,6 @@ public class GetPostByIdControllerUnitTests : BasePostPresentationQueryUnitTest
         await _postController.GetByIdAsync(_request, CancellationToken);
 
         // Assert
-        await ApplicationSender.ShouldReceiveOneSendAsync(_request, CancellationToken);
+        await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);
     }
 }

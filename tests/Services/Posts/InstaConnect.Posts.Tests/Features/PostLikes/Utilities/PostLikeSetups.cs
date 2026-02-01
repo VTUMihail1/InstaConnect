@@ -8,11 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 namespace InstaConnect.Posts.Tests.Features.PostLikes.Utilities;
 public static class PostLikeSetups
 {
-    public static IPostLikeRepository GetPostLikeRepository(this IServiceScope serviceScope)
+    public static IPostLikeCommandRepository GetPostLikeCommandRepository(this IServiceScope serviceScope)
     {
-        var postLikeRepository = serviceScope.ServiceProvider.GetRequiredService<IPostLikeRepository>();
-
-        return postLikeRepository;
+        return serviceScope.ServiceProvider.GetRequiredService<IPostLikeCommandRepository>();
     }
 
     public static async Task<PostLike?> GetPostLikeByIdAsync(
@@ -20,7 +18,7 @@ public static class PostLikeSetups
         PostLikeId id,
         CancellationToken cancellationToken)
     {
-        var postLikeRepository = serviceScope.GetPostLikeRepository();
+        var postLikeRepository = serviceScope.GetPostLikeCommandRepository();
 
         return await postLikeRepository.GetByIdAsync(id, cancellationToken);
     }
@@ -30,7 +28,7 @@ public static class PostLikeSetups
         PostLike postLike,
         CancellationToken cancellationToken)
     {
-        var postLikeRepository = serviceScope.GetPostLikeRepository();
+        var postLikeRepository = serviceScope.GetPostLikeCommandRepository();
 
         await postLikeRepository.AddAsync(postLike, cancellationToken);
     }
@@ -40,7 +38,7 @@ public static class PostLikeSetups
         IEnumerable<PostLike> postLikes,
         CancellationToken cancellationToken)
     {
-        var postLikeRepository = serviceScope.GetPostLikeRepository();
+        var postLikeRepository = serviceScope.GetPostLikeCommandRepository();
 
         await postLikeRepository.AddRangeAsync(postLikes, cancellationToken);
     }
@@ -50,7 +48,7 @@ public static class PostLikeSetups
         PostLike postLike,
         CancellationToken cancellationToken)
     {
-        var postLikeRepository = serviceScope.GetPostLikeRepository();
+        var postLikeRepository = serviceScope.GetPostLikeCommandRepository();
 
         await postLikeRepository.DeleteAsync(postLike, cancellationToken);
     }

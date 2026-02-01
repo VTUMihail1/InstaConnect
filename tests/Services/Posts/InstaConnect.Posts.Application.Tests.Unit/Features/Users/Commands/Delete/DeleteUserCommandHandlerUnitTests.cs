@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Application.Tests.Unit.Features.Users.Commands.Delete;
 
-public class DeleteUserCommandHandlerUnitTests : BaseUserApplicationUnitTest
+public class DeleteUserCommandHandlerUnitTests : BaseUserApplicationCommandUnitTest
 {
     private readonly DeleteUserCommandRequestBuilderFactory _requestBuilderFactory;
     private readonly DeleteUserCommandRequestBuilder _requestBuilder;
@@ -14,7 +14,7 @@ public class DeleteUserCommandHandlerUnitTests : BaseUserApplicationUnitTest
         _requestBuilder = _requestBuilderFactory.Create(User);
         _request = _requestBuilder.Build();
 
-        _handler = new(UserService, ApplicationMapper);
+        _handler = new(Mapper, UserService);
     }
 
     [Fact]

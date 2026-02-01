@@ -14,7 +14,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         : base(webApplicationFactory)
     {
         _requestBuilderFactory = new();
-        _requestBuilder = _requestBuilderFactory.Create(PostCommentLike, User);
+        _requestBuilder = _requestBuilderFactory.Create(PostCommentLike);
         _request = _requestBuilder.Build();
     }
 
@@ -23,6 +23,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         await ServiceScope.AddUserAsync(User, CancellationToken);
         await ServiceScope.AddUserRangeAsync(Users, CancellationToken);
         await ServiceScope.AddPostAsync(Post, CancellationToken);
+        await ServiceScope.AddPostLikeAsync(PostLike, CancellationToken);
         await ServiceScope.AddPostCommentAsync(PostComment, CancellationToken);
         await ServiceScope.AddPostCommentLikeRangeAsync(PostCommentLikes, CancellationToken);
     }
@@ -39,7 +40,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         var request = _requestBuilder.WithId(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForIdAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForIdAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -55,7 +56,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         var request = _requestBuilder.WithCommentId(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForCommentIdAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForCommentIdAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -68,12 +69,12 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         var request = _requestBuilder.WithUserName(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForUserNameAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForUserNameAsync(
             messageTransformer, request, CancellationToken);
     }
 
     [Theory]
-    [PostCommentLikeSortOrderEmptyWithMessageData]
+    [PostCommentLikesSortOrderEmptyWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenSortOrderIsInvalid(
         IEnumTransformer<CommonSortOrder> transformer,
         IEnumMessageTransformer<CommonSortOrder> messageTransformer)
@@ -82,21 +83,21 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         var request = _requestBuilder.WithSortOrder(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForSortOrderAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForSortOrderAsync(
             messageTransformer, request, CancellationToken);
     }
 
     [Theory]
-    [PostCommentLikeSortPropertyEmptyWithMessageData]
+    [PostCommentLikesSortTermEmptyWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenSortPropertyIsInvalid(
-        IEnumTransformer<PostCommentLikeSortProperty> transformer,
-        IEnumMessageTransformer<PostCommentLikeSortProperty> messageTransformer)
+        IEnumTransformer<PostCommentLikesSortTerm> transformer,
+        IEnumMessageTransformer<PostCommentLikesSortTerm> messageTransformer)
     {
         // Arrange
         var request = _requestBuilder.WithSortProperty(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForSortPropertyAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForSortPropertyAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -110,7 +111,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         var request = _requestBuilder.WithPage(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForPageAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForPageAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -124,7 +125,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         var request = _requestBuilder.WithPageSize(transformer).Build();
 
         // Assert
-        await ApplicationSender.ShouldThrowInvalidValidationExceptionForPageSizeAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForPageSizeAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -135,7 +136,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         await ServiceScope.DeletePostAsync(Post, CancellationToken);
 
         // Assert
-        await ApplicationSender.ShouldThrowPostNotFoundExceptionAsync(_request, CancellationToken);
+        await Sender.ShouldThrowPostNotFoundExceptionAsync(_request, CancellationToken);
     }
 
     [Fact]
@@ -145,14 +146,14 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         await ServiceScope.DeletePostCommentAsync(PostComment, CancellationToken);
 
         // Assert
-        await ApplicationSender.ShouldThrowPostCommentNotFoundExceptionAsync(_request, CancellationToken);
+        await Sender.ShouldThrowPostCommentNotFoundExceptionAsync(_request, CancellationToken);
     }
 
     [Fact]
     public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValid()
     {
         // Act
-        var response = await ApplicationSender.SendAsync(_request, CancellationToken);
+        var response = await Sender.SendAsync(_request, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(PostCommentLikes, _request);
@@ -167,7 +168,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         var request = _requestBuilder.WithId(transformer).Build();
 
         // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(PostCommentLikes, _request);
@@ -182,7 +183,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         var request = _requestBuilder.WithCommentId(transformer).Build();
 
         // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(PostCommentLikes, _request);
@@ -199,15 +200,15 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         var request = _requestBuilder.WithUserName(transformer).Build();
 
         // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(PostCommentLikes, _request);
     }
 
     [Theory]
-    [PostCommentLikeSortOrderWithAscendingTermData]
-    [PostCommentLikeSortOrderWithDescendingTermData]
+    [PostCommentLikesSortOrderWithAscendingTermData]
+    [PostCommentLikesSortOrderWithDescendingTermData]
     public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortOrderAreValid(
         IEnumTransformer<CommonSortOrder> transformer, ISortEnumTermTransformer<PostCommentLike> termTransformer)
     {
@@ -215,23 +216,23 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         var request = _requestBuilder.WithSortOrder(transformer).Build();
 
         // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(PostCommentLikes, _request, termTransformer);
     }
 
     [Theory]
-    [PostCommentLikeSortPropertyWithCreatedAtTermData]
-    [PostCommentLikeSortPropertyWithUserNameTermData]
+    [PostCommentLikesSortTermWithCreatedAtTermData]
+    [PostCommentLikesSortTermWithUserNameTermData]
     public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortPropertyAreValid(
-        IEnumTransformer<PostCommentLikeSortProperty> transformer, ISortEnumTermTransformer<PostCommentLike> termTransformer)
+        IEnumTransformer<PostCommentLikesSortTerm> transformer, ISortEnumTermTransformer<PostCommentLike> termTransformer)
     {
         // Arrange
         var request = _requestBuilder.WithSortProperty(transformer).Build();
 
         // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(PostCommentLikes, _request, termTransformer);

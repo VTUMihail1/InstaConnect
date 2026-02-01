@@ -4,23 +4,23 @@ namespace InstaConnect.Identity.Infrastructure.Features.Users.Helpers.Includes;
 
 public class UserClaimsIncludeProperty : IUserIncludeProperty
 {
-    private readonly IIdentityContext _usersContext;
+    private readonly IIdentityContext _context;
 
-    public UserClaimsIncludeProperty(IIdentityContext usersContext)
+    public UserClaimsIncludeProperty(IIdentityContext context)
     {
-        _usersContext = usersContext;
+        _context = context;
     }
 
     public UserIncludeProperty IncludeProperty => UserIncludeProperty.Claims;
 
-    public IAggregateFluent<User> Include(IAggregateFluent<User> pipeline)
+    public IAggregateFluent<User> Include(IAggregateFluent<User> aggregate)
     {
-        return pipeline
+        return aggregate
             .IncludeMany(
-                _usersContext.UserClaims,
+                _context.UserClaims,
                 p => p.Id,
                 l => l.Id.Id,
-                p => p.Claims
+                p => p.UserClaims
             );
     }
 }

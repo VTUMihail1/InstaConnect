@@ -17,7 +17,7 @@ internal class FollowPresentationMappings : IRegister
                 src.FollowerId,
                 src.FollowingName,
                 src.SortOrder,
-                src.SortProperty,
+                src.SortTerm,
                 src.Page,
                 src.PageSize));
 
@@ -29,7 +29,7 @@ internal class FollowPresentationMappings : IRegister
                 src.FollowingId,
                 src.FollowerName,
                 src.SortOrder,
-                src.SortProperty,
+                src.SortTerm,
                 src.Page,
                 src.PageSize));
 
