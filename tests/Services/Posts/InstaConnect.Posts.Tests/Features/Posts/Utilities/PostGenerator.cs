@@ -5,28 +5,22 @@ using RabbitMQ.Client;
 namespace InstaConnect.Posts.Tests.Features.Posts.Utilities;
 public static class PostGenerator
 {
-    public static ICollection<Post> GeneratePostsRange(this Post template, IEnumerable<User> users)
+    public static ICollection<Post> Generate(this Post basePost, IEnumerable<User> users, int numberOfIterations = 3)
     {
-        const int NumberOfIterationsPerUser = 5;
-
-        return [.. users
+        return [basePost, .. users
             .SelectMany(user =>
-                Enumerable.Range(default, NumberOfIterationsPerUser).Select(_ =>
+                Enumerable.Range(default, numberOfIterations).Select(_ =>
                 {
                     var post = new Post(
                         new(PostDataFaker.GetId()),
-                        PostDataFaker.GetTitleWithPrefix(template.Title),
+                        PostDataFaker.GetTitleWithPrefix(basePost.Title),
                         PostDataFaker.GetContent(),
                         user.Id,
                         PostDataFaker.GetCreatedAtUtc(),
                         PostDataFaker.GetUpdatedAtUtc());
 
-                    var postLike = new PostLike(
-                        new(post.Id, user.Id),
-                        PostLikeDataFaker.GetCreatedAtUtc());
-
                     post.AddUser(user);
-                    post.AddPostLike(postLike);
+                    user.AddPost(post);
 
                     return post;
                 }))];

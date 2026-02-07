@@ -4,23 +4,25 @@ public static class PostCommentMockSetups
     public static void SetupGetAllQueryRequest(
         this IApplicationSender sender,
         GetAllPostCommentsApiRequest request,
+        Post post,
         ICollection<PostComment> postComments,
         CancellationToken cancellationToken)
     {
         sender
             .SendAsync(PostCommentMatcher.IsGetAllPostCommentsQueryRequest(request), cancellationToken)
-            .ReturnsResponse(postComments.ToResponse(request));
+            .ReturnsResponse(postComments.ToResponse(post, request));
     }
 
     public static void SetupGetAllForUserQueryRequest(
         this IApplicationSender sender,
         GetAllPostCommentsForUserApiRequest request,
+        User user,
         ICollection<PostComment> postComments,
         CancellationToken cancellationToken)
     {
         sender
             .SendAsync(PostCommentMatcher.IsGetAllPostCommentsForUserQueryRequest(request), cancellationToken)
-            .ReturnsResponse(postComments.ToResponse(request));
+            .ReturnsResponse(postComments.ToResponse(user, request));
     }
 
     public static void SetupGetByIdQueryRequest(

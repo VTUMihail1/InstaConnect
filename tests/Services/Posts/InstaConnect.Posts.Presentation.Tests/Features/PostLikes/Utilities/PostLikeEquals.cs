@@ -64,18 +64,21 @@ public static class PostLikeEquals
 
     public static bool Matches(
         this GetAllPostLikesApiResponse response,
+        Post post,
         ICollection<PostLike> postLikes,
         GetAllPostLikesApiRequest request)
     {
         return response.PostLikeCollection.MatchesWithoutUser(
                    (response, postLike) => response.MatchesWithoutPost(postLike, request),
                    postLike => postLike.MatchesFilter(request),
+                   post,
                    postLikes,
                    request);
     }
 
     public static bool Matches(
         this GetAllPostLikesApiResponse response,
+        Post post,
         ICollection<PostLike> postLikes,
         GetAllPostLikesApiRequest request,
         ISortEnumTermTransformer<PostLike> termTransformer)
@@ -83,6 +86,7 @@ public static class PostLikeEquals
         return response.PostLikeCollection.MatchesWithoutUser(
                    (response, postLike) => response.MatchesWithoutPost(postLike, request),
                    postLike => postLike.MatchesFilter(request),
+                   post,
                    postLikes,
                    request,
                    termTransformer);
@@ -90,18 +94,21 @@ public static class PostLikeEquals
 
     public static bool Matches(
         this GetAllPostLikesForUserApiResponse response,
+        User user,
         ICollection<PostLike> postLikes,
         GetAllPostLikesForUserApiRequest request)
     {
         return response.PostLikeCollection.MatchesWithoutPost(
                    (response, postLike) => response.MatchesWithoutUser(postLike, request),
                    postLike => postLike.MatchesFilter(request),
+                   user,
                    postLikes,
                    request);
     }
 
     public static bool Matches(
         this GetAllPostLikesForUserApiResponse response,
+        User user,
         ICollection<PostLike> postLikes,
         GetAllPostLikesForUserApiRequest request,
         ISortEnumTermTransformer<PostLike> termTransformer)
@@ -109,6 +116,7 @@ public static class PostLikeEquals
         return response.PostLikeCollection.MatchesWithoutPost(
                    (response, postLike) => response.MatchesWithoutUser(postLike, request),
                    postLike => postLike.MatchesFilter(request),
+                   user,
                    postLikes,
                    request,
                    termTransformer);
@@ -150,18 +158,17 @@ public static class PostLikeEquals
         this PostLikeCollectionApiResponse response,
         Func<PostLikeApiResponse, PostLike, bool> matches,
         Func<PostLike, bool> matchesFilter,
+        Post post,
         ICollection<PostLike> postLikes,
         TRequest request)
         where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
     {
-        var postLike = postLikes.FirstOrDefault();
-
         return response.MatchesCollectionResponse(postLikes.Count, request) &&
                response.User == null &&
-               response.Post.MatchesFull(postLike?.Post, request) &&
+               response.Post.MatchesFull(post, request) &&
                response.PostLikes.MatchesCollection(postLikes,
-                                                    response => response.UserId,
-                                                    postLike => postLike.Id.UserId.Id,
+                                                    response => new(new(response.Id), new(response.UserId)),
+                                                    postLike => postLike.Id,
                                                     matches,
                                                     request,
                                                     matchesFilter);
@@ -171,16 +178,15 @@ public static class PostLikeEquals
         this PostLikeCollectionApiResponse response,
         Func<PostLikeApiResponse, PostLike, bool> matches,
         Func<PostLike, bool> matchesFilter,
+        Post post,
         ICollection<PostLike> postLikes,
         TRequest request,
         ISortEnumTermTransformer<PostLike> termTransformer)
         where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
     {
-        var postLike = postLikes.FirstOrDefault();
-
         return response.MatchesCollectionResponse(postLikes.Count, request) &&
                response.User == null &&
-               response.Post.MatchesFull(postLike?.Post, request) &&
+               response.Post.MatchesFull(post, request) &&
                response.PostLikes.MatchesSortedCollection(postLikes,
                                                           matches,
                                                           termTransformer,
@@ -203,18 +209,17 @@ public static class PostLikeEquals
         this PostLikeCollectionApiResponse response,
         Func<PostLikeApiResponse, PostLike, bool> matches,
         Func<PostLike, bool> matchesFilter,
+        User user,
         ICollection<PostLike> postLikes,
         TRequest request)
         where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
     {
-        var postLike = postLikes.FirstOrDefault();
-
         return response.MatchesCollectionResponse(postLikes.Count, request) &&
-               response.User.MatchesFull(postLike?.User) &&
+               response.User.MatchesFull(user) &&
                response.Post == null &&
                response.PostLikes.MatchesCollection(postLikes,
-                                                    response => response.UserId,
-                                                    postLike => postLike.Id.UserId.Id,
+                                                    response => new(new(response.Id), new(response.UserId)),
+                                                    postLike => postLike.Id,
                                                     matches,
                                                     request,
                                                     matchesFilter);
@@ -224,15 +229,14 @@ public static class PostLikeEquals
         this PostLikeCollectionApiResponse response,
         Func<PostLikeApiResponse, PostLike, bool> matches,
         Func<PostLike, bool> matchesFilter,
+        User user,
         ICollection<PostLike> postLikes,
         TRequest request,
         ISortEnumTermTransformer<PostLike> termTransformer)
         where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
     {
-        var postLike = postLikes.FirstOrDefault();
-
         return response.MatchesCollectionResponse(postLikes.Count, request) &&
-               response.User.MatchesFull(postLike?.User) &&
+               response.User.MatchesFull(user) &&
                response.Post == null &&
                response.PostLikes.MatchesSortedCollection(postLikes,
                                                           matches,

@@ -9,8 +9,8 @@ using InstaConnect.Posts.Presentation.Features.Users.Utilities;
 namespace InstaConnect.Posts.Presentation.Features.PostLikes.Models.Requests;
 
 public record GetAllPostLikesApiRequest(
-    [FromClaim(ClaimTypes.NameIdentifier)] string CurrentUserId,
     [FromRoute] string Id,
+    [FromClaim(ClaimTypes.NameIdentifier)] string CurrentUserId,
     [FromQuery] string UserName = UserDefaultValues.Name,
     [FromQuery] CommonSortOrder SortOrder = CommonDefaultValues.SortOrder,
     [FromQuery] PostLikesSortTerm SortTerm = PostLikeDefaultValues.SortTerm,

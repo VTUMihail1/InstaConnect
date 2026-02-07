@@ -17,12 +17,13 @@ public static class PostMockSetups
     public static void SetupGetAllForUserQuery(
         this IPostQueryService service,
         GetAllPostsForUserQueryRequest request,
+        User user,
         ICollection<Post> posts,
         CancellationToken cancellationToken)
     {
         service
             .GetAllForUserAsync(PostMatcher.IsGetAllPostsForUserQuery(request), cancellationToken)
-            .ReturnsResponse(posts.ToResponse(request));
+            .ReturnsResponse(posts.ToResponse(user, request));
     }
 
     public static void SetupGetByIdQuery(

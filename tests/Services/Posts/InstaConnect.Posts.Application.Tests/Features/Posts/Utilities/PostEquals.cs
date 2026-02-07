@@ -98,18 +98,21 @@ public static class PostEquals
 
     public static bool Matches(
         this GetAllPostsForUserQueryResponse response,
+        User user,
         ICollection<Post> posts,
         GetAllPostsForUserQueryRequest request)
     {
         return response.PostCollection.MatchesFull(
                    (response, post) => response.MatchesWithoutUser(post, request),
                    post => post.MatchesFilter(request),
+                   user,
                    posts,
                    request);
     }
 
     public static bool Matches(
         this GetAllPostsForUserQueryResponse response,
+        User user,
         ICollection<Post> posts,
         GetAllPostsForUserQueryRequest request,
         ISortEnumTermTransformer<Post> termTransformer)
@@ -117,6 +120,7 @@ public static class PostEquals
         return response.PostCollection.MatchesFull(
                    (response, post) => response.MatchesWithoutUser(post, request),
                    post => post.MatchesFilter(request),
+                   user,
                    posts,
                    request,
                    termTransformer);
@@ -148,6 +152,7 @@ public static class PostEquals
         return response != null &&
                post != null &&
                post.Id.Matches(response.Id) &&
+               post.UserId.Matches(response.UserId) &&
                post.Title == response.Title &&
                post.Content == response.Content &&
                response.IsLikedByCurrentUser == post.PostLikes.Any(pl => pl.Id.UserId.Matches(request.CurrentUserId)) &&
@@ -160,17 +165,16 @@ public static class PostEquals
         this PostCollectionQueryResponse response,
         Func<PostQueryResponse, Post, bool> matches,
         Func<Post, bool> matchesFilter,
+        User user,
         ICollection<Post> posts,
         TRequest request)
         where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
     {
-        var post = posts.FirstOrDefault();
-
         return response.MatchesCollectionResponse(posts.Count, request) &&
-               response.User.MatchesFull(post?.User) &&
+               response.User.MatchesFull(user) &&
                response.Posts.MatchesCollection(posts,
-                                                response => response.Id,
-                                                post => post.Id.Id,
+                                                response => new(response.Id),
+                                                post => post.Id,
                                                 matches,
                                                 request,
                                                 matchesFilter);
@@ -180,15 +184,14 @@ public static class PostEquals
         this PostCollectionQueryResponse response,
         Func<PostQueryResponse, Post, bool> matches,
         Func<Post, bool> matchesFilter,
+        User user,
         ICollection<Post> posts,
         TRequest request,
         ISortEnumTermTransformer<Post> termTransformer)
         where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
     {
-        var post = posts.FirstOrDefault();
-
         return response.MatchesCollectionResponse(posts.Count, request) &&
-               response.User.MatchesFull(post?.User) &&
+               response.User.MatchesFull(user) &&
                response.Posts.MatchesSortedCollection(posts,
                                                       matches,
                                                       termTransformer,
@@ -202,6 +205,7 @@ public static class PostEquals
         return response != null &&
                post != null &&
                post.Id.Matches(response.Id) &&
+               post.UserId.Matches(response.UserId) &&
                post.Title == response.Title &&
                post.Content == response.Content &&
                response.IsLikedByCurrentUser == post.PostLikes.Any(pl => pl.Id.UserId.Matches(request.CurrentUserId)) &&
@@ -221,8 +225,8 @@ public static class PostEquals
         return response.MatchesCollectionResponse(posts.Count, request) &&
                response.User == null &&
                response.Posts.MatchesCollection(posts,
-                                                response => response.Id,
-                                                post => post.Id.Id,
+                                                response => new(response.Id),
+                                                post => post.Id,
                                                 matches,
                                                 request,
                                                 matchesFilter);

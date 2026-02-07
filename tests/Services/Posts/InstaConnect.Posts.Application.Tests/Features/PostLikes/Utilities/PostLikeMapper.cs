@@ -36,15 +36,15 @@ public static class PostLikeMapper
 
     internal static PostLikeCollectionResponse ToResponseWithoutUser<TRequest>(
         this ICollection<PostLike> postLikes,
+        Post post,
         Func<PostLike, TRequest, bool> filter,
         Func<PostLike, TRequest, PostLikeResponse> transform,
         TRequest request)
         where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
     {
         var paginator = new Paginator();
-        var postLike = postLikes.FirstOrDefault();
 
-        return new(postLike?.Post?.ToFullResponse(request),
+        return new(post?.ToFullResponse(request),
                    null,
                    postLikes.Filter(postLike => filter(postLike, request), request, postLike => transform(postLike, request)),
                    request.Page,
@@ -67,16 +67,16 @@ public static class PostLikeMapper
 
     internal static PostLikeCollectionResponse ToResponseWithoutPost<TRequest>(
         this ICollection<PostLike> postLikes,
+        User user,
         Func<PostLike, TRequest, bool> filter,
         Func<PostLike, TRequest, PostLikeResponse> transform,
         TRequest request)
         where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
     {
         var paginator = new Paginator();
-        var postLike = postLikes.FirstOrDefault();
 
         return new(null,
-                   postLike?.User?.ToFullResponse(),
+                   user.ToFullResponse(),
                    postLikes.Filter(postLike => filter(postLike, request), request, postLike => transform(postLike, request)),
                    request.Page,
                    request.PageSize,
@@ -112,9 +112,11 @@ public static class PostLikeMapper
 
     public static PostLikeCollectionResponse ToResponse(
         this ICollection<PostLike> postLikes,
+        Post post,
         GetAllPostLikesQueryRequest request)
     {
         return postLikes.ToResponseWithoutUser(
+            post,
             (postLike, request) => postLike.MatchesFilter(request),
             (postLike, request) => postLike.ToResponseWithoutPost(request),
             request);
@@ -122,9 +124,11 @@ public static class PostLikeMapper
 
     public static PostLikeCollectionResponse ToResponse(
         this ICollection<PostLike> postLikes,
+        User user,
         GetAllPostLikesForUserQueryRequest request)
     {
         return postLikes.ToResponseWithoutPost(
+            user,
             (postLike, request) => postLike.MatchesFilter(request),
             (postLike, request) => postLike.ToResponseWithoutUser(request),
             request);

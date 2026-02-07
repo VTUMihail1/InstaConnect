@@ -6,7 +6,7 @@ public class GetAllPostCommentsControllerUnitTests : BasePostCommentPresentation
     private readonly GetAllPostCommentsApiRequestBuilder _requestBuilder;
     private readonly GetAllPostCommentsApiRequest _request;
 
-    private readonly PostCommentController _postCommentController;
+    private readonly PostCommentController _controller;
 
     public GetAllPostCommentsControllerUnitTests()
     {
@@ -14,16 +14,16 @@ public class GetAllPostCommentsControllerUnitTests : BasePostCommentPresentation
         _requestBuilder = _requestBuilderFactory.Create(PostComment);
         _request = _requestBuilder.Build();
 
-        _postCommentController = new(Mapper, Sender);
+        _controller = new(Mapper, Sender);
 
-        Sender.SetupGetAllQueryRequest(_request, PostComments, CancellationToken);
+        Sender.SetupGetAllQueryRequest(_request, Post, PostComments, CancellationToken);
     }
 
     [Fact]
     public async Task GetAllAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
     {
         // Act
-        var response = await _postCommentController.GetAllAsync(_request, CancellationToken);
+        var response = await _controller.GetAllAsync(_request, CancellationToken);
 
         // Assert
         response.ShouldBeActionResultWithOkStatusCode();
@@ -33,17 +33,17 @@ public class GetAllPostCommentsControllerUnitTests : BasePostCommentPresentation
     public async Task GetAllAsync_ShouldReturnResponse_WhenRequestIsValid()
     {
         // Act
-        var response = await _postCommentController.GetAllAsync(_request, CancellationToken);
+        var response = await _controller.GetAllAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostComments, _request);
+        response.ShouldSatisfy(Post, PostComments, _request);
     }
 
     [Fact]
     public async Task GetAllAsync_ShouldCallTheApplicationSenderSendAsync_WhenRequestIsValid()
     {
         // Act
-        await _postCommentController.GetAllAsync(_request, CancellationToken);
+        await _controller.GetAllAsync(_request, CancellationToken);
 
         // Assert
         await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);

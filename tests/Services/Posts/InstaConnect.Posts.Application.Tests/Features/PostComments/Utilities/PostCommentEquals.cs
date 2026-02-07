@@ -81,18 +81,21 @@ public static class PostCommentEquals
 
     public static bool Matches(
         this GetAllPostCommentsQueryResponse response,
+        Post post,
         ICollection<PostComment> postComments,
         GetAllPostCommentsQueryRequest request)
     {
         return response.PostCommentCollection.MatchesWithoutUser(
                    (response, postComment) => response.MatchesWithoutPost(postComment, request),
                    postComment => postComment.MatchesFilter(request),
+                   post,
                    postComments,
                    request);
     }
 
     public static bool Matches(
         this GetAllPostCommentsQueryResponse response,
+        Post post,
         ICollection<PostComment> postComments,
         GetAllPostCommentsQueryRequest request,
         ISortEnumTermTransformer<PostComment> termTransformer)
@@ -100,6 +103,7 @@ public static class PostCommentEquals
         return response.PostCommentCollection.MatchesWithoutUser(
                    (response, postComment) => response.MatchesWithoutPost(postComment, request),
                    postComment => postComment.MatchesFilter(request),
+                   post,
                    postComments,
                    request,
                    termTransformer);
@@ -107,18 +111,21 @@ public static class PostCommentEquals
 
     public static bool Matches(
         this GetAllPostCommentsForUserQueryResponse response,
+        User user,
         ICollection<PostComment> postComments,
         GetAllPostCommentsForUserQueryRequest request)
     {
         return response.PostCommentCollection.MatchesWithoutPost(
                    (response, postComment) => response.MatchesWithoutUser(postComment, request),
                    postComment => postComment.MatchesFilter(request),
+                   user,
                    postComments,
                    request);
     }
 
     public static bool Matches(
         this GetAllPostCommentsForUserQueryResponse response,
+        User user,
         ICollection<PostComment> postComments,
         GetAllPostCommentsForUserQueryRequest request,
         ISortEnumTermTransformer<PostComment> termTransformer)
@@ -126,6 +133,7 @@ public static class PostCommentEquals
         return response.PostCommentCollection.MatchesWithoutPost(
                    (response, postComment) => response.MatchesWithoutUser(postComment, request),
                    postComment => postComment.MatchesFilter(request),
+                   user,
                    postComments,
                    request,
                    termTransformer);
@@ -155,7 +163,8 @@ public static class PostCommentEquals
     {
         return response != null &&
                postComment != null &&
-               postComment.Id.Matches(response.Id, response.UserId) &&
+               postComment.Id.Matches(response.Id, response.CommentId) &&
+               postComment.UserId.Matches(response.UserId) &&
                postComment.Content == response.Content &&
                response.IsLikedByCurrentUser == postComment.PostCommentLikes.Any(pl => pl.Id.UserId.Matches(request.CurrentUserId)) &&
                postComment.CreatedAtUtc == response.CreatedAtUtc &&
@@ -169,7 +178,8 @@ public static class PostCommentEquals
     {
         return response != null &&
                postComment != null &&
-               postComment.Id.Matches(response.Id, response.UserId) &&
+               postComment.Id.Matches(response.Id, response.CommentId) &&
+               postComment.UserId.Matches(response.UserId) &&
                postComment.Content == response.Content &&
                response.IsLikedByCurrentUser == postComment.PostCommentLikes.Any(pl => pl.Id.UserId.Matches(request.CurrentUserId)) &&
                postComment.CreatedAtUtc == response.CreatedAtUtc &&
@@ -182,18 +192,17 @@ public static class PostCommentEquals
         this PostCommentCollectionQueryResponse response,
         Func<PostCommentQueryResponse, PostComment, bool> matches,
         Func<PostComment, bool> matchesFilter,
+        Post post,
         ICollection<PostComment> postComments,
         TRequest request)
         where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
     {
-        var postComment = postComments.FirstOrDefault();
-
         return response.MatchesCollectionResponse(postComments.Count, request) &&
                response.User == null &&
-               response.Post.MatchesFull(postComment?.Post, request) &&
+               response.Post.MatchesFull(post, request) &&
                response.PostComments.MatchesCollection(postComments,
-                                                    response => response.UserId,
-                                                    postComment => postComment.UserId.Id,
+                                                    response => new(new(response.Id), response.CommentId),
+                                                    postComment => postComment.Id,
                                                     matches,
                                                     request,
                                                     matchesFilter);
@@ -203,16 +212,15 @@ public static class PostCommentEquals
         this PostCommentCollectionQueryResponse response,
         Func<PostCommentQueryResponse, PostComment, bool> matches,
         Func<PostComment, bool> matchesFilter,
+        Post post,
         ICollection<PostComment> postComments,
         TRequest request,
         ISortEnumTermTransformer<PostComment> termTransformer)
         where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
     {
-        var postComment = postComments.FirstOrDefault();
-
         return response.MatchesCollectionResponse(postComments.Count, request) &&
                response.User == null &&
-               response.Post.MatchesFull(postComment?.Post, request) &&
+               response.Post.MatchesFull(post, request) &&
                response.PostComments.MatchesSortedCollection(postComments,
                                                           matches,
                                                           termTransformer,
@@ -225,7 +233,8 @@ public static class PostCommentEquals
     {
         return response != null &&
                postComment != null &&
-               postComment.Id.Matches(response.Id, response.UserId) &&
+               postComment.Id.Matches(response.Id, response.CommentId) &&
+               postComment.UserId.Matches(response.UserId) &&
                postComment.Content == response.Content &&
                response.IsLikedByCurrentUser == postComment.PostCommentLikes.Any(pl => pl.Id.UserId.Matches(request.CurrentUserId)) &&
                postComment.CreatedAtUtc == response.CreatedAtUtc &&
@@ -238,18 +247,17 @@ public static class PostCommentEquals
         this PostCommentCollectionQueryResponse response,
         Func<PostCommentQueryResponse, PostComment, bool> matches,
         Func<PostComment, bool> matchesFilter,
+        User user,
         ICollection<PostComment> postComments,
         TRequest request)
         where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
     {
-        var postComment = postComments.FirstOrDefault();
-
         return response.MatchesCollectionResponse(postComments.Count, request) &&
-               response.User.MatchesFull(postComment?.User) &&
+               response.User.MatchesFull(user) &&
                response.Post == null &&
                response.PostComments.MatchesCollection(postComments,
-                                                    response => response.UserId,
-                                                    postComment => postComment.UserId.Id,
+                                                    response => new(new(response.Id), response.CommentId),
+                                                    postComment => postComment.Id,
                                                     matches,
                                                     request,
                                                     matchesFilter);
@@ -259,15 +267,14 @@ public static class PostCommentEquals
         this PostCommentCollectionQueryResponse response,
         Func<PostCommentQueryResponse, PostComment, bool> matches,
         Func<PostComment, bool> matchesFilter,
+        User user,
         ICollection<PostComment> postComments,
         TRequest request,
         ISortEnumTermTransformer<PostComment> termTransformer)
         where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
     {
-        var postComment = postComments.FirstOrDefault();
-
         return response.MatchesCollectionResponse(postComments.Count, request) &&
-               response.User.MatchesFull(postComment?.User) &&
+               response.User.MatchesFull(user) &&
                response.Post == null &&
                response.PostComments.MatchesSortedCollection(postComments,
                                                           matches,

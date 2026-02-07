@@ -29,6 +29,7 @@ public static class CommonEquals
         var entitiesByKey = entities.FilterToDictionary(filter, request, entityKey);
 
         return expected.Count == entitiesByKey.Count &&
+               expected.Any() &&
                expected.All(e =>
                entitiesByKey.TryGetValue(expectedKey(e), out var a) &&
                matcher(e, a));
@@ -47,6 +48,7 @@ public static class CommonEquals
         var sortedEntities = entities.Filter(termTransformer, request, filter);
 
         return expected.Count == sortedEntities.Count &&
+               expected.Any() &&
                expected.Zip(sortedEntities, (e, a) => matcher(e, a))
                        .All(match => match);
     }

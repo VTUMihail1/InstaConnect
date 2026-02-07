@@ -37,15 +37,15 @@ public static class PostCommentMapper
 
     internal static PostCommentCollectionResponse ToResponseWithoutUser<TRequest>(
         this ICollection<PostComment> postComments,
+        Post post,
         Func<PostComment, TRequest, bool> filter,
         Func<PostComment, TRequest, PostCommentResponse> transform,
         TRequest request)
         where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
     {
         var paginator = new Paginator();
-        var postComment = postComments.FirstOrDefault();
 
-        return new(postComment?.Post?.ToFullResponse(request),
+        return new(post.ToFullResponse(request),
                    null,
                    postComments.Filter(postComment => filter(postComment, request), request, postComment => transform(postComment, request)),
                    request.Page,
@@ -72,16 +72,16 @@ public static class PostCommentMapper
 
     internal static PostCommentCollectionResponse ToResponseWithoutPost<TRequest>(
         this ICollection<PostComment> postComments,
+        User user,
         Func<PostComment, TRequest, bool> filter,
         Func<PostComment, TRequest, PostCommentResponse> transform,
         TRequest request)
         where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
     {
         var paginator = new Paginator();
-        var postComment = postComments.FirstOrDefault();
 
         return new(null,
-                   postComment?.User?.ToFullResponse(),
+                   user.ToFullResponse(),
                    postComments.Filter(postComment => filter(postComment, request), request, postComment => transform(postComment, request)),
                    request.Page,
                    request.PageSize,
@@ -128,21 +128,23 @@ public static class PostCommentMapper
 
     public static PostCommentCollectionResponse ToResponse(
         this ICollection<PostComment> postComments,
+        Post post,
         GetAllPostCommentsQueryRequest request)
     {
-        return postComments.ToResponseWithoutUser(
-            (postComment, request) => postComment.MatchesFilter(request),
-            (postComment, request) => postComment.ToResponseWithoutPost(request),
-            request);
+        return postComments.ToResponseWithoutUser(post,
+                                                  (postComment, request) => postComment.MatchesFilter(request),
+                                                  (postComment, request) => postComment.ToResponseWithoutPost(request),
+                                                  request);
     }
 
     public static PostCommentCollectionResponse ToResponse(
         this ICollection<PostComment> postComments,
+        User user,
         GetAllPostCommentsForUserQueryRequest request)
     {
-        return postComments.ToResponseWithoutPost(
-            (postComment, request) => postComment.MatchesFilter(request),
-            (postComment, request) => postComment.ToResponseWithoutUser(request),
-            request);
+        return postComments.ToResponseWithoutPost(user,
+                                                  (postComment, request) => postComment.MatchesFilter(request),
+                                                  (postComment, request) => postComment.ToResponseWithoutUser(request),
+                                                  request);
     }
 }

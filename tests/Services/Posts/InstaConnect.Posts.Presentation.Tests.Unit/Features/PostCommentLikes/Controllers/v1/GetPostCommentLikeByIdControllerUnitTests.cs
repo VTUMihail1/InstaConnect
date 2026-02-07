@@ -6,7 +6,7 @@ public class GetPostCommentLikeByIdControllerUnitTests : BasePostCommentLikePres
     private readonly GetPostCommentLikeByIdApiRequestBuilder _requestBuilder;
     private readonly GetPostCommentLikeByIdApiRequest _request;
 
-    private readonly PostCommentLikeController _postCommentLikeController;
+    private readonly PostCommentLikeController _controller;
 
     public GetPostCommentLikeByIdControllerUnitTests()
     {
@@ -14,7 +14,7 @@ public class GetPostCommentLikeByIdControllerUnitTests : BasePostCommentLikePres
         _requestBuilder = _requestBuilderFactory.Create(PostCommentLike);
         _request = _requestBuilder.Build();
 
-        _postCommentLikeController = new(Mapper, Sender);
+        _controller = new(Mapper, Sender);
 
         Sender.SetupGetByIdQueryRequest(_request, PostCommentLike, CancellationToken);
     }
@@ -23,7 +23,7 @@ public class GetPostCommentLikeByIdControllerUnitTests : BasePostCommentLikePres
     public async Task GetByIdAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
     {
         // Act
-        var response = await _postCommentLikeController.GetByIdAsync(_request, CancellationToken);
+        var response = await _controller.GetByIdAsync(_request, CancellationToken);
 
         // Assert
         response.ShouldBeActionResultWithOkStatusCode();
@@ -33,7 +33,7 @@ public class GetPostCommentLikeByIdControllerUnitTests : BasePostCommentLikePres
     public async Task GetByIdAsync_ShouldReturnResponse_WhenRequestIsValid()
     {
         // Act
-        var response = await _postCommentLikeController.GetByIdAsync(_request, CancellationToken);
+        var response = await _controller.GetByIdAsync(_request, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(PostCommentLike, _request);
@@ -43,7 +43,7 @@ public class GetPostCommentLikeByIdControllerUnitTests : BasePostCommentLikePres
     public async Task GetByIdAsync_ShouldCallTheApplicationSenderSendAsync_WhenRequestIsValid()
     {
         // Act
-        await _postCommentLikeController.GetByIdAsync(_request, CancellationToken);
+        await _controller.GetByIdAsync(_request, CancellationToken);
 
         // Assert
         await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);

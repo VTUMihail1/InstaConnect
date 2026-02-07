@@ -6,6 +6,7 @@ public class PostCommentLikeBuilder
 {
     private string _id;
     private string _commentId;
+    private PostComment _postComment;
     private string _userId;
     private User _user;
     private DateTimeOffset _createdAtUtc;
@@ -14,6 +15,7 @@ public class PostCommentLikeBuilder
     {
         _id = postComment.Id.Id.Id;
         _commentId = postComment.Id.CommentId;
+        _postComment = postComment;
         _userId = user.Id.Id;
         _user = user;
         _createdAtUtc = PostCommentLikeDataFaker.GetCreatedAtUtc();
@@ -57,7 +59,10 @@ public class PostCommentLikeBuilder
                     new(_userId)),
                 _createdAtUtc);
 
+        _user.AddPostCommentLike(postCommentLike);
+        _postComment.AddPostCommentLike(postCommentLike);
         postCommentLike.AddUser(_user);
+        postCommentLike.AddPostComment(_postComment);
 
         return postCommentLike;
     }

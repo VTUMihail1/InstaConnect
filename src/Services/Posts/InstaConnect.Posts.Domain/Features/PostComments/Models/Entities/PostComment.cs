@@ -52,14 +52,14 @@ public class PostComment : IEntityWithId<PostCommentId>
         return UserId.IsNot(userId);
     }
 
-    public PostComment AddUser(User user)
+    public PostComment AddUser(User? user)
     {
         User = user;
 
         return this;
     }
 
-    public PostComment AddPost(Post post)
+    public PostComment AddPost(Post? post)
     {
         Post = post;
 

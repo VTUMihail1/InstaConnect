@@ -6,7 +6,7 @@ public class AddPostControllerUnitTests : BasePostPresentationCommandUnitTest
     private readonly AddPostApiRequestBuilder _requestBuilder;
     private readonly AddPostApiRequest _request;
 
-    private readonly PostController _postController;
+    private readonly PostController _controller;
 
     public AddPostControllerUnitTests()
     {
@@ -14,7 +14,7 @@ public class AddPostControllerUnitTests : BasePostPresentationCommandUnitTest
         _requestBuilder = _requestBuilderFactory.Create(User);
         _request = _requestBuilder.Build();
 
-        _postController = new(Mapper, Sender);
+        _controller = new(Mapper, Sender);
 
         Sender.SetupAddCommandRequest(_request, Post, CancellationToken);
     }
@@ -23,7 +23,7 @@ public class AddPostControllerUnitTests : BasePostPresentationCommandUnitTest
     public async Task AddAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
     {
         // Act
-        var response = await _postController.AddAsync(_request, CancellationToken);
+        var response = await _controller.AddAsync(_request, CancellationToken);
 
         // Assert
         response.ShouldBeActionResultWithOkStatusCode();
@@ -33,7 +33,7 @@ public class AddPostControllerUnitTests : BasePostPresentationCommandUnitTest
     public async Task AddAsync_ShouldReturnResponse_WhenRequestIsValid()
     {
         // Act
-        var response = await _postController.AddAsync(_request, CancellationToken);
+        var response = await _controller.AddAsync(_request, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(Post, _request);
@@ -43,7 +43,7 @@ public class AddPostControllerUnitTests : BasePostPresentationCommandUnitTest
     public async Task AddAsync_ShouldCallTheApplicationSenderSendAsync_WhenRequestIsValid()
     {
         // Act
-        await _postController.AddAsync(_request, CancellationToken);
+        await _controller.AddAsync(_request, CancellationToken);
 
         // Assert
         await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);

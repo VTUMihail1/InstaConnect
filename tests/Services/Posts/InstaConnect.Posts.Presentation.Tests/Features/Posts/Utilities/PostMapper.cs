@@ -35,15 +35,15 @@ public static class PostMapper
 
     internal static PostCollectionQueryResponse ToFullResponse<TRequest>(
         this ICollection<Post> posts,
+        User user,
         Func<Post, TRequest, bool> filter,
         Func<Post, TRequest, PostQueryResponse> transform,
         TRequest request)
         where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
     {
         var paginator = new Paginator();
-        var post = posts.FirstOrDefault();
 
-        return new(post?.User?.ToFullResponse(),
+        return new(user.ToFullResponse(),
                     posts.Filter(post => filter(post, request), request, post => transform(post, request)),
                     request.Page,
                     request.PageSize,
@@ -117,9 +117,11 @@ public static class PostMapper
 
     public static GetAllPostsForUserQueryResponse ToResponse(
         this ICollection<Post> posts,
+        User user,
         GetAllPostsForUserApiRequest request)
     {
-        return new(posts.ToFullResponse((post, request) => post.MatchesFilter(request),
+        return new(posts.ToFullResponse(user,
+                                        (post, request) => post.MatchesFilter(request),
                                         (post, request) => post.ToResponseWithoutUser(request),
                                         request));
     }

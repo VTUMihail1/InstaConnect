@@ -1,22 +1,22 @@
-﻿namespace InstaConnect.Posts.Presentation.Tests.Unit.Features.PostCommentLikes.Controllers.v1;
+﻿namespace InstaConnect.Posts.Presentation.Tests.Unit.Features.PostLikes.Controllers.v1;
 
-public class GetAllPostCommentLikesControllerUnitTests : BasePostCommentLikePresentationQueryUnitTest
+public class GetAllPostLikesForUserControllerUnitTests : BasePostLikePresentationQueryUnitTest
 {
-    private readonly GetAllPostCommentLikesApiRequestBuilderFactory _requestBuilderFactory;
-    private readonly GetAllPostCommentLikesApiRequestBuilder _requestBuilder;
-    private readonly GetAllPostCommentLikesApiRequest _request;
+    private readonly GetAllPostLikesForUserApiRequestBuilderFactory _requestBuilderFactory;
+    private readonly GetAllPostLikesForUserApiRequestBuilder _requestBuilder;
+    private readonly GetAllPostLikesForUserApiRequest _request;
 
-    private readonly PostCommentLikeController _controller;
+    private readonly UserPostLikeController _controller;
 
-    public GetAllPostCommentLikesControllerUnitTests()
+    public GetAllPostLikesForUserControllerUnitTests()
     {
         _requestBuilderFactory = new();
-        _requestBuilder = _requestBuilderFactory.Create(PostCommentLike);
+        _requestBuilder = _requestBuilderFactory.Create(PostLike);
         _request = _requestBuilder.Build();
 
         _controller = new(Mapper, Sender);
 
-        Sender.SetupGetAllQueryRequest(_request, PostComment, PostCommentLikes, CancellationToken);
+        Sender.SetupGetAllForUserQueryRequest(_request, User, PostLikes, CancellationToken);
     }
 
     [Fact]
@@ -36,7 +36,7 @@ public class GetAllPostCommentLikesControllerUnitTests : BasePostCommentLikePres
         var response = await _controller.GetAllAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostComment, PostCommentLikes, _request);
+        response.ShouldSatisfy(User, PostLikes, _request);
     }
 
     [Fact]

@@ -48,19 +48,21 @@ public static class PostMatchAssertions
 
     public static void ShouldSatisfy(
         this GetAllPostsForUserApiResponse response,
+        User user,
         ICollection<Post> posts,
         GetAllPostsForUserApiRequest request)
     {
-        response.ShouldSatisfy(p => p.Matches(posts, request));
+        response.ShouldSatisfy(p => p.Matches(user, posts, request));
     }
 
     public static void ShouldSatisfy(
         this GetAllPostsForUserApiResponse response,
+        User user,
         ICollection<Post> posts,
         GetAllPostsForUserApiRequest request,
         ISortEnumTermTransformer<Post> termTransformer)
     {
-        response.ShouldSatisfy(p => p.Matches(posts, request, termTransformer));
+        response.ShouldSatisfy(p => p.Matches(user, posts, request, termTransformer));
     }
 
     public static void ShouldSatisfy(
@@ -97,10 +99,11 @@ public static class PostMatchAssertions
 
     public static void ShouldSatisfy(
         this ActionResult<GetAllPostsForUserApiResponse> response,
+        User user,
         ICollection<Post> posts,
         GetAllPostsForUserApiRequest request)
     {
-        response.ShouldBeActionResultAndSatisfy(p => p.Matches(posts, request));
+        response.ShouldBeActionResultAndSatisfy(p => p.Matches(user, posts, request));
     }
 
     public static void ShouldSatisfy(this Post post, AddPostApiRequest request)

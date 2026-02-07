@@ -6,23 +6,25 @@ public static class PostLikeMockSetups
     public static void SetupGetAllQuery(
         this IPostLikeQueryService likeService,
         GetAllPostLikesQueryRequest request,
+        Post post,
         ICollection<PostLike> postLikes,
         CancellationToken cancellationToken)
     {
         likeService
             .GetAllAsync(PostLikeMatcher.IsGetAllPostLikesQuery(request), cancellationToken)
-            .ReturnsResponse(postLikes.ToResponse(request));
+            .ReturnsResponse(postLikes.ToResponse(post, request));
     }
 
     public static void SetupGetAllForUserQuery(
         this IPostLikeQueryService likeService,
         GetAllPostLikesForUserQueryRequest request,
+        User user,
         ICollection<PostLike> postLikes,
         CancellationToken cancellationToken)
     {
         likeService
             .GetAllForUserAsync(PostLikeMatcher.IsGetAllPostLikesForUserQuery(request), cancellationToken)
-            .ReturnsResponse(postLikes.ToResponse(request));
+            .ReturnsResponse(postLikes.ToResponse(user, request));
     }
 
     public static void SetupGetByIdQuery(

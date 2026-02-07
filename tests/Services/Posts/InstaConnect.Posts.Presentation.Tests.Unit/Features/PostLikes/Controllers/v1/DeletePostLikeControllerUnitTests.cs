@@ -7,7 +7,7 @@ public class DeletePostLikeControllerUnitTests : BasePostLikePresentationCommand
     private readonly DeletePostLikeApiRequestBuilder _requestBuilder;
     private readonly DeletePostLikeApiRequest _request;
 
-    private readonly PostLikeController _postLikeController;
+    private readonly PostLikeController _controller;
 
     public DeletePostLikeControllerUnitTests()
     {
@@ -15,14 +15,14 @@ public class DeletePostLikeControllerUnitTests : BasePostLikePresentationCommand
         _requestBuilder = _requestBuilderFactory.Create(PostLike);
         _request = _requestBuilder.Build();
 
-        _postLikeController = new(Mapper, Sender);
+        _controller = new(Mapper, Sender);
     }
 
     [Fact]
     public async Task DeleteAsync_ShouldReturnNoContentStatusCode_WhenRequestIsValid()
     {
         // Act
-        var response = await _postLikeController.DeleteAsync(_request, CancellationToken);
+        var response = await _controller.DeleteAsync(_request, CancellationToken);
 
         // Assert
         response.ShouldBeActionResultWithNoContentStatusCode();
@@ -32,7 +32,7 @@ public class DeletePostLikeControllerUnitTests : BasePostLikePresentationCommand
     public async Task DeleteAsync_ShouldCallTheApplicationSenderSendAsync_WhenRequestIsValid()
     {
         // Act
-        await _postLikeController.DeleteAsync(_request, CancellationToken);
+        await _controller.DeleteAsync(_request, CancellationToken);
 
         // Assert
         await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);

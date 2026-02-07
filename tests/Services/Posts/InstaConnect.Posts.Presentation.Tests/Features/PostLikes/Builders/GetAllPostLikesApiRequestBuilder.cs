@@ -88,6 +88,6 @@ public class GetAllPostLikesApiRequestBuilder
 
     public GetAllPostLikesApiRequest Build()
     {
-        return new(_id, _userName, _currentUserId, _sortOrder, _sortTerm, _page, _pageSize);
+        return new(_id, _currentUserId, _userName, _sortOrder, _sortTerm, _page, _pageSize);
     }
 }

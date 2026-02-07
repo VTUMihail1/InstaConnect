@@ -6,7 +6,7 @@ public class AddPostLikeControllerUnitTests : BasePostLikePresentationCommandUni
     private readonly AddPostLikeApiRequestBuilder _requestBuilder;
     private readonly AddPostLikeApiRequest _request;
 
-    private readonly PostLikeController _postLikeController;
+    private readonly PostLikeController _controller;
 
     public AddPostLikeControllerUnitTests()
     {
@@ -14,7 +14,7 @@ public class AddPostLikeControllerUnitTests : BasePostLikePresentationCommandUni
         _requestBuilder = _requestBuilderFactory.Create(Post, User);
         _request = _requestBuilder.Build();
 
-        _postLikeController = new(Mapper, Sender);
+        _controller = new(Mapper, Sender);
 
         Sender.SetupAddCommandRequest(_request, PostLike, CancellationToken);
     }
@@ -23,7 +23,7 @@ public class AddPostLikeControllerUnitTests : BasePostLikePresentationCommandUni
     public async Task AddAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
     {
         // Act
-        var response = await _postLikeController.AddAsync(_request, CancellationToken);
+        var response = await _controller.AddAsync(_request, CancellationToken);
 
         // Assert
         response.ShouldBeActionResultWithOkStatusCode();
@@ -33,7 +33,7 @@ public class AddPostLikeControllerUnitTests : BasePostLikePresentationCommandUni
     public async Task AddAsync_ShouldReturnResponse_WhenRequestIsValid()
     {
         // Act
-        var response = await _postLikeController.AddAsync(_request, CancellationToken);
+        var response = await _controller.AddAsync(_request, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(PostLike, _request);
@@ -43,7 +43,7 @@ public class AddPostLikeControllerUnitTests : BasePostLikePresentationCommandUni
     public async Task AddAsync_ShouldCallTheApplicationSenderSendAsync_WhenRequestIsValid()
     {
         // Act
-        await _postLikeController.AddAsync(_request, CancellationToken);
+        await _controller.AddAsync(_request, CancellationToken);
 
         // Assert
         await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);

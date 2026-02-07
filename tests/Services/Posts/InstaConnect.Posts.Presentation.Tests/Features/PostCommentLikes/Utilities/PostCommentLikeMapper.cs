@@ -37,15 +37,15 @@ public static class PostCommentLikeMapper
 
     internal static PostCommentLikeCollectionQueryResponse ToResponseWithoutUser<TRequest>(
         this ICollection<PostCommentLike> postCommentLikes,
+        PostComment postComment,
         Func<PostCommentLike, TRequest, bool> filter,
         Func<PostCommentLike, TRequest, PostCommentLikeQueryResponse> transform,
         TRequest request)
         where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
     {
         var paginator = new Paginator();
-        var postCommentLike = postCommentLikes.FirstOrDefault();
 
-        return new(postCommentLike?.PostComment?.ToFullResponse(request),
+        return new(postComment.ToFullResponse(request),
                    null,
                    postCommentLikes.Filter(postCommentLike => filter(postCommentLike, request), request, postCommentLike => transform(postCommentLike, request)),
                    request.Page,
@@ -70,16 +70,16 @@ public static class PostCommentLikeMapper
 
     internal static PostCommentLikeCollectionQueryResponse ToResponseWithoutPostComment<TRequest>(
         this ICollection<PostCommentLike> postCommentLikes,
+        User user,
         Func<PostCommentLike, TRequest, bool> filter,
         Func<PostCommentLike, TRequest, PostCommentLikeQueryResponse> transform,
         TRequest request)
         where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
     {
         var paginator = new Paginator();
-        var postCommentLike = postCommentLikes.FirstOrDefault();
 
         return new(null,
-                   postCommentLike?.User?.ToFullResponse(),
+                   user.ToFullResponse(),
                    postCommentLikes.Filter(postCommentLike => filter(postCommentLike, request), request, postCommentLike => transform(postCommentLike, request)),
                    request.Page,
                    request.PageSize,
@@ -117,19 +117,23 @@ public static class PostCommentLikeMapper
 
     public static GetAllPostCommentLikesQueryResponse ToResponse(
         this ICollection<PostCommentLike> postCommentLikes,
+        PostComment postComment,
         GetAllPostCommentLikesApiRequest request)
     {
-        return new(postCommentLikes.ToResponseWithoutUser((postCommentLike, request) => postCommentLike.MatchesFilter(request),
-                                                   (postCommentLike, request) => postCommentLike.ToResponseWithoutPostComment(request),
-                                                   request));
+        return new(postCommentLikes.ToResponseWithoutUser(postComment,
+                                                          (postCommentLike, request) => postCommentLike.MatchesFilter(request),
+                                                          (postCommentLike, request) => postCommentLike.ToResponseWithoutPostComment(request),
+                                                          request));
     }
 
     public static GetAllPostCommentLikesForUserQueryResponse ToResponse(
         this ICollection<PostCommentLike> postCommentLikes,
+        User user,
         GetAllPostCommentLikesForUserApiRequest request)
     {
-        return new(postCommentLikes.ToResponseWithoutPostComment((postCommentLike, request) => postCommentLike.MatchesFilter(request),
-                                                   (postCommentLike, request) => postCommentLike.ToResponseWithoutUser(request),
-                                                   request));
+        return new(postCommentLikes.ToResponseWithoutPostComment(user,
+                                                                 (postCommentLike, request) => postCommentLike.MatchesFilter(request),
+                                                                 (postCommentLike, request) => postCommentLike.ToResponseWithoutUser(request),
+                                                                 request));
     }
 }

@@ -26,17 +26,17 @@ public abstract class BasePostLikeTest : BaseTest
         UserBuilderFactory = new();
         UserBuilder = UserBuilderFactory.Create();
         User = UserBuilder.Build();
-        Users = User.GenerateUsersRange();
+        Users = User.Generate();
 
         PostBuilderFactory = new();
         PostBuilder = PostBuilderFactory.Create(User);
         Post = PostBuilder.Build();
-        Posts = Post.GeneratePostsRange(Users);
+        Posts = Post.Generate(Users);
 
         PostLikeBuilderFactory = new();
         PostLikeBuilder = PostLikeBuilderFactory.Create(Post, User);
         PostLike = PostLikeBuilder.Build();
-        PostLikes = Posts.GeneratePostLikesRange(Users);
+        PostLikes = PostLike.Generate(Posts, Users);
 
         CancellationToken = MockFactory.CreateCancellationToken();
     }

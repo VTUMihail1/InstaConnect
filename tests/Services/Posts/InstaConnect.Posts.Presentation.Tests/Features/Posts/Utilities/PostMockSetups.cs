@@ -15,12 +15,13 @@ public static class PostMockSetups
     public static void SetupGetAllForUserQueryRequest(
         this IApplicationSender sender,
         GetAllPostsForUserApiRequest request,
+        User user,
         ICollection<Post> posts,
         CancellationToken cancellationToken)
     {
         sender
             .SendAsync(PostMatcher.IsGetAllPostsForUserQueryRequest(request), cancellationToken)
-            .ReturnsResponse(posts.ToResponse(request));
+            .ReturnsResponse(posts.ToResponse(user, request));
     }
 
     public static void SetupGetByIdQueryRequest(

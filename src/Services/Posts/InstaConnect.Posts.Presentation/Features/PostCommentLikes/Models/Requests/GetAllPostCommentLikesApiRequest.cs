@@ -8,9 +8,9 @@ using InstaConnect.Posts.Presentation.Features.Users.Utilities;
 namespace InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Requests;
 
 public record GetAllPostCommentLikesApiRequest(
-    [FromClaim(ClaimTypes.NameIdentifier)] string CurrentUserId,
     [FromRoute] string Id,
     [FromRoute] string CommentId,
+    [FromClaim(ClaimTypes.NameIdentifier)] string CurrentUserId,
     [FromQuery] string UserName = UserDefaultValues.Name,
     [FromQuery] CommonSortOrder SortOrder = CommonDefaultValues.SortOrder,
     [FromQuery] PostCommentLikesSortTerm SortTerm = PostCommentLikeDefaultValues.SortTerm,

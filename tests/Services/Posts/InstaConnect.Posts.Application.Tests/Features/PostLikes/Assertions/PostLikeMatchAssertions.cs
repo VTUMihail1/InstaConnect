@@ -25,36 +25,40 @@ public static class PostLikeMatchAssertions
 
     public static void ShouldSatisfy(
         this GetAllPostLikesQueryResponse response,
+        Post post,
         ICollection<PostLike> postLikes,
         GetAllPostLikesQueryRequest request)
     {
-        response.ShouldSatisfy(p => p.Matches(postLikes, request));
+        response.ShouldSatisfy(p => p.Matches(post, postLikes, request));
     }
 
     public static void ShouldSatisfy(
         this GetAllPostLikesQueryResponse response,
+        Post post,
         ICollection<PostLike> postLikes,
         GetAllPostLikesQueryRequest request,
         ISortEnumTermTransformer<PostLike> termTransformer)
     {
-        response.ShouldSatisfy(p => p.Matches(postLikes, request, termTransformer));
+        response.ShouldSatisfy(p => p.Matches(post, postLikes, request, termTransformer));
     }
 
     public static void ShouldSatisfy(
         this GetAllPostLikesForUserQueryResponse response,
+        User user,
         ICollection<PostLike> postLikes,
         GetAllPostLikesForUserQueryRequest request)
     {
-        response.ShouldSatisfy(p => p.Matches(postLikes, request));
+        response.ShouldSatisfy(p => p.Matches(user, postLikes, request));
     }
 
     public static void ShouldSatisfy(
         this GetAllPostLikesForUserQueryResponse response,
+        User user,
         ICollection<PostLike> postLikes,
         GetAllPostLikesForUserQueryRequest request,
         ISortEnumTermTransformer<PostLike> termTransformer)
     {
-        response.ShouldSatisfy(p => p.Matches(postLikes, request, termTransformer));
+        response.ShouldSatisfy(p => p.Matches(user, postLikes, request, termTransformer));
     }
 
     public static void ShouldSatisfy(this PostLike postLike, AddPostLikeCommandRequest request)

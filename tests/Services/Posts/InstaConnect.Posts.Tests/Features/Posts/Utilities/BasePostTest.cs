@@ -1,4 +1,5 @@
-﻿using InstaConnect.Posts.Tests.Features.Users.Utilities;
+﻿using InstaConnect.Posts.Tests.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Posts.Tests.Features.Posts.Utilities;
 public abstract class BasePostTest : BaseTest
@@ -25,17 +26,17 @@ public abstract class BasePostTest : BaseTest
         UserBuilderFactory = new();
         UserBuilder = UserBuilderFactory.Create();
         User = UserBuilder.Build();
-        Users = User.GenerateUsersRange();
+        Users = User.Generate();
 
         PostBuilderFactory = new();
         PostBuilder = PostBuilderFactory.Create(User);
         Post = PostBuilder.Build();
-        Posts = Post.GeneratePostsRange(Users);
+        Posts = Post.Generate(Users);
 
         PostLikeBuilderFactory = new();
         PostLikeBuilder = PostLikeBuilderFactory.Create(Post, User);
         PostLike = PostLikeBuilder.Build();
-        PostLikes = [.. Posts.SelectMany(x => x.PostLikes)];
+        PostLikes = PostLike.Generate(Posts, Users);
 
         CancellationToken = MockFactory.CreateCancellationToken();
     }

@@ -76,6 +76,7 @@ public class PostBuilder
                 _updatedAtUtc);
 
         post.AddUser(_user);
+        _user.AddPost(post);
 
         return post;
     }

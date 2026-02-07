@@ -31,36 +31,40 @@ public static class PostCommentMatchAssertions
 
     public static void ShouldSatisfy(
         this GetAllPostCommentsApiResponse response,
+        Post post,
         ICollection<PostComment> postComments,
         GetAllPostCommentsApiRequest request)
     {
-        response.ShouldSatisfy(p => p.Matches(postComments, request));
+        response.ShouldSatisfy(p => p.Matches(post, postComments, request));
     }
 
     public static void ShouldSatisfy(
         this GetAllPostCommentsApiResponse response,
+        Post post,
         ICollection<PostComment> postComments,
         GetAllPostCommentsApiRequest request,
         ISortEnumTermTransformer<PostComment> termTransformer)
     {
-        response.ShouldSatisfy(p => p.Matches(postComments, request, termTransformer));
+        response.ShouldSatisfy(p => p.Matches(post, postComments, request, termTransformer));
     }
 
     public static void ShouldSatisfy(
         this GetAllPostCommentsForUserApiResponse response,
+        User user,
         ICollection<PostComment> postComments,
         GetAllPostCommentsForUserApiRequest request)
     {
-        response.ShouldSatisfy(p => p.Matches(postComments, request));
+        response.ShouldSatisfy(p => p.Matches(user, postComments, request));
     }
 
     public static void ShouldSatisfy(
         this GetAllPostCommentsForUserApiResponse response,
+        User user,
         ICollection<PostComment> postComments,
         GetAllPostCommentsForUserApiRequest request,
         ISortEnumTermTransformer<PostComment> termTransformer)
     {
-        response.ShouldSatisfy(p => p.Matches(postComments, request, termTransformer));
+        response.ShouldSatisfy(p => p.Matches(user, postComments, request, termTransformer));
     }
 
     public static void ShouldSatisfy(
@@ -89,18 +93,20 @@ public static class PostCommentMatchAssertions
 
     public static void ShouldSatisfy(
         this ActionResult<GetAllPostCommentsApiResponse> response,
+        Post post,
         ICollection<PostComment> postComments,
         GetAllPostCommentsApiRequest request)
     {
-        response.ShouldBeActionResultAndSatisfy(p => p.Matches(postComments, request));
+        response.ShouldBeActionResultAndSatisfy(p => p.Matches(post, postComments, request));
     }
 
     public static void ShouldSatisfy(
         this ActionResult<GetAllPostCommentsForUserApiResponse> response,
+        User user,
         ICollection<PostComment> postComments,
         GetAllPostCommentsForUserApiRequest request)
     {
-        response.ShouldBeActionResultAndSatisfy(p => p.Matches(postComments, request));
+        response.ShouldBeActionResultAndSatisfy(p => p.Matches(user, postComments, request));
     }
 
     public static void ShouldSatisfy(this PostComment postComment, AddPostCommentApiRequest request)

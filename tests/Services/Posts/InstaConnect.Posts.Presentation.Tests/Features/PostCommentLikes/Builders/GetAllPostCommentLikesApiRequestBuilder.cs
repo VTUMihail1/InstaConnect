@@ -104,6 +104,6 @@ public class GetAllPostCommentLikesApiRequestBuilder
 
     public GetAllPostCommentLikesApiRequest Build()
     {
-        return new(_id, _commentId, _userName, _currentUserId, _sortOrder, _sortTerm, _page, _pageSize);
+        return new(_id, _commentId, _currentUserId, _userName, _sortOrder, _sortTerm, _page, _pageSize);
     }
 }

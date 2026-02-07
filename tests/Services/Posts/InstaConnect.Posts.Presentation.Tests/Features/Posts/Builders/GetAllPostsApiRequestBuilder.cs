@@ -81,6 +81,6 @@ public class GetAllPostsApiRequestBuilder
 
     public GetAllPostsApiRequest Build()
     {
-        return new(_userName, _title, _currentUserId, _sortOrder, _sortTerm, _page, _pageSize);
+        return new(_currentUserId, _userName, _title, _sortOrder, _sortTerm, _page, _pageSize);
     }
 }

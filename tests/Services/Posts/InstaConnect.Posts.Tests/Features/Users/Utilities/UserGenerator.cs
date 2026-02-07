@@ -1,16 +1,14 @@
 ﻿namespace InstaConnect.Posts.Tests.Features.Users.Utilities;
 public static class UserGenerator
 {
-    public static ICollection<User> GenerateUsersRange(this User template)
+    public static ICollection<User> Generate(this User baseUser, int numberOfIterations = 5)
     {
-        const int NumberOfIterations = 50;
-
-        return [.. Enumerable.Range(default, NumberOfIterations)
+        return [baseUser, .. Enumerable.Range(default, numberOfIterations)
             .Select(_ => new User(new(UserDataFaker.GetId()),
-                                  UserDataFaker.GetFirstNameWithPrefix(template.FirstName),
-                                  UserDataFaker.GetLastNameWithPrefix(template.LastName),
-                                  new(UserDataFaker.GetEmailWithPrefix(template.Email.Value)),
-                                  new(UserDataFaker.GetNameWithPrefix(template.Name.Value)),
+                                  UserDataFaker.GetFirstNameWithPrefix(baseUser.FirstName),
+                                  UserDataFaker.GetLastNameWithPrefix(baseUser.LastName),
+                                  new(UserDataFaker.GetEmailWithPrefix(baseUser.Email.Value)),
+                                  new(UserDataFaker.GetNameWithPrefix(baseUser.Name.Value)),
                                   new(UserDataFaker.GetProfileImage()),
                                   UserDataFaker.GetCreatedAtUtc(),
                                   UserDataFaker.GetUpdatedAtUtc()))];

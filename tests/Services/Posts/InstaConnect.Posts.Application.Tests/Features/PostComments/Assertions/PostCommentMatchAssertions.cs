@@ -31,36 +31,40 @@ public static class PostCommentMatchAssertions
 
     public static void ShouldSatisfy(
         this GetAllPostCommentsQueryResponse response,
+        Post post,
         ICollection<PostComment> postComments,
         GetAllPostCommentsQueryRequest request)
     {
-        response.ShouldSatisfy(p => p.Matches(postComments, request));
+        response.ShouldSatisfy(p => p.Matches(post, postComments, request));
     }
 
     public static void ShouldSatisfy(
         this GetAllPostCommentsQueryResponse response,
+        Post post,
         ICollection<PostComment> postComments,
         GetAllPostCommentsQueryRequest request,
         ISortEnumTermTransformer<PostComment> termTransformer)
     {
-        response.ShouldSatisfy(p => p.Matches(postComments, request, termTransformer));
+        response.ShouldSatisfy(p => p.Matches(post, postComments, request, termTransformer));
     }
 
     public static void ShouldSatisfy(
         this GetAllPostCommentsForUserQueryResponse response,
+        User user,
         ICollection<PostComment> postComments,
         GetAllPostCommentsForUserQueryRequest request)
     {
-        response.ShouldSatisfy(p => p.Matches(postComments, request));
+        response.ShouldSatisfy(p => p.Matches(user, postComments, request));
     }
 
     public static void ShouldSatisfy(
         this GetAllPostCommentsForUserQueryResponse response,
+        User user,
         ICollection<PostComment> postComments,
         GetAllPostCommentsForUserQueryRequest request,
         ISortEnumTermTransformer<PostComment> termTransformer)
     {
-        response.ShouldSatisfy(p => p.Matches(postComments, request, termTransformer));
+        response.ShouldSatisfy(p => p.Matches(user, postComments, request, termTransformer));
     }
 
     public static void ShouldSatisfy(this PostComment postComment, AddPostCommentCommandRequest request)

@@ -4,12 +4,25 @@ public static class PostCommentLikeMockSetups
     public static void SetupGetAllQueryRequest(
         this IApplicationSender sender,
         GetAllPostCommentLikesApiRequest request,
+        PostComment postComment,
         ICollection<PostCommentLike> postCommentLikes,
         CancellationToken cancellationToken)
     {
         sender
             .SendAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesQueryRequest(request), cancellationToken)
-            .ReturnsResponse(postCommentLikes.ToResponse(request));
+            .ReturnsResponse(postCommentLikes.ToResponse(postComment, request));
+    }
+
+    public static void SetupGetAllForUserQueryRequest(
+        this IApplicationSender sender,
+        GetAllPostCommentLikesForUserApiRequest request,
+        User user,
+        ICollection<PostCommentLike> postCommentLikes,
+        CancellationToken cancellationToken)
+    {
+        sender
+            .SendAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesForUserQueryRequest(request), cancellationToken)
+            .ReturnsResponse(postCommentLikes.ToResponse(user, request));
     }
 
     public static void SetupGetByIdQueryRequest(

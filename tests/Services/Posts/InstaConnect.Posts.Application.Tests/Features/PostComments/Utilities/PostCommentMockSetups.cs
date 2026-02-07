@@ -6,23 +6,25 @@ public static class PostCommentMockSetups
     public static void SetupGetAllQuery(
         this IPostCommentQueryService commentService,
         GetAllPostCommentsQueryRequest request,
+        Post post,
         ICollection<PostComment> postComments,
         CancellationToken cancellationToken)
     {
         commentService
             .GetAllAsync(PostCommentMatcher.IsGetAllPostCommentsQuery(request), cancellationToken)
-            .ReturnsResponse(postComments.ToResponse(request));
+            .ReturnsResponse(postComments.ToResponse(post, request));
     }
 
     public static void SetupGetAllForUserQuery(
         this IPostCommentQueryService commentService,
         GetAllPostCommentsForUserQueryRequest request,
+        User user,
         ICollection<PostComment> postComments,
         CancellationToken cancellationToken)
     {
         commentService
             .GetAllForUserAsync(PostCommentMatcher.IsGetAllPostCommentsForUserQuery(request), cancellationToken)
-            .ReturnsResponse(postComments.ToResponse(request));
+            .ReturnsResponse(postComments.ToResponse(user, request));
     }
 
     public static void SetupGetByIdQuery(

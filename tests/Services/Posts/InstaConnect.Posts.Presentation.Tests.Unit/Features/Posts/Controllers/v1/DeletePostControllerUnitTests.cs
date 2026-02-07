@@ -7,7 +7,7 @@ public class DeletePostControllerUnitTests : BasePostPresentationCommandUnitTest
     private readonly DeletePostApiRequestBuilder _requestBuilder;
     private readonly DeletePostApiRequest _request;
 
-    private readonly PostController _postController;
+    private readonly PostController _controller;
 
     public DeletePostControllerUnitTests()
     {
@@ -15,14 +15,14 @@ public class DeletePostControllerUnitTests : BasePostPresentationCommandUnitTest
         _requestBuilder = _requestBuilderFactory.Create(Post);
         _request = _requestBuilder.Build();
 
-        _postController = new(Mapper, Sender);
+        _controller = new(Mapper, Sender);
     }
 
     [Fact]
     public async Task DeleteAsync_ShouldReturnNoContentStatusCode_WhenRequestIsValid()
     {
         // Act
-        var response = await _postController.DeleteAsync(_request, CancellationToken);
+        var response = await _controller.DeleteAsync(_request, CancellationToken);
 
         // Assert
         response.ShouldBeActionResultWithNoContentStatusCode();
@@ -32,7 +32,7 @@ public class DeletePostControllerUnitTests : BasePostPresentationCommandUnitTest
     public async Task DeleteAsync_ShouldCallTheApplicationSenderSendAsync_WhenRequestIsValid()
     {
         // Act
-        await _postController.DeleteAsync(_request, CancellationToken);
+        await _controller.DeleteAsync(_request, CancellationToken);
 
         // Assert
         await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);

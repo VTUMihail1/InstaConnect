@@ -1,7 +1,9 @@
-﻿namespace InstaConnect.Posts.Tests.Features.PostLikes.Utilities;
+﻿using InstaConnect.Posts.Domain.Features.PostLikes.Models.ValueObjects;
+
+namespace InstaConnect.Posts.Tests.Features.PostLikes.Utilities;
 public static class PostLikeGenerator
 {
-    public static ICollection<PostLike> GeneratePostLikesRange(this IEnumerable<Post> posts, IEnumerable<User> users)
+    public static ICollection<PostLike> Generate(this PostLike basePostLike, IEnumerable<Post> posts, IEnumerable<User> users)
     {
         return [.. posts
               .SelectMany(post =>
@@ -10,7 +12,14 @@ public static class PostLikeGenerator
                       var postLike = new PostLike(
                           new(post.Id, user.Id),
                           PostLikeDataFaker.GetCreatedAtUtc());
-              
+
+                      if(basePostLike.Id == postLike.Id)
+                      {
+                          return basePostLike;
+                      }
+
+                      user.AddPostLike(postLike);
+                      post.AddPostLike(postLike);
                       postLike.AddUser(user);
                       postLike.AddPost(post);
               

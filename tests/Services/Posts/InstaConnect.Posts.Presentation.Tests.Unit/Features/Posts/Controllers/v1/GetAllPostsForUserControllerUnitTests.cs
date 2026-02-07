@@ -1,22 +1,22 @@
-﻿namespace InstaConnect.Posts.Presentation.Tests.Unit.Features.PostLikes.Controllers.v1;
+﻿namespace InstaConnect.Posts.Presentation.Tests.Unit.Features.Posts.Controllers.v1;
 
-public class GetAllPostLikesControllerUnitTests : BasePostLikePresentationQueryUnitTest
+public class GetAllPostsForUserControllerUnitTests : BasePostPresentationQueryUnitTest
 {
-    private readonly GetAllPostLikesApiRequestBuilderFactory _requestBuilderFactory;
-    private readonly GetAllPostLikesApiRequestBuilder _requestBuilder;
-    private readonly GetAllPostLikesApiRequest _request;
+    private readonly GetAllPostsForUserApiRequestBuilderFactory _requestBuilderFactory;
+    private readonly GetAllPostsForUserApiRequestBuilder _requestBuilder;
+    private readonly GetAllPostsForUserApiRequest _request;
 
-    private readonly PostLikeController _controller;
+    private readonly UserPostController _controller;
 
-    public GetAllPostLikesControllerUnitTests()
+    public GetAllPostsForUserControllerUnitTests()
     {
         _requestBuilderFactory = new();
-        _requestBuilder = _requestBuilderFactory.Create(PostLike);
+        _requestBuilder = _requestBuilderFactory.Create(Post);
         _request = _requestBuilder.Build();
 
         _controller = new(Mapper, Sender);
 
-        Sender.SetupGetAllQueryRequest(_request, Post, PostLikes, CancellationToken);
+        Sender.SetupGetAllForUserQueryRequest(_request, User, Posts, CancellationToken);
     }
 
     [Fact]
@@ -36,11 +36,11 @@ public class GetAllPostLikesControllerUnitTests : BasePostLikePresentationQueryU
         var response = await _controller.GetAllAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(Post, PostLikes, _request);
+        response.ShouldSatisfy(User, Posts, _request);
     }
 
     [Fact]
-    public async Task GetAllAsync_ShouldCallTheApplicationSenderSendAsync_WhenRequestIsValid()
+    public async Task GetAllAsync_ShouldCallTheSenderSendAsync_WhenRequestIsValid()
     {
         // Act
         await _controller.GetAllAsync(_request, CancellationToken);

@@ -23,36 +23,40 @@ public static class PostCommentLikeMatchAssertions
 
     public static void ShouldSatisfy(
         this GetAllPostCommentLikesQueryResponse response,
+        PostComment postComment,
         ICollection<PostCommentLike> postCommentLikes,
         GetAllPostCommentLikesQueryRequest request)
     {
-        response.ShouldSatisfy(p => p.Matches(postCommentLikes, request));
+        response.ShouldSatisfy(p => p.Matches(postComment, postCommentLikes, request));
     }
 
     public static void ShouldSatisfy(
         this GetAllPostCommentLikesQueryResponse response,
+        PostComment postComment,
         ICollection<PostCommentLike> postCommentLikes,
         GetAllPostCommentLikesQueryRequest request,
         ISortEnumTermTransformer<PostCommentLike> termTransformer)
     {
-        response.ShouldSatisfy(p => p.Matches(postCommentLikes, request, termTransformer));
+        response.ShouldSatisfy(p => p.Matches(postComment, postCommentLikes, request, termTransformer));
     }
 
     public static void ShouldSatisfy(
         this GetAllPostCommentLikesForUserQueryResponse response,
+        User user,
         ICollection<PostCommentLike> postCommentLikes,
         GetAllPostCommentLikesForUserQueryRequest request)
     {
-        response.ShouldSatisfy(p => p.Matches(postCommentLikes, request));
+        response.ShouldSatisfy(p => p.Matches(user, postCommentLikes, request));
     }
 
     public static void ShouldSatisfy(
         this GetAllPostCommentLikesForUserQueryResponse response,
+        User user,
         ICollection<PostCommentLike> postCommentLikes,
         GetAllPostCommentLikesForUserQueryRequest request,
         ISortEnumTermTransformer<PostCommentLike> termTransformer)
     {
-        response.ShouldSatisfy(p => p.Matches(postCommentLikes, request, termTransformer));
+        response.ShouldSatisfy(p => p.Matches(user, postCommentLikes, request, termTransformer));
     }
 
     public static void ShouldSatisfy(this PostCommentLike postCommentLike, AddPostCommentLikeCommandRequest request)

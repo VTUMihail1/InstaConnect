@@ -6,7 +6,7 @@ public class DeletePostCommentLikeControllerUnitTests : BasePostCommentLikePrese
     private readonly DeletePostCommentLikeApiRequestBuilder _requestBuilder;
     private readonly DeletePostCommentLikeApiRequest _request;
 
-    private readonly PostCommentLikeController _postCommentLikeController;
+    private readonly PostCommentLikeController _controller;
 
     public DeletePostCommentLikeControllerUnitTests()
     {
@@ -14,14 +14,14 @@ public class DeletePostCommentLikeControllerUnitTests : BasePostCommentLikePrese
         _requestBuilder = _requestBuilderFactory.Create(PostCommentLike);
         _request = _requestBuilder.Build();
 
-        _postCommentLikeController = new(Mapper, Sender);
+        _controller = new(Mapper, Sender);
     }
 
     [Fact]
     public async Task DeleteAsync_ShouldReturnNoContentStatusCode_WhenRequestIsValid()
     {
         // Act
-        var response = await _postCommentLikeController.DeleteAsync(_request, CancellationToken);
+        var response = await _controller.DeleteAsync(_request, CancellationToken);
 
         // Assert
         response.ShouldBeActionResultWithNoContentStatusCode();
@@ -31,7 +31,7 @@ public class DeletePostCommentLikeControllerUnitTests : BasePostCommentLikePrese
     public async Task DeleteAsync_ShouldCallTheApplicationSenderSendAsync_WhenRequestIsValid()
     {
         // Act
-        await _postCommentLikeController.DeleteAsync(_request, CancellationToken);
+        await _controller.DeleteAsync(_request, CancellationToken);
 
         // Assert
         await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);

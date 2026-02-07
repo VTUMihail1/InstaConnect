@@ -8,8 +8,8 @@ using InstaConnect.Posts.Presentation.Features.Users.Utilities;
 namespace InstaConnect.Posts.Presentation.Features.PostComments.Models.Requests;
 
 public record GetAllPostCommentsApiRequest(
-    [FromClaim(ClaimTypes.NameIdentifier)] string CurrentUserId,
     [FromRoute] string Id,
+    [FromClaim(ClaimTypes.NameIdentifier)] string CurrentUserId,
     [FromQuery] string UserName = UserDefaultValues.Name,
     [FromQuery] CommonSortOrder SortOrder = CommonDefaultValues.SortOrder,
     [FromQuery] PostCommentsSortTerm SortTerm = PostCommentDefaultValues.SortTerm,
