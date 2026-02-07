@@ -54,9 +54,9 @@ public class GetPostCommentLikeByIdQueryRequestValidatorUnitTests : BasePostComm
     }
 
     [Theory]
-    //[UserIdNullWithMessageData]
-    //[UserIdEmptyWithMessageData]
-    //[UserIdTooShortWithMessageData]
+    [UserIdNullWithMessageData]
+    [UserIdEmptyWithMessageData]
+    [UserIdTooShortWithMessageData]
     [UserIdTooLongWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenUserIdIsInvalid(
         IStringTransformer transformer, IStringMessageTransformer messageTransformer)
@@ -64,14 +64,42 @@ public class GetPostCommentLikeByIdQueryRequestValidatorUnitTests : BasePostComm
         // Arrange
         var request = _requestBuilder.WithUserId(transformer).Build();
 
-        var s = messageTransformer.Transform<GetPostCommentLikeByIdQueryRequest>(a => a.UserId, request.UserId);
-        Console.WriteLine(s);
-
         // Act
         var result = _requestValidator.TestValidate(request);
 
         // Assert
         result.ShouldHaveValidationErrorForUserId(messageTransformer, request);
+    }
+
+    [Theory]
+    [UserIdTooLongWithMessageData]
+    public void TestValidate_ShouldHaveAnError_WhenCurrentUserIdIsInvalid(
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+
+        // Act
+        var result = _requestValidator.TestValidate(request);
+
+        // Assert
+        result.ShouldHaveValidationErrorForCurrentUserId(messageTransformer, request);
+    }
+
+    [Theory]
+    [UserIdNullData]
+    [UserIdEmptyData]
+    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenCurrentUserIdIsValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+
+        // Act
+        var result = _requestValidator.TestValidate(request);
+
+        // Assert
+        result.ShouldNotHaveAnyValidationErrorProperties();
     }
 
     [Fact]

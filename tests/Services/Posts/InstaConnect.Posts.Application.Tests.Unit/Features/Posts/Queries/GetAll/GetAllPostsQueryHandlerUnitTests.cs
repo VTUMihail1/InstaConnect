@@ -30,7 +30,7 @@ public class GetAllPostsQueryHandlerUnitTests : BasePostApplicationQueryUnitTest
     }
 
     [Fact]
-    public async Task Handle_ShouldCallPostServiceGetAllAsync_WhenRequestIsValid()
+    public async Task Handle_ShouldCallServiceGetAllAsync_WhenRequestIsValid()
     {
         // Act
         await _handler.Handle(_request, CancellationToken);

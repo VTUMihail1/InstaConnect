@@ -40,7 +40,7 @@ public class AddPostLikeControllerUnitTests : BasePostLikePresentationCommandUni
     }
 
     [Fact]
-    public async Task AddAsync_ShouldCallTheApplicationSenderSendAsync_WhenRequestIsValid()
+    public async Task AddAsync_ShouldCallTheSenderSendAsync_WhenRequestIsValid()
     {
         // Act
         await _controller.AddAsync(_request, CancellationToken);

@@ -52,7 +52,7 @@ internal class PostCommentApplicationMappings : IRegister
                                            new(src.Id),
                                            src.CommentId),
                                        new(
-                                           new(src.Id))));
+                                           new(src.CurrentUserId))));
 
         config.NewConfig<PostCommentResponse, GetPostCommentByIdQueryResponse>()
             .ConstructUsing(src => new(src.Adapt<PostCommentQueryResponse>(config)));

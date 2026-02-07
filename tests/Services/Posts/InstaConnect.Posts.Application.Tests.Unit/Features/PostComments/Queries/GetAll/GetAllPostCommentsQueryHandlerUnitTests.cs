@@ -16,7 +16,7 @@ public class GetAllPostCommentsQueryHandlerUnitTests : BasePostCommentApplicatio
 
         _handler = new(Mapper, CommentService);
 
-        CommentService.SetupGetAllQuery(_request, PostComments, CancellationToken);
+        CommentService.SetupGetAllQuery(_request, Post, PostComments, CancellationToken);
     }
 
     [Fact]
@@ -26,11 +26,11 @@ public class GetAllPostCommentsQueryHandlerUnitTests : BasePostCommentApplicatio
         var response = await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostComments, _request);
+        response.ShouldSatisfy(Post, PostComments, _request);
     }
 
     [Fact]
-    public async Task Handle_ShouldCallPostCommentServiceGetAllAsync_WhenRequestIsValid()
+    public async Task Handle_ShouldCallCommentServiceGetAllAsync_WhenRequestIsValid()
     {
         // Act
         await _handler.Handle(_request, CancellationToken);

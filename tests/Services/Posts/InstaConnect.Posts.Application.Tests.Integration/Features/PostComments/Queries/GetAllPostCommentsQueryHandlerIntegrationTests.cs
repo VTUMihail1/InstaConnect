@@ -74,7 +74,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentApp
 
     [Theory]
     [PostCommentsSortTermEmptyWithMessageData]
-    public async Task SendAsync_ShouldThrowValidationException_WhenSortPropertyIsInvalid(
+    public async Task SendAsync_ShouldThrowValidationException_WhenSortTermIsInvalid(
         IEnumTransformer<PostCommentsSortTerm> transformer, IEnumMessageTransformer<PostCommentsSortTerm> messageTransformer)
     {
         // Arrange

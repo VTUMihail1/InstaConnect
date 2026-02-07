@@ -18,7 +18,7 @@ public class DeleteUserEventHandlerUnitTests : BaseUserPresentationCommandUnitTe
     }
 
     [Fact]
-    public async Task Consume_ShouldCallTheApplicationSenderSendAsync_WhenRequestIsValid()
+    public async Task Consume_ShouldCallTheSenderSendAsync_WhenRequestIsValid()
     {
         // Act
         await _handler.Consume(_request, CancellationToken);

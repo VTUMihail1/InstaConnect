@@ -121,7 +121,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
 
     [Theory]
     [PostLikesSortTermEmptyData]
-    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenSortPropertyIsInvalid(
+    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenSortTermIsInvalid(
         IEnumTransformer<PostLikesSortTerm> transformer)
     {
         // Arrange
@@ -136,7 +136,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
 
     [Theory]
     [PostLikesSortTermEmptyWithMessageData]
-    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenSortPropertyIsInvalid(
+    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenSortTermIsInvalid(
         IEnumTransformer<PostLikesSortTerm> transformer,
         IEnumMessageTransformer<PostLikesSortTerm> messageTransformer)
     {

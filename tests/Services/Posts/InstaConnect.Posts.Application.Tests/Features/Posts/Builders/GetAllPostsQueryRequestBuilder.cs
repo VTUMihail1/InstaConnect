@@ -81,6 +81,6 @@ public class GetAllPostsQueryRequestBuilder
 
     public GetAllPostsQueryRequest Build()
     {
-        return new(_userName, _currentUserId, _title, _sortOrder, _sortTerm, _page, _pageSize);
+        return new(_userName, _title, _currentUserId, _sortOrder, _sortTerm, _page, _pageSize);
     }
 }

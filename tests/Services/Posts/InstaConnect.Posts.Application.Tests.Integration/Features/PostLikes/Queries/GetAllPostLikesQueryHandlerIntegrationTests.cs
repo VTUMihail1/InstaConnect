@@ -70,7 +70,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeApplicati
 
     [Theory]
     [PostLikesSortTermEmptyWithMessageData]
-    public async Task SendAsync_ShouldThrowValidationException_WhenSortPropertyIsInvalid(
+    public async Task SendAsync_ShouldThrowValidationException_WhenSortTermIsInvalid(
         IEnumTransformer<PostLikesSortTerm> transformer, IEnumMessageTransformer<PostLikesSortTerm> messageTransformer)
     {
         // Arrange

@@ -117,7 +117,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 
     [Theory]
     [PostsSortTermEmptyData]
-    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenSortPropertyIsInvalid(
+    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenSortTermIsInvalid(
         IEnumTransformer<PostsSortTerm> transformer)
     {
         // Arrange
@@ -132,7 +132,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 
     [Theory]
     [PostsSortTermEmptyWithMessageData]
-    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenSortPropertyIsInvalid(
+    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenSortTermIsInvalid(
         IEnumTransformer<PostsSortTerm> transformer, IEnumMessageTransformer<PostsSortTerm> messageTransformer)
     {
         // Arrange

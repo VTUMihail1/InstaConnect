@@ -154,7 +154,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
 
     [Theory]
     [PostCommentLikesSortTermEmptyData]
-    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenSortPropertyIsInvalid(
+    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenSortTermIsInvalid(
         IEnumTransformer<PostCommentLikesSortTerm> transformer)
     {
         // Arrange
@@ -169,7 +169,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
 
     [Theory]
     [PostCommentLikesSortTermEmptyWithMessageData]
-    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenSortPropertyIsInvalid(
+    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenSortTermIsInvalid(
         IEnumTransformer<PostCommentLikesSortTerm> transformer,
         IEnumMessageTransformer<PostCommentLikesSortTerm> messageTransformer)
     {

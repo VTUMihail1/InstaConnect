@@ -178,7 +178,7 @@ public static class PostCommentLikeValidationAssertions
         result.ShouldHaveValidationErrorForProperty(p => p.SortOrder, messageTransformer, request);
     }
 
-    public static void ShouldHaveValidationErrorForSortProperty(
+    public static void ShouldHaveValidationErrorForSortTerm(
         this TestValidationResult<GetAllPostCommentLikesQueryRequest> result,
         IEnumMessageTransformer<PostCommentLikesSortTerm> messageTransformer,
         GetAllPostCommentLikesQueryRequest request)
@@ -186,7 +186,7 @@ public static class PostCommentLikeValidationAssertions
         result.ShouldHaveValidationErrorForProperty(p => p.SortTerm, messageTransformer, request);
     }
 
-    public static void ShouldHaveValidationErrorForSortProperty(
+    public static void ShouldHaveValidationErrorForSortTerm(
         this TestValidationResult<GetAllPostCommentLikesForUserQueryRequest> result,
         IEnumMessageTransformer<PostCommentLikesSortTerm> messageTransformer,
         GetAllPostCommentLikesForUserQueryRequest request)

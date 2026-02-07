@@ -1,5 +1,6 @@
 ﻿using InstaConnect.Common.Domain.Models;
 using InstaConnect.Posts.Domain.Features.PostLikes.Models.Requests;
+using InstaConnect.Posts.Tests.Features.PostLikes.DataAttributes.SortTerm;
 
 namespace InstaConnect.Posts.Application.Tests.Unit.Features.PostLikes.Queries.GetAll;
 
@@ -54,6 +55,21 @@ public class GetAllPostLikesQueryRequestValidatorUnitTests : BasePostLikeApplica
     }
 
     [Theory]
+    [UserIdTooLongWithMessageData]
+    public void TestValidate_ShouldHaveAnError_WhenCurrentUserIdIsInvalid(
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+
+        // Act
+        var result = _requestValidator.TestValidate(request);
+
+        // Assert
+        result.ShouldHaveValidationErrorForCurrentUserId(messageTransformer, request);
+    }
+
+    [Theory]
     [PostLikesSortOrderEmptyWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenSortOrderIsInvalid(
         IEnumTransformer<CommonSortOrder> transformer, IEnumMessageTransformer<CommonSortOrder> messageTransformer)
@@ -70,7 +86,7 @@ public class GetAllPostLikesQueryRequestValidatorUnitTests : BasePostLikeApplica
 
     [Theory]
     [PostLikesSortTermEmptyWithMessageData]
-    public void TestValidate_ShouldHaveAnError_WhenSortPropertyIsInvalid(
+    public void TestValidate_ShouldHaveAnError_WhenSortTermIsInvalid(
         IEnumTransformer<PostLikesSortTerm> transformer, IEnumMessageTransformer<PostLikesSortTerm> messageTransformer)
     {
         // Arrange
@@ -123,6 +139,22 @@ public class GetAllPostLikesQueryRequestValidatorUnitTests : BasePostLikeApplica
     {
         // Arrange
         var request = _requestBuilder.WithUserName(transformer).Build();
+
+        // Act
+        var result = _requestValidator.TestValidate(request);
+
+        // Assert
+        result.ShouldNotHaveAnyValidationErrorProperties();
+    }
+
+    [Theory]
+    [UserIdNullData]
+    [UserIdEmptyData]
+    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenCurrentUserIdIsValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);

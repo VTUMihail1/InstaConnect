@@ -30,7 +30,7 @@ public class UpdatePostCommentCommandHandlerUnitTests : BasePostCommentApplicati
     }
 
     [Fact]
-    public async Task Handle_ShouldCallPostCommentServiceUpdateAsync_WhenRequestIsValid()
+    public async Task Handle_ShouldCallCommentServiceUpdateAsync_WhenRequestIsValid()
     {
         // Act
         await _handler.Handle(_request, CancellationToken);

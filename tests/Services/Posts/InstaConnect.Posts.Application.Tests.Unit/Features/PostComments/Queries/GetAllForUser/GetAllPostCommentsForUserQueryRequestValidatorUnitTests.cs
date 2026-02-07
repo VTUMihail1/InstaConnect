@@ -1,18 +1,19 @@
 ﻿using InstaConnect.Common.Domain.Models;
+using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAllForUser;
 using InstaConnect.Posts.Domain.Features.PostComments.Models.Requests;
 using InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.SortTerm;
 
-namespace InstaConnect.Posts.Application.Tests.Unit.Features.PostComments.Queries.GetAll;
+namespace InstaConnect.Posts.Application.Tests.Unit.Features.PostComments.Queries.GetAllForUser;
 
-public class GetAllPostCommentsQueryRequestValidatorUnitTests : BasePostCommentApplicationQueryUnitTest
+public class GetAllPostCommentsForUserQueryRequestValidatorUnitTests : BasePostCommentApplicationQueryUnitTest
 {
-    private readonly GetAllPostCommentsQueryRequestBuilderFactory _requestBuilderFactory;
-    private readonly GetAllPostCommentsQueryRequestBuilder _requestBuilder;
-    private readonly GetAllPostCommentsQueryRequest _request;
+    private readonly GetAllPostCommentsForUserQueryRequestBuilderFactory _requestBuilderFactory;
+    private readonly GetAllPostCommentsForUserQueryRequestBuilder _requestBuilder;
+    private readonly GetAllPostCommentsForUserQueryRequest _request;
 
-    private readonly GetAllPostCommentsQueryRequestValidator _requestValidator;
+    private readonly GetAllPostCommentsForUserQueryRequestValidator _requestValidator;
 
-    public GetAllPostCommentsQueryRequestValidatorUnitTests()
+    public GetAllPostCommentsForUserQueryRequestValidatorUnitTests()
     {
         _requestBuilderFactory = new();
         _requestBuilder = _requestBuilderFactory.Create(PostComment);
@@ -22,36 +23,21 @@ public class GetAllPostCommentsQueryRequestValidatorUnitTests : BasePostCommentA
     }
 
     [Theory]
-    [PostIdNullWithMessageData]
-    [PostIdEmptyWithMessageData]
-    [PostIdTooShortWithMessageData]
-    [PostIdTooLongWithMessageData]
-    public void TestValidate_ShouldHaveAnError_WhenIdIsInvalid(
+    [UserIdNullWithMessageData]
+    [UserIdEmptyWithMessageData]
+    [UserIdTooShortWithMessageData]
+    [UserIdTooLongWithMessageData]
+    public void TestValidate_ShouldHaveAnError_WhenUserIdIsInvalid(
         IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForId(messageTransformer, request);
-    }
-
-    [Theory]
-    [UserNameTooLongWithMessageData]
-    public void TestValidate_ShouldHaveAnError_WhenUserNameIsInvalid(
-        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithUserName(transformer).Build();
-
-        // Act
-        var result = _requestValidator.TestValidate(request);
-
-        // Assert
-        result.ShouldHaveValidationErrorForUserName(messageTransformer, request);
+        result.ShouldHaveValidationErrorForUserId(messageTransformer, request);
     }
 
     [Theory]
@@ -90,7 +76,7 @@ public class GetAllPostCommentsQueryRequestValidatorUnitTests : BasePostCommentA
         IEnumTransformer<PostCommentsSortTerm> transformer, IEnumMessageTransformer<PostCommentsSortTerm> messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(transformer).Build();
+        var request = _requestBuilder.WithSortTerm(transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
@@ -129,22 +115,6 @@ public class GetAllPostCommentsQueryRequestValidatorUnitTests : BasePostCommentA
 
         // Assert
         result.ShouldHaveValidationErrorForPageSize(messageTransformer, request);
-    }
-
-    [Theory]
-    [UserNameEmptyData]
-    [UserNameNullData]
-    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenUserNameIsValid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithUserName(transformer).Build();
-
-        // Act
-        var result = _requestValidator.TestValidate(request);
-
-        // Assert
-        result.ShouldNotHaveAnyValidationErrorProperties();
     }
 
     [Theory]

@@ -40,7 +40,7 @@ public class GetAllPostsControllerUnitTests : BasePostPresentationQueryUnitTest
     }
 
     [Fact]
-    public async Task GetAllAsync_ShouldCallTheApplicationSenderSendAsync_WhenRequestIsValid()
+    public async Task GetAllAsync_ShouldCallTheSenderSendAsync_WhenRequestIsValid()
     {
         // Act
         await _controller.GetAllAsync(_request, CancellationToken);

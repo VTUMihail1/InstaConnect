@@ -40,7 +40,7 @@ public class GetPostCommentByIdControllerUnitTests : BasePostCommentPresentation
     }
 
     [Fact]
-    public async Task GetByIdAsync_ShouldCallTheApplicationSenderSendAsync_WhenRequestIsValid()
+    public async Task GetByIdAsync_ShouldCallTheSenderSendAsync_WhenRequestIsValid()
     {
         // Act
         await _controller.GetByIdAsync(_request, CancellationToken);

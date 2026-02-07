@@ -1,5 +1,6 @@
 ﻿using InstaConnect.Common.Domain.Models;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Requests;
+using InstaConnect.Posts.Tests.Features.PostCommentLikes.DataAttributes.SortTerm;
 
 namespace InstaConnect.Posts.Application.Tests.Unit.Features.PostCommentLikes.Queries.GetAll;
 
@@ -72,6 +73,21 @@ public class GetAllPostCommentLikesQueryRequestValidatorUnitTests : BasePostComm
     }
 
     [Theory]
+    [UserIdTooLongWithMessageData]
+    public void TestValidate_ShouldHaveAnError_WhenCurrentUserIdIsInvalid(
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+
+        // Act
+        var result = _requestValidator.TestValidate(request);
+
+        // Assert
+        result.ShouldHaveValidationErrorForCurrentUserId(messageTransformer, request);
+    }
+
+    [Theory]
     [PostCommentLikesSortOrderEmptyWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenSortOrderIsInvalid(
         IEnumTransformer<CommonSortOrder> transformer,
@@ -89,7 +105,7 @@ public class GetAllPostCommentLikesQueryRequestValidatorUnitTests : BasePostComm
 
     [Theory]
     [PostCommentLikesSortTermEmptyWithMessageData]
-    public void TestValidate_ShouldHaveAnError_WhenSortPropertyIsInvalid(
+    public void TestValidate_ShouldHaveAnError_WhenSortTermIsInvalid(
         IEnumTransformer<PostCommentLikesSortTerm> transformer,
         IEnumMessageTransformer<PostCommentLikesSortTerm> messageTransformer)
     {
@@ -100,7 +116,7 @@ public class GetAllPostCommentLikesQueryRequestValidatorUnitTests : BasePostComm
         var result = _requestValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForSortProperty(messageTransformer, request);
+        result.ShouldHaveValidationErrorForSortTerm(messageTransformer, request);
     }
 
     [Theory]
@@ -143,6 +159,22 @@ public class GetAllPostCommentLikesQueryRequestValidatorUnitTests : BasePostComm
     {
         // Arrange
         var request = _requestBuilder.WithUserName(transformer).Build();
+
+        // Act
+        var result = _requestValidator.TestValidate(request);
+
+        // Assert
+        result.ShouldNotHaveAnyValidationErrorProperties();
+    }
+
+    [Theory]
+    [UserIdNullData]
+    [UserIdEmptyData]
+    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenCurrentUserIdIsValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);

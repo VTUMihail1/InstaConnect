@@ -1,57 +1,62 @@
 ﻿using InstaConnect.Common.Domain.Models;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
+using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAllForUser;
+using InstaConnect.Posts.Domain.Features.PostLikes.Models.Requests;
+using InstaConnect.Posts.Tests.Features.PostLikes.DataAttributes.SortTerm;
 
-namespace InstaConnect.Posts.Application.Tests.Unit.Features.Posts.Queries.GetAll;
+namespace InstaConnect.Posts.Application.Tests.Unit.Features.PostLikes.Queries.GetAllForUser;
 
-public class GetAllPostsQueryRequestValidatorUnitTests : BasePostApplicationQueryUnitTest
+public class GetAllPostLikesForUserQueryRequestValidatorUnitTests : BasePostLikeApplicationQueryUnitTest
 {
-    private readonly GetAllPostsQueryRequestBuilderFactory _requestBuilderFactory;
-    private readonly GetAllPostsQueryRequestBuilder _requestBuilder;
-    private readonly GetAllPostsQueryRequest _request;
+    private readonly GetAllPostLikesForUserQueryRequestBuilderFactory _requestBuilderFactory;
+    private readonly GetAllPostLikesForUserQueryRequestBuilder _requestBuilder;
+    private readonly GetAllPostLikesForUserQueryRequest _request;
 
-    private readonly GetAllPostsQueryRequestValidator _requestValidator;
+    private readonly GetAllPostLikesForUserQueryRequestValidator _requestValidator;
 
-    public GetAllPostsQueryRequestValidatorUnitTests()
+    public GetAllPostLikesForUserQueryRequestValidatorUnitTests()
     {
         _requestBuilderFactory = new();
-        _requestBuilder = _requestBuilderFactory.Create(Post);
+        _requestBuilder = _requestBuilderFactory.Create(PostLike);
         _request = _requestBuilder.Build();
 
         _requestValidator = new();
     }
 
     [Theory]
-    [UserNameTooLongWithMessageData]
-    public void TestValidate_ShouldHaveAnError_WhenUserNameIsInvalid(
+    [UserIdNullWithMessageData]
+    [UserIdEmptyWithMessageData]
+    [UserIdTooShortWithMessageData]
+    [UserIdTooLongWithMessageData]
+    public void TestValidate_ShouldHaveAnError_WhenUserIdIsInvalid(
         IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserName(transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForUserName(messageTransformer, request);
+        result.ShouldHaveValidationErrorForUserId(messageTransformer, request);
     }
 
     [Theory]
-    [PostTitleTooLongWithMessageData]
-    public void TestValidate_ShouldHaveAnError_WhenTitleIsInvalid(
+    [UserIdTooLongWithMessageData]
+    public void TestValidate_ShouldHaveAnError_WhenCurrentUserIdIsInvalid(
         IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithTitle(transformer).Build();
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForTitle(messageTransformer, request);
+        result.ShouldHaveValidationErrorForCurrentUserId(messageTransformer, request);
     }
 
     [Theory]
-    [PostsSortOrderEmptyWithMessageData]
+    [PostLikesSortOrderEmptyWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenSortOrderIsInvalid(
         IEnumTransformer<CommonSortOrder> transformer, IEnumMessageTransformer<CommonSortOrder> messageTransformer)
     {
@@ -66,9 +71,9 @@ public class GetAllPostsQueryRequestValidatorUnitTests : BasePostApplicationQuer
     }
 
     [Theory]
-    [PostsSortTermEmptyWithMessageData]
-    public void TestValidate_ShouldHaveAnError_WhenSortPropertyIsInvalid(
-        IEnumTransformer<PostsSortTerm> transformer, IEnumMessageTransformer<PostsSortTerm> messageTransformer)
+    [PostLikesSortTermEmptyWithMessageData]
+    public void TestValidate_ShouldHaveAnError_WhenSortTermIsInvalid(
+        IEnumTransformer<PostLikesSortTerm> transformer, IEnumMessageTransformer<PostLikesSortTerm> messageTransformer)
     {
         // Arrange
         var request = _requestBuilder.WithSortTerm(transformer).Build();
@@ -77,12 +82,12 @@ public class GetAllPostsQueryRequestValidatorUnitTests : BasePostApplicationQuer
         var result = _requestValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForSortProperty(messageTransformer, request);
+        result.ShouldHaveValidationErrorForSortTerm(messageTransformer, request);
     }
 
     [Theory]
-    [PostPageTooSmallWithMessageData]
-    [PostPageTooLargeWithMessageData]
+    [PostLikePageTooSmallWithMessageData]
+    [PostLikePageTooLargeWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenPageIsInvalid(
         IIntTransformer transformer, IIntMessageTransformer messageTransformer)
     {
@@ -97,8 +102,8 @@ public class GetAllPostsQueryRequestValidatorUnitTests : BasePostApplicationQuer
     }
 
     [Theory]
-    [PostPageSizeTooSmallWithMessageData]
-    [PostPageSizeTooLargeWithMessageData]
+    [PostLikePageSizeTooSmallWithMessageData]
+    [PostLikePageSizeTooLargeWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenPageSizeIsInvalid(
         IIntTransformer transformer, IIntMessageTransformer messageTransformer)
     {
@@ -113,29 +118,13 @@ public class GetAllPostsQueryRequestValidatorUnitTests : BasePostApplicationQuer
     }
 
     [Theory]
-    [UserNameEmptyData]
-    [UserNameNullData]
-    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenUserNameIsValid(
+    [UserIdNullData]
+    [UserIdEmptyData]
+    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenCurrentUserIdIsValid(
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserName(transformer).Build();
-
-        // Act
-        var result = _requestValidator.TestValidate(request);
-
-        // Assert
-        result.ShouldNotHaveAnyValidationErrorProperties();
-    }
-
-    [Theory]
-    [PostTitleEmptyData]
-    [PostTitleNullData]
-    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenTitleIsValid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithTitle(transformer).Build();
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);

@@ -67,7 +67,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationQueryI
 
     [Theory]
     [PostsSortTermEmptyWithMessageData]
-    public async Task SendAsync_ShouldThrowValidationException_WhenSortPropertyIsInvalid(
+    public async Task SendAsync_ShouldThrowValidationException_WhenSortTermIsInvalid(
         IEnumTransformer<PostsSortTerm> transformer, IEnumMessageTransformer<PostsSortTerm> messageTransformer)
     {
         // Arrange

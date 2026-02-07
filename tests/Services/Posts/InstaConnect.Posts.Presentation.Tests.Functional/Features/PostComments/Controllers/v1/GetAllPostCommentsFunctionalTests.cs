@@ -121,7 +121,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
 
     [Theory]
     [PostCommentsSortTermEmptyData]
-    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenSortPropertyIsInvalid(
+    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenSortTermIsInvalid(
         IEnumTransformer<PostCommentsSortTerm> transformer)
     {
         // Arrange
@@ -136,7 +136,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
 
     [Theory]
     [PostCommentsSortTermEmptyWithMessageData]
-    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenSortPropertyIsInvalid(
+    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenSortTermIsInvalid(
         IEnumTransformer<PostCommentsSortTerm> transformer,
         IEnumMessageTransformer<PostCommentsSortTerm> messageTransformer)
     {

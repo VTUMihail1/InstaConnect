@@ -53,6 +53,37 @@ public class GetPostLikeByIdQueryRequestValidatorUnitTests : BasePostLikeApplica
         result.ShouldHaveValidationErrorForUserId(messageTransformer, request);
     }
 
+    [Theory]
+    [UserIdTooLongWithMessageData]
+    public void TestValidate_ShouldHaveAnError_WhenCurrentUserIdIsInvalid(
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+
+        // Act
+        var result = _requestValidator.TestValidate(request);
+
+        // Assert
+        result.ShouldHaveValidationErrorForCurrentUserId(messageTransformer, request);
+    }
+
+    [Theory]
+    [UserIdNullData]
+    [UserIdEmptyData]
+    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenCurrentUserIdIsValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+
+        // Act
+        var result = _requestValidator.TestValidate(request);
+
+        // Assert
+        result.ShouldNotHaveAnyValidationErrorProperties();
+    }
+
     [Fact]
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenRequestIsValid()
     {

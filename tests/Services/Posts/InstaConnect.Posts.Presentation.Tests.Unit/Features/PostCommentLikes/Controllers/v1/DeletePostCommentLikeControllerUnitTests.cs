@@ -28,7 +28,7 @@ public class DeletePostCommentLikeControllerUnitTests : BasePostCommentLikePrese
     }
 
     [Fact]
-    public async Task DeleteAsync_ShouldCallTheApplicationSenderSendAsync_WhenRequestIsValid()
+    public async Task DeleteAsync_ShouldCallTheSenderSendAsync_WhenRequestIsValid()
     {
         // Act
         await _controller.DeleteAsync(_request, CancellationToken);

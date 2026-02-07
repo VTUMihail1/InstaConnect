@@ -85,7 +85,7 @@
     <Using Include="InstaConnect.Posts.Tests.Features.Posts.DataAttributes.Page" />
     <Using Include="InstaConnect.Posts.Tests.Features.Posts.DataAttributes.PageSize" />
     <Using Include="InstaConnect.Posts.Tests.Features.Posts.DataAttributes.SortOrder" />
-    <Using Include="InstaConnect.Posts.Tests.Features.Posts.DataAttributes.SortProperty" />
+    <Using Include="InstaConnect.Posts.Tests.Features.Posts.DataAttributes.SortTerm" />
   </ItemGroup>
 
   <ItemGroup Label="PostLikes">
@@ -105,7 +105,7 @@
     <Using Include="InstaConnect.Posts.Tests.Features.PostLikes.DataAttributes.Page" />
     <Using Include="InstaConnect.Posts.Tests.Features.PostLikes.DataAttributes.PageSize" />
     <Using Include="InstaConnect.Posts.Tests.Features.PostLikes.DataAttributes.SortOrder" />
-    <Using Include="InstaConnect.Posts.Tests.Features.PostLikes.DataAttributes.SortProperty" />
+    <Using Include="InstaConnect.Posts.Tests.Features.PostLikes.DataAttributes.SortTerm" />
   </ItemGroup>
 
   <ItemGroup Label="PostComments">
@@ -128,7 +128,7 @@
     <Using Include="InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.Page" />
     <Using Include="InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.PageSize" />
     <Using Include="InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.SortOrder" />
-    <Using Include="InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.SortProperty" />
+    <Using Include="InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.SortTerm" />
   </ItemGroup>
 
   <ItemGroup Label="PostCommentLikes">
@@ -148,7 +148,7 @@
     <Using Include="InstaConnect.Posts.Tests.Features.PostCommentLikes.DataAttributes.Page" />
     <Using Include="InstaConnect.Posts.Tests.Features.PostCommentLikes.DataAttributes.PageSize" />
     <Using Include="InstaConnect.Posts.Tests.Features.PostCommentLikes.DataAttributes.SortOrder" />
-    <Using Include="InstaConnect.Posts.Tests.Features.PostCommentLikes.DataAttributes.SortProperty" />
+    <Using Include="InstaConnect.Posts.Tests.Features.PostCommentLikes.DataAttributes.SortTerm" />
   </ItemGroup>
 
 </Project>

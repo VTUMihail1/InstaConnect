@@ -89,7 +89,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
 
     [Theory]
     [PostCommentLikesSortTermEmptyWithMessageData]
-    public async Task SendAsync_ShouldThrowValidationException_WhenSortPropertyIsInvalid(
+    public async Task SendAsync_ShouldThrowValidationException_WhenSortTermIsInvalid(
         IEnumTransformer<PostCommentLikesSortTerm> transformer,
         IEnumMessageTransformer<PostCommentLikesSortTerm> messageTransformer)
     {

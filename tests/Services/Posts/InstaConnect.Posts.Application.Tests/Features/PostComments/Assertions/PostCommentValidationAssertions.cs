@@ -193,7 +193,7 @@ public static class PostCommentValidationAssertions
         result.ShouldHaveValidationErrorForProperty(p => p.SortOrder, messageTransformer, request);
     }
 
-    public static void ShouldHaveValidationErrorForSortProperty(
+    public static void ShouldHaveValidationErrorForSortTerm(
         this TestValidationResult<GetAllPostCommentsQueryRequest> result,
         IEnumMessageTransformer<PostCommentsSortTerm> messageTransformer,
         GetAllPostCommentsQueryRequest request)
@@ -201,7 +201,7 @@ public static class PostCommentValidationAssertions
         result.ShouldHaveValidationErrorForProperty(p => p.SortTerm, messageTransformer, request);
     }
 
-    public static void ShouldHaveValidationErrorForSortProperty(
+    public static void ShouldHaveValidationErrorForSortTerm(
         this TestValidationResult<GetAllPostCommentsForUserQueryRequest> result,
         IEnumMessageTransformer<PostCommentsSortTerm> messageTransformer,
         GetAllPostCommentsForUserQueryRequest request)

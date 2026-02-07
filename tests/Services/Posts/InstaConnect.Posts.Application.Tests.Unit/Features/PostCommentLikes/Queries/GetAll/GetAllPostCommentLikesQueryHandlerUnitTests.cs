@@ -16,7 +16,7 @@ public class GetAllPostCommentLikesQueryHandlerUnitTests : BasePostCommentLikeAp
 
         _handler = new(Mapper, CommentLikeService);
 
-        CommentLikeService.SetupGetAllQuery(_request, PostCommentLikes, CancellationToken);
+        CommentLikeService.SetupGetAllQuery(_request, PostComment, PostCommentLikes, CancellationToken);
     }
 
     [Fact]
@@ -26,11 +26,11 @@ public class GetAllPostCommentLikesQueryHandlerUnitTests : BasePostCommentLikeAp
         var response = await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostCommentLikes, _request);
+        response.ShouldSatisfy(PostComment, PostCommentLikes, _request);
     }
 
     [Fact]
-    public async Task Handle_ShouldCallPostCommentLikeServiceGetAllAsync_WhenRequestIsValid()
+    public async Task Handle_ShouldCallCommentLikeServiceGetAllAsync_WhenRequestIsValid()
     {
         // Act
         await _handler.Handle(_request, CancellationToken);

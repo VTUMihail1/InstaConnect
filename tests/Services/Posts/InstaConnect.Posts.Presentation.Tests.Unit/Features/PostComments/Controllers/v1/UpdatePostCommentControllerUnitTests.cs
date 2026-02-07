@@ -40,7 +40,7 @@ public class UpdatePostCommentControllerUnitTests : BasePostCommentPresentationC
     }
 
     [Fact]
-    public async Task UpdateAsync_ShouldCallTheApplicationSenderSendAsync_WhenRequestIsValid()
+    public async Task UpdateAsync_ShouldCallTheSenderSendAsync_WhenRequestIsValid()
     {
         // Act
         await _controller.UpdateAsync(_request, CancellationToken);
