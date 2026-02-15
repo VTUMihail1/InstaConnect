@@ -71,6 +71,19 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
             messageTransformer, request, CancellationToken);
     }
 
+    [Theory]
+    [UserIdTooLongWithMessageData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdIsInvalid(
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+
+        // Assert
+        await Sender.ShouldThrowInvalidValidationExceptionForCurrentUserIdAsync(
+            messageTransformer, request, CancellationToken);
+    }
+
     [Fact]
     public async Task SendAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
     {
@@ -148,6 +161,23 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
     {
         // Arrange
         var request = _requestBuilder.WithUserId(transformer).Build();
+
+        // Act
+        var response = await Sender.SendAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfy(PostCommentLike, request);
+    }
+
+    [Theory]
+    [UserIdNullData]
+    [UserIdEmptyData]
+    [UserIdDifferentCaseData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndCurrentUserIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
         // Act
         var response = await Sender.SendAsync(request, CancellationToken);

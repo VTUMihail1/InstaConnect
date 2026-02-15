@@ -45,6 +45,6 @@ public static class PostEquals
 
     public static bool Matches(this PostId p, string id)
     {
-        return p.Id == id;
+        return p.Id.EqualsOrdinalIgnoreCase(id);
     }
 }

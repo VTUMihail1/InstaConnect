@@ -5,6 +5,7 @@ namespace InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public abstract class SortEnumWithDescendingTermDataAttribute<TEnum, T, TValue> : SortEnumDataAttribute<TEnum>
     where TEnum : Enum
+    where T : IEntity
 {
     public ISortEnumTermTransformer<T> TermTransformer { get; }
 

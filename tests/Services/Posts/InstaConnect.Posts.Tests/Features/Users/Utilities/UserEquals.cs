@@ -45,6 +45,6 @@ public static class UserEquals
 
     public static bool Matches(this UserId p, string id)
     {
-        return p.Id == id;
+        return p.Id.EqualsOrdinalIgnoreCase(id);
     }
 }

@@ -20,9 +20,8 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeApplicati
 
     protected override async Task OnInitializeAsync()
     {
-        await ServiceScope.AddUserAsync(User, CancellationToken);
         await ServiceScope.AddUserRangeAsync(Users, CancellationToken);
-        await ServiceScope.AddPostAsync(Post, CancellationToken);
+        await ServiceScope.AddPostRangeAsync(Posts, CancellationToken);
         await ServiceScope.AddPostLikeRangeAsync(PostLikes, CancellationToken);
     }
 
@@ -56,6 +55,19 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeApplicati
     }
 
     [Theory]
+    [UserIdTooLongWithMessageData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdIsInvalid(
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+
+        // Assert
+        await Sender.ShouldThrowInvalidValidationExceptionForCurrentUserIdAsync(
+            messageTransformer, request, CancellationToken);
+    }
+
+    [Theory]
     [PostLikesSortOrderEmptyWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenSortOrderIsInvalid(
         IEnumTransformer<CommonSortOrder> transformer, IEnumMessageTransformer<CommonSortOrder> messageTransformer)
@@ -77,7 +89,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeApplicati
         var request = _requestBuilder.WithSortTerm(transformer).Build();
 
         // Assert
-        await Sender.ShouldThrowInvalidValidationExceptionForSortPropertyAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForSortTermAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -126,7 +138,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeApplicati
         var response = await Sender.SendAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostLikes, _request);
+        response.ShouldSatisfy(Post, PostLikes, _request);
     }
 
     [Theory]
@@ -141,7 +153,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeApplicati
         var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostLikes, _request);
+        response.ShouldSatisfy(Post, PostLikes, request);
     }
 
     [Theory]
@@ -158,7 +170,24 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeApplicati
         var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostLikes, _request);
+        response.ShouldSatisfy(Post, PostLikes, request);
+    }
+
+    [Theory]
+    [UserIdNullData]
+    [UserIdEmptyData]
+    [UserIdDifferentCaseData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndCurrentUserIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+
+        // Act
+        var response = await Sender.SendAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfy(Post, PostLikes, request);
     }
 
     [Theory]
@@ -174,7 +203,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeApplicati
         var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostLikes, _request, termTransformer);
+        response.ShouldSatisfy(Post, PostLikes, request, termTransformer);
     }
 
     [Theory]
@@ -190,6 +219,6 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeApplicati
         var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostLikes, _request, termTransformer);
+        response.ShouldSatisfy(Post, PostLikes, request, termTransformer);
     }
 }

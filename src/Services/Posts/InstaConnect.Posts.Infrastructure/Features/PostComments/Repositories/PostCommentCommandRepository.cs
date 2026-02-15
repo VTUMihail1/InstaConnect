@@ -25,7 +25,7 @@ internal class PostCommentCommandRepository : IPostCommentCommandRepository
     {
         return await _context
             .PostComments
-            .Aggregate()
+            .AggregateWithCaseInsensitiveCollation()
             .Includes(_commentIncluderFactory, include)
             .Match(id)
             .FirstOrDefaultAsync(cancellationToken);
@@ -44,7 +44,7 @@ internal class PostCommentCommandRepository : IPostCommentCommandRepository
     {
         return await _context
             .PostComments
-            .Aggregate()
+            .AggregateWithCaseInsensitiveCollation()
             .Match(id)
             .AnyAsync(cancellationToken);
     }

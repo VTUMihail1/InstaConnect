@@ -54,21 +54,21 @@ public static class StringExtensions
         return result;
     }
 
-    public static bool EqualsOrdinalIgnoreCase(this string a, string b)
+    public static bool EqualsOrdinalIgnoreCase(this string a, string? b)
     {
         var result = string.Equals(a, b, StringComparison.OrdinalIgnoreCase);
 
         return result;
     }
 
-    public static bool StartsWithOrdinalIgnoreCase(this string a, string b)
+    public static bool StartsWithOrdinalIgnoreCase(this string a, string? b)
     {
-        var result = a.StartsWith(b, StringComparison.OrdinalIgnoreCase);
+        var result = a.StartsWith(b ?? string.Empty, StringComparison.OrdinalIgnoreCase);
 
         return result;
     }
 
-    public static bool NotEqualsOrdinalIgnoreCase(this string a, string b)
+    public static bool NotEqualsOrdinalIgnoreCase(this string a, string? b)
     {
         var result = !a.EqualsOrdinalIgnoreCase(b);
 

@@ -1,21 +1,21 @@
 ﻿using InstaConnect.Common.Domain.Models;
 using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
-using InstaConnect.Posts.Tests.Features.Posts.DataAttributes.SortTerm;
+using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAllForUser;
+using InstaConnect.Posts.Domain.Features.PostLikes.Models.Requests;
 
-namespace InstaConnect.Posts.Application.Tests.Integration.Features.Posts.Queries;
+namespace InstaConnect.Posts.Application.Tests.Integration.Features.PostLikes.Queries;
 
-public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationQueryIntegrationTest
+public class GetAllPostLikesForUserQueryHandlerIntegrationTests : BasePostLikeApplicationQueryIntegrationTest
 {
-    private readonly GetAllPostsQueryRequestBuilderFactory _requestBuilderFactory;
-    private readonly GetAllPostsQueryRequestBuilder _requestBuilder;
-    private readonly GetAllPostsQueryRequest _request;
+    private readonly GetAllPostLikesForUserQueryRequestBuilderFactory _requestBuilderFactory;
+    private readonly GetAllPostLikesForUserQueryRequestBuilder _requestBuilder;
+    private readonly GetAllPostLikesForUserQueryRequest _request;
 
-    public GetAllPostsQueryHandlerIntegrationTests(PostsWebApplicationFactory webApplicationFactory)
+    public GetAllPostLikesForUserQueryHandlerIntegrationTests(PostsWebApplicationFactory webApplicationFactory)
         : base(webApplicationFactory)
     {
         _requestBuilderFactory = new();
-        _requestBuilder = _requestBuilderFactory.Create(Post);
+        _requestBuilder = _requestBuilderFactory.Create(PostLike);
         _request = _requestBuilder.Build();
     }
 
@@ -27,28 +27,18 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationQueryI
     }
 
     [Theory]
-    [UserNameTooLongWithMessageData]
-    public async Task SendAsync_ShouldThrowValidationException_WhenUserNameIsInvalid(
+    [UserIdNullWithMessageData]
+    [UserIdEmptyWithMessageData]
+    [UserIdTooShortWithMessageData]
+    [UserIdTooLongWithMessageData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenUserIdIsInvalid(
         IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserName(transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Assert
-        await Sender.ShouldThrowInvalidValidationExceptionForUserNameAsync(
-            messageTransformer, request, CancellationToken);
-    }
-
-    [Theory]
-    [PostTitleTooLongWithMessageData]
-    public async Task SendAsync_ShouldThrowValidationException_WhenTitleIsInvalid(
-        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithTitle(transformer).Build();
-
-        // Assert
-        await Sender.ShouldThrowInvalidValidationExceptionForTitleAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForUserIdAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -66,7 +56,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationQueryI
     }
 
     [Theory]
-    [PostsSortOrderEmptyWithMessageData]
+    [PostLikesSortOrderEmptyWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenSortOrderIsInvalid(
         IEnumTransformer<CommonSortOrder> transformer, IEnumMessageTransformer<CommonSortOrder> messageTransformer)
     {
@@ -79,9 +69,9 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationQueryI
     }
 
     [Theory]
-    [PostsSortTermEmptyWithMessageData]
+    [PostLikesSortTermEmptyWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenSortTermIsInvalid(
-        IEnumTransformer<PostsSortTerm> transformer, IEnumMessageTransformer<PostsSortTerm> messageTransformer)
+        IEnumTransformer<PostLikesSortTerm> transformer, IEnumMessageTransformer<PostLikesSortTerm> messageTransformer)
     {
         // Arrange
         var request = _requestBuilder.WithSortTerm(transformer).Build();
@@ -92,8 +82,8 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationQueryI
     }
 
     [Theory]
-    [PostPageTooSmallWithMessageData]
-    [PostPageTooLargeWithMessageData]
+    [PostLikePageTooSmallWithMessageData]
+    [PostLikePageTooLargeWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenPageIsInvalid(
         IIntTransformer transformer, IIntMessageTransformer messageTransformer)
     {
@@ -106,8 +96,8 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationQueryI
     }
 
     [Theory]
-    [PostPageSizeTooSmallWithMessageData]
-    [PostPageSizeTooLargeWithMessageData]
+    [PostLikePageSizeTooSmallWithMessageData]
+    [PostLikePageSizeTooLargeWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenPageSizeIsInvalid(
         IIntTransformer transformer, IIntMessageTransformer messageTransformer)
     {
@@ -126,41 +116,22 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationQueryI
         var response = await Sender.SendAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(Posts, _request);
+        response.ShouldSatisfy(User, PostLikes, _request);
     }
 
     [Theory]
-    [UserNameNullData]
-    [UserNameEmptyData]
-    [UserNameDifferentCaseData]
-    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndUserNameAreValid(
+    [UserIdDifferentCaseData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndUserIdAreValid(
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserName(transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(Posts, request);
-    }
-
-    [Theory]
-    [PostTitleNullData]
-    [PostTitleEmptyData]
-    [PostTitleDifferentCaseData]
-    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndTitleAreValid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithTitle(transformer).Build();
-
-        // Act
-        var response = await Sender.SendAsync(request, CancellationToken);
-
-        // Assert
-        response.ShouldSatisfy(Posts, request);
+        response.ShouldSatisfy(User, PostLikes, request);
     }
 
     [Theory]
@@ -177,14 +148,14 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationQueryI
         var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(Posts, request);
+        response.ShouldSatisfy(User, PostLikes, request);
     }
 
     [Theory]
-    [PostsSortOrderWithAscendingTermData]
-    [PostsSortOrderWithDescendingTermData]
+    [PostLikesSortOrderWithAscendingTermData]
+    [PostLikesSortOrderWithDescendingTermData]
     public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortOrderAreValid(
-        IEnumTransformer<CommonSortOrder> transformer, ISortEnumTermTransformer<Post> termTransformer)
+        IEnumTransformer<CommonSortOrder> transformer, ISortEnumTermTransformer<PostLike> termTransformer)
     {
         // Arrange
         var request = _requestBuilder.WithSortOrder(transformer).Build();
@@ -193,15 +164,14 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationQueryI
         var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(Posts, request, termTransformer);
+        response.ShouldSatisfy(User, PostLikes, request, termTransformer);
     }
 
     [Theory]
-    [PostsSortTermWithCreatedAtTermData]
-    [PostsSortTermWithTitleTermData]
-    [PostsSortTermWithUserNameTermData]
+    [PostLikesSortTermWithCreatedAtTermData]
+    [PostLikesSortTermWithUserNameTermData]
     public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortPropertyAreValid(
-        IEnumTransformer<PostsSortTerm> transformer, ISortEnumTermTransformer<Post> termTransformer)
+        IEnumTransformer<PostLikesSortTerm> transformer, ISortEnumTermTransformer<PostLike> termTransformer)
     {
         // Arrange
         var request = _requestBuilder.WithSortTerm(transformer).Build();
@@ -210,6 +180,6 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationQueryI
         var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(Posts, request, termTransformer);
+        response.ShouldSatisfy(User, PostLikes, request, termTransformer);
     }
 }

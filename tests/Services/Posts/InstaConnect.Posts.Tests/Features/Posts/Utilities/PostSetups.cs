@@ -13,14 +13,20 @@ public static class PostSetups
         return serviceScope.ServiceProvider.GetRequiredService<IPostCommandRepository>();
     }
 
+    public static IPostIncludeBuilderFactory GetPostIncludeBuilderFactory(this IServiceScope serviceScope)
+    {
+        return serviceScope.ServiceProvider.GetRequiredService<IPostIncludeBuilderFactory>();
+    }
+
     public static async Task<Post?> GetPostByIdAsync(
         this IServiceScope serviceScope,
         PostId id,
         CancellationToken cancellationToken)
     {
+        var include = serviceScope.GetPostIncludeBuilderFactory().Create().WithUser().Build();
         var postRepository = serviceScope.GetPostCommandRepository();
 
-        return await postRepository.GetByIdAsync(id, cancellationToken);
+        return await postRepository.GetByIdAsync(id, include, cancellationToken);
     }
 
     public static async Task AddPostAsync(

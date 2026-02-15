@@ -13,7 +13,7 @@ public static class PostCommentGenerator
                   users.Select(user =>
                   {
                         var postComment = new PostComment(new(
-                                                         basePostComment.Id.Id,
+                                                         post.Id,
                                                          PostCommentDataFaker.GetId()),
                                                          PostCommentDataFaker.GetContent(),
                                                          user.Id,
@@ -24,7 +24,7 @@ public static class PostCommentGenerator
                         postComment.AddPost(post);
                         user.AddPostComment(postComment);
                         post.AddPostComment(postComment);
-                        
+
                         return postComment;
                   }))];
     }

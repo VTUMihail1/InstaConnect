@@ -1,6 +1,12 @@
 ﻿using InstaConnect.Common.Domain.Models;
 using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Requests;
+using InstaConnect.Posts.Infrastructure.Abstractions;
+
+using Microsoft.Extensions.DependencyInjection;
+
+using MongoDB.Bson;
+using MongoDB.Driver;
 
 namespace InstaConnect.Posts.Application.Tests.Integration.Features.PostCommentLikes.Queries;
 
@@ -20,11 +26,10 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
 
     protected override async Task OnInitializeAsync()
     {
-        await ServiceScope.AddUserAsync(User, CancellationToken);
         await ServiceScope.AddUserRangeAsync(Users, CancellationToken);
-        await ServiceScope.AddPostAsync(Post, CancellationToken);
-        await ServiceScope.AddPostLikeAsync(PostLike, CancellationToken);
-        await ServiceScope.AddPostCommentAsync(PostComment, CancellationToken);
+        await ServiceScope.AddPostRangeAsync(Posts, CancellationToken);
+        await ServiceScope.AddPostLikeRangeAsync(PostLikes, CancellationToken);
+        await ServiceScope.AddPostCommentRangeAsync(PostComments, CancellationToken);
         await ServiceScope.AddPostCommentLikeRangeAsync(PostCommentLikes, CancellationToken);
     }
 
@@ -74,6 +79,19 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
     }
 
     [Theory]
+    [UserIdTooLongWithMessageData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdIsInvalid(
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+
+        // Assert
+        await Sender.ShouldThrowInvalidValidationExceptionForCurrentUserIdAsync(
+            messageTransformer, request, CancellationToken);
+    }
+
+    [Theory]
     [PostCommentLikesSortOrderEmptyWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenSortOrderIsInvalid(
         IEnumTransformer<CommonSortOrder> transformer,
@@ -97,7 +115,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         var request = _requestBuilder.WithSortProperty(transformer).Build();
 
         // Assert
-        await Sender.ShouldThrowInvalidValidationExceptionForSortPropertyAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForSortTermAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -156,7 +174,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         var response = await Sender.SendAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostCommentLikes, _request);
+        response.ShouldSatisfy(PostComment, PostCommentLikes, _request);
     }
 
     [Theory]
@@ -171,7 +189,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostCommentLikes, _request);
+        response.ShouldSatisfy(PostComment, PostCommentLikes, request);
     }
 
     [Theory]
@@ -186,7 +204,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostCommentLikes, _request);
+        response.ShouldSatisfy(PostComment, PostCommentLikes, request);
     }
 
     [Theory]
@@ -203,7 +221,24 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostCommentLikes, _request);
+        response.ShouldSatisfy(PostComment, PostCommentLikes, request);
+    }
+
+    [Theory]
+    [UserIdNullData]
+    [UserIdEmptyData]
+    [UserIdDifferentCaseData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndCurrentUserIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+
+        // Act
+        var response = await Sender.SendAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfy(PostComment, PostCommentLikes, request);
     }
 
     [Theory]
@@ -219,7 +254,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostCommentLikes, _request, termTransformer);
+        response.ShouldSatisfy(PostComment, PostCommentLikes, request, termTransformer);
     }
 
     [Theory]
@@ -235,6 +270,6 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostCommentLikes, _request, termTransformer);
+        response.ShouldSatisfy(PostComment, PostCommentLikes, request, termTransformer);
     }
 }

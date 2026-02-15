@@ -4,7 +4,7 @@ namespace InstaConnect.Common.Infrastructure.Models.Options;
 
 public class MongoDatabaseOptions
 {
-    public const string SectionName = "DatabaseConfiguration";
+    public const string SectionName = "MongoDatabaseConfiguration";
 
     [Required]
     public string ConnectionString { get; set; } = string.Empty;

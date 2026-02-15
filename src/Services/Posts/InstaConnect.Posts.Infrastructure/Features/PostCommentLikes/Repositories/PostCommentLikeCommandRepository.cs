@@ -25,7 +25,7 @@ internal class PostCommentLikeCommandRepository : IPostCommentLikeCommandReposit
     {
         return await _context
             .PostCommentLikes
-            .Aggregate()
+            .AggregateWithCaseInsensitiveCollation()
             .Includes(_commentLikeIncluderFactory, include)
             .Match(id)
             .FirstOrDefaultAsync(cancellationToken);
@@ -44,7 +44,7 @@ internal class PostCommentLikeCommandRepository : IPostCommentLikeCommandReposit
     {
         return await _context
             .PostCommentLikes
-            .Aggregate()
+            .AggregateWithCaseInsensitiveCollation()
             .Match(id)
             .AnyAsync(cancellationToken);
     }

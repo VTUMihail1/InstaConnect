@@ -173,6 +173,19 @@ public static class PostCommentValidationExceptionAssertions
             cancellationToken);
     }
 
+    public static async Task ShouldThrowInvalidValidationExceptionForUserIdAsync(
+        this IApplicationSender sender,
+        IStringMessageTransformer messageTransformer,
+        GetAllPostCommentsForUserQueryRequest request,
+        CancellationToken cancellationToken)
+    {
+        await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostCommentsForUserQueryRequest, string, GetAllPostCommentsForUserQueryResponse>(
+            p => p.UserId,
+            messageTransformer,
+            request,
+            cancellationToken);
+    }
+
     public static async Task ShouldThrowInvalidValidationExceptionForCurrentUserIdAsync(
         this IApplicationSender sender,
         IStringMessageTransformer messageTransformer,
@@ -238,6 +251,19 @@ public static class PostCommentValidationExceptionAssertions
             cancellationToken);
     }
 
+    public static async Task ShouldThrowInvalidValidationExceptionForPageAsync(
+        this IApplicationSender sender,
+        IIntMessageTransformer messageTransformer,
+        GetAllPostCommentsForUserQueryRequest request,
+        CancellationToken cancellationToken)
+    {
+        await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostCommentsForUserQueryRequest, int, GetAllPostCommentsForUserQueryResponse>(
+            p => p.Page,
+            messageTransformer,
+            request,
+            cancellationToken);
+    }
+
     public static async Task ShouldThrowInvalidValidationExceptionForPageSizeAsync(
         this IApplicationSender sender,
         IIntMessageTransformer messageTransformer,
@@ -245,6 +271,19 @@ public static class PostCommentValidationExceptionAssertions
         CancellationToken cancellationToken)
     {
         await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostCommentsQueryRequest, int, GetAllPostCommentsQueryResponse>(
+            p => p.PageSize,
+            messageTransformer,
+            request,
+            cancellationToken);
+    }
+
+    public static async Task ShouldThrowInvalidValidationExceptionForPageSizeAsync(
+        this IApplicationSender sender,
+        IIntMessageTransformer messageTransformer,
+        GetAllPostCommentsForUserQueryRequest request,
+        CancellationToken cancellationToken)
+    {
+        await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostCommentsForUserQueryRequest, int, GetAllPostCommentsForUserQueryResponse>(
             p => p.PageSize,
             messageTransformer,
             request,
@@ -264,13 +303,39 @@ public static class PostCommentValidationExceptionAssertions
             cancellationToken);
     }
 
-    public static async Task ShouldThrowInvalidValidationExceptionForSortPropertyAsync(
+    public static async Task ShouldThrowInvalidValidationExceptionForSortOrderAsync(
+        this IApplicationSender sender,
+        IEnumMessageTransformer<CommonSortOrder> messageTransformer,
+        GetAllPostCommentsForUserQueryRequest request,
+        CancellationToken cancellationToken)
+    {
+        await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostCommentsForUserQueryRequest, CommonSortOrder, GetAllPostCommentsForUserQueryResponse>(
+            p => p.SortOrder,
+            messageTransformer,
+            request,
+            cancellationToken);
+    }
+
+    public static async Task ShouldThrowInvalidValidationExceptionForSortTermAsync(
         this IApplicationSender sender,
         IEnumMessageTransformer<PostCommentsSortTerm> messageTransformer,
         GetAllPostCommentsQueryRequest request,
         CancellationToken cancellationToken)
     {
         await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostCommentsQueryRequest, PostCommentsSortTerm, GetAllPostCommentsQueryResponse>(
+            p => p.SortTerm,
+            messageTransformer,
+            request,
+            cancellationToken);
+    }
+
+    public static async Task ShouldThrowInvalidValidationExceptionForSortTermAsync(
+        this IApplicationSender sender,
+        IEnumMessageTransformer<PostCommentsSortTerm> messageTransformer,
+        GetAllPostCommentsForUserQueryRequest request,
+        CancellationToken cancellationToken)
+    {
+        await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostCommentsForUserQueryRequest, PostCommentsSortTerm, GetAllPostCommentsForUserQueryResponse>(
             p => p.SortTerm,
             messageTransformer,
             request,

@@ -166,7 +166,7 @@ public static class PostCommentLikeEquals
         TRequest request)
         where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
     {
-        return response.MatchesCollectionResponse(postCommentLikes.Count, request) &&
+        return response.MatchesCollectionResponse(postCommentLikes.Count(matchesFilter), request) &&
                response.User == null &&
                response.PostComment.MatchesFull(postComment, request) &&
                response.PostCommentLikes.MatchesCollection(postCommentLikes,
@@ -187,7 +187,7 @@ public static class PostCommentLikeEquals
         ISortEnumTermTransformer<PostCommentLike> termTransformer)
         where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
     {
-        return response.MatchesCollectionResponse(postCommentLikes.Count, request) &&
+        return response.MatchesCollectionResponse(postCommentLikes.Count(matchesFilter), request) &&
                response.User == null &&
                response.PostComment.MatchesFull(postComment, request) &&
                response.PostCommentLikes.MatchesSortedCollection(postCommentLikes,
@@ -217,7 +217,7 @@ public static class PostCommentLikeEquals
         TRequest request)
         where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
     {
-        return response.MatchesCollectionResponse(postCommentLikes.Count, request) &&
+        return response.MatchesCollectionResponse(postCommentLikes.Count(matchesFilter), request) &&
                response.User.MatchesFull(user) &&
                response.PostComment == null &&
                response.PostCommentLikes.MatchesCollection(postCommentLikes,
@@ -238,7 +238,7 @@ public static class PostCommentLikeEquals
         ISortEnumTermTransformer<PostCommentLike> termTransformer)
         where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
     {
-        return response.MatchesCollectionResponse(postCommentLikes.Count, request) &&
+        return response.MatchesCollectionResponse(postCommentLikes.Count(matchesFilter), request) &&
                response.User.MatchesFull(user) &&
                response.PostComment == null &&
                response.PostCommentLikes.MatchesSortedCollection(postCommentLikes,

@@ -4,7 +4,7 @@ namespace InstaConnect.Common.Infrastructure.Models.Options;
 
 public class SessionTokenOptions
 {
-    public const string SectionName = "AccessTokenConfiguration";
+    public const string SectionName = "SessionTokenConfiguration";
 
     [Required]
     public string Issuer { get; set; } = string.Empty;

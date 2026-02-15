@@ -37,10 +37,10 @@ internal class PostLikeQueryRepository : IPostLikeQueryRepository
     {
         return await _context
             .PostLikes
-            .Aggregate()
+            .AggregateWithCaseInsensitiveCollation()
             .Includes(_likeIncluderFactory, include)
             .Match(filter)
-            .ProjectToResponse(currentUser)
+            .ProjectToResponseWithoutPost(currentUser)
             .Sort(_sortOrdererFactory, _likeSortTermerFactory, sorting)
             .Paginate(_paginator, pagination)
             .ToListAsync(cancellationToken);
@@ -66,10 +66,10 @@ internal class PostLikeQueryRepository : IPostLikeQueryRepository
     {
         return await _context
             .PostLikes
-            .Aggregate()
+            .AggregateWithCaseInsensitiveCollation()
             .Includes(_likeIncluderFactory, include)
             .Match(filter)
-            .ProjectToResponse(currentUser)
+            .ProjectToResponseWithoutUser(currentUser)
             .Sort(_sortOrdererFactory, _likeSortTermerFactory, sorting)
             .Paginate(_paginator, pagination)
             .ToListAsync(cancellationToken);
@@ -92,7 +92,7 @@ internal class PostLikeQueryRepository : IPostLikeQueryRepository
     {
         return await _context
             .PostLikes
-            .Aggregate()
+            .AggregateWithCaseInsensitiveCollation()
             .Includes(_likeIncluderFactory, include)
             .Match(filter)
             .GetCount(cancellationToken);
@@ -112,7 +112,7 @@ internal class PostLikeQueryRepository : IPostLikeQueryRepository
     {
         return await _context
             .PostLikes
-            .Aggregate()
+            .AggregateWithCaseInsensitiveCollation()
             .Includes(_likeIncluderFactory, include)
             .Match(filter)
             .GetCount(cancellationToken);
@@ -133,10 +133,10 @@ internal class PostLikeQueryRepository : IPostLikeQueryRepository
     {
         return await _context
             .PostLikes
-            .Aggregate()
+            .AggregateWithCaseInsensitiveCollation()
             .Includes(_likeIncluderFactory, include)
             .Match(id)
-            .ProjectToResponse(currentUser)
+            .ProjectToFullResponse(currentUser)
             .FirstOrDefaultAsync(cancellationToken);
     }
 
@@ -154,7 +154,7 @@ internal class PostLikeQueryRepository : IPostLikeQueryRepository
     {
         return await _context
             .PostLikes
-            .Aggregate()
+            .AggregateWithCaseInsensitiveCollation()
             .Match(id)
             .AnyAsync(cancellationToken);
     }

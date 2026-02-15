@@ -30,7 +30,7 @@ internal static class UserAggregateFluentExtensions
         return aggregate.Match(filter.GetFilter());
     }
 
-    public static IAggregateFluent<UserResponse> ProjectToResponse(
+    public static IAggregateFluent<UserResponse> ProjectToFullResponse(
         this IAggregateFluent<User> aggregate,
         CurrentUserQuery currentUser)
     {

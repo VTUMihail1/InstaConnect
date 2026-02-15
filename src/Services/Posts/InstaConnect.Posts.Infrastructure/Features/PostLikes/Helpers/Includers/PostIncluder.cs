@@ -13,7 +13,7 @@ internal class PostIncluder : IPostLikeIncluder
         _context = context;
     }
 
-    public PostsDestinationType DestinationType => PostsDestinationType.PostComments;
+    public PostsDestinationType DestinationType => PostsDestinationType.PostLikes;
 
     public PostsIncludeType IncludeType => PostsIncludeType.Posts;
 

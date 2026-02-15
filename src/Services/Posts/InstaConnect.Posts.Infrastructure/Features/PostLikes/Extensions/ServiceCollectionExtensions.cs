@@ -18,7 +18,8 @@ internal static class ServiceCollectionExtensions
             cm.MapMember(c => c.Id);
             cm.MapMember(c => c.CreatedAtUtc);
 
-            cm.MapMember(c => c.User);
+            cm.MapMemberWithoutSerialization(c => c.User);
+            cm.MapMemberWithoutSerialization(c => c.Post);
 
             cm.MapCreator(c => new PostLike(
                 c.Id,

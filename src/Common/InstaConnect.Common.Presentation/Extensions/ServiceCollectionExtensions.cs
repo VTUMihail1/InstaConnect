@@ -96,12 +96,12 @@ public static class ServiceCollectionExtensions
     {
         serviceCollection
             .AddOptions<CorsOptions>()
-            .BindConfiguration(nameof(CorsOptions))
+            .BindConfiguration(CorsOptions.SectionName)
             .ValidateDataAnnotations()
             .ValidateOnStart();
 
         var corsOptions = configuration
-            .GetSection(nameof(CorsOptions))
+            .GetSection(CorsOptions.SectionName)
             .Get<CorsOptions>()!;
 
         serviceCollection.AddCors(options =>

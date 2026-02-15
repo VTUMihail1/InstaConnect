@@ -10,4 +10,4 @@ public record PostResponse(
     UserResponse? User,
     bool IsLikedByCurrentUser,
     DateTimeOffset CreatedAtUtc,
-    DateTimeOffset UpdatedAtUtc);
+    DateTimeOffset UpdatedAtUtc) : IEntityResponse;

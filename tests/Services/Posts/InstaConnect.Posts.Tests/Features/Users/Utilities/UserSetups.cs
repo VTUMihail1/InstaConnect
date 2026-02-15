@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Tests.Extensions;
+using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
 using InstaConnect.Posts.Domain.Features.Users.Abstractions;
 using InstaConnect.Posts.Domain.Features.Users.Models.ValueObjects;
 using InstaConnect.Posts.Infrastructure.Abstractions;
@@ -11,6 +12,11 @@ public static class UserSetups
     public static IUserCommandRepository GetUserCommandRepository(this IServiceScope serviceScope)
     {
         return serviceScope.ServiceProvider.GetRequiredService<IUserCommandRepository>();
+    }
+
+    public static IUserIncludeBuilderFactory GetUserIncludeBuilderFactory(this IServiceScope serviceScope)
+    {
+        return serviceScope.ServiceProvider.GetRequiredService<IUserIncludeBuilderFactory>();
     }
 
     public static async Task<User?> GetUserByIdAsync(

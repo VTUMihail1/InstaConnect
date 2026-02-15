@@ -197,7 +197,7 @@ public static class PostCommentEquals
         TRequest request)
         where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
     {
-        return response.MatchesCollectionResponse(postComments.Count, request) &&
+        return response.MatchesCollectionResponse(postComments.Count(matchesFilter), request) &&
                response.User == null &&
                response.Post.MatchesFull(post, request) &&
                response.PostComments.MatchesCollection(postComments,
@@ -218,7 +218,7 @@ public static class PostCommentEquals
         ISortEnumTermTransformer<PostComment> termTransformer)
         where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
     {
-        return response.MatchesCollectionResponse(postComments.Count, request) &&
+        return response.MatchesCollectionResponse(postComments.Count(matchesFilter), request) &&
                response.User == null &&
                response.Post.MatchesFull(post, request) &&
                response.PostComments.MatchesSortedCollection(postComments,
@@ -252,7 +252,7 @@ public static class PostCommentEquals
         TRequest request)
         where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
     {
-        return response.MatchesCollectionResponse(postComments.Count, request) &&
+        return response.MatchesCollectionResponse(postComments.Count(matchesFilter), request) &&
                response.User.MatchesFull(user) &&
                response.Post == null &&
                response.PostComments.MatchesCollection(postComments,
@@ -273,7 +273,7 @@ public static class PostCommentEquals
         ISortEnumTermTransformer<PostComment> termTransformer)
         where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
     {
-        return response.MatchesCollectionResponse(postComments.Count, request) &&
+        return response.MatchesCollectionResponse(postComments.Count(matchesFilter), request) &&
                response.User.MatchesFull(user) &&
                response.Post == null &&
                response.PostComments.MatchesSortedCollection(postComments,

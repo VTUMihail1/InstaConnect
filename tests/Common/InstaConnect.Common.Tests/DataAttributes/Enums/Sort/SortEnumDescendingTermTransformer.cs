@@ -1,6 +1,7 @@
 ﻿namespace InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
 
 internal class SortEnumDescendingTermTransformer<T, TValue> : ISortEnumTermTransformer<T>
+    where T : IEntity
 {
     private readonly Func<T, TValue> _term;
 
@@ -11,6 +12,6 @@ internal class SortEnumDescendingTermTransformer<T, TValue> : ISortEnumTermTrans
 
     public IEnumerable<T> Transform(IEnumerable<T> values)
     {
-        return values.OrderByDescending(_term).AsEnumerable();
+        return values.OrderByDescending(_term).ThenByDescending(a => a.CreatedAtUtc).AsEnumerable();
     }
 }

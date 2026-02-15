@@ -25,10 +25,10 @@ internal class UserQueryRepository : IUserQueryRepository
     {
         return await _context
             .Users
-            .Aggregate()
+            .AggregateWithCaseInsensitiveCollation()
             .Includes(_userIncluderFactory, include)
             .Match(id)
-            .ProjectToResponse(currentUser)
+            .ProjectToFullResponse(currentUser)
             .FirstOrDefaultAsync(cancellationToken);
     }
 
@@ -46,7 +46,7 @@ internal class UserQueryRepository : IUserQueryRepository
     {
         return await _context
             .Users
-            .Aggregate()
+            .AggregateWithCaseInsensitiveCollation()
             .Match(id)
             .AnyAsync(cancellationToken);
     }

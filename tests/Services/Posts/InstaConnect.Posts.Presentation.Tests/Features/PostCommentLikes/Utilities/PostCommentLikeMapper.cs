@@ -5,6 +5,7 @@ using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAllForUser
 using InstaConnect.Posts.Application.Features.Users.Models;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Responses;
 using InstaConnect.Posts.Domain.Features.PostComments.Models.Responses;
+using InstaConnect.Posts.Domain.Features.PostComments.Models.ValueObjects;
 using InstaConnect.Posts.Domain.Features.Users.Models.Responses;
 using InstaConnect.Posts.Presentation.Features.Users.Abstractions;
 using InstaConnect.Posts.Presentation.Tests.Features.PostCommentLikes.Utilities;
@@ -44,14 +45,15 @@ public static class PostCommentLikeMapper
         where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
     {
         var paginator = new Paginator();
+        var totalCount = postCommentLikes.Count(postCommentLike => filter(postCommentLike, request));
 
         return new(postComment.ToFullResponse(request),
                    null,
                    postCommentLikes.Filter(postCommentLike => filter(postCommentLike, request), request, postCommentLike => transform(postCommentLike, request)),
                    request.Page,
                    request.PageSize,
-                   postCommentLikes.Count,
-                   paginator.HasNextPage(request.Page, request.PageSize, postCommentLikes.Count),
+                   totalCount,
+                   paginator.HasNextPage(request.Page, request.PageSize, totalCount),
                    paginator.HasPreviousPage(request.Page));
     }
 
@@ -77,14 +79,15 @@ public static class PostCommentLikeMapper
         where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
     {
         var paginator = new Paginator();
+        var totalCount = postCommentLikes.Count(postCommentLike => filter(postCommentLike, request));
 
         return new(null,
                    user.ToFullResponse(),
                    postCommentLikes.Filter(postCommentLike => filter(postCommentLike, request), request, postCommentLike => transform(postCommentLike, request)),
                    request.Page,
                    request.PageSize,
-                   postCommentLikes.Count,
-                   paginator.HasNextPage(request.Page, request.PageSize, postCommentLikes.Count),
+                   totalCount,
+                   paginator.HasNextPage(request.Page, request.PageSize, totalCount),
                    paginator.HasPreviousPage(request.Page));
     }
 

@@ -41,13 +41,14 @@ public static class PostMapper
         where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
     {
         var paginator = new Paginator();
+        var totalCount = posts.Count(post => filter(post, request));
 
         return new (user.ToFullResponse(),
                     posts.Filter(post => filter(post, request), request, post => transform(post, request)),
                     request.Page,
                     request.PageSize,
-                    posts.Count,
-                    paginator.HasNextPage(request.Page, request.PageSize, posts.Count),
+                    totalCount,
+                    paginator.HasNextPage(request.Page, request.PageSize, totalCount),
                     paginator.HasPreviousPage(request.Page));
     }
 
@@ -59,13 +60,14 @@ public static class PostMapper
         where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
     {
         var paginator = new Paginator();
+        var totalCount = posts.Count(post => filter(post, request));
 
         return new(null,
                    posts.Filter(post => filter(post, request), request, post => transform(post, request)),
                    request.Page,
                    request.PageSize,
-                   posts.Count,
-                   paginator.HasNextPage(request.Page, request.PageSize, posts.Count),
+                   totalCount,
+                   paginator.HasNextPage(request.Page, request.PageSize, totalCount),
                    paginator.HasPreviousPage(request.Page));
     }
 

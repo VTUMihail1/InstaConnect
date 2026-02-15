@@ -4,15 +4,15 @@ namespace InstaConnect.Common.Infrastructure.Extensions;
 
 public static class MongoCollectionExtensions
 {
-    public static async Task<long> GetCount<T>(
-        this IAggregateFluent<T> fluent,
-        CancellationToken cancellationToken)
+    public static IAggregateFluent<T> AggregateWithCaseInsensitiveCollation<T>(
+        this IMongoCollection<T> collection)
     {
-        var result = await fluent
-                           .Count()
-                           .FirstOrDefaultAsync(cancellationToken);
+        var options = new AggregateOptions
+        {
+            Collation = new Collation("en", strength: CollationStrength.Primary)
+        };
 
-        return result?.Count ?? default;
+        return collection.Aggregate(options);
     }
 
     public static async Task AddAsync<T>(
@@ -45,7 +45,6 @@ public static class MongoCollectionExtensions
         }
 
         await collection.InsertManyAsync(session, entities, null, cancellationToken);
-
     }
 
     public static async Task UpdateAsync<T>(
@@ -65,7 +64,6 @@ public static class MongoCollectionExtensions
         }
 
         await collection.ReplaceOneAsync(session, filter, entity, options, cancellationToken);
-
     }
 
     public static async Task DeleteAsync<T>(

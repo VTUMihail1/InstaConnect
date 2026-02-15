@@ -1,4 +1,6 @@
-﻿using InstaConnect.Posts.Infrastructure.Extensions;
+﻿using System.Runtime.CompilerServices;
+
+using InstaConnect.Posts.Infrastructure.Extensions;
 
 using MongoDB.Bson.Serialization;
 
@@ -18,7 +20,8 @@ internal static class ServiceCollectionExtensions
             cm.MapMember(c => c.Id);
             cm.MapMember(c => c.CreatedAtUtc);
 
-            cm.MapMember(c => c.User);
+            cm.MapMemberWithoutSerialization(c => c.User);
+            cm.MapMemberWithoutSerialization(c => c.PostComment);
 
             cm.MapCreator(c => new PostCommentLike(
                 c.Id,
@@ -30,3 +33,4 @@ internal static class ServiceCollectionExtensions
         return serviceCollection;
     }
 }
+

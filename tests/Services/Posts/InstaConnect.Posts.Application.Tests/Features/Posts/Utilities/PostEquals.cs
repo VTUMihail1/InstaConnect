@@ -170,7 +170,7 @@ public static class PostEquals
         TRequest request)
         where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
     {
-        return response.MatchesCollectionResponse(posts.Count, request) &&
+        return response.MatchesCollectionResponse(posts.Count(matchesFilter), request) &&
                response.User.MatchesFull(user) &&
                response.Posts.MatchesCollection(posts,
                                                 response => new(response.Id),
@@ -190,7 +190,7 @@ public static class PostEquals
         ISortEnumTermTransformer<Post> termTransformer)
         where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
     {
-        return response.MatchesCollectionResponse(posts.Count, request) &&
+        return response.MatchesCollectionResponse(posts.Count(matchesFilter), request) &&
                response.User.MatchesFull(user) &&
                response.Posts.MatchesSortedCollection(posts,
                                                       matches,
@@ -222,7 +222,7 @@ public static class PostEquals
         TRequest request)
         where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
     {
-        return response.MatchesCollectionResponse(posts.Count, request) &&
+        return response.MatchesCollectionResponse(posts.Count(matchesFilter), request) &&
                response.User == null &&
                response.Posts.MatchesCollection(posts,
                                                 response => new(response.Id),
@@ -241,7 +241,7 @@ public static class PostEquals
         ISortEnumTermTransformer<Post> termTransformer)
         where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
     {
-        return response.MatchesCollectionResponse(posts.Count, request) &&
+        return response.MatchesCollectionResponse(posts.Count(matchesFilter), request) &&
                response.User == null &&
                response.Posts.MatchesSortedCollection(posts,
                                                       matches,

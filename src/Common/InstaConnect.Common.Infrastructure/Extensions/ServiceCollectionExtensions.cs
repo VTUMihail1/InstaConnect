@@ -83,7 +83,7 @@ public static partial class ServiceCollectionExtensions
 
         serviceCollection
             .AddOptions<MongoDatabaseOptions>()
-            .BindConfiguration(nameof(MongoDatabaseOptions))
+            .BindConfiguration(MongoDatabaseOptions.SectionName)
             .ValidateDataAnnotations()
             .ValidateOnStart();
 
@@ -121,12 +121,12 @@ public static partial class ServiceCollectionExtensions
     {
         serviceCollection
             .AddOptions<CacheOptions>()
-            .BindConfiguration(nameof(CacheOptions))
+            .BindConfiguration(CacheOptions.SectionName)
             .ValidateDataAnnotations()
             .ValidateOnStart();
 
         var cacheOptions = configuration
-            .GetSection(nameof(CacheOptions))
+            .GetSection(CacheOptions.SectionName)
             .Get<CacheOptions>()!;
 
         serviceCollection
@@ -153,12 +153,12 @@ public static partial class ServiceCollectionExtensions
     {
         serviceCollection
             .AddOptions<MessageBrokerOptions>()
-            .BindConfiguration(nameof(MessageBrokerOptions))
+            .BindConfiguration(MessageBrokerOptions.SectionName)
             .ValidateDataAnnotations()
             .ValidateOnStart();
 
         var messageBrokerOptions = configuration
-            .GetSection(nameof(MessageBrokerOptions))
+            .GetSection(MessageBrokerOptions.SectionName)
             .Get<MessageBrokerOptions>()!;
 
         serviceCollection.AddMassTransit(busConfigurator =>
@@ -193,12 +193,12 @@ public static partial class ServiceCollectionExtensions
 
         serviceCollection
         .AddOptions<SessionTokenOptions>()
-        .BindConfiguration(nameof(SessionTokenOptions))
+        .BindConfiguration(SessionTokenOptions.SectionName)
         .ValidateDataAnnotations()
         .ValidateOnStart();
 
         var accessTokenOptions = configuration
-            .GetSection(nameof(SessionTokenOptions))
+            .GetSection(SessionTokenOptions.SectionName)
             .Get<SessionTokenOptions>()!;
 
         serviceCollection
@@ -230,12 +230,12 @@ public static partial class ServiceCollectionExtensions
     {
         serviceCollection
             .AddOptions<ImageUploadOptions>()
-            .BindConfiguration(nameof(ImageUploadOptions))
+            .BindConfiguration(ImageUploadOptions.SectionName)
             .ValidateDataAnnotations()
             .ValidateOnStart();
 
         var imageUploadOptions = configuration
-            .GetSection(nameof(ImageUploadOptions))
+            .GetSection(ImageUploadOptions.SectionName)
             .Get<ImageUploadOptions>()!;
 
         serviceCollection.AddScoped(_ => new Cloudinary(new Account(

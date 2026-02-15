@@ -37,7 +37,7 @@ public static class PostCommentEquals
 
     public static bool Matches(this PostComment entity, PostCommentEventRequest request)
     {
-        return entity.Id.Matches(request.Id, request.UserId) &&
+        return entity.Id.Matches(request.Id, request.CommentId) &&
                entity.Content == request.Content &&
                entity.User != null && entity.User.Matches(request.User) &&
                entity.Post != null && entity.Post.Matches(request.Post) &&
@@ -48,6 +48,6 @@ public static class PostCommentEquals
     public static bool Matches(this PostCommentId p, string id, string commentId)
     {
         return p.Id.Matches(id) &&
-               p.CommentId == commentId;
+               p.CommentId.EqualsOrdinalIgnoreCase(commentId);
     }
 }

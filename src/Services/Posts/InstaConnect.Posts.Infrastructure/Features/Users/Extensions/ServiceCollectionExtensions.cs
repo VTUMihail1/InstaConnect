@@ -23,10 +23,10 @@ internal static class ServiceCollectionExtensions
             cm.MapMember(c => c.CreatedAtUtc);
             cm.MapMember(c => c.UpdatedAtUtc);
 
-            cm.MapMember(c => c.Posts);
-            cm.MapMember(c => c.PostLikes);
-            cm.MapMember(c => c.PostComments);
-            cm.MapMember(c => c.PostCommentLikes);
+            cm.MapMemberWithoutSerialization(c => c.Posts);
+            cm.MapMemberWithoutSerialization(c => c.PostLikes);
+            cm.MapMemberWithoutSerialization(c => c.PostComments);
+            cm.MapMemberWithoutSerialization(c => c.PostCommentLikes);
 
             cm.MapCreator(c => new User(
                 c.Id,

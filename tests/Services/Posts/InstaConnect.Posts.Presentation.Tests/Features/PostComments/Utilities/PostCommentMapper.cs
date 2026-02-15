@@ -47,14 +47,15 @@ public static class PostCommentMapper
         where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
     {
         var paginator = new Paginator();
+        var totalCount = postComments.Count(postComment => filter(postComment, request));
 
         return new(post.ToFullResponse(request),
                    null,
                    postComments.Filter(postComment => filter(postComment, request), request, postComment => transform(postComment, request)),
                    request.Page,
                    request.PageSize,
-                   postComments.Count,
-                   paginator.HasNextPage(request.Page, request.PageSize, postComments.Count),
+                   totalCount,
+                   paginator.HasNextPage(request.Page, request.PageSize, totalCount),
                    paginator.HasPreviousPage(request.Page));
     }
 
@@ -83,14 +84,15 @@ public static class PostCommentMapper
         where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
     {
         var paginator = new Paginator();
+        var totalCount = postComments.Count(postComment => filter(postComment, request));
 
         return new(null,
                    user.ToFullResponse(),
                    postComments.Filter(postComment => filter(postComment, request), request, postComment => transform(postComment, request)),
                    request.Page,
                    request.PageSize,
-                   postComments.Count,
-                   paginator.HasNextPage(request.Page, request.PageSize, postComments.Count),
+                   totalCount,
+                   paginator.HasNextPage(request.Page, request.PageSize, totalCount),
                    paginator.HasPreviousPage(request.Page));
     }
 

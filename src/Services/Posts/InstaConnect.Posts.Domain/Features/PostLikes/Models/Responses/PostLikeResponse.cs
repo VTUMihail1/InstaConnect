@@ -6,4 +6,4 @@ public record PostLikeResponse(
         PostLikeId Id,
         UserResponse? User,
         PostResponse? Post,
-        DateTimeOffset CreatedAtUtc);
+        DateTimeOffset CreatedAtUtc) : IEntityResponse;

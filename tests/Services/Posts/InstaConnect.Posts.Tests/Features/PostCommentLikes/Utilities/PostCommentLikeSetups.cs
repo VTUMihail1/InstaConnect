@@ -1,7 +1,10 @@
 ﻿using InstaConnect.Common.Tests.Extensions;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstractions;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.ValueObjects;
+using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
 using InstaConnect.Posts.Infrastructure.Abstractions;
+using InstaConnect.Posts.Tests.Features.PostComments.Utilities;
+using InstaConnect.Posts.Tests.Features.Posts.Utilities;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,14 +16,22 @@ public static class PostCommentLikeSetups
         return serviceScope.ServiceProvider.GetRequiredService<IPostCommentLikeCommandRepository>();
     }
 
+    public static IPostCommentLikeIncludeBuilderFactory GetPostCommentLikeIncludeBuilderFactory(this IServiceScope serviceScope)
+    {
+        return serviceScope.ServiceProvider.GetRequiredService<IPostCommentLikeIncludeBuilderFactory>();
+    }
+
     public static async Task<PostCommentLike?> GetPostCommentLikeByIdAsync(
         this IServiceScope serviceScope,
         PostCommentLikeId id,
         CancellationToken cancellationToken)
     {
+        var include = serviceScope.GetPostIncludeBuilderFactory().Create().WithUser().Build();
+        var commentInclude = serviceScope.GetPostCommentIncludeBuilderFactory().Create().WithUser().WithPost(include).Build();
+        var commentLikeInclude = serviceScope.GetPostCommentLikeIncludeBuilderFactory().Create().WithPostComment(commentInclude).WithUser().Build();
         var postCommentLikeRepository = serviceScope.GetPostCommentLikeCommandRepository();
 
-        return await postCommentLikeRepository.GetByIdAsync(id, cancellationToken);
+        return await postCommentLikeRepository.GetByIdAsync(id, commentLikeInclude, cancellationToken);
     }
 
     public static async Task AddPostCommentLikeAsync(

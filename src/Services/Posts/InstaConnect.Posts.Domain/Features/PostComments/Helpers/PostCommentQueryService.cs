@@ -35,7 +35,7 @@ internal class PostCommentQueryService : IPostCommentQueryService
             throw new PostNotFoundException(query.Filter.Id);
         }
 
-        var commentInclude = _commentIncludeBuilderFactory.Create().WithPostCommentLikes().Build();
+        var commentInclude = _commentIncludeBuilderFactory.Create().WithUser().WithPostCommentLikes().Build();
         var postComments = await _commentRepository.GetAllAsync(
             query.Filter,
             query.CurrentUser,

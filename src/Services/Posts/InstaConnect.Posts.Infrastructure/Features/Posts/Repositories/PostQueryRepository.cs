@@ -38,10 +38,10 @@ internal class PostQueryRepository : IPostQueryRepository
     {
         return await _context
             .Posts
-            .Aggregate()
+            .AggregateWithCaseInsensitiveCollation()
             .Includes(_includerFactory, include)
             .Match(filter)
-            .ProjectToResponse(currentUser)
+            .ProjectToFullResponse(currentUser)
             .Sort(_sortOrdererFactory, _sortTermerFactory, sorting)
             .Paginate(_paginator, pagination)
             .ToListAsync(cancellationToken);
@@ -67,10 +67,10 @@ internal class PostQueryRepository : IPostQueryRepository
     {
         return await _context
             .Posts
-            .Aggregate()
+            .AggregateWithCaseInsensitiveCollation()
             .Includes(_includerFactory, include)
             .Match(filter)
-            .ProjectToResponse(currentUser)
+            .ProjectToResponseWithoutUser(currentUser)
             .Sort(_sortOrdererFactory, _sortTermerFactory, sorting)
             .Paginate(_paginator, pagination)
             .ToListAsync(cancellationToken);
@@ -93,7 +93,7 @@ internal class PostQueryRepository : IPostQueryRepository
     {
         return await _context
             .Posts
-            .Aggregate()
+            .AggregateWithCaseInsensitiveCollation()
             .Includes(_includerFactory, include)
             .Match(filter)
             .GetCount(cancellationToken);
@@ -113,7 +113,7 @@ internal class PostQueryRepository : IPostQueryRepository
     {
         return await _context
             .Posts
-            .Aggregate()
+            .AggregateWithCaseInsensitiveCollation()
             .Includes(_includerFactory, include)
             .Match(filter)
             .GetCount(cancellationToken);
@@ -134,10 +134,10 @@ internal class PostQueryRepository : IPostQueryRepository
     {
         return await _context
             .Posts
-            .Aggregate()
+            .AggregateWithCaseInsensitiveCollation()
             .Includes(_includerFactory, include)
             .Match(id)
-            .ProjectToResponse(currentUser)
+            .ProjectToFullResponse(currentUser)
             .FirstOrDefaultAsync(cancellationToken);
     }
 
@@ -155,7 +155,7 @@ internal class PostQueryRepository : IPostQueryRepository
     {
         return await _context
             .Posts
-            .Aggregate()
+            .AggregateWithCaseInsensitiveCollation()
             .Match(id)
             .AnyAsync(cancellationToken);
     }

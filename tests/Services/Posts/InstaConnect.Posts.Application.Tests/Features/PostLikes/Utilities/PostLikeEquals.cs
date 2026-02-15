@@ -161,7 +161,7 @@ public static class PostLikeEquals
         TRequest request)
         where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
     {
-        return response.MatchesCollectionResponse(postLikes.Count, request) &&
+        return response.MatchesCollectionResponse(postLikes.Count(matchesFilter), request) &&
                response.User == null &&
                response.Post.MatchesFull(post, request) &&
                response.PostLikes.MatchesCollection(postLikes,
@@ -182,7 +182,7 @@ public static class PostLikeEquals
         ISortEnumTermTransformer<PostLike> termTransformer)
         where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
     {
-        return response.MatchesCollectionResponse(postLikes.Count, request) &&
+        return response.MatchesCollectionResponse(postLikes.Count(matchesFilter), request) &&
                response.User == null &&
                response.Post.MatchesFull(post, request) &&
                response.PostLikes.MatchesSortedCollection(postLikes,
@@ -212,7 +212,7 @@ public static class PostLikeEquals
         TRequest request)
         where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
     {
-        return response.MatchesCollectionResponse(postLikes.Count, request) &&
+        return response.MatchesCollectionResponse(postLikes.Count(matchesFilter), request) &&
                response.User.MatchesFull(user) &&
                response.Post == null &&
                response.PostLikes.MatchesCollection(postLikes,
@@ -233,7 +233,7 @@ public static class PostLikeEquals
         ISortEnumTermTransformer<PostLike> termTransformer)
         where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
     {
-        return response.MatchesCollectionResponse(postLikes.Count, request) &&
+        return response.MatchesCollectionResponse(postLikes.Count(matchesFilter), request) &&
                response.User.MatchesFull(user) &&
                response.Post == null &&
                response.PostLikes.MatchesSortedCollection(postLikes,

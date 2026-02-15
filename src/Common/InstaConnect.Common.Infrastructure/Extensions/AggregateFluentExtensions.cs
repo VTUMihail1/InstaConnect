@@ -10,6 +10,17 @@ namespace InstaConnect.Common.Infrastructure.Extensions;
 
 public static class AggregateFluentExtensions
 {
+    public static async Task<long> GetCount<T>(
+        this IAggregateFluent<T> fluent,
+        CancellationToken cancellationToken)
+    {
+        var result = await fluent
+                           .Count()
+                           .FirstOrDefaultAsync(cancellationToken);
+
+        return result?.Count ?? default;
+    }
+
     public static IAggregateFluent<TEntity> Paginate<TEntity, TPaginationQuery>(
         this IAggregateFluent<TEntity> aggregate,
         IPaginator paginator,
@@ -31,11 +42,12 @@ public static class AggregateFluentExtensions
         where TSortingQuery : ISortingQuery<TSortTerm>
         where TSortTerm : Enum
         where TSortTermer : ISortTermer<TSortTerm, TEntity>
+        where TEntity : IEntityResponse
     {
         var order = sortOrdererFactory.Create(sorting.Order);
         var term = sortTermerFactory.Create(sorting.Term);
 
-        return aggregate.Sort(order.Sort(term.Term));
+        return aggregate.Sort(Builders<TEntity>.Sort.Combine(order.Sort(term.Term), order.Sort<TEntity>(a => a.CreatedAtUtc)));
     }
 
     public static IAggregateFluent<TEntity> Includes<
@@ -52,9 +64,9 @@ public static class AggregateFluentExtensions
         var descriptors = includerFactory.Create(include?.Descriptors);
         var tempPipeline = aggregate;
 
-        foreach (var includeProperty in descriptors)
+        foreach (var descriptor in descriptors)
         {
-            tempPipeline = includeProperty.Include(tempPipeline);
+            tempPipeline = descriptor.Include(tempPipeline);
         }
 
         return tempPipeline;
@@ -90,6 +102,6 @@ public static class AggregateFluentExtensions
                                      entityKey.Box(),
                                      foreignEntityKey.Box(),
                                      destination.Box())
-                       .Unwind(destination.Box(), new AggregateUnwindOptions<TEntity>() { PreserveNullAndEmptyArrays = true });
+                        .Unwind(destination.Box(), new AggregateUnwindOptions<TEntity>() { PreserveNullAndEmptyArrays = true });
     }
 }

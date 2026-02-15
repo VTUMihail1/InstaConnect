@@ -290,7 +290,7 @@ public static class PostCommentLikeValidationExceptionAssertions
             cancellationToken);
     }
 
-    public static async Task ShouldThrowInvalidValidationExceptionForSortPropertyAsync(
+    public static async Task ShouldThrowInvalidValidationExceptionForSortTermAsync(
         this IApplicationSender sender,
         IEnumMessageTransformer<PostCommentLikesSortTerm> messageTransformer,
         GetAllPostCommentLikesQueryRequest request,
@@ -303,7 +303,7 @@ public static class PostCommentLikeValidationExceptionAssertions
             cancellationToken);
     }
 
-    public static async Task ShouldThrowInvalidValidationExceptionForSortPropertyAsync(
+    public static async Task ShouldThrowInvalidValidationExceptionForSortTermAsync(
         this IApplicationSender sender,
         IEnumMessageTransformer<PostCommentLikesSortTerm> messageTransformer,
         GetAllPostCommentLikesForUserQueryRequest request,

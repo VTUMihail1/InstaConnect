@@ -351,7 +351,7 @@ public class UpdateUserIntegrationTests : BaseUserApplicationCommandIntegrationT
         var user = await ServiceScope.GetUserByIdAsync(response.Id, CancellationToken);
 
         // Assert
-        user.ShouldSatisfy(_request);
+        user.ShouldSatisfy(request);
     }
 
     [Theory]

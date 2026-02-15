@@ -41,14 +41,15 @@ public static class PostLikeMapper
         where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
     {
         var paginator = new Paginator();
+        var totalCount = postLikes.Count(postLike => filter(postLike, request));
 
         return new(post.ToFullResponse(request),
                    null,
                    postLikes.Filter(postLike => filter(postLike, request), request, postLike => transform(postLike, request)),
                    request.Page,
                    request.PageSize,
-                   postLikes.Count,
-                   paginator.HasNextPage(request.Page, request.PageSize, postLikes.Count),
+                   totalCount,
+                   paginator.HasNextPage(request.Page, request.PageSize, totalCount),
                    paginator.HasPreviousPage(request.Page));
     }
 
@@ -73,14 +74,15 @@ public static class PostLikeMapper
         where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
     {
         var paginator = new Paginator();
+        var totalCount = postLikes.Count(postLike => filter(postLike, request));
 
         return new(null,
                    user.ToFullResponse(),
                    postLikes.Filter(postLike => filter(postLike, request), request, postLike => transform(postLike, request)),
                    request.Page,
                    request.PageSize,
-                   postLikes.Count,
-                   paginator.HasNextPage(request.Page, request.PageSize, postLikes.Count),
+                   totalCount,
+                   paginator.HasNextPage(request.Page, request.PageSize, totalCount),
                    paginator.HasPreviousPage(request.Page));
     }
 

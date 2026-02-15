@@ -304,7 +304,7 @@ public static class PostValidationExceptionAssertions
             cancellationToken);
     }
 
-    public static async Task ShouldThrowInvalidValidationExceptionForSortPropertyAsync(
+    public static async Task ShouldThrowInvalidValidationExceptionForSortTermAsync(
         this IApplicationSender sender,
         IEnumMessageTransformer<PostsSortTerm> messageTransformer,
         GetAllPostsQueryRequest request,
@@ -317,7 +317,7 @@ public static class PostValidationExceptionAssertions
             cancellationToken);
     }
 
-    public static async Task ShouldThrowInvalidValidationExceptionForSortPropertyAsync(
+    public static async Task ShouldThrowInvalidValidationExceptionForSortTermAsync(
         this IApplicationSender sender,
         IEnumMessageTransformer<PostsSortTerm> messageTransformer,
         GetAllPostsForUserQueryRequest request,

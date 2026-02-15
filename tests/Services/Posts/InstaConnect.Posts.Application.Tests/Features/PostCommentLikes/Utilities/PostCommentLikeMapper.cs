@@ -39,14 +39,15 @@ public static class PostCommentLikeMapper
         where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
     {
         var paginator = new Paginator();
+        var totalCount = postCommentLikes.Count(postCommentLike => filter(postCommentLike, request));
 
         return new(postComment.ToFullResponse(request),
                    null,
                    postCommentLikes.Filter(postCommentLike => filter(postCommentLike, request), request, postCommentLike => transform(postCommentLike, request)),
                    request.Page,
                    request.PageSize,
-                   postCommentLikes.Count,
-                   paginator.HasNextPage(request.Page, request.PageSize, postCommentLikes.Count),
+                   totalCount,
+                   paginator.HasNextPage(request.Page, request.PageSize, totalCount),
                    paginator.HasPreviousPage(request.Page));
     }
 
@@ -70,14 +71,15 @@ public static class PostCommentLikeMapper
         where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
     {
         var paginator = new Paginator();
+        var totalCount = postCommentLikes.Count(postCommentLike => filter(postCommentLike, request));
 
         return new(null,
                    user.ToFullResponse(),
                    postCommentLikes.Filter(postCommentLike => filter(postCommentLike, request), request, postCommentLike => transform(postCommentLike, request)),
                    request.Page,
                    request.PageSize,
-                   postCommentLikes.Count,
-                   paginator.HasNextPage(request.Page, request.PageSize, postCommentLikes.Count),
+                   totalCount,
+                   paginator.HasNextPage(request.Page, request.PageSize, totalCount),
                    paginator.HasPreviousPage(request.Page));
     }
 

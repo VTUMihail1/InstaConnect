@@ -8,4 +8,4 @@ public record UserResponse(
     Name Name,
     Image? ProfileImage,
     DateTimeOffset CreatedAtUtc,
-    DateTimeOffset UpdatedAtUtc);
+    DateTimeOffset UpdatedAtUtc) : IEntityResponse;

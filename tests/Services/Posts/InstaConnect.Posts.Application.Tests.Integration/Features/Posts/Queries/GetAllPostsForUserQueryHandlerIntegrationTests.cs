@@ -1,17 +1,18 @@
 ﻿using InstaConnect.Common.Domain.Models;
 using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
+using InstaConnect.Posts.Application.Features.Posts.Queries.GetAllForUser;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 using InstaConnect.Posts.Tests.Features.Posts.DataAttributes.SortTerm;
 
 namespace InstaConnect.Posts.Application.Tests.Integration.Features.Posts.Queries;
 
-public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationQueryIntegrationTest
+public class GetAllPostsForUserQueryHandlerIntegrationTests : BasePostApplicationQueryIntegrationTest
 {
-    private readonly GetAllPostsQueryRequestBuilderFactory _requestBuilderFactory;
-    private readonly GetAllPostsQueryRequestBuilder _requestBuilder;
-    private readonly GetAllPostsQueryRequest _request;
+    private readonly GetAllPostsForUserQueryRequestBuilderFactory _requestBuilderFactory;
+    private readonly GetAllPostsForUserQueryRequestBuilder _requestBuilder;
+    private readonly GetAllPostsForUserQueryRequest _request;
 
-    public GetAllPostsQueryHandlerIntegrationTests(PostsWebApplicationFactory webApplicationFactory)
+    public GetAllPostsForUserQueryHandlerIntegrationTests(PostsWebApplicationFactory webApplicationFactory)
         : base(webApplicationFactory)
     {
         _requestBuilderFactory = new();
@@ -27,15 +28,18 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationQueryI
     }
 
     [Theory]
-    [UserNameTooLongWithMessageData]
-    public async Task SendAsync_ShouldThrowValidationException_WhenUserNameIsInvalid(
+    [UserIdNullWithMessageData]
+    [UserIdEmptyWithMessageData]
+    [UserIdTooShortWithMessageData]
+    [UserIdTooLongWithMessageData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenUserIdIsInvalid(
         IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserName(transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Assert
-        await Sender.ShouldThrowInvalidValidationExceptionForUserNameAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForUserIdAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -126,24 +130,22 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationQueryI
         var response = await Sender.SendAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(Posts, _request);
+        response.ShouldSatisfy(User, Posts, _request);
     }
 
     [Theory]
-    [UserNameNullData]
-    [UserNameEmptyData]
-    [UserNameDifferentCaseData]
-    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndUserNameAreValid(
+    [UserIdDifferentCaseData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndUserIdAreValid(
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserName(transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(Posts, request);
+        response.ShouldSatisfy(User, Posts, request);
     }
 
     [Theory]
@@ -160,7 +162,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationQueryI
         var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(Posts, request);
+        response.ShouldSatisfy(User, Posts, request);
     }
 
     [Theory]
@@ -177,7 +179,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationQueryI
         var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(Posts, request);
+        response.ShouldSatisfy(User, Posts, request);
     }
 
     [Theory]
@@ -193,7 +195,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationQueryI
         var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(Posts, request, termTransformer);
+        response.ShouldSatisfy(User, Posts, request, termTransformer);
     }
 
     [Theory]
@@ -210,6 +212,6 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationQueryI
         var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(Posts, request, termTransformer);
+        response.ShouldSatisfy(User, Posts, request, termTransformer);
     }
 }

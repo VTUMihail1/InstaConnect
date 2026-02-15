@@ -57,7 +57,7 @@ internal class PostLikeQueryService : IPostLikeQueryService
             throw new UserNotFoundException(query.Filter.UserId);
         }
 
-        var include = _includeBuilderFactory.Create().WithPostLikes().Build();
+        var include = _includeBuilderFactory.Create().WithUser().WithPostLikes().Build();
         var likeInclude = _likeIncludeBuilderFactory.Create().WithPost(include).Build();
         var postLikes = await _likeRepository.GetAllForUserAsync(
             query.Filter,

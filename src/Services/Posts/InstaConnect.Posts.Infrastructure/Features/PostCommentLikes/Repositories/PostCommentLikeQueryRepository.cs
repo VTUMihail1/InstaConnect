@@ -36,10 +36,10 @@ internal class PostCommentLikeQueryRepository : IPostCommentLikeQueryRepository
     {
         return await _context
             .PostCommentLikes
-            .Aggregate()
+            .AggregateWithCaseInsensitiveCollation()
             .Includes(_commentLikeIncluderFactory, include)
             .Match(filter)
-            .ProjectToResponse(currentUser)
+            .ProjectToResponseWithoutPostComment(currentUser)
             .Sort(_sortOrdererFactory, _commentLikeSortTermerFactory, sorting)
             .Paginate(_paginator, pagination)
             .ToListAsync(cancellationToken);
@@ -68,7 +68,7 @@ internal class PostCommentLikeQueryRepository : IPostCommentLikeQueryRepository
             .Aggregate()
             .Includes(_commentLikeIncluderFactory, include)
             .Match(filter)
-            .ProjectToResponse(currentUser)
+            .ProjectToResponseWithoutUser(currentUser)
             .Sort(_sortOrdererFactory, _commentLikeSortTermerFactory, sorting)
             .Paginate(_paginator, pagination)
             .ToListAsync(cancellationToken);
@@ -135,7 +135,7 @@ internal class PostCommentLikeQueryRepository : IPostCommentLikeQueryRepository
             .Aggregate()
             .Includes(_commentLikeIncluderFactory, include)
             .Match(id)
-            .ProjectToResponse(currentUser)
+            .ProjectToFullResponse(currentUser)
             .FirstOrDefaultAsync(cancellationToken);
     }
 

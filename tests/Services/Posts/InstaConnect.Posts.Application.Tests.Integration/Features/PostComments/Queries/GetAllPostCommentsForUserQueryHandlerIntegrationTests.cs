@@ -1,16 +1,17 @@
 ﻿using InstaConnect.Common.Domain.Models;
 using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
+using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAllForUser;
 using InstaConnect.Posts.Domain.Features.PostComments.Models.Requests;
 
 namespace InstaConnect.Posts.Application.Tests.Integration.Features.PostComments.Queries;
 
-public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentApplicationQueryIntegrationTest
+public class GetAllPostCommentsForUserQueryHandlerIntegrationTests : BasePostCommentApplicationQueryIntegrationTest
 {
-    private readonly GetAllPostCommentsQueryRequestBuilderFactory _requestBuilderFactory;
-    private readonly GetAllPostCommentsQueryRequestBuilder _requestBuilder;
-    private readonly GetAllPostCommentsQueryRequest _request;
+    private readonly GetAllPostCommentsForUserQueryRequestBuilderFactory _requestBuilderFactory;
+    private readonly GetAllPostCommentsForUserQueryRequestBuilder _requestBuilder;
+    private readonly GetAllPostCommentsForUserQueryRequest _request;
 
-    public GetAllPostCommentsQueryHandlerIntegrationTests(PostsWebApplicationFactory webApplicationFactory)
+    public GetAllPostCommentsForUserQueryHandlerIntegrationTests(PostsWebApplicationFactory webApplicationFactory)
         : base(webApplicationFactory)
     {
         _requestBuilderFactory = new();
@@ -28,30 +29,18 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentApp
     }
 
     [Theory]
-    [PostIdNullWithMessageData]
-    [PostIdEmptyWithMessageData]
-    [PostIdTooShortWithMessageData]
-    [PostIdTooLongWithMessageData]
-    public async Task SendAsync_ShouldThrowValidationException_WhenIdIsInvalid(
+    [UserIdNullWithMessageData]
+    [UserIdEmptyWithMessageData]
+    [UserIdTooShortWithMessageData]
+    [UserIdTooLongWithMessageData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenUserIdIsInvalid(
         IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Assert
-        await Sender.ShouldThrowInvalidValidationExceptionForIdAsync(messageTransformer, request, CancellationToken);
-    }
-
-    [Theory]
-    [UserNameTooLongWithMessageData]
-    public async Task SendAsync_ShouldThrowValidationException_WhenUserNameIsInvalid(
-        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithUserName(transformer).Build();
-
-        // Assert
-        await Sender.ShouldThrowInvalidValidationExceptionForUserNameAsync(
+        await Sender.ShouldThrowInvalidValidationExceptionForUserIdAsync(
             messageTransformer, request, CancellationToken);
     }
 
@@ -87,7 +76,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentApp
         IEnumTransformer<PostCommentsSortTerm> transformer, IEnumMessageTransformer<PostCommentsSortTerm> messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(transformer).Build();
+        var request = _requestBuilder.WithSortTerm(transformer).Build();
 
         // Assert
         await Sender.ShouldThrowInvalidValidationExceptionForSortTermAsync(
@@ -123,87 +112,28 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentApp
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
-    {
-        // Arrange
-        await ServiceScope.DeletePostAsync(Post, CancellationToken);
-
-        // Assert
-        await Sender.ShouldThrowPostNotFoundExceptionAsync(_request, CancellationToken);
-    }
-
-    [Fact]
     public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValid()
     {
         // Act
         var response = await Sender.SendAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(Post, PostComments, _request);
+        response.ShouldSatisfy(User, PostComments, _request);
     }
 
     [Theory]
-    [PostIdDifferentCaseData]
-    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndIdAreValid(
+    [UserIdDifferentCaseData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndUserIdAreValid(
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(Post, PostComments, request);
-    }
-
-    [Theory]
-    [UserNameNullData]
-    [UserNameEmptyData]
-    [UserNameDifferentCaseData]
-    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndUserNameAreValid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithUserName(transformer).Build();
-
-        // Act
-        var response = await Sender.SendAsync(request, CancellationToken);
-
-        // Assert
-        response.ShouldSatisfy(Post, PostComments, request);
-    }
-
-    [Theory]
-    [PostCommentsSortOrderWithAscendingTermData]
-    [PostCommentsSortOrderWithDescendingTermData]
-    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortOrderAreValid(
-        IEnumTransformer<CommonSortOrder> transformer, ISortEnumTermTransformer<PostComment> termTransformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithSortOrder(transformer).Build();
-
-        // Act
-        var response = await Sender.SendAsync(request, CancellationToken);
-
-        // Assert
-        response.ShouldSatisfy(Post, PostComments, request, termTransformer);
-    }
-
-    [Theory]
-    [PostCommentsSortTermWithCreatedAtTermData]
-    [PostCommentsSortTermWithUserNameTermData]
-    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortPropertyAreValid(
-        IEnumTransformer<PostCommentsSortTerm> transformer, ISortEnumTermTransformer<PostComment> termTransformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithSortProperty(transformer).Build();
-
-        // Act
-        var response = await Sender.SendAsync(request, CancellationToken);
-
-        // Assert
-        response.ShouldSatisfy(Post, PostComments, request, termTransformer);
+        response.ShouldSatisfy(User, PostComments, request);
     }
 
     [Theory]
@@ -220,6 +150,38 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentApp
         var response = await Sender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(Post, PostComments, request);
+        response.ShouldSatisfy(User, PostComments, request);
+    }
+
+    [Theory]
+    [PostCommentsSortOrderWithAscendingTermData]
+    [PostCommentsSortOrderWithDescendingTermData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortOrderAreValid(
+        IEnumTransformer<CommonSortOrder> transformer, ISortEnumTermTransformer<PostComment> termTransformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithSortOrder(transformer).Build();
+
+        // Act
+        var response = await Sender.SendAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfy(User, PostComments, request, termTransformer);
+    }
+
+    [Theory]
+    [PostCommentsSortTermWithCreatedAtTermData]
+    [PostCommentsSortTermWithUserNameTermData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortPropertyAreValid(
+        IEnumTransformer<PostCommentsSortTerm> transformer, ISortEnumTermTransformer<PostComment> termTransformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithSortTerm(transformer).Build();
+
+        // Act
+        var response = await Sender.SendAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfy(User, PostComments, request, termTransformer);
     }
 }

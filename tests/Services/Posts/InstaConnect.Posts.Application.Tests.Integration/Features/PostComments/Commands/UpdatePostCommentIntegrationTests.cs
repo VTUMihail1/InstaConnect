@@ -201,7 +201,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentApplicationComma
         var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Id, CancellationToken);
 
         // Assert
-        postComment.ShouldSatisfy(_request);
+        postComment.ShouldSatisfy(request);
     }
 
     [Theory]
@@ -217,7 +217,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentApplicationComma
         var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Id, CancellationToken);
 
         // Assert
-        postComment.ShouldSatisfy(_request);
+        postComment.ShouldSatisfy(request);
     }
 
     [Theory]
@@ -233,7 +233,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentApplicationComma
         var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Id, CancellationToken);
 
         // Assert
-        postComment.ShouldSatisfy(_request);
+        postComment.ShouldSatisfy(request);
     }
 
     [Fact]

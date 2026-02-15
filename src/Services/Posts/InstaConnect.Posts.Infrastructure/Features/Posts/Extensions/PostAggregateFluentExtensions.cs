@@ -2,6 +2,7 @@
 
 using InstaConnect.Posts.Domain.Features.Users.Models.Responses;
 using InstaConnect.Posts.Infrastructure.Abstractions;
+using InstaConnect.Posts.Infrastructure.Features.PostLikes.Extensions;
 
 using Microsoft.AspNetCore.DataProtection.KeyManagement;
 
@@ -32,30 +33,48 @@ internal static class PostAggregateFluentExtensions
         return aggregate.Match(filter.GetFilter());
     }
 
-    public static IAggregateFluent<PostResponse> ProjectToResponse(
+    public static IAggregateFluent<PostResponse> ProjectToFullResponse(
         this IAggregateFluent<Post> aggregate,
         CurrentUserQuery currentUser)
     {
+        var currentUserId = currentUser.Id.Id?.ToLower();
         var projection = Builders<Post>.Projection.Expression(
              p => new PostResponse(
                  p.Id,
                  p.UserId,
                  p.Title,
                  p.Content,
-                 p.User == null
-                     ? null
-                     : new UserResponse(
-                         p.User!.Id,
-                         p.User.FirstName,
-                         p.User.LastName,
-                         p.User.Email,
-                         p.User.Name,
-                         p.User.ProfileImage,
-                         p.User.CreatedAtUtc,
-                         p.User.UpdatedAtUtc),
+                 new UserResponse(
+                     p.User!.Id,
+                     p.User.FirstName,
+                     p.User.LastName,
+                     p.User.Email,
+                     p.User.Name,
+                     p.User.ProfileImage,
+                     p.User.CreatedAtUtc,
+                     p.User.UpdatedAtUtc),
                  p.PostLikes.Any(
-                     pl => pl.Id.UserId.Id.ToLower() ==
-                           currentUser.Id.Id.ToLower()),
+                     pl => pl.Id.UserId.Id.ToLower() == currentUserId),
+                 p.CreatedAtUtc,
+                 p.UpdatedAtUtc));
+
+        return aggregate.Project(projection);
+    }
+
+    public static IAggregateFluent<PostResponse> ProjectToResponseWithoutUser(
+        this IAggregateFluent<Post> aggregate,
+        CurrentUserQuery currentUser)
+    {
+        var currentUserId = currentUser.Id.Id?.ToLower();
+        var projection = Builders<Post>.Projection.Expression(
+             p => new PostResponse(
+                 p.Id,
+                 p.UserId,
+                 p.Title,
+                 p.Content,
+                 null,
+                 p.PostLikes.Any(
+                     pl => pl.Id.UserId.Id.ToLower() == currentUserId),
                  p.CreatedAtUtc,
                  p.UpdatedAtUtc));
 
