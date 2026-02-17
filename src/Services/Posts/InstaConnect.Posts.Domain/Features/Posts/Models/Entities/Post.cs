@@ -60,7 +60,7 @@ public class Post : IEntityWithId<PostId>
         UpdatedAtUtc = updatedAtUtc;
     }
 
-    public Post AddUser(User user)
+    public Post AddUser(User? user)
     {
         User = user;
 

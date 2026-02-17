@@ -52,13 +52,13 @@ internal class PostCommentCommandService : IPostCommentCommandService
             throw new PostNotFoundException(command.Id);
         }
 
-        var postComment = _commentFactory.Create(command.Id, command.UserId, command.Content);
-        await _commentRepository.AddAsync(postComment, cancellationToken);
+        var newPostComment = _commentFactory.Create(command.Id, command.UserId, command.Content).AddPost(post).AddUser(user);
+        await _commentRepository.AddAsync(newPostComment, cancellationToken);
 
         await _eventPublisher.PublishAsync(
-            _mapper.Map<PostCommentAddedEventRequest>(postComment.AddUser(user).AddPost(post)), cancellationToken);
+            _mapper.Map<PostCommentAddedEventRequest>(newPostComment), cancellationToken);
 
-        return postComment.Id;
+        return newPostComment.Id;
     }
 
     public async Task<PostCommentId> UpdateAsync(UpdatePostCommentCommand command, CancellationToken cancellationToken)

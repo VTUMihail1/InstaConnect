@@ -4,7 +4,7 @@
 public sealed class UserLastNameTooLongDataAttribute : TooLongStringDataAttribute
 {
     public UserLastNameTooLongDataAttribute()
-        : base(UserConfigurations.LastNameMinLength)
+        : base(UserConfigurations.LastNameMaxLength)
     {
     }
 }

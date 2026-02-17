@@ -17,7 +17,7 @@ public static class PostTestRoutes
 
     public static string GetAll(GetAllPostsApiRequest request)
     {
-        const string Format = "{0}?userName={1}&title={2}&sortOrder={3}&sortProperty={4}&page={5}&pageSize={6}";
+        const string Format = "{0}?userName={1}&title={2}&sortOrder={3}&sortTerm={4}&page={5}&pageSize={6}";
 
         return Format.FormatCurrentCulture(
             GetDefault(),
@@ -31,7 +31,7 @@ public static class PostTestRoutes
 
     public static string GetAllForUser(GetAllPostsForUserApiRequest request)
     {
-        const string Format = "{0}?title={1}&sortOrder={2}&sortProperty={3}&page={4}&pageSize={5}";
+        const string Format = "{0}?title={1}&sortOrder={2}&sortTerm={3}&page={4}&pageSize={5}";
 
         return Format.FormatCurrentCulture(
             GetForUserDefault(request.UserId),

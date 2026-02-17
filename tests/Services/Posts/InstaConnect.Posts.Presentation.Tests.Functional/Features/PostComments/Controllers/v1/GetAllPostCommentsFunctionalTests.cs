@@ -20,10 +20,11 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
 
     protected override async Task OnInitializeAsync()
     {
-        await ServiceScope.AddUserAsync(User, CancellationToken);
         await ServiceScope.AddUserRangeAsync(Users, CancellationToken);
-        await ServiceScope.AddPostAsync(Post, CancellationToken);
+        await ServiceScope.AddPostRangeAsync(Posts, CancellationToken);
+        await ServiceScope.AddPostLikeRangeAsync(PostLikes, CancellationToken);
         await ServiceScope.AddPostCommentRangeAsync(PostComments, CancellationToken);
+        await ServiceScope.AddPostCommentLikeRangeAsync(PostCommentLikes, CancellationToken);
     }
 
     [Theory]
@@ -86,6 +87,36 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
 
         // Assert
         response.ShouldSatisfyInvalidValidationForUserName(messageTransformer, request);
+    }
+
+    [Theory]
+    [UserIdTooLongData]
+    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenCurrentUserIdIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+
+        // Act
+        var response = await HttpClient.GetAllPostCommentsStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeBadRequest();
+    }
+
+    [Theory]
+    [UserIdTooLongWithMessageData]
+    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenCurrentUserIdIsInvalid(
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+
+        // Act
+        var response = await HttpClient.GetAllPostCommentsProblemDetailsAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfyInvalidValidationForCurrentUserId(messageTransformer, request);
     }
 
     [Theory]
@@ -270,9 +301,26 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
     }
 
     [Theory]
+    [UserIdNullData]
+    [UserIdEmptyData]
+    [UserIdDifferentCaseData]
+    public async Task GetAllAsync_ShouldHaveOkStatusCode_WhenRequestAndCurrentUserIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+
+        // Act
+        var response = await HttpClient.GetAllPostCommentsStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeOk();
+    }
+
+    [Theory]
     [PostCommentsSortOrderAscendingData]
     [PostCommentsSortOrderDescendingData]
-    public async Task SendAsync_ShouldHaveOkStatusCode_WhenRequestAndSortOrderAreValid(
+    public async Task GetAllAsync_ShouldHaveOkStatusCode_WhenRequestAndSortOrderAreValid(
         IEnumTransformer<CommonSortOrder> transformer)
     {
         // Arrange
@@ -288,7 +336,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
     [Theory]
     [PostCommentsSortTermCreatedAtData]
     [PostCommentsSortTermUserNameData]
-    public async Task SendAsync_ShouldHaveOkStatusCode_WhenRequestAndSortPropertyAreValid(
+    public async Task GetAllAsync_ShouldHaveOkStatusCode_WhenRequestAndSortPropertyAreValid(
         IEnumTransformer<PostCommentsSortTerm> transformer)
     {
         // Arrange
@@ -321,7 +369,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
         var response = await HttpClient.GetAllPostCommentsAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostComments, _request);
+        response.ShouldSatisfy(Post, PostComments, _request);
     }
 
     [Theory]
@@ -336,7 +384,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
         var response = await HttpClient.GetAllPostCommentsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostComments, _request);
+        response.ShouldSatisfy(Post, PostComments, request);
     }
 
     [Theory]
@@ -353,13 +401,30 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
         var response = await HttpClient.GetAllPostCommentsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostComments, _request);
+        response.ShouldSatisfy(Post, PostComments, request);
+    }
+
+    [Theory]
+    [UserIdNullData]
+    [UserIdEmptyData]
+    [UserIdDifferentCaseData]
+    public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndCurrentUserIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+
+        // Act
+        var response = await HttpClient.GetAllPostCommentsAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfy(Post, PostComments, request);
     }
 
     [Theory]
     [PostCommentsSortOrderWithAscendingTermData]
     [PostCommentsSortOrderWithDescendingTermData]
-    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortOrderAreValid(
+    public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndSortOrderAreValid(
         IEnumTransformer<CommonSortOrder> transformer, ISortEnumTermTransformer<PostComment> termTransformer)
     {
         // Arrange
@@ -369,13 +434,13 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
         var response = await HttpClient.GetAllPostCommentsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostComments, _request, termTransformer);
+        response.ShouldSatisfy(Post, PostComments, request, termTransformer);
     }
 
     [Theory]
     [PostCommentsSortTermWithCreatedAtTermData]
     [PostCommentsSortTermWithUserNameTermData]
-    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortPropertyAreValid(
+    public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndSortPropertyAreValid(
         IEnumTransformer<PostCommentsSortTerm> transformer, ISortEnumTermTransformer<PostComment> termTransformer)
     {
         // Arrange
@@ -385,6 +450,6 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
         var response = await HttpClient.GetAllPostCommentsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostComments, _request, termTransformer);
+        response.ShouldSatisfy(Post, PostComments, request, termTransformer);
     }
 }

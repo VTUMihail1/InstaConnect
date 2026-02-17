@@ -330,7 +330,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
         var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
 
         // Assert
-        post.ShouldSatisfy(_request);
+        post.ShouldSatisfy(request);
     }
 
     [Theory]
@@ -346,7 +346,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
         var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
 
         // Assert
-        post.ShouldSatisfy(_request);
+        post.ShouldSatisfy(request);
     }
 
     [Fact]

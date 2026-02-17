@@ -27,14 +27,14 @@ public class PostCommentLike : IEntityWithId<PostCommentLikeId>
 
     public DateTimeOffset CreatedAtUtc { get; }
 
-    public PostCommentLike AddUser(User user)
+    public PostCommentLike AddUser(User? user)
     {
         User = user;
 
         return this;
     }
 
-    public PostCommentLike AddPostComment(PostComment postComment)
+    public PostCommentLike AddPostComment(PostComment? postComment)
     {
         PostComment = postComment;
 

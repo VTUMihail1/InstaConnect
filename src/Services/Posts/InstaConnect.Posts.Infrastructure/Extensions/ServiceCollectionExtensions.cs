@@ -1,4 +1,6 @@
-﻿using InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Extensions;
+﻿using System.Reflection;
+
+using InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Extensions;
 using InstaConnect.Posts.Infrastructure.Features.PostComments.Extensions;
 using InstaConnect.Posts.Infrastructure.Features.PostLikes.Extensions;
 using InstaConnect.Posts.Infrastructure.Features.Posts.Extensions;
@@ -11,7 +13,8 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection serviceCollection,
         IConfiguration configuration,
-        IWebHostEnvironment webHostEnvironment)
+        IWebHostEnvironment webHostEnvironment,
+        Assembly presentationAssembly)
     {
         serviceCollection
             .AddUserServices()
@@ -26,7 +29,7 @@ public static class ServiceCollectionExtensions
             .AddServicesWithMatchingInterfaces(PostInfrastructureReference.Assembly)
             .AddMongoDbContext()
             .AddUnitOfWork()
-            .AddRabbitMQ(configuration, PostInfrastructureReference.Assembly)
+            .AddRabbitMQ(configuration, presentationAssembly)
             .AddJwtBearer(configuration)
             .AddGuidProvider()
             .AddDateTimeProvider()

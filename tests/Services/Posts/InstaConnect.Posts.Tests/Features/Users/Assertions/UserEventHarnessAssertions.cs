@@ -18,7 +18,7 @@ public static class UserEventHarnessAssertions
         UserUpdatedEventRequest request,
         CancellationToken cancellationToken)
     {
-        await eventHarness.ShouldHaveConsumedAsync<UserUpdatedEventRequest>(request.Matches, cancellationToken);
+        await eventHarness.ShouldHaveConsumedAsync<UserUpdatedEventRequest>(p => p.Matches(request), cancellationToken);
     }
 
     public static async Task ShouldHaveConsumedAsync(
@@ -26,7 +26,7 @@ public static class UserEventHarnessAssertions
         UserDeletedEventRequest request,
         CancellationToken cancellationToken)
     {
-        await eventHarness.ShouldHaveConsumedAsync<UserDeletedEventRequest>(request.Matches, cancellationToken);
+        await eventHarness.ShouldHaveConsumedAsync<UserDeletedEventRequest>(p => p.Matches(request), cancellationToken);
     }
 
     public static async Task ShouldHaveFaultedAsync(
@@ -34,7 +34,7 @@ public static class UserEventHarnessAssertions
         UserAddedEventRequest request,
         CancellationToken cancellationToken)
     {
-        await eventHarness.ShouldHaveFaultedAsync<UserAddedEventRequest>(request.Matches, cancellationToken);
+        await eventHarness.ShouldHaveFaultedAsync<UserAddedEventRequest>(p => p.Matches(request), cancellationToken);
     }
 
     public static async Task ShouldHaveFaultedAsync(

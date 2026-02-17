@@ -9,6 +9,7 @@ public static class ContainerFactory
         return new MongoDbBuilder()
             .WithImage("mongo:latest")
             .WithReplicaSet()
+            .WithCleanUp(true)
             .Build();
     }
 
@@ -18,6 +19,7 @@ public static class ContainerFactory
             .WithImage("rabbitmq:latest")
             .WithUsername("guest")
             .WithPassword("guest")
+            .WithCleanUp(true)
             .Build();
     }
 }

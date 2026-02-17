@@ -18,7 +18,9 @@ public class GetPostCommentByIdFunctionalTests : BasePostCommentPresentationQuer
     {
         await ServiceScope.AddUserAsync(User, CancellationToken);
         await ServiceScope.AddPostAsync(Post, CancellationToken);
+        await ServiceScope.AddPostLikeAsync(PostLike, CancellationToken);
         await ServiceScope.AddPostCommentAsync(PostComment, CancellationToken);
+        await ServiceScope.AddPostCommentLikeAsync(PostCommentLike, CancellationToken);
     }
 
     [Theory]
@@ -83,6 +85,36 @@ public class GetPostCommentByIdFunctionalTests : BasePostCommentPresentationQuer
 
         // Assert
         response.ShouldSatisfyInvalidValidationForCommentId(messageTransformer, request);
+    }
+
+    [Theory]
+    [UserIdTooLongData]
+    public async Task GetByIdAsync_ShouldHaveBadRequestStatusCode_WhenCurrentUserIdIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+
+        // Act
+        var response = await HttpClient.GetPostCommentByIdStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeBadRequest();
+    }
+
+    [Theory]
+    [UserIdTooLongWithMessageData]
+    public async Task GetByIdAsync_ShouldHaveBadRequestProblemDetails_WhenCurrentUserIdIsInvalid(
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+
+        // Act
+        var response = await HttpClient.GetPostCommentByIdProblemDetailsAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfyInvalidValidationForCurrentUserId(messageTransformer, request);
     }
 
     [Fact]
@@ -177,6 +209,23 @@ public class GetPostCommentByIdFunctionalTests : BasePostCommentPresentationQuer
         response.ShouldBeOk();
     }
 
+    [Theory]
+    [UserIdNullData]
+    [UserIdEmptyData]
+    [UserIdDifferentCaseData]
+    public async Task GetByIdAsync_ShouldHaveOkStatusCode_WhenRequestAndCurrentUserIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+
+        // Act
+        var response = await HttpClient.GetPostCommentByIdStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeOk();
+    }
+
     [Fact]
     public async Task GetByIdAsync_ShouldHaveResponse_WhenRequestIsValid()
     {
@@ -209,6 +258,23 @@ public class GetPostCommentByIdFunctionalTests : BasePostCommentPresentationQuer
     {
         // Arrange
         var request = _requestBuilder.WithCommentId(transformer).Build();
+
+        // Act
+        var response = await HttpClient.GetPostCommentByIdAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfy(PostComment, request);
+    }
+
+    [Theory]
+    [UserIdNullData]
+    [UserIdEmptyData]
+    [UserIdDifferentCaseData]
+    public async Task GetByIdAsync_ShouldReturnResponse_WhenRequestAndCurrentUserIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
         // Act
         var response = await HttpClient.GetPostCommentByIdAsync(request, CancellationToken);

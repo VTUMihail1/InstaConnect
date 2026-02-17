@@ -155,9 +155,9 @@ public class AddUserPresentationTests : BaseUserPresentationCommandFunctionalTes
     public async Task PublishAsync_ShouldFaultUserAddedEvent_WhenIdAlreadyExists()
     {
         // Arrange
-        var user = UserBuilderFactory.Create().Build();
-        await ServiceScope.AddUserAsync(user, CancellationToken);
-        var request = _requestBuilder.WithId(user).Build();
+        var newUser = UserBuilderFactory.Create().Build();
+        await ServiceScope.AddUserAsync(newUser, CancellationToken);
+        var request = _requestBuilder.WithId(newUser).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
@@ -172,9 +172,9 @@ public class AddUserPresentationTests : BaseUserPresentationCommandFunctionalTes
         IStringTransformer transformer)
     {
         // Arrange
-        var user = UserBuilderFactory.Create().Build();
-        await ServiceScope.AddUserAsync(user, CancellationToken);
-        var request = _requestBuilder.WithId(user, transformer).Build();
+        var newUser = UserBuilderFactory.Create().Build();
+        await ServiceScope.AddUserAsync(newUser, CancellationToken);
+        var request = _requestBuilder.WithId(newUser, transformer).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
@@ -187,9 +187,9 @@ public class AddUserPresentationTests : BaseUserPresentationCommandFunctionalTes
     public async Task PublishAsync_ShouldFaultUserAddedEvent_WhenEmailAlreadyExists()
     {
         // Arrange
-        var user = UserBuilderFactory.Create().Build();
-        await ServiceScope.AddUserAsync(user, CancellationToken);
-        var request = _requestBuilder.WithEmail(user).Build();
+        var newUser = UserBuilderFactory.Create().Build();
+        await ServiceScope.AddUserAsync(newUser, CancellationToken);
+        var request = _requestBuilder.WithEmail(newUser).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
@@ -204,9 +204,9 @@ public class AddUserPresentationTests : BaseUserPresentationCommandFunctionalTes
         IStringTransformer transformer)
     {
         // Arrange
-        var user = UserBuilderFactory.Create().Build();
-        await ServiceScope.AddUserAsync(user, CancellationToken);
-        var request = _requestBuilder.WithEmail(user, transformer).Build();
+        var newUser = UserBuilderFactory.Create().Build();
+        await ServiceScope.AddUserAsync(newUser, CancellationToken);
+        var request = _requestBuilder.WithEmail(newUser, transformer).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
@@ -219,9 +219,9 @@ public class AddUserPresentationTests : BaseUserPresentationCommandFunctionalTes
     public async Task PublishAsync_ShouldFaultUserAddedEvent_WhenNameAlreadyExists()
     {
         // Arrange
-        var user = UserBuilderFactory.Create().Build();
-        await ServiceScope.AddUserAsync(user, CancellationToken);
-        var request = _requestBuilder.WithName(user).Build();
+        var newUser = UserBuilderFactory.Create().Build();
+        await ServiceScope.AddUserAsync(newUser, CancellationToken);
+        var request = _requestBuilder.WithName(newUser).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
@@ -236,15 +236,226 @@ public class AddUserPresentationTests : BaseUserPresentationCommandFunctionalTes
         IStringTransformer transformer)
     {
         // Arrange
-        var user = UserBuilderFactory.Create().Build();
-        await ServiceScope.AddUserAsync(user, CancellationToken);
-        var request = _requestBuilder.WithName(user, transformer).Build();
+        var newUser = UserBuilderFactory.Create().Build();
+        await ServiceScope.AddUserAsync(newUser, CancellationToken);
+        var request = _requestBuilder.WithName(newUser, transformer).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
+    }
+
+    [Theory]
+    [UserIdNullData]
+    [UserIdEmptyData]
+    [UserIdTooShortData]
+    [UserIdTooLongData]
+    public async Task PublishAsync_ShouldNotAddUser_WhenIdIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithId(transformer).Build();
+
+        // Act
+        await EventHarness.PublishAsync(request, CancellationToken);
+        var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+
+        // Assert
+        user.ShouldBeNull();
+    }
+
+    [Theory]
+    [UserNameNullData]
+    [UserNameEmptyData]
+    [UserNameTooShortData]
+    [UserNameTooLongData]
+    public async Task PublishAsync_ShouldNotAddUser_WhenNameIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithName(transformer).Build();
+
+        // Act
+        await EventHarness.PublishAsync(request, CancellationToken);
+        var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+
+        // Assert
+        user.ShouldBeNull();
+    }
+
+    [Theory]
+    [UserFirstNameNullData]
+    [UserFirstNameEmptyData]
+    [UserFirstNameTooShortData]
+    [UserFirstNameTooLongData]
+    public async Task PublishAsync_ShouldNotAddUser_WhenFirstNameIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithFirstName(transformer).Build();
+
+        // Act
+        await EventHarness.PublishAsync(request, CancellationToken);
+        var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+
+        // Assert
+        user.ShouldBeNull();
+    }
+
+    [Theory]
+    [UserLastNameNullData]
+    [UserLastNameEmptyData]
+    [UserLastNameTooShortData]
+    [UserLastNameTooLongData]
+    public async Task PublishAsync_ShouldNotAddUser_WhenLastNameIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithLastName(transformer).Build();
+
+        // Act
+        await EventHarness.PublishAsync(request, CancellationToken);
+        var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+
+        // Assert
+        user.ShouldBeNull();
+    }
+
+    [Theory]
+    [UserEmailNullData]
+    [UserEmailEmptyData]
+    [UserEmailTooShortData]
+    [UserEmailTooLongData]
+    public async Task PublishAsync_ShouldNotAddUser_WhenEmailIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithEmail(transformer).Build();
+
+        // Act
+        await EventHarness.PublishAsync(request, CancellationToken);
+        var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+
+        // Assert
+        user.ShouldBeNull();
+    }
+
+    [Theory]
+    [UserProfileImageTooLongData]
+    public async Task PublishAsync_ShouldNotAddUser_WhenProfileImageIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithProfileImage(transformer).Build();
+
+        // Act
+        await EventHarness.PublishAsync(request, CancellationToken);
+        var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+
+        // Assert
+        user.ShouldBeNull();
+    }
+
+    [Theory]
+    [UserCreatedAtUtcEmptyData]
+    public async Task PublishAsync_ShouldNotAddUser_WhenCreatedAtUtcIsInvalid(
+        IDateTimeOffsetTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCreatedAtUtc(transformer).Build();
+
+        // Act
+        await EventHarness.PublishAsync(request, CancellationToken);
+        var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+
+        // Assert
+        user.ShouldBeNull();
+    }
+
+    [Theory]
+    [UserUpdatedAtUtcEmptyData]
+    public async Task PublishAsync_ShouldNotAddUser_WhenUpdatedAtUtcIsInvalid(
+        IDateTimeOffsetTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithUpdatedAtUtc(transformer).Build();
+
+        // Act
+        await EventHarness.PublishAsync(request, CancellationToken);
+        var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+
+        // Assert
+        user.ShouldBeNull();
+    }
+
+    [Fact]
+    public async Task PublishAsync_ShouldNotAddUser_WhenEmailAlreadyExists()
+    {
+        // Arrange
+        var newUser = UserBuilderFactory.Create().Build();
+        await ServiceScope.AddUserAsync(newUser, CancellationToken);
+        var request = _requestBuilder.WithEmail(newUser).Build();
+
+        // Act
+        await EventHarness.PublishAsync(request, CancellationToken);
+        var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+
+        // Assert
+        user.ShouldBeNull();
+    }
+
+    [Theory]
+    [UserEmailDifferentCaseData]
+    public async Task PublishAsync_ShouldNotAddUser_WhenEmailIsInvalidAndAlreadyExists(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var newUser = UserBuilderFactory.Create().Build();
+        await ServiceScope.AddUserAsync(newUser, CancellationToken);
+        var request = _requestBuilder.WithEmail(newUser, transformer).Build();
+
+        // Act
+        await EventHarness.PublishAsync(request, CancellationToken);
+        var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+
+        // Assert
+        user.ShouldBeNull();
+    }
+
+    [Fact]
+    public async Task PublishAsync_ShouldNotAddUser_WhenNameAlreadyExists()
+    {
+        // Arrange
+        var newUser = UserBuilderFactory.Create().Build();
+        await ServiceScope.AddUserAsync(newUser, CancellationToken);
+        var request = _requestBuilder.WithName(newUser).Build();
+
+        // Act
+        await EventHarness.PublishAsync(request, CancellationToken);
+        var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+
+        // Assert
+        user.ShouldBeNull();
+    }
+
+    [Theory]
+    [UserNameDifferentCaseData]
+    public async Task PublishAsync_ShouldNotAddUser_WhenNameIsInvalidAndAlreadyExists(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var newUser = UserBuilderFactory.Create().Build();
+        await ServiceScope.AddUserAsync(newUser, CancellationToken);
+        var request = _requestBuilder.WithName(newUser, transformer).Build();
+
+        // Act
+        await EventHarness.PublishAsync(request, CancellationToken);
+        var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+
+        // Assert
+        user.ShouldBeNull();
     }
 
     [Fact]

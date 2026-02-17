@@ -20,9 +20,8 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
 
     protected override async Task OnInitializeAsync()
     {
-        await ServiceScope.AddUserAsync(User, CancellationToken);
         await ServiceScope.AddUserRangeAsync(Users, CancellationToken);
-        await ServiceScope.AddPostAsync(Post, CancellationToken);
+        await ServiceScope.AddPostRangeAsync(Posts, CancellationToken);
         await ServiceScope.AddPostLikeRangeAsync(PostLikes, CancellationToken);
     }
 
@@ -86,6 +85,36 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
 
         // Assert
         response.ShouldSatisfyInvalidValidationForUserName(messageTransformer, request);
+    }
+
+    [Theory]
+    [UserIdTooLongData]
+    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenCurrentUserIdIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+
+        // Act
+        var response = await HttpClient.GetAllPostLikesStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeBadRequest();
+    }
+
+    [Theory]
+    [UserIdTooLongWithMessageData]
+    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenCurrentUserIdIsInvalid(
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+
+        // Act
+        var response = await HttpClient.GetAllPostLikesProblemDetailsAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfyInvalidValidationForCurrentUserId(messageTransformer, request);
     }
 
     [Theory]
@@ -283,9 +312,26 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
     }
 
     [Theory]
+    [UserIdNullData]
+    [UserIdEmptyData]
+    [UserIdDifferentCaseData]
+    public async Task GetAllAsync_ShouldHaveOkStatusCode_WhenRequestAndCurrentUserIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+
+        // Act
+        var response = await HttpClient.GetAllPostLikesStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeOk();
+    }
+
+    [Theory]
     [PostLikesSortOrderAscendingData]
     [PostLikesSortOrderDescendingData]
-    public async Task SendAsync_ShouldHaveOkStatusCode_WhenRequestAndSortOrderAreValid(
+    public async Task GetAllAsync_ShouldHaveOkStatusCode_WhenRequestAndSortOrderAreValid(
         IEnumTransformer<CommonSortOrder> transformer)
     {
         // Arrange
@@ -301,7 +347,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
     [Theory]
     [PostLikesSortTermCreatedAtData]
     [PostLikesSortTermUserNameData]
-    public async Task SendAsync_ShouldHaveOkStatusCode_WhenRequestAndSortPropertyAreValid(
+    public async Task GetAllAsync_ShouldHaveOkStatusCode_WhenRequestAndSortPropertyAreValid(
         IEnumTransformer<PostLikesSortTerm> transformer)
     {
         // Arrange
@@ -321,7 +367,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
         var response = await HttpClient.GetAllPostLikesAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostLikes, _request);
+        response.ShouldSatisfy(Post, PostLikes, _request);
     }
 
     [Theory]
@@ -336,7 +382,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
         var response = await HttpClient.GetAllPostLikesAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostLikes, _request);
+        response.ShouldSatisfy(Post, PostLikes, request);
     }
 
     [Theory]
@@ -353,13 +399,30 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
         var response = await HttpClient.GetAllPostLikesAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostLikes, _request);
+        response.ShouldSatisfy(Post, PostLikes, request);
+    }
+
+    [Theory]
+    [UserIdNullData]
+    [UserIdEmptyData]
+    [UserIdDifferentCaseData]
+    public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndCurrentUserIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+
+        // Act
+        var response = await HttpClient.GetAllPostLikesAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfy(Post, PostLikes, request);
     }
 
     [Theory]
     [PostLikesSortOrderWithAscendingTermData]
     [PostLikesSortOrderWithDescendingTermData]
-    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortOrderAreValid(
+    public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndSortOrderAreValid(
         IEnumTransformer<CommonSortOrder> transformer, ISortEnumTermTransformer<PostLike> termTransformer)
     {
         // Arrange
@@ -369,13 +432,13 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
         var response = await HttpClient.GetAllPostLikesAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostLikes, _request, termTransformer);
+        response.ShouldSatisfy(Post, PostLikes, request, termTransformer);
     }
 
     [Theory]
     [PostLikesSortTermWithCreatedAtTermData]
     [PostLikesSortTermWithUserNameTermData]
-    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortPropertyAreValid(
+    public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndSortPropertyAreValid(
         IEnumTransformer<PostLikesSortTerm> transformer, ISortEnumTermTransformer<PostLike> termTransformer)
     {
         // Arrange
@@ -385,6 +448,6 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
         var response = await HttpClient.GetAllPostLikesAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostLikes, _request, termTransformer);
+        response.ShouldSatisfy(Post, PostLikes, request, termTransformer);
     }
 }

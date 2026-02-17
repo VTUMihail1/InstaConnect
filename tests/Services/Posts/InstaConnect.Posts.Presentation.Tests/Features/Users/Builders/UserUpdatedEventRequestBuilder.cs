@@ -19,7 +19,7 @@ public class UserUpdatedEventRequestBuilder
         _lastName = UserDataFaker.GetLastName();
         _email = UserDataFaker.GetEmail();
         _profileImage = UserDataFaker.GetProfileImage();
-        _createdAtUtc = UserDataFaker.GetCreatedAtUtc();
+        _createdAtUtc = user.CreatedAtUtc;
         _updatedAtUtc = UserDataFaker.GetUpdatedAtUtc();
     }
 

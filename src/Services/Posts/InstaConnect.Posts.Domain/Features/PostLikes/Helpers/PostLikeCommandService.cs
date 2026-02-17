@@ -50,7 +50,7 @@ internal class PostLikeCommandService : IPostLikeCommandService
             throw new PostNotFoundException(command.Id);
         }
 
-        var newPostLike = _likeFactory.Create(command.Id, command.UserId);
+        var newPostLike = _likeFactory.Create(command.Id, command.UserId).AddPost(post).AddUser(user);
         var postLike = await _likeRepository.GetByIdAsync(newPostLike.Id, cancellationToken);
 
         if (postLike != null)
@@ -61,7 +61,7 @@ internal class PostLikeCommandService : IPostLikeCommandService
         await _likeRepository.AddAsync(newPostLike, cancellationToken);
 
         await _eventPublisher.PublishAsync(
-            _mapper.Map<PostLikeAddedEventRequest>(newPostLike.AddUser(user).AddPost(post)), cancellationToken);
+            _mapper.Map<PostLikeAddedEventRequest>(newPostLike), cancellationToken);
 
         return newPostLike.Id;
     }

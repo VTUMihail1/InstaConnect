@@ -39,11 +39,11 @@ internal class PostCommandService : IPostCommandService
             throw new UserNotFoundException(command.UserId);
         }
 
-        var newPost = _factory.Create(command.UserId, command.Title, command.Content);
+        var newPost = _factory.Create(command.UserId, command.Title, command.Content).AddUser(user);
         await _repository.AddAsync(newPost, cancellationToken);
 
         await _eventPublisher.PublishAsync(
-            _mapper.Map<PostAddedEventRequest>(newPost.AddUser(user)), cancellationToken);
+            _mapper.Map<PostAddedEventRequest>(newPost), cancellationToken);
 
         return newPost.Id;
     }

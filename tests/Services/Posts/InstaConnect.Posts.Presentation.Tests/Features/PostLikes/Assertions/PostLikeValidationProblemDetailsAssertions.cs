@@ -50,7 +50,7 @@ public static class PostLikeValidationProblemDetailsAssertions
             request);
     }
 
-    public static async Task ShouldSatisfyInvalidValidationForCurrentUserId(
+    public static void ShouldSatisfyInvalidValidationForCurrentUserId(
         this ApplicationProblemDetails problemDetails,
         IStringMessageTransformer messageTransformer,
         GetPostLikeByIdApiRequest request)
@@ -61,7 +61,7 @@ public static class PostLikeValidationProblemDetailsAssertions
            request);
     }
 
-    public static async Task ShouldSatisfyInvalidValidationForCurrentUserId(
+    public static void ShouldSatisfyInvalidValidationForCurrentUserId(
         this ApplicationProblemDetails problemDetails,
         IStringMessageTransformer messageTransformer,
         GetAllPostLikesApiRequest request)
@@ -72,7 +72,7 @@ public static class PostLikeValidationProblemDetailsAssertions
            request);
     }
 
-    public static async Task ShouldSatisfyInvalidValidationForCurrentUserId(
+    public static void ShouldSatisfyInvalidValidationForCurrentUserId(
         this ApplicationProblemDetails problemDetails,
         IStringMessageTransformer messageTransformer,
         GetAllPostLikesForUserApiRequest request)

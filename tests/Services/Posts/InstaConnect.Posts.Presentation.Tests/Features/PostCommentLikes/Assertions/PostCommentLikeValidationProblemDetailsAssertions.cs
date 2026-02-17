@@ -93,7 +93,7 @@ public static class PostCommentLikeValidationProblemDetailsAssertions
             request);
     }
 
-    public static async Task ShouldSatisfyInvalidValidationForCurrentUserId(
+    public static void ShouldSatisfyInvalidValidationForCurrentUserId(
         this ApplicationProblemDetails problemDetails,
         IStringMessageTransformer messageTransformer,
         GetPostCommentLikeByIdApiRequest request)
@@ -104,7 +104,7 @@ public static class PostCommentLikeValidationProblemDetailsAssertions
            request);
     }
 
-    public static async Task ShouldSatisfyInvalidValidationForCurrentUserId(
+    public static void ShouldSatisfyInvalidValidationForCurrentUserId(
         this ApplicationProblemDetails problemDetails,
         IStringMessageTransformer messageTransformer,
         GetAllPostCommentLikesApiRequest request)
@@ -115,7 +115,7 @@ public static class PostCommentLikeValidationProblemDetailsAssertions
            request);
     }
 
-    public static async Task ShouldSatisfyInvalidValidationForCurrentUserId(
+    public static void ShouldSatisfyInvalidValidationForCurrentUserId(
         this ApplicationProblemDetails problemDetails,
         IStringMessageTransformer messageTransformer,
         GetAllPostCommentLikesForUserApiRequest request)

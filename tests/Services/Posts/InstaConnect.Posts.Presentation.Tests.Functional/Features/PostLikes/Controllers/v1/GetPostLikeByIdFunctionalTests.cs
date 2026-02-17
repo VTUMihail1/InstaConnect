@@ -85,6 +85,36 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationQueryFunct
         response.ShouldSatisfyInvalidValidationForUserId(messageTransformer, request);
     }
 
+    [Theory]
+    [UserIdTooLongData]
+    public async Task GetByIdAsync_ShouldHaveBadRequestStatusCode_WhenCurrentUserIdIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+
+        // Act
+        var response = await HttpClient.GetPostLikeByIdStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeBadRequest();
+    }
+
+    [Theory]
+    [UserIdTooLongWithMessageData]
+    public async Task GetByIdAsync_ShouldHaveBadRequestProblemDetails_WhenCurrentUserIdIsInvalid(
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+
+        // Act
+        var response = await HttpClient.GetPostLikeByIdProblemDetailsAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfyInvalidValidationForCurrentUserId(messageTransformer, request);
+    }
+
     [Fact]
     public async Task GetByIdAsync_ShouldHaveNotFoundStatusCode_WhenIdIsInvalid()
     {
@@ -177,6 +207,23 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationQueryFunct
         response.ShouldBeOk();
     }
 
+    [Theory]
+    [UserIdNullData]
+    [UserIdEmptyData]
+    [UserIdDifferentCaseData]
+    public async Task GetByIdAsync_ShouldHaveOkStatusCode_WhenRequestAndCurrentUserIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+
+        // Act
+        var response = await HttpClient.GetPostLikeByIdStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeOk();
+    }
+
     [Fact]
     public async Task GetByIdAsync_ShouldHaveResponse_WhenRequestIsValid()
     {
@@ -209,6 +256,23 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationQueryFunct
     {
         // Arrange
         var request = _requestBuilder.WithUserId(transformer).Build();
+
+        // Act
+        var response = await HttpClient.GetPostLikeByIdAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfy(PostLike, request);
+    }
+
+    [Theory]
+    [UserIdNullData]
+    [UserIdEmptyData]
+    [UserIdDifferentCaseData]
+    public async Task GetByIdAsync_ShouldReturnResponse_WhenRequestAndCurrentUserIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
         // Act
         var response = await HttpClient.GetPostLikeByIdAsync(request, CancellationToken);

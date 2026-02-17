@@ -52,6 +52,25 @@ public class DeleteUserPresentationTests : BaseUserPresentationCommandFunctional
         await EventHarness.ShouldHaveFaultedAsync(_request, CancellationToken);
     }
 
+    [Theory]
+    [UserIdNullData]
+    [UserIdEmptyData]
+    [UserIdTooShortData]
+    [UserIdTooLongData]
+    public async Task PublishAsync_ShouldNotDeleteUser_WhenIdIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithId(transformer).Build();
+
+        // Act
+        await EventHarness.PublishAsync(request, CancellationToken);
+        var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+
+        // Assert
+        user.ShouldSatisfy(User);
+    }
+
     [Fact]
     public async Task PublishAsync_ShouldConsumeUserDeletedEvent_WhenRequestIsValid()
     {

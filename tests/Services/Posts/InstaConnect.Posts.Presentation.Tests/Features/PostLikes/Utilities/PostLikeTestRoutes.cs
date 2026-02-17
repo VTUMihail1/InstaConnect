@@ -17,7 +17,7 @@ public static class PostLikeTestRoutes
 
     public static string GetAll(GetAllPostLikesApiRequest request)
     {
-        const string Format = "{0}?userName={1}&sortOrder={2}&sortProperty={3}&page={4}&pageSize={5}";
+        const string Format = "{0}?userName={1}&sortOrder={2}&sortTerm={3}&page={4}&pageSize={5}";
 
         return Format.FormatCurrentCulture(
             GetDefault(request.Id),
@@ -30,7 +30,7 @@ public static class PostLikeTestRoutes
 
     public static string GetAllForUser(GetAllPostLikesForUserApiRequest request)
     {
-        const string Format = "{0}?sortOrder={1}&sortProperty={2}&page={3}&pageSize={4}";
+        const string Format = "{0}?sortOrder={1}&sortTerm={2}&page={3}&pageSize={4}";
 
         return Format.FormatCurrentCulture(
             GetForUserDefault(request.UserId),

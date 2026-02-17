@@ -20,10 +20,10 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
 
     protected override async Task OnInitializeAsync()
     {
-        await ServiceScope.AddUserAsync(User, CancellationToken);
         await ServiceScope.AddUserRangeAsync(Users, CancellationToken);
-        await ServiceScope.AddPostAsync(Post, CancellationToken);
-        await ServiceScope.AddPostCommentAsync(PostComment, CancellationToken);
+        await ServiceScope.AddPostRangeAsync(Posts, CancellationToken);
+        await ServiceScope.AddPostLikeRangeAsync(PostLikes, CancellationToken);
+        await ServiceScope.AddPostCommentRangeAsync(PostComments, CancellationToken);
         await ServiceScope.AddPostCommentLikeRangeAsync(PostCommentLikes, CancellationToken);
     }
 
@@ -119,6 +119,36 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
 
         // Assert
         response.ShouldSatisfyInvalidValidationForUserName(messageTransformer, request);
+    }
+
+    [Theory]
+    [UserIdTooLongData]
+    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenCurrentUserIdIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+
+        // Act
+        var response = await HttpClient.GetAllPostCommentLikesStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeBadRequest();
+    }
+
+    [Theory]
+    [UserIdTooLongWithMessageData]
+    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenCurrentUserIdIsInvalid(
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+
+        // Act
+        var response = await HttpClient.GetAllPostCommentLikesProblemDetailsAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfyInvalidValidationForCurrentUserId(messageTransformer, request);
     }
 
     [Theory]
@@ -357,9 +387,26 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
     }
 
     [Theory]
+    [UserIdNullData]
+    [UserIdEmptyData]
+    [UserIdDifferentCaseData]
+    public async Task GetAllAsync_ShouldHaveOkStatusCode_WhenRequestAndCurrentUserIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+
+        // Act
+        var response = await HttpClient.GetAllPostCommentLikesStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeOk();
+    }
+
+    [Theory]
     [PostCommentLikesSortOrderAscendingData]
     [PostCommentLikesSortOrderDescendingData]
-    public async Task SendAsync_ShouldHaveOkStatusCode_WhenRequestAndSortOrderAreValid(
+    public async Task GetAllAsync_ShouldHaveOkStatusCode_WhenRequestAndSortOrderAreValid(
         IEnumTransformer<CommonSortOrder> transformer)
     {
         // Arrange
@@ -375,7 +422,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
     [Theory]
     [PostCommentLikesSortTermCreatedAtData]
     [PostCommentLikesSortTermUserNameData]
-    public async Task SendAsync_ShouldHaveOkStatusCode_WhenRequestAndSortPropertyAreValid(
+    public async Task GetAllAsync_ShouldHaveOkStatusCode_WhenRequestAndSortPropertyAreValid(
         IEnumTransformer<PostCommentLikesSortTerm> transformer)
     {
         // Arrange
@@ -395,7 +442,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
         var response = await HttpClient.GetAllPostCommentLikesAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostCommentLikes, _request);
+        response.ShouldSatisfy(PostComment, PostCommentLikes, _request);
     }
 
     [Theory]
@@ -410,7 +457,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
         var response = await HttpClient.GetAllPostCommentLikesAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostCommentLikes, _request);
+        response.ShouldSatisfy(PostComment, PostCommentLikes, request);
     }
 
     [Theory]
@@ -425,7 +472,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
         var response = await HttpClient.GetAllPostCommentLikesAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostCommentLikes, _request);
+        response.ShouldSatisfy(PostComment, PostCommentLikes, request);
     }
 
     [Theory]
@@ -442,13 +489,30 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
         var response = await HttpClient.GetAllPostCommentLikesAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostCommentLikes, _request);
+        response.ShouldSatisfy(PostComment, PostCommentLikes, request);
+    }
+
+    [Theory]
+    [UserIdNullData]
+    [UserIdEmptyData]
+    [UserIdDifferentCaseData]
+    public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndCurrentUserIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+
+        // Act
+        var response = await HttpClient.GetAllPostCommentLikesAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfy(PostComment, PostCommentLikes, request);
     }
 
     [Theory]
     [PostCommentLikesSortOrderWithAscendingTermData]
     [PostCommentLikesSortOrderWithDescendingTermData]
-    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortOrderAreValid(
+    public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndSortOrderAreValid(
         IEnumTransformer<CommonSortOrder> transformer, ISortEnumTermTransformer<PostCommentLike> termTransformer)
     {
         // Arrange
@@ -458,13 +522,13 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
         var response = await HttpClient.GetAllPostCommentLikesAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostCommentLikes, _request, termTransformer);
+        response.ShouldSatisfy(PostComment, PostCommentLikes, request, termTransformer);
     }
 
     [Theory]
     [PostCommentLikesSortTermWithCreatedAtTermData]
     [PostCommentLikesSortTermWithUserNameTermData]
-    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortPropertyAreValid(
+    public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndSortPropertyAreValid(
         IEnumTransformer<PostCommentLikesSortTerm> transformer, ISortEnumTermTransformer<PostCommentLike> termTransformer)
     {
         // Arrange
@@ -474,6 +538,6 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
         var response = await HttpClient.GetAllPostCommentLikesAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostCommentLikes, _request, termTransformer);
+        response.ShouldSatisfy(PostComment, PostCommentLikes, request, termTransformer);
     }
 }

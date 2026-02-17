@@ -106,7 +106,7 @@ public static class PostValidationProblemDetailsAssertions
             request);
     }
 
-    public static async Task ShouldSatisfyInvalidValidationForCurrentUserId(
+    public static void ShouldSatisfyInvalidValidationForCurrentUserId(
         this ApplicationProblemDetails problemDetails,
         IStringMessageTransformer messageTransformer,
         GetPostByIdApiRequest request)
@@ -117,7 +117,7 @@ public static class PostValidationProblemDetailsAssertions
             request);
     }
 
-    public static async Task ShouldSatisfyInvalidValidationForCurrentUserId(
+    public static void ShouldSatisfyInvalidValidationForCurrentUserId(
         this ApplicationProblemDetails problemDetails,
         IStringMessageTransformer messageTransformer,
         GetAllPostsApiRequest request)
@@ -128,7 +128,7 @@ public static class PostValidationProblemDetailsAssertions
            request);
     }
 
-    public static async Task ShouldSatisfyInvalidValidationForCurrentUserId(
+    public static void ShouldSatisfyInvalidValidationForCurrentUserId(
         this ApplicationProblemDetails problemDetails,
         IStringMessageTransformer messageTransformer,
         GetAllPostsForUserApiRequest request)

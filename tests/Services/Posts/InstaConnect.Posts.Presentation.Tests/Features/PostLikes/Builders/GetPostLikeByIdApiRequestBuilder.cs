@@ -57,6 +57,6 @@ public class GetPostLikeByIdApiRequestBuilder
 
     public GetPostLikeByIdApiRequest Build()
     {
-        return new(_id, _currentUserId, _userId);
+        return new(_id, _userId, _currentUserId);
     }
 }

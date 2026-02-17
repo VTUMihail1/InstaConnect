@@ -20,7 +20,7 @@ public class EventHarness : IEventHarness
     }
 
     public async Task PublishAsync<TRequest>(TRequest message, CancellationToken cancellationToken)
-        where TRequest : class
+        where TRequest : class, IEventRequest
     {
         await StopAsync(cancellationToken);
         _testHarness = _testHarnessFactory.Create();
@@ -31,7 +31,7 @@ public class EventHarness : IEventHarness
     }
 
     public async Task ShouldHavePublishedAsync<TRequest>(Func<TRequest, bool> predicate, CancellationToken cancellationToken)
-        where TRequest : class
+        where TRequest : class, IEventRequest
     {
         var isPublished = await _testHarness.Published
                 .Any<TRequest>(e => predicate(e.Context.Message), cancellationToken);
@@ -42,7 +42,7 @@ public class EventHarness : IEventHarness
     public async Task ShouldHaveFaultedAsync<TRequest>(
         Func<TRequest, bool> predicate,
         CancellationToken cancellationToken)
-        where TRequest : class
+        where TRequest : class, IEventRequest
     {
         var result = await _testHarness.Published
                                    .Any<Fault<TRequest>>(e => predicate(e.Context.Message.Message),
@@ -52,7 +52,7 @@ public class EventHarness : IEventHarness
     }
 
     public async Task ShouldHaveConsumedAsync<TRequest>(Func<TRequest, bool> predicate, CancellationToken cancellationToken)
-        where TRequest : class
+        where TRequest : class, IEventRequest
     {
         var result = await _testHarness.Consumed
                 .Any<TRequest>(e => predicate(e.Context.Message), cancellationToken);

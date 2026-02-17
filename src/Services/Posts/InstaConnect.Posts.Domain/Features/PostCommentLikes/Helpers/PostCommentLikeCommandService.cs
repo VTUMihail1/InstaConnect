@@ -64,7 +64,7 @@ internal class PostCommentLikeCommandService : IPostCommentLikeCommandService
             throw new PostCommentNotFoundException(command.CommentId);
         }
 
-        var newPostCommentLike = _commentLikeFactory.Create(command.CommentId, command.UserId);
+        var newPostCommentLike = _commentLikeFactory.Create(command.CommentId, command.UserId).AddUser(user).AddPostComment(postComment);
         var postCommentLike = await _commentLikeRepository.GetByIdAsync(
             newPostCommentLike.Id,
             cancellationToken);
@@ -77,7 +77,7 @@ internal class PostCommentLikeCommandService : IPostCommentLikeCommandService
         await _commentLikeRepository.AddAsync(newPostCommentLike, cancellationToken);
 
         await _eventPublisher.PublishAsync(
-            _mapper.Map<PostCommentLikeAddedEventRequest>(newPostCommentLike.AddUser(user).AddPostComment(postComment)), cancellationToken);
+            _mapper.Map<PostCommentLikeAddedEventRequest>(newPostCommentLike), cancellationToken);
 
         return newPostCommentLike.Id;
     }

@@ -9,6 +9,11 @@ public static class UserMatchAssertions
         user.ShouldSatisfy(u => u.Matches(request));
     }
 
+    public static void ShouldSatisfy(this User u, User user)
+    {
+        user.ShouldSatisfy(u => u.Matches(user));
+    }
+
     public static void ShouldSatisfy(this User user, UserUpdatedEventRequest request)
     {
         user.ShouldSatisfy(u => u.Matches(request));
