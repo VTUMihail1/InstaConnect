@@ -8,7 +8,7 @@ internal static class ServiceCollectionExtensions
 {
     internal static IServiceCollection AddUserClaimServices(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddImplementationsOf<IUserClaimIncludeProperty>(IdentityInfrastructureReference.Assembly);
+        serviceCollection.AddImplementationsOf<IUserClaimIncluder>(IdentityInfrastructureReference.Assembly);
 
         BsonClassMap.TryRegisterClassMap<UserClaim>(cm =>
         {
@@ -16,6 +16,8 @@ internal static class ServiceCollectionExtensions
 
             cm.MapMember(c => c.Id);
             cm.MapMember(c => c.CreatedAtUtc);
+
+            cm.MapMemberWithoutSerialization(c => c.User);
 
             cm.MapCreator(c => new UserClaim(
                 c.Id,

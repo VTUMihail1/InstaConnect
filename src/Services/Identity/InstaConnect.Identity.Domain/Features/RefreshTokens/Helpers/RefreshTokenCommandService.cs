@@ -31,7 +31,7 @@ internal class RefreshTokenCommandService : IRefreshTokenCommandService
 
     public async Task<SessionToken> IssueAsync(IssueRefreshTokenCommand command, CancellationToken cancellationToken)
     {
-        var include = _includeQueryBuilderFactory.Create().WithClaims().Build();
+        var include = _includeQueryBuilderFactory.Create().WithUserClaims().Build();
         var user = await _repository.GetByNameAsync(command.Name, include, cancellationToken);
 
         if (user == null)
@@ -46,17 +46,15 @@ internal class RefreshTokenCommandService : IRefreshTokenCommandService
             throw new UserInvalidDetailsException(command.Name);
         }
 
-        var newRefreshToken = _refreshTokenFactory.Create(user.Id);
+        var newRefreshToken = _refreshTokenFactory.Create(user.Id).AddUser(user);
         await _refreshTokenRepository.AddAsync(newRefreshToken, cancellationToken);
 
-        newRefreshToken.AddUser(user);
-
-        return _sessionTokenGenerator.Generate(newRefreshToken.AddUser(user));
+        return _sessionTokenGenerator.Generate(newRefreshToken);
     }
 
     public async Task<SessionToken> RotateAsync(RotateRefreshTokenCommand command, CancellationToken cancellationToken)
     {
-        var include = _includeQueryBuilderFactory.Create().WithClaims().Build();
+        var include = _includeQueryBuilderFactory.Create().WithUserClaims().Build();
         var user = await _repository.GetByIdAsync(command.Id.Id, include, cancellationToken);
 
         if (user == null)
@@ -81,15 +79,14 @@ internal class RefreshTokenCommandService : IRefreshTokenCommandService
         var newRefreshToken = _refreshTokenFactory.Create(user.Id).AddUser(user);
         await _refreshTokenRepository.AddAsync(newRefreshToken, cancellationToken);
 
-        return _sessionTokenGenerator.Generate(newRefreshToken.AddUser(user));
+        return _sessionTokenGenerator.Generate(newRefreshToken);
     }
 
     public async Task DeleteAsync(DeleteRefreshTokenCommand command, CancellationToken cancellationToken)
     {
-        var include = _includeQueryBuilderFactory.Create().WithClaims().Build();
-        var user = await _repository.GetByIdAsync(command.Id.Id, include, cancellationToken);
+        var userExists = await _repository.ExistsByIdAsync(command.Id.Id, cancellationToken);
 
-        if (user == null)
+        if (userExists)
         {
             throw new UserNotFoundException(command.Id.Id);
         }
@@ -100,8 +97,6 @@ internal class RefreshTokenCommandService : IRefreshTokenCommandService
         {
             throw new RefreshTokenNotFoundException(command.Id);
         }
-
-        refreshToken.AddUser(user);
 
         await _refreshTokenRepository.DeleteAsync(refreshToken, cancellationToken);
     }

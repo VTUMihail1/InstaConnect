@@ -23,7 +23,7 @@ internal class PostIncluderFactory : IPostIncluderFactory
 
         if (includers.IsEmpty())
         {
-            throw new PostCommentIncludeDescriptorsNotSupportedException(descriptors);
+            throw new PostIncludeDescriptorsNotSupportedException(descriptors);
         }
 
         return includers;

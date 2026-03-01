@@ -260,7 +260,7 @@ public static class PostValidationProblemDetailsAssertions
             request);
     }
 
-    public static void ShouldSatisfyInvalidValidationForSortProperty(
+    public static void ShouldSatisfyInvalidValidationForSortTerm(
         this ApplicationProblemDetails problemDetails,
         IEnumMessageTransformer<PostsSortTerm> messageTransformer,
         GetAllPostsApiRequest request)
@@ -271,9 +271,9 @@ public static class PostValidationProblemDetailsAssertions
             request);
     }
 
-    public static void ShouldSatisfyInvalidValidationForSortProperty(
+    public static void ShouldSatisfyInvalidValidationForSortTerm(
         this ApplicationProblemDetails problemDetails,
-        IEnumMessageTransformer<PostsSortTerm> messageTransformer,
+        IEnumMessageTransformer<PostsForUserSortTerm> messageTransformer,
         GetAllPostsForUserApiRequest request)
     {
         problemDetails.ShouldSatisfyInvalidValidation(

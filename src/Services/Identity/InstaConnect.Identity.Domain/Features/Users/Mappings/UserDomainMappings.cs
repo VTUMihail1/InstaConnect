@@ -22,7 +22,7 @@ internal class UserDomainMappings : IRegister
                 src.Email.Value,
                 src.FirstName,
                 src.LastName,
-                src.ProfileImage == null ? null : src.ProfileImage!.Url,
+                src.ProfileImage == null ? null : src.ProfileImage.Url,
                 src.CreatedAtUtc,
                 src.UpdatedAtUtc));
     }

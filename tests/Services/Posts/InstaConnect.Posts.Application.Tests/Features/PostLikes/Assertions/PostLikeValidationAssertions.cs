@@ -149,7 +149,7 @@ public static class PostLikeValidationAssertions
 
     public static void ShouldHaveValidationErrorForSortTerm(
         this TestValidationResult<GetAllPostLikesForUserQueryRequest> result,
-        IEnumMessageTransformer<PostLikesSortTerm> messageTransformer,
+        IEnumMessageTransformer<PostLikesForUserSortTerm> messageTransformer,
         GetAllPostLikesForUserQueryRequest request)
     {
         result.ShouldHaveValidationErrorForProperty(p => p.SortTerm, messageTransformer, request);

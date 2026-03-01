@@ -10,6 +10,6 @@ public record GetAllPostLikesForUserApiRequest(
     [FromRoute] string UserId,
     [FromClaim(ClaimTypes.NameIdentifier)] string CurrentUserId,
     [FromQuery] CommonSortOrder SortOrder = CommonDefaultValues.SortOrder,
-    [FromQuery] PostLikesSortTerm SortTerm = PostLikeDefaultValues.SortTerm,
+    [FromQuery] PostLikesForUserSortTerm SortTerm = PostLikeDefaultValues.SortTermForUser,
     [FromQuery] int Page = PostLikeDefaultValues.Page,
-    [FromQuery] int PageSize = PostLikeDefaultValues.PageSize) : ISortableApiRequest<PostLikesSortTerm>, IPaginatableApiRequest, ICurrentUserableApiRequest;
+    [FromQuery] int PageSize = PostLikeDefaultValues.PageSize) : ISortableApiRequest<PostLikesForUserSortTerm>, IPaginatableApiRequest, ICurrentUserableApiRequest;

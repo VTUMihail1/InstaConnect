@@ -1,3 +1,6 @@
-﻿namespace InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Requests;
+﻿using InstaConnect.Identity.Domain.Models.Requests;
 
-public record RefreshTokenInclude(ICollection<RefreshTokenIncludeProperty> Properties) : IInclude<RefreshTokenIncludeProperty>;
+namespace InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Requests;
+
+public record RefreshTokenInclude(ICollection<IdentityIncludeDescriptor> Descriptors)
+    : IInclude<IdentityDestinationType, IdentityIncludeType, IdentityIncludeDescriptor>;

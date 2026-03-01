@@ -23,13 +23,17 @@ public class Follow : IEntityWithId<FollowId>
 
     public DateTimeOffset CreatedAtUtc { get; }
 
-    public void AddFollower(User follower)
+    public Follow AddFollower(User? follower)
     {
         Follower = follower;
+
+        return this;
     }
 
-    public void AddFollowing(User following)
+    public Follow AddFollowing(User? following)
     {
         Following = following;
+
+        return this;
     }
 }

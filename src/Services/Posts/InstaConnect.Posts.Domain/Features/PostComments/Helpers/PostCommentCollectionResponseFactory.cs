@@ -11,7 +11,7 @@ internal class PostCommentCollectionResponseFactory : IPostCommentCollectionResp
         _paginator = paginator;
     }
 
-    public PostCommentCollectionResponse Create(
+    public PostCommentCollectionResponse CreateForPost(
         PostResponse? post,
         ICollection<PostCommentResponse> postComments,
         long totalCount,
@@ -31,7 +31,7 @@ internal class PostCommentCollectionResponseFactory : IPostCommentCollectionResp
             hasPreviousPage);
     }
 
-    public PostCommentCollectionResponse Create(
+    public PostCommentCollectionResponse CreateForUser(
         UserResponse? user,
         ICollection<PostCommentResponse> postComments,
         long totalCount,

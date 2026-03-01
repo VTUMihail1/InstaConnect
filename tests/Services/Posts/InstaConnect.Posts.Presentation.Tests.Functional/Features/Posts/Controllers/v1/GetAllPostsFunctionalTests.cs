@@ -173,7 +173,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
         var response = await HttpClient.GetAllPostsProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyInvalidValidationForSortProperty(messageTransformer, request);
+        response.ShouldSatisfyInvalidValidationForSortTerm(messageTransformer, request);
     }
 
     [Theory]

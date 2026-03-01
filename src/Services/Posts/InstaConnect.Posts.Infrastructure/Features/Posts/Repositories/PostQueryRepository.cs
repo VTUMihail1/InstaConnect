@@ -13,19 +13,22 @@ internal class PostQueryRepository : IPostQueryRepository
     private readonly IPostIncluderFactory _includerFactory;
     private readonly ISortOrdererFactory _sortOrdererFactory;
     private readonly IPostsSortTermerFactory _sortTermerFactory;
+    private readonly IPostsForUserSortTermerFactory _forUserSortTermerFactory;
 
     public PostQueryRepository(
         IPaginator paginator,
         IPostsContext context,
         IPostIncluderFactory includerFactory,
         ISortOrdererFactory sortOrdererFactory,
-        IPostsSortTermerFactory sortTermerFactory)
+        IPostsSortTermerFactory sortTermerFactory,
+        IPostsForUserSortTermerFactory forUserSortTermerFactory)
     {
         _paginator = paginator;
         _context = context;
         _includerFactory = includerFactory;
         _sortOrdererFactory = sortOrdererFactory;
         _sortTermerFactory = sortTermerFactory;
+        _forUserSortTermerFactory = forUserSortTermerFactory;
     }
 
     public async Task<ICollection<PostResponse>> GetAllAsync(
@@ -60,7 +63,7 @@ internal class PostQueryRepository : IPostQueryRepository
     public async Task<ICollection<PostResponse>> GetAllForUserAsync(
         PostsForUserFilterQuery filter,
         CurrentUserQuery currentUser,
-        PostsSortingQuery sorting,
+        PostsForUserSortingQuery sorting,
         PostsPaginationQuery pagination,
         PostInclude? include,
         CancellationToken cancellationToken)
@@ -71,7 +74,7 @@ internal class PostQueryRepository : IPostQueryRepository
             .Includes(_includerFactory, include)
             .Match(filter)
             .ProjectToResponseWithoutUser(currentUser)
-            .Sort(_sortOrdererFactory, _sortTermerFactory, sorting)
+            .Sort(_sortOrdererFactory, _forUserSortTermerFactory, sorting)
             .Paginate(_paginator, pagination)
             .ToListAsync(cancellationToken);
     }
@@ -79,7 +82,7 @@ internal class PostQueryRepository : IPostQueryRepository
     public async Task<ICollection<PostResponse>> GetAllForUserAsync(
         PostsForUserFilterQuery filter,
         CurrentUserQuery currentUser,
-        PostsSortingQuery sorting,
+        PostsForUserSortingQuery sorting,
         PostsPaginationQuery pagination,
         CancellationToken cancellationToken)
     {

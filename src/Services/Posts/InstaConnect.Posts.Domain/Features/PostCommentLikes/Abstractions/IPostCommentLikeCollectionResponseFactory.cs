@@ -3,13 +3,13 @@
 namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstractions;
 internal interface IPostCommentLikeCollectionResponseFactory
 {
-    PostCommentLikeCollectionResponse Create(
+    PostCommentLikeCollectionResponse CreateForPostComment(
         PostCommentResponse? postComment,
         ICollection<PostCommentLikeResponse> postCommentLikes,
         long totalCount,
         PostCommentLikesPaginationQuery pagination);
 
-    PostCommentLikeCollectionResponse Create(
+    PostCommentLikeCollectionResponse CreateForUser(
         UserResponse? user,
         ICollection<PostCommentLikeResponse> postCommentLikes,
         long totalCount,

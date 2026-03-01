@@ -55,7 +55,7 @@ internal class PostQueryService : IPostQueryService
 
         var totalCount = await _repository.GetTotalCountForUserAsync(query.Filter, include, cancellationToken);
 
-        return _collectionResponseFactory.Create(user, posts, totalCount, query.Pagination);
+        return _collectionResponseFactory.CreateForUser(user, posts, totalCount, query.Pagination);
     }
 
     public async Task<PostResponse> GetByIdAsync(GetPostByIdQuery query, CancellationToken cancellationToken)

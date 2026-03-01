@@ -2,7 +2,7 @@
 
 public record GetAllPostCommentsForUserQuery(
     PostCommentsForUserFilterQuery Filter,
-    PostCommentsSortingQuery Sorting,
+    PostCommentsForUserSortingQuery Sorting,
     PostCommentsPaginationQuery Pagination,
     CurrentUserQuery CurrentUser)
-    : ISortableQuery<PostCommentsSortingQuery, PostCommentsSortTerm>, IPaginatableQuery<PostCommentsPaginationQuery>, ICurrentUserableQuery;
+    : ISortableQuery<PostCommentsForUserSortingQuery, PostCommentsForUserSortTerm>, IPaginatableQuery<PostCommentsPaginationQuery>, ICurrentUserableQuery;

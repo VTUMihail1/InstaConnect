@@ -10,7 +10,7 @@ public class GetAllPostsForUserApiRequestBuilder
     private int _page;
     private int _pageSize;
     private CommonSortOrder _sortOrder;
-    private PostsSortTerm _sortTerm;
+    private PostsForUserSortTerm _sortTerm;
 
     public GetAllPostsForUserApiRequestBuilder(Post post)
     {
@@ -20,7 +20,7 @@ public class GetAllPostsForUserApiRequestBuilder
         _page = PostDataFaker.GetPage();
         _pageSize = PostDataFaker.GetPageSize();
         _sortOrder = DataFaker.GetSortOrder();
-        _sortTerm = PostDataFaker.GetSortTerm();
+        _sortTerm = PostDataFaker.GetForUserSortTerm();
     }
 
     public GetAllPostsForUserApiRequestBuilder WithUserId(User user, IStringTransformer? transformer = null)
@@ -79,7 +79,7 @@ public class GetAllPostsForUserApiRequestBuilder
         return this;
     }
 
-    public GetAllPostsForUserApiRequestBuilder WithSortTerm(IEnumTransformer<PostsSortTerm> transformer)
+    public GetAllPostsForUserApiRequestBuilder WithSortTerm(IEnumTransformer<PostsForUserSortTerm> transformer)
     {
         _sortTerm = transformer.Transform(_sortTerm);
 

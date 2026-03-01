@@ -6,7 +6,7 @@ public static class UserAggregateFluentExtensions
 {
     public static IAggregateFluent<User> Match(
         this IAggregateFluent<User> aggregate,
-        UserFilterQuery filter)
+        UsersFilterQuery filter)
     {
         return aggregate.Match(filter.GetFilter());
     }
@@ -32,7 +32,7 @@ public static class UserAggregateFluentExtensions
         return aggregate.Match(filter.GetFilter());
     }
 
-    public static IAggregateFluent<UserResponse> ProjectToResponse(
+    public static IAggregateFluent<UserResponse> ProjectToFullResponse(
         this IAggregateFluent<User> aggregate,
         CurrentUserQuery currentUser)
     {

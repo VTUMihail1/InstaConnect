@@ -8,7 +8,7 @@ internal static class ServiceCollectionExtensions
 {
     internal static IServiceCollection AddForgotPasswordTokenServices(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddImplementationsOf<IForgotPasswordTokenIncludeProperty>(IdentityInfrastructureReference.Assembly);
+        serviceCollection.AddImplementationsOf<IForgotPasswordTokenIncluder>(IdentityInfrastructureReference.Assembly);
 
         BsonClassMap.TryRegisterClassMap<ForgotPasswordToken>(cm =>
         {
@@ -16,6 +16,8 @@ internal static class ServiceCollectionExtensions
 
             cm.MapMember(c => c.Id);
             cm.MapMember(c => c.CreatedAtUtc);
+
+            cm.MapMemberWithoutSerialization(c => c.User);
 
             cm.MapCreator(c => new ForgotPasswordToken(
                 c.Id,

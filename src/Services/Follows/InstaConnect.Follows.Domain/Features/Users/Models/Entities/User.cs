@@ -9,8 +9,8 @@ public class User : IEntityWithId<UserId>
         LastName = string.Empty;
         Email = new(string.Empty);
         Name = new(string.Empty);
-        FollowerFollows = [];
-        FollowingFollows = [];
+        FollowFollowers = [];
+        FollowFollowings = [];
     }
 
     public User(
@@ -29,8 +29,8 @@ public class User : IEntityWithId<UserId>
         Email = email;
         Name = name;
         ProfileImage = profileImage;
-        FollowerFollows = [];
-        FollowingFollows = [];
+        FollowFollowers = [];
+        FollowFollowings = [];
         CreatedAtUtc = createdAtUtc;
         UpdatedAtUtc = updatedAtUtc;
     }
@@ -47,9 +47,9 @@ public class User : IEntityWithId<UserId>
 
     public Image? ProfileImage { get; private set; }
 
-    public ICollection<Follow> FollowerFollows { get; }
+    public ICollection<Follow> FollowFollowers { get; }
 
-    public ICollection<Follow> FollowingFollows { get; }
+    public ICollection<Follow> FollowFollowings { get; }
 
     public DateTimeOffset CreatedAtUtc { get; }
 
@@ -71,14 +71,18 @@ public class User : IEntityWithId<UserId>
         UpdatedAtUtc = updatedAtUtc;
     }
 
-    public void AddFollowerFollow(Follow follow)
+    public User AddFollowFollower(Follow followFollower)
     {
-        FollowerFollows.Add(follow);
+        FollowFollowers.Add(followFollower);
+
+        return this;
     }
 
-    public void AddFollowingFollow(Follow follow)
+    public User AddFollowFollowing(Follow followFollowing)
     {
-        FollowingFollows.Add(follow);
+        FollowFollowings.Add(followFollowing);
+
+        return this;
     }
 }
 

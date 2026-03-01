@@ -9,7 +9,7 @@ public class GetAllPostCommentLikesForUserApiRequestBuilder
     private int _page;
     private int _pageSize;
     private CommonSortOrder _sortOrder;
-    private PostCommentLikesSortTerm _sortTerm;
+    private PostCommentLikesForUserSortTerm _sortTerm;
 
     public GetAllPostCommentLikesForUserApiRequestBuilder(PostCommentLike postCommentLike)
     {
@@ -18,7 +18,7 @@ public class GetAllPostCommentLikesForUserApiRequestBuilder
         _page = PostCommentLikeDataFaker.GetPage();
         _pageSize = PostCommentLikeDataFaker.GetPageSize();
         _sortOrder = DataFaker.GetSortOrder();
-        _sortTerm = PostCommentLikeDataFaker.GetSortTerm();
+        _sortTerm = PostCommentLikeDataFaker.GetForUserSortTerm();
     }
 
     public GetAllPostCommentLikesForUserApiRequestBuilder WithUserId(User user, IStringTransformer? transformer = null)
@@ -70,7 +70,7 @@ public class GetAllPostCommentLikesForUserApiRequestBuilder
         return this;
     }
 
-    public GetAllPostCommentLikesForUserApiRequestBuilder WithSortTerm(IEnumTransformer<PostCommentLikesSortTerm> transformer)
+    public GetAllPostCommentLikesForUserApiRequestBuilder WithSortTerm(IEnumTransformer<PostCommentLikesForUserSortTerm> transformer)
     {
         _sortTerm = transformer.Transform(_sortTerm);
 

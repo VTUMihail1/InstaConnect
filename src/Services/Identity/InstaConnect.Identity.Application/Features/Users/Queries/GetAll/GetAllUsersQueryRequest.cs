@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Domain.Models;
+using InstaConnect.Identity.Application.Features.Users.Abstractions;
 
 namespace InstaConnect.Identity.Application.Features.Users.Queries.GetAll;
 
@@ -8,7 +9,7 @@ public record GetAllUsersQueryRequest(
     string Name,
     string CurrentId,
     CommonSortOrder SortOrder,
-    UserSortProperty SortTerm,
+    UsersSortTerm SortTerm,
     int Page,
     int PageSize)
-    : IQueryRequest<GetAllUsersQueryResponse>, ISortableQueryRequest<UserSortProperty>, IPaginatableQueryRequest;
+    : IQueryRequest<GetAllUsersQueryResponse>, ISortableQueryRequest<UsersSortTerm>, IPaginatableQueryRequest, ICurrentUserableQueryRequest;

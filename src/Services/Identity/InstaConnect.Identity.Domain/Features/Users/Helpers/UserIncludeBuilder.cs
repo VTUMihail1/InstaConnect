@@ -1,44 +1,81 @@
-﻿namespace InstaConnect.Identity.Domain.Features.Users.Helpers;
+﻿using InstaConnect.Common.Domain.Extensions;
+using InstaConnect.Identity.Domain.Models.Requests;
+
+namespace InstaConnect.Identity.Domain.Features.Users.Helpers;
 
 public class UserIncludeBuilder
 {
-    private readonly ICollection<UserIncludeProperty> _includeProperties;
+    private readonly ICollection<IdentityIncludeDescriptor> _descriptors;
+    private readonly IUserIncludeDescriptorFactory _descriptorsFactory;
 
-    internal UserIncludeBuilder(ICollection<UserIncludeProperty> includeProperties)
+    public UserIncludeBuilder(
+        ICollection<IdentityIncludeDescriptor> descriptors,
+        IUserIncludeDescriptorFactory descriptorsFactory)
     {
-        _includeProperties = includeProperties;
+        _descriptors = descriptors;
+        _descriptorsFactory = descriptorsFactory;
     }
-
-    public UserIncludeBuilder WithClaims()
+    public UserIncludeBuilder WithUserClaims()
     {
-        _includeProperties.Add(UserIncludeProperty.Claims);
+        _descriptors.Add(_descriptorsFactory.CreateUserClaims());
 
         return this;
     }
 
-    public UserIncludeBuilder WithEmailConfirmationTokens()
+    public UserIncludeBuilder WithUserClaims(UserClaimInclude include)
     {
-        _includeProperties.Add(UserIncludeProperty.EmailConfirmationTokens);
+        _descriptors.Add(_descriptorsFactory.CreateUserClaims());
+        _descriptors.AddRange(include.Descriptors);
+
+        return this;
+    }
+    public UserIncludeBuilder WithRefreshTokens()
+    {
+        _descriptors.Add(_descriptorsFactory.CreateRefreshTokens());
+
+        return this;
+    }
+
+    public UserIncludeBuilder WithRefreshTokens(RefreshTokenInclude include)
+    {
+        _descriptors.Add(_descriptorsFactory.CreateRefreshTokens());
+        _descriptors.AddRange(include.Descriptors);
 
         return this;
     }
 
     public UserIncludeBuilder WithForgotPasswordTokens()
     {
-        _includeProperties.Add(UserIncludeProperty.ForgotPasswordTokens);
+        _descriptors.Add(_descriptorsFactory.CreateForgotPasswordTokens());
 
         return this;
     }
 
-    public UserIncludeBuilder WithRefreshTokens()
+    public UserIncludeBuilder WithForgotPasswordTokens(ForgotPasswordTokenInclude include)
     {
-        _includeProperties.Add(UserIncludeProperty.RefreshTokens);
+        _descriptors.Add(_descriptorsFactory.CreateForgotPasswordTokens());
+        _descriptors.AddRange(include.Descriptors);
+
+        return this;
+    }
+
+    public UserIncludeBuilder WithEmailConfirmationTokens()
+    {
+        _descriptors.Add(_descriptorsFactory.CreateEmailConfirmationTokens());
+
+        return this;
+    }
+
+    public UserIncludeBuilder WithEmailConfirmationTokens(EmailConfirmationTokenInclude include)
+    {
+        _descriptors.Add(_descriptorsFactory.CreateEmailConfirmationTokens());
+        _descriptors.AddRange(include.Descriptors);
 
         return this;
     }
 
     public UserInclude Build()
     {
-        return new(_includeProperties);
+        return new(_descriptors);
     }
 }

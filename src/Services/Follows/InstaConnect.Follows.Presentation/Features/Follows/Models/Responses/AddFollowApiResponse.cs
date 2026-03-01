@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Follows.Presentation.Features.Follows.Models.Responses;
 
-public record AddFollowApiResponse(FollowIdApiResponse Response);
+public record AddFollowApiResponse(FollowIdApiResponse Id);

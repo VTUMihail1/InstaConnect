@@ -3,7 +3,8 @@
 using MongoDB.Driver;
 
 namespace InstaConnect.Follows.Infrastructure.Features.Users.Extensions;
-public static class UserFilterExtensions
+
+internal static class UserFilterExtensions
 {
     public static FilterDefinition<User> GetFilter(this UserId filter)
     {

@@ -5,15 +5,15 @@ using MongoDB.Driver;
 namespace InstaConnect.Identity.Infrastructure.Features.Users.Extensions;
 public static class UserFilterExtensions
 {
-    public static FilterDefinition<User> GetFilter(this UserFilterQuery filter)
+    public static FilterDefinition<User> GetFilter(this UsersFilterQuery filter)
     {
-        var userName = filter.Name.GetFilterForNameStartsWith<User>(p => p.Name.Value);
+        var name = filter.Name.GetFilterForNameStartsWith<User>(p => p.Name.Value);
         var firstName = Builders<User>.Filter.StartsWithCaseInsensitive(
             p => p.FirstName, filter.FirstName, filter.FirstName.IsNullOrEmptyOrWhiteSpace());
         var lastName = Builders<User>.Filter.StartsWithCaseInsensitive(
             p => p.LastName, filter.LastName, filter.LastName.IsNullOrEmptyOrWhiteSpace());
 
-        return Builders<User>.Filter.And(userName, firstName, lastName);
+        return Builders<User>.Filter.And(name, firstName, lastName);
     }
 
     public static FilterDefinition<User> GetFilter(this UserId filter)

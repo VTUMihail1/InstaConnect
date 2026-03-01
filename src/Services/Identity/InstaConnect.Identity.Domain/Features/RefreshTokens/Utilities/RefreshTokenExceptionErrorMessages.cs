@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Domain.Extensions;
+using InstaConnect.Identity.Domain.Models.Requests;
 
 namespace InstaConnect.Identity.Domain.Features.RefreshTokens.Utilities;
 
@@ -20,11 +21,11 @@ public static class RefreshTokenExceptionErrorMessages
         return result;
     }
 
-    public static string GetInclidePropertyNotSupportedMessage(ICollection<RefreshTokenIncludeProperty> includeProperties)
+    public static string GetInclideDescriptorsNotSupportedMessage(ICollection<IdentityIncludeDescriptor> descriptors)
     {
-        const string Format = "RefreshTokenIncludeProperties(types: {0}) is not supported";
-        var result = Format.FormatCurrentCulture(includeProperties.JoinAsStringWithComa());
+        const string Format = "RefreshTokenDescriptors({0}) is not supported";
 
-        return result;
+        return Format.FormatCurrentCulture(descriptors
+            .JoinIncludeDescriptorsAsStringWithComa<IdentityDestinationType, IdentityIncludeType, IdentityIncludeDescriptor>());
     }
 }

@@ -126,16 +126,6 @@ public class User : IEntityWithId<UserId>
         PasswordHash = passwordHash;
     }
 
-    public bool DoesNotHaveEmail(Email email)
-    {
-        return Email.IsNot(email);
-    }
-
-    public bool DoesNotHaveName(Name name)
-    {
-        return Name.IsNot(name);
-    }
-
     public void Update(
         string firstName,
         string lastName,

@@ -20,7 +20,7 @@ public interface IPostQueryRepository
     Task<ICollection<PostResponse>> GetAllForUserAsync(
         PostsForUserFilterQuery filter,
         CurrentUserQuery currentUser,
-        PostsSortingQuery sorting,
+        PostsForUserSortingQuery sorting,
         PostsPaginationQuery pagination,
         PostInclude? include,
         CancellationToken cancellationToken);
@@ -28,7 +28,7 @@ public interface IPostQueryRepository
     Task<ICollection<PostResponse>> GetAllForUserAsync(
         PostsForUserFilterQuery filter,
         CurrentUserQuery currentUser,
-        PostsSortingQuery sorting,
+        PostsForUserSortingQuery sorting,
         PostsPaginationQuery pagination,
         CancellationToken cancellationToken);
 

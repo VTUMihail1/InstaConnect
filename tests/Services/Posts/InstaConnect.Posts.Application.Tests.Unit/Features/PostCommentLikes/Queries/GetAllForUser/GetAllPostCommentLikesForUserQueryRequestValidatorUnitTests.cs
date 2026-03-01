@@ -2,6 +2,7 @@
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAllForUser;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Requests;
 using InstaConnect.Posts.Tests.Features.PostCommentLikes.DataAttributes.SortTerm;
+using InstaConnect.Posts.Tests.Features.PostCommentLikes.DataAttributes.SortTerm.ForUser;
 
 namespace InstaConnect.Posts.Application.Tests.Unit.Features.PostCommentLikes.Queries.GetAllForUser;
 
@@ -71,9 +72,9 @@ public class GetAllPostCommentLikesForUserQueryRequestValidatorUnitTests : BaseP
     }
 
     [Theory]
-    [PostCommentLikesSortTermEmptyWithMessageData]
+    [PostCommentLikesForUserSortTermEmptyWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenSortTermIsInvalid(
-        IEnumTransformer<PostCommentLikesSortTerm> transformer, IEnumMessageTransformer<PostCommentLikesSortTerm> messageTransformer)
+        IEnumTransformer<PostCommentLikesForUserSortTerm> transformer, IEnumMessageTransformer<PostCommentLikesForUserSortTerm> messageTransformer)
     {
         // Arrange
         var request = _requestBuilder.WithSortTerm(transformer).Build();

@@ -14,9 +14,9 @@ internal class UserCommandService : IUserCommandService
 
     public async Task<UserId> AddAsync(AddUserCommand command, CancellationToken cancellationToken)
     {
-        var user = await _repository.GetByIdAsync(command.Id, cancellationToken);
+        var userExists = await _repository.ExistsByIdAsync(command.Id, cancellationToken);
 
-        if (user != null)
+        if (userExists)
         {
             throw new UserAlreadyExistsException(command.Id);
         }

@@ -11,7 +11,7 @@ public class GetAllPostCommentsForUserQueryRequestBuilder
     private int _page;
     private int _pageSize;
     private CommonSortOrder _sortOrder;
-    private PostCommentsSortTerm _sortTerm;
+    private PostCommentsForUserSortTerm _sortTerm;
 
     public GetAllPostCommentsForUserQueryRequestBuilder(PostComment postComment)
     {
@@ -20,7 +20,7 @@ public class GetAllPostCommentsForUserQueryRequestBuilder
         _page = PostCommentDataFaker.GetPage();
         _pageSize = PostCommentDataFaker.GetPageSize();
         _sortOrder = DataFaker.GetSortOrder();
-        _sortTerm = PostCommentDataFaker.GetSortTerm();
+        _sortTerm = PostCommentDataFaker.GetForUserSortTerm();
     }
 
     public GetAllPostCommentsForUserQueryRequestBuilder WithUserId(User user, IStringTransformer transformer)
@@ -72,7 +72,7 @@ public class GetAllPostCommentsForUserQueryRequestBuilder
         return this;
     }
 
-    public GetAllPostCommentsForUserQueryRequestBuilder WithSortTerm(IEnumTransformer<PostCommentsSortTerm> transformer)
+    public GetAllPostCommentsForUserQueryRequestBuilder WithSortTerm(IEnumTransformer<PostCommentsForUserSortTerm> transformer)
     {
         _sortTerm = transformer.Transform(_sortTerm);
 

@@ -23,8 +23,15 @@ public static class PostLikeDataFaker
 
     public static PostLikesSortTerm GetSortTerm()
     {
-        const PostLikesSortTerm SortProperty = PostLikesSortTerm.ByCreatedAt;
+        const PostLikesSortTerm SortTerm = PostLikesSortTerm.ByCreatedAt;
 
-        return SortProperty;
+        return SortTerm;
+    }
+
+    public static PostLikesForUserSortTerm GetForUserSortTerm()
+    {
+        const PostLikesForUserSortTerm SortTerm = PostLikesForUserSortTerm.ByCreatedAt;
+
+        return SortTerm;
     }
 }

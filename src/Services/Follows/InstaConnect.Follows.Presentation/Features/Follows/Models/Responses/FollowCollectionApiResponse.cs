@@ -1,9 +1,11 @@
 ﻿namespace InstaConnect.Follows.Presentation.Features.Follows.Models.Responses;
 
 public record FollowCollectionApiResponse(
-    ICollection<FollowApiResponse> Entities,
+    UserApiResponse? Follower,
+    UserApiResponse? Following,
+    ICollection<FollowApiResponse> Follows,
     int Page,
     int PageSize,
-    int TotalCount,
+    long TotalCount,
     bool HasNextPage,
     bool HasPreviousPage) : ICollectionApiResponse;

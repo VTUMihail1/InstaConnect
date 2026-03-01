@@ -1,4 +1,0 @@
-﻿namespace InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Abstractions;
-
-public interface IEmailConfirmationTokenIncludePropertyFactory
-    : IIncluderFactory<EmailConfirmationTokenIncludeProperty, IEmailConfirmationTokenIncludeProperty, EmailConfirmationToken>;

@@ -8,7 +8,7 @@ internal static class ServiceCollectionExtensions
 {
     internal static IServiceCollection AddUserServices(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddImplementationsOf<IUserIncludeProperty>(FollowInfrastructureReference.Assembly);
+        serviceCollection.AddImplementationsOf<IUserIncluder>(FollowInfrastructureReference.Assembly);
 
         BsonClassMap.TryRegisterClassMap<User>(cm =>
         {
@@ -23,8 +23,8 @@ internal static class ServiceCollectionExtensions
             cm.MapMember(c => c.CreatedAtUtc);
             cm.MapMember(c => c.UpdatedAtUtc);
 
-            cm.MapMember(c => c.FollowerFollows);
-            cm.MapMember(c => c.FollowingFollows);
+            cm.MapMemberWithoutSerialization(c => c.FollowFollowers);
+            cm.MapMemberWithoutSerialization(c => c.FollowFollowings);
 
             cm.MapCreator(c => new User(
                 c.Id,
@@ -35,8 +35,6 @@ internal static class ServiceCollectionExtensions
                 c.ProfileImage,
                 c.CreatedAtUtc,
                 c.UpdatedAtUtc));
-
-            cm.SetIgnoreExtraElements(true);
         });
 
         return serviceCollection;

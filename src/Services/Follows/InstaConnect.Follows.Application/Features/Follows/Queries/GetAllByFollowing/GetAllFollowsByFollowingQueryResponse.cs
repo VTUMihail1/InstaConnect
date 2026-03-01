@@ -1,3 +1,0 @@
-﻿namespace InstaConnect.Follows.Application.Features.Follows.Queries.GetAllByFollowing;
-
-public record GetAllFollowsByFollowingQueryResponse(FollowCollectionQueryResponse Response);

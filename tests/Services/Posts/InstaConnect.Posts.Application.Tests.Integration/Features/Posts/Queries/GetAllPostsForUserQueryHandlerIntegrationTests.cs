@@ -83,9 +83,9 @@ public class GetAllPostsForUserQueryHandlerIntegrationTests : BasePostApplicatio
     }
 
     [Theory]
-    [PostsSortTermEmptyWithMessageData]
+    [PostsForUserSortTermEmptyWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenSortTermIsInvalid(
-        IEnumTransformer<PostsSortTerm> transformer, IEnumMessageTransformer<PostsSortTerm> messageTransformer)
+        IEnumTransformer<PostsForUserSortTerm> transformer, IEnumMessageTransformer<PostsForUserSortTerm> messageTransformer)
     {
         // Arrange
         var request = _requestBuilder.WithSortTerm(transformer).Build();
@@ -199,11 +199,11 @@ public class GetAllPostsForUserQueryHandlerIntegrationTests : BasePostApplicatio
     }
 
     [Theory]
-    [PostsSortTermWithCreatedAtTermData]
-    [PostsSortTermWithTitleTermData]
-    [PostsSortTermWithUserNameTermData]
+    [PostsForUserSortTermWithCreatedAtTermData]
+    [PostsForUserSortTermWithTitleTermData]
+    [PostsForUserSortTermWithUserNameTermData]
     public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortPropertyAreValid(
-        IEnumTransformer<PostsSortTerm> transformer, ISortEnumTermTransformer<Post> termTransformer)
+        IEnumTransformer<PostsForUserSortTerm> transformer, ISortEnumTermTransformer<Post> termTransformer)
     {
         // Arrange
         var request = _requestBuilder.WithSortTerm(transformer).Build();

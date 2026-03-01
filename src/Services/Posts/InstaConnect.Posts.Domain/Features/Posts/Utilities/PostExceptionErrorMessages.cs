@@ -26,6 +26,13 @@ public static class PostExceptionErrorMessages
         return Format.FormatCurrentCulture(sortTerm);
     }
 
+    public static string GetSortTermNotSupportedMessage(PostsForUserSortTerm sortTerm)
+    {
+        const string Format = "PostsForUserSortTerm(type: {0}) is not supported";
+
+        return Format.FormatCurrentCulture(sortTerm);
+    }
+
     public static string GetInclideDescriptorsNotSupportedMessage(ICollection<PostsIncludeDescriptor> descriptors)
     {
         const string Format = "PostIncludeDescriptors({0}) is not supported";

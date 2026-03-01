@@ -8,14 +8,14 @@ namespace InstaConnect.Identity.Infrastructure.Features.RefreshTokens.Repositori
 internal class RefreshTokenCommandRepository : IRefreshTokenCommandRepository
 {
     private readonly IIdentityContext _context;
-    private readonly IRefreshTokenIncludePropertyFactory _refreshTokenIncludePropertyFactory;
+    private readonly IRefreshTokenIncluderFactory _refreshTokenIncluderFactory;
 
     public RefreshTokenCommandRepository(
         IIdentityContext context,
-        IRefreshTokenIncludePropertyFactory refreshTokenIncludePropertyFactory)
+        IRefreshTokenIncluderFactory refreshTokenIncluderFactory)
     {
         _context = context;
-        _refreshTokenIncludePropertyFactory = refreshTokenIncludePropertyFactory;
+        _refreshTokenIncluderFactory = refreshTokenIncluderFactory;
     }
 
     public async Task<RefreshToken?> GetByIdAsync(
@@ -26,7 +26,7 @@ internal class RefreshTokenCommandRepository : IRefreshTokenCommandRepository
         return await _context
             .RefreshTokens
             .Aggregate()
-            .Includes(_refreshTokenIncludePropertyFactory, include)
+            .Includes(_refreshTokenIncluderFactory, include)
             .Match(id)
             .FirstOrDefaultAsync(cancellationToken);
     }

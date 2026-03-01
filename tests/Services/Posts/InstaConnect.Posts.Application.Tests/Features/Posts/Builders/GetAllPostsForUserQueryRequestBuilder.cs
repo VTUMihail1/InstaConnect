@@ -11,7 +11,7 @@ public class GetAllPostsForUserQueryRequestBuilder
     private int _page;
     private int _pageSize;
     private CommonSortOrder _sortOrder;
-    private PostsSortTerm _sortTerm;
+    private PostsForUserSortTerm _sortTerm;
 
     public GetAllPostsForUserQueryRequestBuilder(Post post)
     {
@@ -21,7 +21,7 @@ public class GetAllPostsForUserQueryRequestBuilder
         _page = PostDataFaker.GetPage();
         _pageSize = PostDataFaker.GetPageSize();
         _sortOrder = DataFaker.GetSortOrder();
-        _sortTerm = PostDataFaker.GetSortTerm();
+        _sortTerm = PostDataFaker.GetForUserSortTerm();
     }
 
     public GetAllPostsForUserQueryRequestBuilder WithUserId(User user, IStringTransformer? transformer = null)
@@ -80,7 +80,7 @@ public class GetAllPostsForUserQueryRequestBuilder
         return this;
     }
 
-    public GetAllPostsForUserQueryRequestBuilder WithSortTerm(IEnumTransformer<PostsSortTerm> transformer)
+    public GetAllPostsForUserQueryRequestBuilder WithSortTerm(IEnumTransformer<PostsForUserSortTerm> transformer)
     {
         _sortTerm = transformer.Transform(_sortTerm);
 

@@ -8,7 +8,7 @@ internal static class ServiceCollectionExtensions
 {
     internal static IServiceCollection AddEmailConfirmationTokenServices(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddImplementationsOf<IEmailConfirmationTokenIncludeProperty>(IdentityInfrastructureReference.Assembly);
+        serviceCollection.AddImplementationsOf<IEmailConfirmationTokenIncluder>(IdentityInfrastructureReference.Assembly);
 
         BsonClassMap.TryRegisterClassMap<EmailConfirmationToken>(cm =>
         {
@@ -16,6 +16,8 @@ internal static class ServiceCollectionExtensions
 
             cm.MapMember(c => c.Id);
             cm.MapMember(c => c.CreatedAtUtc);
+
+            cm.MapMemberWithoutSerialization(c => c.User);
 
             cm.MapCreator(c => new EmailConfirmationToken(
                 c.Id,

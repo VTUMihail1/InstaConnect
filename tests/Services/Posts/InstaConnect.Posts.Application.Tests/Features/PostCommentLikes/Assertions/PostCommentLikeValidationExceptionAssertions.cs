@@ -305,11 +305,11 @@ public static class PostCommentLikeValidationExceptionAssertions
 
     public static async Task ShouldThrowInvalidValidationExceptionForSortTermAsync(
         this IApplicationSender sender,
-        IEnumMessageTransformer<PostCommentLikesSortTerm> messageTransformer,
+        IEnumMessageTransformer<PostCommentLikesForUserSortTerm> messageTransformer,
         GetAllPostCommentLikesForUserQueryRequest request,
         CancellationToken cancellationToken)
     {
-        await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostCommentLikesForUserQueryRequest, PostCommentLikesSortTerm, GetAllPostCommentLikesForUserQueryResponse>(
+        await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostCommentLikesForUserQueryRequest, PostCommentLikesForUserSortTerm, GetAllPostCommentLikesForUserQueryResponse>(
             p => p.SortTerm,
             messageTransformer,
             request,

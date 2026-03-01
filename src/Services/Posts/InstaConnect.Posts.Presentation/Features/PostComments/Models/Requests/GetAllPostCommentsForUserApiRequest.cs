@@ -10,6 +10,6 @@ public record GetAllPostCommentsForUserApiRequest(
     [FromRoute] string UserId,
     [FromClaim(ClaimTypes.NameIdentifier)] string CurrentUserId,
     [FromQuery] CommonSortOrder SortOrder = CommonDefaultValues.SortOrder,
-    [FromQuery] PostCommentsSortTerm SortTerm = PostCommentDefaultValues.SortTerm,
+    [FromQuery] PostCommentsForUserSortTerm SortTerm = PostCommentDefaultValues.SortTermForUser,
     [FromQuery] int Page = PostCommentDefaultValues.Page,
-    [FromQuery] int PageSize = PostCommentDefaultValues.PageSize) : ISortableApiRequest<PostCommentsSortTerm>, IPaginatableApiRequest, ICurrentUserableApiRequest;
+    [FromQuery] int PageSize = PostCommentDefaultValues.PageSize) : ISortableApiRequest<PostCommentsForUserSortTerm>, IPaginatableApiRequest, ICurrentUserableApiRequest;

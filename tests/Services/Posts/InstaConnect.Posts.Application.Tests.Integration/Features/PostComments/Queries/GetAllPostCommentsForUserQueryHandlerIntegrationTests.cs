@@ -71,9 +71,9 @@ public class GetAllPostCommentsForUserQueryHandlerIntegrationTests : BasePostCom
     }
 
     [Theory]
-    [PostCommentsSortTermEmptyWithMessageData]
+    [PostCommentsForUserSortTermEmptyWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenSortTermIsInvalid(
-        IEnumTransformer<PostCommentsSortTerm> transformer, IEnumMessageTransformer<PostCommentsSortTerm> messageTransformer)
+        IEnumTransformer<PostCommentsForUserSortTerm> transformer, IEnumMessageTransformer<PostCommentsForUserSortTerm> messageTransformer)
     {
         // Arrange
         var request = _requestBuilder.WithSortTerm(transformer).Build();
@@ -170,10 +170,10 @@ public class GetAllPostCommentsForUserQueryHandlerIntegrationTests : BasePostCom
     }
 
     [Theory]
-    [PostCommentsSortTermWithCreatedAtTermData]
-    [PostCommentsSortTermWithUserNameTermData]
+    [PostCommentsForUserSortTermWithCreatedAtTermData]
+    [PostCommentsForUserSortTermWithUserNameTermData]
     public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortPropertyAreValid(
-        IEnumTransformer<PostCommentsSortTerm> transformer, ISortEnumTermTransformer<PostComment> termTransformer)
+        IEnumTransformer<PostCommentsForUserSortTerm> transformer, ISortEnumTermTransformer<PostComment> termTransformer)
     {
         // Arrange
         var request = _requestBuilder.WithSortTerm(transformer).Build();

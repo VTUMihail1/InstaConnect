@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Domain.Extensions;
+using InstaConnect.Identity.Domain.Models.Requests;
 
 namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Utilities;
 
@@ -18,10 +19,11 @@ public static class EmailConfirmationTokenExceptionErrorMessages
         return Format.FormatCurrentCulture(id.Id.Id, id.Value);
     }
 
-    public static string GetInclidePropertyNotSupportedMessage(ICollection<EmailConfirmationTokenIncludeProperty> includeProperties)
+    public static string GetInclideDescriptorsNotSupportedMessage(ICollection<IdentityIncludeDescriptor> descriptors)
     {
-        const string Format = "EmailConfirmationTokenIncludeProperties(types: {0}) is not supported";
+        const string Format = "EmailConfirmationTokenDescriptors({0}) is not supported";
 
-        return Format.FormatCurrentCulture(includeProperties.JoinAsStringWithComa());
+        return Format.FormatCurrentCulture(descriptors
+            .JoinIncludeDescriptorsAsStringWithComa<IdentityDestinationType, IdentityIncludeType, IdentityIncludeDescriptor>());
     }
 }

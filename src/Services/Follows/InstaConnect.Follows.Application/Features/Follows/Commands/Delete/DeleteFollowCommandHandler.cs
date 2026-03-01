@@ -2,22 +2,22 @@
 
 internal class DeleteFollowCommandHandler : ICommandHandler<DeleteFollowCommandRequest>
 {
-    private readonly IFollowService _followService;
-    private readonly IApplicationMapper _applicationMapper;
+    private readonly IApplicationMapper _mapper;
+    private readonly IFollowCommandService _service;
 
     public DeleteFollowCommandHandler(
-        IFollowService followService,
-        IApplicationMapper applicationMapper)
+        IApplicationMapper mapper,
+        IFollowCommandService service)
     {
-        _followService = followService;
-        _applicationMapper = applicationMapper;
+        _mapper = mapper;
+        _service = service;
     }
 
     public async Task Handle(
         DeleteFollowCommandRequest request,
         CancellationToken cancellationToken)
     {
-        var serviceRequest = _applicationMapper.Map<DeleteFollowCommand>(request);
-        await _followService.DeleteAsync(serviceRequest, cancellationToken);
+        var serviceRequest = _mapper.Map<DeleteFollowCommand>(request);
+        await _service.DeleteAsync(serviceRequest, cancellationToken);
     }
 }

@@ -21,7 +21,14 @@ public static class PostCommentLikeExceptionErrorMessages
 
     public static string GetSortPropertyNotSupportedMessage(PostCommentLikesSortTerm sortTerm)
     {
-        const string Format = "PostCommentLikeSortTerm(type: {0}) is not supported";
+        const string Format = "PostCommentLikesSortTerm(type: {0}) is not supported";
+
+        return Format.FormatCurrentCulture(sortTerm);
+    }
+
+    public static string GetSortPropertyNotSupportedMessage(PostCommentLikesForUserSortTerm sortTerm)
+    {
+        const string Format = "PostCommentLikesForUserSortTerm(type: {0}) is not supported";
 
         return Format.FormatCurrentCulture(sortTerm);
     }

@@ -1,16 +1,37 @@
-﻿namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Helpers;
+﻿using InstaConnect.Common.Domain.Extensions;
+using InstaConnect.Identity.Domain.Models.Requests;
+
+namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Helpers;
 
 public class ForgotPasswordTokenIncludeBuilder
 {
-    private readonly HashSet<ForgotPasswordTokenIncludeProperty> _includeProperties;
+    private readonly ICollection<IdentityIncludeDescriptor> _descriptors;
+    private readonly IForgotPasswordTokenIncludeDescriptorFactory _descriptorsFactory;
 
-    internal ForgotPasswordTokenIncludeBuilder(ICollection<ForgotPasswordTokenIncludeProperty> includeProperties)
+    public ForgotPasswordTokenIncludeBuilder(
+        ICollection<IdentityIncludeDescriptor> descriptors,
+        IForgotPasswordTokenIncludeDescriptorFactory descriptorsFactory)
     {
-        _includeProperties = [.. includeProperties];
+        _descriptors = descriptors;
+        _descriptorsFactory = descriptorsFactory;
+    }
+    public ForgotPasswordTokenIncludeBuilder WithUser()
+    {
+        _descriptors.Add(_descriptorsFactory.CreateUser());
+
+        return this;
     }
 
+    public ForgotPasswordTokenIncludeBuilder WithUser(UserInclude include)
+    {
+        _descriptors.Add(_descriptorsFactory.CreateUser());
+        _descriptors.AddRange(include.Descriptors);
+
+        return this;
+    }
+    
     public ForgotPasswordTokenInclude Build()
     {
-        return new(_includeProperties);
+        return new(_descriptors);
     }
 }

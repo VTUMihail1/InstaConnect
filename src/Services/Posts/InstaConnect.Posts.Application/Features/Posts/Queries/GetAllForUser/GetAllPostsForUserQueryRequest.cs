@@ -8,7 +8,7 @@ public record GetAllPostsForUserQueryRequest(
     string CurrentUserId,
     string Title,
     CommonSortOrder SortOrder,
-    PostsSortTerm SortTerm,
+    PostsForUserSortTerm SortTerm,
     int Page,
     int PageSize)
-    : IQueryRequest<GetAllPostsForUserQueryResponse>, ISortableQueryRequest<PostsSortTerm>, IPaginatableQueryRequest, ICurrentUserableQueryRequest;
+    : IQueryRequest<GetAllPostsForUserQueryResponse>, ISortableQueryRequest<PostsForUserSortTerm>, IPaginatableQueryRequest, ICurrentUserableQueryRequest;

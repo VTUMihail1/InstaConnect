@@ -25,7 +25,7 @@ public class ForgotPasswordToken : IEntityWithId<ForgotPasswordTokenId>
 
     public User? User { get; private set; }
 
-    public ForgotPasswordToken AddUser(User user)
+    public ForgotPasswordToken AddUser(User? user)
     {
         User = user;
 

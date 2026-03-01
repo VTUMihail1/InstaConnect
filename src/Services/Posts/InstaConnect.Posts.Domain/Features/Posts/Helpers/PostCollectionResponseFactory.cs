@@ -26,7 +26,7 @@ internal class PostCollectionResponseFactory : IPostCollectionResponseFactory
             hasPreviousPage);
     }
 
-    public PostCollectionResponse Create(UserResponse user, ICollection<PostResponse> posts, long totalCount, PostsPaginationQuery pagination)
+    public PostCollectionResponse CreateForUser(UserResponse user, ICollection<PostResponse> posts, long totalCount, PostsPaginationQuery pagination)
     {
         var hasNextPage = _paginator.HasNextPage(pagination.Page, pagination.PageSize, totalCount);
         var hasPreviousPage = _paginator.HasPreviousPage(pagination.Page);

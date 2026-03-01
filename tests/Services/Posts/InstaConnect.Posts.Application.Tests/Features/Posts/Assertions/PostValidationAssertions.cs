@@ -198,7 +198,7 @@ public static class PostValidationAssertions
 
     public static void ShouldHaveValidationErrorForSortTerm(
         this TestValidationResult<GetAllPostsForUserQueryRequest> result,
-        IEnumMessageTransformer<PostsSortTerm> messageTransformer,
+        IEnumMessageTransformer<PostsForUserSortTerm> messageTransformer,
         GetAllPostsForUserQueryRequest request)
     {
         result.ShouldHaveValidationErrorForProperty(p => p.SortTerm, messageTransformer, request);

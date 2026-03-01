@@ -1,4 +1,0 @@
-﻿namespace InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Abstractions;
-
-public interface IForgotPasswordTokenIncludePropertyFactory
-    : IIncluderFactory<ForgotPasswordTokenIncludeProperty, IForgotPasswordTokenIncludeProperty, ForgotPasswordToken>;

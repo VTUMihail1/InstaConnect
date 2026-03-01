@@ -2,6 +2,7 @@
 using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
 using InstaConnect.Posts.Domain.Features.PostComments.Models.Requests;
 using InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.SortTerm;
+using InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.SortTerm.ForUser;
 
 namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.PostComments.Controllers.v1;
 
@@ -121,9 +122,9 @@ public class GetAllPostCommentsForUserFunctionalTests : BasePostCommentPresentat
     }
 
     [Theory]
-    [PostCommentsSortTermEmptyData]
+    [PostCommentsForUserSortTermEmptyData]
     public async Task GetAllForUserAsync_ShouldHaveBadRequestStatusCode_WhenSortTermIsInvalid(
-        IEnumTransformer<PostCommentsSortTerm> transformer)
+        IEnumTransformer<PostCommentsForUserSortTerm> transformer)
     {
         // Arrange
         var request = _requestBuilder.WithSortTerm(transformer).Build();
@@ -136,9 +137,9 @@ public class GetAllPostCommentsForUserFunctionalTests : BasePostCommentPresentat
     }
 
     [Theory]
-    [PostCommentsSortTermEmptyWithMessageData]
+    [PostCommentsForUserSortTermEmptyWithMessageData]
     public async Task GetAllForUserAsync_ShouldHaveBadRequestProblemDetails_WhenSortTermIsInvalid(
-        IEnumTransformer<PostCommentsSortTerm> transformer, IEnumMessageTransformer<PostCommentsSortTerm> messageTransformer)
+        IEnumTransformer<PostCommentsForUserSortTerm> transformer, IEnumMessageTransformer<PostCommentsForUserSortTerm> messageTransformer)
     {
         // Arrange
         var request = _requestBuilder.WithSortTerm(transformer).Build();
@@ -147,7 +148,7 @@ public class GetAllPostCommentsForUserFunctionalTests : BasePostCommentPresentat
         var response = await HttpClient.GetAllPostCommentsForUserProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyInvalidValidationForSortProperty(messageTransformer, request);
+        response.ShouldSatisfyInvalidValidationForSortTerm(messageTransformer, request);
     }
 
     [Theory]
@@ -258,10 +259,10 @@ public class GetAllPostCommentsForUserFunctionalTests : BasePostCommentPresentat
     }
 
     [Theory]
-    [PostCommentsSortTermCreatedAtData]
-    [PostCommentsSortTermUserNameData]
-    public async Task GetAllForUserAsync_ShouldHaveOkStatusCode_WhenRequestAndSortPropertyAreValid(
-        IEnumTransformer<PostCommentsSortTerm> transformer)
+    [PostCommentsForUserSortTermCreatedAtData]
+    [PostCommentsForUserSortTermUserNameData]
+    public async Task GetAllForUserAsync_ShouldHaveOkStatusCode_WhenRequestAndSortTermAreValid(
+        IEnumTransformer<PostCommentsForUserSortTerm> transformer)
     {
         // Arrange
         var request = _requestBuilder.WithSortTerm(transformer).Build();
@@ -317,10 +318,10 @@ public class GetAllPostCommentsForUserFunctionalTests : BasePostCommentPresentat
     }
 
     [Theory]
-    [PostCommentsSortTermWithCreatedAtTermData]
-    [PostCommentsSortTermWithUserNameTermData]
-    public async Task GetAllForUserAsync_ShouldReturnResponse_WhenRequestAndSortPropertyAreValid(
-        IEnumTransformer<PostCommentsSortTerm> transformer, ISortEnumTermTransformer<PostComment> termTransformer)
+    [PostCommentsForUserSortTermWithCreatedAtTermData]
+    [PostCommentsForUserSortTermWithUserNameTermData]
+    public async Task GetAllForUserAsync_ShouldReturnResponse_WhenRequestAndSortTermAreValid(
+        IEnumTransformer<PostCommentsForUserSortTerm> transformer, ISortEnumTermTransformer<PostComment> termTransformer)
     {
         // Arrange
         var request = _requestBuilder.WithSortTerm(transformer).Build();

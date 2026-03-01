@@ -35,7 +35,7 @@ public static class UserExceptionErrorMessages
 
     public static string GetIncludeDescriptorsNotSupportedMessage(ICollection<PostsIncludeDescriptor> includeProperties)
     {
-        const string Format = "PostIncludeDescriptors({0}) is not supported";
+        const string Format = "UserIncludeDescriptors({0}) is not supported";
 
         return Format.FormatCurrentCulture(includeProperties
             .JoinIncludeDescriptorsAsStringWithComa<PostsDestinationType, PostsIncludeType, PostsIncludeDescriptor>());

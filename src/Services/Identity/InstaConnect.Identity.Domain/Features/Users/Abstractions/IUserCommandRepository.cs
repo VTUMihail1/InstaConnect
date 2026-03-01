@@ -11,12 +11,20 @@ public interface IUserCommandRepository
         UserId id,
         CancellationToken cancellationToken);
 
+    Task<bool> ExistsByIdAsync(
+        UserId id,
+        CancellationToken cancellationToken);
+
     Task<User?> GetByNameAsync(
         Name name,
         UserInclude? include,
         CancellationToken cancellationToken);
 
     Task<User?> GetByNameAsync(
+        Name name,
+        CancellationToken cancellationToken);
+
+    Task<bool> IsNameUniqueAsync(
         Name name,
         CancellationToken cancellationToken);
 
@@ -26,6 +34,10 @@ public interface IUserCommandRepository
         CancellationToken cancellationToken);
 
     Task<User?> GetByEmailAsync(
+        Email email,
+        CancellationToken cancellationToken);
+
+    Task<bool> IsEmailUniqueAsync(
         Email email,
         CancellationToken cancellationToken);
 
@@ -33,7 +45,7 @@ public interface IUserCommandRepository
 
     Task AddRangeAsync(IEnumerable<User> entities, CancellationToken cancellationToken);
 
-    Task UpdateAsync(User entity, CancellationToken cancellationToken);
-
     Task DeleteAsync(User entity, CancellationToken cancellationToken);
+
+    Task UpdateAsync(User entity, CancellationToken cancellationToken);
 }

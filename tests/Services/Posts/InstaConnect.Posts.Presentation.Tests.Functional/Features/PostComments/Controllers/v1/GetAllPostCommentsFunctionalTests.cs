@@ -178,7 +178,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
         var response = await HttpClient.GetAllPostCommentsProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyInvalidValidationForSortProperty(messageTransformer, request);
+        response.ShouldSatisfyInvalidValidationForSortTerm(messageTransformer, request);
     }
 
     [Theory]

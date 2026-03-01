@@ -2,7 +2,4 @@
 
 namespace InstaConnect.Identity.Events.Features.EmailConfirmationTokens;
 
-public record EmailConfirmationTokenAddedEventRequest(
-    UserEventRequest User,
-    EmailConfirmationTokenEventRequest EmailConfirmationToken)
-    : IEventRequest;
+public record EmailConfirmationTokenAddedEventRequest(EmailConfirmationTokenEventRequest EmailConfirmationToken) : IEventRequest;

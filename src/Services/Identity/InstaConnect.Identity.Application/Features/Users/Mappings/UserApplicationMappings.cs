@@ -50,9 +50,9 @@ public class UserApplicationMappings : IRegister
 
         config.NewConfig<GetCurrentUserByIdQueryRequest, GetUserByIdQuery>()
             .ConstructUsing(src => new(
-                                       new(src.Id),
+                                       new(src.CurrentId),
                                        new(
-                                           new(src.Id))));
+                                           new(src.CurrentId))));
 
         config.NewConfig<UserResponse, GetCurrentUserByIdQueryResponse>()
             .ConstructUsing(src => new(src.Adapt<UserQueryResponse>(config)));
@@ -68,9 +68,9 @@ public class UserApplicationMappings : IRegister
 
         config.NewConfig<GetCurrentUserDetailsByIdQueryRequest, GetUserByIdQuery>()
             .ConstructUsing(src => new(
-                                       new(src.Id),
+                                       new(src.CurrentId),
                                        new(
-                                           new(src.Id))));
+                                           new(src.CurrentId))));
 
         config.NewConfig<UserResponse, GetCurrentUserDetailsByIdQueryResponse>()
             .ConstructUsing(src => new(src.Adapt<UserDetailsQueryResponse>(config)));

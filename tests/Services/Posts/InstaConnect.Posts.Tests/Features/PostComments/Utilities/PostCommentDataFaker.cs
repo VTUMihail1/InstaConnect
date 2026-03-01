@@ -38,8 +38,15 @@ public static class PostCommentDataFaker
 
     public static PostCommentsSortTerm GetSortTerm()
     {
-        const PostCommentsSortTerm SortProperty = PostCommentsSortTerm.ByCreatedAt;
+        const PostCommentsSortTerm SortTerm = PostCommentsSortTerm.ByCreatedAt;
 
-        return SortProperty;
+        return SortTerm;
+    }
+
+    public static PostCommentsForUserSortTerm GetForUserSortTerm()
+    {
+        const PostCommentsForUserSortTerm SortTerm = PostCommentsForUserSortTerm.ByCreatedAt;
+
+        return SortTerm;
     }
 }

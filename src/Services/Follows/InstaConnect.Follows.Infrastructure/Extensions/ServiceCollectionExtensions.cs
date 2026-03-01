@@ -1,4 +1,6 @@
-﻿using InstaConnect.Follows.Infrastructure.Features.Follows.Extensions;
+﻿using System.Reflection;
+
+using InstaConnect.Follows.Infrastructure.Features.Follows.Extensions;
 using InstaConnect.Follows.Infrastructure.Features.Users.Extensions;
 
 namespace InstaConnect.Follows.Infrastructure.Extensions;
@@ -8,7 +10,8 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection serviceCollection,
         IConfiguration configuration,
-        IWebHostEnvironment webHostEnvironment)
+        IWebHostEnvironment webHostEnvironment,
+        Assembly presentationAssembly)
     {
         serviceCollection
             .AddUserServices()
@@ -20,7 +23,7 @@ public static class ServiceCollectionExtensions
             .AddServicesWithMatchingInterfaces(FollowInfrastructureReference.Assembly)
             .AddMongoDbContext()
             .AddUnitOfWork()
-            .AddRabbitMQ(configuration, FollowInfrastructureReference.Assembly)
+            .AddRabbitMQ(configuration, presentationAssembly)
             .AddJwtBearer(configuration)
             .AddGuidProvider()
             .AddDateTimeProvider()

@@ -5,5 +5,5 @@ internal interface IPostCollectionResponseFactory
 {
     PostCollectionResponse Create(ICollection<PostResponse> posts, long totalCount, PostsPaginationQuery pagination);
 
-    PostCollectionResponse Create(UserResponse user, ICollection<PostResponse> posts, long totalCount, PostsPaginationQuery pagination);
+    PostCollectionResponse CreateForUser(UserResponse user, ICollection<PostResponse> posts, long totalCount, PostsPaginationQuery pagination);
 }

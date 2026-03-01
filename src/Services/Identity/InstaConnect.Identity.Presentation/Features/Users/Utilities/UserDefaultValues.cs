@@ -10,7 +10,7 @@ public static class UserDefaultValues
 
     public const string Name = "";
 
-    public const UserSortProperty SortProperty = UserSortProperty.ByCreatedAt;
+    public const UsersSortTerm SortTerm = UsersSortTerm.ByCreatedAt;
 
     public const int Page = 1;
 

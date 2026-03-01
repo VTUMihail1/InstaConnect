@@ -1,8 +1,8 @@
 ﻿namespace InstaConnect.Identity.Domain.Features.Users.Models.Requests;
 
 public record GetAllUsersQuery(
-    UserFilterQuery Filter,
-    UserSortingQuery Sorting,
-    UserPaginationQuery Pagination,
+    UsersFilterQuery Filter,
+    UsersSortingQuery Sorting,
+    UsersPaginationQuery Pagination,
     CurrentUserQuery Current)
-    : ISortableQuery<UserSortingQuery, UserSortProperty>, IPaginatableQuery<UserPaginationQuery>;
+    : ISortableQuery<UsersSortingQuery, UsersSortTerm>, IPaginatableQuery<UsersPaginationQuery>;

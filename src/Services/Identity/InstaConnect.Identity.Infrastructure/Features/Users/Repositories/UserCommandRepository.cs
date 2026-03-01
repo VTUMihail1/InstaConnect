@@ -8,11 +8,11 @@ namespace InstaConnect.Identity.Infrastructure.Features.Users.Repositories;
 internal class UserCommandRepository : IUserCommandRepository
 {
     private readonly IIdentityContext _context;
-    private readonly IUserIncludePropertyFactory _includePropertyFactory;
+    private readonly IUserIncluderFactory _includePropertyFactory;
 
     public UserCommandRepository(
         IIdentityContext context,
-        IUserIncludePropertyFactory includePropertyFactory)
+        IUserIncluderFactory includePropertyFactory)
     {
         _context = context;
         _includePropertyFactory = includePropertyFactory;
@@ -25,7 +25,7 @@ internal class UserCommandRepository : IUserCommandRepository
     {
         return await _context
             .Users
-            .Aggregate()
+            .AggregateWithCaseInsensitiveCollation()
             .Includes(_includePropertyFactory, include)
             .Match(id)
             .FirstOrDefaultAsync(cancellationToken);
@@ -38,6 +38,17 @@ internal class UserCommandRepository : IUserCommandRepository
         return await GetByIdAsync(id, null, cancellationToken);
     }
 
+    public async Task<bool> ExistsByIdAsync(
+        UserId id,
+        CancellationToken cancellationToken)
+    {
+        return await _context
+            .Users
+            .AggregateWithCaseInsensitiveCollation()
+            .Match(id)
+            .AnyAsync(cancellationToken);
+    }
+
     public async Task<User?> GetByNameAsync(
         Name name,
         UserInclude? include,
@@ -45,7 +56,7 @@ internal class UserCommandRepository : IUserCommandRepository
     {
         return await _context
             .Users
-            .Aggregate()
+            .AggregateWithCaseInsensitiveCollation()
             .Includes(_includePropertyFactory, include)
             .Match(name)
             .FirstOrDefaultAsync(cancellationToken);
@@ -58,6 +69,17 @@ internal class UserCommandRepository : IUserCommandRepository
         return await GetByNameAsync(name, null, cancellationToken);
     }
 
+    public async Task<bool> IsNameUniqueAsync(
+        Name name,
+        CancellationToken cancellationToken)
+    {
+        return !await _context
+            .Users
+            .AggregateWithCaseInsensitiveCollation()
+            .Match(name)
+            .AnyAsync(cancellationToken);
+    }
+
     public async Task<User?> GetByEmailAsync(
         Email email,
         UserInclude? include,
@@ -65,7 +87,7 @@ internal class UserCommandRepository : IUserCommandRepository
     {
         return await _context
             .Users
-            .Aggregate()
+            .AggregateWithCaseInsensitiveCollation()
             .Includes(_includePropertyFactory, include)
             .Match(email)
             .FirstOrDefaultAsync(cancellationToken);
@@ -76,6 +98,17 @@ internal class UserCommandRepository : IUserCommandRepository
         CancellationToken cancellationToken)
     {
         return await GetByEmailAsync(email, null, cancellationToken);
+    }
+
+    public async Task<bool> IsEmailUniqueAsync(
+        Email email,
+        CancellationToken cancellationToken)
+    {
+        return !await _context
+            .Users
+            .AggregateWithCaseInsensitiveCollation()
+            .Match(email)
+            .AnyAsync(cancellationToken);
     }
 
     public async Task AddAsync(User entity, CancellationToken cancellationToken)

@@ -16,4 +16,13 @@ public class UserClaim : IEntityWithId<UserClaimId>
     public UserClaimId Id { get; }
 
     public DateTimeOffset CreatedAtUtc { get; }
+
+    public User? User { get; private set; }
+
+    public UserClaim AddUser(User? user)
+    {
+        User = user;
+
+        return this;
+    }
 }

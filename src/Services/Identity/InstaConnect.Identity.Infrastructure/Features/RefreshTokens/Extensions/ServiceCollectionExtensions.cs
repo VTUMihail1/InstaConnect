@@ -8,7 +8,7 @@ internal static class ServiceCollectionExtensions
 {
     internal static IServiceCollection AddRefreshTokenServices(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddImplementationsOf<IRefreshTokenIncludeProperty>(IdentityInfrastructureReference.Assembly);
+        serviceCollection.AddImplementationsOf<IRefreshTokenIncluder>(IdentityInfrastructureReference.Assembly);
 
         BsonClassMap.TryRegisterClassMap<RefreshToken>(cm =>
         {
@@ -16,6 +16,8 @@ internal static class ServiceCollectionExtensions
 
             cm.MapMember(c => c.Id);
             cm.MapMember(c => c.CreatedAtUtc);
+
+            cm.MapMemberWithoutSerialization(c => c.User);
 
             cm.MapCreator(c => new RefreshToken(
                 c.Id,

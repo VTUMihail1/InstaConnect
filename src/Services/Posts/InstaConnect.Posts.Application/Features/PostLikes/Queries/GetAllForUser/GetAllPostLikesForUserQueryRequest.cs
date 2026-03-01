@@ -7,7 +7,7 @@ public record GetAllPostLikesForUserQueryRequest(
     string UserId,
     string CurrentUserId,
     CommonSortOrder SortOrder,
-    PostLikesSortTerm SortTerm,
+    PostLikesForUserSortTerm SortTerm,
     int Page,
     int PageSize)
-    : IQueryRequest<GetAllPostLikesForUserQueryResponse>, ISortableQueryRequest<PostLikesSortTerm>, IPaginatableQueryRequest, ICurrentUserableQueryRequest;
+    : IQueryRequest<GetAllPostLikesForUserQueryResponse>, ISortableQueryRequest<PostLikesForUserSortTerm>, IPaginatableQueryRequest, ICurrentUserableQueryRequest;

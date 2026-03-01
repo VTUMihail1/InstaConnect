@@ -188,7 +188,7 @@ public static class PostCommentLikeValidationAssertions
 
     public static void ShouldHaveValidationErrorForSortTerm(
         this TestValidationResult<GetAllPostCommentLikesForUserQueryRequest> result,
-        IEnumMessageTransformer<PostCommentLikesSortTerm> messageTransformer,
+        IEnumMessageTransformer<PostCommentLikesForUserSortTerm> messageTransformer,
         GetAllPostCommentLikesForUserQueryRequest request)
     {
         result.ShouldHaveValidationErrorForProperty(p => p.SortTerm, messageTransformer, request);

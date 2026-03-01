@@ -30,7 +30,7 @@ public static class PostCommentLikeEquals
         GetAllPostCommentLikesForUserQueryRequest request)
     {
         return query.MatchesFilter(request) &&
-               query.MatchesSortable<GetAllPostCommentLikesForUserQuery, GetAllPostCommentLikesForUserQueryRequest, PostCommentLikesSortTerm, PostCommentLikesSortingQuery>(request) &&
+               query.MatchesSortable<GetAllPostCommentLikesForUserQuery, GetAllPostCommentLikesForUserQueryRequest, PostCommentLikesForUserSortTerm, PostCommentLikesForUserSortingQuery>(request) &&
                query.MatchesPaginatable<GetAllPostCommentLikesForUserQuery, GetAllPostCommentLikesForUserQueryRequest, PostCommentLikesPaginationQuery>(request) &&
                query.MatchesCurrentUserable(request);
     }

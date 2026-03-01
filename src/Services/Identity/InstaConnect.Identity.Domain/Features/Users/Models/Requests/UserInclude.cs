@@ -1,3 +1,6 @@
-﻿namespace InstaConnect.Identity.Domain.Features.Users.Models.Requests;
+﻿using InstaConnect.Identity.Domain.Models.Requests;
 
-public record UserInclude(ICollection<UserIncludeProperty> Properties) : IInclude<UserIncludeProperty>;
+namespace InstaConnect.Identity.Domain.Features.Users.Models.Requests;
+
+public record UserInclude(ICollection<IdentityIncludeDescriptor> Descriptors)
+    : IInclude<IdentityDestinationType, IdentityIncludeType, IdentityIncludeDescriptor>;

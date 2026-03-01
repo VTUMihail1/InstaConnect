@@ -1,6 +1,11 @@
-﻿namespace InstaConnect.Follows.Application.Features.Follows.Models;
+﻿using InstaConnect.Follows.Domain.Features.Users.Models.Responses;
+
+namespace InstaConnect.Follows.Application.Features.Follows.Models;
 
 public record FollowQueryResponse(
-    UserQueryResponse Follower,
-    UserQueryResponse Following,
+    string FollowerId,
+    string FollowingId,
+    UserQueryResponse? Follower,
+    UserQueryResponse? Following,
+    bool IsFollowedByCurrentUser,
     DateTimeOffset CreatedAtUtc);

@@ -12,19 +12,22 @@ internal class PostCommentQueryRepository : IPostCommentQueryRepository
     private readonly ISortOrdererFactory _sortOrdererFactory;
     private readonly IPostCommentIncluderFactory _commentIncluderFactory;
     private readonly IPostCommentsSortTermerFactory _commentSortTermerFactory;
+    private readonly IPostCommentsForUserSortTermerFactory _commentForUserSortTermerFactory;
 
     public PostCommentQueryRepository(
         IPaginator paginator,
         IPostsContext context,
         ISortOrdererFactory sortOrdererFactory,
         IPostCommentIncluderFactory commentIncluderFactory,
-        IPostCommentsSortTermerFactory commentSortTermerFactory)
+        IPostCommentsSortTermerFactory commentSortTermerFactory,
+        IPostCommentsForUserSortTermerFactory commentForUserSortTermerFactory)
     {
         _paginator = paginator;
         _context = context;
         _sortOrdererFactory = sortOrdererFactory;
         _commentIncluderFactory = commentIncluderFactory;
         _commentSortTermerFactory = commentSortTermerFactory;
+        _commentForUserSortTermerFactory = commentForUserSortTermerFactory;
     }
 
     public async Task<ICollection<PostCommentResponse>> GetAllAsync(
@@ -59,7 +62,7 @@ internal class PostCommentQueryRepository : IPostCommentQueryRepository
     public async Task<ICollection<PostCommentResponse>> GetAllForUserAsync(
         PostCommentsForUserFilterQuery filter,
         CurrentUserQuery currentUser,
-        PostCommentsSortingQuery sorting,
+        PostCommentsForUserSortingQuery sorting,
         PostCommentsPaginationQuery pagination,
         PostCommentInclude? include,
         CancellationToken cancellationToken)
@@ -70,7 +73,7 @@ internal class PostCommentQueryRepository : IPostCommentQueryRepository
             .Includes(_commentIncluderFactory, include)
             .Match(filter)
             .ProjectToResponseWithoutUser(currentUser)
-            .Sort(_sortOrdererFactory, _commentSortTermerFactory, sorting)
+            .Sort(_sortOrdererFactory, _commentForUserSortTermerFactory, sorting)
             .Paginate(_paginator, pagination)
             .ToListAsync(cancellationToken);
     }
@@ -78,7 +81,7 @@ internal class PostCommentQueryRepository : IPostCommentQueryRepository
     public async Task<ICollection<PostCommentResponse>> GetAllForUserAsync(
         PostCommentsForUserFilterQuery filter,
         CurrentUserQuery currentUser,
-        PostCommentsSortingQuery sorting,
+        PostCommentsForUserSortingQuery sorting,
         PostCommentsPaginationQuery pagination,
         CancellationToken cancellationToken)
     {

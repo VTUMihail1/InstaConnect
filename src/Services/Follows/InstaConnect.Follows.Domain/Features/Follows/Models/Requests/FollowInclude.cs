@@ -1,3 +1,6 @@
-﻿namespace InstaConnect.Follows.Domain.Features.Follows.Models.Requests;
+﻿using InstaConnect.Follows.Domain.Models.Requests;
 
-public record FollowInclude(ICollection<FollowIncludeProperty> Properties);
+namespace InstaConnect.Follows.Domain.Features.Follows.Models.Requests;
+
+public record FollowInclude(ICollection<FollowsIncludeDescriptor> Descriptors)
+    : IInclude<FollowsDestinationType, FollowsIncludeType, FollowsIncludeDescriptor>;

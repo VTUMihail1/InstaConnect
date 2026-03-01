@@ -8,6 +8,8 @@ public static class PostDefaultValues
 
     public const PostsSortTerm SortTerm = PostsSortTerm.ByCreatedAt;
 
+    public const PostsForUserSortTerm SortTermForUser = PostsForUserSortTerm.ByCreatedAt;
+
     public const int Page = 1;
 
     public const int PageSize = 20;

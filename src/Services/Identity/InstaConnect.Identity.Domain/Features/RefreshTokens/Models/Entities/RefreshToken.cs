@@ -25,7 +25,7 @@ public class RefreshToken : IEntityWithId<RefreshTokenId>
 
     public User? User { get; private set; }
 
-    public RefreshToken AddUser(User user)
+    public RefreshToken AddUser(User? user)
     {
         User = user;
 

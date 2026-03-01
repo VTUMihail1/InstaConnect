@@ -20,7 +20,7 @@ public interface IPostCommentLikeQueryRepository
     Task<ICollection<PostCommentLikeResponse>> GetAllForUserAsync(
         PostCommentLikesForUserFilterQuery filter,
         CurrentUserQuery currentUser,
-        PostCommentLikesSortingQuery sorting,
+        PostCommentLikesForUserSortingQuery sorting,
         PostCommentLikesPaginationQuery pagination,
         PostCommentLikeInclude? include,
         CancellationToken cancellationToken);
@@ -28,7 +28,7 @@ public interface IPostCommentLikeQueryRepository
     Task<ICollection<PostCommentLikeResponse>> GetAllForUserAsync(
         PostCommentLikesForUserFilterQuery filter,
         CurrentUserQuery currentUser,
-        PostCommentLikesSortingQuery sorting,
+        PostCommentLikesForUserSortingQuery sorting,
         PostCommentLikesPaginationQuery pagination,
         CancellationToken cancellationToken);
 

@@ -18,4 +18,13 @@ public class EventPublisher : IEventPublisher
     {
         await _publishEndpoint.Publish(message, cancellationToken);
     }
+
+    public async Task PublishAsync<TEvent>(ICollection<TEvent> messages, CancellationToken cancellationToken)
+        where TEvent : class, IEventRequest
+    {
+        foreach (var message in messages)
+        {
+            await PublishAsync(message, cancellationToken);
+        }
+    }
 }

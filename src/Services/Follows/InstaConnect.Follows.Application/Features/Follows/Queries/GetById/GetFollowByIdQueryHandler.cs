@@ -2,29 +2,25 @@
 
 internal class GetFollowByIdQueryHandler : IQueryHandler<GetFollowByIdQueryRequest, GetFollowByIdQueryResponse>
 {
-    private readonly IFollowService _followService;
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly IFollowIncludeQueryBuilderFactory _followIncludeQueryBuilderFactory;
+    private readonly IApplicationMapper _mapper;
+    private readonly IFollowQueryService _service;
 
     public GetFollowByIdQueryHandler(
-        IFollowService followService,
-        IApplicationMapper applicationMapper,
-        IFollowIncludeQueryBuilderFactory followIncludeQueryBuilderFactory)
+        IApplicationMapper mapper,
+        IFollowQueryService service)
     {
-        _followService = followService;
-        _applicationMapper = applicationMapper;
-        _followIncludeQueryBuilderFactory = followIncludeQueryBuilderFactory;
+        _mapper = mapper;
+        _service = service;
     }
 
     public async Task<GetFollowByIdQueryResponse> Handle(
         GetFollowByIdQueryRequest request,
         CancellationToken cancellationToken)
     {
-        var include = _followIncludeQueryBuilderFactory.Create().WithFollower().WithFollowing().Build();
-        var serviceRequest = _applicationMapper.Map<GetFollowByIdQuery>(request).AddInclude(include);
-        var follow = await _followService.GetByIdAsync(serviceRequest, cancellationToken);
+        var serviceRequest = _mapper.Map<GetFollowByIdQuery>(request);
+        var serviceResponse = await _service.GetByIdAsync(serviceRequest, cancellationToken);
 
-        var response = _applicationMapper.Map<GetFollowByIdQueryResponse>(follow);
+        var response = _mapper.Map<GetFollowByIdQueryResponse>(serviceResponse);
 
         return response;
     }

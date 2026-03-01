@@ -21,7 +21,14 @@ public static class PostCommentExceptionErrorMessages
 
     public static string GetSortTermNotSupportedMessage(PostCommentsSortTerm sortTerm)
     {
-        const string Format = "PostCommentSortTerm(type: {0}) is not supported";
+        const string Format = "PostCommentsSortTerm(type: {0}) is not supported";
+
+        return Format.FormatCurrentCulture(sortTerm);
+    }
+
+    public static string GetSortTermNotSupportedMessage(PostCommentsForUserSortTerm sortTerm)
+    {
+        const string Format = "PostCommentsForUserSortTerm(type: {0}) is not supported";
 
         return Format.FormatCurrentCulture(sortTerm);
     }

@@ -23,7 +23,7 @@ public static class PostEquals
     public static bool Matches(this GetAllPostsForUserQueryRequest query, GetAllPostsForUserApiRequest request)
     {
         return query.MatchesFilter(request) &&
-               query.MatchesSortable<GetAllPostsForUserQueryRequest, GetAllPostsForUserApiRequest, PostsSortTerm>(request) &&
+               query.MatchesSortable<GetAllPostsForUserQueryRequest, GetAllPostsForUserApiRequest, PostsForUserSortTerm>(request) &&
                query.MatchesPaginatable(request) &&
                query.MatchesCurrentUserable(request);
     }

@@ -42,7 +42,7 @@ internal class UserPresentationMappings : IRegister
             .ConstructUsing(src => new(src.User.Adapt<UserApiResponse>(config)));
 
         config.NewConfig<GetCurrentUserByIdApiRequest, GetCurrentUserByIdQueryRequest>()
-            .ConstructUsing(src => new(src.Id));
+            .ConstructUsing(src => new(src.CurrentId));
 
         config.NewConfig<GetCurrentUserByIdQueryResponse, GetCurrentUserByIdApiResponse>()
             .ConstructUsing(src => new(src.User.Adapt<UserApiResponse>(config)));
@@ -85,7 +85,7 @@ internal class UserPresentationMappings : IRegister
             .ConstructUsing(src => new(src.Id));
 
         config.NewConfig<DeleteCurrentUserApiRequest, DeleteUserCommandRequest>()
-            .ConstructUsing(src => new(src.Id));
+            .ConstructUsing(src => new(src.CurrentId));
 
         config.NewConfig<UserIdCommandResponse, UserIdApiResponse>()
             .ConstructUsing(src => new(src.Id));

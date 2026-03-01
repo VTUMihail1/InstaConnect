@@ -28,9 +28,9 @@ internal class ForgotPasswordTokenCommandService : IForgotPasswordTokenCommandSe
         _eventPublisher = eventPublisher;
         _repository = repository;
         _dateTimeProvider = dateTimeProvider;
+        _includeQueryBuilderFactory = includeQueryBuilderFactory;
         _forgotPasswordTokenFactory = forgotPasswordTokenFactory;
         _forgotPasswordTokenRepository = forgotPasswordTokenRepository;
-        _includeQueryBuilderFactory = includeQueryBuilderFactory;
     }
 
     public async Task<ForgotPasswordTokenId> AddAsync(AddForgotPasswordTokenCommand command, CancellationToken cancellationToken)
@@ -42,11 +42,11 @@ internal class ForgotPasswordTokenCommandService : IForgotPasswordTokenCommandSe
             throw new UserNameNotFoundException(command.Name);
         }
 
-        var newForgotPasswordToken = _forgotPasswordTokenFactory.Create(user!.Id);
+        var newForgotPasswordToken = _forgotPasswordTokenFactory.Create(user.Id).AddUser(user);
         await _forgotPasswordTokenRepository.AddAsync(newForgotPasswordToken, cancellationToken);
 
         await _eventPublisher.PublishAsync(
-            _mapper.Map<ForgotPasswordTokenAddedEventRequest>(newForgotPasswordToken.AddUser(user)), cancellationToken);
+            _mapper.Map<ForgotPasswordTokenAddedEventRequest>(newForgotPasswordToken), cancellationToken);
 
         return newForgotPasswordToken.Id;
     }
@@ -74,6 +74,9 @@ internal class ForgotPasswordTokenCommandService : IForgotPasswordTokenCommandSe
         }
 
         await _forgotPasswordTokenRepository.DeleteRangeAsync(user.ForgotPasswordTokens, cancellationToken);
+
+        await _eventPublisher.PublishAsync(
+            _mapper.Map<ICollection<ForgotPasswordTokenDeletedEventRequest>>(user), cancellationToken);
 
         user.UpdatePasswordHash(_passwordHasher.Hash(command.Password));
         await _repository.UpdateAsync(user, cancellationToken);

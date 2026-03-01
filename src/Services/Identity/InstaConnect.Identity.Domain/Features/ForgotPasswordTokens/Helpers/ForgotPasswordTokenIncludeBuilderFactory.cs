@@ -2,8 +2,15 @@
 
 public class ForgotPasswordTokenIncludeBuilderFactory : IForgotPasswordTokenIncludeBuilderFactory
 {
+    private readonly IForgotPasswordTokenIncludeDescriptorFactory _descriptorFactory;
+
+    public ForgotPasswordTokenIncludeBuilderFactory(IForgotPasswordTokenIncludeDescriptorFactory descriptorFactory)
+    {
+        _descriptorFactory = descriptorFactory;
+    }
+
     public ForgotPasswordTokenIncludeBuilder Create()
     {
-        return new ForgotPasswordTokenIncludeBuilder([]);
+        return new ForgotPasswordTokenIncludeBuilder([], _descriptorFactory);
     }
 }

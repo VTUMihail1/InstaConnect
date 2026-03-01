@@ -11,6 +11,6 @@ public record GetAllPostsForUserApiRequest(
     [FromClaim(ClaimTypes.NameIdentifier)] string CurrentUserId,
     [FromQuery] string Title = PostDefaultValues.Title,
     [FromQuery] CommonSortOrder SortOrder = CommonDefaultValues.SortOrder,
-    [FromQuery] PostsSortTerm SortTerm = PostDefaultValues.SortTerm,
+    [FromQuery] PostsForUserSortTerm SortTerm = PostDefaultValues.SortTermForUser,
     [FromQuery] int Page = PostDefaultValues.Page,
-    [FromQuery] int PageSize = PostDefaultValues.PageSize) : ISortableApiRequest<PostsSortTerm>, IPaginatableApiRequest, ICurrentUserableApiRequest;
+    [FromQuery] int PageSize = PostDefaultValues.PageSize) : ISortableApiRequest<PostsForUserSortTerm>, IPaginatableApiRequest, ICurrentUserableApiRequest;

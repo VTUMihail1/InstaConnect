@@ -4,9 +4,9 @@ internal class UserClaimCommandRepository : IUserClaimCommandRepository
 {
     private readonly IIdentityContext _context;
 
-    public UserClaimCommandRepository(IIdentityContext _context)
+    public UserClaimCommandRepository(IIdentityContext context)
     {
-        this._context = _context;
+        _context = context;
     }
 
     public async Task AddAsync(UserClaim entity, CancellationToken cancellationToken)

@@ -14,7 +14,7 @@
     <Using Include="InstaConnect.Common.Domain.Models.ValueObjects" />
     <Using Include="InstaConnect.Common.Infrastructure.Abstractions" />
     <Using Include="InstaConnect.Common.Infrastructure.Extensions" />
-    <Using Include="InstaConnect.Follows.Infrastructure.Abstractions"/>
+    <Using Include="InstaConnect.Follows.Infrastructure.Abstractions" />
   </ItemGroup>
 
   <ItemGroup Label="Users">

@@ -2,6 +2,7 @@
 using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Requests;
 using InstaConnect.Posts.Tests.Features.PostCommentLikes.DataAttributes.SortTerm;
+using InstaConnect.Posts.Tests.Features.PostCommentLikes.DataAttributes.SortTerm.ForUser;
 
 namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.PostCommentLikes.Controllers.v1;
 
@@ -121,9 +122,9 @@ public class GetAllPostCommentLikesForUserFunctionalTests : BasePostCommentLikeP
     }
 
     [Theory]
-    [PostCommentLikesSortTermEmptyData]
+    [PostCommentLikesForUserSortTermEmptyData]
     public async Task GetAllForUserAsync_ShouldHaveBadRequestStatusCode_WhenSortTermIsInvalid(
-        IEnumTransformer<PostCommentLikesSortTerm> transformer)
+        IEnumTransformer<PostCommentLikesForUserSortTerm> transformer)
     {
         // Arrange
         var request = _requestBuilder.WithSortTerm(transformer).Build();
@@ -136,9 +137,9 @@ public class GetAllPostCommentLikesForUserFunctionalTests : BasePostCommentLikeP
     }
 
     [Theory]
-    [PostCommentLikesSortTermEmptyWithMessageData]
+    [PostCommentLikesForUserSortTermEmptyWithMessageData]
     public async Task GetAllForUserAsync_ShouldHaveBadRequestProblemDetails_WhenSortTermIsInvalid(
-        IEnumTransformer<PostCommentLikesSortTerm> transformer, IEnumMessageTransformer<PostCommentLikesSortTerm> messageTransformer)
+        IEnumTransformer<PostCommentLikesForUserSortTerm> transformer, IEnumMessageTransformer<PostCommentLikesForUserSortTerm> messageTransformer)
     {
         // Arrange
         var request = _requestBuilder.WithSortTerm(transformer).Build();
@@ -147,7 +148,7 @@ public class GetAllPostCommentLikesForUserFunctionalTests : BasePostCommentLikeP
         var response = await HttpClient.GetAllPostCommentLikesForUserProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyInvalidValidationForSortProperty(messageTransformer, request);
+        response.ShouldSatisfyInvalidValidationForSortTerm(messageTransformer, request);
     }
 
     [Theory]
@@ -258,10 +259,10 @@ public class GetAllPostCommentLikesForUserFunctionalTests : BasePostCommentLikeP
     }
 
     [Theory]
-    [PostCommentLikesSortTermCreatedAtData]
-    [PostCommentLikesSortTermUserNameData]
+    [PostCommentLikesForUserSortTermCreatedAtData]
+    [PostCommentLikesForUserSortTermUserNameData]
     public async Task GetAllForUserAsync_ShouldHaveOkStatusCode_WhenRequestAndSortPropertyAreValid(
-        IEnumTransformer<PostCommentLikesSortTerm> transformer)
+        IEnumTransformer<PostCommentLikesForUserSortTerm> transformer)
     {
         // Arrange
         var request = _requestBuilder.WithSortTerm(transformer).Build();
@@ -317,10 +318,10 @@ public class GetAllPostCommentLikesForUserFunctionalTests : BasePostCommentLikeP
     }
 
     [Theory]
-    [PostCommentLikesSortTermWithCreatedAtTermData]
-    [PostCommentLikesSortTermWithUserNameTermData]
+    [PostCommentLikesForUserSortTermWithCreatedAtTermData]
+    [PostCommentLikesForUserSortTermWithUserNameTermData]
     public async Task GetAllForUserAsync_ShouldReturnResponse_WhenRequestAndSortPropertyAreValid(
-        IEnumTransformer<PostCommentLikesSortTerm> transformer, ISortEnumTermTransformer<PostCommentLike> termTransformer)
+        IEnumTransformer<PostCommentLikesForUserSortTerm> transformer, ISortEnumTermTransformer<PostCommentLike> termTransformer)
     {
         // Arrange
         var request = _requestBuilder.WithSortTerm(transformer).Build();

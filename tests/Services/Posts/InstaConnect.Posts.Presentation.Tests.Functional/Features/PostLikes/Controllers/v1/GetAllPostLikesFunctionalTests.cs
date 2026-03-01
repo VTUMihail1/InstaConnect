@@ -176,7 +176,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
         var response = await HttpClient.GetAllPostLikesProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyInvalidValidationForSortProperty(messageTransformer, request);
+        response.ShouldSatisfyInvalidValidationForSortTerm(messageTransformer, request);
     }
 
     [Theory]

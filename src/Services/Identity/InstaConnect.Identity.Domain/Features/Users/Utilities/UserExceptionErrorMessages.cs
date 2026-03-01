@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Domain.Extensions;
+using InstaConnect.Identity.Domain.Models.Requests;
 
 namespace InstaConnect.Identity.Domain.Features.Users.Utilities;
 
@@ -60,17 +61,18 @@ public static class UserExceptionErrorMessages
         return Format.FormatCurrentCulture(name.Value);
     }
 
-    public static string GetSortPropertyNotSupportedMessage(UserSortProperty sortProperty)
+    public static string GetSortTermNotSupportedMessage(UsersSortTerm sortTerm)
     {
-        const string Format = "UserSortProperty(type: {0}) is not supported";
+        const string Format = "UserSortTerm(type: {0}) is not supported";
 
-        return Format.FormatCurrentCulture(sortProperty);
+        return Format.FormatCurrentCulture(sortTerm);
     }
 
-    public static string GetInclidePropertyNotSupportedMessage(ICollection<UserIncludeProperty> includeProperties)
+    public static string GetInclideDescriptorsNotSupportedMessage(ICollection<IdentityIncludeDescriptor> descriptors)
     {
-        const string Format = "UserIncludeProperties(types: {0}) is not supported";
+        const string Format = "UserDescriptors({0}) is not supported";
 
-        return Format.FormatCurrentCulture(includeProperties.JoinAsStringWithComa());
+        return Format.FormatCurrentCulture(descriptors
+            .JoinIncludeDescriptorsAsStringWithComa<IdentityDestinationType, IdentityIncludeType, IdentityIncludeDescriptor>());
     }
 }

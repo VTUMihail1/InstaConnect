@@ -2,8 +2,15 @@
 
 public class EmailConfirmationTokenIncludeBuilderFactory : IEmailConfirmationTokenIncludeBuilderFactory
 {
+    private readonly IEmailConfirmationTokenIncludeDescriptorFactory _descriptorFactory;
+
+    public EmailConfirmationTokenIncludeBuilderFactory(IEmailConfirmationTokenIncludeDescriptorFactory descriptorFactory)
+    {
+        _descriptorFactory = descriptorFactory;
+    }
+
     public EmailConfirmationTokenIncludeBuilder Create()
     {
-        return new EmailConfirmationTokenIncludeBuilder([]);
+        return new EmailConfirmationTokenIncludeBuilder([], _descriptorFactory);
     }
 }

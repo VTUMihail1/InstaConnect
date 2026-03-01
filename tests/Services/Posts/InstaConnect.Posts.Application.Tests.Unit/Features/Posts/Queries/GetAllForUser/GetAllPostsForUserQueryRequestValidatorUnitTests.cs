@@ -2,6 +2,7 @@
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetAllForUser;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 using InstaConnect.Posts.Tests.Features.Posts.DataAttributes.SortTerm;
+using InstaConnect.Posts.Tests.Features.Posts.DataAttributes.SortTerm.ForUser;
 
 namespace InstaConnect.Posts.Application.Tests.Unit.Features.Posts.Queries.GetAllForUser;
 
@@ -86,9 +87,9 @@ public class GetAllPostsForUserQueryRequestValidatorUnitTests : BasePostApplicat
     }
 
     [Theory]
-    [PostsSortTermEmptyWithMessageData]
+    [PostsForUserSortTermEmptyWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenSortTermIsInvalid(
-        IEnumTransformer<PostsSortTerm> transformer, IEnumMessageTransformer<PostsSortTerm> messageTransformer)
+        IEnumTransformer<PostsForUserSortTerm> transformer, IEnumMessageTransformer<PostsForUserSortTerm> messageTransformer)
     {
         // Arrange
         var request = _requestBuilder.WithSortTerm(transformer).Build();

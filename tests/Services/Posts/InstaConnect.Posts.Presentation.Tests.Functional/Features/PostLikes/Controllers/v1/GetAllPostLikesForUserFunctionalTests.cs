@@ -2,6 +2,7 @@
 using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
 using InstaConnect.Posts.Domain.Features.PostLikes.Models.Requests;
 using InstaConnect.Posts.Tests.Features.PostLikes.DataAttributes.SortTerm;
+using InstaConnect.Posts.Tests.Features.PostLikes.DataAttributes.SortTerm.ForUser;
 
 namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.PostLikes.Controllers.v1;
 
@@ -119,9 +120,9 @@ public class GetAllPostLikesForUserFunctionalTests : BasePostLikePresentationQue
     }
 
     [Theory]
-    [PostLikesSortTermEmptyData]
+    [PostLikesForUserSortTermEmptyData]
     public async Task GetAllForUserAsync_ShouldHaveBadRequestStatusCode_WhenSortTermIsInvalid(
-        IEnumTransformer<PostLikesSortTerm> transformer)
+        IEnumTransformer<PostLikesForUserSortTerm> transformer)
     {
         // Arrange
         var request = _requestBuilder.WithSortTerm(transformer).Build();
@@ -134,9 +135,9 @@ public class GetAllPostLikesForUserFunctionalTests : BasePostLikePresentationQue
     }
 
     [Theory]
-    [PostLikesSortTermEmptyWithMessageData]
+    [PostLikesForUserSortTermEmptyWithMessageData]
     public async Task GetAllForUserAsync_ShouldHaveBadRequestProblemDetails_WhenSortTermIsInvalid(
-        IEnumTransformer<PostLikesSortTerm> transformer, IEnumMessageTransformer<PostLikesSortTerm> messageTransformer)
+        IEnumTransformer<PostLikesForUserSortTerm> transformer, IEnumMessageTransformer<PostLikesForUserSortTerm> messageTransformer)
     {
         // Arrange
         var request = _requestBuilder.WithSortTerm(transformer).Build();
@@ -145,7 +146,7 @@ public class GetAllPostLikesForUserFunctionalTests : BasePostLikePresentationQue
         var response = await HttpClient.GetAllPostLikesForUserProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyInvalidValidationForSortProperty(messageTransformer, request);
+        response.ShouldSatisfyInvalidValidationForSortTerm(messageTransformer, request);
     }
 
     [Theory]
@@ -256,10 +257,10 @@ public class GetAllPostLikesForUserFunctionalTests : BasePostLikePresentationQue
     }
 
     [Theory]
-    [PostLikesSortTermCreatedAtData]
-    [PostLikesSortTermUserNameData]
-    public async Task GetAllForUserAsync_ShouldHaveOkStatusCode_WhenRequestAndSortPropertyAreValid(
-        IEnumTransformer<PostLikesSortTerm> transformer)
+    [PostLikesForUserSortTermCreatedAtData]
+    [PostLikesForUserSortTermUserNameData]
+    public async Task GetAllForUserAsync_ShouldHaveOkStatusCode_WhenRequestAndSortTermAreValid(
+        IEnumTransformer<PostLikesForUserSortTerm> transformer)
     {
         // Arrange
         var request = _requestBuilder.WithSortTerm(transformer).Build();
@@ -315,10 +316,10 @@ public class GetAllPostLikesForUserFunctionalTests : BasePostLikePresentationQue
     }
 
     [Theory]
-    [PostLikesSortTermWithCreatedAtTermData]
-    [PostLikesSortTermWithUserNameTermData]
-    public async Task GetAllForUserAsync_ShouldReturnResponse_WhenRequestAndSortPropertyAreValid(
-        IEnumTransformer<PostLikesSortTerm> transformer, ISortEnumTermTransformer<PostLike> termTransformer)
+    [PostLikesForUserSortTermWithCreatedAtTermData]
+    [PostLikesForUserSortTermWithUserNameTermData]
+    public async Task GetAllForUserAsync_ShouldReturnResponse_WhenRequestAndSortTermAreValid(
+        IEnumTransformer<PostLikesForUserSortTerm> transformer, ISortEnumTermTransformer<PostLike> termTransformer)
     {
         // Arrange
         var request = _requestBuilder.WithSortTerm(transformer).Build();

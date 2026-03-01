@@ -1,16 +1,37 @@
-﻿namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Helpers;
+﻿using InstaConnect.Common.Domain.Extensions;
+using InstaConnect.Identity.Domain.Models.Requests;
+
+namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Helpers;
 
 public class EmailConfirmationTokenIncludeBuilder
 {
-    private readonly ICollection<EmailConfirmationTokenIncludeProperty> _includeProperties;
+    private readonly ICollection<IdentityIncludeDescriptor> _descriptors;
+    private readonly IEmailConfirmationTokenIncludeDescriptorFactory _descriptorsFactory;
 
-    internal EmailConfirmationTokenIncludeBuilder(ICollection<EmailConfirmationTokenIncludeProperty> includeProperties)
+    public EmailConfirmationTokenIncludeBuilder(
+        ICollection<IdentityIncludeDescriptor> descriptors,
+        IEmailConfirmationTokenIncludeDescriptorFactory descriptorsFactory)
     {
-        _includeProperties = includeProperties;
+        _descriptors = descriptors;
+        _descriptorsFactory = descriptorsFactory;
+    }
+    public EmailConfirmationTokenIncludeBuilder WithUser()
+    {
+        _descriptors.Add(_descriptorsFactory.CreateUser());
+
+        return this;
     }
 
+    public EmailConfirmationTokenIncludeBuilder WithUser(UserInclude include)
+    {
+        _descriptors.Add(_descriptorsFactory.CreateUser());
+        _descriptors.AddRange(include.Descriptors);
+
+        return this;
+    }
+    
     public EmailConfirmationTokenInclude Build()
     {
-        return new(_includeProperties);
+        return new(_descriptors);
     }
 }

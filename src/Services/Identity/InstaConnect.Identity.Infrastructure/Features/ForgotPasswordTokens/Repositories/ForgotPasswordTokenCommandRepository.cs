@@ -7,14 +7,14 @@ namespace InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Rep
 internal class ForgotPasswordTokenCommandRepository : IForgotPasswordTokenCommandRepository
 {
     private readonly IIdentityContext _context;
-    private readonly IForgotPasswordTokenIncludePropertyFactory _forgotPasswordTokenIncludePropertyFactory;
+    private readonly IForgotPasswordTokenIncluderFactory _forgotPasswordTokenIncluderFactory;
 
     public ForgotPasswordTokenCommandRepository(
         IIdentityContext context,
-        IForgotPasswordTokenIncludePropertyFactory forgotPasswordTokenIncludePropertyFactory)
+        IForgotPasswordTokenIncluderFactory forgotPasswordTokenIncluderFactory)
     {
         _context = context;
-        _forgotPasswordTokenIncludePropertyFactory = forgotPasswordTokenIncludePropertyFactory;
+        _forgotPasswordTokenIncluderFactory = forgotPasswordTokenIncluderFactory;
     }
 
     public async Task<ForgotPasswordToken?> GetByIdAsync(
@@ -25,7 +25,7 @@ internal class ForgotPasswordTokenCommandRepository : IForgotPasswordTokenComman
         return await _context
             .ForgotPasswordTokens
             .Aggregate()
-            .Includes(_forgotPasswordTokenIncludePropertyFactory, include)
+            .Includes(_forgotPasswordTokenIncluderFactory, include)
             .Match(id)
             .FirstOrDefaultAsync(cancellationToken);
     }

@@ -2,22 +2,22 @@
 
 internal class DeleteUserCommandHandler : ICommandHandler<DeleteUserCommandRequest>
 {
-    private readonly IUserService _userService;
-    private readonly IApplicationMapper _applicationMapper;
+    private readonly IApplicationMapper _mapper;
+    private readonly IUserCommandService _userService;
 
     public DeleteUserCommandHandler(
-        IUserService userService,
-        IApplicationMapper applicationMapper)
+        IApplicationMapper mapper,
+        IUserCommandService userService)
     {
+        _mapper = mapper;
         _userService = userService;
-        _applicationMapper = applicationMapper;
     }
 
     public async Task Handle(
         DeleteUserCommandRequest request,
         CancellationToken cancellationToken)
     {
-        var serviceRequest = _applicationMapper.Map<DeleteUserCommand>(request);
+        var serviceRequest = _mapper.Map<DeleteUserCommand>(request);
         await _userService.DeleteAsync(serviceRequest, cancellationToken);
     }
 }

@@ -8,9 +8,9 @@ internal static class ServiceCollectionExtensions
 {
     internal static IServiceCollection AddFollowServices(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddImplementationsOf<IFollowByFollowerSortProperty>(FollowInfrastructureReference.Assembly);
-        serviceCollection.AddImplementationsOf<IFollowByFollowingSortProperty>(FollowInfrastructureReference.Assembly);
-        serviceCollection.AddImplementationsOf<IFollowIncludeProperty>(FollowInfrastructureReference.Assembly);
+        serviceCollection.AddImplementationsOf<IFollowsForFollowerSortTermer>(FollowInfrastructureReference.Assembly);
+        serviceCollection.AddImplementationsOf<IFollowsForFollowingSortTermer>(FollowInfrastructureReference.Assembly);
+        serviceCollection.AddImplementationsOf<IFollowIncluder>(FollowInfrastructureReference.Assembly);
 
         BsonClassMap.TryRegisterClassMap<Follow>(cm =>
         {
@@ -19,8 +19,8 @@ internal static class ServiceCollectionExtensions
             cm.MapMember(c => c.Id);
             cm.MapMember(c => c.CreatedAtUtc);
 
-            cm.MapMember(c => c.Follower);
-            cm.MapMember(c => c.Following);
+            cm.MapMemberWithoutSerialization(c => c.Follower);
+            cm.MapMemberWithoutSerialization(c => c.Following);
 
             cm.MapCreator(c => new Follow(
                 c.Id,

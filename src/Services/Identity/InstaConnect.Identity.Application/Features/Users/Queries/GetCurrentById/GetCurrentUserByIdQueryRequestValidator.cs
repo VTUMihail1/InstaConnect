@@ -4,7 +4,7 @@ public class GetCurrentUserByIdQueryRequestValidator : AbstractValidator<GetCurr
 {
     public GetCurrentUserByIdQueryRequestValidator()
     {
-        RuleFor(r => r.Id)
+        RuleFor(r => r.CurrentId)
             .NotEmptyWithMessage()
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();

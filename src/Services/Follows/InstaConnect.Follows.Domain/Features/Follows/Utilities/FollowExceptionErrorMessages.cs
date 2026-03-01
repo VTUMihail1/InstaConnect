@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Domain.Extensions;
+using InstaConnect.Follows.Domain.Models.Requests;
 
 namespace InstaConnect.Follows.Domain.Features.Follows.Utilities;
 
@@ -18,24 +19,25 @@ public static class FollowExceptionErrorMessages
         return Format.FormatCurrentCulture(id.FollowerId.Id, id.FollowingId.Id);
     }
 
-    public static string GetByFollowerSortPropertyNotSupportedMessage(FollowByFollowerSortProperty sortProperty)
+    public static string GetSortTermNotSupportedMessage(FollowsForFollowerSortTerm sortTerm)
     {
-        const string Format = "FollowByFollowerSortProperty(type: {0}) is not supported";
+        const string Format = "FollowsByFollowerSortTerm(type: {0}) is not supported";
 
-        return Format.FormatCurrentCulture(sortProperty);
+        return Format.FormatCurrentCulture(sortTerm);
     }
 
-    public static string GetByFollowingSortPropertyNotSupportedMessage(FollowByFollowingSortProperty sortProperty)
+    public static string GetSortTermNotSupportedMessage(FollowsForFollowingSortTerm sortTerm)
     {
-        const string Format = "FollowByFollowingSortProperty(type: {0}) is not supported";
+        const string Format = "FollowsByFollowingSortTerm(type: {0}) is not supported";
 
-        return Format.FormatCurrentCulture(sortProperty);
+        return Format.FormatCurrentCulture(sortTerm);
     }
 
-    public static string GetInclidePropertyNotSupportedMessage(ICollection<FollowIncludeProperty> includeProperties)
+    public static string GetInclideDescriptorsNotSupportedMessage(ICollection<FollowsIncludeDescriptor> descriptors)
     {
-        const string Format = "FollowIncludeProperties(types: {0}) is not supported";
+        const string Format = "FollowIncludeDescriptors({0}) is not supported";
 
-        return Format.FormatCurrentCulture(includeProperties.JoinAsStringWithComa());
+        return Format.FormatCurrentCulture(descriptors
+            .JoinIncludeDescriptorsAsStringWithComa<FollowsDestinationType, FollowsIncludeType, FollowsIncludeDescriptor>());
     }
 }

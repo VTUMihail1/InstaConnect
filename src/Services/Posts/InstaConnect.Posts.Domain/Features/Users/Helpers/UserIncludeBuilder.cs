@@ -6,11 +6,11 @@ namespace InstaConnect.Posts.Domain.Features.Users.Helpers;
 public class UserIncludeBuilder
 {
     private readonly ICollection<PostsIncludeDescriptor> _descriptors;
-    private readonly IUserIncludeDescriptorsFactory _descriptorsFactory;
+    private readonly IUserIncludeDescriptorFactory _descriptorsFactory;
 
     public UserIncludeBuilder(
         ICollection<PostsIncludeDescriptor> descriptors,
-        IUserIncludeDescriptorsFactory descriptorsFactory)
+        IUserIncludeDescriptorFactory descriptorsFactory)
     {
         _descriptors = descriptors;
         _descriptorsFactory = descriptorsFactory;

@@ -2,23 +2,23 @@
 
 internal class AddFollowCommandHandler : ICommandHandler<AddFollowCommandRequest, AddFollowCommandResponse>
 {
-    private readonly IFollowService _followService;
-    private readonly IApplicationMapper _applicationMapper;
+    private readonly IApplicationMapper _mapper;
+    private readonly IFollowCommandService _service;
 
     public AddFollowCommandHandler(
-        IFollowService followService,
-        IApplicationMapper applicationMapper)
+        IApplicationMapper mapper,
+        IFollowCommandService service)
     {
-        _followService = followService;
-        _applicationMapper = applicationMapper;
+        _mapper = mapper;
+        _service = service;
     }
 
     public async Task<AddFollowCommandResponse> Handle(AddFollowCommandRequest request, CancellationToken cancellationToken)
     {
-        var serviceRequest = _applicationMapper.Map<AddFollowCommand>(request);
-        var follow = await _followService.AddAsync(serviceRequest, cancellationToken);
+        var serviceRequest = _mapper.Map<AddFollowCommand>(request);
+        var serviceResponse = await _service.AddAsync(serviceRequest, cancellationToken);
 
-        var response = _applicationMapper.Map<AddFollowCommandResponse>(follow);
+        var response = _mapper.Map<AddFollowCommandResponse>(serviceResponse);
 
         return response;
     }

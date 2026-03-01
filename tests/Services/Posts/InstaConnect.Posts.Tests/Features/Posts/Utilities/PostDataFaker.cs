@@ -48,8 +48,15 @@ public static class PostDataFaker
 
     public static PostsSortTerm GetSortTerm()
     {
-        const PostsSortTerm SortProperty = PostsSortTerm.ByCreatedAt;
+        const PostsSortTerm SortTerm = PostsSortTerm.ByCreatedAt;
 
-        return SortProperty;
+        return SortTerm;
+    }
+
+    public static PostsForUserSortTerm GetForUserSortTerm()
+    {
+        const PostsForUserSortTerm SortTerm = PostsForUserSortTerm.ByCreatedAt;
+
+        return SortTerm;
     }
 }

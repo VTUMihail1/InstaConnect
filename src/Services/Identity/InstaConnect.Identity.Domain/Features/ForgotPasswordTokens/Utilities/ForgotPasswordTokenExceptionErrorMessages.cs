@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Domain.Extensions;
+using InstaConnect.Identity.Domain.Models.Requests;
 
 namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Utilities;
 
@@ -18,10 +19,11 @@ public static class ForgotPasswordTokenExceptionErrorMessages
         return Format.FormatCurrentCulture(id.Id.Id, id.Value);
     }
 
-    public static string GetInclidePropertyNotSupportedMessage(ICollection<ForgotPasswordTokenIncludeProperty> includeProperties)
+    public static string GetInclideDescriptorsNotSupportedMessage(ICollection<IdentityIncludeDescriptor> descriptors)
     {
-        const string Format = "ForgotPasswordTokenIncludeProperties(types: {0}) is not supported";
+        const string Format = "ForgotPasswordTokenDescriptors({0}) is not supported";
 
-        return Format.FormatCurrentCulture(includeProperties.JoinAsStringWithComa());
+        return Format.FormatCurrentCulture(descriptors
+            .JoinIncludeDescriptorsAsStringWithComa<IdentityDestinationType, IdentityIncludeType, IdentityIncludeDescriptor>());
     }
 }

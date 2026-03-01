@@ -8,68 +8,68 @@ internal class UserQueryRepository : IUserQueryRepository
 {
     private readonly IPaginator _paginator;
     private readonly IIdentityContext _context;
-    private readonly ISortOrdererFactory _sortOrderFactory;
-    private readonly IUserSortPropertyFactory _sortPropertyFactory;
-    private readonly IUserIncludePropertyFactory _includePropertyFactory;
+    private readonly IUserIncluderFactory _includerFactory;
+    private readonly ISortOrdererFactory _sortOrdererFactory;
+    private readonly IUsersSortTermerFactory _sortTermerFactory;
 
     public UserQueryRepository(
         IPaginator paginator,
         IIdentityContext context,
-        ISortOrdererFactory sortOrderFactory,
-        IUserSortPropertyFactory sortPropertyFactory,
-        IUserIncludePropertyFactory includePropertyFactory)
+        IUserIncluderFactory includerFactory,
+        ISortOrdererFactory sortOrdererFactory,
+        IUsersSortTermerFactory sortTermerFactory)
     {
         _paginator = paginator;
         _context = context;
-        _sortOrderFactory = sortOrderFactory;
-        _sortPropertyFactory = sortPropertyFactory;
-        _includePropertyFactory = includePropertyFactory;
+        _includerFactory = includerFactory;
+        _sortOrdererFactory = sortOrdererFactory;
+        _sortTermerFactory = sortTermerFactory;
     }
 
     public async Task<ICollection<UserResponse>> GetAllAsync(
-        UserFilterQuery filter,
+        UsersFilterQuery filter,
         CurrentUserQuery current,
-        UserSortingQuery sorting,
-        UserPaginationQuery pagination,
+        UsersSortingQuery sorting,
+        UsersPaginationQuery pagination,
         UserInclude? include,
         CancellationToken cancellationToken)
     {
         return await _context
             .Users
-            .Aggregate()
-            .Includes(_includePropertyFactory, include)
+            .AggregateWithCaseInsensitiveCollation()
+            .Includes(_includerFactory, include)
             .Match(filter)
-            .ProjectToResponse(current)
-            .Sort(_sortOrderFactory, _sortPropertyFactory, sorting)
+            .ProjectToFullResponse(current)
+            .Sort(_sortOrdererFactory, _sortTermerFactory, sorting)
             .Paginate(_paginator, pagination)
             .ToListAsync(cancellationToken);
     }
 
     public async Task<ICollection<UserResponse>> GetAllAsync(
-        UserFilterQuery filter,
+        UsersFilterQuery filter,
         CurrentUserQuery current,
-        UserSortingQuery sorting,
-        UserPaginationQuery pagination,
+        UsersSortingQuery sorting,
+        UsersPaginationQuery pagination,
         CancellationToken cancellationToken)
     {
         return await GetAllAsync(filter, current, sorting, pagination, null, cancellationToken);
     }
 
     public async Task<long> GetTotalCountAsync(
-        UserFilterQuery filter,
+        UsersFilterQuery filter,
         UserInclude? include,
         CancellationToken cancellationToken)
     {
         return await _context
             .Users
-            .Aggregate()
-            .Includes(_includePropertyFactory, include)
+            .AggregateWithCaseInsensitiveCollation()
+            .Includes(_includerFactory, include)
             .Match(filter)
             .GetCount(cancellationToken);
     }
 
     public async Task<long> GetTotalCountAsync(
-        UserFilterQuery filter,
+        UsersFilterQuery filter,
         CancellationToken cancellationToken)
     {
         return await GetTotalCountAsync(filter, null, cancellationToken);
@@ -83,9 +83,10 @@ internal class UserQueryRepository : IUserQueryRepository
     {
         return await _context
             .Users
-            .Aggregate()
+            .AggregateWithCaseInsensitiveCollation()
+            .Includes(_includerFactory, include)
             .Match(id)
-            .ProjectToResponse(current)
+            .ProjectToFullResponse(current)
             .FirstOrDefaultAsync(cancellationToken);
     }
 

@@ -1,4 +1,6 @@
-﻿using InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Extensions;
+﻿using System.Reflection;
+
+using InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Extensions;
 using InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Extensions;
 using InstaConnect.Identity.Infrastructure.Features.RefreshTokens.Extensions;
 using InstaConnect.Identity.Infrastructure.Features.UserClaims.Extensions;
@@ -11,7 +13,8 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection serviceCollection,
         IConfiguration configuration,
-        IWebHostEnvironment webHostEnvironment)
+        IWebHostEnvironment webHostEnvironment,
+        Assembly presentationAssembly)
     {
         serviceCollection
             .AddUserServices()
@@ -26,7 +29,7 @@ public static class ServiceCollectionExtensions
             .AddServicesWithMatchingInterfaces(IdentityInfrastructureReference.Assembly)
             .AddMongoDbContext()
             .AddUnitOfWork()
-            .AddRabbitMQ(configuration, IdentityInfrastructureReference.Assembly)
+            .AddRabbitMQ(configuration, presentationAssembly)
             .AddJwtBearer(configuration)
             .AddGuidProvider()
             .AddDateTimeProvider()

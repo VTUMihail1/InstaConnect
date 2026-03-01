@@ -5,17 +5,17 @@ using InstaConnect.Follows.Infrastructure.Features.Users.Extensions;
 using MongoDB.Driver;
 
 namespace InstaConnect.Follows.Infrastructure.Features.Follows.Extensions;
-public static class FollowFilterExtensions
+
+internal static class FollowFilterExtensions
 {
-    public static FilterDefinition<Follow> GetFilter(this FollowByFollowerFilterQuery filter)
+    public static FilterDefinition<Follow> GetFilter(this FollowsForFollowerFilterQuery filter)
     {
         var followerId = filter.FollowerId.GetFilterForIdEquals<Follow>(p => p.Id.FollowerId.Id);
         var followingName = filter.FollowingName.GetFilterForNameStartsWith<Follow>(p => p.Following!.Name.Value);
 
         return Builders<Follow>.Filter.And(followerId, followingName);
     }
-
-    public static FilterDefinition<Follow> GetFilter(this FollowByFollowingFilterQuery filter)
+    public static FilterDefinition<Follow> GetFilter(this FollowsForFollowingFilterQuery filter)
     {
         var followingId = filter.FollowingId.GetFilterForIdEquals<Follow>(p => p.Id.FollowingId.Id);
         var followerName = filter.FollowerName.GetFilterForNameStartsWith<Follow>(p => p.Follower!.Name.Value);
@@ -28,7 +28,8 @@ public static class FollowFilterExtensions
         return filter.GetFilterForIdEquals<Follow>(p => p.Id.FollowerId.Id, p => p.Id.FollowingId.Id);
     }
 
-    public static FilterDefinition<T> GetFilterForIdEquals<T>(this FollowId filter,
+    public static FilterDefinition<T> GetFilterForIdEquals<T>(
+        this FollowId filter,
         Expression<Func<T, object>> followerIdField,
         Expression<Func<T, object>> followingIdField)
     {

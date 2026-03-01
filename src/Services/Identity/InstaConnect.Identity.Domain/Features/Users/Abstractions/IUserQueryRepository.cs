@@ -3,27 +3,27 @@
 public interface IUserQueryRepository
 {
     Task<ICollection<UserResponse>> GetAllAsync(
-        UserFilterQuery filter,
+        UsersFilterQuery filter,
         CurrentUserQuery current,
-        UserSortingQuery sorting,
-        UserPaginationQuery pagination,
+        UsersSortingQuery sorting,
+        UsersPaginationQuery pagination,
         UserInclude? include,
         CancellationToken cancellationToken);
 
     Task<ICollection<UserResponse>> GetAllAsync(
-        UserFilterQuery filter,
+        UsersFilterQuery filter,
         CurrentUserQuery current,
-        UserSortingQuery sorting,
-        UserPaginationQuery pagination,
+        UsersSortingQuery sorting,
+        UsersPaginationQuery pagination,
         CancellationToken cancellationToken);
 
     Task<long> GetTotalCountAsync(
-        UserFilterQuery filter,
+        UsersFilterQuery filter,
         UserInclude? include,
         CancellationToken cancellationToken);
 
     Task<long> GetTotalCountAsync(
-        UserFilterQuery filter,
+        UsersFilterQuery filter,
         CancellationToken cancellationToken);
 
     Task<UserResponse?> GetByIdAsync(

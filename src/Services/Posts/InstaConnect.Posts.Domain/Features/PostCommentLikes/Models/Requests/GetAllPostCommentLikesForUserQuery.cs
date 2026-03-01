@@ -2,7 +2,7 @@
 
 public record GetAllPostCommentLikesForUserQuery(
     PostCommentLikesForUserFilterQuery Filter,
-    PostCommentLikesSortingQuery Sorting,
+    PostCommentLikesForUserSortingQuery Sorting,
     PostCommentLikesPaginationQuery Pagination,
     CurrentUserQuery CurrentUser)
-    : ISortableQuery<PostCommentLikesSortingQuery, PostCommentLikesSortTerm>, IPaginatableQuery<PostCommentLikesPaginationQuery>, ICurrentUserableQuery;
+    : ISortableQuery<PostCommentLikesForUserSortingQuery, PostCommentLikesForUserSortTerm>, IPaginatableQuery<PostCommentLikesPaginationQuery>, ICurrentUserableQuery;

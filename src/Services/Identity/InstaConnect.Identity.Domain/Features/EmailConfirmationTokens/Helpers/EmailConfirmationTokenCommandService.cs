@@ -38,11 +38,11 @@ internal class EmailConfirmationTokenCommandService : IEmailConfirmationTokenCom
             throw new UserNameNotFoundException(command.Name);
         }
 
-        var newEmailConfirmationToken = _emailConfirmationTokenFactory.Create(user.Id);
+        var newEmailConfirmationToken = _emailConfirmationTokenFactory.Create(user.Id).AddUser(user);
         await _emailConfirmationTokenRepository.AddAsync(newEmailConfirmationToken, cancellationToken);
 
         await _eventPublisher.PublishAsync(
-            _mapper.Map<EmailConfirmationTokenAddedEventRequest>(newEmailConfirmationToken.AddUser(user)), cancellationToken);
+            _mapper.Map<EmailConfirmationTokenAddedEventRequest>(newEmailConfirmationToken), cancellationToken);
 
         return newEmailConfirmationToken;
     }
@@ -70,6 +70,9 @@ internal class EmailConfirmationTokenCommandService : IEmailConfirmationTokenCom
         }
 
         await _emailConfirmationTokenRepository.DeleteRangeAsync(user.EmailConfirmationTokens, cancellationToken);
+
+        await _eventPublisher.PublishAsync(
+            _mapper.Map<ICollection<EmailConfirmationTokenDeletedEventRequest>>(user), cancellationToken);
 
         user.ConfirmEmail();
         await _repository.UpdateAsync(user, cancellationToken);

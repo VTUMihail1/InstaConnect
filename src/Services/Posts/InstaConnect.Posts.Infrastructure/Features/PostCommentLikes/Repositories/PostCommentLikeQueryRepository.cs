@@ -11,19 +11,22 @@ internal class PostCommentLikeQueryRepository : IPostCommentLikeQueryRepository
     private readonly ISortOrdererFactory _sortOrdererFactory;
     private readonly IPostCommentLikeIncluderFactory _commentLikeIncluderFactory;
     private readonly IPostCommentLikesSortTermerFactory _commentLikeSortTermerFactory;
+    private readonly IPostCommentLikesForUserSortTermerFactory _commentLikeForUserSortTermerFactory;
 
     public PostCommentLikeQueryRepository(
         IPaginator paginator,
         IPostsContext context,
         ISortOrdererFactory sortOrdererFactory,
         IPostCommentLikeIncluderFactory commentLikeIncluderFactory,
-        IPostCommentLikesSortTermerFactory commentLikeSortTermerFactory)
+        IPostCommentLikesSortTermerFactory commentLikeSortTermerFactory,
+        IPostCommentLikesForUserSortTermerFactory commentLikeForUserSortTermerFactory)
     {
         _paginator = paginator;
         _context = context;
         _sortOrdererFactory = sortOrdererFactory;
         _commentLikeIncluderFactory = commentLikeIncluderFactory;
         _commentLikeSortTermerFactory = commentLikeSortTermerFactory;
+        _commentLikeForUserSortTermerFactory = commentLikeForUserSortTermerFactory;
     }
 
     public async Task<ICollection<PostCommentLikeResponse>> GetAllAsync(
@@ -58,7 +61,7 @@ internal class PostCommentLikeQueryRepository : IPostCommentLikeQueryRepository
     public async Task<ICollection<PostCommentLikeResponse>> GetAllForUserAsync(
         PostCommentLikesForUserFilterQuery filter,
         CurrentUserQuery currentUser,
-        PostCommentLikesSortingQuery sorting,
+        PostCommentLikesForUserSortingQuery sorting,
         PostCommentLikesPaginationQuery pagination,
         PostCommentLikeInclude? include,
         CancellationToken cancellationToken)
@@ -69,7 +72,7 @@ internal class PostCommentLikeQueryRepository : IPostCommentLikeQueryRepository
             .Includes(_commentLikeIncluderFactory, include)
             .Match(filter)
             .ProjectToResponseWithoutUser(currentUser)
-            .Sort(_sortOrdererFactory, _commentLikeSortTermerFactory, sorting)
+            .Sort(_sortOrdererFactory, _commentLikeForUserSortTermerFactory, sorting)
             .Paginate(_paginator, pagination)
             .ToListAsync(cancellationToken);
     }
@@ -77,7 +80,7 @@ internal class PostCommentLikeQueryRepository : IPostCommentLikeQueryRepository
     public async Task<ICollection<PostCommentLikeResponse>> GetAllForUserAsync(
         PostCommentLikesForUserFilterQuery filter,
         CurrentUserQuery currentUser,
-        PostCommentLikesSortingQuery sorting,
+        PostCommentLikesForUserSortingQuery sorting,
         PostCommentLikesPaginationQuery pagination,
         CancellationToken cancellationToken)
     {

@@ -12,19 +12,22 @@ internal class PostLikeQueryRepository : IPostLikeQueryRepository
     private readonly ISortOrdererFactory _sortOrdererFactory;
     private readonly IPostLikeIncluderFactory _likeIncluderFactory;
     private readonly IPostLikesSortTermerFactory _likeSortTermerFactory;
+    private readonly IPostLikesForUserSortTermerFactory _likeForUserSortTermerFactory;
 
     public PostLikeQueryRepository(
         IPaginator paginator,
         IPostsContext context,
         ISortOrdererFactory sortOrdererFactory,
         IPostLikeIncluderFactory likeIncluderFactory,
-        IPostLikesSortTermerFactory likeSortTermerFactory)
+        IPostLikesSortTermerFactory likeSortTermerFactory,
+        IPostLikesForUserSortTermerFactory likeForUserSortTermerFactory)
     {
         _paginator = paginator;
         _context = context;
         _sortOrdererFactory = sortOrdererFactory;
         _likeIncluderFactory = likeIncluderFactory;
         _likeSortTermerFactory = likeSortTermerFactory;
+        _likeForUserSortTermerFactory = likeForUserSortTermerFactory;
     }
 
     public async Task<ICollection<PostLikeResponse>> GetAllAsync(
@@ -59,7 +62,7 @@ internal class PostLikeQueryRepository : IPostLikeQueryRepository
     public async Task<ICollection<PostLikeResponse>> GetAllForUserAsync(
         PostLikesForUserFilterQuery filter,
         CurrentUserQuery currentUser,
-        PostLikesSortingQuery sorting,
+        PostLikesForUserSortingQuery sorting,
         PostLikesPaginationQuery pagination,
         PostLikeInclude? include,
         CancellationToken cancellationToken)
@@ -70,7 +73,7 @@ internal class PostLikeQueryRepository : IPostLikeQueryRepository
             .Includes(_likeIncluderFactory, include)
             .Match(filter)
             .ProjectToResponseWithoutUser(currentUser)
-            .Sort(_sortOrdererFactory, _likeSortTermerFactory, sorting)
+            .Sort(_sortOrdererFactory, _likeForUserSortTermerFactory, sorting)
             .Paginate(_paginator, pagination)
             .ToListAsync(cancellationToken);
     }
@@ -78,7 +81,7 @@ internal class PostLikeQueryRepository : IPostLikeQueryRepository
     public async Task<ICollection<PostLikeResponse>> GetAllForUserAsync(
         PostLikesForUserFilterQuery filter,
         CurrentUserQuery currentUser,
-        PostLikesSortingQuery sorting,
+        PostLikesForUserSortingQuery sorting,
         PostLikesPaginationQuery pagination,
         CancellationToken cancellationToken)
     {

@@ -2,15 +2,15 @@
 
 public class UserIncludeBuilderFactory : IUserIncludeBuilderFactory
 {
-    private readonly IUserIncludeDescriptorsFactory _descriptorsFactory;
+    private readonly IUserIncludeDescriptorFactory _descriptorFactory;
 
-    public UserIncludeBuilderFactory(IUserIncludeDescriptorsFactory propertyEntryFactory)
+    public UserIncludeBuilderFactory(IUserIncludeDescriptorFactory descriptorFactory)
     {
-        _descriptorsFactory = propertyEntryFactory;
+        _descriptorFactory = descriptorFactory;
     }
 
     public UserIncludeBuilder Create()
     {
-        return new UserIncludeBuilder([], _descriptorsFactory);
+        return new UserIncludeBuilder([], _descriptorFactory);
     }
 }

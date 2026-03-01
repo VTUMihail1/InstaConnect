@@ -203,7 +203,7 @@ public static class PostCommentValidationAssertions
 
     public static void ShouldHaveValidationErrorForSortTerm(
         this TestValidationResult<GetAllPostCommentsForUserQueryRequest> result,
-        IEnumMessageTransformer<PostCommentsSortTerm> messageTransformer,
+        IEnumMessageTransformer<PostCommentsForUserSortTerm> messageTransformer,
         GetAllPostCommentsForUserQueryRequest request)
     {
         result.ShouldHaveValidationErrorForProperty(p => p.SortTerm, messageTransformer, request);

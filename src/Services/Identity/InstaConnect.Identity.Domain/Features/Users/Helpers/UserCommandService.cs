@@ -42,16 +42,16 @@ internal class UserCommandService : IUserCommandService
 
     public async Task<UserId> AddAsync(AddUserCommand command, CancellationToken cancellationToken)
     {
-        var userByEmail = await _repository.GetByEmailAsync(command.Email, cancellationToken);
+        var emailIsNotUnique = !await _repository.IsEmailUniqueAsync(command.Email, cancellationToken);
 
-        if (userByEmail != null)
+        if (emailIsNotUnique)
         {
             throw new UserEmailAlreadyTakenException(command.Email);
         }
 
-        var userByName = await _repository.GetByNameAsync(command.Name, cancellationToken);
+        var nameIsNotUnique = !await _repository.IsNameUniqueAsync(command.Name, cancellationToken);
 
-        if (userByName != null)
+        if (nameIsNotUnique)
         {
             throw new UserNameAlreadyTakenException(command.Name);
         }
@@ -89,23 +89,23 @@ internal class UserCommandService : IUserCommandService
             throw new UserNotFoundException(command.Id);
         }
 
-        var userByEmail = await _repository.GetByEmailAsync(command.Email, cancellationToken);
+        var emailIsNotUnique = !await _repository.IsEmailUniqueAsync(command.Email, cancellationToken);
 
-        if (user.DoesNotHaveEmail(command.Email) && userByEmail != null)
+        if (user.Email.IsNot(command.Email) && emailIsNotUnique)
         {
             throw new UserEmailAlreadyTakenException(command.Email);
         }
 
-        if (user.DoesNotHaveEmail(command.Email))
+        if (user.Email.IsNot(command.Email))
         {
             await _emailConfirmationTokenRepository.DeleteRangeAsync(user.EmailConfirmationTokens, cancellationToken);
 
             user.UpdateEmail(command.Email);
         }
 
-        var userByName = await _repository.GetByNameAsync(command.Name, cancellationToken);
+        var nameIsNotUnique = !await _repository.IsNameUniqueAsync(command.Name, cancellationToken);
 
-        if (user.DoesNotHaveName(command.Name) && userByName != null)
+        if (user.Name.IsNot(command.Name) && nameIsNotUnique)
         {
             throw new UserNameAlreadyTakenException(command.Name);
         }

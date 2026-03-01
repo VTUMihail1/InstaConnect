@@ -45,7 +45,7 @@ internal class PostLikeQueryService : IPostLikeQueryService
 
         var totalCount = await _likeRepository.GetTotalCountAsync(query.Filter, likeInclude, cancellationToken);
 
-        return _likeCollectionResponseFactory.Create(post, postLikes, totalCount, query.Pagination);
+        return _likeCollectionResponseFactory.CreateForPost(post, postLikes, totalCount, query.Pagination);
     }
 
     public async Task<PostLikeCollectionResponse> GetAllForUserAsync(GetAllPostLikesForUserQuery query, CancellationToken cancellationToken)
@@ -69,7 +69,7 @@ internal class PostLikeQueryService : IPostLikeQueryService
 
         var totalCount = await _likeRepository.GetTotalCountForUserAsync(query.Filter, likeInclude, cancellationToken);
 
-        return _likeCollectionResponseFactory.Create(user, postLikes, totalCount, query.Pagination);
+        return _likeCollectionResponseFactory.CreateForUser(user, postLikes, totalCount, query.Pagination);
     }
 
     public async Task<PostLikeResponse> GetByIdAsync(GetPostLikeByIdQuery query, CancellationToken cancellationToken)

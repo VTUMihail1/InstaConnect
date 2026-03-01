@@ -204,7 +204,7 @@ public static class PostLikeValidationProblemDetailsAssertions
             request);
     }
 
-    public static void ShouldSatisfyInvalidValidationForSortProperty(
+    public static void ShouldSatisfyInvalidValidationForSortTerm(
         this ApplicationProblemDetails problemDetails,
         IEnumMessageTransformer<PostLikesSortTerm> messageTransformer,
         GetAllPostLikesApiRequest request)
@@ -215,9 +215,9 @@ public static class PostLikeValidationProblemDetailsAssertions
             request);
     }
 
-    public static void ShouldSatisfyInvalidValidationForSortProperty(
+    public static void ShouldSatisfyInvalidValidationForSortTerm(
         this ApplicationProblemDetails problemDetails,
-        IEnumMessageTransformer<PostLikesSortTerm> messageTransformer,
+        IEnumMessageTransformer<PostLikesForUserSortTerm> messageTransformer,
         GetAllPostLikesForUserApiRequest request)
     {
         problemDetails.ShouldSatisfyInvalidValidation(

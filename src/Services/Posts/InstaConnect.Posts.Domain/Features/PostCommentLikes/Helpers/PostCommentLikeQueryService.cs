@@ -59,7 +59,7 @@ internal class PostCommentLikeQueryService : IPostCommentLikeQueryService
 
         var totalCount = await _commentLikeRepository.GetTotalCountAsync(query.Filter, commentLikeInclude, cancellationToken);
 
-        return _commentLikeCollectionResponseFactory.Create(postComment, postCommentLikes, totalCount, query.Pagination);
+        return _commentLikeCollectionResponseFactory.CreateForPostComment(postComment, postCommentLikes, totalCount, query.Pagination);
     }
 
     public async Task<PostCommentLikeCollectionResponse> GetAllForUserAsync(GetAllPostCommentLikesForUserQuery query, CancellationToken cancellationToken)
@@ -84,7 +84,7 @@ internal class PostCommentLikeQueryService : IPostCommentLikeQueryService
 
         var totalCount = await _commentLikeRepository.GetTotalCountForUserAsync(query.Filter, commentLikeInclude, cancellationToken);
 
-        return _commentLikeCollectionResponseFactory.Create(user, postCommentLikes, totalCount, query.Pagination);
+        return _commentLikeCollectionResponseFactory.CreateForUser(user, postCommentLikes, totalCount, query.Pagination);
     }
 
     public async Task<PostCommentLikeResponse> GetByIdAsync(GetPostCommentLikeByIdQuery query, CancellationToken cancellationToken)

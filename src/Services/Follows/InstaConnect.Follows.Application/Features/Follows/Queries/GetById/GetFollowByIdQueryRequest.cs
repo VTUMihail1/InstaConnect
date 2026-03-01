@@ -1,3 +1,8 @@
-﻿namespace InstaConnect.Follows.Application.Features.Follows.Queries.GetById;
+﻿using InstaConnect.Follows.Application.Features.Users.Abstractions;
 
-public record GetFollowByIdQueryRequest(string FollowerId, string FollowingId) : IQueryRequest<GetFollowByIdQueryResponse>;
+namespace InstaConnect.Follows.Application.Features.Follows.Queries.GetById;
+
+public record GetFollowByIdQueryRequest(
+    string FollowerId,
+    string FollowingId,
+    string CurrentUserId) : IQueryRequest<GetFollowByIdQueryResponse>, ICurrentUserableQueryRequest;

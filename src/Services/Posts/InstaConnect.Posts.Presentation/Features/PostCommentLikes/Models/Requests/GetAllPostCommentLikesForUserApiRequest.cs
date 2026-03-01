@@ -10,6 +10,6 @@ public record GetAllPostCommentLikesForUserApiRequest(
     [FromRoute] string UserId,
     [FromClaim(ClaimTypes.NameIdentifier)] string CurrentUserId,
     [FromQuery] CommonSortOrder SortOrder = CommonDefaultValues.SortOrder,
-    [FromQuery] PostCommentLikesSortTerm SortTerm = PostCommentLikeDefaultValues.SortTerm,
+    [FromQuery] PostCommentLikesForUserSortTerm SortTerm = PostCommentLikeDefaultValues.SortTermForUser,
     [FromQuery] int Page = PostCommentLikeDefaultValues.Page,
-    [FromQuery] int PageSize = PostCommentLikeDefaultValues.PageSize) : ISortableApiRequest<PostCommentLikesSortTerm>, IPaginatableApiRequest, ICurrentUserableApiRequest;
+    [FromQuery] int PageSize = PostCommentLikeDefaultValues.PageSize) : ISortableApiRequest<PostCommentLikesForUserSortTerm>, IPaginatableApiRequest, ICurrentUserableApiRequest;

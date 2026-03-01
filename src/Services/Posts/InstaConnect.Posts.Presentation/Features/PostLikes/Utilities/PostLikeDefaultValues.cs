@@ -6,6 +6,8 @@ public static class PostLikeDefaultValues
 {
     public const PostLikesSortTerm SortTerm = PostLikesSortTerm.ByCreatedAt;
 
+    public const PostLikesForUserSortTerm SortTermForUser = PostLikesForUserSortTerm.ByCreatedAt;
+
     public const int Page = 1;
 
     public const int PageSize = 20;

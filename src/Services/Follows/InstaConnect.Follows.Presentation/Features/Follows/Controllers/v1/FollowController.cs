@@ -1,7 +1,5 @@
 ﻿using InstaConnect.Follows.Application.Features.Follows.Commands.Add;
 using InstaConnect.Follows.Application.Features.Follows.Commands.Delete;
-using InstaConnect.Follows.Application.Features.Follows.Queries.GetAllByFollower;
-using InstaConnect.Follows.Application.Features.Follows.Queries.GetAllByFollowing;
 using InstaConnect.Follows.Application.Features.Follows.Queries.GetById;
 
 namespace InstaConnect.Follows.Presentation.Features.Follows.Controllers.v1;
@@ -11,45 +9,15 @@ namespace InstaConnect.Follows.Presentation.Features.Follows.Controllers.v1;
 [EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class FollowController : ControllerBase
 {
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly IApplicationSender _applicationSender;
+    private readonly IApplicationMapper _mapper;
+    private readonly IApplicationSender _sender;
 
     public FollowController(
-        IApplicationMapper applicationMapper,
-        IApplicationSender applicationSender)
+        IApplicationMapper mapper,
+        IApplicationSender sender)
     {
-        _applicationMapper = applicationMapper;
-        _applicationSender = applicationSender;
-    }
-
-    // GET: api/followers/5f0f2dd0-e957-4d72-8141-767a36fc6e95/follows
-    [HttpGet(FollowRoutes.Follower)]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<GetAllFollowsByFollowerApiResponse>> GetAllByFollowerAsync(
-        GetAllFollowsByFollowerApiRequest request,
-        CancellationToken cancellationToken)
-    {
-        var queryRequest = _applicationMapper.Map<GetAllFollowsByFollowerQueryRequest>(request);
-        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
-        var response = _applicationMapper.Map<GetAllFollowsByFollowerApiResponse>(queryResponse);
-
-        return Ok(response);
-    }
-
-    // GET: api/followings/5f0f2dd0-e957-4d72-8141-767a36fc6e95/follows
-    [HttpGet(FollowRoutes.Following)]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<GetAllFollowsByFollowingApiResponse>> GetAllByFollowingAsync(
-        GetAllFollowsByFollowingApiRequest request,
-        CancellationToken cancellationToken)
-    {
-        var queryRequest = _applicationMapper.Map<GetAllFollowsByFollowingQueryRequest>(request);
-        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
-        var response = _applicationMapper.Map<GetAllFollowsByFollowingApiResponse>(queryResponse);
-
-        return Ok(response);
+        _mapper = mapper;
+        _sender = sender;
     }
 
     // GET: api/followers/current/follows/5f0f2dd0-e957-4d72-8141-767a36fc6e95
@@ -60,9 +28,9 @@ public class FollowController : ControllerBase
         GetFollowByIdApiRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _applicationMapper.Map<GetFollowByIdQueryRequest>(request);
-        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
-        var response = _applicationMapper.Map<GetFollowByIdApiResponse>(queryResponse);
+        var queryRequest = _mapper.Map<GetFollowByIdQueryRequest>(request);
+        var queryResponse = await _sender.SendAsync(queryRequest, cancellationToken);
+        var response = _mapper.Map<GetFollowByIdApiResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -77,9 +45,9 @@ public class FollowController : ControllerBase
         AddFollowApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<AddFollowCommandRequest>(request);
-        var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
-        var response = _applicationMapper.Map<AddFollowApiResponse>(commandResponse);
+        var commandRequest = _mapper.Map<AddFollowCommandRequest>(request);
+        var commandResponse = await _sender.SendAsync(commandRequest, cancellationToken);
+        var response = _mapper.Map<AddFollowApiResponse>(commandResponse);
 
         return Ok(response);
     }
@@ -94,8 +62,8 @@ public class FollowController : ControllerBase
         DeleteFollowApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<DeleteFollowCommandRequest>(request);
-        await _applicationSender.SendAsync(commandRequest, cancellationToken);
+        var commandRequest = _mapper.Map<DeleteFollowCommandRequest>(request);
+        await _sender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }

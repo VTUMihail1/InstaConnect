@@ -24,7 +24,7 @@ public static class PostCommentEquals
     public static bool Matches(this GetAllPostCommentsForUserQueryRequest query, GetAllPostCommentsForUserApiRequest request)
     {
         return query.MatchesFilter(request) &&
-               query.MatchesSortable<GetAllPostCommentsForUserQueryRequest, GetAllPostCommentsForUserApiRequest, PostCommentsSortTerm>(request) &&
+               query.MatchesSortable<GetAllPostCommentsForUserQueryRequest, GetAllPostCommentsForUserApiRequest, PostCommentsForUserSortTerm>(request) &&
                query.MatchesPaginatable(request) &&
                query.MatchesCurrentUserable(request);
     }

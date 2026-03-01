@@ -2,7 +2,7 @@
 
 public record GetAllPostsForUserQuery(
     PostsForUserFilterQuery Filter,
-    PostsSortingQuery Sorting,
+    PostsForUserSortingQuery Sorting,
     PostsPaginationQuery Pagination,
     CurrentUserQuery CurrentUser)
-    : ISortableQuery<PostsSortingQuery, PostsSortTerm>, IPaginatableQuery<PostsPaginationQuery>, ICurrentUserableQuery;
+    : ISortableQuery<PostsForUserSortingQuery, PostsForUserSortTerm>, IPaginatableQuery<PostsPaginationQuery>, ICurrentUserableQuery;

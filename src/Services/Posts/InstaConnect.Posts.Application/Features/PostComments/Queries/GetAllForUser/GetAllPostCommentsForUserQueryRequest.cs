@@ -7,7 +7,7 @@ public record GetAllPostCommentsForUserQueryRequest(
     string UserId,
     string CurrentUserId,
     CommonSortOrder SortOrder,
-    PostCommentsSortTerm SortTerm,
+    PostCommentsForUserSortTerm SortTerm,
     int Page,
     int PageSize)
-    : IQueryRequest<GetAllPostCommentsForUserQueryResponse>, ISortableQueryRequest<PostCommentsSortTerm>, IPaginatableQueryRequest, ICurrentUserableQueryRequest;
+    : IQueryRequest<GetAllPostCommentsForUserQueryResponse>, ISortableQueryRequest<PostCommentsForUserSortTerm>, IPaginatableQueryRequest, ICurrentUserableQueryRequest;

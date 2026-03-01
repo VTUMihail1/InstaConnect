@@ -2,6 +2,7 @@
 using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 using InstaConnect.Posts.Tests.Features.Posts.DataAttributes.SortTerm;
+using InstaConnect.Posts.Tests.Features.Posts.DataAttributes.SortTerm.ForUser;
 
 namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.Posts.Controllers.v1;
 
@@ -149,9 +150,9 @@ public class GetAllPostsForUserFunctionalTests : BasePostPresentationQueryFuncti
     }
 
     [Theory]
-    [PostsSortTermEmptyData]
+    [PostsForUserSortTermEmptyData]
     public async Task GetAllForUserAsync_ShouldHaveBadRequestStatusCode_WhenSortTermIsInvalid(
-        IEnumTransformer<PostsSortTerm> transformer)
+        IEnumTransformer<PostsForUserSortTerm> transformer)
     {
         // Arrange
         var request = _requestBuilder.WithSortTerm(transformer).Build();
@@ -164,9 +165,9 @@ public class GetAllPostsForUserFunctionalTests : BasePostPresentationQueryFuncti
     }
 
     [Theory]
-    [PostsSortTermEmptyWithMessageData]
+    [PostsForUserSortTermEmptyWithMessageData]
     public async Task GetAllForUserAsync_ShouldHaveBadRequestProblemDetails_WhenSortTermIsInvalid(
-        IEnumTransformer<PostsSortTerm> transformer, IEnumMessageTransformer<PostsSortTerm> messageTransformer)
+        IEnumTransformer<PostsForUserSortTerm> transformer, IEnumMessageTransformer<PostsForUserSortTerm> messageTransformer)
     {
         // Arrange
         var request = _requestBuilder.WithSortTerm(transformer).Build();
@@ -175,7 +176,7 @@ public class GetAllPostsForUserFunctionalTests : BasePostPresentationQueryFuncti
         var response = await HttpClient.GetAllPostsForUserProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyInvalidValidationForSortProperty(messageTransformer, request);
+        response.ShouldSatisfyInvalidValidationForSortTerm(messageTransformer, request);
     }
 
     [Theory]
@@ -303,11 +304,11 @@ public class GetAllPostsForUserFunctionalTests : BasePostPresentationQueryFuncti
     }
 
     [Theory]
-    [PostsSortTermCreatedAtData]
-    [PostsSortTermTitleData]
-    [PostsSortTermUserNameData]
-    public async Task GetAllForUserAsync_ShouldHaveOkStatusCode_WhenRequestAndSortPropertyAreValid(
-        IEnumTransformer<PostsSortTerm> transformer)
+    [PostsForUserSortTermCreatedAtData]
+    [PostsForUserSortTermTitleData]
+    [PostsForUserSortTermUserNameData]
+    public async Task GetAllForUserAsync_ShouldHaveOkStatusCode_WhenRequestAndSortTermAreValid(
+        IEnumTransformer<PostsForUserSortTerm> transformer)
     {
         // Arrange
         var request = _requestBuilder.WithSortTerm(transformer).Build();
@@ -380,11 +381,11 @@ public class GetAllPostsForUserFunctionalTests : BasePostPresentationQueryFuncti
     }
 
     [Theory]
-    [PostsSortTermWithCreatedAtTermData]
-    [PostsSortTermWithTitleTermData]
-    [PostsSortTermWithUserNameTermData]
-    public async Task GetAllForUserAsync_ShouldReturnResponse_WhenRequestAndSortPropertyAreValid(
-        IEnumTransformer<PostsSortTerm> transformer, ISortEnumTermTransformer<Post> termTransformer)
+    [PostsForUserSortTermWithCreatedAtTermData]
+    [PostsForUserSortTermWithTitleTermData]
+    [PostsForUserSortTermWithUserNameTermData]
+    public async Task GetAllForUserAsync_ShouldReturnResponse_WhenRequestAndSortTermAreValid(
+        IEnumTransformer<PostsForUserSortTerm> transformer, ISortEnumTermTransformer<Post> termTransformer)
     {
         // Arrange
         var request = _requestBuilder.WithSortTerm(transformer).Build();

@@ -210,7 +210,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
         var response = await HttpClient.GetAllPostCommentLikesProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyInvalidValidationForSortProperty(messageTransformer, request);
+        response.ShouldSatisfyInvalidValidationForSortTerm(messageTransformer, request);
     }
 
     [Theory]

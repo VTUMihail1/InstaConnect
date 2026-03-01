@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
     .AddDomain()
     .AddApplication()
-    .AddInfrastructure(builder.Configuration, builder.Environment)
+    .AddInfrastructure(builder.Configuration, builder.Environment, FollowPresentationReference.Assembly)
     .AddPresentation(builder.Configuration);
 
 builder.Host.AddSerilog();

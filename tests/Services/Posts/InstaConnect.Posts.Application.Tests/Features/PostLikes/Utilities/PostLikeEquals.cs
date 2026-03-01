@@ -25,7 +25,7 @@ public static class PostLikeEquals
     public static bool Matches(this GetAllPostLikesForUserQuery query, GetAllPostLikesForUserQueryRequest request)
     {
         return query.MatchesFilter(request) &&
-               query.MatchesSortable<GetAllPostLikesForUserQuery, GetAllPostLikesForUserQueryRequest, PostLikesSortTerm, PostLikesSortingQuery>(request) &&
+               query.MatchesSortable<GetAllPostLikesForUserQuery, GetAllPostLikesForUserQueryRequest, PostLikesForUserSortTerm, PostLikesForUserSortingQuery>(request) &&
                query.MatchesPaginatable<GetAllPostLikesForUserQuery, GetAllPostLikesForUserQueryRequest, PostLikesPaginationQuery>(request) &&
                query.MatchesCurrentUserable(request);
     }

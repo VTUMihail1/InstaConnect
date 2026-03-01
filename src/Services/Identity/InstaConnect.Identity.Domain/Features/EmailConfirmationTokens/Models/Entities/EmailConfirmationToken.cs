@@ -25,7 +25,7 @@ public class EmailConfirmationToken : IEntityWithId<EmailConfirmationTokenId>
 
     public User? User { get; private set; }
 
-    public EmailConfirmationToken AddUser(User user)
+    public EmailConfirmationToken AddUser(User? user)
     {
         User = user;
 
