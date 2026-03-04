@@ -8,7 +8,7 @@ namespace InstaConnect.Follows.Infrastructure.Features.Follows.Extensions;
 
 internal static class FollowFilterExtensions
 {
-    public static FilterDefinition<Follow> GetFilter(this FollowsForFollowerFilterQuery filter)
+    public static FilterDefinition<Follow> GetFilter(this FollowsFilterQuery filter)
     {
         var followerId = filter.FollowerId.GetFilterForIdEquals<Follow>(p => p.Id.FollowerId.Id);
         var followingName = filter.FollowingName.GetFilterForNameStartsWith<Follow>(p => p.Following!.Name.Value);

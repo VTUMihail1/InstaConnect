@@ -3,9 +3,9 @@
 public enum PostsIncludeType
 {
     None,
-    Users,
-    Posts,
-    PostLikes,
-    PostComments,
-    PostCommentLikes
+    User,
+    Post,
+    PostLike,
+    PostComment,
+    PostCommentLike
 }

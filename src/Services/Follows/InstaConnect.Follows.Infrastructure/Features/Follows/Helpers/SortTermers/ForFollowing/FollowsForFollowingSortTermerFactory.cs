@@ -15,7 +15,7 @@ internal class FollowsForFollowingSortTermerFactory : IFollowsForFollowingSortTe
 
         if (sortTermer == null)
         {
-            throw new FollowForFollowingSortTermNotSupportedException(sortTerm);
+            throw new FollowsForFollowingSortTermNotSupportedException(sortTerm);
         }
 
         return sortTermer;

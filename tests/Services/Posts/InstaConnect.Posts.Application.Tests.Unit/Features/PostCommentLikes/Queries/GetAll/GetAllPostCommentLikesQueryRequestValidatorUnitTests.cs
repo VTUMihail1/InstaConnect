@@ -110,7 +110,7 @@ public class GetAllPostCommentLikesQueryRequestValidatorUnitTests : BasePostComm
         IEnumMessageTransformer<PostCommentLikesSortTerm> messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(transformer).Build();
+        var request = _requestBuilder.WithSortTerm(transformer).Build();
 
         // Act
         var result = _requestValidator.TestValidate(request);

@@ -3,14 +3,14 @@
 namespace InstaConnect.Posts.Domain.Features.PostComments.Abstractions;
 internal interface IPostCommentCollectionResponseFactory
 {
-    PostCommentCollectionResponse CreateForUser(
-        UserResponse? user,
+    PostCommentCollectionResponse Create(
+        PostResponse? post,
         ICollection<PostCommentResponse> postComments,
         long totalCount,
         PostCommentsPaginationQuery pagination);
 
-    PostCommentCollectionResponse CreateForPost(
-        PostResponse? post,
+    PostCommentCollectionResponse CreateForUser(
+        UserResponse? user,
         ICollection<PostCommentResponse> postComments,
         long totalCount,
         PostCommentsPaginationQuery pagination);

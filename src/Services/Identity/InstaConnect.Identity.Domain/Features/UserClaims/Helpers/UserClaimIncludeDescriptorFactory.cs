@@ -6,6 +6,6 @@ public class UserClaimIncludeDescriptorFactory : IUserClaimIncludeDescriptorFact
 {
     public IdentityIncludeDescriptor CreateUser()
     {
-        return new(IdentityDestinationType.UserClaims, IdentityIncludeType.Users);
+        return new(IdentityDestinationType.UserClaim, IdentityIncludeType.User);
     }
 }

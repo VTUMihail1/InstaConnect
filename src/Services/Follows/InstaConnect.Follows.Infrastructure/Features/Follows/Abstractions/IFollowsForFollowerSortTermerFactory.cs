@@ -1,3 +1,0 @@
-﻿namespace InstaConnect.Follows.Infrastructure.Features.Follows.Abstractions;
-
-internal interface IFollowsForFollowerSortTermerFactory : ISortTermerFactory<FollowsForFollowerSortTerm, IFollowsForFollowerSortTermer, FollowResponse>;

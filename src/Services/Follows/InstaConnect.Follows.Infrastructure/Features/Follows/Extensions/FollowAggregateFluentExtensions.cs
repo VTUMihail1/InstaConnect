@@ -8,7 +8,7 @@ internal static class FollowAggregateFluentExtensions
 {
     public static IAggregateFluent<Follow> Match(
         this IAggregateFluent<Follow> aggregate,
-        FollowsForFollowerFilterQuery filter)
+        FollowsFilterQuery filter)
     {
         return aggregate.Match(filter.GetFilter());
     }

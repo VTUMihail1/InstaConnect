@@ -3,9 +3,9 @@
 public enum IdentityDestinationType
 {
     None,
-    Users,
-    UserClaims,
-    RefreshTokens,
-    ForgotPasswordTokens,
-    EmailConfirmationTokens
+    User,
+    UserClaim,
+    RefreshToken,
+    ForgotPasswordToken,
+    EmailConfirmationToken
 }

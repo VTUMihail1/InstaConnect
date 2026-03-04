@@ -95,7 +95,7 @@ public class GetAllPostCommentLikesQueryRequestBuilder
         return this;
     }
 
-    public GetAllPostCommentLikesQueryRequestBuilder WithSortProperty(IEnumTransformer<PostCommentLikesSortTerm> transformer)
+    public GetAllPostCommentLikesQueryRequestBuilder WithSortTerm(IEnumTransformer<PostCommentLikesSortTerm> transformer)
     {
         _sortProperty = transformer.Transform(_sortProperty);
 

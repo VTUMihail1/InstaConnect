@@ -5,42 +5,42 @@ namespace InstaConnect.Posts.Presentation.Tests.Features.PostCommentLikes.Assert
 public static class PostCommentLikeMockAssertions
 {
     public static async Task ShouldReceiveOneSendAsync(
-        this IApplicationSender applicationSender,
+        this IApplicationSender sender,
         GetAllPostCommentLikesApiRequest request,
         CancellationToken cancellationToken)
     {
-        await applicationSender.ShouldHaveReceivedOne().SendAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesQueryRequest(request), cancellationToken);
+        await sender.ShouldHaveReceivedOne().SendAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesQueryRequest(request), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneSendAsync(
-        this IApplicationSender applicationSender,
+        this IApplicationSender sender,
         GetAllPostCommentLikesForUserApiRequest request,
         CancellationToken cancellationToken)
     {
-        await applicationSender.ShouldHaveReceivedOne().SendAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesForUserQueryRequest(request), cancellationToken);
+        await sender.ShouldHaveReceivedOne().SendAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesForUserQueryRequest(request), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneSendAsync(
-        this IApplicationSender applicationSender,
+        this IApplicationSender sender,
         GetPostCommentLikeByIdApiRequest request,
         CancellationToken cancellationToken)
     {
-        await applicationSender.ShouldHaveReceivedOne().SendAsync(PostCommentLikeMatcher.IsGetPostCommentLikeByIdQueryRequest(request), cancellationToken);
+        await sender.ShouldHaveReceivedOne().SendAsync(PostCommentLikeMatcher.IsGetPostCommentLikeByIdQueryRequest(request), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneSendAsync(
-        this IApplicationSender applicationSender,
+        this IApplicationSender sender,
         AddPostCommentLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        await applicationSender.ShouldHaveReceivedOne().SendAsync(PostCommentLikeMatcher.IsAddPostCommentLikeCommandRequest(request), cancellationToken);
+        await sender.ShouldHaveReceivedOne().SendAsync(PostCommentLikeMatcher.IsAddPostCommentLikeCommandRequest(request), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneSendAsync(
-        this IApplicationSender applicationSender,
+        this IApplicationSender sender,
         DeletePostCommentLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        await applicationSender.ShouldHaveReceivedOne().SendAsync(PostCommentLikeMatcher.IsDeletePostCommentLikeCommandRequest(request), cancellationToken);
+        await sender.ShouldHaveReceivedOne().SendAsync(PostCommentLikeMatcher.IsDeletePostCommentLikeCommandRequest(request), cancellationToken);
     }
 }

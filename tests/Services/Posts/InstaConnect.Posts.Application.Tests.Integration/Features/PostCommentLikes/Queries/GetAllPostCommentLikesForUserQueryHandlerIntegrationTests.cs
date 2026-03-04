@@ -172,7 +172,7 @@ public class GetAllPostCommentLikesForUserQueryHandlerIntegrationTests : BasePos
     [Theory]
     [PostCommentLikesForUserSortTermWithCreatedAtTermData]
     [PostCommentLikesForUserSortTermWithUserNameTermData]
-    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortPropertyAreValid(
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortTermAreValid(
         IEnumTransformer<PostCommentLikesForUserSortTerm> transformer, ISortEnumTermTransformer<PostCommentLike> termTransformer)
     {
         // Arrange

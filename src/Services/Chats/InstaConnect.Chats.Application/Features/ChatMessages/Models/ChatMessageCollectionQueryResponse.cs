@@ -1,9 +1,13 @@
-﻿namespace InstaConnect.Chats.Application.Features.ChatMessages.Models;
+﻿using InstaConnect.Chats.Domain.Features.Users.Models.Responses;
+
+namespace InstaConnect.Chats.Application.Features.ChatMessages.Models;
 
 public record ChatMessageCollectionQueryResponse(
-    ICollection<ChatMessageQueryResponse> Entities,
+    ChatQueryResponse? Chat,
+    UserQueryResponse? Sender,
+    ICollection<ChatMessageQueryResponse> ChatMessages,
     int Page,
     int PageSize,
-    int TotalCount,
+    long TotalCount,
     bool HasNextPage,
     bool HasPreviousPage) : ICollectionQueryResponse;

@@ -1,6 +1,6 @@
 ﻿using InstaConnect.Chats.Application.Features.Chats.Commands.Add;
 using InstaConnect.Chats.Application.Features.Chats.Commands.Delete;
-using InstaConnect.Chats.Application.Features.Chats.Queries.GetAllByParticipant;
+using InstaConnect.Chats.Application.Features.Chats.Queries.GetAll;
 using InstaConnect.Chats.Application.Features.Chats.Queries.GetById;
 
 using Mapster;
@@ -11,25 +11,27 @@ internal class ChatPresentationMappings : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<GetAllChatsByParticipantApiRequest, GetAllChatsByParticipantQueryRequest>()
+        config.NewConfig<GetAllChatsApiRequest, GetAllChatsQueryRequest>()
             .ConstructUsing(src => new(
-                src.ParticipantId,
-                src.ParticipantName,
+                src.ParticipantOneId,
+                src.ParticipantTwoName,
+                src.CurrentUserId,
                 src.SortOrder,
                 src.SortTerm,
                 src.Page,
                 src.PageSize));
 
-        config.NewConfig<GetAllChatsByParticipantQueryResponse, GetAllChatsByParticipantApiResponse>()
-            .ConstructUsing(src => new(src.Response.Adapt<ChatCollectionApiResponse>(config)));
+        config.NewConfig<GetAllChatsQueryResponse, GetAllChatsApiResponse>()
+            .ConstructUsing(src => new(src.ChatCollection.Adapt<ChatCollectionApiResponse>(config)));
 
         config.NewConfig<GetChatByIdApiRequest, GetChatByIdQueryRequest>()
             .ConstructUsing(src => new(
                 src.ParticipantOneId,
-                src.ParticipantTwoId));
+                src.ParticipantTwoId,
+                src.CurrentUserId));
 
         config.NewConfig<GetChatByIdQueryResponse, GetChatByIdApiResponse>()
-            .ConstructUsing(src => new(src.Response.Adapt<ChatApiResponse>(config)));
+            .ConstructUsing(src => new(src.Chat.Adapt<ChatApiResponse>(config)));
 
         config.NewConfig<AddChatApiRequest, AddChatCommandRequest>()
             .ConstructUsing(src => new(
@@ -37,7 +39,7 @@ internal class ChatPresentationMappings : IRegister
                                        new(src.ParticipantTwoId)));
 
         config.NewConfig<AddChatCommandResponse, AddChatApiResponse>()
-            .ConstructUsing(src => new(src.Response.Adapt<ChatIdApiResponse>(config)));
+            .ConstructUsing(src => new(src.Id.Adapt<ChatIdApiResponse>(config)));
 
         config.NewConfig<DeleteChatApiRequest, DeleteChatCommandRequest>()
             .ConstructUsing(src => new(
@@ -51,13 +53,17 @@ internal class ChatPresentationMappings : IRegister
 
         config.NewConfig<ChatQueryResponse, ChatApiResponse>()
             .ConstructUsing(src => new(
+                src.ParticipantOneId,
+                src.ParticipantTwoId,
                 src.ParticipantOne.Adapt<UserApiResponse>(config),
                 src.ParticipantTwo.Adapt<UserApiResponse>(config),
                 src.CreatedAtUtc));
 
         config.NewConfig<ChatCollectionQueryResponse, ChatCollectionApiResponse>()
             .ConstructUsing(src => new(
-                  src.Entities.Adapt<ICollection<ChatApiResponse>>(config),
+                  src.ParticipantOne.Adapt<UserApiResponse>(config),
+                  src.ParticipantTwo.Adapt<UserApiResponse>(config),
+                  src.Chats.Adapt<ICollection<ChatApiResponse>>(config),
                   src.Page,
                   src.PageSize,
                   src.TotalCount,

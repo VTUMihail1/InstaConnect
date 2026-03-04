@@ -13,9 +13,9 @@ internal class PostPostLikesIncluder : IPostLikeIncluder
         _context = context;
     }
 
-    public PostsDestinationType DestinationType => PostsDestinationType.Posts;
+    public PostsDestinationType DestinationType => PostsDestinationType.Post;
 
-    public PostsIncludeType IncludeType => PostsIncludeType.PostLikes;
+    public PostsIncludeType IncludeType => PostsIncludeType.PostLike;
 
     public IAggregateFluent<PostLike> Include(IAggregateFluent<PostLike> aggregate)
     {

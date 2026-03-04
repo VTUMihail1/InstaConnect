@@ -12,6 +12,6 @@ public record GetAllFollowsForFollowingApiRequest(
     [FromClaim(ClaimTypes.NameIdentifier)] string CurrentUserId,
     [FromQuery] string FollowerName = UserDefaultValues.Name,
     [FromQuery] CommonSortOrder SortOrder = CommonDefaultValues.SortOrder,
-    [FromQuery] FollowsForFollowingSortTerm SortTerm = FollowDefaultValues.ByFollowingSortProperty,
+    [FromQuery] FollowsForFollowingSortTerm SortTerm = FollowDefaultValues.ByFollowingSortTerm,
     [FromQuery] int Page = FollowDefaultValues.Page,
     [FromQuery] int PageSize = FollowDefaultValues.PageSize) : ISortableApiRequest<FollowsForFollowingSortTerm>, IPaginatableApiRequest, ICurrentUserableApiRequest;

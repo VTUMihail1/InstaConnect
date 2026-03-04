@@ -37,6 +37,7 @@ public class FollowIncludeBuilder
 
         return this;
     }
+
     public FollowIncludeBuilder WithFollowing(FollowingInclude include)
     {
         _descriptors.Add(_descriptorFactory.CreateFollowing());

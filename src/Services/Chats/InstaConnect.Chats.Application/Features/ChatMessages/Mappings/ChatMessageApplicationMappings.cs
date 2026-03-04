@@ -17,16 +17,17 @@ public class ChatMessageApplicationMappings : IRegister
                                        new(
                                            new(
                                                new(src.ParticipantOneId),
-                                               new(src.ParticipantTwoId)),
-                                           new(src.UserId)),
+                                               new(src.ParticipantTwoId))),
                                         new(
                                             src.SortOrder,
                                             src.SortTerm),
                                         new(
                                             src.Page,
-                                            src.PageSize)));
+                                            src.PageSize),
+                                        new(
+                                            new(src.CurrentUserId))));
 
-        config.NewConfig<ChatMessageCollection, GetAllChatMessagesQueryResponse>()
+        config.NewConfig<ChatMessageCollectionResponse, GetAllChatMessagesQueryResponse>()
             .ConstructUsing(src => new(src.Adapt<ChatMessageCollectionQueryResponse>(config)));
 
         config.NewConfig<GetChatMessageByIdQueryRequest, GetChatMessageByIdQuery>()
@@ -36,7 +37,8 @@ public class ChatMessageApplicationMappings : IRegister
                                                new(src.ParticipantOneId),
                                                new(src.ParticipantTwoId)),
                                            src.MessageId),
-                                       new(src.UserId)));
+                                       new(
+                                           new(src.CurrentUserId))));
 
         config.NewConfig<ChatMessage, GetChatMessageByIdQueryResponse>()
             .ConstructUsing(src => new(src.Adapt<ChatMessageQueryResponse>(config)));
@@ -59,8 +61,8 @@ public class ChatMessageApplicationMappings : IRegister
                                                new(src.ParticipantOneId),
                                                new(src.ParticipantTwoId)),
                                            src.MessageId),
-                                       new(src.SenderId),
-                                       src.Content));
+                                       src.Content,
+                                       new(src.SenderId)));
 
         config.NewConfig<ChatMessage, UpdateChatMessageCommandResponse>()
             .ConstructUsing(src => new(src.Id.Adapt<ChatMessageIdCommandResponse>(config)));
@@ -86,17 +88,20 @@ public class ChatMessageApplicationMappings : IRegister
                 src.Id.Id.ParticipantTwoId.Id,
                 src.Id.MessageId,
                 src.Content,
+                src.Chat.Adapt<ChatQueryResponse>(config),
                 src.Sender.Adapt<UserQueryResponse>(config),
                 src.CreatedAtUtc,
                 src.UpdatedAtUtc));
 
-        config.NewConfig<ChatMessageCollection, ChatMessageCollectionQueryResponse>()
-            .ConstructUsing(pc => new(
-                pc.Entities.Adapt<ICollection<ChatMessageQueryResponse>>(),
-                pc.Page,
-                pc.PageSize,
-                pc.TotalCount,
-                pc.HasNextPage,
-                pc.HasPreviousPage));
+        config.NewConfig<ChatMessageCollectionResponse, ChatMessageCollectionQueryResponse>()
+            .ConstructUsing(src => new(
+                src.Chat.Adapt<ChatQueryResponse>(config),
+                src.Sender.Adapt<UserQueryResponse>(config),
+                src.ChatMessages.Adapt<ICollection<ChatMessageQueryResponse>>(config),
+                src.Page,
+                src.PageSize,
+                src.TotalCount,
+                src.HasNextPage,
+                src.HasPreviousPage));
     }
 }

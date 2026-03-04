@@ -6,6 +6,6 @@ public class RefreshTokenIncludeDescriptorFactory : IRefreshTokenIncludeDescript
 {
     public IdentityIncludeDescriptor CreateUser()
     {
-        return new(IdentityDestinationType.RefreshTokens, IdentityIncludeType.Users);
+        return new(IdentityDestinationType.RefreshToken, IdentityIncludeType.User);
     }
 }

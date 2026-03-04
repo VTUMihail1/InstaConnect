@@ -13,9 +13,9 @@ internal class PostsIncluder : IUserIncluder
         _context = context;
     }
 
-    public PostsDestinationType DestinationType => PostsDestinationType.Users;
+    public PostsDestinationType DestinationType => PostsDestinationType.User;
 
-    public PostsIncludeType IncludeType => PostsIncludeType.Posts;
+    public PostsIncludeType IncludeType => PostsIncludeType.Post;
 
     public IAggregateFluent<User> Include(IAggregateFluent<User> aggregate)
     {

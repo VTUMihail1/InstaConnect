@@ -5,12 +5,12 @@ namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Exceptions;
 public class PostCommentLikesSortTermNotSupportedException : BadRequestException
 {
     public PostCommentLikesSortTermNotSupportedException(PostCommentLikesSortTerm sortTerm)
-        : base(PostCommentLikeExceptionErrorMessages.GetSortPropertyNotSupportedMessage(sortTerm))
+        : base(PostCommentLikeExceptionErrorMessages.GetSortTermNotSupportedMessage(sortTerm))
     {
     }
 
     public PostCommentLikesSortTermNotSupportedException(PostCommentLikesSortTerm sortTerm, Exception exception)
-        : base(PostCommentLikeExceptionErrorMessages.GetSortPropertyNotSupportedMessage(sortTerm), exception)
+        : base(PostCommentLikeExceptionErrorMessages.GetSortTermNotSupportedMessage(sortTerm), exception)
     {
     }
 }

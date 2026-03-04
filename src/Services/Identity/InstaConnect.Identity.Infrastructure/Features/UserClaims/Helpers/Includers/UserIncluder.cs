@@ -13,9 +13,9 @@ internal class UserIncluder : IUserClaimIncluder
         _context = context;
     }
 
-    public IdentityDestinationType DestinationType => IdentityDestinationType.UserClaims;
+    public IdentityDestinationType DestinationType => IdentityDestinationType.UserClaim;
 
-    public IdentityIncludeType IncludeType => IdentityIncludeType.Users;
+    public IdentityIncludeType IncludeType => IdentityIncludeType.User;
 
     public IAggregateFluent<UserClaim> Include(IAggregateFluent<UserClaim> aggregate)
     {

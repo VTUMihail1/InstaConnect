@@ -13,9 +13,9 @@ internal class UserIncluder : IRefreshTokenIncluder
         _context = context;
     }
 
-    public IdentityDestinationType DestinationType => IdentityDestinationType.RefreshTokens;
+    public IdentityDestinationType DestinationType => IdentityDestinationType.RefreshToken;
 
-    public IdentityIncludeType IncludeType => IdentityIncludeType.Users;
+    public IdentityIncludeType IncludeType => IdentityIncludeType.User;
 
     public IAggregateFluent<RefreshToken> Include(IAggregateFluent<RefreshToken> aggregate)
     {

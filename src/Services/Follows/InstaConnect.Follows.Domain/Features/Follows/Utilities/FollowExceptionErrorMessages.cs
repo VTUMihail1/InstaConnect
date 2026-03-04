@@ -19,16 +19,16 @@ public static class FollowExceptionErrorMessages
         return Format.FormatCurrentCulture(id.FollowerId.Id, id.FollowingId.Id);
     }
 
-    public static string GetSortTermNotSupportedMessage(FollowsForFollowerSortTerm sortTerm)
+    public static string GetSortTermNotSupportedMessage(FollowsSortTerm sortTerm)
     {
-        const string Format = "FollowsByFollowerSortTerm(type: {0}) is not supported";
+        const string Format = "FollowsSortTerm(type: {0}) is not supported";
 
         return Format.FormatCurrentCulture(sortTerm);
     }
 
     public static string GetSortTermNotSupportedMessage(FollowsForFollowingSortTerm sortTerm)
     {
-        const string Format = "FollowsByFollowingSortTerm(type: {0}) is not supported";
+        const string Format = "FollowsForFollowingSortTerm(type: {0}) is not supported";
 
         return Format.FormatCurrentCulture(sortTerm);
     }

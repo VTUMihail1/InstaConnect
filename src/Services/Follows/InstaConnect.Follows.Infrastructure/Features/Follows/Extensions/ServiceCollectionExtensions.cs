@@ -8,7 +8,7 @@ internal static class ServiceCollectionExtensions
 {
     internal static IServiceCollection AddFollowServices(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddImplementationsOf<IFollowsForFollowerSortTermer>(FollowInfrastructureReference.Assembly);
+        serviceCollection.AddImplementationsOf<IFollowsSortTermer>(FollowInfrastructureReference.Assembly);
         serviceCollection.AddImplementationsOf<IFollowsForFollowingSortTermer>(FollowInfrastructureReference.Assembly);
         serviceCollection.AddImplementationsOf<IFollowIncluder>(FollowInfrastructureReference.Assembly);
 

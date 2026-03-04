@@ -1,21 +1,21 @@
 ﻿using System.Linq.Expressions;
 
-using InstaConnect.Chats.Infrastructure.Features.Chats.Extensions;
 using InstaConnect.Chats.Infrastructure.Features.Users.Extensions;
 
 using MongoDB.Driver;
 
 namespace InstaConnect.Chats.Infrastructure.Features.Chats.Extensions;
-public static class ChatFilterExtensions
+
+internal static class ChatFilterExtensions
 {
-    public static FilterDefinition<Chat> GetFilter(this ChatByParticipantFilterQuery filter)
+    public static FilterDefinition<Chat> GetFilter(this ChatsFilterQuery filter)
     {
         var participantOne = Builders<Chat>.Filter.And(
-            filter.ParticipantId.GetFilterForIdEquals<Chat>(p => p.Id.ParticipantOneId.Id),
-            filter.ParticipantName.GetFilterForNameStartsWith<Chat>(p => p.ParticipantTwo!.Name.Value));
+            filter.ParticipantOneId.GetFilterForIdEquals<Chat>(p => p.Id.ParticipantOneId.Id),
+            filter.ParticipantTwoName.GetFilterForNameStartsWith<Chat>(p => p.ParticipantTwo!.Name.Value));
         var participantTwo = Builders<Chat>.Filter.And(
-            filter.ParticipantId.GetFilterForIdEquals<Chat>(p => p.Id.ParticipantTwoId.Id),
-            filter.ParticipantName.GetFilterForNameStartsWith<Chat>(p => p.ParticipantOne!.Name.Value));
+            filter.ParticipantOneId.GetFilterForIdEquals<Chat>(p => p.Id.ParticipantTwoId.Id),
+            filter.ParticipantTwoName.GetFilterForNameStartsWith<Chat>(p => p.ParticipantOne!.Name.Value));
 
         return Builders<Chat>.Filter.Or(participantOne, participantTwo);
     }

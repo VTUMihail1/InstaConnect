@@ -7,15 +7,15 @@ namespace InstaConnect.Common.Presentation.ExceptionHandlers;
 
 public sealed class ExceptionHandler : IExceptionHandler
 {
-    private readonly IApplicationProblemDetailsFactory _applicationProblemDetailsFactory;
-    private readonly IApplicationProblemDetailsService _applicationProblemDetailsService;
+    private readonly IApplicationProblemDetailsFactory _problemDetailsFactory;
+    private readonly IApplicationProblemDetailsService _problemDetailsService;
 
     public ExceptionHandler(
-        IApplicationProblemDetailsFactory applicationProblemDetailsFactory,
-        IApplicationProblemDetailsService applicationProblemDetailsService)
+        IApplicationProblemDetailsFactory problemDetailsFactory,
+        IApplicationProblemDetailsService problemDetailsService)
     {
-        _applicationProblemDetailsFactory = applicationProblemDetailsFactory;
-        _applicationProblemDetailsService = applicationProblemDetailsService;
+        _problemDetailsFactory = problemDetailsFactory;
+        _problemDetailsService = problemDetailsService;
     }
 
     public async ValueTask<bool> TryHandleAsync(
@@ -23,8 +23,8 @@ public sealed class ExceptionHandler : IExceptionHandler
         Exception exception,
         CancellationToken cancellationToken)
     {
-        var applicationProblemDetails = _applicationProblemDetailsFactory.Create(exception);
-        await _applicationProblemDetailsService.WriteAsync(httpContext, exception, applicationProblemDetails, cancellationToken);
+        var problemDetails = _problemDetailsFactory.Create(exception);
+        await _problemDetailsService.WriteAsync(httpContext, exception, problemDetails, cancellationToken);
 
         return true;
     }

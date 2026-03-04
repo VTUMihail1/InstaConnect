@@ -321,7 +321,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
     [PostsSortTermCreatedAtData]
     [PostsSortTermTitleData]
     [PostsSortTermUserNameData]
-    public async Task GetAllAsync_ShouldHaveOkStatusCode_WhenRequestAndSortPropertyAreValid(
+    public async Task GetAllAsync_ShouldHaveOkStatusCode_WhenRequestAndSortTermAreValid(
         IEnumTransformer<PostsSortTerm> transformer)
     {
         // Arrange
@@ -415,7 +415,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
     [PostsSortTermWithCreatedAtTermData]
     [PostsSortTermWithTitleTermData]
     [PostsSortTermWithUserNameTermData]
-    public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndSortPropertyAreValid(
+    public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndSortTermAreValid(
         IEnumTransformer<PostsSortTerm> transformer, ISortEnumTermTransformer<Post> termTransformer)
     {
         // Arrange

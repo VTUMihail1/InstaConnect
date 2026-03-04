@@ -99,10 +99,10 @@ public static class CommonEquals
                response.HasNextPage == paginator.HasNextPage(response.Page, response.PageSize, response.TotalCount);
     }
 
-    public static bool MatchesSortable<TQueryRequest, TApiRequest, TSortProperty>(this TQueryRequest query, TApiRequest request)
-        where TQueryRequest : ISortableQueryRequest<TSortProperty>
-        where TApiRequest : ISortableApiRequest<TSortProperty>
-        where TSortProperty : Enum
+    public static bool MatchesSortable<TQueryRequest, TApiRequest, TSortTerm>(this TQueryRequest query, TApiRequest request)
+        where TQueryRequest : ISortableQueryRequest<TSortTerm>
+        where TApiRequest : ISortableApiRequest<TSortTerm>
+        where TSortTerm : Enum
     {
         return query.SortOrder == request.SortOrder &&
                query.SortTerm.Equals(request.SortTerm);

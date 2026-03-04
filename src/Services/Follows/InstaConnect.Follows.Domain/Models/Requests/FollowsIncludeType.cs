@@ -3,8 +3,8 @@
 public enum FollowsIncludeType
 {
     None,
-    Followers,
-    Followings,
-    FollowFollowers,
-    FollowFollowings
+    Follower,
+    Following,
+    FollowFollower,
+    FollowFollowing
 }

@@ -22,7 +22,7 @@ public class UserForgotPasswordTokenCreatedEventConsumer : IConsumer<ForgotPassw
 
     public async Task Consume(ConsumeContext<ForgotPasswordTokenAddedEventRequest> context)
     {
-        var mailMessage = _emailFactory.GetEmail(context.Message.Id, EmailConstants.ForgotPasswordTitle, context.Message.Id);
+        var mailMessage = _emailFactory.GetEmail(context.Message.ForgotPasswordToken.Value, EmailConstants.ForgotPasswordTitle, context.Message.ForgotPasswordToken.Id);
 
         try
         {

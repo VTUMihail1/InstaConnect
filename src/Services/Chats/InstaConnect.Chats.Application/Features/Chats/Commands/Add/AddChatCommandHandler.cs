@@ -2,23 +2,23 @@
 
 internal class AddChatCommandHandler : ICommandHandler<AddChatCommandRequest, AddChatCommandResponse>
 {
-    private readonly IChatService _chatService;
-    private readonly IApplicationMapper _applicationMapper;
+    private readonly IApplicationMapper _mapper;
+    private readonly IChatCommandService _service;
 
     public AddChatCommandHandler(
-        IChatService chatService,
-        IApplicationMapper applicationMapper)
+        IApplicationMapper mapper,
+        IChatCommandService service)
     {
-        _chatService = chatService;
-        _applicationMapper = applicationMapper;
+        _mapper = mapper;
+        _service = service;
     }
 
     public async Task<AddChatCommandResponse> Handle(AddChatCommandRequest request, CancellationToken cancellationToken)
     {
-        var serviceRequest = _applicationMapper.Map<AddChatCommand>(request);
-        var chat = await _chatService.AddAsync(serviceRequest, cancellationToken);
+        var serviceRequest = _mapper.Map<AddChatCommand>(request);
+        var serviceResponse = await _service.AddAsync(serviceRequest, cancellationToken);
 
-        var response = _applicationMapper.Map<AddChatCommandResponse>(chat);
+        var response = _mapper.Map<AddChatCommandResponse>(serviceResponse);
 
         return response;
     }

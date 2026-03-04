@@ -13,9 +13,9 @@ internal class ForgotPasswordTokensIncluder : IUserIncluder
         _context = context;
     }
 
-    public IdentityDestinationType DestinationType => IdentityDestinationType.Users;
+    public IdentityDestinationType DestinationType => IdentityDestinationType.User;
 
-    public IdentityIncludeType IncludeType => IdentityIncludeType.ForgotPasswordTokens;
+    public IdentityIncludeType IncludeType => IdentityIncludeType.ForgotPasswordToken;
 
     public IAggregateFluent<User> Include(IAggregateFluent<User> aggregate)
     {

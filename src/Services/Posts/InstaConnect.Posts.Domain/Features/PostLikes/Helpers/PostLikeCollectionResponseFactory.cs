@@ -11,7 +11,7 @@ internal class PostLikeCollectionResponseFactory : IPostLikeCollectionResponseFa
         _paginator = paginator;
     }
 
-    public PostLikeCollectionResponse CreateForPost(
+    public PostLikeCollectionResponse Create(
         PostResponse? post,
         ICollection<PostLikeResponse> postLikes,
         long totalCount,

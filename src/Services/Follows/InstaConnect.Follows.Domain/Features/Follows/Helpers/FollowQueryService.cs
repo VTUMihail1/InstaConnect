@@ -19,7 +19,7 @@ internal class FollowQueryService : IFollowQueryService
         _collectionResponseFactory = collectionResponseFactory;
     }
 
-    public async Task<FollowCollectionResponse> GetAllForFollowerAsync(GetAllFollowsForFollowerQuery query, CancellationToken cancellationToken)
+    public async Task<FollowCollectionResponse> GetAllAsync(GetAllFollowsQuery query, CancellationToken cancellationToken)
     {
         var follower = await _userRepository.GetByIdAsync(query.Filter.FollowerId, query.CurrentUser, cancellationToken);
 
@@ -29,7 +29,7 @@ internal class FollowQueryService : IFollowQueryService
         }
 
         var include = _includeBuilderFactory.Create().WithFollowing().Build();
-        var follows = await _repository.GetAllForFollowerAsync(
+        var follows = await _repository.GetAllAsync(
             query.Filter,
             query.CurrentUser,
             query.Sorting,
@@ -37,9 +37,9 @@ internal class FollowQueryService : IFollowQueryService
             include,
             cancellationToken);
 
-        var totalCount = await _repository.GetTotalCountForFollowerAsync(query.Filter, cancellationToken);
+        var totalCount = await _repository.GetTotalCountAsync(query.Filter, cancellationToken);
 
-        return _collectionResponseFactory.CreateForFollower(follower, follows, totalCount, query.Pagination);
+        return _collectionResponseFactory.Create(follower, follows, totalCount, query.Pagination);
     }
 
     public async Task<FollowCollectionResponse> GetAllForFollowingAsync(GetAllFollowsForFollowingQuery query, CancellationToken cancellationToken)

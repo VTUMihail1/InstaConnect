@@ -4,7 +4,7 @@ namespace InstaConnect.Chats.Presentation.Features.ChatMessages.Utilities;
 
 public static class ChatMessageDefaultValues
 {
-    public const ChatMessageSortProperty SortProperty = ChatMessageSortProperty.ByCreatedAt;
+    public const ChatMessagesSortTerm SortTerm = ChatMessagesSortTerm.ByCreatedAt;
 
     public const int Page = 1;
 

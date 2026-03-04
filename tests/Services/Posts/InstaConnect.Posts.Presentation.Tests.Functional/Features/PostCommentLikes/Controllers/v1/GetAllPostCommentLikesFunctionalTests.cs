@@ -422,7 +422,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
     [Theory]
     [PostCommentLikesSortTermCreatedAtData]
     [PostCommentLikesSortTermUserNameData]
-    public async Task GetAllAsync_ShouldHaveOkStatusCode_WhenRequestAndSortPropertyAreValid(
+    public async Task GetAllAsync_ShouldHaveOkStatusCode_WhenRequestAndSortTermAreValid(
         IEnumTransformer<PostCommentLikesSortTerm> transformer)
     {
         // Arrange
@@ -528,7 +528,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
     [Theory]
     [PostCommentLikesSortTermWithCreatedAtTermData]
     [PostCommentLikesSortTermWithUserNameTermData]
-    public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndSortPropertyAreValid(
+    public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndSortTermAreValid(
         IEnumTransformer<PostCommentLikesSortTerm> transformer, ISortEnumTermTransformer<PostCommentLike> termTransformer)
     {
         // Arrange

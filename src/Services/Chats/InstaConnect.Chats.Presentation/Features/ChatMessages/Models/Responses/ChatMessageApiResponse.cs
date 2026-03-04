@@ -5,6 +5,7 @@ public record ChatMessageApiResponse(
     string ParticipantTwoId,
     string MessageId,
     string Content,
-    UserApiResponse Sender,
+    ChatApiResponse? Chat,
+    UserApiResponse? Sender,
     DateTimeOffset CreatedAtUtc,
     DateTimeOffset UpdatedAtUtc);

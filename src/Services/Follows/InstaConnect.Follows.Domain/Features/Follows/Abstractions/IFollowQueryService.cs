@@ -2,7 +2,7 @@
 
 public interface IFollowQueryService
 {
-    public Task<FollowCollectionResponse> GetAllForFollowerAsync(GetAllFollowsForFollowerQuery query, CancellationToken cancellationToken);
+    public Task<FollowCollectionResponse> GetAllAsync(GetAllFollowsQuery query, CancellationToken cancellationToken);
 
     public Task<FollowCollectionResponse> GetAllForFollowingAsync(GetAllFollowsForFollowingQuery query, CancellationToken cancellationToken);
 

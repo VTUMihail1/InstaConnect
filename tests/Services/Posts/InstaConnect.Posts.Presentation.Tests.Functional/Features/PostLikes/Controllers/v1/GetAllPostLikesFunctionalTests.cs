@@ -347,7 +347,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
     [Theory]
     [PostLikesSortTermCreatedAtData]
     [PostLikesSortTermUserNameData]
-    public async Task GetAllAsync_ShouldHaveOkStatusCode_WhenRequestAndSortPropertyAreValid(
+    public async Task GetAllAsync_ShouldHaveOkStatusCode_WhenRequestAndSortTermAreValid(
         IEnumTransformer<PostLikesSortTerm> transformer)
     {
         // Arrange
@@ -438,7 +438,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
     [Theory]
     [PostLikesSortTermWithCreatedAtTermData]
     [PostLikesSortTermWithUserNameTermData]
-    public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndSortPropertyAreValid(
+    public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndSortTermAreValid(
         IEnumTransformer<PostLikesSortTerm> transformer, ISortEnumTermTransformer<PostLike> termTransformer)
     {
         // Arrange

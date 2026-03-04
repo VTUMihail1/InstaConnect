@@ -71,14 +71,18 @@ public class User : IEntityWithId<UserId>
         UpdatedAtUtc = updatedAtUtc;
     }
 
-    public void AddChat(Chat chat)
+    public User AddChat(Chat chat)
     {
         Chats.Add(chat);
+
+        return this;
     }
 
-    public void AddChatMessage(ChatMessage chatMessage)
+    public User AddChatMessage(ChatMessage chatMessage)
     {
         ChatMessages.Add(chatMessage);
+
+        return this;
     }
 }
 

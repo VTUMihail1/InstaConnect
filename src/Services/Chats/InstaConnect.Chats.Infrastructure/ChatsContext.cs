@@ -4,6 +4,7 @@ using InstaConnect.Common.Infrastructure;
 using MongoDB.Driver;
 
 namespace InstaConnect.Chats.Infrastructure;
+
 public class ChatsContext : MongoDbContext, IChatsContext
 {
     public ChatsContext(IMongoClient mongoClient, IMongoDatabase mongoDatabase)

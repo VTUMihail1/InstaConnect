@@ -6,6 +6,6 @@ public class EmailConfirmationTokenIncludeDescriptorFactory : IEmailConfirmation
 {
     public IdentityIncludeDescriptor CreateUser()
     {
-        return new(IdentityDestinationType.EmailConfirmationTokens, IdentityIncludeType.Users);
+        return new(IdentityDestinationType.EmailConfirmationToken, IdentityIncludeType.User);
     }
 }

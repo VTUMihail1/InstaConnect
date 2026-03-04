@@ -13,9 +13,9 @@ internal class PostCommentsIncluder : IUserIncluder
         _context = context;
     }
 
-    public PostsDestinationType DestinationType => PostsDestinationType.Users;
+    public PostsDestinationType DestinationType => PostsDestinationType.User;
 
-    public PostsIncludeType IncludeType => PostsIncludeType.PostComments;
+    public PostsIncludeType IncludeType => PostsIncludeType.PostComment;
 
     public IAggregateFluent<User> Include(IAggregateFluent<User> aggregate)
     {

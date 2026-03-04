@@ -7,18 +7,13 @@ using InstaConnect.Chats.Infrastructure.Features.Users.Extensions;
 using MongoDB.Driver;
 
 namespace InstaConnect.Chats.Infrastructure.Features.ChatMessages.Extensions;
+
 public static class ChatMessageFilterExtensions
 {
-    public static FilterDefinition<ChatMessage> GetFilter(this ChatMessageFilterQuery filter)
+    public static FilterDefinition<ChatMessage> GetFilter(this ChatMessagesFilterQuery filter)
     {
-        var chatId = filter.Id.GetFilterForIdEquals<ChatMessage>(
+        return filter.Id.GetFilterForIdEquals<ChatMessage>(
             p => p.Id.Id.ParticipantOneId.Id, p => p.Id.Id.ParticipantTwoId.Id);
-
-        var userId = Builders<ChatMessage>.Filter.Or(
-            filter.UserId.GetFilterForIdEquals<ChatMessage>(p => p.Id.Id.ParticipantOneId.Id),
-            filter.UserId.GetFilterForIdEquals<ChatMessage>(p => p.Id.Id.ParticipantTwoId.Id));
-
-        return Builders<ChatMessage>.Filter.And(chatId, userId);
     }
 
     public static FilterDefinition<ChatMessage> GetFilter(this ChatMessageId filter)

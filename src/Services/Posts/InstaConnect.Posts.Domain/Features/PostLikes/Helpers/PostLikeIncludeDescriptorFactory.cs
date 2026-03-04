@@ -12,11 +12,11 @@ public class PostLikeIncludeDescriptorFactory : IPostLikeIncludeDescriptorFactor
 {
     public PostsIncludeDescriptor CreateUser()
     {
-        return new(PostsDestinationType.PostLikes, PostsIncludeType.Users);
+        return new(PostsDestinationType.PostLike, PostsIncludeType.User);
     }
 
     public PostsIncludeDescriptor CreatePost()
     {
-        return new(PostsDestinationType.PostLikes, PostsIncludeType.Posts);
+        return new(PostsDestinationType.PostLike, PostsIncludeType.Post);
     }
 }

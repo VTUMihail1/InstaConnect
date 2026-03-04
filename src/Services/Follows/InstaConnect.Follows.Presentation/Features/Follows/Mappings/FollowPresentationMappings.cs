@@ -1,6 +1,6 @@
 ﻿using InstaConnect.Follows.Application.Features.Follows.Commands.Add;
 using InstaConnect.Follows.Application.Features.Follows.Commands.Delete;
-using InstaConnect.Follows.Application.Features.Follows.Queries.GetAllForFollower;
+using InstaConnect.Follows.Application.Features.Follows.Queries.GetAll;
 using InstaConnect.Follows.Application.Features.Follows.Queries.GetAllForFollowing;
 using InstaConnect.Follows.Application.Features.Follows.Queries.GetById;
 
@@ -12,7 +12,7 @@ internal class FollowPresentationMappings : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<GetAllFollowsForFollowerApiRequest, GetAllFollowsForFollowerQueryRequest>()
+        config.NewConfig<GetAllFollowsApiRequest, GetAllFollowsQueryRequest>()
             .ConstructUsing(src => new(
                 src.FollowerId,
                 src.FollowingName,
@@ -22,7 +22,7 @@ internal class FollowPresentationMappings : IRegister
                 src.Page,
                 src.PageSize));
 
-        config.NewConfig<GetAllFollowsForFollowerQueryResponse, GetAllFollowsForFollowerApiResponse>()
+        config.NewConfig<GetAllFollowsQueryResponse, GetAllFollowsApiResponse>()
             .ConstructUsing(src => new(src.FollowCollection.Adapt<FollowCollectionApiResponse>(config)));
 
         config.NewConfig<GetAllFollowsForFollowingApiRequest, GetAllFollowsForFollowingQueryRequest>()

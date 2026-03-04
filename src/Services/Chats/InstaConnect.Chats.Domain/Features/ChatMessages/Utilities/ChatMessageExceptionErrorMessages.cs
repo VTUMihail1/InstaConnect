@@ -1,4 +1,5 @@
-﻿using InstaConnect.Common.Domain.Extensions;
+﻿using InstaConnect.Chats.Domain.Models.Requests;
+using InstaConnect.Common.Domain.Extensions;
 
 namespace InstaConnect.Chats.Domain.Features.ChatMessages.Utilities;
 
@@ -11,17 +12,25 @@ public static class ChatMessageExceptionErrorMessages
         return Format.FormatCurrentCulture(id.Id.ParticipantOneId.Id, id.Id.ParticipantTwoId.Id, id.MessageId);
     }
 
-    public static string GetSortPropertyNotSupportedMessage(ChatMessageSortProperty sortProperty)
+    public static string GetForbiddenMessage(ChatMessageId id, UserId senderId)
     {
-        const string Format = "ChatMessageSortProperty(type: {0}) is not supported";
+        const string Format = "ChatMessage(participantOneId: {0}, participantTwoId: {1}, messageId: {2}) is not owned by Sender(id: {3})";
 
-        return Format.FormatCurrentCulture(sortProperty);
+        return Format.FormatCurrentCulture(id.Id.ParticipantOneId.Id, id.Id.ParticipantTwoId.Id, id.MessageId, senderId.Id);
     }
 
-    public static string GetInclidePropertyNotSupportedMessage(ICollection<ChatMessageIncludeProperty> includeProperties)
+    public static string GetSortTermNotSupportedMessage(ChatMessagesSortTerm sortTerm)
     {
-        const string Format = "ChatMessageIncludeProperties(types: {0}) is not supported";
+        const string Format = "ChatMessagesSortTerm(type: {0}) is not supported";
 
-        return Format.FormatCurrentCulture(includeProperties.JoinAsStringWithComa());
+        return Format.FormatCurrentCulture(sortTerm);
+    }
+
+    public static string GetInclideDescriptorsNotSupportedMessage(ICollection<ChatsIncludeDescriptor> descriptors)
+    {
+        const string Format = "ChatMessageIncludeDescriptors({0}) is not supported";
+
+        return Format.FormatCurrentCulture(descriptors
+            .JoinIncludeDescriptorsAsStringWithComa<ChatsDestinationType, ChatsIncludeType, ChatsIncludeDescriptor>());
     }
 }

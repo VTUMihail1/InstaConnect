@@ -3,7 +3,7 @@
 namespace InstaConnect.Posts.Domain.Features.PostLikes.Abstractions;
 internal interface IPostLikeCollectionResponseFactory
 {
-    PostLikeCollectionResponse CreateForPost(
+    PostLikeCollectionResponse Create(
         PostResponse? post,
         ICollection<PostLikeResponse> postLikes,
         long totalCount,

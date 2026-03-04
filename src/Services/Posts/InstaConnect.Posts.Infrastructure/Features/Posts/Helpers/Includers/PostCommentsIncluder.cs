@@ -13,9 +13,9 @@ internal class PostCommentsIncluder : IPostIncluder
         _context = context;
     }
 
-    public PostsDestinationType DestinationType => PostsDestinationType.Posts;
+    public PostsDestinationType DestinationType => PostsDestinationType.Post;
 
-    public PostsIncludeType IncludeType => PostsIncludeType.PostComments;
+    public PostsIncludeType IncludeType => PostsIncludeType.PostComment;
 
     public IAggregateFluent<Post> Include(IAggregateFluent<Post> aggregate)
     {

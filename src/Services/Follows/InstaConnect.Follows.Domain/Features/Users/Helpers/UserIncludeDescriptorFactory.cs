@@ -6,11 +6,11 @@ public class UserIncludeDescriptorFactory : IUserIncludeDescriptorFactory
 {
     public FollowsIncludeDescriptor CreateFollowFollowers()
     {
-        return new(FollowsDestinationType.Users, FollowsIncludeType.FollowFollowers);
+        return new(FollowsDestinationType.User, FollowsIncludeType.FollowFollower);
     }
 
     public FollowsIncludeDescriptor CreateFollowFollowings()
     {
-        return new(FollowsDestinationType.Users, FollowsIncludeType.Followings);
+        return new(FollowsDestinationType.User, FollowsIncludeType.Following);
     }
 }

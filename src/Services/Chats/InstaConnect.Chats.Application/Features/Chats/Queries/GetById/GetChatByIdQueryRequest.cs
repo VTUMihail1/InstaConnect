@@ -1,3 +1,9 @@
-﻿namespace InstaConnect.Chats.Application.Features.Chats.Queries.GetById;
+﻿using InstaConnect.Chats.Application.Features.Users.Abstractions;
 
-public record GetChatByIdQueryRequest(string ParticipantOneId, string ParticipantTwoId) : IQueryRequest<GetChatByIdQueryResponse>;
+namespace InstaConnect.Chats.Application.Features.Chats.Queries.GetById;
+
+public record GetChatByIdQueryRequest(
+    string ParticipantOneId,
+    string ParticipantTwoId,
+    string CurrentUserId)
+    : IQueryRequest<GetChatByIdQueryResponse>, ICurrentUserableQueryRequest;

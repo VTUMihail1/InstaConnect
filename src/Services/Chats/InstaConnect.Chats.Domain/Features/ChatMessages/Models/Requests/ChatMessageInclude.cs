@@ -1,3 +1,6 @@
-﻿namespace InstaConnect.Chats.Domain.Features.ChatMessages.Models.Requests;
+﻿using InstaConnect.Chats.Domain.Models.Requests;
 
-public record ChatMessageInclude(ICollection<ChatMessageIncludeProperty> Properties);
+namespace InstaConnect.Chats.Domain.Features.ChatMessages.Models.Requests;
+
+public record ChatMessageInclude(ICollection<ChatsIncludeDescriptor> Descriptors)
+    : IInclude<ChatsDestinationType, ChatsIncludeType, ChatsIncludeDescriptor>;

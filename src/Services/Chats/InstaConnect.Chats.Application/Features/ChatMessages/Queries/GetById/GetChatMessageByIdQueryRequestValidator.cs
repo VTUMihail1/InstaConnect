@@ -19,7 +19,7 @@ public class GetChatMessageByIdQueryRequestValidator : AbstractValidator<GetChat
             .ChatMessageIdMinLengthWithMessage()
             .ChatMessageIdMaxLengthWithMessage();
 
-        RuleFor(r => r.UserId)
+        RuleFor(r => r.CurrentUserId)
             .NotEmptyWithMessage()
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();

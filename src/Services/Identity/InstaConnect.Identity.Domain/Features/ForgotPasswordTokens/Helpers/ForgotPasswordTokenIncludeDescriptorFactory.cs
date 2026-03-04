@@ -6,6 +6,6 @@ public class ForgotPasswordTokenIncludeDescriptorFactory : IForgotPasswordTokenI
 {
     public IdentityIncludeDescriptor CreateUser()
     {
-        return new(IdentityDestinationType.ForgotPasswordTokens, IdentityIncludeType.Users);
+        return new(IdentityDestinationType.ForgotPasswordToken, IdentityIncludeType.User);
     }
 }

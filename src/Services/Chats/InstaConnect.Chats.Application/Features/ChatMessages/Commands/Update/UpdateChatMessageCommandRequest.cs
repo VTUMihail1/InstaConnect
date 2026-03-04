@@ -4,5 +4,5 @@ public record UpdateChatMessageCommandRequest(
     string ParticipantOneId,
     string ParticipantTwoId,
     string MessageId,
-    string SenderId,
-    string Content) : ICommandRequest<UpdateChatMessageCommandResponse>;
+    string Content,
+    string SenderId) : ICommandRequest<UpdateChatMessageCommandResponse>;

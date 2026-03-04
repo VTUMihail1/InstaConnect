@@ -336,7 +336,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
     [Theory]
     [PostCommentsSortTermCreatedAtData]
     [PostCommentsSortTermUserNameData]
-    public async Task GetAllAsync_ShouldHaveOkStatusCode_WhenRequestAndSortPropertyAreValid(
+    public async Task GetAllAsync_ShouldHaveOkStatusCode_WhenRequestAndSortTermAreValid(
         IEnumTransformer<PostCommentsSortTerm> transformer)
     {
         // Arrange
@@ -440,7 +440,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
     [Theory]
     [PostCommentsSortTermWithCreatedAtTermData]
     [PostCommentsSortTermWithUserNameTermData]
-    public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndSortPropertyAreValid(
+    public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndSortTermAreValid(
         IEnumTransformer<PostCommentsSortTerm> transformer, ISortEnumTermTransformer<PostComment> termTransformer)
     {
         // Arrange

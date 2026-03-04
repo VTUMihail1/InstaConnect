@@ -79,7 +79,7 @@ public class GetAllPostCommentsQueryRequestBuilder
         return this;
     }
 
-    public GetAllPostCommentsQueryRequestBuilder WithSortProperty(IEnumTransformer<PostCommentsSortTerm> transformer)
+    public GetAllPostCommentsQueryRequestBuilder WithSortTerm(IEnumTransformer<PostCommentsSortTerm> transformer)
     {
         _sortProperty = transformer.Transform(_sortProperty);
 

@@ -172,7 +172,7 @@ public class GetAllPostCommentsForUserQueryHandlerIntegrationTests : BasePostCom
     [Theory]
     [PostCommentsForUserSortTermWithCreatedAtTermData]
     [PostCommentsForUserSortTermWithUserNameTermData]
-    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortPropertyAreValid(
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortTermAreValid(
         IEnumTransformer<PostCommentsForUserSortTerm> transformer, ISortEnumTermTransformer<PostComment> termTransformer)
     {
         // Arrange

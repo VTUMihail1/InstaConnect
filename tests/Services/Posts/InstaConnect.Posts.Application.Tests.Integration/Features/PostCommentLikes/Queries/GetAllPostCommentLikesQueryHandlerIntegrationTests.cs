@@ -112,7 +112,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         IEnumMessageTransformer<PostCommentLikesSortTerm> messageTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(transformer).Build();
+        var request = _requestBuilder.WithSortTerm(transformer).Build();
 
         // Assert
         await Sender.ShouldThrowInvalidValidationExceptionForSortTermAsync(
@@ -260,11 +260,11 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
     [Theory]
     [PostCommentLikesSortTermWithCreatedAtTermData]
     [PostCommentLikesSortTermWithUserNameTermData]
-    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortPropertyAreValid(
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortTermAreValid(
         IEnumTransformer<PostCommentLikesSortTerm> transformer, ISortEnumTermTransformer<PostCommentLike> termTransformer)
     {
         // Arrange
-        var request = _requestBuilder.WithSortProperty(transformer).Build();
+        var request = _requestBuilder.WithSortTerm(transformer).Build();
 
         // Act
         var response = await Sender.SendAsync(request, CancellationToken);

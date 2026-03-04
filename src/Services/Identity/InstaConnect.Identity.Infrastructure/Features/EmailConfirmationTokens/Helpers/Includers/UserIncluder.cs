@@ -13,9 +13,9 @@ internal class UserIncluder : IEmailConfirmationTokenIncluder
         _context = context;
     }
 
-    public IdentityDestinationType DestinationType => IdentityDestinationType.EmailConfirmationTokens;
+    public IdentityDestinationType DestinationType => IdentityDestinationType.EmailConfirmationToken;
 
-    public IdentityIncludeType IncludeType => IdentityIncludeType.Users;
+    public IdentityIncludeType IncludeType => IdentityIncludeType.User;
 
     public IAggregateFluent<EmailConfirmationToken> Include(IAggregateFluent<EmailConfirmationToken> aggregate)
     {

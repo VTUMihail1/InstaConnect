@@ -11,7 +11,7 @@ internal class FollowQueryRepository : IFollowQueryRepository
     private readonly IFollowsContext _context;
     private readonly IFollowIncluderFactory _includerFactory;
     private readonly ISortOrdererFactory _sortOrdererFactory;
-    private readonly IFollowsForFollowerSortTermerFactory _forFollowerSortTermerFactory;
+    private readonly IFollowsSortTermerFactory _sortTermerFactory;
     private readonly IFollowsForFollowingSortTermerFactory _forFollowingSortTermerFactory;
 
     public FollowQueryRepository(
@@ -19,21 +19,21 @@ internal class FollowQueryRepository : IFollowQueryRepository
         IFollowsContext context,
         IFollowIncluderFactory includerFactory,
         ISortOrdererFactory sortOrdererFactory,
-        IFollowsForFollowerSortTermerFactory forFollowerSortTermerFactory,
+        IFollowsSortTermerFactory sortTermerFactory,
         IFollowsForFollowingSortTermerFactory forFollowingSortTermerFactory)
     {
         _paginator = paginator;
         _context = context;
         _includerFactory = includerFactory;
         _sortOrdererFactory = sortOrdererFactory;
-        _forFollowerSortTermerFactory = forFollowerSortTermerFactory;
+        _sortTermerFactory = sortTermerFactory;
         _forFollowingSortTermerFactory = forFollowingSortTermerFactory;
     }
 
-    public async Task<ICollection<FollowResponse>> GetAllForFollowerAsync(
-        FollowsForFollowerFilterQuery filter,
+    public async Task<ICollection<FollowResponse>> GetAllAsync(
+        FollowsFilterQuery filter,
         CurrentUserQuery currentUser,
-        FollowsForFollowerSortingQuery sorting,
+        FollowsSortingQuery sorting,
         FollowsPaginationQuery pagination,
         FollowInclude? include,
         CancellationToken cancellationToken)
@@ -44,19 +44,19 @@ internal class FollowQueryRepository : IFollowQueryRepository
             .Includes(_includerFactory, include)
             .Match(filter)
             .ProjectToResponseWithoutFollower(currentUser)
-            .Sort(_sortOrdererFactory, _forFollowerSortTermerFactory, sorting)
+            .Sort(_sortOrdererFactory, _sortTermerFactory, sorting)
             .Paginate(_paginator, pagination)
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<ICollection<FollowResponse>> GetAllForFollowerAsync(
-        FollowsForFollowerFilterQuery filter,
+    public async Task<ICollection<FollowResponse>> GetAllAsync(
+        FollowsFilterQuery filter,
         CurrentUserQuery currentUser,
-        FollowsForFollowerSortingQuery sorting,
+        FollowsSortingQuery sorting,
         FollowsPaginationQuery pagination,
         CancellationToken cancellationToken)
     {
-        return await GetAllForFollowerAsync(filter, currentUser, sorting, pagination, null, cancellationToken);
+        return await GetAllAsync(filter, currentUser, sorting, pagination, null, cancellationToken);
     }
 
     public async Task<ICollection<FollowResponse>> GetAllForFollowingAsync(
@@ -88,8 +88,8 @@ internal class FollowQueryRepository : IFollowQueryRepository
         return await GetAllForFollowingAsync(filter, currentUser, sorting, pagination, null, cancellationToken);
     }
 
-    public async Task<long> GetTotalCountForFollowerAsync(
-        FollowsForFollowerFilterQuery filter,
+    public async Task<long> GetTotalCountAsync(
+        FollowsFilterQuery filter,
         FollowInclude? include,
         CancellationToken cancellationToken)
     {
@@ -101,11 +101,11 @@ internal class FollowQueryRepository : IFollowQueryRepository
             .GetCount(cancellationToken);
     }
 
-    public async Task<long> GetTotalCountForFollowerAsync(
-        FollowsForFollowerFilterQuery filter,
+    public async Task<long> GetTotalCountAsync(
+        FollowsFilterQuery filter,
         CancellationToken cancellationToken)
     {
-        return await GetTotalCountForFollowerAsync(filter, null, cancellationToken);
+        return await GetTotalCountAsync(filter, null, cancellationToken);
     }
 
     public async Task<long> GetTotalCountForFollowingAsync(

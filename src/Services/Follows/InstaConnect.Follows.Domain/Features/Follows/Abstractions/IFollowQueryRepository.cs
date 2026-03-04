@@ -2,18 +2,18 @@
 
 public interface IFollowQueryRepository
 {
-    Task<ICollection<FollowResponse>> GetAllForFollowerAsync(
-        FollowsForFollowerFilterQuery filter,
+    Task<ICollection<FollowResponse>> GetAllAsync(
+        FollowsFilterQuery filter,
         CurrentUserQuery currentUser,
-        FollowsForFollowerSortingQuery sorting,
+        FollowsSortingQuery sorting,
         FollowsPaginationQuery pagination,
         FollowInclude? include,
         CancellationToken cancellationToken);
 
-    Task<ICollection<FollowResponse>> GetAllForFollowerAsync(
-        FollowsForFollowerFilterQuery filter,
+    Task<ICollection<FollowResponse>> GetAllAsync(
+        FollowsFilterQuery filter,
         CurrentUserQuery currentUser,
-        FollowsForFollowerSortingQuery sorting,
+        FollowsSortingQuery sorting,
         FollowsPaginationQuery pagination,
         CancellationToken cancellationToken);
 
@@ -32,13 +32,13 @@ public interface IFollowQueryRepository
         FollowsPaginationQuery pagination,
         CancellationToken cancellationToken);
 
-    Task<long> GetTotalCountForFollowerAsync(
-        FollowsForFollowerFilterQuery filter,
+    Task<long> GetTotalCountAsync(
+        FollowsFilterQuery filter,
         FollowInclude? include,
         CancellationToken cancellationToken);
 
-    Task<long> GetTotalCountForFollowerAsync(
-        FollowsForFollowerFilterQuery filter,
+    Task<long> GetTotalCountAsync(
+        FollowsFilterQuery filter,
         CancellationToken cancellationToken);
 
     Task<long> GetTotalCountForFollowingAsync(

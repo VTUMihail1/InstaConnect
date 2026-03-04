@@ -27,19 +27,25 @@ public class Chat : IEntityWithId<ChatId>
 
     public DateTimeOffset CreatedAtUtc { get; }
 
-    public void AddParticipantOne(User participantOne)
+    public Chat AddParticipantOne(User? participantOne)
     {
         ParticipantOne = participantOne;
+
+        return this;
     }
 
-    public void AddParticipantTwo(User participantTwo)
+    public Chat AddParticipantTwo(User? participantTwo)
     {
         ParticipantTwo = participantTwo;
+
+        return this;
     }
 
-    public void AddMessage(ChatMessage message)
+    public Chat AddMessage(ChatMessage message)
     {
         Messages.Add(message);
+
+        return this;
     }
 
     public bool IsNotParticipant(UserId participantId)

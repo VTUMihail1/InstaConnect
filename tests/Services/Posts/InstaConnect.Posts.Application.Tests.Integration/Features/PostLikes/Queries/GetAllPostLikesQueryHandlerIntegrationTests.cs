@@ -209,7 +209,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeApplicati
     [Theory]
     [PostLikesSortTermWithCreatedAtTermData]
     [PostLikesSortTermWithUserNameTermData]
-    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortPropertyAreValid(
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortTermAreValid(
         IEnumTransformer<PostLikesSortTerm> transformer, ISortEnumTermTransformer<PostLike> termTransformer)
     {
         // Arrange

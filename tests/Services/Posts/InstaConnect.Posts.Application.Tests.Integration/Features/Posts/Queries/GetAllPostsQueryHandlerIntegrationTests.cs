@@ -200,7 +200,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationQueryI
     [PostsSortTermWithCreatedAtTermData]
     [PostsSortTermWithTitleTermData]
     [PostsSortTermWithUserNameTermData]
-    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortPropertyAreValid(
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndSortTermAreValid(
         IEnumTransformer<PostsSortTerm> transformer, ISortEnumTermTransformer<Post> termTransformer)
     {
         // Arrange

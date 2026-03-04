@@ -2,22 +2,22 @@
 
 internal class DeleteChatMessageCommandHandler : ICommandHandler<DeleteChatMessageCommandRequest>
 {
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly IChatMessageService _chatMessageService;
+    private readonly IApplicationMapper _mapper;
+    private readonly IChatMessageCommandService _messageService;
 
     public DeleteChatMessageCommandHandler(
-        IApplicationMapper applicationMapper,
-        IChatMessageService chatMessageService)
+        IApplicationMapper mapper,
+        IChatMessageCommandService messageService)
     {
-        _applicationMapper = applicationMapper;
-        _chatMessageService = chatMessageService;
+        _mapper = mapper;
+        _messageService = messageService;
     }
 
     public async Task Handle(
         DeleteChatMessageCommandRequest request,
         CancellationToken cancellationToken)
     {
-        var serviceRequest = _applicationMapper.Map<DeleteChatMessageCommand>(request);
-        await _chatMessageService.DeleteAsync(serviceRequest, cancellationToken);
+        var serviceRequest = _mapper.Map<DeleteChatMessageCommand>(request);
+        await _messageService.DeleteAsync(serviceRequest, cancellationToken);
     }
 }

@@ -5,6 +5,7 @@ public record ChatMessageQueryResponse(
     string ParticipantTwoId,
     string MessageId,
     string Content,
-    UserQueryResponse Sender,
+    ChatQueryResponse? Chat,
+    UserQueryResponse? Sender,
     DateTimeOffset CreatedAtUtc,
     DateTimeOffset UpdatedAtUtc);

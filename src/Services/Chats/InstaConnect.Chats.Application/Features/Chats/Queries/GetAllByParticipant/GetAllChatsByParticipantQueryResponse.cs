@@ -1,3 +1,0 @@
-﻿namespace InstaConnect.Chats.Application.Features.Chats.Queries.GetAllByParticipant;
-
-public record GetAllChatsByParticipantQueryResponse(ChatCollectionQueryResponse Response);

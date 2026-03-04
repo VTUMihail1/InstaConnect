@@ -1,7 +1,3 @@
 ﻿namespace InstaConnect.Chats.Events.Features.Chats;
 
-public record ChatAddedEventRequest(
-    string ParticipantOne,
-    string ParticipantTwo,
-    DateTimeOffset CreatedAtUtc)
-    : IEventRequest;
+public record ChatAddedEventRequest(ChatEventRequest Chat) : IEventRequest;

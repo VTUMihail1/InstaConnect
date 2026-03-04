@@ -4,7 +4,7 @@ namespace InstaConnect.Follows.Domain.Features.Follows.Abstractions;
 
 internal interface IFollowCollectionResponseFactory
 {
-    FollowCollectionResponse CreateForFollower(UserResponse follower, ICollection<FollowResponse> follows, long totalCount, FollowsPaginationQuery pagination);
+    FollowCollectionResponse Create(UserResponse follower, ICollection<FollowResponse> follows, long totalCount, FollowsPaginationQuery pagination);
 
     FollowCollectionResponse CreateForFollowing(UserResponse following, ICollection<FollowResponse> follows, long totalCount, FollowsPaginationQuery pagination);
 }

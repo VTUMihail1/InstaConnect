@@ -1,0 +1,77 @@
+﻿using InstaConnect.Common.Events.Abstractions;
+
+namespace InstaConnect.Chats.Domain.Features.Chats.Helpers;
+
+internal class ChatCommandService : IChatCommandService
+{
+    private readonly IChatFactory _factory;
+    private readonly IApplicationMapper _mapper;
+    private readonly IEventPublisher _eventPublisher;
+    private readonly IChatCommandRepository _repository;
+    private readonly IUserCommandRepository _userRepository;
+    private readonly IChatIncludeBuilderFactory _includeBuilderFactory;
+
+    public ChatCommandService(
+        IChatFactory factory,
+        IApplicationMapper mapper,
+        IEventPublisher eventPublisher,
+        IChatCommandRepository repository,
+        IUserCommandRepository userRepository,
+        IChatIncludeBuilderFactory includeBuilderFactory)
+    {
+        _factory = factory;
+        _mapper = mapper;
+        _eventPublisher = eventPublisher;
+        _repository = repository;
+        _userRepository = userRepository;
+        _includeBuilderFactory = includeBuilderFactory;
+    }
+
+    public async Task<ChatId> AddAsync(AddChatCommand command, CancellationToken cancellationToken)
+    {
+        var participantOne = await _userRepository.GetByIdAsync(command.ParticipantOneId, cancellationToken);
+
+        if (participantOne == null)
+        {
+            throw new UserNotFoundException(command.ParticipantOneId);
+        }
+
+        var participantTwo = await _userRepository.GetByIdAsync(command.ParticipantTwoId, cancellationToken);
+
+        if (participantTwo == null)
+        {
+            throw new UserNotFoundException(command.ParticipantTwoId);
+        }
+
+        var newChat = _factory.Create(command.ParticipantOneId, command.ParticipantTwoId).AddParticipantOne(participantOne).AddParticipantTwo(participantTwo);
+        var chat = await _repository.GetByIdAsync(newChat.Id, cancellationToken);
+
+        if (chat != null)
+        {
+            throw new ChatAlreadyExistsException(newChat.Id);
+        }
+
+        await _repository.AddAsync(newChat, cancellationToken);
+
+        await _eventPublisher.PublishAsync(
+            _mapper.Map<ChatAddedEventRequest>(newChat), cancellationToken);
+
+        return newChat.Id;
+    }
+
+    public async Task DeleteAsync(DeleteChatCommand command, CancellationToken cancellationToken)
+    {
+        var include = _includeBuilderFactory.Create().WithParticipantOne().WithParticipantTwo().Build();
+        var chat = await _repository.GetByIdAsync(command.Id, include, cancellationToken);
+
+        if (chat == null)
+        {
+            throw new ChatNotFoundException(command.Id);
+        }
+
+        await _repository.DeleteAsync(chat, cancellationToken);
+
+        await _eventPublisher.PublishAsync(
+            _mapper.Map<ChatDeletedEventRequest>(chat), cancellationToken);
+    }
+}

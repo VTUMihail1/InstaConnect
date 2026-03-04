@@ -2,23 +2,23 @@
 
 internal class UpdateChatMessageCommandHandler : ICommandHandler<UpdateChatMessageCommandRequest, UpdateChatMessageCommandResponse>
 {
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly IChatMessageService _chatMessageService;
+    private readonly IApplicationMapper _mapper;
+    private readonly IChatMessageCommandService _messageService;
 
     public UpdateChatMessageCommandHandler(
-        IApplicationMapper applicationMapper,
-        IChatMessageService chatMessageService)
+        IApplicationMapper mapper,
+        IChatMessageCommandService messageService)
     {
-        _applicationMapper = applicationMapper;
-        _chatMessageService = chatMessageService;
+        _mapper = mapper;
+        _messageService = messageService;
     }
 
     public async Task<UpdateChatMessageCommandResponse> Handle(UpdateChatMessageCommandRequest request, CancellationToken cancellationToken)
     {
-        var serviceRequest = _applicationMapper.Map<UpdateChatMessageCommand>(request);
-        var chatMessage = await _chatMessageService.UpdateAsync(serviceRequest, cancellationToken);
+        var serviceRequest = _mapper.Map<UpdateChatMessageCommand>(request);
+        var serviceResponse = await _messageService.UpdateAsync(serviceRequest, cancellationToken);
 
-        var response = _applicationMapper.Map<UpdateChatMessageCommandResponse>(chatMessage);
+        var response = _mapper.Map<UpdateChatMessageCommandResponse>(serviceResponse);
 
         return response;
     }

@@ -13,9 +13,9 @@ internal class FollowFollowersIncluder : IUserIncluder
         _context = context;
     }
 
-    public FollowsDestinationType DestinationType => FollowsDestinationType.Users;
+    public FollowsDestinationType DestinationType => FollowsDestinationType.User;
 
-    public FollowsIncludeType IncludeType => FollowsIncludeType.Followers;
+    public FollowsIncludeType IncludeType => FollowsIncludeType.Follower;
 
     public IAggregateFluent<User> Include(IAggregateFluent<User> aggregate)
     {

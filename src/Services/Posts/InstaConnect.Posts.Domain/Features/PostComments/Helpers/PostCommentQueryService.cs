@@ -46,7 +46,7 @@ internal class PostCommentQueryService : IPostCommentQueryService
 
         var totalCount = await _commentRepository.GetTotalCountAsync(query.Filter, commentInclude, cancellationToken);
 
-        return _commentCollectionResponseFactory.CreateForPost(post, postComments, totalCount, query.Pagination);
+        return _commentCollectionResponseFactory.Create(post, postComments, totalCount, query.Pagination);
     }
 
     public async Task<PostCommentCollectionResponse> GetAllForUserAsync(GetAllPostCommentsForUserQuery query, CancellationToken cancellationToken)

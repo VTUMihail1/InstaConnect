@@ -1,9 +1,11 @@
 ﻿namespace InstaConnect.Chats.Presentation.Features.Chats.Models.Responses;
 
 public record ChatCollectionApiResponse(
-    ICollection<ChatApiResponse> Entities,
+    UserApiResponse? ParticipantOne,
+    UserApiResponse? ParticipantTwo,
+    ICollection<ChatApiResponse> Chats,
     int Page,
     int PageSize,
-    int TotalCount,
+    long TotalCount,
     bool HasNextPage,
     bool HasPreviousPage) : ICollectionApiResponse;

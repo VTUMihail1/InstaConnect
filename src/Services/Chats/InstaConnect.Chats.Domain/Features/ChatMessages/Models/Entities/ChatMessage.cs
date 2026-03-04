@@ -29,6 +29,8 @@ public class ChatMessage : IEntityWithId<ChatMessageId>
 
     public User? Sender { get; private set; }
 
+    public Chat? Chat { get; private set; }
+
     public string Content { get; private set; }
 
     public DateTimeOffset CreatedAtUtc { get; }
@@ -41,8 +43,17 @@ public class ChatMessage : IEntityWithId<ChatMessageId>
         UpdatedAtUtc = updatedAtUtc;
     }
 
-    public void AddSender(User sender)
+    public ChatMessage AddSender(User? sender)
     {
         Sender = sender;
+
+        return this;
+    }
+
+    public ChatMessage AddChat(Chat? chat)
+    {
+        Chat = chat;
+
+        return this;
     }
 }

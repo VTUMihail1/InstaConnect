@@ -11,15 +11,15 @@ namespace InstaConnect.Chats.Presentation.Features.ChatMessages.Controllers.v1;
 [EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class ChatMessageController : ControllerBase
 {
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly IApplicationSender _applicationSender;
+    private readonly IApplicationMapper _mapper;
+    private readonly IApplicationSender _sender;
 
     public ChatMessageController(
-        IApplicationMapper applicationMapper,
-        IApplicationSender applicationSender)
+        IApplicationMapper mapper,
+        IApplicationSender sender)
     {
-        _applicationMapper = applicationMapper;
-        _applicationSender = applicationSender;
+        _mapper = mapper;
+        _sender = sender;
     }
 
     // GET: api/participants/5f0f2dd0-e957-4d72-8141-767a36fc6e95/chats/5f0f2dd0-e957-4d72-8141-767a36fc6e95/messages
@@ -30,9 +30,9 @@ public class ChatMessageController : ControllerBase
         GetAllChatMessagesApiRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _applicationMapper.Map<GetAllChatMessagesQueryRequest>(request);
-        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
-        var response = _applicationMapper.Map<GetAllChatMessagesApiResponse>(queryResponse);
+        var queryRequest = _mapper.Map<GetAllChatMessagesQueryRequest>(request);
+        var queryResponse = await _sender.SendAsync(queryRequest, cancellationToken);
+        var response = _mapper.Map<GetAllChatMessagesApiResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -45,9 +45,9 @@ public class ChatMessageController : ControllerBase
         GetChatMessageByIdApiRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _applicationMapper.Map<GetChatMessageByIdQueryRequest>(request);
-        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
-        var response = _applicationMapper.Map<GetChatMessageByIdApiResponse>(queryResponse);
+        var queryRequest = _mapper.Map<GetChatMessageByIdQueryRequest>(request);
+        var queryResponse = await _sender.SendAsync(queryRequest, cancellationToken);
+        var response = _mapper.Map<GetChatMessageByIdApiResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -62,9 +62,9 @@ public class ChatMessageController : ControllerBase
         AddChatMessageApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<AddChatMessageCommandRequest>(request);
-        var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
-        var response = _applicationMapper.Map<AddChatMessageApiResponse>(commandResponse);
+        var commandRequest = _mapper.Map<AddChatMessageCommandRequest>(request);
+        var commandResponse = await _sender.SendAsync(commandRequest, cancellationToken);
+        var response = _mapper.Map<AddChatMessageApiResponse>(commandResponse);
 
         return Ok(response);
     }
@@ -79,9 +79,9 @@ public class ChatMessageController : ControllerBase
         UpdateChatMessageApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<UpdateChatMessageCommandRequest>(request);
-        var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
-        var response = _applicationMapper.Map<UpdateChatMessageApiResponse>(commandResponse);
+        var commandRequest = _mapper.Map<UpdateChatMessageCommandRequest>(request);
+        var commandResponse = await _sender.SendAsync(commandRequest, cancellationToken);
+        var response = _mapper.Map<UpdateChatMessageApiResponse>(commandResponse);
 
         return Ok(response);
     }
@@ -96,8 +96,8 @@ public class ChatMessageController : ControllerBase
         DeleteChatMessageApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<DeleteChatMessageCommandRequest>(request);
-        await _applicationSender.SendAsync(commandRequest, cancellationToken);
+        var commandRequest = _mapper.Map<DeleteChatMessageCommandRequest>(request);
+        await _sender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }

@@ -8,7 +8,7 @@ internal static class ServiceCollectionExtensions
 {
     internal static IServiceCollection AddUserServices(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddImplementationsOf<IUserIncludeProperty>(ChatInfrastructureReference.Assembly);
+        serviceCollection.AddImplementationsOf<IUserIncluder>(ChatInfrastructureReference.Assembly);
 
         BsonClassMap.TryRegisterClassMap<User>(cm =>
         {
@@ -23,8 +23,8 @@ internal static class ServiceCollectionExtensions
             cm.MapMember(c => c.CreatedAtUtc);
             cm.MapMember(c => c.UpdatedAtUtc);
 
-            cm.MapMember(c => c.Chats);
-            cm.MapMember(c => c.ChatMessages);
+            cm.MapMemberWithoutSerialization(c => c.Chats);
+            cm.MapMemberWithoutSerialization(c => c.ChatMessages);
 
             cm.MapCreator(c => new User(
                 c.Id,
@@ -35,8 +35,6 @@ internal static class ServiceCollectionExtensions
                 c.ProfileImage,
                 c.CreatedAtUtc,
                 c.UpdatedAtUtc));
-
-            cm.SetIgnoreExtraElements(true);
         });
 
         return serviceCollection;

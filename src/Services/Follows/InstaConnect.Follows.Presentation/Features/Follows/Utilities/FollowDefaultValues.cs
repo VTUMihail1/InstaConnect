@@ -4,9 +4,9 @@ namespace InstaConnect.Follows.Presentation.Features.Follows.Utilities;
 
 public static class FollowDefaultValues
 {
-    public const FollowsForFollowerSortTerm ByFollowerSortProperty = FollowsForFollowerSortTerm.ByCreatedAt;
+    public const FollowsSortTerm ByFollowerSortTerm = FollowsSortTerm.ByCreatedAt;
 
-    public const FollowsForFollowingSortTerm ByFollowingSortProperty = FollowsForFollowingSortTerm.ByCreatedAt;
+    public const FollowsForFollowingSortTerm ByFollowingSortTerm = FollowsForFollowingSortTerm.ByCreatedAt;
 
     public const int Page = 1;
 

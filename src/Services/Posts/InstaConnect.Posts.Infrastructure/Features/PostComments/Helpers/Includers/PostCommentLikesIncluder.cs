@@ -13,9 +13,9 @@ internal class PostCommentLikesIncluder : IPostCommentIncluder
         _context = context;
     }
 
-    public PostsDestinationType DestinationType => PostsDestinationType.PostComments;
+    public PostsDestinationType DestinationType => PostsDestinationType.PostComment;
 
-    public PostsIncludeType IncludeType => PostsIncludeType.PostCommentLikes;
+    public PostsIncludeType IncludeType => PostsIncludeType.PostCommentLike;
 
     public IAggregateFluent<PostComment> Include(IAggregateFluent<PostComment> aggregate)
     {

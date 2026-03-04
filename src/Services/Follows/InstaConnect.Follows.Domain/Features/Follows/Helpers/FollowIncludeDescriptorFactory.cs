@@ -6,11 +6,11 @@ public class FollowIncludeDescriptorFactory : IFollowIncludeDescriptorFactory
 {
     public FollowsIncludeDescriptor CreateFollower()
     {
-        return new(FollowsDestinationType.Follows, FollowsIncludeType.Followers);
+        return new(FollowsDestinationType.Follow, FollowsIncludeType.Follower);
     }
 
     public FollowsIncludeDescriptor CreateFollowing()
     {
-        return new(FollowsDestinationType.Follows, FollowsIncludeType.Followings);
+        return new(FollowsDestinationType.Follow, FollowsIncludeType.Following);
     }
 }

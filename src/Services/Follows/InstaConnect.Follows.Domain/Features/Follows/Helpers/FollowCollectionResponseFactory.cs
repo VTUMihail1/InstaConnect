@@ -11,7 +11,7 @@ internal class FollowCollectionResponseFactory : IFollowCollectionResponseFactor
         _paginator = paginator;
     }
 
-    public FollowCollectionResponse CreateForFollower(UserResponse follower, ICollection<FollowResponse> follows, long totalCount, FollowsPaginationQuery pagination)
+    public FollowCollectionResponse Create(UserResponse follower, ICollection<FollowResponse> follows, long totalCount, FollowsPaginationQuery pagination)
     {
         var hasNextPage = _paginator.HasNextPage(pagination.Page, pagination.PageSize, totalCount);
         var hasPreviousPage = _paginator.HasPreviousPage(pagination.Page);

@@ -13,14 +13,12 @@ internal class ForbiddenExceptionStatus : IBaseExceptionStatus
 
     public ApplicationProblemDetails GetApplicationProblemDetails(BaseException exception)
     {
-        var applicationProblemDetails = new ApplicationProblemDetails
+        return new ApplicationProblemDetails
         {
             Title = Status.ToString(),
             Type = exception.GetType().Name,
             Status = StatusCodes.Status403Forbidden,
             Detail = exception.Message,
         };
-
-        return applicationProblemDetails;
     }
 }

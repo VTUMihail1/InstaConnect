@@ -19,14 +19,14 @@ public static class PostCommentLikeExceptionErrorMessages
         return Format.FormatCurrentCulture(id.CommentId.Id.Id, id.CommentId.CommentId, id.UserId.Id);
     }
 
-    public static string GetSortPropertyNotSupportedMessage(PostCommentLikesSortTerm sortTerm)
+    public static string GetSortTermNotSupportedMessage(PostCommentLikesSortTerm sortTerm)
     {
         const string Format = "PostCommentLikesSortTerm(type: {0}) is not supported";
 
         return Format.FormatCurrentCulture(sortTerm);
     }
 
-    public static string GetSortPropertyNotSupportedMessage(PostCommentLikesForUserSortTerm sortTerm)
+    public static string GetSortTermNotSupportedMessage(PostCommentLikesForUserSortTerm sortTerm)
     {
         const string Format = "PostCommentLikesForUserSortTerm(type: {0}) is not supported";
 

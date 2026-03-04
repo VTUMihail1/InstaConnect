@@ -2,23 +2,23 @@
 
 internal class AddChatMessageCommandHandler : ICommandHandler<AddChatMessageCommandRequest, AddChatMessageCommandResponse>
 {
-    private readonly IApplicationMapper _applicationMapper;
-    private readonly IChatMessageService _chatMessageService;
+    private readonly IApplicationMapper _mapper;
+    private readonly IChatMessageCommandService _messageService;
 
     public AddChatMessageCommandHandler(
-        IApplicationMapper applicationMapper,
-        IChatMessageService chatMessageService)
+        IApplicationMapper mapper,
+        IChatMessageCommandService messageService)
     {
-        _applicationMapper = applicationMapper;
-        _chatMessageService = chatMessageService;
+        _mapper = mapper;
+        _messageService = messageService;
     }
 
     public async Task<AddChatMessageCommandResponse> Handle(AddChatMessageCommandRequest request, CancellationToken cancellationToken)
     {
-        var serviceRequest = _applicationMapper.Map<AddChatMessageCommand>(request);
-        var chatMessage = await _chatMessageService.AddAsync(serviceRequest, cancellationToken);
+        var serviceRequest = _mapper.Map<AddChatMessageCommand>(request);
+        var chatMessage = await _messageService.AddAsync(serviceRequest, cancellationToken);
 
-        var response = _applicationMapper.Map<AddChatMessageCommandResponse>(chatMessage);
+        var response = _mapper.Map<AddChatMessageCommandResponse>(chatMessage);
 
         return response;
     }

@@ -8,8 +8,8 @@ internal static class ServiceCollectionExtensions
 {
     internal static IServiceCollection AddChatMessageServices(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddImplementationsOf<IChatMessageSortProperty>(ChatInfrastructureReference.Assembly);
-        serviceCollection.AddImplementationsOf<IChatMessageIncludeProperty>(ChatInfrastructureReference.Assembly);
+        serviceCollection.AddImplementationsOf<IChatMessagesSortTermer>(ChatInfrastructureReference.Assembly);
+        serviceCollection.AddImplementationsOf<IChatMessageIncluder>(ChatInfrastructureReference.Assembly);
 
         BsonClassMap.TryRegisterClassMap<ChatMessage>(cm =>
         {
@@ -17,12 +17,12 @@ internal static class ServiceCollectionExtensions
 
             cm.MapMember(c => c.Id);
             cm.MapMember(c => c.SenderId);
-
             cm.MapMember(c => c.Content);
             cm.MapMember(c => c.CreatedAtUtc);
             cm.MapMember(c => c.UpdatedAtUtc);
 
-            cm.MapMember(c => c.Sender);
+            cm.MapMemberWithoutSerialization(c => c.Chat);
+            cm.MapMemberWithoutSerialization(c => c.Sender);
 
             cm.MapCreator(c => new ChatMessage(
                 c.Id,

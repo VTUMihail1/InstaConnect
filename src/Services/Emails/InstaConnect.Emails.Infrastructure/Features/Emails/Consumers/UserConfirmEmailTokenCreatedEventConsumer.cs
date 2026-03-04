@@ -22,7 +22,7 @@ public class UserConfirmEmailTokenCreatedEventConsumer : IConsumer<EmailConfirma
 
     public async Task Consume(ConsumeContext<EmailConfirmationTokenAddedEventRequest> context)
     {
-        var mailMessage = _emailFactory.GetEmail(context.Message.Id, EmailConstants.ForgotPasswordTitle, context.Message.Id);
+        var mailMessage = _emailFactory.GetEmail(context.Message.EmailConfirmationToken.Value, EmailConstants.ForgotPasswordTitle, context.Message.EmailConfirmationToken.Id);
 
         try
         {

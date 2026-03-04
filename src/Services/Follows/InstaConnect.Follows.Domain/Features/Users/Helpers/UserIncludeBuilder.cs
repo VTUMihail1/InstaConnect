@@ -23,7 +23,7 @@ public class UserIncludeBuilder
         return this;
     }
 
-    public UserIncludeBuilder WithFollowers(FollowFollowerInclude include)
+    public UserIncludeBuilder WithFollowFollowers(FollowFollowerInclude include)
     {
         _descriptors.Add(_descriptorsFactory.CreateFollowFollowers());
         _descriptors.AddRange(include.Descriptors);
@@ -38,7 +38,7 @@ public class UserIncludeBuilder
         return this;
     }
 
-    public UserIncludeBuilder WithFollowings(FollowInclude include)
+    public UserIncludeBuilder WithFollowFollowings(FollowFollowingInclude include)
     {
         _descriptors.Add(_descriptorsFactory.CreateFollowFollowings());
         _descriptors.AddRange(include.Descriptors);

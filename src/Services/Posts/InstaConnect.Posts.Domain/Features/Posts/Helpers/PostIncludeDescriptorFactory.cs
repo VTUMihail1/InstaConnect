@@ -12,16 +12,16 @@ public class PostIncludeDescriptorFactory : IPostIncludeDescriptorFactory
 {
     public PostsIncludeDescriptor CreateUser()
     {
-        return new(PostsDestinationType.Posts, PostsIncludeType.Users);
+        return new(PostsDestinationType.Post, PostsIncludeType.User);
     }
 
     public PostsIncludeDescriptor CreatePostLikes()
     {
-        return new(PostsDestinationType.Posts, PostsIncludeType.PostLikes);
+        return new(PostsDestinationType.Post, PostsIncludeType.PostLike);
     }
 
     public PostsIncludeDescriptor CreatePostComments()
     {
-        return new(PostsDestinationType.Posts, PostsIncludeType.PostComments);
+        return new(PostsDestinationType.Post, PostsIncludeType.PostComment);
     }
 }

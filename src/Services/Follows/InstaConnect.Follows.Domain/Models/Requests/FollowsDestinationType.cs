@@ -3,10 +3,10 @@
 public enum FollowsDestinationType
 {
     None,
-    Users,
-    Follows,
-    Followers,
-    Followings,
-    FollowFollowers,
-    FollowFollowings
+    User,
+    Follow,
+    Follower,
+    Following,
+    FollowFollower,
+    FollowFollowing
 }
