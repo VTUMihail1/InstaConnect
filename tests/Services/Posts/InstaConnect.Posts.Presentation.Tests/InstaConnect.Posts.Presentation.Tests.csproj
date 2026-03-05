@@ -1,4 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <IsTestProject>false</IsTestProject>
+  </PropertyGroup>
+    
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Presentation.Tests\InstaConnect.Common.Presentation.Tests.csproj" />
     <ProjectReference Include="..\InstaConnect.Posts.Tests\InstaConnect.Posts.Tests.csproj" />

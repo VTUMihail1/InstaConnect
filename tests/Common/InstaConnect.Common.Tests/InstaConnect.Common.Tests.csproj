@@ -1,12 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <PropertyGroup>
+    <IsTestProject>false</IsTestProject>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Bogus" />
     <PackageReference Include="FluentAssertions" />
     <PackageReference Include="NSubstitute" />
-    <PackageReference Include="Testcontainers.MongoDb" />
     <PackageReference Include="xunit" />
     <PackageReference Include="xunit.extensibility.core" />
+    <PackageReference Include="Testcontainers.MongoDb" />
     <PackageReference Include="Testcontainers.RabbitMq" />
     <PackageReference Include="Testcontainers.Redis" />
     <PackageReference Include="WebMotions.Fake.Authentication.JwtBearer" />
