@@ -10,17 +10,25 @@ public static class ContainerFactory
     public static MongoDbContainer GetMongoDbContainer()
     {
         return new MongoDbBuilder()
-           .WithImage("mongo:7.0")
+           .WithImage("mongo:latest")
            .WithReplicaSet()
            .WithCleanUp(true)
+           .WithWaitStrategy(
+                Wait.ForUnixContainer()
+                    .UntilContainerIsHealthy())
            .Build();
     }
 
     public static RabbitMqContainer GetRabbitMqContainer()
     {
         return new RabbitMqBuilder()
-            .WithImage("rabbitmq:3.13-management")
+            .WithImage("rabbitmq:latest")
+            .WithUsername("guest")
+            .WithPassword("guest")
             .WithCleanUp(true)
+            .WithWaitStrategy(
+                 Wait.ForUnixContainer()
+                     .UntilContainerIsHealthy())
             .Build();
     }
 }
