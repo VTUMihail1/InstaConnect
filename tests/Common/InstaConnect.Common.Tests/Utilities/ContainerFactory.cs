@@ -13,9 +13,6 @@ public static class ContainerFactory
            .WithImage("mongo:latest")
            .WithReplicaSet()
            .WithCleanUp(true)
-           .WithWaitStrategy(
-                Wait.ForUnixContainer()
-                    .UntilContainerIsHealthy())
            .Build();
     }
 
@@ -23,12 +20,7 @@ public static class ContainerFactory
     {
         return new RabbitMqBuilder()
             .WithImage("rabbitmq:latest")
-            .WithUsername("guest")
-            .WithPassword("guest")
             .WithCleanUp(true)
-            .WithWaitStrategy(
-                 Wait.ForUnixContainer()
-                     .UntilContainerIsHealthy())
             .Build();
     }
 }
