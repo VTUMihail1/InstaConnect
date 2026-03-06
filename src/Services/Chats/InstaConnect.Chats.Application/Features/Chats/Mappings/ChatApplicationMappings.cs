@@ -26,7 +26,7 @@ public class ChatApplicationMappings : IRegister
                                            new(src.CurrentUserId))));
 
         config.NewConfig<ChatCollectionResponse, GetAllChatsQueryResponse>()
-            .ConstructUsing(src => new(src.Adapt<ChatCollectionQueryResponse>(config)));
+            .ConstructUsing(src => new(src.Adapt<ChatCollectionQueryResponse>(config)!));
 
         config.NewConfig<GetChatByIdQueryRequest, GetChatByIdQuery>()
             .ConstructUsing(src => new(
@@ -37,7 +37,7 @@ public class ChatApplicationMappings : IRegister
                                            new(src.CurrentUserId))));
 
         config.NewConfig<Chat, GetChatByIdQueryResponse>()
-            .ConstructUsing(src => new(src.Adapt<ChatQueryResponse>(config)));
+            .ConstructUsing(src => new(src.Adapt<ChatQueryResponse>(config)!));
 
         config.NewConfig<AddChatCommandRequest, AddChatCommand>()
             .ConstructUsing(src => new(
@@ -45,7 +45,7 @@ public class ChatApplicationMappings : IRegister
                                        new(src.ParticipantTwoId)));
 
         config.NewConfig<Chat, AddChatCommandResponse>()
-            .ConstructUsing(src => new(src.Id.Adapt<ChatIdCommandResponse>(config)));
+            .ConstructUsing(src => new(src.Id.Adapt<ChatIdCommandResponse>(config)!));
 
         config.NewConfig<DeleteChatCommandRequest, DeleteChatCommand>()
             .ConstructUsing(src => new(
@@ -70,7 +70,7 @@ public class ChatApplicationMappings : IRegister
             .ConstructUsing(src => new(
                   src.ParticipantOne.Adapt<UserQueryResponse>(config),
                   src.ParticipantTwo.Adapt<UserQueryResponse>(config),
-                  src.Chats.Adapt<ICollection<ChatQueryResponse>>(config),
+                  src.Chats.Adapt<ICollection<ChatQueryResponse>>(config)!,
                   src.Page,
                   src.PageSize,
                   src.TotalCount,

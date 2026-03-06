@@ -9,8 +9,7 @@ public static class ContainerFactory
 {
     public static MongoDbContainer GetMongoDbContainer()
     {
-        return new MongoDbBuilder()
-           .WithImage("mongo:latest")
+        return new MongoDbBuilder("mongo:latest")
            .WithReplicaSet()
            .WithCleanUp(true)
            .Build();
@@ -18,8 +17,7 @@ public static class ContainerFactory
 
     public static RabbitMqContainer GetRabbitMqContainer()
     {
-        return new RabbitMqBuilder()
-            .WithImage("rabbitmq:latest")
+        return new RabbitMqBuilder("rabbitmq:latest")
             .WithCleanUp(true)
             .Build();
     }

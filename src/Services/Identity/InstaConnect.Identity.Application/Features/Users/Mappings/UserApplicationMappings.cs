@@ -32,7 +32,7 @@ public class UserApplicationMappings : IRegister
 
         config.NewConfig<UserCollectionResponse, GetAllUsersQueryResponse>()
             .ConstructUsing(src => new(
-                  src.Users.Adapt<ICollection<UserQueryResponse>>(config),
+                  src.Users.Adapt<ICollection<UserQueryResponse>>(config)!,
                   src.Page,
                   src.PageSize,
                   src.TotalCount,
@@ -46,7 +46,7 @@ public class UserApplicationMappings : IRegister
                                            new(src.CurrentId))));
 
         config.NewConfig<UserResponse, GetUserByIdQueryResponse>()
-            .ConstructUsing(src => new(src.Adapt<UserQueryResponse>(config)));
+            .ConstructUsing(src => new(src.Adapt<UserQueryResponse>(config)!));
 
         config.NewConfig<GetCurrentUserByIdQueryRequest, GetUserByIdQuery>()
             .ConstructUsing(src => new(
@@ -55,7 +55,7 @@ public class UserApplicationMappings : IRegister
                                            new(src.CurrentId))));
 
         config.NewConfig<UserResponse, GetCurrentUserByIdQueryResponse>()
-            .ConstructUsing(src => new(src.Adapt<UserQueryResponse>(config)));
+            .ConstructUsing(src => new(src.Adapt<UserQueryResponse>(config)!));
 
         config.NewConfig<GetUserDetailsByIdQueryRequest, GetUserByIdQuery>()
             .ConstructUsing(src => new(
@@ -64,7 +64,7 @@ public class UserApplicationMappings : IRegister
                                            new(src.CurrentId))));
 
         config.NewConfig<UserResponse, GetUserDetailsByIdQueryResponse>()
-            .ConstructUsing(src => new(src.Adapt<UserDetailsQueryResponse>(config)));
+            .ConstructUsing(src => new(src.Adapt<UserDetailsQueryResponse>(config)!));
 
         config.NewConfig<GetCurrentUserDetailsByIdQueryRequest, GetUserByIdQuery>()
             .ConstructUsing(src => new(
@@ -73,7 +73,7 @@ public class UserApplicationMappings : IRegister
                                            new(src.CurrentId))));
 
         config.NewConfig<UserResponse, GetCurrentUserDetailsByIdQueryResponse>()
-            .ConstructUsing(src => new(src.Adapt<UserDetailsQueryResponse>(config)));
+            .ConstructUsing(src => new(src.Adapt<UserDetailsQueryResponse>(config)!));
 
         config.NewConfig<AddUserCommandRequest, AddUserCommand>()
             .ConstructUsing(src => new(
@@ -86,7 +86,7 @@ public class UserApplicationMappings : IRegister
                 src.ProfileImage));
 
         config.NewConfig<UserId, AddUserCommandResponse>()
-            .ConstructUsing(src => new(src.Adapt<UserIdCommandResponse>(config)));
+            .ConstructUsing(src => new(src.Adapt<UserIdCommandResponse>(config)!));
 
         config.NewConfig<UpdateCurrentUserCommandRequest, UpdateUserCommand>()
             .ConstructUsing(src => new(
@@ -98,7 +98,7 @@ public class UserApplicationMappings : IRegister
                 src.ProfileImage));
 
         config.NewConfig<UserId, UpdateCurrentUserCommandResponse>()
-            .ConstructUsing(src => new(src.Adapt<UserIdCommandResponse>(config)));
+            .ConstructUsing(src => new(src.Adapt<UserIdCommandResponse>(config)!));
 
         config.NewConfig<DeleteUserCommandRequest, DeleteUserCommand>()
             .ConstructUsing(src => new(

@@ -32,7 +32,7 @@ internal class PostCommentLikeApplicationMappings : IRegister
             .ConstructUsing(src => new(
                   src.PostComment.Adapt<PostCommentQueryResponse>(config),
                   src.User.Adapt<UserQueryResponse>(config),
-                  src.PostCommentLikes.Adapt<ICollection<PostCommentLikeQueryResponse>>(config),
+                  src.PostCommentLikes.Adapt<ICollection<PostCommentLikeQueryResponse>>(config)!,
                   src.Page,
                   src.PageSize,
                   src.TotalCount,
@@ -56,7 +56,7 @@ internal class PostCommentLikeApplicationMappings : IRegister
                     new(src.CurrentUserId))));
 
         config.NewConfig<PostCommentLikeCollectionResponse, GetAllPostCommentLikesQueryResponse>()
-            .ConstructUsing(src => new(src.Adapt<PostCommentLikeCollectionQueryResponse>(config)));
+            .ConstructUsing(src => new(src.Adapt<PostCommentLikeCollectionQueryResponse>(config)!));
 
         config.NewConfig<GetAllPostCommentLikesForUserQueryRequest, GetAllPostCommentLikesForUserQuery>()
             .ConstructUsing(src => new(
@@ -71,7 +71,7 @@ internal class PostCommentLikeApplicationMappings : IRegister
                     new(src.CurrentUserId))));
 
         config.NewConfig<PostCommentLikeCollectionResponse, GetAllPostCommentLikesForUserQueryResponse>()
-            .ConstructUsing(src => new(src.Adapt<PostCommentLikeCollectionQueryResponse>(config)));
+            .ConstructUsing(src => new(src.Adapt<PostCommentLikeCollectionQueryResponse>(config)!));
 
         config.NewConfig<GetPostCommentLikeByIdQueryRequest, GetPostCommentLikeByIdQuery>()
             .ConstructUsing(src => new(
@@ -85,7 +85,7 @@ internal class PostCommentLikeApplicationMappings : IRegister
 
         config.NewConfig<PostCommentLikeResponse, GetPostCommentLikeByIdQueryResponse>()
             .ConstructUsing(src => new(
-                src.Adapt<PostCommentLikeQueryResponse>(config)));
+                src.Adapt<PostCommentLikeQueryResponse>(config)!));
 
         config.NewConfig<AddPostCommentLikeCommandRequest, AddPostCommentLikeCommand>()
             .ConstructUsing(src => new(
@@ -97,7 +97,7 @@ internal class PostCommentLikeApplicationMappings : IRegister
                                                src.UserId))));
 
         config.NewConfig<PostCommentLikeId, AddPostCommentLikeCommandResponse>()
-            .ConstructUsing(src => new(src.Adapt<PostCommentLikeIdCommandResponse>(config)));
+            .ConstructUsing(src => new(src.Adapt<PostCommentLikeIdCommandResponse>(config)!));
 
         config.NewConfig<DeletePostCommentLikeCommandRequest, DeletePostCommentLikeCommand>()
             .ConstructUsing(src => new(

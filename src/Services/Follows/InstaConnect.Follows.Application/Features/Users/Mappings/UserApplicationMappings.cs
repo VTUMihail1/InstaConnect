@@ -23,7 +23,7 @@ internal class UserApplicationMappings : IRegister
                 src.UpdatedAtUtc));
 
         config.NewConfig<UserId, AddUserCommandResponse>()
-            .ConstructUsing(src => new(src.Adapt<UserIdCommandResponse>(config)));
+            .ConstructUsing(src => new(src.Adapt<UserIdCommandResponse>(config)!));
 
         config.NewConfig<UpdateUserCommandRequest, UpdateUserCommand>()
             .ConstructUsing(src => new(
@@ -36,7 +36,7 @@ internal class UserApplicationMappings : IRegister
                 src.UpdatedAtUtc));
 
         config.NewConfig<UserId, UpdateUserCommandResponse>()
-            .ConstructUsing(src => new(src.Adapt<UserIdCommandResponse>(config)));
+            .ConstructUsing(src => new(src.Adapt<UserIdCommandResponse>(config)!));
 
         config.NewConfig<DeleteUserCommandRequest, DeleteUserCommand>()
             .ConstructUsing(src => new(

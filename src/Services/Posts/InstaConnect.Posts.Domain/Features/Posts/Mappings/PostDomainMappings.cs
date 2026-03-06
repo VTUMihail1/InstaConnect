@@ -9,13 +9,13 @@ internal class PostDomainMappings : IRegister
     public void Register(TypeAdapterConfig config)
     {
         config.NewConfig<Post, PostAddedEventRequest>()
-            .ConstructUsing(src => new(src.Adapt<PostEventRequest>(config)));
+            .ConstructUsing(src => new(src.Adapt<PostEventRequest>(config)!));
 
         config.NewConfig<Post, PostUpdatedEventRequest>()
-            .ConstructUsing(src => new(src.Adapt<PostEventRequest>(config)));
+            .ConstructUsing(src => new(src.Adapt<PostEventRequest>(config)!));
 
         config.NewConfig<Post, PostDeletedEventRequest>()
-            .ConstructUsing(src => new(src.Adapt<PostEventRequest>(config)));
+            .ConstructUsing(src => new(src.Adapt<PostEventRequest>(config)!));
 
         config.NewConfig<Post, PostEventRequest>()
             .ConstructUsing(src => new(
@@ -23,7 +23,7 @@ internal class PostDomainMappings : IRegister
                 src.UserId.Id,
                 src.Title,
                 src.Content,
-                src.User.Adapt<UserEventRequest>(config),
+                src.User.Adapt<UserEventRequest>(config)!,
                 src.CreatedAtUtc,
                 src.UpdatedAtUtc));
     }

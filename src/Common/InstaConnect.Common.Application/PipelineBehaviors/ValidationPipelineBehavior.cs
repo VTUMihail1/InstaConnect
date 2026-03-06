@@ -37,6 +37,6 @@ internal sealed class ValidationPipelineBehavior<TRequest, TResponse>
             throw new InvalidValidationException(validationFailures);
         }
 
-        return await next();
+        return await next(cancellationToken);
     }
 }

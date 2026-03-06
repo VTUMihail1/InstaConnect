@@ -24,7 +24,7 @@ internal class PostLikePresentationMappings : IRegister
                 src.PageSize));
 
         config.NewConfig<GetAllPostLikesQueryResponse, GetAllPostLikesApiResponse>()
-            .ConstructUsing(src => new(src.PostLikeCollection.Adapt<PostLikeCollectionApiResponse>(config)));
+            .ConstructUsing(src => new(src.PostLikeCollection.Adapt<PostLikeCollectionApiResponse>(config)!));
 
         config.NewConfig<GetAllPostLikesForUserApiRequest, GetAllPostLikesForUserQueryRequest>()
             .ConstructUsing(src => new(
@@ -36,7 +36,7 @@ internal class PostLikePresentationMappings : IRegister
                     src.PageSize));
 
         config.NewConfig<GetAllPostLikesForUserQueryResponse, GetAllPostLikesForUserApiResponse>()
-            .ConstructUsing(src => new(src.PostLikeCollection.Adapt<PostLikeCollectionApiResponse>(config)));
+            .ConstructUsing(src => new(src.PostLikeCollection.Adapt<PostLikeCollectionApiResponse>(config)!));
 
         config.NewConfig<GetPostLikeByIdApiRequest, GetPostLikeByIdQueryRequest>()
             .ConstructUsing(src => new(src.Id,
@@ -44,14 +44,14 @@ internal class PostLikePresentationMappings : IRegister
                                        src.CurrentUserId));
 
         config.NewConfig<GetPostLikeByIdQueryResponse, GetPostLikeByIdApiResponse>()
-            .ConstructUsing(src => new(src.PostLike.Adapt<PostLikeApiResponse>(config)));
+            .ConstructUsing(src => new(src.PostLike.Adapt<PostLikeApiResponse>(config)!));
 
         config.NewConfig<AddPostLikeApiRequest, AddPostLikeCommandRequest>()
             .ConstructUsing(src => new(src.Id,
                                        src.UserId));
 
         config.NewConfig<AddPostLikeCommandResponse, AddPostLikeApiResponse>()
-            .ConstructUsing(src => new(src.Id.Adapt<PostLikeIdApiResponse>(config)));
+            .ConstructUsing(src => new(src.Id.Adapt<PostLikeIdApiResponse>(config)!));
 
         config.NewConfig<DeletePostLikeApiRequest, DeletePostLikeCommandRequest>()
             .ConstructUsing(src => new(src.Id,
@@ -74,7 +74,7 @@ internal class PostLikePresentationMappings : IRegister
             .ConstructUsing(src => new(
                   src.Post.Adapt<PostApiResponse>(config),
                   src.User.Adapt<UserApiResponse>(config),
-                  src.PostLikes.Adapt<ICollection<PostLikeApiResponse>>(config),
+                  src.PostLikes.Adapt<ICollection<PostLikeApiResponse>>(config)!,
                   src.Page,
                   src.PageSize,
                   src.TotalCount,

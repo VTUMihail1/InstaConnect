@@ -40,7 +40,7 @@ internal class CachingPipelineBehavior<TRequest, TResponse>
 
         _logger.LogInformation("Cache miss for {RequestKey}", requestKey);
 
-        var data = await next();
+        var data = await next(cancellationToken);
         var cacheRequest = _cacheRequestFactory.Get(requestKey, request.ExpirationSeconds, data);
         await _cacheHandler.SetAsync(cacheRequest, cancellationToken);
 

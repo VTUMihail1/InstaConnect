@@ -25,6 +25,6 @@ internal class LoggingPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<
             "Processing request {RequestName}",
             requestName);
 
-        return await next();
+        return await next(cancellationToken);
     }
 }

@@ -7,13 +7,13 @@ internal class UserDomainMappings : IRegister
     public void Register(TypeAdapterConfig config)
     {
         config.NewConfig<User, UserAddedEventRequest>()
-            .ConstructUsing(src => new(src.Adapt<UserEventRequest>()));
+            .ConstructUsing(src => new(src.Adapt<UserEventRequest>()!));
 
         config.NewConfig<User, UserUpdatedEventRequest>()
-            .ConstructUsing(src => new(src.Adapt<UserEventRequest>()));
+            .ConstructUsing(src => new(src.Adapt<UserEventRequest>()!));
 
         config.NewConfig<User, UserDeletedEventRequest>()
-            .ConstructUsing(src => new(src.Adapt<UserEventRequest>()));
+            .ConstructUsing(src => new(src.Adapt<UserEventRequest>()!));
 
         config.NewConfig<User, UserEventRequest>()
             .ConstructUsing(src => new(

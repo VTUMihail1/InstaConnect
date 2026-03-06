@@ -18,8 +18,8 @@ public class RefreshTokenApplicationMappings : IRegister
 
         config.NewConfig<SessionToken, IssueRefreshTokenCommandResponse>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<RefreshTokenIdCommandResponse>(),
-                src.AccessToken.Adapt<AccessTokenCommandResponse>(),
+                src.Id.Adapt<RefreshTokenIdCommandResponse>()!,
+                src.AccessToken.Adapt<AccessTokenCommandResponse>()!,
                 src.ExpiresAtUtc));
 
         config.NewConfig<RotateRefreshTokenCommandRequest, RotateRefreshTokenCommand>()
@@ -30,8 +30,8 @@ public class RefreshTokenApplicationMappings : IRegister
 
         config.NewConfig<SessionToken, RotateRefreshTokenCommandResponse>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<RefreshTokenIdCommandResponse>(),
-                src.AccessToken.Adapt<AccessTokenCommandResponse>(),
+                src.Id.Adapt<RefreshTokenIdCommandResponse>()!,
+                src.AccessToken.Adapt<AccessTokenCommandResponse>()!,
                 src.ExpiresAtUtc));
 
         config.NewConfig<DeleteCurrentRefreshTokenCommandRequest, DeleteRefreshTokenCommand>()

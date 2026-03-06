@@ -28,7 +28,7 @@ internal class PostApplicationMappings : IRegister
                     new(src.CurrentUserId))));
 
         config.NewConfig<PostCollectionResponse, GetAllPostsQueryResponse>()
-            .ConstructUsing(src => new(src.Adapt<PostCollectionQueryResponse>(config)));
+            .ConstructUsing(src => new(src.Adapt<PostCollectionQueryResponse>(config)!));
 
         config.NewConfig<GetAllPostsForUserQueryRequest, GetAllPostsForUserQuery>()
             .ConstructUsing(src => new(
@@ -45,7 +45,7 @@ internal class PostApplicationMappings : IRegister
                     new(src.CurrentUserId))));
 
         config.NewConfig<PostCollectionResponse, GetAllPostsForUserQueryResponse>()
-            .ConstructUsing(src => new(src.Adapt<PostCollectionQueryResponse>(config)));
+            .ConstructUsing(src => new(src.Adapt<PostCollectionQueryResponse>(config)!));
 
         config.NewConfig<GetPostByIdQueryRequest, GetPostByIdQuery>()
             .ConstructUsing(src => new(
@@ -54,12 +54,12 @@ internal class PostApplicationMappings : IRegister
                                            new(src.CurrentUserId))));
 
         config.NewConfig<PostResponse, GetPostByIdQueryResponse>()
-            .ConstructUsing(src => new(src.Adapt<PostQueryResponse>(config)));
+            .ConstructUsing(src => new(src.Adapt<PostQueryResponse>(config)!));
 
         config.NewConfig<PostCollectionResponse, PostCollectionQueryResponse>()
             .ConstructUsing(src => new(
                   src.User.Adapt<UserQueryResponse>(config),
-                  src.Posts.Adapt<ICollection<PostQueryResponse>>(config),
+                  src.Posts.Adapt<ICollection<PostQueryResponse>>(config)!,
                   src.Page,
                   src.PageSize,
                   src.TotalCount,
@@ -84,7 +84,7 @@ internal class PostApplicationMappings : IRegister
                 src.Content));
 
         config.NewConfig<PostId, AddPostCommandResponse>()
-            .ConstructUsing(src => new(src.Adapt<PostIdCommandResponse>(config)));
+            .ConstructUsing(src => new(src.Adapt<PostIdCommandResponse>(config)!));
 
         config.NewConfig<UpdatePostCommandRequest, UpdatePostCommand>()
             .ConstructUsing(src => new(
@@ -94,7 +94,7 @@ internal class PostApplicationMappings : IRegister
                 src.Content));
 
         config.NewConfig<PostId, UpdatePostCommandResponse>()
-            .ConstructUsing(src => new(src.Adapt<PostIdCommandResponse>(config)));
+            .ConstructUsing(src => new(src.Adapt<PostIdCommandResponse>(config)!));
 
         config.NewConfig<DeletePostCommandRequest, DeletePostCommand>()
             .ConstructUsing(src => new(

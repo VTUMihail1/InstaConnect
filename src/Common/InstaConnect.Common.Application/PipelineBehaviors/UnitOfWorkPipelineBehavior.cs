@@ -22,7 +22,7 @@ internal sealed class UnitOfWorkPipelineBehavior<TRequest, TResponse>
 
         try
         {
-            var response = await next();
+            var response = await next(cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
 
             return response;

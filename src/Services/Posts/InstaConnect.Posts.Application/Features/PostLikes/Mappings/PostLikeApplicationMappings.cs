@@ -28,7 +28,7 @@ internal class PostLikeApplicationMappings : IRegister
                     new(src.CurrentUserId))));
 
         config.NewConfig<PostLikeCollectionResponse, GetAllPostLikesQueryResponse>()
-            .ConstructUsing(src => new(src.Adapt<PostLikeCollectionQueryResponse>(config)));
+            .ConstructUsing(src => new(src.Adapt<PostLikeCollectionQueryResponse>(config)!));
 
         config.NewConfig<GetAllPostLikesForUserQueryRequest, GetAllPostLikesForUserQuery>()
             .ConstructUsing(src => new(
@@ -43,7 +43,7 @@ internal class PostLikeApplicationMappings : IRegister
                     new(src.CurrentUserId))));
 
         config.NewConfig<PostLikeCollectionResponse, GetAllPostLikesForUserQueryResponse>()
-            .ConstructUsing(src => new(src.Adapt<PostLikeCollectionQueryResponse>(config)));
+            .ConstructUsing(src => new(src.Adapt<PostLikeCollectionQueryResponse>(config)!));
 
         config.NewConfig<GetPostLikeByIdQueryRequest, GetPostLikeByIdQuery>()
             .ConstructUsing(src => new(
@@ -55,7 +55,7 @@ internal class PostLikeApplicationMappings : IRegister
 
         config.NewConfig<PostLikeResponse, GetPostLikeByIdQueryResponse>()
             .ConstructUsing(src => new(
-                src.Adapt<PostLikeQueryResponse>(config)));
+                src.Adapt<PostLikeQueryResponse>(config)!));
 
         config.NewConfig<PostLikeResponse, PostLikeQueryResponse>()
             .ConstructUsing(src => new(
@@ -69,7 +69,7 @@ internal class PostLikeApplicationMappings : IRegister
             .ConstructUsing(src => new(
                   src.Post.Adapt<PostQueryResponse>(config),
                   src.User.Adapt<UserQueryResponse>(config),
-                  src.PostLikes.Adapt<ICollection<PostLikeQueryResponse>>(config),
+                  src.PostLikes.Adapt<ICollection<PostLikeQueryResponse>>(config)!,
                   src.Page,
                   src.PageSize,
                   src.TotalCount,
@@ -82,7 +82,7 @@ internal class PostLikeApplicationMappings : IRegister
                                        new(src.UserId)));
 
         config.NewConfig<PostLikeId, AddPostLikeCommandResponse>()
-            .ConstructUsing(src => new(src.Adapt<PostLikeIdCommandResponse>(config)));
+            .ConstructUsing(src => new(src.Adapt<PostLikeIdCommandResponse>(config)!));
 
         config.NewConfig<DeletePostLikeCommandRequest, DeletePostLikeCommand>()
             .ConstructUsing(src => new(

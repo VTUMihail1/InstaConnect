@@ -23,7 +23,7 @@ internal class PostPresentationMappings : IRegister
                     src.PageSize));
 
         config.NewConfig<GetAllPostsQueryResponse, GetAllPostsApiResponse>()
-            .ConstructUsing(src => new(src.PostCollection.Adapt<PostCollectionApiResponse>(config)));
+            .ConstructUsing(src => new(src.PostCollection.Adapt<PostCollectionApiResponse>(config)!));
 
         config.NewConfig<GetAllPostsForUserApiRequest, GetAllPostsForUserQueryRequest>()
             .ConstructUsing(src => new(
@@ -36,13 +36,13 @@ internal class PostPresentationMappings : IRegister
                     src.PageSize));
 
         config.NewConfig<GetAllPostsForUserQueryResponse, GetAllPostsForUserApiResponse>()
-            .ConstructUsing(src => new(src.PostCollection.Adapt<PostCollectionApiResponse>(config)));
+            .ConstructUsing(src => new(src.PostCollection.Adapt<PostCollectionApiResponse>(config)!));
 
         config.NewConfig<GetPostByIdApiRequest, GetPostByIdQueryRequest>()
             .ConstructUsing(src => new(src.Id, src.CurrentUserId));
 
         config.NewConfig<GetPostByIdQueryResponse, GetPostByIdApiResponse>()
-            .ConstructUsing(src => new(src.Post.Adapt<PostApiResponse>(config)));
+            .ConstructUsing(src => new(src.Post.Adapt<PostApiResponse>(config)!));
 
         config.NewConfig<AddPostApiRequest, AddPostCommandRequest>()
             .ConstructUsing(src => new(
@@ -51,7 +51,7 @@ internal class PostPresentationMappings : IRegister
                 src.Body.Content));
 
         config.NewConfig<AddPostCommandResponse, AddPostApiResponse>()
-            .ConstructUsing(src => new(src.Id.Adapt<PostIdApiResponse>(config)));
+            .ConstructUsing(src => new(src.Id.Adapt<PostIdApiResponse>(config)!));
 
         config.NewConfig<UpdatePostApiRequest, UpdatePostCommandRequest>()
             .ConstructUsing(src => new(
@@ -61,7 +61,7 @@ internal class PostPresentationMappings : IRegister
                 src.Body.Content));
 
         config.NewConfig<UpdatePostCommandResponse, UpdatePostApiResponse>()
-            .ConstructUsing(src => new(src.Id.Adapt<PostIdApiResponse>(config)));
+            .ConstructUsing(src => new(src.Id.Adapt<PostIdApiResponse>(config)!));
 
         config.NewConfig<PostIdCommandResponse, PostIdApiResponse>()
             .ConstructUsing(src => new(src.Id));
@@ -80,7 +80,7 @@ internal class PostPresentationMappings : IRegister
         config.NewConfig<PostCollectionQueryResponse, PostCollectionApiResponse>()
             .ConstructUsing(src => new(
                   src.User.Adapt<UserApiResponse>(config),
-                  src.Posts.Adapt<ICollection<PostApiResponse>>(config),
+                  src.Posts.Adapt<ICollection<PostApiResponse>>(config)!,
                   src.Page,
                   src.PageSize,
                   src.TotalCount,

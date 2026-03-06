@@ -11,9 +11,6 @@
 	  <PackageReference Include="Microsoft.AspNetCore.Identity" />
 	  <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
 	  <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" />
-	  <PackageReference Include="Microsoft.Extensions.Options" />
-	  <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
-	  <PackageReference Include="Microsoft.Extensions.Options.DataAnnotations" />
 	  <PackageReference Include="MongoDB.Bson" />
 	  <PackageReference Include="MongoDB.Driver" />
 	  <PackageReference Include="Newtonsoft.Json" />
@@ -25,7 +22,6 @@
 	  <PackageReference Include="OpenTelemetry.Instrumentation.SqlClient" />
 	  <PackageReference Include="OpenTelemetry.Instrumentation.StackExchangeRedis" />
 	  <PackageReference Include="Serilog.Sinks.OpenTelemetry" />
-	  <PackageReference Include="Z.Dapper.Plus" />
   </ItemGroup>
 	
   <ItemGroup>

@@ -29,7 +29,7 @@ internal class PostCommentApplicationMappings : IRegister
                     new(src.CurrentUserId))));
 
         config.NewConfig<PostCommentCollectionResponse, GetAllPostCommentsQueryResponse>()
-            .ConstructUsing(src => new(src.Adapt<PostCommentCollectionQueryResponse>(config)));
+            .ConstructUsing(src => new(src.Adapt<PostCommentCollectionQueryResponse>(config)!));
 
         config.NewConfig<GetAllPostCommentsForUserQueryRequest, GetAllPostCommentsForUserQuery>()
             .ConstructUsing(src => new(
@@ -44,7 +44,7 @@ internal class PostCommentApplicationMappings : IRegister
                     new(src.CurrentUserId))));
 
         config.NewConfig<PostCommentCollectionResponse, GetAllPostCommentsForUserQueryResponse>()
-            .ConstructUsing(src => new(src.Adapt<PostCommentCollectionQueryResponse>(config)));
+            .ConstructUsing(src => new(src.Adapt<PostCommentCollectionQueryResponse>(config)!));
 
         config.NewConfig<GetPostCommentByIdQueryRequest, GetPostCommentByIdQuery>()
             .ConstructUsing(src => new(
@@ -55,7 +55,7 @@ internal class PostCommentApplicationMappings : IRegister
                                            new(src.CurrentUserId))));
 
         config.NewConfig<PostCommentResponse, GetPostCommentByIdQueryResponse>()
-            .ConstructUsing(src => new(src.Adapt<PostCommentQueryResponse>(config)));
+            .ConstructUsing(src => new(src.Adapt<PostCommentQueryResponse>(config)!));
 
         config.NewConfig<PostCommentResponse, PostCommentQueryResponse>()
             .ConstructUsing(src => new(
@@ -73,7 +73,7 @@ internal class PostCommentApplicationMappings : IRegister
             .ConstructUsing(src => new(
                   src.Post.Adapt<PostQueryResponse>(config),
                   src.User.Adapt<UserQueryResponse>(config),
-                  src.PostComments.Adapt<ICollection<PostCommentQueryResponse>>(config),
+                  src.PostComments.Adapt<ICollection<PostCommentQueryResponse>>(config)!,
                   src.Page,
                   src.PageSize,
                   src.TotalCount,
@@ -87,7 +87,7 @@ internal class PostCommentApplicationMappings : IRegister
                 new(src.UserId)));
 
         config.NewConfig<PostCommentId, AddPostCommentCommandResponse>()
-            .ConstructUsing(src => new(src.Adapt<PostCommentIdCommandResponse>(config)));
+            .ConstructUsing(src => new(src.Adapt<PostCommentIdCommandResponse>(config)!));
 
         config.NewConfig<UpdatePostCommentCommandRequest, UpdatePostCommentCommand>()
             .ConstructUsing(src => new(
@@ -98,7 +98,7 @@ internal class PostCommentApplicationMappings : IRegister
                 src.Content));
 
         config.NewConfig<PostCommentId, UpdatePostCommentCommandResponse>()
-            .ConstructUsing(src => new(src.Adapt<PostCommentIdCommandResponse>(config)));
+            .ConstructUsing(src => new(src.Adapt<PostCommentIdCommandResponse>(config)!));
 
         config.NewConfig<DeletePostCommentCommandRequest, DeletePostCommentCommand>()
              .ConstructUsing(src => new(

@@ -23,7 +23,7 @@ internal class ChatMessagePresentationMappings : IRegister
                 src.PageSize));
 
         config.NewConfig<GetAllChatMessagesQueryResponse, GetAllChatMessagesApiResponse>()
-            .ConstructUsing(src => new(src.ChatMessageResponse.Adapt<ChatMessageCollectionApiResponse>(config)));
+            .ConstructUsing(src => new(src.ChatMessageResponse.Adapt<ChatMessageCollectionApiResponse>(config)!));
 
         config.NewConfig<GetChatMessageByIdApiRequest, GetChatMessageByIdQueryRequest>()
             .ConstructUsing(src => new(
@@ -33,7 +33,7 @@ internal class ChatMessagePresentationMappings : IRegister
                 src.CurrentUserId));
 
         config.NewConfig<GetChatMessageByIdQueryResponse, GetChatMessageByIdApiResponse>()
-            .ConstructUsing(src => new(src.ChatMessage.Adapt<ChatMessageApiResponse>(config)));
+            .ConstructUsing(src => new(src.ChatMessage.Adapt<ChatMessageApiResponse>(config)!));
 
         config.NewConfig<AddChatMessageApiRequest, AddChatMessageCommandRequest>()
             .ConstructUsing(src => new(
@@ -43,7 +43,7 @@ internal class ChatMessagePresentationMappings : IRegister
                 src.Body.Content));
 
         config.NewConfig<AddChatMessageCommandResponse, AddChatMessageApiResponse>()
-            .ConstructUsing(src => new(src.Id.Adapt<ChatMessageIdApiResponse>(config)));
+            .ConstructUsing(src => new(src.Id.Adapt<ChatMessageIdApiResponse>(config)!));
 
         config.NewConfig<UpdateChatMessageApiRequest, UpdateChatMessageCommandRequest>()
             .ConstructUsing(src => new(
@@ -54,7 +54,7 @@ internal class ChatMessagePresentationMappings : IRegister
                 src.Body.Content));
 
         config.NewConfig<UpdateChatMessageCommandResponse, UpdateChatMessageApiResponse>()
-            .ConstructUsing(src => new(src.Id.Adapt<ChatMessageIdApiResponse>(config)));
+            .ConstructUsing(src => new(src.Id.Adapt<ChatMessageIdApiResponse>(config)!));
 
         config.NewConfig<DeleteChatMessageApiRequest, DeleteChatMessageCommandRequest>()
             .ConstructUsing(src => new(
@@ -84,7 +84,7 @@ internal class ChatMessagePresentationMappings : IRegister
             .ConstructUsing(src => new(
                   src.Chat.Adapt<ChatApiResponse>(config),
                   src.Sender.Adapt<UserApiResponse>(config),
-                  src.ChatMessages.Adapt<ICollection<ChatMessageApiResponse>>(config),
+                  src.ChatMessages.Adapt<ICollection<ChatMessageApiResponse>>(config)!,
                   src.Page,
                   src.PageSize,
                   src.TotalCount,

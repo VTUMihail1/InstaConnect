@@ -27,7 +27,7 @@ public class FollowApplicationMappings : IRegister
                     new(src.CurrentUserId))));
 
         config.NewConfig<FollowCollectionResponse, GetAllFollowsQueryResponse>()
-            .ConstructUsing(src => new(src.Adapt<FollowCollectionQueryResponse>(config)));
+            .ConstructUsing(src => new(src.Adapt<FollowCollectionQueryResponse>(config)!));
 
         config.NewConfig<GetAllFollowsForFollowingQueryRequest, GetAllFollowsForFollowingQuery>()
             .ConstructUsing(src => new(
@@ -44,7 +44,7 @@ public class FollowApplicationMappings : IRegister
                     new(src.CurrentUserId))));
 
         config.NewConfig<FollowCollectionResponse, GetAllFollowsForFollowingQueryResponse>()
-            .ConstructUsing(src => new(src.Adapt<FollowCollectionQueryResponse>(config)));
+            .ConstructUsing(src => new(src.Adapt<FollowCollectionQueryResponse>(config)!));
 
         config.NewConfig<GetFollowByIdQueryRequest, GetFollowByIdQuery>()
             .ConstructUsing(src => new(
@@ -56,7 +56,7 @@ public class FollowApplicationMappings : IRegister
 
         config.NewConfig<FollowResponse, GetFollowByIdQueryResponse>()
             .ConstructUsing(src => new(
-                src.Adapt<FollowQueryResponse>(config)));
+                src.Adapt<FollowQueryResponse>(config)!));
 
         config.NewConfig<FollowResponse, FollowQueryResponse>()
             .ConstructUsing(src => new(
@@ -71,7 +71,7 @@ public class FollowApplicationMappings : IRegister
             .ConstructUsing(src => new(
                   src.Follower.Adapt<UserQueryResponse>(config),
                   src.Following.Adapt<UserQueryResponse>(config),
-                  src.Follows.Adapt<ICollection<FollowQueryResponse>>(config),
+                  src.Follows.Adapt<ICollection<FollowQueryResponse>>(config)!,
                   src.Page,
                   src.PageSize,
                   src.TotalCount,
@@ -84,7 +84,7 @@ public class FollowApplicationMappings : IRegister
                                        new(src.FollowingId)));
 
         config.NewConfig<FollowId, AddFollowCommandResponse>()
-            .ConstructUsing(src => new(src.Adapt<FollowIdCommandResponse>(config)));
+            .ConstructUsing(src => new(src.Adapt<FollowIdCommandResponse>(config)!));
 
         config.NewConfig<DeleteFollowCommandRequest, DeleteFollowCommand>()
             .ConstructUsing(src => new(
