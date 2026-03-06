@@ -7,7 +7,7 @@ public static class StringExtensions
 {
     extension(string str)
     {
-        public string FormatCurrentCulture(params object[] args)
+        public string FormatCurrentCulture(params object?[] args)
         {
             return string.Format(CultureInfo.CurrentCulture, str, args);
         }
