@@ -8,34 +8,43 @@ namespace InstaConnect.Follows.Infrastructure.Features.Follows.Extensions;
 
 internal static class FollowFilterExtensions
 {
-    public static FilterDefinition<Follow> GetFilter(this FollowsFilterQuery filter)
+    extension(FollowsFilterQuery filter)
     {
-        var followerId = filter.FollowerId.GetFilterForIdEquals<Follow>(p => p.Id.FollowerId.Id);
-        var followingName = filter.FollowingName.GetFilterForNameStartsWith<Follow>(p => p.Following!.Name.Value);
+        public FilterDefinition<Follow> GetFilter()
+        {
+            var followerId = filter.FollowerId.GetFilterForIdEquals<Follow>(p => p.Id.FollowerId.Id);
+            var followingName = filter.FollowingName.GetFilterForNameStartsWith<Follow>(p => p.Following!.Name.Value);
 
-        return Builders<Follow>.Filter.And(followerId, followingName);
-    }
-    public static FilterDefinition<Follow> GetFilter(this FollowsForFollowingFilterQuery filter)
-    {
-        var followingId = filter.FollowingId.GetFilterForIdEquals<Follow>(p => p.Id.FollowingId.Id);
-        var followerName = filter.FollowerName.GetFilterForNameStartsWith<Follow>(p => p.Follower!.Name.Value);
-
-        return Builders<Follow>.Filter.And(followingId, followerName);
+            return Builders<Follow>.Filter.And(followerId, followingName);
+        }
     }
 
-    public static FilterDefinition<Follow> GetFilter(this FollowId filter)
+    extension(FollowsForFollowingFilterQuery filter)
     {
-        return filter.GetFilterForIdEquals<Follow>(p => p.Id.FollowerId.Id, p => p.Id.FollowingId.Id);
+        public FilterDefinition<Follow> GetFilter()
+        {
+            var followingId = filter.FollowingId.GetFilterForIdEquals<Follow>(p => p.Id.FollowingId.Id);
+            var followerName = filter.FollowerName.GetFilterForNameStartsWith<Follow>(p => p.Follower!.Name.Value);
+
+            return Builders<Follow>.Filter.And(followingId, followerName);
+        }
     }
 
-    public static FilterDefinition<T> GetFilterForIdEquals<T>(
-        this FollowId filter,
-        Expression<Func<T, object>> followerIdField,
-        Expression<Func<T, object>> followingIdField)
+    extension(FollowId filter)
     {
-        var followerId = filter.FollowerId.GetFilterForIdEquals(followerIdField);
-        var followingId = filter.FollowingId.GetFilterForIdEquals(followingIdField);
+        public FilterDefinition<Follow> GetFilter()
+        {
+            return filter.GetFilterForIdEquals<Follow>(p => p.Id.FollowerId.Id, p => p.Id.FollowingId.Id);
+        }
 
-        return Builders<T>.Filter.And(followerId, followingId);
+        public FilterDefinition<T> GetFilterForIdEquals<T>(
+            Expression<Func<T, object>> followerIdField,
+            Expression<Func<T, object>> followingIdField)
+        {
+            var followerId = filter.FollowerId.GetFilterForIdEquals(followerIdField);
+            var followingId = filter.FollowingId.GetFilterForIdEquals(followingIdField);
+
+            return Builders<T>.Filter.And(followerId, followingId);
+        }
     }
 }

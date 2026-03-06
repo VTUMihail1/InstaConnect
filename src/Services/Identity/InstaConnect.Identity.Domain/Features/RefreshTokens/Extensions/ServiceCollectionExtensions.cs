@@ -2,8 +2,11 @@
 
 internal static class ServiceCollectionExtensions
 {
-    internal static IServiceCollection AddRefreshTokenServices(this IServiceCollection serviceCollection)
+    extension(IServiceCollection serviceCollection)
     {
-        return serviceCollection;
+        public IServiceCollection AddRefreshTokenServices()
+        {
+            return serviceCollection;
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using InstaConnect.Common.Domain.Utilities;
 
 namespace InstaConnect.Common.Domain.Exceptions;
+
 public class InvalidValidationException : Exception
 {
     public IEnumerable<string> Errors { get; }

@@ -4,6 +4,7 @@ using InstaConnect.Posts.Tests.Features.Posts.Utilities;
 using InstaConnect.Posts.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Posts.Tests.Features.PostComments.Utilities;
+
 public abstract class BasePostCommentTest : BaseTest
 {
     protected UserBuilderFactory UserBuilderFactory { get; }

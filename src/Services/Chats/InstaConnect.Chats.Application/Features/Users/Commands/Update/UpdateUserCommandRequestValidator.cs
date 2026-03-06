@@ -1,4 +1,5 @@
 ﻿namespace InstaConnect.Chats.Application.Features.Users.Commands.Update;
+
 public class UpdateUserCommandRequestValidator : AbstractValidator<UpdateUserCommandRequest>
 {
     public UpdateUserCommandRequestValidator()

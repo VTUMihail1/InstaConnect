@@ -6,29 +6,32 @@ namespace InstaConnect.Posts.Infrastructure.Features.PostLikes.Extensions;
 
 internal static class ServiceCollectionExtensions
 {
-    internal static IServiceCollection AddPostLikeServices(this IServiceCollection serviceCollection)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection.AddImplementationsOf<IPostLikesSortTermer>(PostInfrastructureReference.Assembly);
-        serviceCollection.AddImplementationsOf<IPostLikesForUserSortTermer>(PostInfrastructureReference.Assembly);
-        serviceCollection.AddImplementationsOf<IPostLikeIncluder>(PostInfrastructureReference.Assembly);
-
-        BsonClassMap.TryRegisterClassMap<PostLike>(cm =>
+        internal IServiceCollection AddPostLikeServices()
         {
-            cm.MapIdMember(c => c.Id);
+            serviceCollection.AddImplementationsOf<IPostLikesSortTermer>(PostInfrastructureReference.Assembly);
+            serviceCollection.AddImplementationsOf<IPostLikesForUserSortTermer>(PostInfrastructureReference.Assembly);
+            serviceCollection.AddImplementationsOf<IPostLikeIncluder>(PostInfrastructureReference.Assembly);
 
-            cm.MapMember(c => c.Id);
-            cm.MapMember(c => c.CreatedAtUtc);
+            BsonClassMap.TryRegisterClassMap<PostLike>(cm =>
+            {
+                cm.MapIdMember(c => c.Id);
 
-            cm.MapMemberWithoutSerialization(c => c.User);
-            cm.MapMemberWithoutSerialization(c => c.Post);
+                cm.MapMember(c => c.Id);
+                cm.MapMember(c => c.CreatedAtUtc);
 
-            cm.MapCreator(c => new PostLike(
-                c.Id,
-                c.CreatedAtUtc));
+                cm.MapMemberWithoutSerialization(c => c.User);
+                cm.MapMemberWithoutSerialization(c => c.Post);
 
-            cm.SetIgnoreExtraElements(true);
-        });
+                cm.MapCreator(c => new PostLike(
+                    c.Id,
+                    c.CreatedAtUtc));
 
-        return serviceCollection;
+                cm.SetIgnoreExtraElements(true);
+            });
+
+            return serviceCollection;
+        }
     }
 }

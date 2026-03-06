@@ -1,4 +1,5 @@
 ﻿namespace InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Helpers.SortTermers.ForUser;
+
 internal class PostCommentLikesForUserSortTermerFactory : IPostCommentLikesForUserSortTermerFactory
 {
     private readonly IEnumerable<IPostCommentLikesForUserSortTermer> _sortTermers;

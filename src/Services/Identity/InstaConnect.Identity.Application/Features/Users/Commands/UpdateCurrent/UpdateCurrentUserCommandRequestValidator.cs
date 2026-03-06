@@ -1,4 +1,5 @@
 ﻿namespace InstaConnect.Identity.Application.Features.Users.Commands.UpdateCurrent;
+
 public class UpdateCurrentUserCommandRequestValidator : AbstractValidator<UpdateCurrentUserCommandRequest>
 {
     public UpdateCurrentUserCommandRequestValidator()

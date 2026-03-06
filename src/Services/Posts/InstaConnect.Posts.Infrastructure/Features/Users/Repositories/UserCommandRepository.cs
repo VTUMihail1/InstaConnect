@@ -1,9 +1,6 @@
-﻿using InstaConnect.Posts.Domain.Models.Requests;
-using InstaConnect.Posts.Infrastructure.Features.Users.Extensions;
+﻿using InstaConnect.Posts.Infrastructure.Features.Users.Extensions;
 
 using MongoDB.Driver;
-
-using StackExchange.Redis;
 
 namespace InstaConnect.Posts.Infrastructure.Features.Users.Repositories;
 

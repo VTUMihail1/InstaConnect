@@ -6,36 +6,39 @@ namespace InstaConnect.Posts.Infrastructure.Features.PostComments.Extensions;
 
 internal static class ServiceCollectionExtensions
 {
-    internal static IServiceCollection AddPostCommentServices(this IServiceCollection serviceCollection)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection.AddImplementationsOf<IPostCommentsSortTermer>(PostInfrastructureReference.Assembly);
-        serviceCollection.AddImplementationsOf<IPostCommentsForUserSortTermer>(PostInfrastructureReference.Assembly);
-        serviceCollection.AddImplementationsOf<IPostCommentIncluder>(PostInfrastructureReference.Assembly);
-
-        BsonClassMap.TryRegisterClassMap<PostComment>(cm =>
+        internal IServiceCollection AddPostCommentServices()
         {
-            cm.MapIdMember(c => c.Id);
+            serviceCollection.AddImplementationsOf<IPostCommentsSortTermer>(PostInfrastructureReference.Assembly);
+            serviceCollection.AddImplementationsOf<IPostCommentsForUserSortTermer>(PostInfrastructureReference.Assembly);
+            serviceCollection.AddImplementationsOf<IPostCommentIncluder>(PostInfrastructureReference.Assembly);
 
-            cm.MapMember(c => c.Id);
-            cm.MapMember(c => c.UserId);
-            cm.MapMember(c => c.Content);
-            cm.MapMember(c => c.CreatedAtUtc);
-            cm.MapMember(c => c.UpdatedAtUtc);
+            BsonClassMap.TryRegisterClassMap<PostComment>(cm =>
+            {
+                cm.MapIdMember(c => c.Id);
 
-            cm.MapMemberWithoutSerialization(c => c.User);
-            cm.MapMemberWithoutSerialization(c => c.Post);
-            cm.MapMemberWithoutSerialization(c => c.PostCommentLikes);
+                cm.MapMember(c => c.Id);
+                cm.MapMember(c => c.UserId);
+                cm.MapMember(c => c.Content);
+                cm.MapMember(c => c.CreatedAtUtc);
+                cm.MapMember(c => c.UpdatedAtUtc);
 
-            cm.MapCreator(c => new PostComment(
-                c.Id,
-                c.Content,
-                c.UserId,
-                c.CreatedAtUtc,
-                c.UpdatedAtUtc));
+                cm.MapMemberWithoutSerialization(c => c.User);
+                cm.MapMemberWithoutSerialization(c => c.Post);
+                cm.MapMemberWithoutSerialization(c => c.PostCommentLikes);
 
-            cm.SetIgnoreExtraElements(true);
-        });
+                cm.MapCreator(c => new PostComment(
+                    c.Id,
+                    c.Content,
+                    c.UserId,
+                    c.CreatedAtUtc,
+                    c.UpdatedAtUtc));
 
-        return serviceCollection;
+                cm.SetIgnoreExtraElements(true);
+            });
+
+            return serviceCollection;
+        }
     }
 }

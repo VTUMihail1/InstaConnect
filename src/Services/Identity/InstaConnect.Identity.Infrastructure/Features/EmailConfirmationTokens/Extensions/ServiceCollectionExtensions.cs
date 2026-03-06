@@ -6,27 +6,30 @@ namespace InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.
 
 internal static class ServiceCollectionExtensions
 {
-    internal static IServiceCollection AddEmailConfirmationTokenServices(this IServiceCollection serviceCollection)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection.AddImplementationsOf<IEmailConfirmationTokenIncluder>(IdentityInfrastructureReference.Assembly);
-
-        BsonClassMap.TryRegisterClassMap<EmailConfirmationToken>(cm =>
+        internal IServiceCollection AddEmailConfirmationTokenServices()
         {
-            cm.MapIdMember(c => c.Id);
+            serviceCollection.AddImplementationsOf<IEmailConfirmationTokenIncluder>(IdentityInfrastructureReference.Assembly);
 
-            cm.MapMember(c => c.Id);
-            cm.MapMember(c => c.CreatedAtUtc);
+            BsonClassMap.TryRegisterClassMap<EmailConfirmationToken>(cm =>
+            {
+                cm.MapIdMember(c => c.Id);
 
-            cm.MapMemberWithoutSerialization(c => c.User);
+                cm.MapMember(c => c.Id);
+                cm.MapMember(c => c.CreatedAtUtc);
 
-            cm.MapCreator(c => new EmailConfirmationToken(
-                c.Id,
-                c.ExpiresAtUtc,
-                c.CreatedAtUtc));
+                cm.MapMemberWithoutSerialization(c => c.User);
 
-            cm.SetIgnoreExtraElements(true);
-        });
+                cm.MapCreator(c => new EmailConfirmationToken(
+                    c.Id,
+                    c.ExpiresAtUtc,
+                    c.CreatedAtUtc));
 
-        return serviceCollection;
+                cm.SetIgnoreExtraElements(true);
+            });
+
+            return serviceCollection;
+        }
     }
 }

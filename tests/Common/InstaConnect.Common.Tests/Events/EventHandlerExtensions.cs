@@ -5,12 +5,15 @@ namespace InstaConnect.Common.Tests.Events;
 
 public static class EventHandlerExtensions
 {
-    public static async Task Consume<TEvent>(this IEventHandler<TEvent> eventHandler, TEvent message, CancellationToken cancellationToken)
+    extension<TEvent>(IEventHandler<TEvent> eventHandler)
         where TEvent : class, IEventRequest
     {
-        var consumeContext = MockFactory.CreateConsumerContext(message, cancellationToken);
+        public async Task Consume(TEvent message, CancellationToken cancellationToken)
+        {
+            var consumeContext = MockFactory.CreateConsumerContext(message, cancellationToken);
 
-        await eventHandler.Consume(consumeContext);
+            await eventHandler.Consume(consumeContext);
+        }
     }
 }
 

@@ -2,8 +2,11 @@
 
 internal static class ServiceCollectionExtensions
 {
-    internal static IServiceCollection AddChatMessageServices(this IServiceCollection serviceCollection)
+    extension(IServiceCollection serviceCollection)
     {
-        return serviceCollection;
+        internal IServiceCollection AddChatMessageServices()
+        {
+            return serviceCollection;
+        }
     }
 }

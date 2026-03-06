@@ -1,6 +1,7 @@
 ﻿using InstaConnect.Common.Domain.Abstractions;
 
 namespace InstaConnect.Common.Infrastructure.Helpers;
+
 public class DateTimeProvider : IDateTimeProvider
 {
     public DateTimeOffset GetOffsetUtcNow()

@@ -6,27 +6,30 @@ using InstaConnect.Identity.Presentation.Features.Users.Extensions;
 
 namespace InstaConnect.Identity.Presentation.Extensions;
 
-public static class ServiceCollectionExtensions
+internal static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddPresentation(this IServiceCollection serviceCollection, IConfiguration configuration)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection
-            .AddUserServices(configuration)
-            .AddForgotPasswordTokenServices()
-            .AddEmailConfirmationTokenServices();
+        public IServiceCollection AddPresentation(IConfiguration configuration)
+        {
+            serviceCollection
+                .AddUserServices()
+                .AddForgotPasswordTokenServices()
+                .AddEmailConfirmationTokenServices();
 
-        serviceCollection
-            .AddServicesWithMatchingInterfaces(IdentityPresentationReference.Assembly)
-            .AddApiControllers()
-            .AddMapper(IdentityPresentationReference.Assembly, CommonPresentationReference.Assembly)
-            .AddAuthorizationPolicies()
-            .AddCorsPolicies(configuration)
-            .AddSwagger()
-            .AddRateLimiterPolicies()
-            .AddExceptionHandler();
+            serviceCollection
+                .AddServicesWithMatchingInterfaces(IdentityPresentationReference.Assembly)
+                .AddApiControllers()
+                .AddMapper(IdentityPresentationReference.Assembly, CommonPresentationReference.Assembly)
+                .AddAuthorizationPolicies()
+                .AddCorsPolicies(configuration)
+                .AddSwagger()
+                .AddRateLimiterPolicies()
+                .AddExceptionHandler();
 
-        serviceCollection.AddEndpointsApiExplorer();
+            serviceCollection.AddEndpointsApiExplorer();
 
-        return serviceCollection;
+            return serviceCollection;
+        }
     }
 }

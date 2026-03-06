@@ -9,19 +9,22 @@ namespace InstaConnect.Identity.Domain.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddDomain(this IServiceCollection serviceCollection)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection
-            .AddUserServices()
-            .AddUserClaimsServices()
-            .AddRefreshTokenServices()
-            .AddForgotPasswordTokenServices()
-            .AddEmailConfirmationTokenServices();
+        public IServiceCollection AddDomain()
+        {
+            serviceCollection
+                .AddUserServices()
+                .AddUserClaimsServices()
+                .AddRefreshTokenServices()
+                .AddForgotPasswordTokenServices()
+                .AddEmailConfirmationTokenServices();
 
-        serviceCollection
-            .AddMapper(IdentityDomainReference.Assembly, CommonDomainReference.Assembly)
-            .AddServicesWithMatchingInterfaces(IdentityDomainReference.Assembly);
+            serviceCollection
+                .AddMapper(IdentityDomainReference.Assembly, CommonDomainReference.Assembly)
+                .AddServicesWithMatchingInterfaces(IdentityDomainReference.Assembly);
 
-        return serviceCollection;
+            return serviceCollection;
+        }
     }
 }

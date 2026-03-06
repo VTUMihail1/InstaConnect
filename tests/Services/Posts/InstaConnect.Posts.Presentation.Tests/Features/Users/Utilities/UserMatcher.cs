@@ -1,4 +1,5 @@
 ﻿namespace InstaConnect.Posts.Presentation.Tests.Features.Users.Utilities;
+
 public static class UserMatcher
 {
     public static AddUserCommandRequest IsAddUserCommandRequest(UserAddedEventRequest request)

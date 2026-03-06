@@ -1,4 +1,5 @@
 ﻿namespace InstaConnect.Follows.Application.Features.Follows.Commands.Delete;
+
 public class DeleteFollowCommandRequestValidator : AbstractValidator<DeleteFollowCommandRequest>
 {
     public DeleteFollowCommandRequestValidator()

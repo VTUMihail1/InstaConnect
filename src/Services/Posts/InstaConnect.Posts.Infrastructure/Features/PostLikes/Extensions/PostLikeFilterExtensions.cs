@@ -9,32 +9,40 @@ namespace InstaConnect.Posts.Infrastructure.Features.PostLikes.Extensions;
 
 internal static class PostLikeFilterExtensions
 {
-    public static FilterDefinition<PostLike> GetFilter(this PostLikesFilterQuery filter)
+    extension(PostLikesFilterQuery filter)
     {
-        var id = filter.Id.GetFilterForIdEquals<PostLike>(p => p.Id.Id.Id);
-        var userName = filter.UserName.GetFilterForNameStartsWith<PostLike>(p => p.User!.Name.Value);
+        public FilterDefinition<PostLike> GetFilter()
+        {
+            var id = filter.Id.GetFilterForIdEquals<PostLike>(p => p.Id.Id.Id);
+            var userName = filter.UserName.GetFilterForNameStartsWith<PostLike>(p => p.User!.Name.Value);
 
-        return Builders<PostLike>.Filter.And(id, userName);
+            return Builders<PostLike>.Filter.And(id, userName);
+        }
     }
 
-    public static FilterDefinition<PostLike> GetFilter(this PostLikesForUserFilterQuery filter)
+    extension(PostLikesForUserFilterQuery filter)
     {
-        return filter.UserId.GetFilterForIdEquals<PostLike>(p => p.Id.UserId.Id);
+        public FilterDefinition<PostLike> GetFilter()
+        {
+            return filter.UserId.GetFilterForIdEquals<PostLike>(p => p.Id.UserId.Id);
+        }
     }
 
-    public static FilterDefinition<PostLike> GetFilter(this PostLikeId filter)
+    extension(PostLikeId filter)
     {
-        return filter.GetFilterForIdEquals<PostLike>(p => p.Id.Id.Id, p => p.Id.UserId.Id);
-    }
+        public FilterDefinition<PostLike> GetFilter()
+        {
+            return filter.GetFilterForIdEquals<PostLike>(p => p.Id.Id.Id, p => p.Id.UserId.Id);
+        }
 
-    public static FilterDefinition<T> GetFilterForIdEquals<T>(
-        this PostLikeId filter,
-        Expression<Func<T, object>> idField,
-        Expression<Func<T, object>> userIdField)
-    {
-        var id = filter.Id.GetFilterForIdEquals(idField);
-        var userId = filter.UserId.GetFilterForIdEquals(userIdField);
+        public FilterDefinition<T> GetFilterForIdEquals<T>(
+            Expression<Func<T, object>> idField,
+            Expression<Func<T, object>> userIdField)
+        {
+            var id = filter.Id.GetFilterForIdEquals(idField);
+            var userId = filter.UserId.GetFilterForIdEquals(userIdField);
 
-        return Builders<T>.Filter.And(id, userId);
+            return Builders<T>.Filter.And(id, userId);
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿namespace InstaConnect.Posts.Infrastructure.Features.Posts.Helpers.SortTermers.ForUser;
+
 internal class PostsForUserSortTermerFactory : IPostsForUserSortTermerFactory
 {
     private readonly IEnumerable<IPostsForUserSortTermer> _sortTermer;

@@ -1,14 +1,16 @@
 ﻿using InstaConnect.Posts.Tests.Features.PostLikes.Utilities;
 
 namespace InstaConnect.Posts.Tests.Features.PostCommentLikes.Utilities;
+
 public static class PostCommentLikeGenerator
 {
-    public static ICollection<PostCommentLike> Generate(
-        this PostCommentLike basePostCommentLike,
+    extension(PostCommentLike basePostCommentLike)
+    {
+        public ICollection<PostCommentLike> Generate(
         IEnumerable<PostComment> postComments,
         IEnumerable<User> users)
-    {
-        return [.. postComments
+        {
+            return [.. postComments
               .SelectMany(postComment =>
                   users.Select(user =>
                   {
@@ -28,5 +30,6 @@ public static class PostCommentLikeGenerator
 
                       return postCommentLike;
                   }))];
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using InstaConnect.Follows.Domain.Models.Requests;
 
 namespace InstaConnect.Follows.Infrastructure.Features.Follows.Helpers.Includers;
+
 internal class FollowIncluderFactory : IFollowIncluderFactory
 {
     private readonly IEnumerable<IFollowIncluder> _includers;

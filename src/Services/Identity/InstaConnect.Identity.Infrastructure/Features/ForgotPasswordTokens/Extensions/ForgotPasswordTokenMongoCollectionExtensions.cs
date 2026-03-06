@@ -8,22 +8,22 @@ namespace InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Ext
 
 public static class ForgotPasswordTokenMongoCollectionExtensions
 {
-    public static async Task UpdateAsync(
-        this IMongoCollection<ForgotPasswordToken> collection,
-        IClientSessionHandle? session,
-        ForgotPasswordToken entity,
-        CancellationToken cancellationToken)
+    extension(IMongoCollection<ForgotPasswordToken> collection)
     {
-        await collection.UpdateAsync(session, entity.Id.GetFilter(), entity, cancellationToken);
+        public async Task UpdateAsync(
+            IClientSessionHandle? session,
+            ForgotPasswordToken entity,
+            CancellationToken cancellationToken)
+        {
+            await collection.UpdateAsync(session, entity.Id.GetFilter(), entity, cancellationToken);
+        }
 
-    }
-
-    public static async Task DeleteRangeAsync(
-        this IMongoCollection<ForgotPasswordToken> collection,
-        IClientSessionHandle? session,
-        IEnumerable<ForgotPasswordToken> entities,
-        CancellationToken cancellationToken)
-    {
-        await collection.DeleteRangeAsync(session, entities.Select(p => p.Id).GetFilter(), cancellationToken);
+        public async Task DeleteRangeAsync(
+            IClientSessionHandle? session,
+            IEnumerable<ForgotPasswordToken> entities,
+            CancellationToken cancellationToken)
+        {
+            await collection.DeleteRangeAsync(session, entities.Select(p => p.Id).GetFilter(), cancellationToken);
+        }
     }
 }

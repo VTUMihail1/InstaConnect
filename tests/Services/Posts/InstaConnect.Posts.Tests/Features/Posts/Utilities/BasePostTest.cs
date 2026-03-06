@@ -2,6 +2,7 @@
 using InstaConnect.Posts.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Posts.Tests.Features.Posts.Utilities;
+
 public abstract class BasePostTest : BaseTest
 {
     protected UserBuilderFactory UserBuilderFactory { get; }

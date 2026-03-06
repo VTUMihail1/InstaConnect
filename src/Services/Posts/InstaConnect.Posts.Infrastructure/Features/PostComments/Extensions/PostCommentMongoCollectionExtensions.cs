@@ -8,22 +8,22 @@ namespace InstaConnect.Posts.Infrastructure.Features.PostComments.Extensions;
 
 internal static class PostCommentMongoCollectionExtensions
 {
-    public static async Task UpdateAsync(
-        this IMongoCollection<PostComment> collection,
-        IClientSessionHandle? session,
-        PostComment entity,
-        CancellationToken cancellationToken)
+    extension(IMongoCollection<PostComment> collection)
     {
-        await collection.UpdateAsync(session, entity.Id.GetFilter(), entity, cancellationToken);
+        public async Task UpdateAsync(
+            IClientSessionHandle? session,
+            PostComment entity,
+            CancellationToken cancellationToken)
+        {
+            await collection.UpdateAsync(session, entity.Id.GetFilter(), entity, cancellationToken);
+        }
 
-    }
-
-    public static async Task DeleteAsync(
-        this IMongoCollection<PostComment> collection,
-        IClientSessionHandle? session,
-        PostComment entity,
-        CancellationToken cancellationToken)
-    {
-        await collection.DeleteAsync(session, entity.Id.GetFilter(), cancellationToken);
+        public async Task DeleteAsync(
+            IClientSessionHandle? session,
+            PostComment entity,
+            CancellationToken cancellationToken)
+        {
+            await collection.DeleteAsync(session, entity.Id.GetFilter(), cancellationToken);
+        }
     }
 }

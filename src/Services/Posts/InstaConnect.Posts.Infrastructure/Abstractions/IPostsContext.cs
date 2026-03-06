@@ -1,6 +1,7 @@
 ﻿using MongoDB.Driver;
 
 namespace InstaConnect.Posts.Infrastructure.Abstractions;
+
 public interface IPostsContext : IMongoDbContext
 {
     public IMongoCollection<User> Users { get; }

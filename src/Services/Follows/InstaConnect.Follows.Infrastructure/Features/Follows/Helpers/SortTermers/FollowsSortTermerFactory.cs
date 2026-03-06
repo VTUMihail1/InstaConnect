@@ -1,4 +1,5 @@
 ﻿namespace InstaConnect.Follows.Infrastructure.Features.Follows.Helpers.SortTermers;
+
 internal class FollowsSortTermerFactory : IFollowsSortTermerFactory
 {
     private readonly IEnumerable<IFollowsSortTermer> _sortTermer;

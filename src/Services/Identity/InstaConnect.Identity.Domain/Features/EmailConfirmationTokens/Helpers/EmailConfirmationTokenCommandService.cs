@@ -1,6 +1,7 @@
 ﻿using InstaConnect.Common.Events.Abstractions;
 
 namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Helpers;
+
 internal class EmailConfirmationTokenCommandService : IEmailConfirmationTokenCommandService
 {
     private readonly IApplicationMapper _mapper;

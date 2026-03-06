@@ -1,4 +1,5 @@
 ﻿namespace InstaConnect.Follows.Application.Features.Users.Commands.Update;
+
 public class UpdateUserCommandRequestValidator : AbstractValidator<UpdateUserCommandRequest>
 {
     public UpdateUserCommandRequestValidator()

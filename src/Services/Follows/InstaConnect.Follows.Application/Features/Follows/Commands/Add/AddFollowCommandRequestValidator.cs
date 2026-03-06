@@ -1,4 +1,5 @@
 ﻿namespace InstaConnect.Follows.Application.Features.Follows.Commands.Add;
+
 public class AddFollowCommandRequestValidator : AbstractValidator<AddFollowCommandRequest>
 {
     public AddFollowCommandRequestValidator()

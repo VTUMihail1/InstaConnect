@@ -7,12 +7,14 @@ namespace InstaConnect.Posts.Infrastructure.Features.PostLikes.Extensions;
 
 internal static class PostLikeMongoCollectionExtensions
 {
-    public static async Task DeleteAsync(
-        this IMongoCollection<PostLike> collection,
-        IClientSessionHandle? session,
-        PostLike entity,
-        CancellationToken cancellationToken)
+    extension(IMongoCollection<PostLike> collection)
     {
-        await collection.DeleteAsync(session, entity.Id.GetFilter(), cancellationToken);
+        public async Task DeleteAsync(
+            IClientSessionHandle? session,
+            PostLike entity,
+            CancellationToken cancellationToken)
+        {
+            await collection.DeleteAsync(session, entity.Id.GetFilter(), cancellationToken);
+        }
     }
 }

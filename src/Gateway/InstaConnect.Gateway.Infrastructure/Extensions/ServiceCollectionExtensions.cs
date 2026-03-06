@@ -8,15 +8,15 @@ namespace InstaConnect.Gateway.Infrastructure.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddInfrastructure(
-        this IServiceCollection serviceCollection,
-        IConfiguration configuration,
-        IWebHostEnvironment webHostEnvironment)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection
-            .AddObservability(configuration, webHostEnvironment)
-            .AddJwtBearer(configuration);
+        public IServiceCollection AddInfrastructure(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
+        {
+            serviceCollection
+                .AddObservability(configuration, webHostEnvironment)
+                .AddJwtBearer(configuration);
 
-        return serviceCollection;
+            return serviceCollection;
+        }
     }
 }

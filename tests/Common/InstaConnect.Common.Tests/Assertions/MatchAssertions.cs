@@ -6,33 +6,42 @@ namespace InstaConnect.Common.Tests.Assertions;
 
 public static class MatchAssertions
 {
-    public static void ShouldSatisfy<T>(this T obj, Expression<Func<T, bool>> predicate)
+    extension<T>(T obj)
     {
-        obj.Should().Match(predicate);
+        public void ShouldSatisfy(Expression<Func<T, bool>> predicate)
+        {
+            obj.Should().Match(predicate);
+        }
+
+        public void ShouldBeNull()
+        {
+            obj.Should().BeNull();
+        }
+
+        public void ShouldBe(T value)
+        {
+            obj.Should().Be(value);
+        }
     }
 
-    public static void ShouldBeNull<T>(this T obj)
+    extension(bool obj)
     {
-        obj.Should().BeNull();
+        public void ShouldBeTrue()
+        {
+            obj.Should().Be(true);
+        }
+
+        public void ShouldBeFalse()
+        {
+            obj.Should().Be(false);
+        }
     }
 
-    public static void ShouldBe<T>(this T obj, T value)
+    extension<T>(IEnumerable<T> obj)
     {
-        obj.Should().Be(value);
-    }
-
-    public static void ShouldBeTrue(this bool obj)
-    {
-        obj.Should().Be(true);
-    }
-
-    public static void ShouldBeFalse(this bool obj)
-    {
-        obj.Should().Be(false);
-    }
-
-    public static void ShouldContain<T>(this IEnumerable<T> obj, Expression<Func<T, bool>> predicate)
-    {
-        obj.Should().Contain(predicate);
+        public void ShouldContain(Expression<Func<T, bool>> predicate)
+        {
+            obj.Should().Contain(predicate);
+        }
     }
 }

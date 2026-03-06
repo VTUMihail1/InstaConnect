@@ -1,6 +1,4 @@
-﻿using InstaConnect.Posts.Application.Features.Posts.Queries.GetAllForUser;
-
-namespace InstaConnect.Posts.Application.Tests.Unit.Features.Posts.Queries.GetAllForUser;
+﻿namespace InstaConnect.Posts.Application.Tests.Unit.Features.Posts.Queries.GetAllForUser;
 
 public class GetAllPostsForUserQueryHandlerUnitTests : BasePostApplicationQueryUnitTest
 {

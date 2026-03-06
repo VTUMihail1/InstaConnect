@@ -4,162 +4,150 @@ namespace InstaConnect.Posts.Presentation.Tests.Features.PostCommentLikes.Assert
 
 public static class PostCommentLikeProblemDetailsAssertions
 {
-    public static void ShouldSatisfyUserNotFound(
-        this ApplicationProblemDetails problemDetails,
+    extension(ApplicationProblemDetails problemDetails)
+    {
+        public void ShouldSatisfyUserNotFound(
         AddPostCommentLikeApiRequest request)
-    {
-        problemDetails.ShouldSatisfyUserNotFound(
-            r => r.UserId,
-            request);
-    }
+        {
+            problemDetails.ShouldSatisfyUserNotFound(
+                r => r.UserId,
+                request);
+        }
 
-    public static void ShouldSatisfyUserNotFound(
-        this ApplicationProblemDetails problemDetails,
-        GetAllPostCommentLikesForUserApiRequest request)
-    {
-        problemDetails.ShouldSatisfyUserNotFound(
-            r => r.UserId,
-            request);
-    }
+        public void ShouldSatisfyUserNotFound(
+            GetAllPostCommentLikesForUserApiRequest request)
+        {
+            problemDetails.ShouldSatisfyUserNotFound(
+                r => r.UserId,
+                request);
+        }
 
-    public static void ShouldSatisfyPostNotFound(
-        this ApplicationProblemDetails problemDetails,
-        AddPostCommentLikeApiRequest request)
-    {
-        problemDetails.ShouldSatisfyPostNotFound(
-            r => r.Id,
-            request);
-    }
+        public void ShouldSatisfyPostNotFound(
+            AddPostCommentLikeApiRequest request)
+        {
+            problemDetails.ShouldSatisfyPostNotFound(
+                r => r.Id,
+                request);
+        }
 
-    public static void ShouldSatisfyPostNotFound(
-        this ApplicationProblemDetails problemDetails,
-        DeletePostCommentLikeApiRequest request)
-    {
-        problemDetails.ShouldSatisfyPostNotFound(
-            r => r.Id,
-            request);
-    }
+        public void ShouldSatisfyPostNotFound(
+            DeletePostCommentLikeApiRequest request)
+        {
+            problemDetails.ShouldSatisfyPostNotFound(
+                r => r.Id,
+                request);
+        }
 
-    public static void ShouldSatisfyPostNotFound(
-        this ApplicationProblemDetails problemDetails,
-        GetPostCommentLikeByIdApiRequest request)
-    {
-        problemDetails.ShouldSatisfyPostNotFound(
-            r => r.Id,
-            request);
-    }
+        public void ShouldSatisfyPostNotFound(
+            GetPostCommentLikeByIdApiRequest request)
+        {
+            problemDetails.ShouldSatisfyPostNotFound(
+                r => r.Id,
+                request);
+        }
 
-    public static void ShouldSatisfyPostNotFound(
-        this ApplicationProblemDetails problemDetails,
-        GetAllPostCommentLikesApiRequest request)
-    {
-        problemDetails.ShouldSatisfyPostNotFound(
-            r => r.Id,
-            request);
-    }
+        public void ShouldSatisfyPostNotFound(
+            GetAllPostCommentLikesApiRequest request)
+        {
+            problemDetails.ShouldSatisfyPostNotFound(
+                r => r.Id,
+                request);
+        }
 
-    public static void ShouldSatisfyPostCommentNotFound(
-        this ApplicationProblemDetails problemDetails,
-        AddPostCommentLikeApiRequest request)
-    {
-        problemDetails.ShouldSatisfyPostCommentNotFound(
-            r => r.Id,
-            r => r.CommentId,
-            request);
-    }
+        public void ShouldSatisfyPostCommentNotFound(
+            AddPostCommentLikeApiRequest request)
+        {
+            problemDetails.ShouldSatisfyPostCommentNotFound(
+                r => r.Id,
+                r => r.CommentId,
+                request);
+        }
 
-    public static void ShouldSatisfyPostCommentNotFound(
-        this ApplicationProblemDetails problemDetails,
-        DeletePostCommentLikeApiRequest request)
-    {
-        problemDetails.ShouldSatisfyPostCommentNotFound(
-            r => r.Id,
-            r => r.CommentId,
-            request);
-    }
+        public void ShouldSatisfyPostCommentNotFound(
+            DeletePostCommentLikeApiRequest request)
+        {
+            problemDetails.ShouldSatisfyPostCommentNotFound(
+                r => r.Id,
+                r => r.CommentId,
+                request);
+        }
 
-    public static void ShouldSatisfyPostCommentNotFound(
-        this ApplicationProblemDetails problemDetails,
-        GetPostCommentLikeByIdApiRequest request)
-    {
-        problemDetails.ShouldSatisfyPostCommentNotFound(
-            r => r.Id,
-            r => r.CommentId,
-            request);
-    }
+        public void ShouldSatisfyPostCommentNotFound(
+            GetPostCommentLikeByIdApiRequest request)
+        {
+            problemDetails.ShouldSatisfyPostCommentNotFound(
+                r => r.Id,
+                r => r.CommentId,
+                request);
+        }
 
-    public static void ShouldSatisfyPostCommentNotFound(
-        this ApplicationProblemDetails problemDetails,
-        GetAllPostCommentLikesApiRequest request)
-    {
-        problemDetails.ShouldSatisfyPostCommentNotFound(
-            r => r.Id,
-            r => r.CommentId,
-            request);
-    }
+        public void ShouldSatisfyPostCommentNotFound(
+            GetAllPostCommentLikesApiRequest request)
+        {
+            problemDetails.ShouldSatisfyPostCommentNotFound(
+                r => r.Id,
+                r => r.CommentId,
+                request);
+        }
 
-    public static void ShouldSatisfyPostCommentLikeNotFound(
-        this ApplicationProblemDetails problemDetails,
-        DeletePostCommentLikeApiRequest request)
-    {
-        problemDetails.ShouldSatisfyPostCommentLikeNotFound(
-            r => r.Id,
-            r => r.CommentId,
-            r => r.UserId,
-            request);
-    }
+        public void ShouldSatisfyPostCommentLikeNotFound(
+            DeletePostCommentLikeApiRequest request)
+        {
+            problemDetails.ShouldSatisfyPostCommentLikeNotFound(
+                r => r.Id,
+                r => r.CommentId,
+                r => r.UserId,
+                request);
+        }
 
-    public static void ShouldSatisfyPostCommentLikeNotFound(
-        this ApplicationProblemDetails problemDetails,
-        GetPostCommentLikeByIdApiRequest request)
-    {
-        problemDetails.ShouldSatisfyPostCommentLikeNotFound(
-            r => r.Id,
-            r => r.CommentId,
-            r => r.UserId,
-            request);
-    }
+        public void ShouldSatisfyPostCommentLikeNotFound(
+            GetPostCommentLikeByIdApiRequest request)
+        {
+            problemDetails.ShouldSatisfyPostCommentLikeNotFound(
+                r => r.Id,
+                r => r.CommentId,
+                r => r.UserId,
+                request);
+        }
 
-    public static void ShouldSatisfyPostCommentLikeAlreadyExists(
-        this ApplicationProblemDetails problemDetails,
-        AddPostCommentLikeApiRequest request)
-    {
-        problemDetails.ShouldSatisfyPostCommentLikeAlreadyExists(
-            r => r.Id,
-            r => r.CommentId,
-            r => r.UserId,
-            request);
-    }
+        public void ShouldSatisfyPostCommentLikeAlreadyExists(
+            AddPostCommentLikeApiRequest request)
+        {
+            problemDetails.ShouldSatisfyPostCommentLikeAlreadyExists(
+                r => r.Id,
+                r => r.CommentId,
+                r => r.UserId,
+                request);
+        }
 
-    internal static void ShouldSatisfyPostCommentLikeNotFound<TRequest>(
-        this ApplicationProblemDetails problemDetails,
-        Func<TRequest, string> idPropertyExpression,
-        Func<TRequest, string> commentIdPropertyExpression,
-        Func<TRequest, string> userIdPropertyExpression,
-        TRequest request)
-    {
-        problemDetails.ShouldSatisfyNotFound(
-            PostCommentLikeExceptionErrorMessages.GetNotFoundMessage(
-                new(
+        internal void ShouldSatisfyPostCommentLikeNotFound<TRequest>(
+            Func<TRequest, string> idPropertyExpression,
+            Func<TRequest, string> commentIdPropertyExpression,
+            Func<TRequest, string> userIdPropertyExpression,
+            TRequest request)
+        {
+            problemDetails.ShouldSatisfyNotFound(
+                PostCommentLikeExceptionErrorMessages.GetNotFoundMessage(
                     new(
-                        new(idPropertyExpression(request)),
-                        commentIdPropertyExpression(request)),
-                    new(userIdPropertyExpression(request)))));
-    }
+                        new(
+                            new(idPropertyExpression(request)),
+                            commentIdPropertyExpression(request)),
+                        new(userIdPropertyExpression(request)))));
+        }
 
-    internal static void ShouldSatisfyPostCommentLikeAlreadyExists<TRequest>(
-        this ApplicationProblemDetails problemDetails,
-        Func<TRequest, string> idPropertyExpression,
-        Func<TRequest, string> commentIdPropertyExpression,
-        Func<TRequest, string> userIdPropertyExpression,
-        TRequest request)
-    {
-        problemDetails.ShouldSatisfyBadRequest(
-            PostCommentLikeExceptionErrorMessages.GetAlreadyExistsMessage(
-                new(
+        internal void ShouldSatisfyPostCommentLikeAlreadyExists<TRequest>(
+            Func<TRequest, string> idPropertyExpression,
+            Func<TRequest, string> commentIdPropertyExpression,
+            Func<TRequest, string> userIdPropertyExpression,
+            TRequest request)
+        {
+            problemDetails.ShouldSatisfyBadRequest(
+                PostCommentLikeExceptionErrorMessages.GetAlreadyExistsMessage(
                     new(
-                        new(idPropertyExpression(request)),
-                        commentIdPropertyExpression(request)),
-                    new(userIdPropertyExpression(request)))));
+                        new(
+                            new(idPropertyExpression(request)),
+                            commentIdPropertyExpression(request)),
+                        new(userIdPropertyExpression(request)))));
+        }
     }
 }

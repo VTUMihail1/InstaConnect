@@ -6,21 +6,30 @@ namespace InstaConnect.Common.Tests.Utilities;
 
 public static class MockSetups
 {
-    public static void ReturnsResponse<TResponse>(this TResponse response, TResponse returnThis)
+    extension<TResponse>(TResponse response)
         where TResponse : class?
     {
-        response.Returns(returnThis);
+        public void ReturnsResponse(TResponse returnThis)
+        {
+            response.Returns(returnThis);
+        }
     }
 
-    public static void ReturnsResponse<TResponse>(this Task<TResponse> response, TResponse returnThis)
+    extension<TResponse>(Task<TResponse> response)
         where TResponse : class?
     {
-        response.Returns(returnThis);
+        public void ReturnsResponse(TResponse returnThis)
+        {
+            response.Returns(returnThis);
+        }
     }
 
-    public static void WhenDo<T>(this T obj, Action<T> setup, Action callback)
-            where T : class
+    extension<T>(T obj)
+        where T : class
     {
-        obj.When(setup).Do(_ => callback());
+        public void WhenDo(Action<T> setup, Action callback)
+        {
+            obj.When(setup).Do(_ => callback());
+        }
     }
 }

@@ -10,27 +10,30 @@ namespace InstaConnect.Emails.Infrastructure.Features.Emails.Extensions;
 
 internal static class ServiceCollectionExtensions
 {
-    internal static IServiceCollection AddEmailServices(this IServiceCollection serviceCollection, IConfiguration configuration)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection
-            .AddOptions<EmailOptions>()
-            .BindConfiguration(nameof(EmailOptions))
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
-
-        var emailOptions = configuration
-            .GetSection(nameof(EmailOptions))
-            .Get<EmailOptions>()!;
-
-        serviceCollection.AddScoped(_ => new SmtpClient()
+        internal IServiceCollection AddEmailServices(IConfiguration configuration)
         {
-            Host = emailOptions.SmtpServer,
-            Port = emailOptions.Port,
-            EnableSsl = true,
-            UseDefaultCredentials = false,
-            Credentials = new NetworkCredential(emailOptions.Username, emailOptions.Password)
-        });
+            serviceCollection
+                .AddOptions<EmailOptions>()
+                .BindConfiguration(nameof(EmailOptions))
+                .ValidateDataAnnotations()
+                .ValidateOnStart();
 
-        return serviceCollection;
+            var emailOptions = configuration
+                .GetSection(nameof(EmailOptions))
+                .Get<EmailOptions>()!;
+
+            serviceCollection.AddScoped(_ => new SmtpClient()
+            {
+                Host = emailOptions.SmtpServer,
+                Port = emailOptions.Port,
+                EnableSsl = true,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(emailOptions.Username, emailOptions.Password)
+            });
+
+            return serviceCollection;
+        }
     }
 }

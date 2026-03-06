@@ -10,25 +10,28 @@ namespace InstaConnect.Posts.Presentation.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddPresentation(this IServiceCollection serviceCollection, IConfiguration configuration)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection
-            .AddUserServices()
-            .AddPostServices()
-            .AddPostLikeServices()
-            .AddPostCommentServices()
-            .AddPostCommentLikeServices();
+        public IServiceCollection AddPresentation(IConfiguration configuration)
+        {
+            serviceCollection
+                .AddUserServices()
+                .AddPostServices()
+                .AddPostLikeServices()
+                .AddPostCommentServices()
+                .AddPostCommentLikeServices();
 
-        serviceCollection
-            .AddServicesWithMatchingInterfaces(PostPresentationReference.Assembly)
-            .AddApiControllers()
-            .AddMapper(PostPresentationReference.Assembly, CommonPresentationReference.Assembly)
-            .AddAuthorizationPolicies()
-            .AddCorsPolicies(configuration)
-            .AddSwagger()
-            .AddRateLimiterPolicies()
-            .AddExceptionHandler();
+            serviceCollection
+                .AddServicesWithMatchingInterfaces(PostPresentationReference.Assembly)
+                .AddApiControllers()
+                .AddMapper(PostPresentationReference.Assembly, CommonPresentationReference.Assembly)
+                .AddAuthorizationPolicies()
+                .AddCorsPolicies(configuration)
+                .AddSwagger()
+                .AddRateLimiterPolicies()
+                .AddExceptionHandler();
 
-        return serviceCollection;
+            return serviceCollection;
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿namespace InstaConnect.Posts.Domain.Features.Posts.Abstractions;
+
 public interface IPostCommandRepository
 {
     Task AddAsync(Post entity, CancellationToken cancellationToken);

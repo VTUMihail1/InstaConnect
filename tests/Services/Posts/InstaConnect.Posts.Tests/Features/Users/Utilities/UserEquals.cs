@@ -2,49 +2,68 @@
 using InstaConnect.Posts.Domain.Features.Users.Models.ValueObjects;
 
 namespace InstaConnect.Posts.Tests.Features.Users.Utilities;
+
 public static class UserEquals
 {
-    public static bool Matches(this UserAddedEventRequest p, UserAddedEventRequest request)
+    extension(UserAddedEventRequest p)
     {
-        return p.User.Matches(request.User);
+        public bool Matches(UserAddedEventRequest request)
+        {
+            return p.User.Matches(request.User);
+        }
     }
 
-    public static bool Matches(this UserUpdatedEventRequest p, UserUpdatedEventRequest request)
+    extension(UserUpdatedEventRequest p)
     {
-        return p.User.Matches(request.User);
+        public bool Matches(UserUpdatedEventRequest request)
+        {
+            return p.User.Matches(request.User);
+        }
     }
 
-    public static bool Matches(this UserDeletedEventRequest p, UserDeletedEventRequest request)
+    extension(UserDeletedEventRequest p)
     {
-        return p.User.Matches(request.User);
+        public bool Matches(UserDeletedEventRequest request)
+        {
+            return p.User.Matches(request.User);
+        }
     }
 
-    public static bool Matches(this UserEventRequest r, UserEventRequest request)
+    extension(UserEventRequest r)
     {
-        return r.Id == request.Id &&
-               r.Name == request.Name &&
-               r.Email == request.Email &&
-               r.FirstName == request.FirstName &&
-               r.LastName == request.LastName &&
-               r.ProfileImageUrl == request.ProfileImageUrl &&
-               r.CreatedAtUtc == request.CreatedAtUtc &&
-               r.UpdatedAtUtc == request.UpdatedAtUtc;
+        public bool Matches(UserEventRequest request)
+        {
+            return r.Id == request.Id &&
+                   r.Name == request.Name &&
+                   r.Email == request.Email &&
+                   r.FirstName == request.FirstName &&
+                   r.LastName == request.LastName &&
+                   r.ProfileImageUrl == request.ProfileImageUrl &&
+                   r.CreatedAtUtc == request.CreatedAtUtc &&
+                   r.UpdatedAtUtc == request.UpdatedAtUtc;
+        }
     }
 
-    public static bool Matches(this User entity, UserEventRequest request)
+    extension(User entity)
     {
-        return entity.Id.Matches(request.Id) &&
-               entity.Name.Matches(request.Name) &&
-               entity.Email.Matches(request.Email) &&
-               entity.FirstName == request.FirstName &&
-               entity.LastName == request.LastName &&
-               entity.ProfileImage.Matches(request.ProfileImageUrl) &&
-               entity.CreatedAtUtc == request.CreatedAtUtc &&
-               entity.UpdatedAtUtc == request.UpdatedAtUtc;
+        public bool Matches(UserEventRequest request)
+        {
+            return entity.Id.Matches(request.Id) &&
+                   entity.Name.Matches(request.Name) &&
+                   entity.Email.Matches(request.Email) &&
+                   entity.FirstName == request.FirstName &&
+                   entity.LastName == request.LastName &&
+                   entity.ProfileImage.Matches(request.ProfileImageUrl) &&
+                   entity.CreatedAtUtc == request.CreatedAtUtc &&
+                   entity.UpdatedAtUtc == request.UpdatedAtUtc;
+        }
     }
 
-    public static bool Matches(this UserId p, string id)
+    extension(UserId p)
     {
-        return p.Id.EqualsOrdinalIgnoreCase(id);
+        public bool Matches(string id)
+        {
+            return p.Id.EqualsOrdinalIgnoreCase(id);
+        }
     }
 }

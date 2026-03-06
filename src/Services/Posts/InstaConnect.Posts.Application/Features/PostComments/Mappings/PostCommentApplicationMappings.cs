@@ -4,7 +4,6 @@ using InstaConnect.Posts.Application.Features.PostComments.Commands.Update;
 using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAll;
 using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAllForUser;
 using InstaConnect.Posts.Application.Features.PostComments.Queries.GetById;
-using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAllForUser;
 
 using Mapster;
 

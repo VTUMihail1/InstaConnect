@@ -1,8 +1,6 @@
 ﻿using InstaConnect.Common.Domain.Models;
 using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
 using InstaConnect.Posts.Domain.Features.PostComments.Models.Requests;
-using InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.SortTerm;
-using InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.SortTerm.ForUser;
 
 namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.PostComments.Controllers.v1;
 

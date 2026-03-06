@@ -6,16 +6,19 @@ namespace InstaConnect.Follows.Domain.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddDomain(this IServiceCollection serviceCollection)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection
-            .AddUserServices()
-            .AddFollowServices();
+        public IServiceCollection AddDomain()
+        {
+            serviceCollection
+                .AddUserServices()
+                .AddFollowServices();
 
-        serviceCollection
-            .AddMapper(FollowDomainReference.Assembly, CommonDomainReference.Assembly)
-            .AddServicesWithMatchingInterfaces(FollowDomainReference.Assembly);
+            serviceCollection
+                .AddMapper(FollowDomainReference.Assembly, CommonDomainReference.Assembly)
+                .AddServicesWithMatchingInterfaces(FollowDomainReference.Assembly);
 
-        return serviceCollection;
+            return serviceCollection;
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿namespace InstaConnect.Posts.Tests.Features.Users.Utilities;
+
 public abstract class BaseUserTest : BaseTest
 {
     protected UserBuilderFactory UserBuilderFactory { get; }

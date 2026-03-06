@@ -9,19 +9,21 @@ namespace InstaConnect.Common.Application.Tests.Assertions;
 
 public static class ValidationAssertions
 {
-    public static void ShouldHaveValidationErrorForProperty<TRequest, TProperty>(
-        this TestValidationResult<TRequest> testValidationResult,
-        Expression<Func<TRequest, TProperty>> memberAccessor,
-        IMessageTransformer<TProperty> messageTransformer,
-        TRequest request)
+    extension<TRequest>(TestValidationResult<TRequest> testValidationResult)
     {
-        testValidationResult
-            .ShouldHaveValidationErrorFor(memberAccessor)
-            .ShouldContain(p => p.Matches(messageTransformer.Transform(memberAccessor, memberAccessor.Compile()(request))));
-    }
+        public void ShouldHaveValidationErrorForProperty<TProperty>(
+            Expression<Func<TRequest, TProperty>> memberAccessor,
+            IMessageTransformer<TProperty> messageTransformer,
+            TRequest request)
+        {
+            testValidationResult
+                .ShouldHaveValidationErrorFor(memberAccessor)
+                .ShouldContain(p => p.Matches(messageTransformer.Transform(memberAccessor, memberAccessor.Compile()(request))));
+        }
 
-    public static void ShouldNotHaveAnyValidationErrorProperties<T>(this TestValidationResult<T> testValidationResult)
-    {
-        testValidationResult.ShouldNotHaveAnyValidationErrors();
+        public void ShouldNotHaveAnyValidationErrorProperties()
+        {
+            testValidationResult.ShouldNotHaveAnyValidationErrors();
+        }
     }
 }

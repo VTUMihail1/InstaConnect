@@ -4,43 +4,44 @@ namespace InstaConnect.Posts.Application.Tests.Features.PostCommentLikes.Asserti
 
 public static class PostCommentLikeMockAssertions
 {
-    public static async Task ShouldReceiveOneGetAllAsync(
-        this IPostCommentLikeQueryService postCommentLikeService,
-        GetAllPostCommentLikesQueryRequest request,
-        CancellationToken cancellationToken)
+    extension(IPostCommentLikeQueryService postCommentLikeService)
     {
-        await postCommentLikeService.ShouldHaveReceivedOne().GetAllAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesQuery(request), cancellationToken);
+        public async Task ShouldReceiveOneGetAllAsync(GetAllPostCommentLikesQueryRequest request, CancellationToken cancellationToken)
+        {
+            await postCommentLikeService.ShouldHaveReceivedOne()
+
+                .GetAllAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesQuery(request), cancellationToken);
+        }
+
+        public async Task ShouldReceiveOneGetAllForUserAsync(GetAllPostCommentLikesForUserQueryRequest request, CancellationToken cancellationToken)
+        {
+            await postCommentLikeService.ShouldHaveReceivedOne()
+
+                .GetAllForUserAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesForUserQuery(request), cancellationToken);
+        }
+
+        public async Task ShouldReceiveOneGetByIdAsync(GetPostCommentLikeByIdQueryRequest request, CancellationToken cancellationToken)
+        {
+            await postCommentLikeService.ShouldHaveReceivedOne()
+
+                .GetByIdAsync(PostCommentLikeMatcher.IsGetPostCommentLikeByIdQuery(request), cancellationToken);
+        }
     }
 
-    public static async Task ShouldReceiveOneGetAllForUserAsync(
-        this IPostCommentLikeQueryService postCommentLikeService,
-        GetAllPostCommentLikesForUserQueryRequest request,
-        CancellationToken cancellationToken)
+    extension(IPostCommentLikeCommandService postCommentLikeService)
     {
-        await postCommentLikeService.ShouldHaveReceivedOne().GetAllForUserAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesForUserQuery(request), cancellationToken);
-    }
+        public async Task ShouldReceiveOneAddAsync(AddPostCommentLikeCommandRequest request, CancellationToken cancellationToken)
+        {
+            await postCommentLikeService.ShouldHaveReceivedOne()
 
-    public static async Task ShouldReceiveOneGetByIdAsync(
-        this IPostCommentLikeQueryService postCommentLikeService,
-        GetPostCommentLikeByIdQueryRequest request,
-        CancellationToken cancellationToken)
-    {
-        await postCommentLikeService.ShouldHaveReceivedOne().GetByIdAsync(PostCommentLikeMatcher.IsGetPostCommentLikeByIdQuery(request), cancellationToken);
-    }
+                .AddAsync(PostCommentLikeMatcher.IsAddPostCommentLikeCommand(request), cancellationToken);
+        }
 
-    public static async Task ShouldReceiveOneAddAsync(
-        this IPostCommentLikeCommandService postCommentLikeService,
-        AddPostCommentLikeCommandRequest request,
-        CancellationToken cancellationToken)
-    {
-        await postCommentLikeService.ShouldHaveReceivedOne().AddAsync(PostCommentLikeMatcher.IsAddPostCommentLikeCommand(request), cancellationToken);
-    }
+        public async Task ShouldReceiveOneDeleteAsync(DeletePostCommentLikeCommandRequest request, CancellationToken cancellationToken)
+        {
+            await postCommentLikeService.ShouldHaveReceivedOne()
 
-    public static async Task ShouldReceiveOneDeleteAsync(
-        this IPostCommentLikeCommandService postCommentLikeService,
-        DeletePostCommentLikeCommandRequest request,
-        CancellationToken cancellationToken)
-    {
-        await postCommentLikeService.ShouldHaveReceivedOne().DeleteAsync(PostCommentLikeMatcher.IsDeletePostCommentLikeCommand(request), cancellationToken);
+                .DeleteAsync(PostCommentLikeMatcher.IsDeletePostCommentLikeCommand(request), cancellationToken);
+        }
     }
 }

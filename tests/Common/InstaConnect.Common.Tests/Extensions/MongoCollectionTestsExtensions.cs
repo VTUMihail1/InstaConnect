@@ -1,12 +1,14 @@
 ﻿using MongoDB.Driver;
 
 namespace InstaConnect.Common.Tests.Extensions;
+
 public static class MongoCollectionTestsExtensions
 {
-    public static async Task ResetAsync<TDocument>(
-            this IMongoCollection<TDocument> collection,
-            CancellationToken cancellationToken = default)
+    extension<TDocument>(IMongoCollection<TDocument> collection)
     {
-        await collection.DeleteManyAsync(d => true, cancellationToken);
+        public async Task ResetAsync(CancellationToken cancellationToken = default)
+        {
+            await collection.DeleteManyAsync(d => true, cancellationToken);
+        }
     }
 }

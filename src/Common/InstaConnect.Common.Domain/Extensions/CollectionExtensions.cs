@@ -2,13 +2,14 @@
 
 public static class CollectionExtensions
 {
-    public static ICollection<T> AddRange<T>(this ICollection<T> collection, IEnumerable<T> items)
+    extension<T>(ICollection<T> collection)
     {
-        foreach (var item in items)
+        public void AddRange(IEnumerable<T> items)
         {
-            collection.Add(item);
+            foreach (var item in items)
+            {
+                collection.Add(item);
+            }
         }
-
-        return collection;
     }
 }

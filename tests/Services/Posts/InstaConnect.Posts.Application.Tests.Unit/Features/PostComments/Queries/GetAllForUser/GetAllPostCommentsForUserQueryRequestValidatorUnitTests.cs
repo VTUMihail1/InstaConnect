@@ -1,8 +1,5 @@
 ﻿using InstaConnect.Common.Domain.Models;
-using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAllForUser;
 using InstaConnect.Posts.Domain.Features.PostComments.Models.Requests;
-using InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.SortTerm;
-using InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.SortTerm.ForUser;
 
 namespace InstaConnect.Posts.Application.Tests.Unit.Features.PostComments.Queries.GetAllForUser;
 

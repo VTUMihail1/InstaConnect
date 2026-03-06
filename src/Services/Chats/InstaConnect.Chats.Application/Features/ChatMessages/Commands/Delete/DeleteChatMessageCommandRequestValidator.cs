@@ -1,4 +1,5 @@
 ﻿namespace InstaConnect.Chats.Application.Features.ChatMessages.Commands.Delete;
+
 public class DeleteChatMessageCommandRequestValidator : AbstractValidator<DeleteChatMessageCommandRequest>
 {
     public DeleteChatMessageCommandRequestValidator()

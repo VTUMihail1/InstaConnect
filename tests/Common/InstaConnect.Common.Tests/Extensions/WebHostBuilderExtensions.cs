@@ -1,24 +1,30 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using InstaConnect.Common.Domain.Extensions;
+using InstaConnect.Common.Infrastructure.Models.Options;
+
+using Microsoft.AspNetCore.Hosting;
 
 namespace InstaConnect.Common.Tests.Extensions;
 
 public static class WebHostBuilderExtensions
 {
-    public static void UpdateDatabaseConnectionString(this IWebHostBuilder webHostBuilder, string connectionString)
+    extension(IWebHostBuilder webHostBuilder)
     {
-        const string DatabaseConnectionStringKey = "MongoDatabaseConfiguration:ConnectionString";
+        public void UpdateDatabaseConnectionString(string connectionString)
+        {
+            const string Format = "{0}:{1}";
 
-        webHostBuilder.UseSetting(
-            DatabaseConnectionStringKey,
-            connectionString);
-    }
+            webHostBuilder.UseSetting(
+                Format.FormatCurrentCulture(MongoDatabaseOptions.SectionName, nameof(MongoDatabaseOptions.ConnectionString)),
+                connectionString);
+        }
 
-    public static void UpdateCacheConnectionString(this IWebHostBuilder webHostBuilder, string connectionString)
-    {
-        const string CacheConnectionStringKey = "CacheOptions:ConnectionString";
+        public void UpdateCacheConnectionString(string connectionString)
+        {
+            const string Format = "{0}:{1}";
 
-        webHostBuilder.UseSetting(
-            CacheConnectionStringKey,
-            connectionString);
+            webHostBuilder.UseSetting(
+                Format.FormatCurrentCulture(CacheOptions.SectionName, nameof(CacheOptions.ConnectionString)),
+                connectionString);
+        }
     }
 }

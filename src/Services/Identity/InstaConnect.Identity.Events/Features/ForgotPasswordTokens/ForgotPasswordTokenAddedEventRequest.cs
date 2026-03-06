@@ -1,5 +1,3 @@
-﻿using InstaConnect.Identity.Events.Features.Users;
-
-namespace InstaConnect.Identity.Events.Features.ForgotPasswordTokens;
+﻿namespace InstaConnect.Identity.Events.Features.ForgotPasswordTokens;
 
 public record ForgotPasswordTokenAddedEventRequest(ForgotPasswordTokenEventRequest ForgotPasswordToken) : IEventRequest;

@@ -10,31 +10,33 @@ namespace InstaConnect.Identity.Infrastructure.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddInfrastructure(
-        this IServiceCollection serviceCollection,
-        IConfiguration configuration,
-        IWebHostEnvironment webHostEnvironment,
-        Assembly presentationAssembly)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection
-            .AddUserServices()
-            .AddUserClaimServices()
-            .AddRefreshTokenServices()
-            .AddForgotPasswordTokenServices()
-            .AddEmailConfirmationTokenServices();
+        public IServiceCollection AddInfrastructure(
+            IConfiguration configuration,
+            IWebHostEnvironment webHostEnvironment,
+            Assembly presentationAssembly)
+        {
+            serviceCollection
+                .AddUserServices()
+                .AddUserClaimServices()
+                .AddRefreshTokenServices()
+                .AddForgotPasswordTokenServices()
+                .AddEmailConfirmationTokenServices();
 
-        serviceCollection
-            .AddObservability(configuration, webHostEnvironment)
-            .AddMapper(IdentityInfrastructureReference.Assembly)
-            .AddServicesWithMatchingInterfaces(IdentityInfrastructureReference.Assembly)
-            .AddMongoDbContext()
-            .AddUnitOfWork()
-            .AddRabbitMQ(configuration, presentationAssembly)
-            .AddJwtBearer(configuration)
-            .AddGuidProvider()
-            .AddDateTimeProvider()
-            .AddSortOrders();
+            serviceCollection
+                .AddObservability(configuration, webHostEnvironment)
+                .AddMapper(IdentityInfrastructureReference.Assembly)
+                .AddServicesWithMatchingInterfaces(IdentityInfrastructureReference.Assembly)
+                .AddMongoDbContext()
+                .AddUnitOfWork()
+                .AddRabbitMQ(configuration, presentationAssembly)
+                .AddJwtBearer(configuration)
+                .AddGuidProvider()
+                .AddDateTimeProvider()
+                .AddSortOrders();
 
-        return serviceCollection;
+            return serviceCollection;
+        }
     }
 }

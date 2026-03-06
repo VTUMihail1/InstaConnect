@@ -1,131 +1,127 @@
 ﻿using InstaConnect.Common.Application.Abstractions;
 using InstaConnect.Common.Application.Tests.Utilities;
 using InstaConnect.Common.Infrastructure.Helpers;
-using InstaConnect.Posts.Application.Features.Posts.Queries.GetAllForUser;
 using InstaConnect.Posts.Application.Features.Users.Abstractions;
 using InstaConnect.Posts.Application.Tests.Features.Posts.Utilities;
 using InstaConnect.Posts.Application.Tests.Features.Users.Utilities;
 using InstaConnect.Posts.Domain.Features.Posts.Models.ValueObjects;
-using InstaConnect.Posts.Domain.Features.Users.Models.Responses;
 
 namespace InstaConnect.Posts.Application.Tests.Features.Posts.Utilities;
+
 public static class PostMapper
 {
-    internal static PostId ToIdResponse(
-        this Post post)
+    extension(Post post)
     {
-        return post.Id;
+        internal PostId ToIdResponse(
+)
+        {
+            return post.Id;
+        }
+
+        internal PostResponse ToFullResponse<TRequest>(
+            TRequest request)
+            where TRequest : ICurrentUserableQueryRequest
+        {
+            return new(post.Id,
+                       post.UserId,
+                       post.Title,
+                       post.Content,
+                       post.User?.ToFullResponse(),
+                       post.PostLikes.Any(pl => pl.Id.UserId.Matches(request.CurrentUserId)),
+                       post.CreatedAtUtc,
+                       post.UpdatedAtUtc);
+        }
+
+        internal PostResponse ToResponseWithoutUser<TRequest>(
+            TRequest request)
+            where TRequest : ICurrentUserableQueryRequest
+        {
+            return new(post.Id,
+                       post.UserId,
+                       post.Title,
+                       post.Content,
+                       null,
+                       post.PostLikes.Any(pl => pl.Id.UserId.Matches(request.CurrentUserId)),
+                       post.CreatedAtUtc,
+                       post.UpdatedAtUtc);
+        }
+
+        public PostId ToResponse(
+            AddPostCommandRequest request)
+        {
+            return post.ToIdResponse();
+        }
+
+        public PostId ToResponse(
+            UpdatePostCommandRequest request)
+        {
+            return post.ToIdResponse();
+        }
+
+        public PostResponse ToResponse(
+            GetPostByIdQueryRequest request)
+        {
+            return post.ToFullResponse(request);
+        }
     }
 
-    internal static PostResponse ToFullResponse<TRequest>(
-        this Post post,
-        TRequest request)
-        where TRequest : ICurrentUserableQueryRequest
+    extension(ICollection<Post> posts)
     {
-        return new(post.Id,
-                   post.UserId,
-                   post.Title,
-                   post.Content,
-                   post.User?.ToFullResponse(),
-                   post.PostLikes.Any(pl => pl.Id.UserId.Matches(request.CurrentUserId)),
-                   post.CreatedAtUtc,
-                   post.UpdatedAtUtc);
-    }
-
-    internal static PostCollectionResponse ToFullResponse<TRequest>(
-        this ICollection<Post> posts,
+        internal PostCollectionResponse ToFullResponse<TRequest>(
         User user,
         Func<Post, TRequest, bool> filter,
         Func<Post, TRequest, PostResponse> transform,
         TRequest request)
         where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
-    {
-        var paginator = new Paginator();
-        var totalCount = posts.Count(post => filter(post, request));
+        {
+            var paginator = new Paginator();
+            var totalCount = posts.Count(post => filter(post, request));
 
-        return new (user.ToFullResponse(),
-                    posts.Filter(post => filter(post, request), request, post => transform(post, request)),
-                    request.Page,
-                    request.PageSize,
-                    totalCount,
-                    paginator.HasNextPage(request.Page, request.PageSize, totalCount),
-                    paginator.HasPreviousPage(request.Page));
-    }
+            return new(user.ToFullResponse(),
+                        posts.Filter(post => filter(post, request), request, post => transform(post, request)),
+                        request.Page,
+                        request.PageSize,
+                        totalCount,
+                        paginator.HasNextPage(request.Page, request.PageSize, totalCount),
+                        paginator.HasPreviousPage(request.Page));
+        }
 
-    internal static PostCollectionResponse ToResponseWithoutUser<TRequest>(
-        this ICollection<Post> posts,
-        Func<Post, TRequest, bool> filter,
-        Func<Post, TRequest, PostResponse> transform,
-        TRequest request)
-        where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
-    {
-        var paginator = new Paginator();
-        var totalCount = posts.Count(post => filter(post, request));
+        internal PostCollectionResponse ToResponseWithoutUser<TRequest>(
+            Func<Post, TRequest, bool> filter,
+            Func<Post, TRequest, PostResponse> transform,
+            TRequest request)
+            where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
+        {
+            var paginator = new Paginator();
+            var totalCount = posts.Count(post => filter(post, request));
 
-        return new(null,
-                   posts.Filter(post => filter(post, request), request, post => transform(post, request)),
-                   request.Page,
-                   request.PageSize,
-                   totalCount,
-                   paginator.HasNextPage(request.Page, request.PageSize, totalCount),
-                   paginator.HasPreviousPage(request.Page));
-    }
+            return new(null,
+                       posts.Filter(post => filter(post, request), request, post => transform(post, request)),
+                       request.Page,
+                       request.PageSize,
+                       totalCount,
+                       paginator.HasNextPage(request.Page, request.PageSize, totalCount),
+                       paginator.HasPreviousPage(request.Page));
+        }
 
-    internal static PostResponse ToResponseWithoutUser<TRequest>(
-        this Post post,
-        TRequest request)
-        where TRequest : ICurrentUserableQueryRequest
-    {
-        return new(post.Id,
-                   post.UserId,
-                   post.Title,
-                   post.Content,
-                   null,
-                   post.PostLikes.Any(pl => pl.Id.UserId.Matches(request.CurrentUserId)),
-                   post.CreatedAtUtc,
-                   post.UpdatedAtUtc);
-    }
+        public PostCollectionResponse ToResponse(
+            GetAllPostsQueryRequest request)
+        {
+            return posts.ToResponseWithoutUser(
+                (post, request) => post.MatchesFilter(request),
+                (post, request) => post.ToFullResponse(request),
+                request);
+        }
 
-    public static PostId ToResponse(
-        this Post post,
-        AddPostCommandRequest request)
-    {
-        return post.ToIdResponse();
-    }
-
-    public static PostId ToResponse(
-        this Post post,
-        UpdatePostCommandRequest request)
-    {
-        return post.ToIdResponse();
-    }
-
-    public static PostResponse ToResponse(
-        this Post post,
-        GetPostByIdQueryRequest request)
-    {
-        return post.ToFullResponse(request);
-    }
-
-    public static PostCollectionResponse ToResponse(
-        this ICollection<Post> posts,
-        GetAllPostsQueryRequest request)
-    {
-        return posts.ToResponseWithoutUser(
-            (post, request) => post.MatchesFilter(request),
-            (post, request) => post.ToFullResponse(request),
-            request);
-    }
-
-    public static PostCollectionResponse ToResponse(
-        this ICollection<Post> posts,
-        User user,
-        GetAllPostsForUserQueryRequest request)
-    {
-        return posts.ToFullResponse(
-            user,
-            (post, request) => post.MatchesFilter(request),
-            (post, request) => post.ToResponseWithoutUser(request),
-            request);
+        public PostCollectionResponse ToResponse(
+            User user,
+            GetAllPostsForUserQueryRequest request)
+        {
+            return posts.ToFullResponse(
+                user,
+                (post, request) => post.MatchesFilter(request),
+                (post, request) => post.ToResponseWithoutUser(request),
+                request);
+        }
     }
 }

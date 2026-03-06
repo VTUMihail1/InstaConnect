@@ -30,188 +30,160 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
 namespace InstaConnect.Common.Infrastructure.Extensions;
+
 public static partial class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddUnitOfWork(this IServiceCollection serviceCollection)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
-
-        return serviceCollection;
-    }
-
-    public static IServiceCollection AddObservability(
-        this IServiceCollection serviceCollection,
-        IConfiguration configuration,
-        IWebHostEnvironment webHostEnvironment)
-    {
-        serviceCollection
-            .AddOptions<OpenTelemetryOptions>()
-            .BindConfiguration(OpenTelemetryOptions.SectionName)
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
-
-        var openTelemetryOptions = configuration
-                    .GetSection(OpenTelemetryOptions.SectionName)
-                    .Get<OpenTelemetryOptions>()!;
-
-        serviceCollection.AddOpenTelemetry()
-              .ConfigureResource(r => r.AddService(webHostEnvironment.ApplicationName))
-              .WithTracing(tracing => tracing
-                  .AddAspNetCoreInstrumentation()
-                  .AddHttpClientInstrumentation()
-                  .AddRedisInstrumentation()
-                  .AddMassTransitInstrumentation()
-                  .AddOtlpExporter(options =>
-                  {
-                      options.Endpoint = new Uri(openTelemetryOptions.Endpoint);
-                  }))
-              .WithMetrics(metrics => metrics
-                  .AddAspNetCoreInstrumentation()
-                  .AddHttpClientInstrumentation()
-                  .AddMassTransitInstrumentation()
-                  .AddOtlpExporter(options =>
-                  {
-                      options.Endpoint = new Uri(openTelemetryOptions.Endpoint);
-                  }));
-
-        return serviceCollection;
-    }
-
-    public static IServiceCollection AddMongoDbContext(this IServiceCollection serviceCollection)
-    {
-        const string ConventionName = "ApplicationConventionPack";
-
-        serviceCollection
-            .AddOptions<MongoDatabaseOptions>()
-            .BindConfiguration(MongoDatabaseOptions.SectionName)
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
-
-        serviceCollection.AddScoped<IMongoClient>(sp => new MongoClient(sp.GetRequiredService<IOptions<MongoDatabaseOptions>>()
-                                                                          .Value
-                                                                          .ConnectionString));
-
-        serviceCollection.AddScoped(sp => sp.GetRequiredService<IMongoClient>()
-                                            .GetDatabase(sp.GetRequiredService<IOptions<MongoDatabaseOptions>>()
-                                                           .Value
-                                                           .Name));
-
-        serviceCollection
-            .AddScoped<IPaginator, Paginator>()
-            .AddScoped<IMongoDbContext, MongoDbContext>();
-
-        var conventionPack = new ConventionPack
+        public IServiceCollection AddUnitOfWork()
         {
-            new SnakeCaseElementNameConvention(),
-            new IgnoreExtraElementsConvention(true)
-        };
+            serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
+            return serviceCollection;
+        }
 
-        ConventionRegistry.Register(
-            ConventionName,
-            conventionPack,
-            t => true
-        );
-
-        return serviceCollection;
-    }
-
-    public static IServiceCollection AddRedisCaching(
-        this IServiceCollection serviceCollection,
-        IConfiguration configuration)
-    {
-        serviceCollection
-            .AddOptions<CacheOptions>()
-            .BindConfiguration(CacheOptions.SectionName)
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
-
-        var cacheOptions = configuration
-            .GetSection(CacheOptions.SectionName)
-            .Get<CacheOptions>()!;
-
-        serviceCollection
-            .AddScoped<IJsonConverter, JsonConverter>()
-            .AddScoped<ICacheHandler, CacheHandler>()
-            .AddScoped<ICacheRequestFactory, CacheRequestFactory>();
-
-        serviceCollection.AddStackExchangeRedisCache(redisOptions =>
-            redisOptions.Configuration = cacheOptions.ConnectionString);
-
-        serviceCollection
-            .AddHealthChecks()
-            .AddRedis(cacheOptions.ConnectionString);
-
-        return serviceCollection;
-    }
-
-    public static IServiceCollection AddRabbitMQ(
-        this IServiceCollection serviceCollection,
-        IConfiguration configuration,
-        Assembly currentAssembly,
-        Action<IBusRegistrationConfigurator>? configure = null
-        )
-    {
-        serviceCollection
-            .AddOptions<MessageBrokerOptions>()
-            .BindConfiguration(MessageBrokerOptions.SectionName)
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
-
-        var messageBrokerOptions = configuration
-            .GetSection(MessageBrokerOptions.SectionName)
-            .Get<MessageBrokerOptions>()!;
-
-        serviceCollection.AddMassTransit(busConfigurator =>
+        public IServiceCollection AddObservability(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
         {
-            busConfigurator.SetKebabCaseEndpointNameFormatter();
+            serviceCollection
+                .AddOptions<OpenTelemetryOptions>()
+                .BindConfiguration(OpenTelemetryOptions.SectionName)
+                .ValidateDataAnnotations()
+                .ValidateOnStart();
 
-            busConfigurator.AddConsumers(currentAssembly);
+            var openTelemetryOptions = configuration
+                        .GetSection(OpenTelemetryOptions.SectionName)
+                        .Get<OpenTelemetryOptions>()!;
 
-            busConfigurator.UsingRabbitMq((context, configurator) =>
+            serviceCollection.AddOpenTelemetry()
+                  .ConfigureResource(r => r.AddService(webHostEnvironment.ApplicationName))
+                  .WithTracing(tracing => tracing
+                      .AddAspNetCoreInstrumentation()
+                      .AddHttpClientInstrumentation()
+                      .AddRedisInstrumentation()
+                      .AddMassTransitInstrumentation()
+                      .AddOtlpExporter(options => options.Endpoint = new Uri(openTelemetryOptions.Endpoint)))
+                  .WithMetrics(metrics => metrics
+                      .AddAspNetCoreInstrumentation()
+                      .AddHttpClientInstrumentation()
+                      .AddMassTransitInstrumentation()
+                      .AddOtlpExporter(options => options.Endpoint = new Uri(openTelemetryOptions.Endpoint)));
+
+            return serviceCollection;
+        }
+
+        public IServiceCollection AddMongoDbContext()
+        {
+            const string ConventionName = "ApplicationConventionPack";
+
+            serviceCollection
+                .AddOptions<MongoDatabaseOptions>()
+                .BindConfiguration(MongoDatabaseOptions.SectionName)
+                .ValidateDataAnnotations()
+                .ValidateOnStart();
+
+            serviceCollection.AddScoped<IMongoClient>(sp =>
+                new MongoClient(sp.GetRequiredService<IOptions<MongoDatabaseOptions>>().Value.ConnectionString));
+
+            serviceCollection.AddScoped(sp =>
+                sp.GetRequiredService<IMongoClient>()
+                  .GetDatabase(sp.GetRequiredService<IOptions<MongoDatabaseOptions>>().Value.Name));
+
+            serviceCollection.AddScoped<IPaginator, Paginator>()
+                             .AddScoped<IMongoDbContext, MongoDbContext>();
+
+            var conventionPack = new ConventionPack
             {
-                configurator.Host(new Uri(messageBrokerOptions.Host), h =>
+                new SnakeCaseElementNameConvention(),
+                new IgnoreExtraElementsConvention(true)
+            };
+
+            ConventionRegistry.Register(ConventionName, conventionPack, t => true);
+
+            return serviceCollection;
+        }
+
+        public IServiceCollection AddRedisCaching(IConfiguration configuration)
+        {
+            serviceCollection
+                .AddOptions<CacheOptions>()
+                .BindConfiguration(CacheOptions.SectionName)
+                .ValidateDataAnnotations()
+                .ValidateOnStart();
+
+            var cacheOptions = configuration
+                .GetSection(CacheOptions.SectionName)
+                .Get<CacheOptions>()!;
+
+            serviceCollection.AddScoped<IJsonConverter, JsonConverter>()
+                             .AddScoped<ICacheHandler, CacheHandler>()
+                             .AddScoped<ICacheRequestFactory, CacheRequestFactory>();
+
+            serviceCollection.AddStackExchangeRedisCache(redisOptions =>
+                redisOptions.Configuration = cacheOptions.ConnectionString);
+
+            serviceCollection.AddHealthChecks()
+                             .AddRedis(cacheOptions.ConnectionString);
+
+            return serviceCollection;
+        }
+
+        public IServiceCollection AddRabbitMQ(IConfiguration configuration, Assembly currentAssembly, Action<IBusRegistrationConfigurator>? configure = null)
+        {
+            serviceCollection
+                .AddOptions<MessageBrokerOptions>()
+                .BindConfiguration(MessageBrokerOptions.SectionName)
+                .ValidateDataAnnotations()
+                .ValidateOnStart();
+
+            var messageBrokerOptions = configuration
+                .GetSection(MessageBrokerOptions.SectionName)
+                .Get<MessageBrokerOptions>()!;
+
+            serviceCollection.AddMassTransit(busConfigurator =>
+            {
+                busConfigurator.SetKebabCaseEndpointNameFormatter();
+                busConfigurator.AddConsumers(currentAssembly);
+
+                busConfigurator.UsingRabbitMq((context, configurator) =>
                 {
-                    h.Username(messageBrokerOptions.Username);
-                    h.Password(messageBrokerOptions.Password);
+                    configurator.Host(new Uri(messageBrokerOptions.Host), h =>
+                    {
+                        h.Username(messageBrokerOptions.Username);
+                        h.Password(messageBrokerOptions.Password);
+                    });
+
+                    configurator.ConfigureEndpoints(context);
                 });
 
-                configurator.ConfigureEndpoints(context);
+                configure?.Invoke(busConfigurator);
             });
 
-            configure?.Invoke(busConfigurator);
-        });
+            serviceCollection.AddScoped<IEventPublisher, EventPublisher>();
 
-        serviceCollection
-            .AddScoped<IEventPublisher, EventPublisher>();
+            return serviceCollection;
+        }
 
-        return serviceCollection;
-    }
+        public IServiceCollection AddJwtBearer(IConfiguration configuration)
+        {
+            serviceCollection.AddScoped<IEncoder, Encoder>();
 
-    public static IServiceCollection AddJwtBearer(this IServiceCollection serviceCollection, IConfiguration configuration)
-    {
-        serviceCollection.AddScoped<IEncoder, Encoder>();
+            serviceCollection.AddOptions<SessionTokenOptions>()
+                             .BindConfiguration(SessionTokenOptions.SectionName)
+                             .ValidateDataAnnotations()
+                             .ValidateOnStart();
 
-        serviceCollection
-        .AddOptions<SessionTokenOptions>()
-        .BindConfiguration(SessionTokenOptions.SectionName)
-        .ValidateDataAnnotations()
-        .ValidateOnStart();
+            var accessTokenOptions = configuration
+                .GetSection(SessionTokenOptions.SectionName)
+                .Get<SessionTokenOptions>()!;
 
-        var accessTokenOptions = configuration
-            .GetSection(SessionTokenOptions.SectionName)
-            .Get<SessionTokenOptions>()!;
-
-        serviceCollection
-            .AddAuthentication(opt =>
+            serviceCollection.AddAuthentication(opt =>
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
             .AddJwtBearer(opt =>
             {
-                var encoder = serviceCollection
-                                 .BuildServiceProvider()
-                                 .GetRequiredService<IEncoder>();
+                var encoder = serviceCollection.BuildServiceProvider()
+                                              .GetRequiredService<IEncoder>();
 
                 opt.RequireHttpsMetadata = false;
                 opt.SaveToken = true;
@@ -223,71 +195,60 @@ public static partial class ServiceCollectionExtensions
                 };
             });
 
-        return serviceCollection;
-    }
+            return serviceCollection;
+        }
 
-    public static IServiceCollection AddCloudinary(this IServiceCollection serviceCollection, IConfiguration configuration)
-    {
-        serviceCollection
-            .AddOptions<ImageUploadOptions>()
-            .BindConfiguration(ImageUploadOptions.SectionName)
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
+        public IServiceCollection AddCloudinary(IConfiguration configuration)
+        {
+            serviceCollection
+                .AddOptions<ImageUploadOptions>()
+                .BindConfiguration(ImageUploadOptions.SectionName)
+                .ValidateDataAnnotations()
+                .ValidateOnStart();
 
-        var imageUploadOptions = configuration
-            .GetSection(ImageUploadOptions.SectionName)
-            .Get<ImageUploadOptions>()!;
+            var imageUploadOptions = configuration
+                .GetSection(ImageUploadOptions.SectionName)
+                .Get<ImageUploadOptions>()!;
 
-        serviceCollection.AddScoped(_ => new Cloudinary(new Account(
-            imageUploadOptions.CloudName,
-            imageUploadOptions.ApiKey,
-            imageUploadOptions.ApiSecret)));
+            serviceCollection.AddScoped(_ => new Cloudinary(new Account(
+                imageUploadOptions.CloudName,
+                imageUploadOptions.ApiKey,
+                imageUploadOptions.ApiSecret)));
 
-        serviceCollection
-            .AddScoped<IImageUploadFactory, ImageUploadFactory>()
-            .AddScoped<IImageHandler, ImageHandler>();
+            serviceCollection.AddScoped<IImageUploadFactory, ImageUploadFactory>()
+                             .AddScoped<IImageHandler, ImageHandler>();
 
-        return serviceCollection;
-    }
+            return serviceCollection;
+        }
 
-    public static IServiceCollection AddDateTimeProvider(this IServiceCollection serviceCollection)
-    {
-        serviceCollection
-            .AddScoped<IDateTimeProvider, DateTimeProvider>();
+        public IServiceCollection AddDateTimeProvider()
+        {
+            serviceCollection.AddScoped<IDateTimeProvider, DateTimeProvider>();
+            return serviceCollection;
+        }
 
-        return serviceCollection;
-    }
+        public IServiceCollection AddGuidProvider()
+        {
+            serviceCollection.AddScoped<IGuidProvider, GuidProvider>();
+            return serviceCollection;
+        }
 
-    public static IServiceCollection AddGuidProvider(this IServiceCollection serviceCollection)
-    {
-        serviceCollection
-            .AddScoped<IGuidProvider, GuidProvider>();
+        public TOptions AddOptions<TOptions>(IConfiguration configuration, string sectionName) where TOptions : class
+        {
+            serviceCollection.AddOptions<TOptions>()
+                             .BindConfiguration(sectionName)
+                             .ValidateDataAnnotations()
+                             .ValidateOnStart();
 
-        return serviceCollection;
-    }
+            return configuration.GetSection(sectionName).Get<TOptions>()!;
+        }
 
-    public static TOptions AddOptions<TOptions>(this IServiceCollection serviceCollection, IConfiguration configuration, string sectionName)
-        where TOptions : class
-    {
-        serviceCollection
-            .AddOptions<TOptions>()
-            .BindConfiguration(sectionName)
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
+        public IServiceCollection AddSortOrders()
+        {
+            serviceCollection.AddScoped<ISortOrdererFactory, SortOrdererFactory>()
+                             .AddImplementationsOf<ISortOrderer>(CommonInfrastructureReference.Assembly);
 
-        var options = configuration
-            .GetSection(sectionName)
-            .Get<TOptions>()!;
-
-        return options;
-    }
-
-    public static IServiceCollection AddSortOrders(this IServiceCollection serviceCollection)
-    {
-        serviceCollection
-            .AddScoped<ISortOrdererFactory, SortOrdererFactory>()
-            .AddImplementationsOf<ISortOrderer>(CommonInfrastructureReference.Assembly);
-
-        return serviceCollection;
+            return serviceCollection;
+        }
     }
 }

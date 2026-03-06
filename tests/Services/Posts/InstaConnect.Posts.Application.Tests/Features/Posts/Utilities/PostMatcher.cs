@@ -1,6 +1,5 @@
-﻿using InstaConnect.Posts.Application.Features.Posts.Queries.GetAllForUser;
+﻿namespace InstaConnect.Posts.Application.Tests.Features.Posts.Utilities;
 
-namespace InstaConnect.Posts.Application.Tests.Features.Posts.Utilities;
 public static class PostMatcher
 {
     public static GetAllPostsQuery IsGetAllPostsQuery(GetAllPostsQueryRequest request)

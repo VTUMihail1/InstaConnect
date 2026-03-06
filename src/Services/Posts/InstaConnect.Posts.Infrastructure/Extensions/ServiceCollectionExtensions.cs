@@ -10,31 +10,33 @@ namespace InstaConnect.Posts.Infrastructure.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddInfrastructure(
-        this IServiceCollection serviceCollection,
-        IConfiguration configuration,
-        IWebHostEnvironment webHostEnvironment,
-        Assembly presentationAssembly)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection
-            .AddUserServices()
-            .AddPostServices()
-            .AddPostLikeServices()
-            .AddPostCommentServices()
-            .AddPostCommentLikeServices();
+        public IServiceCollection AddInfrastructure(
+            IConfiguration configuration,
+            IWebHostEnvironment webHostEnvironment,
+            Assembly presentationAssembly)
+        {
+            serviceCollection
+                .AddUserServices()
+                .AddPostServices()
+                .AddPostLikeServices()
+                .AddPostCommentServices()
+                .AddPostCommentLikeServices();
 
-        serviceCollection
-            .AddObservability(configuration, webHostEnvironment)
-            .AddMapper(PostInfrastructureReference.Assembly)
-            .AddServicesWithMatchingInterfaces(PostInfrastructureReference.Assembly)
-            .AddMongoDbContext()
-            .AddUnitOfWork()
-            .AddRabbitMQ(configuration, presentationAssembly)
-            .AddJwtBearer(configuration)
-            .AddGuidProvider()
-            .AddDateTimeProvider()
-            .AddSortOrders();
+            serviceCollection
+                .AddObservability(configuration, webHostEnvironment)
+                .AddMapper(PostInfrastructureReference.Assembly)
+                .AddServicesWithMatchingInterfaces(PostInfrastructureReference.Assembly)
+                .AddMongoDbContext()
+                .AddUnitOfWork()
+                .AddRabbitMQ(configuration, presentationAssembly)
+                .AddJwtBearer(configuration)
+                .AddGuidProvider()
+                .AddDateTimeProvider()
+                .AddSortOrders();
 
-        return serviceCollection;
+            return serviceCollection;
+        }
     }
 }

@@ -1,5 +1,4 @@
-﻿using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAllForUser;
-using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAllForUser;
+﻿using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAllForUser;
 
 namespace InstaConnect.Posts.Presentation.Features.PostComments.Controllers.v1;
 

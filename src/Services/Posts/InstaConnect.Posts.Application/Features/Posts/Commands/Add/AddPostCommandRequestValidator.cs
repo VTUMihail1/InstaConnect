@@ -1,4 +1,5 @@
 ﻿namespace InstaConnect.Posts.Application.Features.Posts.Commands.Add;
+
 public class AddPostCommandRequestValidator : AbstractValidator<AddPostCommandRequest>
 {
     public AddPostCommandRequestValidator()

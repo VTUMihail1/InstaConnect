@@ -1,7 +1,4 @@
-﻿using System.Linq.Expressions;
-
-using InstaConnect.Common.Domain.Extensions;
-using InstaConnect.Posts.Domain.Features.Posts.Helpers;
+﻿using InstaConnect.Common.Domain.Extensions;
 using InstaConnect.Posts.Domain.Models.Requests;
 
 namespace InstaConnect.Posts.Domain.Features.PostLikes.Helpers;

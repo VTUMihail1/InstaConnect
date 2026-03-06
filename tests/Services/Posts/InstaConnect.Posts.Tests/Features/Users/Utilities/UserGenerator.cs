@@ -1,9 +1,12 @@
 ﻿namespace InstaConnect.Posts.Tests.Features.Users.Utilities;
+
 public static class UserGenerator
 {
-    public static ICollection<User> Generate(this User baseUser, int numberOfIterations = 5)
+    extension(User baseUser)
     {
-        return [baseUser, .. Enumerable.Range(default, numberOfIterations)
+        public ICollection<User> Generate(int numberOfIterations = 5)
+        {
+            return [baseUser, .. Enumerable.Range(default, numberOfIterations)
             .Select(_ => new User(new(UserDataFaker.GetId()),
                                   UserDataFaker.GetFirstNameWithPrefix(baseUser.FirstName),
                                   UserDataFaker.GetLastNameWithPrefix(baseUser.LastName),
@@ -12,5 +15,6 @@ public static class UserGenerator
                                   new(UserDataFaker.GetProfileImage()),
                                   UserDataFaker.GetCreatedAtUtc(),
                                   UserDataFaker.GetUpdatedAtUtc()))];
+        }
     }
 }

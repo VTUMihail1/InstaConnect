@@ -14,7 +14,7 @@ internal class TooLargeIntTransformer : IIntTransformer
 
     public int Transform(int value)
     {
-        return IntOperations.Increment(_maxValue);
+        return _maxValue.Increment();
     }
 }
 

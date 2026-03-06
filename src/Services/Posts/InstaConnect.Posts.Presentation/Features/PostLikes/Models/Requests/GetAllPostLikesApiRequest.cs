@@ -2,7 +2,6 @@
 
 using InstaConnect.Common.Domain.Models;
 using InstaConnect.Posts.Domain.Features.PostLikes.Models.Requests;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 using InstaConnect.Posts.Presentation.Features.Users.Abstractions;
 using InstaConnect.Posts.Presentation.Features.Users.Utilities;
 

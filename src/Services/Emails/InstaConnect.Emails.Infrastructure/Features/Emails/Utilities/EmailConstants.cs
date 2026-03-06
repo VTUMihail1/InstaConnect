@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Emails.Infrastructure.Features.Emails.Utilities;
 
-public abstract class EmailConstants
+public static class EmailConstants
 {
     public const string EmailConfirmationTitle = "Email Confirmation";
 

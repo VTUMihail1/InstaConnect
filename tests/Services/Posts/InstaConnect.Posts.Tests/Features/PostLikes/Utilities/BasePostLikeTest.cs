@@ -2,6 +2,7 @@
 using InstaConnect.Posts.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Posts.Tests.Features.PostLikes.Utilities;
+
 public abstract class BasePostLikeTest : BaseTest
 {
     protected UserBuilderFactory UserBuilderFactory { get; }

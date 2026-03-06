@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Chats.Domain.Features.Users.Utilities;
 
-public abstract class UserConfigurations
+public static class UserConfigurations
 {
     public const int IdMinLength = 7;
     public const int IdMaxLength = 100;

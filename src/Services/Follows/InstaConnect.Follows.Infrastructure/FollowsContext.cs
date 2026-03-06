@@ -4,6 +4,7 @@ using InstaConnect.Follows.Infrastructure.Utilities;
 using MongoDB.Driver;
 
 namespace InstaConnect.Follows.Infrastructure;
+
 public class FollowsContext : MongoDbContext, IFollowsContext
 {
     public FollowsContext(IMongoClient mongoClient, IMongoDatabase mongoDatabase)

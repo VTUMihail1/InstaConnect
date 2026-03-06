@@ -2,6 +2,7 @@
 using InstaConnect.Common.Presentation.Models;
 
 namespace InstaConnect.Common.Presentation.Abstractions;
+
 public interface IApplicationProblemDetailsFactory
 {
     ApplicationProblemDetails Create(Exception exception);

@@ -1,4 +1,5 @@
 ﻿namespace InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Issue;
+
 public class IssueRefreshTokenCommandRequestValidator : AbstractValidator<IssueRefreshTokenCommandRequest>
 {
     public IssueRefreshTokenCommandRequestValidator()

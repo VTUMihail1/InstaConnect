@@ -7,17 +7,20 @@ namespace InstaConnect.Chats.Domain.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddDomain(this IServiceCollection serviceCollection)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection
-            .AddUserServices()
-            .AddChatServices()
-            .AddChatMessageServices();
+        public IServiceCollection AddDomain()
+        {
+            serviceCollection
+                .AddUserServices()
+                .AddChatServices()
+                .AddChatMessageServices();
 
-        serviceCollection
-            .AddMapper(ChatDomainReference.Assembly, CommonDomainReference.Assembly)
-            .AddServicesWithMatchingInterfaces(ChatDomainReference.Assembly);
+            serviceCollection
+                .AddMapper(ChatDomainReference.Assembly, CommonDomainReference.Assembly)
+                .AddServicesWithMatchingInterfaces(ChatDomainReference.Assembly);
 
-        return serviceCollection;
+            return serviceCollection;
+        }
     }
 }

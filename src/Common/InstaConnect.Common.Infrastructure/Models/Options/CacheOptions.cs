@@ -1,4 +1,5 @@
 ﻿namespace InstaConnect.Common.Infrastructure.Models.Options;
+
 public class CacheOptions
 {
     public const string SectionName = "CacheConfiguration";

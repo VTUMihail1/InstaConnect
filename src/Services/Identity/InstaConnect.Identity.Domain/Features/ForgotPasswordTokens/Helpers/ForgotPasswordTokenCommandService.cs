@@ -2,6 +2,7 @@
 using InstaConnect.Identity.Domain.Helpers;
 
 namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Helpers;
+
 internal class ForgotPasswordTokenCommandService : IForgotPasswordTokenCommandService
 {
     private readonly IApplicationMapper _mapper;

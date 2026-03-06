@@ -29,7 +29,7 @@ public class UserClaimIncludeBuilder
 
         return this;
     }
-    
+
     public UserClaimInclude Build()
     {
         return new(_descriptors);

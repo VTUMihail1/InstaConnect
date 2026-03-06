@@ -5,62 +5,53 @@ namespace InstaConnect.Posts.Application.Tests.Features.PostCommentLikes.Asserti
 
 public static class PostCommentLikeMatchAssertions
 {
-    public static void ShouldSatisfy(
-        this AddPostCommentLikeCommandResponse response,
-        PostCommentLike postCommentLike,
-        AddPostCommentLikeCommandRequest request)
+    extension(AddPostCommentLikeCommandResponse response)
     {
-        response.ShouldSatisfy(p => p.Matches(postCommentLike, request));
+        public void ShouldSatisfy(PostCommentLike postCommentLike, AddPostCommentLikeCommandRequest request)
+        {
+            response.ShouldSatisfy(p => p.Matches(postCommentLike, request));
+        }
     }
 
-    public static void ShouldSatisfy(
-        this GetPostCommentLikeByIdQueryResponse response,
-        PostCommentLike postCommentLike,
-        GetPostCommentLikeByIdQueryRequest request)
+    extension(GetPostCommentLikeByIdQueryResponse response)
     {
-        response.ShouldSatisfy(p => p.Matches(postCommentLike, request));
+        public void ShouldSatisfy(PostCommentLike postCommentLike, GetPostCommentLikeByIdQueryRequest request)
+        {
+            response.ShouldSatisfy(p => p.Matches(postCommentLike, request));
+        }
     }
 
-    public static void ShouldSatisfy(
-        this GetAllPostCommentLikesQueryResponse response,
-        PostComment postComment,
-        ICollection<PostCommentLike> postCommentLikes,
-        GetAllPostCommentLikesQueryRequest request)
+    extension(GetAllPostCommentLikesQueryResponse response)
     {
-        response.ShouldSatisfy(p => p.Matches(postComment, postCommentLikes, request));
+        public void ShouldSatisfy(PostComment postComment, ICollection<PostCommentLike> postCommentLikes, GetAllPostCommentLikesQueryRequest request)
+        {
+            response.ShouldSatisfy(p => p.Matches(postComment, postCommentLikes, request));
+        }
+
+        public void ShouldSatisfy(PostComment postComment, ICollection<PostCommentLike> postCommentLikes, GetAllPostCommentLikesQueryRequest request, ISortEnumTermTransformer<PostCommentLike> termTransformer)
+        {
+            response.ShouldSatisfy(p => p.Matches(postComment, postCommentLikes, request, termTransformer));
+        }
     }
 
-    public static void ShouldSatisfy(
-        this GetAllPostCommentLikesQueryResponse response,
-        PostComment postComment,
-        ICollection<PostCommentLike> postCommentLikes,
-        GetAllPostCommentLikesQueryRequest request,
-        ISortEnumTermTransformer<PostCommentLike> termTransformer)
+    extension(GetAllPostCommentLikesForUserQueryResponse response)
     {
-        response.ShouldSatisfy(p => p.Matches(postComment, postCommentLikes, request, termTransformer));
+        public void ShouldSatisfy(User user, ICollection<PostCommentLike> postCommentLikes, GetAllPostCommentLikesForUserQueryRequest request)
+        {
+            response.ShouldSatisfy(p => p.Matches(user, postCommentLikes, request));
+        }
+
+        public void ShouldSatisfy(User user, ICollection<PostCommentLike> postCommentLikes, GetAllPostCommentLikesForUserQueryRequest request, ISortEnumTermTransformer<PostCommentLike> termTransformer)
+        {
+            response.ShouldSatisfy(p => p.Matches(user, postCommentLikes, request, termTransformer));
+        }
     }
 
-    public static void ShouldSatisfy(
-        this GetAllPostCommentLikesForUserQueryResponse response,
-        User user,
-        ICollection<PostCommentLike> postCommentLikes,
-        GetAllPostCommentLikesForUserQueryRequest request)
+    extension(PostCommentLike postCommentLike)
     {
-        response.ShouldSatisfy(p => p.Matches(user, postCommentLikes, request));
-    }
-
-    public static void ShouldSatisfy(
-        this GetAllPostCommentLikesForUserQueryResponse response,
-        User user,
-        ICollection<PostCommentLike> postCommentLikes,
-        GetAllPostCommentLikesForUserQueryRequest request,
-        ISortEnumTermTransformer<PostCommentLike> termTransformer)
-    {
-        response.ShouldSatisfy(p => p.Matches(user, postCommentLikes, request, termTransformer));
-    }
-
-    public static void ShouldSatisfy(this PostCommentLike postCommentLike, AddPostCommentLikeCommandRequest request)
-    {
-        postCommentLike.ShouldSatisfy(p => p.Matches(request));
+        public void ShouldSatisfy(AddPostCommentLikeCommandRequest request)
+        {
+            postCommentLike.ShouldSatisfy(p => p.Matches(request));
+        }
     }
 }

@@ -4,6 +4,7 @@ using InstaConnect.Posts.Infrastructure.Utilities;
 using MongoDB.Driver;
 
 namespace InstaConnect.Posts.Infrastructure;
+
 public class PostsContext : MongoDbContext, IPostsContext
 {
     public PostsContext(IMongoClient mongoClient, IMongoDatabase mongoDatabase)

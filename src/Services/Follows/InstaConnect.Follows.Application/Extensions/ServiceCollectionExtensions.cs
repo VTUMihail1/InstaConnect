@@ -4,17 +4,20 @@ namespace InstaConnect.Follows.Application.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddApplication(this IServiceCollection serviceCollection)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection
-            .AddUserServices()
-            .AddFollowServices();
+        public IServiceCollection AddApplication()
+        {
+            serviceCollection
+                .AddUserServices()
+                .AddFollowServices();
 
-        serviceCollection
-            .AddCQRS(FollowApplicationReference.Assembly)
-            .AddMapper(FollowApplicationReference.Assembly, CommonApplicationReference.Assembly)
-            .AddValidators(FollowApplicationReference.Assembly);
+            serviceCollection
+                .AddCQRS(FollowApplicationReference.Assembly)
+                .AddMapper(FollowApplicationReference.Assembly, CommonApplicationReference.Assembly)
+                .AddValidators(FollowApplicationReference.Assembly);
 
-        return serviceCollection;
+            return serviceCollection;
+        }
     }
 }

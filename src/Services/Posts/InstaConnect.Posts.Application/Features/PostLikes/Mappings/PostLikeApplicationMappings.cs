@@ -3,7 +3,6 @@ using InstaConnect.Posts.Application.Features.PostLikes.Commands.Delete;
 using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAll;
 using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAllForUser;
 using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetById;
-using InstaConnect.Posts.Application.Features.Posts.Queries.GetAllForUser;
 
 using Mapster;
 

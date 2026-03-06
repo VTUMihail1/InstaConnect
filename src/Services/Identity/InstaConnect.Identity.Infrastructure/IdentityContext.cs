@@ -4,6 +4,7 @@ using InstaConnect.Identity.Infrastructure.Utilities;
 using MongoDB.Driver;
 
 namespace InstaConnect.Identity.Infrastructure;
+
 public class IdentityContext : MongoDbContext, IIdentityContext
 {
     public IdentityContext(IMongoClient mongoClient, IMongoDatabase mongoDatabase)

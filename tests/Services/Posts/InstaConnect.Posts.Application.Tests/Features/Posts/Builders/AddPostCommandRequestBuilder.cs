@@ -1,6 +1,7 @@
 ﻿using InstaConnect.Common.Tests.DataAttributes.Base;
 
 namespace InstaConnect.Posts.Application.Tests.Features.Posts.Builders;
+
 public class AddPostCommandRequestBuilder
 {
     private string _userId;

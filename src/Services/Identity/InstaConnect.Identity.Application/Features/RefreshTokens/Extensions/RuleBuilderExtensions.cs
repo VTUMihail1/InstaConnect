@@ -2,13 +2,16 @@
 
 internal static class RuleBuilderExtensions
 {
-    public static IRuleBuilderOptions<T, string> RefreshTokenValueMinLengthWithMessage<T>(this IRuleBuilder<T, string> ruleBuilder)
+    extension<T>(IRuleBuilder<T, string> ruleBuilder)
     {
-        return ruleBuilder.MinLengthWithMessage(RefreshTokenConfigurations.ValueMinLength);
-    }
+        public IRuleBuilderOptions<T, string> RefreshTokenValueMinLengthWithMessage()
+        {
+            return ruleBuilder.MinLengthWithMessage(RefreshTokenConfigurations.ValueMinLength);
+        }
 
-    public static IRuleBuilderOptions<T, string> RefreshTokenValueMaxLengthWithMessage<T>(this IRuleBuilder<T, string> ruleBuilder)
-    {
-        return ruleBuilder.MaxLengthWithMessage(RefreshTokenConfigurations.ValueMaxLength);
+        public IRuleBuilderOptions<T, string> RefreshTokenValueMaxLengthWithMessage()
+        {
+            return ruleBuilder.MaxLengthWithMessage(RefreshTokenConfigurations.ValueMaxLength);
+        }
     }
 }

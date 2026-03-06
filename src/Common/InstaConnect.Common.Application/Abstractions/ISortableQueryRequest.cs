@@ -1,6 +1,7 @@
 ﻿using InstaConnect.Common.Domain.Models;
 
 namespace InstaConnect.Common.Application.Abstractions;
+
 public interface ISortableQueryRequest<out TSortTerm>
     where TSortTerm : Enum
 {

@@ -7,22 +7,22 @@ namespace InstaConnect.Identity.Infrastructure.Features.RefreshTokens.Extensions
 
 public static class RefreshTokenMongoCollectionExtensions
 {
-    public static async Task UpdateAsync(
-        this IMongoCollection<RefreshToken> collection,
-        IClientSessionHandle? session,
-        RefreshToken entity,
-        CancellationToken cancellationToken)
+    extension(IMongoCollection<RefreshToken> collection)
     {
-        await collection.UpdateAsync(session, entity.Id.GetFilter(), entity, cancellationToken);
+        public async Task UpdateAsync(
+            IClientSessionHandle? session,
+            RefreshToken entity,
+            CancellationToken cancellationToken)
+        {
+            await collection.UpdateAsync(session, entity.Id.GetFilter(), entity, cancellationToken);
+        }
 
-    }
-
-    public static async Task DeleteAsync(
-        this IMongoCollection<RefreshToken> collection,
-        IClientSessionHandle? session,
-        RefreshToken entity,
-        CancellationToken cancellationToken)
-    {
-        await collection.DeleteAsync(session, entity.Id.GetFilter(), cancellationToken);
+        public async Task DeleteAsync(
+            IClientSessionHandle? session,
+            RefreshToken entity,
+            CancellationToken cancellationToken)
+        {
+            await collection.DeleteAsync(session, entity.Id.GetFilter(), cancellationToken);
+        }
     }
 }

@@ -7,50 +7,53 @@ namespace InstaConnect.Common.Presentation.Extensions;
 
 public static class WebApplicationExtensions
 {
-    public static WebApplication UseDeveloperDocumentation(this WebApplication webApplication)
+    extension(WebApplication webApplication)
     {
-        if (webApplication.Environment.IsDevelopment())
+        public WebApplication UseDeveloperDocumentation()
         {
-            webApplication.UseSwagger();
-            webApplication.UseSwaggerUI();
+            if (webApplication.Environment.IsDevelopment())
+            {
+                webApplication.UseSwagger();
+                webApplication.UseSwaggerUI();
+            }
+
+            return webApplication;
         }
 
-        return webApplication;
-    }
+        public WebApplication UseConfiguredCors()
+        {
+            webApplication.UseCors(AppPolicies.CorsPolicy);
 
-    public static WebApplication UseConfiguredCors(this WebApplication webApplication)
-    {
-        webApplication.UseCors(AppPolicies.CorsPolicy);
+            return webApplication;
+        }
 
-        return webApplication;
-    }
+        public WebApplication UseRequestRateLimiting()
+        {
+            webApplication.UseRateLimiter();
 
-    public static WebApplication UseRequestRateLimiting(this WebApplication webApplication)
-    {
-        webApplication.UseRateLimiter();
+            return webApplication;
+        }
 
-        return webApplication;
-    }
+        public WebApplication UseSecurity()
+        {
+            webApplication.UseAuthentication();
+            webApplication.UseAuthorization();
 
-    public static WebApplication UseSecurity(this WebApplication webApplication)
-    {
-        webApplication.UseAuthentication();
-        webApplication.UseAuthorization();
+            return webApplication;
+        }
 
-        return webApplication;
-    }
+        public WebApplication MapApiEndpoints()
+        {
+            webApplication.MapControllers();
 
-    public static WebApplication MapApiEndpoints(this WebApplication webApplication)
-    {
-        webApplication.MapControllers();
+            return webApplication;
+        }
 
-        return webApplication;
-    }
+        public WebApplication UseGlobalExceptionHandling()
+        {
+            webApplication.UseExceptionHandler();
 
-    public static WebApplication UseGlobalExceptionHandling(this WebApplication webApplication)
-    {
-        webApplication.UseExceptionHandler();
-
-        return webApplication;
+            return webApplication;
+        }
     }
 }

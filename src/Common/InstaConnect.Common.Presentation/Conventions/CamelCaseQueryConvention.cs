@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace InstaConnect.Common.Presentation.Conventions;
+
 public class CamelCaseQueryConvention : IParameterModelConvention
 {
     public void Apply(ParameterModel parameter)

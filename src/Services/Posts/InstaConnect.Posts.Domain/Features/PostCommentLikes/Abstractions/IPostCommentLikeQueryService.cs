@@ -1,4 +1,5 @@
 ﻿namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstractions;
+
 public interface IPostCommentLikeQueryService
 {
     public Task<PostCommentLikeCollectionResponse> GetAllAsync(GetAllPostCommentLikesQuery query, CancellationToken cancellationToken);

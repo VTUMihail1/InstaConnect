@@ -5,96 +5,113 @@ namespace InstaConnect.Posts.Presentation.Tests.Features.PostLikes.Assertions;
 
 public static class PostLikeMatchAssertions
 {
-    public static void ShouldSatisfy(
-        this AddPostLikeApiResponse response,
+    extension(AddPostLikeApiResponse response)
+    {
+        public void ShouldSatisfy(
         PostLike postLike,
         AddPostLikeApiRequest request)
-    {
-        response.ShouldSatisfy(p => p.Matches(postLike, request));
+        {
+            response.ShouldSatisfy(p => p.Matches(postLike, request));
+        }
     }
 
-    public static void ShouldSatisfy(
-        this GetPostLikeByIdApiResponse response,
+    extension(GetPostLikeByIdApiResponse response)
+    {
+        public void ShouldSatisfy(
         PostLike postLike,
         GetPostLikeByIdApiRequest request)
-    {
-        response.ShouldSatisfy(p => p.Matches(postLike, request));
+        {
+            response.ShouldSatisfy(p => p.Matches(postLike, request));
+        }
     }
 
-    public static void ShouldSatisfy(
-        this GetAllPostLikesApiResponse response,
+    extension(GetAllPostLikesApiResponse response)
+    {
+        public void ShouldSatisfy(
         Post post,
         ICollection<PostLike> postLikes,
         GetAllPostLikesApiRequest request)
-    {
-        response.ShouldSatisfy(p => p.Matches(post, postLikes, request));
+        {
+            response.ShouldSatisfy(p => p.Matches(post, postLikes, request));
+        }
+
+        public void ShouldSatisfy(
+            Post post,
+            ICollection<PostLike> postLikes,
+            GetAllPostLikesApiRequest request,
+            ISortEnumTermTransformer<PostLike> termTransformer)
+        {
+            response.ShouldSatisfy(p => p.Matches(post, postLikes, request, termTransformer));
+        }
     }
 
-    public static void ShouldSatisfy(
-        this GetAllPostLikesApiResponse response,
-        Post post,
-        ICollection<PostLike> postLikes,
-        GetAllPostLikesApiRequest request,
-        ISortEnumTermTransformer<PostLike> termTransformer)
+    extension(GetAllPostLikesForUserApiResponse response)
     {
-        response.ShouldSatisfy(p => p.Matches(post, postLikes, request, termTransformer));
-    }
-
-    public static void ShouldSatisfy(
-        this GetAllPostLikesForUserApiResponse response,
+        public void ShouldSatisfy(
         User user,
         ICollection<PostLike> postLikes,
         GetAllPostLikesForUserApiRequest request)
-    {
-        response.ShouldSatisfy(p => p.Matches(user, postLikes, request));
+        {
+            response.ShouldSatisfy(p => p.Matches(user, postLikes, request));
+        }
+
+        public void ShouldSatisfy(
+            User user,
+            ICollection<PostLike> postLikes,
+            GetAllPostLikesForUserApiRequest request,
+            ISortEnumTermTransformer<PostLike> termTransformer)
+        {
+            response.ShouldSatisfy(p => p.Matches(user, postLikes, request, termTransformer));
+        }
     }
 
-    public static void ShouldSatisfy(
-        this GetAllPostLikesForUserApiResponse response,
-        User user,
-        ICollection<PostLike> postLikes,
-        GetAllPostLikesForUserApiRequest request,
-        ISortEnumTermTransformer<PostLike> termTransformer)
+    extension(ActionResult<AddPostLikeApiResponse> response)
     {
-        response.ShouldSatisfy(p => p.Matches(user, postLikes, request, termTransformer));
-    }
-
-    public static void ShouldSatisfy(
-        this ActionResult<AddPostLikeApiResponse> response,
+        public void ShouldSatisfy(
         PostLike postLike,
         AddPostLikeApiRequest request)
-    {
-        response.ShouldBeActionResultAndSatisfy(p => p.Matches(postLike, request));
+        {
+            response.ShouldBeActionResultAndSatisfy(p => p.Matches(postLike, request));
+        }
     }
 
-    public static void ShouldSatisfy(
-        this ActionResult<GetPostLikeByIdApiResponse> response,
+    extension(ActionResult<GetPostLikeByIdApiResponse> response)
+    {
+        public void ShouldSatisfy(
         PostLike postLike,
         GetPostLikeByIdApiRequest request)
-    {
-        response.ShouldBeActionResultAndSatisfy(p => p.Matches(postLike, request));
+        {
+            response.ShouldBeActionResultAndSatisfy(p => p.Matches(postLike, request));
+        }
     }
 
-    public static void ShouldSatisfy(
-        this ActionResult<GetAllPostLikesApiResponse> response,
+    extension(ActionResult<GetAllPostLikesApiResponse> response)
+    {
+        public void ShouldSatisfy(
         Post post,
         ICollection<PostLike> postLikes,
         GetAllPostLikesApiRequest request)
-    {
-        response.ShouldBeActionResultAndSatisfy(p => p.Matches(post, postLikes, request));
+        {
+            response.ShouldBeActionResultAndSatisfy(p => p.Matches(post, postLikes, request));
+        }
     }
 
-    public static void ShouldSatisfy(
-        this ActionResult<GetAllPostLikesForUserApiResponse> response,
+    extension(ActionResult<GetAllPostLikesForUserApiResponse> response)
+    {
+        public void ShouldSatisfy(
         User user,
         ICollection<PostLike> postLikes,
         GetAllPostLikesForUserApiRequest request)
-    {
-        response.ShouldBeActionResultAndSatisfy(p => p.Matches(user, postLikes, request));
+        {
+            response.ShouldBeActionResultAndSatisfy(p => p.Matches(user, postLikes, request));
+        }
     }
 
-    public static void ShouldSatisfy(this PostLike postLike, AddPostLikeApiRequest request)
+    extension(PostLike postLike)
     {
-        postLike.ShouldSatisfy(p => p.Matches(request));
+        public void ShouldSatisfy(AddPostLikeApiRequest request)
+        {
+            postLike.ShouldSatisfy(p => p.Matches(request));
+        }
     }
 }

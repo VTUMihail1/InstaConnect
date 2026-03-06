@@ -6,38 +6,41 @@ namespace InstaConnect.Posts.Infrastructure.Features.Posts.Extensions;
 
 internal static class ServiceCollectionExtensions
 {
-    internal static IServiceCollection AddPostServices(this IServiceCollection serviceCollection)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection.AddImplementationsOf<IPostsSortTermer>(PostInfrastructureReference.Assembly);
-        serviceCollection.AddImplementationsOf<IPostsForUserSortTermer>(PostInfrastructureReference.Assembly);
-        serviceCollection.AddImplementationsOf<IPostIncluder>(PostInfrastructureReference.Assembly);
-
-        BsonClassMap.TryRegisterClassMap<Post>(cm =>
+        internal IServiceCollection AddPostServices()
         {
-            cm.MapIdMember(c => c.Id);
+            serviceCollection.AddImplementationsOf<IPostsSortTermer>(PostInfrastructureReference.Assembly);
+            serviceCollection.AddImplementationsOf<IPostsForUserSortTermer>(PostInfrastructureReference.Assembly);
+            serviceCollection.AddImplementationsOf<IPostIncluder>(PostInfrastructureReference.Assembly);
 
-            cm.MapMember(c => c.Id);
-            cm.MapMember(c => c.UserId);
-            cm.MapMember(c => c.Title);
-            cm.MapMember(c => c.Content);
-            cm.MapMember(c => c.CreatedAtUtc);
-            cm.MapMember(c => c.UpdatedAtUtc);
+            BsonClassMap.TryRegisterClassMap<Post>(cm =>
+            {
+                cm.MapIdMember(c => c.Id);
 
-            cm.MapMemberWithoutSerialization(c => c.User);
-            cm.MapMemberWithoutSerialization(c => c.PostLikes);
-            cm.MapMemberWithoutSerialization(c => c.PostComments);
+                cm.MapMember(c => c.Id);
+                cm.MapMember(c => c.UserId);
+                cm.MapMember(c => c.Title);
+                cm.MapMember(c => c.Content);
+                cm.MapMember(c => c.CreatedAtUtc);
+                cm.MapMember(c => c.UpdatedAtUtc);
 
-            cm.MapCreator(c => new Post(
-                c.Id,
-                c.Title,
-                c.Content,
-                c.UserId,
-                c.CreatedAtUtc,
-                c.UpdatedAtUtc));
+                cm.MapMemberWithoutSerialization(c => c.User);
+                cm.MapMemberWithoutSerialization(c => c.PostLikes);
+                cm.MapMemberWithoutSerialization(c => c.PostComments);
 
-            cm.SetIgnoreExtraElements(true);
-        });
+                cm.MapCreator(c => new Post(
+                    c.Id,
+                    c.Title,
+                    c.Content,
+                    c.UserId,
+                    c.CreatedAtUtc,
+                    c.UpdatedAtUtc));
 
-        return serviceCollection;
+                cm.SetIgnoreExtraElements(true);
+            });
+
+            return serviceCollection;
+        }
     }
 }

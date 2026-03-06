@@ -2,81 +2,71 @@
 using System.Text.RegularExpressions;
 
 namespace InstaConnect.Common.Domain.Extensions;
+
 public static class StringExtensions
 {
-    public static string FormatCurrentCulture(this string format, params object[] args)
+    extension(string str)
     {
-        var result = string.Format(CultureInfo.CurrentCulture, format, args);
-
-        return result;
-    }
-
-    public static string ToSnakeCase(this string str)
-    {
-        const int Min = 0;
-        const string Underscore = "_";
-
-        var result = string.Concat(str.Select((x, i) => i > Min && char.IsUpper(x) ? Underscore + x : x.ToString()))
-                     .ToLowerCurrentCulture();
-
-        return result;
-    }
-
-    public static string ToSpaceBetweenWordsCase(this string str)
-    {
-        const string OldCharsRegex = "([a-z])([A-Z])";
-        const string NewCharsRegex = "$1 $2";
-
-        return Regex.Replace(str, OldCharsRegex, NewCharsRegex);
-    }
-
-    public static string ToCamelCase(this string str)
-    {
-        if (str.IsNullOrEmptyOrWhiteSpace())
+        public string FormatCurrentCulture(params object[] args)
         {
-            return str;
+            return string.Format(CultureInfo.CurrentCulture, str, args);
         }
 
-        return char.ToLowerInvariant(str[0]) + str.Substring(1);
-    }
+        public string ToSnakeCase()
+        {
+            const int Min = 0;
+            const string Underscore = "_";
 
-    public static string ToLowerCurrentCulture(this string a)
-    {
-        var result = a.ToLower(CultureInfo.CurrentCulture);
+            return string.Concat(str.Select((x, i) => i > Min && char.IsUpper(x) ? Underscore + x : x.ToString()))
+                         .ToLowerCurrentCulture();
+        }
 
-        return result;
-    }
+        public string ToSpaceBetweenWordsCase()
+        {
+            const string OldCharsRegex = "([a-z])([A-Z])";
+            const string NewCharsRegex = "$1 $2";
 
-    public static string ToUpperCurrentCulture(this string a)
-    {
-        var result = a.ToUpper(CultureInfo.CurrentCulture);
+            return Regex.Replace(str, OldCharsRegex, NewCharsRegex);
+        }
 
-        return result;
-    }
+        public string ToCamelCase()
+        {
+            if (str.IsNullOrEmptyOrWhiteSpace())
+            {
+                return str;
+            }
 
-    public static bool EqualsOrdinalIgnoreCase(this string a, string? b)
-    {
-        var result = string.Equals(a, b, StringComparison.OrdinalIgnoreCase);
+            return char.ToLowerInvariant(str[0]) + str.Substring(1);
+        }
 
-        return result;
-    }
+        public string ToLowerCurrentCulture()
+        {
+            return str.ToLower(CultureInfo.CurrentCulture);
+        }
 
-    public static bool StartsWithOrdinalIgnoreCase(this string a, string? b)
-    {
-        var result = a.StartsWith(b ?? string.Empty, StringComparison.OrdinalIgnoreCase);
+        public string ToUpperCurrentCulture()
+        {
+            return str.ToUpper(CultureInfo.CurrentCulture);
+        }
 
-        return result;
-    }
+        public bool EqualsOrdinalIgnoreCase(string? b)
+        {
+            return string.Equals(str, b, StringComparison.OrdinalIgnoreCase);
+        }
 
-    public static bool NotEqualsOrdinalIgnoreCase(this string a, string? b)
-    {
-        var result = !a.EqualsOrdinalIgnoreCase(b);
+        public bool StartsWithOrdinalIgnoreCase(string? b)
+        {
+            return str.StartsWith(b ?? string.Empty, StringComparison.OrdinalIgnoreCase);
+        }
 
-        return result;
-    }
+        public bool NotEqualsOrdinalIgnoreCase(string? b)
+        {
+            return !str.EqualsOrdinalIgnoreCase(b);
+        }
 
-    public static bool IsNullOrEmptyOrWhiteSpace(this string? a)
-    {
-        return string.IsNullOrEmpty(a) || string.IsNullOrWhiteSpace(a);
+        public bool IsNullOrEmptyOrWhiteSpace()
+        {
+            return string.IsNullOrEmpty(str) || string.IsNullOrWhiteSpace(str);
+        }
     }
 }

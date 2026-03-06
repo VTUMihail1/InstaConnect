@@ -1,4 +1,5 @@
 ﻿namespace InstaConnect.Posts.Presentation.Tests.Features.Posts.Utilities;
+
 public static class PostTestRoutes
 {
     public static string GetDefault()

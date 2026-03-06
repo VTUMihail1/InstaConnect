@@ -7,28 +7,30 @@ namespace InstaConnect.Follows.Infrastructure.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddInfrastructure(
-        this IServiceCollection serviceCollection,
-        IConfiguration configuration,
-        IWebHostEnvironment webHostEnvironment,
-        Assembly presentationAssembly)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection
-            .AddUserServices()
-            .AddFollowServices();
+        public IServiceCollection AddInfrastructure(
+            IConfiguration configuration,
+            IWebHostEnvironment webHostEnvironment,
+            Assembly presentationAssembly)
+        {
+            serviceCollection
+                .AddUserServices()
+                .AddFollowServices();
 
-        serviceCollection
-            .AddObservability(configuration, webHostEnvironment)
-            .AddMapper(FollowInfrastructureReference.Assembly)
-            .AddServicesWithMatchingInterfaces(FollowInfrastructureReference.Assembly)
-            .AddMongoDbContext()
-            .AddUnitOfWork()
-            .AddRabbitMQ(configuration, presentationAssembly)
-            .AddJwtBearer(configuration)
-            .AddGuidProvider()
-            .AddDateTimeProvider()
-            .AddSortOrders();
+            serviceCollection
+                .AddObservability(configuration, webHostEnvironment)
+                .AddMapper(FollowInfrastructureReference.Assembly)
+                .AddServicesWithMatchingInterfaces(FollowInfrastructureReference.Assembly)
+                .AddMongoDbContext()
+                .AddUnitOfWork()
+                .AddRabbitMQ(configuration, presentationAssembly)
+                .AddJwtBearer(configuration)
+                .AddGuidProvider()
+                .AddDateTimeProvider()
+                .AddSortOrders();
 
-        return serviceCollection;
+            return serviceCollection;
+        }
     }
 }

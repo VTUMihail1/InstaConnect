@@ -1,4 +1,5 @@
 ﻿namespace InstaConnect.Identity.Domain.Features.RefreshTokens.Abstractions;
+
 public interface IRefreshTokenCommandService
 {
     public Task<SessionToken> IssueAsync(IssueRefreshTokenCommand command, CancellationToken cancellationToken);

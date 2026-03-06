@@ -6,21 +6,18 @@ namespace InstaConnect.Common.Infrastructure.Extensions;
 
 internal static class DistributedCacheExtensions
 {
-    public static async Task SetStringAsync(
-        this IDistributedCache distributedCache,
-        string key,
-        string value,
-        DateTimeOffset expiration,
-        CancellationToken cancellationToken)
+    extension(IDistributedCache distributedCache)
     {
-        await distributedCache.SetStringAsync(
-            key,
-            value,
-            new DistributedCacheEntryOptions
-            {
-                AbsoluteExpiration = expiration,
-            },
-            cancellationToken);
+        public async Task SetStringAsync(string key, string value, DateTimeOffset expiration, CancellationToken cancellationToken)
+        {
+            await distributedCache.SetStringAsync(
+                key,
+                value,
+                new DistributedCacheEntryOptions
+                {
+                    AbsoluteExpiration = expiration,
+                },
+                cancellationToken);
+        }
     }
 }
-

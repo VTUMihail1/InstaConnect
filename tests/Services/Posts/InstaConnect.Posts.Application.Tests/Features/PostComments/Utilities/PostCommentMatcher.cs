@@ -1,6 +1,5 @@
-﻿using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAllForUser;
+﻿namespace InstaConnect.Posts.Application.Tests.Features.PostComments.Utilities;
 
-namespace InstaConnect.Posts.Application.Tests.Features.PostComments.Utilities;
 public static class PostCommentMatcher
 {
     public static GetAllPostCommentsQuery IsGetAllPostCommentsQuery(GetAllPostCommentsQueryRequest request)

@@ -2,28 +2,39 @@
 using InstaConnect.Common.Domain.Models.ValueObjects;
 
 namespace InstaConnect.Common.Tests.Utilities;
+
 public static class CommonEquals
 {
-    public static bool Matches(this Name p, string value)
+    extension(Name p)
     {
-        return p.Value.EqualsOrdinalIgnoreCase(value);
+        public bool Matches(string value)
+        {
+            return p.Value.EqualsOrdinalIgnoreCase(value);
+        }
     }
 
-    public static bool Matches(this Email p, string value)
+    extension(Email p)
     {
-        return p.Value.EqualsOrdinalIgnoreCase(value);
+        public bool Matches(string value)
+        {
+            return p.Value.EqualsOrdinalIgnoreCase(value);
+        }
     }
 
-    public static bool Matches(this Image? p, string? url)
+    extension(Image? p)
     {
-        return p == null || p.Url == url;
+        public bool Matches(string? url)
+        {
+            return p == null || p.Url == url;
+        }
     }
 
-    public static bool MatchesCollection<T>(
-        this ICollection<T> expected,
-        ICollection<T> actual)
+    extension<T>(ICollection<T> expected)
     {
-        return expected.Count == actual.Count &&
-               expected.All(actual.Contains);
+        public bool MatchesCollection(ICollection<T> actual)
+        {
+            return expected.Count == actual.Count &&
+                   expected.All(actual.Contains);
+        }
     }
 }

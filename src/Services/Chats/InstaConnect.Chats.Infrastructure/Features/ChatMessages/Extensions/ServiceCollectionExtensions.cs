@@ -6,34 +6,37 @@ namespace InstaConnect.Chats.Infrastructure.Features.ChatMessages.Extensions;
 
 internal static class ServiceCollectionExtensions
 {
-    internal static IServiceCollection AddChatMessageServices(this IServiceCollection serviceCollection)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection.AddImplementationsOf<IChatMessagesSortTermer>(ChatInfrastructureReference.Assembly);
-        serviceCollection.AddImplementationsOf<IChatMessageIncluder>(ChatInfrastructureReference.Assembly);
-
-        BsonClassMap.TryRegisterClassMap<ChatMessage>(cm =>
+        internal IServiceCollection AddChatMessageServices()
         {
-            cm.MapIdMember(c => c.Id);
+            serviceCollection.AddImplementationsOf<IChatMessagesSortTermer>(ChatInfrastructureReference.Assembly);
+            serviceCollection.AddImplementationsOf<IChatMessageIncluder>(ChatInfrastructureReference.Assembly);
 
-            cm.MapMember(c => c.Id);
-            cm.MapMember(c => c.SenderId);
-            cm.MapMember(c => c.Content);
-            cm.MapMember(c => c.CreatedAtUtc);
-            cm.MapMember(c => c.UpdatedAtUtc);
+            BsonClassMap.TryRegisterClassMap<ChatMessage>(cm =>
+            {
+                cm.MapIdMember(c => c.Id);
 
-            cm.MapMemberWithoutSerialization(c => c.Chat);
-            cm.MapMemberWithoutSerialization(c => c.Sender);
+                cm.MapMember(c => c.Id);
+                cm.MapMember(c => c.SenderId);
+                cm.MapMember(c => c.Content);
+                cm.MapMember(c => c.CreatedAtUtc);
+                cm.MapMember(c => c.UpdatedAtUtc);
 
-            cm.MapCreator(c => new ChatMessage(
-                c.Id,
-                c.SenderId,
-                c.Content,
-                c.CreatedAtUtc,
-                c.UpdatedAtUtc));
+                cm.MapMemberWithoutSerialization(c => c.Chat);
+                cm.MapMemberWithoutSerialization(c => c.Sender);
 
-            cm.SetIgnoreExtraElements(true);
-        });
+                cm.MapCreator(c => new ChatMessage(
+                    c.Id,
+                    c.SenderId,
+                    c.Content,
+                    c.CreatedAtUtc,
+                    c.UpdatedAtUtc));
 
-        return serviceCollection;
+                cm.SetIgnoreExtraElements(true);
+            });
+
+            return serviceCollection;
+        }
     }
 }

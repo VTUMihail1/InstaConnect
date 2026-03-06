@@ -7,22 +7,22 @@ namespace InstaConnect.Posts.Infrastructure.Features.Users.Extensions;
 
 internal static class UserMongoCollectionExtensions
 {
-    public static async Task UpdateAsync(
-        this IMongoCollection<User> collection,
-        IClientSessionHandle? session,
-        User entity,
-        CancellationToken cancellationToken)
+    extension(IMongoCollection<User> collection)
     {
-        await collection.UpdateAsync(session, entity.Id.GetFilter(), entity, cancellationToken);
+        public async Task UpdateAsync(
+            IClientSessionHandle? session,
+            User entity,
+            CancellationToken cancellationToken)
+        {
+            await collection.UpdateAsync(session, entity.Id.GetFilter(), entity, cancellationToken);
+        }
 
-    }
-
-    public static async Task DeleteAsync(
-        this IMongoCollection<User> collection,
-        IClientSessionHandle? session,
-        User entity,
-        CancellationToken cancellationToken)
-    {
-        await collection.DeleteAsync(session, entity.Id.GetFilter(), cancellationToken);
+        public async Task DeleteAsync(
+            IClientSessionHandle? session,
+            User entity,
+            CancellationToken cancellationToken)
+        {
+            await collection.DeleteAsync(session, entity.Id.GetFilter(), cancellationToken);
+        }
     }
 }

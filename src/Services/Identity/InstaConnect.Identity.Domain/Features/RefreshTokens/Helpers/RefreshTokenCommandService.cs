@@ -1,6 +1,7 @@
 ﻿using InstaConnect.Identity.Domain.Helpers;
 
 namespace InstaConnect.Identity.Domain.Features.RefreshTokens.Helpers;
+
 internal class RefreshTokenCommandService : IRefreshTokenCommandService
 {
     private readonly IPasswordHasher _passwordHasher;

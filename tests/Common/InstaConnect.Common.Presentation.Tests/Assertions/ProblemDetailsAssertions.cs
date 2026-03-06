@@ -11,47 +11,37 @@ namespace InstaConnect.Common.Presentation.Tests.Assertions;
 
 public static class ProblemDetailsAssertions
 {
-    internal static void ShouldSatisfy(this ApplicationProblemDetails problemDetails, int statusCode, string errorMessage)
+    extension(ApplicationProblemDetails problemDetails)
     {
-        problemDetails.ShouldSatisfy(d => d.Matches(statusCode, errorMessage));
-    }
+        internal void ShouldSatisfy(int statusCode, string errorMessage)
+        {
+            problemDetails.ShouldSatisfy(d => d.Matches(statusCode, errorMessage));
+        }
 
-    public static void ShouldSatisfyInvalidValidation<TRequest, TProperty>(
-        this ApplicationProblemDetails problemDetails,
-        Expression<Func<TRequest, TProperty>> propertyExpression,
-        IMessageTransformer<TProperty> messageTransformer,
-        TRequest request)
-    {
-        problemDetails.ShouldSatisfy(d => d.Matches(
-            StatusCodes.Status400BadRequest,
-            CommonExceptionErrorMessages.GetInvalidValidation(),
-            messageTransformer.Transform(propertyExpression, propertyExpression.Compile()(request))));
-    }
+        public void ShouldSatisfyInvalidValidation<TRequest, TProperty>(
+            Expression<Func<TRequest, TProperty>> propertyExpression,
+            IMessageTransformer<TProperty> messageTransformer,
+            TRequest request)
+        {
+            problemDetails.ShouldSatisfy(d => d.Matches(
+                StatusCodes.Status400BadRequest,
+                CommonExceptionErrorMessages.GetInvalidValidation(),
+                messageTransformer.Transform(propertyExpression, propertyExpression.Compile()(request))));
+        }
 
-    public static void ShouldSatisfyBadRequest(
-        this ApplicationProblemDetails problemDetails,
-        string errorMessage)
-    {
-        problemDetails.ShouldSatisfy(
-            StatusCodes.Status400BadRequest,
-            errorMessage);
-    }
+        public void ShouldSatisfyBadRequest(string errorMessage)
+        {
+            problemDetails.ShouldSatisfy(StatusCodes.Status400BadRequest, errorMessage);
+        }
 
-    public static void ShouldSatisfyForbidden(
-        this ApplicationProblemDetails problemDetails,
-        string errorMessage)
-    {
-        problemDetails.ShouldSatisfy(
-            StatusCodes.Status403Forbidden,
-            errorMessage);
-    }
+        public void ShouldSatisfyForbidden(string errorMessage)
+        {
+            problemDetails.ShouldSatisfy(StatusCodes.Status403Forbidden, errorMessage);
+        }
 
-    public static void ShouldSatisfyNotFound(
-        this ApplicationProblemDetails problemDetails,
-        string errorMessage)
-    {
-        problemDetails.ShouldSatisfy(
-            StatusCodes.Status404NotFound,
-            errorMessage);
+        public void ShouldSatisfyNotFound(string errorMessage)
+        {
+            problemDetails.ShouldSatisfy(StatusCodes.Status404NotFound, errorMessage);
+        }
     }
 }

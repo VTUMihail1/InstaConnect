@@ -12,46 +12,49 @@ using Scrutor;
 
 namespace InstaConnect.Common.Domain.Extensions;
 
-public static class ServiceCollectionExtentions
+public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddMapper(this IServiceCollection serviceCollection, params Assembly[] assemblies)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection.AddMapster();
+        public IServiceCollection AddMapper(params Assembly[] assemblies)
+        {
+            serviceCollection.AddMapster();
 
-        var config = TypeAdapterConfig.GlobalSettings;
-        config.Scan(assemblies);
-        serviceCollection.AddSingleton(config);
+            var config = TypeAdapterConfig.GlobalSettings;
+            config.Scan(assemblies);
+            serviceCollection.AddSingleton(config);
 
-        serviceCollection.AddScoped<IApplicationMapper, ApplicationMapper>();
+            serviceCollection.AddScoped<IApplicationMapper, ApplicationMapper>();
 
-        return serviceCollection;
-    }
+            return serviceCollection;
+        }
 
-    public static IServiceCollection AddServicesWithMatchingInterfaces(this IServiceCollection serviceCollection, params Assembly[] assemblies)
-    {
-        serviceCollection
-            .Scan(selector => selector
-            .FromAssemblies(assemblies)
-            .AddClasses(false)
-            .UsingRegistrationStrategy(RegistrationStrategy.Skip)
-            .AsMatchingInterface()
-            .WithScopedLifetime());
+        public IServiceCollection AddServicesWithMatchingInterfaces(params Assembly[] assemblies)
+        {
+            serviceCollection
+                .Scan(selector => selector
+                    .FromAssemblies(assemblies)
+                    .AddClasses(false)
+                    .UsingRegistrationStrategy(RegistrationStrategy.Skip)
+                    .AsMatchingInterface()
+                    .WithScopedLifetime());
 
-        return serviceCollection;
-    }
+            return serviceCollection;
+        }
 
-    public static IServiceCollection AddImplementationsOf<TInterface>(this IServiceCollection services, Assembly assembly)
-        where TInterface : class
-    {
-        var implementations = assembly
-            .DefinedTypes
-            .Where(type => type is { IsAbstract: false, IsInterface: false } &&
-                           type.IsAssignableTo(typeof(TInterface)))
-            .Select(type => ServiceDescriptor.Transient(typeof(TInterface), type))
-            .ToArray();
+        public IServiceCollection AddImplementationsOf<TInterface>(Assembly assembly)
+            where TInterface : class
+        {
+            var implementations = assembly
+                .DefinedTypes
+                .Where(type => type is { IsAbstract: false, IsInterface: false } &&
+                               type.IsAssignableTo(typeof(TInterface)))
+                .Select(type => ServiceDescriptor.Transient(typeof(TInterface), type))
+                .ToArray();
 
-        services.TryAddEnumerable(implementations);
+            serviceCollection.TryAddEnumerable(implementations);
 
-        return services;
+            return serviceCollection;
+        }
     }
 }

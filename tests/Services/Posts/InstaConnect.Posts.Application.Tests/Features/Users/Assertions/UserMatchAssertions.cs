@@ -4,29 +4,36 @@ namespace InstaConnect.Posts.Application.Tests.Features.Users.Assertions;
 
 public static class UserMatchAssertions
 {
-    public static void ShouldSatisfy(
-        this AddUserCommandResponse response,
+    extension(AddUserCommandResponse response)
+    {
+        public void ShouldSatisfy(
         User user,
         AddUserCommandRequest request)
-    {
-        response.ShouldSatisfy(u => u.Matches(user, request));
+        {
+            response.ShouldSatisfy(u => u.Matches(user, request));
+        }
     }
 
-    public static void ShouldSatisfy(
-        this UpdateUserCommandResponse response,
+    extension(UpdateUserCommandResponse response)
+    {
+        public void ShouldSatisfy(
         User user,
         UpdateUserCommandRequest request)
-    {
-        response.ShouldSatisfy(u => u.Matches(user, request));
+        {
+            response.ShouldSatisfy(u => u.Matches(user, request));
+        }
     }
 
-    public static void ShouldSatisfy(this User user, AddUserCommandRequest request)
+    extension(User user)
     {
-        user.ShouldSatisfy(u => u.Matches(request));
-    }
+        public void ShouldSatisfy(AddUserCommandRequest request)
+        {
+            user.ShouldSatisfy(u => u.Matches(request));
+        }
 
-    public static void ShouldSatisfy(this User user, UpdateUserCommandRequest request)
-    {
-        user.ShouldSatisfy(u => u.Matches(request));
+        public void ShouldSatisfy(UpdateUserCommandRequest request)
+        {
+            user.ShouldSatisfy(u => u.Matches(request));
+        }
     }
 }

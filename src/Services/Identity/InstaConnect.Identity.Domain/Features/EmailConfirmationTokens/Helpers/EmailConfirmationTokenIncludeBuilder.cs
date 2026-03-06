@@ -29,7 +29,7 @@ public class EmailConfirmationTokenIncludeBuilder
 
         return this;
     }
-    
+
     public EmailConfirmationTokenInclude Build()
     {
         return new(_descriptors);

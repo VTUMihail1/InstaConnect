@@ -1,4 +1,5 @@
 ﻿namespace InstaConnect.Identity.Domain.Features.Users.Models.Responses;
+
 public record UserCollectionResponse(
     ICollection<UserResponse> Users,
     int Page,

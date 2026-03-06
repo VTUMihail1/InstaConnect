@@ -6,27 +6,30 @@ namespace InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Ext
 
 internal static class ServiceCollectionExtensions
 {
-    internal static IServiceCollection AddForgotPasswordTokenServices(this IServiceCollection serviceCollection)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection.AddImplementationsOf<IForgotPasswordTokenIncluder>(IdentityInfrastructureReference.Assembly);
-
-        BsonClassMap.TryRegisterClassMap<ForgotPasswordToken>(cm =>
+        internal IServiceCollection AddForgotPasswordTokenServices()
         {
-            cm.MapIdMember(c => c.Id);
+            serviceCollection.AddImplementationsOf<IForgotPasswordTokenIncluder>(IdentityInfrastructureReference.Assembly);
 
-            cm.MapMember(c => c.Id);
-            cm.MapMember(c => c.CreatedAtUtc);
+            BsonClassMap.TryRegisterClassMap<ForgotPasswordToken>(cm =>
+            {
+                cm.MapIdMember(c => c.Id);
 
-            cm.MapMemberWithoutSerialization(c => c.User);
+                cm.MapMember(c => c.Id);
+                cm.MapMember(c => c.CreatedAtUtc);
 
-            cm.MapCreator(c => new ForgotPasswordToken(
-                c.Id,
-                c.ExpiresAtUtc,
-                c.CreatedAtUtc));
+                cm.MapMemberWithoutSerialization(c => c.User);
 
-            cm.SetIgnoreExtraElements(true);
-        });
+                cm.MapCreator(c => new ForgotPasswordToken(
+                    c.Id,
+                    c.ExpiresAtUtc,
+                    c.CreatedAtUtc));
 
-        return serviceCollection;
+                cm.SetIgnoreExtraElements(true);
+            });
+
+            return serviceCollection;
+        }
     }
 }

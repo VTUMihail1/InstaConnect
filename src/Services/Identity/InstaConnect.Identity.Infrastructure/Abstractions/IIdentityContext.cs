@@ -1,6 +1,7 @@
 ﻿using MongoDB.Driver;
 
 namespace InstaConnect.Identity.Infrastructure.Abstractions;
+
 public interface IIdentityContext : IMongoDbContext
 {
     public IMongoCollection<User> Users { get; }

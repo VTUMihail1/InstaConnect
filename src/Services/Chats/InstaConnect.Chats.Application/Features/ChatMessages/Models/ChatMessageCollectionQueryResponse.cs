@@ -1,6 +1,4 @@
-﻿using InstaConnect.Chats.Domain.Features.Users.Models.Responses;
-
-namespace InstaConnect.Chats.Application.Features.ChatMessages.Models;
+﻿namespace InstaConnect.Chats.Application.Features.ChatMessages.Models;
 
 public record ChatMessageCollectionQueryResponse(
     ChatQueryResponse? Chat,

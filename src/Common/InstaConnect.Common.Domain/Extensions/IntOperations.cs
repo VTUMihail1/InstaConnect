@@ -2,13 +2,16 @@
 
 public static class IntOperations
 {
-    public static int Increment(int value)
+    extension(int value)
     {
-        return value + 1;
-    }
+        public int Increment()
+        {
+            return value + 1;
+        }
 
-    public static int Decrement(int value)
-    {
-        return value - 1;
+        public int Decrement()
+        {
+            return value - 1;
+        }
     }
 }

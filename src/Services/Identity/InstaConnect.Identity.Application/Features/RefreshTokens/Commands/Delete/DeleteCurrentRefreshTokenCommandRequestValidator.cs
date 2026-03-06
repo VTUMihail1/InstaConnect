@@ -1,4 +1,5 @@
 ﻿namespace InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Delete;
+
 public class DeleteCurrentRefreshTokenCommandRequestValidator : AbstractValidator<DeleteCurrentRefreshTokenCommandRequest>
 {
     public DeleteCurrentRefreshTokenCommandRequestValidator()

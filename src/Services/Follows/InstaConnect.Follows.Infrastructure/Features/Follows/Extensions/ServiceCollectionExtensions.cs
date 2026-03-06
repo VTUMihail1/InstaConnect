@@ -6,29 +6,32 @@ namespace InstaConnect.Follows.Infrastructure.Features.Follows.Extensions;
 
 internal static class ServiceCollectionExtensions
 {
-    internal static IServiceCollection AddFollowServices(this IServiceCollection serviceCollection)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection.AddImplementationsOf<IFollowsSortTermer>(FollowInfrastructureReference.Assembly);
-        serviceCollection.AddImplementationsOf<IFollowsForFollowingSortTermer>(FollowInfrastructureReference.Assembly);
-        serviceCollection.AddImplementationsOf<IFollowIncluder>(FollowInfrastructureReference.Assembly);
-
-        BsonClassMap.TryRegisterClassMap<Follow>(cm =>
+        internal IServiceCollection AddFollowServices()
         {
-            cm.MapIdMember(c => c.Id);
+            serviceCollection.AddImplementationsOf<IFollowsSortTermer>(FollowInfrastructureReference.Assembly);
+            serviceCollection.AddImplementationsOf<IFollowsForFollowingSortTermer>(FollowInfrastructureReference.Assembly);
+            serviceCollection.AddImplementationsOf<IFollowIncluder>(FollowInfrastructureReference.Assembly);
 
-            cm.MapMember(c => c.Id);
-            cm.MapMember(c => c.CreatedAtUtc);
+            BsonClassMap.TryRegisterClassMap<Follow>(cm =>
+            {
+                cm.MapIdMember(c => c.Id);
 
-            cm.MapMemberWithoutSerialization(c => c.Follower);
-            cm.MapMemberWithoutSerialization(c => c.Following);
+                cm.MapMember(c => c.Id);
+                cm.MapMember(c => c.CreatedAtUtc);
 
-            cm.MapCreator(c => new Follow(
-                c.Id,
-                c.CreatedAtUtc));
+                cm.MapMemberWithoutSerialization(c => c.Follower);
+                cm.MapMemberWithoutSerialization(c => c.Following);
 
-            cm.SetIgnoreExtraElements(true);
-        });
+                cm.MapCreator(c => new Follow(
+                    c.Id,
+                    c.CreatedAtUtc));
 
-        return serviceCollection;
+                cm.SetIgnoreExtraElements(true);
+            });
+
+            return serviceCollection;
+        }
     }
 }

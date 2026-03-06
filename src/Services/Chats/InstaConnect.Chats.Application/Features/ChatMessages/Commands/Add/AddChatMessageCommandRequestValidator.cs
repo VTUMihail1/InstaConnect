@@ -1,4 +1,5 @@
 ﻿namespace InstaConnect.Chats.Application.Features.ChatMessages.Commands.Add;
+
 public class AddChatMessageCommandRequestValidator : AbstractValidator<AddChatMessageCommandRequest>
 {
     public AddChatMessageCommandRequestValidator()

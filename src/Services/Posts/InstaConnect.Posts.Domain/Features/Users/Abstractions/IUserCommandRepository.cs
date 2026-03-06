@@ -1,6 +1,5 @@
-﻿using InstaConnect.Posts.Domain.Models.Requests;
+﻿namespace InstaConnect.Posts.Domain.Features.Users.Abstractions;
 
-namespace InstaConnect.Posts.Domain.Features.Users.Abstractions;
 public interface IUserCommandRepository
 {
     Task<User?> GetByIdAsync(

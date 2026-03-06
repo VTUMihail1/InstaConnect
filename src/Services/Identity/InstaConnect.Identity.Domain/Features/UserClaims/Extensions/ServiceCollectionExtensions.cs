@@ -2,8 +2,11 @@
 
 internal static class ServiceCollectionExtensions
 {
-    internal static IServiceCollection AddUserClaimsServices(this IServiceCollection serviceCollection)
+    extension(IServiceCollection serviceCollection)
     {
-        return serviceCollection;
+        public IServiceCollection AddUserClaimsServices()
+        {
+            return serviceCollection;
+        }
     }
 }

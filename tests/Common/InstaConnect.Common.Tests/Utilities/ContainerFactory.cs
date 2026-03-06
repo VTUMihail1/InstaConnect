@@ -1,6 +1,4 @@
-﻿using DotNet.Testcontainers.Builders;
-
-using Testcontainers.MongoDb;
+﻿using Testcontainers.MongoDb;
 using Testcontainers.RabbitMq;
 
 namespace InstaConnect.Common.Tests.Utilities;

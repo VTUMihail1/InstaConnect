@@ -3,6 +3,7 @@
 using Microsoft.AspNetCore.Http;
 
 namespace InstaConnect.Common.Presentation.Abstractions;
+
 public interface IApplicationProblemDetailsService
 {
     Task WriteAsync(

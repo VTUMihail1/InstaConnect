@@ -1,12 +1,6 @@
 ﻿using InstaConnect.Common.Domain.Models;
 using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Requests;
-using InstaConnect.Posts.Infrastructure.Abstractions;
-
-using Microsoft.Extensions.DependencyInjection;
-
-using MongoDB.Bson;
-using MongoDB.Driver;
 
 namespace InstaConnect.Posts.Application.Tests.Integration.Features.PostCommentLikes.Queries;
 

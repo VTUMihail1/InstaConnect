@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace InstaConnect.Common.Infrastructure.Models.Options;
+
 public class MessageBrokerOptions
 {
     public const string SectionName = "MessageBrokerConfiguration";

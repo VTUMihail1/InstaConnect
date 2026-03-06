@@ -10,20 +10,22 @@ namespace InstaConnect.Emails.Infrastructure.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddInfrastructure(
-        this IServiceCollection serviceCollection,
-        IConfiguration configuration,
-        IWebHostEnvironment webHostEnvironment)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection
-            .AddEmailServices(configuration);
+        public IServiceCollection AddInfrastructure(
+            IConfiguration configuration,
+            IWebHostEnvironment webHostEnvironment)
+        {
+            serviceCollection
+                .AddEmailServices(configuration);
 
-        serviceCollection
-            .AddObservability(configuration, webHostEnvironment)
-            .AddServicesWithMatchingInterfaces(InfrastructureReference.Assembly)
-            .AddRabbitMQ(configuration, InfrastructureReference.Assembly)
-            .AddJwtBearer(configuration);
+            serviceCollection
+                .AddObservability(configuration, webHostEnvironment)
+                .AddServicesWithMatchingInterfaces(InfrastructureReference.Assembly)
+                .AddRabbitMQ(configuration, InfrastructureReference.Assembly)
+                .AddJwtBearer(configuration);
 
-        return serviceCollection;
+            return serviceCollection;
+        }
     }
 }

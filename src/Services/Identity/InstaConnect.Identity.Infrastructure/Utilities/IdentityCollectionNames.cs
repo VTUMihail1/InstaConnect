@@ -1,4 +1,5 @@
 ﻿namespace InstaConnect.Identity.Infrastructure.Utilities;
+
 public static class IdentityCollectionNames
 {
     public const string Users = "users";

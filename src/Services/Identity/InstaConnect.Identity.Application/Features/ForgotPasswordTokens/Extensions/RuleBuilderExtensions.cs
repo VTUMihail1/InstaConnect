@@ -2,13 +2,16 @@
 
 internal static class RuleBuilderExtensions
 {
-    public static IRuleBuilderOptions<T, string> ForgotPasswordTokenValueMinLengthWithMessage<T>(this IRuleBuilder<T, string> ruleBuilder)
+    extension<T>(IRuleBuilder<T, string> ruleBuilder)
     {
-        return ruleBuilder.MinLengthWithMessage(ForgotPasswordTokenConfigurations.ValueMinLength);
-    }
+        public IRuleBuilderOptions<T, string> ForgotPasswordTokenValueMinLengthWithMessage()
+        {
+            return ruleBuilder.MinLengthWithMessage(ForgotPasswordTokenConfigurations.ValueMinLength);
+        }
 
-    public static IRuleBuilderOptions<T, string> ForgotPasswordTokenValueMaxLengthWithMessage<T>(this IRuleBuilder<T, string> ruleBuilder)
-    {
-        return ruleBuilder.MaxLengthWithMessage(ForgotPasswordTokenConfigurations.ValueMaxLength);
+        public IRuleBuilderOptions<T, string> ForgotPasswordTokenValueMaxLengthWithMessage()
+        {
+            return ruleBuilder.MaxLengthWithMessage(ForgotPasswordTokenConfigurations.ValueMaxLength);
+        }
     }
 }

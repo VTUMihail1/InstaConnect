@@ -1,4 +1,5 @@
 ﻿namespace InstaConnect.Posts.Domain.Features.PostComments.Abstractions;
+
 public interface IPostCommentCommandService
 {
     public Task<PostCommentId> AddAsync(AddPostCommentCommand command, CancellationToken cancellationToken);

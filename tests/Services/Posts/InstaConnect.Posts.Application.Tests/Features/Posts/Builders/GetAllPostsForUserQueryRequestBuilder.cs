@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Common.Tests.DataAttributes.Base;
-using InstaConnect.Posts.Application.Features.Posts.Queries.GetAllForUser;
 
 namespace InstaConnect.Posts.Application.Tests.Features.Posts.Builders;
 

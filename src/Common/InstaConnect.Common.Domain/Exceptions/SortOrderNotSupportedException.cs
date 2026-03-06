@@ -2,6 +2,7 @@
 using InstaConnect.Common.Domain.Utilities;
 
 namespace InstaConnect.Common.Domain.Exceptions;
+
 public class SortOrderNotSupportedException : BadRequestException
 {
     public SortOrderNotSupportedException(CommonSortOrder sortOrder)

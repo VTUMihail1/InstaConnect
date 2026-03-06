@@ -5,23 +5,24 @@ namespace InstaConnect.Posts.Tests.Features.PostCommentLikes.Assertions;
 
 public static class PostCommentLikeEventHarnessAssertions
 {
-    public static async Task ShouldHavePublishedAddedAsync(
-        this IEventHarness eventHarness,
+    extension(IEventHarness eventHarness)
+    {
+        public async Task ShouldHavePublishedAddedAsync(
         PostCommentLike entity,
         CancellationToken cancellationToken)
-    {
-        await eventHarness.ShouldHavePublishedAsync<PostCommentLikeAddedEventRequest>(
-            p => p.Matches(entity),
-            cancellationToken);
-    }
+        {
+            await eventHarness.ShouldHavePublishedAsync<PostCommentLikeAddedEventRequest>(
+                p => p.Matches(entity),
+                cancellationToken);
+        }
 
-    public static async Task ShouldHavePublishedDeletedAsync(
-        this IEventHarness eventHarness,
-        PostCommentLike entity,
-        CancellationToken cancellationToken)
-    {
-        await eventHarness.ShouldHavePublishedAsync<PostCommentLikeDeletedEventRequest>(
-            p => p.Matches(entity),
-            cancellationToken);
+        public async Task ShouldHavePublishedDeletedAsync(
+            PostCommentLike entity,
+            CancellationToken cancellationToken)
+        {
+            await eventHarness.ShouldHavePublishedAsync<PostCommentLikeDeletedEventRequest>(
+                p => p.Matches(entity),
+                cancellationToken);
+        }
     }
 }

@@ -1,211 +1,152 @@
 ﻿namespace InstaConnect.Posts.Application.Tests.Features.PostComments.Assertions;
+
 public static class PostCommentValidationAssertions
 {
-    public static void ShouldHaveValidationErrorForId(
-        this TestValidationResult<AddPostCommentCommandRequest> result,
-        IStringMessageTransformer messageTransformer,
-        AddPostCommentCommandRequest request)
+    extension(TestValidationResult<AddPostCommentCommandRequest> result)
     {
-        result.ShouldHaveValidationErrorForProperty(p => p.Id, messageTransformer, request);
+        public void ShouldHaveValidationErrorForId(IStringMessageTransformer messageTransformer, AddPostCommentCommandRequest request)
+        {
+            result.ShouldHaveValidationErrorForProperty(p => p.Id, messageTransformer, request);
+        }
+
+        public void ShouldHaveValidationErrorForContent(IStringMessageTransformer messageTransformer, AddPostCommentCommandRequest request)
+        {
+            result.ShouldHaveValidationErrorForProperty(p => p.Content, messageTransformer, request);
+        }
+
+        public void ShouldHaveValidationErrorForUserId(IStringMessageTransformer messageTransformer, AddPostCommentCommandRequest request)
+        {
+            result.ShouldHaveValidationErrorForProperty(p => p.UserId, messageTransformer, request);
+        }
     }
 
-    public static void ShouldHaveValidationErrorForId(
-        this TestValidationResult<UpdatePostCommentCommandRequest> result,
-        IStringMessageTransformer messageTransformer,
-        UpdatePostCommentCommandRequest request)
+    extension(TestValidationResult<UpdatePostCommentCommandRequest> result)
     {
-        result.ShouldHaveValidationErrorForProperty(p => p.Id, messageTransformer, request);
+        public void ShouldHaveValidationErrorForId(IStringMessageTransformer messageTransformer, UpdatePostCommentCommandRequest request)
+        {
+            result.ShouldHaveValidationErrorForProperty(p => p.Id, messageTransformer, request);
+        }
+
+        public void ShouldHaveValidationErrorForCommentId(IStringMessageTransformer messageTransformer, UpdatePostCommentCommandRequest request)
+        {
+            result.ShouldHaveValidationErrorForProperty(p => p.CommentId, messageTransformer, request);
+        }
+
+        public void ShouldHaveValidationErrorForContent(IStringMessageTransformer messageTransformer, UpdatePostCommentCommandRequest request)
+        {
+            result.ShouldHaveValidationErrorForProperty(p => p.Content, messageTransformer, request);
+        }
+
+        public void ShouldHaveValidationErrorForUserId(IStringMessageTransformer messageTransformer, UpdatePostCommentCommandRequest request)
+        {
+            result.ShouldHaveValidationErrorForProperty(p => p.UserId, messageTransformer, request);
+        }
     }
 
-    public static void ShouldHaveValidationErrorForId(
-        this TestValidationResult<DeletePostCommentCommandRequest> result,
-        IStringMessageTransformer messageTransformer,
-        DeletePostCommentCommandRequest request)
+    extension(TestValidationResult<DeletePostCommentCommandRequest> result)
     {
-        result.ShouldHaveValidationErrorForProperty(p => p.Id, messageTransformer, request);
+        public void ShouldHaveValidationErrorForId(IStringMessageTransformer messageTransformer, DeletePostCommentCommandRequest request)
+        {
+            result.ShouldHaveValidationErrorForProperty(p => p.Id, messageTransformer, request);
+        }
+
+        public void ShouldHaveValidationErrorForCommentId(IStringMessageTransformer messageTransformer, DeletePostCommentCommandRequest request)
+        {
+            result.ShouldHaveValidationErrorForProperty(p => p.CommentId, messageTransformer, request);
+        }
+
+        public void ShouldHaveValidationErrorForUserId(IStringMessageTransformer messageTransformer, DeletePostCommentCommandRequest request)
+        {
+            result.ShouldHaveValidationErrorForProperty(p => p.UserId, messageTransformer, request);
+        }
     }
 
-    public static void ShouldHaveValidationErrorForId(
-        this TestValidationResult<GetPostCommentByIdQueryRequest> result,
-        IStringMessageTransformer messageTransformer,
-        GetPostCommentByIdQueryRequest request)
+    extension(TestValidationResult<GetPostCommentByIdQueryRequest> result)
     {
-        result.ShouldHaveValidationErrorForProperty(p => p.Id, messageTransformer, request);
+        public void ShouldHaveValidationErrorForId(IStringMessageTransformer messageTransformer, GetPostCommentByIdQueryRequest request)
+        {
+            result.ShouldHaveValidationErrorForProperty(p => p.Id, messageTransformer, request);
+        }
+
+        public void ShouldHaveValidationErrorForCommentId(IStringMessageTransformer messageTransformer, GetPostCommentByIdQueryRequest request)
+        {
+            result.ShouldHaveValidationErrorForProperty(p => p.CommentId, messageTransformer, request);
+        }
+
+        public void ShouldHaveValidationErrorForCurrentUserId(IStringMessageTransformer messageTransformer, GetPostCommentByIdQueryRequest request)
+        {
+            result.ShouldHaveValidationErrorForProperty(p => p.CurrentUserId, messageTransformer, request);
+        }
     }
 
-    public static void ShouldHaveValidationErrorForId(
-        this TestValidationResult<GetAllPostCommentsQueryRequest> result,
-        IStringMessageTransformer messageTransformer,
-        GetAllPostCommentsQueryRequest request)
+    extension(TestValidationResult<GetAllPostCommentsQueryRequest> result)
     {
-        result.ShouldHaveValidationErrorForProperty(p => p.Id, messageTransformer, request);
+        public void ShouldHaveValidationErrorForId(IStringMessageTransformer messageTransformer, GetAllPostCommentsQueryRequest request)
+        {
+            result.ShouldHaveValidationErrorForProperty(p => p.Id, messageTransformer, request);
+        }
+
+        public void ShouldHaveValidationErrorForCurrentUserId(IStringMessageTransformer messageTransformer, GetAllPostCommentsQueryRequest request)
+        {
+            result.ShouldHaveValidationErrorForProperty(p => p.CurrentUserId, messageTransformer, request);
+        }
+
+        public void ShouldHaveValidationErrorForUserName(IStringMessageTransformer messageTransformer, GetAllPostCommentsQueryRequest request)
+        {
+            result.ShouldHaveValidationErrorForProperty(p => p.UserName, messageTransformer, request);
+        }
+
+        public void ShouldHaveValidationErrorForPage(IIntMessageTransformer messageTransformer, GetAllPostCommentsQueryRequest request)
+        {
+            result.ShouldHaveValidationErrorForProperty(p => p.Page, messageTransformer, request);
+        }
+
+        public void ShouldHaveValidationErrorForPageSize(IIntMessageTransformer messageTransformer, GetAllPostCommentsQueryRequest request)
+        {
+            result.ShouldHaveValidationErrorForProperty(p => p.PageSize, messageTransformer, request);
+        }
+
+        public void ShouldHaveValidationErrorForSortOrder(IEnumMessageTransformer<CommonSortOrder> messageTransformer, GetAllPostCommentsQueryRequest request)
+        {
+            result.ShouldHaveValidationErrorForProperty(p => p.SortOrder, messageTransformer, request);
+        }
+
+        public void ShouldHaveValidationErrorForSortTerm(IEnumMessageTransformer<PostCommentsSortTerm> messageTransformer, GetAllPostCommentsQueryRequest request)
+        {
+            result.ShouldHaveValidationErrorForProperty(p => p.SortTerm, messageTransformer, request);
+        }
     }
 
-    public static void ShouldHaveValidationErrorForCommentId(
-        this TestValidationResult<UpdatePostCommentCommandRequest> result,
-        IStringMessageTransformer messageTransformer,
-        UpdatePostCommentCommandRequest request)
+    extension(TestValidationResult<GetAllPostCommentsForUserQueryRequest> result)
     {
-        result.ShouldHaveValidationErrorForProperty(p => p.CommentId, messageTransformer, request);
-    }
+        public void ShouldHaveValidationErrorForUserId(IStringMessageTransformer messageTransformer, GetAllPostCommentsForUserQueryRequest request)
+        {
+            result.ShouldHaveValidationErrorForProperty(p => p.UserId, messageTransformer, request);
+        }
 
-    public static void ShouldHaveValidationErrorForCommentId(
-        this TestValidationResult<DeletePostCommentCommandRequest> result,
-        IStringMessageTransformer messageTransformer,
-        DeletePostCommentCommandRequest request)
-    {
-        result.ShouldHaveValidationErrorForProperty(p => p.CommentId, messageTransformer, request);
-    }
+        public void ShouldHaveValidationErrorForCurrentUserId(IStringMessageTransformer messageTransformer, GetAllPostCommentsForUserQueryRequest request)
+        {
+            result.ShouldHaveValidationErrorForProperty(p => p.CurrentUserId, messageTransformer, request);
+        }
 
-    public static void ShouldHaveValidationErrorForCommentId(
-        this TestValidationResult<GetPostCommentByIdQueryRequest> result,
-        IStringMessageTransformer messageTransformer,
-        GetPostCommentByIdQueryRequest request)
-    {
-        result.ShouldHaveValidationErrorForProperty(p => p.CommentId, messageTransformer, request);
-    }
+        public void ShouldHaveValidationErrorForPage(IIntMessageTransformer messageTransformer, GetAllPostCommentsForUserQueryRequest request)
+        {
+            result.ShouldHaveValidationErrorForProperty(p => p.Page, messageTransformer, request);
+        }
 
-    public static void ShouldHaveValidationErrorForContent(
-        this TestValidationResult<AddPostCommentCommandRequest> result,
-        IStringMessageTransformer messageTransformer,
-        AddPostCommentCommandRequest request)
-    {
-        result.ShouldHaveValidationErrorForProperty(p => p.Content, messageTransformer, request);
-    }
+        public void ShouldHaveValidationErrorForPageSize(IIntMessageTransformer messageTransformer, GetAllPostCommentsForUserQueryRequest request)
+        {
+            result.ShouldHaveValidationErrorForProperty(p => p.PageSize, messageTransformer, request);
+        }
 
-    public static void ShouldHaveValidationErrorForContent(
-        this TestValidationResult<UpdatePostCommentCommandRequest> result,
-        IStringMessageTransformer messageTransformer,
-        UpdatePostCommentCommandRequest request)
-    {
-        result.ShouldHaveValidationErrorForProperty(p => p.Content, messageTransformer, request);
-    }
+        public void ShouldHaveValidationErrorForSortOrder(IEnumMessageTransformer<CommonSortOrder> messageTransformer, GetAllPostCommentsForUserQueryRequest request)
+        {
+            result.ShouldHaveValidationErrorForProperty(p => p.SortOrder, messageTransformer, request);
+        }
 
-    public static void ShouldHaveValidationErrorForUserId(
-        this TestValidationResult<AddPostCommentCommandRequest> result,
-        IStringMessageTransformer messageTransformer,
-        AddPostCommentCommandRequest request)
-    {
-        result.ShouldHaveValidationErrorForProperty(p => p.UserId, messageTransformer, request);
-    }
-
-    public static void ShouldHaveValidationErrorForUserId(
-        this TestValidationResult<GetAllPostCommentsForUserQueryRequest> result,
-        IStringMessageTransformer messageTransformer,
-        GetAllPostCommentsForUserQueryRequest request)
-    {
-        result.ShouldHaveValidationErrorForProperty(p => p.UserId, messageTransformer, request);
-    }
-
-    public static void ShouldHaveValidationErrorForUserId(
-        this TestValidationResult<UpdatePostCommentCommandRequest> result,
-        IStringMessageTransformer messageTransformer,
-        UpdatePostCommentCommandRequest request)
-    {
-        result.ShouldHaveValidationErrorForProperty(p => p.UserId, messageTransformer, request);
-    }
-
-    public static void ShouldHaveValidationErrorForUserId(
-        this TestValidationResult<DeletePostCommentCommandRequest> result,
-        IStringMessageTransformer messageTransformer,
-        DeletePostCommentCommandRequest request)
-    {
-        result.ShouldHaveValidationErrorForProperty(p => p.UserId, messageTransformer, request);
-    }
-
-    public static void ShouldHaveValidationErrorForCurrentUserId(
-        this TestValidationResult<GetPostCommentByIdQueryRequest> result,
-        IStringMessageTransformer messageTransformer,
-        GetPostCommentByIdQueryRequest request)
-    {
-        result.ShouldHaveValidationErrorForProperty(p => p.CurrentUserId, messageTransformer, request);
-    }
-
-    public static void ShouldHaveValidationErrorForCurrentUserId(
-        this TestValidationResult<GetAllPostCommentsQueryRequest> result,
-        IStringMessageTransformer messageTransformer,
-        GetAllPostCommentsQueryRequest request)
-    {
-        result.ShouldHaveValidationErrorForProperty(p => p.CurrentUserId, messageTransformer, request);
-    }
-
-    public static void ShouldHaveValidationErrorForCurrentUserId(
-        this TestValidationResult<GetAllPostCommentsForUserQueryRequest> result,
-        IStringMessageTransformer messageTransformer,
-        GetAllPostCommentsForUserQueryRequest request)
-    {
-        result.ShouldHaveValidationErrorForProperty(p => p.CurrentUserId, messageTransformer, request);
-    }
-
-    public static void ShouldHaveValidationErrorForUserName(
-        this TestValidationResult<GetAllPostCommentsQueryRequest> result,
-        IStringMessageTransformer messageTransformer,
-        GetAllPostCommentsQueryRequest request)
-    {
-        result.ShouldHaveValidationErrorForProperty(p => p.UserName, messageTransformer, request);
-    }
-
-    public static void ShouldHaveValidationErrorForPage(
-        this TestValidationResult<GetAllPostCommentsQueryRequest> result,
-        IIntMessageTransformer messageTransformer,
-        GetAllPostCommentsQueryRequest request)
-    {
-        result.ShouldHaveValidationErrorForProperty(p => p.Page, messageTransformer, request);
-    }
-
-    public static void ShouldHaveValidationErrorForPage(
-        this TestValidationResult<GetAllPostCommentsForUserQueryRequest> result,
-        IIntMessageTransformer messageTransformer,
-        GetAllPostCommentsForUserQueryRequest request)
-    {
-        result.ShouldHaveValidationErrorForProperty(p => p.Page, messageTransformer, request);
-    }
-
-    public static void ShouldHaveValidationErrorForPageSize(
-        this TestValidationResult<GetAllPostCommentsQueryRequest> result,
-        IIntMessageTransformer messageTransformer,
-        GetAllPostCommentsQueryRequest request)
-    {
-        result.ShouldHaveValidationErrorForProperty(p => p.PageSize, messageTransformer, request);
-    }
-
-    public static void ShouldHaveValidationErrorForPageSize(
-        this TestValidationResult<GetAllPostCommentsForUserQueryRequest> result,
-        IIntMessageTransformer messageTransformer,
-        GetAllPostCommentsForUserQueryRequest request)
-    {
-        result.ShouldHaveValidationErrorForProperty(p => p.PageSize, messageTransformer, request);
-    }
-
-    public static void ShouldHaveValidationErrorForSortOrder(
-        this TestValidationResult<GetAllPostCommentsQueryRequest> result,
-        IEnumMessageTransformer<CommonSortOrder> messageTransformer,
-        GetAllPostCommentsQueryRequest request)
-    {
-        result.ShouldHaveValidationErrorForProperty(p => p.SortOrder, messageTransformer, request);
-    }
-
-    public static void ShouldHaveValidationErrorForSortOrder(
-        this TestValidationResult<GetAllPostCommentsForUserQueryRequest> result,
-        IEnumMessageTransformer<CommonSortOrder> messageTransformer,
-        GetAllPostCommentsForUserQueryRequest request)
-    {
-        result.ShouldHaveValidationErrorForProperty(p => p.SortOrder, messageTransformer, request);
-    }
-
-    public static void ShouldHaveValidationErrorForSortTerm(
-        this TestValidationResult<GetAllPostCommentsQueryRequest> result,
-        IEnumMessageTransformer<PostCommentsSortTerm> messageTransformer,
-        GetAllPostCommentsQueryRequest request)
-    {
-        result.ShouldHaveValidationErrorForProperty(p => p.SortTerm, messageTransformer, request);
-    }
-
-    public static void ShouldHaveValidationErrorForSortTerm(
-        this TestValidationResult<GetAllPostCommentsForUserQueryRequest> result,
-        IEnumMessageTransformer<PostCommentsForUserSortTerm> messageTransformer,
-        GetAllPostCommentsForUserQueryRequest request)
-    {
-        result.ShouldHaveValidationErrorForProperty(p => p.SortTerm, messageTransformer, request);
+        public void ShouldHaveValidationErrorForSortTerm(IEnumMessageTransformer<PostCommentsForUserSortTerm> messageTransformer, GetAllPostCommentsForUserQueryRequest request)
+        {
+            result.ShouldHaveValidationErrorForProperty(p => p.SortTerm, messageTransformer, request);
+        }
     }
 }

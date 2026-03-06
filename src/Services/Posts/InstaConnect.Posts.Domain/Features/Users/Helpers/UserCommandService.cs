@@ -1,4 +1,5 @@
 ﻿namespace InstaConnect.Posts.Domain.Features.Users.Helpers;
+
 internal class UserCommandService : IUserCommandService
 {
     private readonly IUserFactory _factory;

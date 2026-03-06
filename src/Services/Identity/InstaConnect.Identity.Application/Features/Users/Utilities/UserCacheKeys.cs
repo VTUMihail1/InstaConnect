@@ -1,6 +1,7 @@
 ﻿using InstaConnect.Common.Domain.Extensions;
 
 namespace InstaConnect.Identity.Application.Features.Users.Utilities;
+
 public static class UserCacheKeys
 {
     public static string GetCurrent(string currentId)

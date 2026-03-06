@@ -9,19 +9,22 @@ namespace InstaConnect.Posts.Domain.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddDomain(this IServiceCollection serviceCollection)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection
-            .AddUserServices()
-            .AddPostServices()
-            .AddPostLikeServices()
-            .AddPostCommentServices()
-            .AddPostCommentLikeServices();
+        public IServiceCollection AddDomain()
+        {
+            serviceCollection
+                .AddUserServices()
+                .AddPostServices()
+                .AddPostLikeServices()
+                .AddPostCommentServices()
+                .AddPostCommentLikeServices();
 
-        serviceCollection
-            .AddMapper(PostDomainReference.Assembly, CommonDomainReference.Assembly)
-            .AddServicesWithMatchingInterfaces(PostDomainReference.Assembly);
+            serviceCollection
+                .AddMapper(PostDomainReference.Assembly, CommonDomainReference.Assembly)
+                .AddServicesWithMatchingInterfaces(PostDomainReference.Assembly);
 
-        return serviceCollection;
+            return serviceCollection;
+        }
     }
 }

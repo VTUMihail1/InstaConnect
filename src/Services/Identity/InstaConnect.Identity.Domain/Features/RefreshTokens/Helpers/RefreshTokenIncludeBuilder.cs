@@ -29,7 +29,7 @@ public class RefreshTokenIncludeBuilder
 
         return this;
     }
-    
+
     public RefreshTokenInclude Build()
     {
         return new(_descriptors);

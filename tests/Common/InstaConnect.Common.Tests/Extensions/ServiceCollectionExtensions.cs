@@ -9,38 +9,41 @@ using Microsoft.Extensions.DependencyInjection;
 using WebMotions.Fake.Authentication.JwtBearer;
 
 namespace InstaConnect.Common.Tests.Extensions;
+
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddTestEventHarness(this IServiceCollection serviceCollection, string connectionString, params Assembly[] currentAssemblies)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection.AddMassTransitTestEventHarness(connectionString, currentAssemblies);
-
-        serviceCollection.AddScoped<ITestHarnessFactory>(_ => new TestHarnessFactory(connectionString, currentAssemblies));
-        serviceCollection.AddScoped<IEventHarness, EventHarness>();
-
-        return serviceCollection;
-    }
-
-    internal static IServiceCollection AddMassTransitTestEventHarness(this IServiceCollection serviceCollection, string connectionString, params Assembly[] currentAssemblies)
-    {
-        serviceCollection.AddMassTransitTestHarness(busConfigurator =>
+        public IServiceCollection AddTestEventHarness(string connectionString, params Assembly[] currentAssemblies)
         {
-            busConfigurator.AddConsumers(currentAssemblies);
+            serviceCollection.AddMassTransitTestEventHarness(connectionString, currentAssemblies);
 
-            busConfigurator.UsingRabbitMq((context, configurator) =>
+            serviceCollection.AddScoped<ITestHarnessFactory>(_ => new TestHarnessFactory(connectionString, currentAssemblies));
+            serviceCollection.AddScoped<IEventHarness, EventHarness>();
+
+            return serviceCollection;
+        }
+
+        internal IServiceCollection AddMassTransitTestEventHarness(string connectionString, params Assembly[] currentAssemblies)
+        {
+            serviceCollection.AddMassTransitTestHarness(busConfigurator =>
             {
-                configurator.Host(new Uri(connectionString));
+                busConfigurator.AddConsumers(currentAssemblies);
 
-                configurator.ConfigureEndpoints(context);
+                busConfigurator.UsingRabbitMq((context, configurator) =>
+                {
+                    configurator.Host(new Uri(connectionString));
+
+                    configurator.ConfigureEndpoints(context);
+                });
             });
-        });
 
-        return serviceCollection;
-    }
+            return serviceCollection;
+        }
 
-    public static IServiceCollection AddTestJwtAuth(this IServiceCollection serviceCollection)
-    {
-        serviceCollection
+        public IServiceCollection AddTestJwtAuth()
+        {
+            serviceCollection
                 .AddAuthentication(opt =>
                 {
                     opt.DefaultAuthenticateScheme = FakeJwtBearerDefaults.AuthenticationScheme;
@@ -48,6 +51,7 @@ public static class ServiceCollectionExtensions
                 })
                 .AddFakeJwtBearer(opt => opt.BearerValueType = FakeJwtBearerBearerValueType.Jwt);
 
-        return serviceCollection;
+            return serviceCollection;
+        }
     }
 }

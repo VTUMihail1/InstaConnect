@@ -2,37 +2,39 @@
 using InstaConnect.Posts.Domain.Features.Users.Models.ValueObjects;
 
 namespace InstaConnect.Posts.Application.Tests.Features.Users.Utilities;
+
 public static class UserMapper
 {
-    internal static UserId ToIdResponse(
-        this User user)
+    extension(User user)
     {
-        return user.Id;
-    }
+        internal UserId ToIdResponse(
+)
+        {
+            return user.Id;
+        }
 
-    public static UserResponse ToFullResponse(this User user)
-    {
-        return new(user.Id,
-                   user.FirstName,
-                   user.LastName,
-                   user.Email,
-                   user.Name,
-                   user.ProfileImage,
-                   user.CreatedAtUtc,
-                   user.UpdatedAtUtc);
-    }
+        public UserResponse ToFullResponse()
+        {
+            return new(user.Id,
+                       user.FirstName,
+                       user.LastName,
+                       user.Email,
+                       user.Name,
+                       user.ProfileImage,
+                       user.CreatedAtUtc,
+                       user.UpdatedAtUtc);
+        }
 
-    public static UserId ToResponse(
-        this User user,
-        AddUserCommandRequest request)
-    {
-        return user.ToIdResponse();
-    }
+        public UserId ToResponse(
+            AddUserCommandRequest request)
+        {
+            return user.ToIdResponse();
+        }
 
-    public static UserId ToResponse(
-        this User user,
-        UpdateUserCommandRequest request)
-    {
-        return user.ToIdResponse();
+        public UserId ToResponse(
+            UpdateUserCommandRequest request)
+        {
+            return user.ToIdResponse();
+        }
     }
 }

@@ -6,26 +6,29 @@ namespace InstaConnect.Identity.Infrastructure.Features.UserClaims.Extensions;
 
 internal static class ServiceCollectionExtensions
 {
-    internal static IServiceCollection AddUserClaimServices(this IServiceCollection serviceCollection)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection.AddImplementationsOf<IUserClaimIncluder>(IdentityInfrastructureReference.Assembly);
-
-        BsonClassMap.TryRegisterClassMap<UserClaim>(cm =>
+        internal IServiceCollection AddUserClaimServices()
         {
-            cm.MapIdMember(c => c.Id);
+            serviceCollection.AddImplementationsOf<IUserClaimIncluder>(IdentityInfrastructureReference.Assembly);
 
-            cm.MapMember(c => c.Id);
-            cm.MapMember(c => c.CreatedAtUtc);
+            BsonClassMap.TryRegisterClassMap<UserClaim>(cm =>
+            {
+                cm.MapIdMember(c => c.Id);
 
-            cm.MapMemberWithoutSerialization(c => c.User);
+                cm.MapMember(c => c.Id);
+                cm.MapMember(c => c.CreatedAtUtc);
 
-            cm.MapCreator(c => new UserClaim(
-                c.Id,
-                c.CreatedAtUtc));
+                cm.MapMemberWithoutSerialization(c => c.User);
 
-            cm.SetIgnoreExtraElements(true);
-        });
+                cm.MapCreator(c => new UserClaim(
+                    c.Id,
+                    c.CreatedAtUtc));
 
-        return serviceCollection;
+                cm.SetIgnoreExtraElements(true);
+            });
+
+            return serviceCollection;
+        }
     }
 }

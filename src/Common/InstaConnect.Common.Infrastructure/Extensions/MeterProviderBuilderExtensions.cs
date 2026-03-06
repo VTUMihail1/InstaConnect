@@ -6,10 +6,13 @@ namespace InstaConnect.Common.Infrastructure.Extensions;
 
 public static class MeterProviderBuilderExtensions
 {
-    public static MeterProviderBuilder AddMassTransitInstrumentation(this MeterProviderBuilder meterProviderBuilder)
+    extension(MeterProviderBuilder meterProviderBuilder)
     {
-        meterProviderBuilder.AddMeter(InstrumentationOptions.MeterName);
+        public MeterProviderBuilder AddMassTransitInstrumentation()
+        {
+            meterProviderBuilder.AddMeter(InstrumentationOptions.MeterName);
 
-        return meterProviderBuilder;
+            return meterProviderBuilder;
+        }
     }
 }

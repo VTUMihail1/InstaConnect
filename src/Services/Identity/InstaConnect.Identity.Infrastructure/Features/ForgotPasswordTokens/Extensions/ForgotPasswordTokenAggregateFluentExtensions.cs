@@ -4,10 +4,11 @@ namespace InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Ext
 
 public static class ForgotPasswordTokenAggregateFluentExtensions
 {
-    public static IAggregateFluent<ForgotPasswordToken> Match(
-        this IAggregateFluent<ForgotPasswordToken> aggregate,
-        ForgotPasswordTokenId filter)
+    extension(IAggregateFluent<ForgotPasswordToken> aggregate)
     {
-        return aggregate.Match(filter.GetFilter());
+        public IAggregateFluent<ForgotPasswordToken> Match(ForgotPasswordTokenId filter)
+        {
+            return aggregate.Match(filter.GetFilter());
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿namespace InstaConnect.Posts.Domain.Features.Users.Abstractions;
+
 public interface IUserCommandService
 {
     public Task<UserId> AddAsync(AddUserCommand command, CancellationToken cancellationToken);

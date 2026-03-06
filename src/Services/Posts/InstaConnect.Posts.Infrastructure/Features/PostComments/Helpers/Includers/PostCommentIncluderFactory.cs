@@ -1,6 +1,7 @@
 ﻿using InstaConnect.Posts.Domain.Models.Requests;
 
 namespace InstaConnect.Posts.Infrastructure.Features.PostComments.Helpers.Includers;
+
 internal class PostCommentIncluderFactory : IPostCommentIncluderFactory
 {
     private readonly IEnumerable<IPostCommentIncluder> _includers;

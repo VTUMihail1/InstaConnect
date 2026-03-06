@@ -4,13 +4,16 @@ namespace InstaConnect.Common.Infrastructure.Extensions;
 
 public static class ClientSessionHandleExtensions
 {
-    public static bool IsInTransaction(this IClientSessionHandle? session)
+    extension(IClientSessionHandle? session)
     {
-        return session != null && session!.IsInTransaction;
-    }
+        public bool IsInTransaction()
+        {
+            return session != null && session!.IsInTransaction;
+        }
 
-    public static bool IsNotInTransaction(this IClientSessionHandle? session)
-    {
-        return !session.IsInTransaction();
+        public bool IsNotInTransaction()
+        {
+            return !session.IsInTransaction();
+        }
     }
 }

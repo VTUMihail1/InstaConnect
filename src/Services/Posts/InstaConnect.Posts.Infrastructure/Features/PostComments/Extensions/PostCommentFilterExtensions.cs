@@ -9,33 +9,41 @@ namespace InstaConnect.Posts.Infrastructure.Features.PostComments.Extensions;
 
 internal static class PostCommentFilterExtensions
 {
-    public static FilterDefinition<PostComment> GetFilter(this PostCommentsFilterQuery filter)
+    extension(PostCommentsFilterQuery filter)
     {
-        var id = filter.Id.GetFilterForIdEquals<PostComment>(p => p.Id.Id.Id);
-        var userName = filter.UserName.GetFilterForNameStartsWith<PostComment>(p => p.User!.Name.Value);
+        public FilterDefinition<PostComment> GetFilter()
+        {
+            var id = filter.Id.GetFilterForIdEquals<PostComment>(p => p.Id.Id.Id);
+            var userName = filter.UserName.GetFilterForNameStartsWith<PostComment>(p => p.User!.Name.Value);
 
-        return Builders<PostComment>.Filter.And(id, userName);
+            return Builders<PostComment>.Filter.And(id, userName);
+        }
     }
 
-    public static FilterDefinition<PostComment> GetFilter(this PostCommentsForUserFilterQuery filter)
+    extension(PostCommentsForUserFilterQuery filter)
     {
-        return filter.UserId.GetFilterForIdEquals<PostComment>(p => p.UserId.Id);
+        public FilterDefinition<PostComment> GetFilter()
+        {
+            return filter.UserId.GetFilterForIdEquals<PostComment>(p => p.UserId.Id);
+        }
     }
 
-    public static FilterDefinition<PostComment> GetFilter(this PostCommentId filter)
+    extension(PostCommentId filter)
     {
-        return filter.GetFilterForIdEquals<PostComment>(p => p.Id.Id.Id, p => p.Id.CommentId);
-    }
+        public FilterDefinition<PostComment> GetFilter()
+        {
+            return filter.GetFilterForIdEquals<PostComment>(p => p.Id.Id.Id, p => p.Id.CommentId);
+        }
 
-    public static FilterDefinition<T> GetFilterForIdEquals<T>(
-        this PostCommentId filter,
-        Expression<Func<T, object>> idField,
-        Expression<Func<T, object>> commentIdField)
-    {
-        var id = filter.Id.GetFilterForIdEquals(idField);
-        var commentId = Builders<T>.Filter.EqualsCaseInsensitive(
-            commentIdField, filter.CommentId, filter.CommentId.IsNullOrEmptyOrWhiteSpace());
+        public FilterDefinition<T> GetFilterForIdEquals<T>(
+            Expression<Func<T, object>> idField,
+            Expression<Func<T, object>> commentIdField)
+        {
+            var id = filter.Id.GetFilterForIdEquals(idField);
+            var commentId = Builders<T>.Filter.EqualsCaseInsensitive(
+                commentIdField, filter.CommentId, filter.CommentId.IsNullOrEmptyOrWhiteSpace());
 
-        return Builders<T>.Filter.And(id, commentId);
+            return Builders<T>.Filter.And(id, commentId);
+        }
     }
 }

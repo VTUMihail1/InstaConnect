@@ -15,7 +15,7 @@ internal class TooLongStringTransformer : IStringTransformer
 
     public string Transform(string? value)
     {
-        var result = DataFaker.GetString(IntOperations.Increment(_maxLength));
+        var result = DataFaker.GetString(_maxLength.Increment());
 
         return result;
     }

@@ -3,6 +3,7 @@ using InstaConnect.Common.Domain.Models;
 using InstaConnect.Common.Infrastructure.Abstractions;
 
 namespace InstaConnect.Common.Infrastructure.Helpers.SortOrders;
+
 internal class SortOrdererFactory : ISortOrdererFactory
 {
     private readonly IEnumerable<ISortOrderer> _sortOrderers;

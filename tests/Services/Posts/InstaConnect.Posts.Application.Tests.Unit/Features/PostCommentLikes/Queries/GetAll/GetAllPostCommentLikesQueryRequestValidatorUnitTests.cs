@@ -1,6 +1,5 @@
 ﻿using InstaConnect.Common.Domain.Models;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Requests;
-using InstaConnect.Posts.Tests.Features.PostCommentLikes.DataAttributes.SortTerm;
 
 namespace InstaConnect.Posts.Application.Tests.Unit.Features.PostCommentLikes.Queries.GetAll;
 

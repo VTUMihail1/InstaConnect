@@ -1,6 +1,7 @@
 ﻿using InstaConnect.Posts.Domain.Models.Requests;
 
 namespace InstaConnect.Posts.Infrastructure.Features.Posts.Helpers.Includers;
+
 internal class PostIncluderFactory : IPostIncluderFactory
 {
     private readonly IEnumerable<IPostIncluder> _includers;

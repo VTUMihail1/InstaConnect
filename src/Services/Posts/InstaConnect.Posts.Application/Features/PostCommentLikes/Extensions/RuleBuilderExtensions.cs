@@ -2,23 +2,26 @@
 
 internal static class RuleBuilderExtensions
 {
-    public static IRuleBuilderOptions<T, int> PostCommentLikePageMinValueWithMessage<T>(this IRuleBuilder<T, int> ruleBuilder)
+    extension<T>(IRuleBuilder<T, int> ruleBuilder)
     {
-        return ruleBuilder.MinValueWithMessage(PostCommentLikeConfigurations.PageMinValue);
-    }
+        public IRuleBuilderOptions<T, int> PostCommentLikePageMinValueWithMessage()
+        {
+            return ruleBuilder.MinValueWithMessage(PostCommentLikeConfigurations.PageMinValue);
+        }
 
-    public static IRuleBuilderOptions<T, int> PostCommentLikePageMaxValueWithMessage<T>(this IRuleBuilder<T, int> ruleBuilder)
-    {
-        return ruleBuilder.MaxValueWithMessage(PostCommentLikeConfigurations.PageMaxValue);
-    }
+        public IRuleBuilderOptions<T, int> PostCommentLikePageMaxValueWithMessage()
+        {
+            return ruleBuilder.MaxValueWithMessage(PostCommentLikeConfigurations.PageMaxValue);
+        }
 
-    public static IRuleBuilderOptions<T, int> PostCommentLikePageSizeMinValueWithMessage<T>(this IRuleBuilder<T, int> ruleBuilder)
-    {
-        return ruleBuilder.MinValueWithMessage(PostCommentLikeConfigurations.PageSizeMinValue);
-    }
+        public IRuleBuilderOptions<T, int> PostCommentLikePageSizeMinValueWithMessage()
+        {
+            return ruleBuilder.MinValueWithMessage(PostCommentLikeConfigurations.PageSizeMinValue);
+        }
 
-    public static IRuleBuilderOptions<T, int> PostCommentLikePageSizeMaxValueWithMessage<T>(this IRuleBuilder<T, int> ruleBuilder)
-    {
-        return ruleBuilder.MaxValueWithMessage(PostCommentLikeConfigurations.PageSizeMaxValue);
+        public IRuleBuilderOptions<T, int> PostCommentLikePageSizeMaxValueWithMessage()
+        {
+            return ruleBuilder.MaxValueWithMessage(PostCommentLikeConfigurations.PageSizeMaxValue);
+        }
     }
 }

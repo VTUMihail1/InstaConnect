@@ -2,58 +2,64 @@
 
 internal static class RuleBuilderExtensions
 {
-    public static IRuleBuilderOptions<T, string> UserIdMinLengthWithMessage<T>(this IRuleBuilder<T, string> ruleBuilder)
+    extension<T>(IRuleBuilder<T, string> ruleBuilder)
     {
-        return ruleBuilder.MinLengthWithMessage(UserConfigurations.IdMinLength);
+        public IRuleBuilderOptions<T, string> UserIdMinLengthWithMessage()
+        {
+            return ruleBuilder.MinLengthWithMessage(UserConfigurations.IdMinLength);
+        }
+
+        public IRuleBuilderOptions<T, string> UserIdMaxLengthWithMessage()
+        {
+            return ruleBuilder.MaxLengthWithMessage(UserConfigurations.IdMaxLength);
+        }
+
+        public IRuleBuilderOptions<T, string> UserEmailMinLengthWithMessage()
+        {
+            return ruleBuilder.MinLengthWithMessage(UserConfigurations.EmailMinLength);
+        }
+
+        public IRuleBuilderOptions<T, string> UserEmailMaxLengthWithMessage()
+        {
+            return ruleBuilder.MaxLengthWithMessage(UserConfigurations.EmailMaxLength);
+        }
+
+        public IRuleBuilderOptions<T, string> UserFirstNameMinLengthWithMessage()
+        {
+            return ruleBuilder.MinLengthWithMessage(UserConfigurations.FirstNameMinLength);
+        }
+
+        public IRuleBuilderOptions<T, string> UserFirstNameMaxLengthWithMessage()
+        {
+            return ruleBuilder.MaxLengthWithMessage(UserConfigurations.FirstNameMaxLength);
+        }
+
+        public IRuleBuilderOptions<T, string> UserLastNameMinLengthWithMessage()
+        {
+            return ruleBuilder.MinLengthWithMessage(UserConfigurations.LastNameMinLength);
+        }
+
+        public IRuleBuilderOptions<T, string> UserLastNameMaxLengthWithMessage()
+        {
+            return ruleBuilder.MaxLengthWithMessage(UserConfigurations.LastNameMaxLength);
+        }
+
+        public IRuleBuilderOptions<T, string> UserNameMinLengthWithMessage()
+        {
+            return ruleBuilder.MinLengthWithMessage(UserConfigurations.NameMinLength);
+        }
+
+        public IRuleBuilderOptions<T, string> UserNameMaxLengthWithMessage()
+        {
+            return ruleBuilder.MaxLengthWithMessage(UserConfigurations.NameMaxLength);
+        }
     }
 
-    public static IRuleBuilderOptions<T, string> UserIdMaxLengthWithMessage<T>(this IRuleBuilder<T, string> ruleBuilder)
+    extension<T>(IRuleBuilder<T, string?> ruleBuilder)
     {
-        return ruleBuilder.MaxLengthWithMessage(UserConfigurations.IdMaxLength);
-    }
-
-    public static IRuleBuilderOptions<T, string> UserEmailMinLengthWithMessage<T>(this IRuleBuilder<T, string> ruleBuilder)
-    {
-        return ruleBuilder.MinLengthWithMessage(UserConfigurations.EmailMinLength);
-    }
-
-    public static IRuleBuilderOptions<T, string> UserEmailMaxLengthWithMessage<T>(this IRuleBuilder<T, string> ruleBuilder)
-    {
-        return ruleBuilder.MaxLengthWithMessage(UserConfigurations.EmailMaxLength);
-    }
-
-    public static IRuleBuilderOptions<T, string> UserFirstNameMinLengthWithMessage<T>(this IRuleBuilder<T, string> ruleBuilder)
-    {
-        return ruleBuilder.MinLengthWithMessage(UserConfigurations.FirstNameMinLength);
-    }
-
-    public static IRuleBuilderOptions<T, string> UserFirstNameMaxLengthWithMessage<T>(this IRuleBuilder<T, string> ruleBuilder)
-    {
-        return ruleBuilder.MaxLengthWithMessage(UserConfigurations.FirstNameMaxLength);
-    }
-
-    public static IRuleBuilderOptions<T, string> UserLastNameMinLengthWithMessage<T>(this IRuleBuilder<T, string> ruleBuilder)
-    {
-        return ruleBuilder.MinLengthWithMessage(UserConfigurations.LastNameMinLength);
-    }
-
-    public static IRuleBuilderOptions<T, string> UserLastNameMaxLengthWithMessage<T>(this IRuleBuilder<T, string> ruleBuilder)
-    {
-        return ruleBuilder.MaxLengthWithMessage(UserConfigurations.LastNameMaxLength);
-    }
-
-    public static IRuleBuilderOptions<T, string> UserNameMinLengthWithMessage<T>(this IRuleBuilder<T, string> ruleBuilder)
-    {
-        return ruleBuilder.MinLengthWithMessage(UserConfigurations.NameMinLength);
-    }
-
-    public static IRuleBuilderOptions<T, string> UserNameMaxLengthWithMessage<T>(this IRuleBuilder<T, string> ruleBuilder)
-    {
-        return ruleBuilder.MaxLengthWithMessage(UserConfigurations.NameMaxLength);
-    }
-
-    public static IRuleBuilderOptions<T, string?> UserProfileImageUrlMaxLengthWithMessage<T>(this IRuleBuilder<T, string?> ruleBuilder)
-    {
-        return ruleBuilder!.MaxLengthWithMessage(UserConfigurations.ProfileImageUrlMaxLength);
+        public IRuleBuilderOptions<T, string?> UserProfileImageUrlMaxLengthWithMessage()
+        {
+            return ruleBuilder!.MaxLengthWithMessage(UserConfigurations.ProfileImageUrlMaxLength);
+        }
     }
 }

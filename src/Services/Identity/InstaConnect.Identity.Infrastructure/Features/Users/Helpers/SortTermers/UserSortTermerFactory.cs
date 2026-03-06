@@ -1,4 +1,5 @@
 ﻿namespace InstaConnect.Identity.Infrastructure.Features.Users.Helpers.SortTermers;
+
 internal class UserSortTermerFactory : IUsersSortTermerFactory
 {
     private readonly IEnumerable<IUsersSortTermer> _sortTermer;

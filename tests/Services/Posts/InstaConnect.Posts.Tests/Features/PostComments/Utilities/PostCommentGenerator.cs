@@ -1,14 +1,12 @@
-﻿using InstaConnect.Posts.Domain.Features.PostLikes.Models.ValueObjects;
-using InstaConnect.Posts.Tests.Features.PostCommentLikes.Utilities;
-using InstaConnect.Posts.Tests.Features.PostLikes.Utilities;
-using InstaConnect.Posts.Tests.Features.Posts.Utilities;
+﻿namespace InstaConnect.Posts.Tests.Features.PostComments.Utilities;
 
-namespace InstaConnect.Posts.Tests.Features.PostComments.Utilities;
 public static class PostCommentGenerator
 {
-    public static ICollection<PostComment> Generate(this PostComment basePostComment, IEnumerable<Post> posts, IEnumerable<User> users)
+    extension(PostComment basePostComment)
     {
-        return [basePostComment, .. posts
+        public ICollection<PostComment> Generate(IEnumerable<Post> posts, IEnumerable<User> users)
+        {
+            return [basePostComment, .. posts
               .SelectMany(post =>
                   users.Select(user =>
                   {
@@ -19,7 +17,7 @@ public static class PostCommentGenerator
                                                          user.Id,
                                                          PostCommentDataFaker.GetCreatedAtUtc(),
                                                          PostCommentDataFaker.GetUpdatedAtUtc());
-                        
+
                         postComment.AddUser(user);
                         postComment.AddPost(post);
                         user.AddPostComment(postComment);
@@ -27,5 +25,6 @@ public static class PostCommentGenerator
 
                         return postComment;
                   }))];
+        }
     }
 }

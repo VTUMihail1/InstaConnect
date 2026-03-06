@@ -1,13 +1,12 @@
-﻿using InstaConnect.Posts.Tests.Features.PostLikes.Utilities;
+﻿namespace InstaConnect.Posts.Tests.Features.Posts.Utilities;
 
-using RabbitMQ.Client;
-
-namespace InstaConnect.Posts.Tests.Features.Posts.Utilities;
 public static class PostGenerator
 {
-    public static ICollection<Post> Generate(this Post basePost, IEnumerable<User> users, int numberOfIterations = 3)
+    extension(Post basePost)
     {
-        return [basePost, .. users
+        public ICollection<Post> Generate(IEnumerable<User> users, int numberOfIterations = 3)
+        {
+            return [basePost, .. users
             .SelectMany(user =>
                 Enumerable.Range(default, numberOfIterations).Select(_ =>
                 {
@@ -24,5 +23,6 @@ public static class PostGenerator
 
                     return post;
                 }))];
+        }
     }
 }

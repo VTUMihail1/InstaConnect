@@ -14,7 +14,7 @@ internal class TooSmallIntTransformer : IIntTransformer
 
     public int Transform(int value)
     {
-        return IntOperations.Decrement(_minValue);
+        return _minValue.Decrement();
     }
 }
 

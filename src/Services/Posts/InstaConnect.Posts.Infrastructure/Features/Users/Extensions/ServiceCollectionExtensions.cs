@@ -6,39 +6,42 @@ namespace InstaConnect.Posts.Infrastructure.Features.Users.Extensions;
 
 internal static class ServiceCollectionExtensions
 {
-    internal static IServiceCollection AddUserServices(this IServiceCollection serviceCollection)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection.AddImplementationsOf<IUserIncluder>(PostInfrastructureReference.Assembly);
-
-        BsonClassMap.TryRegisterClassMap<User>(cm =>
+        internal IServiceCollection AddUserServices()
         {
-            cm.MapIdMember(c => c.Id);
+            serviceCollection.AddImplementationsOf<IUserIncluder>(PostInfrastructureReference.Assembly);
 
-            cm.MapMember(c => c.Id);
-            cm.MapMember(c => c.FirstName);
-            cm.MapMember(c => c.LastName);
-            cm.MapMember(c => c.Name);
-            cm.MapMember(c => c.Email);
-            cm.MapMember(c => c.ProfileImage);
-            cm.MapMember(c => c.CreatedAtUtc);
-            cm.MapMember(c => c.UpdatedAtUtc);
+            BsonClassMap.TryRegisterClassMap<User>(cm =>
+            {
+                cm.MapIdMember(c => c.Id);
 
-            cm.MapMemberWithoutSerialization(c => c.Posts);
-            cm.MapMemberWithoutSerialization(c => c.PostLikes);
-            cm.MapMemberWithoutSerialization(c => c.PostComments);
-            cm.MapMemberWithoutSerialization(c => c.PostCommentLikes);
+                cm.MapMember(c => c.Id);
+                cm.MapMember(c => c.FirstName);
+                cm.MapMember(c => c.LastName);
+                cm.MapMember(c => c.Name);
+                cm.MapMember(c => c.Email);
+                cm.MapMember(c => c.ProfileImage);
+                cm.MapMember(c => c.CreatedAtUtc);
+                cm.MapMember(c => c.UpdatedAtUtc);
 
-            cm.MapCreator(c => new User(
-                c.Id,
-                c.FirstName,
-                c.LastName,
-                c.Email,
-                c.Name,
-                c.ProfileImage,
-                c.CreatedAtUtc,
-                c.UpdatedAtUtc));
-        });
+                cm.MapMemberWithoutSerialization(c => c.Posts);
+                cm.MapMemberWithoutSerialization(c => c.PostLikes);
+                cm.MapMemberWithoutSerialization(c => c.PostComments);
+                cm.MapMemberWithoutSerialization(c => c.PostCommentLikes);
 
-        return serviceCollection;
+                cm.MapCreator(c => new User(
+                    c.Id,
+                    c.FirstName,
+                    c.LastName,
+                    c.Email,
+                    c.Name,
+                    c.ProfileImage,
+                    c.CreatedAtUtc,
+                    c.UpdatedAtUtc));
+            });
+
+            return serviceCollection;
+        }
     }
 }

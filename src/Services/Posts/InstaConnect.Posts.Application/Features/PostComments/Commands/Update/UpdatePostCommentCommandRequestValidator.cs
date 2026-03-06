@@ -1,4 +1,5 @@
 ﻿namespace InstaConnect.Posts.Application.Features.PostComments.Commands.Update;
+
 public class UpdatePostCommentCommandRequestValidator : AbstractValidator<UpdatePostCommentCommandRequest>
 {
     public UpdatePostCommentCommandRequestValidator()

@@ -6,6 +6,7 @@ using InstaConnect.Common.Presentation.Models;
 using Microsoft.AspNetCore.Http;
 
 namespace InstaConnect.Common.Presentation.Helpers;
+
 public class ApplicationProblemDetailsService : IApplicationProblemDetailsService
 {
     private readonly IProblemDetailsService _problemDetailsService;

@@ -1,7 +1,6 @@
 ﻿using System.Security.Claims;
 
 using InstaConnect.Common.Domain.Models;
-using InstaConnect.Identity.Domain.Features.Users.Abstractions;
 using InstaConnect.Identity.Domain.Features.Users.Models.Requests;
 using InstaConnect.Identity.Presentation.Features.Users.Abstractions;
 

@@ -3,6 +3,7 @@
 using InstaConnect.Common.Infrastructure.Abstractions;
 
 namespace InstaConnect.Common.Infrastructure.Helpers;
+
 internal class Encoder : IEncoder
 {
     public byte[] GetBytesUTF8(string key)

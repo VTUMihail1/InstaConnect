@@ -1,6 +1,7 @@
 ﻿using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAllForUser;
 
 namespace InstaConnect.Posts.Presentation.Tests.Features.PostLikes.Utilities;
+
 public static class PostLikeMatcher
 {
     public static GetAllPostLikesQueryRequest IsGetAllPostLikesQueryRequest(GetAllPostLikesApiRequest request)

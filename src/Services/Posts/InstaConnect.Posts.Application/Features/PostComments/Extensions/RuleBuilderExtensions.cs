@@ -2,43 +2,49 @@
 
 internal static class RuleBuilderExtensions
 {
-    public static IRuleBuilderOptions<T, string> PostCommentIdMinLengthWithMessage<T>(this IRuleBuilder<T, string> ruleBuilder)
+    extension<T>(IRuleBuilder<T, string> ruleBuilder)
     {
-        return ruleBuilder.MinLengthWithMessage(PostCommentConfigurations.IdMinLength);
+        public IRuleBuilderOptions<T, string> PostCommentIdMinLengthWithMessage()
+        {
+            return ruleBuilder.MinLengthWithMessage(PostCommentConfigurations.IdMinLength);
+        }
+
+        public IRuleBuilderOptions<T, string> PostCommentIdMaxLengthWithMessage()
+        {
+            return ruleBuilder.MaxLengthWithMessage(PostCommentConfigurations.IdMaxLength);
+        }
+
+        public IRuleBuilderOptions<T, string> PostCommentContentMinLengthWithMessage()
+        {
+            return ruleBuilder.MinLengthWithMessage(PostCommentConfigurations.ContentMinLength);
+        }
+
+        public IRuleBuilderOptions<T, string> PostCommentContentMaxLengthWithMessage()
+        {
+            return ruleBuilder.MaxLengthWithMessage(PostCommentConfigurations.ContentMaxLength);
+        }
     }
 
-    public static IRuleBuilderOptions<T, string> PostCommentIdMaxLengthWithMessage<T>(this IRuleBuilder<T, string> ruleBuilder)
+    extension<T>(IRuleBuilder<T, int> ruleBuilder)
     {
-        return ruleBuilder.MaxLengthWithMessage(PostCommentConfigurations.IdMaxLength);
-    }
+        public IRuleBuilderOptions<T, int> PostCommentPageMinValueWithMessage()
+        {
+            return ruleBuilder.MinValueWithMessage(PostCommentConfigurations.PageMinValue);
+        }
 
-    public static IRuleBuilderOptions<T, string> PostCommentContentMinLengthWithMessage<T>(this IRuleBuilder<T, string> ruleBuilder)
-    {
-        return ruleBuilder.MinLengthWithMessage(PostCommentConfigurations.ContentMinLength);
-    }
+        public IRuleBuilderOptions<T, int> PostCommentPageMaxValueWithMessage()
+        {
+            return ruleBuilder.MaxValueWithMessage(PostCommentConfigurations.PageMaxValue);
+        }
 
-    public static IRuleBuilderOptions<T, string> PostCommentContentMaxLengthWithMessage<T>(this IRuleBuilder<T, string> ruleBuilder)
-    {
-        return ruleBuilder.MaxLengthWithMessage(PostCommentConfigurations.ContentMaxLength);
-    }
+        public IRuleBuilderOptions<T, int> PostCommentPageSizeMinValueWithMessage()
+        {
+            return ruleBuilder.MinValueWithMessage(PostCommentConfigurations.PageSizeMinValue);
+        }
 
-    public static IRuleBuilderOptions<T, int> PostCommentPageMinValueWithMessage<T>(this IRuleBuilder<T, int> ruleBuilder)
-    {
-        return ruleBuilder.MinValueWithMessage(PostCommentConfigurations.PageMinValue);
-    }
-
-    public static IRuleBuilderOptions<T, int> PostCommentPageMaxValueWithMessage<T>(this IRuleBuilder<T, int> ruleBuilder)
-    {
-        return ruleBuilder.MaxValueWithMessage(PostCommentConfigurations.PageMaxValue);
-    }
-
-    public static IRuleBuilderOptions<T, int> PostCommentPageSizeMinValueWithMessage<T>(this IRuleBuilder<T, int> ruleBuilder)
-    {
-        return ruleBuilder.MinValueWithMessage(PostCommentConfigurations.PageSizeMinValue);
-    }
-
-    public static IRuleBuilderOptions<T, int> PostCommentPageSizeMaxValueWithMessage<T>(this IRuleBuilder<T, int> ruleBuilder)
-    {
-        return ruleBuilder.MaxValueWithMessage(PostCommentConfigurations.PageSizeMaxValue);
+        public IRuleBuilderOptions<T, int> PostCommentPageSizeMaxValueWithMessage()
+        {
+            return ruleBuilder.MaxValueWithMessage(PostCommentConfigurations.PageSizeMaxValue);
+        }
     }
 }

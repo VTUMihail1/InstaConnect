@@ -1,5 +1,4 @@
-﻿using System.Formats.Asn1;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 using InstaConnect.Common.Domain.Extensions;
 
@@ -9,28 +8,31 @@ namespace InstaConnect.Common.Infrastructure.Extensions;
 
 public static class BsonRegularExpressionExtensions
 {
-    public static BsonRegularExpression GetEqualsCaseInsensitiveRegex(this object value)
+    extension(object value)
     {
-        return value.GetCaseInsensitiveRegex("^{0}$");
-    }
+        public BsonRegularExpression GetEqualsCaseInsensitiveRegex()
+        {
+            return value.GetCaseInsensitiveRegex("^{0}$");
+        }
 
-    public static BsonRegularExpression GetStartsWithCaseInsensitiveRegex(this object value)
-    {
-        return value.GetCaseInsensitiveRegex("^{0}");
-    }
+        public BsonRegularExpression GetStartsWithCaseInsensitiveRegex()
+        {
+            return value.GetCaseInsensitiveRegex("^{0}");
+        }
 
-    public static BsonRegularExpression GetEndsWithCaseInsensitiveRegex(this object value)
-    {
-        return value.GetCaseInsensitiveRegex("{0}$");
-    }
+        public BsonRegularExpression GetEndsWithCaseInsensitiveRegex()
+        {
+            return value.GetCaseInsensitiveRegex("{0}$");
+        }
 
-    public static BsonRegularExpression GetContainsCaseInsensitiveRegex(this object value)
-    {
-        return value.GetCaseInsensitiveRegex("{0}");
-    }
+        public BsonRegularExpression GetContainsCaseInsensitiveRegex()
+        {
+            return value.GetCaseInsensitiveRegex("{0}");
+        }
 
-    public static BsonRegularExpression GetCaseInsensitiveRegex(this object value, string regexTemplate)
-    {
-        return new BsonRegularExpression(regexTemplate.FormatCurrentCulture(Regex.Escape(value.ToString()!)), "i");
+        public BsonRegularExpression GetCaseInsensitiveRegex(string regexTemplate)
+        {
+            return new BsonRegularExpression(regexTemplate.FormatCurrentCulture(Regex.Escape(value.ToString()!)), "i");
+        }
     }
 }

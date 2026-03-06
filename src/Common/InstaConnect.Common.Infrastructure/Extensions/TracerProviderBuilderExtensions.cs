@@ -6,10 +6,12 @@ namespace InstaConnect.Common.Infrastructure.Extensions;
 
 public static class TracerProviderBuilderExtensions
 {
-    public static TracerProviderBuilder AddMassTransitInstrumentation(this TracerProviderBuilder tracerProviderBuilder)
+    extension(TracerProviderBuilder tracerProviderBuilder)
     {
-        tracerProviderBuilder.AddSource(DiagnosticHeaders.DefaultListenerName);
-
-        return tracerProviderBuilder;
+        public TracerProviderBuilder AddMassTransitInstrumentation()
+        {
+            tracerProviderBuilder.AddSource(DiagnosticHeaders.DefaultListenerName);
+            return tracerProviderBuilder;
+        }
     }
 }

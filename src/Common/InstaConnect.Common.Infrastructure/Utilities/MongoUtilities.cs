@@ -1,4 +1,5 @@
 ﻿namespace InstaConnect.Common.Infrastructure.Utilities;
+
 public static class MongoUtilities
 {
     public const string RegexCaseInsensitive = "i";

@@ -23,28 +23,29 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Common.Presentation.Extensions;
+
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddAuthorizationPolicies(this IServiceCollection serviceCollection)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection.AddAuthorizationBuilder()
-            .SetDefaultPolicy(new AuthorizationPolicyBuilder()
-                .RequireAuthenticatedUser()
-                .RequireClaim(ClaimTypes.NameIdentifier)
-                .Build())
-            .AddPolicy(AppPolicies.AdminPolicy, policy => policy.RequireClaim(ApplicationClaims.Admin));
+        public IServiceCollection AddAuthorizationPolicies()
+        {
+            serviceCollection.AddAuthorizationBuilder()
+                .SetDefaultPolicy(new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .RequireClaim(ClaimTypes.NameIdentifier)
+                    .Build())
+                .AddPolicy(AppPolicies.AdminPolicy, policy => policy.RequireClaim(ApplicationClaims.Admin));
 
-        return serviceCollection;
-    }
+            return serviceCollection;
+        }
 
-    public static IServiceCollection AddApiControllers(this IServiceCollection serviceCollection)
-    {
-        serviceCollection
-            .AddHttpContextAccessor()
-            .AddScoped<ICookieStore, CookieStore>();
+        public IServiceCollection AddApiControllers()
+        {
+            serviceCollection.AddHttpContextAccessor()
+                             .AddScoped<ICookieStore, CookieStore>();
 
-        serviceCollection
-            .AddControllers(options =>
+            serviceCollection.AddControllers(options =>
             {
                 options.ValueProviderFactories.Add(new FromClaimValueProviderFactory());
                 options.ValueProviderFactories.Add(new FromCookieValueProviderFactory());
@@ -56,15 +57,13 @@ public static class ServiceCollectionExtensions
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });
 
-        serviceCollection
-            .Configure<ApiBehaviorOptions>(options => options.SuppressInferBindingSourcesForParameters = true);
+            serviceCollection.Configure<ApiBehaviorOptions>(options =>
+                options.SuppressInferBindingSourcesForParameters = true);
 
-        serviceCollection
-            .AddApiVersioning(options =>
+            serviceCollection.AddApiVersioning(options =>
             {
                 options.DefaultApiVersion = new ApiVersion(1);
                 options.ReportApiVersions = true;
-
             })
             .AddApiExplorer(options =>
             {
@@ -72,79 +71,73 @@ public static class ServiceCollectionExtensions
                 options.SubstituteApiVersionInUrl = true;
             });
 
-        return serviceCollection;
-    }
+            return serviceCollection;
+        }
 
-    public static IServiceCollection AddExceptionHandler(this IServiceCollection serviceCollection)
-    {
-        serviceCollection
-            .AddSingleton<IApplicationProblemDetailsFactory, ApplicationProblemDetailsFactory>()
-            .AddSingleton<IApplicationProblemDetailsService, ApplicationProblemDetailsService>()
-            .AddImplementationsOf<IBaseExceptionStatus>(CommonPresentationReference.Assembly);
-
-        serviceCollection.AddProblemDetails();
-
-        serviceCollection
-            .AddExceptionHandler<InvalidValidationExceptionHandler>()
-            .AddExceptionHandler<BaseExceptionHandler>()
-            .AddExceptionHandler<ExceptionHandler>();
-
-        return serviceCollection;
-    }
-
-    public static IServiceCollection AddCorsPolicies(this IServiceCollection serviceCollection, IConfiguration configuration)
-    {
-        serviceCollection
-            .AddOptions<CorsOptions>()
-            .BindConfiguration(CorsOptions.SectionName)
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
-
-        var corsOptions = configuration
-            .GetSection(CorsOptions.SectionName)
-            .Get<CorsOptions>()!;
-
-        serviceCollection.AddCors(options =>
+        public IServiceCollection AddExceptionHandler()
         {
-            options.AddDefaultPolicy(builder =>
-                builder.AllowAnyOrigin()
-                       .AllowAnyHeader()
-                       .AllowAnyMethod());
+            serviceCollection.AddSingleton<IApplicationProblemDetailsFactory, ApplicationProblemDetailsFactory>()
+                             .AddSingleton<IApplicationProblemDetailsService, ApplicationProblemDetailsService>()
+                             .AddImplementationsOf<IBaseExceptionStatus>(CommonPresentationReference.Assembly);
 
-            options.AddPolicy(AppPolicies.CorsPolicy, builder =>
-                builder.WithOrigins(corsOptions.AllowedOrigins.Split(", "))
-                       .AllowAnyHeader()
-                       .AllowAnyMethod());
-        });
+            serviceCollection.AddProblemDetails();
 
-        return serviceCollection;
-    }
+            serviceCollection.AddExceptionHandler<InvalidValidationExceptionHandler>()
+                             .AddExceptionHandler<BaseExceptionHandler>()
+                             .AddExceptionHandler<ExceptionHandler>();
 
-    public static IServiceCollection AddSwagger(this IServiceCollection serviceCollection)
-    {
-        serviceCollection.AddEndpointsApiExplorer();
+            return serviceCollection;
+        }
 
-        serviceCollection.AddSwaggerGen();
-
-        return serviceCollection;
-    }
-
-    public static IServiceCollection AddRateLimiterPolicies(this IServiceCollection serviceCollection)
-    {
-        serviceCollection.AddRateLimiter(options =>
+        public IServiceCollection AddCorsPolicies(IConfiguration configuration)
         {
-            options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+            serviceCollection.AddOptions<CorsOptions>()
+                             .BindConfiguration(CorsOptions.SectionName)
+                             .ValidateDataAnnotations()
+                             .ValidateOnStart();
 
-            options.AddPolicy(AppPolicies.RateLimiterPolicy,
-                httpContext => RateLimitPartition.GetFixedWindowLimiter(
-                    partitionKey: httpContext.Connection.RemoteIpAddress?.ToString(),
-                    factory: _ => new FixedWindowRateLimiterOptions
-                    {
-                        PermitLimit = 100,
-                        Window = TimeSpan.FromSeconds(10),
-                    }));
-        });
+            var corsOptions = configuration.GetSection(CorsOptions.SectionName).Get<CorsOptions>()!;
 
-        return serviceCollection;
+            serviceCollection.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                    builder.AllowAnyOrigin()
+                           .AllowAnyHeader()
+                           .AllowAnyMethod());
+
+                options.AddPolicy(AppPolicies.CorsPolicy, builder =>
+                    builder.WithOrigins(corsOptions.AllowedOrigins.Split(", "))
+                           .AllowAnyHeader()
+                           .AllowAnyMethod());
+            });
+
+            return serviceCollection;
+        }
+
+        public IServiceCollection AddSwagger()
+        {
+            serviceCollection.AddEndpointsApiExplorer();
+            serviceCollection.AddSwaggerGen();
+            return serviceCollection;
+        }
+
+        public IServiceCollection AddRateLimiterPolicies()
+        {
+            serviceCollection.AddRateLimiter(options =>
+            {
+                options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+                options.AddPolicy(AppPolicies.RateLimiterPolicy,
+                    httpContext => RateLimitPartition.GetFixedWindowLimiter(
+                        partitionKey: httpContext.Connection.RemoteIpAddress?.ToString(),
+                        factory: _ => new FixedWindowRateLimiterOptions
+                        {
+                            PermitLimit = 100,
+                            Window = TimeSpan.FromSeconds(10),
+                        }));
+            });
+
+            return serviceCollection;
+        }
     }
 }

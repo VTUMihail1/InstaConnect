@@ -4,20 +4,23 @@ namespace InstaConnect.Posts.Application.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddApplication(this IServiceCollection serviceCollection)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection
-            .AddUserServices()
-            .AddPostServices()
-            .AddPostLikeServices()
-            .AddPostCommentServices()
-            .AddPostCommentLikeServices();
+        public IServiceCollection AddApplication()
+        {
+            serviceCollection
+                .AddUserServices()
+                .AddPostServices()
+                .AddPostLikeServices()
+                .AddPostCommentServices()
+                .AddPostCommentLikeServices();
 
-        serviceCollection
-            .AddCQRS(PostApplicationReference.Assembly)
-            .AddMapper(PostApplicationReference.Assembly, CommonApplicationReference.Assembly)
-            .AddValidators(PostApplicationReference.Assembly);
+            serviceCollection
+                .AddCQRS(PostApplicationReference.Assembly)
+                .AddMapper(PostApplicationReference.Assembly, CommonApplicationReference.Assembly)
+                .AddValidators(PostApplicationReference.Assembly);
 
-        return serviceCollection;
+            return serviceCollection;
+        }
     }
 }

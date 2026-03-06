@@ -1,4 +1,5 @@
 ﻿namespace InstaConnect.Posts.Domain.Features.PostLikes.Helpers;
+
 internal class PostLikeQueryService : IPostLikeQueryService
 {
     private readonly IPostQueryRepository _repository;

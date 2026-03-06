@@ -4,22 +4,22 @@ namespace InstaConnect.Follows.Infrastructure.Features.Follows.Extensions;
 
 internal static class FollowMongoCollectionExtensions
 {
-    public static async Task UpdateAsync(
-        this IMongoCollection<Follow> collection,
-        IClientSessionHandle? session,
-        Follow entity,
-        CancellationToken cancellationToken)
+    extension(IMongoCollection<Follow> collection)
     {
-        await collection.UpdateAsync(session, entity.Id.GetFilter(), entity, cancellationToken);
+        public async Task UpdateAsync(
+            IClientSessionHandle? session,
+            Follow entity,
+            CancellationToken cancellationToken)
+        {
+            await collection.UpdateAsync(session, entity.Id.GetFilter(), entity, cancellationToken);
+        }
 
-    }
-
-    public static async Task DeleteAsync(
-        this IMongoCollection<Follow> collection,
-        IClientSessionHandle? session,
-        Follow entity,
-        CancellationToken cancellationToken)
-    {
-        await collection.DeleteAsync(session, entity.Id.GetFilter(), cancellationToken);
+        public async Task DeleteAsync(
+            IClientSessionHandle? session,
+            Follow entity,
+            CancellationToken cancellationToken)
+        {
+            await collection.DeleteAsync(session, entity.Id.GetFilter(), cancellationToken);
+        }
     }
 }

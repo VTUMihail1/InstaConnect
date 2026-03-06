@@ -2,53 +2,59 @@
 
 internal static class RuleBuilderExtensions
 {
-    public static IRuleBuilderOptions<T, string> PostIdMinLengthWithMessage<T>(this IRuleBuilder<T, string> ruleBuilder)
+    extension<T>(IRuleBuilder<T, string> ruleBuilder)
     {
-        return ruleBuilder.MinLengthWithMessage(PostConfigurations.IdMinLength);
+        public IRuleBuilderOptions<T, string> PostIdMinLengthWithMessage()
+        {
+            return ruleBuilder.MinLengthWithMessage(PostConfigurations.IdMinLength);
+        }
+
+        public IRuleBuilderOptions<T, string> PostIdMaxLengthWithMessage()
+        {
+            return ruleBuilder.MaxLengthWithMessage(PostConfigurations.IdMaxLength);
+        }
+
+        public IRuleBuilderOptions<T, string> PostTitleMinLengthWithMessage()
+        {
+            return ruleBuilder.MinLengthWithMessage(PostConfigurations.TitleMinLength);
+        }
+
+        public IRuleBuilderOptions<T, string> PostTitleMaxLengthWithMessage()
+        {
+            return ruleBuilder.MaxLengthWithMessage(PostConfigurations.TitleMaxLength);
+        }
+
+        public IRuleBuilderOptions<T, string> PostContentMinLengthWithMessage()
+        {
+            return ruleBuilder.MinLengthWithMessage(PostConfigurations.ContentMinLength);
+        }
+
+        public IRuleBuilderOptions<T, string> PostContentMaxLengthWithMessage()
+        {
+            return ruleBuilder.MaxLengthWithMessage(PostConfigurations.ContentMaxLength);
+        }
     }
 
-    public static IRuleBuilderOptions<T, string> PostIdMaxLengthWithMessage<T>(this IRuleBuilder<T, string> ruleBuilder)
+    extension<T>(IRuleBuilder<T, int> ruleBuilder)
     {
-        return ruleBuilder.MaxLengthWithMessage(PostConfigurations.IdMaxLength);
-    }
+        public IRuleBuilderOptions<T, int> PostPageMinValueWithMessage()
+        {
+            return ruleBuilder.MinValueWithMessage(PostConfigurations.PageMinValue);
+        }
 
-    public static IRuleBuilderOptions<T, string> PostTitleMinLengthWithMessage<T>(this IRuleBuilder<T, string> ruleBuilder)
-    {
-        return ruleBuilder.MinLengthWithMessage(PostConfigurations.TitleMinLength);
-    }
+        public IRuleBuilderOptions<T, int> PostPageMaxValueWithMessage()
+        {
+            return ruleBuilder.MaxValueWithMessage(PostConfigurations.PageMaxValue);
+        }
 
-    public static IRuleBuilderOptions<T, string> PostTitleMaxLengthWithMessage<T>(this IRuleBuilder<T, string> ruleBuilder)
-    {
-        return ruleBuilder.MaxLengthWithMessage(PostConfigurations.TitleMaxLength);
-    }
+        public IRuleBuilderOptions<T, int> PostPageSizeMinValueWithMessage()
+        {
+            return ruleBuilder.MinValueWithMessage(PostConfigurations.PageSizeMinValue);
+        }
 
-    public static IRuleBuilderOptions<T, string> PostContentMinLengthWithMessage<T>(this IRuleBuilder<T, string> ruleBuilder)
-    {
-        return ruleBuilder.MinLengthWithMessage(PostConfigurations.ContentMinLength);
-    }
-
-    public static IRuleBuilderOptions<T, string> PostContentMaxLengthWithMessage<T>(this IRuleBuilder<T, string> ruleBuilder)
-    {
-        return ruleBuilder.MaxLengthWithMessage(PostConfigurations.ContentMaxLength);
-    }
-
-    public static IRuleBuilderOptions<T, int> PostPageMinValueWithMessage<T>(this IRuleBuilder<T, int> ruleBuilder)
-    {
-        return ruleBuilder.MinValueWithMessage(PostConfigurations.PageMinValue);
-    }
-
-    public static IRuleBuilderOptions<T, int> PostPageMaxValueWithMessage<T>(this IRuleBuilder<T, int> ruleBuilder)
-    {
-        return ruleBuilder.MaxValueWithMessage(PostConfigurations.PageMaxValue);
-    }
-
-    public static IRuleBuilderOptions<T, int> PostPageSizeMinValueWithMessage<T>(this IRuleBuilder<T, int> ruleBuilder)
-    {
-        return ruleBuilder.MinValueWithMessage(PostConfigurations.PageSizeMinValue);
-    }
-
-    public static IRuleBuilderOptions<T, int> PostPageSizeMaxValueWithMessage<T>(this IRuleBuilder<T, int> ruleBuilder)
-    {
-        return ruleBuilder.MaxValueWithMessage(PostConfigurations.PageSizeMaxValue);
+        public IRuleBuilderOptions<T, int> PostPageSizeMaxValueWithMessage()
+        {
+            return ruleBuilder.MaxValueWithMessage(PostConfigurations.PageSizeMaxValue);
+        }
     }
 }

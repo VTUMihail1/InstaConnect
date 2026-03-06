@@ -1,47 +1,47 @@
-﻿using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAllForUser;
-using InstaConnect.Posts.Application.Tests.Features.PostLikes.Utilities;
+﻿using InstaConnect.Posts.Application.Tests.Features.PostLikes.Utilities;
 
 namespace InstaConnect.Posts.Application.Tests.Features.PostLikes.Assertions;
 
 public static class PostLikeMockAssertions
 {
-    public static async Task ShouldReceiveOneGetAllAsync(
-        this IPostLikeQueryService postLikeService,
+    extension(IPostLikeQueryService postLikeService)
+    {
+        public async Task ShouldReceiveOneGetAllAsync(
         GetAllPostLikesQueryRequest request,
         CancellationToken cancellationToken)
-    {
-        await postLikeService.ShouldHaveReceivedOne().GetAllAsync(PostLikeMatcher.IsGetAllPostLikesQuery(request), cancellationToken);
+        {
+            await postLikeService.ShouldHaveReceivedOne().GetAllAsync(PostLikeMatcher.IsGetAllPostLikesQuery(request), cancellationToken);
+        }
+
+        public async Task ShouldReceiveOneGetAllForUserAsync(
+            GetAllPostLikesForUserQueryRequest request,
+            CancellationToken cancellationToken)
+        {
+            await postLikeService.ShouldHaveReceivedOne().GetAllForUserAsync(PostLikeMatcher.IsGetAllPostLikesForUserQuery(request), cancellationToken);
+        }
+
+        public async Task ShouldReceiveOneGetByIdAsync(
+            GetPostLikeByIdQueryRequest request,
+            CancellationToken cancellationToken)
+        {
+            await postLikeService.ShouldHaveReceivedOne().GetByIdAsync(PostLikeMatcher.IsGetPostLikeByIdQuery(request), cancellationToken);
+        }
     }
 
-    public static async Task ShouldReceiveOneGetAllForUserAsync(
-        this IPostLikeQueryService postLikeService,
-        GetAllPostLikesForUserQueryRequest request,
-        CancellationToken cancellationToken)
+    extension(IPostLikeCommandService postLikeService)
     {
-        await postLikeService.ShouldHaveReceivedOne().GetAllForUserAsync(PostLikeMatcher.IsGetAllPostLikesForUserQuery(request), cancellationToken);
-    }
-
-    public static async Task ShouldReceiveOneGetByIdAsync(
-        this IPostLikeQueryService postLikeService,
-        GetPostLikeByIdQueryRequest request,
-        CancellationToken cancellationToken)
-    {
-        await postLikeService.ShouldHaveReceivedOne().GetByIdAsync(PostLikeMatcher.IsGetPostLikeByIdQuery(request), cancellationToken);
-    }
-
-    public static async Task ShouldReceiveOneAddAsync(
-        this IPostLikeCommandService postLikeService,
+        public async Task ShouldReceiveOneAddAsync(
         AddPostLikeCommandRequest request,
         CancellationToken cancellationToken)
-    {
-        await postLikeService.ShouldHaveReceivedOne().AddAsync(PostLikeMatcher.IsAddPostLikeCommand(request), cancellationToken);
-    }
+        {
+            await postLikeService.ShouldHaveReceivedOne().AddAsync(PostLikeMatcher.IsAddPostLikeCommand(request), cancellationToken);
+        }
 
-    public static async Task ShouldReceiveOneDeleteAsync(
-        this IPostLikeCommandService postLikeService,
-        DeletePostLikeCommandRequest request,
-        CancellationToken cancellationToken)
-    {
-        await postLikeService.ShouldHaveReceivedOne().DeleteAsync(PostLikeMatcher.IsDeletePostLikeCommand(request), cancellationToken);
+        public async Task ShouldReceiveOneDeleteAsync(
+            DeletePostLikeCommandRequest request,
+            CancellationToken cancellationToken)
+        {
+            await postLikeService.ShouldHaveReceivedOne().DeleteAsync(PostLikeMatcher.IsDeletePostLikeCommand(request), cancellationToken);
+        }
     }
 }

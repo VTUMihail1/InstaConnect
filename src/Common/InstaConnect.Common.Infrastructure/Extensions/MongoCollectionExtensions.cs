@@ -1,99 +1,79 @@
-﻿using MongoDB.Driver;
+﻿using InstaConnect.Common.Domain.Abstractions;
+
+using MongoDB.Driver;
 
 namespace InstaConnect.Common.Infrastructure.Extensions;
 
 public static class MongoCollectionExtensions
 {
-    public static IAggregateFluent<T> AggregateWithCaseInsensitiveCollation<T>(
-        this IMongoCollection<T> collection)
+    extension<T>(IMongoCollection<T> collection)
+        where T : IEntity
     {
-        var options = new AggregateOptions
+        public IAggregateFluent<T> AggregateWithCaseInsensitiveCollation()
         {
-            Collation = new Collation("en", strength: CollationStrength.Primary)
-        };
+            var options = new AggregateOptions
+            {
+                Collation = new Collation("en", strength: CollationStrength.Primary)
+            };
 
-        return collection.Aggregate(options);
-    }
-
-    public static async Task AddAsync<T>(
-        this IMongoCollection<T> collection,
-        IClientSessionHandle? session,
-        T entity,
-        CancellationToken cancellationToken)
-    {
-        if (session.IsNotInTransaction())
-        {
-            await collection.InsertOneAsync(entity, null, cancellationToken);
-
-            return;
+            return collection.Aggregate(options);
         }
 
-        await collection.InsertOneAsync(session, entity, null, cancellationToken);
-    }
-
-    public static async Task AddRangeAsync<T>(
-        this IMongoCollection<T> collection,
-        IClientSessionHandle? session,
-        IEnumerable<T> entities,
-        CancellationToken cancellationToken)
-    {
-        if (session.IsNotInTransaction())
+        public async Task AddAsync(IClientSessionHandle? session, T entity, CancellationToken cancellationToken)
         {
-            await collection.InsertManyAsync(entities, null, cancellationToken);
+            if (session.IsNotInTransaction())
+            {
+                await collection.InsertOneAsync(entity, null, cancellationToken);
+                return;
+            }
 
-            return;
+            await collection.InsertOneAsync(session, entity, null, cancellationToken);
         }
 
-        await collection.InsertManyAsync(session, entities, null, cancellationToken);
-    }
-
-    public static async Task UpdateAsync<T>(
-        this IMongoCollection<T> collection,
-        IClientSessionHandle? session,
-        FilterDefinition<T> filter,
-        T entity,
-        CancellationToken cancellationToken)
-    {
-        var options = new ReplaceOptions { IsUpsert = false };
-
-        if (session.IsNotInTransaction())
+        public async Task AddRangeAsync(IClientSessionHandle? session, IEnumerable<T> entities, CancellationToken cancellationToken)
         {
-            await collection.ReplaceOneAsync(filter, entity, options, cancellationToken);
+            if (session.IsNotInTransaction())
+            {
+                await collection.InsertManyAsync(entities, null, cancellationToken);
+                return;
+            }
 
-            return;
+            await collection.InsertManyAsync(session, entities, null, cancellationToken);
         }
 
-        await collection.ReplaceOneAsync(session, filter, entity, options, cancellationToken);
-    }
-
-    public static async Task DeleteAsync<T>(
-        this IMongoCollection<T> collection,
-        IClientSessionHandle? session,
-        FilterDefinition<T> filter,
-        CancellationToken cancellationToken)
-    {
-        if (session.IsNotInTransaction())
+        public async Task UpdateAsync(IClientSessionHandle? session, FilterDefinition<T> filter, T entity, CancellationToken cancellationToken)
         {
-            await collection.DeleteOneAsync(filter, null, cancellationToken);
+            var options = new ReplaceOptions { IsUpsert = false };
 
-            return;
+            if (session.IsNotInTransaction())
+            {
+                await collection.ReplaceOneAsync(filter, entity, options, cancellationToken);
+                return;
+            }
+
+            await collection.ReplaceOneAsync(session, filter, entity, options, cancellationToken);
         }
 
-        await collection.DeleteOneAsync(session, filter, null, cancellationToken);
-    }
-
-    public static async Task DeleteRangeAsync<T>(
-        this IMongoCollection<T> collection,
-        IClientSessionHandle? session,
-        FilterDefinition<T> filter,
-        CancellationToken cancellationToken)
-    {
-        if (session.IsNotInTransaction())
+        public async Task DeleteAsync(IClientSessionHandle? session, FilterDefinition<T> filter, CancellationToken cancellationToken)
         {
-            await collection.DeleteManyAsync(filter, null, cancellationToken);
-            return;
+            if (session.IsNotInTransaction())
+            {
+                await collection.DeleteOneAsync(filter, null, cancellationToken);
+                return;
+            }
+
+            await collection.DeleteOneAsync(session, filter, null, cancellationToken);
         }
 
-        await collection.DeleteManyAsync(session, filter, null, cancellationToken);
+        public async Task DeleteRangeAsync(IClientSessionHandle? session, FilterDefinition<T> filter, CancellationToken cancellationToken)
+        {
+            if (session.IsNotInTransaction())
+            {
+                await collection.DeleteManyAsync(filter, null, cancellationToken);
+                return;
+            }
+
+            await collection.DeleteManyAsync(session, filter, null, cancellationToken);
+        }
     }
 }

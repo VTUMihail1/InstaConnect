@@ -3,9 +3,6 @@ using InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Delete;
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAll;
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAllForUser;
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetById;
-using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAllForUser;
-using InstaConnect.Posts.Application.Features.Users.Models;
-using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Responses;
 
 using Mapster;
 

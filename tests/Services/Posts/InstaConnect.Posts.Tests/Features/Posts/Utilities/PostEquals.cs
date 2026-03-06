@@ -1,50 +1,68 @@
-﻿using InstaConnect.Identity.Events.Features.Users;
-using InstaConnect.Posts.Domain.Features.Posts.Models.ValueObjects;
+﻿using InstaConnect.Posts.Domain.Features.Posts.Models.ValueObjects;
 using InstaConnect.Posts.Events.Features.Posts;
 using InstaConnect.Posts.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Posts.Tests.Features.Posts.Utilities;
+
 public static class PostEquals
 {
-    public static bool Matches(this PostAddedEventRequest request, Post entity)
+    extension(PostAddedEventRequest request)
     {
-        return entity.Matches(request.Post);
+        public bool Matches(Post entity)
+        {
+            return entity.Matches(request.Post);
+        }
     }
 
-    public static bool Matches(this PostUpdatedEventRequest request, Post entity)
+    extension(PostUpdatedEventRequest request)
     {
-        return entity.Matches(request.Post);
+        public bool Matches(Post entity)
+        {
+            return entity.Matches(request.Post);
+        }
     }
 
-    public static bool Matches(this PostDeletedEventRequest request, Post entity)
+    extension(PostDeletedEventRequest request)
     {
-        return entity.Matches(request.Post);
+        public bool Matches(Post entity)
+        {
+            return entity.Matches(request.Post);
+        }
     }
 
-    public static bool Matches(this PostEventRequest r, PostEventRequest request)
+    extension(PostEventRequest r)
     {
-        return r.Id == request.Id &&
-               r.UserId == request.UserId &&
-               r.User.Matches(request.User) &&
-               r.Title == request.Title &&
-               r.Content == request.Content &&
-               r.CreatedAtUtc == request.CreatedAtUtc &&
-               r.UpdatedAtUtc == request.UpdatedAtUtc;
+        public bool Matches(PostEventRequest request)
+        {
+            return r.Id == request.Id &&
+                   r.UserId == request.UserId &&
+                   r.User.Matches(request.User) &&
+                   r.Title == request.Title &&
+                   r.Content == request.Content &&
+                   r.CreatedAtUtc == request.CreatedAtUtc &&
+                   r.UpdatedAtUtc == request.UpdatedAtUtc;
+        }
     }
 
-    public static bool Matches(this Post entity, PostEventRequest request)
+    extension(Post entity)
     {
-        return entity.Id.Matches(request.Id) &&
-               entity.UserId.Matches(request.UserId) &&
-               entity.User != null && entity.User.Matches(request.User) &&
-               entity.Title == request.Title &&
-               entity.Content == request.Content &&
-               entity.CreatedAtUtc == request.CreatedAtUtc &&
-               entity.UpdatedAtUtc == request.UpdatedAtUtc;
+        public bool Matches(PostEventRequest request)
+        {
+            return entity.Id.Matches(request.Id) &&
+                   entity.UserId.Matches(request.UserId) &&
+                   entity.User != null && entity.User.Matches(request.User) &&
+                   entity.Title == request.Title &&
+                   entity.Content == request.Content &&
+                   entity.CreatedAtUtc == request.CreatedAtUtc &&
+                   entity.UpdatedAtUtc == request.UpdatedAtUtc;
+        }
     }
 
-    public static bool Matches(this PostId p, string id)
+    extension(PostId p)
     {
-        return p.Id.EqualsOrdinalIgnoreCase(id);
+        public bool Matches(string id)
+        {
+            return p.Id.EqualsOrdinalIgnoreCase(id);
+        }
     }
 }

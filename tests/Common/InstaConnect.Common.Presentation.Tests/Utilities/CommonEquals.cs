@@ -1,6 +1,5 @@
 ﻿using InstaConnect.Common.Application.Abstractions;
 using InstaConnect.Common.Domain.Abstractions;
-using InstaConnect.Common.Domain.Extensions;
 using InstaConnect.Common.Infrastructure.Helpers;
 using InstaConnect.Common.Presentation.Models;
 using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
@@ -8,111 +7,117 @@ using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InstaConnect.Common.Presentation.Tests.Utilities;
+
 public static class CommonEquals
 {
-    public static bool Matches(
-        this ApplicationProblemDetails d,
-        int statusCode,
-        string detail)
+    extension(ApplicationProblemDetails d)
     {
-        return d.Status == statusCode &&
-               d.Detail == detail;
+        public bool Matches(int statusCode, string detail)
+        {
+            return d.Status == statusCode &&
+                   d.Detail == detail;
+        }
+
+        public bool Matches(int statusCode, string detail, string errorMessage)
+        {
+            return d.Status == statusCode &&
+                   d.Detail == detail &&
+                   d.Errors!.All(e => e == errorMessage);
+        }
     }
 
-    public static bool Matches(
-        this ApplicationProblemDetails d,
-        int statusCode,
-        string detail,
-        string errorMessage)
+    extension(ObjectResult s)
     {
-        return d.Status == statusCode &&
-               d.Detail == detail &&
-               d.Errors!.All(e => e == errorMessage);
+        public bool Matches(int statusCode)
+        {
+            return s.StatusCode == statusCode;
+        }
     }
 
-    public static bool Matches(
-        this ObjectResult s,
-        int statusCode)
+    extension(StatusCodeResult s)
     {
-        return s.StatusCode == statusCode;
+        public bool Matches(int statusCode)
+        {
+            return s.StatusCode == statusCode;
+        }
     }
 
-    public static bool Matches(
-        this StatusCodeResult s,
-        int statusCode)
+    extension<TExpected>(ICollection<TExpected> expected)
     {
-        return s.StatusCode == statusCode;
-    }
-
-    public static bool MatchesCollection<TExpected, TEntity, TKey, TRequest>(
-        this ICollection<TExpected> expected,
-        ICollection<TEntity> entities,
-        Func<TExpected, TKey> expectedKey,
-        Func<TEntity, TKey> entityKey,
-        Func<TExpected, TEntity, bool> matcher,
-        TRequest request,
-        Func<TEntity, bool> filter)
-        where TRequest : IPaginatableApiRequest
-        where TEntity : IEntity
-        where TKey : notnull
-    {
-        var entitiesByKey = entities.FilterToDictionary(filter, request, entityKey);
-
-        return expected.Count == entitiesByKey.Count &&
-               expected.Any() &&
-               expected.All(e =>
-               entitiesByKey.TryGetValue(expectedKey(e), out var a) &&
-               matcher(e, a));
-    }
-
-    public static bool MatchesSortedCollection<TExpected, TEntity, TRequest>(
-        this ICollection<TExpected> expected,
-        ICollection<TEntity> entities,
-        Func<TExpected, TEntity, bool> matcher,
-        ISortEnumTermTransformer<TEntity> termTransformer,
-        TRequest request,
-        Func<TEntity, bool> filter)
-        where TRequest : IPaginatableApiRequest
-        where TEntity : IEntity
-    {
-        var sortedEntities = entities.Filter(termTransformer, request, filter);
-
-        return expected.Count == sortedEntities.Count &&
-               expected.Any() &&
-               expected.Zip(sortedEntities, (e, a) => matcher(e, a))
-                       .All(match => match);
-    }
-
-    public static bool MatchesCollectionResponse<TResponse, TRequest>(
-        this TResponse response,
-        int totalCount,
-        TRequest request)
+        public bool MatchesCollection<TEntity, TKey, TRequest>(
+            ICollection<TEntity> entities,
+            Func<TExpected, TKey> expectedKey,
+            Func<TEntity, TKey> entityKey,
+            Func<TExpected, TEntity, bool> matcher,
+            TRequest request,
+            Func<TEntity, bool> filter)
             where TRequest : IPaginatableApiRequest
-            where TResponse : ICollectionApiResponse
-    {
-        var paginator = new Paginator();
+            where TEntity : IEntity
+            where TKey : notnull
+        {
+            var entitiesByKey = entities.FilterToDictionary(filter, request, entityKey);
 
-        return response.Page == request.Page &&
-               response.PageSize == request.PageSize &&
-               response.TotalCount == totalCount &&
-               response.HasPreviousPage == paginator.HasPreviousPage(response.Page) &&
-               response.HasNextPage == paginator.HasNextPage(response.Page, response.PageSize, response.TotalCount);
+            return expected.Count == entitiesByKey.Count &&
+                   expected.Any() &&
+                   expected.All(e =>
+                   entitiesByKey.TryGetValue(expectedKey(e), out var a) &&
+                   matcher(e, a));
+        }
+
+        public bool MatchesSortedCollection<TEntity, TRequest>(
+            ICollection<TEntity> entities,
+            Func<TExpected, TEntity, bool> matcher,
+            ISortEnumTermTransformer<TEntity> termTransformer,
+            TRequest request,
+            Func<TEntity, bool> filter)
+            where TRequest : IPaginatableApiRequest
+            where TEntity : IEntity
+        {
+            var sortedEntities = entities.Filter(termTransformer, request, filter);
+
+            return expected.Count == sortedEntities.Count &&
+                   expected.Any() &&
+                   expected.Zip(sortedEntities, (e, a) => matcher(e, a))
+                           .All(match => match);
+        }
     }
 
-    public static bool MatchesSortable<TQueryRequest, TApiRequest, TSortTerm>(this TQueryRequest query, TApiRequest request)
-        where TQueryRequest : ISortableQueryRequest<TSortTerm>
-        where TApiRequest : ISortableApiRequest<TSortTerm>
-        where TSortTerm : Enum
+    extension<TResponse>(TResponse response)
+        where TResponse : ICollectionApiResponse
     {
-        return query.SortOrder == request.SortOrder &&
-               query.SortTerm.Equals(request.SortTerm);
+        public bool MatchesCollectionResponse<TRequest>(int totalCount, TRequest request)
+            where TRequest : IPaginatableApiRequest
+        {
+            var paginator = new Paginator();
+
+            return response.Page == request.Page &&
+                   response.PageSize == request.PageSize &&
+                   response.TotalCount == totalCount &&
+                   response.HasPreviousPage == paginator.HasPreviousPage(response.Page) &&
+                   response.HasNextPage == paginator.HasNextPage(response.Page, response.PageSize, response.TotalCount);
+        }
     }
 
-    public static bool MatchesPaginatable<TQueryRequest, TApiRequest>(this TQueryRequest query, TApiRequest request)
-        where TQueryRequest : IPaginatableQueryRequest
-        where TApiRequest : IPaginatableApiRequest
+    extension<TQueryRequest, TSortTerm>(TQueryRequest query)
+            where TQueryRequest : ISortableQueryRequest<TSortTerm>
+            where TSortTerm : Enum
     {
-        return query.Page == request.Page &&
-               query.PageSize == request.PageSize;
+        public bool MatchesSortable<TApiRequest>(TApiRequest request)
+            where TApiRequest : ISortableApiRequest<TSortTerm>
+        {
+            return query.SortOrder == request.SortOrder &&
+                   query.SortTerm.Equals(request.SortTerm);
+        }
+    }
+
+    extension<TQueryRequest>(TQueryRequest query)
+            where TQueryRequest : IPaginatableQueryRequest
+    {
+        public bool MatchesPaginatable<TApiRequest>(TApiRequest request)
+            where TApiRequest : IPaginatableApiRequest
+        {
+            return query.Page == request.Page &&
+                   query.PageSize == request.PageSize;
+        }
     }
 }

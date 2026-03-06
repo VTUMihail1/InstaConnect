@@ -1,11 +1,12 @@
-﻿using InstaConnect.Posts.Domain.Features.PostLikes.Models.ValueObjects;
+﻿namespace InstaConnect.Posts.Tests.Features.PostLikes.Utilities;
 
-namespace InstaConnect.Posts.Tests.Features.PostLikes.Utilities;
 public static class PostLikeGenerator
 {
-    public static ICollection<PostLike> Generate(this PostLike basePostLike, IEnumerable<Post> posts, IEnumerable<User> users)
+    extension(PostLike basePostLike)
     {
-        return [.. posts
+        public ICollection<PostLike> Generate(IEnumerable<Post> posts, IEnumerable<User> users)
+        {
+            return [.. posts
               .SelectMany(post =>
                   users.Select(user =>
                   {
@@ -22,8 +23,9 @@ public static class PostLikeGenerator
                       post.AddPostLike(postLike);
                       postLike.AddUser(user);
                       postLike.AddPost(post);
-              
+
                       return postLike;
                   }))];
+        }
     }
 }

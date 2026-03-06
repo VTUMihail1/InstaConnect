@@ -6,27 +6,30 @@ namespace InstaConnect.Identity.Infrastructure.Features.RefreshTokens.Extensions
 
 internal static class ServiceCollectionExtensions
 {
-    internal static IServiceCollection AddRefreshTokenServices(this IServiceCollection serviceCollection)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection.AddImplementationsOf<IRefreshTokenIncluder>(IdentityInfrastructureReference.Assembly);
-
-        BsonClassMap.TryRegisterClassMap<RefreshToken>(cm =>
+        internal IServiceCollection AddRefreshTokenServices()
         {
-            cm.MapIdMember(c => c.Id);
+            serviceCollection.AddImplementationsOf<IRefreshTokenIncluder>(IdentityInfrastructureReference.Assembly);
 
-            cm.MapMember(c => c.Id);
-            cm.MapMember(c => c.CreatedAtUtc);
+            BsonClassMap.TryRegisterClassMap<RefreshToken>(cm =>
+            {
+                cm.MapIdMember(c => c.Id);
 
-            cm.MapMemberWithoutSerialization(c => c.User);
+                cm.MapMember(c => c.Id);
+                cm.MapMember(c => c.CreatedAtUtc);
 
-            cm.MapCreator(c => new RefreshToken(
-                c.Id,
-                c.ExpiresAtUtc,
-                c.CreatedAtUtc));
+                cm.MapMemberWithoutSerialization(c => c.User);
 
-            cm.SetIgnoreExtraElements(true);
-        });
+                cm.MapCreator(c => new RefreshToken(
+                    c.Id,
+                    c.ExpiresAtUtc,
+                    c.CreatedAtUtc));
 
-        return serviceCollection;
+                cm.SetIgnoreExtraElements(true);
+            });
+
+            return serviceCollection;
+        }
     }
 }

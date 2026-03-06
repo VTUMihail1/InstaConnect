@@ -12,26 +12,26 @@ namespace InstaConnect.Common.Infrastructure.Extensions;
 
 public static class LoggingBuilderExtensions
 {
-    public static ILoggingBuilder AddLogging(
-        this ILoggingBuilder loggingBuilder,
-        IConfiguration configuration,
-        IWebHostEnvironment webHostEnvironment)
+    extension(ILoggingBuilder loggingBuilder)
     {
-        var openTelemetryOptions = configuration
-                    .GetSection(OpenTelemetryOptions.SectionName)
-                    .Get<OpenTelemetryOptions>()!;
-
-        var resourceBuilder = ResourceBuilder.CreateDefault().AddService(webHostEnvironment.ApplicationName);
-
-        loggingBuilder.AddOpenTelemetry(options =>
+        public ILoggingBuilder AddLogging(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
         {
-            options.SetResourceBuilder(resourceBuilder);
-            options.AddOtlpExporter(options =>
-            {
-                options.Endpoint = new Uri(openTelemetryOptions.Endpoint);
-            });
-        });
+            var openTelemetryOptions = configuration
+                        .GetSection(OpenTelemetryOptions.SectionName)
+                        .Get<OpenTelemetryOptions>()!;
 
-        return loggingBuilder;
+            var resourceBuilder = ResourceBuilder.CreateDefault().AddService(webHostEnvironment.ApplicationName);
+
+            loggingBuilder.AddOpenTelemetry(options =>
+            {
+                options.SetResourceBuilder(resourceBuilder);
+                options.AddOtlpExporter(options =>
+                {
+                    options.Endpoint = new Uri(openTelemetryOptions.Endpoint);
+                });
+            });
+
+            return loggingBuilder;
+        }
     }
 }

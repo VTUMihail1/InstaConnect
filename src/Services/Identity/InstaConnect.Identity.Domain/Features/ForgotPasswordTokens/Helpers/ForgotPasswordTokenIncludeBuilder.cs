@@ -29,7 +29,7 @@ public class ForgotPasswordTokenIncludeBuilder
 
         return this;
     }
-    
+
     public ForgotPasswordTokenInclude Build()
     {
         return new(_descriptors);

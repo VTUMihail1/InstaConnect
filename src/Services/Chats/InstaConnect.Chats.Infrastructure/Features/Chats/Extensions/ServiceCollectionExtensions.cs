@@ -6,28 +6,30 @@ namespace InstaConnect.Chats.Infrastructure.Features.Chats.Extensions;
 
 internal static class ServiceCollectionExtensions
 {
-    internal static IServiceCollection AddChatServices(this IServiceCollection serviceCollection)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection.AddImplementationsOf<IChatsSortTermer>(ChatInfrastructureReference.Assembly);
-        serviceCollection.AddImplementationsOf<IChatIncluder>(ChatInfrastructureReference.Assembly);
-
-        BsonClassMap.TryRegisterClassMap<Chat>(cm =>
+        internal IServiceCollection AddChatServices()
         {
-            cm.MapIdMember(c => c.Id);
+            serviceCollection.AddImplementationsOf<IChatsSortTermer>(ChatInfrastructureReference.Assembly);
+            serviceCollection.AddImplementationsOf<IChatIncluder>(ChatInfrastructureReference.Assembly);
 
-            cm.MapMember(c => c.Id);
-            cm.MapMember(c => c.CreatedAtUtc);
+            BsonClassMap.TryRegisterClassMap<Chat>(cm =>
+            {
+                cm.MapIdMember(c => c.Id);
 
-            cm.MapMemberWithoutSerialization(c => c.ParticipantOne);
-            cm.MapMemberWithoutSerialization(c => c.ParticipantTwo);
+                cm.MapMember(c => c.CreatedAtUtc);
 
-            cm.MapCreator(c => new Chat(
-                c.Id,
-                c.CreatedAtUtc));
+                cm.MapMemberWithoutSerialization(c => c.ParticipantOne);
+                cm.MapMemberWithoutSerialization(c => c.ParticipantTwo);
 
-            cm.SetIgnoreExtraElements(true);
-        });
+                cm.MapCreator(c => new Chat(
+                    c.Id,
+                    c.CreatedAtUtc));
 
-        return serviceCollection;
+                cm.SetIgnoreExtraElements(true);
+            });
+
+            return serviceCollection;
+        }
     }
 }

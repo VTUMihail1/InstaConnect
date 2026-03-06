@@ -2,13 +2,16 @@
 
 public static class TransformExtensions
 {
-    public static TValue TryTransform<TValue>(this ITransformer<TValue>? transformer, TValue value)
+    extension<TValue>(ITransformer<TValue>? transformer)
     {
-        if (transformer != null)
+        public TValue TryTransform(TValue value)
         {
-            return transformer.Transform(value);
-        }
+            if (transformer != null)
+            {
+                return transformer.Transform(value);
+            }
 
-        return value;
+            return value;
+        }
     }
 }

@@ -5,18 +5,21 @@ namespace InstaConnect.Emails.Presentation.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddPresentation(this IServiceCollection serviceCollection, IConfiguration configuration)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection
-            .AddServicesWithMatchingInterfaces(PresentationReference.Assembly)
-            .AddApiControllers()
-            .AddMapper(PresentationReference.Assembly)
-            .AddAuthorizationPolicies()
-            .AddCorsPolicies(configuration)
-            .AddSwagger()
-            .AddRateLimiterPolicies()
-            .AddExceptionHandler();
+        public IServiceCollection AddPresentation(IConfiguration configuration)
+        {
+            serviceCollection
+                .AddServicesWithMatchingInterfaces(PresentationReference.Assembly)
+                .AddApiControllers()
+                .AddMapper(PresentationReference.Assembly)
+                .AddAuthorizationPolicies()
+                .AddCorsPolicies(configuration)
+                .AddSwagger()
+                .AddRateLimiterPolicies()
+                .AddExceptionHandler();
 
-        return serviceCollection;
+            return serviceCollection;
+        }
     }
 }
