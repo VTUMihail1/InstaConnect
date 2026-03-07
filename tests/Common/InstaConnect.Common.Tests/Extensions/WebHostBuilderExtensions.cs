@@ -11,19 +11,15 @@ public static class WebHostBuilderExtensions
     {
         public void UpdateDatabaseConnectionString(string connectionString)
         {
-            const string Format = "{0}:{1}";
-
             webHostBuilder.UseSetting(
-                Format.FormatCurrentCulture(MongoDatabaseOptions.SectionName, nameof(MongoDatabaseOptions.ConnectionString)),
+                MongoDatabaseOptions.SectionName.FormatCurrentCultureSectionKey(nameof(MongoDatabaseOptions.ConnectionString)),
                 connectionString);
         }
 
         public void UpdateCacheConnectionString(string connectionString)
         {
-            const string Format = "{0}:{1}";
-
             webHostBuilder.UseSetting(
-                Format.FormatCurrentCulture(CacheOptions.SectionName, nameof(CacheOptions.ConnectionString)),
+                CacheOptions.SectionName.FormatCurrentCultureSectionKey(nameof(CacheOptions.ConnectionString)),
                 connectionString);
         }
     }

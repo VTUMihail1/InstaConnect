@@ -12,6 +12,13 @@ public static class StringExtensions
             return string.Format(CultureInfo.CurrentCulture, str, args);
         }
 
+        public string FormatCurrentCultureSectionKey(string key)
+        {
+            const string Format = "{0}:{1}";
+
+            return Format.FormatCurrentCulture(str, key);
+        }
+
         public string ToSnakeCase()
         {
             const int Min = 0;
