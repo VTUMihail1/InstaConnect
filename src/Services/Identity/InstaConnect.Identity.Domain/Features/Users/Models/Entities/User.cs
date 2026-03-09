@@ -137,6 +137,34 @@ public class User : IEntityWithId<UserId>
         Name = name;
         UpdatedAtUtc = updatedAtUtc;
     }
+
+    public User AddUserClaim(UserClaim userClaim)
+    {
+        UserClaims.Add(userClaim);
+
+        return this;
+    }
+
+    public User AddRefreshToken(RefreshToken refreshToken)
+    {
+        RefreshTokens.Add(refreshToken);
+
+        return this;
+    }
+
+    public User AddForgotPasswordToken(ForgotPasswordToken forgotPasswordToken)
+    {
+        ForgotPasswordTokens.Add(forgotPasswordToken);
+
+        return this;
+    }
+
+    public User AddEmailConfirmationToken(EmailConfirmationToken emailConfirmationToken)
+    {
+        EmailConfirmationTokens.Add(emailConfirmationToken);
+
+        return this;
+    }
 }
 
 

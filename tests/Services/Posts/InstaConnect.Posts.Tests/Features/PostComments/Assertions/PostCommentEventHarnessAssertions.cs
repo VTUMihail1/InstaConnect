@@ -8,8 +8,8 @@ public static class PostCommentEventHarnessAssertions
     extension(IEventHarness eventHarness)
     {
         public async Task ShouldHavePublishedAddedAsync(
-        PostComment entity,
-        CancellationToken cancellationToken)
+            PostComment entity,
+            CancellationToken cancellationToken)
         {
             await eventHarness.ShouldHavePublishedAsync<PostCommentAddedEventRequest>(
                 p => p.Matches(entity),

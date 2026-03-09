@@ -23,7 +23,7 @@ public static class UserConfigurations
     public const int PasswordHashMinLength = 7;
     public const int PasswordHashMaxLength = 100;
 
-    public const int ProfileImageMaxLength = 100;
+    public const int ProfileImageUrlMaxLength = 100;
 
     public const int PageMinValue = 1;
     public const int PageMaxValue = 100;

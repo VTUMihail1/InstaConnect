@@ -13,5 +13,7 @@ public interface IRefreshTokenCommandRepository
 
     Task AddAsync(RefreshToken entity, CancellationToken cancellationToken);
 
+    Task AddRangeAsync(IEnumerable<RefreshToken> entities, CancellationToken cancellationToken);
+
     Task DeleteAsync(RefreshToken entity, CancellationToken cancellationToken);
 }

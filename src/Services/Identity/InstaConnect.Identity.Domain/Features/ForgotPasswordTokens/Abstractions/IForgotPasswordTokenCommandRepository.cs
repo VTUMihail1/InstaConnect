@@ -13,5 +13,7 @@ public interface IForgotPasswordTokenCommandRepository
 
     Task AddAsync(ForgotPasswordToken entity, CancellationToken cancellationToken);
 
+    Task AddRangeAsync(IEnumerable<ForgotPasswordToken> entities, CancellationToken cancellationToken);
+
     Task DeleteRangeAsync(IEnumerable<ForgotPasswordToken> entities, CancellationToken cancellationToken);
 }

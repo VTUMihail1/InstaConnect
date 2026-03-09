@@ -44,6 +44,13 @@ internal class EmailConfirmationTokenCommandRepository : IEmailConfirmationToken
             .AddAsync(_context.ClientSessionHandle, entity, cancellationToken);
     }
 
+    public async Task AddRangeAsync(IEnumerable<EmailConfirmationToken> entities, CancellationToken cancellationToken)
+    {
+        await _context
+            .EmailConfirmationTokens
+            .AddRangeAsync(_context.ClientSessionHandle, entities, cancellationToken);
+    }
+
     public async Task DeleteRangeAsync(IEnumerable<EmailConfirmationToken> entities, CancellationToken cancellationToken)
     {
         await _context.EmailConfirmationTokens

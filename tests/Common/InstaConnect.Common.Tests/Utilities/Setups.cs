@@ -13,6 +13,11 @@ public static class Setups
             return serviceScope.ServiceProvider.GetRequiredService<IEventHarness>();
         }
 
+        public IImageHandler GetImageHandler()
+        {
+            return serviceScope.ServiceProvider.GetRequiredService<IImageHandler>();
+        }
+
         public IApplicationSender GetSender()
         {
             return serviceScope.ServiceProvider.GetRequiredService<IApplicationSender>();

@@ -15,4 +15,11 @@ internal class UserClaimCommandRepository : IUserClaimCommandRepository
             .UserClaims
             .AddAsync(_context.ClientSessionHandle, entity, cancellationToken);
     }
+
+    public async Task AddRangeAsync(IEnumerable<UserClaim> entities, CancellationToken cancellationToken)
+    {
+        await _context
+            .UserClaims
+            .AddRangeAsync(_context.ClientSessionHandle, entities, cancellationToken);
+    }
 }

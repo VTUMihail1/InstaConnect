@@ -8,8 +8,8 @@ public static class UserEventHarnessAssertions
     extension(IEventHarness eventHarness)
     {
         public async Task ShouldHaveConsumedAsync(
-        UserAddedEventRequest request,
-        CancellationToken cancellationToken)
+            UserAddedEventRequest request,
+            CancellationToken cancellationToken)
         {
             await eventHarness.ShouldHaveConsumedAsync<UserAddedEventRequest>(p => p.Matches(request), cancellationToken);
         }

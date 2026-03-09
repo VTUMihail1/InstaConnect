@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.5.33627.172
+# Visual Studio Version 18
+VisualStudioVersion = 18.4.11519.219 insiders
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1299849E-069E-4D1C-9180-72B9C9C3BAC7}"
 	ProjectSection(SolutionItems) = preProject
@@ -123,6 +123,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Common.Events", "src\Common\InstaConnect.Common.Events\InstaConnect.Common.Events.csproj", "{1A3742B3-A3F6-411B-A34D-1116EDD5080D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Chats.Events", "src\Services\Chats\InstaConnect.Chats.Events\InstaConnect.Chats.Events.csproj", "{318566BF-B86A-4794-9A3D-59CD92F47D01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Identity.Tests", "tests\Services\Identity\InstaConnect.Identity.Tests\InstaConnect.Identity.Tests.csproj", "{1CFBBA67-409C-42CF-9DB3-7B2B779F5395}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -294,6 +296,10 @@ Global
 		{318566BF-B86A-4794-9A3D-59CD92F47D01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{318566BF-B86A-4794-9A3D-59CD92F47D01}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{318566BF-B86A-4794-9A3D-59CD92F47D01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CFBBA67-409C-42CF-9DB3-7B2B779F5395}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CFBBA67-409C-42CF-9DB3-7B2B779F5395}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CFBBA67-409C-42CF-9DB3-7B2B779F5395}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CFBBA67-409C-42CF-9DB3-7B2B779F5395}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -353,6 +359,7 @@ Global
 		{EB6F4B3F-8920-4413-B9FB-9018E7E2B6E3} = {BB218D91-B7C7-4865-9A44-68EFCEBF744C}
 		{1A3742B3-A3F6-411B-A34D-1116EDD5080D} = {C7AAC72E-FFC7-4387-B752-90D8633C6B24}
 		{318566BF-B86A-4794-9A3D-59CD92F47D01} = {7FE8F3FE-E3F1-46BD-B1A5-788D3E987AEB}
+		{1CFBBA67-409C-42CF-9DB3-7B2B779F5395} = {26B903EE-D354-4E26-8785-325AEBD06FC4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {74CDCE11-9171-4345-A1A8-63E51F48297C}

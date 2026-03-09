@@ -64,19 +64,9 @@ internal static class RuleBuilderExtensions
             return ruleBuilder.MaxLengthWithMessage(UserConfigurations.PasswordMaxLength);
         }
 
-        public IRuleBuilderOptions<T, string> UserPasswordHashMinLengthWithMessage()
-        {
-            return ruleBuilder.MinLengthWithMessage(UserConfigurations.PasswordHashMinLength);
-        }
-
-        public IRuleBuilderOptions<T, string> UserPasswordHashMaxLengthWithMessage()
-        {
-            return ruleBuilder.MaxLengthWithMessage(UserConfigurations.PasswordHashMaxLength);
-        }
-
         public IRuleBuilderOptions<T, string> UserProfileImageMaxLengthWithMessage()
         {
-            return ruleBuilder.MaxLengthWithMessage(UserConfigurations.ProfileImageMaxLength);
+            return ruleBuilder.MaxLengthWithMessage(UserConfigurations.ProfileImageUrlMaxLength);
         }
     }
 

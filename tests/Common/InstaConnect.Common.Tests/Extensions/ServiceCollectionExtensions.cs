@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 
 using InstaConnect.Common.Tests.Events;
+using InstaConnect.Common.Tests.Utilities;
 
 using MassTransit;
 
@@ -20,6 +21,13 @@ public static class ServiceCollectionExtensions
 
             serviceCollection.AddScoped<ITestHarnessFactory>(_ => new TestHarnessFactory(connectionString, currentAssemblies));
             serviceCollection.AddScoped<IEventHarness, EventHarness>();
+
+            return serviceCollection;
+        }
+
+        public IServiceCollection AddMockImageHandler()
+        {
+            serviceCollection.AddScoped(_ => Mocker.Mock<IImageHandler>());
 
             return serviceCollection;
         }
