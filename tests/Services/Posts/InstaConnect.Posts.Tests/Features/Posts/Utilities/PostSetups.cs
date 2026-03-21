@@ -36,7 +36,9 @@ public static class PostSetups
             PostId id,
             CancellationToken cancellationToken)
         {
-            return await serviceScope.GetPostCommandRepository().GetByIdAsync(id, cancellationToken);
+            var include = serviceScope.GetPostIncludeBuilderFactory().Create().WithUser().Build();
+
+            return await serviceScope.GetPostCommandRepository().GetByIdAsync(id, include, cancellationToken);
         }
 
         public async Task AddPostAsync(

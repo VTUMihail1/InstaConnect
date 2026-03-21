@@ -25,6 +25,13 @@ public static class PostLikeTestRoutes
             userId);
     }
 
+    private static string GetCurrent(string id)
+    {
+        const string Format = "{0}/current";
+
+        return Format.FormatCurrentCulture(GetDefault(id));
+    }
+
     public static string GetRoute(GetAllPostLikesApiRequest request)
     {
         const string Format = "{0}?userName={1}&sortOrder={2}&sortTerm={3}&page={4}&pageSize={5}";
@@ -62,6 +69,6 @@ public static class PostLikeTestRoutes
 
     public static string GetRoute(DeletePostLikeApiRequest request)
     {
-        return GetId(request.Id, request.UserId);
+        return GetCurrent(request.Id);
     }
 }

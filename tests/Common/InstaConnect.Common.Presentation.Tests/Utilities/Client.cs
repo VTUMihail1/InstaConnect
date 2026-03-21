@@ -11,12 +11,6 @@ public static class Client
 {
     extension(HttpClient httpClient)
     {
-        public HttpClient WithoutAuthorization()
-        {
-            httpClient.SetFakeJwtBearerToken([]);
-
-            return httpClient;
-        }
         public HttpClient WithAuthorization(string userId)
         {
             httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>()

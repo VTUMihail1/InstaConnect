@@ -130,7 +130,6 @@ public static class PostClient
             var route = PostTestRoutes.GetRoute(request);
 
             return await httpClient
-                .WithoutAuthorization()
                 .PostAsJsonAsync(route, request.Body, cancellationToken);
         }
 
@@ -197,7 +196,6 @@ public static class PostClient
             var route = PostTestRoutes.GetRoute(request);
 
             return await httpClient
-                .WithoutAuthorization()
                 .PutAsJsonAsync(route, request.Body, cancellationToken);
         }
 
@@ -264,7 +262,6 @@ public static class PostClient
             var route = PostTestRoutes.GetRoute(request);
 
             return await httpClient
-                .WithoutAuthorization()
                 .DeleteAsync(route, cancellationToken);
         }
 

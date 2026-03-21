@@ -130,8 +130,7 @@ public static class PostCommentClient
             var route = PostCommentTestRoutes.GetRoute(request);
 
             return await httpClient
-                .WithoutAuthorization()
-                .PostAsync(route, null, cancellationToken);
+                .PostAsJsonAsync(route, request.Body, cancellationToken);
         }
 
         private async Task<HttpResponseMessage> AddPostCommentResponseMessageAsync(
@@ -142,7 +141,7 @@ public static class PostCommentClient
 
             return await httpClient
                 .WithAuthorization(request.UserId)
-                .PostAsync(route, null, cancellationToken);
+                .PostAsJsonAsync(route, request.Body, cancellationToken);
         }
 
         public async Task<ApplicationProblemDetails> AddPostCommentProblemDetailsUnauthorizedAsync(
@@ -197,7 +196,6 @@ public static class PostCommentClient
             var route = PostCommentTestRoutes.GetRoute(request);
 
             return await httpClient
-                .WithoutAuthorization()
                 .PutAsJsonAsync(route, request.Body, cancellationToken);
         }
 
@@ -264,7 +262,6 @@ public static class PostCommentClient
             var route = PostCommentTestRoutes.GetRoute(request);
 
             return await httpClient
-                .WithoutAuthorization()
                 .DeleteAsync(route, cancellationToken);
         }
 

@@ -51,8 +51,8 @@ public class PostLikeController : ControllerBase
         return Ok(response);
     }
 
-    // POST: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/likes/current
-    [HttpPost(PostLikeRoutes.Current)]
+    // POST: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/likes
+    [HttpPost]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

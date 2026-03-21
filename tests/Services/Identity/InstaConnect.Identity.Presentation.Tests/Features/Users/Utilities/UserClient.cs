@@ -92,7 +92,6 @@ public static class UserClient
             var route = UserTestRoutes.GetRoute(request);
 
             return await httpClient
-                .WithoutAuthorization()
                 .GetAsync(route, cancellationToken);
         }
 
@@ -197,7 +196,6 @@ public static class UserClient
             var route = UserTestRoutes.GetRoute(request);
 
             return await httpClient
-                .WithoutAuthorization()
                 .GetAsync(route, cancellationToken);
         }
 
@@ -301,7 +299,6 @@ public static class UserClient
             var route = UserTestRoutes.GetRoute(request);
 
             return await httpClient
-                .WithoutAuthorization()
                 .PutAsJsonAsync(route, request.Form.GetContent(), cancellationToken);
         }
 
@@ -368,7 +365,6 @@ public static class UserClient
             var route = UserTestRoutes.GetRoute(request);
 
             return await httpClient
-                .WithoutAuthorization()
                 .DeleteAsync(route, cancellationToken);
         }
 
@@ -462,7 +458,6 @@ public static class UserClient
             var route = UserTestRoutes.GetRoute(request);
 
             return await httpClient
-                .WithoutAuthorization()
                 .DeleteAsync(route, cancellationToken);
         }
 

@@ -91,7 +91,6 @@ public static class UserClaimClient
             var route = UserClaimTestRoutes.GetRoute(request);
 
             return await httpClient
-                .WithoutAuthorization()
                 .DeleteAsync(route, cancellationToken);
         }
 

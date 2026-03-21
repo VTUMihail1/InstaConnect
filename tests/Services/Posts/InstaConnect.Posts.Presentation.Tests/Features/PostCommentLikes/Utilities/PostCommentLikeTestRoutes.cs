@@ -25,6 +25,13 @@ public static class PostCommentLikeTestRoutes
             userId);
     }
 
+    private static string GetCurrent(string id, string commentId)
+    {
+        const string Format = "{0}/current";
+
+        return Format.FormatCurrentCulture(GetDefault(id, commentId));
+    }
+
     public static string GetRoute(GetAllPostCommentLikesApiRequest request)
     {
         const string Format = "{0}?userName={1}&sortOrder={2}&sortTerm={3}&page={4}&pageSize={5}";
@@ -62,6 +69,6 @@ public static class PostCommentLikeTestRoutes
 
     public static string GetRoute(DeletePostCommentLikeApiRequest request)
     {
-        return GetId(request.Id, request.CommentId, request.UserId);
+        return GetCurrent(request.Id, request.CommentId);
     }
 }

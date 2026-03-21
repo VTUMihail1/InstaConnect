@@ -130,7 +130,6 @@ public static class PostCommentLikeClient
             var route = PostCommentLikeTestRoutes.GetRoute(request);
 
             return await httpClient
-                .WithoutAuthorization()
                 .PostAsync(route, null, cancellationToken);
         }
 
@@ -197,7 +196,6 @@ public static class PostCommentLikeClient
             var route = PostCommentLikeTestRoutes.GetRoute(request);
 
             return await httpClient
-                .WithoutAuthorization()
                 .DeleteAsync(route, cancellationToken);
         }
 

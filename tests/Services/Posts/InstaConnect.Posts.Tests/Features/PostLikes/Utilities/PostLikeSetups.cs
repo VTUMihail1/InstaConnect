@@ -1,5 +1,6 @@
 ﻿using InstaConnect.Posts.Domain.Features.PostLikes.Abstractions;
 using InstaConnect.Posts.Domain.Features.PostLikes.Models.ValueObjects;
+using InstaConnect.Posts.Tests.Features.Posts.Utilities;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -36,7 +37,10 @@ public static class PostLikeSetups
             PostLikeId id,
             CancellationToken cancellationToken)
         {
-            return await serviceScope.GetPostLikeCommandRepository().GetByIdAsync(id, cancellationToken);
+            var include = serviceScope.GetPostIncludeBuilderFactory().Create().WithUser().Build();
+            var likeInclude = serviceScope.GetPostLikeIncludeBuilderFactory().Create().WithUser().WithPost(include).Build();
+
+            return await serviceScope.GetPostLikeCommandRepository().GetByIdAsync(id, likeInclude, cancellationToken);
         }
 
         public async Task AddPostLikeAsync(

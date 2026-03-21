@@ -52,7 +52,7 @@ public class PostCommentLikeController : ControllerBase
     }
 
     // POST: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/comments/5f0f2dd0-e957-4d72-8141-767a36fc6e95/likes/current
-    [HttpPost(PostCommentLikeRoutes.Current)]
+    [HttpPost]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
