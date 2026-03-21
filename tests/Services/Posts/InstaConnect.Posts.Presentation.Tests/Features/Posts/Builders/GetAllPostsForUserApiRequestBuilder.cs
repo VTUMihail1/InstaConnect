@@ -23,9 +23,9 @@ public class GetAllPostsForUserApiRequestBuilder
         _sortTerm = PostDataFaker.GetForUserSortTerm();
     }
 
-    public GetAllPostsForUserApiRequestBuilder WithUserId(User user, IStringTransformer? transformer = null)
+    public GetAllPostsForUserApiRequestBuilder WithUserId(UserId userId, IStringTransformer? transformer = null)
     {
-        _userId = transformer.TryTransform(user.Id.Id);
+        _userId = transformer.TryTransform(userId.Id);
 
         return this;
     }
@@ -37,9 +37,9 @@ public class GetAllPostsForUserApiRequestBuilder
         return this;
     }
 
-    public GetAllPostsForUserApiRequestBuilder WithCurrentUserId(User user, IStringTransformer? transformer = null)
+    public GetAllPostsForUserApiRequestBuilder WithCurrentUserId(UserId currentUserId, IStringTransformer? transformer = null)
     {
-        _currentUserId = transformer.TryTransform(user.Id.Id);
+        _currentUserId = transformer.TryTransform(currentUserId.Id);
 
         return this;
     }

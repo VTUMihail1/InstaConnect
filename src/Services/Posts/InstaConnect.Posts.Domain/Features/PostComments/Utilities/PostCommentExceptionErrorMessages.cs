@@ -33,7 +33,7 @@ public static class PostCommentExceptionErrorMessages
         return Format.FormatCurrentCulture(sortTerm);
     }
 
-    public static string GetInclidePropertyNotSupportedMessage(ICollection<PostsIncludeDescriptor> descriptors)
+    public static string GetIncludePropertyNotSupportedMessage(ICollection<PostsIncludeDescriptor> descriptors)
     {
         const string Format = "PostCommentIncludeDescriptors({0}) is not supported";
 

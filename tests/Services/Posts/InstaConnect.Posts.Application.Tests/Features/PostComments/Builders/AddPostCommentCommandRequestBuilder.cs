@@ -15,9 +15,9 @@ public class AddPostCommentCommandRequestBuilder
         _content = PostCommentDataFaker.GetContent();
     }
 
-    public AddPostCommentCommandRequestBuilder WithId(Post post, IStringTransformer? transformer = null)
+    public AddPostCommentCommandRequestBuilder WithId(PostId id, IStringTransformer? transformer = null)
     {
-        _id = transformer.TryTransform(post.Id.Id);
+        _id = transformer.TryTransform(id.Id);
 
         return this;
     }
@@ -29,9 +29,9 @@ public class AddPostCommentCommandRequestBuilder
         return this;
     }
 
-    public AddPostCommentCommandRequestBuilder WithUserId(User user, IStringTransformer? transformer = null)
+    public AddPostCommentCommandRequestBuilder WithUserId(UserId userId, IStringTransformer? transformer = null)
     {
-        _userId = transformer.TryTransform(user.Id.Id);
+        _userId = transformer.TryTransform(userId.Id);
 
         return this;
     }

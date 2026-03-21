@@ -21,13 +21,13 @@ public abstract class BasePostCommentLikeWebTest : BasePostCommentLikeTest, ICla
     public async Task InitializeAsync()
     {
         await EventHarness.StartAsync(CancellationToken);
-        await ServiceScope.ResetPostCommentLikeDatabase(CancellationToken);
+        await ServiceScope.ResetPostsDatabase(CancellationToken);
         await OnInitializeAsync();
     }
 
     public async Task DisposeAsync()
     {
-        await ServiceScope.ResetPostCommentLikeDatabase(CancellationToken);
+        await ServiceScope.ResetPostsDatabase(CancellationToken);
         await EventHarness.StopAsync(CancellationToken);
     }
 

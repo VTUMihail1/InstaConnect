@@ -5,8 +5,8 @@ public static class UserValidationAssertions
     extension(TestValidationResult<UpdateUserCommandRequest> result)
     {
         public void ShouldHaveValidationErrorForId(
-        IStringMessageTransformer messageTransformer,
-        UpdateUserCommandRequest value)
+            IStringMessageTransformer messageTransformer,
+            UpdateUserCommandRequest value)
         {
             result.ShouldHaveValidationErrorForProperty(p => p.Id, messageTransformer, value);
         }
@@ -57,8 +57,8 @@ public static class UserValidationAssertions
     extension(TestValidationResult<DeleteUserCommandRequest> result)
     {
         public void ShouldHaveValidationErrorForId(
-        IStringMessageTransformer messageTransformer,
-        DeleteUserCommandRequest value)
+            IStringMessageTransformer messageTransformer,
+            DeleteUserCommandRequest value)
         {
             result.ShouldHaveValidationErrorForProperty(p => p.Id, messageTransformer, value);
         }
@@ -67,8 +67,8 @@ public static class UserValidationAssertions
     extension(TestValidationResult<AddUserCommandRequest> result)
     {
         public void ShouldHaveValidationErrorForId(
-        IStringMessageTransformer messageTransformer,
-        AddUserCommandRequest value)
+            IStringMessageTransformer messageTransformer,
+            AddUserCommandRequest value)
         {
             result.ShouldHaveValidationErrorForProperty(p => p.Id, messageTransformer, value);
         }

@@ -23,9 +23,9 @@ public class GetAllPostCommentsQueryRequestBuilder
         _sortProperty = PostCommentDataFaker.GetSortTerm();
     }
 
-    public GetAllPostCommentsQueryRequestBuilder WithId(Post post, IStringTransformer? transformer = null)
+    public GetAllPostCommentsQueryRequestBuilder WithId(PostId id, IStringTransformer? transformer = null)
     {
-        _id = transformer.TryTransform(post.Id.Id);
+        _id = transformer.TryTransform(id.Id);
 
         return this;
     }
@@ -44,9 +44,9 @@ public class GetAllPostCommentsQueryRequestBuilder
         return this;
     }
 
-    public GetAllPostCommentsQueryRequestBuilder WithCurrentUserId(User user, IStringTransformer? transformer = null)
+    public GetAllPostCommentsQueryRequestBuilder WithCurrentUserId(UserId currentUserId, IStringTransformer? transformer = null)
     {
-        _currentUserId = transformer.TryTransform(user.Id.Id);
+        _currentUserId = transformer.TryTransform(currentUserId.Id);
 
         return this;
     }

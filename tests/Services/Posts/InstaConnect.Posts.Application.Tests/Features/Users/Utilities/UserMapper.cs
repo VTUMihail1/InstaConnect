@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Posts.Domain.Features.Users.Models.Responses;
-using InstaConnect.Posts.Domain.Features.Users.Models.ValueObjects;
 
 namespace InstaConnect.Posts.Application.Tests.Features.Users.Utilities;
 

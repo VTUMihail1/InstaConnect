@@ -105,6 +105,8 @@ public class User : IEntityWithId<UserId>
 
     public DateTimeOffset UpdatedAtUtc { get; private set; }
 
+    public bool IsEmailNotConfirmed => !IsEmailConfirmed;
+
     public void UpdateEmail(Email email)
     {
         Email = email;

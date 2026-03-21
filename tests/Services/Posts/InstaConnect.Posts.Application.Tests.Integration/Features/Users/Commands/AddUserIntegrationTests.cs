@@ -132,7 +132,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
     {
         // Arrange
         await ServiceScope.AddUserAsync(User, CancellationToken);
-        var request = _requestBuilder.WithId(User).Build();
+        var request = _requestBuilder.WithId(User.Id).Build();
 
         // Assert
         await Sender.ShouldThrowUserAlreadyExistsExceptionAsync(request, CancellationToken);
@@ -145,7 +145,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
     {
         // Arrange
         await ServiceScope.AddUserAsync(User, CancellationToken);
-        var request = _requestBuilder.WithId(User, transformer).Build();
+        var request = _requestBuilder.WithId(User.Id, transformer).Build();
 
         // Assert
         await Sender.ShouldThrowUserAlreadyExistsExceptionAsync(request, CancellationToken);
@@ -156,7 +156,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
     {
         // Arrange
         await ServiceScope.AddUserAsync(User, CancellationToken);
-        var request = _requestBuilder.WithEmail(User).Build();
+        var request = _requestBuilder.WithEmail(User.Email).Build();
 
         // Assert
         await Sender.ShouldThrowUserEmailAlreadyExistsExceptionAsync(request, CancellationToken);
@@ -169,7 +169,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
     {
         // Arrange
         await ServiceScope.AddUserAsync(User, CancellationToken);
-        var request = _requestBuilder.WithEmail(User, transformer).Build();
+        var request = _requestBuilder.WithEmail(User.Email, transformer).Build();
 
         // Assert
         await Sender.ShouldThrowUserEmailAlreadyExistsExceptionAsync(request, CancellationToken);
@@ -180,7 +180,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
     {
         // Arrange
         await ServiceScope.AddUserAsync(User, CancellationToken);
-        var request = _requestBuilder.WithName(User).Build();
+        var request = _requestBuilder.WithName(User.Name).Build();
 
         // Assert
         await Sender.ShouldThrowUserNameAlreadyExistsExceptionAsync(request, CancellationToken);
@@ -193,7 +193,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
     {
         // Arrange
         await ServiceScope.AddUserAsync(User, CancellationToken);
-        var request = _requestBuilder.WithName(User, transformer).Build();
+        var request = _requestBuilder.WithName(User.Name, transformer).Build();
 
         // Assert
         await Sender.ShouldThrowUserNameAlreadyExistsExceptionAsync(request, CancellationToken);

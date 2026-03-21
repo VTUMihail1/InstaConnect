@@ -6,12 +6,12 @@ namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Exceptio
 public class EmailConfirmationTokenIncludeDescriptorsNotSupportedException : BadRequestException
 {
     public EmailConfirmationTokenIncludeDescriptorsNotSupportedException(ICollection<IdentityIncludeDescriptor> includeDescriptors)
-        : base(EmailConfirmationTokenExceptionErrorMessages.GetInclideDescriptorsNotSupportedMessage(includeDescriptors))
+        : base(EmailConfirmationTokenExceptionErrorMessages.GetIncludeDescriptorsNotSupportedMessage(includeDescriptors))
     {
     }
 
     public EmailConfirmationTokenIncludeDescriptorsNotSupportedException(ICollection<IdentityIncludeDescriptor> includeDescriptors, Exception exception)
-        : base(EmailConfirmationTokenExceptionErrorMessages.GetInclideDescriptorsNotSupportedMessage(includeDescriptors), exception)
+        : base(EmailConfirmationTokenExceptionErrorMessages.GetIncludeDescriptorsNotSupportedMessage(includeDescriptors), exception)
     {
     }
 }

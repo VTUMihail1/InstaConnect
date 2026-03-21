@@ -1,8 +1,5 @@
-﻿using InstaConnect.Common.Tests.Extensions;
-using InstaConnect.Posts.Domain.Features.PostLikes.Abstractions;
+﻿using InstaConnect.Posts.Domain.Features.PostLikes.Abstractions;
 using InstaConnect.Posts.Domain.Features.PostLikes.Models.ValueObjects;
-using InstaConnect.Posts.Infrastructure.Abstractions;
-using InstaConnect.Posts.Tests.Features.Posts.Utilities;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,64 +7,57 @@ namespace InstaConnect.Posts.Tests.Features.PostLikes.Utilities;
 
 public static class PostLikeSetups
 {
-    extension(IServiceScope serviceScope)
+    extension(IServiceProvider serviceProvider)
     {
         public IPostLikeCommandRepository GetPostLikeCommandRepository()
         {
-            return serviceScope.ServiceProvider.GetRequiredService<IPostLikeCommandRepository>();
+            return serviceProvider.GetRequiredService<IPostLikeCommandRepository>();
         }
 
         public IPostLikeIncludeBuilderFactory GetPostLikeIncludeBuilderFactory()
         {
-            return serviceScope.ServiceProvider.GetRequiredService<IPostLikeIncludeBuilderFactory>();
+            return serviceProvider.GetRequiredService<IPostLikeIncludeBuilderFactory>();
+        }
+    }
+
+    extension(IServiceScope serviceScope)
+    {
+        public IPostLikeCommandRepository GetPostLikeCommandRepository()
+        {
+            return serviceScope.ServiceProvider.GetPostLikeCommandRepository();
+        }
+
+        public IPostLikeIncludeBuilderFactory GetPostLikeIncludeBuilderFactory()
+        {
+            return serviceScope.ServiceProvider.GetPostLikeIncludeBuilderFactory();
         }
 
         public async Task<PostLike?> GetPostLikeByIdAsync(
             PostLikeId id,
             CancellationToken cancellationToken)
         {
-            var include = serviceScope.GetPostIncludeBuilderFactory().Create().WithUser().Build();
-            var likeInclude = serviceScope.GetPostLikeIncludeBuilderFactory().Create().WithUser().WithPost(include).Build();
-            var postLikeRepository = serviceScope.GetPostLikeCommandRepository();
-
-            return await postLikeRepository.GetByIdAsync(id, likeInclude, cancellationToken);
+            return await serviceScope.GetPostLikeCommandRepository().GetByIdAsync(id, cancellationToken);
         }
 
         public async Task AddPostLikeAsync(
             PostLike postLike,
             CancellationToken cancellationToken)
         {
-            var postLikeRepository = serviceScope.GetPostLikeCommandRepository();
-
-            await postLikeRepository.AddAsync(postLike, cancellationToken);
+            await serviceScope.GetPostLikeCommandRepository().AddAsync(postLike, cancellationToken);
         }
 
         public async Task AddPostLikeRangeAsync(
             IEnumerable<PostLike> postLikes,
             CancellationToken cancellationToken)
         {
-            var postLikeRepository = serviceScope.GetPostLikeCommandRepository();
-
-            await postLikeRepository.AddRangeAsync(postLikes, cancellationToken);
+            await serviceScope.GetPostLikeCommandRepository().AddRangeAsync(postLikes, cancellationToken);
         }
 
         public async Task DeletePostLikeAsync(
             PostLike postLike,
             CancellationToken cancellationToken)
         {
-            var postLikeRepository = serviceScope.GetPostLikeCommandRepository();
-
-            await postLikeRepository.DeleteAsync(postLike, cancellationToken);
-        }
-
-        public async Task ResetPostLikeDatabase(
-            CancellationToken cancellationToken)
-        {
-            var context = serviceScope.ServiceProvider.GetRequiredService<IPostsContext>();
-
-            await context.PostLikes.ResetAsync(cancellationToken);
-            await context.Posts.ResetAsync(cancellationToken);
-            await context.Users.ResetAsync(cancellationToken);
+            await serviceScope.GetPostLikeCommandRepository().DeleteAsync(postLike, cancellationToken);
         }
     }
 }

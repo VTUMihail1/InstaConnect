@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Tests.Features.Users.Utilities;
+﻿using Microsoft.AspNetCore.Http;
+
+namespace InstaConnect.Identity.Tests.Features.Users.Utilities;
 
 public static class UserDataFaker
 {
@@ -52,11 +54,6 @@ public static class UserDataFaker
         return DataFaker.GetAverageString(UserConfigurations.PasswordMinLength, UserConfigurations.PasswordMaxLength);
     }
 
-    public static string GetPasswordHash()
-    {
-        return DataFaker.GetAverageString(UserConfigurations.PasswordHashMinLength, UserConfigurations.PasswordHashMaxLength);
-    }
-
     public static bool GetIsEmailConfirmed()
     {
         const bool IsEmailConfirmed = true;
@@ -64,9 +61,9 @@ public static class UserDataFaker
         return IsEmailConfirmed;
     }
 
-    public static string GetProfileImage()
+    public static IFormFile GetProfileImage()
     {
-        return DataFaker.GetAverageString(UserConfigurations.ProfileImageUrlMaxLength);
+        return DataFaker.GetFormFile();
     }
 
     public static DateTimeOffset GetCreatedAtUtc()

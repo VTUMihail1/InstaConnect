@@ -7,7 +7,7 @@ namespace InstaConnect.Chats.Presentation.Features.Chats.Controllers.v1;
 
 [ApiVersion(ChatRoutes.Version1)]
 [Route(ChatRoutes.Resource)]
-[EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
+[EnableRateLimiting(RateLimiterPolicies.Default)]
 public class ChatController : ControllerBase
 {
     private readonly IApplicationMapper _mapper;

@@ -2,7 +2,6 @@
 
 using InstaConnect.Common.Domain.Abstractions;
 using InstaConnect.Common.Infrastructure.Helpers;
-using InstaConnect.Common.Presentation.Abstractions;
 using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
 
 namespace InstaConnect.Common.Application.Tests.Utilities;

@@ -157,7 +157,7 @@ public class AddUserPresentationTests : BaseUserPresentationCommandFunctionalTes
         // Arrange
         var newUser = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(newUser, CancellationToken);
-        var request = _requestBuilder.WithId(newUser).Build();
+        var request = _requestBuilder.WithId(newUser.Id).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
@@ -174,7 +174,7 @@ public class AddUserPresentationTests : BaseUserPresentationCommandFunctionalTes
         // Arrange
         var newUser = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(newUser, CancellationToken);
-        var request = _requestBuilder.WithId(newUser, transformer).Build();
+        var request = _requestBuilder.WithId(newUser.Id, transformer).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
@@ -189,7 +189,7 @@ public class AddUserPresentationTests : BaseUserPresentationCommandFunctionalTes
         // Arrange
         var newUser = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(newUser, CancellationToken);
-        var request = _requestBuilder.WithEmail(newUser).Build();
+        var request = _requestBuilder.WithEmail(newUser.Email).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
@@ -206,7 +206,7 @@ public class AddUserPresentationTests : BaseUserPresentationCommandFunctionalTes
         // Arrange
         var newUser = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(newUser, CancellationToken);
-        var request = _requestBuilder.WithEmail(newUser, transformer).Build();
+        var request = _requestBuilder.WithEmail(newUser.Email, transformer).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
@@ -221,7 +221,7 @@ public class AddUserPresentationTests : BaseUserPresentationCommandFunctionalTes
         // Arrange
         var newUser = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(newUser, CancellationToken);
-        var request = _requestBuilder.WithName(newUser).Build();
+        var request = _requestBuilder.WithName(newUser.Name).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
@@ -238,7 +238,7 @@ public class AddUserPresentationTests : BaseUserPresentationCommandFunctionalTes
         // Arrange
         var newUser = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(newUser, CancellationToken);
-        var request = _requestBuilder.WithName(newUser, transformer).Build();
+        var request = _requestBuilder.WithName(newUser.Name, transformer).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
@@ -396,7 +396,7 @@ public class AddUserPresentationTests : BaseUserPresentationCommandFunctionalTes
         // Arrange
         var newUser = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(newUser, CancellationToken);
-        var request = _requestBuilder.WithEmail(newUser).Build();
+        var request = _requestBuilder.WithEmail(newUser.Email).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
@@ -414,7 +414,7 @@ public class AddUserPresentationTests : BaseUserPresentationCommandFunctionalTes
         // Arrange
         var newUser = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(newUser, CancellationToken);
-        var request = _requestBuilder.WithEmail(newUser, transformer).Build();
+        var request = _requestBuilder.WithEmail(newUser.Email, transformer).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
@@ -430,7 +430,7 @@ public class AddUserPresentationTests : BaseUserPresentationCommandFunctionalTes
         // Arrange
         var newUser = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(newUser, CancellationToken);
-        var request = _requestBuilder.WithName(newUser).Build();
+        var request = _requestBuilder.WithName(newUser.Name).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
@@ -448,7 +448,7 @@ public class AddUserPresentationTests : BaseUserPresentationCommandFunctionalTes
         // Arrange
         var newUser = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(newUser, CancellationToken);
-        var request = _requestBuilder.WithName(newUser, transformer).Build();
+        var request = _requestBuilder.WithName(newUser.Name, transformer).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);

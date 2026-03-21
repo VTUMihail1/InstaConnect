@@ -51,6 +51,13 @@ internal class ForgotPasswordTokenCommandRepository : IForgotPasswordTokenComman
             .AddRangeAsync(_context.ClientSessionHandle, entities, cancellationToken);
     }
 
+    public async Task DeleteAsync(ForgotPasswordToken entity, CancellationToken cancellationToken)
+    {
+        await _context
+            .ForgotPasswordTokens
+            .DeleteAsync(_context.ClientSessionHandle, entity, cancellationToken);
+    }
+
     public async Task DeleteRangeAsync(IEnumerable<ForgotPasswordToken> entities, CancellationToken cancellationToken)
     {
         await _context.ForgotPasswordTokens

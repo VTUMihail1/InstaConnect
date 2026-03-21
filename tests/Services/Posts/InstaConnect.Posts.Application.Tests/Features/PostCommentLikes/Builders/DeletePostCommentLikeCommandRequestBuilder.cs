@@ -15,9 +15,9 @@ public class DeletePostCommentLikeCommandRequestBuilder
         _userId = postCommentLike.Id.UserId.Id;
     }
 
-    public DeletePostCommentLikeCommandRequestBuilder WithId(Post post, IStringTransformer? transformer = null)
+    public DeletePostCommentLikeCommandRequestBuilder WithId(PostId id, IStringTransformer? transformer = null)
     {
-        _id = transformer.TryTransform(post.Id.Id);
+        _id = transformer.TryTransform(id.Id);
 
         return this;
     }
@@ -29,9 +29,9 @@ public class DeletePostCommentLikeCommandRequestBuilder
         return this;
     }
 
-    public DeletePostCommentLikeCommandRequestBuilder WithCommentId(PostComment postComment, IStringTransformer? transformer = null)
+    public DeletePostCommentLikeCommandRequestBuilder WithCommentId(PostCommentId commentId, IStringTransformer? transformer = null)
     {
-        _commentId = transformer.TryTransform(postComment.Id.CommentId);
+        _commentId = transformer.TryTransform(commentId.CommentId);
 
         return this;
     }
@@ -43,9 +43,9 @@ public class DeletePostCommentLikeCommandRequestBuilder
         return this;
     }
 
-    public DeletePostCommentLikeCommandRequestBuilder WithUserId(User user, IStringTransformer? transformer = null)
+    public DeletePostCommentLikeCommandRequestBuilder WithUserId(UserId userId, IStringTransformer? transformer = null)
     {
-        _userId = transformer.TryTransform(user.Id.Id);
+        _userId = transformer.TryTransform(userId.Id);
 
         return this;
     }

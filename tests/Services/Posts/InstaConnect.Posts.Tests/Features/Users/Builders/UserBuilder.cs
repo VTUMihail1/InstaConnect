@@ -25,58 +25,58 @@ public class UserBuilder
         _updatedAtUtc = UserDataFaker.GetUpdatedAtUtc();
     }
 
-    public UserBuilder WithId(IStringTransformer transformer)
+    public UserBuilder WithId(string id)
     {
-        _id = transformer.Transform(_id);
+        _id = id;
 
         return this;
     }
 
-    public UserBuilder WithName(IStringTransformer transformer)
+    public UserBuilder WithName(string name)
     {
-        _name = transformer.Transform(_name);
+        _name = name;
 
         return this;
     }
 
-    public UserBuilder WithFirstName(IStringTransformer transformer)
+    public UserBuilder WithFirstName(string firstName)
     {
-        _firstName = transformer.Transform(_firstName);
+        _firstName = firstName;
 
         return this;
     }
 
-    public UserBuilder WithLastName(IStringTransformer transformer)
+    public UserBuilder WithLastName(string lastName)
     {
-        _lastName = transformer.Transform(_lastName);
+        _lastName = lastName;
 
         return this;
     }
 
-    public UserBuilder WithEmail(IStringTransformer transformer)
+    public UserBuilder WithEmail(string email)
     {
-        _email = transformer.Transform(_email);
+        _email = email;
 
         return this;
     }
 
-    public UserBuilder WithProfileImage(IStringTransformer transformer)
+    public UserBuilder WithProfileImage(string profileImage)
     {
-        _profileImage = transformer.Transform(_profileImage ?? string.Empty);
+        _profileImage = profileImage;
 
         return this;
     }
 
-    public UserBuilder WithCreatedAtUtc(IDateTimeOffsetTransformer transformer)
+    public UserBuilder WithCreatedAtUtc(DateTimeOffset createdAtUtc)
     {
-        _createdAtUtc = transformer.Transform(_createdAtUtc);
+        _createdAtUtc = createdAtUtc;
 
         return this;
     }
 
-    public UserBuilder WithUpdatedAtUtc(IDateTimeOffsetTransformer transformer)
+    public UserBuilder WithUpdatedAtUtc(DateTimeOffset updatedAtUtc)
     {
-        _updatedAtUtc = transformer.Transform(_updatedAtUtc);
+        _updatedAtUtc = updatedAtUtc;
 
         return this;
     }

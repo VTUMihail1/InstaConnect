@@ -1,11 +1,19 @@
-﻿using InstaConnect.Identity.Tests.Features.RefreshTokens.Utilities;
+﻿using InstaConnect.Common.Tests.Extensions;
+using InstaConnect.Identity.Domain.Helpers;
+using InstaConnect.Identity.Tests.Features.RefreshTokens.Utilities;
 using InstaConnect.Identity.Tests.Features.UserClaims.Utilities;
 using InstaConnect.Identity.Tests.Features.Users.Utilities;
+
+using Microsoft.AspNetCore.Http;
 
 namespace InstaConnect.Identity.Tests.Features.UserClaims.Utilities;
 
 public abstract class BaseUserClaimTest : BaseTest
 {
+    protected IPasswordHasher PasswordHasher { get; }
+    protected string Password { get; }
+    protected IFormFile ProfileImage { get; }
+
     protected UserBuilderFactory UserBuilderFactory { get; }
     protected UserBuilder UserBuilder { get; }
     protected User User { get; }
@@ -18,10 +26,14 @@ public abstract class BaseUserClaimTest : BaseTest
 
     protected CancellationToken CancellationToken { get; }
 
-    protected BaseUserClaimTest()
+    protected BaseUserClaimTest(IPasswordHasher passwordHasher)
     {
+        PasswordHasher = passwordHasher;
+        Password = UserDataFaker.GetPassword();
+        ProfileImage = UserDataFaker.GetProfileImage();
+
         UserBuilderFactory = new();
-        UserBuilder = UserBuilderFactory.Create();
+        UserBuilder = UserBuilderFactory.Create(PasswordHasher.Hash(Password), ProfileImage.GetUrl());
         User = UserBuilder.Build();
         Users = User.Generate();
 

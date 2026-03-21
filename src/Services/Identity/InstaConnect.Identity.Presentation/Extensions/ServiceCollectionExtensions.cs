@@ -2,6 +2,8 @@
 using InstaConnect.Common.Presentation.Extensions;
 using InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Extensions;
 using InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Extensions;
+using InstaConnect.Identity.Presentation.Features.RefreshTokens.Extensions;
+using InstaConnect.Identity.Presentation.Features.UserClaims.Extensions;
 using InstaConnect.Identity.Presentation.Features.Users.Extensions;
 
 namespace InstaConnect.Identity.Presentation.Extensions;
@@ -14,6 +16,8 @@ internal static class ServiceCollectionExtensions
         {
             serviceCollection
                 .AddUserServices()
+                .AddUserClaimServices()
+                .AddRefreshTokenServices()
                 .AddForgotPasswordTokenServices()
                 .AddEmailConfirmationTokenServices();
 

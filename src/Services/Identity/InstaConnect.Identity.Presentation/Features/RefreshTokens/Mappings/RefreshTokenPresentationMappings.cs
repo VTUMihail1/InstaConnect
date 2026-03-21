@@ -1,4 +1,4 @@
-﻿using InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Delete;
+﻿using InstaConnect.Identity.Application.Features.RefreshTokens.Commands.DeleteCurrent;
 using InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Issue;
 using InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Rotate;
 

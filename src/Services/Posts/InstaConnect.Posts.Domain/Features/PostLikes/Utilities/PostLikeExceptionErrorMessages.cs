@@ -33,7 +33,7 @@ public static class PostLikeExceptionErrorMessages
         return Format.FormatCurrentCulture(sortTerm);
     }
 
-    public static string GetInclideDescriptorsNotSupportedMessage(ICollection<PostsIncludeDescriptor> descriptors)
+    public static string GetIncludeDescriptorsNotSupportedMessage(ICollection<PostsIncludeDescriptor> descriptors)
     {
         const string Format = "PostLikeDescriptors({0}) is not supported";
 

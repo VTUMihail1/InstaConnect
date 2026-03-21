@@ -19,23 +19,23 @@ public class PostLikeBuilder
         _createdAtUtc = PostLikeDataFaker.GetCreatedAtUtc();
     }
 
-    public PostLikeBuilder WithId(IStringTransformer transformer)
+    public PostLikeBuilder WithId(string id)
     {
-        _id = transformer.Transform(_id);
+        _id = id;
 
         return this;
     }
 
-    public PostLikeBuilder WithUserId(IStringTransformer transformer)
+    public PostLikeBuilder WithUserId(string userId)
     {
-        _userId = transformer.Transform(_userId);
+        _userId = userId;
 
         return this;
     }
 
-    public PostLikeBuilder WithCreatedAtUtc(IDateTimeOffsetTransformer transformer)
+    public PostLikeBuilder WithCreatedAtUtc(DateTimeOffset createdAtUtc)
     {
-        _createdAtUtc = transformer.Transform(_createdAtUtc);
+        _createdAtUtc = createdAtUtc;
 
         return this;
     }

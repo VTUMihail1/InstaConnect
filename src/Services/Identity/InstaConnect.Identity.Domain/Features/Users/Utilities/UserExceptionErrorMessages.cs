@@ -19,13 +19,6 @@ public static class UserExceptionErrorMessages
         return Format.FormatCurrentCulture(name.Value);
     }
 
-    public static string GetEmailNotFoundMessage(Email email)
-    {
-        const string Format = "User(email: {0}) does not exist";
-
-        return Format.FormatCurrentCulture(email.Value);
-    }
-
     public static string GetNameAlreadyTakenMessage(Name name)
     {
         const string Format = "User(name: {0}) already taken";
@@ -40,18 +33,25 @@ public static class UserExceptionErrorMessages
         return Format.FormatCurrentCulture(email.Value);
     }
 
-    public static string GetEmailAlreadyConfirmedMessage(Email email)
+    public static string GetEmailAlreadyConfirmedMessage(UserId id)
     {
-        const string Format = "User(email: {0}) already confirmed";
+        const string Format = "User(id: {0}) already confirmed";
 
-        return Format.FormatCurrentCulture(email.Value);
+        return Format.FormatCurrentCulture(id.Id);
     }
 
-    public static string GetEmailNotConfirmedMessage(Email email)
+    public static string GetEmailNotConfirmedMessage(UserId id)
     {
-        const string Format = "User(email: {0}) not confirmed";
+        const string Format = "User(id: {0}) not confirmed";
 
-        return Format.FormatCurrentCulture(email.Value);
+        return Format.FormatCurrentCulture(id.Id);
+    }
+
+    public static string GetNameEmailNotConfirmedMessage(Name name)
+    {
+        const string Format = "User(name: {0}) not confirmed";
+
+        return Format.FormatCurrentCulture(name.Value);
     }
 
     public static string GetInvalidDetailsMessage(Name name)
@@ -68,7 +68,7 @@ public static class UserExceptionErrorMessages
         return Format.FormatCurrentCulture(sortTerm);
     }
 
-    public static string GetInclideDescriptorsNotSupportedMessage(ICollection<IdentityIncludeDescriptor> descriptors)
+    public static string GetIncludeDescriptorsNotSupportedMessage(ICollection<IdentityIncludeDescriptor> descriptors)
     {
         const string Format = "UserDescriptors({0}) is not supported";
 

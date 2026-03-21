@@ -1,7 +1,5 @@
 ﻿using System.Reflection;
 
-using InstaConnect.Common.Tests.DataAttributes.Strings.Base;
-
 using Xunit.Sdk;
 
 namespace InstaConnect.Common.Tests.DataAttributes.Booleans.Base;

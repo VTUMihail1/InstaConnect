@@ -2,4 +2,4 @@
 
 public record GetUserByIdQuery(
     UserId Id,
-    CurrentUserQuery Current);
+    CurrentUserQuery Current) : ICurrentUserableQuery;

@@ -6,21 +6,39 @@ namespace InstaConnect.Common.Tests.Utilities;
 
 public static class Setups
 {
-    extension(IServiceScope serviceScope)
+    extension(IServiceProvider serviceProvider)
     {
         public IEventHarness GetEventHarness()
         {
-            return serviceScope.ServiceProvider.GetRequiredService<IEventHarness>();
+            return serviceProvider.GetRequiredService<IEventHarness>();
         }
 
         public IImageHandler GetImageHandler()
         {
-            return serviceScope.ServiceProvider.GetRequiredService<IImageHandler>();
+            return serviceProvider.GetRequiredService<IImageHandler>();
         }
 
         public IApplicationSender GetSender()
         {
-            return serviceScope.ServiceProvider.GetRequiredService<IApplicationSender>();
+            return serviceProvider.GetRequiredService<IApplicationSender>();
+        }
+    }
+
+    extension(IServiceScope serviceScope)
+    {
+        public IEventHarness GetEventHarness()
+        {
+            return serviceScope.ServiceProvider.GetEventHarness();
+        }
+
+        public IImageHandler GetImageHandler()
+        {
+            return serviceScope.ServiceProvider.GetImageHandler();
+        }
+
+        public IApplicationSender GetSender()
+        {
+            return serviceScope.ServiceProvider.GetSender();
         }
     }
 }

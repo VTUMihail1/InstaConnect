@@ -33,7 +33,7 @@ public static class FollowExceptionErrorMessages
         return Format.FormatCurrentCulture(sortTerm);
     }
 
-    public static string GetInclideDescriptorsNotSupportedMessage(ICollection<FollowsIncludeDescriptor> descriptors)
+    public static string GetIncludeDescriptorsNotSupportedMessage(ICollection<FollowsIncludeDescriptor> descriptors)
     {
         const string Format = "FollowIncludeDescriptors({0}) is not supported";
 

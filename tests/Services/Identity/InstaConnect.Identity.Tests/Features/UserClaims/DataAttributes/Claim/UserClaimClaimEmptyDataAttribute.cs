@@ -1,6 +1,8 @@
-﻿namespace InstaConnect.Identity.Tests.Features.UserClaims.DataAttributes.Claim;
+﻿using InstaConnect.Common.Domain.Utilities;
+
+namespace InstaConnect.Identity.Tests.Features.UserClaims.DataAttributes.Claim;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-public sealed class UserClaimClaimEmptyDataAttribute : EmptyStringDataAttribute
+public sealed class UserClaimClaimEmptyDataAttribute : EmptyEnumDataAttribute<ApplicationClaims>
 {
 }

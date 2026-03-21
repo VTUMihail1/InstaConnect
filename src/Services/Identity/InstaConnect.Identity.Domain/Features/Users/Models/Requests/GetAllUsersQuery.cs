@@ -5,4 +5,4 @@ public record GetAllUsersQuery(
     UsersSortingQuery Sorting,
     UsersPaginationQuery Pagination,
     CurrentUserQuery Current)
-    : ISortableQuery<UsersSortingQuery, UsersSortTerm>, IPaginatableQuery<UsersPaginationQuery>;
+    : ISortableQuery<UsersSortingQuery, UsersSortTerm>, IPaginatableQuery<UsersPaginationQuery>, ICurrentUserableQuery;

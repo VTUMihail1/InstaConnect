@@ -6,12 +6,12 @@ namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Exceptions;
 public class ForgotPasswordTokenIncludeDescriptorsNotSupportedException : BadRequestException
 {
     public ForgotPasswordTokenIncludeDescriptorsNotSupportedException(ICollection<IdentityIncludeDescriptor> includeDescriptors)
-        : base(ForgotPasswordTokenExceptionErrorMessages.GetInclideDescriptorsNotSupportedMessage(includeDescriptors))
+        : base(ForgotPasswordTokenExceptionErrorMessages.GetIncludeDescriptorsNotSupportedMessage(includeDescriptors))
     {
     }
 
     public ForgotPasswordTokenIncludeDescriptorsNotSupportedException(ICollection<IdentityIncludeDescriptor> includeDescriptors, Exception exception)
-        : base(ForgotPasswordTokenExceptionErrorMessages.GetInclideDescriptorsNotSupportedMessage(includeDescriptors), exception)
+        : base(ForgotPasswordTokenExceptionErrorMessages.GetIncludeDescriptorsNotSupportedMessage(includeDescriptors), exception)
     {
     }
 }

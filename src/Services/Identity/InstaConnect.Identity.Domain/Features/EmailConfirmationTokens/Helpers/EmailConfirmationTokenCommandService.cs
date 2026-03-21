@@ -30,7 +30,7 @@ internal class EmailConfirmationTokenCommandService : IEmailConfirmationTokenCom
         _emailConfirmationTokenRepository = emailConfirmationTokenRepository;
     }
 
-    public async Task<EmailConfirmationToken> AddAsync(AddEmailConfirmationTokenCommand command, CancellationToken cancellationToken)
+    public async Task<EmailConfirmationTokenId> AddAsync(AddEmailConfirmationTokenCommand command, CancellationToken cancellationToken)
     {
         var user = await _repository.GetByNameAsync(command.Name, cancellationToken);
 
@@ -45,7 +45,7 @@ internal class EmailConfirmationTokenCommandService : IEmailConfirmationTokenCom
         await _eventPublisher.PublishAsync(
             _mapper.Map<EmailConfirmationTokenAddedEventRequest>(newEmailConfirmationToken), cancellationToken);
 
-        return newEmailConfirmationToken;
+        return newEmailConfirmationToken.Id;
     }
 
     public async Task VerifyAsync(VerifyEmailConfirmationTokenCommand command, CancellationToken cancellationToken)
@@ -56,6 +56,11 @@ internal class EmailConfirmationTokenCommandService : IEmailConfirmationTokenCom
         if (user == null)
         {
             throw new UserNotFoundException(command.Id.Id);
+        }
+
+        if (user.IsEmailConfirmed)
+        {
+            throw new UserEmailAlreadyConfirmedException(command.Id.Id);
         }
 
         var emailConfirmationToken = await _emailConfirmationTokenRepository.GetByIdAsync(command.Id, cancellationToken);

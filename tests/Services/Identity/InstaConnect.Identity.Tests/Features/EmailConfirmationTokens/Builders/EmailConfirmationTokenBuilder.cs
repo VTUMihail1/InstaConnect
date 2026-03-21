@@ -17,30 +17,30 @@ public class EmailConfirmationTokenBuilder
         _createdAtUtc = EmailConfirmationTokenDataFaker.GetCreatedAtUtc();
     }
 
-    public EmailConfirmationTokenBuilder WithId(IStringTransformer transformer)
+    public EmailConfirmationTokenBuilder WithId(string id)
     {
-        _id = transformer.Transform(_id);
+        _id = id;
 
         return this;
     }
 
-    public EmailConfirmationTokenBuilder WithValue(IStringTransformer transformer)
+    public EmailConfirmationTokenBuilder WithValue(string value)
     {
-        _value = transformer.Transform(_value);
+        _value = value;
 
         return this;
     }
 
-    public EmailConfirmationTokenBuilder WithCreatedAtUtc(IDateTimeOffsetTransformer transformer)
+    public EmailConfirmationTokenBuilder WithCreatedAtUtc(DateTimeOffset createdAtUtc)
     {
-        _createdAtUtc = transformer.Transform(_createdAtUtc);
+        _createdAtUtc = createdAtUtc;
 
         return this;
     }
 
-    public EmailConfirmationTokenBuilder WithExpiredAtUtc(IDateTimeOffsetTransformer transformer)
+    public EmailConfirmationTokenBuilder WithExpiredAtUtc(DateTimeOffset expiresAtUtc)
     {
-        _expiresAtUtc = transformer.Transform(_expiresAtUtc);
+        _expiresAtUtc = expiresAtUtc;
 
         return this;
     }

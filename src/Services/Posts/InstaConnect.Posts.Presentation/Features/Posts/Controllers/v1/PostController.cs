@@ -8,7 +8,7 @@ namespace InstaConnect.Posts.Presentation.Features.Posts.Controllers.v1;
 
 [ApiVersion(PostRoutes.Version1)]
 [Route(PostRoutes.Resource)]
-[EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
+[EnableRateLimiting(RateLimiterPolicies.Default)]
 public class PostController : ControllerBase
 {
     private readonly IApplicationMapper _mapper;

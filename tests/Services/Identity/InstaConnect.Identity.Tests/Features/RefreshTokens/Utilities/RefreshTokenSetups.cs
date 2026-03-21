@@ -1,6 +1,5 @@
-﻿using InstaConnect.Common.Tests.Extensions;
-using InstaConnect.Identity.Domain.Features.RefreshTokens.Abstractions;
-using InstaConnect.Identity.Infrastructure.Abstractions;
+﻿using InstaConnect.Identity.Domain.Features.RefreshTokens.Abstractions;
+using InstaConnect.Identity.Domain.Features.RefreshTokens.Models.ValueObjects;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -8,42 +7,58 @@ namespace InstaConnect.Identity.Tests.Features.RefreshTokens.Utilities;
 
 public static class RefreshTokenSetups
 {
-    extension(IServiceScope serviceScope)
+    extension(IServiceProvider serviceProvider)
     {
         public IRefreshTokenCommandRepository GetRefreshTokenCommandRepository()
         {
-            return serviceScope.ServiceProvider.GetRequiredService<IRefreshTokenCommandRepository>();
+            return serviceProvider.GetRequiredService<IRefreshTokenCommandRepository>();
         }
 
         public IRefreshTokenIncludeBuilderFactory GetRefreshTokenIncludeBuilderFactory()
         {
-            return serviceScope.ServiceProvider.GetRequiredService<IRefreshTokenIncludeBuilderFactory>();
+            return serviceProvider.GetRequiredService<IRefreshTokenIncludeBuilderFactory>();
+        }
+    }
+
+    extension(IServiceScope serviceScope)
+    {
+        public IRefreshTokenCommandRepository GetRefreshTokenCommandRepository()
+        {
+            return serviceScope.ServiceProvider.GetRefreshTokenCommandRepository();
+        }
+
+        public IRefreshTokenIncludeBuilderFactory GetRefreshTokenIncludeBuilderFactory()
+        {
+            return serviceScope.ServiceProvider.GetRefreshTokenIncludeBuilderFactory();
+        }
+
+        public async Task<RefreshToken?> GetRefreshTokenByIdAsync(
+            RefreshTokenId id,
+            CancellationToken cancellationToken)
+        {
+            return await serviceScope.GetRefreshTokenCommandRepository().GetByIdAsync(id, cancellationToken);
         }
 
         public async Task AddRefreshTokenAsync(
             RefreshToken refreshToken,
             CancellationToken cancellationToken)
         {
-            var refreshTokenRepository = serviceScope.GetRefreshTokenCommandRepository();
-
-            await refreshTokenRepository.AddAsync(refreshToken, cancellationToken);
+            await serviceScope.GetRefreshTokenCommandRepository().AddAsync(refreshToken, cancellationToken);
         }
 
         public async Task AddRefreshTokenRangeAsync(
             IEnumerable<RefreshToken> refreshTokens,
             CancellationToken cancellationToken)
         {
-            var refreshTokenRepository = serviceScope.GetRefreshTokenCommandRepository();
-
-            await refreshTokenRepository.AddRangeAsync(refreshTokens, cancellationToken);
+            await serviceScope.GetRefreshTokenCommandRepository().AddRangeAsync(refreshTokens, cancellationToken);
         }
 
-        public async Task ResetRefreshTokenDatabase(
+        public async Task DeleteRefreshTokenAsync(
+            RefreshToken refreshToken,
             CancellationToken cancellationToken)
         {
-            var context = serviceScope.ServiceProvider.GetRequiredService<IIdentityContext>();
-
-            await context.RefreshTokens.ResetAsync(cancellationToken);
+            await serviceScope.GetRefreshTokenCommandRepository().DeleteAsync(refreshToken, cancellationToken);
         }
     }
 }
+

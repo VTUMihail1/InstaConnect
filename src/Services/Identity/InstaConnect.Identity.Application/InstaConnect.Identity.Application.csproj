@@ -37,6 +37,17 @@
     <Using Include="InstaConnect.Identity.Application.Features.Users.Extensions" />
   </ItemGroup>
 
+  <ItemGroup Label="UserClaims">
+    <Using Include="InstaConnect.Identity.Domain.Features.UserClaims.Utilities" />
+    <Using Include="InstaConnect.Identity.Domain.Features.UserClaims.Abstractions" />
+    <Using Include="InstaConnect.Identity.Domain.Features.UserClaims.Models.Entities" />
+    <Using Include="InstaConnect.Identity.Domain.Features.UserClaims.Models.ValueObjects" />
+    <Using Include="InstaConnect.Identity.Domain.Features.UserClaims.Models.Requests" />
+    <Using Include="InstaConnect.Identity.Domain.Features.UserClaims.Models.Responses" />
+    <Using Include="InstaConnect.Identity.Application.Features.UserClaims.Models" />
+    <Using Include="InstaConnect.Identity.Application.Features.UserClaims.Extensions" />
+  </ItemGroup>
+
   <ItemGroup Label="RefreshTokens">
     <Using Include="InstaConnect.Identity.Domain.Features.RefreshTokens.Utilities" />
     <Using Include="InstaConnect.Identity.Domain.Features.RefreshTokens.Abstractions" />

@@ -11,7 +11,7 @@ namespace InstaConnect.Identity.Presentation.Features.Users.Controllers.v1;
 
 [ApiVersion(UserRoutes.Version1)]
 [Route(UserRoutes.Resource)]
-[EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
+[EnableRateLimiting(RateLimiterPolicies.Default)]
 public class UserController : ControllerBase
 {
     private readonly IApplicationMapper _mapper;
@@ -47,7 +47,7 @@ public class UserController : ControllerBase
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<GetCurrentUserByIdApiResponse>> GetCurrentDetailsByIdAsync(
-        GetCurrentUserDetailsApiRequest request,
+        GetCurrentUserDetailsByIdApiRequest request,
         CancellationToken cancellationToken)
     {
         var queryRequest = _mapper.Map<GetCurrentUserByIdQueryRequest>(request);
@@ -60,7 +60,7 @@ public class UserController : ControllerBase
 
     // GET: api/users/5f0f2dd0-e957-4d72-8141-767a36fc6e95/details
     [HttpGet(UserRoutes.IdDetails)]
-    [Authorize(AppPolicies.AdminPolicy)]
+    [Authorize(AuthorizationPolicies.Admin)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -157,7 +157,7 @@ public class UserController : ControllerBase
     }
 
     // DELETE: api/users/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-    [Authorize(AppPolicies.AdminPolicy)]
+    [Authorize(AuthorizationPolicies.Admin)]
     [HttpDelete(UserRoutes.Id)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

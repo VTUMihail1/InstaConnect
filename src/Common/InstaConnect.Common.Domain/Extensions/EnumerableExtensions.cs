@@ -21,6 +21,11 @@ public static class EnumerableExtensions
             return enumerable.JoinAsString(", ");
         }
 
+        public string JoinAsStringWithSemicolon()
+        {
+            return enumerable.JoinAsString("; ");
+        }
+
         public string JoinAsStringWithNewLine()
         {
             return enumerable.JoinAsString("\n");

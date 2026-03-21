@@ -1,12 +1,10 @@
-﻿using System.Security.Claims;
-
-using InstaConnect.Chats.Presentation.Features.ChatMessages.Models.Bodies;
+﻿using InstaConnect.Chats.Presentation.Features.ChatMessages.Models.Bodies;
 
 namespace InstaConnect.Chats.Presentation.Features.ChatMessages.Models.Requests;
 
 public record AddChatMessageApiRequest(
-    [FromClaim(ClaimTypes.NameIdentifier)] string ParticipantOneId,
+    [UserIdFromClaim] string ParticipantOneId,
     [FromRoute] string ParticipantTwoId,
-    [FromClaim(ClaimTypes.NameIdentifier)] string SenderId,
+    [UserIdFromClaim] string SenderId,
     [FromBody] AddChatMessageApiBody Body
 );

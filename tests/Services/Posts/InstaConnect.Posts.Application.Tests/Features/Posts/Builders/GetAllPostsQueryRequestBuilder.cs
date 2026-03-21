@@ -37,9 +37,9 @@ public class GetAllPostsQueryRequestBuilder
         return this;
     }
 
-    public GetAllPostsQueryRequestBuilder WithCurrentUserId(User user, IStringTransformer? transformer = null)
+    public GetAllPostsQueryRequestBuilder WithCurrentUserId(UserId userId, IStringTransformer? transformer = null)
     {
-        _currentUserId = transformer.TryTransform(user.Id.Id);
+        _currentUserId = transformer.TryTransform(userId.Id);
 
         return this;
     }

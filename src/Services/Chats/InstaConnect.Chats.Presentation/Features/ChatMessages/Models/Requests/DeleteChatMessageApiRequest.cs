@@ -1,10 +1,8 @@
-﻿using System.Security.Claims;
-
-namespace InstaConnect.Chats.Presentation.Features.ChatMessages.Models.Requests;
+﻿namespace InstaConnect.Chats.Presentation.Features.ChatMessages.Models.Requests;
 
 public record DeleteChatMessageApiRequest(
-    [FromClaim(ClaimTypes.NameIdentifier)] string ParticipantOneId,
+    [UserIdFromClaim] string ParticipantOneId,
     [FromRoute] string ParticipantTwoId,
     [FromRoute] string MessageId,
-    [FromClaim(ClaimTypes.NameIdentifier)] string SenderId
+    [UserIdFromClaim] string SenderId
 );

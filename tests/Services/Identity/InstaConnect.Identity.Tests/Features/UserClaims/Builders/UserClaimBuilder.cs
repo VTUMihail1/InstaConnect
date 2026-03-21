@@ -1,11 +1,12 @@
-﻿using InstaConnect.Identity.Tests.Features.UserClaims.Utilities;
+﻿using InstaConnect.Common.Domain.Utilities;
+using InstaConnect.Identity.Tests.Features.UserClaims.Utilities;
 
 namespace InstaConnect.Identity.Tests.Features.UserClaims.Builders;
 
 public class UserClaimBuilder
 {
     private string _id;
-    private string _claim;
+    private ApplicationClaims _claim;
     private DateTimeOffset _createdAtUtc;
 
     public UserClaimBuilder(User user)
@@ -15,23 +16,23 @@ public class UserClaimBuilder
         _createdAtUtc = UserClaimDataFaker.GetCreatedAtUtc();
     }
 
-    public UserClaimBuilder WithId(IStringTransformer transformer)
+    public UserClaimBuilder WithId(string id)
     {
-        _id = transformer.Transform(_id);
+        _id = id;
 
         return this;
     }
 
-    public UserClaimBuilder WithClaim(IStringTransformer transformer)
+    public UserClaimBuilder WithClaim(ApplicationClaims claim)
     {
-        _claim = transformer.Transform(_claim);
+        _claim = claim;
 
         return this;
     }
 
-    public UserClaimBuilder WithCreatedAtUtc(IDateTimeOffsetTransformer transformer)
+    public UserClaimBuilder WithCreatedAtUtc(DateTimeOffset createdAtUtc)
     {
-        _createdAtUtc = transformer.Transform(_createdAtUtc);
+        _createdAtUtc = createdAtUtc;
 
         return this;
     }

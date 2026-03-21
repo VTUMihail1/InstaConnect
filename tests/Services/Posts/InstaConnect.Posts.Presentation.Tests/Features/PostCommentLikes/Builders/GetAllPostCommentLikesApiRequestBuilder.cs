@@ -25,9 +25,9 @@ public class GetAllPostCommentLikesApiRequestBuilder
         _sortTerm = PostCommentLikeDataFaker.GetSortTerm();
     }
 
-    public GetAllPostCommentLikesApiRequestBuilder WithId(Post post, IStringTransformer? transformer = null)
+    public GetAllPostCommentLikesApiRequestBuilder WithId(PostId id, IStringTransformer? transformer = null)
     {
-        _id = transformer.TryTransform(post.Id.Id);
+        _id = transformer.TryTransform(id.Id);
 
         return this;
     }
@@ -39,9 +39,9 @@ public class GetAllPostCommentLikesApiRequestBuilder
         return this;
     }
 
-    public GetAllPostCommentLikesApiRequestBuilder WithCommentId(PostComment postComment, IStringTransformer? transformer = null)
+    public GetAllPostCommentLikesApiRequestBuilder WithCommentId(PostCommentId commentId, IStringTransformer? transformer = null)
     {
-        _commentId = transformer.TryTransform(postComment.Id.CommentId);
+        _commentId = transformer.TryTransform(commentId.CommentId);
 
         return this;
     }
@@ -60,9 +60,9 @@ public class GetAllPostCommentLikesApiRequestBuilder
         return this;
     }
 
-    public GetAllPostCommentLikesApiRequestBuilder WithCurrentUserId(User user, IStringTransformer? transformer = null)
+    public GetAllPostCommentLikesApiRequestBuilder WithCurrentUserId(UserId currentUserId, IStringTransformer? transformer = null)
     {
-        _currentUserId = transformer.TryTransform(user.Id.Id);
+        _currentUserId = transformer.TryTransform(currentUserId.Id);
 
         return this;
     }

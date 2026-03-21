@@ -1,9 +1,5 @@
-﻿using InstaConnect.Common.Tests.Extensions;
-using InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstractions;
+﻿using InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstractions;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.ValueObjects;
-using InstaConnect.Posts.Infrastructure.Abstractions;
-using InstaConnect.Posts.Tests.Features.PostComments.Utilities;
-using InstaConnect.Posts.Tests.Features.Posts.Utilities;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,67 +7,58 @@ namespace InstaConnect.Posts.Tests.Features.PostCommentLikes.Utilities;
 
 public static class PostCommentLikeSetups
 {
-    extension(IServiceScope serviceScope)
+    extension(IServiceProvider serviceProvider)
     {
         public IPostCommentLikeCommandRepository GetPostCommentLikeCommandRepository()
         {
-            return serviceScope.ServiceProvider.GetRequiredService<IPostCommentLikeCommandRepository>();
+            return serviceProvider.GetRequiredService<IPostCommentLikeCommandRepository>();
         }
 
         public IPostCommentLikeIncludeBuilderFactory GetPostCommentLikeIncludeBuilderFactory()
         {
-            return serviceScope.ServiceProvider.GetRequiredService<IPostCommentLikeIncludeBuilderFactory>();
+            return serviceProvider.GetRequiredService<IPostCommentLikeIncludeBuilderFactory>();
+        }
+    }
+
+    extension(IServiceScope serviceScope)
+    {
+        public IPostCommentLikeCommandRepository GetPostCommentLikeCommandRepository()
+        {
+            return serviceScope.ServiceProvider.GetPostCommentLikeCommandRepository();
+        }
+
+        public IPostCommentLikeIncludeBuilderFactory GetPostCommentLikeIncludeBuilderFactory()
+        {
+            return serviceScope.ServiceProvider.GetPostCommentLikeIncludeBuilderFactory();
         }
 
         public async Task<PostCommentLike?> GetPostCommentLikeByIdAsync(
             PostCommentLikeId id,
             CancellationToken cancellationToken)
         {
-            var include = serviceScope.GetPostIncludeBuilderFactory().Create().WithUser().Build();
-            var commentInclude = serviceScope.GetPostCommentIncludeBuilderFactory().Create().WithUser().WithPost(include).Build();
-            var commentLikeInclude = serviceScope.GetPostCommentLikeIncludeBuilderFactory().Create().WithPostComment(commentInclude).WithUser().Build();
-            var postCommentLikeRepository = serviceScope.GetPostCommentLikeCommandRepository();
-
-            return await postCommentLikeRepository.GetByIdAsync(id, commentLikeInclude, cancellationToken);
+            return await serviceScope.GetPostCommentLikeCommandRepository().GetByIdAsync(id, cancellationToken);
         }
 
         public async Task AddPostCommentLikeAsync(
             PostCommentLike postCommentLike,
             CancellationToken cancellationToken)
         {
-            var postCommentLikeRepository = serviceScope.GetPostCommentLikeCommandRepository();
-
-            await postCommentLikeRepository.AddAsync(postCommentLike, cancellationToken);
+            await serviceScope.GetPostCommentLikeCommandRepository().AddAsync(postCommentLike, cancellationToken);
         }
 
         public async Task AddPostCommentLikeRangeAsync(
             IEnumerable<PostCommentLike> postCommentLikes,
             CancellationToken cancellationToken)
         {
-            var postCommentLikeRepository = serviceScope.GetPostCommentLikeCommandRepository();
-
-            await postCommentLikeRepository.AddRangeAsync(postCommentLikes, cancellationToken);
+            await serviceScope.GetPostCommentLikeCommandRepository().AddRangeAsync(postCommentLikes, cancellationToken);
         }
 
         public async Task DeletePostCommentLikeAsync(
             PostCommentLike postCommentLike,
             CancellationToken cancellationToken)
         {
-            var postCommentLikeRepository = serviceScope.GetPostCommentLikeCommandRepository();
-
-            await postCommentLikeRepository.DeleteAsync(postCommentLike, cancellationToken);
-        }
-
-        public async Task ResetPostCommentLikeDatabase(
-            CancellationToken cancellationToken)
-        {
-            var context = serviceScope.ServiceProvider.GetRequiredService<IPostsContext>();
-
-            await context.PostCommentLikes.ResetAsync(cancellationToken);
-            await context.PostComments.ResetAsync(cancellationToken);
-            await context.PostLikes.ResetAsync(cancellationToken);
-            await context.Posts.ResetAsync(cancellationToken);
-            await context.Users.ResetAsync(cancellationToken);
+            await serviceScope.GetPostCommentLikeCommandRepository().DeleteAsync(postCommentLike, cancellationToken);
         }
     }
 }
+

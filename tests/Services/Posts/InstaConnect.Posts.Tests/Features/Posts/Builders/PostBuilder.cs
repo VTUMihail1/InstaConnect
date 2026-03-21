@@ -23,44 +23,44 @@ public class PostBuilder
         _updatedAtUtc = PostDataFaker.GetUpdatedAtUtc();
     }
 
-    public PostBuilder WithId(IStringTransformer transformer)
+    public PostBuilder WithId(string id)
     {
-        _id = transformer.Transform(_id);
+        _id = id;
 
         return this;
     }
 
-    public PostBuilder WithTitle(IStringTransformer transformer)
+    public PostBuilder WithTitle(string title)
     {
-        _title = transformer.Transform(_title);
+        _title = title;
 
         return this;
     }
 
-    public PostBuilder WithContent(IStringTransformer transformer)
+    public PostBuilder WithContent(string content)
     {
-        _content = transformer.Transform(_content);
+        _content = content;
 
         return this;
     }
 
-    public PostBuilder WithUserId(IStringTransformer transformer)
+    public PostBuilder WithUserId(string userId)
     {
-        _userId = transformer.Transform(_userId);
+        _userId = userId;
 
         return this;
     }
 
-    public PostBuilder WithCreatedAtUtc(IDateTimeOffsetTransformer transformer)
+    public PostBuilder WithCreatedAtUtc(DateTimeOffset createdAtUtc)
     {
-        _createdAtUtc = transformer.Transform(_createdAtUtc);
+        _createdAtUtc = createdAtUtc;
 
         return this;
     }
 
-    public PostBuilder WithUpdatedAtUtc(IDateTimeOffsetTransformer transformer)
+    public PostBuilder WithUpdatedAtUtc(DateTimeOffset updatedAtUtc)
     {
-        _updatedAtUtc = transformer.Transform(_updatedAtUtc);
+        _updatedAtUtc = updatedAtUtc;
 
         return this;
     }

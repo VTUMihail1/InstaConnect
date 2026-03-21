@@ -15,5 +15,7 @@ public interface IEmailConfirmationTokenCommandRepository
 
     Task AddRangeAsync(IEnumerable<EmailConfirmationToken> entities, CancellationToken cancellationToken);
 
+    Task DeleteAsync(EmailConfirmationToken entity, CancellationToken cancellationToken);
+
     Task DeleteRangeAsync(IEnumerable<EmailConfirmationToken> entities, CancellationToken cancellationToken);
 }

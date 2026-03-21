@@ -19,7 +19,7 @@ public static class EmailConfirmationTokenExceptionErrorMessages
         return Format.FormatCurrentCulture(id.Id.Id, id.Value);
     }
 
-    public static string GetInclideDescriptorsNotSupportedMessage(ICollection<IdentityIncludeDescriptor> descriptors)
+    public static string GetIncludeDescriptorsNotSupportedMessage(ICollection<IdentityIncludeDescriptor> descriptors)
     {
         const string Format = "EmailConfirmationTokenDescriptors({0}) is not supported";
 

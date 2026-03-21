@@ -1,0 +1,108 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <IsTestProject>false</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Presentation.Tests\InstaConnect.Common.Presentation.Tests.csproj" />
+    <ProjectReference Include="..\InstaConnect.Identity.Tests\InstaConnect.Identity.Tests.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Label="Common">
+    <Using Include="Microsoft.AspNetCore.Mvc" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Base" />
+    <Using Include="InstaConnect.Common.Domain.Extensions" />
+    <Using Include="InstaConnect.Common.Application.Abstractions" />
+    <Using Include="InstaConnect.Common.Domain.Models" />
+    <Using Include="InstaConnect.Common.Domain.Models.ValueObjects" />
+    <Using Include="InstaConnect.Common.Tests.Events" />
+    <Using Include="InstaConnect.Common.Tests.Assertions" />
+    <Using Include="InstaConnect.Common.Presentation.Tests.Assertions" />
+    <Using Include="InstaConnect.Common.Tests.Utilities" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Enums.Base" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.Base" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Ints.Base" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.DateTimeOffsets.Base" />
+    <Using Include="InstaConnect.Common.Presentation.Tests.Utilities" />
+  </ItemGroup>
+
+  <ItemGroup Label="Users">
+    <Using Include="InstaConnect.Identity.Domain.Features.Users.Models.Entities" />
+    <Using Include="InstaConnect.Identity.Domain.Features.Users.Models.ValueObjects" />
+    <Using Include="InstaConnect.Identity.Domain.Features.Users.Utilities" />
+    <Using Include="InstaConnect.Identity.Presentation.Features.Users.Models.Requests" />
+    <Using Include="InstaConnect.Identity.Presentation.Features.Users.Models.Responses" />
+    <Using Include="InstaConnect.Identity.Tests.Features.Users.Assertions" />
+    <Using Include="InstaConnect.Identity.Tests.Features.Users.Builders" />
+    <Using Include="InstaConnect.Identity.Tests.Features.Users.Utilities" />
+    <Using Include="InstaConnect.Identity.Presentation.Tests.Features.Users.Assertions" />
+    <Using Include="InstaConnect.Identity.Application.Features.Users.Models" />
+    <Using Include="InstaConnect.Identity.Application.Features.Users.Queries.GetAll" />
+    <Using Include="InstaConnect.Identity.Application.Features.Users.Queries.GetById" />
+    <Using Include="InstaConnect.Identity.Application.Features.Users.Queries.GetDetailsById" />
+    <Using Include="InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentById" />
+    <Using Include="InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentDetailsById" />
+    <Using Include="InstaConnect.Identity.Application.Features.Users.Commands.Add" />
+    <Using Include="InstaConnect.Identity.Application.Features.Users.Commands.UpdateCurrent" />
+    <Using Include="InstaConnect.Identity.Application.Features.Users.Commands.Delete" />
+    <Using Include="InstaConnect.Identity.Application.Features.Users.Commands.DeleteCurrent" />
+  </ItemGroup>
+
+  <ItemGroup Label="UserClaims">
+    <Using Include="InstaConnect.Identity.Domain.Features.UserClaims.Models.Entities" />
+    <Using Include="InstaConnect.Identity.Domain.Features.UserClaims.Models.ValueObjects" />
+    <Using Include="InstaConnect.Identity.Presentation.Features.UserClaims.Models.Requests" />
+    <Using Include="InstaConnect.Identity.Presentation.Features.UserClaims.Models.Responses" />
+    <Using Include="InstaConnect.Identity.Domain.Features.UserClaims.Utilities" />
+    <Using Include="InstaConnect.Identity.Tests.Features.UserClaims.Builders" />
+    <Using Include="InstaConnect.Identity.Tests.Features.UserClaims.Utilities" />
+    <Using Include="InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Assertions" />
+    <Using Include="InstaConnect.Identity.Application.Features.UserClaims.Models" />
+    <Using Include="InstaConnect.Identity.Application.Features.UserClaims.Queries.GetAll" />
+    <Using Include="InstaConnect.Identity.Application.Features.UserClaims.Commands.Add" />
+    <Using Include="InstaConnect.Identity.Application.Features.UserClaims.Commands.Delete" />
+  </ItemGroup>
+
+  <ItemGroup Label="RefreshTokens">
+    <Using Include="InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Entities" />
+    <Using Include="InstaConnect.Identity.Domain.Features.RefreshTokens.Models.ValueObjects" />
+    <Using Include="InstaConnect.Identity.Domain.Features.RefreshTokens.Utilities" />
+    <Using Include="InstaConnect.Identity.Presentation.Features.RefreshTokens.Models.Requests" />
+    <Using Include="InstaConnect.Identity.Presentation.Features.RefreshTokens.Models.Responses" />
+    <Using Include="InstaConnect.Identity.Tests.Features.RefreshTokens.Builders" />
+    <Using Include="InstaConnect.Identity.Tests.Features.RefreshTokens.Utilities" />
+    <Using Include="InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Assertions" />
+    <Using Include="InstaConnect.Identity.Application.Features.RefreshTokens.Models" />
+    <Using Include="InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Issue" />
+    <Using Include="InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Rotate" />
+    <Using Include="InstaConnect.Identity.Application.Features.RefreshTokens.Commands.DeleteCurrent" />
+  </ItemGroup>
+
+  <ItemGroup Label="ForgotPasswordTokens">
+    <Using Include="InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entities" />
+    <Using Include="InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.ValueObjects" />
+    <Using Include="InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Utilities" />
+    <Using Include="InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Models.Requests" />
+    <Using Include="InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.Assertions" />
+    <Using Include="InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.Builders" />
+    <Using Include="InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.Utilities" />
+    <Using Include="InstaConnect.Identity.Presentation.Tests.Features.ForgotPasswordTokens.Assertions" />
+    <Using Include="InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Add" />
+    <Using Include="InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Verify" />
+  </ItemGroup>
+
+  <ItemGroup Label="EmailConfirmationTokens">
+    <Using Include="InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entities" />
+    <Using Include="InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.ValueObjects" />
+    <Using Include="InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Utilities" />
+    <Using Include="InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Models.Requests" />
+    <Using Include="InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Assertions" />
+    <Using Include="InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Builders" />
+    <Using Include="InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Utilities" />
+    <Using Include="InstaConnect.Identity.Presentation.Tests.Features.EmailConfirmationTokens.Assertions" />
+    <Using Include="InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Add" />
+    <Using Include="InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Verify" />
+  </ItemGroup>
+
+</Project>

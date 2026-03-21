@@ -17,30 +17,30 @@ public class RefreshTokenBuilder
         _createdAtUtc = RefreshTokenDataFaker.GetCreatedAtUtc();
     }
 
-    public RefreshTokenBuilder WithId(IStringTransformer transformer)
+    public RefreshTokenBuilder WithId(string id)
     {
-        _id = transformer.Transform(_id);
+        _id = id;
 
         return this;
     }
 
-    public RefreshTokenBuilder WithValue(IStringTransformer transformer)
+    public RefreshTokenBuilder WithValue(string value)
     {
-        _value = transformer.Transform(_value);
+        _value = value;
 
         return this;
     }
 
-    public RefreshTokenBuilder WithCreatedAtUtc(IDateTimeOffsetTransformer transformer)
+    public RefreshTokenBuilder WithCreatedAtUtc(DateTimeOffset createdAtUtc)
     {
-        _createdAtUtc = transformer.Transform(_createdAtUtc);
+        _createdAtUtc = createdAtUtc;
 
         return this;
     }
 
-    public RefreshTokenBuilder WithExpiredAtUtc(IDateTimeOffsetTransformer transformer)
+    public RefreshTokenBuilder WithExpiredAtUtc(DateTimeOffset expiresAtUtc)
     {
-        _expiresAtUtc = transformer.Transform(_expiresAtUtc);
+        _expiresAtUtc = expiresAtUtc;
 
         return this;
     }

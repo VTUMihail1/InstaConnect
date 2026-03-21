@@ -23,9 +23,9 @@ public class UserAddedEventRequestBuilder
         _updatedAtUtc = user.UpdatedAtUtc;
     }
 
-    public UserAddedEventRequestBuilder WithId(User user, IStringTransformer? transformer = null)
+    public UserAddedEventRequestBuilder WithId(UserId id, IStringTransformer? transformer = null)
     {
-        _id = transformer.TryTransform(user.Id.Id);
+        _id = transformer.TryTransform(id.Id);
 
         return this;
     }
@@ -37,9 +37,9 @@ public class UserAddedEventRequestBuilder
         return this;
     }
 
-    public UserAddedEventRequestBuilder WithName(User user, IStringTransformer? transformer = null)
+    public UserAddedEventRequestBuilder WithName(Name name, IStringTransformer? transformer = null)
     {
-        _name = transformer.TryTransform(user.Name.Value);
+        _name = transformer.TryTransform(name.Value);
 
         return this;
     }
@@ -65,9 +65,9 @@ public class UserAddedEventRequestBuilder
         return this;
     }
 
-    public UserAddedEventRequestBuilder WithEmail(User user, IStringTransformer? transformer = null)
+    public UserAddedEventRequestBuilder WithEmail(Email email, IStringTransformer? transformer = null)
     {
-        _email = transformer.TryTransform(user.Email.Value);
+        _email = transformer.TryTransform(email.Value);
 
         return this;
     }

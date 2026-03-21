@@ -10,6 +10,7 @@ public static class ServiceCollectionExtensions
         {
             serviceCollection
                 .AddUserServices()
+                .AddUserClaimServices()
                 .AddRefreshTokenServices()
                 .AddForgotPasswordTokenServices()
                 .AddEmailConfirmationTokenServices();

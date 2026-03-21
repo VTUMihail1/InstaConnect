@@ -23,9 +23,9 @@ public class UpdateUserCommandRequestBuilder
         _updatedAtUtc = UserDataFaker.GetUpdatedAtUtc();
     }
 
-    public UpdateUserCommandRequestBuilder WithId(User user, IStringTransformer? transformer = null)
+    public UpdateUserCommandRequestBuilder WithId(UserId id, IStringTransformer? transformer = null)
     {
-        _id = transformer.TryTransform(user.Id.Id);
+        _id = transformer.TryTransform(id.Id);
 
         return this;
     }
@@ -37,9 +37,9 @@ public class UpdateUserCommandRequestBuilder
         return this;
     }
 
-    public UpdateUserCommandRequestBuilder WithName(User user, IStringTransformer? transformer = null)
+    public UpdateUserCommandRequestBuilder WithName(Name name, IStringTransformer? transformer = null)
     {
-        _name = transformer.TryTransform(user.Name.Value);
+        _name = transformer.TryTransform(name.Value);
 
         return this;
     }
@@ -65,9 +65,9 @@ public class UpdateUserCommandRequestBuilder
         return this;
     }
 
-    public UpdateUserCommandRequestBuilder WithEmail(User user, IStringTransformer? transformer = null)
+    public UpdateUserCommandRequestBuilder WithEmail(Email email, IStringTransformer? transformer = null)
     {
-        _email = transformer.TryTransform(user.Email.Value);
+        _email = transformer.TryTransform(email.Value);
 
         return this;
     }

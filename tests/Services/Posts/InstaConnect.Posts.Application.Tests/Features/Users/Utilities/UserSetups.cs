@@ -1,6 +1,5 @@
 ﻿using InstaConnect.Posts.Application.Features.Users.Models;
 using InstaConnect.Posts.Application.Tests.Features.Users.Utilities;
-using InstaConnect.Posts.Domain.Features.Users.Models.ValueObjects;
 
 using Microsoft.Extensions.DependencyInjection;
 

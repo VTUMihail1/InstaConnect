@@ -15,9 +15,9 @@ public class GetPostCommentLikeByIdApiRequestBuilder
         _currentUserId = postCommentLike.Id.UserId.Id;
     }
 
-    public GetPostCommentLikeByIdApiRequestBuilder WithId(Post post, IStringTransformer? transformer = null)
+    public GetPostCommentLikeByIdApiRequestBuilder WithId(PostId id, IStringTransformer? transformer = null)
     {
-        _id = transformer.TryTransform(post.Id.Id);
+        _id = transformer.TryTransform(id.Id);
 
         return this;
     }
@@ -29,9 +29,9 @@ public class GetPostCommentLikeByIdApiRequestBuilder
         return this;
     }
 
-    public GetPostCommentLikeByIdApiRequestBuilder WithCommentId(PostComment postComment, IStringTransformer? transformer = null)
+    public GetPostCommentLikeByIdApiRequestBuilder WithCommentId(PostCommentId commentId, IStringTransformer? transformer = null)
     {
-        _commentId = transformer.TryTransform(postComment.Id.CommentId);
+        _commentId = transformer.TryTransform(commentId.CommentId);
 
         return this;
     }
@@ -43,9 +43,9 @@ public class GetPostCommentLikeByIdApiRequestBuilder
         return this;
     }
 
-    public GetPostCommentLikeByIdApiRequestBuilder WithUserId(User user, IStringTransformer? transformer = null)
+    public GetPostCommentLikeByIdApiRequestBuilder WithUserId(UserId userId, IStringTransformer? transformer = null)
     {
-        _userId = transformer.TryTransform(user.Id.Id);
+        _userId = transformer.TryTransform(userId.Id);
 
         return this;
     }
@@ -57,9 +57,9 @@ public class GetPostCommentLikeByIdApiRequestBuilder
         return this;
     }
 
-    public GetPostCommentLikeByIdApiRequestBuilder WithCurrentUserId(User user, IStringTransformer? transformer = null)
+    public GetPostCommentLikeByIdApiRequestBuilder WithCurrentUserId(UserId currentUserId, IStringTransformer? transformer = null)
     {
-        _currentUserId = transformer.TryTransform(user.Id.Id);
+        _currentUserId = transformer.TryTransform(currentUserId.Id);
 
         return this;
     }

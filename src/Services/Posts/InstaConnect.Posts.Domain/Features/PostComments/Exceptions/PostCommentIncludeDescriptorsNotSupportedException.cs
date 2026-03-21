@@ -6,12 +6,12 @@ namespace InstaConnect.Posts.Domain.Features.PostComments.Exceptions;
 public class PostCommentIncludeDescriptorsNotSupportedException : BadRequestException
 {
     public PostCommentIncludeDescriptorsNotSupportedException(ICollection<PostsIncludeDescriptor> descriptors)
-        : base(PostCommentExceptionErrorMessages.GetInclidePropertyNotSupportedMessage(descriptors))
+        : base(PostCommentExceptionErrorMessages.GetIncludePropertyNotSupportedMessage(descriptors))
     {
     }
 
     public PostCommentIncludeDescriptorsNotSupportedException(ICollection<PostsIncludeDescriptor> descriptors, Exception exception)
-        : base(PostCommentExceptionErrorMessages.GetInclidePropertyNotSupportedMessage(descriptors), exception)
+        : base(PostCommentExceptionErrorMessages.GetIncludePropertyNotSupportedMessage(descriptors), exception)
     {
     }
 }

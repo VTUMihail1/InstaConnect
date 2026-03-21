@@ -15,9 +15,9 @@ public class GetPostLikeByIdQueryRequestBuilder
         _currentUserId = postLike.Id.UserId.Id;
     }
 
-    public GetPostLikeByIdQueryRequestBuilder WithId(Post post, IStringTransformer? transformer = null)
+    public GetPostLikeByIdQueryRequestBuilder WithId(PostId id, IStringTransformer? transformer = null)
     {
-        _id = transformer.TryTransform(post.Id.Id);
+        _id = transformer.TryTransform(id.Id);
 
         return this;
     }
@@ -29,9 +29,9 @@ public class GetPostLikeByIdQueryRequestBuilder
         return this;
     }
 
-    public GetPostLikeByIdQueryRequestBuilder WithUserId(User user, IStringTransformer? transformer = null)
+    public GetPostLikeByIdQueryRequestBuilder WithUserId(UserId userId, IStringTransformer? transformer = null)
     {
-        _userId = transformer.TryTransform(user.Id.Id);
+        _userId = transformer.TryTransform(userId.Id);
 
         return this;
     }
@@ -43,9 +43,9 @@ public class GetPostLikeByIdQueryRequestBuilder
         return this;
     }
 
-    public GetPostLikeByIdQueryRequestBuilder WithCurrentUserId(User user, IStringTransformer? transformer = null)
+    public GetPostLikeByIdQueryRequestBuilder WithCurrentUserId(UserId currentUserId, IStringTransformer? transformer = null)
     {
-        _currentUserId = transformer.TryTransform(user.Id.Id);
+        _currentUserId = transformer.TryTransform(currentUserId.Id);
 
         return this;
     }

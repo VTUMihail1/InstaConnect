@@ -21,23 +21,23 @@ public class PostCommentLikeBuilder
         _createdAtUtc = PostCommentLikeDataFaker.GetCreatedAtUtc();
     }
 
-    public PostCommentLikeBuilder WithId(IStringTransformer transformer)
+    public PostCommentLikeBuilder WithId(string id)
     {
-        _id = transformer.Transform(_id);
+        _id = id;
 
         return this;
     }
 
-    public PostCommentLikeBuilder WithCommentId(IStringTransformer transformer)
+    public PostCommentLikeBuilder WithCommentId(string commentId)
     {
-        _commentId = transformer.Transform(_commentId);
+        _commentId = commentId;
 
         return this;
     }
 
-    public PostCommentLikeBuilder WithUserId(IStringTransformer transformer)
+    public PostCommentLikeBuilder WithUserId(string userId)
     {
-        _userId = transformer.Transform(_userId);
+        _userId = userId;
 
         return this;
     }

@@ -13,9 +13,9 @@ public class AddPostCommentLikeApiRequestBuilder
         _userId = user.Id.Id;
     }
 
-    public AddPostCommentLikeApiRequestBuilder WithId(Post post, IStringTransformer? transformer = null)
+    public AddPostCommentLikeApiRequestBuilder WithId(PostId id, IStringTransformer? transformer = null)
     {
-        _id = transformer.TryTransform(post.Id.Id);
+        _id = transformer.TryTransform(id.Id);
 
         return this;
     }
@@ -27,9 +27,9 @@ public class AddPostCommentLikeApiRequestBuilder
         return this;
     }
 
-    public AddPostCommentLikeApiRequestBuilder WithCommentId(PostComment postComment, IStringTransformer? transformer = null)
+    public AddPostCommentLikeApiRequestBuilder WithCommentId(PostCommentId commentId, IStringTransformer? transformer = null)
     {
-        _commentId = transformer.TryTransform(postComment.Id.CommentId);
+        _commentId = transformer.TryTransform(commentId.CommentId);
 
         return this;
     }
@@ -41,9 +41,9 @@ public class AddPostCommentLikeApiRequestBuilder
         return this;
     }
 
-    public AddPostCommentLikeApiRequestBuilder WithUserId(User user, IStringTransformer? transformer = null)
+    public AddPostCommentLikeApiRequestBuilder WithUserId(UserId userId, IStringTransformer? transformer = null)
     {
-        _userId = transformer.TryTransform(user.Id.Id);
+        _userId = transformer.TryTransform(userId.Id);
 
         return this;
     }

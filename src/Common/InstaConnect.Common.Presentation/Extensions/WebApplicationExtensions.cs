@@ -22,7 +22,7 @@ public static class WebApplicationExtensions
 
         public WebApplication UseConfiguredCors()
         {
-            webApplication.UseCors(AppPolicies.CorsPolicy);
+            webApplication.UseCors(CorsPolicies.SpecificOrigins);
 
             return webApplication;
         }

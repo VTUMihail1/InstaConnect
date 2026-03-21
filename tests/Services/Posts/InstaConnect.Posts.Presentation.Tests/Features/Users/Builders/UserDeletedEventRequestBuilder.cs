@@ -23,9 +23,9 @@ public class UserDeletedEventRequestBuilder
         _updatedAtUtc = UserDataFaker.GetUpdatedAtUtc();
     }
 
-    public UserDeletedEventRequestBuilder WithId(User user, IStringTransformer? transformer = null)
+    public UserDeletedEventRequestBuilder WithId(UserId id, IStringTransformer? transformer = null)
     {
-        _id = transformer.TryTransform(user.Id.Id);
+        _id = transformer.TryTransform(id.Id);
 
         return this;
     }

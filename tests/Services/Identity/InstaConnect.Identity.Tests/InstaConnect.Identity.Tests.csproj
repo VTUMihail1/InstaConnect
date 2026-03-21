@@ -34,6 +34,8 @@
     <Using Include="InstaConnect.Common.Tests.DataAttributes.Booleans.Base" />
     <Using Include="InstaConnect.Common.Tests.DataAttributes.Booleans.True" />
     <Using Include="InstaConnect.Common.Tests.DataAttributes.Booleans.False" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.FormFiles.Base" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.FormFiles.Null" />
   </ItemGroup>
 
   <ItemGroup Label="Users">
@@ -46,6 +48,7 @@
   <ItemGroup Label="UserClaims">
     <Using Include="InstaConnect.Identity.Domain.Features.UserClaims.Utilities" />
     <Using Include="InstaConnect.Identity.Domain.Features.UserClaims.Models.Entities" />
+    <Using Include="InstaConnect.Identity.Domain.Features.UserClaims.Models.Requests" />
     <Using Include="InstaConnect.Identity.Tests.Features.UserClaims.Builders" />
   </ItemGroup>
 

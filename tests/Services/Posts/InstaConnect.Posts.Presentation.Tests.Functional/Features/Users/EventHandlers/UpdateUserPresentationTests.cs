@@ -161,7 +161,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
         var newUser = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(newUser, CancellationToken);
 
-        var request = _requestBuilder.WithEmail(newUser).Build();
+        var request = _requestBuilder.WithEmail(newUser.Email).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
@@ -179,7 +179,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
         var newUser = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(newUser, CancellationToken);
 
-        var request = _requestBuilder.WithEmail(newUser, transformer).Build();
+        var request = _requestBuilder.WithEmail(newUser.Email, transformer).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
@@ -195,7 +195,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
         var newUser = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(newUser, CancellationToken);
 
-        var request = _requestBuilder.WithName(newUser).Build();
+        var request = _requestBuilder.WithName(newUser.Name).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
@@ -213,7 +213,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
         var newUser = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(newUser, CancellationToken);
 
-        var request = _requestBuilder.WithName(newUser, transformer).Build();
+        var request = _requestBuilder.WithName(newUser.Name, transformer).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
@@ -356,7 +356,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
         var newUser = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(newUser, CancellationToken);
 
-        var request = _requestBuilder.WithEmail(newUser).Build();
+        var request = _requestBuilder.WithEmail(newUser.Email).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
@@ -375,7 +375,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
         var newUser = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(newUser, CancellationToken);
 
-        var request = _requestBuilder.WithEmail(newUser, transformer).Build();
+        var request = _requestBuilder.WithEmail(newUser.Email, transformer).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
@@ -392,7 +392,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
         var newUser = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(newUser, CancellationToken);
 
-        var request = _requestBuilder.WithName(newUser).Build();
+        var request = _requestBuilder.WithName(newUser.Name).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
@@ -411,7 +411,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
         var newUser = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(newUser, CancellationToken);
 
-        var request = _requestBuilder.WithName(newUser, transformer).Build();
+        var request = _requestBuilder.WithName(newUser.Name, transformer).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
@@ -465,7 +465,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
     public async Task PublishAsync_ShouldConsumeUserUpdatedEvent_WhenNameHasNotChanged()
     {
         // Arrange
-        var request = _requestBuilder.WithName(User).Build();
+        var request = _requestBuilder.WithName(User.Name).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
@@ -480,7 +480,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithName(User, transformer).Build();
+        var request = _requestBuilder.WithName(User.Name, transformer).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
@@ -508,7 +508,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
     public async Task PublishAsync_ShouldConsumeUserUpdatedEvent_WhenEmailHasNotChanged()
     {
         // Arrange
-        var request = _requestBuilder.WithEmail(User).Build();
+        var request = _requestBuilder.WithEmail(User.Email).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
@@ -523,7 +523,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithEmail(User, transformer).Build();
+        var request = _requestBuilder.WithEmail(User.Email, transformer).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
@@ -595,7 +595,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
     public async Task PublishAsync_ShouldUpdateUser_WhenNameHasNotChanged()
     {
         // Arrange
-        var request = _requestBuilder.WithName(User).Build();
+        var request = _requestBuilder.WithName(User.Name).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
@@ -611,7 +611,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithName(User, transformer).Build();
+        var request = _requestBuilder.WithName(User.Name, transformer).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
@@ -641,7 +641,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
     public async Task PublishAsync_ShouldUpdateUser_WhenEmailHasNotChanged()
     {
         // Arrange
-        var request = _requestBuilder.WithEmail(User).Build();
+        var request = _requestBuilder.WithEmail(User.Email).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);
@@ -658,7 +658,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithEmail(User, transformer).Build();
+        var request = _requestBuilder.WithEmail(User.Email, transformer).Build();
 
         // Act
         await EventHarness.PublishAsync(request, CancellationToken);

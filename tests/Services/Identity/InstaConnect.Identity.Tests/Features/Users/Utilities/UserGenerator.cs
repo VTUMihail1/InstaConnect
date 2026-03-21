@@ -12,9 +12,9 @@ public static class UserGenerator
                                   UserDataFaker.GetLastNameWithPrefix(baseUser.LastName),
                                   new(UserDataFaker.GetEmailWithPrefix(baseUser.Email.Value)),
                                   new(UserDataFaker.GetNameWithPrefix(baseUser.Name.Value)),
-                                  UserDataFaker.GetPasswordHash(),
+                                  baseUser.PasswordHash,
                                   baseUser.IsEmailConfirmed,
-                                  new(UserDataFaker.GetProfileImage()),
+                                  baseUser.ProfileImage,
                                   UserDataFaker.GetCreatedAtUtc(),
                                   UserDataFaker.GetUpdatedAtUtc()))];
         }

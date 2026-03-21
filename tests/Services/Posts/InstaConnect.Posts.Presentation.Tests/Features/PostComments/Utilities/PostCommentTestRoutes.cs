@@ -2,21 +2,30 @@
 
 public static class PostCommentTestRoutes
 {
-    public static string GetDefault(string id)
+    private static string GetDefault(string id)
     {
         const string Format = "api/v1/posts/{0}/comments";
 
         return Format.FormatCurrentCulture(id);
     }
 
-    public static string GetForUserDefault(string userId)
+    private static string GetForUserDefault(string userId)
     {
         const string Format = "api/v1/users/{0}/post-comments";
 
         return Format.FormatCurrentCulture(userId);
     }
 
-    public static string GetAll(GetAllPostCommentsApiRequest request)
+    private static string GetId(string id, string commentId)
+    {
+        const string Format = "{0}/{1}";
+
+        return Format.FormatCurrentCulture(
+            GetDefault(id),
+            commentId);
+    }
+
+    public static string GetRoute(GetAllPostCommentsApiRequest request)
     {
         const string Format = "{0}?userName={1}&sortOrder={2}&sortTerm={3}&page={4}&pageSize={5}";
 
@@ -29,7 +38,7 @@ public static class PostCommentTestRoutes
             request.PageSize);
     }
 
-    public static string GetAllForUser(GetAllPostCommentsForUserApiRequest request)
+    public static string GetRoute(GetAllPostCommentsForUserApiRequest request)
     {
         const string Format = "{0}?sortOrder={1}&sortTerm={2}&page={3}&pageSize={4}";
 
@@ -41,12 +50,23 @@ public static class PostCommentTestRoutes
             request.PageSize);
     }
 
-    public static string GetId(string id, string commentId)
+    public static string GetRoute(GetPostCommentByIdApiRequest request)
     {
-        const string Format = "{0}/{1}";
+        return GetId(request.Id, request.CommentId);
+    }
 
-        return Format.FormatCurrentCulture(
-            GetDefault(id),
-            commentId);
+    public static string GetRoute(AddPostCommentApiRequest request)
+    {
+        return GetDefault(request.Id);
+    }
+
+    public static string GetRoute(UpdatePostCommentApiRequest request)
+    {
+        return GetId(request.Id, request.CommentId);
+    }
+
+    public static string GetRoute(DeletePostCommentApiRequest request)
+    {
+        return GetId(request.Id, request.CommentId);
     }
 }

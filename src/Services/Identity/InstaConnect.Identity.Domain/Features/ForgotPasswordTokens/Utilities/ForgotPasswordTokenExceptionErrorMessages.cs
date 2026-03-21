@@ -19,7 +19,7 @@ public static class ForgotPasswordTokenExceptionErrorMessages
         return Format.FormatCurrentCulture(id.Id.Id, id.Value);
     }
 
-    public static string GetInclideDescriptorsNotSupportedMessage(ICollection<IdentityIncludeDescriptor> descriptors)
+    public static string GetIncludeDescriptorsNotSupportedMessage(ICollection<IdentityIncludeDescriptor> descriptors)
     {
         const string Format = "ForgotPasswordTokenDescriptors({0}) is not supported";
 

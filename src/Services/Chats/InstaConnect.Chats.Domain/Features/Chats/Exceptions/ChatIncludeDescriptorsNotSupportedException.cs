@@ -6,12 +6,12 @@ namespace InstaConnect.Chats.Domain.Features.Chats.Exceptions;
 public class ChatIncludeDescriptorsNotSupportedException : BadRequestException
 {
     public ChatIncludeDescriptorsNotSupportedException(ICollection<ChatsIncludeDescriptor> includeDescriptors)
-        : base(ChatExceptionErrorMessages.GetInclideDescriptorsNotSupportedMessage(includeDescriptors))
+        : base(ChatExceptionErrorMessages.GetIncludeDescriptorsNotSupportedMessage(includeDescriptors))
     {
     }
 
     public ChatIncludeDescriptorsNotSupportedException(ICollection<ChatsIncludeDescriptor> includeDescriptors, Exception exception)
-        : base(ChatExceptionErrorMessages.GetInclideDescriptorsNotSupportedMessage(includeDescriptors), exception)
+        : base(ChatExceptionErrorMessages.GetIncludeDescriptorsNotSupportedMessage(includeDescriptors), exception)
     {
     }
 }

@@ -63,11 +63,6 @@ internal static class RuleBuilderExtensions
         {
             return ruleBuilder.MaxLengthWithMessage(UserConfigurations.PasswordMaxLength);
         }
-
-        public IRuleBuilderOptions<T, string> UserProfileImageMaxLengthWithMessage()
-        {
-            return ruleBuilder.MaxLengthWithMessage(UserConfigurations.ProfileImageUrlMaxLength);
-        }
     }
 
     extension<T>(IRuleBuilder<T, int> ruleBuilder)

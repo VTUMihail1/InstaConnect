@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Extensions;
+using InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Extensions;
 using InstaConnect.Identity.Infrastructure.Features.RefreshTokens.Extensions;
 using InstaConnect.Identity.Infrastructure.Features.Users.Extensions;
 
@@ -16,6 +17,14 @@ public static class EmailConfirmationTokenMongoCollectionExtensions
             CancellationToken cancellationToken)
         {
             await collection.UpdateAsync(session, entity.Id.GetFilter(), entity, cancellationToken);
+        }
+
+        public async Task DeleteAsync(
+            IClientSessionHandle? session,
+            EmailConfirmationToken entity,
+            CancellationToken cancellationToken)
+        {
+            await collection.DeleteAsync(session, entity.Id.GetFilter(), cancellationToken);
         }
 
         public async Task DeleteRangeAsync(

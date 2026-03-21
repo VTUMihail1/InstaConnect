@@ -21,9 +21,9 @@ public class GetAllPostCommentLikesForUserQueryRequestBuilder
         _sortTerm = PostCommentLikeDataFaker.GetForUserSortTerm();
     }
 
-    public GetAllPostCommentLikesForUserQueryRequestBuilder WithUserId(User user, IStringTransformer transformer)
+    public GetAllPostCommentLikesForUserQueryRequestBuilder WithUserId(UserId userId, IStringTransformer transformer)
     {
-        _userId = transformer.Transform(user.Id.Id);
+        _userId = transformer.Transform(userId.Id);
 
         return this;
     }
@@ -35,9 +35,9 @@ public class GetAllPostCommentLikesForUserQueryRequestBuilder
         return this;
     }
 
-    public GetAllPostCommentLikesForUserQueryRequestBuilder WithCurrentUserId(User user, IStringTransformer? transformer = null)
+    public GetAllPostCommentLikesForUserQueryRequestBuilder WithCurrentUserId(UserId currentUserId, IStringTransformer? transformer = null)
     {
-        _currentUserId = transformer.TryTransform(user.Id.Id);
+        _currentUserId = transformer.TryTransform(currentUserId.Id);
 
         return this;
     }

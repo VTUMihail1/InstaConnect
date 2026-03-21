@@ -1,8 +1,6 @@
-﻿using System.Security.Claims;
-
-namespace InstaConnect.Follows.Presentation.Features.Follows.Models.Requests;
+﻿namespace InstaConnect.Follows.Presentation.Features.Follows.Models.Requests;
 
 public record AddFollowApiRequest(
-    [FromClaim(ClaimTypes.NameIdentifier)] string FollowerId,
+    [UserIdFromClaim] string FollowerId,
     [FromRoute] string FollowingId
 );

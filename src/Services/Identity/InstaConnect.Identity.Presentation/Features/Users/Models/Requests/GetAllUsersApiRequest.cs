@@ -1,13 +1,11 @@
-﻿using System.Security.Claims;
-
-using InstaConnect.Common.Domain.Models;
+﻿using InstaConnect.Common.Domain.Models;
 using InstaConnect.Identity.Domain.Features.Users.Models.Requests;
 using InstaConnect.Identity.Presentation.Features.Users.Abstractions;
 
 namespace InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
 
 public record GetAllUsersApiRequest(
-    [FromClaim(ClaimTypes.NameIdentifier)] string CurrentId,
+    [UserIdFromClaim] string CurrentId,
     [FromQuery] string FirstName = UserDefaultValues.FirstName,
     [FromQuery] string LastName = UserDefaultValues.LastName,
     [FromQuery] string Name = UserDefaultValues.Name,

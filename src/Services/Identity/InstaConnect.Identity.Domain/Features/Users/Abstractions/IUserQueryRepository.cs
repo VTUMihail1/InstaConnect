@@ -36,4 +36,8 @@ public interface IUserQueryRepository
         UserId id,
         CurrentUserQuery current,
         CancellationToken cancellationToken);
+
+    Task<bool> ExistsByIdAsync(
+        UserId id,
+        CancellationToken cancellationToken);
 }

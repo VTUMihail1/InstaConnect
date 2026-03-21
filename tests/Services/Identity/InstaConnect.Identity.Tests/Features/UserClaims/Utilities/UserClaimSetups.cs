@@ -1,6 +1,5 @@
-﻿using InstaConnect.Common.Tests.Extensions;
-using InstaConnect.Identity.Domain.Features.UserClaims.Abstractions;
-using InstaConnect.Identity.Infrastructure.Abstractions;
+﻿using InstaConnect.Identity.Domain.Features.UserClaims.Abstractions;
+using InstaConnect.Identity.Domain.Features.UserClaims.Models.ValueObjects;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -8,42 +7,57 @@ namespace InstaConnect.Identity.Tests.Features.UserClaims.Utilities;
 
 public static class UserClaimSetups
 {
-    extension(IServiceScope serviceScope)
+    extension(IServiceProvider serviceProvider)
     {
         public IUserClaimCommandRepository GetUserClaimCommandRepository()
         {
-            return serviceScope.ServiceProvider.GetRequiredService<IUserClaimCommandRepository>();
+            return serviceProvider.GetRequiredService<IUserClaimCommandRepository>();
         }
 
         public IUserClaimIncludeBuilderFactory GetUserClaimIncludeBuilderFactory()
         {
-            return serviceScope.ServiceProvider.GetRequiredService<IUserClaimIncludeBuilderFactory>();
+            return serviceProvider.GetRequiredService<IUserClaimIncludeBuilderFactory>();
+        }
+    }
+
+    extension(IServiceScope serviceScope)
+    {
+        public IUserClaimCommandRepository GetUserClaimCommandRepository()
+        {
+            return serviceScope.ServiceProvider.GetUserClaimCommandRepository();
+        }
+
+        public IUserClaimIncludeBuilderFactory GetUserClaimIncludeBuilderFactory()
+        {
+            return serviceScope.ServiceProvider.GetUserClaimIncludeBuilderFactory();
+        }
+
+        public async Task<UserClaim?> GetUserClaimByIdAsync(
+            UserClaimId id,
+            CancellationToken cancellationToken)
+        {
+            return await serviceScope.GetUserClaimCommandRepository().GetByIdAsync(id, cancellationToken);
         }
 
         public async Task AddUserClaimAsync(
             UserClaim userClaim,
             CancellationToken cancellationToken)
         {
-            var userClaimRepository = serviceScope.GetUserClaimCommandRepository();
-
-            await userClaimRepository.AddAsync(userClaim, cancellationToken);
+            await serviceScope.GetUserClaimCommandRepository().AddAsync(userClaim, cancellationToken);
         }
 
         public async Task AddUserClaimRangeAsync(
             IEnumerable<UserClaim> userClaims,
             CancellationToken cancellationToken)
         {
-            var userClaimRepository = serviceScope.GetUserClaimCommandRepository();
-
-            await userClaimRepository.AddRangeAsync(userClaims, cancellationToken);
+            await serviceScope.GetUserClaimCommandRepository().AddRangeAsync(userClaims, cancellationToken);
         }
 
-        public async Task ResetUserClaimDatabase(
+        public async Task DeleteUserClaimAsync(
+            UserClaim userClaim,
             CancellationToken cancellationToken)
         {
-            var context = serviceScope.ServiceProvider.GetRequiredService<IIdentityContext>();
-
-            await context.UserClaims.ResetAsync(cancellationToken);
+            await serviceScope.GetUserClaimCommandRepository().DeleteAsync(userClaim, cancellationToken);
         }
     }
 }

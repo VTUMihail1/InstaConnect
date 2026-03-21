@@ -33,7 +33,7 @@ public static class ChatExceptionErrorMessages
         return Format.FormatCurrentCulture(sortTerm);
     }
 
-    public static string GetInclideDescriptorsNotSupportedMessage(ICollection<ChatsIncludeDescriptor> descriptors)
+    public static string GetIncludeDescriptorsNotSupportedMessage(ICollection<ChatsIncludeDescriptor> descriptors)
     {
         const string Format = "ChatIncludeDescriptors({0}) is not supported";
 

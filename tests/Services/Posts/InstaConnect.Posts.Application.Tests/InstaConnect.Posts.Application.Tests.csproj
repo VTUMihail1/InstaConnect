@@ -14,6 +14,7 @@
     <Using Include="FluentValidation.TestHelper" />
     <Using Include="InstaConnect.Common.Domain.Extensions" />
     <Using Include="InstaConnect.Common.Domain.Models" />
+    <Using Include="InstaConnect.Common.Domain.Models.ValueObjects" />
     <Using Include="InstaConnect.Common.Tests.Events" />
     <Using Include="InstaConnect.Common.Tests.Assertions" />
     <Using Include="InstaConnect.Common.Application.Tests.Assertions" />
@@ -27,6 +28,7 @@
   <ItemGroup Label="Users">
     <Using Include="InstaConnect.Posts.Domain.Features.Users.Abstractions" />
     <Using Include="InstaConnect.Posts.Domain.Features.Users.Models.Entities" />
+    <Using Include="InstaConnect.Posts.Domain.Features.Users.Models.ValueObjects" />
     <Using Include="InstaConnect.Posts.Domain.Features.Users.Models.Requests" />
     <Using Include="InstaConnect.Posts.Domain.Features.Users.Utilities" />
     <Using Include="InstaConnect.Posts.Application.Tests.Features.Users.Assertions" />
@@ -41,6 +43,7 @@
   <ItemGroup Label="Posts">
     <Using Include="InstaConnect.Posts.Domain.Features.Posts.Abstractions" />
     <Using Include="InstaConnect.Posts.Domain.Features.Posts.Models.Entities" />
+    <Using Include="InstaConnect.Posts.Domain.Features.Posts.Models.ValueObjects" />
     <Using Include="InstaConnect.Posts.Domain.Features.Posts.Models.Requests" />
     <Using Include="InstaConnect.Posts.Domain.Features.Posts.Models.Responses" />
     <Using Include="InstaConnect.Posts.Domain.Features.Posts.Utilities" />
@@ -58,6 +61,7 @@
   <ItemGroup Label="PostLikes">
     <Using Include="InstaConnect.Posts.Domain.Features.PostLikes.Abstractions" />
     <Using Include="InstaConnect.Posts.Domain.Features.PostLikes.Models.Entities" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostLikes.Models.ValueObjects" />
     <Using Include="InstaConnect.Posts.Domain.Features.PostLikes.Models.Requests" />
     <Using Include="InstaConnect.Posts.Domain.Features.PostLikes.Models.Responses" />
     <Using Include="InstaConnect.Posts.Domain.Features.PostLikes.Utilities" />
@@ -74,6 +78,7 @@
   <ItemGroup Label="PostComments">
     <Using Include="InstaConnect.Posts.Domain.Features.PostComments.Abstractions" />
     <Using Include="InstaConnect.Posts.Domain.Features.PostComments.Models.Entities" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostComments.Models.ValueObjects" />
     <Using Include="InstaConnect.Posts.Domain.Features.PostComments.Models.Requests" />
     <Using Include="InstaConnect.Posts.Domain.Features.PostComments.Models.Responses" />
     <Using Include="InstaConnect.Posts.Domain.Features.PostComments.Utilities" />
@@ -91,6 +96,7 @@
   <ItemGroup Label="PostCommentLikes">
     <Using Include="InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstractions" />
     <Using Include="InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entities" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.ValueObjects" />
     <Using Include="InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Requests" />
     <Using Include="InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Responses" />
     <Using Include="InstaConnect.Posts.Domain.Features.PostCommentLikes.Utilities" />

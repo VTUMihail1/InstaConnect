@@ -17,30 +17,30 @@ public class ForgotPasswordTokenBuilder
         _createdAtUtc = ForgotPasswordTokenDataFaker.GetCreatedAtUtc();
     }
 
-    public ForgotPasswordTokenBuilder WithId(IStringTransformer transformer)
+    public ForgotPasswordTokenBuilder WithId(string id)
     {
-        _id = transformer.Transform(_id);
+        _id = id;
 
         return this;
     }
 
-    public ForgotPasswordTokenBuilder WithValue(IStringTransformer transformer)
+    public ForgotPasswordTokenBuilder WithValue(string value)
     {
-        _value = transformer.Transform(_value);
+        _value = value;
 
         return this;
     }
 
-    public ForgotPasswordTokenBuilder WithCreatedAtUtc(IDateTimeOffsetTransformer transformer)
+    public ForgotPasswordTokenBuilder WithCreatedAtUtc(DateTimeOffset createdAtUtc)
     {
-        _createdAtUtc = transformer.Transform(_createdAtUtc);
+        _createdAtUtc = createdAtUtc;
 
         return this;
     }
 
-    public ForgotPasswordTokenBuilder WithExpiredAtUtc(IDateTimeOffsetTransformer transformer)
+    public ForgotPasswordTokenBuilder WithExpiredAtUtc(DateTimeOffset expiresAtUtc)
     {
-        _expiresAtUtc = transformer.Transform(_expiresAtUtc);
+        _expiresAtUtc = expiresAtUtc;
 
         return this;
     }

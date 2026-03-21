@@ -2,5 +2,5 @@
 
 public interface ICurrentUserableQuery
 {
-    public CurrentUserQuery CurrentUser { get; }
+    public CurrentUserQuery Current { get; }
 }

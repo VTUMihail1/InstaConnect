@@ -1,10 +1,12 @@
-﻿namespace InstaConnect.Identity.Domain.Features.UserClaims.Models.Entities;
+﻿using InstaConnect.Common.Domain.Utilities;
+
+namespace InstaConnect.Identity.Domain.Features.UserClaims.Models.Entities;
 
 public class UserClaim : IEntityWithId<UserClaimId>
 {
     public UserClaim()
     {
-        Id = new(new(string.Empty), string.Empty);
+        Id = new(new(string.Empty), ApplicationClaims.None);
     }
 
     public UserClaim(UserClaimId id, DateTimeOffset createdAtUtc)

@@ -8,7 +8,7 @@ namespace InstaConnect.Chats.Presentation.Features.ChatMessages.Controllers.v1;
 
 [ApiVersion(ChatMessageRoutes.Version1)]
 [Route(ChatMessageRoutes.Resource)]
-[EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
+[EnableRateLimiting(RateLimiterPolicies.Default)]
 public class ChatMessageController : ControllerBase
 {
     private readonly IApplicationMapper _mapper;

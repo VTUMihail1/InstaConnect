@@ -2,21 +2,30 @@
 
 public static class PostTestRoutes
 {
-    public static string GetDefault()
+    private static string GetDefault()
     {
         const string Route = "api/v1/posts";
 
         return Route;
     }
 
-    public static string GetForUserDefault(string userId)
+    private static string GetForUserDefault(string userId)
     {
         const string Format = "api/v1/users/{0}/posts";
 
         return Format.FormatCurrentCulture(userId);
     }
 
-    public static string GetAll(GetAllPostsApiRequest request)
+    private static string GetId(string id)
+    {
+        const string Format = "{0}/{1}";
+
+        return Format.FormatCurrentCulture(
+            GetDefault(),
+            id);
+    }
+
+    public static string GetRoute(GetAllPostsApiRequest request)
     {
         const string Format = "{0}?userName={1}&title={2}&sortOrder={3}&sortTerm={4}&page={5}&pageSize={6}";
 
@@ -30,7 +39,7 @@ public static class PostTestRoutes
             request.PageSize);
     }
 
-    public static string GetAllForUser(GetAllPostsForUserApiRequest request)
+    public static string GetRoute(GetAllPostsForUserApiRequest request)
     {
         const string Format = "{0}?title={1}&sortOrder={2}&sortTerm={3}&page={4}&pageSize={5}";
 
@@ -43,12 +52,23 @@ public static class PostTestRoutes
             request.PageSize);
     }
 
-    public static string GetId(string id)
+    public static string GetRoute(GetPostByIdApiRequest request)
     {
-        const string Format = "{0}/{1}";
+        return GetId(request.Id);
+    }
 
-        return Format.FormatCurrentCulture(
-            GetDefault(),
-            id);
+    public static string GetRoute(AddPostApiRequest request)
+    {
+        return GetDefault();
+    }
+
+    public static string GetRoute(UpdatePostApiRequest request)
+    {
+        return GetId(request.Id);
+    }
+
+    public static string GetRoute(DeletePostApiRequest request)
+    {
+        return GetId(request.Id);
     }
 }

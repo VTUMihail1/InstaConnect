@@ -3,7 +3,6 @@
 using InstaConnect.Common.Application.Utilities;
 using InstaConnect.Common.Domain.Extensions;
 using InstaConnect.Common.Tests.DataAttributes.Booleans.Base;
-using InstaConnect.Common.Tests.DataAttributes.Strings.Base;
 
 namespace InstaConnect.Common.Tests.DataAttributes.Booleans.True;
 

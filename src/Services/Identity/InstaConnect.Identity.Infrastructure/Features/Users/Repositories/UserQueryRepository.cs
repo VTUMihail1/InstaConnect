@@ -97,4 +97,15 @@ internal class UserQueryRepository : IUserQueryRepository
     {
         return await GetByIdAsync(id, current, null, cancellationToken);
     }
+
+    public async Task<bool> ExistsByIdAsync(
+        UserId id,
+        CancellationToken cancellationToken)
+    {
+        return await _context
+            .Users
+            .AggregateWithCaseInsensitiveCollation()
+            .Match(id)
+            .AnyAsync(cancellationToken);
+    }
 }

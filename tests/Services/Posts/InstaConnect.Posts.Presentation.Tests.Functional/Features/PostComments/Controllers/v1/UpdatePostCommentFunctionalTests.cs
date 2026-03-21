@@ -225,7 +225,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationComma
         // Arrange
         var user = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(user, CancellationToken);
-        var request = _requestBuilder.WithUserId(user).Build();
+        var request = _requestBuilder.WithUserId(user.Id).Build();
 
         // Act
         var response = await HttpClient.UpdatePostCommentStatusCodeAsync(request, CancellationToken);
@@ -240,7 +240,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationComma
         // Arrange
         var user = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(user, CancellationToken);
-        var request = _requestBuilder.WithUserId(user).Build();
+        var request = _requestBuilder.WithUserId(user.Id).Build();
 
         // Act
         var response = await HttpClient.UpdatePostCommentProblemDetailsAsync(request, CancellationToken);

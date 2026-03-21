@@ -202,7 +202,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
         // Arrange
         var user = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(user, CancellationToken);
-        var request = _requestBuilder.WithUserId(user).Build();
+        var request = _requestBuilder.WithUserId(user.Id).Build();
 
         // Act
         var response = await HttpClient.UpdatePostStatusCodeAsync(request, CancellationToken);
@@ -217,7 +217,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
         // Arrange
         var user = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(user, CancellationToken);
-        var request = _requestBuilder.WithUserId(user).Build();
+        var request = _requestBuilder.WithUserId(user.Id).Build();
 
         // Act
         var response = await HttpClient.UpdatePostProblemDetailsAsync(request, CancellationToken);

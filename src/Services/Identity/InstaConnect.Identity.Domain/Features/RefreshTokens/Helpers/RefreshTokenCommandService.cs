@@ -47,6 +47,11 @@ internal class RefreshTokenCommandService : IRefreshTokenCommandService
             throw new UserInvalidDetailsException(command.Name);
         }
 
+        if (user.IsEmailNotConfirmed)
+        {
+            throw new UserNameEmailNotConfirmedException(command.Name);
+        }
+
         var newRefreshToken = _refreshTokenFactory.Create(user.Id).AddUser(user);
         await _refreshTokenRepository.AddAsync(newRefreshToken, cancellationToken);
 
@@ -61,6 +66,11 @@ internal class RefreshTokenCommandService : IRefreshTokenCommandService
         if (user == null)
         {
             throw new UserNotFoundException(command.Id.Id);
+        }
+
+        if (user.IsEmailNotConfirmed)
+        {
+            throw new UserEmailNotConfirmedException(command.Id.Id);
         }
 
         var refreshToken = await _refreshTokenRepository.GetByIdAsync(command.Id, cancellationToken);

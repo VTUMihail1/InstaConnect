@@ -30,9 +30,9 @@ public class GetAllPostsApiRequestBuilder
         return this;
     }
 
-    public GetAllPostsApiRequestBuilder WithCurrentUserId(User user, IStringTransformer? transformer = null)
+    public GetAllPostsApiRequestBuilder WithCurrentUserId(UserId currentUserId, IStringTransformer? transformer = null)
     {
-        _currentUserId = transformer.TryTransform(user.Id.Id);
+        _currentUserId = transformer.TryTransform(currentUserId.Id);
 
         return this;
     }

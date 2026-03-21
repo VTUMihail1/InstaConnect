@@ -7,7 +7,7 @@ namespace InstaConnect.Follows.Presentation.Features.Follows.Controllers.v1;
 
 [ApiVersion(FollowRoutes.Version1)]
 [Route(FollowRoutes.Resource)]
-[EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
+[EnableRateLimiting(RateLimiterPolicies.Default)]
 public class FollowController : ControllerBase
 {
     private readonly IApplicationMapper _mapper;

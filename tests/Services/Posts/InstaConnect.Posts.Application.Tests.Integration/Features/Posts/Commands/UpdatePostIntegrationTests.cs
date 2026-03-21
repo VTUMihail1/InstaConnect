@@ -100,7 +100,7 @@ public class UpdatePostIntegrationTests : BasePostApplicationCommandIntegrationT
         // Arrange
         var user = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(user, CancellationToken);
-        var request = _requestBuilder.WithUserId(user).Build();
+        var request = _requestBuilder.WithUserId(user.Id).Build();
 
         // Assert
         await Sender.ShouldThrowPostForbiddenExceptionAsync(request, CancellationToken);

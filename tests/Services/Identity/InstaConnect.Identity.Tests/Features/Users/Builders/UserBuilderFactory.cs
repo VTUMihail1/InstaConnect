@@ -2,8 +2,8 @@
 
 public class UserBuilderFactory
 {
-    public UserBuilder Create()
+    public UserBuilder Create(string passwordHash, string? profileImage)
     {
-        return new();
+        return new(passwordHash, profileImage);
     }
 }

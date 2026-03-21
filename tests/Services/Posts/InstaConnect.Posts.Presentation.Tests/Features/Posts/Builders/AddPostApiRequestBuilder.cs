@@ -13,9 +13,9 @@ public class AddPostApiRequestBuilder
         _content = PostDataFaker.GetContent();
     }
 
-    public AddPostApiRequestBuilder WithUserId(User user, IStringTransformer? transformer = null)
+    public AddPostApiRequestBuilder WithUserId(UserId userId, IStringTransformer? transformer = null)
     {
-        _userId = transformer.TryTransform(user.Id.Id);
+        _userId = transformer.TryTransform(userId.Id);
 
         return this;
     }

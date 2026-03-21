@@ -142,7 +142,7 @@ public class UpdateUserIntegrationTests : BaseUserApplicationCommandIntegrationT
         var user = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(user, CancellationToken);
 
-        var request = _requestBuilder.WithEmail(user).Build();
+        var request = _requestBuilder.WithEmail(user.Email).Build();
 
         // Assert
         await Sender.ShouldThrowUserEmailAlreadyExistsExceptionAsync(request, CancellationToken);
@@ -157,7 +157,7 @@ public class UpdateUserIntegrationTests : BaseUserApplicationCommandIntegrationT
         var user = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(user, CancellationToken);
 
-        var request = _requestBuilder.WithEmail(user, transformer).Build();
+        var request = _requestBuilder.WithEmail(user.Email, transformer).Build();
 
         // Assert
         await Sender.ShouldThrowUserEmailAlreadyExistsExceptionAsync(request, CancellationToken);
@@ -170,7 +170,7 @@ public class UpdateUserIntegrationTests : BaseUserApplicationCommandIntegrationT
         var user = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(user, CancellationToken);
 
-        var request = _requestBuilder.WithName(user).Build();
+        var request = _requestBuilder.WithName(user.Name).Build();
 
         // Assert
         await Sender.ShouldThrowUserNameAlreadyExistsExceptionAsync(request, CancellationToken);
@@ -185,7 +185,7 @@ public class UpdateUserIntegrationTests : BaseUserApplicationCommandIntegrationT
         var user = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(user, CancellationToken);
 
-        var request = _requestBuilder.WithName(user, transformer).Build();
+        var request = _requestBuilder.WithName(user.Name, transformer).Build();
 
         // Assert
         await Sender.ShouldThrowUserNameAlreadyExistsExceptionAsync(request, CancellationToken);
@@ -238,7 +238,7 @@ public class UpdateUserIntegrationTests : BaseUserApplicationCommandIntegrationT
     public async Task SendAsync_ShouldReturnResponse_WhenNameHasNotChanged()
     {
         // Arrange
-        var request = _requestBuilder.WithName(User).Build();
+        var request = _requestBuilder.WithName(User.Name).Build();
 
         // Act
         var response = await Sender.SendAsync(request, CancellationToken);
@@ -254,7 +254,7 @@ public class UpdateUserIntegrationTests : BaseUserApplicationCommandIntegrationT
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithName(User, transformer).Build();
+        var request = _requestBuilder.WithName(User.Name, transformer).Build();
 
         // Act
         var response = await Sender.SendAsync(request, CancellationToken);
@@ -284,7 +284,7 @@ public class UpdateUserIntegrationTests : BaseUserApplicationCommandIntegrationT
     public async Task SendAsync_ShouldReturnResponse_WhenEmailHasNotChanged()
     {
         // Arrange
-        var request = _requestBuilder.WithEmail(User).Build();
+        var request = _requestBuilder.WithEmail(User.Email).Build();
 
         // Act
         var response = await Sender.SendAsync(request, CancellationToken);
@@ -300,7 +300,7 @@ public class UpdateUserIntegrationTests : BaseUserApplicationCommandIntegrationT
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithEmail(User, transformer).Build();
+        var request = _requestBuilder.WithEmail(User.Email, transformer).Build();
 
         // Act
         var response = await Sender.SendAsync(request, CancellationToken);
@@ -374,7 +374,7 @@ public class UpdateUserIntegrationTests : BaseUserApplicationCommandIntegrationT
     public async Task SendAsync_ShouldUpdateUser_WhenNameHasNotChanged()
     {
         // Arrange
-        var request = _requestBuilder.WithName(User).Build();
+        var request = _requestBuilder.WithName(User.Name).Build();
 
         // Act
         var response = await Sender.SendAsync(request, CancellationToken);
@@ -390,7 +390,7 @@ public class UpdateUserIntegrationTests : BaseUserApplicationCommandIntegrationT
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithName(User, transformer).Build();
+        var request = _requestBuilder.WithName(User.Name, transformer).Build();
 
         // Act
         var response = await Sender.SendAsync(request, CancellationToken);
@@ -420,7 +420,7 @@ public class UpdateUserIntegrationTests : BaseUserApplicationCommandIntegrationT
     public async Task SendAsync_ShouldUpdateUser_WhenEmailHasNotChanged()
     {
         // Arrange
-        var request = _requestBuilder.WithEmail(User).Build();
+        var request = _requestBuilder.WithEmail(User.Email).Build();
 
         // Act
         var response = await Sender.SendAsync(request, CancellationToken);
@@ -436,7 +436,7 @@ public class UpdateUserIntegrationTests : BaseUserApplicationCommandIntegrationT
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithEmail(User, transformer).Build();
+        var request = _requestBuilder.WithEmail(User.Email, transformer).Build();
 
         // Act
         var response = await Sender.SendAsync(request, CancellationToken);

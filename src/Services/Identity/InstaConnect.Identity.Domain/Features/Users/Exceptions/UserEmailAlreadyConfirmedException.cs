@@ -4,13 +4,13 @@ namespace InstaConnect.Identity.Domain.Features.Users.Exceptions;
 
 public class UserEmailAlreadyConfirmedException : BadRequestException
 {
-    public UserEmailAlreadyConfirmedException(Email email) : base(
-        UserExceptionErrorMessages.GetEmailAlreadyConfirmedMessage(email))
+    public UserEmailAlreadyConfirmedException(UserId id) : base(
+        UserExceptionErrorMessages.GetEmailAlreadyConfirmedMessage(id))
     {
     }
 
-    public UserEmailAlreadyConfirmedException(Email email, Exception exception) : base(
-        UserExceptionErrorMessages.GetEmailAlreadyConfirmedMessage(email), exception)
+    public UserEmailAlreadyConfirmedException(UserId id, Exception exception) : base(
+        UserExceptionErrorMessages.GetEmailAlreadyConfirmedMessage(id), exception)
     {
     }
 }

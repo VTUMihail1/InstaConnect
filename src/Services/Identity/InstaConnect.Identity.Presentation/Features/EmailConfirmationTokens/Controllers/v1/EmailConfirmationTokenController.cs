@@ -5,7 +5,7 @@ namespace InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Co
 
 [ApiVersion(EmailConfirmationTokenRoutes.Version1)]
 [Route(EmailConfirmationTokenRoutes.Resource)]
-[EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
+[EnableRateLimiting(RateLimiterPolicies.Default)]
 public class EmailConfirmationTokenController : ControllerBase
 {
     private readonly IApplicationMapper _mapper;

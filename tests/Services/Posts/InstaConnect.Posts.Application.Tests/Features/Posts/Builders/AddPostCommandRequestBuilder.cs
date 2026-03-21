@@ -15,9 +15,9 @@ public class AddPostCommandRequestBuilder
         _content = PostDataFaker.GetContent();
     }
 
-    public AddPostCommandRequestBuilder WithUserId(User user, IStringTransformer? transformer = null)
+    public AddPostCommandRequestBuilder WithUserId(UserId userId, IStringTransformer? transformer = null)
     {
-        _userId = transformer.TryTransform(user.Id.Id);
+        _userId = transformer.TryTransform(userId.Id);
 
         return this;
     }

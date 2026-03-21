@@ -7,7 +7,7 @@ namespace InstaConnect.Posts.Presentation.Features.PostLikes.Controllers.v1;
 
 [ApiVersion(PostLikeRoutes.Version1)]
 [Route(PostLikeRoutes.Resource)]
-[EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
+[EnableRateLimiting(RateLimiterPolicies.Default)]
 public class PostLikeController : ControllerBase
 {
     private readonly IApplicationMapper _mapper;

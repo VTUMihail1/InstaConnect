@@ -1,6 +1,4 @@
-﻿using System.Security.Claims;
-
-using InstaConnect.Common.Domain.Models;
+﻿using InstaConnect.Common.Domain.Models;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Requests;
 using InstaConnect.Posts.Presentation.Features.Users.Abstractions;
 
@@ -8,7 +6,7 @@ namespace InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Reque
 
 public record GetAllPostCommentLikesForUserApiRequest(
     [FromRoute] string UserId,
-    [FromClaim(ClaimTypes.NameIdentifier)] string CurrentUserId,
+    [UserIdFromClaim] string CurrentUserId,
     [FromQuery] CommonSortOrder SortOrder = CommonDefaultValues.SortOrder,
     [FromQuery] PostCommentLikesForUserSortTerm SortTerm = PostCommentLikeDefaultValues.SortTermForUser,
     [FromQuery] int Page = PostCommentLikeDefaultValues.Page,

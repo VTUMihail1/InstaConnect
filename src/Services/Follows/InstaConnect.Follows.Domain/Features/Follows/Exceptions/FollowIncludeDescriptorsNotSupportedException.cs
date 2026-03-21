@@ -6,12 +6,12 @@ namespace InstaConnect.Follows.Domain.Features.Follows.Exceptions;
 public class FollowIncludeDescriptorsNotSupportedException : BadRequestException
 {
     public FollowIncludeDescriptorsNotSupportedException(ICollection<FollowsIncludeDescriptor> includeDescriptors)
-        : base(FollowExceptionErrorMessages.GetInclideDescriptorsNotSupportedMessage(includeDescriptors))
+        : base(FollowExceptionErrorMessages.GetIncludeDescriptorsNotSupportedMessage(includeDescriptors))
     {
     }
 
     public FollowIncludeDescriptorsNotSupportedException(ICollection<FollowsIncludeDescriptor> includeDescriptors, Exception exception)
-        : base(FollowExceptionErrorMessages.GetInclideDescriptorsNotSupportedMessage(includeDescriptors), exception)
+        : base(FollowExceptionErrorMessages.GetIncludeDescriptorsNotSupportedMessage(includeDescriptors), exception)
     {
     }
 }

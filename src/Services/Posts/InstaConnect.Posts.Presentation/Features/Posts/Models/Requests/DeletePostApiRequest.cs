@@ -1,8 +1,6 @@
-﻿using System.Security.Claims;
-
-namespace InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
+﻿namespace InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 
 public record DeletePostApiRequest(
     [FromRoute] string Id,
-    [FromClaim(ClaimTypes.NameIdentifier)] string UserId
+    [UserIdFromClaim] string UserId
 );

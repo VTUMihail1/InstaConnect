@@ -21,13 +21,13 @@ public abstract class BasePostWebTest : BasePostTest, IClassFixture<PostsWebAppl
     public async Task InitializeAsync()
     {
         await EventHarness.StartAsync(CancellationToken);
-        await ServiceScope.ResetPostDatabase(CancellationToken);
+        await ServiceScope.ResetPostsDatabase(CancellationToken);
         await OnInitializeAsync();
     }
 
     public async Task DisposeAsync()
     {
-        await ServiceScope.ResetPostDatabase(CancellationToken);
+        await ServiceScope.ResetPostsDatabase(CancellationToken);
         await EventHarness.StopAsync(CancellationToken);
     }
 

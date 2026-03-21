@@ -1,5 +1,6 @@
 ﻿using InstaConnect.Identity.Application.Features.Users.Commands.Add;
 using InstaConnect.Identity.Application.Features.Users.Commands.Delete;
+using InstaConnect.Identity.Application.Features.Users.Commands.DeleteCurrent;
 using InstaConnect.Identity.Application.Features.Users.Commands.UpdateCurrent;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetAll;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetById;
@@ -27,13 +28,7 @@ internal class UserPresentationMappings : IRegister
                 src.PageSize));
 
         config.NewConfig<GetAllUsersQueryResponse, GetAllUsersApiResponse>()
-            .ConstructUsing(src => new(
-                  src.Users.Adapt<ICollection<UserApiResponse>>(config)!,
-                  src.Page,
-                  src.PageSize,
-                  src.TotalCount,
-                  src.HasNextPage,
-                  src.HasPreviousPage));
+            .ConstructUsing(src => new(src.UserCollection.Adapt<UserCollectionApiResponse>(config)!));
 
         config.NewConfig<GetUserByIdApiRequest, GetUserByIdQueryRequest>()
             .ConstructUsing(src => new(src.Id, src.CurrentId));
@@ -84,7 +79,7 @@ internal class UserPresentationMappings : IRegister
         config.NewConfig<DeleteUserApiRequest, DeleteUserCommandRequest>()
             .ConstructUsing(src => new(src.Id));
 
-        config.NewConfig<DeleteCurrentUserApiRequest, DeleteUserCommandRequest>()
+        config.NewConfig<DeleteCurrentUserApiRequest, DeleteCurrentUserCommandRequest>()
             .ConstructUsing(src => new(src.CurrentId));
 
         config.NewConfig<UserIdCommandResponse, UserIdApiResponse>()
@@ -100,15 +95,13 @@ internal class UserPresentationMappings : IRegister
                   src.CreatedAtUtc,
                   src.UpdatedAtUtc));
 
-        config.NewConfig<UserDetailsQueryResponse, UserDetailsApiResponse>()
+        config.NewConfig<UserCollectionQueryResponse, UserCollectionApiResponse>()
             .ConstructUsing(src => new(
-                  src.Id,
-                  src.FirstName,
-                  src.LastName,
-                  src.Name,
-                  src.Email,
-                  src.ProfileImageUrl,
-                  src.CreatedAtUtc,
-                  src.UpdatedAtUtc));
+                  src.Users.Adapt<ICollection<UserApiResponse>>(config)!,
+                  src.Page,
+                  src.PageSize,
+                  src.TotalCount,
+                  src.HasNextPage,
+                  src.HasPreviousPage));
     }
 }

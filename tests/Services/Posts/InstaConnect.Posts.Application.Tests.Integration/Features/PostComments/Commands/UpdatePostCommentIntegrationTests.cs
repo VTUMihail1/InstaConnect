@@ -112,7 +112,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentApplicationComma
         var user = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(user, CancellationToken);
 
-        var request = _requestBuilder.WithUserId(user).Build();
+        var request = _requestBuilder.WithUserId(user.Id).Build();
 
         // Assert
         await Sender.ShouldThrowPostCommentForbiddenExceptionAsync(request, CancellationToken);
@@ -167,7 +167,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentApplicationComma
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(User, transformer).Build();
+        var request = _requestBuilder.WithUserId(User.Id, transformer).Build();
 
         // Act
         var response = await Sender.SendAsync(request, CancellationToken);
@@ -226,7 +226,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentApplicationComma
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(User, transformer).Build();
+        var request = _requestBuilder.WithUserId(User.Id, transformer).Build();
 
         // Act
         var response = await Sender.SendAsync(request, CancellationToken);
@@ -285,7 +285,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentApplicationComma
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(User, transformer).Build();
+        var request = _requestBuilder.WithUserId(User.Id, transformer).Build();
 
         // Act
         var response = await Sender.SendAsync(request, CancellationToken);

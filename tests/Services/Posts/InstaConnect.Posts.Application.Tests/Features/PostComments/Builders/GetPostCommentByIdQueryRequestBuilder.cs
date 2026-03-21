@@ -15,9 +15,9 @@ public class GetPostCommentByIdQueryRequestBuilder
         _currentUserId = DataFaker.GetPrefixString(postComment.UserId.Id);
     }
 
-    public GetPostCommentByIdQueryRequestBuilder WithId(Post post, IStringTransformer? transformer = null)
+    public GetPostCommentByIdQueryRequestBuilder WithId(PostId id, IStringTransformer? transformer = null)
     {
-        _id = transformer.TryTransform(post.Id.Id);
+        _id = transformer.TryTransform(id.Id);
 
         return this;
     }
@@ -29,9 +29,9 @@ public class GetPostCommentByIdQueryRequestBuilder
         return this;
     }
 
-    public GetPostCommentByIdQueryRequestBuilder WithCommentId(PostComment postComment, IStringTransformer? transformer = null)
+    public GetPostCommentByIdQueryRequestBuilder WithCommentId(PostCommentId commentId, IStringTransformer? transformer = null)
     {
-        _commentId = transformer.TryTransform(postComment.Id.CommentId);
+        _commentId = transformer.TryTransform(commentId.CommentId);
 
         return this;
     }
@@ -43,9 +43,9 @@ public class GetPostCommentByIdQueryRequestBuilder
         return this;
     }
 
-    public GetPostCommentByIdQueryRequestBuilder WithCurrentUserId(User user, IStringTransformer? transformer = null)
+    public GetPostCommentByIdQueryRequestBuilder WithCurrentUserId(UserId currentUserId, IStringTransformer? transformer = null)
     {
-        _currentUserId = transformer.TryTransform(user.Id.Id);
+        _currentUserId = transformer.TryTransform(currentUserId.Id);
 
         return this;
     }

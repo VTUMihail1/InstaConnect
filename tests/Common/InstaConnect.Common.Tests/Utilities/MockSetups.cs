@@ -7,7 +7,6 @@ namespace InstaConnect.Common.Tests.Utilities;
 public static class MockSetups
 {
     extension<TResponse>(TResponse response)
-        where TResponse : class?
     {
         public void ReturnsResponse(TResponse returnThis)
         {

@@ -166,14 +166,14 @@ public static partial class ServiceCollectionExtensions
         {
             serviceCollection.AddScoped<IEncoder, Encoder>();
 
-            serviceCollection.AddOptions<SessionTokenOptions>()
-                             .BindConfiguration(SessionTokenOptions.SectionName)
+            serviceCollection.AddOptions<AccessTokenOptions>()
+                             .BindConfiguration(AccessTokenOptions.SectionName)
                              .ValidateDataAnnotations()
                              .ValidateOnStart();
 
             var accessTokenOptions = configuration
-                .GetSection(SessionTokenOptions.SectionName)
-                .Get<SessionTokenOptions>()!;
+                .GetSection(AccessTokenOptions.SectionName)
+                .Get<AccessTokenOptions>()!;
 
             serviceCollection.AddAuthentication(opt =>
             {

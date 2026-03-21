@@ -1,4 +1,4 @@
-﻿using InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Delete;
+﻿using InstaConnect.Identity.Application.Features.RefreshTokens.Commands.DeleteCurrent;
 using InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Issue;
 using InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Rotate;
 using InstaConnect.Identity.Presentation.Features.RefreshTokens.Abstractions;
@@ -7,7 +7,7 @@ namespace InstaConnect.Identity.Presentation.Features.RefreshTokens.Controllers.
 
 [ApiVersion(RefreshTokenRoutes.Version1)]
 [Route(RefreshTokenRoutes.Resource)]
-[EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
+[EnableRateLimiting(RateLimiterPolicies.Default)]
 public class RefreshTokenController : ControllerBase
 {
     private readonly IApplicationMapper _mapper;

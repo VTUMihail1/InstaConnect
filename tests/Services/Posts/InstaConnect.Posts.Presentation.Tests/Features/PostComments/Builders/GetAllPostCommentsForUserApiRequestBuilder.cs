@@ -21,9 +21,9 @@ public class GetAllPostCommentsForUserApiRequestBuilder
         _sortTerm = PostCommentDataFaker.GetForUserSortTerm();
     }
 
-    public GetAllPostCommentsForUserApiRequestBuilder WithUserId(User user, IStringTransformer? transformer = null)
+    public GetAllPostCommentsForUserApiRequestBuilder WithUserId(UserId userId, IStringTransformer? transformer = null)
     {
-        _userId = transformer.TryTransform(user.Id.Id);
+        _userId = transformer.TryTransform(userId.Id);
 
         return this;
     }
@@ -35,9 +35,9 @@ public class GetAllPostCommentsForUserApiRequestBuilder
         return this;
     }
 
-    public GetAllPostCommentsForUserApiRequestBuilder WithCurrentUserId(User user, IStringTransformer? transformer = null)
+    public GetAllPostCommentsForUserApiRequestBuilder WithCurrentUserId(UserId currentUserId, IStringTransformer? transformer = null)
     {
-        _currentUserId = transformer.TryTransform(user.Id.Id);
+        _currentUserId = transformer.TryTransform(currentUserId.Id);
 
         return this;
     }

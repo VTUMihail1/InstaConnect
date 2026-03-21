@@ -1,5 +1,4 @@
-﻿using InstaConnect.Identity.Tests.Features.Users.Utilities;
-using InstaConnect.Identity.Tests.Utilities;
+﻿using InstaConnect.Identity.Tests.Utilities;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,7 +12,7 @@ public abstract class BaseUserClaimWebTest : BaseUserClaimTest, IClassFixture<Id
 
     protected IEventHarness EventHarness { get; }
 
-    protected BaseUserClaimWebTest(IdentityWebApplicationFactory webApplicationFactory)
+    protected BaseUserClaimWebTest(IdentityWebApplicationFactory webApplicationFactory) : base(webApplicationFactory.Services.GetPasswordHasher())
     {
         ServiceScope = webApplicationFactory.Services.CreateScope();
         EventHarness = ServiceScope.GetEventHarness();
@@ -22,13 +21,13 @@ public abstract class BaseUserClaimWebTest : BaseUserClaimTest, IClassFixture<Id
     public async Task InitializeAsync()
     {
         await EventHarness.StartAsync(CancellationToken);
-        await ServiceScope.ResetUserDatabase(CancellationToken);
+        await ServiceScope.ResetIdentityDatabase(CancellationToken);
         await OnInitializeAsync();
     }
 
     public async Task DisposeAsync()
     {
-        await ServiceScope.ResetUserDatabase(CancellationToken);
+        await ServiceScope.ResetIdentityDatabase(CancellationToken);
         await EventHarness.StopAsync(CancellationToken);
     }
 

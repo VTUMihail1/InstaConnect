@@ -5,7 +5,7 @@ namespace InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Contr
 
 [ApiVersion(ForgotPasswordTokenRoutes.Version1)]
 [Route(ForgotPasswordTokenRoutes.Resource)]
-[EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
+[EnableRateLimiting(RateLimiterPolicies.Default)]
 public class ForgotPasswordTokenController : ControllerBase
 {
     private readonly IApplicationMapper _mapper;

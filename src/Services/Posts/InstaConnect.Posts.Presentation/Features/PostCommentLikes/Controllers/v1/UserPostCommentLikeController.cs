@@ -4,7 +4,7 @@ namespace InstaConnect.Posts.Presentation.Features.PostCommentLikes.Controllers.
 
 [ApiVersion(PostCommentLikeRoutes.Version1)]
 [Route(PostCommentLikeRoutes.UserResource)]
-[EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
+[EnableRateLimiting(RateLimiterPolicies.Default)]
 public class UserPostCommentLikeController : ControllerBase
 {
     private readonly IApplicationMapper _mapper;

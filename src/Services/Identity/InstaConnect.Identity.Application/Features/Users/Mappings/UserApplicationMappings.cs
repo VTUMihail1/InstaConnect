@@ -31,13 +31,7 @@ public class UserApplicationMappings : IRegister
                                            new(src.CurrentId))));
 
         config.NewConfig<UserCollectionResponse, GetAllUsersQueryResponse>()
-            .ConstructUsing(src => new(
-                  src.Users.Adapt<ICollection<UserQueryResponse>>(config)!,
-                  src.Page,
-                  src.PageSize,
-                  src.TotalCount,
-                  src.HasNextPage,
-                  src.HasPreviousPage));
+            .ConstructUsing(src => new(src.Adapt<UserCollectionQueryResponse>(config)!));
 
         config.NewConfig<GetUserByIdQueryRequest, GetUserByIdQuery>()
             .ConstructUsing(src => new(
@@ -106,7 +100,7 @@ public class UserApplicationMappings : IRegister
 
         config.NewConfig<DeleteCurrentUserCommandRequest, DeleteUserCommand>()
             .ConstructUsing(src => new(
-                                       new(src.Id)));
+                                       new(src.CurrentId)));
 
         config.NewConfig<UserId, UserIdCommandResponse>()
             .ConstructUsing(src => new(src.Id));
@@ -131,5 +125,14 @@ public class UserApplicationMappings : IRegister
                   src.ProfileImage == null ? null : src.ProfileImage!.Url,
                   src.CreatedAtUtc,
                   src.UpdatedAtUtc));
+
+        config.NewConfig<UserCollectionResponse, UserCollectionQueryResponse>()
+            .ConstructUsing(src => new(
+                  src.Users.Adapt<ICollection<UserQueryResponse>>(config)!,
+                  src.Page,
+                  src.PageSize,
+                  src.TotalCount,
+                  src.HasNextPage,
+                  src.HasPreviousPage));
     }
 }

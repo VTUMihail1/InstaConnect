@@ -189,7 +189,7 @@ public class DeletePostCommentFunctionalTests : BasePostCommentPresentationComma
         // Arrange
         var user = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(user, CancellationToken);
-        var request = _requestBuilder.WithUserId(user).Build();
+        var request = _requestBuilder.WithUserId(user.Id).Build();
 
         // Act
         var response = await HttpClient.DeletePostCommentStatusCodeAsync(request, CancellationToken);
@@ -204,7 +204,7 @@ public class DeletePostCommentFunctionalTests : BasePostCommentPresentationComma
         // Arrange
         var user = UserBuilderFactory.Create().Build();
         await ServiceScope.AddUserAsync(user, CancellationToken);
-        var request = _requestBuilder.WithUserId(user).Build();
+        var request = _requestBuilder.WithUserId(user.Id).Build();
 
         // Act
         var response = await HttpClient.DeletePostCommentProblemDetailsAsync(request, CancellationToken);

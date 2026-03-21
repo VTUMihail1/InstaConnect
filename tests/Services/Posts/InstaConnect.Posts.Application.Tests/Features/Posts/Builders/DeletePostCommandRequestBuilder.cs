@@ -13,9 +13,9 @@ public class DeletePostCommandRequestBuilder
         _userId = post.UserId.Id;
     }
 
-    public DeletePostCommandRequestBuilder WithId(Post post, IStringTransformer? transformer = null)
+    public DeletePostCommandRequestBuilder WithId(PostId id, IStringTransformer? transformer = null)
     {
-        _id = transformer.TryTransform(post.Id.Id);
+        _id = transformer.TryTransform(id.Id);
 
         return this;
     }
@@ -27,9 +27,9 @@ public class DeletePostCommandRequestBuilder
         return this;
     }
 
-    public DeletePostCommandRequestBuilder WithUserId(User user, IStringTransformer? transformer = null)
+    public DeletePostCommandRequestBuilder WithUserId(UserId userId, IStringTransformer? transformer = null)
     {
-        _userId = transformer.TryTransform(user.Id.Id);
+        _userId = transformer.TryTransform(userId.Id);
 
         return this;
     }

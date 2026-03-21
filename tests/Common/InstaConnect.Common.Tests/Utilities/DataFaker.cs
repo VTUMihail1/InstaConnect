@@ -7,8 +7,6 @@ using InstaConnect.Common.Domain.Models;
 
 using Microsoft.AspNetCore.Http;
 
-using NSubstitute;
-
 namespace InstaConnect.Common.Tests.Utilities;
 
 public abstract class DataFaker
@@ -17,9 +15,10 @@ public abstract class DataFaker
 
     private static readonly Faker _faker = new();
 
-    public static IFormFile GetFile(string name)
+    public static IFormFile GetFormFile()
     {
-        var formFile = Substitute.For<IFormFile>();
+        var name = _faker.Random.String();
+        var formFile = Mocker.Mock<IFormFile>();
 
         var fileContent = Encoding.UTF8.GetBytes("This is a test file.");
         var stream = new MemoryStream(fileContent)
@@ -27,14 +26,13 @@ public abstract class DataFaker
             Position = 0
         };
 
-        formFile.OpenReadStream().Returns(stream);
-        formFile.Name.Returns(name);
-        formFile.FileName.Returns(name);
-        formFile.ContentType.Returns("text/plain");
-        formFile.Length.Returns(stream.Length);
+        formFile.OpenReadStream().ReturnsResponse(stream);
+        formFile.Name.ReturnsResponse(name);
+        formFile.FileName.ReturnsResponse(name);
+        formFile.ContentType.ReturnsResponse("text/plain");
+        formFile.Length.ReturnsResponse(stream.Length);
 
         return formFile;
-
     }
 
     public static string GetGuid()

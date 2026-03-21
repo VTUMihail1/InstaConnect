@@ -21,7 +21,7 @@ public static class RefreshTokenExceptionErrorMessages
         return result;
     }
 
-    public static string GetInclideDescriptorsNotSupportedMessage(ICollection<IdentityIncludeDescriptor> descriptors)
+    public static string GetIncludeDescriptorsNotSupportedMessage(ICollection<IdentityIncludeDescriptor> descriptors)
     {
         const string Format = "RefreshTokenDescriptors({0}) is not supported";
 

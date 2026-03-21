@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Common.Tests.DataAttributes.Booleans.Base;
-using InstaConnect.Common.Tests.DataAttributes.Booleans.True;
 
 namespace InstaConnect.Common.Tests.DataAttributes.Booleans.False;
 

@@ -18,6 +18,14 @@ public static class ForgotPasswordTokenMongoCollectionExtensions
             await collection.UpdateAsync(session, entity.Id.GetFilter(), entity, cancellationToken);
         }
 
+        public async Task DeleteAsync(
+            IClientSessionHandle? session,
+            ForgotPasswordToken entity,
+            CancellationToken cancellationToken)
+        {
+            await collection.DeleteAsync(session, entity.Id.GetFilter(), cancellationToken);
+        }
+
         public async Task DeleteRangeAsync(
             IClientSessionHandle? session,
             IEnumerable<ForgotPasswordToken> entities,

@@ -29,6 +29,7 @@
     <Using Include="InstaConnect.Identity.Domain.Features.UserClaims.Models.Entities" />
     <Using Include="InstaConnect.Identity.Domain.Features.UserClaims.Models.ValueObjects" />
     <Using Include="InstaConnect.Identity.Domain.Features.UserClaims.Models.Requests" />
+    <Using Include="InstaConnect.Identity.Domain.Features.UserClaims.Models.Responses" />
   </ItemGroup>
 
   <ItemGroup Label="RefreshTokens">

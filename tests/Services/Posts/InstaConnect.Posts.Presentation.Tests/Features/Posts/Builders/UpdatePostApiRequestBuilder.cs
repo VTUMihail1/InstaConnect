@@ -15,9 +15,9 @@ public class UpdatePostApiRequestBuilder
         _content = PostDataFaker.GetContent();
     }
 
-    public UpdatePostApiRequestBuilder WithId(Post post, IStringTransformer? transformer = null)
+    public UpdatePostApiRequestBuilder WithId(PostId id, IStringTransformer? transformer = null)
     {
-        _id = transformer.TryTransform(post.Id.Id);
+        _id = transformer.TryTransform(id.Id);
 
         return this;
     }
@@ -29,9 +29,9 @@ public class UpdatePostApiRequestBuilder
         return this;
     }
 
-    public UpdatePostApiRequestBuilder WithUserId(User user, IStringTransformer? transformer = null)
+    public UpdatePostApiRequestBuilder WithUserId(UserId userId, IStringTransformer? transformer = null)
     {
-        _userId = transformer.TryTransform(user.Id.Id);
+        _userId = transformer.TryTransform(userId.Id);
 
         return this;
     }

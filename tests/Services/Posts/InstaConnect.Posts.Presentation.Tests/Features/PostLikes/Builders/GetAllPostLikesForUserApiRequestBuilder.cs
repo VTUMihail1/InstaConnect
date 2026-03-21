@@ -21,9 +21,9 @@ public class GetAllPostLikesForUserApiRequestBuilder
         _sortTerm = PostLikeDataFaker.GetForUserSortTerm();
     }
 
-    public GetAllPostLikesForUserApiRequestBuilder WithUserId(User user, IStringTransformer? transformer = null)
+    public GetAllPostLikesForUserApiRequestBuilder WithUserId(UserId userId, IStringTransformer? transformer = null)
     {
-        _userId = transformer.TryTransform(user.Id.Id);
+        _userId = transformer.TryTransform(userId.Id);
 
         return this;
     }
@@ -35,9 +35,9 @@ public class GetAllPostLikesForUserApiRequestBuilder
         return this;
     }
 
-    public GetAllPostLikesForUserApiRequestBuilder WithCurrentUserId(User user, IStringTransformer? transformer = null)
+    public GetAllPostLikesForUserApiRequestBuilder WithCurrentUserId(UserId currentUserId, IStringTransformer? transformer = null)
     {
-        _currentUserId = transformer.TryTransform(user.Id.Id);
+        _currentUserId = transformer.TryTransform(currentUserId.Id);
 
         return this;
     }

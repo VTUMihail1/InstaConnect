@@ -11,9 +11,9 @@ public class DeleteUserCommandRequestBuilder
         _id = user.Id.Id;
     }
 
-    public DeleteUserCommandRequestBuilder WithId(User user, IStringTransformer? transformer = null)
+    public DeleteUserCommandRequestBuilder WithId(UserId id, IStringTransformer? transformer = null)
     {
-        _id = transformer.TryTransform(user.Id.Id);
+        _id = transformer.TryTransform(id.Id);
 
         return this;
     }

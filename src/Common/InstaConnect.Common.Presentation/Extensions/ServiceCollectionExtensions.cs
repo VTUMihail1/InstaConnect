@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
 
 using Asp.Versioning;
@@ -33,9 +32,9 @@ public static class ServiceCollectionExtensions
             serviceCollection.AddAuthorizationBuilder()
                 .SetDefaultPolicy(new AuthorizationPolicyBuilder()
                     .RequireAuthenticatedUser()
-                    .RequireClaim(ClaimTypes.NameIdentifier)
+                    .RequireClaim(DefaultClaims.Id)
                     .Build())
-                .AddPolicy(AppPolicies.AdminPolicy, policy => policy.RequireClaim(ApplicationClaims.Admin));
+                .AddPolicy(AuthorizationPolicies.Admin, policy => policy.RequireClaim(ApplicationClaims.Admin.GetName()));
 
             return serviceCollection;
         }
@@ -105,7 +104,7 @@ public static class ServiceCollectionExtensions
                            .AllowAnyHeader()
                            .AllowAnyMethod());
 
-                options.AddPolicy(AppPolicies.CorsPolicy, builder =>
+                options.AddPolicy(CorsPolicies.SpecificOrigins, builder =>
                     builder.WithOrigins(corsOptions.AllowedOrigins.Split(", "))
                            .AllowAnyHeader()
                            .AllowAnyMethod());
@@ -127,7 +126,7 @@ public static class ServiceCollectionExtensions
             {
                 options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
 
-                options.AddPolicy(AppPolicies.RateLimiterPolicy,
+                options.AddPolicy(RateLimiterPolicies.Default,
                     httpContext => RateLimitPartition.GetFixedWindowLimiter(
                         partitionKey: httpContext.Connection.RemoteIpAddress?.ToString(),
                         factory: _ => new FixedWindowRateLimiterOptions

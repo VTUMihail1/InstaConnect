@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Extensions;
+using InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Extensions;
 
 using MongoDB.Driver;
 
@@ -49,6 +50,13 @@ internal class EmailConfirmationTokenCommandRepository : IEmailConfirmationToken
         await _context
             .EmailConfirmationTokens
             .AddRangeAsync(_context.ClientSessionHandle, entities, cancellationToken);
+    }
+
+    public async Task DeleteAsync(EmailConfirmationToken entity, CancellationToken cancellationToken)
+    {
+        await _context
+            .EmailConfirmationTokens
+            .DeleteAsync(_context.ClientSessionHandle, entity, cancellationToken);
     }
 
     public async Task DeleteRangeAsync(IEnumerable<EmailConfirmationToken> entities, CancellationToken cancellationToken)
