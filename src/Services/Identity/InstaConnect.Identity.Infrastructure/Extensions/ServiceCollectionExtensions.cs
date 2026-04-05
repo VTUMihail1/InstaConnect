@@ -1,10 +1,12 @@
 ﻿using System.Reflection;
 
+using InstaConnect.Identity.Domain.Helpers;
 using InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Extensions;
 using InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Extensions;
 using InstaConnect.Identity.Infrastructure.Features.RefreshTokens.Extensions;
 using InstaConnect.Identity.Infrastructure.Features.UserClaims.Extensions;
 using InstaConnect.Identity.Infrastructure.Features.Users.Extensions;
+using InstaConnect.Identity.Infrastructure.Helpers;
 
 namespace InstaConnect.Identity.Infrastructure.Extensions;
 
@@ -17,6 +19,8 @@ public static class ServiceCollectionExtensions
             IWebHostEnvironment webHostEnvironment,
             Assembly presentationAssembly)
         {
+            serviceCollection.AddSingleton<IPasswordHasher, PasswordHasher>();
+
             serviceCollection
                 .AddUserServices()
                 .AddUserClaimServices()
@@ -28,6 +32,7 @@ public static class ServiceCollectionExtensions
                 .AddObservability(configuration, webHostEnvironment)
                 .AddMapper(IdentityInfrastructureReference.Assembly)
                 .AddServicesWithMatchingInterfaces(IdentityInfrastructureReference.Assembly)
+                .AddRedisCaching(configuration)
                 .AddMongoDbContext()
                 .AddUnitOfWork()
                 .AddRabbitMQ(configuration, presentationAssembly)

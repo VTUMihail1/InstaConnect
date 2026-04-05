@@ -36,7 +36,9 @@ public static class UserSetups
             UserId id,
             CancellationToken cancellationToken)
         {
-            return await serviceScope.GetUserCommandRepository().GetByIdAsync(id, cancellationToken);
+            var include = serviceScope.GetUserIncludeBuilderFactory().Create().WithEmailConfirmationTokens().WithForgotPasswordTokens().Build();
+
+            return await serviceScope.GetUserCommandRepository().GetByIdAsync(id, include, cancellationToken);
         }
 
         public async Task AddUserAsync(
@@ -44,6 +46,13 @@ public static class UserSetups
             CancellationToken cancellationToken)
         {
             await serviceScope.GetUserCommandRepository().AddAsync(user, cancellationToken);
+        }
+
+        public async Task UpdateUserAsync(
+            User user,
+            CancellationToken cancellationToken)
+        {
+            await serviceScope.GetUserCommandRepository().UpdateAsync(user, cancellationToken);
         }
 
         public async Task AddUserRangeAsync(

@@ -1,19 +1,31 @@
-﻿namespace InstaConnect.Identity.Domain.Features.UserClaims.Helpers;
+﻿using InstaConnect.Common.Events.Abstractions;
+using InstaConnect.Identity.Events.Features.UserClaims;
+
+namespace InstaConnect.Identity.Domain.Features.UserClaims.Helpers;
 
 internal class UserClaimCommandService : IUserClaimCommandService
 {
+    private readonly IApplicationMapper _mapper;
+    private readonly IEventPublisher _eventPublisher;
     private readonly IUserClaimFactory _claimFactory;
     private readonly IUserCommandRepository _repository;
     private readonly IUserClaimCommandRepository _claimRepository;
+    private readonly IUserClaimIncludeBuilderFactory _claimIncludeBuilderFactory;
 
     public UserClaimCommandService(
+        IApplicationMapper mapper,
+        IEventPublisher eventPublisher,
         IUserClaimFactory claimFactory,
         IUserCommandRepository repository,
-        IUserClaimCommandRepository claimRepository)
+        IUserClaimCommandRepository claimRepository,
+        IUserClaimIncludeBuilderFactory claimIncludeBuilderFactory)
     {
+        _mapper = mapper;
+        _eventPublisher = eventPublisher;
         _claimFactory = claimFactory;
         _repository = repository;
         _claimRepository = claimRepository;
+        _claimIncludeBuilderFactory = claimIncludeBuilderFactory;
     }
 
     public async Task<UserClaimId> AddAsync(AddUserClaimCommand command, CancellationToken cancellationToken)
@@ -35,6 +47,9 @@ internal class UserClaimCommandService : IUserClaimCommandService
 
         await _claimRepository.AddAsync(newUserClaim, cancellationToken);
 
+        await _eventPublisher.PublishAsync(
+            _mapper.Map<UserClaimAddedEventRequest>(newUserClaim), cancellationToken);
+
         return newUserClaim.Id;
     }
 
@@ -47,7 +62,8 @@ internal class UserClaimCommandService : IUserClaimCommandService
             throw new UserNotFoundException(command.Id.Id);
         }
 
-        var userClaim = await _claimRepository.GetByIdAsync(command.Id, cancellationToken);
+        var claimInclude = _claimIncludeBuilderFactory.Create().WithUser().Build();
+        var userClaim = await _claimRepository.GetByIdAsync(command.Id, claimInclude, cancellationToken);
 
         if (userClaim == null)
         {
@@ -55,5 +71,8 @@ internal class UserClaimCommandService : IUserClaimCommandService
         }
 
         await _claimRepository.DeleteAsync(userClaim, cancellationToken);
+
+        await _eventPublisher.PublishAsync(
+            _mapper.Map<UserClaimDeletedEventRequest>(userClaim), cancellationToken);
     }
 }

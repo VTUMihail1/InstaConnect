@@ -180,6 +180,7 @@ public static class UserEquals
                    user.Name.Matches(request.Name) &&
                    user.Email.Matches(request.Email) &&
                    passwordHasher.IsMatch(request.Password, user.PasswordHash) &&
+                   user.IsEmailNotConfirmed &&
                    user.ProfileImage.Matches(request.ProfileImage?.GetUrl());
         }
 
@@ -190,7 +191,18 @@ public static class UserEquals
                    user.LastName == request.LastName &&
                    user.Name.Matches(request.Name) &&
                    user.Email.Matches(request.Email) &&
-                   user.ProfileImage.Matches(request.ProfileImage?.GetUrl());
+                   (request.ProfileImage == null ||
+                   user.ProfileImage.Matches(request.ProfileImage.GetUrl()));
+        }
+
+        public bool Matches(VerifyEmailConfirmationTokenCommandRequest request)
+        {
+            return user.IsEmailConfirmed;
+        }
+
+        public bool Matches(VerifyForgotPasswordTokenCommandRequest request, IPasswordHasher passwordHasher)
+        {
+            return passwordHasher.IsMatch(request.Password, user.PasswordHash);
         }
 
         public bool MatchesFilter(GetAllUsersQueryRequest request)

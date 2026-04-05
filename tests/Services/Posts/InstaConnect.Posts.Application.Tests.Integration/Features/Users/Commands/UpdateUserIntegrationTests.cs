@@ -113,7 +113,7 @@ public class UpdateUserIntegrationTests : BaseUserApplicationCommandIntegrationT
     }
 
     [Theory]
-    [UserCreatedAtUtcEmptyWithMessageData]
+    [UserUpdatedAtUtcEmptyWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenUpdatedAtUtcIsInvalid(
         IDateTimeOffsetTransformer transformer, IDateTimeOffsetMessageTransformer messageTransformer)
     {

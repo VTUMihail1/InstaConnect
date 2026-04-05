@@ -101,6 +101,9 @@ internal class UserCommandService : IUserCommandService
             await _emailConfirmationTokenRepository.DeleteRangeAsync(user.EmailConfirmationTokens, cancellationToken);
 
             user.UpdateEmail(command.Email);
+
+            await _eventPublisher.PublishAsync(
+                _mapper.Map<ICollection<EmailConfirmationTokenDeletedEventRequest>>(user), cancellationToken);
         }
 
         var nameIsNotUnique = !await _repository.IsNameUniqueAsync(command.Name, cancellationToken);
@@ -116,6 +119,7 @@ internal class UserCommandService : IUserCommandService
         }
 
         user.Update(command.FirstName, command.LastName, command.Name, _dateTimeProvider.GetOffsetUtcNow());
+        await _repository.UpdateAsync(user, cancellationToken);
 
         await _eventPublisher.PublishAsync(
             _mapper.Map<UserUpdatedEventRequest>(user), cancellationToken);

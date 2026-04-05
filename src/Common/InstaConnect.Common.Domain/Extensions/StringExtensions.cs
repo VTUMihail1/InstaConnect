@@ -75,6 +75,11 @@ public static class StringExtensions
         {
             return string.IsNullOrEmpty(str) || string.IsNullOrWhiteSpace(str);
         }
+
+        public bool IsNotNullOrEmptyOrWhiteSpace()
+        {
+            return !IsNullOrEmptyOrWhiteSpace(str);
+        }
     }
 }
 

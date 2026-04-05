@@ -29,12 +29,25 @@ public static class CommonEquals
         }
     }
 
-    extension<T>(ICollection<T> expected)
+    extension<TExpected>(ICollection<TExpected> expected)
     {
-        public bool MatchesCollection(ICollection<T> actual)
+        public bool MatchesCollection<TEntity, TKey>(
+        ICollection<TEntity> entities,
+        Func<TExpected, TKey> expectedKey,
+        Func<TEntity, TKey> entityKey,
+        Func<TExpected, TEntity, bool> matcher)
+        where TEntity : IEntity
+        where TKey : notnull
         {
-            return expected.Count == actual.Count &&
-                   expected.All(actual.Contains);
+            var entitiesByKey = entities
+                .OrderBy(a => a.CreatedAtUtc)
+                .ToDictionary(entityKey);
+
+            return expected.Count == entitiesByKey.Count &&
+                   expected.Any() &&
+                   expected.All(e =>
+                   entitiesByKey.TryGetValue(expectedKey(e), out var a) &&
+                   matcher(e, a));
         }
     }
 }

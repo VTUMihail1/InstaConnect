@@ -71,6 +71,7 @@ public class AddUserCommandRequestBuilder
     public AddUserCommandRequestBuilder WithPassword(IStringTransformer transformer)
     {
         _password = transformer.Transform(_password);
+        _confirmPassword = _password;
 
         return this;
     }

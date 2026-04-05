@@ -51,13 +51,13 @@ public class User : IEntityWithId<UserId>
 
     public Image? ProfileImage { get; private set; }
 
-    public ICollection<Post> Posts { get; }
+    public ICollection<Post> Posts { get; private set; }
 
-    public ICollection<PostLike> PostLikes { get; }
+    public ICollection<PostLike> PostLikes { get; private set; }
 
-    public ICollection<PostComment> PostComments { get; }
+    public ICollection<PostComment> PostComments { get; private set; }
 
-    public ICollection<PostCommentLike> PostCommentLikes { get; }
+    public ICollection<PostCommentLike> PostCommentLikes { get; private set; }
 
     public DateTimeOffset CreatedAtUtc { get; }
 

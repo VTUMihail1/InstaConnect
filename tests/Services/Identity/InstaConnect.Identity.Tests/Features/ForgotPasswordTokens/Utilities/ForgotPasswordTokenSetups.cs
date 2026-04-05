@@ -53,6 +53,13 @@ public static class ForgotPasswordTokenSetups
             await serviceScope.GetForgotPasswordTokenCommandRepository().AddRangeAsync(forgotPasswordTokens, cancellationToken);
         }
 
+        public async Task UpdateForgotPasswordTokenAsync(
+            ForgotPasswordToken forgotPasswordToken,
+            CancellationToken cancellationToken)
+        {
+            await serviceScope.GetForgotPasswordTokenCommandRepository().UpdateAsync(forgotPasswordToken, cancellationToken);
+        }
+
         public async Task DeleteForgotPasswordTokenAsync(
             ForgotPasswordToken forgotPasswordToken,
             CancellationToken cancellationToken)

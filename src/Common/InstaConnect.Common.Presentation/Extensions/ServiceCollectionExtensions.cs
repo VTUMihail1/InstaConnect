@@ -5,6 +5,7 @@ using Asp.Versioning;
 
 using InstaConnect.Common.Domain.Extensions;
 using InstaConnect.Common.Domain.Utilities;
+using InstaConnect.Common.Events.Models;
 using InstaConnect.Common.Presentation.Abstractions;
 using InstaConnect.Common.Presentation.Binders.FromClaim;
 using InstaConnect.Common.Presentation.Binders.FromCookie;

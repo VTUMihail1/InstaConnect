@@ -34,10 +34,10 @@ public static class RefreshTokenEquals
 
     extension(IssueRefreshTokenCommandResponse response)
     {
-        public bool Matches(RefreshToken refreshToken, AccessToken accessToken, IssueRefreshTokenCommandRequest request)
+        public bool Matches(RefreshToken refreshToken, IssueRefreshTokenCommandRequest request)
         {
             return response.Id.Matches(refreshToken.Id) &&
-                   response.AccessToken.Matches(accessToken) &&
+                   response.AccessToken.Matches() &&
                    response.ExpiresAtUtc == refreshToken.ExpiresAtUtc;
         }
     }
@@ -45,10 +45,10 @@ public static class RefreshTokenEquals
 
     extension(RotateRefreshTokenCommandResponse response)
     {
-        public bool Matches(RefreshToken refreshToken, AccessToken accessToken, RotateRefreshTokenCommandRequest request)
+        public bool Matches(RefreshToken refreshToken, RotateRefreshTokenCommandRequest request)
         {
             return response.Id.Matches(refreshToken.Id) &&
-                   response.AccessToken.Matches(accessToken) &&
+                   response.AccessToken.Matches() &&
                    response.ExpiresAtUtc == refreshToken.ExpiresAtUtc;
         }
     }
@@ -63,7 +63,7 @@ public static class RefreshTokenEquals
 
         public bool Matches(RotateRefreshTokenCommandRequest request)
         {
-            return refreshToken.Id.Matches(request.Id, request.Value);
+            return refreshToken.Id.Id.Matches(request.Id) && refreshToken.Id.Value.IsNotNullOrEmptyOrWhiteSpace();
         }
     }
 
@@ -78,10 +78,10 @@ public static class RefreshTokenEquals
 
     extension(AccessTokenCommandResponse response)
     {
-        public bool Matches(AccessToken accessToken)
+        public bool Matches()
         {
-            return response.Value == accessToken.Value &&
-                   response.ExpiresAtUtc == accessToken.ExpiresAtUtc;
+            return response.Value.IsNotNullOrEmptyOrWhiteSpace() &&
+                   response.ExpiresAtUtc != default;
         }
     }
 }

@@ -17,6 +17,16 @@ public static class ForgotPasswordTokenEventHarnessAssertions
                 cancellationToken);
         }
 
+        public async Task ShouldHavePublishedAddedAsync(
+            ICollection<ForgotPasswordToken> entities,
+            CancellationToken cancellationToken)
+        {
+            foreach (var entity in entities)
+            {
+                await eventHarness.ShouldHavePublishedAddedAsync(entity, cancellationToken);
+            }
+        }
+
         public async Task ShouldHavePublishedDeletedAsync(
             ForgotPasswordToken entity,
             CancellationToken cancellationToken)
@@ -24,6 +34,16 @@ public static class ForgotPasswordTokenEventHarnessAssertions
             await eventHarness.ShouldHavePublishedAsync<ForgotPasswordTokenDeletedEventRequest>(
                 p => p.Matches(entity),
                 cancellationToken);
+        }
+
+        public async Task ShouldHavePublishedDeletedAsync(
+            ICollection<ForgotPasswordToken> entities,
+            CancellationToken cancellationToken)
+        {
+            foreach (var entity in entities)
+            {
+                await eventHarness.ShouldHavePublishedDeletedAsync(entity, cancellationToken);
+            }
         }
     }
 }

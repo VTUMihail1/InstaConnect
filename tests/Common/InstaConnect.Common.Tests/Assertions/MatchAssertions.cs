@@ -43,5 +43,15 @@ public static class MatchAssertions
         {
             obj.Should().Contain(predicate);
         }
+
+        public void ShouldBeEmpty()
+        {
+            obj.Should().BeEmpty();
+        }
+
+        public void ShouldNotBeEmpty()
+        {
+            obj.Should().NotBeEmpty();
+        }
     }
 }

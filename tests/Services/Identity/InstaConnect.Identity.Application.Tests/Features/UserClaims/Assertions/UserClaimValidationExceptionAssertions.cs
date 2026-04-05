@@ -1,5 +1,5 @@
 ﻿using InstaConnect.Common.Application.Abstractions;
-using InstaConnect.Common.Domain.Utilities;
+using InstaConnect.Common.Events.Models;
 
 namespace InstaConnect.Identity.Application.Tests.Features.UserClaims.Assertions;
 

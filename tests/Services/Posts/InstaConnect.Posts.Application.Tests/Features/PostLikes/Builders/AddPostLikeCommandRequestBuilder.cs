@@ -27,9 +27,9 @@ public class AddPostLikeCommandRequestBuilder
         return this;
     }
 
-    public AddPostLikeCommandRequestBuilder WithUserId(User userId, IStringTransformer? transformer = null)
+    public AddPostLikeCommandRequestBuilder WithUserId(UserId userId, IStringTransformer? transformer = null)
     {
-        _userId = transformer.TryTransform(userId.Id.Id);
+        _userId = transformer.TryTransform(userId.Id);
 
         return this;
     }

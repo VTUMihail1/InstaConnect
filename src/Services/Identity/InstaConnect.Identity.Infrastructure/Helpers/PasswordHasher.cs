@@ -2,7 +2,7 @@
 
 namespace InstaConnect.Identity.Infrastructure.Helpers;
 
-internal class PasswordHasher : IPasswordHasher
+public class PasswordHasher : IPasswordHasher
 {
     public string Hash(string password)
     {

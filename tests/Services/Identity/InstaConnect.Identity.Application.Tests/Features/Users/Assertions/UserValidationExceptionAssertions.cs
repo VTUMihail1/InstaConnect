@@ -138,6 +138,30 @@ public static class UserValidationExceptionAssertions
                 cancellationToken);
         }
 
+        public async Task ShouldThrowInvalidValidationExceptionForPasswordAsync(
+            IStringMessageTransformer messageTransformer,
+            AddUserCommandRequest request,
+            CancellationToken cancellationToken)
+        {
+            await sender.ShouldThrowInvalidValidationExceptionAsync<AddUserCommandRequest, string, AddUserCommandResponse>(
+                p => p.Password,
+                messageTransformer,
+                request,
+                cancellationToken);
+        }
+
+        public async Task ShouldThrowInvalidValidationExceptionForConfirmPasswordAsync(
+            IStringMessageTransformer messageTransformer,
+            AddUserCommandRequest request,
+            CancellationToken cancellationToken)
+        {
+            await sender.ShouldThrowInvalidValidationExceptionAsync<AddUserCommandRequest, string, AddUserCommandResponse>(
+                p => p.ConfirmPassword,
+                messageTransformer,
+                request,
+                cancellationToken);
+        }
+
         public async Task ShouldThrowInvalidValidationExceptionForIdAsync(
             IStringMessageTransformer messageTransformer,
             GetUserByIdQueryRequest request,

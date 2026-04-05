@@ -12,7 +12,7 @@ public abstract class BaseRefreshTokenWebTest : BaseRefreshTokenTest, IClassFixt
 
     protected IEventHarness EventHarness { get; }
 
-    protected BaseRefreshTokenWebTest(IdentityWebApplicationFactory webApplicationFactory) : base(webApplicationFactory.Services.GetPasswordHasher(), webApplicationFactory.Services.GetAccessTokenGenerator())
+    protected BaseRefreshTokenWebTest(IdentityWebApplicationFactory webApplicationFactory) : base(webApplicationFactory.Services.GetPasswordHasher())
     {
         ServiceScope = webApplicationFactory.Services.CreateScope();
         EventHarness = ServiceScope.GetEventHarness();

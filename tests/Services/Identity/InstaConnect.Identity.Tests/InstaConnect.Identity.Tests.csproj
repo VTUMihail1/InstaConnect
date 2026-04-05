@@ -25,6 +25,7 @@
     <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.Base" />
     <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.DifferentCase" />
     <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.Empty" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.NotEqual" />
     <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.TooShort" />
     <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.TooLong" />
     <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.Null" />

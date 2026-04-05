@@ -36,7 +36,9 @@ public static class RefreshTokenSetups
             RefreshTokenId id,
             CancellationToken cancellationToken)
         {
-            return await serviceScope.GetRefreshTokenCommandRepository().GetByIdAsync(id, cancellationToken);
+            var refreshTokenInclude = serviceScope.GetRefreshTokenIncludeBuilderFactory().Create().WithUser().Build();
+
+            return await serviceScope.GetRefreshTokenCommandRepository().GetByIdAsync(id, refreshTokenInclude, cancellationToken);
         }
 
         public async Task AddRefreshTokenAsync(
@@ -51,6 +53,13 @@ public static class RefreshTokenSetups
             CancellationToken cancellationToken)
         {
             await serviceScope.GetRefreshTokenCommandRepository().AddRangeAsync(refreshTokens, cancellationToken);
+        }
+
+        public async Task UpdateRefreshTokenAsync(
+            RefreshToken refreshToken,
+            CancellationToken cancellationToken)
+        {
+            await serviceScope.GetRefreshTokenCommandRepository().UpdateAsync(refreshToken, cancellationToken);
         }
 
         public async Task DeleteRefreshTokenAsync(

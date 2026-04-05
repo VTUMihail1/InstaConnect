@@ -1,4 +1,5 @@
-﻿using InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Extensions;
+﻿using InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Extensions;
+using InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Extensions;
 
 using MongoDB.Driver;
 
@@ -37,6 +38,17 @@ internal class ForgotPasswordTokenCommandRepository : IForgotPasswordTokenComman
         return await GetByIdAsync(id, null, cancellationToken);
     }
 
+    public async Task<bool> ExistsByIdAsync(
+        ForgotPasswordTokenId id,
+        CancellationToken cancellationToken)
+    {
+        return await _context
+            .ForgotPasswordTokens
+            .AggregateWithCaseInsensitiveCollation()
+            .Match(id)
+            .AnyAsync(cancellationToken);
+    }
+
     public async Task AddAsync(ForgotPasswordToken entity, CancellationToken cancellationToken)
     {
         await _context
@@ -49,6 +61,13 @@ internal class ForgotPasswordTokenCommandRepository : IForgotPasswordTokenComman
         await _context
             .ForgotPasswordTokens
             .AddRangeAsync(_context.ClientSessionHandle, entities, cancellationToken);
+    }
+
+    public async Task UpdateAsync(ForgotPasswordToken entity, CancellationToken cancellationToken)
+    {
+        await _context
+            .ForgotPasswordTokens
+            .UpdateAsync(_context.ClientSessionHandle, entity, cancellationToken);
     }
 
     public async Task DeleteAsync(ForgotPasswordToken entity, CancellationToken cancellationToken)

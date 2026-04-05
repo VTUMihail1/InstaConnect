@@ -5,6 +5,7 @@ using InstaConnect.Identity.Application.Features.Users.Commands.UpdateCurrent;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetAll;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetById;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentById;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentDetailsById;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetDetailsById;
 
 namespace InstaConnect.Identity.Presentation.Features.Users.Controllers.v1;
@@ -46,14 +47,14 @@ public class UserController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<GetCurrentUserByIdApiResponse>> GetCurrentDetailsByIdAsync(
+    public async Task<ActionResult<GetCurrentUserDetailsByIdApiResponse>> GetCurrentDetailsByIdAsync(
         GetCurrentUserDetailsByIdApiRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _mapper.Map<GetCurrentUserByIdQueryRequest>(request);
+        var queryRequest = _mapper.Map<GetCurrentUserDetailsByIdQueryRequest>(request);
         var queryResponse = await _sender.SendAsync(queryRequest, cancellationToken);
 
-        var response = _mapper.Map<GetCurrentUserByIdApiResponse>(queryResponse);
+        var response = _mapper.Map<GetCurrentUserDetailsByIdApiResponse>(queryResponse);
 
         return Ok(response);
     }

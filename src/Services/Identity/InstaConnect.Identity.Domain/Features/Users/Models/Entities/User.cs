@@ -56,7 +56,7 @@ public class User : IEntityWithId<UserId>
         Image? profileImage,
         DateTimeOffset createdAtUtc,
         DateTimeOffset updatedAtUtc,
-        ICollection<UserClaim> claims,
+        ICollection<UserClaim> userClaims,
         ICollection<RefreshToken> refreshTokens,
         ICollection<ForgotPasswordToken> forgotPasswordTokens,
         ICollection<EmailConfirmationToken> emailConfirmationTokens)
@@ -71,7 +71,7 @@ public class User : IEntityWithId<UserId>
         ProfileImage = profileImage;
         CreatedAtUtc = createdAtUtc;
         UpdatedAtUtc = updatedAtUtc;
-        UserClaims = claims;
+        UserClaims = userClaims;
         RefreshTokens = refreshTokens;
         ForgotPasswordTokens = forgotPasswordTokens;
         EmailConfirmationTokens = emailConfirmationTokens;
@@ -93,13 +93,13 @@ public class User : IEntityWithId<UserId>
 
     public Image? ProfileImage { get; private set; }
 
-    public ICollection<UserClaim> UserClaims { get; }
+    public ICollection<UserClaim> UserClaims { get; private set; }
 
-    public ICollection<RefreshToken> RefreshTokens { get; }
+    public ICollection<RefreshToken> RefreshTokens { get; private set; }
 
-    public ICollection<EmailConfirmationToken> EmailConfirmationTokens { get; }
+    public ICollection<EmailConfirmationToken> EmailConfirmationTokens { get; private set; }
 
-    public ICollection<ForgotPasswordToken> ForgotPasswordTokens { get; }
+    public ICollection<ForgotPasswordToken> ForgotPasswordTokens { get; private set; }
 
     public DateTimeOffset CreatedAtUtc { get; }
 

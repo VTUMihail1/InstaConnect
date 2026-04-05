@@ -36,7 +36,9 @@ public static class UserClaimSetups
             UserClaimId id,
             CancellationToken cancellationToken)
         {
-            return await serviceScope.GetUserClaimCommandRepository().GetByIdAsync(id, cancellationToken);
+            var claimInclude = serviceScope.GetUserClaimIncludeBuilderFactory().Create().WithUser().Build();
+
+            return await serviceScope.GetUserClaimCommandRepository().GetByIdAsync(id, claimInclude, cancellationToken);
         }
 
         public async Task AddUserClaimAsync(

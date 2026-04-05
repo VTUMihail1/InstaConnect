@@ -1,4 +1,5 @@
-﻿using InstaConnect.Identity.Infrastructure.Extensions;
+﻿using InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Options;
+using InstaConnect.Identity.Infrastructure.Extensions;
 
 using MongoDB.Bson.Serialization;
 
@@ -10,6 +11,12 @@ internal static class ServiceCollectionExtensions
     {
         internal IServiceCollection AddRefreshTokenServices()
         {
+            serviceCollection
+                .AddOptions<RefreshTokenOptions>()
+                .BindConfiguration(RefreshTokenOptions.SectionName)
+                .ValidateDataAnnotations()
+                .ValidateOnStart();
+
             serviceCollection.AddImplementationsOf<IRefreshTokenIncluder>(IdentityInfrastructureReference.Assembly);
 
             BsonClassMap.TryRegisterClassMap<RefreshToken>(cm =>
@@ -17,6 +24,7 @@ internal static class ServiceCollectionExtensions
                 cm.MapIdMember(c => c.Id);
 
                 cm.MapMember(c => c.Id);
+                cm.MapMember(c => c.ExpiresAtUtc);
                 cm.MapMember(c => c.CreatedAtUtc);
 
                 cm.MapMemberWithoutSerialization(c => c.User);

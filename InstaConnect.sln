@@ -130,6 +130,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Identity.Appli
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Identity.Presentation.Tests", "tests\Services\Identity\InstaConnect.Identity.Presentation.Tests\InstaConnect.Identity.Presentation.Tests.csproj", "{0FEBA040-9034-483D-8419-A8F44F77F531}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Identity.Application.Tests.Unit", "tests\Services\Identity\InstaConnect.Identity.Application.Tests.Unit\InstaConnect.Identity.Application.Tests.Unit.csproj", "{23F549D0-AF42-4F3C-BBF3-7BC0B27E78EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Identity.Presentation.Tests.Unit", "tests\Services\Identity\InstaConnect.Identity.Presentation.Tests.Unit\InstaConnect.Identity.Presentation.Tests.Unit.csproj", "{289F88A9-769E-4E43-9F3C-4B51345675B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Identity.Application.Tests.Integration", "tests\Services\Identity\InstaConnect.Identity.Application.Tests.Integration\InstaConnect.Identity.Application.Tests.Integration.csproj", "{47671C75-87E5-4FBA-A99B-93A6C1BDD006}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -312,6 +318,18 @@ Global
 		{0FEBA040-9034-483D-8419-A8F44F77F531}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FEBA040-9034-483D-8419-A8F44F77F531}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FEBA040-9034-483D-8419-A8F44F77F531}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23F549D0-AF42-4F3C-BBF3-7BC0B27E78EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23F549D0-AF42-4F3C-BBF3-7BC0B27E78EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23F549D0-AF42-4F3C-BBF3-7BC0B27E78EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23F549D0-AF42-4F3C-BBF3-7BC0B27E78EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{289F88A9-769E-4E43-9F3C-4B51345675B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{289F88A9-769E-4E43-9F3C-4B51345675B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{289F88A9-769E-4E43-9F3C-4B51345675B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{289F88A9-769E-4E43-9F3C-4B51345675B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47671C75-87E5-4FBA-A99B-93A6C1BDD006}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47671C75-87E5-4FBA-A99B-93A6C1BDD006}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47671C75-87E5-4FBA-A99B-93A6C1BDD006}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47671C75-87E5-4FBA-A99B-93A6C1BDD006}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -374,6 +392,9 @@ Global
 		{1CFBBA67-409C-42CF-9DB3-7B2B779F5395} = {26B903EE-D354-4E26-8785-325AEBD06FC4}
 		{ABDE9F31-BAC8-40ED-98AA-13EB39F7130F} = {26B903EE-D354-4E26-8785-325AEBD06FC4}
 		{0FEBA040-9034-483D-8419-A8F44F77F531} = {26B903EE-D354-4E26-8785-325AEBD06FC4}
+		{23F549D0-AF42-4F3C-BBF3-7BC0B27E78EC} = {26B903EE-D354-4E26-8785-325AEBD06FC4}
+		{289F88A9-769E-4E43-9F3C-4B51345675B0} = {26B903EE-D354-4E26-8785-325AEBD06FC4}
+		{47671C75-87E5-4FBA-A99B-93A6C1BDD006} = {26B903EE-D354-4E26-8785-325AEBD06FC4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {74CDCE11-9171-4345-A1A8-63E51F48297C}

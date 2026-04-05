@@ -4,28 +4,30 @@ public static class RefreshTokenMapper
 {
     extension(RefreshToken refreshToken)
     {
+        private AccessToken ToAccessToken()
+        {
+            return new(refreshToken.Id.Value, refreshToken.ExpiresAtUtc);
+        }
         internal RefreshTokenId ToIdResponse()
         {
             return refreshToken.Id;
         }
 
-        internal SessionToken ToSessionTokenResponse(AccessToken accessToken)
+        internal SessionToken ToSessionTokenResponse()
         {
-            return new(refreshToken.Id, accessToken, refreshToken.ExpiresAtUtc);
+            return new(refreshToken.Id, refreshToken.ToAccessToken(), refreshToken.ExpiresAtUtc);
         }
 
         public SessionToken ToResponse(
-            IssueRefreshTokenCommandRequest request,
-            AccessToken accessToken)
+            IssueRefreshTokenCommandRequest request)
         {
-            return refreshToken.ToSessionTokenResponse(accessToken);
+            return refreshToken.ToSessionTokenResponse();
         }
 
         public SessionToken ToResponse(
-            RotateRefreshTokenCommandRequest request,
-            AccessToken accessToken)
+            RotateRefreshTokenCommandRequest request)
         {
-            return refreshToken.ToSessionTokenResponse(accessToken);
+            return refreshToken.ToSessionTokenResponse();
         }
     }
 }

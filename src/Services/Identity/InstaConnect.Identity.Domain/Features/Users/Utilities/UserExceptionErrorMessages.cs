@@ -40,6 +40,13 @@ public static class UserExceptionErrorMessages
         return Format.FormatCurrentCulture(id.Id);
     }
 
+    public static string GetNameEmailAlreadyConfirmedMessage(Name name)
+    {
+        const string Format = "User(name: {0}) already confirmed";
+
+        return Format.FormatCurrentCulture(name.Value);
+    }
+
     public static string GetEmailNotConfirmedMessage(UserId id)
     {
         const string Format = "User(id: {0}) not confirmed";

@@ -95,9 +95,9 @@ internal class RefreshTokenCommandService : IRefreshTokenCommandService
 
     public async Task DeleteAsync(DeleteRefreshTokenCommand command, CancellationToken cancellationToken)
     {
-        var userExists = await _repository.ExistsByIdAsync(command.Id.Id, cancellationToken);
+        var userNotExists = !await _repository.ExistsByIdAsync(command.Id.Id, cancellationToken);
 
-        if (userExists)
+        if (userNotExists)
         {
             throw new UserNotFoundException(command.Id.Id);
         }

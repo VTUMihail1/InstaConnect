@@ -40,7 +40,7 @@ internal class UserClaimQueryRepository : IUserClaimQueryRepository
             .AggregateWithCaseInsensitiveCollation()
             .Includes(_claimIncluderFactory, include)
             .Match(filter)
-            .ProjectToFullResponse(current)
+            .ProjectToResponseWithoutUser(current)
             .Sort(_sortOrdererFactory, _claimSortTermerFactory, sorting)
             .Paginate(_paginator, pagination)
             .ToListAsync(cancellationToken);

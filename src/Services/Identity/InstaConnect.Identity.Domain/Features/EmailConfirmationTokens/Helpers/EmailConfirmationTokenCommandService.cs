@@ -39,6 +39,11 @@ internal class EmailConfirmationTokenCommandService : IEmailConfirmationTokenCom
             throw new UserNameNotFoundException(command.Name);
         }
 
+        if (user.IsEmailConfirmed)
+        {
+            throw new UserNameEmailAlreadyConfirmedException(command.Name);
+        }
+
         var newEmailConfirmationToken = _emailConfirmationTokenFactory.Create(user.Id).AddUser(user);
         await _emailConfirmationTokenRepository.AddAsync(newEmailConfirmationToken, cancellationToken);
 

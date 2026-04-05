@@ -3,6 +3,7 @@ using System.Net.Http.Json;
 
 using InstaConnect.Common.Domain.Extensions;
 using InstaConnect.Common.Domain.Utilities;
+using InstaConnect.Common.Events.Models;
 using InstaConnect.Common.Presentation.Models;
 
 namespace InstaConnect.Common.Presentation.Tests.Utilities;

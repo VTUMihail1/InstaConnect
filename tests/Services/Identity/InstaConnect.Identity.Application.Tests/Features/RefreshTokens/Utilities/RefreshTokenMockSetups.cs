@@ -7,23 +7,21 @@ public static class RefreshTokenMockSetups
         public void SetupIssueCommand(
             IssueRefreshTokenCommandRequest request,
             RefreshToken refreshToken,
-            AccessToken accessToken,
             CancellationToken cancellationToken)
         {
             service
                 .IssueAsync(RefreshTokenMatcher.IsIssueRefreshTokenCommand(request), cancellationToken)
-                .ReturnsResponse(refreshToken.ToResponse(request, accessToken));
+                .ReturnsResponse(refreshToken.ToResponse(request));
         }
 
         public void SetupRotateCommand(
             RotateRefreshTokenCommandRequest request,
             RefreshToken refreshToken,
-            AccessToken accessToken,
             CancellationToken cancellationToken)
         {
             service
                 .RotateAsync(RefreshTokenMatcher.IsRotateRefreshTokenCommand(request), cancellationToken)
-                .ReturnsResponse(refreshToken.ToResponse(request, accessToken));
+                .ReturnsResponse(refreshToken.ToResponse(request));
         }
     }
 }

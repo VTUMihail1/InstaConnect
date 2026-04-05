@@ -35,5 +35,8 @@ public abstract class BaseUserWebTest : BaseUserTest, IClassFixture<IdentityWebA
         await EventHarness.StopAsync(CancellationToken);
     }
 
-    protected abstract Task OnInitializeAsync();
+    protected virtual Task OnInitializeAsync()
+    {
+        return Task.CompletedTask;
+    }
 }

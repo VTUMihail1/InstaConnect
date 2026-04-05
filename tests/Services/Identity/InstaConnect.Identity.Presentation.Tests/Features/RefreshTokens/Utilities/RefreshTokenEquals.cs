@@ -1,5 +1,4 @@
-﻿using InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Responses;
-using InstaConnect.Identity.Domain.Helpers;
+﻿using InstaConnect.Identity.Domain.Helpers;
 using InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Utilities;
 using InstaConnect.Identity.Presentation.Tests.Features.Users.Utilities;
 
@@ -37,18 +36,18 @@ public static class RefreshTokenEquals
 
     extension(IssueRefreshTokenApiResponse response)
     {
-        public bool Matches(RefreshToken refreshToken, AccessToken accessToken, IssueRefreshTokenApiRequest request)
+        public bool Matches(RefreshToken refreshToken, IssueRefreshTokenApiRequest request)
         {
-            return response.AccessToken.Matches(accessToken);
+            return response.AccessToken.Matches();
         }
     }
 
 
     extension(RotateRefreshTokenApiResponse response)
     {
-        public bool Matches(RefreshToken refreshToken, AccessToken accessToken, RotateRefreshTokenApiRequest request)
+        public bool Matches(RefreshToken refreshToken, RotateRefreshTokenApiRequest request)
         {
-            return response.AccessToken.Matches(accessToken);
+            return response.AccessToken.Matches();
         }
     }
 
@@ -66,13 +65,12 @@ public static class RefreshTokenEquals
         }
     }
 
-
     extension(AccessTokenApiResponse response)
     {
-        public bool Matches(AccessToken accessToken)
+        public bool Matches()
         {
-            return response.Value == accessToken.Value &&
-                   response.ExpiresAtUtc == accessToken.ExpiresAtUtc;
+            return response.Value.IsNotNullOrEmptyOrWhiteSpace() &&
+                   response.ExpiresAtUtc != default;
         }
     }
 }

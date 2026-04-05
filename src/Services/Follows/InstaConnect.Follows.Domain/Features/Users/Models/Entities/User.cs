@@ -47,9 +47,9 @@ public class User : IEntityWithId<UserId>
 
     public Image? ProfileImage { get; private set; }
 
-    public ICollection<Follow> FollowFollowers { get; }
+    public ICollection<Follow> FollowFollowers { get; private set; }
 
-    public ICollection<Follow> FollowFollowings { get; }
+    public ICollection<Follow> FollowFollowings { get; private set; }
 
     public DateTimeOffset CreatedAtUtc { get; }
 

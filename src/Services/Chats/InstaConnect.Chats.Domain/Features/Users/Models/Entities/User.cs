@@ -47,9 +47,9 @@ public class User : IEntityWithId<UserId>
 
     public Image? ProfileImage { get; private set; }
 
-    public ICollection<Chat> Chats { get; }
+    public ICollection<Chat> Chats { get; private set; }
 
-    public ICollection<ChatMessage> ChatMessages { get; }
+    public ICollection<ChatMessage> ChatMessages { get; private set; }
 
     public DateTimeOffset CreatedAtUtc { get; }
 

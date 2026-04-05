@@ -9,11 +9,11 @@ public static class ForgotPasswordTokenExceptionAssertions
 {
     extension(IApplicationSender sender)
     {
-        public async Task ShouldThrowUserInvalidDetailsExceptionAsync(
+        public async Task ShouldThrowUserNameNotFoundExceptionAsync(
             AddForgotPasswordTokenCommandRequest request,
             CancellationToken cancellationToken)
         {
-            await sender.ShouldThrowUserInvalidDetailsExceptionAsync(
+            await sender.ShouldThrowUserNameNotFoundExceptionAsync(
                 r => r.Name,
                 request,
                 cancellationToken);

@@ -39,7 +39,7 @@ public abstract class BaseEmailConfirmationTokenTest : BaseTest
 
         UserBuilderFactory = new();
         UserBuilder = UserBuilderFactory.Create(PasswordHasher.Hash(Password), ProfileImage.GetUrl());
-        User = UserBuilder.Build();
+        User = UserBuilder.WithUnconfirmedEmail().Build();
         Users = User.Generate();
 
         UserClaimBuilderFactory = new();

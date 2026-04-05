@@ -104,7 +104,7 @@ public static class UserExceptionAssertions
             CancellationToken cancellationToken)
         {
             await sender.ShouldThrowUserEmailAlreadyTakenExceptionAsync<AddUserCommandRequest, AddUserCommandResponse>(
-                r => r.Name,
+                r => r.Email,
                 request,
                 cancellationToken);
         }
@@ -114,7 +114,7 @@ public static class UserExceptionAssertions
             CancellationToken cancellationToken)
         {
             await sender.ShouldThrowUserEmailAlreadyTakenExceptionAsync<UpdateCurrentUserCommandRequest, UpdateCurrentUserCommandResponse>(
-                r => r.Name,
+                r => r.Email,
                 request,
                 cancellationToken);
         }
@@ -168,49 +168,49 @@ public static class UserExceptionAssertions
         }
 
         internal async Task ShouldThrowUserEmailAlreadyTakenExceptionAsync<TRequest>(
-            Func<TRequest, string> idPropertyExpression,
+            Func<TRequest, string> emailPropertyExpression,
             TRequest request,
             CancellationToken cancellationToken)
             where TRequest : IRequest
         {
             await sender.ShouldThrowAsync<UserEmailAlreadyTakenException, TRequest>(
-                UserExceptionErrorMessages.GetNotFoundMessage(new(idPropertyExpression(request))),
+                UserExceptionErrorMessages.GetEmailAlreadyTakenMessage(new(emailPropertyExpression(request))),
                 request,
                 cancellationToken);
         }
 
         internal async Task ShouldThrowUserEmailAlreadyTakenExceptionAsync<TRequest, TResponse>(
-            Func<TRequest, string> idPropertyExpression,
+            Func<TRequest, string> emailPropertyExpression,
             TRequest request,
             CancellationToken cancellationToken)
             where TRequest : IRequest<TResponse>
         {
             await sender.ShouldThrowAsync<UserEmailAlreadyTakenException, TRequest, TResponse>(
-                UserExceptionErrorMessages.GetNotFoundMessage(new(idPropertyExpression(request))),
+                UserExceptionErrorMessages.GetEmailAlreadyTakenMessage(new(emailPropertyExpression(request))),
                 request,
                 cancellationToken);
         }
 
         internal async Task ShouldThrowUserNameAlreadyTakenExceptionAsync<TRequest>(
-            Func<TRequest, string> idPropertyExpression,
+            Func<TRequest, string> namePropertyExpression,
             TRequest request,
             CancellationToken cancellationToken)
             where TRequest : IRequest
         {
             await sender.ShouldThrowAsync<UserNameAlreadyTakenException, TRequest>(
-                UserExceptionErrorMessages.GetNotFoundMessage(new(idPropertyExpression(request))),
+                UserExceptionErrorMessages.GetNameAlreadyTakenMessage(new(namePropertyExpression(request))),
                 request,
                 cancellationToken);
         }
 
         internal async Task ShouldThrowUserNameAlreadyTakenExceptionAsync<TRequest, TResponse>(
-            Func<TRequest, string> idPropertyExpression,
+            Func<TRequest, string> namePropertyExpression,
             TRequest request,
             CancellationToken cancellationToken)
             where TRequest : IRequest<TResponse>
         {
             await sender.ShouldThrowAsync<UserNameAlreadyTakenException, TRequest, TResponse>(
-                UserExceptionErrorMessages.GetNotFoundMessage(new(idPropertyExpression(request))),
+                UserExceptionErrorMessages.GetNameAlreadyTakenMessage(new(namePropertyExpression(request))),
                 request,
                 cancellationToken);
         }
@@ -252,13 +252,37 @@ public static class UserExceptionAssertions
         }
 
         internal async Task ShouldThrowUserEmailAlreadyConfirmedExceptionAsync<TRequest, TResponse>(
-            Func<TRequest, string> namePropertyExpression,
+            Func<TRequest, string> idPropertyExpression,
             TRequest request,
             CancellationToken cancellationToken)
             where TRequest : IRequest<TResponse>
         {
             await sender.ShouldThrowAsync<UserEmailAlreadyConfirmedException, TRequest, TResponse>(
-                UserExceptionErrorMessages.GetEmailAlreadyConfirmedMessage(new(namePropertyExpression(request))),
+                UserExceptionErrorMessages.GetEmailAlreadyConfirmedMessage(new(idPropertyExpression(request))),
+                request,
+                cancellationToken);
+        }
+
+        internal async Task ShouldThrowUserNameEmailAlreadyConfirmedExceptionAsync<TRequest>(
+            Func<TRequest, string> namePropertyExpression,
+            TRequest request,
+            CancellationToken cancellationToken)
+            where TRequest : IRequest
+        {
+            await sender.ShouldThrowAsync<UserNameEmailAlreadyConfirmedException, TRequest>(
+                UserExceptionErrorMessages.GetNameEmailAlreadyConfirmedMessage(new(namePropertyExpression(request))),
+                request,
+                cancellationToken);
+        }
+
+        internal async Task ShouldThrowUserNameEmailAlreadyConfirmedExceptionAsync<TRequest, TResponse>(
+            Func<TRequest, string> namePropertyExpression,
+            TRequest request,
+            CancellationToken cancellationToken)
+            where TRequest : IRequest<TResponse>
+        {
+            await sender.ShouldThrowAsync<UserNameEmailAlreadyConfirmedException, TRequest, TResponse>(
+                UserExceptionErrorMessages.GetNameEmailAlreadyConfirmedMessage(new(namePropertyExpression(request))),
                 request,
                 cancellationToken);
         }

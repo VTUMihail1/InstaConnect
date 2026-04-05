@@ -21,25 +21,17 @@ public static class UserClaimFilterExtensions
     {
         public FilterDefinition<UserClaim> GetFilter()
         {
-            return filter.GetFilterForIdEquals<UserClaim>(p => p.Id.Id.Id);
+            return filter.GetFilterForIdEquals<UserClaim>(p => p.Id.Id.Id, p => p.Id.Claim);
         }
 
-        public FilterDefinition<T> GetFilterForIdEquals<T>(Expression<Func<T, object>> idField)
-        {
-            return Builders<T>.Filter.EqualsCaseInsensitive(idField, filter.Id, filter.Id.Id.IsEmpty());
-        }
-    }
-
-    extension(UserClaimId filter)
-    {
         public FilterDefinition<T> GetFilterForIdEquals<T>(
             Expression<Func<T, object>> idField,
             Expression<Func<T, object>> claimField)
         {
             var id = filter.Id.GetFilterForIdEquals(idField);
-            var value = Builders<T>.Filter.EqualsCaseInsensitive(claimField, filter.Claim, filter.Claim.IsEmpty());
+            var claim = Builders<T>.Filter.Eq(claimField, filter.Claim);
 
-            return Builders<T>.Filter.And(id, value);
+            return Builders<T>.Filter.And(id, claim);
         }
     }
 }

@@ -11,11 +11,11 @@ public static class CommonErrorMessages
         return Format.FormatCurrentCulture(propertyName);
     }
 
-    public static string GetEqual(string propertyName, string equalPropertyName)
+    public static string GetNotEqual(string propertyName, string equalPropertyName)
     {
-        const string Format = "{0} must not be empty.";
+        const string Format = "{0} must be the same as {1}.";
 
-        return Format.FormatCurrentCulture(propertyName);
+        return Format.FormatCurrentCulture(propertyName, equalPropertyName);
     }
 
     public static string GetMinLength(string propertyName, int length, int minLength)

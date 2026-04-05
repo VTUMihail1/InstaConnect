@@ -32,11 +32,21 @@ public static class RefreshTokenMockAssertions
 
     extension(IRefreshTokenCookieStore store)
     {
-        public void ShouldReceiveOneSet(RefreshToken refreshToken)
+        public void ShouldReceiveOneSet(
+            RotateRefreshTokenApiRequest request,
+            RefreshToken refreshToken)
         {
             store.ShouldHaveReceivedOne().Set(refreshToken.Id.Id.Id, refreshToken.Id.Value, refreshToken.ExpiresAtUtc);
         }
-        public void ShouldReceiveOneDelete()
+
+        public void ShouldReceiveOneSet(
+            IssueRefreshTokenApiRequest request,
+            RefreshToken refreshToken)
+        {
+            store.ShouldHaveReceivedOne().Set(refreshToken.Id.Id.Id, refreshToken.Id.Value, refreshToken.ExpiresAtUtc);
+        }
+
+        public void ShouldReceiveOneDelete(DeleteCurrentRefreshTokenApiRequest request)
         {
             store.ShouldHaveReceivedOne().Delete();
         }

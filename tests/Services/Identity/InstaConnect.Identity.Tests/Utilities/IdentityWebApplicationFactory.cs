@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.TestHost;
 
 using Testcontainers.MongoDb;
 using Testcontainers.RabbitMq;
+using Testcontainers.Redis;
 
 using Xunit;
 
@@ -14,11 +15,13 @@ namespace InstaConnect.Identity.Tests.Utilities;
 
 public class IdentityWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
+    private readonly RedisContainer _redisContainer;
     private readonly MongoDbContainer _mongoDbContainer;
     private readonly RabbitMqContainer _rabbitMqContainer;
 
     public IdentityWebApplicationFactory()
     {
+        _redisContainer = ContainerFactory.GetRedisContainer();
         _mongoDbContainer = ContainerFactory.GetMongoDbContainer();
         _rabbitMqContainer = ContainerFactory.GetRabbitMqContainer();
     }
@@ -33,16 +36,19 @@ public class IdentityWebApplicationFactory : WebApplicationFactory<Program>, IAs
         });
 
         builder.UpdateDatabaseConnectionString(_mongoDbContainer.GetConnectionString());
+        builder.UpdateCacheConnectionString(_redisContainer.GetConnectionString());
     }
 
     public async Task InitializeAsync()
     {
+        await _redisContainer.StartAsync();
         await _mongoDbContainer.StartAsync();
         await _rabbitMqContainer.StartAsync();
     }
 
     public new async Task DisposeAsync()
     {
+        await _redisContainer.DisposeAsync().AsTask();
         await _mongoDbContainer.DisposeAsync().AsTask();
         await _rabbitMqContainer.DisposeAsync().AsTask();
     }

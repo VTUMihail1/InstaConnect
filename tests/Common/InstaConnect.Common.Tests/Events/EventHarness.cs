@@ -39,6 +39,15 @@ public class EventHarness : IEventHarness
         isPublished.ShouldBeTrue();
     }
 
+    public async Task ShouldHaveNotPublishedAsync<TRequest>(Func<TRequest, bool> predicate, CancellationToken cancellationToken)
+        where TRequest : class, IEventRequest
+    {
+        var isPublished = await _testHarness.Published
+                .Any<TRequest>(e => predicate(e.Context.Message), cancellationToken);
+
+        isPublished.ShouldBeFalse();
+    }
+
     public async Task ShouldHaveFaultedAsync<TRequest>(
         Func<TRequest, bool> predicate,
         CancellationToken cancellationToken)

@@ -4,21 +4,25 @@ public static class UserClaimGenerator
 {
     extension(UserClaim baseUserClaim)
     {
-        public ICollection<UserClaim> Generate(IEnumerable<User> users, int numberOfIterations = 3)
+        public ICollection<UserClaim> Generate(IEnumerable<User> users)
         {
-            return [baseUserClaim, .. users
-               .SelectMany(user =>
-                   Enumerable.Range(default, numberOfIterations).Select(_ =>
-                   {
-                         var userClaim = new UserClaim(
-                             new(user.Id, UserClaimDataFaker.GetClaim()),
-                             UserClaimDataFaker.GetCreatedAtUtc());
+            return [.. users
+               .Select(user =>
+                       {
+                           var userClaim = new UserClaim(
+                               new(user.Id, UserClaimDataFaker.GetClaim()),
+                               UserClaimDataFaker.GetCreatedAtUtc());
 
-                         user.AddUserClaim(userClaim);
-                         userClaim.AddUser(user);
+                           if(baseUserClaim.Id == userClaim.Id)
+                           {
+                               return baseUserClaim;
+                           }
 
-                         return userClaim;
-                   }))];
+                           user.AddUserClaim(userClaim);
+                           userClaim.AddUser(user);
+
+                           return userClaim;
+                       })];
         }
     }
 }

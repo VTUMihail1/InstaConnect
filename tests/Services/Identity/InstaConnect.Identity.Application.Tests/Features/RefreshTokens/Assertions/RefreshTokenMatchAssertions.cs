@@ -7,17 +7,17 @@ public static class RefreshTokenMatchAssertions
 {
     extension(IssueRefreshTokenCommandResponse response)
     {
-        public void ShouldSatisfy(RefreshToken refreshToken, AccessToken accessToken, IssueRefreshTokenCommandRequest request)
+        public void ShouldSatisfy(RefreshToken refreshToken, IssueRefreshTokenCommandRequest request)
         {
-            response.ShouldSatisfy(p => p.Matches(refreshToken, accessToken, request));
+            response.ShouldSatisfy(p => p.Matches(refreshToken, request));
         }
     }
 
     extension(RotateRefreshTokenCommandResponse response)
     {
-        public void ShouldSatisfy(RefreshToken refreshToken, AccessToken accessToken, RotateRefreshTokenCommandRequest request)
+        public void ShouldSatisfy(RefreshToken refreshToken, RotateRefreshTokenCommandRequest request)
         {
-            response.ShouldSatisfy(p => p.Matches(refreshToken, accessToken, request));
+            response.ShouldSatisfy(p => p.Matches(refreshToken, request));
         }
     }
 

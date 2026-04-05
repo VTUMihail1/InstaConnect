@@ -211,6 +211,16 @@ public static class UserEquals
                    user.ProfileImage.Matches(request.Form.ProfileImage?.GetUrl());
         }
 
+        public bool Matches(VerifyEmailConfirmationTokenApiRequest request)
+        {
+            return user.IsEmailConfirmed;
+        }
+
+        public bool Matches(VerifyForgotPasswordTokenApiRequest request, IPasswordHasher passwordHasher)
+        {
+            return passwordHasher.IsMatch(request.Body.Password, user.PasswordHash);
+        }
+
         public bool MatchesFilter(GetAllUsersApiRequest request)
         {
 

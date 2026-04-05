@@ -22,6 +22,11 @@ public static class Setups
         {
             return serviceProvider.GetRequiredService<IApplicationSender>();
         }
+
+        public ICacheHandler GetCacheHandler()
+        {
+            return serviceProvider.GetRequiredService<ICacheHandler>();
+        }
     }
 
     extension(IServiceScope serviceScope)
@@ -39,6 +44,11 @@ public static class Setups
         public IApplicationSender GetSender()
         {
             return serviceScope.ServiceProvider.GetSender();
+        }
+
+        public ICacheHandler GetCacheHandler()
+        {
+            return serviceScope.ServiceProvider.GetCacheHandler();
         }
     }
 }

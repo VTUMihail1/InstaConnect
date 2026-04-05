@@ -10,7 +10,6 @@ public class RefreshTokenApplicationMappings : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-
         config.NewConfig<IssueRefreshTokenCommandRequest, IssueRefreshTokenCommand>()
             .ConstructUsing(src => new(
                 new(src.Name),
@@ -18,8 +17,8 @@ public class RefreshTokenApplicationMappings : IRegister
 
         config.NewConfig<SessionToken, IssueRefreshTokenCommandResponse>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<RefreshTokenIdCommandResponse>()!,
-                src.AccessToken.Adapt<AccessTokenCommandResponse>()!,
+                src.Id.Adapt<RefreshTokenIdCommandResponse>(config)!,
+                src.AccessToken.Adapt<AccessTokenCommandResponse>(config)!,
                 src.ExpiresAtUtc));
 
         config.NewConfig<RotateRefreshTokenCommandRequest, RotateRefreshTokenCommand>()
@@ -30,8 +29,8 @@ public class RefreshTokenApplicationMappings : IRegister
 
         config.NewConfig<SessionToken, RotateRefreshTokenCommandResponse>()
             .ConstructUsing(src => new(
-                src.Id.Adapt<RefreshTokenIdCommandResponse>()!,
-                src.AccessToken.Adapt<AccessTokenCommandResponse>()!,
+                src.Id.Adapt<RefreshTokenIdCommandResponse>(config)!,
+                src.AccessToken.Adapt<AccessTokenCommandResponse>(config)!,
                 src.ExpiresAtUtc));
 
         config.NewConfig<DeleteCurrentRefreshTokenCommandRequest, DeleteRefreshTokenCommand>()
@@ -40,10 +39,10 @@ public class RefreshTokenApplicationMappings : IRegister
                                            new(src.Id),
                                            src.Value)));
 
-        config.NewConfig<RefreshToken, RefreshTokenIdCommandResponse>()
+        config.NewConfig<RefreshTokenId, RefreshTokenIdCommandResponse>()
             .ConstructUsing(src => new(
-                src.Id.Id.Id,
-                src.Id.Value));
+                src.Id.Id,
+                src.Value));
 
         config.NewConfig<AccessToken, AccessTokenCommandResponse>()
             .ConstructUsing(src => new(

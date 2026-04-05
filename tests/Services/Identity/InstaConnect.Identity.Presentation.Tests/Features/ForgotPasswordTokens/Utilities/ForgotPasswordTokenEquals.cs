@@ -39,5 +39,10 @@ public static class ForgotPasswordTokenEquals
                    passwordHasher.IsMatch(request.Body.Password, forgotPasswordToken.User!.PasswordHash) &&
                    request.Body.Password == request.Body.ConfirmPassword;
         }
+
+        public bool MatchesFilter(UpdateCurrentUserApiRequest request)
+        {
+            return forgotPasswordToken.Id.Id.Matches(request.Id);
+        }
     }
 }

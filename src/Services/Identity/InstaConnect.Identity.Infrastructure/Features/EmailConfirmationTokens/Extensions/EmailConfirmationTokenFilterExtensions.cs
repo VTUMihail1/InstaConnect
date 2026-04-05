@@ -32,17 +32,14 @@ public static class EmailConfirmationTokenFilterExtensions
     {
         public FilterDefinition<EmailConfirmationToken> GetFilter()
         {
-            return filter.GetFilterForIdIn<EmailConfirmationToken>(p => p.Id.Id.Id, p => p.Id.Value);
+            return filter.GetFilterForIdRange<EmailConfirmationToken>(p => p.Id.Id.Id, p => p.Id.Value);
         }
 
-        public FilterDefinition<T> GetFilterForIdIn<T>(
+        public FilterDefinition<T> GetFilterForIdRange<T>(
             Expression<Func<T, object>> idField,
             Expression<Func<T, object>> valueField)
         {
-            var id = filter.Select(a => a.Id).GetFilterForIdIn(idField);
-            var value = Builders<T>.Filter.InCaseInsensitive(valueField, filter.Select(p => p.Value), filter.IsEmpty());
-
-            return Builders<T>.Filter.And(id, value);
+            return Builders<T>.Filter.Or(filter.Select(item => item.GetFilterForIdEquals(idField, valueField)));
         }
     }
 }

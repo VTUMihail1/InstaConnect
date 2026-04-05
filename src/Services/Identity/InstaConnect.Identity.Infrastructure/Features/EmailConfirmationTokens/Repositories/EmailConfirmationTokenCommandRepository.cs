@@ -1,5 +1,6 @@
 ﻿using InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Extensions;
 using InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Extensions;
+using InstaConnect.Identity.Infrastructure.Features.Users.Extensions;
 
 using MongoDB.Driver;
 
@@ -38,6 +39,17 @@ internal class EmailConfirmationTokenCommandRepository : IEmailConfirmationToken
         return await GetByIdAsync(id, null, cancellationToken);
     }
 
+    public async Task<bool> ExistsByIdAsync(
+        EmailConfirmationTokenId id,
+        CancellationToken cancellationToken)
+    {
+        return await _context
+            .EmailConfirmationTokens
+            .AggregateWithCaseInsensitiveCollation()
+            .Match(id)
+            .AnyAsync(cancellationToken);
+    }
+
     public async Task AddAsync(EmailConfirmationToken entity, CancellationToken cancellationToken)
     {
         await _context
@@ -50,6 +62,13 @@ internal class EmailConfirmationTokenCommandRepository : IEmailConfirmationToken
         await _context
             .EmailConfirmationTokens
             .AddRangeAsync(_context.ClientSessionHandle, entities, cancellationToken);
+    }
+
+    public async Task UpdateAsync(EmailConfirmationToken entity, CancellationToken cancellationToken)
+    {
+        await _context
+            .EmailConfirmationTokens
+            .UpdateAsync(_context.ClientSessionHandle, entity, cancellationToken);
     }
 
     public async Task DeleteAsync(EmailConfirmationToken entity, CancellationToken cancellationToken)

@@ -40,9 +40,9 @@ public class Post : IEntityWithId<PostId>
 
     public User? User { get; private set; }
 
-    public ICollection<PostLike> PostLikes { get; }
+    public ICollection<PostLike> PostLikes { get; private set; }
 
-    public ICollection<PostComment> PostComments { get; }
+    public ICollection<PostComment> PostComments { get; private set; }
 
     public DateTimeOffset CreatedAtUtc { get; }
 

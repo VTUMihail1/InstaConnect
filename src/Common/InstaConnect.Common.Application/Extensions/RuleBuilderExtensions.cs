@@ -24,7 +24,7 @@ public static class RuleBuilderExtensions
         {
             return ruleBuilder
                 .Equal(equalPropertyExpression)
-                .WithMessage(CommonErrorMessages.GetEqual(PropertyNamePlaceholder, equalPropertyExpression.GetProperty()));
+                .WithMessage(CommonErrorMessages.GetNotEqual(PropertyNamePlaceholder, equalPropertyExpression.GetProperty()));
         }
     }
 

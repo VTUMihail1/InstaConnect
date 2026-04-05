@@ -78,6 +78,20 @@ public class UserBuilder
         return this;
     }
 
+    public UserBuilder WithConfirmedEmail()
+    {
+        _isEmailConfirmed = true;
+
+        return this;
+    }
+
+    public UserBuilder WithUnconfirmedEmail()
+    {
+        _isEmailConfirmed = false;
+
+        return this;
+    }
+
     public UserBuilder WithProfileImage(string profileImage)
     {
         _profileImage = profileImage;

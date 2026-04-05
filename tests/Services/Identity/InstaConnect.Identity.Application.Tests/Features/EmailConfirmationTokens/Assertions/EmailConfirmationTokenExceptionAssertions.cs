@@ -29,6 +29,16 @@ public static class EmailConfirmationTokenExceptionAssertions
                 cancellationToken);
         }
 
+        public async Task ShouldThrowUserNameEmailAlreadyConfirmedExceptionAsync(
+            AddEmailConfirmationTokenCommandRequest request,
+            CancellationToken cancellationToken)
+        {
+            await sender.ShouldThrowUserNameEmailAlreadyConfirmedExceptionAsync(
+                r => r.Name,
+                request,
+                cancellationToken);
+        }
+
         public async Task ShouldThrowUserEmailAlreadyConfirmedExceptionAsync(
             VerifyEmailConfirmationTokenCommandRequest request,
             CancellationToken cancellationToken)

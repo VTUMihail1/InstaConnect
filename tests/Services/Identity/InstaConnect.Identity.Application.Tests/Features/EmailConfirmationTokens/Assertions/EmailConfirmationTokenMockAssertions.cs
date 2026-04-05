@@ -6,7 +6,7 @@ public static class EmailConfirmationTokenMockAssertions
 {
     extension(IEmailConfirmationTokenCommandService emailConfirmationTokenService)
     {
-        public async Task ShouldReceiveOneIssueAsync(
+        public async Task ShouldReceiveOneAddAsync(
         AddEmailConfirmationTokenCommandRequest request,
         CancellationToken cancellationToken)
         {

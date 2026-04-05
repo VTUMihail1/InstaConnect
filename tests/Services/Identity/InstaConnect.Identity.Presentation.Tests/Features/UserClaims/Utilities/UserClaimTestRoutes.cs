@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Domain.Utilities;
+﻿using InstaConnect.Common.Events.Models;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Utilities;
 

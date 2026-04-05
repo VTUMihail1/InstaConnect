@@ -52,6 +52,15 @@ internal class RefreshTokenCommandRepository : IRefreshTokenCommandRepository
             .AddRangeAsync(_context.ClientSessionHandle, entities, cancellationToken);
     }
 
+    public async Task UpdateAsync(RefreshToken entity, CancellationToken cancellationToken)
+    {
+        await _context.RefreshTokens
+            .UpdateAsync(
+            _context.ClientSessionHandle,
+            entity,
+            cancellationToken);
+    }
+
     public async Task DeleteAsync(RefreshToken entity, CancellationToken cancellationToken)
     {
         await _context.RefreshTokens

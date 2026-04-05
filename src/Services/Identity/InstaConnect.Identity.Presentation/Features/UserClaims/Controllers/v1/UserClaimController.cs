@@ -4,7 +4,7 @@ using InstaConnect.Identity.Application.Features.UserClaims.Queries.GetAll;
 
 namespace InstaConnect.Identity.Presentation.Features.UserClaims.Controllers.v1;
 
-[ApiVersion(UserRoutes.Version1)]
+[ApiVersion(UserClaimRoutes.Version1)]
 [Route(UserClaimRoutes.Resource)]
 [Authorize(AuthorizationPolicies.Admin)]
 [EnableRateLimiting(RateLimiterPolicies.Default)]
@@ -52,7 +52,7 @@ public class UserClaimController : ControllerBase
     }
 
     // DELETE: api/users/5f0f2dd0-e957-4d72-8141-767a36fc6e95/claims/admin
-    [HttpDelete(UserRoutes.Id)]
+    [HttpDelete(UserClaimRoutes.Id)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> DeleteAsync(

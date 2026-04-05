@@ -23,7 +23,7 @@ public class Chat : IEntityWithId<ChatId>
 
     public User? ParticipantTwo { get; private set; }
 
-    public ICollection<ChatMessage> Messages { get; }
+    public ICollection<ChatMessage> Messages { get; private set; }
 
     public DateTimeOffset CreatedAtUtc { get; }
 

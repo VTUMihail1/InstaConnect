@@ -61,7 +61,7 @@ public static class UserClaimEquals
             GetAllUserClaimsApiRequest request)
         {
             return response.UserClaimCollection.MatchesFull(
-                       (response, userClaim) => response.MatchesFull(userClaim, request),
+                       (response, userClaim) => response.MatchesWithoutUser(userClaim, request),
                        userClaim => userClaim.MatchesFilter(request),
                        user,
                        userClaims,

@@ -1,3 +1,11 @@
-﻿namespace InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Options;
+﻿using System.ComponentModel.DataAnnotations;
 
-public record RefreshTokenOptions(int LifetimeSeconds);
+namespace InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Options;
+
+public class RefreshTokenOptions
+{
+    public const string SectionName = "RefreshTokenConfiguration";
+
+    [Required]
+    public int LifetimeSeconds { get; set; }
+}

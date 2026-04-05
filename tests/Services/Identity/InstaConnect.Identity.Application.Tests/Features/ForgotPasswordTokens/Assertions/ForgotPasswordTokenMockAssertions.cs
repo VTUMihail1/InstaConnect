@@ -6,7 +6,7 @@ public static class ForgotPasswordTokenMockAssertions
 {
     extension(IForgotPasswordTokenCommandService forgotPasswordTokenService)
     {
-        public async Task ShouldReceiveOneIssueAsync(
+        public async Task ShouldReceiveOneAddAsync(
         AddForgotPasswordTokenCommandRequest request,
         CancellationToken cancellationToken)
         {

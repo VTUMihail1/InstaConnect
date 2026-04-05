@@ -48,12 +48,4 @@ public static class UserFilterExtensions
             return filter.GetFilterForEmailEquals<User>(p => p.Email.Value);
         }
     }
-
-    extension(IEnumerable<UserId> filter)
-    {
-        public FilterDefinition<T> GetFilterForIdIn<T>(Expression<Func<T, object>> idField)
-        {
-            return Builders<T>.Filter.InCaseInsensitive(idField, filter.Select(p => p.Id), filter.IsEmpty());
-        }
-    }
 }

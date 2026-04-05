@@ -29,6 +29,7 @@ public static class EmailConfirmationTokenEquals
         {
             return r.Id == request.Id &&
                    r.Value == request.Value &&
+                   r.User.Matches(request.User) &&
                    r.ExpiresAtUtc == request.ExpiresAtUtc &&
                    r.CreatedAtUtc == request.CreatedAtUtc;
         }
@@ -39,8 +40,16 @@ public static class EmailConfirmationTokenEquals
         public bool Matches(EmailConfirmationTokenEventRequest request)
         {
             return entity.Id.Matches(request.Id, request.Value) &&
+                   entity.User != null && entity.User.Matches(request.User) &&
                    entity.ExpiresAtUtc == request.ExpiresAtUtc &&
                    entity.CreatedAtUtc == request.CreatedAtUtc;
+        }
+
+        public bool Matches(EmailConfirmationToken e)
+        {
+            return entity.Id.Matches(e.Id.Id.Id, e.Id.Value) &&
+                   entity.ExpiresAtUtc == e.ExpiresAtUtc &&
+                   entity.CreatedAtUtc == e.CreatedAtUtc;
         }
     }
 
@@ -50,6 +59,18 @@ public static class EmailConfirmationTokenEquals
         {
             return p.Id.Matches(id) &&
                    p.Value.EqualsOrdinalIgnoreCase(value);
+        }
+    }
+
+    extension(ICollection<EmailConfirmationToken> emailConfirmationTokens)
+    {
+        public bool Matches(
+            ICollection<EmailConfirmationToken> e)
+        {
+            return emailConfirmationTokens.MatchesCollection(e,
+                                                          e => e.Id,
+                                                          e => e.Id,
+                                                          (emailConfirmationToken, e) => emailConfirmationToken.Matches(e));
         }
     }
 }

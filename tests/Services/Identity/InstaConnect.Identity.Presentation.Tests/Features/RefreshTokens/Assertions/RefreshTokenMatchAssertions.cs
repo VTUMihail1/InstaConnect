@@ -1,6 +1,6 @@
-﻿using InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Responses;
-using InstaConnect.Identity.Domain.Helpers;
+﻿using InstaConnect.Identity.Domain.Helpers;
 using InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Utilities;
+using InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Utilities;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Assertions;
 
@@ -8,17 +8,37 @@ public static class RefreshTokenMatchAssertions
 {
     extension(IssueRefreshTokenApiResponse response)
     {
-        public void ShouldSatisfy(RefreshToken refreshToken, AccessToken accessToken, IssueRefreshTokenApiRequest request)
+        public void ShouldSatisfy(RefreshToken refreshToken, IssueRefreshTokenApiRequest request)
         {
-            response.ShouldSatisfy(p => p.Matches(refreshToken, accessToken, request));
+            response.ShouldSatisfy(p => p.Matches(refreshToken, request));
         }
     }
 
     extension(RotateRefreshTokenApiResponse response)
     {
-        public void ShouldSatisfy(RefreshToken refreshToken, AccessToken accessToken, RotateRefreshTokenApiRequest request)
+        public void ShouldSatisfy(RefreshToken refreshToken, RotateRefreshTokenApiRequest request)
         {
-            response.ShouldSatisfy(p => p.Matches(refreshToken, accessToken, request));
+            response.ShouldSatisfy(p => p.Matches(refreshToken, request));
+        }
+    }
+
+    extension(ActionResult<IssueRefreshTokenApiResponse> response)
+    {
+        public void ShouldSatisfy(
+        RefreshToken refreshToken,
+        IssueRefreshTokenApiRequest request)
+        {
+            response.ShouldBeActionResultAndSatisfy(p => p.Matches(refreshToken, request));
+        }
+    }
+
+    extension(ActionResult<RotateRefreshTokenApiResponse> response)
+    {
+        public void ShouldSatisfy(
+        RefreshToken refreshToken,
+        RotateRefreshTokenApiRequest request)
+        {
+            response.ShouldBeActionResultAndSatisfy(p => p.Matches(refreshToken, request));
         }
     }
 

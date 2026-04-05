@@ -83,5 +83,15 @@ public static class UserMatchAssertions
         {
             user.ShouldSatisfy(p => p.Matches(request));
         }
+
+        public void ShouldSatisfy(VerifyEmailConfirmationTokenCommandRequest request)
+        {
+            user.ShouldSatisfy(p => p.Matches(request));
+        }
+
+        public void ShouldSatisfy(VerifyForgotPasswordTokenCommandRequest request, IPasswordHasher passwordHasher)
+        {
+            user.ShouldSatisfy(p => p.Matches(request, passwordHasher));
+        }
     }
 }

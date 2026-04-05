@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Application.Features.UserClaims.Commands.Add;
+﻿using InstaConnect.Common.Events.Models;
+
+namespace InstaConnect.Identity.Application.Features.UserClaims.Commands.Add;
 
 public record AddUserClaimCommandRequest(
     string Id,

@@ -7,12 +7,12 @@
   </ItemGroup>
 
   <ItemGroup>
-  	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-  	  <_Parameter1>InstaConnect.Identity.Application.UnitTests</_Parameter1>
-  	</AssemblyAttribute>
-  	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-  	  <_Parameter1>InstaConnect.Identity.Application.IntegrationTests</_Parameter1>
-  	</AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>InstaConnect.Identity.Application.Tests.Unit</_Parameter1>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>InstaConnect.Identity.Application.Tests.Integration</_Parameter1>
+    </AssemblyAttribute>
   </ItemGroup>
 
   <ItemGroup Label="Common">

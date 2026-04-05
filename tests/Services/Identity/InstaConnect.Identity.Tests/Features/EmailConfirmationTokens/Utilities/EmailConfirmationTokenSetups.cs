@@ -53,6 +53,13 @@ public static class EmailConfirmationTokenSetups
             await serviceScope.GetEmailConfirmationTokenCommandRepository().AddRangeAsync(emailConfirmationTokens, cancellationToken);
         }
 
+        public async Task UpdateEmailConfirmationTokenAsync(
+            EmailConfirmationToken emailConfirmationToken,
+            CancellationToken cancellationToken)
+        {
+            await serviceScope.GetEmailConfirmationTokenCommandRepository().UpdateAsync(emailConfirmationToken, cancellationToken);
+        }
+
         public async Task DeleteEmailConfirmationTokenAsync(
             EmailConfirmationToken emailConfirmationToken,
             CancellationToken cancellationToken)

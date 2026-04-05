@@ -35,7 +35,7 @@ public class PostComment : IEntityWithId<PostCommentId>
 
     public Post? Post { get; private set; }
 
-    public ICollection<PostCommentLike> PostCommentLikes { get; }
+    public ICollection<PostCommentLike> PostCommentLikes { get; private set; }
 
     public DateTimeOffset CreatedAtUtc { get; }
 

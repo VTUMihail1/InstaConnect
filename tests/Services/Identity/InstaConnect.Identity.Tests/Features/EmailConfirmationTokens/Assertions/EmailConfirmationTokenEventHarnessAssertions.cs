@@ -17,6 +17,16 @@ public static class EmailConfirmationTokenEventHarnessAssertions
                 cancellationToken);
         }
 
+        public async Task ShouldHavePublishedAddedAsync(
+            ICollection<EmailConfirmationToken> entities,
+            CancellationToken cancellationToken)
+        {
+            foreach (var entity in entities)
+            {
+                await eventHarness.ShouldHavePublishedAddedAsync(entity, cancellationToken);
+            }
+        }
+
         public async Task ShouldHavePublishedDeletedAsync(
             EmailConfirmationToken entity,
             CancellationToken cancellationToken)
@@ -24,6 +34,35 @@ public static class EmailConfirmationTokenEventHarnessAssertions
             await eventHarness.ShouldHavePublishedAsync<EmailConfirmationTokenDeletedEventRequest>(
                 p => p.Matches(entity),
                 cancellationToken);
+        }
+
+        public async Task ShouldHavePublishedDeletedAsync(
+            ICollection<EmailConfirmationToken> entities,
+            CancellationToken cancellationToken)
+        {
+            foreach (var entity in entities)
+            {
+                await eventHarness.ShouldHavePublishedDeletedAsync(entity, cancellationToken);
+            }
+        }
+
+        public async Task ShouldHaveNotPublishedDeletedAsync(
+            EmailConfirmationToken entity,
+            CancellationToken cancellationToken)
+        {
+            await eventHarness.ShouldHaveNotPublishedAsync<EmailConfirmationTokenDeletedEventRequest>(
+                p => p.Matches(entity),
+                cancellationToken);
+        }
+
+        public async Task ShouldHaveNotPublishedDeletedAsync(
+            ICollection<EmailConfirmationToken> entities,
+            CancellationToken cancellationToken)
+        {
+            foreach (var entity in entities)
+            {
+                await eventHarness.ShouldHaveNotPublishedDeletedAsync(entity, cancellationToken);
+            }
         }
     }
 }

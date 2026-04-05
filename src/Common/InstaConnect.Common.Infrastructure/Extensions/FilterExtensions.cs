@@ -49,20 +49,6 @@ public static class FilterExtensions
 
             return builder.Regex(field, value.GetContainsCaseInsensitiveRegex());
         }
-
-        public FilterDefinition<T> InCaseInsensitive(Expression<Func<T, object>> field, IEnumerable<object> values, bool isEmpty = false)
-        {
-            if (isEmpty)
-            {
-                return builder.Empty;
-            }
-
-            var patterns = values
-                .Select(value => value.GetEqualsCaseInsensitiveRegex())
-                .ToList();
-
-            return builder.In(field, patterns);
-        }
     }
 
     extension<T>(Name filter)
