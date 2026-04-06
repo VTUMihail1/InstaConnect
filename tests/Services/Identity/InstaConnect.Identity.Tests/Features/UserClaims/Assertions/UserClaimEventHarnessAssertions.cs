@@ -9,21 +9,21 @@ public static class UserClaimEventHarnessAssertions
 {
     extension(IEventHarness eventHarness)
     {
-        public async Task ShouldHavePublishedAddedAsync(
-            UserClaim entity,
+        public async Task ShouldHavePublishedUserClaimAddedAsync(
+            UserClaim userClaim,
             CancellationToken cancellationToken)
         {
             await eventHarness.ShouldHavePublishedAsync<UserClaimAddedEventRequest>(
-                p => p.Matches(entity),
+                p => p.Matches(userClaim),
                 cancellationToken);
         }
 
-        public async Task ShouldHavePublishedDeletedAsync(
-            UserClaim entity,
+        public async Task ShouldHavePublishedUserClaimDeletedAsync(
+            UserClaim userClaim,
             CancellationToken cancellationToken)
         {
             await eventHarness.ShouldHavePublishedAsync<UserClaimDeletedEventRequest>(
-                p => p.Matches(entity),
+                p => p.Matches(userClaim),
                 cancellationToken);
         }
     }

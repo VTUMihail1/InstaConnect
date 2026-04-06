@@ -374,7 +374,7 @@ public class AddPostLikeFunctionalTests : BasePostLikePresentationCommandFunctio
         var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Id, CancellationToken);
 
         // Assert
-        await EventHarness.ShouldHavePublishedAddedAsync(postLike, CancellationToken);
+        await EventHarness.ShouldHavePublishedPostLikeAddedAsync(postLike, CancellationToken);
     }
 
     [Theory]
@@ -390,7 +390,7 @@ public class AddPostLikeFunctionalTests : BasePostLikePresentationCommandFunctio
         var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Id, CancellationToken);
 
         // Assert
-        await EventHarness.ShouldHavePublishedAddedAsync(postLike, CancellationToken);
+        await EventHarness.ShouldHavePublishedPostLikeAddedAsync(postLike, CancellationToken);
     }
 
     [Theory]
@@ -406,6 +406,6 @@ public class AddPostLikeFunctionalTests : BasePostLikePresentationCommandFunctio
         var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Id, CancellationToken);
 
         // Assert
-        await EventHarness.ShouldHavePublishedAddedAsync(postLike, CancellationToken);
+        await EventHarness.ShouldHavePublishedPostLikeAddedAsync(postLike, CancellationToken);
     }
 }

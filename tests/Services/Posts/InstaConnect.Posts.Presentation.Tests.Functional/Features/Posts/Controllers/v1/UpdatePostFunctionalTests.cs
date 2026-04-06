@@ -357,7 +357,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
         var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
 
         // Assert
-        await EventHarness.ShouldHavePublishedUpdatedAsync(post, CancellationToken);
+        await EventHarness.ShouldHavePublishedPostUpdatedAsync(post, CancellationToken);
     }
 
     [Theory]
@@ -373,7 +373,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
         var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
 
         // Assert
-        await EventHarness.ShouldHavePublishedUpdatedAsync(post, CancellationToken);
+        await EventHarness.ShouldHavePublishedPostUpdatedAsync(post, CancellationToken);
     }
 
     [Theory]
@@ -389,6 +389,6 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
         var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
 
         // Assert
-        await EventHarness.ShouldHavePublishedUpdatedAsync(post, CancellationToken);
+        await EventHarness.ShouldHavePublishedPostUpdatedAsync(post, CancellationToken);
     }
 }

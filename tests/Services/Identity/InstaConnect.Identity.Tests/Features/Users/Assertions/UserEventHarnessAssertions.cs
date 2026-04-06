@@ -7,30 +7,30 @@ public static class UserEventHarnessAssertions
 {
     extension(IEventHarness eventHarness)
     {
-        public async Task ShouldHavePublishedAddedAsync(
-            User entity,
+        public async Task ShouldHavePublishedUserAddedAsync(
+            User user,
             CancellationToken cancellationToken)
         {
             await eventHarness.ShouldHavePublishedAsync<UserAddedEventRequest>(
-                p => p.Matches(entity),
+                p => p.Matches(user),
                 cancellationToken);
         }
 
-        public async Task ShouldHavePublishedUpdatedAsync(
-            User entity,
+        public async Task ShouldHavePublishedUserUpdatedAsync(
+            User user,
             CancellationToken cancellationToken)
         {
             await eventHarness.ShouldHavePublishedAsync<UserUpdatedEventRequest>(
-                p => p.Matches(entity),
+                p => p.Matches(user),
                 cancellationToken);
         }
 
-        public async Task ShouldHavePublishedDeletedAsync(
-            User entity,
+        public async Task ShouldHavePublishedUserDeletedAsync(
+            User user,
             CancellationToken cancellationToken)
         {
             await eventHarness.ShouldHavePublishedAsync<UserDeletedEventRequest>(
-                p => p.Matches(entity),
+                p => p.Matches(user),
                 cancellationToken);
         }
     }

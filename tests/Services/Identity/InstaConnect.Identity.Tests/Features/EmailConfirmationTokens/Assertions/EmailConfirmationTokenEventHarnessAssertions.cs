@@ -8,60 +8,60 @@ public static class EmailConfirmationTokenEventHarnessAssertions
 {
     extension(IEventHarness eventHarness)
     {
-        public async Task ShouldHavePublishedAddedAsync(
-            EmailConfirmationToken entity,
+        public async Task ShouldHavePublishedEmailConfirmationTokenAddedAsync(
+            EmailConfirmationToken emailConfirmationToken,
             CancellationToken cancellationToken)
         {
             await eventHarness.ShouldHavePublishedAsync<EmailConfirmationTokenAddedEventRequest>(
-                p => p.Matches(entity),
+                p => p.Matches(emailConfirmationToken),
                 cancellationToken);
         }
 
-        public async Task ShouldHavePublishedAddedAsync(
-            ICollection<EmailConfirmationToken> entities,
+        public async Task ShouldHavePublishedEmailConfirmationTokenAddedRangeAsync(
+            User user,
             CancellationToken cancellationToken)
         {
-            foreach (var entity in entities)
+            foreach (var emailConfirmationToken in user.EmailConfirmationTokens.Select(a => a.AddUser(user)))
             {
-                await eventHarness.ShouldHavePublishedAddedAsync(entity, cancellationToken);
+                await eventHarness.ShouldHavePublishedEmailConfirmationTokenAddedAsync(emailConfirmationToken.AddUser(user), cancellationToken);
             }
         }
 
-        public async Task ShouldHavePublishedDeletedAsync(
-            EmailConfirmationToken entity,
+        public async Task ShouldHavePublishedEmailConfirmationTokenDeletedAsync(
+            EmailConfirmationToken emailConfirmationToken,
             CancellationToken cancellationToken)
         {
             await eventHarness.ShouldHavePublishedAsync<EmailConfirmationTokenDeletedEventRequest>(
-                p => p.Matches(entity),
+                p => p.Matches(emailConfirmationToken),
                 cancellationToken);
         }
 
-        public async Task ShouldHavePublishedDeletedAsync(
-            ICollection<EmailConfirmationToken> entities,
+        public async Task ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(
+            User user,
             CancellationToken cancellationToken)
         {
-            foreach (var entity in entities)
+            foreach (var emailConfirmationToken in user.EmailConfirmationTokens.Select(a => a.AddUser(user)))
             {
-                await eventHarness.ShouldHavePublishedDeletedAsync(entity, cancellationToken);
+                await eventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedAsync(emailConfirmationToken.AddUser(user), cancellationToken);
             }
         }
 
-        public async Task ShouldHaveNotPublishedDeletedAsync(
-            EmailConfirmationToken entity,
+        public async Task ShouldHaveNotPublishedEmailConfirmationTokenDeletedAsync(
+            EmailConfirmationToken emailConfirmationToken,
             CancellationToken cancellationToken)
         {
             await eventHarness.ShouldHaveNotPublishedAsync<EmailConfirmationTokenDeletedEventRequest>(
-                p => p.Matches(entity),
+                p => p.Matches(emailConfirmationToken),
                 cancellationToken);
         }
 
-        public async Task ShouldHaveNotPublishedDeletedAsync(
-            ICollection<EmailConfirmationToken> entities,
+        public async Task ShouldHaveNotPublishedEmailConfirmationTokenDeletedRangeAsync(
+            User user,
             CancellationToken cancellationToken)
         {
-            foreach (var entity in entities)
+            foreach (var emailConfirmationToken in user.EmailConfirmationTokens.Select(a => a.AddUser(user)))
             {
-                await eventHarness.ShouldHaveNotPublishedDeletedAsync(entity, cancellationToken);
+                await eventHarness.ShouldHaveNotPublishedEmailConfirmationTokenDeletedAsync(emailConfirmationToken, cancellationToken);
             }
         }
     }

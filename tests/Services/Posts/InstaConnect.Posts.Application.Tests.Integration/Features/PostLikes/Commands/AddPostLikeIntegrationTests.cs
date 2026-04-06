@@ -202,7 +202,7 @@ public class AddPostLikeIntegrationTests : BasePostLikeApplicationCommandIntegra
         var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Id, CancellationToken);
 
         // Assert
-        await EventHarness.ShouldHavePublishedAddedAsync(postLike, CancellationToken);
+        await EventHarness.ShouldHavePublishedPostLikeAddedAsync(postLike, CancellationToken);
     }
 
     [Theory]
@@ -218,7 +218,7 @@ public class AddPostLikeIntegrationTests : BasePostLikeApplicationCommandIntegra
         var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Id, CancellationToken);
 
         // Assert
-        await EventHarness.ShouldHavePublishedAddedAsync(postLike, CancellationToken);
+        await EventHarness.ShouldHavePublishedPostLikeAddedAsync(postLike, CancellationToken);
     }
 
     [Theory]
@@ -234,6 +234,6 @@ public class AddPostLikeIntegrationTests : BasePostLikeApplicationCommandIntegra
         var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Id, CancellationToken);
 
         // Assert
-        await EventHarness.ShouldHavePublishedAddedAsync(postLike, CancellationToken);
+        await EventHarness.ShouldHavePublishedPostLikeAddedAsync(postLike, CancellationToken);
     }
 }

@@ -100,10 +100,9 @@ internal class UserCommandService : IUserCommandService
         {
             await _emailConfirmationTokenRepository.DeleteRangeAsync(user.EmailConfirmationTokens, cancellationToken);
 
-            user.UpdateEmail(command.Email);
-
             await _eventPublisher.PublishAsync(
                 _mapper.Map<ICollection<EmailConfirmationTokenDeletedEventRequest>>(user), cancellationToken);
+            user.UpdateEmail(command.Email);
         }
 
         var nameIsNotUnique = !await _repository.IsNameUniqueAsync(command.Name, cancellationToken);

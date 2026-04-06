@@ -7,30 +7,30 @@ public static class PostEventHarnessAssertions
 {
     extension(IEventHarness eventHarness)
     {
-        public async Task ShouldHavePublishedAddedAsync(
-            Post entity,
+        public async Task ShouldHavePublishedPostAddedAsync(
+            Post post,
             CancellationToken cancellationToken)
         {
             await eventHarness.ShouldHavePublishedAsync<PostAddedEventRequest>(
-                p => p.Matches(entity),
+                p => p.Matches(post),
                 cancellationToken);
         }
 
-        public async Task ShouldHavePublishedUpdatedAsync(
-            Post entity,
+        public async Task ShouldHavePublishedPostUpdatedAsync(
+            Post post,
             CancellationToken cancellationToken)
         {
             await eventHarness.ShouldHavePublishedAsync<PostUpdatedEventRequest>(
-                p => p.Matches(entity),
+                p => p.Matches(post),
                 cancellationToken);
         }
 
-        public async Task ShouldHavePublishedDeletedAsync(
-            Post entity,
+        public async Task ShouldHavePublishedPostDeletedAsync(
+            Post post,
             CancellationToken cancellationToken)
         {
             await eventHarness.ShouldHavePublishedAsync<PostDeletedEventRequest>(
-                p => p.Matches(entity),
+                p => p.Matches(post),
                 cancellationToken);
         }
     }

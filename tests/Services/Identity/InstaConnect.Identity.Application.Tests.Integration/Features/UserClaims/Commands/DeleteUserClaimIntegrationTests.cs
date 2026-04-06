@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Common.Events.Models;
-using InstaConnect.Identity.Tests.Features.UserClaims.Assertions;
 
 namespace InstaConnect.Identity.Application.Tests.Integration.Features.UserClaims.Commands;
 
@@ -104,7 +103,7 @@ public class DeleteUserClaimIntegrationTests : BaseUserClaimApplicationCommandIn
         await Sender.SendAsync(_request, CancellationToken);
 
         // Assert
-        await EventHarness.ShouldHavePublishedDeletedAsync(UserClaim, CancellationToken);
+        await EventHarness.ShouldHavePublishedUserClaimDeletedAsync(UserClaim, CancellationToken);
     }
 
     [Theory]
@@ -119,6 +118,6 @@ public class DeleteUserClaimIntegrationTests : BaseUserClaimApplicationCommandIn
         await Sender.SendAsync(request, CancellationToken);
 
         // Assert
-        await EventHarness.ShouldHavePublishedDeletedAsync(UserClaim, CancellationToken);
+        await EventHarness.ShouldHavePublishedUserClaimDeletedAsync(UserClaim, CancellationToken);
     }
 }

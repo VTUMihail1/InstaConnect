@@ -124,7 +124,7 @@ public class DeletePostIntegrationTests : BasePostApplicationCommandIntegrationT
         await Sender.SendAsync(_request, CancellationToken);
 
         // Assert
-        await EventHarness.ShouldHavePublishedDeletedAsync(Post, CancellationToken);
+        await EventHarness.ShouldHavePublishedPostDeletedAsync(Post, CancellationToken);
     }
 
     [Theory]
@@ -139,7 +139,7 @@ public class DeletePostIntegrationTests : BasePostApplicationCommandIntegrationT
         await Sender.SendAsync(request, CancellationToken);
 
         // Assert
-        await EventHarness.ShouldHavePublishedDeletedAsync(Post, CancellationToken);
+        await EventHarness.ShouldHavePublishedPostDeletedAsync(Post, CancellationToken);
     }
 
     [Theory]
@@ -154,6 +154,6 @@ public class DeletePostIntegrationTests : BasePostApplicationCommandIntegrationT
         await Sender.SendAsync(request, CancellationToken);
 
         // Assert
-        await EventHarness.ShouldHavePublishedDeletedAsync(Post, CancellationToken);
+        await EventHarness.ShouldHavePublishedPostDeletedAsync(Post, CancellationToken);
     }
 }

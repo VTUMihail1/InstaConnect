@@ -7,21 +7,21 @@ public static class PostLikeEventHarnessAssertions
 {
     extension(IEventHarness eventHarness)
     {
-        public async Task ShouldHavePublishedAddedAsync(
-            PostLike entity,
+        public async Task ShouldHavePublishedPostLikeAddedAsync(
+            PostLike postLike,
             CancellationToken cancellationToken)
         {
             await eventHarness.ShouldHavePublishedAsync<PostLikeAddedEventRequest>(
-                p => p.Matches(entity),
+                p => p.Matches(postLike),
                 cancellationToken);
         }
 
-        public async Task ShouldHavePublishedDeletedAsync(
-            PostLike entity,
+        public async Task ShouldHavePublishedPostLikeDeletedAsync(
+            PostLike postLike,
             CancellationToken cancellationToken)
         {
             await eventHarness.ShouldHavePublishedAsync<PostLikeDeletedEventRequest>(
-                p => p.Matches(entity),
+                p => p.Matches(postLike),
                 cancellationToken);
         }
     }

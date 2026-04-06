@@ -8,41 +8,41 @@ public static class ForgotPasswordTokenEventHarnessAssertions
 {
     extension(IEventHarness eventHarness)
     {
-        public async Task ShouldHavePublishedAddedAsync(
-            ForgotPasswordToken entity,
+        public async Task ShouldHavePublishedForgotPasswordTokenAddedAsync(
+            ForgotPasswordToken forgotPasswordToken,
             CancellationToken cancellationToken)
         {
             await eventHarness.ShouldHavePublishedAsync<ForgotPasswordTokenAddedEventRequest>(
-                p => p.Matches(entity),
+                p => p.Matches(forgotPasswordToken),
                 cancellationToken);
         }
 
-        public async Task ShouldHavePublishedAddedAsync(
-            ICollection<ForgotPasswordToken> entities,
+        public async Task ShouldHavePublishedForgotPasswordTokenAddedRangeAsync(
+            User user,
             CancellationToken cancellationToken)
         {
-            foreach (var entity in entities)
+            foreach (var forgotPasswordToken in user.ForgotPasswordTokens.Select(a => a.AddUser(user)))
             {
-                await eventHarness.ShouldHavePublishedAddedAsync(entity, cancellationToken);
+                await eventHarness.ShouldHavePublishedForgotPasswordTokenAddedAsync(forgotPasswordToken, cancellationToken);
             }
         }
 
-        public async Task ShouldHavePublishedDeletedAsync(
-            ForgotPasswordToken entity,
+        public async Task ShouldHavePublishedForgotPasswordTokenDeletedAsync(
+            ForgotPasswordToken forgotPasswordToken,
             CancellationToken cancellationToken)
         {
             await eventHarness.ShouldHavePublishedAsync<ForgotPasswordTokenDeletedEventRequest>(
-                p => p.Matches(entity),
+                p => p.Matches(forgotPasswordToken),
                 cancellationToken);
         }
 
-        public async Task ShouldHavePublishedDeletedAsync(
-            ICollection<ForgotPasswordToken> entities,
+        public async Task ShouldHavePublishedForgotPasswordTokenDeletedRangeAsync(
+            User user,
             CancellationToken cancellationToken)
         {
-            foreach (var entity in entities)
+            foreach (var forgotPasswordToken in user.ForgotPasswordTokens.Select(a => a.AddUser(user)))
             {
-                await eventHarness.ShouldHavePublishedDeletedAsync(entity, cancellationToken);
+                await eventHarness.ShouldHavePublishedForgotPasswordTokenDeletedAsync(forgotPasswordToken.AddUser(user), cancellationToken);
             }
         }
     }

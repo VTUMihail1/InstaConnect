@@ -167,7 +167,7 @@ public class DeletePostCommentIntegrationTests : BasePostCommentApplicationComma
         await Sender.SendAsync(_request, CancellationToken);
 
         // Assert
-        await EventHarness.ShouldHavePublishedDeletedAsync(PostComment, CancellationToken);
+        await EventHarness.ShouldHavePublishedPostCommentDeletedAsync(PostComment, CancellationToken);
     }
 
     [Theory]
@@ -182,7 +182,7 @@ public class DeletePostCommentIntegrationTests : BasePostCommentApplicationComma
         await Sender.SendAsync(request, CancellationToken);
 
         // Assert
-        await EventHarness.ShouldHavePublishedDeletedAsync(PostComment, CancellationToken);
+        await EventHarness.ShouldHavePublishedPostCommentDeletedAsync(PostComment, CancellationToken);
     }
 
     [Theory]
@@ -197,7 +197,7 @@ public class DeletePostCommentIntegrationTests : BasePostCommentApplicationComma
         await Sender.SendAsync(request, CancellationToken);
 
         // Assert
-        await EventHarness.ShouldHavePublishedDeletedAsync(PostComment, CancellationToken);
+        await EventHarness.ShouldHavePublishedPostCommentDeletedAsync(PostComment, CancellationToken);
     }
 
     [Theory]
@@ -212,6 +212,6 @@ public class DeletePostCommentIntegrationTests : BasePostCommentApplicationComma
         await Sender.SendAsync(request, CancellationToken);
 
         // Assert
-        await EventHarness.ShouldHavePublishedDeletedAsync(PostComment, CancellationToken);
+        await EventHarness.ShouldHavePublishedPostCommentDeletedAsync(PostComment, CancellationToken);
     }
 }
