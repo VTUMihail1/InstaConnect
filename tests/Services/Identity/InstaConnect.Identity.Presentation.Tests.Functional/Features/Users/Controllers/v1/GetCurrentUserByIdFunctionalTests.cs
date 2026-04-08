@@ -136,4 +136,31 @@ public class GetCurrentUserByIdFunctionalTests : BaseUserPresentationQueryFuncti
         // Assert
         response.ShouldSatisfy(User, request);
     }
+
+    [Fact]
+    public async Task GetCurrentByIdAsync_ShouldCacheResponse_WhenRequestIsValid()
+    {
+        // Act
+        await HttpClient.GetCurrentUserByIdAsync(_request, CancellationToken);
+        var response = await ServiceScope.GetResponseFromCache(_request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfy(User, _request);
+    }
+
+    [Theory]
+    [UserIdDifferentCaseData]
+    public async Task GetCurrentByIdAsync_ShouldCacheResponse_WhenRequestAndCurrentIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCurrentId(transformer).Build();
+
+        // Act
+        await HttpClient.GetCurrentUserByIdAsync(request, CancellationToken);
+        var response = await ServiceScope.GetResponseFromCache(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfy(User, request);
+    }
 }
