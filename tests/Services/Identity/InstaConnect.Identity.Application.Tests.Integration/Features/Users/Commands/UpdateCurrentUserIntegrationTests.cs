@@ -101,7 +101,7 @@ public class UpdateCurrentUserIntegrationTests : BaseUserApplicationCommandInteg
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowUserNotFoundException_WhenRequestIsInvalid()
+    public async Task SendAsync_ShouldThrowUserNotFoundException_WhenUserNotFound()
     {
         // Arrange
         await ServiceScope.DeleteUserAsync(User, CancellationToken);

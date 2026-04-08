@@ -1,10 +1,14 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 using InstaConnect.Common.Domain.Extensions;
 using InstaConnect.Common.Domain.Utilities;
 using InstaConnect.Common.Events.Models;
 using InstaConnect.Common.Presentation.Models;
+
+using Microsoft.Net.Http.Headers;
 
 namespace InstaConnect.Common.Presentation.Tests.Utilities;
 
@@ -51,7 +55,13 @@ public static class Client
     {
         public async Task<T> GetFromJsonAsync<T>(CancellationToken cancellationToken)
         {
-            return (await httpResponseMessage.Content.ReadFromJsonAsync<T>(cancellationToken))!;
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                Converters = { new JsonStringEnumConverter() }
+            };
+
+            return (await httpResponseMessage.Content.ReadFromJsonAsync<T>(options, cancellationToken))!;
         }
 
         public async Task<ApplicationProblemDetails> GetProblemDetailsFromJsonAsync(CancellationToken cancellationToken)
@@ -62,6 +72,13 @@ public static class Client
         public HttpStatusCode GetStatusCode()
         {
             return httpResponseMessage.StatusCode;
+        }
+
+        public ICollection<SetCookieHeaderValue> GetCookies()
+        {
+            const string SetCookieHeader = "Set-Cookie";
+
+            return [.. httpResponseMessage.Headers.GetValues(SetCookieHeader).Select(header => SetCookieHeaderValue.Parse(header))];
         }
     }
 }

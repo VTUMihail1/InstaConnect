@@ -2,6 +2,8 @@
 using InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Utilities;
 using InstaConnect.Identity.Presentation.Tests.Features.Users.Utilities;
 
+using Microsoft.Net.Http.Headers;
+
 namespace InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Utilities;
 
 
@@ -36,7 +38,7 @@ public static class RefreshTokenEquals
 
     extension(IssueRefreshTokenApiResponse response)
     {
-        public bool Matches(RefreshToken refreshToken, IssueRefreshTokenApiRequest request)
+        public bool Matches(IssueRefreshTokenApiRequest request)
         {
             return response.AccessToken.Matches();
         }
@@ -45,7 +47,7 @@ public static class RefreshTokenEquals
 
     extension(RotateRefreshTokenApiResponse response)
     {
-        public bool Matches(RefreshToken refreshToken, RotateRefreshTokenApiRequest request)
+        public bool Matches(RotateRefreshTokenApiRequest request)
         {
             return response.AccessToken.Matches();
         }
@@ -71,6 +73,54 @@ public static class RefreshTokenEquals
         {
             return response.Value.IsNotNullOrEmptyOrWhiteSpace() &&
                    response.ExpiresAtUtc != default;
+        }
+    }
+
+    extension(ICollection<SetCookieHeaderValue> cookies)
+    {
+        public bool Matches(IssueRefreshTokenApiRequest request, User user)
+        {
+            var idCookie = cookies.GetId();
+            var id = idCookie.GetStringValue();
+            var valueCookie = cookies.GetValue();
+            var value = valueCookie.GetStringValue();
+
+            return user.Id.Matches(id) &&
+                   idCookie.Expires != default &&
+                   idCookie.Secure &&
+                   idCookie.HttpOnly &&
+                   user.RefreshTokens.Any(a => a.Id.Matches(id, value)) &&
+                   valueCookie.Expires != default &&
+                   valueCookie.Secure &&
+                   valueCookie.HttpOnly;
+        }
+
+        public bool Matches(RotateRefreshTokenApiRequest request, User user)
+        {
+            var idCookie = cookies.GetId();
+            var id = idCookie.GetStringValue();
+            var valueCookie = cookies.GetValue();
+            var value = valueCookie.GetStringValue();
+
+            return user.Id.Matches(id) &&
+                   idCookie.Expires != default &&
+                   idCookie.Secure &&
+                   idCookie.HttpOnly &&
+                   user.RefreshTokens.Any(a => a.Id.Matches(id, value)) &&
+                   valueCookie.Expires != default &&
+                   valueCookie.Secure &&
+                   valueCookie.HttpOnly;
+        }
+
+        public bool Matches(DeleteCurrentRefreshTokenApiRequest request, User user)
+        {
+            var idCookie = cookies.GetId();
+            var id = idCookie.GetStringValue();
+            var valueCookie = cookies.GetValue();
+            var value = valueCookie.GetStringValue();
+
+            return id.IsNullOrEmptyOrWhiteSpace() &&
+                   value.IsNullOrEmptyOrWhiteSpace();
         }
     }
 }

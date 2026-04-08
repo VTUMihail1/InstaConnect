@@ -51,7 +51,7 @@ public class VerifyEmailConfirmationTokenIntegrationTests : BaseEmailConfirmatio
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowUserNotFoundException_WhenIdIsInvalid()
+    public async Task SendAsync_ShouldThrowUserNotFoundException_WhenUserNotFound()
     {
         // Arrange
         await ServiceScope.DeleteUserAsync(User, CancellationToken);
@@ -61,7 +61,7 @@ public class VerifyEmailConfirmationTokenIntegrationTests : BaseEmailConfirmatio
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowEmailConfirmationTokenNotFoundException_WhenIdIsInvalid()
+    public async Task SendAsync_ShouldThrowEmailConfirmationTokenNotFoundException_WhenEmailConfirmationTokenNotFound()
     {
         // Arrange
         await ServiceScope.DeleteEmailConfirmationTokenAsync(EmailConfirmationToken, CancellationToken);
@@ -82,7 +82,7 @@ public class VerifyEmailConfirmationTokenIntegrationTests : BaseEmailConfirmatio
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowForgotPasswordExpiredException_WhenIdIsInvalid()
+    public async Task SendAsync_ShouldThrowEmailConfirmationTokenExpiredException_WhenEmailConfirmationTokenHasExpired()
     {
         // Arrange
         var updatedEmailConfirmationToken = EmailConfirmationTokenBuilder.WithAlreadyExpiresAtUtc().Build();

@@ -9,7 +9,7 @@ public static class UserValidationProblemDetailsAssertions
     {
         public void ShouldSatisfyInvalidValidationForId(
             IStringMessageTransformer messageTransformer,
-            UpdateCurrentUserCommandRequest request)
+            UpdateCurrentUserApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.Id,
@@ -19,47 +19,47 @@ public static class UserValidationProblemDetailsAssertions
 
         public void ShouldSatisfyInvalidValidationForFirstName(
             IStringMessageTransformer messageTransformer,
-            UpdateCurrentUserCommandRequest request)
+            UpdateCurrentUserApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.FirstName,
+                p => p.Form.FirstName,
                 messageTransformer,
                 request);
         }
 
         public void ShouldSatisfyInvalidValidationForLastName(
             IStringMessageTransformer messageTransformer,
-            UpdateCurrentUserCommandRequest request)
+            UpdateCurrentUserApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.LastName,
+                p => p.Form.LastName,
                 messageTransformer,
                 request);
         }
 
         public void ShouldSatisfyInvalidValidationForName(
             IStringMessageTransformer messageTransformer,
-            UpdateCurrentUserCommandRequest request)
+            UpdateCurrentUserApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.Name,
+                p => p.Form.Name,
                 messageTransformer,
                 request);
         }
 
         public void ShouldSatisfyInvalidValidationForEmail(
             IStringMessageTransformer messageTransformer,
-            UpdateCurrentUserCommandRequest request)
+            UpdateCurrentUserApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.Email,
+                p => p.Form.Email,
                 messageTransformer,
                 request);
         }
 
         public void ShouldSatisfyInvalidValidationForId(
             IStringMessageTransformer messageTransformer,
-            DeleteUserCommandRequest request)
+            DeleteUserApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.Id,
@@ -69,7 +69,7 @@ public static class UserValidationProblemDetailsAssertions
 
         public void ShouldSatisfyInvalidValidationForId(
             IStringMessageTransformer messageTransformer,
-            DeleteCurrentUserCommandRequest request)
+            DeleteCurrentUserApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.CurrentId,
@@ -79,7 +79,7 @@ public static class UserValidationProblemDetailsAssertions
 
         public void ShouldSatisfyInvalidValidationForId(
             IStringMessageTransformer messageTransformer,
-            GetUserByIdQueryRequest request)
+            GetUserByIdApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.Id,
@@ -89,7 +89,7 @@ public static class UserValidationProblemDetailsAssertions
 
         public void ShouldSatisfyInvalidValidationForCurrentId(
             IStringMessageTransformer messageTransformer,
-            GetUserByIdQueryRequest request)
+            GetUserByIdApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.CurrentId,
@@ -99,7 +99,7 @@ public static class UserValidationProblemDetailsAssertions
 
         public void ShouldSatisfyInvalidValidationForCurrentId(
             IStringMessageTransformer messageTransformer,
-            GetCurrentUserByIdQueryRequest request)
+            GetCurrentUserByIdApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.CurrentId,
@@ -109,7 +109,7 @@ public static class UserValidationProblemDetailsAssertions
 
         public void ShouldSatisfyInvalidValidationForId(
             IStringMessageTransformer messageTransformer,
-            GetUserDetailsByIdQueryRequest request)
+            GetUserDetailsByIdApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.Id,
@@ -119,7 +119,7 @@ public static class UserValidationProblemDetailsAssertions
 
         public void ShouldSatisfyInvalidValidationForCurrentId(
             IStringMessageTransformer messageTransformer,
-            GetUserDetailsByIdQueryRequest request)
+            GetUserDetailsByIdApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.CurrentId,
@@ -129,7 +129,7 @@ public static class UserValidationProblemDetailsAssertions
 
         public void ShouldSatisfyInvalidValidationForCurrentId(
             IStringMessageTransformer messageTransformer,
-            GetCurrentUserDetailsByIdQueryRequest request)
+            GetCurrentUserDetailsByIdApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.CurrentId,
@@ -139,67 +139,67 @@ public static class UserValidationProblemDetailsAssertions
 
         public void ShouldSatisfyInvalidValidationForFirstName(
             IStringMessageTransformer messageTransformer,
-            AddUserCommandRequest request)
+            AddUserApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.FirstName,
+                p => p.Form.FirstName,
                 messageTransformer,
                 request);
         }
 
         public void ShouldSatisfyInvalidValidationForLastName(
             IStringMessageTransformer messageTransformer,
-            AddUserCommandRequest request)
+            AddUserApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.LastName,
+                p => p.Form.LastName,
                 messageTransformer,
                 request);
         }
 
         public void ShouldSatisfyInvalidValidationForName(
             IStringMessageTransformer messageTransformer,
-            AddUserCommandRequest request)
+            AddUserApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.Name,
+                p => p.Form.Name,
                 messageTransformer,
                 request);
         }
 
         public void ShouldSatisfyInvalidValidationForEmail(
             IStringMessageTransformer messageTransformer,
-            AddUserCommandRequest request)
+            AddUserApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.Email,
+                p => p.Form.Email,
                 messageTransformer,
                 request);
         }
 
         public void ShouldSatisfyInvalidValidationForPassword(
             IStringMessageTransformer messageTransformer,
-            AddUserCommandRequest request)
+            AddUserApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.Password,
+                p => p.Form.Password,
                 messageTransformer,
                 request);
         }
 
         public void ShouldSatisfyInvalidValidationForConfirmPassword(
             IStringMessageTransformer messageTransformer,
-            AddUserCommandRequest request)
+            AddUserApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.ConfirmPassword,
+                p => p.Form.ConfirmPassword,
                 messageTransformer,
                 request);
         }
 
         public void ShouldSatisfyInvalidValidationForName(
             IStringMessageTransformer messageTransformer,
-            GetAllUsersQueryRequest request)
+            GetAllUsersApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.Name,
@@ -209,7 +209,7 @@ public static class UserValidationProblemDetailsAssertions
 
         public void ShouldSatisfyInvalidValidationForFirstName(
             IStringMessageTransformer messageTransformer,
-            GetAllUsersQueryRequest request)
+            GetAllUsersApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.FirstName,
@@ -219,7 +219,7 @@ public static class UserValidationProblemDetailsAssertions
 
         public void ShouldSatisfyInvalidValidationForLastName(
             IStringMessageTransformer messageTransformer,
-            GetAllUsersQueryRequest request)
+            GetAllUsersApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.LastName,
@@ -229,7 +229,7 @@ public static class UserValidationProblemDetailsAssertions
 
         public void ShouldSatisfyInvalidValidationForCurrentId(
             IStringMessageTransformer messageTransformer,
-            GetAllUsersQueryRequest request)
+            GetAllUsersApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.CurrentId,
@@ -239,7 +239,7 @@ public static class UserValidationProblemDetailsAssertions
 
         public void ShouldSatisfyInvalidValidationForPage(
             IIntMessageTransformer messageTransformer,
-            GetAllUsersQueryRequest request)
+            GetAllUsersApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.Page,
@@ -249,7 +249,7 @@ public static class UserValidationProblemDetailsAssertions
 
         public void ShouldSatisfyInvalidValidationForPageSize(
             IIntMessageTransformer messageTransformer,
-            GetAllUsersQueryRequest request)
+            GetAllUsersApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.PageSize,
@@ -259,7 +259,7 @@ public static class UserValidationProblemDetailsAssertions
 
         public void ShouldSatisfyInvalidValidationForSortOrder(
             IEnumMessageTransformer<CommonSortOrder> messageTransformer,
-            GetAllUsersQueryRequest request)
+            GetAllUsersApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.SortOrder,
@@ -269,7 +269,7 @@ public static class UserValidationProblemDetailsAssertions
 
         public void ShouldSatisfyInvalidValidationForSortTerm(
             IEnumMessageTransformer<UsersSortTerm> messageTransformer,
-            GetAllUsersQueryRequest request)
+            GetAllUsersApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.SortTerm,

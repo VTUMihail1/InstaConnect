@@ -36,7 +36,7 @@ public class GetCurrentUserByIdQueryHandlerIntegrationTests : BaseUserApplicatio
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowUserNotFoundException_WhenIdIsInvalid()
+    public async Task SendAsync_ShouldThrowUserNotFoundException_WhenUserNotFound()
     {
         // Arrange
         await ServiceScope.DeleteUserAsync(User, CancellationToken);

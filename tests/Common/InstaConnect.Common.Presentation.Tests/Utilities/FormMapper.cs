@@ -1,21 +1,39 @@
-﻿namespace InstaConnect.Common.Presentation.Tests.Utilities;
+﻿using System.Net.Http.Headers;
+using System.Text;
+
+using Microsoft.AspNetCore.Http;
+
+namespace InstaConnect.Common.Presentation.Tests.Utilities;
 
 public static class FormMapper
 {
-    extension(string content)
+    extension(MultipartFormDataContent multipart)
     {
-        public StringContent GetContent()
+        public MultipartFormDataContent AddString(string? content, string name)
         {
-            return new StringContent(content);
+            if (content == null)
+            {
+                return multipart;
+            }
+
+            var stringContent = new StringContent(content, Encoding.UTF8, "text/plain");
+            multipart.Add(stringContent, name);
+
+            return multipart;
         }
-    }
 
-
-    extension(Stream content)
-    {
-        public StreamContent GetContent()
+        public MultipartFormDataContent AddFile(IFormFile? file, string name)
         {
-            return new StreamContent(content);
+            if (file == null)
+            {
+                return multipart;
+            }
+
+            var streamContent = new StreamContent(file.OpenReadStream());
+            streamContent.Headers.ContentType = new MediaTypeHeaderValue(file.ContentType);
+            multipart.Add(streamContent, name, file.FileName);
+
+            return multipart;
         }
     }
 }

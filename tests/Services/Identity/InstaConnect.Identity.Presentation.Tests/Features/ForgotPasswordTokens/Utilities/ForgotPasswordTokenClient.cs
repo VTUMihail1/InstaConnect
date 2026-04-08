@@ -51,7 +51,7 @@ public static class ForgotPasswordTokenClient
             var route = ForgotPasswordTokenTestRoutes.GetRoute(request);
 
             return await httpClient
-                .PostAsJsonAsync(route, request.Body, cancellationToken);
+                .PutAsJsonAsync(route, request.Body, cancellationToken);
         }
 
         public async Task<ApplicationProblemDetails> VerifyForgotPasswordTokenProblemDetailsAsync(

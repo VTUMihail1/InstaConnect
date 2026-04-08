@@ -10,7 +10,7 @@ public static class UserClaimValidationProblemDetailsAssertions
     {
         public void ShouldSatisfyInvalidValidationForId(
             IStringMessageTransformer messageTransformer,
-            DeleteUserClaimCommandRequest request)
+            DeleteUserClaimApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.Id,
@@ -20,7 +20,7 @@ public static class UserClaimValidationProblemDetailsAssertions
 
         public void ShouldSatisfyInvalidValidationForId(
             IStringMessageTransformer messageTransformer,
-            AddUserClaimCommandRequest request)
+            AddUserClaimApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.Id,
@@ -30,7 +30,7 @@ public static class UserClaimValidationProblemDetailsAssertions
 
         public void ShouldSatisfyInvalidValidationForId(
             IStringMessageTransformer messageTransformer,
-            GetAllUserClaimsQueryRequest request)
+            GetAllUserClaimsApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.Id,
@@ -40,7 +40,7 @@ public static class UserClaimValidationProblemDetailsAssertions
 
         public void ShouldSatisfyInvalidValidationForClaim(
             IEnumMessageTransformer<ApplicationClaims> messageTransformer,
-            DeleteUserClaimCommandRequest request)
+            DeleteUserClaimApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.Claim,
@@ -50,17 +50,17 @@ public static class UserClaimValidationProblemDetailsAssertions
 
         public void ShouldSatisfyInvalidValidationForClaim(
             IEnumMessageTransformer<ApplicationClaims> messageTransformer,
-            AddUserClaimCommandRequest request)
+            AddUserClaimApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.Claim,
+                p => p.Body.Claim,
                 messageTransformer,
                 request);
         }
 
         public void ShouldSatisfyInvalidValidationForCurrentId(
             IStringMessageTransformer messageTransformer,
-            GetAllUserClaimsQueryRequest request)
+            GetAllUserClaimsApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.CurrentId,
@@ -70,7 +70,7 @@ public static class UserClaimValidationProblemDetailsAssertions
 
         public void ShouldSatisfyInvalidValidationForPage(
             IIntMessageTransformer messageTransformer,
-            GetAllUserClaimsQueryRequest request)
+            GetAllUserClaimsApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.Page,
@@ -80,7 +80,7 @@ public static class UserClaimValidationProblemDetailsAssertions
 
         public void ShouldSatisfyInvalidValidationForPageSize(
             IIntMessageTransformer messageTransformer,
-            GetAllUserClaimsQueryRequest request)
+            GetAllUserClaimsApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.PageSize,
@@ -90,7 +90,7 @@ public static class UserClaimValidationProblemDetailsAssertions
 
         public void ShouldSatisfyInvalidValidationForSortOrder(
             IEnumMessageTransformer<CommonSortOrder> messageTransformer,
-            GetAllUserClaimsQueryRequest request)
+            GetAllUserClaimsApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.SortOrder,
@@ -100,7 +100,7 @@ public static class UserClaimValidationProblemDetailsAssertions
 
         public void ShouldSatisfyInvalidValidationForSortTerm(
             IEnumMessageTransformer<UserClaimsSortTerm> messageTransformer,
-            GetAllUserClaimsQueryRequest request)
+            GetAllUserClaimsApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.SortTerm,

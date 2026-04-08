@@ -8,7 +8,7 @@ public static class RefreshTokenValidationProblemDetailsAssertions
     {
         public void ShouldSatisfyInvalidValidationForName(
             IStringMessageTransformer messageTransformer,
-            IssueRefreshTokenCommandRequest request)
+            IssueRefreshTokenApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.Name,
@@ -18,17 +18,17 @@ public static class RefreshTokenValidationProblemDetailsAssertions
 
         public void ShouldSatisfyInvalidValidationForPassword(
             IStringMessageTransformer messageTransformer,
-            IssueRefreshTokenCommandRequest request)
+            IssueRefreshTokenApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.Password,
+                p => p.Body.Password,
                 messageTransformer,
                 request);
         }
 
         public void ShouldSatisfyInvalidValidationForId(
             IStringMessageTransformer messageTransformer,
-            DeleteCurrentRefreshTokenCommandRequest request)
+            DeleteCurrentRefreshTokenApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.Id,
@@ -38,7 +38,7 @@ public static class RefreshTokenValidationProblemDetailsAssertions
 
         public void ShouldSatisfyInvalidValidationForId(
             IStringMessageTransformer messageTransformer,
-            RotateRefreshTokenCommandRequest request)
+            RotateRefreshTokenApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.Id,
@@ -48,7 +48,7 @@ public static class RefreshTokenValidationProblemDetailsAssertions
 
         public void ShouldSatisfyInvalidValidationForValue(
             IStringMessageTransformer messageTransformer,
-            DeleteCurrentRefreshTokenCommandRequest request)
+            DeleteCurrentRefreshTokenApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.Value,
@@ -58,7 +58,7 @@ public static class RefreshTokenValidationProblemDetailsAssertions
 
         public void ShouldSatisfyInvalidValidationForValue(
             IStringMessageTransformer messageTransformer,
-            RotateRefreshTokenCommandRequest request)
+            RotateRefreshTokenApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.Value,

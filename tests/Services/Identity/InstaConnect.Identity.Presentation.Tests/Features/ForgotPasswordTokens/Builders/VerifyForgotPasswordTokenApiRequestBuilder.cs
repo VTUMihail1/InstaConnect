@@ -39,6 +39,7 @@ public class VerifyForgotPasswordTokenApiRequestBuilder
     public VerifyForgotPasswordTokenApiRequestBuilder WithPassword(IStringTransformer transformer)
     {
         _password = transformer.Transform(_password);
+        _confirmPassword = _password;
 
         return this;
     }

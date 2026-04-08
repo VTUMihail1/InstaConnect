@@ -70,6 +70,7 @@ public class AddUserApiRequestBuilder
     public AddUserApiRequestBuilder WithPassword(IStringTransformer transformer)
     {
         _password = transformer.Transform(_password);
+        _confirmPassword = _password;
 
         return this;
     }

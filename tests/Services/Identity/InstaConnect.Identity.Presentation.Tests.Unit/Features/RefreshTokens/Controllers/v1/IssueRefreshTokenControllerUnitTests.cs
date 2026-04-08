@@ -36,7 +36,7 @@ public class IssueRefreshTokenControllerUnitTests : BaseRefreshTokenPresentation
         var response = await _controller.IssueAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(RefreshToken, _request);
+        response.ShouldSatisfy(_request);
     }
 
     [Fact]

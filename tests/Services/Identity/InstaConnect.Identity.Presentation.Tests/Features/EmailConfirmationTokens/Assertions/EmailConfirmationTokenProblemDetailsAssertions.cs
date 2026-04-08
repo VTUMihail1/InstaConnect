@@ -7,15 +7,23 @@ public static class EmailConfirmationTokenProblemDetailsAssertions
     extension(ApplicationProblemDetails problemDetails)
     {
         public void ShouldSatisfyUserNameNotFound(
-            AddEmailConfirmationTokenCommandRequest request)
+            AddEmailConfirmationTokenApiRequest request)
         {
             problemDetails.ShouldSatisfyUserNameNotFound(
                 r => r.Name,
                 request);
         }
 
+        public void ShouldSatisfyUserNameEmailAlreadyConfirmed(
+            AddEmailConfirmationTokenApiRequest request)
+        {
+            problemDetails.ShouldSatisfyUserNameEmailAlreadyConfirmed(
+                r => r.Name,
+                request);
+        }
+
         public void ShouldSatisfyUserNotFound(
-            VerifyEmailConfirmationTokenCommandRequest request)
+            VerifyEmailConfirmationTokenApiRequest request)
         {
             problemDetails.ShouldSatisfyUserNotFound(
                 r => r.Id,
@@ -23,7 +31,7 @@ public static class EmailConfirmationTokenProblemDetailsAssertions
         }
 
         public void ShouldSatisfyUserEmailAlreadyConfirmed(
-            VerifyEmailConfirmationTokenCommandRequest request)
+            VerifyEmailConfirmationTokenApiRequest request)
         {
             problemDetails.ShouldSatisfyUserEmailAlreadyConfirmed(
                 r => r.Id,
@@ -31,7 +39,7 @@ public static class EmailConfirmationTokenProblemDetailsAssertions
         }
 
         public void ShouldSatisfyEmailConfirmationTokenNotFound(
-            VerifyEmailConfirmationTokenCommandRequest request)
+            VerifyEmailConfirmationTokenApiRequest request)
         {
             problemDetails.ShouldSatisfyEmailConfirmationTokenNotFound(
                 r => r.Id,
@@ -40,7 +48,7 @@ public static class EmailConfirmationTokenProblemDetailsAssertions
         }
 
         public void ShouldSatisfyEmailConfirmationTokenExpired(
-            VerifyEmailConfirmationTokenCommandRequest request)
+            VerifyEmailConfirmationTokenApiRequest request)
         {
             problemDetails.ShouldSatisfyEmailConfirmationTokenExpired(
                 r => r.Id,

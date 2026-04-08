@@ -9,11 +9,11 @@ public static class EmailConfirmationTokenTestRoutes
         return Format.FormatCurrentCulture(name);
     }
 
-    private static string GetDefaultId(string id)
+    private static string GetDefaultIdVerify(string id, string value)
     {
-        const string Format = "api/v1/users/{0}/email-confirmation-tokens";
+        const string Format = "api/v1/users/{0}/email-confirmation-tokens/{1}/verify";
 
-        return Format.FormatCurrentCulture(id);
+        return Format.FormatCurrentCulture(id, value);
     }
 
     public static string GetRoute(AddEmailConfirmationTokenApiRequest request)
@@ -23,6 +23,6 @@ public static class EmailConfirmationTokenTestRoutes
 
     public static string GetRoute(VerifyEmailConfirmationTokenApiRequest request)
     {
-        return GetDefaultId(request.Id);
+        return GetDefaultIdVerify(request.Id, request.Value);
     }
 }

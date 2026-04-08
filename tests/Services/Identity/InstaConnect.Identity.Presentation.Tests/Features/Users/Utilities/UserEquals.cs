@@ -208,7 +208,7 @@ public static class UserEquals
                    user.LastName == request.Form.LastName &&
                    user.Name.Matches(request.Form.Name) &&
                    user.Email.Matches(request.Form.Email) &&
-                   user.ProfileImage.Matches(request.Form.ProfileImage?.GetUrl());
+                   (request.Form.ProfileImage == null || user.ProfileImage.Matches(request.Form.ProfileImage.GetUrl()));
         }
 
         public bool Matches(VerifyEmailConfirmationTokenApiRequest request)

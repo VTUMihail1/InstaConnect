@@ -4,6 +4,8 @@ using System.Net.Http.Json;
 using InstaConnect.Common.Presentation.Models;
 using InstaConnect.Identity.Presentation.Features.RefreshTokens.Utilities;
 
+using Microsoft.Net.Http.Headers;
+
 namespace InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Utilities;
 
 public static class RefreshTokenClient
@@ -38,6 +40,15 @@ public static class RefreshTokenClient
             return await response.GetFromJsonAsync<IssueRefreshTokenApiResponse>(cancellationToken);
         }
 
+        public async Task<ICollection<SetCookieHeaderValue>> IssueRefreshTokenResponseCookiesAsync(
+            IssueRefreshTokenApiRequest request,
+            CancellationToken cancellationToken)
+        {
+            var response = await httpClient.IssueRefreshTokenResponseMessageAsync(request, cancellationToken);
+
+            return response.GetCookies();
+        }
+
         public async Task<HttpStatusCode> IssueRefreshTokenStatusCodeAsync(
             IssueRefreshTokenApiRequest request,
             CancellationToken cancellationToken)
@@ -54,7 +65,7 @@ public static class RefreshTokenClient
             var route = RefreshTokenTestRoutes.GetRoute(request);
 
             return await httpClient
-                .PostAsJsonAsync(route, cancellationToken);
+                .PostAsync(route, null, cancellationToken);
         }
 
         private async Task<HttpResponseMessage> RotateRefreshTokenResponseMessageAsync(
@@ -66,7 +77,7 @@ public static class RefreshTokenClient
             return await httpClient
                 .WithCookies(new(RefreshTokenCookieKeys.Id, request.Id),
                              new(RefreshTokenCookieKeys.Value, request.Value))
-                .PostAsJsonAsync(route, cancellationToken);
+                .PostAsync(route, null, cancellationToken);
         }
 
         public async Task<ApplicationProblemDetails> RotateRefreshTokenProblemDetailsWithoutCookiesAsync(
@@ -94,6 +105,15 @@ public static class RefreshTokenClient
             var response = await httpClient.RotateRefreshTokenResponseMessageAsync(request, cancellationToken);
 
             return await response.GetFromJsonAsync<RotateRefreshTokenApiResponse>(cancellationToken);
+        }
+
+        public async Task<ICollection<SetCookieHeaderValue>> RotateRefreshTokenResponseCookiesAsync(
+            RotateRefreshTokenApiRequest request,
+            CancellationToken cancellationToken)
+        {
+            var response = await httpClient.RotateRefreshTokenResponseMessageAsync(request, cancellationToken);
+
+            return response.GetCookies();
         }
 
         public async Task<HttpStatusCode> RotateRefreshTokenStatusCodeWithoutCookiesAsync(
@@ -159,6 +179,15 @@ public static class RefreshTokenClient
             CancellationToken cancellationToken)
         {
             await httpClient.DeleteCurrentRefreshTokenResponseMessageAsync(request, cancellationToken);
+        }
+
+        public async Task<ICollection<SetCookieHeaderValue>> DeleteCurrentRefreshTokenResponseCookiesAsync(
+            DeleteCurrentRefreshTokenApiRequest request,
+            CancellationToken cancellationToken)
+        {
+            var response = await httpClient.DeleteCurrentRefreshTokenResponseMessageAsync(request, cancellationToken);
+
+            return response.GetCookies();
         }
 
         public async Task<HttpStatusCode> DeleteCurrentRefreshTokenStatusCodeWithoutCookiesAsync(

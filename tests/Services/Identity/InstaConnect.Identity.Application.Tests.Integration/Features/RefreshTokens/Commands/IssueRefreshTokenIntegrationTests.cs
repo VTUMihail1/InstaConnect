@@ -17,6 +17,7 @@ public class IssueRefreshTokenIntegrationTests : BaseRefreshTokenApplicationComm
     protected override async Task OnInitializeAsync()
     {
         await ServiceScope.AddUserAsync(User, CancellationToken);
+        await ServiceScope.AddUserClaimRangeAsync(User.UserClaims, CancellationToken);
     }
 
     [Theory]
@@ -50,7 +51,7 @@ public class IssueRefreshTokenIntegrationTests : BaseRefreshTokenApplicationComm
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowUserInvalidDetailsException_WhenNameIsInvalid()
+    public async Task SendAsync_ShouldThrowUserInvalidDetailsException_WhenUserNotFound()
     {
         // Arrange
         await ServiceScope.DeleteUserAsync(User, CancellationToken);
@@ -60,7 +61,7 @@ public class IssueRefreshTokenIntegrationTests : BaseRefreshTokenApplicationComm
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowUserInvalidDetailsException_WhenPasswordIsInvalid()
+    public async Task SendAsync_ShouldThrowUserInvalidDetailsException_WhenPasswordDoesNotMatch()
     {
         // Arrange
         var updatedUser = UserBuilder.WithPasswordHash(PasswordHasher.Hash(NewPassword)).Build();

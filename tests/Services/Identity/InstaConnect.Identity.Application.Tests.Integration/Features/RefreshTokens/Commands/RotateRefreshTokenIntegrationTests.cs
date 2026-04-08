@@ -17,6 +17,7 @@ public class RotateRefreshTokenIntegrationTests : BaseRefreshTokenApplicationCom
     protected override async Task OnInitializeAsync()
     {
         await ServiceScope.AddUserAsync(User, CancellationToken);
+        await ServiceScope.AddUserClaimRangeAsync(User.UserClaims, CancellationToken);
         await ServiceScope.AddRefreshTokenAsync(RefreshToken, CancellationToken);
     }
 
@@ -51,7 +52,7 @@ public class RotateRefreshTokenIntegrationTests : BaseRefreshTokenApplicationCom
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowUserNotFoundException_WhenIdIsInvalid()
+    public async Task SendAsync_ShouldThrowUserNotFoundException_WhenUserNotFound()
     {
         // Arrange
         await ServiceScope.DeleteUserAsync(User, CancellationToken);
@@ -61,7 +62,7 @@ public class RotateRefreshTokenIntegrationTests : BaseRefreshTokenApplicationCom
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowRefreshTokenNotFoundException_WhenIdIsInvalid()
+    public async Task SendAsync_ShouldThrowRefreshTokenNotFoundException_WhenRefreshTokenNotFound()
     {
         // Arrange
         await ServiceScope.DeleteRefreshTokenAsync(RefreshToken, CancellationToken);
@@ -71,7 +72,7 @@ public class RotateRefreshTokenIntegrationTests : BaseRefreshTokenApplicationCom
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowRefreshTokenExpiredException_WhenIdIsInvalid()
+    public async Task SendAsync_ShouldThrowRefreshTokenExpiredException_WhenRefreshTokenHasExpired()
     {
         // Arrange
         var updatedRefreshToken = RefreshTokenBuilder.WithAlreadyExpiresAtUtc().Build();

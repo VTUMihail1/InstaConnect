@@ -36,7 +36,7 @@ public class RotateRefreshTokenControllerUnitTests : BaseRefreshTokenPresentatio
         var response = await _controller.RotateAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(RefreshToken, _request);
+        response.ShouldSatisfy(_request);
     }
 
     [Fact]

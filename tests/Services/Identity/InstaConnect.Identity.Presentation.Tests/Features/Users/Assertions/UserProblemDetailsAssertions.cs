@@ -7,7 +7,7 @@ public static class UserProblemDetailsAssertions
     extension(ApplicationProblemDetails problemDetails)
     {
         public void ShouldSatisfyUserNotFound(
-            UpdateCurrentUserCommandRequest request)
+            UpdateCurrentUserApiRequest request)
         {
             problemDetails.ShouldSatisfyUserNotFound(
                 r => r.Id,
@@ -15,7 +15,7 @@ public static class UserProblemDetailsAssertions
         }
 
         public void ShouldSatisfyUserNotFound(
-            GetUserByIdQueryRequest request)
+            GetUserByIdApiRequest request)
         {
             problemDetails.ShouldSatisfyUserNotFound(
                 r => r.Id,
@@ -23,7 +23,7 @@ public static class UserProblemDetailsAssertions
         }
 
         public void ShouldSatisfyUserNotFound(
-            GetUserDetailsByIdQueryRequest request)
+            GetUserDetailsByIdApiRequest request)
         {
             problemDetails.ShouldSatisfyUserNotFound(
                 r => r.Id,
@@ -31,7 +31,7 @@ public static class UserProblemDetailsAssertions
         }
 
         public void ShouldSatisfyUserNotFound(
-            GetCurrentUserByIdQueryRequest request)
+            GetCurrentUserByIdApiRequest request)
         {
             problemDetails.ShouldSatisfyUserNotFound(
                 r => r.CurrentId,
@@ -39,7 +39,7 @@ public static class UserProblemDetailsAssertions
         }
 
         public void ShouldSatisfyUserNotFound(
-            GetCurrentUserDetailsByIdQueryRequest request)
+            GetCurrentUserDetailsByIdApiRequest request)
         {
             problemDetails.ShouldSatisfyUserNotFound(
                 r => r.CurrentId,
@@ -47,7 +47,7 @@ public static class UserProblemDetailsAssertions
         }
 
         public void ShouldSatisfyUserNotFound(
-            DeleteUserCommandRequest request)
+            DeleteUserApiRequest request)
         {
             problemDetails.ShouldSatisfyUserNotFound(
                 r => r.Id,
@@ -55,7 +55,7 @@ public static class UserProblemDetailsAssertions
         }
 
         public void ShouldSatisfyUserNotFound(
-            DeleteCurrentUserCommandRequest request)
+            DeleteCurrentUserApiRequest request)
         {
             problemDetails.ShouldSatisfyUserNotFound(
                 r => r.CurrentId,
@@ -63,34 +63,34 @@ public static class UserProblemDetailsAssertions
         }
 
         public void ShouldSatisfyUserNameAlreadyTaken(
-            AddUserCommandRequest request)
+            AddUserApiRequest request)
         {
             problemDetails.ShouldSatisfyUserNameAlreadyTaken(
-                r => r.Name,
+                r => r.Form.Name,
                 request);
         }
 
         public void ShouldSatisfyUserNameAlreadyTaken(
-            UpdateCurrentUserCommandRequest request)
+            UpdateCurrentUserApiRequest request)
         {
             problemDetails.ShouldSatisfyUserNameAlreadyTaken(
-                r => r.Name,
+                r => r.Form.Name,
                 request);
         }
 
         public void ShouldSatisfyUserEmailAlreadyTaken(
-            AddUserCommandRequest request)
+            AddUserApiRequest request)
         {
             problemDetails.ShouldSatisfyUserEmailAlreadyTaken(
-                r => r.Email,
+                r => r.Form.Email,
                 request);
         }
 
         public void ShouldSatisfyUserEmailAlreadyTaken(
-            UpdateCurrentUserCommandRequest request)
+            UpdateCurrentUserApiRequest request)
         {
             problemDetails.ShouldSatisfyUserEmailAlreadyTaken(
-                r => r.Email,
+                r => r.Form.Email,
                 request);
         }
 
@@ -131,39 +131,48 @@ public static class UserProblemDetailsAssertions
         }
 
         internal void ShouldSatisfyUserInvalidDetails<TRequest>(
-            Func<TRequest, string> propertyExpression,
+            Func<TRequest, string> namePropertyExpression,
             TRequest request)
         {
             problemDetails.ShouldSatisfyBadRequest(
                 UserExceptionErrorMessages.GetInvalidDetailsMessage(
-                    new(propertyExpression(request))));
+                    new(namePropertyExpression(request))));
         }
 
         internal void ShouldSatisfyUserEmailAlreadyConfirmed<TRequest>(
-            Func<TRequest, string> propertyExpression,
+            Func<TRequest, string> idPropertyExpression,
             TRequest request)
         {
             problemDetails.ShouldSatisfyBadRequest(
                 UserExceptionErrorMessages.GetEmailAlreadyConfirmedMessage(
-                    new(propertyExpression(request))));
+                    new(idPropertyExpression(request))));
+        }
+
+        internal void ShouldSatisfyUserNameEmailAlreadyConfirmed<TRequest>(
+            Func<TRequest, string> namePropertyExpression,
+            TRequest request)
+        {
+            problemDetails.ShouldSatisfyBadRequest(
+                UserExceptionErrorMessages.GetNameEmailAlreadyConfirmedMessage(
+                    new(namePropertyExpression(request))));
         }
 
         internal void ShouldSatisfyUserEmailNotConfirmed<TRequest>(
-            Func<TRequest, string> propertyExpression,
+            Func<TRequest, string> idPropertyExpression,
             TRequest request)
         {
-            problemDetails.ShouldSatisfyForbidden(
+            problemDetails.ShouldSatisfyBadRequest(
                 UserExceptionErrorMessages.GetEmailNotConfirmedMessage(
-                    new(propertyExpression(request))));
+                    new(idPropertyExpression(request))));
         }
 
         internal void ShouldSatisfyUserNameEmailNotConfirmed<TRequest>(
-            Func<TRequest, string> propertyExpression,
+            Func<TRequest, string> namePropertyExpression,
             TRequest request)
         {
-            problemDetails.ShouldSatisfyForbidden(
+            problemDetails.ShouldSatisfyBadRequest(
                 UserExceptionErrorMessages.GetNameEmailNotConfirmedMessage(
-                    new(propertyExpression(request))));
+                    new(namePropertyExpression(request))));
         }
     }
 }

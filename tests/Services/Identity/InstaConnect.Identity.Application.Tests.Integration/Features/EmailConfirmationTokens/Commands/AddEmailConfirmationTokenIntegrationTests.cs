@@ -35,7 +35,7 @@ public class AddEmailConfirmationTokenIntegrationTests : BaseEmailConfirmationTo
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowUserNameNotFoundException_WhenNameIsInvalid()
+    public async Task SendAsync_ShouldThrowUserNameNotFoundException_WhenUserNotFound()
     {
         // Arrange
         await ServiceScope.DeleteUserAsync(User, CancellationToken);

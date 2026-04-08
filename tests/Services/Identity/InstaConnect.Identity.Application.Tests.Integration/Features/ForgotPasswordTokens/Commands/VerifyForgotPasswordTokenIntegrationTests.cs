@@ -80,7 +80,7 @@ public class VerifyForgotPasswordTokenIntegrationTests : BaseForgotPasswordToken
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowUserNotFoundException_WhenIdIsInvalid()
+    public async Task SendAsync_ShouldThrowUserNotFoundException_WhenUserNotFound()
     {
         // Arrange
         await ServiceScope.DeleteUserAsync(User, CancellationToken);
@@ -90,7 +90,7 @@ public class VerifyForgotPasswordTokenIntegrationTests : BaseForgotPasswordToken
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowForgotPasswordTokenNotFoundException_WhenIdIsInvalid()
+    public async Task SendAsync_ShouldThrowForgotPasswordTokenNotFoundException_WhenForgotPasswordTokenNotFound()
     {
         // Arrange
         await ServiceScope.DeleteForgotPasswordTokenAsync(ForgotPasswordToken, CancellationToken);
@@ -100,7 +100,7 @@ public class VerifyForgotPasswordTokenIntegrationTests : BaseForgotPasswordToken
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowForgotPasswordExpiredException_WhenIdIsInvalid()
+    public async Task SendAsync_ShouldThrowForgotPasswordExpiredException_WhenForgotPasswordTokenHasExpired()
     {
         // Arrange
         var updatedForgotPasswordToken = ForgotPasswordTokenBuilder.WithAlreadyExpiresAtUtc().Build();

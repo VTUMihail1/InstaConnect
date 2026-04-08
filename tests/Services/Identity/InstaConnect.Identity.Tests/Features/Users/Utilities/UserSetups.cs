@@ -36,7 +36,7 @@ public static class UserSetups
             UserId id,
             CancellationToken cancellationToken)
         {
-            var include = serviceScope.GetUserIncludeBuilderFactory().Create().WithEmailConfirmationTokens().WithForgotPasswordTokens().Build();
+            var include = serviceScope.GetUserIncludeBuilderFactory().Create().WithEmailConfirmationTokens().WithForgotPasswordTokens().WithRefreshTokens().Build();
 
             return await serviceScope.GetUserCommandRepository().GetByIdAsync(id, include, cancellationToken);
         }

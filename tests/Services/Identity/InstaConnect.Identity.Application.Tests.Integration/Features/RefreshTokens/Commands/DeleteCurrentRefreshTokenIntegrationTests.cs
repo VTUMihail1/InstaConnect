@@ -51,7 +51,7 @@ public class DeleteCurrentRefreshTokenIntegrationTests : BaseRefreshTokenApplica
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowUserNotFoundException_WhenIdIsInvalid()
+    public async Task SendAsync_ShouldThrowUserNotFoundException_WhenUserNotFound()
     {
         // Arrange
         await ServiceScope.DeleteUserAsync(User, CancellationToken);
@@ -61,7 +61,7 @@ public class DeleteCurrentRefreshTokenIntegrationTests : BaseRefreshTokenApplica
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowRefreshTokenNotFoundException_WhenIdIsInvalid()
+    public async Task SendAsync_ShouldThrowRefreshTokenNotFoundException_WhenRefreshTokenNotFound()
     {
         // Arrange
         await ServiceScope.DeleteRefreshTokenAsync(RefreshToken, CancellationToken);

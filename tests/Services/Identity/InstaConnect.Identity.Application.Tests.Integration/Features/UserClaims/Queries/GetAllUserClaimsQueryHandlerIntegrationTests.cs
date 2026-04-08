@@ -108,6 +108,16 @@ public class GetAllUserClaimsQueryHandlerIntegrationTests : BaseUserClaimApplica
     }
 
     [Fact]
+    public async Task SendAsync_ShouldThrowUserNotFoundException_WhenUserNotFound()
+    {
+        // Arrange
+        await ServiceScope.DeleteUserAsync(User, CancellationToken);
+
+        // Assert
+        await Sender.ShouldThrowUserNotFoundExceptionAsync(_request, CancellationToken);
+    }
+
+    [Fact]
     public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValid()
     {
         // Act

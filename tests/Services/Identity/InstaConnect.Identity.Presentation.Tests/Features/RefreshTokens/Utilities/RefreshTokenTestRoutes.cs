@@ -23,6 +23,13 @@ public static class RefreshTokenTestRoutes
         return Format.FormatCurrentCulture(GetDefaultCurrent());
     }
 
+    private static string GetCurrentRotate()
+    {
+        const string Format = "{0}/rotate";
+
+        return Format.FormatCurrentCulture(GetCurrent());
+    }
+
     public static string GetRoute(IssueRefreshTokenApiRequest request)
     {
         return GetDefaultName(request.Name);
@@ -30,7 +37,7 @@ public static class RefreshTokenTestRoutes
 
     public static string GetRoute(RotateRefreshTokenApiRequest request)
     {
-        return GetCurrent();
+        return GetCurrentRotate();
     }
 
     public static string GetRoute(DeleteCurrentRefreshTokenApiRequest request)

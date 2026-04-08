@@ -102,7 +102,7 @@ public static class UserClient
             var route = UserTestRoutes.GetRoute(request);
 
             return await httpClient
-                .WithAuthorization(request.CurrentId)
+                .WithAdminAuthorization(request.CurrentId)
                 .GetAsync(route, cancellationToken);
         }
 
@@ -151,7 +151,17 @@ public static class UserClient
             return response.GetStatusCode();
         }
 
-        private async Task<HttpResponseMessage> GetUserDetailsByIdResponseMessageAsync(
+        private async Task<HttpResponseMessage> GetUserDetailsByIdUnauthorizedResponseMessageAsync(
+            GetUserDetailsByIdApiRequest request,
+            CancellationToken cancellationToken)
+        {
+            var route = UserTestRoutes.GetRoute(request);
+
+            return await httpClient
+                .GetAsync(route, cancellationToken);
+        }
+
+        private async Task<HttpResponseMessage> GetUserDetailsByIdForbiddenResponseMessageAsync(
             GetUserDetailsByIdApiRequest request,
             CancellationToken cancellationToken)
         {
@@ -160,6 +170,35 @@ public static class UserClient
             return await httpClient
                 .WithAuthorization(request.CurrentId)
                 .GetAsync(route, cancellationToken);
+        }
+
+        private async Task<HttpResponseMessage> GetUserDetailsByIdResponseMessageAsync(
+            GetUserDetailsByIdApiRequest request,
+            CancellationToken cancellationToken)
+        {
+            var route = UserTestRoutes.GetRoute(request);
+
+            return await httpClient
+                .WithAdminAuthorization(request.CurrentId)
+                .GetAsync(route, cancellationToken);
+        }
+
+        public async Task<ApplicationProblemDetails> GetUserDetailsByIdUnauthorizedProblemDetailsAsync(
+            GetUserDetailsByIdApiRequest request,
+            CancellationToken cancellationToken)
+        {
+            var response = await httpClient.GetUserDetailsByIdUnauthorizedResponseMessageAsync(request, cancellationToken);
+
+            return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
+        }
+
+        public async Task<ApplicationProblemDetails> GetUserDetailsByIdForbiddenProblemDetailsAsync(
+            GetUserDetailsByIdApiRequest request,
+            CancellationToken cancellationToken)
+        {
+            var response = await httpClient.GetUserDetailsByIdForbiddenResponseMessageAsync(request, cancellationToken);
+
+            return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
         }
 
         public async Task<ApplicationProblemDetails> GetUserDetailsByIdProblemDetailsAsync(
@@ -171,13 +210,31 @@ public static class UserClient
             return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
         }
 
-        public async Task<GetUserDetailsByIdApiResponse> GetUserByIdAsync(
+        public async Task<GetUserDetailsByIdApiResponse> GetUserDetailsByIdAsync(
             GetUserDetailsByIdApiRequest request,
             CancellationToken cancellationToken)
         {
             var response = await httpClient.GetUserDetailsByIdResponseMessageAsync(request, cancellationToken);
 
             return await response.GetFromJsonAsync<GetUserDetailsByIdApiResponse>(cancellationToken);
+        }
+
+        public async Task<HttpStatusCode> GetUserDetailsByIdStatusCodeUnauthorizedAsync(
+            GetUserDetailsByIdApiRequest request,
+            CancellationToken cancellationToken)
+        {
+            var response = await httpClient.GetUserDetailsByIdUnauthorizedResponseMessageAsync(request, cancellationToken);
+
+            return response.GetStatusCode();
+        }
+
+        public async Task<HttpStatusCode> GetUserDetailsByIdStatusCodeForbiddenAsync(
+            GetUserDetailsByIdApiRequest request,
+            CancellationToken cancellationToken)
+        {
+            var response = await httpClient.GetUserDetailsByIdForbiddenResponseMessageAsync(request, cancellationToken);
+
+            return response.GetStatusCode();
         }
 
         public async Task<HttpStatusCode> GetUserDetailsByIdStatusCodeAsync(
@@ -262,7 +319,7 @@ public static class UserClient
             var route = UserTestRoutes.GetRoute(request);
 
             return await httpClient
-                .PostAsJsonAsync(route, request.Form.GetContent(), cancellationToken);
+                .PostAsync(route, request.Form.GetContent(), cancellationToken);
         }
 
         public async Task<ApplicationProblemDetails> AddUserProblemDetailsAsync(
@@ -310,7 +367,7 @@ public static class UserClient
 
             return await httpClient
                 .WithAuthorization(request.Id)
-                .PutAsJsonAsync(route, request.Form.GetContent(), cancellationToken);
+                .PutAsync(route, request.Form.GetContent(), cancellationToken);
         }
 
         public async Task<ApplicationProblemDetails> UpdateCurrentUserProblemDetailsUnauthorizedAsync(
@@ -368,7 +425,7 @@ public static class UserClient
                 .DeleteAsync(route, cancellationToken);
         }
 
-        private async Task<HttpResponseMessage> DeleteUserResponseMessageAsync(
+        private async Task<HttpResponseMessage> DeleteUserForbiddenResponseMessageAsync(
             DeleteUserApiRequest request,
             CancellationToken cancellationToken)
         {
@@ -379,7 +436,7 @@ public static class UserClient
                 .DeleteAsync(route, cancellationToken);
         }
 
-        private async Task<HttpResponseMessage> DeleteUserAdminResponseMessageAsync(
+        private async Task<HttpResponseMessage> DeleteUserResponseMessageAsync(
             DeleteUserApiRequest request,
             CancellationToken cancellationToken)
         {
@@ -399,20 +456,20 @@ public static class UserClient
             return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
         }
 
+        public async Task<ApplicationProblemDetails> DeleteUserForbiddenProblemDetailsAsync(
+            DeleteUserApiRequest request,
+            CancellationToken cancellationToken)
+        {
+            var response = await httpClient.DeleteUserForbiddenResponseMessageAsync(request, cancellationToken);
+
+            return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
+        }
+
         public async Task<ApplicationProblemDetails> DeleteUserProblemDetailsAsync(
             DeleteUserApiRequest request,
             CancellationToken cancellationToken)
         {
             var response = await httpClient.DeleteUserResponseMessageAsync(request, cancellationToken);
-
-            return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
-        }
-
-        public async Task<ApplicationProblemDetails> DeleteUserAdminProblemDetailsAsync(
-            DeleteUserApiRequest request,
-            CancellationToken cancellationToken)
-        {
-            var response = await httpClient.DeleteUserAdminResponseMessageAsync(request, cancellationToken);
 
             return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
         }
@@ -433,20 +490,20 @@ public static class UserClient
             return response.GetStatusCode();
         }
 
+        public async Task<HttpStatusCode> DeleteUserStatusCodeForbiddenAsync(
+            DeleteUserApiRequest request,
+            CancellationToken cancellationToken)
+        {
+            var response = await httpClient.DeleteUserForbiddenResponseMessageAsync(request, cancellationToken);
+
+            return response.GetStatusCode();
+        }
+
         public async Task<HttpStatusCode> DeleteUserStatusCodeAsync(
             DeleteUserApiRequest request,
             CancellationToken cancellationToken)
         {
             var response = await httpClient.DeleteUserResponseMessageAsync(request, cancellationToken);
-
-            return response.GetStatusCode();
-        }
-
-        public async Task<HttpStatusCode> DeleteUserAdminStatusCodeAsync(
-            DeleteUserApiRequest request,
-            CancellationToken cancellationToken)
-        {
-            var response = await httpClient.DeleteUserAdminResponseMessageAsync(request, cancellationToken);
 
             return response.GetStatusCode();
         }

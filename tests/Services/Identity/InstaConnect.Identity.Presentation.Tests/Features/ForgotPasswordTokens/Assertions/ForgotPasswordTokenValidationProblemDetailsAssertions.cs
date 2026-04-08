@@ -8,7 +8,7 @@ public static class ForgotPasswordTokenValidationProblemDetailsAssertions
     {
         public void ShouldSatisfyInvalidValidationForName(
             IStringMessageTransformer messageTransformer,
-            AddForgotPasswordTokenCommandRequest request)
+            AddForgotPasswordTokenApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.Name,
@@ -18,7 +18,7 @@ public static class ForgotPasswordTokenValidationProblemDetailsAssertions
 
         public void ShouldSatisfyInvalidValidationForId(
             IStringMessageTransformer messageTransformer,
-            VerifyForgotPasswordTokenCommandRequest request)
+            VerifyForgotPasswordTokenApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.Id,
@@ -28,7 +28,7 @@ public static class ForgotPasswordTokenValidationProblemDetailsAssertions
 
         public void ShouldSatisfyInvalidValidationForValue(
             IStringMessageTransformer messageTransformer,
-            VerifyForgotPasswordTokenCommandRequest request)
+            VerifyForgotPasswordTokenApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.Value,
@@ -38,20 +38,20 @@ public static class ForgotPasswordTokenValidationProblemDetailsAssertions
 
         public void ShouldSatisfyInvalidValidationForPassword(
             IStringMessageTransformer messageTransformer,
-            VerifyForgotPasswordTokenCommandRequest request)
+            VerifyForgotPasswordTokenApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.Password,
+                p => p.Body.Password,
                 messageTransformer,
                 request);
         }
 
         public void ShouldSatisfyInvalidValidationForConfirmPassword(
             IStringMessageTransformer messageTransformer,
-            VerifyForgotPasswordTokenCommandRequest request)
+            VerifyForgotPasswordTokenApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.ConfirmPassword,
+                p => p.Body.ConfirmPassword,
                 messageTransformer,
                 request);
         }

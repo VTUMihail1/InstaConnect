@@ -7,7 +7,7 @@ public static class RefreshTokenProblemDetailsAssertions
     extension(ApplicationProblemDetails problemDetails)
     {
         public void ShouldSatisfyUserInvalidDetails(
-            IssueRefreshTokenCommandRequest request)
+            IssueRefreshTokenApiRequest request)
         {
             problemDetails.ShouldSatisfyUserInvalidDetails(
                 r => r.Name,
@@ -15,7 +15,7 @@ public static class RefreshTokenProblemDetailsAssertions
         }
 
         public void ShouldSatisfyUserNameEmailNotConfirmed(
-            IssueRefreshTokenCommandRequest request)
+            IssueRefreshTokenApiRequest request)
         {
             problemDetails.ShouldSatisfyUserNameEmailNotConfirmed(
                 r => r.Name,
@@ -23,7 +23,7 @@ public static class RefreshTokenProblemDetailsAssertions
         }
 
         public void ShouldSatisfyUserEmailNotConfirmed(
-            RotateRefreshTokenCommandRequest request)
+            RotateRefreshTokenApiRequest request)
         {
             problemDetails.ShouldSatisfyUserEmailNotConfirmed(
                 r => r.Id,
@@ -31,7 +31,7 @@ public static class RefreshTokenProblemDetailsAssertions
         }
 
         public void ShouldSatisfyUserNotFound(
-            RotateRefreshTokenCommandRequest request)
+            RotateRefreshTokenApiRequest request)
         {
             problemDetails.ShouldSatisfyUserNotFound(
                 r => r.Id,
@@ -39,7 +39,7 @@ public static class RefreshTokenProblemDetailsAssertions
         }
 
         public void ShouldSatisfyUserNotFound(
-            DeleteCurrentRefreshTokenCommandRequest request)
+            DeleteCurrentRefreshTokenApiRequest request)
         {
             problemDetails.ShouldSatisfyUserNotFound(
                 r => r.Id,
@@ -47,7 +47,7 @@ public static class RefreshTokenProblemDetailsAssertions
         }
 
         public void ShouldSatisfyRefreshTokenNotFound(
-            RotateRefreshTokenCommandRequest request)
+            RotateRefreshTokenApiRequest request)
         {
             problemDetails.ShouldSatisfyRefreshTokenNotFound(
                 r => r.Id,
@@ -56,7 +56,7 @@ public static class RefreshTokenProblemDetailsAssertions
         }
 
         public void ShouldSatisfyRefreshTokenNotFound(
-            DeleteCurrentRefreshTokenCommandRequest request)
+            DeleteCurrentRefreshTokenApiRequest request)
         {
             problemDetails.ShouldSatisfyRefreshTokenNotFound(
                 r => r.Id,
@@ -65,7 +65,7 @@ public static class RefreshTokenProblemDetailsAssertions
         }
 
         public void ShouldSatisfyRefreshTokenExpired(
-            RotateRefreshTokenCommandRequest request)
+            RotateRefreshTokenApiRequest request)
         {
             problemDetails.ShouldSatisfyRefreshTokenExpired(
                 r => r.Id,
@@ -74,7 +74,7 @@ public static class RefreshTokenProblemDetailsAssertions
         }
 
         public void ShouldSatisfyRefreshTokenExpired(
-            DeleteCurrentRefreshTokenCommandRequest request)
+            DeleteCurrentRefreshTokenApiRequest request)
         {
             problemDetails.ShouldSatisfyRefreshTokenExpired(
                 r => r.Id,

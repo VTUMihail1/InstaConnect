@@ -1,6 +1,5 @@
 ﻿using InstaConnect.Common.Events.Models;
 using InstaConnect.Common.Presentation.Models;
-using InstaConnect.Identity.Domain.Features.UserClaims.Models.Requests;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Assertions;
 
@@ -8,104 +7,64 @@ public static class UserClaimProblemDetailsAssertions
 {
     extension(ApplicationProblemDetails problemDetails)
     {
-        public void ShouldSatisfyInvalidValidationForId(
-            IStringMessageTransformer messageTransformer,
-            DeleteUserClaimCommandRequest request)
+        public void ShouldSatisfyUserNotFound(
+            GetAllUserClaimsApiRequest request)
         {
-            problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.Id,
-                messageTransformer,
+            problemDetails.ShouldSatisfyUserNotFound(
+                r => r.Id,
                 request);
         }
 
-        public void ShouldSatisfyInvalidValidationForId(
-            IStringMessageTransformer messageTransformer,
-            AddUserClaimCommandRequest request)
+        public void ShouldSatisfyUserNotFound(
+            AddUserClaimApiRequest request)
         {
-            problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.Id,
-                messageTransformer,
+            problemDetails.ShouldSatisfyUserNotFound(
+                r => r.Id,
                 request);
         }
 
-        public void ShouldSatisfyInvalidValidationForId(
-            IStringMessageTransformer messageTransformer,
-            GetAllUserClaimsQueryRequest request)
+        public void ShouldSatisfyUserNotFound(
+            DeleteUserClaimApiRequest request)
         {
-            problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.Id,
-                messageTransformer,
+            problemDetails.ShouldSatisfyUserNotFound(
+                r => r.Id,
                 request);
         }
 
-        public void ShouldSatisfyInvalidValidationForClaim(
-            IEnumMessageTransformer<ApplicationClaims> messageTransformer,
-            DeleteUserClaimCommandRequest request)
+        public void ShouldSatisfyUserClaimAlreadyExists(
+            AddUserClaimApiRequest request)
         {
-            problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.Claim,
-                messageTransformer,
+            problemDetails.ShouldSatisfyUserClaimAlreadyExists(
+                r => r.Id,
+                r => r.Body.Claim,
                 request);
         }
 
-        public void ShouldSatisfyInvalidValidationForClaim(
-            IEnumMessageTransformer<ApplicationClaims> messageTransformer,
-            AddUserClaimCommandRequest request)
+        public void ShouldSatisfyUserClaimNotFound(
+            DeleteUserClaimApiRequest request)
         {
-            problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.Claim,
-                messageTransformer,
+            problemDetails.ShouldSatisfyUserClaimNotFound(
+                r => r.Id,
+                r => r.Claim,
                 request);
         }
 
-        public void ShouldSatisfyInvalidValidationForCurrentId(
-            IStringMessageTransformer messageTransformer,
-            GetAllUserClaimsQueryRequest request)
+        internal void ShouldSatisfyUserClaimNotFound<TRequest>(
+            Func<TRequest, string> idPropertyExpression,
+            Func<TRequest, ApplicationClaims> claimPropertyExpression,
+            TRequest request)
         {
-            problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.CurrentId,
-                messageTransformer,
-                request);
+            problemDetails.ShouldSatisfyNotFound(
+                UserClaimExceptionErrorMessages.GetNotFoundMessage(new UserClaimId(new UserId(idPropertyExpression(request)), claimPropertyExpression(request))));
         }
 
-        public void ShouldSatisfyInvalidValidationForPage(
-            IIntMessageTransformer messageTransformer,
-            GetAllUserClaimsQueryRequest request)
+        internal void ShouldSatisfyUserClaimAlreadyExists<TRequest>(
+            Func<TRequest, string> idPropertyExpression,
+            Func<TRequest, ApplicationClaims> claimPropertyExpression,
+            TRequest request)
         {
-            problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.Page,
-                messageTransformer,
-                request);
-        }
-
-        public void ShouldSatisfyInvalidValidationForPageSize(
-            IIntMessageTransformer messageTransformer,
-            GetAllUserClaimsQueryRequest request)
-        {
-            problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.PageSize,
-                messageTransformer,
-                request);
-        }
-
-        public void ShouldSatisfyInvalidValidationForSortOrder(
-            IEnumMessageTransformer<CommonSortOrder> messageTransformer,
-            GetAllUserClaimsQueryRequest request)
-        {
-            problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.SortOrder,
-                messageTransformer,
-                request);
-        }
-
-        public void ShouldSatisfyInvalidValidationForSortTerm(
-            IEnumMessageTransformer<UserClaimsSortTerm> messageTransformer,
-            GetAllUserClaimsQueryRequest request)
-        {
-            problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.SortTerm,
-                messageTransformer,
-                request);
+            problemDetails.ShouldSatisfyBadRequest(
+                UserClaimExceptionErrorMessages.GetAlreadyExistsMessage(new UserClaimId(new UserId(idPropertyExpression(request)), claimPropertyExpression(request))));
         }
     }
 }

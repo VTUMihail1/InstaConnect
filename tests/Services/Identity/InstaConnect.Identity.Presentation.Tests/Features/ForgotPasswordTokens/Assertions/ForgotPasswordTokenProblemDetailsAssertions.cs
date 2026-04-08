@@ -6,16 +6,16 @@ public static class ForgotPasswordTokenProblemDetailsAssertions
 {
     extension(ApplicationProblemDetails problemDetails)
     {
-        public void ShouldSatisfyUserInvalidDetails(
-            AddForgotPasswordTokenCommandRequest request)
+        public void ShouldSatisfyUserNameNotFound(
+            AddForgotPasswordTokenApiRequest request)
         {
-            problemDetails.ShouldSatisfyUserInvalidDetails(
+            problemDetails.ShouldSatisfyUserNameNotFound(
                 r => r.Name,
                 request);
         }
 
         public void ShouldSatisfyUserNotFound(
-            VerifyForgotPasswordTokenCommandRequest request)
+            VerifyForgotPasswordTokenApiRequest request)
         {
             problemDetails.ShouldSatisfyUserNotFound(
                 r => r.Id,
@@ -23,7 +23,7 @@ public static class ForgotPasswordTokenProblemDetailsAssertions
         }
 
         public void ShouldSatisfyForgotPasswordTokenNotFound(
-            VerifyForgotPasswordTokenCommandRequest request)
+            VerifyForgotPasswordTokenApiRequest request)
         {
             problemDetails.ShouldSatisfyForgotPasswordTokenNotFound(
                 r => r.Id,
@@ -32,7 +32,7 @@ public static class ForgotPasswordTokenProblemDetailsAssertions
         }
 
         public void ShouldSatisfyForgotPasswordTokenExpired(
-            VerifyForgotPasswordTokenCommandRequest request)
+            VerifyForgotPasswordTokenApiRequest request)
         {
             problemDetails.ShouldSatisfyForgotPasswordTokenExpired(
                 r => r.Id,

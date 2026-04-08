@@ -8,7 +8,7 @@ public static class EmailConfirmationTokenValidationProblemDetailsAssertions
     {
         public void ShouldSatisfyInvalidValidationForName(
             IStringMessageTransformer messageTransformer,
-            AddEmailConfirmationTokenCommandRequest request)
+            AddEmailConfirmationTokenApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.Name,
@@ -18,7 +18,7 @@ public static class EmailConfirmationTokenValidationProblemDetailsAssertions
 
         public void ShouldSatisfyInvalidValidationForId(
             IStringMessageTransformer messageTransformer,
-            VerifyEmailConfirmationTokenCommandRequest request)
+            VerifyEmailConfirmationTokenApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.Id,
@@ -28,7 +28,7 @@ public static class EmailConfirmationTokenValidationProblemDetailsAssertions
 
         public void ShouldSatisfyInvalidValidationForValue(
             IStringMessageTransformer messageTransformer,
-            VerifyEmailConfirmationTokenCommandRequest request)
+            VerifyEmailConfirmationTokenApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.Value,

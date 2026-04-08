@@ -50,7 +50,7 @@ public static class EmailConfirmationTokenClient
             var route = EmailConfirmationTokenTestRoutes.GetRoute(request);
 
             return await httpClient
-                .PostAsync(route, null, cancellationToken);
+                .PutAsync(route, null, cancellationToken);
         }
 
         public async Task<ApplicationProblemDetails> VerifyEmailConfirmationTokenProblemDetailsAsync(
