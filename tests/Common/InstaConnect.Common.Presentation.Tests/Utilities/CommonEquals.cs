@@ -1,5 +1,6 @@
 ﻿using InstaConnect.Common.Application.Abstractions;
 using InstaConnect.Common.Domain.Abstractions;
+using InstaConnect.Common.Domain.Extensions;
 using InstaConnect.Common.Infrastructure.Helpers;
 using InstaConnect.Common.Presentation.Models;
 using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
@@ -15,13 +16,13 @@ public static class CommonEquals
         public bool Matches(int statusCode, string detail)
         {
             return d.Status == statusCode &&
-                   d.Detail == detail;
+                   detail.EqualsOrdinalIgnoreCase(d.Detail);
         }
 
         public bool Matches(int statusCode, string detail, string errorMessage)
         {
             return d.Status == statusCode &&
-                   d.Detail == detail &&
+                   detail.EqualsOrdinalIgnoreCase(d.Detail) &&
                    d.Errors!.All(e => e == errorMessage);
         }
     }

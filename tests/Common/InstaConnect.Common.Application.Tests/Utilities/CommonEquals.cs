@@ -1,6 +1,7 @@
 ﻿using FluentValidation.Results;
 
 using InstaConnect.Common.Domain.Abstractions;
+using InstaConnect.Common.Domain.Extensions;
 using InstaConnect.Common.Infrastructure.Helpers;
 using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
 
@@ -13,7 +14,7 @@ public static class CommonEquals
         public bool Matches(
         string errorMessage)
         {
-            return v.ErrorMessage == errorMessage;
+            return v.ErrorMessage.EqualsOrdinalIgnoreCase(errorMessage);
         }
     }
 
