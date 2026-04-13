@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Chats.Application.Features.ChatMessages.Queries.GetAll;
 
-public record GetAllChatMessagesQueryResponse(ChatMessageCollectionQueryResponse ChatMessageResponse);
+public record GetAllChatMessagesQueryResponse(ChatMessageCollectionQueryResponse ChatMessageCollection);

@@ -1,0 +1,57 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <IsTestProject>false</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\Services\Chats\InstaConnect.Chats.Domain\InstaConnect.Chats.Domain.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Services\Chats\InstaConnect.Chats.Infrastructure\InstaConnect.Chats.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Services\Chats\InstaConnect.Chats.Presentation\InstaConnect.Chats.Presentation.csproj" />
+    <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Tests\InstaConnect.Common.Tests.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Label="Common">
+    <Using Include="InstaConnect.Common.Domain.Extensions" />
+    <Using Include="InstaConnect.Common.Tests.Events" />
+    <Using Include="InstaConnect.Common.Tests.Assertions" />
+    <Using Include="InstaConnect.Common.Tests.Utilities" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.DateTimeOffsets.Base" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.DateTimeOffsets.Empty" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Ints.Base" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Ints.Empty" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Ints.TooSmall" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Ints.TooLarge" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.Base" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.DifferentCase" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.Empty" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.TooShort" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.TooLong" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.Null" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Enums.Base" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Enums.Empty" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Enums.Sort" />
+  </ItemGroup>
+
+  <ItemGroup Label="Users">
+    <Using Include="InstaConnect.Chats.Domain.Features.Users.Utilities" />
+    <Using Include="InstaConnect.Chats.Domain.Features.Users.Models.Entities" />
+    <Using Include="InstaConnect.Chats.Domain.Features.Users.Models.Requests" />
+    <Using Include="InstaConnect.Chats.Tests.Features.Users.Builders" />
+  </ItemGroup>
+  
+  <ItemGroup Label="Chats">
+    <Using Include="InstaConnect.Chats.Domain.Features.Chats.Utilities" />
+    <Using Include="InstaConnect.Chats.Domain.Features.Chats.Models.Entities" />
+    <Using Include="InstaConnect.Chats.Domain.Features.Chats.Models.Requests" />
+    <Using Include="InstaConnect.Chats.Tests.Features.Chats.Builders" />
+  </ItemGroup>
+
+  <ItemGroup Label="ChatMessages">
+    <Using Include="InstaConnect.Chats.Domain.Features.ChatMessages.Utilities" />
+    <Using Include="InstaConnect.Chats.Domain.Features.ChatMessages.Models.Entities" />
+    <Using Include="InstaConnect.Chats.Domain.Features.ChatMessages.Models.Requests" />
+    <Using Include="InstaConnect.Chats.Tests.Features.ChatMessages.Builders" />
+  </ItemGroup>
+
+</Project>

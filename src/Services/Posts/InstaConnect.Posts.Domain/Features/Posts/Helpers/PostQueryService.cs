@@ -4,33 +4,28 @@ internal class PostQueryService : IPostQueryService
 {
     private readonly IPostQueryRepository _repository;
     private readonly IUserQueryRepository _userRepository;
-    private readonly IPostIncludeBuilderFactory _includeBuilderFactory;
     private readonly IPostCollectionResponseFactory _collectionResponseFactory;
 
     public PostQueryService(
         IPostQueryRepository repository,
         IUserQueryRepository userRepository,
-        IPostIncludeBuilderFactory includeBuilderFactory,
         IPostCollectionResponseFactory collectionResponseFactory)
     {
         _repository = repository;
         _userRepository = userRepository;
-        _includeBuilderFactory = includeBuilderFactory;
         _collectionResponseFactory = collectionResponseFactory;
     }
 
     public async Task<PostCollectionResponse> GetAllAsync(GetAllPostsQuery query, CancellationToken cancellationToken)
     {
-        var include = _includeBuilderFactory.Create().WithUser().WithPostLikes().Build();
         var posts = await _repository.GetAllAsync(
             query.Filter,
             query.CurrentUser,
             query.Sorting,
             query.Pagination,
-            include,
             cancellationToken);
 
-        var totalCount = await _repository.GetTotalCountAsync(query.Filter, include, cancellationToken);
+        var totalCount = await _repository.GetTotalCountAsync(query.Filter, cancellationToken);
 
         return _collectionResponseFactory.Create(posts, totalCount, query.Pagination);
     }
@@ -44,27 +39,23 @@ internal class PostQueryService : IPostQueryService
             throw new UserNotFoundException(query.Filter.UserId);
         }
 
-        var include = _includeBuilderFactory.Create().WithPostLikes().Build();
         var posts = await _repository.GetAllForUserAsync(
             query.Filter,
             query.CurrentUser,
             query.Sorting,
             query.Pagination,
-            include,
             cancellationToken);
 
-        var totalCount = await _repository.GetTotalCountForUserAsync(query.Filter, include, cancellationToken);
+        var totalCount = await _repository.GetTotalCountForUserAsync(query.Filter, cancellationToken);
 
         return _collectionResponseFactory.CreateForUser(user, posts, totalCount, query.Pagination);
     }
 
     public async Task<PostResponse> GetByIdAsync(GetPostByIdQuery query, CancellationToken cancellationToken)
     {
-        var include = _includeBuilderFactory.Create().WithUser().WithPostLikes().Build();
         var post = await _repository.GetByIdAsync(
             query.Id,
             query.CurrentUser,
-            include,
             cancellationToken);
 
         if (post == null)

@@ -11,9 +11,6 @@ internal class ChatDomainMappings : IRegister
         config.NewConfig<Chat, ChatAddedEventRequest>()
             .ConstructUsing(src => new(src.Adapt<ChatEventRequest>(config)!));
 
-        config.NewConfig<Chat, ChatDeletedEventRequest>()
-            .ConstructUsing(src => new(src.Adapt<ChatEventRequest>(config)!));
-
         config.NewConfig<Chat, ChatEventRequest>()
             .ConstructUsing(src => new(
                 src.Id.ParticipantOneId.Id,

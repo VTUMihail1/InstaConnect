@@ -4,18 +4,15 @@ internal class FollowQueryService : IFollowQueryService
 {
     private readonly IFollowQueryRepository _repository;
     private readonly IUserQueryRepository _userRepository;
-    private readonly IFollowIncludeBuilderFactory _includeBuilderFactory;
     private readonly IFollowCollectionResponseFactory _collectionResponseFactory;
 
     public FollowQueryService(
         IFollowQueryRepository repository,
         IUserQueryRepository userRepository,
-        IFollowIncludeBuilderFactory includeBuilderFactory,
         IFollowCollectionResponseFactory collectionResponseFactory)
     {
         _repository = repository;
         _userRepository = userRepository;
-        _includeBuilderFactory = includeBuilderFactory;
         _collectionResponseFactory = collectionResponseFactory;
     }
 
@@ -28,13 +25,11 @@ internal class FollowQueryService : IFollowQueryService
             throw new UserNotFoundException(query.Filter.FollowerId);
         }
 
-        var include = _includeBuilderFactory.Create().WithFollowing().Build();
         var follows = await _repository.GetAllAsync(
             query.Filter,
             query.CurrentUser,
             query.Sorting,
             query.Pagination,
-            include,
             cancellationToken);
 
         var totalCount = await _repository.GetTotalCountAsync(query.Filter, cancellationToken);
@@ -51,13 +46,11 @@ internal class FollowQueryService : IFollowQueryService
             throw new UserNotFoundException(query.Filter.FollowingId);
         }
 
-        var include = _includeBuilderFactory.Create().WithFollower().Build();
         var follows = await _repository.GetAllForFollowingAsync(
             query.Filter,
             query.CurrentUser,
             query.Sorting,
             query.Pagination,
-            include,
             cancellationToken);
 
         var totalCount = await _repository.GetTotalCountForFollowingAsync(query.Filter, cancellationToken);
@@ -67,11 +60,9 @@ internal class FollowQueryService : IFollowQueryService
 
     public async Task<FollowResponse> GetByIdAsync(GetFollowByIdQuery query, CancellationToken cancellationToken)
     {
-        var include = _includeBuilderFactory.Create().WithFollower().WithFollowing().Build();
         var follow = await _repository.GetByIdAsync(
             query.Id,
             query.CurrentUser,
-            include,
             cancellationToken);
 
         if (follow == null)

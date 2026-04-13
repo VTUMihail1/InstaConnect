@@ -4,6 +4,7 @@ public record ChatMessageQueryResponse(
     string ParticipantOneId,
     string ParticipantTwoId,
     string MessageId,
+    string SenderId,
     string Content,
     ChatQueryResponse? Chat,
     UserQueryResponse? Sender,

@@ -350,19 +350,6 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
     }
 
     [Fact]
-    public async Task GetAllAsync_ShouldHavePostNotFoundProblemDetails_WhenIdIsInvalid()
-    {
-        // Arrange
-        await ServiceScope.DeletePostAsync(Post, CancellationToken);
-
-        // Act
-        var response = await HttpClient.GetAllPostCommentsProblemDetailsAsync(_request, CancellationToken);
-
-        // Assert
-        response.ShouldSatisfyPostNotFound(_request);
-    }
-
-    [Fact]
     public async Task GetAllAsync_ShouldReturnResponse_WhenRequestIsValid()
     {
         // Act

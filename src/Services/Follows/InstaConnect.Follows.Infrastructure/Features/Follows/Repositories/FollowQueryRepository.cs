@@ -12,6 +12,7 @@ internal class FollowQueryRepository : IFollowQueryRepository
     private readonly IFollowIncluderFactory _includerFactory;
     private readonly ISortOrdererFactory _sortOrdererFactory;
     private readonly IFollowsSortTermerFactory _sortTermerFactory;
+    private readonly IFollowIncludeBuilderFactory _includeBuilderFactory;
     private readonly IFollowsForFollowingSortTermerFactory _forFollowingSortTermerFactory;
 
     public FollowQueryRepository(
@@ -20,6 +21,7 @@ internal class FollowQueryRepository : IFollowQueryRepository
         IFollowIncluderFactory includerFactory,
         ISortOrdererFactory sortOrdererFactory,
         IFollowsSortTermerFactory sortTermerFactory,
+        IFollowIncludeBuilderFactory includeBuilderFactory,
         IFollowsForFollowingSortTermerFactory forFollowingSortTermerFactory)
     {
         _paginator = paginator;
@@ -27,6 +29,7 @@ internal class FollowQueryRepository : IFollowQueryRepository
         _includerFactory = includerFactory;
         _sortOrdererFactory = sortOrdererFactory;
         _sortTermerFactory = sortTermerFactory;
+        _includeBuilderFactory = includeBuilderFactory;
         _forFollowingSortTermerFactory = forFollowingSortTermerFactory;
     }
 
@@ -35,9 +38,10 @@ internal class FollowQueryRepository : IFollowQueryRepository
         CurrentUserQuery currentUser,
         FollowsSortingQuery sorting,
         FollowsPaginationQuery pagination,
-        FollowInclude? include,
         CancellationToken cancellationToken)
     {
+        var include = _includeBuilderFactory.Create().WithFollowing().Build();
+
         return await _context
             .Follows
             .AggregateWithCaseInsensitiveCollation()
@@ -49,24 +53,15 @@ internal class FollowQueryRepository : IFollowQueryRepository
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<ICollection<FollowResponse>> GetAllAsync(
-        FollowsFilterQuery filter,
-        CurrentUserQuery currentUser,
-        FollowsSortingQuery sorting,
-        FollowsPaginationQuery pagination,
-        CancellationToken cancellationToken)
-    {
-        return await GetAllAsync(filter, currentUser, sorting, pagination, null, cancellationToken);
-    }
-
     public async Task<ICollection<FollowResponse>> GetAllForFollowingAsync(
         FollowsForFollowingFilterQuery filter,
         CurrentUserQuery currentUser,
         FollowsForFollowingSortingQuery sorting,
         FollowsPaginationQuery pagination,
-        FollowInclude? include,
         CancellationToken cancellationToken)
     {
+        var include = _includeBuilderFactory.Create().WithFollower().Build();
+
         return await _context
             .Follows
             .AggregateWithCaseInsensitiveCollation()
@@ -78,41 +73,12 @@ internal class FollowQueryRepository : IFollowQueryRepository
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<ICollection<FollowResponse>> GetAllForFollowingAsync(
-        FollowsForFollowingFilterQuery filter,
-        CurrentUserQuery currentUser,
-        FollowsForFollowingSortingQuery sorting,
-        FollowsPaginationQuery pagination,
-        CancellationToken cancellationToken)
-    {
-        return await GetAllForFollowingAsync(filter, currentUser, sorting, pagination, null, cancellationToken);
-    }
-
-    public async Task<long> GetTotalCountAsync(
-        FollowsFilterQuery filter,
-        FollowInclude? include,
-        CancellationToken cancellationToken)
-    {
-        return await _context
-            .Follows
-            .AggregateWithCaseInsensitiveCollation()
-            .Includes(_includerFactory, include)
-            .Match(filter)
-            .GetCount(cancellationToken);
-    }
-
     public async Task<long> GetTotalCountAsync(
         FollowsFilterQuery filter,
         CancellationToken cancellationToken)
     {
-        return await GetTotalCountAsync(filter, null, cancellationToken);
-    }
+        var include = _includeBuilderFactory.Create().WithFollowing().Build();
 
-    public async Task<long> GetTotalCountForFollowingAsync(
-        FollowsForFollowingFilterQuery filter,
-        FollowInclude? include,
-        CancellationToken cancellationToken)
-    {
         return await _context
             .Follows
             .AggregateWithCaseInsensitiveCollation()
@@ -125,15 +91,23 @@ internal class FollowQueryRepository : IFollowQueryRepository
         FollowsForFollowingFilterQuery filter,
         CancellationToken cancellationToken)
     {
-        return await GetTotalCountForFollowingAsync(filter, null, cancellationToken);
+        var include = _includeBuilderFactory.Create().WithFollower().Build();
+
+        return await _context
+            .Follows
+            .AggregateWithCaseInsensitiveCollation()
+            .Includes(_includerFactory, include)
+            .Match(filter)
+            .GetCount(cancellationToken);
     }
 
     public async Task<FollowResponse?> GetByIdAsync(
         FollowId id,
         CurrentUserQuery currentUser,
-        FollowInclude? include,
         CancellationToken cancellationToken)
     {
+        var include = _includeBuilderFactory.Create().WithFollower().WithFollowing().Build();
+
         return await _context
             .Follows
             .AggregateWithCaseInsensitiveCollation()
@@ -141,14 +115,6 @@ internal class FollowQueryRepository : IFollowQueryRepository
             .Match(id)
             .ProjectToFullResponse(currentUser)
             .FirstOrDefaultAsync(cancellationToken);
-    }
-
-    public async Task<FollowResponse?> GetByIdAsync(
-        FollowId id,
-        CurrentUserQuery currentUser,
-        CancellationToken cancellationToken)
-    {
-        return await GetByIdAsync(id, currentUser, null, cancellationToken);
     }
 
     public async Task<bool> ExistsByIdAsync(

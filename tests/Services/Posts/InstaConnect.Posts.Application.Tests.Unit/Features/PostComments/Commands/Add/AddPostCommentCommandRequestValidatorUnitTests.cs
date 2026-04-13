@@ -64,10 +64,6 @@ public class AddPostCommentCommandRequestValidatorUnitTests : BasePostCommentApp
         // Arrange
         var request = _requestBuilder.WithContent(transformer).Build();
 
-        var message = messageTransformer.Transform<AddPostCommentCommandRequest>(r => r.Content, request.Content);
-
-        Console.WriteLine(message);
-
         // Act
         var result = _requestValidator.TestValidate(request);
 

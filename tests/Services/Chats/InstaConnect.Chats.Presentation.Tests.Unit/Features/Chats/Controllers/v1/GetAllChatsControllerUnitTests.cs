@@ -1,0 +1,51 @@
+﻿namespace InstaConnect.Chats.Presentation.Tests.Unit.Features.Chats.Controllers.v1;
+
+public class GetAllChatsControllerUnitTests : BaseChatPresentationQueryUnitTest
+{
+    private readonly GetAllChatsApiRequestBuilderFactory _requestBuilderFactory;
+    private readonly GetAllChatsApiRequestBuilder _requestBuilder;
+    private readonly GetAllChatsApiRequest _request;
+
+    private readonly ChatController _controller;
+
+    public GetAllChatsControllerUnitTests()
+    {
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(Chat);
+        _request = _requestBuilder.Build();
+
+        _controller = new(Mapper, Sender);
+
+        Sender.SetupGetAllQueryRequest(_request, ParticipantOne, Chats, CancellationToken);
+    }
+
+    [Fact]
+    public async Task GetAllAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
+    {
+        // Act
+        var response = await _controller.GetAllAsync(_request, CancellationToken);
+
+        // Assert
+        response.ShouldBeActionResultWithOkStatusCode();
+    }
+
+    [Fact]
+    public async Task GetAllAsync_ShouldReturnResponse_WhenRequestIsValid()
+    {
+        // Act
+        var response = await _controller.GetAllAsync(_request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfy(ParticipantOne, Chats, _request);
+    }
+
+    [Fact]
+    public async Task GetAllAsync_ShouldCallTheSenderSendAsync_WhenRequestIsValid()
+    {
+        // Act
+        await _controller.GetAllAsync(_request, CancellationToken);
+
+        // Assert
+        await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);
+    }
+}

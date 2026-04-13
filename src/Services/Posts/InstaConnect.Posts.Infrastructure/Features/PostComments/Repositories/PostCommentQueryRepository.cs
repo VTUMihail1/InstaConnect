@@ -10,23 +10,29 @@ internal class PostCommentQueryRepository : IPostCommentQueryRepository
     private readonly IPaginator _paginator;
     private readonly IPostsContext _context;
     private readonly ISortOrdererFactory _sortOrdererFactory;
+    private readonly IPostIncludeBuilderFactory _includeBuilderFactory;
     private readonly IPostCommentIncluderFactory _commentIncluderFactory;
     private readonly IPostCommentsSortTermerFactory _commentSortTermerFactory;
+    private readonly IPostCommentIncludeBuilderFactory _commentIncludeBuilderFactory;
     private readonly IPostCommentsForUserSortTermerFactory _commentForUserSortTermerFactory;
 
     public PostCommentQueryRepository(
         IPaginator paginator,
         IPostsContext context,
         ISortOrdererFactory sortOrdererFactory,
+        IPostIncludeBuilderFactory includeBuilderFactory,
         IPostCommentIncluderFactory commentIncluderFactory,
         IPostCommentsSortTermerFactory commentSortTermerFactory,
+        IPostCommentIncludeBuilderFactory commentIncludeBuilderFactory,
         IPostCommentsForUserSortTermerFactory commentForUserSortTermerFactory)
     {
         _paginator = paginator;
         _context = context;
         _sortOrdererFactory = sortOrdererFactory;
+        _includeBuilderFactory = includeBuilderFactory;
         _commentIncluderFactory = commentIncluderFactory;
         _commentSortTermerFactory = commentSortTermerFactory;
+        _commentIncludeBuilderFactory = commentIncludeBuilderFactory;
         _commentForUserSortTermerFactory = commentForUserSortTermerFactory;
     }
 
@@ -35,13 +41,14 @@ internal class PostCommentQueryRepository : IPostCommentQueryRepository
         CurrentUserQuery currentUser,
         PostCommentsSortingQuery sorting,
         PostCommentsPaginationQuery pagination,
-        PostCommentInclude? include,
         CancellationToken cancellationToken)
     {
+        var commentInclude = _commentIncludeBuilderFactory.Create().WithUser().WithPostCommentLikes().Build();
+
         return await _context
             .PostComments
             .AggregateWithCaseInsensitiveCollation()
-            .Includes(_commentIncluderFactory, include)
+            .Includes(_commentIncluderFactory, commentInclude)
             .Match(filter)
             .ProjectToResponseWithoutPost(currentUser)
             .Sort(_sortOrdererFactory, _commentSortTermerFactory, sorting)
@@ -49,28 +56,20 @@ internal class PostCommentQueryRepository : IPostCommentQueryRepository
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<ICollection<PostCommentResponse>> GetAllAsync(
-        PostCommentsFilterQuery filter,
-        CurrentUserQuery currentUser,
-        PostCommentsSortingQuery sorting,
-        PostCommentsPaginationQuery pagination,
-        CancellationToken cancellationToken)
-    {
-        return await GetAllAsync(filter, currentUser, sorting, pagination, null, cancellationToken);
-    }
-
     public async Task<ICollection<PostCommentResponse>> GetAllForUserAsync(
         PostCommentsForUserFilterQuery filter,
         CurrentUserQuery currentUser,
         PostCommentsForUserSortingQuery sorting,
         PostCommentsPaginationQuery pagination,
-        PostCommentInclude? include,
         CancellationToken cancellationToken)
     {
+        var include = _includeBuilderFactory.Create().WithUser().WithPostLikes().Build();
+        var commentInclude = _commentIncludeBuilderFactory.Create().WithPost(include).WithPostCommentLikes().Build();
+
         return await _context
             .PostComments
             .AggregateWithCaseInsensitiveCollation()
-            .Includes(_commentIncluderFactory, include)
+            .Includes(_commentIncluderFactory, commentInclude)
             .Match(filter)
             .ProjectToResponseWithoutUser(currentUser)
             .Sort(_sortOrdererFactory, _commentForUserSortTermerFactory, sorting)
@@ -78,45 +77,16 @@ internal class PostCommentQueryRepository : IPostCommentQueryRepository
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<ICollection<PostCommentResponse>> GetAllForUserAsync(
-        PostCommentsForUserFilterQuery filter,
-        CurrentUserQuery currentUser,
-        PostCommentsForUserSortingQuery sorting,
-        PostCommentsPaginationQuery pagination,
-        CancellationToken cancellationToken)
-    {
-        return await GetAllForUserAsync(filter, currentUser, sorting, pagination, null, cancellationToken);
-    }
-
-    public async Task<long> GetTotalCountAsync(
-        PostCommentsFilterQuery filter,
-        PostCommentInclude? include,
-        CancellationToken cancellationToken)
-    {
-        return await _context
-            .PostComments
-            .AggregateWithCaseInsensitiveCollation()
-            .Includes(_commentIncluderFactory, include)
-            .Match(filter)
-            .GetCount(cancellationToken);
-    }
-
     public async Task<long> GetTotalCountAsync(
         PostCommentsFilterQuery filter,
         CancellationToken cancellationToken)
     {
-        return await GetTotalCountAsync(filter, null, cancellationToken);
-    }
+        var commentInclude = _commentIncludeBuilderFactory.Create().WithUser().WithPostCommentLikes().Build();
 
-    public async Task<long> GetTotalCountForUserAsync(
-        PostCommentsForUserFilterQuery filter,
-        PostCommentInclude? include,
-        CancellationToken cancellationToken)
-    {
         return await _context
             .PostComments
             .AggregateWithCaseInsensitiveCollation()
-            .Includes(_commentIncluderFactory, include)
+            .Includes(_commentIncluderFactory, commentInclude)
             .Match(filter)
             .GetCount(cancellationToken);
     }
@@ -125,30 +95,32 @@ internal class PostCommentQueryRepository : IPostCommentQueryRepository
         PostCommentsForUserFilterQuery filter,
         CancellationToken cancellationToken)
     {
-        return await GetTotalCountForUserAsync(filter, null, cancellationToken);
+        var include = _includeBuilderFactory.Create().WithUser().WithPostLikes().Build();
+        var commentInclude = _commentIncludeBuilderFactory.Create().WithPost(include).WithPostCommentLikes().Build();
+
+        return await _context
+            .PostComments
+            .AggregateWithCaseInsensitiveCollation()
+            .Includes(_commentIncluderFactory, commentInclude)
+            .Match(filter)
+            .GetCount(cancellationToken);
     }
 
     public async Task<PostCommentResponse?> GetByIdAsync(
         PostCommentId id,
         CurrentUserQuery currentUser,
-        PostCommentInclude? include,
         CancellationToken cancellationToken)
     {
+        var include = _includeBuilderFactory.Create().WithUser().WithPostLikes().Build();
+        var commentInclude = _commentIncludeBuilderFactory.Create().WithUser().WithPostCommentLikes().WithPost(include).Build();
+
         return await _context
             .PostComments
             .AggregateWithCaseInsensitiveCollation()
-            .Includes(_commentIncluderFactory, include)
+            .Includes(_commentIncluderFactory, commentInclude)
             .Match(id)
             .ProjectToFullResponse(currentUser)
             .FirstOrDefaultAsync(cancellationToken);
-    }
-
-    public async Task<PostCommentResponse?> GetByIdAsync(
-        PostCommentId id,
-        CurrentUserQuery currentUser,
-        CancellationToken cancellationToken)
-    {
-        return await GetByIdAsync(id, currentUser, null, cancellationToken);
     }
 
     public async Task<bool> ExistsByIdAsync(

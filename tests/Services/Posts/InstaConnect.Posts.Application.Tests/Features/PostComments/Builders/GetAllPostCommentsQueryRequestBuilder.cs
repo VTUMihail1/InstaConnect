@@ -10,17 +10,17 @@ public class GetAllPostCommentsQueryRequestBuilder
     private int _page;
     private int _pageSize;
     private CommonSortOrder _sortOrder;
-    private PostCommentsSortTerm _sortProperty;
+    private PostCommentsSortTerm _sortTerm;
 
     public GetAllPostCommentsQueryRequestBuilder(PostComment postComment)
     {
         _id = postComment.Id.Id.Id;
         _userName = DataFaker.GetPrefixString(postComment.User!.Name.Value);
-        _currentUserId = DataFaker.GetPrefixString(postComment.UserId.Id);
+        _currentUserId = postComment.UserId.Id;
         _page = PostCommentDataFaker.GetPage();
         _pageSize = PostCommentDataFaker.GetPageSize();
         _sortOrder = DataFaker.GetSortOrder();
-        _sortProperty = PostCommentDataFaker.GetSortTerm();
+        _sortTerm = PostCommentDataFaker.GetSortTerm();
     }
 
     public GetAllPostCommentsQueryRequestBuilder WithId(PostId id, IStringTransformer? transformer = null)
@@ -81,13 +81,13 @@ public class GetAllPostCommentsQueryRequestBuilder
 
     public GetAllPostCommentsQueryRequestBuilder WithSortTerm(IEnumTransformer<PostCommentsSortTerm> transformer)
     {
-        _sortProperty = transformer.Transform(_sortProperty);
+        _sortTerm = transformer.Transform(_sortTerm);
 
         return this;
     }
 
     public GetAllPostCommentsQueryRequest Build()
     {
-        return new(_id, _userName, _currentUserId, _sortOrder, _sortProperty, _page, _pageSize);
+        return new(_id, _userName, _currentUserId, _sortOrder, _sortTerm, _page, _pageSize);
     }
 }

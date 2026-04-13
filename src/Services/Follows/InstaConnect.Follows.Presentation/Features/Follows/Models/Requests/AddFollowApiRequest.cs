@@ -1,6 +1,8 @@
-﻿namespace InstaConnect.Follows.Presentation.Features.Follows.Models.Requests;
+﻿using InstaConnect.Follows.Presentation.Features.Follows.Models.Bodies;
+
+namespace InstaConnect.Follows.Presentation.Features.Follows.Models.Requests;
 
 public record AddFollowApiRequest(
     [UserIdFromClaim] string FollowerId,
-    [FromRoute] string FollowingId
+    [FromBody] AddFollowApiBody Body
 );

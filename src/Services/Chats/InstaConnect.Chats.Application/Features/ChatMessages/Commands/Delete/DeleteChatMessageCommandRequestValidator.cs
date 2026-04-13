@@ -14,11 +14,6 @@ public class DeleteChatMessageCommandRequestValidator : AbstractValidator<Delete
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();
 
-        RuleFor(r => r.SenderId)
-            .NotEmptyWithMessage()
-            .UserIdMinLengthWithMessage()
-            .UserIdMaxLengthWithMessage();
-
         RuleFor(r => r.MessageId)
             .NotEmptyWithMessage()
             .ChatMessageIdMinLengthWithMessage()

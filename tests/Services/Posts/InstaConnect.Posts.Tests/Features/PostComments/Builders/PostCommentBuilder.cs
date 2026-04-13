@@ -25,48 +25,6 @@ public class PostCommentBuilder
         _updatedAtUtc = PostCommentDataFaker.GetUpdatedAtUtc();
     }
 
-    public PostCommentBuilder WithId(string id)
-    {
-        _id = id;
-
-        return this;
-    }
-
-    public PostCommentBuilder WithCommentId(string commentId)
-    {
-        _commentId = commentId;
-
-        return this;
-    }
-
-    public PostCommentBuilder WithContent(string content)
-    {
-        _content = content;
-
-        return this;
-    }
-
-    public PostCommentBuilder WithUserId(string userId)
-    {
-        _userId = userId;
-
-        return this;
-    }
-
-    public PostCommentBuilder WithCreatedAtUtc(DateTimeOffset createdAtUtc)
-    {
-        _createdAtUtc = createdAtUtc;
-
-        return this;
-    }
-
-    public PostCommentBuilder WithUpdatedAtUtc(DateTimeOffset updatedAtUtc)
-    {
-        _updatedAtUtc = updatedAtUtc;
-
-        return this;
-    }
-
     public PostComment Build()
     {
         var postComment = new PostComment(

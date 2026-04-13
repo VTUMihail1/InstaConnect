@@ -3,5 +3,4 @@
 public record AddChatMessageCommandRequest(
     string ParticipantOneId,
     string ParticipantTwoId,
-    string SenderId,
     string Content) : ICommandRequest<AddChatMessageCommandResponse>;

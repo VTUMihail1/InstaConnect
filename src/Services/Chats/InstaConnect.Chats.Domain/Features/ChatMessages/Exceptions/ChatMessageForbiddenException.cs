@@ -2,7 +2,7 @@
 
 namespace InstaConnect.Chats.Domain.Features.ChatMessages.Exceptions;
 
-public class ChatMessageForbiddenException : NotFoundException
+public class ChatMessageForbiddenException : ForbiddenException
 {
     public ChatMessageForbiddenException(ChatMessageId id, UserId senderId)
         : base(ChatMessageExceptionErrorMessages.GetForbiddenMessage(id, senderId))

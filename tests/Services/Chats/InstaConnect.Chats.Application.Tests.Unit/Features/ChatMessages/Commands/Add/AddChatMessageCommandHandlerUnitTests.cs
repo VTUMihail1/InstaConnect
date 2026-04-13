@@ -1,0 +1,41 @@
+﻿namespace InstaConnect.Chats.Application.Tests.Unit.Features.ChatMessages.Commands.Add;
+
+public class AddChatMessageCommandHandlerUnitTests : BaseChatMessageApplicationCommandUnitTest
+{
+    private readonly AddChatMessageCommandRequestBuilderFactory _requestBuilderFactory;
+    private readonly AddChatMessageCommandRequestBuilder _requestBuilder;
+    private readonly AddChatMessageCommandRequest _request;
+
+    private readonly AddChatMessageCommandHandler _handler;
+
+    public AddChatMessageCommandHandlerUnitTests()
+    {
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(Chat);
+        _request = _requestBuilder.Build();
+
+        _handler = new(Mapper, CommentService);
+
+        CommentService.SetupAddCommand(_request, ChatMessage, CancellationToken);
+    }
+
+    [Fact]
+    public async Task Handle_ShouldReturnResponse_WhenRequestIsValid()
+    {
+        // Act
+        var response = await _handler.Handle(_request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfy(ChatMessage, _request);
+    }
+
+    [Fact]
+    public async Task Handle_ShouldCallCommentServiceAddAsync_WhenRequestIsValid()
+    {
+        // Act
+        await _handler.Handle(_request, CancellationToken);
+
+        // Assert
+        await CommentService.ShouldReceiveOneAddAsync(_request, CancellationToken);
+    }
+}

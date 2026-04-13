@@ -5,7 +5,7 @@ public class Chat : IEntityWithId<ChatId>
     private Chat()
     {
         Id = new(new(string.Empty), new(string.Empty));
-        Messages = [];
+        ChatMessages = [];
     }
 
     public Chat(
@@ -13,7 +13,7 @@ public class Chat : IEntityWithId<ChatId>
         DateTimeOffset createdAtUtc)
     {
         Id = id;
-        Messages = [];
+        ChatMessages = [];
         CreatedAtUtc = createdAtUtc;
     }
 
@@ -23,7 +23,7 @@ public class Chat : IEntityWithId<ChatId>
 
     public User? ParticipantTwo { get; private set; }
 
-    public ICollection<ChatMessage> Messages { get; private set; }
+    public ICollection<ChatMessage> ChatMessages { get; private set; }
 
     public DateTimeOffset CreatedAtUtc { get; }
 
@@ -41,15 +41,10 @@ public class Chat : IEntityWithId<ChatId>
         return this;
     }
 
-    public Chat AddMessage(ChatMessage message)
+    public Chat AddChatMessage(ChatMessage chatMessage)
     {
-        Messages.Add(message);
+        ChatMessages.Add(chatMessage);
 
         return this;
-    }
-
-    public bool IsNotParticipant(UserId participantId)
-    {
-        return Id.ParticipantOneId.IsNot(participantId) || Id.ParticipantTwoId.IsNot(participantId);
     }
 }

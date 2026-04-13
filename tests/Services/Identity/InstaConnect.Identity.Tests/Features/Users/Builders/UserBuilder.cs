@@ -29,51 +29,9 @@ public class UserBuilder
         _updatedAtUtc = UserDataFaker.GetUpdatedAtUtc();
     }
 
-    public UserBuilder WithId(string id)
-    {
-        _id = id;
-
-        return this;
-    }
-
-    public UserBuilder WithName(string name)
-    {
-        _name = name;
-
-        return this;
-    }
-
-    public UserBuilder WithFirstName(string firstName)
-    {
-        _firstName = firstName;
-
-        return this;
-    }
-
-    public UserBuilder WithLastName(string lastName)
-    {
-        _lastName = lastName;
-
-        return this;
-    }
-
-    public UserBuilder WithEmail(string email)
-    {
-        _email = email;
-
-        return this;
-    }
-
     public UserBuilder WithPasswordHash(string passwordHash)
     {
         _passwordHash = passwordHash;
-
-        return this;
-    }
-
-    public UserBuilder WithIsEmailConfirmed(bool isEmailConfirmed)
-    {
-        _isEmailConfirmed = isEmailConfirmed;
 
         return this;
     }
@@ -88,27 +46,6 @@ public class UserBuilder
     public UserBuilder WithUnconfirmedEmail()
     {
         _isEmailConfirmed = false;
-
-        return this;
-    }
-
-    public UserBuilder WithProfileImage(string profileImage)
-    {
-        _profileImage = profileImage;
-
-        return this;
-    }
-
-    public UserBuilder WithCreatedAtUtc(DateTimeOffset createdAtUtc)
-    {
-        _createdAtUtc = createdAtUtc;
-
-        return this;
-    }
-
-    public UserBuilder WithUpdatedAtUtc(DateTimeOffset updatedAtUtc)
-    {
-        _updatedAtUtc = updatedAtUtc;
 
         return this;
     }

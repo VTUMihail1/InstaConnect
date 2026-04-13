@@ -36,7 +36,7 @@ public class FollowController : ControllerBase
         return Ok(response);
     }
 
-    // GET: api/followers/current/follows/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+    // GET: api/followers/5f0f2dd0-e957-4d72-8141-767a36fc6e95/follows/5f0f2dd0-e957-4d72-8141-767a36fc6e95
     [HttpGet(FollowRoutes.Id)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -51,8 +51,8 @@ public class FollowController : ControllerBase
         return Ok(response);
     }
 
-    // POST: api/followers/current/follows/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-    [HttpPost(FollowRoutes.CurrentId)]
+    // POST: api/followers/current/follows
+    [HttpPost(FollowRoutes.Current)]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

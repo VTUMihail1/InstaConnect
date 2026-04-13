@@ -23,48 +23,6 @@ public class PostBuilder
         _updatedAtUtc = PostDataFaker.GetUpdatedAtUtc();
     }
 
-    public PostBuilder WithId(string id)
-    {
-        _id = id;
-
-        return this;
-    }
-
-    public PostBuilder WithTitle(string title)
-    {
-        _title = title;
-
-        return this;
-    }
-
-    public PostBuilder WithContent(string content)
-    {
-        _content = content;
-
-        return this;
-    }
-
-    public PostBuilder WithUserId(string userId)
-    {
-        _userId = userId;
-
-        return this;
-    }
-
-    public PostBuilder WithCreatedAtUtc(DateTimeOffset createdAtUtc)
-    {
-        _createdAtUtc = createdAtUtc;
-
-        return this;
-    }
-
-    public PostBuilder WithUpdatedAtUtc(DateTimeOffset updatedAtUtc)
-    {
-        _updatedAtUtc = updatedAtUtc;
-
-        return this;
-    }
-
     public Post Build()
     {
         var post = new Post(

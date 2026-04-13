@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Chats.Application.Features.Chats.Commands.Add;
-using InstaConnect.Chats.Application.Features.Chats.Commands.Delete;
 using InstaConnect.Chats.Application.Features.Chats.Queries.GetAll;
 using InstaConnect.Chats.Application.Features.Chats.Queries.GetById;
 
@@ -14,7 +13,7 @@ public class ChatApplicationMappings : IRegister
         config.NewConfig<GetAllChatsQueryRequest, GetAllChatsQuery>()
             .ConstructUsing(src => new(
                                        new(
-                                           new(src.ParticipantOneId),
+                                           new(src.CurrentUserId),
                                            new(src.ParticipantTwoName)),
                                        new(
                                            src.SortOrder,
@@ -31,12 +30,12 @@ public class ChatApplicationMappings : IRegister
         config.NewConfig<GetChatByIdQueryRequest, GetChatByIdQuery>()
             .ConstructUsing(src => new(
                                        new(
-                                           new(src.ParticipantOneId),
+                                           new(src.CurrentUserId),
                                            new(src.ParticipantTwoId)),
                                        new(
                                            new(src.CurrentUserId))));
 
-        config.NewConfig<Chat, GetChatByIdQueryResponse>()
+        config.NewConfig<ChatResponse, GetChatByIdQueryResponse>()
             .ConstructUsing(src => new(src.Adapt<ChatQueryResponse>(config)!));
 
         config.NewConfig<AddChatCommandRequest, AddChatCommand>()
@@ -44,21 +43,15 @@ public class ChatApplicationMappings : IRegister
                                        new(src.ParticipantOneId),
                                        new(src.ParticipantTwoId)));
 
-        config.NewConfig<Chat, AddChatCommandResponse>()
-            .ConstructUsing(src => new(src.Id.Adapt<ChatIdCommandResponse>(config)!));
-
-        config.NewConfig<DeleteChatCommandRequest, DeleteChatCommand>()
-            .ConstructUsing(src => new(
-                                       new(
-                                           new(src.ParticipantOneId),
-                                           new(src.ParticipantTwoId))));
+        config.NewConfig<ChatId, AddChatCommandResponse>()
+            .ConstructUsing(src => new(src.Adapt<ChatIdCommandResponse>(config)!));
 
         config.NewConfig<ChatId, ChatIdCommandResponse>()
             .ConstructUsing(src => new(
                 src.ParticipantOneId.Id,
                 src.ParticipantTwoId.Id));
 
-        config.NewConfig<Chat, ChatQueryResponse>()
+        config.NewConfig<ChatResponse, ChatQueryResponse>()
             .ConstructUsing(src => new(
                 src.Id.ParticipantOneId.Id,
                 src.Id.ParticipantTwoId.Id,

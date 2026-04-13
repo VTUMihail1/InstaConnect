@@ -12,19 +12,22 @@ internal class ChatQueryRepository : IChatQueryRepository
     private readonly IChatIncluderFactory _includerFactory;
     private readonly ISortOrdererFactory _sortOrdererFactory;
     private readonly IChatsSortTermerFactory _sortTermerFactory;
+    private readonly IChatIncludeBuilderFactory _includeBuilderFactory;
 
     public ChatQueryRepository(
         IPaginator paginator,
         IChatsContext context,
         IChatIncluderFactory includerFactory,
         ISortOrdererFactory sortOrdererFactory,
-        IChatsSortTermerFactory sortTermerFactory)
+        IChatsSortTermerFactory sortTermerFactory,
+        IChatIncludeBuilderFactory includeBuilderFactory)
     {
         _paginator = paginator;
         _context = context;
         _includerFactory = includerFactory;
         _sortOrdererFactory = sortOrdererFactory;
         _sortTermerFactory = sortTermerFactory;
+        _includeBuilderFactory = includeBuilderFactory;
     }
 
     public async Task<ICollection<ChatResponse>> GetAllAsync(
@@ -32,9 +35,10 @@ internal class ChatQueryRepository : IChatQueryRepository
         CurrentUserQuery currentUser,
         ChatsSortingQuery sorting,
         ChatsPaginationQuery pagination,
-        ChatInclude? include,
         CancellationToken cancellationToken)
     {
+        var include = _includeBuilderFactory.Create().WithParticipantOne().WithParticipantTwo().Build();
+
         return await _context
             .Chats
             .AggregateWithCaseInsensitiveCollation()
@@ -46,21 +50,12 @@ internal class ChatQueryRepository : IChatQueryRepository
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<ICollection<ChatResponse>> GetAllAsync(
-        ChatsFilterQuery filter,
-        CurrentUserQuery currentUser,
-        ChatsSortingQuery sorting,
-        ChatsPaginationQuery pagination,
-        CancellationToken cancellationToken)
-    {
-        return await GetAllAsync(filter, currentUser, sorting, pagination, null, cancellationToken);
-    }
-
     public async Task<long> GetTotalCountAsync(
         ChatsFilterQuery filter,
-        ChatInclude? include,
         CancellationToken cancellationToken)
     {
+        var include = _includeBuilderFactory.Create().WithParticipantOne().WithParticipantTwo().Build();
+
         return await _context
             .Chats
             .AggregateWithCaseInsensitiveCollation()
@@ -69,19 +64,13 @@ internal class ChatQueryRepository : IChatQueryRepository
             .GetCount(cancellationToken);
     }
 
-    public async Task<long> GetTotalCountAsync(
-        ChatsFilterQuery filter,
-        CancellationToken cancellationToken)
-    {
-        return await GetTotalCountAsync(filter, null, cancellationToken);
-    }
-
     public async Task<ChatResponse?> GetByIdAsync(
         ChatId id,
         CurrentUserQuery currentUser,
-        ChatInclude? include,
         CancellationToken cancellationToken)
     {
+        var include = _includeBuilderFactory.Create().WithParticipantOne().WithParticipantTwo().Build();
+
         return await _context
             .Chats
             .AggregateWithCaseInsensitiveCollation()
@@ -89,14 +78,6 @@ internal class ChatQueryRepository : IChatQueryRepository
             .Match(id)
             .ProjectToFullResponse(currentUser)
             .FirstOrDefaultAsync(cancellationToken);
-    }
-
-    public async Task<ChatResponse?> GetByIdAsync(
-        ChatId id,
-        CurrentUserQuery currentUser,
-        CancellationToken cancellationToken)
-    {
-        return await GetByIdAsync(id, currentUser, null, cancellationToken);
     }
 
     public async Task<bool> ExistsByIdAsync(

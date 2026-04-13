@@ -3,6 +3,5 @@
 public record DeleteChatMessageApiRequest(
     [UserIdFromClaim] string ParticipantOneId,
     [FromRoute] string ParticipantTwoId,
-    [FromRoute] string MessageId,
-    [UserIdFromClaim] string SenderId
+    [FromRoute] string MessageId
 );

@@ -50,7 +50,7 @@ internal class PostLikeCommandService : IPostLikeCommandService
             throw new PostNotFoundException(command.Id);
         }
 
-        var newPostLike = _likeFactory.Create(command.Id, command.UserId).AddPost(post).AddUser(user);
+        var newPostLike = _likeFactory.Create(post.Id, user.Id).AddPost(post).AddUser(user);
         var postLike = await _likeRepository.GetByIdAsync(newPostLike.Id, cancellationToken);
 
         if (postLike != null)

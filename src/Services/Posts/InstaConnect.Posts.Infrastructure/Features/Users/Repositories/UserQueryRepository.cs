@@ -20,24 +20,15 @@ internal class UserQueryRepository : IUserQueryRepository
     public async Task<UserResponse?> GetByIdAsync(
         UserId id,
         CurrentUserQuery currentUser,
-        UserInclude? include,
         CancellationToken cancellationToken)
     {
         return await _context
             .Users
             .AggregateWithCaseInsensitiveCollation()
-            .Includes(_userIncluderFactory, include)
+            .Includes(_userIncluderFactory)
             .Match(id)
             .ProjectToFullResponse(currentUser)
             .FirstOrDefaultAsync(cancellationToken);
-    }
-
-    public async Task<UserResponse?> GetByIdAsync(
-        UserId id,
-        CurrentUserQuery currentUser,
-        CancellationToken cancellationToken)
-    {
-        return await GetByIdAsync(id, currentUser, null, cancellationToken);
     }
 
     public async Task<bool> ExistsByIdAsync(

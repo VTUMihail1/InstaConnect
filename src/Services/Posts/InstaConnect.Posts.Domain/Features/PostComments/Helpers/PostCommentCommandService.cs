@@ -53,7 +53,7 @@ internal class PostCommentCommandService : IPostCommentCommandService
             throw new PostNotFoundException(command.Id);
         }
 
-        var newPostComment = _commentFactory.Create(command.Id, command.UserId, command.Content).AddPost(post).AddUser(user);
+        var newPostComment = _commentFactory.Create(post.Id, user.Id, command.Content).AddPost(post).AddUser(user);
         await _commentRepository.AddAsync(newPostComment, cancellationToken);
 
         await _eventPublisher.PublishAsync(

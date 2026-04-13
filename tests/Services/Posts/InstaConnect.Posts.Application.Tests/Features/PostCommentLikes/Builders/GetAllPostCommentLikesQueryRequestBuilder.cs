@@ -11,7 +11,7 @@ public class GetAllPostCommentLikesQueryRequestBuilder
     private int _page;
     private int _pageSize;
     private CommonSortOrder _sortOrder;
-    private PostCommentLikesSortTerm _sortProperty;
+    private PostCommentLikesSortTerm _sortTerm;
 
     public GetAllPostCommentLikesQueryRequestBuilder(PostCommentLike postCommentLike)
     {
@@ -22,7 +22,7 @@ public class GetAllPostCommentLikesQueryRequestBuilder
         _page = PostCommentLikeDataFaker.GetPage();
         _pageSize = PostCommentLikeDataFaker.GetPageSize();
         _sortOrder = DataFaker.GetSortOrder();
-        _sortProperty = PostCommentLikeDataFaker.GetSortTerm();
+        _sortTerm = PostCommentLikeDataFaker.GetSortTerm();
     }
 
     public GetAllPostCommentLikesQueryRequestBuilder WithId(PostId id, IStringTransformer? transformer = null)
@@ -97,13 +97,13 @@ public class GetAllPostCommentLikesQueryRequestBuilder
 
     public GetAllPostCommentLikesQueryRequestBuilder WithSortTerm(IEnumTransformer<PostCommentLikesSortTerm> transformer)
     {
-        _sortProperty = transformer.Transform(_sortProperty);
+        _sortTerm = transformer.Transform(_sortTerm);
 
         return this;
     }
 
     public GetAllPostCommentLikesQueryRequest Build()
     {
-        return new(_id, _commentId, _userName, _currentUserId, _sortOrder, _sortProperty, _page, _pageSize);
+        return new(_id, _commentId, _userName, _currentUserId, _sortOrder, _sortTerm, _page, _pageSize);
     }
 }

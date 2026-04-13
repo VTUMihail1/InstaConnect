@@ -4,12 +4,12 @@ public class GetChatByIdQueryRequestValidator : AbstractValidator<GetChatByIdQue
 {
     public GetChatByIdQueryRequestValidator()
     {
-        RuleFor(r => r.ParticipantOneId)
+        RuleFor(r => r.ParticipantTwoId)
             .NotEmptyWithMessage()
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();
 
-        RuleFor(r => r.ParticipantTwoId)
+        RuleFor(c => c.CurrentUserId)
             .NotEmptyWithMessage()
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();

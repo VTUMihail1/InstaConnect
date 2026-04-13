@@ -6,7 +6,6 @@ namespace InstaConnect.Chats.Presentation.Features.ChatMessages.Models.Requests;
 
 public record GetAllChatMessagesApiRequest(
     [UserIdFromClaim] string CurrentUserId,
-    [UserIdFromClaim] string ParticipantOneId,
     [FromRoute] string ParticipantTwoId,
     [FromQuery] CommonSortOrder SortOrder = CommonDefaultValues.SortOrder,
     [FromQuery] ChatMessagesSortTerm SortTerm = ChatMessageDefaultValues.SortTerm,

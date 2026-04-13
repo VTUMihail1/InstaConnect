@@ -21,34 +21,6 @@ public class PostCommentLikeBuilder
         _createdAtUtc = PostCommentLikeDataFaker.GetCreatedAtUtc();
     }
 
-    public PostCommentLikeBuilder WithId(string id)
-    {
-        _id = id;
-
-        return this;
-    }
-
-    public PostCommentLikeBuilder WithCommentId(string commentId)
-    {
-        _commentId = commentId;
-
-        return this;
-    }
-
-    public PostCommentLikeBuilder WithUserId(string userId)
-    {
-        _userId = userId;
-
-        return this;
-    }
-
-    public PostCommentLikeBuilder WithCreatedAtUtc(IDateTimeOffsetTransformer transformer)
-    {
-        _createdAtUtc = transformer.Transform(_createdAtUtc);
-
-        return this;
-    }
-
     public PostCommentLike Build()
     {
         var postCommentLike = new PostCommentLike(

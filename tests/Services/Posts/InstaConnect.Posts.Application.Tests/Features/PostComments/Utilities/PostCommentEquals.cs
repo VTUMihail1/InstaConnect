@@ -112,7 +112,7 @@ public static class PostCommentEquals
         public bool Matches(Post post, ICollection<PostComment> postComments, GetAllPostCommentsQueryRequest request)
         {
             return response.PostCommentCollection.MatchesWithoutUser(
-                (res, comment) => res.MatchesWithoutPost(comment, request),
+                (response, comment) => response.MatchesWithoutPost(comment, request),
                 comment => comment.MatchesFilter(request),
                 post,
                 postComments,
@@ -123,7 +123,7 @@ public static class PostCommentEquals
         public bool Matches(Post post, ICollection<PostComment> postComments, GetAllPostCommentsQueryRequest request, ISortEnumTermTransformer<PostComment> termTransformer)
         {
             return response.PostCommentCollection.MatchesWithoutUser(
-                (res, comment) => res.MatchesWithoutPost(comment, request),
+                (response, comment) => response.MatchesWithoutPost(comment, request),
                 comment => comment.MatchesFilter(request),
                 post,
                 postComments,
@@ -138,7 +138,7 @@ public static class PostCommentEquals
         public bool Matches(User user, ICollection<PostComment> postComments, GetAllPostCommentsForUserQueryRequest request)
         {
             return response.PostCommentCollection.MatchesWithoutPost(
-                (res, comment) => res.MatchesWithoutUser(comment, request),
+                (response, comment) => response.MatchesWithoutUser(comment, request),
                 comment => comment.MatchesFilter(request),
                 user,
                 postComments,
@@ -149,7 +149,7 @@ public static class PostCommentEquals
         public bool Matches(User user, ICollection<PostComment> postComments, GetAllPostCommentsForUserQueryRequest request, ISortEnumTermTransformer<PostComment> termTransformer)
         {
             return response.PostCommentCollection.MatchesWithoutPost(
-                (res, comment) => res.MatchesWithoutUser(comment, request),
+                (response, comment) => response.MatchesWithoutUser(comment, request),
                 comment => comment.MatchesFilter(request),
                 user,
                 postComments,

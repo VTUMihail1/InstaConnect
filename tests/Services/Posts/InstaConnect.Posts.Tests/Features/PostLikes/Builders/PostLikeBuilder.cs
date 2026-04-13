@@ -19,27 +19,6 @@ public class PostLikeBuilder
         _createdAtUtc = PostLikeDataFaker.GetCreatedAtUtc();
     }
 
-    public PostLikeBuilder WithId(string id)
-    {
-        _id = id;
-
-        return this;
-    }
-
-    public PostLikeBuilder WithUserId(string userId)
-    {
-        _userId = userId;
-
-        return this;
-    }
-
-    public PostLikeBuilder WithCreatedAtUtc(DateTimeOffset createdAtUtc)
-    {
-        _createdAtUtc = createdAtUtc;
-
-        return this;
-    }
-
     public PostLike Build()
     {
         var postLike = new PostLike(

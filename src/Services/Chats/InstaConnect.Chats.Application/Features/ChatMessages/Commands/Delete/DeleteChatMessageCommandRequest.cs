@@ -3,5 +3,4 @@
 public record DeleteChatMessageCommandRequest(
     string ParticipantOneId,
     string ParticipantTwoId,
-    string MessageId,
-    string SenderId) : ICommandRequest;
+    string MessageId) : ICommandRequest;

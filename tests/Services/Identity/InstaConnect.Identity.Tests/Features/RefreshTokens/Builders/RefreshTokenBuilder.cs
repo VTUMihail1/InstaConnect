@@ -19,37 +19,11 @@ public class RefreshTokenBuilder
         _createdAtUtc = RefreshTokenDataFaker.GetCreatedAtUtc();
     }
 
-    public RefreshTokenBuilder WithId(string id)
-    {
-        _id = id;
-
-        return this;
-    }
-
-    public RefreshTokenBuilder WithValue(string value)
-    {
-        _value = value;
-
-        return this;
-    }
-
-    public RefreshTokenBuilder WithCreatedAtUtc(DateTimeOffset createdAtUtc)
-    {
-        _createdAtUtc = createdAtUtc;
-
-        return this;
-    }
-
-    public RefreshTokenBuilder WithExpiresAtUtc(DateTimeOffset expiresAtUtc)
-    {
-        _expiresAtUtc = expiresAtUtc;
-
-        return this;
-    }
-
     public RefreshTokenBuilder WithAlreadyExpiresAtUtc()
     {
-        return WithExpiresAtUtc(RefreshTokenDataFaker.GetAlreadyExpiresAtUtc());
+        _expiresAtUtc = RefreshTokenDataFaker.GetAlreadyExpiresAtUtc();
+
+        return this;
     }
 
     public RefreshToken Build()

@@ -3,6 +3,7 @@ using System.Text;
 
 using Bogus;
 
+using InstaConnect.Common.Domain.Extensions;
 using InstaConnect.Common.Domain.Models;
 
 using Microsoft.AspNetCore.Http;
@@ -104,7 +105,7 @@ public abstract class DataFaker
             return string.Empty;
         }
 
-        return value.ToUpper(CultureInfo.CurrentCulture);
+        return value.ToUpperCurrentCulture();
     }
 
     public static TEnum GetEmptyEnum<TEnum>()

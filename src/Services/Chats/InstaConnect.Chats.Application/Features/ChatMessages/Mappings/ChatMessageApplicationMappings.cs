@@ -16,7 +16,7 @@ public class ChatMessageApplicationMappings : IRegister
             .ConstructUsing(src => new(
                                        new(
                                            new(
-                                               new(src.ParticipantOneId),
+                                               new(src.CurrentUserId),
                                                new(src.ParticipantTwoId))),
                                         new(
                                             src.SortOrder,
@@ -34,13 +34,13 @@ public class ChatMessageApplicationMappings : IRegister
             .ConstructUsing(src => new(
                                        new(
                                            new(
-                                               new(src.ParticipantOneId),
+                                               new(src.CurrentUserId),
                                                new(src.ParticipantTwoId)),
                                            src.MessageId),
                                        new(
                                            new(src.CurrentUserId))));
 
-        config.NewConfig<ChatMessage, GetChatMessageByIdQueryResponse>()
+        config.NewConfig<ChatMessageResponse, GetChatMessageByIdQueryResponse>()
             .ConstructUsing(src => new(src.Adapt<ChatMessageQueryResponse>(config)!));
 
         config.NewConfig<AddChatMessageCommandRequest, AddChatMessageCommand>()
@@ -48,11 +48,10 @@ public class ChatMessageApplicationMappings : IRegister
                                        new(
                                                new(src.ParticipantOneId),
                                                new(src.ParticipantTwoId)),
-                                       new(src.SenderId),
                                        src.Content));
 
-        config.NewConfig<ChatMessage, AddChatMessageCommandResponse>()
-            .ConstructUsing(src => new(src.Id.Adapt<ChatMessageIdCommandResponse>(config)!));
+        config.NewConfig<ChatMessageId, AddChatMessageCommandResponse>()
+            .ConstructUsing(src => new(src.Adapt<ChatMessageIdCommandResponse>(config)!));
 
         config.NewConfig<UpdateChatMessageCommandRequest, UpdateChatMessageCommand>()
             .ConstructUsing(src => new(
@@ -61,11 +60,10 @@ public class ChatMessageApplicationMappings : IRegister
                                                new(src.ParticipantOneId),
                                                new(src.ParticipantTwoId)),
                                            src.MessageId),
-                                       src.Content,
-                                       new(src.SenderId)));
+                                       src.Content));
 
-        config.NewConfig<ChatMessage, UpdateChatMessageCommandResponse>()
-            .ConstructUsing(src => new(src.Id.Adapt<ChatMessageIdCommandResponse>(config)!));
+        config.NewConfig<ChatMessageId, UpdateChatMessageCommandResponse>()
+            .ConstructUsing(src => new(src.Adapt<ChatMessageIdCommandResponse>(config)!));
 
         config.NewConfig<DeleteChatMessageCommandRequest, DeleteChatMessageCommand>()
             .ConstructUsing(src => new(
@@ -73,8 +71,7 @@ public class ChatMessageApplicationMappings : IRegister
                                            new(
                                                new(src.ParticipantOneId),
                                                new(src.ParticipantTwoId)),
-                                           src.MessageId),
-                                       new(src.SenderId)));
+                                           src.MessageId)));
 
         config.NewConfig<ChatMessageId, ChatMessageIdCommandResponse>()
             .ConstructUsing(src => new(
@@ -82,11 +79,12 @@ public class ChatMessageApplicationMappings : IRegister
                 src.Id.ParticipantTwoId.Id,
                 src.MessageId));
 
-        config.NewConfig<ChatMessage, ChatMessageQueryResponse>()
+        config.NewConfig<ChatMessageResponse, ChatMessageQueryResponse>()
             .ConstructUsing(src => new(
                 src.Id.Id.ParticipantOneId.Id,
                 src.Id.Id.ParticipantTwoId.Id,
                 src.Id.MessageId,
+                src.SenderId.Id,
                 src.Content,
                 src.Chat.Adapt<ChatQueryResponse>(config),
                 src.Sender.Adapt<UserQueryResponse>(config),

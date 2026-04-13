@@ -13,6 +13,7 @@ internal class PostQueryRepository : IPostQueryRepository
     private readonly IPostIncluderFactory _includerFactory;
     private readonly ISortOrdererFactory _sortOrdererFactory;
     private readonly IPostsSortTermerFactory _sortTermerFactory;
+    private readonly IPostIncludeBuilderFactory _includeBuilderFactory;
     private readonly IPostsForUserSortTermerFactory _forUserSortTermerFactory;
 
     public PostQueryRepository(
@@ -21,6 +22,7 @@ internal class PostQueryRepository : IPostQueryRepository
         IPostIncluderFactory includerFactory,
         ISortOrdererFactory sortOrdererFactory,
         IPostsSortTermerFactory sortTermerFactory,
+        IPostIncludeBuilderFactory includeBuilderFactory,
         IPostsForUserSortTermerFactory forUserSortTermerFactory)
     {
         _paginator = paginator;
@@ -28,6 +30,7 @@ internal class PostQueryRepository : IPostQueryRepository
         _includerFactory = includerFactory;
         _sortOrdererFactory = sortOrdererFactory;
         _sortTermerFactory = sortTermerFactory;
+        _includeBuilderFactory = includeBuilderFactory;
         _forUserSortTermerFactory = forUserSortTermerFactory;
     }
 
@@ -36,9 +39,10 @@ internal class PostQueryRepository : IPostQueryRepository
         CurrentUserQuery currentUser,
         PostsSortingQuery sorting,
         PostsPaginationQuery pagination,
-        PostInclude? include,
         CancellationToken cancellationToken)
     {
+        var include = _includeBuilderFactory.Create().WithUser().WithPostLikes().Build();
+
         return await _context
             .Posts
             .AggregateWithCaseInsensitiveCollation()
@@ -50,24 +54,15 @@ internal class PostQueryRepository : IPostQueryRepository
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<ICollection<PostResponse>> GetAllAsync(
-        PostsFilterQuery filter,
-        CurrentUserQuery currentUser,
-        PostsSortingQuery sorting,
-        PostsPaginationQuery pagination,
-        CancellationToken cancellationToken)
-    {
-        return await GetAllAsync(filter, currentUser, sorting, pagination, null, cancellationToken);
-    }
-
     public async Task<ICollection<PostResponse>> GetAllForUserAsync(
         PostsForUserFilterQuery filter,
         CurrentUserQuery currentUser,
         PostsForUserSortingQuery sorting,
         PostsPaginationQuery pagination,
-        PostInclude? include,
         CancellationToken cancellationToken)
     {
+        var include = _includeBuilderFactory.Create().WithPostLikes().Build();
+
         return await _context
             .Posts
             .AggregateWithCaseInsensitiveCollation()
@@ -79,41 +74,12 @@ internal class PostQueryRepository : IPostQueryRepository
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<ICollection<PostResponse>> GetAllForUserAsync(
-        PostsForUserFilterQuery filter,
-        CurrentUserQuery currentUser,
-        PostsForUserSortingQuery sorting,
-        PostsPaginationQuery pagination,
-        CancellationToken cancellationToken)
-    {
-        return await GetAllForUserAsync(filter, currentUser, sorting, pagination, null, cancellationToken);
-    }
-
-    public async Task<long> GetTotalCountAsync(
-        PostsFilterQuery filter,
-        PostInclude? include,
-        CancellationToken cancellationToken)
-    {
-        return await _context
-            .Posts
-            .AggregateWithCaseInsensitiveCollation()
-            .Includes(_includerFactory, include)
-            .Match(filter)
-            .GetCount(cancellationToken);
-    }
-
     public async Task<long> GetTotalCountAsync(
         PostsFilterQuery filter,
         CancellationToken cancellationToken)
     {
-        return await GetTotalCountAsync(filter, null, cancellationToken);
-    }
+        var include = _includeBuilderFactory.Create().WithUser().WithPostLikes().Build();
 
-    public async Task<long> GetTotalCountForUserAsync(
-        PostsForUserFilterQuery filter,
-        PostInclude? include,
-        CancellationToken cancellationToken)
-    {
         return await _context
             .Posts
             .AggregateWithCaseInsensitiveCollation()
@@ -126,15 +92,23 @@ internal class PostQueryRepository : IPostQueryRepository
         PostsForUserFilterQuery filter,
         CancellationToken cancellationToken)
     {
-        return await GetTotalCountForUserAsync(filter, null, cancellationToken);
+        var include = _includeBuilderFactory.Create().WithPostLikes().Build();
+
+        return await _context
+            .Posts
+            .AggregateWithCaseInsensitiveCollation()
+            .Includes(_includerFactory, include)
+            .Match(filter)
+            .GetCount(cancellationToken);
     }
 
     public async Task<PostResponse?> GetByIdAsync(
         PostId id,
         CurrentUserQuery currentUser,
-        PostInclude? include,
         CancellationToken cancellationToken)
     {
+        var include = _includeBuilderFactory.Create().WithUser().WithPostLikes().Build();
+
         return await _context
             .Posts
             .AggregateWithCaseInsensitiveCollation()
@@ -142,14 +116,6 @@ internal class PostQueryRepository : IPostQueryRepository
             .Match(id)
             .ProjectToFullResponse(currentUser)
             .FirstOrDefaultAsync(cancellationToken);
-    }
-
-    public async Task<PostResponse?> GetByIdAsync(
-        PostId id,
-        CurrentUserQuery currentUser,
-        CancellationToken cancellationToken)
-    {
-        return await GetByIdAsync(id, currentUser, null, cancellationToken);
     }
 
     public async Task<bool> ExistsByIdAsync(

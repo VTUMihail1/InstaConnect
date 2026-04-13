@@ -5,7 +5,6 @@ internal class ChatMessageCommandService : IChatMessageCommandService
     private readonly IChatCommandRepository _repository;
     private readonly IDateTimeProvider _dateTimeProvider;
     private readonly IChatMessageFactory _messageFactory;
-    private readonly IUserCommandRepository _userRepository;
     private readonly IChatMessageCommandRepository _messageRepository;
     private readonly IChatIncludeBuilderFactory _includeBuilderFactory;
     private readonly IChatMessageIncludeBuilderFactory _messageIncludeBuilderFactory;
@@ -14,7 +13,6 @@ internal class ChatMessageCommandService : IChatMessageCommandService
         IChatCommandRepository repository,
         IDateTimeProvider dateTimeProvider,
         IChatMessageFactory messageFactory,
-        IUserCommandRepository userRepository,
         IChatMessageCommandRepository messageRepository,
         IChatIncludeBuilderFactory includeBuilderFactory,
         IChatMessageIncludeBuilderFactory messageIncludeBuilderFactory)
@@ -22,7 +20,6 @@ internal class ChatMessageCommandService : IChatMessageCommandService
         _repository = repository;
         _dateTimeProvider = dateTimeProvider;
         _messageFactory = messageFactory;
-        _userRepository = userRepository;
         _messageRepository = messageRepository;
         _includeBuilderFactory = includeBuilderFactory;
         _messageIncludeBuilderFactory = messageIncludeBuilderFactory;
@@ -30,13 +27,6 @@ internal class ChatMessageCommandService : IChatMessageCommandService
 
     public async Task<ChatMessageId> AddAsync(AddChatMessageCommand command, CancellationToken cancellationToken)
     {
-        var sender = await _userRepository.GetByIdAsync(command.SenderId, cancellationToken);
-
-        if (sender == null)
-        {
-            throw new UserNotFoundException(command.SenderId);
-        }
-
         var chat = await _repository.GetByIdAsync(command.Id, cancellationToken);
 
         if (chat == null)
@@ -44,12 +34,7 @@ internal class ChatMessageCommandService : IChatMessageCommandService
             throw new ChatNotFoundException(command.Id);
         }
 
-        if (chat.IsNotParticipant(command.SenderId))
-        {
-            throw new ChatForbiddenException(command.Id, command.SenderId);
-        }
-
-        var newChatMessage = _messageFactory.Create(command.Id, command.SenderId, command.Content).AddSender(sender).AddChat(chat);
+        var newChatMessage = _messageFactory.Create(chat.Id, chat.Id.ParticipantOneId, command.Content);
         await _messageRepository.AddAsync(newChatMessage, cancellationToken);
 
         return newChatMessage.Id;
@@ -57,7 +42,7 @@ internal class ChatMessageCommandService : IChatMessageCommandService
 
     public async Task<ChatMessageId> UpdateAsync(UpdateChatMessageCommand command, CancellationToken cancellationToken)
     {
-        var chatNotExists = await _repository.ExistsByIdAsync(command.Id.Id, cancellationToken);
+        var chatNotExists = !await _repository.ExistsByIdAsync(command.Id.Id, cancellationToken);
 
         if (chatNotExists)
         {
@@ -73,9 +58,9 @@ internal class ChatMessageCommandService : IChatMessageCommandService
             throw new ChatMessageNotFoundException(command.Id);
         }
 
-        if (chatMessage.SenderId.IsNot(command.SenderId))
+        if (chatMessage.SenderId.IsNot(command.Id.Id.ParticipantOneId))
         {
-            throw new ChatMessageForbiddenException(command.Id, command.SenderId);
+            throw new ChatMessageForbiddenException(command.Id, command.Id.Id.ParticipantOneId);
         }
 
         var utcNow = _dateTimeProvider.GetOffsetUtcNow();
@@ -87,7 +72,7 @@ internal class ChatMessageCommandService : IChatMessageCommandService
 
     public async Task DeleteAsync(DeleteChatMessageCommand command, CancellationToken cancellationToken)
     {
-        var chatNotExists = await _repository.ExistsByIdAsync(command.Id.Id, cancellationToken);
+        var chatNotExists = !await _repository.ExistsByIdAsync(command.Id.Id, cancellationToken);
 
         if (chatNotExists)
         {
@@ -103,9 +88,9 @@ internal class ChatMessageCommandService : IChatMessageCommandService
             throw new ChatMessageNotFoundException(command.Id);
         }
 
-        if (chatMessage.SenderId.IsNot(command.SenderId))
+        if (chatMessage.SenderId.IsNot(command.Id.Id.ParticipantOneId))
         {
-            throw new ChatMessageForbiddenException(command.Id, command.SenderId);
+            throw new ChatMessageForbiddenException(command.Id, command.Id.Id.ParticipantOneId);
         }
 
         await _messageRepository.DeleteAsync(chatMessage, cancellationToken);

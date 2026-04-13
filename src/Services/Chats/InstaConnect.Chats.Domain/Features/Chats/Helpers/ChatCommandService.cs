@@ -9,22 +9,19 @@ internal class ChatCommandService : IChatCommandService
     private readonly IEventPublisher _eventPublisher;
     private readonly IChatCommandRepository _repository;
     private readonly IUserCommandRepository _userRepository;
-    private readonly IChatIncludeBuilderFactory _includeBuilderFactory;
 
     public ChatCommandService(
         IChatFactory factory,
         IApplicationMapper mapper,
         IEventPublisher eventPublisher,
         IChatCommandRepository repository,
-        IUserCommandRepository userRepository,
-        IChatIncludeBuilderFactory includeBuilderFactory)
+        IUserCommandRepository userRepository)
     {
         _factory = factory;
         _mapper = mapper;
         _eventPublisher = eventPublisher;
         _repository = repository;
         _userRepository = userRepository;
-        _includeBuilderFactory = includeBuilderFactory;
     }
 
     public async Task<ChatId> AddAsync(AddChatCommand command, CancellationToken cancellationToken)
@@ -43,7 +40,7 @@ internal class ChatCommandService : IChatCommandService
             throw new UserNotFoundException(command.ParticipantTwoId);
         }
 
-        var newChat = _factory.Create(command.ParticipantOneId, command.ParticipantTwoId).AddParticipantOne(participantOne).AddParticipantTwo(participantTwo);
+        var newChat = _factory.Create(participantOne.Id, participantTwo.Id).AddParticipantOne(participantOne).AddParticipantTwo(participantTwo);
         var chat = await _repository.GetByIdAsync(newChat.Id, cancellationToken);
 
         if (chat != null)
@@ -57,21 +54,5 @@ internal class ChatCommandService : IChatCommandService
             _mapper.Map<ChatAddedEventRequest>(newChat), cancellationToken);
 
         return newChat.Id;
-    }
-
-    public async Task DeleteAsync(DeleteChatCommand command, CancellationToken cancellationToken)
-    {
-        var include = _includeBuilderFactory.Create().WithParticipantOne().WithParticipantTwo().Build();
-        var chat = await _repository.GetByIdAsync(command.Id, include, cancellationToken);
-
-        if (chat == null)
-        {
-            throw new ChatNotFoundException(command.Id);
-        }
-
-        await _repository.DeleteAsync(chat, cancellationToken);
-
-        await _eventPublisher.PublishAsync(
-            _mapper.Map<ChatDeletedEventRequest>(chat), cancellationToken);
     }
 }

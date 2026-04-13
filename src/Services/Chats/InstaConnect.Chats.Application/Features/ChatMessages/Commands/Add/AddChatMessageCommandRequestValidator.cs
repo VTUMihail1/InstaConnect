@@ -14,11 +14,6 @@ public class AddChatMessageCommandRequestValidator : AbstractValidator<AddChatMe
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();
 
-        RuleFor(r => r.SenderId)
-            .NotEmptyWithMessage()
-            .UserIdMinLengthWithMessage()
-            .UserIdMaxLengthWithMessage();
-
         RuleFor(r => r.Content)
             .NotEmptyWithMessage()
             .ChatMessageContentMinLengthWithMessage()

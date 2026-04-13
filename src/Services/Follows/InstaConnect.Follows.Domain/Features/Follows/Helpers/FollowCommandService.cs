@@ -43,7 +43,7 @@ internal class FollowCommandService : IFollowCommandService
             throw new UserNotFoundException(command.FollowingId);
         }
 
-        var newFollow = _factory.Create(command.FollowerId, command.FollowingId).AddFollower(follower).AddFollowing(following);
+        var newFollow = _factory.Create(follower.Id, following.Id).AddFollower(follower).AddFollowing(following);
         var followExists = await _repository.ExistsByIdAsync(newFollow.Id, cancellationToken);
 
         if (followExists)

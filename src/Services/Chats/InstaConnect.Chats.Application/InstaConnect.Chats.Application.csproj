@@ -5,13 +5,14 @@
     <ProjectReference Include="..\InstaConnect.Chats.Domain\InstaConnect.Chats.Domain.csproj" />
   </ItemGroup>
 
+
   <ItemGroup>
-  	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-  	  <_Parameter1>InstaConnect.Messages.Application.UnitTests</_Parameter1>
-  	</AssemblyAttribute>
-  	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-  	  <_Parameter1>InstaConnect.Messages.Application.IntegrationTests</_Parameter1>
-  	</AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>InstaConnect.Chats.Application.Tests.Unit</_Parameter1>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>InstaConnect.Chats.Application.Tests.Integration</_Parameter1>
+    </AssemblyAttribute>
   </ItemGroup>
 
   <ItemGroup Label="Common">

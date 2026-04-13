@@ -1,10 +1,10 @@
 ﻿using InstaConnect.Chats.Application.Features.Chats.Commands.Add;
-using InstaConnect.Chats.Application.Features.Chats.Commands.Delete;
 using InstaConnect.Chats.Application.Features.Chats.Queries.GetAll;
 using InstaConnect.Chats.Application.Features.Chats.Queries.GetById;
 
 namespace InstaConnect.Chats.Presentation.Features.Chats.Controllers.v1;
 
+[Authorize]
 [ApiVersion(ChatRoutes.Version1)]
 [Route(ChatRoutes.Resource)]
 [EnableRateLimiting(RateLimiterPolicies.Default)]
@@ -51,9 +51,8 @@ public class ChatController : ControllerBase
         return Ok(response);
     }
 
-    // POST: api/participants/current/chats/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-    [HttpPost(ChatRoutes.Id)]
-    [Authorize]
+    // POST: api/participants/current/chats
+    [HttpPost]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -66,21 +65,5 @@ public class ChatController : ControllerBase
         var response = _mapper.Map<AddChatApiResponse>(commandResponse);
 
         return Ok(response);
-    }
-
-    // DELETE: api/participants/current/chats/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-    [HttpDelete(ChatRoutes.Id)]
-    [Authorize]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult> DeleteAsync(
-        DeleteChatApiRequest request,
-        CancellationToken cancellationToken)
-    {
-        var commandRequest = _mapper.Map<DeleteChatCommandRequest>(request);
-        await _sender.SendAsync(commandRequest, cancellationToken);
-
-        return NoContent();
     }
 }

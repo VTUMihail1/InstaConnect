@@ -18,27 +18,6 @@ public class UserClaimBuilder
         _createdAtUtc = UserClaimDataFaker.GetCreatedAtUtc();
     }
 
-    public UserClaimBuilder WithId(string id)
-    {
-        _id = id;
-
-        return this;
-    }
-
-    public UserClaimBuilder WithClaim(ApplicationClaims claim)
-    {
-        _claim = claim;
-
-        return this;
-    }
-
-    public UserClaimBuilder WithCreatedAtUtc(DateTimeOffset createdAtUtc)
-    {
-        _createdAtUtc = createdAtUtc;
-
-        return this;
-    }
-
     public UserClaim Build()
     {
         var userClaim = new UserClaim(

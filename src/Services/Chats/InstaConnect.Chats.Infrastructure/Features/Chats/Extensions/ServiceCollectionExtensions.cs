@@ -17,10 +17,12 @@ internal static class ServiceCollectionExtensions
             {
                 cm.MapIdMember(c => c.Id);
 
+                cm.MapMember(c => c.Id);
                 cm.MapMember(c => c.CreatedAtUtc);
 
                 cm.MapMemberWithoutSerialization(c => c.ParticipantOne);
                 cm.MapMemberWithoutSerialization(c => c.ParticipantTwo);
+                cm.MapMemberWithoutSerialization(c => c.ChatMessages);
 
                 cm.MapCreator(c => new Chat(
                     c.Id,

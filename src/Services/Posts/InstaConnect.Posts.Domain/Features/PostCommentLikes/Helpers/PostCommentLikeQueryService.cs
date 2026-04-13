@@ -5,29 +5,20 @@ internal class PostCommentLikeQueryService : IPostCommentLikeQueryService
     private readonly IPostQueryRepository _repository;
     private readonly IUserQueryRepository _userRepository;
     private readonly IPostCommentQueryRepository _commentRepository;
-    private readonly IPostIncludeBuilderFactory _includeBuilderFactory;
     private readonly IPostCommentLikeQueryRepository _commentLikeRepository;
-    private readonly IPostCommentIncludeBuilderFactory _commentIncludeBuilderFactory;
-    private readonly IPostCommentLikeIncludeBuilderFactory _commentLikeIncludeBuilderFactory;
     private readonly IPostCommentLikeCollectionResponseFactory _commentLikeCollectionResponseFactory;
 
     public PostCommentLikeQueryService(
         IPostQueryRepository repository,
         IUserQueryRepository userRepository,
         IPostCommentQueryRepository commentRepository,
-        IPostIncludeBuilderFactory includeBuilderFactory,
         IPostCommentLikeQueryRepository commentLikeRepository,
-        IPostCommentIncludeBuilderFactory commentIncludeBuilderFactory,
-        IPostCommentLikeIncludeBuilderFactory commentLikeIncludeBuilderFactory,
         IPostCommentLikeCollectionResponseFactory commentLikeCollectionResponseFactory)
     {
         _repository = repository;
         _userRepository = userRepository;
         _commentRepository = commentRepository;
-        _includeBuilderFactory = includeBuilderFactory;
         _commentLikeRepository = commentLikeRepository;
-        _commentIncludeBuilderFactory = commentIncludeBuilderFactory;
-        _commentLikeIncludeBuilderFactory = commentLikeIncludeBuilderFactory;
         _commentLikeCollectionResponseFactory = commentLikeCollectionResponseFactory;
     }
 
@@ -40,25 +31,21 @@ internal class PostCommentLikeQueryService : IPostCommentLikeQueryService
             throw new PostNotFoundException(query.Filter.CommentId.Id);
         }
 
-        var include = _includeBuilderFactory.Create().WithUser().WithPostLikes().Build();
-        var commentInclude = _commentIncludeBuilderFactory.Create().WithUser().WithPost(include).WithPostCommentLikes().Build();
-        var postComment = await _commentRepository.GetByIdAsync(query.Filter.CommentId, query.CurrentUser, commentInclude, cancellationToken);
+        var postComment = await _commentRepository.GetByIdAsync(query.Filter.CommentId, query.CurrentUser, cancellationToken);
 
         if (postComment == null)
         {
             throw new PostCommentNotFoundException(query.Filter.CommentId);
         }
 
-        var commentLikeInclude = _commentLikeIncludeBuilderFactory.Create().WithUser().Build();
         var postCommentLikes = await _commentLikeRepository.GetAllAsync(
             query.Filter,
             query.CurrentUser,
             query.Sorting,
             query.Pagination,
-            commentLikeInclude,
             cancellationToken);
 
-        var totalCount = await _commentLikeRepository.GetTotalCountAsync(query.Filter, commentLikeInclude, cancellationToken);
+        var totalCount = await _commentLikeRepository.GetTotalCountAsync(query.Filter, cancellationToken);
 
         return _commentLikeCollectionResponseFactory.Create(postComment, postCommentLikes, totalCount, query.Pagination);
     }
@@ -72,18 +59,14 @@ internal class PostCommentLikeQueryService : IPostCommentLikeQueryService
             throw new UserNotFoundException(query.Filter.UserId);
         }
 
-        var include = _includeBuilderFactory.Create().WithUser().WithPostLikes().Build();
-        var commentInclude = _commentIncludeBuilderFactory.Create().WithUser().WithPost(include).WithPostCommentLikes().Build();
-        var commentLikeInclude = _commentLikeIncludeBuilderFactory.Create().WithPostComment(commentInclude).Build();
         var postCommentLikes = await _commentLikeRepository.GetAllForUserAsync(
             query.Filter,
             query.CurrentUser,
             query.Sorting,
             query.Pagination,
-            commentLikeInclude,
             cancellationToken);
 
-        var totalCount = await _commentLikeRepository.GetTotalCountForUserAsync(query.Filter, commentLikeInclude, cancellationToken);
+        var totalCount = await _commentLikeRepository.GetTotalCountForUserAsync(query.Filter, cancellationToken);
 
         return _commentLikeCollectionResponseFactory.CreateForUser(user, postCommentLikes, totalCount, query.Pagination);
     }
@@ -104,9 +87,6 @@ internal class PostCommentLikeQueryService : IPostCommentLikeQueryService
             throw new PostCommentNotFoundException(query.Id.CommentId);
         }
 
-        var include = _includeBuilderFactory.Create().WithUser().WithPostLikes().Build();
-        var commentInclude = _commentIncludeBuilderFactory.Create().WithUser().WithPost(include).WithPostCommentLikes().Build();
-        var commentLikeInclude = _commentLikeIncludeBuilderFactory.Create().WithUser().WithPostComment(commentInclude).Build();
         var postCommentLike = await _commentLikeRepository.GetByIdAsync(
             query.Id,
             query.CurrentUser,

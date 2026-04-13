@@ -19,13 +19,6 @@ public static class ChatExceptionErrorMessages
         return Format.FormatCurrentCulture(id.ParticipantOneId.Id, id.ParticipantTwoId.Id);
     }
 
-    public static string GetForbiddenMessage(ChatId id, UserId participantId)
-    {
-        const string Format = "Chat(participantOneId: {0}, participantTwoId: {1}) does not have Participant(id: {2})";
-
-        return Format.FormatCurrentCulture(id.ParticipantOneId.Id, id.ParticipantTwoId.Id, participantId.Id);
-    }
-
     public static string GetSortTermNotSupportedMessage(ChatsSortTerm sortTerm)
     {
         const string Format = "ChatsSortTerm(type: {0}) is not supported";

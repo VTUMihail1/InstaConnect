@@ -4,7 +4,6 @@ using InstaConnect.Common.Domain.Models;
 namespace InstaConnect.Chats.Application.Features.ChatMessages.Queries.GetAll;
 
 public record GetAllChatMessagesQueryRequest(
-    string ParticipantOneId,
     string ParticipantTwoId,
     string CurrentUserId,
     CommonSortOrder SortOrder,

@@ -14,20 +14,18 @@ internal class ChatMessagePresentationMappings : IRegister
     {
         config.NewConfig<GetAllChatMessagesApiRequest, GetAllChatMessagesQueryRequest>()
             .ConstructUsing(src => new(
-                src.CurrentUserId,
-                src.ParticipantOneId,
                 src.ParticipantTwoId,
+                src.CurrentUserId,
                 src.SortOrder,
                 src.SortTerm,
                 src.Page,
                 src.PageSize));
 
         config.NewConfig<GetAllChatMessagesQueryResponse, GetAllChatMessagesApiResponse>()
-            .ConstructUsing(src => new(src.ChatMessageResponse.Adapt<ChatMessageCollectionApiResponse>(config)!));
+            .ConstructUsing(src => new(src.ChatMessageCollection.Adapt<ChatMessageCollectionApiResponse>(config)!));
 
         config.NewConfig<GetChatMessageByIdApiRequest, GetChatMessageByIdQueryRequest>()
             .ConstructUsing(src => new(
-                src.ParticipantOneId,
                 src.ParticipantTwoId,
                 src.MessageId,
                 src.CurrentUserId));
@@ -39,7 +37,6 @@ internal class ChatMessagePresentationMappings : IRegister
             .ConstructUsing(src => new(
                 src.ParticipantOneId,
                 src.ParticipantTwoId,
-                src.SenderId,
                 src.Body.Content));
 
         config.NewConfig<AddChatMessageCommandResponse, AddChatMessageApiResponse>()
@@ -50,7 +47,6 @@ internal class ChatMessagePresentationMappings : IRegister
                 src.ParticipantOneId,
                 src.ParticipantTwoId,
                 src.MessageId,
-                src.SenderId,
                 src.Body.Content));
 
         config.NewConfig<UpdateChatMessageCommandResponse, UpdateChatMessageApiResponse>()
@@ -60,8 +56,7 @@ internal class ChatMessagePresentationMappings : IRegister
             .ConstructUsing(src => new(
                 src.ParticipantOneId,
                 src.ParticipantTwoId,
-                src.MessageId,
-                src.SenderId));
+                src.MessageId));
 
         config.NewConfig<ChatMessageIdCommandResponse, ChatMessageIdApiResponse>()
             .ConstructUsing(src => new(
@@ -74,6 +69,7 @@ internal class ChatMessagePresentationMappings : IRegister
                 src.ParticipantOneId,
                 src.ParticipantTwoId,
                 src.MessageId,
+                src.SenderId,
                 src.Content,
                 src.Chat.Adapt<ChatApiResponse>(config),
                 src.Sender.Adapt<UserApiResponse>(config),

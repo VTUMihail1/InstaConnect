@@ -3,7 +3,7 @@ using InstaConnect.Common.Tests.Utilities;
 
 namespace InstaConnect.Common.Tests.DataAttributes.Strings.DifferentCase;
 
-internal class DifferentCaseStringTransformer : IStringTransformer
+public class DifferentCaseStringTransformer : IStringTransformer
 {
     public string Transform(string? value)
     {

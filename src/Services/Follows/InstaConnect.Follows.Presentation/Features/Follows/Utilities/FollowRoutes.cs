@@ -8,6 +8,8 @@ public static class FollowRoutes
 
     public const string Id = "{followerId}/follows/{followingId}";
 
+    public const string Current = "current/follows";
+
     public const string CurrentId = "current/follows/{followingId}";
 
     public const string Version1 = "1.0";

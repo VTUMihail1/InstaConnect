@@ -14,11 +14,6 @@ public class UpdateChatMessageCommandRequestValidator : AbstractValidator<Update
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();
 
-        RuleFor(r => r.SenderId)
-            .NotEmptyWithMessage()
-            .UserIdMinLengthWithMessage()
-            .UserIdMaxLengthWithMessage();
-
         RuleFor(r => r.MessageId)
             .NotEmptyWithMessage()
             .ChatMessageIdMinLengthWithMessage()

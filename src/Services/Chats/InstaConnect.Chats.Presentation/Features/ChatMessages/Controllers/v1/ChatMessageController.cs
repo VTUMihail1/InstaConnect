@@ -6,6 +6,7 @@ using InstaConnect.Chats.Application.Features.ChatMessages.Queries.GetById;
 
 namespace InstaConnect.Chats.Presentation.Features.ChatMessages.Controllers.v1;
 
+[Authorize]
 [ApiVersion(ChatMessageRoutes.Version1)]
 [Route(ChatMessageRoutes.Resource)]
 [EnableRateLimiting(RateLimiterPolicies.Default)]
@@ -54,7 +55,6 @@ public class ChatMessageController : ControllerBase
 
     // POST: api/participants/current/chats/5f0f2dd0-e957-4d72-8141-767a36fc6e95/messages
     [HttpPost]
-    [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -71,7 +71,6 @@ public class ChatMessageController : ControllerBase
 
     // PUT: api/participants/current/chats/5f0f2dd0-e957-4d72-8141-767a36fc6e95/messages/5f0f2dd0-e957-4d72-8141-767a36fc6e95
     [HttpPut(ChatMessageRoutes.Id)]
-    [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -88,7 +87,6 @@ public class ChatMessageController : ControllerBase
 
     // DELETE: api/participants/current/chats/5f0f2dd0-e957-4d72-8141-767a36fc6e95/messages/5f0f2dd0-e957-4d72-8141-767a36fc6e95
     [HttpDelete(ChatMessageRoutes.Id)]
-    [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

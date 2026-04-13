@@ -37,7 +37,7 @@ internal class UserClaimCommandService : IUserClaimCommandService
             throw new UserNotFoundException(command.Id);
         }
 
-        var newUserClaim = _claimFactory.Create(command.Id, command.Claim).AddUser(user);
+        var newUserClaim = _claimFactory.Create(user.Id, command.Claim).AddUser(user);
         var userClaim = await _claimRepository.GetByIdAsync(newUserClaim.Id, cancellationToken);
 
         if (userClaim != null)

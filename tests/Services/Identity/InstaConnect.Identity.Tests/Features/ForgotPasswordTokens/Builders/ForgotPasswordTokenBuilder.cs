@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.Utilities;
+using InstaConnect.Identity.Tests.Features.RefreshTokens.Utilities;
 
 namespace InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.Builders;
 
@@ -19,37 +20,11 @@ public class ForgotPasswordTokenBuilder
         _createdAtUtc = ForgotPasswordTokenDataFaker.GetCreatedAtUtc();
     }
 
-    public ForgotPasswordTokenBuilder WithId(string id)
-    {
-        _id = id;
-
-        return this;
-    }
-
-    public ForgotPasswordTokenBuilder WithValue(string value)
-    {
-        _value = value;
-
-        return this;
-    }
-
-    public ForgotPasswordTokenBuilder WithCreatedAtUtc(DateTimeOffset createdAtUtc)
-    {
-        _createdAtUtc = createdAtUtc;
-
-        return this;
-    }
-
-    public ForgotPasswordTokenBuilder WithExpiresAtUtc(DateTimeOffset expiresAtUtc)
-    {
-        _expiresAtUtc = expiresAtUtc;
-
-        return this;
-    }
-
     public ForgotPasswordTokenBuilder WithAlreadyExpiresAtUtc()
     {
-        return WithExpiresAtUtc(ForgotPasswordTokenDataFaker.GetAlreadyExpiresAtUtc());
+        _expiresAtUtc = ForgotPasswordTokenDataFaker.GetAlreadyExpiresAtUtc();
+
+        return this;
     }
 
     public ForgotPasswordToken Build()

@@ -1,0 +1,10 @@
+﻿namespace InstaConnect.Chats.Tests.Features.Users.DataAttributes.Email;
+
+[AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
+public sealed class UserEmailTooShortDataAttribute : TooShortStringDataAttribute
+{
+    public UserEmailTooShortDataAttribute()
+        : base(UserConfigurations.EmailMinLength)
+    {
+    }
+}

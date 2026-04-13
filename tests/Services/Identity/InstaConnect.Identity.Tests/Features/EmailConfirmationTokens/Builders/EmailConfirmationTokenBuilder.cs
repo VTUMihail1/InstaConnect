@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Utilities;
+using InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.Utilities;
 
 namespace InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Builders;
 
@@ -19,37 +20,11 @@ public class EmailConfirmationTokenBuilder
         _createdAtUtc = EmailConfirmationTokenDataFaker.GetCreatedAtUtc();
     }
 
-    public EmailConfirmationTokenBuilder WithId(string id)
-    {
-        _id = id;
-
-        return this;
-    }
-
-    public EmailConfirmationTokenBuilder WithValue(string value)
-    {
-        _value = value;
-
-        return this;
-    }
-
-    public EmailConfirmationTokenBuilder WithCreatedAtUtc(DateTimeOffset createdAtUtc)
-    {
-        _createdAtUtc = createdAtUtc;
-
-        return this;
-    }
-
-    public EmailConfirmationTokenBuilder WithExpiresAtUtc(DateTimeOffset expiresAtUtc)
-    {
-        _expiresAtUtc = expiresAtUtc;
-
-        return this;
-    }
-
     public EmailConfirmationTokenBuilder WithAlreadyExpiresAtUtc()
     {
-        return WithExpiresAtUtc(EmailConfirmationTokenDataFaker.GetAlreadyExpiresAtUtc());
+        _expiresAtUtc = EmailConfirmationTokenDataFaker.GetAlreadyExpiresAtUtc();
+
+        return this;
     }
 
     public EmailConfirmationToken Build()

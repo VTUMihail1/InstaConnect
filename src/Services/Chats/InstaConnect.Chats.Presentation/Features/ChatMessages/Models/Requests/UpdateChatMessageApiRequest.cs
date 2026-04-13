@@ -6,6 +6,5 @@ public record UpdateChatMessageApiRequest(
     [UserIdFromClaim] string ParticipantOneId,
     [FromRoute] string ParticipantTwoId,
     [FromRoute] string MessageId,
-    [UserIdFromClaim] string SenderId,
     [FromBody] UpdateChatMessageApiBody Body
 );

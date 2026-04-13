@@ -12,7 +12,7 @@ public class GetPostCommentByIdQueryRequestBuilder
     {
         _id = postComment.Id.Id.Id;
         _commentId = postComment.Id.CommentId;
-        _currentUserId = DataFaker.GetPrefixString(postComment.UserId.Id);
+        _currentUserId = postComment.UserId.Id;
     }
 
     public GetPostCommentByIdQueryRequestBuilder WithId(PostId id, IStringTransformer? transformer = null)
