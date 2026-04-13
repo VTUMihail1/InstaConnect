@@ -8,14 +8,10 @@ namespace InstaConnect.Posts.Infrastructure.Features.Users.Repositories;
 internal class UserQueryRepository : IUserQueryRepository
 {
     private readonly IPostsContext _context;
-    private readonly IUserIncluderFactory _userIncluderFactory;
 
-    public UserQueryRepository(
-        IPostsContext context,
-        IUserIncluderFactory userIncluderFactory)
+    public UserQueryRepository(IPostsContext context)
     {
         _context = context;
-        _userIncluderFactory = userIncluderFactory;
     }
     public async Task<UserResponse?> GetByIdAsync(
         UserId id,
@@ -25,7 +21,6 @@ internal class UserQueryRepository : IUserQueryRepository
         return await _context
             .Users
             .AggregateWithCaseInsensitiveCollation()
-            .Includes(_userIncluderFactory)
             .Match(id)
             .ProjectToFullResponse(currentUser)
             .FirstOrDefaultAsync(cancellationToken);
