@@ -90,7 +90,6 @@ internal class PostCommentLikeQueryService : IPostCommentLikeQueryService
         var postCommentLike = await _commentLikeRepository.GetByIdAsync(
             query.Id,
             query.CurrentUser,
-            commentLikeInclude,
             cancellationToken);
 
         if (postCommentLike == null)
