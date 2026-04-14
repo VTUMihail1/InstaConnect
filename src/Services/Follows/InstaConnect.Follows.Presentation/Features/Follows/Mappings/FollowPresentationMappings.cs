@@ -51,7 +51,7 @@ internal class FollowPresentationMappings : IRegister
                                        src.Body.FollowingId));
 
         config.NewConfig<AddFollowCommandResponse, AddFollowApiResponse>()
-            .ConstructUsing(src => new(src.Response.Adapt<FollowIdApiResponse>(config)!));
+            .ConstructUsing(src => new(src.Id.Adapt<FollowIdApiResponse>(config)!));
 
         config.NewConfig<DeleteFollowApiRequest, DeleteFollowCommandRequest>()
             .ConstructUsing(src => new(src.FollowerId,

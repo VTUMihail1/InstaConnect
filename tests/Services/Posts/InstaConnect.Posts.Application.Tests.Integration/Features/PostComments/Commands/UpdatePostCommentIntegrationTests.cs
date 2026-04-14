@@ -167,7 +167,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentApplicationComma
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(User.Id, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         var response = await Sender.SendAsync(request, CancellationToken);
@@ -226,7 +226,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentApplicationComma
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(User.Id, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         var response = await Sender.SendAsync(request, CancellationToken);
@@ -285,7 +285,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentApplicationComma
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(User.Id, transformer).Build();
+        var request = _requestBuilder.WithUserId(transformer).Build();
 
         // Act
         var response = await Sender.SendAsync(request, CancellationToken);

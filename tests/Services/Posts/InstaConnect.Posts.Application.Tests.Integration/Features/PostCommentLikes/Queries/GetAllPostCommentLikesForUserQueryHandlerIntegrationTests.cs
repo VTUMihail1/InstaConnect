@@ -111,6 +111,16 @@ public class GetAllPostCommentLikesForUserQueryHandlerIntegrationTests : BasePos
     }
 
     [Fact]
+    public async Task SendAsync_ShouldThrowUserNotFoundException_WhenUserIdIsInvalid()
+    {
+        // Arrange
+        await ServiceScope.DeleteUserAsync(User, CancellationToken);
+
+        // Assert
+        await Sender.ShouldThrowUserNotFoundExceptionAsync(_request, CancellationToken);
+    }
+
+    [Fact]
     public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValid()
     {
         // Act

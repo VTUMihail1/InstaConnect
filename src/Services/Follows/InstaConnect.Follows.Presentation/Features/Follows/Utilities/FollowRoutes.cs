@@ -6,6 +6,8 @@ public static class FollowRoutes
 
     public const string FollowingResource = "api/v{version:apiVersion}/followings/{followingId}/follows";
 
+    public const string Default = "{followerId}/follows";
+
     public const string Id = "{followerId}/follows/{followingId}";
 
     public const string Current = "current/follows";

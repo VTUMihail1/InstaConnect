@@ -22,7 +22,7 @@ public class FollowController : ControllerBase
     }
 
     // GET: api/followers/5f0f2dd0-e957-4d72-8141-767a36fc6e95/follows
-    [HttpGet(FollowRoutes.Id)]
+    [HttpGet(FollowRoutes.Default)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<GetAllFollowsApiResponse>> GetAllAsync(

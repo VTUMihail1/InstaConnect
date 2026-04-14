@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <IsTestProject>false</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\Services\Follows\InstaConnect.Follows.Domain\InstaConnect.Follows.Domain.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Services\Follows\InstaConnect.Follows.Infrastructure\InstaConnect.Follows.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Services\Follows\InstaConnect.Follows.Presentation\InstaConnect.Follows.Presentation.csproj" />
+    <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Tests\InstaConnect.Common.Tests.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Label="Common">
+    <Using Include="InstaConnect.Common.Domain.Extensions" />
+    <Using Include="InstaConnect.Common.Tests.Events" />
+    <Using Include="InstaConnect.Common.Tests.Assertions" />
+    <Using Include="InstaConnect.Common.Tests.Utilities" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.DateTimeOffsets.Base" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.DateTimeOffsets.Empty" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Ints.Base" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Ints.Empty" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Ints.TooSmall" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Ints.TooLarge" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.Base" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.DifferentCase" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.Empty" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.TooShort" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.TooLong" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.Null" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Enums.Base" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Enums.Empty" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Enums.Sort" />
+  </ItemGroup>
+
+  <ItemGroup Label="Users">
+    <Using Include="InstaConnect.Follows.Domain.Features.Users.Utilities" />
+    <Using Include="InstaConnect.Follows.Domain.Features.Users.Models.Entities" />
+    <Using Include="InstaConnect.Follows.Domain.Features.Users.Models.Requests" />
+    <Using Include="InstaConnect.Follows.Tests.Features.Users.Builders" />
+  </ItemGroup>
+
+  <ItemGroup Label="Follows">
+    <Using Include="InstaConnect.Follows.Domain.Features.Follows.Utilities" />
+    <Using Include="InstaConnect.Follows.Domain.Features.Follows.Models.Entities" />
+    <Using Include="InstaConnect.Follows.Domain.Features.Follows.Models.Requests" />
+    <Using Include="InstaConnect.Follows.Tests.Features.Follows.Builders" />
+  </ItemGroup>
+
+</Project>

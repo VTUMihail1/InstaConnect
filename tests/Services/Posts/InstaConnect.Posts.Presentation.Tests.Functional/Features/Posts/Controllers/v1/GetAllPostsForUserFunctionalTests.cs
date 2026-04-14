@@ -242,10 +242,51 @@ public class GetAllPostsForUserFunctionalTests : BasePostPresentationQueryFuncti
     }
 
     [Fact]
+    public async Task GetAllAsync_ShouldHaveNotFoundStatusCode_WhenUserIdIsInvalid()
+    {
+        // Arrange
+        await ServiceScope.DeleteUserAsync(User, CancellationToken);
+
+        // Act
+        var response = await HttpClient.GetAllPostsForUserStatusCodeAsync(_request, CancellationToken);
+
+        // Assert
+        response.ShouldBeNotFound();
+    }
+
+    [Fact]
+    public async Task GetAllAsync_ShouldHaveUserNotFoundProblemDetails_WhenUserIdIsInvalid()
+    {
+        // Arrange
+        await ServiceScope.DeleteUserAsync(User, CancellationToken);
+
+        // Act
+        var response = await HttpClient.GetAllPostsForUserProblemDetailsAsync(_request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfyUserNotFound(_request);
+    }
+
+    [Fact]
     public async Task GetAllForUserAsync_ShouldHaveOkStatusCode_WhenRequestIsValid()
     {
         // Act
         var response = await HttpClient.GetAllPostsForUserStatusCodeAsync(_request, CancellationToken);
+
+        // Assert
+        response.ShouldBeOk();
+    }
+
+    [Theory]
+    [UserIdDifferentCaseData]
+    public async Task GetAllForUserAsync_ShouldHaveOkStatusCode_WhenRequestAndUserIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithUserId(transformer).Build();
+
+        // Act
+        var response = await HttpClient.GetAllPostsForUserStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response.ShouldBeOk();
@@ -326,6 +367,21 @@ public class GetAllPostsForUserFunctionalTests : BasePostPresentationQueryFuncti
 
         // Assert
         response.ShouldSatisfy(User, Posts, _request);
+    }
+
+    [Theory]
+    [UserIdDifferentCaseData]
+    public async Task GetAllForUserAsync_ShouldReturnResponse_WhenRequestAndUserIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithUserId(transformer).Build();
+
+        // Act
+        var response = await HttpClient.GetAllPostsForUserAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfy(User, Posts, request);
     }
 
     [Theory]

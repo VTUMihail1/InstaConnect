@@ -13,5 +13,8 @@ public class GetFollowByIdQueryRequestValidator : AbstractValidator<GetFollowByI
             .NotEmptyWithMessage()
             .UserIdMinLengthWithMessage()
             .UserIdMaxLengthWithMessage();
+
+        RuleFor(c => c.CurrentUserId)
+            .UserIdMaxLengthWithMessage();
     }
 }

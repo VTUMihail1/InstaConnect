@@ -12,6 +12,9 @@ public class GetAllFollowsForFollowingQueryRequestValidator : AbstractValidator<
         RuleFor(c => c.FollowerName)
             .UserNameMaxLengthWithMessage();
 
+        RuleFor(c => c.CurrentUserId)
+            .UserIdMaxLengthWithMessage();
+
         RuleFor(q => q.SortOrder)
             .NotEmptyWithMessage();
 
