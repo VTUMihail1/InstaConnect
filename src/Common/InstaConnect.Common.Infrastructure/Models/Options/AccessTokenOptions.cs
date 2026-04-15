@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
+using InstaConnect.Common.Domain.Abstractions;
+
 namespace InstaConnect.Common.Infrastructure.Models.Options;
 
-public class AccessTokenOptions
+public class AccessTokenOptions : IApplicationOptions
 {
     public const string SectionName = "AccessTokenConfiguration";
 

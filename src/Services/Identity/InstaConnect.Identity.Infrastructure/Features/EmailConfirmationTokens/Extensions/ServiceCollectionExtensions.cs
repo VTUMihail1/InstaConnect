@@ -1,6 +1,8 @@
 ﻿using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Options;
 using InstaConnect.Identity.Infrastructure.Extensions;
 
+using Microsoft.AspNetCore.Cors.Infrastructure;
+
 using MongoDB.Bson.Serialization;
 
 namespace InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Extensions;
@@ -11,11 +13,7 @@ internal static class ServiceCollectionExtensions
     {
         internal IServiceCollection AddEmailConfirmationTokenServices()
         {
-            serviceCollection
-                .AddOptions<EmailConfirmationTokenOptions>()
-                .BindConfiguration(EmailConfirmationTokenOptions.SectionName)
-                .ValidateDataAnnotations()
-                .ValidateOnStart();
+            serviceCollection.AddValidatedOptions<EmailConfirmationTokenOptions>(EmailConfirmationTokenOptions.SectionName);
 
             serviceCollection.AddImplementationsOf<IEmailConfirmationTokenIncluder>(IdentityInfrastructureReference.Assembly);
 

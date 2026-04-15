@@ -31,7 +31,11 @@ public class FollowsWebApplicationFactory : WebApplicationFactory<Program>, IAsy
             serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), FollowPresentationReference.Assembly);
         });
 
-        builder.UpdateDatabaseConnectionString(_mongoDbContainer.GetConnectionString());
+        builder.UpdateMongoConfiguration(_mongoDbContainer.GetConnectionString());
+        builder.UpdateRabbitMqConfiguration(_rabbitMqContainer.GetConnectionString());
+        builder.UpdateAccessTokenConfiguration();
+        builder.UpdateOpenTelemetryConfiguration();
+        builder.UpdateCorsConfiguration();
     }
 
     public async Task InitializeAsync()

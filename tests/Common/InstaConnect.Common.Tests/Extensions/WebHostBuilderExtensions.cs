@@ -1,5 +1,7 @@
 ﻿using InstaConnect.Common.Domain.Extensions;
 using InstaConnect.Common.Infrastructure.Models.Options;
+using InstaConnect.Common.Presentation.Models.Options;
+using InstaConnect.Common.Tests.Utilities;
 
 using Microsoft.AspNetCore.Hosting;
 
@@ -9,18 +11,69 @@ public static class WebHostBuilderExtensions
 {
     extension(IWebHostBuilder webHostBuilder)
     {
-        public void UpdateDatabaseConnectionString(string connectionString)
+        public void UpdateMongoConfiguration(string connectionString)
         {
             webHostBuilder.UseSetting(
-                MongoDatabaseOptions.SectionName.FormatCurrentCultureSectionKey(nameof(MongoDatabaseOptions.ConnectionString)),
+                MongoOptions.SectionName.FormatCurrentCultureSectionKey(nameof(MongoOptions.ConnectionString)),
                 connectionString);
         }
 
-        public void UpdateCacheConnectionString(string connectionString)
+        public void UpdateRedisConfiguration(string connectionString)
         {
             webHostBuilder.UseSetting(
-                CacheOptions.SectionName.FormatCurrentCultureSectionKey(nameof(CacheOptions.ConnectionString)),
+                RedisOptions.SectionName.FormatCurrentCultureSectionKey(nameof(RedisOptions.ConnectionString)),
                 connectionString);
+        }
+
+        public void UpdateRabbitMqConfiguration(string connectionString)
+        {
+            webHostBuilder.UseSetting(
+                RabbitMqOptions.SectionName.FormatCurrentCultureSectionKey(nameof(RabbitMqOptions.ConnectionString)),
+                connectionString);
+        }
+
+        public void UpdateCloudinaryConfiguration()
+        {
+            webHostBuilder.UseSetting(
+                CloudinaryOptions.SectionName.FormatCurrentCultureSectionKey(nameof(CloudinaryOptions.CloudName)),
+                MockValues.CloudinaryCloudName);
+
+            webHostBuilder.UseSetting(
+                CloudinaryOptions.SectionName.FormatCurrentCultureSectionKey(nameof(CloudinaryOptions.ApiKey)),
+                MockValues.CloudinaryApiKey);
+
+            webHostBuilder.UseSetting(
+                CloudinaryOptions.SectionName.FormatCurrentCultureSectionKey(nameof(CloudinaryOptions.ApiSecret)),
+                MockValues.CloudinaryApiSecret);
+        }
+
+        public void UpdateAccessTokenConfiguration()
+        {
+            webHostBuilder.UseSetting(
+                AccessTokenOptions.SectionName.FormatCurrentCultureSectionKey(nameof(AccessTokenOptions.SecurityKey)),
+                MockValues.AccessTokenSecurityKey);
+
+            webHostBuilder.UseSetting(
+                AccessTokenOptions.SectionName.FormatCurrentCultureSectionKey(nameof(AccessTokenOptions.Issuer)),
+                MockValues.AccessTokenIssuer);
+
+            webHostBuilder.UseSetting(
+                AccessTokenOptions.SectionName.FormatCurrentCultureSectionKey(nameof(AccessTokenOptions.Audience)),
+                MockValues.AccessTokenAudience);
+        }
+
+        public void UpdateOpenTelemetryConfiguration()
+        {
+            webHostBuilder.UseSetting(
+                OpenTelemetryOptions.SectionName.FormatCurrentCultureSectionKey(nameof(OpenTelemetryOptions.Endpoint)),
+                MockValues.OpenTelemetryEndpoint);
+        }
+
+        public void UpdateCorsConfiguration()
+        {
+            webHostBuilder.UseSetting(
+                CorsOptions.SectionName.FormatCurrentCultureSectionKey(nameof(CorsOptions.AllowedOrigins)),
+                MockValues.CorsAllowedOrigins);
         }
     }
 }

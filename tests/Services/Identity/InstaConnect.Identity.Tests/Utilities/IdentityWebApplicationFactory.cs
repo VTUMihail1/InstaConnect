@@ -35,8 +35,13 @@ public class IdentityWebApplicationFactory : WebApplicationFactory<Program>, IAs
             serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), IdentityPresentationReference.Assembly);
         });
 
-        builder.UpdateDatabaseConnectionString(_mongoDbContainer.GetConnectionString());
-        builder.UpdateCacheConnectionString(_redisContainer.GetConnectionString());
+        builder.UpdateMongoConfiguration(_mongoDbContainer.GetConnectionString());
+        builder.UpdateRabbitMqConfiguration(_rabbitMqContainer.GetConnectionString());
+        builder.UpdateRedisConfiguration(_redisContainer.GetConnectionString());
+        builder.UpdateAccessTokenConfiguration();
+        builder.UpdateOpenTelemetryConfiguration();
+        builder.UpdateCloudinaryConfiguration();
+        builder.UpdateCorsConfiguration();
     }
 
     public async Task InitializeAsync()

@@ -1,4 +1,5 @@
-﻿using InstaConnect.Common.Infrastructure.Models.Options;
+﻿using InstaConnect.Common.Domain.Extensions;
+using InstaConnect.Common.Infrastructure.Models.Options;
 
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -16,9 +17,7 @@ public static class LoggingBuilderExtensions
     {
         public ILoggingBuilder AddLogging(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
         {
-            var openTelemetryOptions = configuration
-                        .GetSection(OpenTelemetryOptions.SectionName)
-                        .Get<OpenTelemetryOptions>()!;
+            var openTelemetryOptions = configuration.GetOptions<OpenTelemetryOptions>(OpenTelemetryOptions.SectionName);
 
             var resourceBuilder = ResourceBuilder.CreateDefault().AddService(webHostEnvironment.ApplicationName);
 

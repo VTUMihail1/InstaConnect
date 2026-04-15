@@ -1,11 +1,15 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Reflection;
+using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
 
 using Asp.Versioning;
 
+using CloudinaryDotNet.Actions;
+
 using InstaConnect.Common.Domain.Extensions;
 using InstaConnect.Common.Domain.Utilities;
 using InstaConnect.Common.Events.Models;
+using InstaConnect.Common.Infrastructure.Models.Options;
 using InstaConnect.Common.Presentation.Abstractions;
 using InstaConnect.Common.Presentation.Binders.FromClaim;
 using InstaConnect.Common.Presentation.Binders.FromCookie;
@@ -15,12 +19,14 @@ using InstaConnect.Common.Presentation.Helpers;
 using InstaConnect.Common.Presentation.Models.Options;
 using InstaConnect.Common.Presentation.Utilities;
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi;
 
 namespace InstaConnect.Common.Presentation.Extensions;
 
@@ -91,22 +97,18 @@ public static class ServiceCollectionExtensions
 
         public IServiceCollection AddCorsPolicies(IConfiguration configuration)
         {
-            serviceCollection.AddOptions<CorsOptions>()
-                             .BindConfiguration(CorsOptions.SectionName)
-                             .ValidateDataAnnotations()
-                             .ValidateOnStart();
+            serviceCollection.AddValidatedOptions<CorsOptions>(CorsOptions.SectionName);
+            var options = configuration.GetOptions<CorsOptions>(CorsOptions.SectionName);
 
-            var corsOptions = configuration.GetSection(CorsOptions.SectionName).Get<CorsOptions>()!;
-
-            serviceCollection.AddCors(options =>
+            serviceCollection.AddCors(o =>
             {
-                options.AddDefaultPolicy(builder =>
+                o.AddDefaultPolicy(builder =>
                     builder.AllowAnyOrigin()
                            .AllowAnyHeader()
                            .AllowAnyMethod());
 
-                options.AddPolicy(CorsPolicies.SpecificOrigins, builder =>
-                    builder.WithOrigins(corsOptions.AllowedOrigins.Split(", "))
+                o.AddPolicy(CorsPolicies.SpecificOrigins, builder =>
+                    builder.WithOrigins(options.AllowedOrigins.Split(", "))
                            .AllowAnyHeader()
                            .AllowAnyMethod());
             });
@@ -117,7 +119,21 @@ public static class ServiceCollectionExtensions
         public IServiceCollection AddSwagger()
         {
             serviceCollection.AddEndpointsApiExplorer();
-            serviceCollection.AddSwaggerGen();
+            serviceCollection.AddSwaggerGen(o =>
+            {
+                var securityScheme = new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    Scheme = JwtBearerDefaults.AuthenticationScheme,
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "Enter JWT Bearer token **ONLY**",
+                };
+
+                o.AddSecurityDefinition(securityScheme.Name, securityScheme);
+            });
+
             return serviceCollection;
         }
 

@@ -31,7 +31,11 @@ public class PostsWebApplicationFactory : WebApplicationFactory<Program>, IAsync
             serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), PostPresentationReference.Assembly);
         });
 
-        builder.UpdateDatabaseConnectionString(_mongoDbContainer.GetConnectionString());
+        builder.UpdateMongoConfiguration(_mongoDbContainer.GetConnectionString());
+        builder.UpdateRabbitMqConfiguration(_rabbitMqContainer.GetConnectionString());
+        builder.UpdateAccessTokenConfiguration();
+        builder.UpdateOpenTelemetryConfiguration();
+        builder.UpdateCorsConfiguration();
     }
 
     public async Task InitializeAsync()

@@ -2,7 +2,7 @@
 
 namespace InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Options;
 
-public class RefreshTokenOptions
+public class RefreshTokenOptions : IApplicationOptions
 {
     public const string SectionName = "RefreshTokenConfiguration";
 

@@ -25,10 +25,10 @@ public static class ServiceCollectionExtensions
                 .AddPostCommentLikeServices();
 
             serviceCollection
-                .AddObservability(configuration, webHostEnvironment)
+                .AddOpenTelemetry(configuration, webHostEnvironment)
                 .AddMapper(PostInfrastructureReference.Assembly)
                 .AddServicesWithMatchingInterfaces(PostInfrastructureReference.Assembly)
-                .AddMongoDbContext()
+                .AddMongoDatabase(configuration)
                 .AddUnitOfWork()
                 .AddRabbitMQ(configuration, presentationAssembly)
                 .AddJwtBearer(configuration)

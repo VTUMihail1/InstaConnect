@@ -4,224 +4,159 @@ networks:
 services:
   otel-lgtm:
     image: grafana/otel-lgtm
+    container_name: otel-lgtm
     ports:
       - "3000:3000"
       - "4317:4317"
       - "4318:4318"
     volumes:
       - ./.containers/grafana:/data
-
-  sqlserver:
-    hostname: sqlserver
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    user: root
-    environment:
-            SA_PASSWORD: "password123!"
-            ACCEPT_EULA: "Y"
-    ports:
-      - "1433:1433"
-    volumes:
-      - ./.containers/mysql:/var/opt/mssql/data
     networks:
       - instaconnect
-  
-  redis:
-    image: redis:latest
-    restart: always
+
+  mongodb:
+    image: mongo:7
+    container_name: mongodb
+    hostname: mongodb
+    restart: unless-stopped
     environment:
-      REDIS_USER: guest
-      REDIS_PASSWORD: guest
-    command: ["redis-server", "--requirepass", "guest", "--masterauth", "guest"]
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./.containers/mongodb:/data/db
+    networks:
+      - instaconnect
+
+  redis:
+    image: redis:7
+    container_name: redis
+    restart: always
+    command: >
+      redis-server --requirepass ${REDIS_PASSWORD} --masterauth ${REDIS_PASSWORD}
     ports:
       - "6379:6379"
     volumes:
-      - ./.containers/redis/data/:/data
+      - ./.containers/redis/data:/data
     networks:
       - instaconnect
 
   rabbitmq:
     image: rabbitmq:management
+    container_name: rabbitmq
     hostname: rabbitmq
-    environment: 
-      RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASS: guest
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USERNAME}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
     ports:
       - "15672:15672"
-      - "5672:5672" 
+      - "5672:5672"
     volumes:
-      - ./.containers/rabbit-mq/data/:/var/lib/rabbitmq
-      - ./.containers/rabbit-mq/log/:/var/log/rabbitmq
+      - ./.containers/rabbitmq/data:/var/lib/rabbitmq
+      - ./.containers/rabbitmq/log:/var/log/rabbitmq
     networks:
       - instaconnect
 
-  gateway-svc:
-    image: ${DOCKER_REGISTRY-}gateway-svc
-    build:
-      context: .
-      dockerfile: src/Gateway/InstaConnect.Gateway.Web/Dockerfile
-    environment:
-      ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_URLS: http://+:80
-      OTEL_EXPORTER_OTLP_ENDPOINT: grpc://otel-lgtm:4317
-      OpenTelemetryOptions__Endpoint: grpc://otel-lgtm:4317
-      AccessTokenOptions__Issuer: http://identity-svc:5200
-      AccessTokenOptions__Audience: http://gateway-svc:5100
-      AccessTokenOptions__SecurityKey: 6R9f6d1Y4Z$0^8Y&S2e3nF4*G6u7D0#L
-      AccessTokenOptions__LifetimeSeconds: 900
-      CorsOptions__AllowedOrigins: gateway-svc:5100
-      ReverseProxy__Clusters__identity-cluster__Destinations__destination1__Address: http://identity-svc
-      ReverseProxy__Clusters__posts-cluster__Destinations__destination1__Address: http://posts-svc
-      ReverseProxy__Clusters__messages-cluster__Destinations__destination1__Address: http://messages-svc
-      ReverseProxy__Clusters__follows-cluster__Destinations__destination1__Address: http://follows-svc
-    ports:
-      - "5100:80"
-    networks:
-      - instaconnect
-  
   identity-svc:
     image: ${DOCKER_REGISTRY-}identity-svc
-    build: 
+    container_name: identity-svc
+    build:
       context: .
-      dockerfile: src/Services/Identity/InstaConnect.Identity.Web/Dockerfile
+      dockerfile: src/Services/Identity/InstaConnect.Identity.Presentation/Dockerfile
     environment:
-      OTEL_EXPORTER_OTLP_ENDPOINT: grpc://otel-lgtm:4317
-      OpenTelemetryOptions__Endpoint: grpc://otel-lgtm:4317
-      DatabaseOptions__ConnectionString: Server=sqlserver;Database=instaconnect.users;User Id=sa;Password=password123!;MultipleActiveResultSets=true;TrustServerCertificate=True;
-      CorsOptions__AllowedOrigins: gateway-svc:5100
-      CacheOptions__ConnectionString: redis://guest:guest@redis:6379
-      MessageBrokerOptions__Host: amqp://rabbitmq:5672
-      MessageBrokerOptions__Username: guest
-      MessageBrokerOptions__Password: guest
-      AdminOptions__Email: admin@instaconnect.com
-      AdminOptions__Password: SecureAdminPass123!
-      AccessTokenOptions__Issuer: http://identity-svc:5200
-      AccessTokenOptions__Audience: http://gateway-svc:5100
-      AccessTokenOptions__SecurityKey: 6R9f6d1Y4Z$0^8Y&S2e3nF4*G6u7D0#L
-      AccessTokenOptions__LifetimeSeconds: 900
-      EmailConfirmationOptions__LifetimeSeconds: 900
-      ForgotPasswordOptions__LifetimeSeconds: 900
-      GatewayOptions__Url: http://gateway-svc:5100
-      ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_URLS: http://+:80
+      ASPNETCORE_ENVIRONMENT: Docker
+      AccessTokenConfiguration__SecurityKey: "${ACCESS_TOKEN_SECURITY_KEY}"
+      MongoConfiguration__ConnectionString: "Server=mongodb;Database=instaconnect.identity;User Id=${MONGO_USERNAME};Password=${MONGO_PASSWORD};TrustServerCertificate=True;"
+      RabbitMqConfiguration__ConnectionString: "amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@rabbitmq:5672/"
+      RedisConfiguration__ConnectionString: "redis:6379,password=${REDIS_PASSWORD},abortConnect=False"
+      CloudinaryConfiguration__CloudName: ${CLOUDINARY_CLOUD_NAME}
+      CloudinaryConfiguration__ApiKey: ${CLOUDINARY_API_KEY}
+      CloudinaryConfiguration__ApiSecret: ${CLOUDINARY_API_SECRET}
     ports:
-      - "5200:80"
+      - "8083:80"
     depends_on:
-      - sqlserver
+      - otel-lgtm
+      - mongodb
       - rabbitmq
       - redis
     networks:
       - instaconnect
 
   posts-svc:
-    image: ${DOCKER_REGISTRY-}posts-read-svc
+    image: ${DOCKER_REGISTRY-}posts-svc
+    container_name: posts-svc
     build:
       context: .
-      dockerfile: src/Services/Posts/InstaConnect.Posts.Web/Dockerfile
+      dockerfile: src/Services/Posts/InstaConnect.Posts.Presentation/Dockerfile
     environment:
-      OTEL_EXPORTER_OTLP_ENDPOINT: grpc://otel-lgtm:4317
-      OpenTelemetryOptions__Endpoint: grpc://otel-lgtm:4317
-      DatabaseOptions__ConnectionString: Server=sqlserver;Database=instaconnect.posts;User Id=sa;Password=password123!;MultipleActiveResultSets=true;TrustServerCertificate=True;
-      CorsOptions__AllowedOrigins: gateway-svc:5100
-      MessageBrokerOptions__Host: amqp://rabbitmq:5672
-      MessageBrokerOptions__Username: guest
-      MessageBrokerOptions__Password: guest
-      AccessTokenOptions__Issuer: http://identity-svc:5200
-      AccessTokenOptions__Audience: http://gateway-svc:5100
-      AccessTokenOptions__SecurityKey: 6R9f6d1Y4Z$0^8Y&S2e3nF4*G6u7D0#L
-      AccessTokenOptions__LifetimeSeconds: 900
-      ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_URLS: http://+:80
+      ASPNETCORE_ENVIRONMENT: Docker
+      AccessTokenConfiguration__SecurityKey: "${ACCESS_TOKEN_SECURITY_KEY}"
+      MongoConfiguration__ConnectionString: "Server=mongodb;Database=instaconnect.posts;User Id=${MONGO_USERNAME};Password=${MONGO_PASSWORD};TrustServerCertificate=True;"
+      RabbitMqConfiguration__ConnectionString: "amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@rabbitmq:5672/"
+      RedisConfiguration__ConnectionString: "redis:6379,password=${REDIS_PASSWORD},abortConnect=False"
     ports:
-      - "5300:80"
+      - "8082:80"
     depends_on:
-      - sqlserver
+      - otel-lgtm
+      - mongodb
       - rabbitmq
-      - redis
     networks:
       - instaconnect
 
-  messages-svc:
-    image: ${DOCKER_REGISTRY-}messages-svc
+  chats-svc:
+    image: ${DOCKER_REGISTRY-}chats-svc
+    container_name: chats-svc
     build:
       context: .
-      dockerfile: src/Services/Messages/InstaConnect.Messages.Web/Dockerfile
+      dockerfile: src/Services/Chats/InstaConnect.Chats.Presentation/Dockerfile
     environment:
-      OTEL_EXPORTER_OTLP_ENDPOINT: grpc://otel-lgtm:4317
-      OpenTelemetryOptions__Endpoint: grpc://otel-lgtm:4317
-      DatabaseOptions__ConnectionString: Server=sqlserver;Database=instaconnect.messages;User Id=sa;Password=password123!;MultipleActiveResultSets=true;TrustServerCertificate=True;
-      MessageBrokerOptions__Host: amqp://rabbitmq:5672
-      MessageBrokerOptions__Username: guest
-      MessageBrokerOptions__Password: guest
-      CorsOptions__AllowedOrigins: gateway-svc:5100
-      AccessTokenOptions__Issuer: http://identity-svc:5200
-      AccessTokenOptions__Audience: http://gateway-svc:5100
-      AccessTokenOptions__SecurityKey: 6R9f6d1Y4Z$0^8Y&S2e3nF4*G6u7D0#L
-      AccessTokenOptions__LifetimeSeconds: 900
-      ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_URLS: http://+:80
+      ASPNETCORE_ENVIRONMENT: Docker
+      AccessTokenConfiguration__SecurityKey: "${ACCESS_TOKEN_SECURITY_KEY}"
+      MongoConfiguration__ConnectionString: "Server=mongodb;Database=instaconnect.chats;User Id=${MONGO_USERNAME};Password=${MONGO_PASSWORD};TrustServerCertificate=True;"
+      RabbitMqConfiguration__ConnectionString: "amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@rabbitmq:5672/"
+      RedisConfiguration__ConnectionString: "redis:6379,password=${REDIS_PASSWORD},abortConnect=False"
     ports:
-      - "5400:80"
+      - "8081:80"
     depends_on:
-      - sqlserver
+      - otel-lgtm
+      - mongodb
       - rabbitmq
-      - redis
     networks:
       - instaconnect
 
   follows-svc:
-    image: ${DOCKER_REGISTRY-}follows-read-svc
+    image: ${DOCKER_REGISTRY-}follows-svc
+    container_name: follows-svc
     build:
       context: .
-      dockerfile: src/Services/Follows/InstaConnect.Follows.Web/Dockerfile
+      dockerfile: src/Services/Follows/InstaConnect.Follows.Presentation/Dockerfile
     environment:
-      OTEL_EXPORTER_OTLP_ENDPOINT: grpc://otel-lgtm:4317
-      OpenTelemetryOptions__Endpoint: grpc://otel-lgtm:4317
-      DatabaseOptions__ConnectionString: Server=sqlserver;Database=instaconnect.follows;User Id=sa;Password=password123!;MultipleActiveResultSets=true;TrustServerCertificate=True;
-      MessageBrokerOptions__Host: amqp://rabbitmq:5672
-      MessageBrokerOptions__Username: guest
-      MessageBrokerOptions__Password: guest
-      CorsOptions__AllowedOrigins: gateway-svc:5100
-      AccessTokenOptions__Issuer: http://identity-svc:5200
-      AccessTokenOptions__Audience: http://gateway-svc:5100
-      AccessTokenOptions__SecurityKey: 6R9f6d1Y4Z$0^8Y&S2e3nF4*G6u7D0#L
-      AccessTokenOptions__LifetimeSeconds: 900
-      ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_URLS: http://+:80
+      ASPNETCORE_ENVIRONMENT: Docker
+      AccessTokenConfiguration__SecurityKey: "${ACCESS_TOKEN_SECURITY_KEY}"
+      MongoConfiguration__ConnectionString: "Server=mongodb;Database=instaconnect.follows;User Id=${MONGO_USERNAME};Password=${MONGO_PASSWORD};TrustServerCertificate=True;"
+      RabbitMqConfiguration__ConnectionString: "amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@rabbitmq:5672/"
+      RedisConfiguration__ConnectionString: "redis:6379,password=${REDIS_PASSWORD},abortConnect=False"
     ports:
-      - "5500:80"
+      - "8080:80"
     depends_on:
-      - sqlserver
+      - otel-lgtm
+      - mongodb
       - rabbitmq
-      - redis
     networks:
       - instaconnect
 
-  email-svc:
-    image: ${DOCKER_REGISTRY-}email-svc
-    build:
-      context: .
-      dockerfile: src/Services/Emails/InstaConnect.Emails.Web/Dockerfile
-    environment:
-      OTEL_EXPORTER_OTLP_ENDPOINT: grpc://otel-lgtm:4317
-      OpenTelemetryOptions__Endpoint: grpc://otel-lgtm:4317
-      MessageBrokerOptions__Host: amqp://rabbitmq:5672
-      MessageBrokerOptions__Username: guest
-      MessageBrokerOptions__Password: guest
-      CorsOptions__AllowedOrigins: gateway-svc:5100
-      AccessTokenOptions__Issuer: http://identity-svc:5200
-      AccessTokenOptions__Audience: http://gateway-svc:5100
-      AccessTokenOptions__SecurityKey: 6R9f6d1Y4Z$0^8Y&S2e3nF4*G6u7D0#L
-      AccessTokenOptions__LifetimeSeconds: 900
-      EmailOptions__SmtpServer: smtp.sendgrid.net
-      EmailOptions__Port: 587
-      EmailOptions__Sender: mihail.nikolov125@gmail.com
-      EmailOptions__Username: apikey
-      EmailOptions__Password: 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
-      ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_URLS: http://+:80
+  nginx:
+    image: nginx:latest
+    container_name: gateway-nginx
     ports:
-      - "5600:80"
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
-      - rabbitmq
+      - identity-svc
+      - posts-svc
+      - chats-svc
+      - follows-svc
     networks:
       - instaconnect

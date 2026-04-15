@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
+using InstaConnect.Common.Domain.Abstractions;
+
 namespace InstaConnect.Common.Infrastructure.Models.Options;
 
-internal class ImageUploadOptions
+public class CloudinaryOptions : IApplicationOptions
 {
-    public const string SectionName = "ImageUploadConfiguration";
+    public const string SectionName = "CloudinaryConfiguration";
 
     [Required]
     public string CloudName { get; set; } = string.Empty;

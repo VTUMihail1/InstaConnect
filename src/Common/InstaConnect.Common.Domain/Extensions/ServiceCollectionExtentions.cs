@@ -16,6 +16,18 @@ public static class ServiceCollectionExtensions
 {
     extension(IServiceCollection serviceCollection)
     {
+        public IServiceCollection AddValidatedOptions<TOptions>(string sectionName)
+            where TOptions : class, IApplicationOptions
+        {
+            serviceCollection
+                .AddOptions<TOptions>()
+                .BindConfiguration(sectionName)
+                .ValidateDataAnnotations()
+                .ValidateOnStart();
+
+            return serviceCollection;
+        }
+
         public IServiceCollection AddMapper(params Assembly[] assemblies)
         {
             serviceCollection.AddMapster();

@@ -1,4 +1,5 @@
-﻿using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Options;
+﻿using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Options;
+using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Options;
 using InstaConnect.Identity.Infrastructure.Extensions;
 
 using MongoDB.Bson.Serialization;
@@ -11,11 +12,7 @@ internal static class ServiceCollectionExtensions
     {
         internal IServiceCollection AddForgotPasswordTokenServices()
         {
-            serviceCollection
-                .AddOptions<ForgotPasswordTokenOptions>()
-                .BindConfiguration(ForgotPasswordTokenOptions.SectionName)
-                .ValidateDataAnnotations()
-                .ValidateOnStart();
+            serviceCollection.AddValidatedOptions<ForgotPasswordTokenOptions>(ForgotPasswordTokenOptions.SectionName);
 
             serviceCollection.AddImplementationsOf<IForgotPasswordTokenIncluder>(IdentityInfrastructureReference.Assembly);
 

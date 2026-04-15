@@ -21,10 +21,10 @@ public static class ServiceCollectionExtensions
                 .AddChatMessageServices();
 
             serviceCollection
-                .AddObservability(configuration, webHostEnvironment)
+                .AddOpenTelemetry(configuration, webHostEnvironment)
                 .AddMapper(ChatInfrastructureReference.Assembly, CommonInfrastructureReference.Assembly)
                 .AddServicesWithMatchingInterfaces(ChatInfrastructureReference.Assembly)
-                .AddMongoDbContext()
+                .AddMongoDatabase(configuration)
                 .AddUnitOfWork()
                 .AddRabbitMQ(configuration, presentationAssembly)
                 .AddJwtBearer(configuration)

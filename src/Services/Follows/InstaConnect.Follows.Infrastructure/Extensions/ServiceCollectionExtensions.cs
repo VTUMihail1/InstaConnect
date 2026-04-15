@@ -19,10 +19,10 @@ public static class ServiceCollectionExtensions
                 .AddFollowServices();
 
             serviceCollection
-                .AddObservability(configuration, webHostEnvironment)
+                .AddOpenTelemetry(configuration, webHostEnvironment)
                 .AddMapper(FollowInfrastructureReference.Assembly)
                 .AddServicesWithMatchingInterfaces(FollowInfrastructureReference.Assembly)
-                .AddMongoDbContext()
+                .AddMongoDatabase(configuration)
                 .AddUnitOfWork()
                 .AddRabbitMQ(configuration, presentationAssembly)
                 .AddJwtBearer(configuration)

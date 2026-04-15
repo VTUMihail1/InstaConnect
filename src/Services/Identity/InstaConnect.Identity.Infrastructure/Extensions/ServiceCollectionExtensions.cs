@@ -29,11 +29,11 @@ public static class ServiceCollectionExtensions
                 .AddEmailConfirmationTokenServices();
 
             serviceCollection
-                .AddObservability(configuration, webHostEnvironment)
+                .AddOpenTelemetry(configuration, webHostEnvironment)
                 .AddMapper(IdentityInfrastructureReference.Assembly)
                 .AddServicesWithMatchingInterfaces(IdentityInfrastructureReference.Assembly)
                 .AddRedisCaching(configuration)
-                .AddMongoDbContext()
+                .AddMongoDatabase(configuration)
                 .AddUnitOfWork()
                 .AddRabbitMQ(configuration, presentationAssembly)
                 .AddJwtBearer(configuration)

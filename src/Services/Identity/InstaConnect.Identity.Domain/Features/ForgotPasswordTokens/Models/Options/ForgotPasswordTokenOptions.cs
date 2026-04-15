@@ -2,7 +2,7 @@
 
 namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Options;
 
-public class ForgotPasswordTokenOptions
+public class ForgotPasswordTokenOptions : IApplicationOptions
 {
     public const string SectionName = "ForgotPasswordTokenConfiguration";
 

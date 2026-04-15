@@ -2,7 +2,7 @@
 
 namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Options;
 
-public class EmailConfirmationTokenOptions
+public class EmailConfirmationTokenOptions : IApplicationOptions
 {
     public const string SectionName = "EmailConfirmationTokenConfiguration";
 

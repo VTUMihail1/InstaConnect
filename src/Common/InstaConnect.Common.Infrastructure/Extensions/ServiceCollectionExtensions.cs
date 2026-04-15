@@ -41,51 +41,41 @@ public static partial class ServiceCollectionExtensions
             return serviceCollection;
         }
 
-        public IServiceCollection AddObservability(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
+        public IServiceCollection AddOpenTelemetry(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
         {
-            serviceCollection
-                .AddOptions<OpenTelemetryOptions>()
-                .BindConfiguration(OpenTelemetryOptions.SectionName)
-                .ValidateDataAnnotations()
-                .ValidateOnStart();
-
-            var openTelemetryOptions = configuration
-                        .GetSection(OpenTelemetryOptions.SectionName)
-                        .Get<OpenTelemetryOptions>()!;
+            serviceCollection.AddValidatedOptions<OpenTelemetryOptions>(OpenTelemetryOptions.SectionName);
+            var options = configuration.GetOptions<OpenTelemetryOptions>(OpenTelemetryOptions.SectionName);
 
             serviceCollection.AddOpenTelemetry()
                   .ConfigureResource(r => r.AddService(webHostEnvironment.ApplicationName))
-                  .WithTracing(tracing => tracing
+                  .WithTracing(t => t
                       .AddAspNetCoreInstrumentation()
                       .AddHttpClientInstrumentation()
                       .AddRedisInstrumentation()
                       .AddMassTransitInstrumentation()
-                      .AddOtlpExporter(options => options.Endpoint = new Uri(openTelemetryOptions.Endpoint)))
-                  .WithMetrics(metrics => metrics
+                      .AddOtlpExporter(o => o.Endpoint = new Uri(options.Endpoint)))
+                  .WithMetrics(m => m
                       .AddAspNetCoreInstrumentation()
                       .AddHttpClientInstrumentation()
                       .AddMassTransitInstrumentation()
-                      .AddOtlpExporter(options => options.Endpoint = new Uri(openTelemetryOptions.Endpoint)));
+                      .AddOtlpExporter(o => o.Endpoint = new Uri(options.Endpoint)));
 
             return serviceCollection;
         }
 
-        public IServiceCollection AddMongoDbContext()
+        public IServiceCollection AddMongoDatabase(IConfiguration configuration)
         {
             const string ConventionName = "ApplicationConventionPack";
 
-            serviceCollection
-                .AddOptions<MongoDatabaseOptions>()
-                .BindConfiguration(MongoDatabaseOptions.SectionName)
-                .ValidateDataAnnotations()
-                .ValidateOnStart();
+            serviceCollection.AddValidatedOptions<MongoOptions>(MongoOptions.SectionName);
+            var options = configuration.GetOptions<MongoOptions>(MongoOptions.SectionName);
 
-            serviceCollection.AddScoped<IMongoClient>(sp =>
-                new MongoClient(sp.GetRequiredService<IOptions<MongoDatabaseOptions>>().Value.ConnectionString));
+            serviceCollection.AddScoped<IMongoClient>(_ =>
+                new MongoClient(options.ConnectionString));
 
             serviceCollection.AddScoped(sp =>
                 sp.GetRequiredService<IMongoClient>()
-                  .GetDatabase(sp.GetRequiredService<IOptions<MongoDatabaseOptions>>().Value.Name));
+                  .GetDatabase(options.Name));
 
             serviceCollection.AddScoped<IPaginator, Paginator>()
                              .AddScoped<IMongoDbContext, MongoDbContext>();
@@ -103,40 +93,26 @@ public static partial class ServiceCollectionExtensions
 
         public IServiceCollection AddRedisCaching(IConfiguration configuration)
         {
-            serviceCollection
-                .AddOptions<CacheOptions>()
-                .BindConfiguration(CacheOptions.SectionName)
-                .ValidateDataAnnotations()
-                .ValidateOnStart();
-
-            var cacheOptions = configuration
-                .GetSection(CacheOptions.SectionName)
-                .Get<CacheOptions>()!;
+            serviceCollection.AddValidatedOptions<RedisOptions>(RedisOptions.SectionName);
+            var options = configuration.GetOptions<RedisOptions>(RedisOptions.SectionName);
 
             serviceCollection.AddScoped<IJsonConverter, JsonConverter>()
                              .AddScoped<ICacheHandler, CacheHandler>()
                              .AddScoped<ICacheRequestFactory, CacheRequestFactory>();
 
             serviceCollection.AddStackExchangeRedisCache(redisOptions =>
-                redisOptions.Configuration = cacheOptions.ConnectionString);
+                redisOptions.Configuration = options.ConnectionString);
 
             serviceCollection.AddHealthChecks()
-                             .AddRedis(cacheOptions.ConnectionString);
+                             .AddRedis(options.ConnectionString);
 
             return serviceCollection;
         }
 
         public IServiceCollection AddRabbitMQ(IConfiguration configuration, Assembly currentAssembly, Action<IBusRegistrationConfigurator>? configure = null)
         {
-            serviceCollection
-                .AddOptions<MessageBrokerOptions>()
-                .BindConfiguration(MessageBrokerOptions.SectionName)
-                .ValidateDataAnnotations()
-                .ValidateOnStart();
-
-            var messageBrokerOptions = configuration
-                .GetSection(MessageBrokerOptions.SectionName)
-                .Get<MessageBrokerOptions>()!;
+            serviceCollection.AddValidatedOptions<RabbitMqOptions>(RabbitMqOptions.SectionName);
+            var options = configuration.GetOptions<RabbitMqOptions>(RabbitMqOptions.SectionName);
 
             serviceCollection.AddMassTransit(busConfigurator =>
             {
@@ -145,11 +121,7 @@ public static partial class ServiceCollectionExtensions
 
                 busConfigurator.UsingRabbitMq((context, configurator) =>
                 {
-                    configurator.Host(new Uri(messageBrokerOptions.Host), h =>
-                    {
-                        h.Username(messageBrokerOptions.Username);
-                        h.Password(messageBrokerOptions.Password);
-                    });
+                    configurator.Host(new Uri(options.ConnectionString));
 
                     configurator.ConfigureEndpoints(context);
                 });
@@ -164,16 +136,10 @@ public static partial class ServiceCollectionExtensions
 
         public IServiceCollection AddJwtBearer(IConfiguration configuration)
         {
+            serviceCollection.AddValidatedOptions<AccessTokenOptions>(AccessTokenOptions.SectionName);
+            var options = configuration.GetOptions<AccessTokenOptions>(AccessTokenOptions.SectionName);
+
             serviceCollection.AddScoped<IEncoder, Encoder>();
-
-            serviceCollection.AddOptions<AccessTokenOptions>()
-                             .BindConfiguration(AccessTokenOptions.SectionName)
-                             .ValidateDataAnnotations()
-                             .ValidateOnStart();
-
-            var accessTokenOptions = configuration
-                .GetSection(AccessTokenOptions.SectionName)
-                .Get<AccessTokenOptions>()!;
 
             serviceCollection.AddAuthentication(opt =>
             {
@@ -189,7 +155,7 @@ public static partial class ServiceCollectionExtensions
                 opt.SaveToken = true;
                 opt.TokenValidationParameters = new TokenValidationParameters
                 {
-                    IssuerSigningKey = new SymmetricSecurityKey(encoder.GetBytesUTF8(accessTokenOptions.SecurityKey)),
+                    IssuerSigningKey = new SymmetricSecurityKey(encoder.GetBytesUTF8(options.SecurityKey)),
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
@@ -200,20 +166,13 @@ public static partial class ServiceCollectionExtensions
 
         public IServiceCollection AddCloudinary(IConfiguration configuration)
         {
-            serviceCollection
-                .AddOptions<ImageUploadOptions>()
-                .BindConfiguration(ImageUploadOptions.SectionName)
-                .ValidateDataAnnotations()
-                .ValidateOnStart();
-
-            var imageUploadOptions = configuration
-                .GetSection(ImageUploadOptions.SectionName)
-                .Get<ImageUploadOptions>()!;
+            serviceCollection.AddValidatedOptions<CloudinaryOptions>(CloudinaryOptions.SectionName);
+            var options = configuration.GetOptions<CloudinaryOptions>(CloudinaryOptions.SectionName);
 
             serviceCollection.AddScoped(_ => new Cloudinary(new Account(
-                imageUploadOptions.CloudName,
-                imageUploadOptions.ApiKey,
-                imageUploadOptions.ApiSecret)));
+                options.CloudName,
+                options.ApiKey,
+                options.ApiSecret)));
 
             serviceCollection.AddScoped<IImageUploadFactory, ImageUploadFactory>()
                              .AddScoped<IImageHandler, ImageHandler>();
@@ -231,16 +190,6 @@ public static partial class ServiceCollectionExtensions
         {
             serviceCollection.AddScoped<IGuidProvider, GuidProvider>();
             return serviceCollection;
-        }
-
-        public TOptions AddOptions<TOptions>(IConfiguration configuration, string sectionName) where TOptions : class
-        {
-            serviceCollection.AddOptions<TOptions>()
-                             .BindConfiguration(sectionName)
-                             .ValidateDataAnnotations()
-                             .ValidateOnStart();
-
-            return configuration.GetSection(sectionName).Get<TOptions>()!;
         }
 
         public IServiceCollection AddSortOrders()

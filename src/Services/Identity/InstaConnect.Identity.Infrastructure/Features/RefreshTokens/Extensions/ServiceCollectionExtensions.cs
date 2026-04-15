@@ -1,4 +1,5 @@
-﻿using InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Options;
+﻿using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Options;
+using InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Options;
 using InstaConnect.Identity.Infrastructure.Extensions;
 
 using MongoDB.Bson.Serialization;
@@ -11,11 +12,7 @@ internal static class ServiceCollectionExtensions
     {
         internal IServiceCollection AddRefreshTokenServices()
         {
-            serviceCollection
-                .AddOptions<RefreshTokenOptions>()
-                .BindConfiguration(RefreshTokenOptions.SectionName)
-                .ValidateDataAnnotations()
-                .ValidateOnStart();
+            serviceCollection.AddOptions<RefreshTokenOptions>(RefreshTokenOptions.SectionName);
 
             serviceCollection.AddImplementationsOf<IRefreshTokenIncluder>(IdentityInfrastructureReference.Assembly);
 
