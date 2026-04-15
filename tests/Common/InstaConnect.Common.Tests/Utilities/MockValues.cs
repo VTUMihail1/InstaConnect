@@ -12,7 +12,7 @@ public static class MockValues
 
     public const string CloudinaryApiSecret = "test";
 
-    public const string AccessTokenSecurityKey = "kKwnpThCX-265RJe6OINzrECK1s";
+    public const string AccessTokenSecurityKey = "6R9f6d1Y4Z$0^8Y&S2e3nF4*G6u7D0#L9K!pT2vW8xZ5@qR7mN3bH6cJ1L0sF4dE8";
 
     public const string AccessTokenIssuer = "http://svc:5200";
 
