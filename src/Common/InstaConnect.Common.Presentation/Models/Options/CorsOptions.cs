@@ -1,9 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace InstaConnect.Shared.Presentation.Models.Options;
+using InstaConnect.Common.Domain.Abstractions;
 
-public class CorsOptions
+namespace InstaConnect.Common.Presentation.Models.Options;
+
+public class CorsOptions : IApplicationOptions
 {
+    public const string SectionName = "CorsConfiguration";
+
     [Required]
     public string AllowedOrigins { get; set; } = string.Empty;
 }

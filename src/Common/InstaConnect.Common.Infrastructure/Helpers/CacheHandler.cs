@@ -1,6 +1,10 @@
-﻿using Microsoft.Extensions.Caching.Distributed;
+﻿using InstaConnect.Common.Infrastructure.Extensions;
 
-namespace InstaConnect.Shared.Infrastructure.Helpers;
+using Microsoft.Extensions.Caching.Distributed;
+
+namespace InstaConnect.Common.Infrastructure.Helpers;
+
+
 internal class CacheHandler : ICacheHandler
 {
     private readonly IJsonConverter _jsonConverter;
@@ -32,26 +36,6 @@ internal class CacheHandler : ICacheHandler
 
         return obj;
 
-    }
-}
-
-internal static class DistributedCacheExtensions
-{
-    public static async Task SetStringAsync(
-        this IDistributedCache distributedCache,
-        string key,
-        string value,
-        DateTime expiration,
-        CancellationToken cancellationToken)
-    {
-        await distributedCache.SetStringAsync(
-            key,
-            value,
-            new DistributedCacheEntryOptions
-            {
-                AbsoluteExpiration = expiration,
-            },
-            cancellationToken);
     }
 }
 

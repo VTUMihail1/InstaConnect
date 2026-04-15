@@ -1,16 +1,16 @@
-﻿using InstaConnect.Shared.Common.Exceptions.Base;
+﻿using InstaConnect.Common.Domain.Exceptions;
 
 namespace InstaConnect.Identity.Domain.Features.Users.Exceptions;
 
 public class UserEmailAlreadyTakenException : BadRequestException
 {
-    private const string ErrorMessage = "Email already taken";
-
-    public UserEmailAlreadyTakenException() : base(ErrorMessage)
+    public UserEmailAlreadyTakenException(Email email) : base(
+        UserExceptionErrorMessages.GetEmailAlreadyTakenMessage(email))
     {
     }
 
-    public UserEmailAlreadyTakenException(Exception exception) : base(ErrorMessage, exception)
+    public UserEmailAlreadyTakenException(Email email, Exception exception) : base(
+        UserExceptionErrorMessages.GetEmailAlreadyTakenMessage(email), exception)
     {
     }
 }

@@ -1,30 +1,42 @@
-#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
+# See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-USER app
+# This stage is used when running from VS in fast mode (Default for Debug configuration)
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
+USER $APP_UID
 WORKDIR /app
-EXPOSE 5200
-EXPOSE 80
+EXPOSE 8080
+EXPOSE 8081
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+
+# This stage is used to build the service project
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+ENV ASPNETCORE_ENVIRONMENT=Docker
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["src/Services/Identity/InstaConnect.Identity.Web/InstaConnect.Identity.Web.csproj", "src/Services/Identity/InstaConnect.Identity.Web/"]
-COPY ["src/Services/Shared/InstaConnect.Shared.Web/InstaConnect.Shared.Web.csproj", "src/Services/Shared/InstaConnect.Shared.Web/"]
-COPY ["src/Services/Shared/InstaConnect.Shared.Business/InstaConnect.Shared.Business.csproj", "src/Services/Shared/InstaConnect.Shared.Business/"]
-COPY ["src/Services/Shared/InstaConnect.Shared.Data/InstaConnect.Shared.Data.csproj", "src/Services/Shared/InstaConnect.Shared.Data/"]
-COPY ["src/Services/Identity/InstaConnect.Identity.Business/InstaConnect.Identity.Business.csproj", "src/Services/Identity/InstaConnect.Identity.Business/"]
-COPY ["src/Services/Identity/InstaConnect.Identity.Data/InstaConnect.Identity.Data.csproj", "src/Services/Identity/InstaConnect.Identity.Data/"]
-RUN dotnet restore "./src/Services/Identity/InstaConnect.Identity.Web/InstaConnect.Identity.Web.csproj"
+COPY ["Directory.Packages.props", "."]
+COPY ["Directory.Build.props", "."]
+COPY ["src/Services/Identity/InstaConnect.Identity.Presentation/InstaConnect.Identity.Presentation.csproj", "src/Services/Identity/InstaConnect.Identity.Presentation/"]
+COPY ["src/Common/InstaConnect.Common.Presentation/InstaConnect.Common.Presentation.csproj", "src/Common/InstaConnect.Common.Presentation/"]
+COPY ["src/Common/InstaConnect.Common.Application/InstaConnect.Common.Application.csproj", "src/Common/InstaConnect.Common.Application/"]
+COPY ["src/Common/InstaConnect.Common.Domain/InstaConnect.Common.Domain.csproj", "src/Common/InstaConnect.Common.Domain/"]
+COPY ["src/Common/InstaConnect.Common.Events/InstaConnect.Common.Events.csproj", "src/Common/InstaConnect.Common.Events/"]
+COPY ["src/Common/InstaConnect.Common.Infrastructure/InstaConnect.Common.Infrastructure.csproj", "src/Common/InstaConnect.Common.Infrastructure/"]
+COPY ["src/Services/Identity/InstaConnect.Identity.Application/InstaConnect.Identity.Application.csproj", "src/Services/Identity/InstaConnect.Identity.Application/"]
+COPY ["src/Services/Identity/InstaConnect.Identity.Domain/InstaConnect.Identity.Domain.csproj", "src/Services/Identity/InstaConnect.Identity.Domain/"]
+COPY ["src/Services/Identity/InstaConnect.Identity.Events/InstaConnect.Identity.Events.csproj", "src/Services/Identity/InstaConnect.Identity.Events/"]
+COPY ["src/Services/Identity/InstaConnect.Identity.Infrastructure/InstaConnect.Identity.Infrastructure.csproj", "src/Services/Identity/InstaConnect.Identity.Infrastructure/"]
+RUN dotnet restore "./src/Services/Identity/InstaConnect.Identity.Presentation/InstaConnect.Identity.Presentation.csproj"
 COPY . .
-WORKDIR "/src/src/Services/Identity/InstaConnect.Identity.Web"
-RUN dotnet build "./InstaConnect.Identity.Web.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/src/Services/Identity/InstaConnect.Identity.Presentation"
+RUN dotnet build "./InstaConnect.Identity.Presentation.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
+# This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./InstaConnect.Identity.Web.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./InstaConnect.Identity.Presentation.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
+# This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "InstaConnect.Identity.Web.dll"]
+ENTRYPOINT ["dotnet", "InstaConnect.Identity.Presentation.dll"]

@@ -1,0 +1,12 @@
+﻿using InstaConnect.Common.Domain.Models;
+
+namespace InstaConnect.Identity.Tests.Features.UserClaims.DataAttributes.SortOrder;
+
+[AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
+public sealed class UserClaimsSortOrderDescendingDataAttribute : SortEnumDataAttribute<CommonSortOrder>
+{
+    public UserClaimsSortOrderDescendingDataAttribute()
+        : base(CommonSortOrder.Descending)
+    {
+    }
+}

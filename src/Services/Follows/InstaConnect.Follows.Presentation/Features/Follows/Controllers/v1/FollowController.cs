@@ -5,82 +5,81 @@ using InstaConnect.Follows.Application.Features.Follows.Queries.GetById;
 
 namespace InstaConnect.Follows.Presentation.Features.Follows.Controllers.v1;
 
-[ApiController]
 [ApiVersion(FollowRoutes.Version1)]
 [Route(FollowRoutes.Resource)]
-[EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
+[EnableRateLimiting(RateLimiterPolicies.Default)]
 public class FollowController : ControllerBase
 {
-    private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IInstaConnectSender _instaConnectSender;
+    private readonly IApplicationMapper _mapper;
+    private readonly IApplicationSender _sender;
 
     public FollowController(
-        IInstaConnectMapper instaConnectMapper,
-        IInstaConnectSender instaConnectSender)
+        IApplicationMapper mapper,
+        IApplicationSender sender)
     {
-        _instaConnectMapper = instaConnectMapper;
-        _instaConnectSender = instaConnectSender;
+        _mapper = mapper;
+        _sender = sender;
     }
 
-    // GET: api/follows
-    [HttpGet]
+    // GET: api/followers/5f0f2dd0-e957-4d72-8141-767a36fc6e95/follows
+    [HttpGet(FollowRoutes.Default)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<FollowPaginationQueryResponse>> GetAllAsync(
-        GetAllFollowsRequest request,
+    public async Task<ActionResult<GetAllFollowsApiResponse>> GetAllAsync(
+        GetAllFollowsApiRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _instaConnectMapper.Map<GetAllFollowsQuery>(request);
-        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<FollowPaginationQueryResponse>(queryResponse);
+        var queryRequest = _mapper.Map<GetAllFollowsQueryRequest>(request);
+        var queryResponse = await _sender.SendAsync(queryRequest, cancellationToken);
+        var response = _mapper.Map<GetAllFollowsApiResponse>(queryResponse);
 
         return Ok(response);
     }
 
-    // GET: api/follows/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+    // GET: api/followers/5f0f2dd0-e957-4d72-8141-767a36fc6e95/follows/5f0f2dd0-e957-4d72-8141-767a36fc6e95
     [HttpGet(FollowRoutes.Id)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<FollowQueryResponse>> GetByIdAsync(
-        GetFollowByIdRequest request,
+    public async Task<ActionResult<GetFollowByIdApiResponse>> GetByIdAsync(
+        GetFollowByIdApiRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _instaConnectMapper.Map<GetFollowByIdQuery>(request);
-        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<FollowQueryResponse>(queryResponse);
+        var queryRequest = _mapper.Map<GetFollowByIdQueryRequest>(request);
+        var queryResponse = await _sender.SendAsync(queryRequest, cancellationToken);
+        var response = _mapper.Map<GetFollowByIdApiResponse>(queryResponse);
 
         return Ok(response);
     }
 
-    // POST: api/follows
-    [HttpPost]
+    // POST: api/followers/current/follows
+    [HttpPost(FollowRoutes.Current)]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<FollowCommandResponse>> AddAsync(
-        AddFollowRequest request,
+    public async Task<ActionResult<AddFollowApiResponse>> AddAsync(
+        AddFollowApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _instaConnectMapper.Map<AddFollowCommand>(request);
-        var commandResponse = await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<FollowCommandResponse>(commandResponse);
+        var commandRequest = _mapper.Map<AddFollowCommandRequest>(request);
+        var commandResponse = await _sender.SendAsync(commandRequest, cancellationToken);
+        var response = _mapper.Map<AddFollowApiResponse>(commandResponse);
 
         return Ok(response);
     }
 
-    //DELETE: api/follows/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-    [HttpDelete(FollowRoutes.Id)]
+    // DELETE: api/followers/current/follows/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+    [HttpDelete(FollowRoutes.CurrentId)]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> DeleteAsync(
-        DeleteFollowRequest request,
+        DeleteFollowApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _instaConnectMapper.Map<DeleteFollowCommand>(request);
-        await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
+        var commandRequest = _mapper.Map<DeleteFollowCommandRequest>(request);
+        await _sender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }

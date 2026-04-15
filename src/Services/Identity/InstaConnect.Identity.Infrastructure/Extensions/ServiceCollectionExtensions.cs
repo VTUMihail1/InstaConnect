@@ -1,33 +1,47 @@
-﻿using InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Extensions;
+﻿using System.Reflection;
+
+using InstaConnect.Identity.Domain.Helpers;
+using InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Extensions;
 using InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Extensions;
+using InstaConnect.Identity.Infrastructure.Features.RefreshTokens.Extensions;
 using InstaConnect.Identity.Infrastructure.Features.UserClaims.Extensions;
 using InstaConnect.Identity.Infrastructure.Features.Users.Extensions;
-using InstaConnect.Shared.Common.Extensions;
-using InstaConnect.Shared.Infrastructure.Extensions;
+using InstaConnect.Identity.Infrastructure.Helpers;
 
 namespace InstaConnect.Identity.Infrastructure.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection serviceCollection, IConfiguration configuration)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection
-            .AddForgotPasswordTokenServices()
-            .AddEmailConfirmationTokenServices()
-            .AddUserClaimServices()
-            .AddUserServices();
+        public IServiceCollection AddInfrastructure(
+            IConfiguration configuration,
+            IWebHostEnvironment webHostEnvironment,
+            Assembly presentationAssembly)
+        {
+            serviceCollection.AddSingleton<IPasswordHasher, PasswordHasher>();
 
-        serviceCollection
-            .AddDatabaseContext<IdentityContext>(configuration)
-            .AddServicesWithMatchingInterfaces(InfrastructureReference.Assembly)
-            .AddRedisCaching(configuration)
-            .AddUnitOfWork<IdentityContext>()
-            .AddJwtBearer(configuration)
-            .AddCloudinary(configuration)
-            .AddRabbitMQ(configuration, InfrastructureReference.Assembly, busConfigurator =>
-                busConfigurator.AddTransactionalOutbox<IdentityContext>())
-            .AddDateTimeProvider();
+            serviceCollection
+                .AddUserServices()
+                .AddUserClaimServices()
+                .AddRefreshTokenServices()
+                .AddForgotPasswordTokenServices()
+                .AddEmailConfirmationTokenServices();
 
-        return serviceCollection;
+            serviceCollection
+                .AddOpenTelemetry(configuration, webHostEnvironment)
+                .AddMapper(IdentityInfrastructureReference.Assembly)
+                .AddServicesWithMatchingInterfaces(IdentityInfrastructureReference.Assembly)
+                .AddRedisCaching(configuration)
+                .AddMongoDatabase(configuration)
+                .AddUnitOfWork()
+                .AddRabbitMQ(configuration, presentationAssembly)
+                .AddJwtBearer(configuration)
+                .AddGuidProvider()
+                .AddDateTimeProvider()
+                .AddSortOrders();
+
+            return serviceCollection;
+        }
     }
 }

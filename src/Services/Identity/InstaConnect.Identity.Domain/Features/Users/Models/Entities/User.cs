@@ -1,46 +1,172 @@
-﻿using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entities;
-using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entities;
-using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entities;
+﻿namespace InstaConnect.Identity.Domain.Features.Users.Models.Entities;
 
-namespace InstaConnect.Identity.Domain.Features.Users.Models.Entities;
-
-public class User : BaseEntity
+public class User : IEntityWithId<UserId>
 {
+    private User()
+    {
+        Id = new(string.Empty);
+        FirstName = string.Empty;
+        LastName = string.Empty;
+        Email = new(string.Empty);
+        Name = new(string.Empty);
+        PasswordHash = string.Empty;
+        IsEmailConfirmed = false;
+        UserClaims = [];
+        RefreshTokens = [];
+        ForgotPasswordTokens = [];
+        EmailConfirmationTokens = [];
+    }
+
     public User(
+        UserId id,
         string firstName,
         string lastName,
-        string email,
-        string userName,
+        Email email,
+        Name name,
         string passwordHash,
-        string? profileImage)
+        bool isEmailConfirmed,
+        Image? profileImage,
+        DateTimeOffset createdAtUtc,
+        DateTimeOffset updatedAtUtc)
     {
+        Id = id;
         FirstName = firstName;
         LastName = lastName;
         Email = email;
-        UserName = userName;
+        Name = name;
         PasswordHash = passwordHash;
+        IsEmailConfirmed = isEmailConfirmed;
+        ProfileImage = profileImage;
+        UserClaims = [];
+        RefreshTokens = [];
+        ForgotPasswordTokens = [];
+        EmailConfirmationTokens = [];
+        CreatedAtUtc = createdAtUtc;
+        UpdatedAtUtc = updatedAtUtc;
+    }
+
+    public User(
+        UserId id,
+        string firstName,
+        string lastName,
+        Email email,
+        Name name,
+        string passwordHash,
+        bool isEmailConfirmed,
+        Image? profileImage,
+        DateTimeOffset createdAtUtc,
+        DateTimeOffset updatedAtUtc,
+        ICollection<UserClaim> userClaims,
+        ICollection<RefreshToken> refreshTokens,
+        ICollection<ForgotPasswordToken> forgotPasswordTokens,
+        ICollection<EmailConfirmationToken> emailConfirmationTokens)
+    {
+        Id = id;
+        FirstName = firstName;
+        LastName = lastName;
+        Email = email;
+        Name = name;
+        PasswordHash = passwordHash;
+        IsEmailConfirmed = isEmailConfirmed;
+        ProfileImage = profileImage;
+        CreatedAtUtc = createdAtUtc;
+        UpdatedAtUtc = updatedAtUtc;
+        UserClaims = userClaims;
+        RefreshTokens = refreshTokens;
+        ForgotPasswordTokens = forgotPasswordTokens;
+        EmailConfirmationTokens = emailConfirmationTokens;
+    }
+
+    public UserId Id { get; }
+
+    public string FirstName { get; private set; }
+
+    public string LastName { get; private set; }
+
+    public Email Email { get; private set; }
+
+    public Name Name { get; private set; }
+
+    public string PasswordHash { get; private set; }
+
+    public bool IsEmailConfirmed { get; private set; }
+
+    public Image? ProfileImage { get; private set; }
+
+    public ICollection<UserClaim> UserClaims { get; private set; }
+
+    public ICollection<RefreshToken> RefreshTokens { get; private set; }
+
+    public ICollection<EmailConfirmationToken> EmailConfirmationTokens { get; private set; }
+
+    public ICollection<ForgotPasswordToken> ForgotPasswordTokens { get; private set; }
+
+    public DateTimeOffset CreatedAtUtc { get; }
+
+    public DateTimeOffset UpdatedAtUtc { get; private set; }
+
+    public bool IsEmailNotConfirmed => !IsEmailConfirmed;
+
+    public void UpdateEmail(Email email)
+    {
+        Email = email;
+        IsEmailConfirmed = false;
+    }
+
+    public void UpdateProfileImage(Image? profileImage)
+    {
         ProfileImage = profileImage;
     }
 
-    public string FirstName { get; set; }
+    public void ConfirmEmail()
+    {
+        IsEmailConfirmed = true;
+    }
 
-    public string LastName { get; set; }
+    public void UpdatePasswordHash(string passwordHash)
+    {
+        PasswordHash = passwordHash;
+    }
 
-    public string Email { get; set; }
+    public void Update(
+        string firstName,
+        string lastName,
+        Name name,
+        DateTimeOffset updatedAtUtc)
+    {
+        FirstName = firstName;
+        LastName = lastName;
+        Name = name;
+        UpdatedAtUtc = updatedAtUtc;
+    }
 
-    public string UserName { get; set; }
+    public User AddUserClaim(UserClaim userClaim)
+    {
+        UserClaims.Add(userClaim);
 
-    public string PasswordHash { get; set; }
+        return this;
+    }
 
-    public string? ProfileImage { get; set; }
+    public User AddRefreshToken(RefreshToken refreshToken)
+    {
+        RefreshTokens.Add(refreshToken);
 
-    public bool IsEmailConfirmed { get; set; }
+        return this;
+    }
 
-    public ICollection<ForgotPasswordToken> ForgotPasswordTokens { get; set; } = [];
+    public User AddForgotPasswordToken(ForgotPasswordToken forgotPasswordToken)
+    {
+        ForgotPasswordTokens.Add(forgotPasswordToken);
 
-    public ICollection<EmailConfirmationToken> EmailConfirmationTokens { get; set; } = [];
+        return this;
+    }
 
-    public ICollection<UserClaim> UserClaims { get; set; } = [];
+    public User AddEmailConfirmationToken(EmailConfirmationToken emailConfirmationToken)
+    {
+        EmailConfirmationTokens.Add(emailConfirmationToken);
+
+        return this;
+    }
 }
 
 

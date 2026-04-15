@@ -1,28 +1,24 @@
-﻿using InstaConnect.Shared.Infrastructure.Extensions;
+﻿using InstaConnect.Common.Infrastructure;
+using InstaConnect.Identity.Infrastructure.Utilities;
+
+using MongoDB.Driver;
 
 namespace InstaConnect.Identity.Infrastructure;
 
-public class IdentityContext : DbContext
+public class IdentityContext : MongoDbContext, IIdentityContext
 {
-    public IdentityContext(DbContextOptions options) : base(options)
-    { }
-
-    public DbSet<User> Users { get; set; }
-
-    public DbSet<EmailConfirmationToken> EmailConfirmationTokens { get; set; }
-
-    public DbSet<ForgotPasswordToken> ForgotPasswordTokens { get; set; }
-
-    public DbSet<UserClaim> UserClaims { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    public IdentityContext(IMongoClient mongoClient, IMongoDatabase mongoDatabase)
+        : base(mongoClient, mongoDatabase)
     {
-        var currentAssembly = typeof(IdentityContext).Assembly;
-
-        base.OnModelCreating(modelBuilder);
-
-        modelBuilder.ApplyConfigurationsFromAssembly(currentAssembly);
-
-        modelBuilder.ApplyTransactionalOutboxEntityConfiguration();
     }
+
+    public IMongoCollection<User> Users => ToCollection<User, UserId>(IdentityCollectionNames.Users);
+
+    public IMongoCollection<UserClaim> UserClaims => ToCollection<UserClaim, UserClaimId>(IdentityCollectionNames.UserClaims);
+
+    public IMongoCollection<RefreshToken> RefreshTokens => ToCollection<RefreshToken, RefreshTokenId>(IdentityCollectionNames.RefreshTokens);
+
+    public IMongoCollection<ForgotPasswordToken> ForgotPasswordTokens => ToCollection<ForgotPasswordToken, ForgotPasswordTokenId>(IdentityCollectionNames.ForgotPasswordTokens);
+
+    public IMongoCollection<EmailConfirmationToken> EmailConfirmationTokens => ToCollection<EmailConfirmationToken, EmailConfirmationTokenId>(IdentityCollectionNames.EmailConfirmationTokens);
 }

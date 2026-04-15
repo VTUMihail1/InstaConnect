@@ -1,20 +1,18 @@
-﻿namespace InstaConnect.Follows.Infrastructure;
+﻿using InstaConnect.Common.Infrastructure;
+using InstaConnect.Follows.Infrastructure.Utilities;
 
-public class FollowsContext : DbContext
+using MongoDB.Driver;
+
+namespace InstaConnect.Follows.Infrastructure;
+
+public class FollowsContext : MongoDbContext, IFollowsContext
 {
-    public FollowsContext(DbContextOptions<FollowsContext> options) : base(options)
-    { }
-
-    public DbSet<Follow> Follows { get; set; }
-
-    public DbSet<User> Users { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    public FollowsContext(IMongoClient mongoClient, IMongoDatabase mongoDatabase)
+        : base(mongoClient, mongoDatabase)
     {
-        var currentAssembly = typeof(FollowsContext).Assembly;
-
-        base.OnModelCreating(modelBuilder);
-
-        modelBuilder.ApplyConfigurationsFromAssembly(currentAssembly);
     }
+
+    public IMongoCollection<User> Users => ToCollection<User, UserId>(FollowCollectionNames.Users);
+
+    public IMongoCollection<Follow> Follows => ToCollection<Follow, FollowId>(FollowCollectionNames.Follows);
 }

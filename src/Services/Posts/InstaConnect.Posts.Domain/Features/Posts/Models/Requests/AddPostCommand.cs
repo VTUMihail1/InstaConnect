@@ -1,0 +1,3 @@
+﻿namespace InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
+
+public record AddPostCommand(UserId UserId, string Title, string Content);

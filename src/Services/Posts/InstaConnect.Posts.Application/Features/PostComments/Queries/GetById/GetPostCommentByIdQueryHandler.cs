@@ -1,28 +1,26 @@
 ﻿namespace InstaConnect.Posts.Application.Features.PostComments.Queries.GetById;
 
-internal class GetPostCommentByIdQueryHandler : IQueryHandler<GetPostCommentByIdQuery, PostCommentQueryViewModel>
+internal class GetPostCommentByIdQueryHandler : IQueryHandler<GetPostCommentByIdQueryRequest, GetPostCommentByIdQueryResponse>
 {
-    private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IPostCommentReadRepository _postCommentReadRepository;
+    private readonly IApplicationMapper _mapper;
+    private readonly IPostCommentQueryService _commentService;
 
     public GetPostCommentByIdQueryHandler(
-        IInstaConnectMapper mapper,
-        IPostCommentReadRepository postCommentRepository)
+        IApplicationMapper mapper,
+        IPostCommentQueryService commentService)
     {
-        _instaConnectMapper = mapper;
-        _postCommentReadRepository = postCommentRepository;
+        _mapper = mapper;
+        _commentService = commentService;
     }
 
-    public async Task<PostCommentQueryViewModel> Handle(GetPostCommentByIdQuery request, CancellationToken cancellationToken)
+    public async Task<GetPostCommentByIdQueryResponse> Handle(
+        GetPostCommentByIdQueryRequest request,
+        CancellationToken cancellationToken)
     {
-        var postComment = await _postCommentReadRepository.GetByIdAsync(request.Id, cancellationToken);
+        var serviceRequest = _mapper.Map<GetPostCommentByIdQuery>(request);
+        var postComment = await _commentService.GetByIdAsync(serviceRequest, cancellationToken);
 
-        if (postComment == null)
-        {
-            throw new PostCommentNotFoundException();
-        }
-
-        var response = _instaConnectMapper.Map<PostCommentQueryViewModel>(postComment);
+        var response = _mapper.Map<GetPostCommentByIdQueryResponse>(postComment);
 
         return response;
     }

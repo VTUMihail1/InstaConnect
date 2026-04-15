@@ -1,6 +1,10 @@
-﻿namespace InstaConnect.Shared.Application.Abstractions;
+﻿namespace InstaConnect.Common.Application.Abstractions;
 
 public interface IUnitOfWork
 {
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+    Task BeginAsync(CancellationToken cancellationToken);
+
+    Task CommitAsync(CancellationToken cancellationToken);
+
+    Task AbortAsync(CancellationToken cancellationToken);
 }

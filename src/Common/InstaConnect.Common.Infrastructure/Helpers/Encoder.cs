@@ -1,17 +1,15 @@
 ﻿using System.Text;
 
-using InstaConnect.Shared.Infrastructure.Abstractions;
+using InstaConnect.Common.Infrastructure.Abstractions;
 
-namespace InstaConnect.Shared.Infrastructure.Extensions;
-public static partial class ServiceCollectionExtensions
+namespace InstaConnect.Common.Infrastructure.Helpers;
+
+internal class Encoder : IEncoder
 {
-    internal class Encoder : IEncoder
+    public byte[] GetBytesUTF8(string key)
     {
-        public byte[] GetBytesUTF8(string key)
-        {
-            var bytes = Encoding.UTF8.GetBytes(key);
+        var bytes = Encoding.UTF8.GetBytes(key);
 
-            return bytes;
-        }
+        return bytes;
     }
 }

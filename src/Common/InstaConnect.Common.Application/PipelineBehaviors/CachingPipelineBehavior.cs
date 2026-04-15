@@ -1,8 +1,12 @@
-﻿namespace InstaConnect.Shared.Application.PipelineBehaviors;
+﻿using MediatR;
+
+using Microsoft.Extensions.Logging;
+
+namespace InstaConnect.Common.Application.PipelineBehaviors;
 
 internal class CachingPipelineBehavior<TRequest, TResponse>
     : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : IQuery<TResponse>, ICachable
+    where TRequest : IQueryRequest<TResponse>, ICachable
     where TResponse : class
 {
     private readonly ICacheHandler _cacheHandler;
@@ -36,7 +40,7 @@ internal class CachingPipelineBehavior<TRequest, TResponse>
 
         _logger.LogInformation("Cache miss for {RequestKey}", requestKey);
 
-        var data = await next();
+        var data = await next(cancellationToken);
         var cacheRequest = _cacheRequestFactory.Get(requestKey, request.ExpirationSeconds, data);
         await _cacheHandler.SetAsync(cacheRequest, cancellationToken);
 

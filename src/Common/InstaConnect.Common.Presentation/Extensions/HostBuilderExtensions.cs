@@ -1,14 +1,19 @@
-﻿using Serilog;
+﻿using Microsoft.Extensions.Hosting;
 
-namespace InstaConnect.Shared.Presentation.Extensions;
+using Serilog;
+
+namespace InstaConnect.Common.Presentation.Extensions;
 
 public static class HostBuilderExtensions
 {
-    public static IHostBuilder AddSerilog(this IHostBuilder hostBuilder)
+    extension(IHostBuilder hostBuilder)
     {
-        hostBuilder.UseSerilog((context, configuration) =>
-            configuration.ReadFrom.Configuration(context.Configuration));
+        public IHostBuilder AddSerilog()
+        {
+            hostBuilder.UseSerilog((context, configuration) =>
+                configuration.ReadFrom.Configuration(context.Configuration));
 
-        return hostBuilder;
+            return hostBuilder;
+        }
     }
 }

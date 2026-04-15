@@ -1,44 +1,27 @@
 ﻿namespace InstaConnect.Posts.Application.Features.PostComments.Commands.Update;
 
-internal class UpdatePostCommentCommandHandler : ICommandHandler<UpdatePostCommentCommand, PostCommentCommandViewModel>
+public class UpdatePostCommentCommandHandler : ICommandHandler<UpdatePostCommentCommandRequest, UpdatePostCommentCommandResponse>
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IPostCommentWriteRepository _postCommentRepository;
+    private readonly IApplicationMapper _mapper;
+    private readonly IPostCommentCommandService _commentService;
 
     public UpdatePostCommentCommandHandler(
-        IUnitOfWork unitOfWork,
-        IInstaConnectMapper instaConnectMapper,
-        IPostCommentWriteRepository postCommentRepository)
+        IApplicationMapper mapper,
+        IPostCommentCommandService commentService)
     {
-        _unitOfWork = unitOfWork;
-        _instaConnectMapper = instaConnectMapper;
-        _postCommentRepository = postCommentRepository;
+        _mapper = mapper;
+        _commentService = commentService;
     }
 
-    public async Task<PostCommentCommandViewModel> Handle(
-        UpdatePostCommentCommand request,
+    public async Task<UpdatePostCommentCommandResponse> Handle(
+        UpdatePostCommentCommandRequest request,
         CancellationToken cancellationToken)
     {
-        var existingPostComment = await _postCommentRepository.GetByIdAsync(request.Id, cancellationToken);
+        var serviceRequest = _mapper.Map<UpdatePostCommentCommand>(request);
+        var serviceResponse = await _commentService.UpdateAsync(serviceRequest, cancellationToken);
 
-        if (existingPostComment == null)
-        {
-            throw new PostCommentNotFoundException();
-        }
+        var response = _mapper.Map<UpdatePostCommentCommandResponse>(serviceResponse);
 
-        if (request.CurrentUserId != existingPostComment.UserId)
-        {
-            throw new UserForbiddenException();
-        }
-
-        _instaConnectMapper.Map(request, existingPostComment);
-        _postCommentRepository.Update(existingPostComment);
-
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-
-        var postCommentCommand = _instaConnectMapper.Map<PostCommentCommandViewModel>(existingPostComment);
-
-        return postCommentCommand;
+        return response;
     }
 }

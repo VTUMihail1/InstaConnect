@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Shared.Infrastructure.Abstractions;
+﻿namespace InstaConnect.Common.Infrastructure.Abstractions;
 
 public interface IEncoder
 {

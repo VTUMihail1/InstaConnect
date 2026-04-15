@@ -1,4 +1,8 @@
-namespace InstaConnect.Shared.Application.PipelineBehaviors;
+using MediatR;
+
+using Microsoft.Extensions.Logging;
+
+namespace InstaConnect.Common.Application.PipelineBehaviors;
 
 internal class LoggingPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest
@@ -21,6 +25,6 @@ internal class LoggingPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<
             "Processing request {RequestName}",
             requestName);
 
-        return await next();
+        return await next(cancellationToken);
     }
 }

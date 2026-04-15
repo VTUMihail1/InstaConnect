@@ -42,7 +42,7 @@ csharp_indent_labels = one_less_than_current
 # Organize usings
 dotnet_separate_import_directive_groups = true
 dotnet_sort_system_directives_first = true
-csharp_style_namespace_declarations=file_scoped:warning
+csharp_style_namespace_declarations= file_scoped:warning
 dotnet_style_namespace_match_folder=true:warning
 
 # Modifier preferences
@@ -56,7 +56,7 @@ dotnet_style_predefined_type_for_member_access = true:suggestion
 # name all constant fields using PascalCase
 dotnet_naming_rule.constant_fields_should_be_pascal_case.severity = suggestion
 dotnet_naming_rule.constant_fields_should_be_pascal_case.symbols  = constant_fields
-dotnet_naming_rule.constant_fields_should_be_pascal_case.style    = pascal_case_style
+dotnet_naming_rule.constant_fields_should_be_pascal_case.style = pascal_case_style
 
 dotnet_naming_symbols.constant_fields.applicable_kinds   = field
 dotnet_naming_symbols.constant_fields.required_modifiers = const
@@ -65,7 +65,7 @@ dotnet_naming_style.pascal_case_style.capitalization = pascal_case
 # internal and private fields should be _camelCase
 dotnet_naming_rule.camel_case_for_private_internal_fields.severity = suggestion
 dotnet_naming_rule.camel_case_for_private_internal_fields.symbols  = private_internal_fields
-dotnet_naming_rule.camel_case_for_private_internal_fields.style    = camel_case_underscore_style
+dotnet_naming_rule.camel_case_for_private_internal_fields.style = camel_case_underscore_style
 
 dotnet_naming_symbols.private_internal_fields.applicable_kinds = field
 dotnet_naming_symbols.private_internal_fields.applicable_accessibilities = private, internal
@@ -86,13 +86,13 @@ dotnet_naming_style.begins_with_i.word_separator =
 dotnet_naming_style.begins_with_i.capitalization = pascal_case
 
 # Code style defaults
-csharp_prefer_braces = true:refactoring
+csharp_prefer_braces = true:silent
 csharp_preserve_single_line_blocks = true:none
 csharp_preserve_single_line_statements = false:none
 csharp_prefer_static_local_function = true:suggestion
 csharp_prefer_simple_using_statement = false:none
 csharp_style_prefer_switch_expression = true:suggestion
-csharp_style_prefer_primary_constructors = false
+csharp_style_prefer_primary_constructors = false:suggestion
 
 # Code quality
 dotnet_style_readonly_field = true:suggestion
@@ -113,10 +113,10 @@ dotnet_style_prefer_conditional_expression_over_return = true:refactoring
 csharp_prefer_simple_default_expression = true:suggestion
 
 # Expression-bodied members
-csharp_style_expression_bodied_methods = when_on_single_line:refactoring
-csharp_style_expression_bodied_constructors = when_on_single_line:refactoring
-csharp_style_expression_bodied_operators = when_on_single_line:refactoring
-csharp_style_expression_bodied_properties = when_on_single_line:refactoring
+csharp_style_expression_bodied_methods = when_on_single_line:silent
+csharp_style_expression_bodied_constructors = when_on_single_line:silent
+csharp_style_expression_bodied_operators = when_on_single_line:silent
+csharp_style_expression_bodied_properties = when_on_single_line:silent
 csharp_style_expression_bodied_indexers = when_on_single_line:refactoring
 csharp_style_expression_bodied_accessors = when_on_single_line:refactoring
 csharp_style_expression_bodied_lambdas = when_on_single_line:refactoring
@@ -162,17 +162,33 @@ csharp_space_between_square_brackets = false
 
 # Analyzers
 dotnet_code_quality.ca1802.api_surface = private, internal
+csharp_using_directive_placement = outside_namespace:silent
+csharp_style_prefer_method_group_conversion = true:silent
+csharp_style_prefer_top_level_statements = true:silent
+csharp_prefer_system_threading_lock = true:suggestion
 
 # Diagnostics
 [*.{cs,vb}]
+dotnet_diagnostic.S2234.severity = none
+dotnet_diagnostic.S2325.severity = none
+dotnet_diagnostic.S2933.severity = none
+dotnet_diagnostic.S3358.severity = none
+dotnet_diagnostic.CA1019.severity = none
+dotnet_diagnostic.CA1024.severity = none
 dotnet_diagnostic.CA1032.severity = none
+dotnet_diagnostic.CA1034.severity = none
 dotnet_diagnostic.CA1040.severity = none
 dotnet_diagnostic.CA1052.severity = none
 dotnet_diagnostic.CA1054.severity = none
 dotnet_diagnostic.CA1055.severity = none
 dotnet_diagnostic.CA1056.severity = none
 dotnet_diagnostic.CA1062.severity = none
+dotnet_diagnostic.CA1304.severity = none
+dotnet_diagnostic.CA1311.severity = none
+dotnet_diagnostic.CA1515.severity = none
 dotnet_diagnostic.CA1707.severity = none
+dotnet_diagnostic.CA1708.severity = none
+dotnet_diagnostic.CA1711.severity = none
 dotnet_diagnostic.CA1714.severity = none
 dotnet_diagnostic.CA1716.severity = none
 dotnet_diagnostic.CA1724.severity = none
@@ -180,7 +196,10 @@ dotnet_diagnostic.CA1812.severity = none
 dotnet_diagnostic.CA1822.severity = none
 dotnet_diagnostic.CA1848.severity = none
 dotnet_diagnostic.CA1852.severity = none
+dotnet_diagnostic.CA1860.severity = none
+dotnet_diagnostic.CA1862.severity = none
 dotnet_diagnostic.CA1863.severity = none
+dotnet_diagnostic.CA1873.severity = none
 dotnet_diagnostic.CA2000.severity = none
 dotnet_diagnostic.CA2007.severity = none
 dotnet_diagnostic.CA2227.severity = none
@@ -189,7 +208,10 @@ dotnet_diagnostic.CA5404.severity = none
 
 # Xml project files
 [*.{csproj,vcxproj,vcxproj.filters,proj,nativeproj,locproj}]
-indent_size = 2
+indent_size = 4
+dotnet_style_operator_placement_when_wrapping = beginning_of_line
+tab_width = 4
+end_of_line = crlf
 
 # Xml build files
 [*.builds]

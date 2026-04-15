@@ -1,40 +1,23 @@
 ﻿namespace InstaConnect.Identity.Application.Features.Users.Commands.Delete;
 
-public class DeleteUserCommandHandler : ICommandHandler<DeleteUserCommand>
+internal class DeleteUserCommandHandler : ICommandHandler<DeleteUserCommandRequest>
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IEventPublisher _eventPublisher;
-    private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IUserWriteRepository _userWriteRepository;
+    private readonly IApplicationMapper _mapper;
+    private readonly IUserCommandService _service;
 
     public DeleteUserCommandHandler(
-        IUnitOfWork unitOfWork,
-        IEventPublisher eventPublisher,
-        IInstaConnectMapper instaConnectMapper,
-        IUserWriteRepository userWriteRepository)
+        IApplicationMapper mapper,
+        IUserCommandService service)
     {
-        _unitOfWork = unitOfWork;
-        _eventPublisher = eventPublisher;
-        _instaConnectMapper = instaConnectMapper;
-        _userWriteRepository = userWriteRepository;
+        _mapper = mapper;
+        _service = service;
     }
 
     public async Task Handle(
-        DeleteUserCommand request,
+        DeleteUserCommandRequest request,
         CancellationToken cancellationToken)
     {
-        var existingUser = await _userWriteRepository.GetByIdAsync(request.Id, cancellationToken);
-
-        if (existingUser == null)
-        {
-            throw new UserNotFoundException();
-        }
-
-        _userWriteRepository.Delete(existingUser);
-
-        var userDeletedEvent = _instaConnectMapper.Map<UserDeletedEvent>(existingUser);
-        await _eventPublisher.PublishAsync(userDeletedEvent, cancellationToken);
-
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        var serviceRequest = _mapper.Map<DeleteUserCommand>(request);
+        await _service.DeleteAsync(serviceRequest, cancellationToken);
     }
 }

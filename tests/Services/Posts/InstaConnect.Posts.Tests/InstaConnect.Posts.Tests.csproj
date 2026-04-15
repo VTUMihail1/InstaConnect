@@ -1,0 +1,71 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <IsTestProject>false</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\Services\Posts\InstaConnect.Posts.Domain\InstaConnect.Posts.Domain.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Services\Posts\InstaConnect.Posts.Infrastructure\InstaConnect.Posts.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Services\Posts\InstaConnect.Posts.Presentation\InstaConnect.Posts.Presentation.csproj" />
+    <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Tests\InstaConnect.Common.Tests.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Label="Common">
+    <Using Include="InstaConnect.Common.Domain.Extensions" />
+    <Using Include="InstaConnect.Common.Tests.Events" />
+    <Using Include="InstaConnect.Common.Tests.Assertions" />
+    <Using Include="InstaConnect.Common.Tests.Utilities" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.DateTimeOffsets.Base" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.DateTimeOffsets.Empty" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Ints.Base" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Ints.Empty" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Ints.TooSmall" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Ints.TooLarge" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.Base" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.DifferentCase" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.Empty" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.TooShort" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.TooLong" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.Null" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Enums.Base" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Enums.Empty" />
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Enums.Sort" />
+  </ItemGroup>
+
+  <ItemGroup Label="Users">
+    <Using Include="InstaConnect.Posts.Domain.Features.Users.Utilities" />
+    <Using Include="InstaConnect.Posts.Domain.Features.Users.Models.Entities" />
+    <Using Include="InstaConnect.Posts.Domain.Features.Users.Models.Requests" />
+    <Using Include="InstaConnect.Posts.Tests.Features.Users.Builders" />
+  </ItemGroup>
+  
+  <ItemGroup Label="Posts">
+    <Using Include="InstaConnect.Posts.Domain.Features.Posts.Utilities" />
+    <Using Include="InstaConnect.Posts.Domain.Features.Posts.Models.Entities" />
+    <Using Include="InstaConnect.Posts.Domain.Features.Posts.Models.Requests" />
+    <Using Include="InstaConnect.Posts.Tests.Features.Posts.Builders" />
+  </ItemGroup>
+
+  <ItemGroup Label="PostLikes">
+    <Using Include="InstaConnect.Posts.Domain.Features.PostLikes.Utilities" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostLikes.Models.Entities" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostLikes.Models.Requests" />
+    <Using Include="InstaConnect.Posts.Tests.Features.PostLikes.Builders" />
+  </ItemGroup>
+
+  <ItemGroup Label="PostComments">
+    <Using Include="InstaConnect.Posts.Domain.Features.PostComments.Utilities" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostComments.Models.Entities" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostComments.Models.Requests" />
+    <Using Include="InstaConnect.Posts.Tests.Features.PostComments.Builders" />
+  </ItemGroup>
+
+  <ItemGroup Label="PostCommentLikes">
+    <Using Include="InstaConnect.Posts.Domain.Features.PostCommentLikes.Utilities" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entities" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Requests" />
+    <Using Include="InstaConnect.Posts.Tests.Features.PostCommentLikes.Builders" />
+  </ItemGroup>
+
+</Project>

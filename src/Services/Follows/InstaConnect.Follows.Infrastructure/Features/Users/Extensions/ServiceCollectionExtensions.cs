@@ -1,8 +1,45 @@
-﻿namespace InstaConnect.Follows.Infrastructure.Features.Users.Extensions;
+﻿using InstaConnect.Follows.Infrastructure.Extensions;
+
+using MongoDB.Bson.Serialization;
+
+namespace InstaConnect.Follows.Infrastructure.Features.Users.Extensions;
+
 internal static class ServiceCollectionExtensions
 {
-    internal static IServiceCollection AddUserServices(this IServiceCollection serviceCollection)
+    extension(IServiceCollection serviceCollection)
     {
-        return serviceCollection;
+        internal IServiceCollection AddUserServices()
+        {
+            serviceCollection.AddImplementationsOf<IUserIncluder>(FollowInfrastructureReference.Assembly);
+
+            BsonClassMap.TryRegisterClassMap<User>(cm =>
+            {
+                cm.MapIdMember(c => c.Id);
+
+                cm.MapMember(c => c.Id);
+                cm.MapMember(c => c.FirstName);
+                cm.MapMember(c => c.LastName);
+                cm.MapMember(c => c.Name);
+                cm.MapMember(c => c.Email);
+                cm.MapMember(c => c.ProfileImage);
+                cm.MapMember(c => c.CreatedAtUtc);
+                cm.MapMember(c => c.UpdatedAtUtc);
+
+                cm.MapMemberWithoutSerialization(c => c.FollowFollowers);
+                cm.MapMemberWithoutSerialization(c => c.FollowFollowings);
+
+                cm.MapCreator(c => new User(
+                    c.Id,
+                    c.FirstName,
+                    c.LastName,
+                    c.Email,
+                    c.Name,
+                    c.ProfileImage,
+                    c.CreatedAtUtc,
+                    c.UpdatedAtUtc));
+            });
+
+            return serviceCollection;
+        }
     }
 }

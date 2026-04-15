@@ -1,57 +1,75 @@
-﻿using System.Security.Claims;
+﻿using System.Reflection;
 using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
 
 using Asp.Versioning;
 
-using InstaConnect.Shared.Common.Utilities;
-using InstaConnect.Shared.Presentation.Binders.FromClaim;
-using InstaConnect.Shared.Presentation.ExceptionHandlers;
-using InstaConnect.Shared.Presentation.Models.Options;
-using InstaConnect.Shared.Presentation.Utilities;
+using CloudinaryDotNet.Actions;
 
+using InstaConnect.Common.Domain.Extensions;
+using InstaConnect.Common.Domain.Utilities;
+using InstaConnect.Common.Events.Models;
+using InstaConnect.Common.Infrastructure.Models.Options;
+using InstaConnect.Common.Presentation.Abstractions;
+using InstaConnect.Common.Presentation.Binders.FromClaim;
+using InstaConnect.Common.Presentation.Binders.FromCookie;
+using InstaConnect.Common.Presentation.Conventions;
+using InstaConnect.Common.Presentation.ExceptionHandlers;
+using InstaConnect.Common.Presentation.Helpers;
+using InstaConnect.Common.Presentation.Models.Options;
+using InstaConnect.Common.Presentation.Utilities;
+
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi;
 
-namespace InstaConnect.Shared.Presentation.Extensions;
+namespace InstaConnect.Common.Presentation.Extensions;
+
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddAuthorizationPolicies(this IServiceCollection serviceCollection)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection.AddAuthorizationBuilder()
-            .SetDefaultPolicy(new AuthorizationPolicyBuilder()
-                .RequireAuthenticatedUser()
-                .RequireClaim(ClaimTypes.NameIdentifier)
-                .Build())
-            .AddPolicy(AppPolicies.AdminPolicy, policy => policy.RequireClaim(AppClaims.Admin));
+        public IServiceCollection AddAuthorizationPolicies()
+        {
+            serviceCollection.AddAuthorizationBuilder()
+                .SetDefaultPolicy(new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .RequireClaim(DefaultClaims.Id)
+                    .Build())
+                .AddPolicy(AuthorizationPolicies.Admin, policy => policy.RequireClaim(ApplicationClaims.Admin.GetName()));
 
-        return serviceCollection;
-    }
+            return serviceCollection;
+        }
 
-    public static IServiceCollection AddApiControllers(this IServiceCollection serviceCollection)
-    {
-        serviceCollection
-            .AddControllers(options =>
-                options.ValueProviderFactories.Add(new FromClaimValueProviderFactory()))
+        public IServiceCollection AddApiControllers()
+        {
+            serviceCollection.AddHttpContextAccessor()
+                             .AddScoped<ICookieStore, CookieStore>();
+
+            serviceCollection.AddControllers(options =>
+            {
+                options.ValueProviderFactories.Add(new FromClaimValueProviderFactory());
+                options.ValueProviderFactories.Add(new FromCookieValueProviderFactory());
+                options.Conventions.Add(new CamelCaseQueryConvention());
+            })
             .AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });
 
-        serviceCollection
-            .Configure<ApiBehaviorOptions>(options => options.SuppressInferBindingSourcesForParameters = true);
+            serviceCollection.Configure<ApiBehaviorOptions>(options =>
+                options.SuppressInferBindingSourcesForParameters = true);
 
-        serviceCollection
-            .AddApiVersioning(options =>
+            serviceCollection.AddApiVersioning(options =>
             {
                 options.DefaultApiVersion = new ApiVersion(1);
                 options.ReportApiVersions = true;
-
             })
             .AddApiExplorer(options =>
             {
@@ -59,70 +77,83 @@ public static class ServiceCollectionExtensions
                 options.SubstituteApiVersionInUrl = true;
             });
 
-        return serviceCollection;
-    }
+            return serviceCollection;
+        }
 
-    public static IServiceCollection AddExceptionHandler(this IServiceCollection serviceCollection)
-    {
-        serviceCollection.AddProblemDetails();
-        serviceCollection.AddExceptionHandler<AppExceptionHandler>();
-
-        return serviceCollection;
-    }
-
-    public static IServiceCollection AddCorsPolicies(this IServiceCollection serviceCollection, IConfiguration configuration)
-    {
-        serviceCollection
-            .AddOptions<CorsOptions>()
-            .BindConfiguration(nameof(CorsOptions))
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
-
-        var corsOptions = configuration
-            .GetSection(nameof(CorsOptions))
-            .Get<CorsOptions>()!;
-
-        serviceCollection.AddCors(options =>
+        public IServiceCollection AddExceptionHandler()
         {
-            options.AddDefaultPolicy(builder =>
-                builder.AllowAnyOrigin()
-                       .AllowAnyHeader()
-                       .AllowAnyMethod());
+            serviceCollection.AddSingleton<IApplicationProblemDetailsFactory, ApplicationProblemDetailsFactory>()
+                             .AddSingleton<IApplicationProblemDetailsService, ApplicationProblemDetailsService>()
+                             .AddImplementationsOf<IBaseExceptionStatus>(CommonPresentationReference.Assembly);
 
-            options.AddPolicy(AppPolicies.CorsPolicy, builder =>
-                builder.WithOrigins(corsOptions.AllowedOrigins.Split(", "))
-                       .AllowAnyHeader()
-                       .AllowAnyMethod());
-        });
+            serviceCollection.AddProblemDetails();
 
-        return serviceCollection;
-    }
+            serviceCollection.AddExceptionHandler<InvalidValidationExceptionHandler>()
+                             .AddExceptionHandler<BaseExceptionHandler>()
+                             .AddExceptionHandler<ExceptionHandler>();
 
-    public static IServiceCollection AddSwagger(this IServiceCollection serviceCollection)
-    {
-        serviceCollection.AddEndpointsApiExplorer();
+            return serviceCollection;
+        }
 
-        serviceCollection.AddSwaggerGen();
-
-        return serviceCollection;
-    }
-
-    public static IServiceCollection AddRateLimiterPolicies(this IServiceCollection serviceCollection)
-    {
-        serviceCollection.AddRateLimiter(options =>
+        public IServiceCollection AddCorsPolicies(IConfiguration configuration)
         {
-            options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+            serviceCollection.AddValidatedOptions<CorsOptions>(CorsOptions.SectionName);
+            var options = configuration.GetOptions<CorsOptions>(CorsOptions.SectionName);
 
-            options.AddPolicy(AppPolicies.RateLimiterPolicy,
-                httpContext => RateLimitPartition.GetFixedWindowLimiter(
-                    partitionKey: httpContext.Connection.RemoteIpAddress?.ToString(),
-                    factory: _ => new FixedWindowRateLimiterOptions
-                    {
-                        PermitLimit = 100,
-                        Window = TimeSpan.FromSeconds(10),
-                    }));
-        });
+            serviceCollection.AddCors(o =>
+            {
+                o.AddDefaultPolicy(builder =>
+                    builder.AllowAnyOrigin()
+                           .AllowAnyHeader()
+                           .AllowAnyMethod());
 
-        return serviceCollection;
+                o.AddPolicy(CorsPolicies.SpecificOrigins, builder =>
+                    builder.WithOrigins(options.AllowedOrigins.Split(", "))
+                           .AllowAnyHeader()
+                           .AllowAnyMethod());
+            });
+
+            return serviceCollection;
+        }
+
+        public IServiceCollection AddSwagger()
+        {
+            serviceCollection.AddEndpointsApiExplorer();
+            serviceCollection.AddSwaggerGen(o =>
+            {
+                var securityScheme = new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    Scheme = JwtBearerDefaults.AuthenticationScheme,
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "Enter JWT Bearer token **ONLY**",
+                };
+
+                o.AddSecurityDefinition(securityScheme.Name, securityScheme);
+            });
+
+            return serviceCollection;
+        }
+
+        public IServiceCollection AddRateLimiterPolicies()
+        {
+            serviceCollection.AddRateLimiter(options =>
+            {
+                options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+                options.AddPolicy(RateLimiterPolicies.Default,
+                    httpContext => RateLimitPartition.GetFixedWindowLimiter(
+                        partitionKey: httpContext.Connection.RemoteIpAddress?.ToString(),
+                        factory: _ => new FixedWindowRateLimiterOptions
+                        {
+                            PermitLimit = 100,
+                            Window = TimeSpan.FromSeconds(10),
+                        }));
+            });
+
+            return serviceCollection;
+        }
     }
 }

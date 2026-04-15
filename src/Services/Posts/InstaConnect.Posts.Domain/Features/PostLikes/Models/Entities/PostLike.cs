@@ -1,33 +1,39 @@
-﻿using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
-using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
+﻿namespace InstaConnect.Posts.Domain.Features.PostLikes.Models.Entities;
 
-namespace InstaConnect.Posts.Domain.Features.PostLikes.Models.Entities;
-
-public class PostLike : BaseEntity
+public class PostLike : IEntityWithId<PostLikeId>
 {
-    public PostLike(
-        string postId,
-        string userId)
+    private PostLike()
     {
-        PostId = postId;
-        UserId = userId;
+        Id = new(new(string.Empty), new(string.Empty));
     }
 
     public PostLike(
-        Post post,
-        User user)
+        PostLikeId id,
+        DateTimeOffset createdAtUtc)
+    {
+        Id = id;
+        CreatedAtUtc = createdAtUtc;
+    }
+
+    public PostLikeId Id { get; }
+
+    public Post? Post { get; private set; }
+
+    public User? User { get; private set; }
+
+    public DateTimeOffset CreatedAtUtc { get; }
+
+    public PostLike AddUser(User? user)
+    {
+        User = user;
+
+        return this;
+    }
+
+    public PostLike AddPost(Post? post)
     {
         Post = post;
-        User = user;
-        PostId = post.Id;
-        UserId = user.Id;
+
+        return this;
     }
-
-    public string PostId { get; }
-
-    public string UserId { get; }
-
-    public Post? Post { get; set; }
-
-    public User? User { get; set; }
 }

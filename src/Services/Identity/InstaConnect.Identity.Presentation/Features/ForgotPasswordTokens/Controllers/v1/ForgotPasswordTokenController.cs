@@ -5,18 +5,18 @@ namespace InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Contr
 
 [ApiVersion(ForgotPasswordTokenRoutes.Version1)]
 [Route(ForgotPasswordTokenRoutes.Resource)]
-[EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
+[EnableRateLimiting(RateLimiterPolicies.Default)]
 public class ForgotPasswordTokenController : ControllerBase
 {
-    private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IInstaConnectSender _instaConnectSender;
+    private readonly IApplicationMapper _mapper;
+    private readonly IApplicationSender _sender;
 
     public ForgotPasswordTokenController(
-        IInstaConnectMapper instaConnectMapper,
-        IInstaConnectSender instaConnectSender)
+        IApplicationMapper mapper,
+        IApplicationSender sender)
     {
-        _instaConnectMapper = instaConnectMapper;
-        _instaConnectSender = instaConnectSender;
+        _mapper = mapper;
+        _sender = sender;
     }
 
     // POST: api/users/user@example.com/forgot-password-tokens
@@ -24,11 +24,11 @@ public class ForgotPasswordTokenController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> AddAsync(
-        AddForgotPasswordTokenRequest request,
+        AddForgotPasswordTokenApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _instaConnectMapper.Map<AddForgotPasswordTokenCommand>(request);
-        await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
+        var commandRequest = _mapper.Map<AddForgotPasswordTokenCommandRequest>(request);
+        await _sender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }
@@ -38,11 +38,11 @@ public class ForgotPasswordTokenController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> VerifyAsync(
-        VerifyForgotPasswordTokenRequest request,
+        VerifyForgotPasswordTokenApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _instaConnectMapper.Map<VerifyForgotPasswordTokenCommand>(request);
-        await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
+        var commandRequest = _mapper.Map<VerifyForgotPasswordTokenCommandRequest>(request);
+        await _sender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }

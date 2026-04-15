@@ -1,59 +1,25 @@
 ﻿namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Add;
 
-internal class AddPostCommentLikeCommandHandler : ICommandHandler<AddPostCommentLikeCommand, PostCommentLikeCommandViewModel>
+internal class AddPostCommentLikeCommandHandler : ICommandHandler<AddPostCommentLikeCommandRequest, AddPostCommentLikeCommandResponse>
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IUserWriteRepository _userWriteRepository;
-    private readonly IPostCommentWriteRepository _postCommentWriteRepository;
-    private readonly IPostCommentLikeWriteRepository _postCommentLikeWriteRepository;
+    private readonly IApplicationMapper _mapper;
+    private readonly IPostCommentLikeCommandService _commentLikeService;
 
     public AddPostCommentLikeCommandHandler(
-        IUnitOfWork unitOfWork,
-        IInstaConnectMapper instaConnectMapper,
-        IUserWriteRepository userWriteRepository,
-        IPostCommentWriteRepository postCommentRepository,
-        IPostCommentLikeWriteRepository postCommentLikeRepository)
+        IApplicationMapper mapper,
+        IPostCommentLikeCommandService commentLikeService)
     {
-        _unitOfWork = unitOfWork;
-        _instaConnectMapper = instaConnectMapper;
-        _userWriteRepository = userWriteRepository;
-        _postCommentWriteRepository = postCommentRepository;
-        _postCommentLikeWriteRepository = postCommentLikeRepository;
+        _mapper = mapper;
+        _commentLikeService = commentLikeService;
     }
 
-    public async Task<PostCommentLikeCommandViewModel> Handle(
-        AddPostCommentLikeCommand request,
-        CancellationToken cancellationToken)
+    public async Task<AddPostCommentLikeCommandResponse> Handle(AddPostCommentLikeCommandRequest request, CancellationToken cancellationToken)
     {
-        var existingPostComment = await _postCommentWriteRepository.GetByIdAsync(request.PostCommentId, cancellationToken);
+        var serviceRequest = _mapper.Map<AddPostCommentLikeCommand>(request);
+        var serviceResponse = await _commentLikeService.AddAsync(serviceRequest, cancellationToken);
 
-        if (existingPostComment == null)
-        {
-            throw new PostCommentNotFoundException();
-        }
+        var response = _mapper.Map<AddPostCommentLikeCommandResponse>(serviceResponse);
 
-        var existingUser = await _userWriteRepository.GetByIdAsync(request.CurrentUserId, cancellationToken);
-
-        if (existingUser == null)
-        {
-            throw new UserNotFoundException();
-        }
-
-        var existingPostLike = await _postCommentLikeWriteRepository.GetByUserIdAndPostCommentIdAsync(request.CurrentUserId, request.PostCommentId, cancellationToken);
-
-        if (existingPostLike != null)
-        {
-            throw new PostCommentLikeAlreadyExistsException();
-        }
-
-        var postCommentLike = _instaConnectMapper.Map<PostCommentLike>(request);
-        _postCommentLikeWriteRepository.Add(postCommentLike);
-
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-
-        var postCommentLikeCommandViewModel = _instaConnectMapper.Map<PostCommentLikeCommandViewModel>(postCommentLike);
-
-        return postCommentLikeCommandViewModel;
+        return response;
     }
 }

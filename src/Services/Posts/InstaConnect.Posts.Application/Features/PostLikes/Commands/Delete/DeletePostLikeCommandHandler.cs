@@ -1,34 +1,23 @@
 ﻿namespace InstaConnect.Posts.Application.Features.PostLikes.Commands.Delete;
 
-internal class DeletePostLikeCommandHandler : ICommandHandler<DeletePostLikeCommand>
+internal class DeletePostLikeCommandHandler : ICommandHandler<DeletePostLikeCommandRequest>
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IPostLikeWriteRepository _postLikeWriteRepository;
+    private readonly IApplicationMapper _mapper;
+    private readonly IPostLikeCommandService _likeService;
 
     public DeletePostLikeCommandHandler(
-        IUnitOfWork unitOfWork,
-        IPostLikeWriteRepository postLikeWriteRepository)
+        IApplicationMapper mapper,
+        IPostLikeCommandService likeService)
     {
-        _unitOfWork = unitOfWork;
-        _postLikeWriteRepository = postLikeWriteRepository;
+        _mapper = mapper;
+        _likeService = likeService;
     }
 
-    public async Task Handle(DeletePostLikeCommand request, CancellationToken cancellationToken)
+    public async Task Handle(
+        DeletePostLikeCommandRequest request,
+        CancellationToken cancellationToken)
     {
-        var existingPostLike = await _postLikeWriteRepository.GetByIdAsync(request.Id, cancellationToken);
-
-        if (existingPostLike == null)
-        {
-            throw new PostLikeNotFoundException();
-        }
-
-        if (request.CurrentUserId != existingPostLike.UserId)
-        {
-            throw new UserForbiddenException();
-        }
-
-        _postLikeWriteRepository.Delete(existingPostLike);
-
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        var serviceRequest = _mapper.Map<DeletePostLikeCommand>(request);
+        await _likeService.DeleteAsync(serviceRequest, cancellationToken);
     }
 }

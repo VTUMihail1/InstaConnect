@@ -1,36 +1,89 @@
-﻿using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
+﻿namespace InstaConnect.Follows.Domain.Features.Users.Models.Entities;
 
-namespace InstaConnect.Follows.Domain.Features.Users.Models.Entities;
-
-public class User : BaseEntity
+public class User : IEntityWithId<UserId>
 {
+    private User()
+    {
+        Id = new(string.Empty);
+        FirstName = string.Empty;
+        LastName = string.Empty;
+        Email = new(string.Empty);
+        Name = new(string.Empty);
+        FollowFollowers = [];
+        FollowFollowings = [];
+    }
+
     public User(
+        UserId id,
         string firstName,
         string lastName,
-        string email,
-        string userName,
-        string? profileImage = null)
+        Email email,
+        Name name,
+        Image? profileImage,
+        DateTimeOffset createdAtUtc,
+        DateTimeOffset updatedAtUtc)
     {
+        Id = id;
         FirstName = firstName;
         LastName = lastName;
         Email = email;
-        UserName = userName;
+        Name = name;
         ProfileImage = profileImage;
+        FollowFollowers = [];
+        FollowFollowings = [];
+        CreatedAtUtc = createdAtUtc;
+        UpdatedAtUtc = updatedAtUtc;
     }
 
-    public string FirstName { get; set; }
+    public UserId Id { get; }
 
-    public string LastName { get; set; }
+    public string FirstName { get; private set; }
 
-    public string Email { get; set; }
+    public string LastName { get; private set; }
 
-    public string UserName { get; set; }
+    public Email Email { get; private set; }
 
-    public string? ProfileImage { get; set; }
+    public Name Name { get; private set; }
 
-    public ICollection<Follow> Followers { get; set; } = [];
+    public Image? ProfileImage { get; private set; }
 
-    public ICollection<Follow> Followings { get; set; } = [];
+    public ICollection<Follow> FollowFollowers { get; private set; }
+
+    public ICollection<Follow> FollowFollowings { get; private set; }
+
+    public DateTimeOffset CreatedAtUtc { get; }
+
+    public DateTimeOffset UpdatedAtUtc { get; private set; }
+
+    public void Update(
+        Email email,
+        string firstName,
+        string lastName,
+        Name name,
+        Image? profileImage,
+        DateTimeOffset updatedAtUtc)
+    {
+        Email = email;
+        FirstName = firstName;
+        LastName = lastName;
+        Name = name;
+        ProfileImage = profileImage;
+        UpdatedAtUtc = updatedAtUtc;
+    }
+
+    public User AddFollowFollower(Follow followFollower)
+    {
+        FollowFollowers.Add(followFollower);
+
+        return this;
+    }
+
+    public User AddFollowFollowing(Follow followFollowing)
+    {
+        FollowFollowings.Add(followFollowing);
+
+        return this;
+    }
 }
 
 

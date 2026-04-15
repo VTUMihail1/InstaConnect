@@ -1,0 +1,16 @@
+﻿using InstaConnect.Chats.Application.Extensions;
+
+namespace InstaConnect.Chats.Application.Tests.Unit.Features.ChatMessages.Utilities;
+
+public abstract class BaseChatMessageApplicationQueryUnitTest : BaseChatMessageTest
+{
+    protected IApplicationMapper Mapper { get; }
+
+    protected IChatMessageQueryService CommentService { get; }
+
+    protected BaseChatMessageApplicationQueryUnitTest()
+    {
+        Mapper = MockFactory.CreateMapper(ChatApplicationReference.Assembly);
+        CommentService = ChatMessageMockFactory.CreateQueryService();
+    }
+}

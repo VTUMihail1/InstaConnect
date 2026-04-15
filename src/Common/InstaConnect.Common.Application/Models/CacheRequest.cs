@@ -1,6 +1,6 @@
-﻿namespace InstaConnect.Shared.Application.Models;
+﻿namespace InstaConnect.Common.Application.Models;
 
 public record CacheRequest(
     string Key,
     object? Data,
-    DateTime Expiration);
+    DateTimeOffset Expiration);

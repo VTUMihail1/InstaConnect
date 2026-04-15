@@ -7,79 +7,79 @@ namespace InstaConnect.Posts.Presentation.Features.PostLikes.Controllers.v1;
 
 [ApiVersion(PostLikeRoutes.Version1)]
 [Route(PostLikeRoutes.Resource)]
-[EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
+[EnableRateLimiting(RateLimiterPolicies.Default)]
 public class PostLikeController : ControllerBase
 {
-    private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IInstaConnectSender _instaConnectSender;
+    private readonly IApplicationMapper _mapper;
+    private readonly IApplicationSender _sender;
 
     public PostLikeController(
-        IInstaConnectMapper instaConnectMapper,
-        IInstaConnectSender instaConnectSender)
+        IApplicationMapper mapper,
+        IApplicationSender sender)
     {
-        _instaConnectMapper = instaConnectMapper;
-        _instaConnectSender = instaConnectSender;
+        _mapper = mapper;
+        _sender = sender;
     }
 
-    // GET: api/post-likes
+    // GET: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/likes
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<PostLikePaginationQueryResponse>> GetAllAsync(
-        GetAllPostLikesRequest request,
+    public async Task<ActionResult<GetAllPostLikesApiResponse>> GetAllAsync(
+        GetAllPostLikesApiRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _instaConnectMapper.Map<GetAllPostLikesQuery>(request);
-        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<PostLikePaginationQueryResponse>(queryResponse);
+        var queryRequest = _mapper.Map<GetAllPostLikesQueryRequest>(request);
+        var queryResponse = await _sender.SendAsync(queryRequest, cancellationToken);
+        var response = _mapper.Map<GetAllPostLikesApiResponse>(queryResponse);
 
         return Ok(response);
     }
 
-    // GET: api/post-likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+    // GET: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95
     [HttpGet(PostLikeRoutes.Id)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<PostLikeQueryResponse>> GetByIdAsync(
-        GetPostLikeByIdRequest request,
+    public async Task<ActionResult<GetPostLikeByIdApiResponse>> GetByIdAsync(
+        GetPostLikeByIdApiRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _instaConnectMapper.Map<GetPostLikeByIdQuery>(request);
-        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<PostLikeQueryResponse>(queryResponse);
+        var queryRequest = _mapper.Map<GetPostLikeByIdQueryRequest>(request);
+        var queryResponse = await _sender.SendAsync(queryRequest, cancellationToken);
+        var response = _mapper.Map<GetPostLikeByIdApiResponse>(queryResponse);
 
         return Ok(response);
     }
 
-    // POST: api/post-likes
+    // POST: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/likes
     [HttpPost]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<PostLikeCommandResponse>> AddAsync(
-        AddPostLikeRequest request,
+    public async Task<ActionResult<AddPostLikeApiResponse>> AddAsync(
+        AddPostLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _instaConnectMapper.Map<AddPostLikeCommand>(request);
-        var commandResponse = await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<PostLikeCommandResponse>(commandResponse);
+        var commandRequest = _mapper.Map<AddPostLikeCommandRequest>(request);
+        var commandResponse = await _sender.SendAsync(commandRequest, cancellationToken);
+        var response = _mapper.Map<AddPostLikeApiResponse>(commandResponse);
 
         return Ok(response);
     }
 
-    //DELETE: api/post-likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-    [HttpDelete(PostLikeRoutes.Id)]
+    // DELETE: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/likes/current
+    [HttpDelete(PostLikeRoutes.Current)]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteAsync(
-        DeletePostLikeRequest request,
+    public async Task<ActionResult> DeleteAsync(
+        DeletePostLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _instaConnectMapper.Map<DeletePostLikeCommand>(request);
-        await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
+        var commandRequest = _mapper.Map<DeletePostLikeCommandRequest>(request);
+        await _sender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }

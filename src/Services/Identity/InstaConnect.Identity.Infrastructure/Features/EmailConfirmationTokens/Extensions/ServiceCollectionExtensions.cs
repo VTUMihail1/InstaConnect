@@ -1,17 +1,41 @@
-﻿using InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Models.Options;
+﻿using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Options;
+using InstaConnect.Identity.Infrastructure.Extensions;
+
+using Microsoft.AspNetCore.Cors.Infrastructure;
+
+using MongoDB.Bson.Serialization;
 
 namespace InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Extensions;
 
 internal static class ServiceCollectionExtensions
 {
-    internal static IServiceCollection AddEmailConfirmationTokenServices(this IServiceCollection serviceCollection)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection
-            .AddOptions<EmailConfirmationOptions>()
-            .BindConfiguration(nameof(EmailConfirmationOptions))
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
+        internal IServiceCollection AddEmailConfirmationTokenServices()
+        {
+            serviceCollection.AddValidatedOptions<EmailConfirmationTokenOptions>(EmailConfirmationTokenOptions.SectionName);
 
-        return serviceCollection;
+            serviceCollection.AddImplementationsOf<IEmailConfirmationTokenIncluder>(IdentityInfrastructureReference.Assembly);
+
+            BsonClassMap.TryRegisterClassMap<EmailConfirmationToken>(cm =>
+            {
+                cm.MapIdMember(c => c.Id);
+
+                cm.MapMember(c => c.Id);
+                cm.MapMember(c => c.ExpiresAtUtc);
+                cm.MapMember(c => c.CreatedAtUtc);
+
+                cm.MapMemberWithoutSerialization(c => c.User);
+
+                cm.MapCreator(c => new EmailConfirmationToken(
+                    c.Id,
+                    c.ExpiresAtUtc,
+                    c.CreatedAtUtc));
+
+                cm.SetIgnoreExtraElements(true);
+            });
+
+            return serviceCollection;
+        }
     }
 }

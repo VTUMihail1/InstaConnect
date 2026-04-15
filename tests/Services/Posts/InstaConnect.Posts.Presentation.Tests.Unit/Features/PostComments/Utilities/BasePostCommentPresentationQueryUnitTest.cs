@@ -1,0 +1,16 @@
+﻿using InstaConnect.Posts.Presentation.Extensions;
+
+namespace InstaConnect.Posts.Presentation.Tests.Unit.Features.PostComments.Utilities;
+
+public abstract class BasePostCommentPresentationQueryUnitTest : BasePostCommentTest
+{
+    protected IApplicationSender Sender { get; }
+
+    protected IApplicationMapper Mapper { get; }
+
+    protected BasePostCommentPresentationQueryUnitTest()
+    {
+        Sender = MockFactory.CreateApplicationSender();
+        Mapper = MockFactory.CreateMapper(PostPresentationReference.Assembly);
+    }
+}

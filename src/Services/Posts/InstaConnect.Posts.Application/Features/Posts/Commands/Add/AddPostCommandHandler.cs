@@ -1,40 +1,23 @@
 ﻿namespace InstaConnect.Posts.Application.Features.Posts.Commands.Add;
 
-internal class AddPostCommandHandler : ICommandHandler<AddPostCommand, PostCommandViewModel>
+internal class AddPostCommandHandler : ICommandHandler<AddPostCommandRequest, AddPostCommandResponse>
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IPostWriteRepository _postWriteRepository;
-    private readonly IUserWriteRepository _userWriteRepository;
+    private readonly IApplicationMapper _mapper;
+    private readonly IPostCommandService _service;
 
-    public AddPostCommandHandler(
-        IUnitOfWork unitOfWork,
-        IInstaConnectMapper instaConnectMapper,
-        IPostWriteRepository postWriteRepository,
-        IUserWriteRepository userWriteRepository)
+    public AddPostCommandHandler(IApplicationMapper mapper, IPostCommandService service)
     {
-        _unitOfWork = unitOfWork;
-        _instaConnectMapper = instaConnectMapper;
-        _postWriteRepository = postWriteRepository;
-        _userWriteRepository = userWriteRepository;
+        _mapper = mapper;
+        _service = service;
     }
 
-    public async Task<PostCommandViewModel> Handle(AddPostCommand request, CancellationToken cancellationToken)
+    public async Task<AddPostCommandResponse> Handle(AddPostCommandRequest request, CancellationToken cancellationToken)
     {
-        var existingUser = await _userWriteRepository.GetByIdAsync(request.CurrentUserId, cancellationToken);
+        var serviceRequest = _mapper.Map<AddPostCommand>(request);
+        var serviceResponse = await _service.AddAsync(serviceRequest, cancellationToken);
 
-        if (existingUser == null)
-        {
-            throw new UserNotFoundException();
-        }
+        var response = _mapper.Map<AddPostCommandResponse>(serviceResponse);
 
-        var post = _instaConnectMapper.Map<Post>(request);
-        _postWriteRepository.Add(post);
-
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-
-        var postCommentViewModel = _instaConnectMapper.Map<PostCommandViewModel>(post);
-
-        return postCommentViewModel;
+        return response;
     }
 }

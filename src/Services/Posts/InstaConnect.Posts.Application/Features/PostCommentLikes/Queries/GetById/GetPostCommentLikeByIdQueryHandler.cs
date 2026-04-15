@@ -1,28 +1,26 @@
 ﻿namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetById;
 
-internal class GetPostCommentLikeByIdQueryHandler : IQueryHandler<GetPostCommentLikeByIdQuery, PostCommentLikeQueryViewModel>
+internal class GetPostCommentLikeByIdQueryHandler : IQueryHandler<GetPostCommentLikeByIdQueryRequest, GetPostCommentLikeByIdQueryResponse>
 {
-    private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IPostCommentLikeReadRepository _postCommentLikeRepository;
+    private readonly IApplicationMapper _mapper;
+    private readonly IPostCommentLikeQueryService _commentLikeService;
 
     public GetPostCommentLikeByIdQueryHandler(
-        IInstaConnectMapper instaConnectMapper,
-        IPostCommentLikeReadRepository postCommentLikeRepository)
+        IApplicationMapper mapper,
+        IPostCommentLikeQueryService commentLikeService)
     {
-        _instaConnectMapper = instaConnectMapper;
-        _postCommentLikeRepository = postCommentLikeRepository;
+        _mapper = mapper;
+        _commentLikeService = commentLikeService;
     }
 
-    public async Task<PostCommentLikeQueryViewModel> Handle(GetPostCommentLikeByIdQuery request, CancellationToken cancellationToken)
+    public async Task<GetPostCommentLikeByIdQueryResponse> Handle(
+        GetPostCommentLikeByIdQueryRequest request,
+        CancellationToken cancellationToken)
     {
-        var postCommentLike = await _postCommentLikeRepository.GetByIdAsync(request.Id, cancellationToken);
+        var serviceRequest = _mapper.Map<GetPostCommentLikeByIdQuery>(request);
+        var serviceResponse = await _commentLikeService.GetByIdAsync(serviceRequest, cancellationToken);
 
-        if (postCommentLike == null)
-        {
-            throw new PostCommentLikeNotFoundException();
-        }
-
-        var response = _instaConnectMapper.Map<PostCommentLikeQueryViewModel>(postCommentLike);
+        var response = _mapper.Map<GetPostCommentLikeByIdQueryResponse>(serviceResponse);
 
         return response;
     }

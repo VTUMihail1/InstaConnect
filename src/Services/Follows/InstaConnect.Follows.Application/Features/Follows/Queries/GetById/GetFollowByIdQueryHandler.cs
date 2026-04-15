@@ -1,30 +1,26 @@
 ﻿namespace InstaConnect.Follows.Application.Features.Follows.Queries.GetById;
 
-public class GetFollowByIdQueryHandler : IQueryHandler<GetFollowByIdQuery, FollowQueryViewModel>
+internal class GetFollowByIdQueryHandler : IQueryHandler<GetFollowByIdQueryRequest, GetFollowByIdQueryResponse>
 {
-    private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IFollowReadRepository _followReadRepository;
+    private readonly IApplicationMapper _mapper;
+    private readonly IFollowQueryService _service;
 
     public GetFollowByIdQueryHandler(
-        IInstaConnectMapper instaConnectMapper,
-        IFollowReadRepository followReadRepository)
+        IApplicationMapper mapper,
+        IFollowQueryService service)
     {
-        _instaConnectMapper = instaConnectMapper;
-        _followReadRepository = followReadRepository;
+        _mapper = mapper;
+        _service = service;
     }
 
-    public async Task<FollowQueryViewModel> Handle(
-        GetFollowByIdQuery request,
+    public async Task<GetFollowByIdQueryResponse> Handle(
+        GetFollowByIdQueryRequest request,
         CancellationToken cancellationToken)
     {
-        var follow = await _followReadRepository.GetByIdAsync(request.Id, cancellationToken);
+        var serviceRequest = _mapper.Map<GetFollowByIdQuery>(request);
+        var serviceResponse = await _service.GetByIdAsync(serviceRequest, cancellationToken);
 
-        if (follow == null)
-        {
-            throw new FollowNotFoundException();
-        }
-
-        var response = _instaConnectMapper.Map<FollowQueryViewModel>(follow);
+        var response = _mapper.Map<GetFollowByIdQueryResponse>(serviceResponse);
 
         return response;
     }

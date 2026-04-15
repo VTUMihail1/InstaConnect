@@ -2,62 +2,79 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Application\InstaConnect.Common.Application.csproj" />
-    <ProjectReference Include="..\..\..\Common\InstaConnect.Common\InstaConnect.Common.csproj" />
-    <ProjectReference Include="..\InstaConnect.Identity.Common\InstaConnect.Identity.Common.csproj" />
+    <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Domain\InstaConnect.Common.Domain.csproj" />
     <ProjectReference Include="..\InstaConnect.Identity.Domain\InstaConnect.Identity.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-  	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-  	  <_Parameter1>InstaConnect.Identity.Application.UnitTests</_Parameter1>
-  	</AssemblyAttribute>
-  	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-  	  <_Parameter1>InstaConnect.Identity.Application.IntegrationTests</_Parameter1>
-  	</AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>InstaConnect.Identity.Application.Tests.Unit</_Parameter1>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>InstaConnect.Identity.Application.Tests.Integration</_Parameter1>
+    </AssemblyAttribute>
   </ItemGroup>
 
-  <ItemGroup>
-    <!-- General -->
+  <ItemGroup Label="Common">
     <Using Include="FluentValidation" />
     <Using Include="Microsoft.Extensions.DependencyInjection" />
+    <Using Include="InstaConnect.Common.Domain.Utilities" />
+    <Using Include="InstaConnect.Common.Domain.Exceptions" />
+    <Using Include="InstaConnect.Common.Domain.Abstractions" />
+    <Using Include="InstaConnect.Common.Application.Abstractions" />
+    <Using Include="InstaConnect.Common.Application.Models" />
+    <Using Include="InstaConnect.Common.Application.Extensions" />
+  </ItemGroup>
 
-    <!-- Users -->
-    <Using Include="InstaConnect.Identity.Application.Features.Users.Abstractions" />
-    <Using Include="InstaConnect.Identity.Application.Features.Users.Models" />
+  <ItemGroup Label="Users">
+    <Using Include="InstaConnect.Identity.Domain.Features.Users.Utilities" />
     <Using Include="InstaConnect.Identity.Domain.Features.Users.Abstractions" />
-    <Using Include="InstaConnect.Identity.Domain.Features.Users.Exceptions" />
     <Using Include="InstaConnect.Identity.Domain.Features.Users.Models.Entities" />
+    <Using Include="InstaConnect.Identity.Domain.Features.Users.Models.ValueObjects" />
+    <Using Include="InstaConnect.Identity.Domain.Features.Users.Models.Requests" />
+    <Using Include="InstaConnect.Identity.Domain.Features.Users.Models.Responses" />
+    <Using Include="InstaConnect.Identity.Application.Features.Users.Models" />
+    <Using Include="InstaConnect.Identity.Application.Features.Users.Extensions" />
+  </ItemGroup>
 
-    <!-- User Claims -->
+  <ItemGroup Label="UserClaims">
+    <Using Include="InstaConnect.Identity.Domain.Features.UserClaims.Utilities" />
     <Using Include="InstaConnect.Identity.Domain.Features.UserClaims.Abstractions" />
     <Using Include="InstaConnect.Identity.Domain.Features.UserClaims.Models.Entities" />
+    <Using Include="InstaConnect.Identity.Domain.Features.UserClaims.Models.ValueObjects" />
+    <Using Include="InstaConnect.Identity.Domain.Features.UserClaims.Models.Requests" />
+    <Using Include="InstaConnect.Identity.Domain.Features.UserClaims.Models.Responses" />
+    <Using Include="InstaConnect.Identity.Application.Features.UserClaims.Models" />
+    <Using Include="InstaConnect.Identity.Application.Features.UserClaims.Extensions" />
+  </ItemGroup>
 
-    <!-- Email Confirmation Tokens -->
-    <Using Include="InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Abstractions" />
-    <Using Include="InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Models" />
-    <Using Include="InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Abstractions" />
-    <Using Include="InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Exceptions" />
-    <Using Include="InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entities" />
+  <ItemGroup Label="RefreshTokens">
+    <Using Include="InstaConnect.Identity.Domain.Features.RefreshTokens.Utilities" />
+    <Using Include="InstaConnect.Identity.Domain.Features.RefreshTokens.Abstractions" />
+    <Using Include="InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Entities" />
+    <Using Include="InstaConnect.Identity.Domain.Features.RefreshTokens.Models.ValueObjects" />
+    <Using Include="InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Requests" />
+    <Using Include="InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Responses" />
+    <Using Include="InstaConnect.Identity.Application.Features.RefreshTokens.Models" />
+    <Using Include="InstaConnect.Identity.Application.Features.RefreshTokens.Extensions" />
+  </ItemGroup>
 
-    <!-- Forgot Password Tokens -->
-    <Using Include="InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Abstractions" />
-    <Using Include="InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Models" />
+  <ItemGroup Label="ForgotPasswordTokens">
+    <Using Include="InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Utilities" />
     <Using Include="InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Abstractions" />
-    <Using Include="InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Exceptions" />
     <Using Include="InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entities" />
+    <Using Include="InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.ValueObjects" />
+    <Using Include="InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Requests" />
+    <Using Include="InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Extensions" />
+  </ItemGroup>
 
-    <!-- Common -->
-    <Using Include="InstaConnect.Shared.Application.Contracts.Users" />
-    <Using Include="InstaConnect.Shared.Application.Contracts.EmailConfirmationTokens" />
-    <Using Include="InstaConnect.Shared.Application.Contracts.ForgotPasswordTokens" />
-    <Using Include="InstaConnect.Shared.Application.Models" />
-    <Using Include="InstaConnect.Identity.Common.Features.Users.Utilities" />
-    <Using Include="InstaConnect.Identity.Common.Features.EmailConfirmationTokens.Utilities" />
-    <Using Include="InstaConnect.Identity.Common.Features.ForgotPasswordTokens.Utilities" />
-    <Using Include="InstaConnect.Shared.Application.Abstractions" />
-    <Using Include="InstaConnect.Shared.Common.Abstractions" />
-    <Using Include="InstaConnect.Shared.Common.Exceptions.Users" />
-    <Using Include="InstaConnect.Shared.Common.Models.Enums" />
+  <ItemGroup Label="EmailConfirmationTokens">
+    <Using Include="InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Utilities" />
+    <Using Include="InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Abstractions" />
+    <Using Include="InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entities" />
+    <Using Include="InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.ValueObjects" />
+    <Using Include="InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Requests" />
+    <Using Include="InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Extensions" />
   </ItemGroup>
 
 </Project>

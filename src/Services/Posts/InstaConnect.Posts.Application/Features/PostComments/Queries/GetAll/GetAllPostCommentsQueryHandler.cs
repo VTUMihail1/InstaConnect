@@ -1,28 +1,26 @@
-﻿using InstaConnect.Posts.Domain.Features.PostComments.Models.Filters;
+﻿namespace InstaConnect.Posts.Application.Features.PostComments.Queries.GetAll;
 
-namespace InstaConnect.Posts.Application.Features.PostComments.Queries.GetAll;
-
-internal class GetAllPostCommentsQueryHandler : IQueryHandler<GetAllPostCommentsQuery, PostCommentPaginationQueryViewModel>
+internal class GetAllPostCommentsQueryHandler : IQueryHandler<GetAllPostCommentsQueryRequest, GetAllPostCommentsQueryResponse>
 {
-    private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IPostCommentReadRepository _postCommentReadRepository;
+    private readonly IApplicationMapper _mapper;
+    private readonly IPostCommentQueryService _commentService;
 
     public GetAllPostCommentsQueryHandler(
-        IInstaConnectMapper instaConnectMapper,
-        IPostCommentReadRepository postCommentReadRepository)
+        IApplicationMapper mapper,
+        IPostCommentQueryService commentService)
     {
-        _instaConnectMapper = instaConnectMapper;
-        _postCommentReadRepository = postCommentReadRepository;
+        _mapper = mapper;
+        _commentService = commentService;
     }
 
-    public async Task<PostCommentPaginationQueryViewModel> Handle(
-        GetAllPostCommentsQuery request,
+    public async Task<GetAllPostCommentsQueryResponse> Handle(
+        GetAllPostCommentsQueryRequest request,
         CancellationToken cancellationToken)
     {
-        var filteredCollectionQuery = _instaConnectMapper.Map<PostCommentCollectionReadQuery>(request);
+        var serviceRequest = _mapper.Map<GetAllPostCommentsQuery>(request);
+        var collection = await _commentService.GetAllAsync(serviceRequest, cancellationToken);
 
-        var postComments = await _postCommentReadRepository.GetAllAsync(filteredCollectionQuery, cancellationToken);
-        var response = _instaConnectMapper.Map<PostCommentPaginationQueryViewModel>(postComments);
+        var response = _mapper.Map<GetAllPostCommentsQueryResponse>(collection);
 
         return response;
     }

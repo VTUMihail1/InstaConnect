@@ -1,0 +1,11 @@
+﻿namespace InstaConnect.Chats.Domain.Features.Users.Models.Responses;
+
+public record UserResponse(
+    UserId Id,
+    string FirstName,
+    string LastName,
+    Email Email,
+    Name Name,
+    Image? ProfileImage,
+    DateTimeOffset CreatedAtUtc,
+    DateTimeOffset UpdatedAtUtc) : IEntityResponse;
