@@ -6,6 +6,7 @@
 	  <PackageReference Include="CloudinaryDotNet" />
 	  <PackageReference Include="Dapper" />
 	  <PackageReference Include="MassTransit" />
+	  <PackageReference Include="MassTransit.MongoDb" />
 	  <PackageReference Include="MassTransit.RabbitMQ" />
 	  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
 	  <PackageReference Include="Microsoft.AspNetCore.Identity" />
@@ -22,6 +23,7 @@
 	  <PackageReference Include="OpenTelemetry.Instrumentation.SqlClient" />
 	  <PackageReference Include="OpenTelemetry.Instrumentation.StackExchangeRedis" />
 	  <PackageReference Include="Serilog.Sinks.OpenTelemetry" />
+	  <PackageReference Include="System.Security.Cryptography.Xml" />
   </ItemGroup>
 	
   <ItemGroup>

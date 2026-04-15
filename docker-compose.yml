@@ -67,7 +67,8 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Docker
       AccessTokenConfiguration__SecurityKey: "${ACCESS_TOKEN_SECURITY_KEY}"
-      MongoConfiguration__ConnectionString: "Server=mongodb;Database=instaconnect.identity;User Id=${MONGO_USERNAME};Password=${MONGO_PASSWORD};TrustServerCertificate=True;"
+      MongoConfiguration__Name: "instaconnect_identity"
+      MongoConfiguration__ConnectionString: "mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongodb:27017/instaconnect_identity?authSource=admin&directConnection=true"
       RabbitMqConfiguration__ConnectionString: "amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@rabbitmq:5672/"
       RedisConfiguration__ConnectionString: "redis:6379,password=${REDIS_PASSWORD},abortConnect=False"
       CloudinaryConfiguration__CloudName: ${CLOUDINARY_CLOUD_NAME}
@@ -76,10 +77,14 @@ services:
     ports:
       - "8083:80"
     depends_on:
-      - otel-lgtm
-      - mongodb
-      - rabbitmq
-      - redis
+      otel-lgtm:
+        condition: service_started
+      mongodb:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+      redis:
+        condition: service_started
     networks:
       - instaconnect
 
@@ -92,15 +97,19 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Docker
       AccessTokenConfiguration__SecurityKey: "${ACCESS_TOKEN_SECURITY_KEY}"
-      MongoConfiguration__ConnectionString: "Server=mongodb;Database=instaconnect.posts;User Id=${MONGO_USERNAME};Password=${MONGO_PASSWORD};TrustServerCertificate=True;"
+      MongoConfiguration__Name: "instaconnect_posts"
+      MongoConfiguration__ConnectionString: "mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongodb:27017/instaconnect_posts?authSource=admin&directConnection=true"
       RabbitMqConfiguration__ConnectionString: "amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@rabbitmq:5672/"
       RedisConfiguration__ConnectionString: "redis:6379,password=${REDIS_PASSWORD},abortConnect=False"
     ports:
       - "8082:80"
     depends_on:
-      - otel-lgtm
-      - mongodb
-      - rabbitmq
+      otel-lgtm:
+        condition: service_started
+      mongodb:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
     networks:
       - instaconnect
 
@@ -113,15 +122,19 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Docker
       AccessTokenConfiguration__SecurityKey: "${ACCESS_TOKEN_SECURITY_KEY}"
-      MongoConfiguration__ConnectionString: "Server=mongodb;Database=instaconnect.chats;User Id=${MONGO_USERNAME};Password=${MONGO_PASSWORD};TrustServerCertificate=True;"
+      MongoConfiguration__Name: "instaconnect_chats"
+      MongoConfiguration__ConnectionString: "mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongodb:27017/instaconnect_chats?authSource=admin&directConnection=true"
       RabbitMqConfiguration__ConnectionString: "amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@rabbitmq:5672/"
       RedisConfiguration__ConnectionString: "redis:6379,password=${REDIS_PASSWORD},abortConnect=False"
     ports:
       - "8081:80"
     depends_on:
-      - otel-lgtm
-      - mongodb
-      - rabbitmq
+      otel-lgtm:
+        condition: service_started
+      mongodb:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
     networks:
       - instaconnect
 
@@ -134,19 +147,23 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Docker
       AccessTokenConfiguration__SecurityKey: "${ACCESS_TOKEN_SECURITY_KEY}"
-      MongoConfiguration__ConnectionString: "Server=mongodb;Database=instaconnect.follows;User Id=${MONGO_USERNAME};Password=${MONGO_PASSWORD};TrustServerCertificate=True;"
+      MongoConfiguration__Name: "instaconnect_follows"
+      MongoConfiguration__ConnectionString: "mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongodb:27017/instaconnect_follows?authSource=admin&directConnection=true"
       RabbitMqConfiguration__ConnectionString: "amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@rabbitmq:5672/"
       RedisConfiguration__ConnectionString: "redis:6379,password=${REDIS_PASSWORD},abortConnect=False"
     ports:
       - "8080:80"
     depends_on:
-      - otel-lgtm
-      - mongodb
-      - rabbitmq
+      otel-lgtm:
+        condition: service_started
+      mongodb:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
     networks:
       - instaconnect
 
-  nginx:
+  gateway-svc:
     image: nginx:latest
     container_name: gateway-nginx
     ports:
@@ -154,9 +171,13 @@ services:
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
-      - identity-svc
-      - posts-svc
-      - chats-svc
-      - follows-svc
+      identity-svc:
+        condition: service_started
+      posts-svc:
+        condition: service_started
+      chats-svc:
+        condition: service_started
+      follows-svc:
+        condition: service_started
     networks:
       - instaconnect

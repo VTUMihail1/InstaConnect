@@ -109,8 +109,11 @@ public static partial class ServiceCollectionExtensions
             return serviceCollection;
         }
 
-        public IServiceCollection AddRabbitMQ(IConfiguration configuration, Assembly currentAssembly, Action<IBusRegistrationConfigurator>? configure = null)
+        public IServiceCollection AddRabbitMQ(IConfiguration configuration, Assembly currentAssembly)
         {
+            const int QueryDelay = 1;
+            const int DupkicateDetectionWindow = 30;
+
             serviceCollection.AddValidatedOptions<RabbitMqOptions>(RabbitMqOptions.SectionName);
             var options = configuration.GetOptions<RabbitMqOptions>(RabbitMqOptions.SectionName);
 
@@ -126,7 +129,16 @@ public static partial class ServiceCollectionExtensions
                     configurator.ConfigureEndpoints(context);
                 });
 
-                configure?.Invoke(busConfigurator);
+                busConfigurator.AddMongoDbOutbox(o =>
+                {
+                    o.ClientFactory(provider => provider.GetRequiredService<IMongoClient>());
+                    o.DatabaseFactory(provider => provider.GetRequiredService<IMongoDatabase>());
+
+                    o.QueryDelay = TimeSpan.FromSeconds(QueryDelay);
+                    o.DuplicateDetectionWindow = TimeSpan.FromSeconds(DupkicateDetectionWindow);
+
+                    o.UseBusOutbox();
+                });
             });
 
             serviceCollection.AddScoped<IEventPublisher, EventPublisher>();
