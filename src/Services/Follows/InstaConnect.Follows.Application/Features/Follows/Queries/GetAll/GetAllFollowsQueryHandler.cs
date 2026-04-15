@@ -1,28 +1,26 @@
-﻿using InstaConnect.Follows.Domain.Features.Follows.Models.Filters;
+﻿namespace InstaConnect.Follows.Application.Features.Follows.Queries.GetAll;
 
-namespace InstaConnect.Follows.Application.Features.Follows.Queries.GetAll;
-
-internal class GetAllFollowsQueryHandler : IQueryHandler<GetAllFollowsQuery, FollowPaginationQueryViewModel>
+internal class GetAllFollowsQueryHandler : IQueryHandler<GetAllFollowsQueryRequest, GetAllFollowsQueryResponse>
 {
-    private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IFollowReadRepository _followReadRepository;
+    private readonly IApplicationMapper _mapper;
+    private readonly IFollowQueryService _service;
 
     public GetAllFollowsQueryHandler(
-        IInstaConnectMapper instaConnectMapper,
-        IFollowReadRepository followReadRepository)
+        IApplicationMapper mapper,
+        IFollowQueryService service)
     {
-        _instaConnectMapper = instaConnectMapper;
-        _followReadRepository = followReadRepository;
+        _mapper = mapper;
+        _service = service;
     }
 
-    public async Task<FollowPaginationQueryViewModel> Handle(
-        GetAllFollowsQuery request,
+    public async Task<GetAllFollowsQueryResponse> Handle(
+        GetAllFollowsQueryRequest request,
         CancellationToken cancellationToken)
     {
-        var filteredQuery = _instaConnectMapper.Map<FollowCollectionReadQuery>(request);
+        var serviceRequest = _mapper.Map<GetAllFollowsQuery>(request);
+        var serviceResponse = await _service.GetAllAsync(serviceRequest, cancellationToken);
 
-        var follows = await _followReadRepository.GetAllAsync(filteredQuery, cancellationToken);
-        var response = _instaConnectMapper.Map<FollowPaginationQueryViewModel>(follows);
+        var response = _mapper.Map<GetAllFollowsQueryResponse>(serviceResponse);
 
         return response;
     }

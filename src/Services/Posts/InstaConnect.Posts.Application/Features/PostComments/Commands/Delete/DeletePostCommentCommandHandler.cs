@@ -1,36 +1,23 @@
 ﻿namespace InstaConnect.Posts.Application.Features.PostComments.Commands.Delete;
 
-internal class DeletePostCommentCommandHandler : ICommandHandler<DeletePostCommentCommand>
+internal class DeletePostCommentCommandHandler : ICommandHandler<DeletePostCommentCommandRequest>
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IPostCommentWriteRepository _postCommentWriteRepository;
+    private readonly IApplicationMapper _mapper;
+    private readonly IPostCommentCommandService _commentService;
 
     public DeletePostCommentCommandHandler(
-        IUnitOfWork unitOfWork,
-        IPostCommentWriteRepository postCommentWriteRepository)
+        IApplicationMapper mapper,
+        IPostCommentCommandService commentService)
     {
-        _unitOfWork = unitOfWork;
-        _postCommentWriteRepository = postCommentWriteRepository;
+        _mapper = mapper;
+        _commentService = commentService;
     }
 
     public async Task Handle(
-        DeletePostCommentCommand request,
+        DeletePostCommentCommandRequest request,
         CancellationToken cancellationToken)
     {
-        var existingPostComment = await _postCommentWriteRepository.GetByIdAsync(request.Id, cancellationToken);
-
-        if (existingPostComment == null)
-        {
-            throw new PostCommentNotFoundException();
-        }
-
-        if (request.CurrentUserId != existingPostComment.UserId)
-        {
-            throw new UserForbiddenException();
-        }
-
-        _postCommentWriteRepository.Delete(existingPostComment);
-
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        var serviceRequest = _mapper.Map<DeletePostCommentCommand>(request);
+        await _commentService.DeleteAsync(serviceRequest, cancellationToken);
     }
 }

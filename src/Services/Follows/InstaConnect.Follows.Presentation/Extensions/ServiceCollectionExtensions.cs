@@ -1,28 +1,31 @@
-﻿using InstaConnect.Follows.Presentation.Features.Follows.Extensions;
+﻿using InstaConnect.Common.Domain.Extensions;
+using InstaConnect.Common.Presentation.Extensions;
+using InstaConnect.Follows.Presentation.Features.Follows.Extensions;
 using InstaConnect.Follows.Presentation.Features.Users.Extensions;
-using InstaConnect.Shared.Common.Extensions;
-using InstaConnect.Shared.Presentation.Extensions;
 
 namespace InstaConnect.Follows.Presentation.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddPresentation(this IServiceCollection serviceCollection, IConfiguration configuration)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection
-            .AddFollowServices()
-            .AddUserServices();
+        public IServiceCollection AddPresentation(IConfiguration configuration)
+        {
+            serviceCollection
+                .AddUserServices()
+                .AddFollowServices();
 
-        serviceCollection
-            .AddServicesWithMatchingInterfaces(PresentationReference.Assembly)
-            .AddApiControllers()
-            .AddMapper(PresentationReference.Assembly)
-            .AddAuthorizationPolicies()
-            .AddCorsPolicies(configuration)
-            .AddSwagger()
-            .AddRateLimiterPolicies()
-            .AddExceptionHandler();
+            serviceCollection
+                .AddServicesWithMatchingInterfaces(FollowPresentationReference.Assembly)
+                .AddApiControllers()
+                .AddMapper(FollowPresentationReference.Assembly, CommonPresentationReference.Assembly)
+                .AddAuthorizationPolicies()
+                .AddCorsPolicies(configuration)
+                .AddSwagger()
+                .AddRateLimiterPolicies()
+                .AddExceptionHandler();
 
-        return serviceCollection;
+            return serviceCollection;
+        }
     }
 }

@@ -1,6 +1,7 @@
-﻿using InstaConnect.Shared.Application.Models;
+﻿using InstaConnect.Common.Application.Models;
+using InstaConnect.Common.Domain.Abstractions;
 
-namespace InstaConnect.Shared.Application.Helpers;
+namespace InstaConnect.Common.Application.Helpers;
 
 public class CacheRequestFactory : ICacheRequestFactory
 {
@@ -13,7 +14,7 @@ public class CacheRequestFactory : ICacheRequestFactory
 
     public CacheRequest Get(string key, int expirationSeconds, object? data)
     {
-        var absoluteExpiration = _dateTimeProvider.GetCurrentUtc(expirationSeconds);
+        var absoluteExpiration = _dateTimeProvider.GetOffsetUtcNow(expirationSeconds);
         var cacheRequest = new CacheRequest(key, data, absoluteExpiration);
 
         return cacheRequest;

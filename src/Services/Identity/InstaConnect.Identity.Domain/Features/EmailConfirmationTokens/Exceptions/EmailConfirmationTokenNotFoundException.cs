@@ -1,12 +1,11 @@
-﻿using InstaConnect.Shared.Common.Exceptions.Base;
+﻿using InstaConnect.Common.Domain.Exceptions;
 
 namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Exceptions;
 
 public class EmailConfirmationTokenNotFoundException : NotFoundException
 {
-    private const string ErrorMessage = "Email confirmation token does not exist";
-
-    public EmailConfirmationTokenNotFoundException() : base(ErrorMessage)
+    public EmailConfirmationTokenNotFoundException(EmailConfirmationTokenId id)
+        : base(EmailConfirmationTokenExceptionErrorMessages.GetNotFoundMessage(id))
     {
     }
 }

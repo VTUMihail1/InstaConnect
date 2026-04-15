@@ -1,28 +1,39 @@
-﻿using InstaConnect.Follows.Domain.Features.Users.Models.Entities;
+﻿namespace InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
 
-namespace InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
-
-public class Follow : BaseEntity
+public class Follow : IEntityWithId<FollowId>
 {
-    public Follow(string followerId, string followingId)
+    private Follow()
     {
-        FollowerId = followerId;
-        FollowingId = followingId;
+        Id = new(new(string.Empty), new(string.Empty));
     }
 
-    public Follow(User follower, User following)
+    public Follow(
+        FollowId followId,
+        DateTimeOffset createdAtUtc)
+    {
+        Id = followId;
+        CreatedAtUtc = createdAtUtc;
+    }
+
+    public FollowId Id { get; }
+
+    public User? Follower { get; private set; }
+
+    public User? Following { get; private set; }
+
+    public DateTimeOffset CreatedAtUtc { get; }
+
+    public Follow AddFollower(User? follower)
     {
         Follower = follower;
-        FollowerId = follower.Id;
-        Following = following;
-        FollowingId = following.Id;
+
+        return this;
     }
 
-    public string FollowingId { get; }
+    public Follow AddFollowing(User? following)
+    {
+        Following = following;
 
-    public User? Following { get; }
-
-    public string FollowerId { get; }
-
-    public User? Follower { get; }
+        return this;
+    }
 }

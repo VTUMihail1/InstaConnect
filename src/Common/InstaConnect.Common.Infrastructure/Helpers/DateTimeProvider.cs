@@ -1,17 +1,26 @@
-﻿namespace InstaConnect.Shared.Infrastructure.Helpers;
+﻿using InstaConnect.Common.Domain.Abstractions;
+
+namespace InstaConnect.Common.Infrastructure.Helpers;
+
 public class DateTimeProvider : IDateTimeProvider
 {
-    public DateTime GetCurrentUtc()
+    public DateTimeOffset GetOffsetUtcNow()
     {
-        var currentDateTime = DateTime.Now;
-
-        return currentDateTime;
+        return DateTimeOffset.UtcNow;
     }
 
-    public DateTime GetCurrentUtc(int seconds)
+    public DateTimeOffset GetOffsetUtcNow(int seconds)
     {
-        var currentDateTimeWithSecondsAhead = DateTime.UtcNow.AddSeconds(seconds);
+        return DateTimeOffset.UtcNow.AddSeconds(seconds);
+    }
 
-        return currentDateTimeWithSecondsAhead;
+    public DateTime GetUtcNow()
+    {
+        return DateTime.UtcNow;
+    }
+
+    public DateTime GetUtcNow(int seconds)
+    {
+        return DateTime.UtcNow.AddSeconds(seconds);
     }
 }

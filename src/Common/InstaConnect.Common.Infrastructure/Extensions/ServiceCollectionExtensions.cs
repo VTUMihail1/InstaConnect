@@ -2,259 +2,202 @@
 
 using CloudinaryDotNet;
 
-using InstaConnect.Shared.Application.Helpers;
-using InstaConnect.Shared.Infrastructure.Abstractions;
-using InstaConnect.Shared.Infrastructure.Extensions;
-using InstaConnect.Shared.Infrastructure.Helpers;
-using InstaConnect.Shared.Infrastructure.Interceptors;
-using InstaConnect.Shared.Infrastructure.Models.Options;
+using InstaConnect.Common.Application.Helpers;
+using InstaConnect.Common.Domain.Abstractions;
+using InstaConnect.Common.Domain.Extensions;
+using InstaConnect.Common.Events.Abstractions;
+using InstaConnect.Common.Infrastructure.Abstractions;
+using InstaConnect.Common.Infrastructure.Extensions;
+using InstaConnect.Common.Infrastructure.Helpers;
+using InstaConnect.Common.Infrastructure.Helpers.Conventions;
+using InstaConnect.Common.Infrastructure.Helpers.SortOrders;
+using InstaConnect.Common.Infrastructure.Models.Options;
+
+using MassTransit;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.Extensions.Caching.StackExchangeRedis;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-using WebMotions.Fake.Authentication.JwtBearer;
+using MongoDB.Bson.Serialization.Conventions;
+using MongoDB.Driver;
 
-namespace InstaConnect.Shared.Infrastructure.Extensions;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
+
+namespace InstaConnect.Common.Infrastructure.Extensions;
+
 public static partial class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddUnitOfWork<TContext>(this IServiceCollection serviceCollection)
-    where TContext : DbContext
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>(sp =>
-        new UnitOfWork(sp.GetRequiredService<TContext>()));
-
-        return serviceCollection;
-    }
-
-    public static IServiceCollection AddDatabaseContext<TContext>(
-        this IServiceCollection serviceCollection,
-        IConfiguration configuration,
-        Action<DbContextOptionsBuilder>? optionsAction = null)
-    where TContext : DbContext
-    {
-        serviceCollection.AddScoped<AuditableEntityInterceptor>();
-
-        serviceCollection
-            .AddOptions<DatabaseOptions>()
-            .BindConfiguration(nameof(DatabaseOptions))
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
-
-        var databaseOptions = configuration
-                    .GetSection(nameof(DatabaseOptions))
-                    .Get<DatabaseOptions>()!;
-
-
-
-        serviceCollection.AddDbContext<TContext>((sp, options) =>
+        public IServiceCollection AddUnitOfWork()
         {
-            var auditableEntityInterceptor = sp.GetRequiredService<AuditableEntityInterceptor>();
+            serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
+            return serviceCollection;
+        }
 
-            options.AddInterceptors(auditableEntityInterceptor);
-
-            options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-
-            options.UseSqlServer(
-                    databaseOptions.ConnectionString,
-                    sqlServerOptions => sqlServerOptions.EnableRetryOnFailure());
-
-            optionsAction?.Invoke(options);
-        });
-
-        serviceCollection
-            .AddHealthChecks()
-            .AddDbContextCheck<TContext>();
-
-        return serviceCollection;
-    }
-
-    public static IServiceCollection AddRedisCaching(
-        this IServiceCollection serviceCollection,
-        IConfiguration configuration
-        )
-    {
-        serviceCollection
-            .AddOptions<CacheOptions>()
-            .BindConfiguration(nameof(CacheOptions))
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
-
-        var cacheOptions = configuration
-            .GetSection(nameof(CacheOptions))
-            .Get<CacheOptions>()!;
-
-        serviceCollection
-            .AddScoped<IJsonConverter, JsonConverter>()
-            .AddScoped<ICacheHandler, CacheHandler>()
-            .AddScoped<ICacheRequestFactory, CacheRequestFactory>();
-
-        serviceCollection.AddStackExchangeRedisCache(redisOptions =>
-            redisOptions.Configuration = cacheOptions.ConnectionString);
-
-        serviceCollection
-            .AddHealthChecks()
-            .AddRedis(cacheOptions.ConnectionString);
-
-        return serviceCollection;
-    }
-
-    public static IServiceCollection AddRabbitMQ(
-        this IServiceCollection serviceCollection,
-        IConfiguration configuration,
-        Assembly currentAssembly,
-        Action<IBusRegistrationConfigurator>? configure = null
-        )
-    {
-        serviceCollection
-            .AddOptions<MessageBrokerOptions>()
-            .BindConfiguration(nameof(MessageBrokerOptions))
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
-
-        var messageBrokerOptions = configuration
-            .GetSection(nameof(MessageBrokerOptions))
-            .Get<MessageBrokerOptions>()!;
-
-        serviceCollection.AddMassTransit(busConfigurator =>
+        public IServiceCollection AddOpenTelemetry(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
         {
-            busConfigurator.SetKebabCaseEndpointNameFormatter();
+            serviceCollection.AddValidatedOptions<OpenTelemetryOptions>(OpenTelemetryOptions.SectionName);
+            var options = configuration.GetOptions<OpenTelemetryOptions>(OpenTelemetryOptions.SectionName);
 
-            busConfigurator.AddConsumers(currentAssembly);
+            serviceCollection.AddOpenTelemetry()
+                  .ConfigureResource(r => r.AddService(webHostEnvironment.ApplicationName))
+                  .WithTracing(t => t
+                      .AddAspNetCoreInstrumentation()
+                      .AddHttpClientInstrumentation()
+                      .AddRedisInstrumentation()
+                      .AddMassTransitInstrumentation()
+                      .AddOtlpExporter(o => o.Endpoint = new Uri(options.Endpoint)))
+                  .WithMetrics(m => m
+                      .AddAspNetCoreInstrumentation()
+                      .AddHttpClientInstrumentation()
+                      .AddMassTransitInstrumentation()
+                      .AddOtlpExporter(o => o.Endpoint = new Uri(options.Endpoint)));
 
-            busConfigurator.UsingRabbitMq((context, configurator) =>
+            return serviceCollection;
+        }
+
+        public IServiceCollection AddMongoDatabase(IConfiguration configuration)
+        {
+            const string ConventionName = "ApplicationConventionPack";
+
+            serviceCollection.AddValidatedOptions<MongoOptions>(MongoOptions.SectionName);
+            var options = configuration.GetOptions<MongoOptions>(MongoOptions.SectionName);
+
+            serviceCollection.AddScoped<IMongoClient>(_ =>
+                new MongoClient(options.ConnectionString));
+
+            serviceCollection.AddScoped(sp =>
+                sp.GetRequiredService<IMongoClient>()
+                  .GetDatabase(options.Name));
+
+            serviceCollection.AddScoped<IPaginator, Paginator>()
+                             .AddScoped<IMongoDbContext, MongoDbContext>();
+
+            var conventionPack = new ConventionPack
             {
-                configurator.Host(new Uri(messageBrokerOptions.Host), h =>
+                new SnakeCaseElementNameConvention(),
+                new IgnoreExtraElementsConvention(true)
+            };
+
+            ConventionRegistry.Register(ConventionName, conventionPack, t => true);
+
+            return serviceCollection;
+        }
+
+        public IServiceCollection AddRedisCaching(IConfiguration configuration)
+        {
+            serviceCollection.AddValidatedOptions<RedisOptions>(RedisOptions.SectionName);
+            var options = configuration.GetOptions<RedisOptions>(RedisOptions.SectionName);
+
+            serviceCollection.AddScoped<IJsonConverter, JsonConverter>()
+                             .AddScoped<ICacheHandler, CacheHandler>()
+                             .AddScoped<ICacheRequestFactory, CacheRequestFactory>();
+
+            serviceCollection.AddStackExchangeRedisCache(redisOptions =>
+                redisOptions.Configuration = options.ConnectionString);
+
+            serviceCollection.AddHealthChecks()
+                             .AddRedis(options.ConnectionString);
+
+            return serviceCollection;
+        }
+
+        public IServiceCollection AddRabbitMQ(IConfiguration configuration, Assembly currentAssembly, Action<IBusRegistrationConfigurator>? configure = null)
+        {
+            serviceCollection.AddValidatedOptions<RabbitMqOptions>(RabbitMqOptions.SectionName);
+            var options = configuration.GetOptions<RabbitMqOptions>(RabbitMqOptions.SectionName);
+
+            serviceCollection.AddMassTransit(busConfigurator =>
+            {
+                busConfigurator.SetKebabCaseEndpointNameFormatter();
+                busConfigurator.AddConsumers(currentAssembly);
+
+                busConfigurator.UsingRabbitMq((context, configurator) =>
                 {
-                    h.Username(messageBrokerOptions.Username);
-                    h.Password(messageBrokerOptions.Password);
+                    configurator.Host(new Uri(options.ConnectionString));
+
+                    configurator.ConfigureEndpoints(context);
                 });
 
-                configurator.ConfigureEndpoints(context);
+                configure?.Invoke(busConfigurator);
             });
 
-            configure?.Invoke(busConfigurator);
-        });
+            serviceCollection.AddScoped<IEventPublisher, EventPublisher>();
 
-        serviceCollection
-            .AddScoped<IEventPublisher, EventPublisher>();
+            return serviceCollection;
+        }
 
-        return serviceCollection;
-    }
+        public IServiceCollection AddJwtBearer(IConfiguration configuration)
+        {
+            serviceCollection.AddValidatedOptions<AccessTokenOptions>(AccessTokenOptions.SectionName);
+            var options = configuration.GetOptions<AccessTokenOptions>(AccessTokenOptions.SectionName);
 
-    public static IServiceCollection AddJwtBearer(this IServiceCollection serviceCollection, IConfiguration configuration)
-    {
-        serviceCollection.AddScoped<IEncoder, Encoder>();
+            serviceCollection.AddScoped<IEncoder, Encoder>();
 
-        serviceCollection
-        .AddOptions<AccessTokenOptions>()
-        .BindConfiguration(nameof(AccessTokenOptions))
-        .ValidateDataAnnotations()
-        .ValidateOnStart();
-
-        var accessTokenOptions = configuration
-            .GetSection(nameof(AccessTokenOptions))
-            .Get<AccessTokenOptions>()!;
-
-        serviceCollection
-            .AddAuthentication(opt =>
+            serviceCollection.AddAuthentication(opt =>
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
             .AddJwtBearer(opt =>
             {
-                var encoder = serviceCollection
-                                 .BuildServiceProvider()
-                                 .GetRequiredService<IEncoder>();
+                var encoder = serviceCollection.BuildServiceProvider()
+                                              .GetRequiredService<IEncoder>();
 
                 opt.RequireHttpsMetadata = false;
                 opt.SaveToken = true;
                 opt.TokenValidationParameters = new TokenValidationParameters
                 {
-                    IssuerSigningKey = new SymmetricSecurityKey(encoder.GetBytesUTF8(accessTokenOptions.SecurityKey)),
+                    IssuerSigningKey = new SymmetricSecurityKey(encoder.GetBytesUTF8(options.SecurityKey)),
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
             });
 
-        return serviceCollection;
-    }
-
-    public static IServiceCollection AddCloudinary(this IServiceCollection serviceCollection, IConfiguration configuration)
-    {
-        serviceCollection
-            .AddOptions<ImageUploadOptions>()
-            .BindConfiguration(nameof(ImageUploadOptions))
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
-
-        var imageUploadOptions = configuration
-            .GetSection(nameof(ImageUploadOptions))
-            .Get<ImageUploadOptions>()!;
-
-        serviceCollection.AddScoped(_ => new Cloudinary(new Account(
-            imageUploadOptions.CloudName,
-            imageUploadOptions.ApiKey,
-            imageUploadOptions.ApiSecret)));
-
-        serviceCollection
-            .AddScoped<IImageUploadFactory, ImageUploadFactory>()
-            .AddScoped<IImageHandler, ImageHandler>();
-
-        return serviceCollection;
-    }
-
-    public static IServiceCollection AddDateTimeProvider(this IServiceCollection serviceCollection)
-    {
-        serviceCollection
-            .AddScoped<IDateTimeProvider, DateTimeProvider>();
-
-        return serviceCollection;
-    }
-
-    public static IServiceCollection AddTestDbContext<TContext>(this IServiceCollection serviceCollection, Action<DbContextOptionsBuilder>? optionsAction = null)
-      where TContext : DbContext
-    {
-        var efCoreDescriptor = serviceCollection.SingleOrDefault(s => s.ServiceType == typeof(DbContextOptions<TContext>));
-
-        if (efCoreDescriptor != null)
-        {
-            serviceCollection.Remove(efCoreDescriptor);
+            return serviceCollection;
         }
 
-        serviceCollection.AddDbContext<TContext>(options => optionsAction?.Invoke(options));
-
-        return serviceCollection;
-    }
-
-    public static IServiceCollection AddTestJwtAuth(this IServiceCollection serviceCollection)
-    {
-        serviceCollection
-                .AddAuthentication(opt =>
-                {
-                    opt.DefaultAuthenticateScheme = FakeJwtBearerDefaults.AuthenticationScheme;
-                    opt.DefaultChallengeScheme = FakeJwtBearerDefaults.AuthenticationScheme;
-                })
-                .AddFakeJwtBearer(opt => opt.BearerValueType = FakeJwtBearerBearerValueType.Jwt);
-
-        return serviceCollection;
-    }
-
-    public static IServiceCollection AddTestRedisCache(this IServiceCollection serviceCollection, Action<RedisCacheOptions>? optionsAction = null!)
-    {
-        var descriptor = serviceCollection.SingleOrDefault(s => s.ServiceType == typeof(IDistributedCache));
-
-        if (descriptor != null)
+        public IServiceCollection AddCloudinary(IConfiguration configuration)
         {
-            serviceCollection.Remove(descriptor);
+            serviceCollection.AddValidatedOptions<CloudinaryOptions>(CloudinaryOptions.SectionName);
+            var options = configuration.GetOptions<CloudinaryOptions>(CloudinaryOptions.SectionName);
+
+            serviceCollection.AddScoped(_ => new Cloudinary(new Account(
+                options.CloudName,
+                options.ApiKey,
+                options.ApiSecret)));
+
+            serviceCollection.AddScoped<IImageUploadFactory, ImageUploadFactory>()
+                             .AddScoped<IImageHandler, ImageHandler>();
+
+            return serviceCollection;
         }
 
-        serviceCollection.AddStackExchangeRedisCache(options => optionsAction?.Invoke(options));
+        public IServiceCollection AddDateTimeProvider()
+        {
+            serviceCollection.AddScoped<IDateTimeProvider, DateTimeProvider>();
+            return serviceCollection;
+        }
 
-        return serviceCollection;
+        public IServiceCollection AddGuidProvider()
+        {
+            serviceCollection.AddScoped<IGuidProvider, GuidProvider>();
+            return serviceCollection;
+        }
+
+        public IServiceCollection AddSortOrders()
+        {
+            serviceCollection.AddScoped<ISortOrdererFactory, SortOrdererFactory>()
+                             .AddImplementationsOf<ISortOrderer>(CommonInfrastructureReference.Assembly);
+
+            return serviceCollection;
+        }
     }
 }

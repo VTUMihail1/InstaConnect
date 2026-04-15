@@ -2,8 +2,11 @@
 
 internal static class ServiceCollectionExtensions
 {
-    internal static IServiceCollection AddPostServices(this IServiceCollection serviceCollection)
+    extension(IServiceCollection serviceCollection)
     {
-        return serviceCollection;
+        internal IServiceCollection AddPostServices()
+        {
+            return serviceCollection;
+        }
     }
 }

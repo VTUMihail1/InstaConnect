@@ -1,16 +1,16 @@
-﻿using InstaConnect.Shared.Common.Exceptions.Base;
+﻿using InstaConnect.Common.Domain.Exceptions;
 
 namespace InstaConnect.Posts.Domain.Features.PostLikes.Exceptions;
 
 public class PostLikeAlreadyExistsException : BadRequestException
 {
-    private const string ErrorMessage = "Post like already exists";
-
-    public PostLikeAlreadyExistsException() : base(ErrorMessage)
+    public PostLikeAlreadyExistsException(PostLikeId id)
+        : base(PostLikeExceptionErrorMessages.GetAlreadyExistsMessage(id))
     {
     }
 
-    public PostLikeAlreadyExistsException(Exception exception) : base(ErrorMessage, exception)
+    public PostLikeAlreadyExistsException(PostLikeId id, Exception exception)
+        : base(PostLikeExceptionErrorMessages.GetAlreadyExistsMessage(id), exception)
     {
     }
 }

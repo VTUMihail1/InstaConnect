@@ -1,6 +1,8 @@
 using System.Security.Claims;
 
-namespace InstaConnect.Shared.Presentation.Binders.FromClaim;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+
+namespace InstaConnect.Common.Presentation.Binders.FromClaim;
 
 public class FromClaimValueProvider : BindingSourceValueProvider
 {

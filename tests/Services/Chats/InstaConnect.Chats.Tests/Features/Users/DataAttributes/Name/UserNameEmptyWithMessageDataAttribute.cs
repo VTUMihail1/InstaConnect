@@ -1,0 +1,4 @@
+﻿namespace InstaConnect.Chats.Tests.Features.Users.DataAttributes.Name;
+
+[AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
+public sealed class UserNameEmptyWithMessageDataAttribute : EmptyStringWithMessageDataAttribute;

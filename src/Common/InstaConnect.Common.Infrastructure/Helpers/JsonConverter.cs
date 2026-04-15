@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace InstaConnect.Shared.Infrastructure.Helpers;
+namespace InstaConnect.Common.Infrastructure.Helpers;
 
 internal class JsonConverter : IJsonConverter
 {

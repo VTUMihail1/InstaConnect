@@ -1,4 +1,6 @@
-namespace InstaConnect.Shared.Presentation.Binders.FromClaim;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+
+namespace InstaConnect.Common.Presentation.Binders.FromClaim;
 
 public class FromClaimValueProviderFactory : IValueProviderFactory
 {

@@ -1,0 +1,16 @@
+﻿using InstaConnect.Follows.Presentation.Extensions;
+
+namespace InstaConnect.Follows.Presentation.Tests.Unit.Features.Follows.Utilities;
+
+public abstract class BaseFollowPresentationCommandUnitTest : BaseFollowTest
+{
+    protected IApplicationSender Sender { get; }
+
+    protected IApplicationMapper Mapper { get; }
+
+    protected BaseFollowPresentationCommandUnitTest()
+    {
+        Sender = MockFactory.CreateApplicationSender();
+        Mapper = MockFactory.CreateMapper(FollowPresentationReference.Assembly);
+    }
+}

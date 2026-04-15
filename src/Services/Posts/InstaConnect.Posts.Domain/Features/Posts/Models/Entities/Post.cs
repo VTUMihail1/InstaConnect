@@ -1,41 +1,83 @@
-﻿using InstaConnect.Posts.Domain.Features.PostComments.Models.Entities;
-using InstaConnect.Posts.Domain.Features.PostLikes.Models.Entities;
-using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
+﻿namespace InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
 
-namespace InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
-
-public class Post : BaseEntity
+public class Post : IEntityWithId<PostId>
 {
+    private Post()
+    {
+        Id = new(string.Empty);
+        Title = string.Empty;
+        Content = string.Empty;
+        UserId = new(string.Empty);
+        PostLikes = [];
+        PostComments = [];
+    }
+
     public Post(
+        PostId id,
         string title,
         string content,
-        string userId)
+        UserId userId,
+        DateTimeOffset createdAtUtc,
+        DateTimeOffset updatedAtUtc)
     {
+        Id = id;
         Title = title;
         Content = content;
         UserId = userId;
+        PostLikes = [];
+        PostComments = [];
+        CreatedAtUtc = createdAtUtc;
+        UpdatedAtUtc = updatedAtUtc;
     }
 
-    public Post(
-        string title,
-        string content,
-        User user)
+    public PostId Id { get; }
+
+    public string Title { get; private set; }
+
+    public string Content { get; private set; }
+
+    public UserId UserId { get; }
+
+    public User? User { get; private set; }
+
+    public ICollection<PostLike> PostLikes { get; private set; }
+
+    public ICollection<PostComment> PostComments { get; private set; }
+
+    public DateTimeOffset CreatedAtUtc { get; }
+
+    public DateTimeOffset UpdatedAtUtc { get; private set; }
+
+    public bool IsNotOwnedByUser(UserId userId)
+    {
+        return UserId.IsNot(userId);
+    }
+
+    public void Update(string title, string content, DateTimeOffset updatedAtUtc)
     {
         Title = title;
         Content = content;
-        User = user;
-        UserId = user.Id;
+        UpdatedAtUtc = updatedAtUtc;
     }
 
-    public string Title { get; set; }
+    public Post AddUser(User? user)
+    {
+        User = user;
 
-    public string Content { get; set; }
+        return this;
+    }
 
-    public string UserId { get; }
+    public Post AddPostLike(PostLike postLike)
+    {
+        PostLikes.Add(postLike);
 
-    public User? User { get; set; }
+        return this;
+    }
 
-    public ICollection<PostLike> PostLikes { get; set; } = [];
+    public Post AddPostComment(PostComment postComment)
+    {
+        PostComments.Add(postComment);
 
-    public ICollection<PostComment> PostComments { get; set; } = [];
+        return this;
+    }
 }

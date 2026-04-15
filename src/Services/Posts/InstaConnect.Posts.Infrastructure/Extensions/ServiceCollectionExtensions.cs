@@ -1,32 +1,42 @@
-﻿using InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Extensions;
+﻿using System.Reflection;
+
+using InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Extensions;
 using InstaConnect.Posts.Infrastructure.Features.PostComments.Extensions;
 using InstaConnect.Posts.Infrastructure.Features.PostLikes.Extensions;
 using InstaConnect.Posts.Infrastructure.Features.Posts.Extensions;
 using InstaConnect.Posts.Infrastructure.Features.Users.Extensions;
-using InstaConnect.Shared.Common.Extensions;
-using InstaConnect.Shared.Infrastructure.Extensions;
 
 namespace InstaConnect.Posts.Infrastructure.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection serviceCollection, IConfiguration configuration)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection
-            .AddUserServices()
-            .AddPostServices()
-            .AddPostLikeServices()
-            .AddPostCommentServices()
-            .AddPostCommentLikeServices();
+        public IServiceCollection AddInfrastructure(
+            IConfiguration configuration,
+            IWebHostEnvironment webHostEnvironment,
+            Assembly presentationAssembly)
+        {
+            serviceCollection
+                .AddUserServices()
+                .AddPostServices()
+                .AddPostLikeServices()
+                .AddPostCommentServices()
+                .AddPostCommentLikeServices();
 
-        serviceCollection
-            .AddServicesWithMatchingInterfaces(InfrastructureReference.Assembly)
-            .AddDatabaseContext<PostsContext>(configuration)
-            .AddUnitOfWork<PostsContext>()
-            .AddRabbitMQ(configuration, InfrastructureReference.Assembly)
-            .AddJwtBearer(configuration)
-            .AddDateTimeProvider();
+            serviceCollection
+                .AddOpenTelemetry(configuration, webHostEnvironment)
+                .AddMapper(PostInfrastructureReference.Assembly)
+                .AddServicesWithMatchingInterfaces(PostInfrastructureReference.Assembly)
+                .AddMongoDatabase(configuration)
+                .AddUnitOfWork()
+                .AddRabbitMQ(configuration, presentationAssembly)
+                .AddJwtBearer(configuration)
+                .AddGuidProvider()
+                .AddDateTimeProvider()
+                .AddSortOrders();
 
-        return serviceCollection;
+            return serviceCollection;
+        }
     }
 }

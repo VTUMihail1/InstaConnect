@@ -1,27 +1,26 @@
-﻿using InstaConnect.Posts.Application.Features.PostCommentLikes.Extensions;
-using InstaConnect.Posts.Application.Features.PostComments.Extensions;
-using InstaConnect.Posts.Application.Features.PostLikes.Extensions;
-using InstaConnect.Posts.Application.Features.Posts.Extensions;
-using InstaConnect.Shared.Application.Extensions;
-using InstaConnect.Shared.Common.Extensions;
+﻿using InstaConnect.Common.Domain.Extensions;
 
 namespace InstaConnect.Posts.Application.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddApplication(this IServiceCollection serviceCollection)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection
-            .AddPostServices()
-            .AddPostLikeServices()
-            .AddPostCommentServices()
-            .AddPostCommentLikeServices();
+        public IServiceCollection AddApplication()
+        {
+            serviceCollection
+                .AddUserServices()
+                .AddPostServices()
+                .AddPostLikeServices()
+                .AddPostCommentServices()
+                .AddPostCommentLikeServices();
 
-        serviceCollection
-            .AddMediatR(ApplicationReference.Assembly)
-            .AddMapper(ApplicationReference.Assembly)
-            .AddValidators(ApplicationReference.Assembly);
+            serviceCollection
+                .AddCQRS(PostApplicationReference.Assembly)
+                .AddMapper(PostApplicationReference.Assembly, CommonApplicationReference.Assembly)
+                .AddValidators(PostApplicationReference.Assembly);
 
-        return serviceCollection;
+            return serviceCollection;
+        }
     }
 }

@@ -1,28 +1,26 @@
-﻿using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Filters;
+﻿namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAll;
 
-namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAll;
-
-internal class GetAllPostCommentLikesQueryHandler : IQueryHandler<GetAllPostCommentLikesQuery, PostCommentLikePaginationQueryViewModel>
+internal class GetAllPostCommentLikesQueryHandler : IQueryHandler<GetAllPostCommentLikesQueryRequest, GetAllPostCommentLikesQueryResponse>
 {
-    private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IPostCommentLikeReadRepository _postCommentLikeReadRepository;
+    private readonly IApplicationMapper _mapper;
+    private readonly IPostCommentLikeQueryService _commentLikeService;
 
     public GetAllPostCommentLikesQueryHandler(
-        IInstaConnectMapper instaConnectMapper,
-        IPostCommentLikeReadRepository postCommentLikeReadRepository)
+        IApplicationMapper mapper,
+        IPostCommentLikeQueryService commentLikeService)
     {
-        _instaConnectMapper = instaConnectMapper;
-        _postCommentLikeReadRepository = postCommentLikeReadRepository;
+        _mapper = mapper;
+        _commentLikeService = commentLikeService;
     }
 
-    public async Task<PostCommentLikePaginationQueryViewModel> Handle(
-        GetAllPostCommentLikesQuery request,
+    public async Task<GetAllPostCommentLikesQueryResponse> Handle(
+        GetAllPostCommentLikesQueryRequest request,
         CancellationToken cancellationToken)
     {
-        var filteredCollectionQuery = _instaConnectMapper.Map<PostCommentLikeCollectionReadQuery>(request);
+        var serviceRequest = _mapper.Map<GetAllPostCommentLikesQuery>(request);
+        var serviceResponse = await _commentLikeService.GetAllAsync(serviceRequest, cancellationToken);
 
-        var postCommentLikes = await _postCommentLikeReadRepository.GetAllAsync(filteredCollectionQuery, cancellationToken);
-        var response = _instaConnectMapper.Map<PostCommentLikePaginationQueryViewModel>(postCommentLikes);
+        var response = _mapper.Map<GetAllPostCommentLikesQueryResponse>(serviceResponse);
 
         return response;
     }

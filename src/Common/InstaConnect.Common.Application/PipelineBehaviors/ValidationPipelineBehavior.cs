@@ -1,12 +1,14 @@
 using FluentValidation;
 
-using InstaConnect.Shared.Common.Exceptions.Base;
+using InstaConnect.Common.Domain.Exceptions;
 
-namespace InstaConnect.Shared.Application.PipelineBehaviors;
+using MediatR;
+
+namespace InstaConnect.Common.Application.PipelineBehaviors;
 
 internal sealed class ValidationPipelineBehavior<TRequest, TResponse>
     : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : notnull
+    where TRequest : IBaseRequest
 {
     private readonly IEnumerable<IValidator<TRequest>> _validators;
 
@@ -32,11 +34,9 @@ internal sealed class ValidationPipelineBehavior<TRequest, TResponse>
 
         if (validationFailures.Any())
         {
-            var errorMessage = string.Join(",\n", validationFailures);
-
-            throw new AppValidationException(errorMessage);
+            throw new InvalidValidationException(validationFailures);
         }
 
-        return await next();
+        return await next(cancellationToken);
     }
 }

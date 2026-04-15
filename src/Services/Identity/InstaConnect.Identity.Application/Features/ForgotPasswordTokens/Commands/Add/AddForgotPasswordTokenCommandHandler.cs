@@ -1,38 +1,21 @@
 ﻿namespace InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Add;
 
-public class AddForgotPasswordTokenCommandHandler : ICommandHandler<AddForgotPasswordTokenCommand>
+internal class AddForgotPasswordTokenCommandHandler : ICommandHandler<AddForgotPasswordTokenCommandRequest>
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IUserWriteRepository _userWriteRepository;
-    private readonly IForgotPasswordTokenPublisher _forgotPasswordTokenPublisher;
+    private readonly IApplicationMapper _mapper;
+    private readonly IForgotPasswordTokenCommandService _forgotPasswordTokenService;
 
     public AddForgotPasswordTokenCommandHandler(
-        IUnitOfWork unitOfWork,
-        IInstaConnectMapper instaConnectMapper,
-        IUserWriteRepository userWriteRepository,
-        IForgotPasswordTokenPublisher forgotPasswordTokenPublisher)
+        IApplicationMapper mapper,
+        IForgotPasswordTokenCommandService forgotPasswordTokenService)
     {
-        _unitOfWork = unitOfWork;
-        _instaConnectMapper = instaConnectMapper;
-        _userWriteRepository = userWriteRepository;
-        _forgotPasswordTokenPublisher = forgotPasswordTokenPublisher;
+        _mapper = mapper;
+        _forgotPasswordTokenService = forgotPasswordTokenService;
     }
 
-    public async Task Handle(
-        AddForgotPasswordTokenCommand request,
-        CancellationToken cancellationToken)
+    public async Task Handle(AddForgotPasswordTokenCommandRequest request, CancellationToken cancellationToken)
     {
-        var existingUser = await _userWriteRepository.GetByEmailAsync(request.Email, cancellationToken);
-
-        if (existingUser == null)
-        {
-            throw new UserNotFoundException();
-        }
-
-        var createForgotPasswordTokenModel = _instaConnectMapper.Map<CreateForgotPasswordTokenModel>(existingUser);
-        await _forgotPasswordTokenPublisher.PublishForgotPasswordTokenAsync(createForgotPasswordTokenModel, cancellationToken);
-
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        var serviceRequest = _mapper.Map<AddForgotPasswordTokenCommand>(request);
+        await _forgotPasswordTokenService.AddAsync(serviceRequest, cancellationToken);
     }
 }

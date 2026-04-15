@@ -1,16 +1,16 @@
-﻿using InstaConnect.Shared.Common.Exceptions.Base;
+﻿using InstaConnect.Common.Domain.Exceptions;
 
 namespace InstaConnect.Posts.Domain.Features.PostComments.Exceptions;
 
 public class PostCommentNotFoundException : NotFoundException
 {
-    private const string ErrorMessage = "Post comment not found";
-
-    public PostCommentNotFoundException() : base(ErrorMessage)
+    public PostCommentNotFoundException(PostCommentId id)
+        : base(PostCommentExceptionErrorMessages.GetNotFoundMessage(id))
     {
     }
 
-    public PostCommentNotFoundException(Exception exception) : base(ErrorMessage, exception)
+    public PostCommentNotFoundException(PostCommentId id, Exception exception)
+        : base(PostCommentExceptionErrorMessages.GetNotFoundMessage(id), exception)
     {
     }
 }

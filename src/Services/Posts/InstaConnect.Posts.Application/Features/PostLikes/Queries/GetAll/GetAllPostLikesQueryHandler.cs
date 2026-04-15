@@ -1,28 +1,26 @@
-﻿using InstaConnect.Posts.Domain.Features.PostLikes.Models.Filters;
+﻿namespace InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAll;
 
-namespace InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAll;
-
-internal class GetAllPostLikesQueryHandler : IQueryHandler<GetAllPostLikesQuery, PostLikePaginationQueryViewModel>
+internal class GetAllPostLikesQueryHandler : IQueryHandler<GetAllPostLikesQueryRequest, GetAllPostLikesQueryResponse>
 {
-    private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IPostLikeReadRepository _postLikeReadRepository;
+    private readonly IApplicationMapper _mapper;
+    private readonly IPostLikeQueryService _likeService;
 
     public GetAllPostLikesQueryHandler(
-        IInstaConnectMapper instaConnectMapper,
-        IPostLikeReadRepository postLikeRepository)
+        IApplicationMapper mapper,
+        IPostLikeQueryService likeService)
     {
-        _instaConnectMapper = instaConnectMapper;
-        _postLikeReadRepository = postLikeRepository;
+        _mapper = mapper;
+        _likeService = likeService;
     }
 
-    public async Task<PostLikePaginationQueryViewModel> Handle(
-        GetAllPostLikesQuery request,
+    public async Task<GetAllPostLikesQueryResponse> Handle(
+        GetAllPostLikesQueryRequest request,
         CancellationToken cancellationToken)
     {
-        var filteredCollectionQuery = _instaConnectMapper.Map<PostLikeCollectionReadQuery>(request);
+        var serviceRequest = _mapper.Map<GetAllPostLikesQuery>(request);
+        var serviceResponse = await _likeService.GetAllAsync(serviceRequest, cancellationToken);
 
-        var postLikes = await _postLikeReadRepository.GetAllAsync(filteredCollectionQuery, cancellationToken);
-        var response = _instaConnectMapper.Map<PostLikePaginationQueryViewModel>(postLikes);
+        var response = _mapper.Map<GetAllPostLikesQueryResponse>(serviceResponse);
 
         return response;
     }

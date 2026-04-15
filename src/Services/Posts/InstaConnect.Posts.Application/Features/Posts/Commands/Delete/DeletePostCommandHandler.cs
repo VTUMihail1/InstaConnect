@@ -1,34 +1,21 @@
 ﻿namespace InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
 
-internal class DeletePostCommandHandler : ICommandHandler<DeletePostCommand>
+internal class DeletePostCommandHandler : ICommandHandler<DeletePostCommandRequest>
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IPostWriteRepository _postWriteRepository;
+    private readonly IApplicationMapper _mapper;
+    private readonly IPostCommandService _service;
 
-    public DeletePostCommandHandler(
-        IUnitOfWork unitOfWork,
-        IPostWriteRepository postWriteRepository)
+    public DeletePostCommandHandler(IApplicationMapper mapper, IPostCommandService service)
     {
-        _unitOfWork = unitOfWork;
-        _postWriteRepository = postWriteRepository;
+        _mapper = mapper;
+        _service = service;
     }
 
-    public async Task Handle(DeletePostCommand request, CancellationToken cancellationToken)
+    public async Task Handle(
+        DeletePostCommandRequest request,
+        CancellationToken cancellationToken)
     {
-        var existingPost = await _postWriteRepository.GetByIdAsync(request.Id, cancellationToken);
-
-        if (existingPost == null)
-        {
-            throw new PostNotFoundException();
-        }
-
-        if (request.CurrentUserId != existingPost.UserId)
-        {
-            throw new UserForbiddenException();
-        }
-
-        _postWriteRepository.Delete(existingPost);
-
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        var serviceRequest = _mapper.Map<DeletePostCommand>(request);
+        await _service.DeleteAsync(serviceRequest, cancellationToken);
     }
 }

@@ -1,27 +1,24 @@
-﻿namespace InstaConnect.Posts.Infrastructure;
+﻿using InstaConnect.Common.Infrastructure;
+using InstaConnect.Posts.Infrastructure.Utilities;
 
-public class PostsContext : DbContext
+using MongoDB.Driver;
+
+namespace InstaConnect.Posts.Infrastructure;
+
+public class PostsContext : MongoDbContext, IPostsContext
 {
-    public PostsContext(DbContextOptions options) : base(options)
+    public PostsContext(IMongoClient mongoClient, IMongoDatabase mongoDatabase)
+        : base(mongoClient, mongoDatabase)
     {
     }
 
-    public DbSet<Post> Posts { get; set; }
+    public IMongoCollection<User> Users => ToCollection<User, UserId>(PostCollectionNames.Users);
 
-    public DbSet<PostLike> PostLikes { get; set; }
+    public IMongoCollection<Post> Posts => ToCollection<Post, PostId>(PostCollectionNames.Posts);
 
-    public DbSet<PostCommentLike> PostCommentLikes { get; set; }
+    public IMongoCollection<PostLike> PostLikes => ToCollection<PostLike, PostLikeId>(PostCollectionNames.PostLikes);
 
-    public DbSet<PostComment> PostComments { get; set; }
+    public IMongoCollection<PostComment> PostComments => ToCollection<PostComment, PostCommentId>(PostCollectionNames.PostComments);
 
-    public DbSet<User> Users { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        var currentAssembly = typeof(PostsContext).Assembly;
-
-        base.OnModelCreating(modelBuilder);
-
-        modelBuilder.ApplyConfigurationsFromAssembly(currentAssembly);
-    }
+    public IMongoCollection<PostCommentLike> PostCommentLikes => ToCollection<PostCommentLike, PostCommentLikeId>(PostCollectionNames.PostCommentLikes);
 }

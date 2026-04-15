@@ -1,0 +1,17 @@
+﻿using InstaConnect.Common.Domain.Exceptions;
+using InstaConnect.Posts.Domain.Models.Requests;
+
+namespace InstaConnect.Posts.Domain.Features.Users.Exceptions;
+
+public class UserIncludeDescriptorsNotSupportedException : BadRequestException
+{
+    public UserIncludeDescriptorsNotSupportedException(ICollection<PostsIncludeDescriptor> descriptors)
+        : base(UserExceptionErrorMessages.GetIncludeDescriptorsNotSupportedMessage(descriptors))
+    {
+    }
+
+    public UserIncludeDescriptorsNotSupportedException(ICollection<PostsIncludeDescriptor> descriptors, Exception exception)
+        : base(UserExceptionErrorMessages.GetIncludeDescriptorsNotSupportedMessage(descriptors), exception)
+    {
+    }
+}

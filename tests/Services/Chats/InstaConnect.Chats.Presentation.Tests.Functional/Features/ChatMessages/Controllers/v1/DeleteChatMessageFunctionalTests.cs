@@ -1,0 +1,462 @@
+﻿namespace InstaConnect.Chats.Presentation.Tests.Functional.Features.ChatMessages.Controllers.v1;
+
+public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationCommandFunctionalTest
+{
+    private readonly DeleteChatMessageApiRequestBuilderFactory _requestBuilderFactory;
+    private readonly DeleteChatMessageApiRequestBuilder _requestBuilder;
+    private readonly DeleteChatMessageApiRequest _request;
+
+    public DeleteChatMessageFunctionalTests(ChatsWebApplicationFactory webApplicationFactory)
+        : base(webApplicationFactory)
+    {
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(ChatMessage);
+        _request = _requestBuilder.Build();
+    }
+
+    protected override async Task OnInitializeAsync()
+    {
+        await ServiceScope.AddUserAsync(ParticipantOne, CancellationToken);
+        await ServiceScope.AddUserAsync(ParticipantTwo, CancellationToken);
+        await ServiceScope.AddChatAsync(Chat, CancellationToken);
+        await ServiceScope.AddChatMessageAsync(ChatMessage, CancellationToken);
+    }
+
+    [Fact]
+    public async Task DeleteAsync_ShouldReturnUnauthorizedStatusCode_WhenRequestIsUnauthorized()
+    {
+        // Act
+        var response = await HttpClient.DeleteChatMessageStatusCodeUnauthorizedAsync(_request, CancellationToken);
+
+        // Assert
+        response.ShouldBeUnauthorized();
+    }
+
+    [Theory]
+    [UserIdNullData]
+    [UserIdEmptyData]
+    [UserIdTooShortData]
+    [UserIdTooLongData]
+    public async Task DeleteAsync_ShouldHaveBadRequestStatusCode_WhenParticipantOneIdIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithParticipantOneId(transformer).Build();
+
+        // Act
+        var response = await HttpClient.DeleteChatMessageStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeBadRequest();
+    }
+
+    [Theory]
+    [UserIdNullWithMessageData]
+    [UserIdEmptyWithMessageData]
+    [UserIdTooShortWithMessageData]
+    [UserIdTooLongWithMessageData]
+    public async Task DeleteAsync_ShouldHaveBadRequestProblemDetails_WhenParticipantOneIdIsInvalid(
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithParticipantOneId(transformer).Build();
+
+        // Act
+        var response = await HttpClient.DeleteChatMessageProblemDetailsAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfyInvalidValidationForParticipantOneId(messageTransformer, request);
+    }
+
+    [Theory]
+    [UserIdTooShortData]
+    [UserIdTooLongData]
+    public async Task DeleteAsync_ShouldHaveBadRequestStatusCode_WhenParticipantTwoIdIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
+
+        // Act
+        var response = await HttpClient.DeleteChatMessageStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeBadRequest();
+    }
+
+    [Theory]
+    [UserIdTooShortWithMessageData]
+    [UserIdTooLongWithMessageData]
+    public async Task DeleteAsync_ShouldHaveBadRequestProblemDetails_WhenParticipantTwoIdIsInvalid(
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
+
+        // Act
+        var response = await HttpClient.DeleteChatMessageProblemDetailsAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfyInvalidValidationForParticipantTwoId(messageTransformer, request);
+    }
+
+    [Theory]
+    [ChatMessageIdTooShortData]
+    [ChatMessageIdTooLongData]
+    public async Task DeleteAsync_ShouldHaveBadRequestStatusCode_WhenMessageIdIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithMessageId(transformer).Build();
+
+        // Act
+        var response = await HttpClient.DeleteChatMessageStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeBadRequest();
+    }
+
+    [Theory]
+    [ChatMessageIdTooShortWithMessageData]
+    [ChatMessageIdTooLongWithMessageData]
+    public async Task DeleteAsync_ShouldHaveBadRequestProblemDetails_WhenMessageIdIsInvalid(
+        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithMessageId(transformer).Build();
+
+        // Act
+        var response = await HttpClient.DeleteChatMessageProblemDetailsAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfyInvalidValidationForMessageId(messageTransformer, request);
+    }
+
+    [Fact]
+    public async Task DeleteAsync_ShouldHaveNotFoundStatusCode_WhenIdIsInvalid()
+    {
+        // Arrange
+        await ServiceScope.DeleteChatAsync(Chat, CancellationToken);
+
+        // Act
+        var response = await HttpClient.DeleteChatMessageStatusCodeAsync(_request, CancellationToken);
+
+        // Assert
+        response.ShouldBeNotFound();
+    }
+
+    [Fact]
+    public async Task DeleteAsync_ShouldHaveChatNotFoundProblemDetails_WhenIdIsInvalid()
+    {
+        // Arrange
+        await ServiceScope.DeleteChatAsync(Chat, CancellationToken);
+
+        // Act
+        var response = await HttpClient.DeleteChatMessageProblemDetailsAsync(_request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfyChatNotFound(_request);
+    }
+
+    [Fact]
+    public async Task DeleteAsync_ShouldHaveNotFoundStatusCode_WhenMessageIdIsInvalid()
+    {
+        // Arrange
+        await ServiceScope.DeleteChatMessageAsync(ChatMessage, CancellationToken);
+
+        // Act
+        var response = await HttpClient.DeleteChatMessageStatusCodeAsync(_request, CancellationToken);
+
+        // Assert
+        response.ShouldBeNotFound();
+    }
+
+    [Fact]
+    public async Task DeleteAsync_ShouldHaveChatMessageNotFoundProblemDetails_WhenMessageIdIsInvalid()
+    {
+        // Arrange
+        await ServiceScope.DeleteChatMessageAsync(ChatMessage, CancellationToken);
+
+        // Act
+        var response = await HttpClient.DeleteChatMessageProblemDetailsAsync(_request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfyChatMessageNotFound(_request);
+    }
+
+    [Fact]
+    public async Task DeleteAsync_ShouldHaveForbiddenStatusCode_WhenUserIdIsInvalid()
+    {
+        // Arrange
+        var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).Build();
+
+        // Act
+        var response = await HttpClient.DeleteChatMessageStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeForbidden();
+    }
+
+    [Fact]
+    public async Task DeleteAsync_ShouldHaveChatMessageForbiddenProblemDetails_WhenUserIdIsInvalid()
+    {
+        // Arrange
+        var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).Build();
+
+        // Act
+        var response = await HttpClient.DeleteChatMessageProblemDetailsAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfyChatMessageForbidden(request);
+    }
+
+    [Fact]
+    public async Task DeleteAsync_ShouldHaveNoContentStatusCode_WhenRequestIsValid()
+    {
+        // Act
+        var response = await HttpClient.DeleteChatMessageStatusCodeAsync(_request, CancellationToken);
+
+        // Assert
+        response.ShouldBeNoContent();
+    }
+
+    [Theory]
+    [UserIdDifferentCaseData]
+    public async Task DeleteAsync_ShouldHaveNoContentStatusCode_WhenRequestAndParticipantOneIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithParticipantOneId(transformer).Build();
+
+        // Act
+        var response = await HttpClient.DeleteChatMessageStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeNoContent();
+    }
+
+    [Theory]
+    [UserIdDifferentCaseData]
+    public async Task DeleteAsync_ShouldHaveNoContentStatusCode_WhenRequestAndParticipantTwoIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
+
+        // Act
+        var response = await HttpClient.DeleteChatMessageStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeNoContent();
+    }
+
+    [Theory]
+    [ChatMessageIdDifferentCaseData]
+    public async Task DeleteAsync_ShouldHaveNoContentStatusCode_WhenRequestAndMessageIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithMessageId(transformer).Build();
+
+        // Act
+        var response = await HttpClient.DeleteChatMessageStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeNoContent();
+    }
+
+    [Fact]
+    public async Task DeleteAsync_ShouldDeleteChatMessage_WhenRequestIsValid()
+    {
+        // Act
+        await HttpClient.DeleteChatMessageAsync(_request, CancellationToken);
+        var chatMessage = await ServiceScope.GetChatMessageByIdAsync(ChatMessage.Id, CancellationToken);
+
+        // Assert
+        chatMessage.ShouldBeNull();
+    }
+
+    [Theory]
+    [UserIdDifferentCaseData]
+    public async Task UpdateAsync_ShouldReturnResponse_WhenRequestAndParticipantOneIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithParticipantOneId(transformer).Build();
+
+        // Act
+        await HttpClient.DeleteChatMessageAsync(request, CancellationToken);
+        var chatMessage = await ServiceScope.GetChatMessageByIdAsync(ChatMessage.Id, CancellationToken);
+
+        // Assert
+        chatMessage.ShouldBeNull();
+    }
+
+    [Theory]
+    [UserIdDifferentCaseData]
+    public async Task UpdateAsync_ShouldReturnResponse_WhenRequestAndParticipantTwoIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
+
+        // Act
+        await HttpClient.DeleteChatMessageAsync(request, CancellationToken);
+        var chatMessage = await ServiceScope.GetChatMessageByIdAsync(ChatMessage.Id, CancellationToken);
+
+        // Assert
+        chatMessage.ShouldBeNull();
+    }
+
+    [Theory]
+    [ChatMessageIdDifferentCaseData]
+    public async Task DeleteAsync_ShouldDeleteChatMessage_WhenRequestAndMessageIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithMessageId(transformer).Build();
+
+        // Act
+        await HttpClient.DeleteChatMessageAsync(request, CancellationToken);
+        var chatMessage = await ServiceScope.GetChatMessageByIdAsync(ChatMessage.Id, CancellationToken);
+
+        // Assert
+        chatMessage.ShouldBeNull();
+    }
+
+    [Fact]
+    public async Task DeleteAsync_ShouldHaveInvertedNoContentStatusCode_WhenRequestIsValid()
+    {
+        // Arrange
+        var updatedChatMessage = ChatMessageBuilder.WithSenderId(ParticipantTwo.Id).Build();
+        await ServiceScope.UpdateChatMessageAsync(updatedChatMessage, CancellationToken);
+        var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).Build();
+
+        // Act
+        var response = await HttpClient.DeleteChatMessageStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeNoContent();
+    }
+
+    [Theory]
+    [UserIdDifferentCaseData]
+    public async Task DeleteAsync_ShouldHaveInvertedNoContentStatusCode_WhenRequestAndParticipantOneIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var updatedChatMessage = ChatMessageBuilder.WithSenderId(ParticipantTwo.Id).Build();
+        await ServiceScope.UpdateChatMessageAsync(updatedChatMessage, CancellationToken);
+        var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id, transformer).WithParticipantTwoId(ParticipantOne.Id).Build();
+
+        // Act
+        var response = await HttpClient.DeleteChatMessageStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeNoContent();
+    }
+
+    [Theory]
+    [UserIdDifferentCaseData]
+    public async Task DeleteAsync_ShouldHaveInvertedNoContentStatusCode_WhenRequestAndParticipantTwoIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var updatedChatMessage = ChatMessageBuilder.WithSenderId(ParticipantTwo.Id).Build();
+        await ServiceScope.UpdateChatMessageAsync(updatedChatMessage, CancellationToken);
+        var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id, transformer).Build();
+
+        // Act
+        var response = await HttpClient.DeleteChatMessageStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeNoContent();
+    }
+
+    [Theory]
+    [ChatMessageIdDifferentCaseData]
+    public async Task DeleteAsync_ShouldHaveInvertedNoContentStatusCode_WhenRequestAndMessageIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var updatedChatMessage = ChatMessageBuilder.WithSenderId(ParticipantTwo.Id).Build();
+        await ServiceScope.UpdateChatMessageAsync(updatedChatMessage, CancellationToken);
+        var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).WithMessageId(transformer).Build();
+
+        // Act
+        var response = await HttpClient.DeleteChatMessageStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeNoContent();
+    }
+
+    [Fact]
+    public async Task DeleteAsync_ShouldDeleteInvertedChatMessage_WhenRequestIsValid()
+    {
+        // Arrange
+        var updatedChatMessage = ChatMessageBuilder.WithSenderId(ParticipantTwo.Id).Build();
+        await ServiceScope.UpdateChatMessageAsync(updatedChatMessage, CancellationToken);
+        var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).Build();
+
+        // Act
+        await HttpClient.DeleteChatMessageAsync(request, CancellationToken);
+        var chatMessage = await ServiceScope.GetChatMessageByIdAsync(ChatMessage.Id, CancellationToken);
+
+        // Assert
+        chatMessage.ShouldBeNull();
+    }
+
+    [Theory]
+    [UserIdDifferentCaseData]
+    public async Task DeleteAsync_ShouldDeleteInvertedChatMessage_WhenRequestAndParticipantOneIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var updatedChatMessage = ChatMessageBuilder.WithSenderId(ParticipantTwo.Id).Build();
+        await ServiceScope.UpdateChatMessageAsync(updatedChatMessage, CancellationToken);
+        var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id, transformer).WithParticipantTwoId(ParticipantOne.Id).Build();
+
+        // Act
+        await HttpClient.DeleteChatMessageAsync(request, CancellationToken);
+        var chatMessage = await ServiceScope.GetChatMessageByIdAsync(ChatMessage.Id, CancellationToken);
+
+        // Assert
+        chatMessage.ShouldBeNull();
+    }
+
+    [Theory]
+    [UserIdDifferentCaseData]
+    public async Task DeleteAsync_ShouldDeleteInvertedChatMessagee_WhenRequestAndParticipantTwoIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var updatedChatMessage = ChatMessageBuilder.WithSenderId(ParticipantTwo.Id).Build();
+        await ServiceScope.UpdateChatMessageAsync(updatedChatMessage, CancellationToken);
+        var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id, transformer).Build();
+
+        // Act
+        await HttpClient.DeleteChatMessageAsync(request, CancellationToken);
+        var chatMessage = await ServiceScope.GetChatMessageByIdAsync(ChatMessage.Id, CancellationToken);
+
+        // Assert
+        chatMessage.ShouldBeNull();
+    }
+
+    [Theory]
+    [ChatMessageIdDifferentCaseData]
+    public async Task DeleteAsync_ShouldDeleteInvertedChatMessage_WhenRequestAndMessageIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var updatedChatMessage = ChatMessageBuilder.WithSenderId(ParticipantTwo.Id).Build();
+        await ServiceScope.UpdateChatMessageAsync(updatedChatMessage, CancellationToken);
+        var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).WithMessageId(transformer).Build();
+
+        // Act
+        await HttpClient.DeleteChatMessageAsync(request, CancellationToken);
+        var chatMessage = await ServiceScope.GetChatMessageByIdAsync(ChatMessage.Id, CancellationToken);
+
+        // Assert
+        chatMessage.ShouldBeNull();
+    }
+}

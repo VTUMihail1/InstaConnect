@@ -1,32 +1,39 @@
-﻿using InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Extensions;
+﻿using InstaConnect.Common.Domain.Extensions;
+using InstaConnect.Common.Presentation.Extensions;
+using InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Extensions;
 using InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Extensions;
+using InstaConnect.Identity.Presentation.Features.RefreshTokens.Extensions;
+using InstaConnect.Identity.Presentation.Features.UserClaims.Extensions;
 using InstaConnect.Identity.Presentation.Features.Users.Extensions;
-using InstaConnect.Shared.Common.Extensions;
-using InstaConnect.Shared.Presentation.Extensions;
 
 namespace InstaConnect.Identity.Presentation.Extensions;
 
-public static class ServiceCollectionExtensions
+internal static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddPresentation(this IServiceCollection serviceCollection, IConfiguration configuration)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection
-            .AddUserServices(configuration)
-            .AddForgotPasswordTokenServices()
-            .AddEmailConfirmationTokenServices();
+        public IServiceCollection AddPresentation(IConfiguration configuration)
+        {
+            serviceCollection
+                .AddUserServices()
+                .AddUserClaimServices()
+                .AddRefreshTokenServices()
+                .AddForgotPasswordTokenServices()
+                .AddEmailConfirmationTokenServices();
 
-        serviceCollection
-            .AddServicesWithMatchingInterfaces(PresentationReference.Assembly)
-            .AddApiControllers()
-            .AddMapper(PresentationReference.Assembly)
-            .AddAuthorizationPolicies()
-            .AddCorsPolicies(configuration)
-            .AddSwagger()
-            .AddRateLimiterPolicies()
-            .AddExceptionHandler();
+            serviceCollection
+                .AddServicesWithMatchingInterfaces(IdentityPresentationReference.Assembly)
+                .AddApiControllers()
+                .AddMapper(IdentityPresentationReference.Assembly, CommonPresentationReference.Assembly)
+                .AddAuthorizationPolicies()
+                .AddCorsPolicies(configuration)
+                .AddSwagger()
+                .AddRateLimiterPolicies()
+                .AddExceptionHandler();
 
-        serviceCollection.AddEndpointsApiExplorer();
+            serviceCollection.AddEndpointsApiExplorer();
 
-        return serviceCollection;
+            return serviceCollection;
+        }
     }
 }

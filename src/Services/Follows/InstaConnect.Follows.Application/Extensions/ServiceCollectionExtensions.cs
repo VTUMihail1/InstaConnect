@@ -1,21 +1,23 @@
-﻿using InstaConnect.Follows.Application.Features.Follows.Extensions;
-using InstaConnect.Shared.Application.Extensions;
-using InstaConnect.Shared.Common.Extensions;
+﻿using InstaConnect.Common.Domain.Extensions;
 
 namespace InstaConnect.Follows.Application.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddApplication(this IServiceCollection serviceCollection)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection
-            .AddFollowServices();
+        public IServiceCollection AddApplication()
+        {
+            serviceCollection
+                .AddUserServices()
+                .AddFollowServices();
 
-        serviceCollection
-            .AddMediatR(ApplicationReference.Assembly)
-            .AddMapper(ApplicationReference.Assembly)
-            .AddValidators(ApplicationReference.Assembly);
+            serviceCollection
+                .AddCQRS(FollowApplicationReference.Assembly)
+                .AddMapper(FollowApplicationReference.Assembly, CommonApplicationReference.Assembly)
+                .AddValidators(FollowApplicationReference.Assembly);
 
-        return serviceCollection;
+            return serviceCollection;
+        }
     }
 }

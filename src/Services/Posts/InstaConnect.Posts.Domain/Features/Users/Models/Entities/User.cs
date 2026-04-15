@@ -1,43 +1,111 @@
-﻿using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entities;
-using InstaConnect.Posts.Domain.Features.PostComments.Models.Entities;
-using InstaConnect.Posts.Domain.Features.PostLikes.Models.Entities;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
+﻿namespace InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
-namespace InstaConnect.Posts.Domain.Features.Users.Models.Entities;
-
-public class User : BaseEntity
+public class User : IEntityWithId<UserId>
 {
+    private User()
+    {
+        Id = new(string.Empty);
+        FirstName = string.Empty;
+        LastName = string.Empty;
+        Email = new(string.Empty);
+        Name = new(string.Empty);
+        Posts = [];
+        PostLikes = [];
+        PostComments = [];
+        PostCommentLikes = [];
+    }
+
     public User(
+        UserId id,
         string firstName,
         string lastName,
-        string email,
-        string userName,
-        string? profileImage)
+        Email email,
+        Name name,
+        Image? profileImage,
+        DateTimeOffset createdAtUtc,
+        DateTimeOffset updatedAtUtc)
     {
+        Id = id;
         FirstName = firstName;
         LastName = lastName;
         Email = email;
-        UserName = userName;
+        Name = name;
         ProfileImage = profileImage;
+        Posts = [];
+        PostLikes = [];
+        PostComments = [];
+        PostCommentLikes = [];
+        CreatedAtUtc = createdAtUtc;
+        UpdatedAtUtc = updatedAtUtc;
     }
 
-    public string FirstName { get; set; }
+    public UserId Id { get; }
 
-    public string LastName { get; set; }
+    public string FirstName { get; private set; }
 
-    public string Email { get; set; }
+    public string LastName { get; private set; }
 
-    public string UserName { get; set; }
+    public Email Email { get; private set; }
 
-    public string? ProfileImage { get; set; }
+    public Name Name { get; private set; }
 
-    public ICollection<Post> Posts { get; set; } = [];
+    public Image? ProfileImage { get; private set; }
 
-    public ICollection<PostLike> PostLikes { get; set; } = [];
+    public ICollection<Post> Posts { get; private set; }
 
-    public ICollection<PostComment> PostComments { get; set; } = [];
+    public ICollection<PostLike> PostLikes { get; private set; }
 
-    public ICollection<PostCommentLike> PostCommentLikes { get; set; } = [];
+    public ICollection<PostComment> PostComments { get; private set; }
+
+    public ICollection<PostCommentLike> PostCommentLikes { get; private set; }
+
+    public DateTimeOffset CreatedAtUtc { get; }
+
+    public DateTimeOffset UpdatedAtUtc { get; private set; }
+
+    public void Update(
+        Email email,
+        string firstName,
+        string lastName,
+        Name name,
+        Image? profileImage,
+        DateTimeOffset updatedAtUtc)
+    {
+        Email = email;
+        FirstName = firstName;
+        LastName = lastName;
+        Name = name;
+        ProfileImage = profileImage;
+        UpdatedAtUtc = updatedAtUtc;
+    }
+
+    public User AddPost(Post post)
+    {
+        Posts.Add(post);
+
+        return this;
+    }
+
+    public User AddPostLike(PostLike postLike)
+    {
+        PostLikes.Add(postLike);
+
+        return this;
+    }
+
+    public User AddPostComment(PostComment postComment)
+    {
+        PostComments.Add(postComment);
+
+        return this;
+    }
+
+    public User AddPostCommentLike(PostCommentLike postCommentLike)
+    {
+        PostCommentLikes.Add(postCommentLike);
+
+        return this;
+    }
 }
 
 

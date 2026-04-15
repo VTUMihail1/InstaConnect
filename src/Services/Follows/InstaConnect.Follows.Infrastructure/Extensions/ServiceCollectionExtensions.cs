@@ -1,28 +1,36 @@
-﻿using InstaConnect.Follows.Infrastructure.Features.Follows.Extensions;
+﻿using System.Reflection;
+
+using InstaConnect.Follows.Infrastructure.Features.Follows.Extensions;
 using InstaConnect.Follows.Infrastructure.Features.Users.Extensions;
-using InstaConnect.Shared.Common.Extensions;
-using InstaConnect.Shared.Infrastructure.Extensions;
 
 namespace InstaConnect.Follows.Infrastructure.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection serviceCollection, IConfiguration configuration)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection
-            .AddDatabaseContext<FollowsContext>(configuration);
+        public IServiceCollection AddInfrastructure(
+            IConfiguration configuration,
+            IWebHostEnvironment webHostEnvironment,
+            Assembly presentationAssembly)
+        {
+            serviceCollection
+                .AddUserServices()
+                .AddFollowServices();
 
-        serviceCollection
-            .AddFollowServices()
-            .AddUserServices();
+            serviceCollection
+                .AddOpenTelemetry(configuration, webHostEnvironment)
+                .AddMapper(FollowInfrastructureReference.Assembly)
+                .AddServicesWithMatchingInterfaces(FollowInfrastructureReference.Assembly)
+                .AddMongoDatabase(configuration)
+                .AddUnitOfWork()
+                .AddRabbitMQ(configuration, presentationAssembly)
+                .AddJwtBearer(configuration)
+                .AddGuidProvider()
+                .AddDateTimeProvider()
+                .AddSortOrders();
 
-        serviceCollection
-            .AddServicesWithMatchingInterfaces(InfrastructureReference.Assembly)
-            .AddUnitOfWork<FollowsContext>()
-            .AddRabbitMQ(configuration, InfrastructureReference.Assembly)
-            .AddJwtBearer(configuration)
-            .AddDateTimeProvider();
-
-        return serviceCollection;
+            return serviceCollection;
+        }
     }
 }

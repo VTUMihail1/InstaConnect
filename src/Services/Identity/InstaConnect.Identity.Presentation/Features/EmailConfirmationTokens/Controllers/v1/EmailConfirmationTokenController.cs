@@ -5,30 +5,30 @@ namespace InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Co
 
 [ApiVersion(EmailConfirmationTokenRoutes.Version1)]
 [Route(EmailConfirmationTokenRoutes.Resource)]
-[EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
+[EnableRateLimiting(RateLimiterPolicies.Default)]
 public class EmailConfirmationTokenController : ControllerBase
 {
-    private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IInstaConnectSender _instaConnectSender;
+    private readonly IApplicationMapper _mapper;
+    private readonly IApplicationSender _sender;
 
     public EmailConfirmationTokenController(
-        IInstaConnectMapper instaConnectMapper,
-        IInstaConnectSender instaConnectSender)
+        IApplicationMapper mapper,
+        IApplicationSender sender)
     {
-        _instaConnectMapper = instaConnectMapper;
-        _instaConnectSender = instaConnectSender;
+        _mapper = mapper;
+        _sender = sender;
     }
 
-    // POST: api/users/user@example.com/email-confirmation-tokens
+    // POST: api/users/name/email-confirmation-tokens
     [HttpPost(EmailConfirmationTokenRoutes.Add)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> AddAsync(
-        AddEmailConfirmationTokenRequest request,
+        AddEmailConfirmationTokenApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _instaConnectMapper.Map<AddEmailConfirmationTokenCommand>(request);
-        await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
+        var commandRequest = _mapper.Map<AddEmailConfirmationTokenCommandRequest>(request);
+        await _sender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }
@@ -38,11 +38,11 @@ public class EmailConfirmationTokenController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> VerifyAsync(
-        VerifyEmailConfirmationTokenRequest request,
+        VerifyEmailConfirmationTokenApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _instaConnectMapper.Map<VerifyEmailConfirmationTokenCommand>(request);
-        await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
+        var commandRequest = _mapper.Map<VerifyEmailConfirmationTokenCommandRequest>(request);
+        await _sender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }

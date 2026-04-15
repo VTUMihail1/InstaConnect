@@ -1,7 +1,9 @@
-﻿namespace InstaConnect.Shared.Application.Abstractions;
+﻿using MediatR;
 
-public interface ICommandHandler<TCommand> : IRequestHandler<TCommand>
-    where TCommand : ICommand;
+namespace InstaConnect.Common.Application.Abstractions;
+
+public interface ICommandHandler<in TCommand> : IRequestHandler<TCommand>
+    where TCommand : ICommandRequest;
 
 public interface ICommandHandler<TCommand, TResponse> : IRequestHandler<TCommand, TResponse>
-    where TCommand : ICommand<TResponse>;
+    where TCommand : ICommandRequest<TResponse>;

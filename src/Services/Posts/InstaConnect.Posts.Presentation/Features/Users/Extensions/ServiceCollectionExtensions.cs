@@ -1,9 +1,12 @@
 ﻿namespace InstaConnect.Posts.Presentation.Features.Users.Extensions;
 
-public static class ServiceCollectionExtensions
+internal static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddUserServices(this IServiceCollection serviceCollection)
+    extension(IServiceCollection serviceCollection)
     {
-        return serviceCollection;
+        internal IServiceCollection AddUserServices()
+        {
+            return serviceCollection;
+        }
     }
 }

@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Events\InstaConnect.Common.Events.csproj" />
+    <ProjectReference Include="..\..\Identity\InstaConnect.Identity.Events\InstaConnect.Identity.Events.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Label="Common">
+    <Using Include="InstaConnect.Common.Events.Abstractions" />
+  </ItemGroup>
+  
+</Project>

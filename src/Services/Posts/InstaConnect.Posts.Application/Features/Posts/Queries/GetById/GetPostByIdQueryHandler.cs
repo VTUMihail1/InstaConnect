@@ -1,30 +1,24 @@
 ﻿namespace InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
 
-internal class GetPostByIdQueryHandler : IQueryHandler<GetPostByIdQuery, PostQueryViewModel>
+internal class GetPostByIdQueryHandler : IQueryHandler<GetPostByIdQueryRequest, GetPostByIdQueryResponse>
 {
-    private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IPostReadRepository _postReadRepository;
+    private readonly IApplicationMapper _mapper;
+    private readonly IPostQueryService _service;
 
-    public GetPostByIdQueryHandler(
-        IInstaConnectMapper instaConnectMapper,
-        IPostReadRepository postReadRepository)
+    public GetPostByIdQueryHandler(IApplicationMapper mapper, IPostQueryService service)
     {
-        _instaConnectMapper = instaConnectMapper;
-        _postReadRepository = postReadRepository;
+        _mapper = mapper;
+        _service = service;
     }
 
-    public async Task<PostQueryViewModel> Handle(
-        GetPostByIdQuery request,
+    public async Task<GetPostByIdQueryResponse> Handle(
+        GetPostByIdQueryRequest request,
         CancellationToken cancellationToken)
     {
-        var post = await _postReadRepository.GetByIdAsync(request.Id, cancellationToken);
+        var serviceRequest = _mapper.Map<GetPostByIdQuery>(request);
+        var serviceResponse = await _service.GetByIdAsync(serviceRequest, cancellationToken);
 
-        if (post == null)
-        {
-            throw new PostNotFoundException();
-        }
-
-        var response = _instaConnectMapper.Map<PostQueryViewModel>(post);
+        var response = _mapper.Map<GetPostByIdQueryResponse>(serviceResponse);
 
         return response;
     }

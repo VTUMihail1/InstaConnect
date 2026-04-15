@@ -1,0 +1,3 @@
+﻿namespace InstaConnect.Chats.Infrastructure.Features.ChatMessages.Abstractions;
+
+internal interface IChatMessagesSortTermerFactory : ISortTermerFactory<ChatMessagesSortTerm, IChatMessagesSortTermer, ChatMessageResponse>;

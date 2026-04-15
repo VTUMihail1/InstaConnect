@@ -2,38 +2,42 @@
 
 using FluentValidation;
 
-using InstaConnect.Shared.Application.Extensions;
-using InstaConnect.Shared.Application.Helpers;
-using InstaConnect.Shared.Application.PipelineBehaviors;
+using InstaConnect.Common.Application.Helpers;
+using InstaConnect.Common.Application.PipelineBehaviors;
 
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Shared.Application.Extensions;
-public static class ServiceCollectionExtentions
+namespace InstaConnect.Common.Application.Extensions;
+
+public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddMediatR(this IServiceCollection serviceCollection, Assembly assembly)
+    extension(IServiceCollection serviceCollection)
     {
-        serviceCollection.AddMediatR(
-            cf =>
-            {
-                cf.RegisterServicesFromAssembly(assembly);
+        public IServiceCollection AddCQRS(params Assembly[] assemblies)
+        {
+            serviceCollection.AddMediatR(
+                cf =>
+                {
+                    cf.RegisterServicesFromAssemblies(assemblies);
 
-                cf.AddOpenBehavior(typeof(LoggingPipelineBehavior<,>));
-                cf.AddOpenBehavior(typeof(ValidationPipelineBehavior<,>));
-                cf.AddOpenBehavior(typeof(CachingPipelineBehavior<,>));
-            });
+                    cf.AddOpenBehavior(typeof(LoggingPipelineBehavior<,>));
+                    cf.AddOpenBehavior(typeof(ValidationPipelineBehavior<,>));
+                    cf.AddOpenBehavior(typeof(CachingPipelineBehavior<,>));
+                    cf.AddOpenBehavior(typeof(UnitOfWorkPipelineBehavior<,>));
+                });
 
-        serviceCollection.AddScoped<IInstaConnectSender, InstaConnectSender>();
+            serviceCollection.AddScoped<IApplicationSender, ApplicationSender>();
 
-        return serviceCollection;
-    }
+            return serviceCollection;
+        }
 
-    public static IServiceCollection AddValidators(this IServiceCollection serviceCollection, Assembly assembly)
-    {
-        serviceCollection.AddValidatorsFromAssembly(assembly);
+        public IServiceCollection AddValidators(params Assembly[] assemblies)
+        {
+            ValidatorOptions.Global.DefaultRuleLevelCascadeMode = CascadeMode.Stop;
 
-        serviceCollection.AddScoped<IEntityPropertyValidator, EntityPropertyValidator>();
+            serviceCollection.AddValidatorsFromAssemblies(assemblies);
 
-        return serviceCollection;
+            return serviceCollection;
+        }
     }
 }

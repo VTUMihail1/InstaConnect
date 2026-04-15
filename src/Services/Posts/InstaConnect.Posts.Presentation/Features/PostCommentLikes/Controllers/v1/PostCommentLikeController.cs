@@ -7,79 +7,79 @@ namespace InstaConnect.Posts.Presentation.Features.PostCommentLikes.Controllers.
 
 [ApiVersion(PostCommentLikeRoutes.Version1)]
 [Route(PostCommentLikeRoutes.Resource)]
-[EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
+[EnableRateLimiting(RateLimiterPolicies.Default)]
 public class PostCommentLikeController : ControllerBase
 {
-    private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IInstaConnectSender _instaConnectSender;
+    private readonly IApplicationMapper _mapper;
+    private readonly IApplicationSender _sender;
 
     public PostCommentLikeController(
-        IInstaConnectMapper instaConnectMapper,
-        IInstaConnectSender instaConnectSender)
+        IApplicationMapper mapper,
+        IApplicationSender sender)
     {
-        _instaConnectMapper = instaConnectMapper;
-        _instaConnectSender = instaConnectSender;
+        _mapper = mapper;
+        _sender = sender;
     }
 
-    // GET: api/post-comment-likes
+    // GET: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/comments/5f0f2dd0-e957-4d72-8141-767a36fc6e95/likes
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<PostCommentLikePaginationQueryResponse>> GetAllAsync(
-        GetAllPostCommentLikesRequest request,
+    public async Task<ActionResult<GetAllPostCommentLikesApiResponse>> GetAllAsync(
+        GetAllPostCommentLikesApiRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _instaConnectMapper.Map<GetAllPostCommentLikesQuery>(request);
-        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<PostCommentLikePaginationQueryResponse>(queryResponse);
+        var queryRequest = _mapper.Map<GetAllPostCommentLikesQueryRequest>(request);
+        var queryResponse = await _sender.SendAsync(queryRequest, cancellationToken);
+        var response = _mapper.Map<GetAllPostCommentLikesApiResponse>(queryResponse);
 
         return Ok(response);
     }
 
-    // GET: api/post-comment-likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+    // GET: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/comments/5f0f2dd0-e957-4d72-8141-767a36fc6e95/likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95
     [HttpGet(PostCommentLikeRoutes.Id)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<PostCommentQueryResponse>> GetByIdAsync(
-        GetPostCommentLikeByIdRequest request,
+    public async Task<ActionResult<GetPostCommentLikeByIdApiResponse>> GetByIdAsync(
+        GetPostCommentLikeByIdApiRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _instaConnectMapper.Map<GetPostCommentLikeByIdQuery>(request);
-        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<PostCommentLikeQueryResponse>(queryResponse);
+        var queryRequest = _mapper.Map<GetPostCommentLikeByIdQueryRequest>(request);
+        var queryResponse = await _sender.SendAsync(queryRequest, cancellationToken);
+        var response = _mapper.Map<GetPostCommentLikeByIdApiResponse>(queryResponse);
 
         return Ok(response);
     }
 
-    // POST: api/post-comment-likes
+    // POST: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/comments/5f0f2dd0-e957-4d72-8141-767a36fc6e95/likes/current
     [HttpPost]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<PostCommentLikeCommandResponse>> AddAsync(
-        AddPostCommentLikeRequest request,
+    public async Task<ActionResult<AddPostCommentLikeApiResponse>> AddAsync(
+        AddPostCommentLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _instaConnectMapper.Map<AddPostCommentLikeCommand>(request);
-        var commandResponse = await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<PostCommentLikeCommandResponse>(commandResponse);
+        var commandRequest = _mapper.Map<AddPostCommentLikeCommandRequest>(request);
+        var commandResponse = await _sender.SendAsync(commandRequest, cancellationToken);
+        var response = _mapper.Map<AddPostCommentLikeApiResponse>(commandResponse);
 
         return Ok(response);
     }
 
-    //DELETE: api/posts-comment-likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-    [HttpDelete(PostCommentLikeRoutes.Id)]
+    // DELETE: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/comments/5f0f2dd0-e957-4d72-8141-767a36fc6e95/likes/current
+    [HttpDelete(PostCommentLikeRoutes.Current)]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> DeleteAsync(
-        DeletePostCommentLikeRequest request,
+        DeletePostCommentLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _instaConnectMapper.Map<DeletePostCommentLikeCommand>(request);
-        await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
+        var commandRequest = _mapper.Map<DeletePostCommentLikeCommandRequest>(request);
+        await _sender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }

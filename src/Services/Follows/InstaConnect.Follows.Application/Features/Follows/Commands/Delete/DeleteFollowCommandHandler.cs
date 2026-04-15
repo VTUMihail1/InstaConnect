@@ -1,36 +1,23 @@
 ﻿namespace InstaConnect.Follows.Application.Features.Follows.Commands.Delete;
 
-internal class DeleteFollowCommandHandler : ICommandHandler<DeleteFollowCommand>
+internal class DeleteFollowCommandHandler : ICommandHandler<DeleteFollowCommandRequest>
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IFollowWriteRepository _followWriteRepository;
+    private readonly IApplicationMapper _mapper;
+    private readonly IFollowCommandService _service;
 
     public DeleteFollowCommandHandler(
-        IUnitOfWork unitOfWork,
-        IFollowWriteRepository followWriteRepository)
+        IApplicationMapper mapper,
+        IFollowCommandService service)
     {
-        _unitOfWork = unitOfWork;
-        _followWriteRepository = followWriteRepository;
+        _mapper = mapper;
+        _service = service;
     }
 
     public async Task Handle(
-        DeleteFollowCommand request,
+        DeleteFollowCommandRequest request,
         CancellationToken cancellationToken)
     {
-        var existingFollow = await _followWriteRepository.GetByIdAsync(request.Id, cancellationToken);
-
-        if (existingFollow == null)
-        {
-            throw new FollowNotFoundException();
-        }
-
-        if (request.CurrentUserId != existingFollow.FollowerId)
-        {
-            throw new UserForbiddenException();
-        }
-
-        _followWriteRepository.Delete(existingFollow);
-
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        var serviceRequest = _mapper.Map<DeleteFollowCommand>(request);
+        await _service.DeleteAsync(serviceRequest, cancellationToken);
     }
 }

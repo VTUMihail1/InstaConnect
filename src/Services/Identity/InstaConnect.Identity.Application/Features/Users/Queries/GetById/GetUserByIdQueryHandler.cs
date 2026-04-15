@@ -1,30 +1,26 @@
 ﻿namespace InstaConnect.Identity.Application.Features.Users.Queries.GetById;
 
-public class GetUserByIdQueryHandler : IQueryHandler<GetUserByIdQuery, UserQueryViewModel>
+internal class GetUserByIdQueryHandler : IQueryHandler<GetUserByIdQueryRequest, GetUserByIdQueryResponse>
 {
-    private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IUserReadRepository _userReadRepository;
+    private readonly IApplicationMapper _mapper;
+    private readonly IUserQueryService _service;
 
     public GetUserByIdQueryHandler(
-        IInstaConnectMapper instaConnectMapper,
-        IUserReadRepository userReadRepository)
+        IApplicationMapper mapper,
+        IUserQueryService service)
     {
-        _instaConnectMapper = instaConnectMapper;
-        _userReadRepository = userReadRepository;
+        _mapper = mapper;
+        _service = service;
     }
 
-    public async Task<UserQueryViewModel> Handle(
-        GetUserByIdQuery request,
+    public async Task<GetUserByIdQueryResponse> Handle(
+        GetUserByIdQueryRequest request,
         CancellationToken cancellationToken)
     {
-        var existingUser = await _userReadRepository.GetByIdAsync(request.Id, cancellationToken);
+        var serviceRequest = _mapper.Map<GetUserByIdQuery>(request);
+        var serviceResponse = await _service.GetByIdAsync(serviceRequest, cancellationToken);
 
-        if (existingUser == null)
-        {
-            throw new UserNotFoundException();
-        }
-
-        var response = _instaConnectMapper.Map<UserQueryViewModel>(existingUser);
+        var response = _mapper.Map<GetUserByIdQueryResponse>(serviceResponse);
 
         return response;
     }
