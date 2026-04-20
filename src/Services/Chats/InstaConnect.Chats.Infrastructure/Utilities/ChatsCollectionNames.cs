@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Chats.Infrastructure.Utilities;
 
-public static class ChatCollectionNames
+public static class ChatsCollectionNames
 {
     public const string Users = "users";
 

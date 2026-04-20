@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Tests.Extensions;
+using InstaConnect.Follows.Infrastructure.Utilities;
 using InstaConnect.Follows.Presentation.Extensions;
 
 using Microsoft.AspNetCore.Hosting;
@@ -28,7 +29,7 @@ public class FollowsWebApplicationFactory : WebApplicationFactory<Program>, IAsy
         builder.ConfigureTestServices(serviceCollection =>
         {
             serviceCollection.AddTestJwtAuth();
-            serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), FollowPresentationReference.Assembly);
+            serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), FollowsEventHandlerUtilities.Prefix, FollowsPresentationReference.Assembly);
         });
 
         builder.UpdateMongoConfiguration(_mongoDbContainer.GetConnectionString());

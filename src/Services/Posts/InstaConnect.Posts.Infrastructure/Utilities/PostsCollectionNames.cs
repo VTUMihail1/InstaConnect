@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Infrastructure.Utilities;
 
-public static class PostCollectionNames
+public static class PostsCollectionNames
 {
     public const string Users = "users";
 

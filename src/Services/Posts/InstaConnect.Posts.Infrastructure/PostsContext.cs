@@ -12,13 +12,13 @@ public class PostsContext : MongoDbContext, IPostsContext
     {
     }
 
-    public IMongoCollection<User> Users => ToCollection<User, UserId>(PostCollectionNames.Users);
+    public IMongoCollection<User> Users => ToCollection<User, UserId>(PostsCollectionNames.Users);
 
-    public IMongoCollection<Post> Posts => ToCollection<Post, PostId>(PostCollectionNames.Posts);
+    public IMongoCollection<Post> Posts => ToCollection<Post, PostId>(PostsCollectionNames.Posts);
 
-    public IMongoCollection<PostLike> PostLikes => ToCollection<PostLike, PostLikeId>(PostCollectionNames.PostLikes);
+    public IMongoCollection<PostLike> PostLikes => ToCollection<PostLike, PostLikeId>(PostsCollectionNames.PostLikes);
 
-    public IMongoCollection<PostComment> PostComments => ToCollection<PostComment, PostCommentId>(PostCollectionNames.PostComments);
+    public IMongoCollection<PostComment> PostComments => ToCollection<PostComment, PostCommentId>(PostsCollectionNames.PostComments);
 
-    public IMongoCollection<PostCommentLike> PostCommentLikes => ToCollection<PostCommentLike, PostCommentLikeId>(PostCollectionNames.PostCommentLikes);
+    public IMongoCollection<PostCommentLike> PostCommentLikes => ToCollection<PostCommentLike, PostCommentLikeId>(PostsCollectionNames.PostCommentLikes);
 }

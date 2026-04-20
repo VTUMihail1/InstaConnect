@@ -10,9 +10,9 @@ internal static class ServiceCollectionExtensions
     {
         internal IServiceCollection AddPostLikeServices()
         {
-            serviceCollection.AddImplementationsOf<IPostLikesSortTermer>(PostInfrastructureReference.Assembly);
-            serviceCollection.AddImplementationsOf<IPostLikesForUserSortTermer>(PostInfrastructureReference.Assembly);
-            serviceCollection.AddImplementationsOf<IPostLikeIncluder>(PostInfrastructureReference.Assembly);
+            serviceCollection.AddImplementationsOf<IPostLikesSortTermer>(PostsInfrastructureReference.Assembly);
+            serviceCollection.AddImplementationsOf<IPostLikesForUserSortTermer>(PostsInfrastructureReference.Assembly);
+            serviceCollection.AddImplementationsOf<IPostLikeIncluder>(PostsInfrastructureReference.Assembly);
 
             BsonClassMap.TryRegisterClassMap<PostLike>(cm =>
             {

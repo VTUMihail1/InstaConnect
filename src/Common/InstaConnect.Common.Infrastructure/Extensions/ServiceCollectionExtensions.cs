@@ -109,21 +109,35 @@ public static partial class ServiceCollectionExtensions
             return serviceCollection;
         }
 
-        public IServiceCollection AddRabbitMQ(IConfiguration configuration, Assembly currentAssembly)
+        public IServiceCollection AddRabbitMQ(IConfiguration configuration, string prefix, params Assembly[] currentAssemblies)
         {
             serviceCollection.AddValidatedOptions<RabbitMqOptions>(RabbitMqOptions.SectionName);
             var options = configuration.GetOptions<RabbitMqOptions>(RabbitMqOptions.SectionName);
 
             serviceCollection.AddMassTransit(busConfigurator =>
             {
-                busConfigurator.SetKebabCaseEndpointNameFormatter();
-                busConfigurator.AddConsumers(currentAssembly);
+                busConfigurator.SetKebabCaseEndpointNameFormatterWithPrefix(prefix);
+
+                busConfigurator.AddConsumers(currentAssemblies);
 
                 busConfigurator.UsingRabbitMq((context, configurator) =>
                 {
-                    configurator.Host(new Uri(options.ConnectionString));
+                    configurator.Host(options.ConnectionString);
 
                     configurator.ConfigureEndpoints(context);
+                });
+
+                busConfigurator.AddMongoDbOutbox(o =>
+                {
+                    const int QueryDelaySeconds = 1;
+                    const int DuplicateDetectionWindowSeconds = 30;
+
+                    o.QueryDelay = TimeSpan.FromSeconds(QueryDelaySeconds);
+                    o.DuplicateDetectionWindow = TimeSpan.FromSeconds(DuplicateDetectionWindowSeconds);
+
+                    o.ClientFactory(provider => provider.GetRequiredService<IMongoClient>());
+                    o.DatabaseFactory(provider => provider.GetRequiredService<IMongoDatabase>());
+                    o.UseBusOutbox();
                 });
             });
 

@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
     .AddDomain()
     .AddApplication()
-    .AddInfrastructure(builder.Configuration, builder.Environment, ChatPresentationReference.Assembly)
+    .AddInfrastructure(builder.Configuration, builder.Environment, ChatsPresentationReference.Assembly)
     .AddPresentation(builder.Configuration);
 
 builder.Host.AddSerilog();

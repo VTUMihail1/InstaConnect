@@ -2,6 +2,7 @@
 
 using InstaConnect.Follows.Infrastructure.Features.Follows.Extensions;
 using InstaConnect.Follows.Infrastructure.Features.Users.Extensions;
+using InstaConnect.Follows.Infrastructure.Utilities;
 
 namespace InstaConnect.Follows.Infrastructure.Extensions;
 
@@ -20,11 +21,11 @@ public static class ServiceCollectionExtensions
 
             serviceCollection
                 .AddOpenTelemetry(configuration, webHostEnvironment)
-                .AddMapper(FollowInfrastructureReference.Assembly)
-                .AddServicesWithMatchingInterfaces(FollowInfrastructureReference.Assembly)
+                .AddMapper(FollowsInfrastructureReference.Assembly)
+                .AddServicesWithMatchingInterfaces(FollowsInfrastructureReference.Assembly)
                 .AddMongoDatabase(configuration)
                 .AddUnitOfWork()
-                .AddRabbitMQ(configuration, presentationAssembly)
+                .AddRabbitMQ(configuration, FollowsEventHandlerUtilities.Prefix, presentationAssembly)
                 .AddJwtBearer(configuration)
                 .AddGuidProvider()
                 .AddDateTimeProvider()

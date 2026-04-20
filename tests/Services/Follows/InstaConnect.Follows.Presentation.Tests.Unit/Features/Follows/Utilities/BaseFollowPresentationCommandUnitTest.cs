@@ -11,6 +11,6 @@ public abstract class BaseFollowPresentationCommandUnitTest : BaseFollowTest
     protected BaseFollowPresentationCommandUnitTest()
     {
         Sender = MockFactory.CreateApplicationSender();
-        Mapper = MockFactory.CreateMapper(FollowPresentationReference.Assembly);
+        Mapper = MockFactory.CreateMapper(FollowsPresentationReference.Assembly);
     }
 }

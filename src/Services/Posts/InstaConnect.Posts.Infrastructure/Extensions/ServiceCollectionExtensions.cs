@@ -5,6 +5,7 @@ using InstaConnect.Posts.Infrastructure.Features.PostComments.Extensions;
 using InstaConnect.Posts.Infrastructure.Features.PostLikes.Extensions;
 using InstaConnect.Posts.Infrastructure.Features.Posts.Extensions;
 using InstaConnect.Posts.Infrastructure.Features.Users.Extensions;
+using InstaConnect.Posts.Infrastructure.Utilities;
 
 namespace InstaConnect.Posts.Infrastructure.Extensions;
 
@@ -26,11 +27,11 @@ public static class ServiceCollectionExtensions
 
             serviceCollection
                 .AddOpenTelemetry(configuration, webHostEnvironment)
-                .AddMapper(PostInfrastructureReference.Assembly)
-                .AddServicesWithMatchingInterfaces(PostInfrastructureReference.Assembly)
+                .AddMapper(PostsInfrastructureReference.Assembly)
+                .AddServicesWithMatchingInterfaces(PostsInfrastructureReference.Assembly)
                 .AddMongoDatabase(configuration)
                 .AddUnitOfWork()
-                .AddRabbitMQ(configuration, presentationAssembly)
+                .AddRabbitMQ(configuration, PostsEventHandlerUtilities.Prefix, presentationAssembly)
                 .AddJwtBearer(configuration)
                 .AddGuidProvider()
                 .AddDateTimeProvider()

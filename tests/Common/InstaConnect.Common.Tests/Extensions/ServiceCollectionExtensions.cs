@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 
+using InstaConnect.Common.Infrastructure.Extensions;
 using InstaConnect.Common.Tests.Events;
 using InstaConnect.Common.Tests.Utilities;
 
@@ -15,11 +16,11 @@ public static class ServiceCollectionExtensions
 {
     extension(IServiceCollection serviceCollection)
     {
-        public IServiceCollection AddTestEventHarness(string connectionString, params Assembly[] currentAssemblies)
+        public IServiceCollection AddTestEventHarness(string connectionString, string prefix, params Assembly[] currentAssemblies)
         {
-            serviceCollection.AddMassTransitTestEventHarness(connectionString, currentAssemblies);
+            serviceCollection.AddMassTransitTestEventHarness(connectionString, prefix, currentAssemblies);
 
-            serviceCollection.AddScoped<ITestHarnessFactory>(_ => new TestHarnessFactory(connectionString, currentAssemblies));
+            serviceCollection.AddScoped<ITestHarnessFactory>(_ => new TestHarnessFactory(connectionString, prefix, currentAssemblies));
             serviceCollection.AddScoped<IEventHarness, EventHarness>();
 
             return serviceCollection;
@@ -32,15 +33,17 @@ public static class ServiceCollectionExtensions
             return serviceCollection;
         }
 
-        internal IServiceCollection AddMassTransitTestEventHarness(string connectionString, params Assembly[] currentAssemblies)
+        internal IServiceCollection AddMassTransitTestEventHarness(string connectionString, string prefix, params Assembly[] currentAssemblies)
         {
             serviceCollection.AddMassTransitTestHarness(busConfigurator =>
             {
+                busConfigurator.SetKebabCaseEndpointNameFormatterWithPrefix(prefix);
+
                 busConfigurator.AddConsumers(currentAssemblies);
 
                 busConfigurator.UsingRabbitMq((context, configurator) =>
                 {
-                    configurator.Host(new Uri(connectionString));
+                    configurator.Host(connectionString);
 
                     configurator.ConfigureEndpoints(context);
                 });

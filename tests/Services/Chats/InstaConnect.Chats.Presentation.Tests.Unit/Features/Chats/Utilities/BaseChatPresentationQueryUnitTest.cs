@@ -11,6 +11,6 @@ public abstract class BaseChatPresentationQueryUnitTest : BaseChatTest
     protected BaseChatPresentationQueryUnitTest()
     {
         Sender = MockFactory.CreateApplicationSender();
-        Mapper = MockFactory.CreateMapper(ChatPresentationReference.Assembly);
+        Mapper = MockFactory.CreateMapper(ChatsPresentationReference.Assembly);
     }
 }

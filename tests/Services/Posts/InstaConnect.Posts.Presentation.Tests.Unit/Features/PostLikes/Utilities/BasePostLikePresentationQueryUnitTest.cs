@@ -11,6 +11,6 @@ public abstract class BasePostLikePresentationQueryUnitTest : BasePostLikeTest
     protected BasePostLikePresentationQueryUnitTest()
     {
         Sender = MockFactory.CreateApplicationSender();
-        Mapper = MockFactory.CreateMapper(PostPresentationReference.Assembly);
+        Mapper = MockFactory.CreateMapper(PostsPresentationReference.Assembly);
     }
 }

@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Common.Tests.Extensions;
-using InstaConnect.Chats.Presentation.Extensions;
 
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -9,6 +8,8 @@ using Testcontainers.MongoDb;
 using Testcontainers.RabbitMq;
 
 using Xunit;
+using InstaConnect.Chats.Presentation.Extensions;
+using InstaConnect.Chats.Infrastructure.Utilities;
 
 namespace InstaConnect.Chats.Tests.Utilities;
 
@@ -28,7 +29,7 @@ public class ChatsWebApplicationFactory : WebApplicationFactory<Program>, IAsync
         builder.ConfigureTestServices(serviceCollection =>
         {
             serviceCollection.AddTestJwtAuth();
-            serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), ChatPresentationReference.Assembly);
+            serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), ChatsEventHandlerUtilities.Prefix, ChatsPresentationReference.Assembly);
         });
 
         builder.UpdateMongoConfiguration(_mongoDbContainer.GetConnectionString());
