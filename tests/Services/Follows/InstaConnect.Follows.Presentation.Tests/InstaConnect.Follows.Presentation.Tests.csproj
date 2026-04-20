@@ -3,6 +3,10 @@
   <PropertyGroup>
     <IsTestProject>false</IsTestProject>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" />
+  </ItemGroup>
     
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Presentation.Tests\InstaConnect.Common.Presentation.Tests.csproj" />
@@ -11,7 +15,7 @@
 
   <ItemGroup Label="Common">
     <Using Include="Microsoft.AspNetCore.Mvc" />
-    <Using Include="InstaConnect.Common.Tests.DataAttributes.Base"/>
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Base" />
     <Using Include="InstaConnect.Common.Domain.Extensions" />
     <Using Include="InstaConnect.Common.Application.Abstractions" />
     <Using Include="InstaConnect.Common.Domain.Models" />
@@ -32,7 +36,7 @@
     <Using Include="InstaConnect.Follows.Domain.Features.Users.Models.Entities" />
     <Using Include="InstaConnect.Follows.Domain.Features.Users.Models.ValueObjects" />
     <Using Include="InstaConnect.Follows.Domain.Features.Users.Utilities" />
-    <Using Include="InstaConnect.Follows.Presentation.Tests.Features.Users.Assertions"/>
+    <Using Include="InstaConnect.Follows.Presentation.Tests.Features.Users.Assertions" />
     <Using Include="InstaConnect.Follows.Tests.Features.Users.Assertions" />
     <Using Include="InstaConnect.Follows.Tests.Features.Users.Builders" />
     <Using Include="InstaConnect.Follows.Tests.Features.Users.Utilities" />
@@ -50,7 +54,7 @@
     <Using Include="InstaConnect.Follows.Tests.Features.Follows.Assertions" />
     <Using Include="InstaConnect.Follows.Tests.Features.Follows.Builders" />
     <Using Include="InstaConnect.Follows.Tests.Features.Follows.Utilities" />
-    <Using Include="InstaConnect.Follows.Presentation.Tests.Features.Follows.Assertions"/>
+    <Using Include="InstaConnect.Follows.Presentation.Tests.Features.Follows.Assertions" />
     <Using Include="InstaConnect.Follows.Application.Features.Follows.Models" />
     <Using Include="InstaConnect.Follows.Application.Features.Follows.Queries.GetAll" />
     <Using Include="InstaConnect.Follows.Application.Features.Follows.Queries.GetAllForFollowing" />

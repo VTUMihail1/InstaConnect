@@ -11,11 +11,8 @@ public static class WebApplicationExtensions
     {
         public WebApplication UseDeveloperDocumentation()
         {
-            if (webApplication.Environment.IsDevelopment())
-            {
-                webApplication.UseSwagger();
-                webApplication.UseSwaggerUI();
-            }
+            webApplication.UseSwagger();
+            webApplication.UseSwaggerUI();
 
             return webApplication;
         }

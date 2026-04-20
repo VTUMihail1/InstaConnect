@@ -34,6 +34,7 @@ public static class ServiceCollectionExtensions
                 .AddServicesWithMatchingInterfaces(IdentityInfrastructureReference.Assembly)
                 .AddRedisCaching(configuration)
                 .AddMongoDatabase(configuration)
+                .AddCloudinary(configuration)
                 .AddUnitOfWork()
                 .AddRabbitMQ(configuration, presentationAssembly)
                 .AddJwtBearer(configuration)

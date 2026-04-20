@@ -15,6 +15,10 @@
     </AssemblyAttribute>
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MediatR" />
+  </ItemGroup>
+
   <ItemGroup Label="Common">
     <Using Include="FluentValidation" />
     <Using Include="Microsoft.Extensions.DependencyInjection" />

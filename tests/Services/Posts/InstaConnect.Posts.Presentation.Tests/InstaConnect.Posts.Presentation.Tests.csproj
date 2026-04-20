@@ -3,6 +3,10 @@
   <PropertyGroup>
     <IsTestProject>false</IsTestProject>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" />
+  </ItemGroup>
     
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Presentation.Tests\InstaConnect.Common.Presentation.Tests.csproj" />
@@ -11,7 +15,7 @@
 
   <ItemGroup Label="Common">
     <Using Include="Microsoft.AspNetCore.Mvc" />
-    <Using Include="InstaConnect.Common.Tests.DataAttributes.Base"/>
+    <Using Include="InstaConnect.Common.Tests.DataAttributes.Base" />
     <Using Include="InstaConnect.Common.Domain.Extensions" />
     <Using Include="InstaConnect.Common.Application.Abstractions" />
     <Using Include="InstaConnect.Common.Domain.Models" />
@@ -32,7 +36,7 @@
     <Using Include="InstaConnect.Posts.Domain.Features.Users.Models.Entities" />
     <Using Include="InstaConnect.Posts.Domain.Features.Users.Models.ValueObjects" />
     <Using Include="InstaConnect.Posts.Domain.Features.Users.Utilities" />
-    <Using Include="InstaConnect.Posts.Presentation.Tests.Features.Users.Assertions"/>
+    <Using Include="InstaConnect.Posts.Presentation.Tests.Features.Users.Assertions" />
     <Using Include="InstaConnect.Posts.Tests.Features.Users.Assertions" />
     <Using Include="InstaConnect.Posts.Tests.Features.Users.Builders" />
     <Using Include="InstaConnect.Posts.Tests.Features.Users.Utilities" />
@@ -50,7 +54,7 @@
     <Using Include="InstaConnect.Posts.Tests.Features.Posts.Assertions" />
     <Using Include="InstaConnect.Posts.Tests.Features.Posts.Builders" />
     <Using Include="InstaConnect.Posts.Tests.Features.Posts.Utilities" />
-    <Using Include="InstaConnect.Posts.Presentation.Tests.Features.Posts.Assertions"/>
+    <Using Include="InstaConnect.Posts.Presentation.Tests.Features.Posts.Assertions" />
     <Using Include="InstaConnect.Posts.Application.Features.Posts.Models" />
     <Using Include="InstaConnect.Posts.Application.Features.Posts.Queries.GetAll" />
     <Using Include="InstaConnect.Posts.Application.Features.Posts.Queries.GetAllForUser" />
@@ -69,7 +73,7 @@
     <Using Include="InstaConnect.Posts.Tests.Features.PostLikes.Assertions" />
     <Using Include="InstaConnect.Posts.Tests.Features.PostLikes.Builders" />
     <Using Include="InstaConnect.Posts.Tests.Features.PostLikes.Utilities" />
-    <Using Include="InstaConnect.Posts.Presentation.Tests.Features.PostLikes.Assertions"/>
+    <Using Include="InstaConnect.Posts.Presentation.Tests.Features.PostLikes.Assertions" />
     <Using Include="InstaConnect.Posts.Application.Features.PostLikes.Models" />
     <Using Include="InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAll" />
     <Using Include="InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAllForUser" />
@@ -87,7 +91,7 @@
     <Using Include="InstaConnect.Posts.Tests.Features.PostComments.Assertions" />
     <Using Include="InstaConnect.Posts.Tests.Features.PostComments.Builders" />
     <Using Include="InstaConnect.Posts.Tests.Features.PostComments.Utilities" />
-    <Using Include="InstaConnect.Posts.Presentation.Tests.Features.PostComments.Assertions"/>
+    <Using Include="InstaConnect.Posts.Presentation.Tests.Features.PostComments.Assertions" />
     <Using Include="InstaConnect.Posts.Application.Features.PostComments.Models" />
     <Using Include="InstaConnect.Posts.Application.Features.PostComments.Queries.GetAll" />
     <Using Include="InstaConnect.Posts.Application.Features.PostComments.Queries.GetAllForUser" />
@@ -106,7 +110,7 @@
     <Using Include="InstaConnect.Posts.Tests.Features.PostCommentLikes.Assertions" />
     <Using Include="InstaConnect.Posts.Tests.Features.PostCommentLikes.Builders" />
     <Using Include="InstaConnect.Posts.Tests.Features.PostCommentLikes.Utilities" />
-    <Using Include="InstaConnect.Posts.Presentation.Tests.Features.PostCommentLikes.Assertions"/>
+    <Using Include="InstaConnect.Posts.Presentation.Tests.Features.PostCommentLikes.Assertions" />
     <Using Include="InstaConnect.Posts.Application.Features.PostCommentLikes.Models" />
     <Using Include="InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAll" />
     <Using Include="InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAllForUser" />

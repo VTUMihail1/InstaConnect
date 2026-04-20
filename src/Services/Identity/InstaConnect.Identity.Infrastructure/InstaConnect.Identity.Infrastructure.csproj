@@ -2,6 +2,7 @@
 
   <ItemGroup>
 	<PackageReference Include="BCrypt.Net-Next" />
+	<PackageReference Include="MediatR" />
   </ItemGroup>
 	
   <ItemGroup>
