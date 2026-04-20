@@ -16,6 +16,9 @@ public static class WebHostBuilderExtensions
             webHostBuilder.UseSetting(
                 MongoOptions.SectionName.FormatCurrentCultureSectionKey(nameof(MongoOptions.ConnectionString)),
                 connectionString);
+
+            webHostBuilder.UseSetting(MongoOptions.SectionName.FormatCurrentCultureSectionKey(nameof(MongoOptions.Name)),
+                MockValues.MongoName);
         }
 
         public void UpdateRedisConfiguration(string connectionString)

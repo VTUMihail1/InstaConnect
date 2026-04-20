@@ -6,6 +6,8 @@ namespace InstaConnect.Common.Tests.Utilities;
 
 public static class MockValues
 {
+    public const string MongoName = "instaconnect";
+
     public const string CloudinaryCloudName = "test";
 
     public const string CloudinaryApiKey = "test";
