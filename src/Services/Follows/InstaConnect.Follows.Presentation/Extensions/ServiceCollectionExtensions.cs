@@ -21,7 +21,6 @@ public static class ServiceCollectionExtensions
                 .AddMapper(FollowsPresentationReference.Assembly, CommonPresentationReference.Assembly)
                 .AddAuthorizationPolicies()
                 .AddCorsPolicies(configuration)
-                .AddSwagger()
                 .AddRateLimiterPolicies()
                 .AddExceptionHandler();
 

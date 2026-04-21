@@ -112,27 +112,6 @@ public static class ServiceCollectionExtensions
             return serviceCollection;
         }
 
-        public IServiceCollection AddSwagger()
-        {
-            serviceCollection.AddEndpointsApiExplorer();
-            serviceCollection.AddSwaggerGen(o =>
-            {
-                var securityScheme = new OpenApiSecurityScheme
-                {
-                    Name = "Authorization",
-                    Type = SecuritySchemeType.Http,
-                    Scheme = JwtBearerDefaults.AuthenticationScheme,
-                    BearerFormat = "JWT",
-                    In = ParameterLocation.Header,
-                    Description = "Enter JWT Bearer token **ONLY**",
-                };
-
-                o.AddSecurityDefinition(securityScheme.Name, securityScheme);
-            });
-
-            return serviceCollection;
-        }
-
         public IServiceCollection AddRateLimiterPolicies()
         {
             serviceCollection.AddRateLimiter(options =>

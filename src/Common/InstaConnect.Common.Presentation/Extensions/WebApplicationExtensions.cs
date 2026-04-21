@@ -8,14 +8,6 @@ public static class WebApplicationExtensions
 {
     extension(WebApplication webApplication)
     {
-        public WebApplication UseDeveloperDocumentation()
-        {
-            webApplication.UseSwagger();
-            webApplication.UseSwaggerUI();
-
-            return webApplication;
-        }
-
         public WebApplication UseConfiguredCors()
         {
             webApplication.UseCors(CorsPolicies.SpecificOrigins);

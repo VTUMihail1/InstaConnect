@@ -9,7 +9,6 @@ internal static class WebApplicationExtensions
         public WebApplication UsePresentation()
         {
             return application
-                .UseDeveloperDocumentation()
                 .UseConfiguredCors()
                 .UseRequestRateLimiting()
                 .UseSecurity()

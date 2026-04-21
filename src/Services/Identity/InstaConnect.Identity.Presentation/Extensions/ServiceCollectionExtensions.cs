@@ -27,7 +27,6 @@ internal static class ServiceCollectionExtensions
                 .AddMapper(IdentityPresentationReference.Assembly, CommonPresentationReference.Assembly)
                 .AddAuthorizationPolicies()
                 .AddCorsPolicies(configuration)
-                .AddSwagger()
                 .AddRateLimiterPolicies()
                 .AddExceptionHandler();
 

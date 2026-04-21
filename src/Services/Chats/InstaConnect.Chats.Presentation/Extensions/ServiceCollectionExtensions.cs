@@ -23,7 +23,6 @@ public static class ServiceCollectionExtensions
                 .AddMapper(ChatsPresentationReference.Assembly, CommonPresentationReference.Assembly)
                 .AddAuthorizationPolicies()
                 .AddCorsPolicies(configuration)
-                .AddSwagger()
                 .AddRateLimiterPolicies()
                 .AddExceptionHandler();
 
