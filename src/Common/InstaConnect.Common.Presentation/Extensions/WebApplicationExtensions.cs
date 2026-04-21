@@ -1,7 +1,6 @@
 ﻿using InstaConnect.Common.Presentation.Utilities;
 
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Hosting;
 
 namespace InstaConnect.Common.Presentation.Extensions;
 
@@ -11,11 +10,8 @@ public static class WebApplicationExtensions
     {
         public WebApplication UseDeveloperDocumentation()
         {
-            if (webApplication.Environment.IsDevelopment())
-            {
-                webApplication.UseSwagger();
-                webApplication.UseSwaggerUI();
-            }
+            webApplication.UseSwagger();
+            webApplication.UseSwaggerUI();
 
             return webApplication;
         }

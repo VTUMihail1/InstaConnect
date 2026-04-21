@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Utilities;
-using InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.Utilities;
 
 namespace InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Builders;
 

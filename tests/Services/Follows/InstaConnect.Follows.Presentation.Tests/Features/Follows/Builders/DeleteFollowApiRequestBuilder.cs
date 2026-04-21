@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Tests.DataAttributes.Base;
-
-namespace InstaConnect.Follows.Presentation.Tests.Features.Follows.Builders;
+﻿namespace InstaConnect.Follows.Presentation.Tests.Features.Follows.Builders;
 
 public class DeleteFollowApiRequestBuilder
 {

@@ -18,9 +18,9 @@ public static class ServiceCollectionExtensions
                 .AddChatMessageServices();
 
             serviceCollection
-                .AddServicesWithMatchingInterfaces(ChatPresentationReference.Assembly)
+                .AddServicesWithMatchingInterfaces(ChatsPresentationReference.Assembly)
                 .AddApiControllers()
-                .AddMapper(ChatPresentationReference.Assembly, CommonPresentationReference.Assembly)
+                .AddMapper(ChatsPresentationReference.Assembly, CommonPresentationReference.Assembly)
                 .AddAuthorizationPolicies()
                 .AddCorsPolicies(configuration)
                 .AddSwagger()

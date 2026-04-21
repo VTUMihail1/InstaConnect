@@ -10,7 +10,7 @@ public abstract class BasePostCommentLikeApplicationCommandUnitTest : BasePostCo
 
     protected BasePostCommentLikeApplicationCommandUnitTest()
     {
-        Mapper = MockFactory.CreateMapper(PostApplicationReference.Assembly);
+        Mapper = MockFactory.CreateMapper(PostsApplicationReference.Assembly);
         CommentLikeService = PostCommentLikeMockFactory.CreateCommandService();
     }
 }

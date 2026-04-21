@@ -12,6 +12,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="MediatR" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="xunit" />
     <PackageReference Include="xunit.runner.visualstudio">
@@ -31,7 +32,7 @@
     <Using Include="InstaConnect.Common.Application.Abstractions" />
     <Using Include="InstaConnect.Common.Tests.Events" />
     <Using Include="InstaConnect.Common.Tests.Assertions" />
-    <Using Include="InstaConnect.Common.Application.Tests.Assertions"/>
+    <Using Include="InstaConnect.Common.Application.Tests.Assertions" />
     <Using Include="InstaConnect.Common.Tests.Utilities" />
     <Using Include="InstaConnect.Common.Tests.DataAttributes.Enums" />
     <Using Include="InstaConnect.Common.Tests.DataAttributes.Enums.Base" />
@@ -45,12 +46,12 @@
     <Using Include="InstaConnect.Follows.Domain.Features.Users.Abstractions" />
     <Using Include="InstaConnect.Follows.Domain.Features.Users.Models.Entities" />
     <Using Include="InstaConnect.Follows.Application.Tests.Features.Users.Builders" />
-    <Using Include="InstaConnect.Follows.Application.Tests.Features.Users.Utilities"/>
+    <Using Include="InstaConnect.Follows.Application.Tests.Features.Users.Utilities" />
     <Using Include="InstaConnect.Follows.Application.Features.Users.Commands.Add" />
     <Using Include="InstaConnect.Follows.Application.Features.Users.Commands.Update" />
     <Using Include="InstaConnect.Follows.Application.Features.Users.Commands.Delete" />
     <Using Include="InstaConnect.Follows.Application.Tests.Integration.Features.Users.Utilities" />
-    <Using Include="InstaConnect.Follows.Application.Tests.Features.Users.Assertions"/>
+    <Using Include="InstaConnect.Follows.Application.Tests.Features.Users.Assertions" />
     <Using Include="InstaConnect.Follows.Tests.Features.Users.Assertions" />
     <Using Include="InstaConnect.Follows.Tests.Features.Users.Builders" />
     <Using Include="InstaConnect.Follows.Tests.Features.Users.Utilities" />
@@ -68,14 +69,14 @@
     <Using Include="InstaConnect.Follows.Domain.Features.Follows.Abstractions" />
     <Using Include="InstaConnect.Follows.Domain.Features.Follows.Models.Entities" />
     <Using Include="InstaConnect.Follows.Application.Tests.Features.Follows.Builders" />
-    <Using Include="InstaConnect.Follows.Application.Tests.Features.Follows.Utilities"/>
+    <Using Include="InstaConnect.Follows.Application.Tests.Features.Follows.Utilities" />
     <Using Include="InstaConnect.Follows.Application.Features.Follows.Queries.GetAll" />
     <Using Include="InstaConnect.Follows.Application.Features.Follows.Queries.GetAllForFollowing" />
     <Using Include="InstaConnect.Follows.Application.Features.Follows.Queries.GetById" />
     <Using Include="InstaConnect.Follows.Application.Features.Follows.Commands.Add" />
     <Using Include="InstaConnect.Follows.Application.Features.Follows.Commands.Delete" />
     <Using Include="InstaConnect.Follows.Application.Tests.Integration.Features.Follows.Utilities" />
-    <Using Include="InstaConnect.Follows.Application.Tests.Features.Follows.Assertions"/>
+    <Using Include="InstaConnect.Follows.Application.Tests.Features.Follows.Assertions" />
     <Using Include="InstaConnect.Follows.Tests.Features.Follows.Assertions" />
     <Using Include="InstaConnect.Follows.Tests.Features.Follows.Builders" />
     <Using Include="InstaConnect.Follows.Tests.Features.Follows.Utilities" />

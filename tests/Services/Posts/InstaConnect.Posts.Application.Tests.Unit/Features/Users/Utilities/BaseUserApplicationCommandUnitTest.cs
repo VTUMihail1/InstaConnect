@@ -10,7 +10,7 @@ public abstract class BaseUserApplicationCommandUnitTest : BaseUserTest
 
     protected BaseUserApplicationCommandUnitTest()
     {
-        Mapper = MockFactory.CreateMapper(PostApplicationReference.Assembly);
+        Mapper = MockFactory.CreateMapper(PostsApplicationReference.Assembly);
         UserService = UserMockFactory.CreateCommandService();
     }
 }

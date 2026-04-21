@@ -1,6 +1,5 @@
 ﻿using InstaConnect.Common.Domain.Models;
 using InstaConnect.Follows.Domain.Features.Follows.Models.Requests;
-using InstaConnect.Follows.Tests.Features.Follows.DataAttributes.SortTerm.ForFollowing;
 
 namespace InstaConnect.Follows.Application.Tests.Unit.Features.Follows.Queries.GetAllForFollowing;
 

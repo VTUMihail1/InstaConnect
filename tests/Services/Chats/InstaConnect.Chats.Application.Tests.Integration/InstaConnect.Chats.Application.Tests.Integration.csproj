@@ -12,6 +12,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="MediatR" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="xunit" />
     <PackageReference Include="xunit.runner.visualstudio">
@@ -31,7 +32,7 @@
     <Using Include="InstaConnect.Common.Application.Abstractions" />
     <Using Include="InstaConnect.Common.Tests.Events" />
     <Using Include="InstaConnect.Common.Tests.Assertions" />
-    <Using Include="InstaConnect.Common.Application.Tests.Assertions"/>
+    <Using Include="InstaConnect.Common.Application.Tests.Assertions" />
     <Using Include="InstaConnect.Common.Tests.Utilities" />
     <Using Include="InstaConnect.Common.Tests.DataAttributes.Enums" />
     <Using Include="InstaConnect.Common.Tests.DataAttributes.Enums.Base" />
@@ -45,12 +46,12 @@
     <Using Include="InstaConnect.Chats.Domain.Features.Users.Abstractions" />
     <Using Include="InstaConnect.Chats.Domain.Features.Users.Models.Entities" />
     <Using Include="InstaConnect.Chats.Application.Tests.Features.Users.Builders" />
-    <Using Include="InstaConnect.Chats.Application.Tests.Features.Users.Utilities"/>
+    <Using Include="InstaConnect.Chats.Application.Tests.Features.Users.Utilities" />
     <Using Include="InstaConnect.Chats.Application.Features.Users.Commands.Add" />
     <Using Include="InstaConnect.Chats.Application.Features.Users.Commands.Update" />
     <Using Include="InstaConnect.Chats.Application.Features.Users.Commands.Delete" />
     <Using Include="InstaConnect.Chats.Application.Tests.Integration.Features.Users.Utilities" />
-    <Using Include="InstaConnect.Chats.Application.Tests.Features.Users.Assertions"/>
+    <Using Include="InstaConnect.Chats.Application.Tests.Features.Users.Assertions" />
     <Using Include="InstaConnect.Chats.Tests.Features.Users.Assertions" />
     <Using Include="InstaConnect.Chats.Tests.Features.Users.Builders" />
     <Using Include="InstaConnect.Chats.Tests.Features.Users.Utilities" />
@@ -68,12 +69,12 @@
     <Using Include="InstaConnect.Chats.Domain.Features.Chats.Abstractions" />
     <Using Include="InstaConnect.Chats.Domain.Features.Chats.Models.Entities" />
     <Using Include="InstaConnect.Chats.Application.Tests.Features.Chats.Builders" />
-    <Using Include="InstaConnect.Chats.Application.Tests.Features.Chats.Utilities"/>
+    <Using Include="InstaConnect.Chats.Application.Tests.Features.Chats.Utilities" />
     <Using Include="InstaConnect.Chats.Application.Features.Chats.Queries.GetAll" />
     <Using Include="InstaConnect.Chats.Application.Features.Chats.Queries.GetById" />
     <Using Include="InstaConnect.Chats.Application.Features.Chats.Commands.Add" />
     <Using Include="InstaConnect.Chats.Application.Tests.Integration.Features.Chats.Utilities" />
-    <Using Include="InstaConnect.Chats.Application.Tests.Features.Chats.Assertions"/>
+    <Using Include="InstaConnect.Chats.Application.Tests.Features.Chats.Assertions" />
     <Using Include="InstaConnect.Chats.Tests.Features.Chats.Assertions" />
     <Using Include="InstaConnect.Chats.Tests.Features.Chats.Builders" />
     <Using Include="InstaConnect.Chats.Tests.Features.Chats.Utilities" />
@@ -87,14 +88,14 @@
     <Using Include="InstaConnect.Chats.Domain.Features.ChatMessages.Abstractions" />
     <Using Include="InstaConnect.Chats.Domain.Features.ChatMessages.Models.Entities" />
     <Using Include="InstaConnect.Chats.Application.Tests.Features.ChatMessages.Builders" />
-    <Using Include="InstaConnect.Chats.Application.Tests.Features.ChatMessages.Utilities"/>
+    <Using Include="InstaConnect.Chats.Application.Tests.Features.ChatMessages.Utilities" />
     <Using Include="InstaConnect.Chats.Application.Features.ChatMessages.Queries.GetAll" />
     <Using Include="InstaConnect.Chats.Application.Features.ChatMessages.Queries.GetById" />
     <Using Include="InstaConnect.Chats.Application.Features.ChatMessages.Commands.Add" />
     <Using Include="InstaConnect.Chats.Application.Features.ChatMessages.Commands.Update" />
     <Using Include="InstaConnect.Chats.Application.Features.ChatMessages.Commands.Delete" />
     <Using Include="InstaConnect.Chats.Application.Tests.Integration.Features.ChatMessages.Utilities" />
-    <Using Include="InstaConnect.Chats.Application.Tests.Features.ChatMessages.Assertions"/>
+    <Using Include="InstaConnect.Chats.Application.Tests.Features.ChatMessages.Assertions" />
     <Using Include="InstaConnect.Chats.Tests.Features.ChatMessages.Builders" />
     <Using Include="InstaConnect.Chats.Tests.Features.ChatMessages.Utilities" />
     <Using Include="InstaConnect.Chats.Tests.Features.ChatMessages.DataAttributes.Id" />

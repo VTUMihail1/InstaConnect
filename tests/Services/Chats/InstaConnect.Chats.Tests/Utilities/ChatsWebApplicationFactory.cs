@@ -1,5 +1,5 @@
-﻿using InstaConnect.Common.Tests.Extensions;
-using InstaConnect.Chats.Presentation.Extensions;
+﻿using InstaConnect.Chats.Presentation.Extensions;
+using InstaConnect.Common.Tests.Extensions;
 
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -28,7 +28,7 @@ public class ChatsWebApplicationFactory : WebApplicationFactory<Program>, IAsync
         builder.ConfigureTestServices(serviceCollection =>
         {
             serviceCollection.AddTestJwtAuth();
-            serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), ChatPresentationReference.Assembly);
+            serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), ChatsPresentationReference.Assembly);
         });
 
         builder.UpdateMongoConfiguration(_mongoDbContainer.GetConnectionString());

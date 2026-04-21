@@ -10,7 +10,7 @@ public abstract class BaseFollowApplicationCommandUnitTest : BaseFollowTest
 
     protected BaseFollowApplicationCommandUnitTest()
     {
-        Mapper = MockFactory.CreateMapper(FollowApplicationReference.Assembly);
+        Mapper = MockFactory.CreateMapper(FollowsApplicationReference.Assembly);
         Service = FollowMockFactory.CreateCommandService();
     }
 }

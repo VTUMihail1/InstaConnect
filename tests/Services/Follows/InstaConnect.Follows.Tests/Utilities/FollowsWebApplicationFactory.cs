@@ -28,7 +28,7 @@ public class FollowsWebApplicationFactory : WebApplicationFactory<Program>, IAsy
         builder.ConfigureTestServices(serviceCollection =>
         {
             serviceCollection.AddTestJwtAuth();
-            serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), FollowPresentationReference.Assembly);
+            serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), FollowsPresentationReference.Assembly);
         });
 
         builder.UpdateMongoConfiguration(_mongoDbContainer.GetConnectionString());

@@ -28,7 +28,7 @@ public class PostsWebApplicationFactory : WebApplicationFactory<Program>, IAsync
         builder.ConfigureTestServices(serviceCollection =>
         {
             serviceCollection.AddTestJwtAuth();
-            serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), PostPresentationReference.Assembly);
+            serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), PostsPresentationReference.Assembly);
         });
 
         builder.UpdateMongoConfiguration(_mongoDbContainer.GetConnectionString());

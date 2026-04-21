@@ -10,7 +10,7 @@ internal static class ServiceCollectionExtensions
     {
         internal IServiceCollection AddUserServices()
         {
-            serviceCollection.AddImplementationsOf<IUserIncluder>(ChatInfrastructureReference.Assembly);
+            serviceCollection.AddImplementationsOf<IUserIncluder>(ChatsInfrastructureReference.Assembly);
 
             BsonClassMap.TryRegisterClassMap<User>(cm =>
             {

@@ -1,5 +1,5 @@
-﻿using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
-using InstaConnect.Chats.Application.Tests.Features.Chats.Utilities;
+﻿using InstaConnect.Chats.Application.Tests.Features.Chats.Utilities;
+using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
 
 namespace InstaConnect.Chats.Application.Tests.Features.Chats.Assertions;
 

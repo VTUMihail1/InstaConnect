@@ -1,8 +1,6 @@
 ﻿using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Options;
 using InstaConnect.Identity.Infrastructure.Extensions;
 
-using Microsoft.AspNetCore.Cors.Infrastructure;
-
 using MongoDB.Bson.Serialization;
 
 namespace InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Extensions;
