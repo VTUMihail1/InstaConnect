@@ -1,7 +1,5 @@
 ﻿using InstaConnect.Common.Tests.DataAttributes.Base;
 
-using MassTransit.Util;
-
 namespace InstaConnect.Chats.Application.Tests.Features.Chats.Builders;
 
 public class GetAllChatsQueryRequestBuilder

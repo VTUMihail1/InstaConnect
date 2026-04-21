@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 
-using InstaConnect.Common.Infrastructure.Extensions;
 using InstaConnect.Common.Tests.Events;
 using InstaConnect.Common.Tests.Utilities;
 
@@ -16,11 +15,11 @@ public static class ServiceCollectionExtensions
 {
     extension(IServiceCollection serviceCollection)
     {
-        public IServiceCollection AddTestEventHarness(string connectionString, string prefix, params Assembly[] currentAssemblies)
+        public IServiceCollection AddTestEventHarness(string connectionString, Assembly currentAssembly, Action<IRabbitMqBusFactoryConfigurator, IBusRegistrationContext>? configureEndpoints = null)
         {
-            serviceCollection.AddMassTransitTestEventHarness(connectionString, prefix, currentAssemblies);
+            serviceCollection.AddMassTransitTestEventHarness(connectionString, currentAssembly, configureEndpoints);
 
-            serviceCollection.AddScoped<ITestHarnessFactory>(_ => new TestHarnessFactory(connectionString, prefix, currentAssemblies));
+            serviceCollection.AddScoped<ITestHarnessFactory>(_ => new TestHarnessFactory(connectionString, currentAssembly, configureEndpoints));
             serviceCollection.AddScoped<IEventHarness, EventHarness>();
 
             return serviceCollection;
@@ -33,19 +32,19 @@ public static class ServiceCollectionExtensions
             return serviceCollection;
         }
 
-        internal IServiceCollection AddMassTransitTestEventHarness(string connectionString, string prefix, params Assembly[] currentAssemblies)
+        internal IServiceCollection AddMassTransitTestEventHarness(string connectionString, Assembly currentAssembly, Action<IRabbitMqBusFactoryConfigurator, IBusRegistrationContext>? configureEndpoints = null)
         {
             serviceCollection.AddMassTransitTestHarness(busConfigurator =>
             {
-                busConfigurator.SetKebabCaseEndpointNameFormatterWithPrefix(prefix);
+                busConfigurator.SetKebabCaseEndpointNameFormatter();
 
-                busConfigurator.AddConsumers(currentAssemblies);
+                busConfigurator.AddConsumers(currentAssembly);
 
                 busConfigurator.UsingRabbitMq((context, configurator) =>
                 {
                     configurator.Host(connectionString);
 
-                    configurator.ConfigureEndpoints(context);
+                    configureEndpoints?.Invoke(configurator, context);
                 });
             });
 

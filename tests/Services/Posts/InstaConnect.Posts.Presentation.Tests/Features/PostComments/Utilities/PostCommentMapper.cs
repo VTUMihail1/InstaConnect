@@ -1,6 +1,5 @@
 ﻿using InstaConnect.Common.Infrastructure.Helpers;
 using InstaConnect.Common.Presentation.Abstractions;
-using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAllForUser;
 using InstaConnect.Posts.Presentation.Features.Users.Abstractions;
 using InstaConnect.Posts.Presentation.Tests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Presentation.Tests.Features.PostLikes.Utilities;

@@ -6,8 +6,6 @@ using InstaConnect.Common.Application.Abstractions;
 using InstaConnect.Common.Application.Tests.Utilities;
 using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
 
-using MassTransit;
-
 namespace InstaConnect.Chats.Application.Tests.Features.Chats.Utilities;
 
 public static class ChatEquals

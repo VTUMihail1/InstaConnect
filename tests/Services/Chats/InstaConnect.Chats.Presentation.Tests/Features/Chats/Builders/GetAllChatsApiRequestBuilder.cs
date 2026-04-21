@@ -1,7 +1,4 @@
 ﻿using InstaConnect.Chats.Domain.Features.Chats.Models.Requests;
-using InstaConnect.Common.Tests.DataAttributes.Base;
-
-using MassTransit.Util;
 
 namespace InstaConnect.Chats.Presentation.Tests.Features.Chats.Builders;
 

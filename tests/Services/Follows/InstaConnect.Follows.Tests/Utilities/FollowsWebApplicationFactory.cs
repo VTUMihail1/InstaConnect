@@ -1,6 +1,8 @@
-﻿using InstaConnect.Common.Tests.Extensions;
-using InstaConnect.Follows.Infrastructure.Utilities;
+﻿using InstaConnect.Common.Infrastructure.Extensions;
+using InstaConnect.Common.Tests.Extensions;
 using InstaConnect.Follows.Presentation.Extensions;
+using InstaConnect.Follows.Presentation.Features.Users.EventHandlers;
+using InstaConnect.Follows.Presentation.Utilities;
 
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -29,7 +31,9 @@ public class FollowsWebApplicationFactory : WebApplicationFactory<Program>, IAsy
         builder.ConfigureTestServices(serviceCollection =>
         {
             serviceCollection.AddTestJwtAuth();
-            serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), FollowsEventHandlerUtilities.Prefix, FollowsPresentationReference.Assembly);
+            serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), FollowsPresentationReference.Assembly, (configurator, context) => configurator.ReceiveEndpoint<UserAddedEventHandler>(context, FollowsEventHandlerUtilities.UserAdded)
+                                                                                                                                                                          .ReceiveEndpoint<UserUpdatedEventHandler>(context, FollowsEventHandlerUtilities.UserUpdated)
+                                                                                                                                                                          .ReceiveEndpoint<UserDeletedEventHandler>(context, FollowsEventHandlerUtilities.UserDeleted));
         });
 
         builder.UpdateMongoConfiguration(_mongoDbContainer.GetConnectionString());

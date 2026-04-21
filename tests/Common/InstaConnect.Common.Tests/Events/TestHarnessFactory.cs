@@ -2,6 +2,7 @@
 
 using InstaConnect.Common.Tests.Extensions;
 
+using MassTransit;
 using MassTransit.Testing;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -10,21 +11,21 @@ namespace InstaConnect.Common.Tests.Events;
 
 public class TestHarnessFactory : ITestHarnessFactory
 {
-    private string _connectionString;
-    private string _prefix;
-    private Assembly[] _currentAssemblies;
+    private readonly string _connectionString;
+    private readonly Assembly _currentAssembly;
+    private readonly Action<IRabbitMqBusFactoryConfigurator, IBusRegistrationContext>? _configureEndpoints;
 
-    public TestHarnessFactory(string connectionString, string prefix, Assembly[] currentAssemblies)
+    public TestHarnessFactory(string connectionString, Assembly currentAssembly, Action<IRabbitMqBusFactoryConfigurator, IBusRegistrationContext>? configureEndpoints = null)
     {
         _connectionString = connectionString;
-        _prefix = prefix;
-        _currentAssemblies = currentAssemblies;
+        _currentAssembly = currentAssembly;
+        _configureEndpoints = configureEndpoints;
     }
 
     public ITestHarness Create()
     {
         return new ServiceCollection()
-                .AddMassTransitTestEventHarness(_connectionString, _prefix, _currentAssemblies)
+                .AddMassTransitTestEventHarness(_connectionString, _currentAssembly, _configureEndpoints)
                 .BuildServiceProvider(true)
                 .GetTestHarness();
     }
