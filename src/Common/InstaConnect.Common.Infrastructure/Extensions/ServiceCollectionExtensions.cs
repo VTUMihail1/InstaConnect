@@ -126,19 +126,6 @@ public static partial class ServiceCollectionExtensions
 
                     configurator.ConfigureEndpoints(context);
                 });
-
-                busConfigurator.AddMongoDbOutbox(o =>
-                {
-                    const int QueryDelaySeconds = 1;
-                    const int DuplicateDetectionWindowSeconds = 30;
-
-                    o.QueryDelay = TimeSpan.FromSeconds(QueryDelaySeconds);
-                    o.DuplicateDetectionWindow = TimeSpan.FromSeconds(DuplicateDetectionWindowSeconds);
-
-                    o.ClientFactory(provider => provider.GetRequiredService<IMongoClient>());
-                    o.DatabaseFactory(provider => provider.GetRequiredService<IMongoDatabase>());
-                    o.UseBusOutbox();
-                });
             });
 
             serviceCollection.AddScoped<IEventPublisher, EventPublisher>();
