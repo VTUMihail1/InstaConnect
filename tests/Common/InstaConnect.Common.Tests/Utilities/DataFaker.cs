@@ -17,7 +17,7 @@ public abstract class DataFaker
 
     public static IFormFile GetFormFile()
     {
-        var name = _faker.Random.String();
+        var name = _faker.System.FileName();
         var formFile = Mocker.Mock<IFormFile>();
 
         var fileContent = Encoding.UTF8.GetBytes("This is a test file.");
