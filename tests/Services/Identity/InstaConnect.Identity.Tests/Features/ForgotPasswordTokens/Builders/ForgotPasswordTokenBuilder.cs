@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.Utilities;
+using InstaConnect.Identity.Tests.Features.RefreshTokens.Utilities;
 
 namespace InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.Builders;
 

@@ -1,8 +1,4 @@
-﻿using InstaConnect.Chats.Presentation.Extensions;
-using InstaConnect.Chats.Presentation.Features.Users.EventHandlers;
-using InstaConnect.Chats.Presentation.Utilities;
-using InstaConnect.Common.Infrastructure.Extensions;
-using InstaConnect.Common.Tests.Extensions;
+﻿using InstaConnect.Common.Tests.Extensions;
 
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -12,6 +8,8 @@ using Testcontainers.MongoDb;
 using Testcontainers.RabbitMq;
 
 using Xunit;
+using InstaConnect.Chats.Presentation.Extensions;
+using InstaConnect.Chats.Infrastructure.Utilities;
 
 namespace InstaConnect.Chats.Tests.Utilities;
 
@@ -31,9 +29,7 @@ public class ChatsWebApplicationFactory : WebApplicationFactory<Program>, IAsync
         builder.ConfigureTestServices(serviceCollection =>
         {
             serviceCollection.AddTestJwtAuth();
-            serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), ChatsPresentationReference.Assembly, (configurator, context) => configurator.ReceiveEndpoint<UserAddedEventHandler>(context, ChatsEventHandlerUtilities.UserAdded)
-                                                                                                                                                                        .ReceiveEndpoint<UserUpdatedEventHandler>(context, ChatsEventHandlerUtilities.UserUpdated)
-                                                                                                                                                                        .ReceiveEndpoint<UserDeletedEventHandler>(context, ChatsEventHandlerUtilities.UserDeleted));
+            serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), ChatsEventHandlerUtilities.Prefix, ChatsPresentationReference.Assembly);
         });
 
         builder.UpdateMongoConfiguration(_mongoDbContainer.GetConnectionString());

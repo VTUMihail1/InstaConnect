@@ -3,8 +3,7 @@
 using InstaConnect.Chats.Infrastructure.Features.ChatMessages.Extensions;
 using InstaConnect.Chats.Infrastructure.Features.Chats.Extensions;
 using InstaConnect.Chats.Infrastructure.Features.Users.Extensions;
-
-using MassTransit;
+using InstaConnect.Chats.Infrastructure.Utilities;
 
 namespace InstaConnect.Chats.Infrastructure.Extensions;
 
@@ -15,8 +14,7 @@ public static class ServiceCollectionExtensions
         public IServiceCollection AddInfrastructure(
             IConfiguration configuration,
             IWebHostEnvironment webHostEnvironment,
-            Assembly presentationAssembly,
-            Action<IRabbitMqBusFactoryConfigurator, IBusRegistrationContext>? configureEndpoints = null)
+            Assembly presentationAssembly)
         {
             serviceCollection
                 .AddUserServices()
@@ -29,7 +27,7 @@ public static class ServiceCollectionExtensions
                 .AddServicesWithMatchingInterfaces(ChatsInfrastructureReference.Assembly)
                 .AddMongoDatabase(configuration)
                 .AddUnitOfWork()
-                .AddRabbitMQ(configuration, presentationAssembly, configureEndpoints)
+                .AddRabbitMQ(configuration, ChatsEventHandlerUtilities.Prefix, presentationAssembly)
                 .AddJwtBearer(configuration)
                 .AddGuidProvider()
                 .AddDateTimeProvider()

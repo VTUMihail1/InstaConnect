@@ -1,8 +1,13 @@
-﻿using InstaConnect.Chats.Domain.Features.Chats.Models.Requests;
+﻿using System.Linq.Expressions;
+
+using InstaConnect.Chats.Application.Features.Users.Abstractions;
+using InstaConnect.Chats.Domain.Features.Chats.Models.Requests;
 using InstaConnect.Chats.Presentation.Features.Users.Abstractions;
 using InstaConnect.Chats.Presentation.Tests.Features.Users.Utilities;
 using InstaConnect.Common.Presentation.Abstractions;
 using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
+
+using NSubstitute.Core;
 
 namespace InstaConnect.Chats.Presentation.Tests.Features.Chats.Utilities;
 

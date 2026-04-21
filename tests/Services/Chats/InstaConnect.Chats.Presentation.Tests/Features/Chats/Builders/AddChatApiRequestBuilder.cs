@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Chats.Presentation.Tests.Features.Chats.Builders;
+﻿using InstaConnect.Common.Tests.DataAttributes.Base;
+
+namespace InstaConnect.Chats.Presentation.Tests.Features.Chats.Builders;
 
 public class AddChatApiRequestBuilder
 {

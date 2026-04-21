@@ -1,6 +1,6 @@
-﻿using InstaConnect.Chats.Domain.Features.Chats.Models.Requests;
-using InstaConnect.Common.Domain.Models;
+﻿using InstaConnect.Common.Domain.Models;
 using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
+using InstaConnect.Chats.Domain.Features.Chats.Models.Requests;
 
 namespace InstaConnect.Chats.Application.Tests.Integration.Features.Chats.Queries;
 

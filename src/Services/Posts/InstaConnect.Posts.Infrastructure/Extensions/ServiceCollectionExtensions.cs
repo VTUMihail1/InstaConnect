@@ -5,8 +5,7 @@ using InstaConnect.Posts.Infrastructure.Features.PostComments.Extensions;
 using InstaConnect.Posts.Infrastructure.Features.PostLikes.Extensions;
 using InstaConnect.Posts.Infrastructure.Features.Posts.Extensions;
 using InstaConnect.Posts.Infrastructure.Features.Users.Extensions;
-
-using MassTransit;
+using InstaConnect.Posts.Infrastructure.Utilities;
 
 namespace InstaConnect.Posts.Infrastructure.Extensions;
 
@@ -17,8 +16,7 @@ public static class ServiceCollectionExtensions
         public IServiceCollection AddInfrastructure(
             IConfiguration configuration,
             IWebHostEnvironment webHostEnvironment,
-            Assembly presentationAssembly,
-            Action<IRabbitMqBusFactoryConfigurator, IBusRegistrationContext>? configureEndpoints = null)
+            Assembly presentationAssembly)
         {
             serviceCollection
                 .AddUserServices()
@@ -33,7 +31,7 @@ public static class ServiceCollectionExtensions
                 .AddServicesWithMatchingInterfaces(PostsInfrastructureReference.Assembly)
                 .AddMongoDatabase(configuration)
                 .AddUnitOfWork()
-                .AddRabbitMQ(configuration, presentationAssembly, configureEndpoints)
+                .AddRabbitMQ(configuration, PostsEventHandlerUtilities.Prefix, presentationAssembly)
                 .AddJwtBearer(configuration)
                 .AddGuidProvider()
                 .AddDateTimeProvider()

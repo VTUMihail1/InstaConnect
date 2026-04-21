@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Follows.Presentation.Tests.Features.Follows.Utilities;
+﻿using InstaConnect.Follows.Application.Features.Follows.Queries.GetAllForFollowing;
+
+namespace InstaConnect.Follows.Presentation.Tests.Features.Follows.Utilities;
 
 public static class FollowMatcher
 {

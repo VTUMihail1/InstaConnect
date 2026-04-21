@@ -7,8 +7,7 @@ using InstaConnect.Identity.Infrastructure.Features.RefreshTokens.Extensions;
 using InstaConnect.Identity.Infrastructure.Features.UserClaims.Extensions;
 using InstaConnect.Identity.Infrastructure.Features.Users.Extensions;
 using InstaConnect.Identity.Infrastructure.Helpers;
-
-using MassTransit;
+using InstaConnect.Identity.Infrastructure.Utilities;
 
 namespace InstaConnect.Identity.Infrastructure.Extensions;
 
@@ -19,8 +18,7 @@ public static class ServiceCollectionExtensions
         public IServiceCollection AddInfrastructure(
             IConfiguration configuration,
             IWebHostEnvironment webHostEnvironment,
-            Assembly presentationAssembly,
-            Action<IRabbitMqBusFactoryConfigurator, IBusRegistrationContext>? configureEndpoints = null)
+            Assembly presentationAssembly)
         {
             serviceCollection.AddSingleton<IPasswordHasher, PasswordHasher>();
 
@@ -39,7 +37,7 @@ public static class ServiceCollectionExtensions
                 .AddMongoDatabase(configuration)
                 .AddCloudinary(configuration)
                 .AddUnitOfWork()
-                .AddRabbitMQ(configuration, presentationAssembly, configureEndpoints)
+                .AddRabbitMQ(configuration, IdentityEventHandlerUtilities.Prefix, presentationAssembly)
                 .AddJwtBearer(configuration)
                 .AddGuidProvider()
                 .AddDateTimeProvider()

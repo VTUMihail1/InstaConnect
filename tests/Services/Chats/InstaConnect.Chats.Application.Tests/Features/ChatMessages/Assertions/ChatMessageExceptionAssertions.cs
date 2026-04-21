@@ -1,5 +1,5 @@
-﻿using InstaConnect.Chats.Domain.Features.ChatMessages.Exceptions;
-using InstaConnect.Common.Application.Abstractions;
+﻿using InstaConnect.Common.Application.Abstractions;
+using InstaConnect.Chats.Domain.Features.ChatMessages.Exceptions;
 
 using MediatR;
 

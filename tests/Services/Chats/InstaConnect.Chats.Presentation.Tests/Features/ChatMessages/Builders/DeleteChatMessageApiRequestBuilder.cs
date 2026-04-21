@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Chats.Presentation.Tests.Features.ChatMessages.Builders;
+﻿using InstaConnect.Common.Tests.DataAttributes.Base;
+
+namespace InstaConnect.Chats.Presentation.Tests.Features.ChatMessages.Builders;
 
 public class DeleteChatMessageApiRequestBuilder
 {

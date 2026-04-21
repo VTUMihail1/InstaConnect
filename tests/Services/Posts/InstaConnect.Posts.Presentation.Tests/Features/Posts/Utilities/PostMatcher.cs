@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Presentation.Tests.Features.Posts.Utilities;
+﻿using InstaConnect.Posts.Application.Features.Posts.Queries.GetAllForUser;
+
+namespace InstaConnect.Posts.Presentation.Tests.Features.Posts.Utilities;
 
 public static class PostMatcher
 {

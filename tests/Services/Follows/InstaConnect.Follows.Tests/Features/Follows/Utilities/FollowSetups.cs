@@ -1,5 +1,6 @@
 ﻿using InstaConnect.Follows.Domain.Features.Follows.Abstractions;
 using InstaConnect.Follows.Domain.Features.Follows.Models.ValueObjects;
+using InstaConnect.Follows.Tests.Features.Follows.Utilities;
 
 using Microsoft.Extensions.DependencyInjection;
 

@@ -1,5 +1,5 @@
-﻿using InstaConnect.Chats.Tests.Features.Users.Utilities;
-using InstaConnect.Identity.Events.Features.Users;
+﻿using InstaConnect.Identity.Events.Features.Users;
+using InstaConnect.Chats.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Chats.Tests.Features.Users.Assertions;
 
