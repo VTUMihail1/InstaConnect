@@ -1,5 +1,5 @@
-﻿using InstaConnect.Identity.Events.Features.Users;
-using InstaConnect.Follows.Tests.Features.Users.Utilities;
+﻿using InstaConnect.Follows.Tests.Features.Users.Utilities;
+using InstaConnect.Identity.Events.Features.Users;
 
 namespace InstaConnect.Follows.Tests.Features.Users.Assertions;
 

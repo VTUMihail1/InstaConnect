@@ -1,7 +1,6 @@
 ﻿using InstaConnect.Common.Presentation.Utilities;
 
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Hosting;
 
 namespace InstaConnect.Common.Presentation.Extensions;
 

@@ -1,6 +1,4 @@
-﻿using InstaConnect.Chats.Domain.Features.Users.Models.ValueObjects;
-
-namespace InstaConnect.Chats.Tests.Features.ChatMessages.Utilities;
+﻿namespace InstaConnect.Chats.Tests.Features.ChatMessages.Utilities;
 
 public static class ChatMessageGenerator
 {
@@ -18,12 +16,12 @@ public static class ChatMessageGenerator
                          ChatMessageDataFaker.GetCreatedAtUtc(),
                          ChatMessageDataFaker.GetUpdatedAtUtc()
                      );
-                 
+
                      chatMessage.AddSender(chat.ParticipantOne);
                      chatMessage.AddChat(chat);
                      chat.ParticipantOne!.AddChatMessage(chatMessage);
                      chat.AddChatMessage(chatMessage);
-                 
+
                      return chatMessage;
                  })),
                  ..chats.SelectMany(chat =>
@@ -36,12 +34,12 @@ public static class ChatMessageGenerator
                          ChatMessageDataFaker.GetCreatedAtUtc(),
                          ChatMessageDataFaker.GetUpdatedAtUtc()
                      );
-                 
+
                      chatMessage.AddSender(chat.ParticipantTwo);
                      chatMessage.AddChat(chat);
                      chat.ParticipantTwo!.AddChatMessage(chatMessage);
                      chat.AddChatMessage(chatMessage);
-                 
+
                      return chatMessage;
                  }))];
         }

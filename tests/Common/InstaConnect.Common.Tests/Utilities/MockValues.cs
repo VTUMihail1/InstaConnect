@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace InstaConnect.Common.Tests.Utilities;
+﻿namespace InstaConnect.Common.Tests.Utilities;
 
 public static class MockValues
 {

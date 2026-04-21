@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Common.Tests.Extensions;
-using InstaConnect.Identity.Infrastructure.Utilities;
 using InstaConnect.Identity.Presentation.Extensions;
 
 using Microsoft.AspNetCore.Hosting;
@@ -33,7 +32,7 @@ public class IdentityWebApplicationFactory : WebApplicationFactory<Program>, IAs
         {
             serviceCollection.AddMockImageHandler();
             serviceCollection.AddTestJwtAuth();
-            serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), IdentityEventHandlerUtilities.Prefix, IdentityPresentationReference.Assembly);
+            serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), IdentityPresentationReference.Assembly);
         });
 
         builder.UpdateMongoConfiguration(_mongoDbContainer.GetConnectionString());

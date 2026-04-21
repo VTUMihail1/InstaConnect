@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Common.Tests.Extensions;
-using InstaConnect.Posts.Infrastructure.Utilities;
 using InstaConnect.Posts.Presentation.Extensions;
 
 using Microsoft.AspNetCore.Hosting;
@@ -29,7 +28,7 @@ public class PostsWebApplicationFactory : WebApplicationFactory<Program>, IAsync
         builder.ConfigureTestServices(serviceCollection =>
         {
             serviceCollection.AddTestJwtAuth();
-            serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), PostsEventHandlerUtilities.Prefix, PostsPresentationReference.Assembly);
+            serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), PostsPresentationReference.Assembly);
         });
 
         builder.UpdateMongoConfiguration(_mongoDbContainer.GetConnectionString());

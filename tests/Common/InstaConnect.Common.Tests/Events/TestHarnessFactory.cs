@@ -11,20 +11,18 @@ namespace InstaConnect.Common.Tests.Events;
 public class TestHarnessFactory : ITestHarnessFactory
 {
     private string _connectionString;
-    private string _prefix;
     private Assembly[] _currentAssemblies;
 
-    public TestHarnessFactory(string connectionString, string prefix, Assembly[] currentAssemblies)
+    public TestHarnessFactory(string connectionString, Assembly[] currentAssemblies)
     {
         _connectionString = connectionString;
-        _prefix = prefix;
         _currentAssemblies = currentAssemblies;
     }
 
     public ITestHarness Create()
     {
         return new ServiceCollection()
-                .AddMassTransitTestEventHarness(_connectionString, _prefix, _currentAssemblies)
+                .AddMassTransitTestEventHarness(_connectionString, _currentAssemblies)
                 .BuildServiceProvider(true)
                 .GetTestHarness();
     }
