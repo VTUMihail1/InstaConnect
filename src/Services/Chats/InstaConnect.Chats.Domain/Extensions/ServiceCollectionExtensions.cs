@@ -17,8 +17,8 @@ public static class ServiceCollectionExtensions
                 .AddChatMessageServices();
 
             serviceCollection
-                .AddMapper(ChatDomainReference.Assembly, CommonDomainReference.Assembly)
-                .AddServicesWithMatchingInterfaces(ChatDomainReference.Assembly);
+                .AddMapper(ChatsDomainReference.Assembly, CommonDomainReference.Assembly)
+                .AddServicesWithMatchingInterfaces(ChatsDomainReference.Assembly);
 
             return serviceCollection;
         }

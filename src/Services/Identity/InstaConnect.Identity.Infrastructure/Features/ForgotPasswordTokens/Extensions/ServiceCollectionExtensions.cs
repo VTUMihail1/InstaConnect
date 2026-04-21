@@ -1,5 +1,4 @@
-﻿using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Options;
-using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Options;
+﻿using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Options;
 using InstaConnect.Identity.Infrastructure.Extensions;
 
 using MongoDB.Bson.Serialization;

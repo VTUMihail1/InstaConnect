@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Follows.Infrastructure.Utilities;
 
-public static class FollowCollectionNames
+public static class FollowsCollectionNames
 {
     public const string Users = "users";
 

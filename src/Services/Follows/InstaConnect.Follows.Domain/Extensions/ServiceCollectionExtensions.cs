@@ -15,8 +15,8 @@ public static class ServiceCollectionExtensions
                 .AddFollowServices();
 
             serviceCollection
-                .AddMapper(FollowDomainReference.Assembly, CommonDomainReference.Assembly)
-                .AddServicesWithMatchingInterfaces(FollowDomainReference.Assembly);
+                .AddMapper(FollowsDomainReference.Assembly, CommonDomainReference.Assembly)
+                .AddServicesWithMatchingInterfaces(FollowsDomainReference.Assembly);
 
             return serviceCollection;
         }

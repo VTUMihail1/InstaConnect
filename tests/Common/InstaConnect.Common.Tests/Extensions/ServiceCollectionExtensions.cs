@@ -36,11 +36,13 @@ public static class ServiceCollectionExtensions
         {
             serviceCollection.AddMassTransitTestHarness(busConfigurator =>
             {
+                busConfigurator.SetKebabCaseEndpointNameFormatter();
+
                 busConfigurator.AddConsumers(currentAssemblies);
 
                 busConfigurator.UsingRabbitMq((context, configurator) =>
                 {
-                    configurator.Host(new Uri(connectionString));
+                    configurator.Host(connectionString);
 
                     configurator.ConfigureEndpoints(context);
                 });

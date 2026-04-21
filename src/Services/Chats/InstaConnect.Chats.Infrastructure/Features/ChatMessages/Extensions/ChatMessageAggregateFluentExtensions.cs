@@ -1,7 +1,5 @@
 ﻿using InstaConnect.Chats.Domain.Features.Users.Models.Responses;
 
-using Microsoft.AspNetCore.Mvc.Rendering;
-
 using MongoDB.Driver;
 
 namespace InstaConnect.Chats.Infrastructure.Features.ChatMessages.Extensions;

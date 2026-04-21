@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\..\..\src\Services\Chats\InstaConnect.Chats.Domain\InstaConnect.Chats.Domain.csproj" />
     <ProjectReference Include="..\..\..\..\src\Services\Chats\InstaConnect.Chats.Infrastructure\InstaConnect.Chats.Infrastructure.csproj" />
     <ProjectReference Include="..\..\..\..\src\Services\Chats\InstaConnect.Chats.Presentation\InstaConnect.Chats.Presentation.csproj" />

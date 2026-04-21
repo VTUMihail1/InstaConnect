@@ -1,6 +1,4 @@
-﻿using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAllForUser;
-
-namespace InstaConnect.Posts.Presentation.Tests.Features.PostComments.Utilities;
+﻿namespace InstaConnect.Posts.Presentation.Tests.Features.PostComments.Utilities;
 
 public static class PostCommentMatcher
 {

@@ -12,9 +12,9 @@ public class ChatsContext : MongoDbContext, IChatsContext
     {
     }
 
-    public IMongoCollection<User> Users => ToCollection<User, UserId>(ChatCollectionNames.Users);
+    public IMongoCollection<User> Users => ToCollection<User, UserId>(ChatsCollectionNames.Users);
 
-    public IMongoCollection<Chat> Chats => ToCollection<Chat, ChatId>(ChatCollectionNames.Chats);
+    public IMongoCollection<Chat> Chats => ToCollection<Chat, ChatId>(ChatsCollectionNames.Chats);
 
-    public IMongoCollection<ChatMessage> ChatMessages => ToCollection<ChatMessage, ChatMessageId>(ChatCollectionNames.ChatMessages);
+    public IMongoCollection<ChatMessage> ChatMessages => ToCollection<ChatMessage, ChatMessageId>(ChatsCollectionNames.ChatMessages);
 }

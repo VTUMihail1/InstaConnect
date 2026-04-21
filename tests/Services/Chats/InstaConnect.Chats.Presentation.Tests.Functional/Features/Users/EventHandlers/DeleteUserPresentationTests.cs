@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Chats.Tests.Features.Users.Assertions;
-using InstaConnect.Common.Tests.DataAttributes.Strings.DifferentCase;
 
 namespace InstaConnect.Chats.Presentation.Tests.Functional.Features.Users.EventHandlers;
 

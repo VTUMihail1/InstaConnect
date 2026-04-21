@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Tests.DataAttributes.Base;
-
-namespace InstaConnect.Chats.Presentation.Tests.Features.ChatMessages.Builders;
+﻿namespace InstaConnect.Chats.Presentation.Tests.Features.ChatMessages.Builders;
 
 public class GetChatMessageByIdApiRequestBuilder
 {

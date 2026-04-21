@@ -11,6 +11,6 @@ public abstract class BaseUserPresentationCommandUnitTest : BaseUserTest
     protected BaseUserPresentationCommandUnitTest()
     {
         Sender = MockFactory.CreateApplicationSender();
-        Mapper = MockFactory.CreateMapper(PostPresentationReference.Assembly);
+        Mapper = MockFactory.CreateMapper(PostsPresentationReference.Assembly);
     }
 }

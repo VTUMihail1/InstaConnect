@@ -7,6 +7,7 @@ using InstaConnect.Identity.Infrastructure.Features.RefreshTokens.Extensions;
 using InstaConnect.Identity.Infrastructure.Features.UserClaims.Extensions;
 using InstaConnect.Identity.Infrastructure.Features.Users.Extensions;
 using InstaConnect.Identity.Infrastructure.Helpers;
+using InstaConnect.Identity.Infrastructure.Utilities;
 
 namespace InstaConnect.Identity.Infrastructure.Extensions;
 
@@ -34,8 +35,9 @@ public static class ServiceCollectionExtensions
                 .AddServicesWithMatchingInterfaces(IdentityInfrastructureReference.Assembly)
                 .AddRedisCaching(configuration)
                 .AddMongoDatabase(configuration)
+                .AddCloudinary(configuration)
                 .AddUnitOfWork()
-                .AddRabbitMQ(configuration, presentationAssembly)
+                .AddRabbitMQ(configuration, IdentityEventHandlerUtilities.Prefix, presentationAssembly)
                 .AddJwtBearer(configuration)
                 .AddGuidProvider()
                 .AddDateTimeProvider()

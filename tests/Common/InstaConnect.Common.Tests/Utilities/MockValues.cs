@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace InstaConnect.Common.Tests.Utilities;
+﻿namespace InstaConnect.Common.Tests.Utilities;
 
 public static class MockValues
 {
+    public const string MongoName = "instaconnect";
+
     public const string CloudinaryCloudName = "test";
 
     public const string CloudinaryApiKey = "test";

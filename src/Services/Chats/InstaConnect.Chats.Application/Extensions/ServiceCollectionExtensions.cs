@@ -14,9 +14,9 @@ public static class ServiceCollectionExtensions
                 .AddChatMessageServices();
 
             serviceCollection
-                .AddCQRS(ChatApplicationReference.Assembly)
-                .AddMapper(ChatApplicationReference.Assembly, CommonApplicationReference.Assembly)
-                .AddValidators(ChatApplicationReference.Assembly);
+                .AddCQRS(ChatsApplicationReference.Assembly)
+                .AddMapper(ChatsApplicationReference.Assembly, CommonApplicationReference.Assembly)
+                .AddValidators(ChatsApplicationReference.Assembly);
 
             return serviceCollection;
         }

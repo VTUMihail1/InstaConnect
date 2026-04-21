@@ -10,9 +10,9 @@ internal static class ServiceCollectionExtensions
     {
         internal IServiceCollection AddFollowServices()
         {
-            serviceCollection.AddImplementationsOf<IFollowsSortTermer>(FollowInfrastructureReference.Assembly);
-            serviceCollection.AddImplementationsOf<IFollowsForFollowingSortTermer>(FollowInfrastructureReference.Assembly);
-            serviceCollection.AddImplementationsOf<IFollowIncluder>(FollowInfrastructureReference.Assembly);
+            serviceCollection.AddImplementationsOf<IFollowsSortTermer>(FollowsInfrastructureReference.Assembly);
+            serviceCollection.AddImplementationsOf<IFollowsForFollowingSortTermer>(FollowsInfrastructureReference.Assembly);
+            serviceCollection.AddImplementationsOf<IFollowIncluder>(FollowsInfrastructureReference.Assembly);
 
             BsonClassMap.TryRegisterClassMap<Follow>(cm =>
             {

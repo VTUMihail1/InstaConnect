@@ -26,6 +26,6 @@ internal class ImageHandler : IImageHandler
         var imageUploadParams = _imageUploadFactory.GetImageUploadParams(formFile);
         var imageUploadResult = await _cloudinary.UploadAsync(imageUploadParams, cancellationToken);
 
-        return new(imageUploadResult.Url.AbsolutePath);
+        return new(imageUploadResult.Url.AbsoluteUri);
     }
 }

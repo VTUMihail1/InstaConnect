@@ -16,9 +16,9 @@ public static class ServiceCollectionExtensions
                 .AddPostCommentLikeServices();
 
             serviceCollection
-                .AddCQRS(PostApplicationReference.Assembly)
-                .AddMapper(PostApplicationReference.Assembly, CommonApplicationReference.Assembly)
-                .AddValidators(PostApplicationReference.Assembly);
+                .AddCQRS(PostsApplicationReference.Assembly)
+                .AddMapper(PostsApplicationReference.Assembly, CommonApplicationReference.Assembly)
+                .AddValidators(PostsApplicationReference.Assembly);
 
             return serviceCollection;
         }

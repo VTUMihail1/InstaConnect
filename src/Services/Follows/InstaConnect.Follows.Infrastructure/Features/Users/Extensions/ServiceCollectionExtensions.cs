@@ -10,7 +10,7 @@ internal static class ServiceCollectionExtensions
     {
         internal IServiceCollection AddUserServices()
         {
-            serviceCollection.AddImplementationsOf<IUserIncluder>(FollowInfrastructureReference.Assembly);
+            serviceCollection.AddImplementationsOf<IUserIncluder>(FollowsInfrastructureReference.Assembly);
 
             BsonClassMap.TryRegisterClassMap<User>(cm =>
             {

@@ -19,7 +19,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 using MongoDB.Bson.Serialization.Conventions;
@@ -109,24 +108,23 @@ public static partial class ServiceCollectionExtensions
             return serviceCollection;
         }
 
-        public IServiceCollection AddRabbitMQ(IConfiguration configuration, Assembly currentAssembly, Action<IBusRegistrationConfigurator>? configure = null)
+        public IServiceCollection AddRabbitMQ(IConfiguration configuration, string prefix, params Assembly[] currentAssemblies)
         {
             serviceCollection.AddValidatedOptions<RabbitMqOptions>(RabbitMqOptions.SectionName);
             var options = configuration.GetOptions<RabbitMqOptions>(RabbitMqOptions.SectionName);
 
             serviceCollection.AddMassTransit(busConfigurator =>
             {
-                busConfigurator.SetKebabCaseEndpointNameFormatter();
-                busConfigurator.AddConsumers(currentAssembly);
+                busConfigurator.SetKebabCaseEndpointNameFormatterWithPrefix(prefix);
+
+                busConfigurator.AddConsumers(currentAssemblies);
 
                 busConfigurator.UsingRabbitMq((context, configurator) =>
                 {
-                    configurator.Host(new Uri(options.ConnectionString));
+                    configurator.Host(options.ConnectionString);
 
                     configurator.ConfigureEndpoints(context);
                 });
-
-                configure?.Invoke(busConfigurator);
             });
 
             serviceCollection.AddScoped<IEventPublisher, EventPublisher>();
