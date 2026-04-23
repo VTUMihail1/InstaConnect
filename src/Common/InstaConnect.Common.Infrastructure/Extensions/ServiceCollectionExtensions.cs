@@ -83,8 +83,7 @@ public static partial class ServiceCollectionExtensions
             var conventionPack = new ConventionPack
             {
                 new SnakeCaseElementNameConvention(),
-                new IgnoreExtraElementsConvention(true),
-                new EnumRepresentationConvention(BsonType.String)
+                new IgnoreExtraElementsConvention(true)
             };
 
             ConventionRegistry.Register(ConventionName, conventionPack, t => true);
