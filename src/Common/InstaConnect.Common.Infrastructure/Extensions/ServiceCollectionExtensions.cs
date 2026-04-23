@@ -70,10 +70,10 @@ public static partial class ServiceCollectionExtensions
             serviceCollection.AddValidatedOptions<MongoOptions>(MongoOptions.SectionName);
             var options = configuration.GetOptions<MongoOptions>(MongoOptions.SectionName);
 
-            serviceCollection.AddScoped<IMongoClient>(_ =>
+            serviceCollection.AddSingleton<IMongoClient>(_ =>
                 new MongoClient(options.ConnectionString));
 
-            serviceCollection.AddScoped(sp =>
+            serviceCollection.AddSingleton(sp =>
                 sp.GetRequiredService<IMongoClient>()
                   .GetDatabase(options.Name));
 
