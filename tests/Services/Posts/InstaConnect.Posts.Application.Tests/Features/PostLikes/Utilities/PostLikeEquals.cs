@@ -76,7 +76,7 @@ public static class PostLikeEquals
         PostLike postLike,
         AddPostLikeCommandRequest request)
         {
-            return response.Id.Matches(postLike.Id);
+            return response.Response.Matches(postLike.Id);
         }
     }
 
@@ -84,7 +84,7 @@ public static class PostLikeEquals
     {
         public bool Matches(PostLike postLike, GetPostLikeByIdQueryRequest request)
         {
-            return response.PostLike.MatchesFull(postLike, request);
+            return response.Response.MatchesFull(postLike, request);
         }
     }
 
@@ -95,7 +95,7 @@ public static class PostLikeEquals
         ICollection<PostLike> postLikes,
         GetAllPostLikesQueryRequest request)
         {
-            return response.PostLikeCollection.MatchesWithoutUser(
+            return response.Response.MatchesWithoutUser(
                        (response, postLike) => response.MatchesWithoutPost(postLike, request),
                        postLike => postLike.MatchesFilter(request),
                        post,
@@ -109,7 +109,7 @@ public static class PostLikeEquals
             GetAllPostLikesQueryRequest request,
             ISortEnumTermTransformer<PostLike> termTransformer)
         {
-            return response.PostLikeCollection.MatchesWithoutUser(
+            return response.Response.MatchesWithoutUser(
                        (response, postLike) => response.MatchesWithoutPost(postLike, request),
                        postLike => postLike.MatchesFilter(request),
                        post,
@@ -126,7 +126,7 @@ public static class PostLikeEquals
         ICollection<PostLike> postLikes,
         GetAllPostLikesForUserQueryRequest request)
         {
-            return response.PostLikeCollection.MatchesWithoutPost(
+            return response.Response.MatchesWithoutPost(
                        (response, postLike) => response.MatchesWithoutUser(postLike, request),
                        postLike => postLike.MatchesFilter(request),
                        user,
@@ -140,7 +140,7 @@ public static class PostLikeEquals
             GetAllPostLikesForUserQueryRequest request,
             ISortEnumTermTransformer<PostLike> termTransformer)
         {
-            return response.PostLikeCollection.MatchesWithoutPost(
+            return response.Response.MatchesWithoutPost(
                        (response, postLike) => response.MatchesWithoutUser(postLike, request),
                        postLike => postLike.MatchesFilter(request),
                        user,

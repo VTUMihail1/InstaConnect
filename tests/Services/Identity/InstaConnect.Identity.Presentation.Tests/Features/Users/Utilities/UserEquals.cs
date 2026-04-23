@@ -114,7 +114,7 @@ public static class UserEquals
         User user,
         AddUserApiRequest request)
         {
-            return response.Id.Matches(user.Id);
+            return response.Response.Matches(user.Id);
         }
     }
 
@@ -124,7 +124,7 @@ public static class UserEquals
         User user,
         UpdateCurrentUserApiRequest request)
         {
-            return response.Id.Matches(user.Id);
+            return response.Response.Matches(user.Id);
         }
     }
 
@@ -132,7 +132,7 @@ public static class UserEquals
     {
         public bool Matches(User user, GetUserByIdApiRequest request)
         {
-            return response.User.MatchesFull(user, request);
+            return response.Response.MatchesFull(user, request);
         }
     }
 
@@ -141,7 +141,7 @@ public static class UserEquals
     {
         public bool Matches(User user, GetUserDetailsByIdApiRequest request)
         {
-            return response.User.MatchesFull(user, request);
+            return response.Response.MatchesFull(user, request);
         }
     }
 
@@ -149,7 +149,7 @@ public static class UserEquals
     {
         public bool Matches(User user, GetCurrentUserByIdApiRequest request)
         {
-            return response.User.MatchesFull(user, request);
+            return response.Response.MatchesFull(user, request);
         }
     }
 
@@ -158,7 +158,7 @@ public static class UserEquals
     {
         public bool Matches(User user, GetCurrentUserDetailsByIdApiRequest request)
         {
-            return response.User.MatchesFull(user, request);
+            return response.Response.MatchesFull(user, request);
         }
     }
 
@@ -168,7 +168,7 @@ public static class UserEquals
         ICollection<User> users,
         GetAllUsersApiRequest request)
         {
-            return response.UserCollection.MatchesFull(
+            return response.Response.MatchesFull(
                        (response, user) => response.MatchesFull(user, request),
                        user => user.MatchesFilter(request),
                        users,
@@ -180,7 +180,7 @@ public static class UserEquals
             GetAllUsersApiRequest request,
             ISortEnumTermTransformer<User> termTransformer)
         {
-            return response.UserCollection.MatchesFull(
+            return response.Response.MatchesFull(
                        (response, user) => response.MatchesFull(user, request),
                        user => user.MatchesFilter(request),
                        users,

@@ -47,7 +47,7 @@ public static class UserClaimEquals
     {
         public bool Matches(UserClaim userClaim, AddUserClaimCommandRequest request)
         {
-            return response.Id.Matches(userClaim.Id);
+            return response.Response.Matches(userClaim.Id);
         }
     }
 
@@ -58,7 +58,7 @@ public static class UserClaimEquals
             ICollection<UserClaim> userClaims,
             GetAllUserClaimsQueryRequest request)
         {
-            return response.UserClaimCollection.MatchesFull(
+            return response.Response.MatchesFull(
                        (response, userClaim) => response.MatchesWithoutUser(userClaim, request),
                        userClaim => userClaim.MatchesFilter(request),
                        user,
@@ -72,7 +72,7 @@ public static class UserClaimEquals
             GetAllUserClaimsQueryRequest request,
             ISortEnumTermTransformer<UserClaim> termTransformer)
         {
-            return response.UserClaimCollection.MatchesFull(
+            return response.Response.MatchesFull(
                        (response, userClaim) => response.MatchesWithoutUser(userClaim, request),
                        userClaim => userClaim.MatchesFilter(request),
                        user,

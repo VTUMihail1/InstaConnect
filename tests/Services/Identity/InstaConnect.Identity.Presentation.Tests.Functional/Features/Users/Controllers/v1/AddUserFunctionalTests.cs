@@ -378,7 +378,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
     {
         // Act
         var response = await HttpClient.AddUserAsync(_request, CancellationToken);
-        var user = await ServiceScope.GetUserByIdAsync(response.Id, CancellationToken);
+        var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(user, _request);
@@ -393,7 +393,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 
         // Act
         var response = await HttpClient.AddUserAsync(request, CancellationToken);
-        var user = await ServiceScope.GetUserByIdAsync(response.Id, CancellationToken);
+        var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(user, request);
@@ -404,7 +404,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
     {
         // Act
         var response = await HttpClient.AddUserAsync(_request, CancellationToken);
-        var user = await ServiceScope.GetUserByIdAsync(response.Id, CancellationToken);
+        var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
 
         // Assert
         user.ShouldSatisfy(_request, PasswordHasher);
@@ -419,7 +419,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 
         // Act
         var response = await HttpClient.AddUserAsync(request, CancellationToken);
-        var user = await ServiceScope.GetUserByIdAsync(response.Id, CancellationToken);
+        var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
 
         // Assert
         user.ShouldSatisfy(request, PasswordHasher);
@@ -430,7 +430,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
     {
         // Act
         var response = await HttpClient.AddUserAsync(_request, CancellationToken);
-        var user = await ServiceScope.GetUserByIdAsync(response.Id, CancellationToken);
+        var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
 
         // Assert
         user.EmailConfirmationTokens.ShouldNotBeEmpty();
@@ -445,7 +445,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 
         // Act
         var response = await HttpClient.AddUserAsync(request, CancellationToken);
-        var user = await ServiceScope.GetUserByIdAsync(response.Id, CancellationToken);
+        var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
 
         // Assert
         user.EmailConfirmationTokens.ShouldNotBeEmpty();
@@ -456,7 +456,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
     {
         // Act
         var response = await HttpClient.AddUserAsync(_request, CancellationToken);
-        var user = await ServiceScope.GetUserByIdAsync(response.Id, CancellationToken);
+        var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedUserAddedAsync(user, CancellationToken);
@@ -471,7 +471,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 
         // Act
         var response = await HttpClient.AddUserAsync(request, CancellationToken);
-        var user = await ServiceScope.GetUserByIdAsync(response.Id, CancellationToken);
+        var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedUserAddedAsync(user, CancellationToken);
@@ -482,7 +482,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
     {
         // Act
         var response = await HttpClient.AddUserAsync(_request, CancellationToken);
-        var user = await ServiceScope.GetUserByIdAsync(response.Id, CancellationToken);
+        var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedEmailConfirmationTokenAddedRangeAsync(user, CancellationToken);
@@ -497,7 +497,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 
         // Act
         var response = await HttpClient.AddUserAsync(request, CancellationToken);
-        var user = await ServiceScope.GetUserByIdAsync(response.Id, CancellationToken);
+        var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedEmailConfirmationTokenAddedRangeAsync(user, CancellationToken);

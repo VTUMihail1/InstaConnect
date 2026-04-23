@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Chats.Application.Features.Chats.Queries.GetById;
 
-public record GetChatByIdQueryResponse(ChatQueryResponse Chat);
+public record GetChatByIdQueryResponse(ChatQueryResponse Response);

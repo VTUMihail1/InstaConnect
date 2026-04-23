@@ -285,7 +285,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
     {
         // Act
         var response = await HttpClient.AddFollowAsync(_request, CancellationToken);
-        var follow = await ServiceScope.GetFollowByIdAsync(response.Id, CancellationToken);
+        var follow = await ServiceScope.GetFollowByIdAsync(response.Response, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(follow, _request);
@@ -301,7 +301,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 
         // Act
         var response = await HttpClient.AddFollowAsync(request, CancellationToken);
-        var follow = await ServiceScope.GetFollowByIdAsync(response.Id, CancellationToken);
+        var follow = await ServiceScope.GetFollowByIdAsync(response.Response, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(follow, request);
@@ -317,7 +317,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 
         // Act
         var response = await HttpClient.AddFollowAsync(request, CancellationToken);
-        var follow = await ServiceScope.GetFollowByIdAsync(response.Id, CancellationToken);
+        var follow = await ServiceScope.GetFollowByIdAsync(response.Response, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(follow, request);
@@ -328,7 +328,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
     {
         // Act
         var response = await HttpClient.AddFollowAsync(_request, CancellationToken);
-        var follow = await ServiceScope.GetFollowByIdAsync(response.Id, CancellationToken);
+        var follow = await ServiceScope.GetFollowByIdAsync(response.Response, CancellationToken);
 
         // Assert
         follow.ShouldSatisfy(_request);
@@ -344,7 +344,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 
         // Act
         var response = await HttpClient.AddFollowAsync(request, CancellationToken);
-        var follow = await ServiceScope.GetFollowByIdAsync(response.Id, CancellationToken);
+        var follow = await ServiceScope.GetFollowByIdAsync(response.Response, CancellationToken);
 
         // Assert
         follow.ShouldSatisfy(request);
@@ -360,7 +360,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 
         // Act
         var response = await HttpClient.AddFollowAsync(request, CancellationToken);
-        var follow = await ServiceScope.GetFollowByIdAsync(response.Id, CancellationToken);
+        var follow = await ServiceScope.GetFollowByIdAsync(response.Response, CancellationToken);
 
         // Assert
         follow.ShouldSatisfy(request);
@@ -371,7 +371,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
     {
         // Act
         var response = await HttpClient.AddFollowAsync(_request, CancellationToken);
-        var follow = await ServiceScope.GetFollowByIdAsync(response.Id, CancellationToken);
+        var follow = await ServiceScope.GetFollowByIdAsync(response.Response, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedFollowAddedAsync(follow, CancellationToken);
@@ -387,7 +387,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 
         // Act
         var response = await HttpClient.AddFollowAsync(request, CancellationToken);
-        var follow = await ServiceScope.GetFollowByIdAsync(response.Id, CancellationToken);
+        var follow = await ServiceScope.GetFollowByIdAsync(response.Response, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedFollowAddedAsync(follow, CancellationToken);
@@ -403,7 +403,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 
         // Act
         var response = await HttpClient.AddFollowAsync(request, CancellationToken);
-        var follow = await ServiceScope.GetFollowByIdAsync(response.Id, CancellationToken);
+        var follow = await ServiceScope.GetFollowByIdAsync(response.Response, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedFollowAddedAsync(follow, CancellationToken);

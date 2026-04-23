@@ -1,8 +1,10 @@
-﻿namespace InstaConnect.Identity.Presentation.Features.RefreshTokens.Abstractions;
+﻿using InstaConnect.Identity.Presentation.Features.RefreshTokens.Models;
+
+namespace InstaConnect.Identity.Presentation.Features.RefreshTokens.Abstractions;
 
 public interface IRefreshTokenCookieStore
 {
-    void Set(string id, string value, DateTimeOffset expiresAtUtc);
+    void Set(RefreshTokenCookie cookie);
 
     void Delete();
 }

@@ -36,20 +36,15 @@ public static class RefreshTokenEquals
     {
         public bool Matches(RefreshToken refreshToken, IssueRefreshTokenCommandRequest request)
         {
-            return response.Id.Matches(refreshToken.Id) &&
-                   response.AccessToken.Matches() &&
-                   response.ExpiresAtUtc == refreshToken.ExpiresAtUtc;
+            return response.Response.Matches(refreshToken);
         }
     }
-
 
     extension(RotateRefreshTokenCommandResponse response)
     {
         public bool Matches(RefreshToken refreshToken, RotateRefreshTokenCommandRequest request)
         {
-            return response.Id.Matches(refreshToken.Id) &&
-                   response.AccessToken.Matches() &&
-                   response.ExpiresAtUtc == refreshToken.ExpiresAtUtc;
+            return response.Response.Matches(refreshToken);
         }
     }
 
@@ -72,6 +67,16 @@ public static class RefreshTokenEquals
         public bool Matches(RefreshTokenId id)
         {
             return id.Matches(response.Id, response.Value);
+        }
+    }
+
+    extension(SessionTokenCommandResponse response)
+    {
+        public bool Matches(RefreshToken refreshToken)
+        {
+            return response.Id.Matches(refreshToken.Id) &&
+                   response.AccessToken.Matches() &&
+                   response.ExpiresAtUtc == refreshToken.ExpiresAtUtc;
         }
     }
 

@@ -364,7 +364,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationComma
     {
         // Act
         var response = await HttpClient.UpdatePostCommentAsync(_request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Id, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
 
         // Assert
         postComment.ShouldSatisfy(_request);
@@ -380,7 +380,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationComma
 
         // Act
         var response = await HttpClient.UpdatePostCommentAsync(request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Id, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
 
         // Assert
         postComment.ShouldSatisfy(request);
@@ -396,7 +396,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationComma
 
         // Act
         var response = await HttpClient.UpdatePostCommentAsync(request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Id, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
 
         // Assert
         postComment.ShouldSatisfy(request);
@@ -412,7 +412,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationComma
 
         // Act
         var response = await HttpClient.UpdatePostCommentAsync(request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Id, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
 
         // Assert
         postComment.ShouldSatisfy(request);
@@ -423,7 +423,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationComma
     {
         // Act
         var response = await HttpClient.UpdatePostCommentAsync(_request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Id, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedPostCommentUpdatedAsync(postComment, CancellationToken);
@@ -439,7 +439,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationComma
 
         // Act
         var response = await HttpClient.UpdatePostCommentAsync(request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Id, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedPostCommentUpdatedAsync(postComment, CancellationToken);
@@ -455,7 +455,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationComma
 
         // Act
         var response = await HttpClient.UpdatePostCommentAsync(request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Id, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedPostCommentUpdatedAsync(postComment, CancellationToken);
@@ -471,7 +471,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationComma
 
         // Act
         var response = await HttpClient.UpdatePostCommentAsync(request, CancellationToken);
-        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Id, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Response, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedPostCommentUpdatedAsync(postComment, CancellationToken);

@@ -48,7 +48,7 @@ public static class ChatEquals
         Chat chat,
         AddChatApiRequest request)
         {
-            return response.Id.Matches(chat.Id);
+            return response.Response.Matches(chat.Id);
         }
     }
 
@@ -56,12 +56,12 @@ public static class ChatEquals
     {
         public bool Matches(Chat chat, GetChatByIdApiRequest request)
         {
-            return response.Chat.MatchesFull(chat, request);
+            return response.Response.MatchesFull(chat, request);
         }
 
         public bool MatchesInverted(Chat chat, GetChatByIdApiRequest request)
         {
-            return response.Chat.MatchesFullInverted(chat, request);
+            return response.Response.MatchesFullInverted(chat, request);
         }
     }
 
@@ -72,7 +72,7 @@ public static class ChatEquals
         ICollection<Chat> chats,
         GetAllChatsApiRequest request)
         {
-            return response.ChatCollection.MatchesWithoutParticipantTwo(
+            return response.Response.MatchesWithoutParticipantTwo(
                        (response, chat) => response.MatchesWithoutParticipantOne(chat, request),
                        chat => chat.MatchesFilter(request),
                        participantOne,
@@ -86,7 +86,7 @@ public static class ChatEquals
             GetAllChatsApiRequest request,
             ISortEnumTermTransformer<Chat> termTransformer)
         {
-            return response.ChatCollection.MatchesWithoutParticipantTwo(
+            return response.Response.MatchesWithoutParticipantTwo(
                        (response, chat) => response.MatchesWithoutParticipantOne(chat, request),
                        chat => chat.MatchesFilter(request),
                        participantOne,
@@ -100,7 +100,7 @@ public static class ChatEquals
         ICollection<Chat> chats,
         GetAllChatsApiRequest request)
         {
-            return response.ChatCollection.MatchesWithoutParticipantTwoInverted(
+            return response.Response.MatchesWithoutParticipantTwoInverted(
                        (response, chat) => response.MatchesWithoutParticipantOneInverted(chat, request),
                        chat => chat.MatchesFilter(request),
                        participantTwo,
@@ -114,7 +114,7 @@ public static class ChatEquals
             GetAllChatsApiRequest request,
             ISortEnumTermTransformer<Chat> termTransformer)
         {
-            return response.ChatCollection.MatchesWithoutParticipantTwoInverted(
+            return response.Response.MatchesWithoutParticipantTwoInverted(
                        (response, chat) => response.MatchesWithoutParticipantOneInverted(chat, request),
                        chat => chat.MatchesFilter(request),
                        participantTwo,

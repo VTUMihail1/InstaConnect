@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Chats.Presentation.Features.Chats.Models.Responses;
 
-public record GetChatByIdApiResponse(ChatApiResponse Chat);
+public record GetChatByIdApiResponse(ChatApiResponse Response);
