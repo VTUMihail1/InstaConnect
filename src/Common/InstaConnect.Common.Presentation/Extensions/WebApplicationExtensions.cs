@@ -1,4 +1,6 @@
-﻿using InstaConnect.Common.Presentation.Utilities;
+﻿using HealthChecks.UI.Client;
+
+using InstaConnect.Common.Presentation.Utilities;
 
 using Microsoft.AspNetCore.Builder;
 
@@ -41,7 +43,10 @@ public static class WebApplicationExtensions
         {
             const string HealthCheckEndpoint = "/healthz";
 
-            webApplication.MapHealthChecks(HealthCheckEndpoint);
+            webApplication.MapHealthChecks(HealthCheckEndpoint, new()
+            {
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+            });
 
             return webApplication;
         }
