@@ -1,12 +1,10 @@
-﻿using InstaConnect.Identity.Presentation.Features.RefreshTokens.Models;
-
-namespace InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Utilities;
+﻿namespace InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Utilities;
 
 public static class RefreshTokenMatcher
 {
-    public static RefreshTokenCookie IsRefreshTokenCookie(RefreshToken refreshToken)
+    public static SetRefreshTokenCookieRequest IsRefreshTokenCookieRequest(RefreshToken refreshToken)
     {
-        return Matcher.Is<RefreshTokenCookie>(p => p.Matches(refreshToken));
+        return Matcher.Is<SetRefreshTokenCookieRequest>(p => p.Matches(refreshToken));
     }
 
     public static IssueRefreshTokenCommandRequest IsIssueRefreshTokenCommandRequest(IssueRefreshTokenApiRequest request)

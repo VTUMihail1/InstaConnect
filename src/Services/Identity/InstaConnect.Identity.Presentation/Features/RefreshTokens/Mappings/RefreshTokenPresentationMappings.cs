@@ -1,7 +1,6 @@
 ﻿using InstaConnect.Identity.Application.Features.RefreshTokens.Commands.DeleteCurrent;
 using InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Issue;
 using InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Rotate;
-using InstaConnect.Identity.Presentation.Features.RefreshTokens.Models;
 
 using Mapster;
 
@@ -11,7 +10,7 @@ internal class RefreshTokenPresentationMappings : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<SessionTokenCommandResponse, RefreshTokenCookie>()
+        config.NewConfig<SessionTokenCommandResponse, SetRefreshTokenCookieRequest>()
             .ConstructUsing(src => new(src.Id.Id, src.Id.Value, src.ExpiresAtUtc));
 
         config.NewConfig<IssueRefreshTokenApiRequest, IssueRefreshTokenCommandRequest>()

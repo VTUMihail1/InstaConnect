@@ -1,6 +1,4 @@
-﻿using HealthChecks.UI.Client;
-
-using InstaConnect.Common.Presentation.Utilities;
+﻿using InstaConnect.Common.Presentation.Utilities;
 
 using Microsoft.AspNetCore.Builder;
 

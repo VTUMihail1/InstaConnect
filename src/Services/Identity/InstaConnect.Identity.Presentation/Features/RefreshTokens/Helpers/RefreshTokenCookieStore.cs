@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Identity.Presentation.Features.RefreshTokens.Abstractions;
-using InstaConnect.Identity.Presentation.Features.RefreshTokens.Models;
 
 namespace InstaConnect.Identity.Presentation.Features.RefreshTokens.Helpers;
 
@@ -12,10 +11,10 @@ internal class RefreshTokenCookieStore : IRefreshTokenCookieStore
         _cookieStore = cookieStore;
     }
 
-    public void Set(RefreshTokenCookie cookie)
+    public void Set(SetRefreshTokenCookieRequest request)
     {
-        _cookieStore.SetHttpOnly(RefreshTokenCookieKeys.Id, cookie.Id, cookie.ExpiresAtUtc);
-        _cookieStore.SetHttpOnly(RefreshTokenCookieKeys.Value, cookie.Value, cookie.ExpiresAtUtc);
+        _cookieStore.SetHttpOnly(RefreshTokenCookieKeys.Id, request.Id, request.ExpiresAtUtc);
+        _cookieStore.SetHttpOnly(RefreshTokenCookieKeys.Value, request.Value, request.ExpiresAtUtc);
     }
 
     public void Delete()

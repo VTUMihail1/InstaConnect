@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Identity.Domain.Helpers;
-using InstaConnect.Identity.Presentation.Features.RefreshTokens.Models;
 using InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Utilities;
 using InstaConnect.Identity.Presentation.Tests.Features.Users.Utilities;
 
@@ -10,13 +9,13 @@ namespace InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Utilit
 
 public static class RefreshTokenEquals
 {
-    extension(RefreshTokenCookie cookie)
+    extension(SetRefreshTokenCookieRequest request)
     {
         public bool Matches(RefreshToken refreshToken)
         {
-            return cookie.Id == refreshToken.Id.Id.Id &&
-                   cookie.Value == refreshToken.Id.Value &&
-                   cookie.ExpiresAtUtc == refreshToken.ExpiresAtUtc;
+            return request.Id == refreshToken.Id.Id.Id &&
+                   request.Value == refreshToken.Id.Value &&
+                   request.ExpiresAtUtc == refreshToken.ExpiresAtUtc;
         }
     }
 

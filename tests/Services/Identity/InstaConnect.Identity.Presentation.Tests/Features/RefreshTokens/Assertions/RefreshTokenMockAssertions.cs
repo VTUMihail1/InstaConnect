@@ -35,7 +35,7 @@ public static class RefreshTokenMockAssertions
         public void ShouldReceiveOneSet(
             RefreshToken refreshToken)
         {
-            store.ShouldHaveReceivedOne().Set(RefreshTokenMatcher.IsRefreshTokenCookie(refreshToken));
+            store.ShouldHaveReceivedOne().Set(RefreshTokenMatcher.IsRefreshTokenCookieRequest(refreshToken));
         }
 
         public void ShouldReceiveOneDelete(DeleteCurrentRefreshTokenApiRequest request)
