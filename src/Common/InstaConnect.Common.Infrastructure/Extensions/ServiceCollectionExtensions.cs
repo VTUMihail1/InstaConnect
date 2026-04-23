@@ -21,6 +21,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 
@@ -62,7 +63,7 @@ public static partial class ServiceCollectionExtensions
             return serviceCollection;
         }
 
-        public IServiceCollection AddMongoDatabase(IConfiguration configuration)
+        public IServiceCollection AddMongo(IConfiguration configuration)
         {
             const string ConventionName = "ApplicationConventionPack";
 
@@ -82,15 +83,20 @@ public static partial class ServiceCollectionExtensions
             var conventionPack = new ConventionPack
             {
                 new SnakeCaseElementNameConvention(),
-                new IgnoreExtraElementsConvention(true)
+                new IgnoreExtraElementsConvention(true),
+                new EnumRepresentationConvention(BsonType.String)
             };
 
             ConventionRegistry.Register(ConventionName, conventionPack, t => true);
 
+            serviceCollection.AddHealthChecks()
+                 .AddMongoDb(sp => sp.GetRequiredService<IMongoClient>(),
+                             _ => options.Name);
+
             return serviceCollection;
         }
 
-        public IServiceCollection AddRedisCaching(IConfiguration configuration)
+        public IServiceCollection AddRedis(IConfiguration configuration)
         {
             serviceCollection.AddValidatedOptions<RedisOptions>(RedisOptions.SectionName);
             var options = configuration.GetOptions<RedisOptions>(RedisOptions.SectionName);
@@ -118,6 +124,19 @@ public static partial class ServiceCollectionExtensions
                 busConfigurator.SetKebabCaseEndpointNameFormatterWithPrefix(prefix);
 
                 busConfigurator.AddConsumers(currentAssemblies);
+
+                busConfigurator.AddMongoDbOutbox(o =>
+                {
+                    o.ClientFactory(provider => provider.GetRequiredService<IMongoClient>());
+                    o.DatabaseFactory(provider => provider.GetRequiredService<IMongoDatabase>());
+
+                    o.UseBusOutbox();
+                });
+
+                busConfigurator.AddConfigureEndpointsCallback((context, name, cfg) =>
+                {
+                    cfg.UseMongoDbOutbox(context);
+                });
 
                 busConfigurator.UsingRabbitMq((context, configurator) =>
                 {

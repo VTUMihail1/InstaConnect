@@ -23,7 +23,7 @@ public static class ServiceCollectionExtensions
                 .AddOpenTelemetry(configuration, webHostEnvironment)
                 .AddMapper(FollowsInfrastructureReference.Assembly)
                 .AddServicesWithMatchingInterfaces(FollowsInfrastructureReference.Assembly)
-                .AddMongoDatabase(configuration)
+                .AddMongo(configuration)
                 .AddUnitOfWork()
                 .AddRabbitMQ(configuration, FollowsEventHandlerUtilities.Prefix, presentationAssembly)
                 .AddJwtBearer(configuration)

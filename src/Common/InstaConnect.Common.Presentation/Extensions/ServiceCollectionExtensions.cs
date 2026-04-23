@@ -15,14 +15,12 @@ using InstaConnect.Common.Presentation.Helpers;
 using InstaConnect.Common.Presentation.Models.Options;
 using InstaConnect.Common.Presentation.Utilities;
 
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.OpenApi;
 
 namespace InstaConnect.Common.Presentation.Extensions;
 
