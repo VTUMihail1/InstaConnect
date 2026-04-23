@@ -1,4 +1,4 @@
-﻿using InstaConnect.Follows.Infrastructure.Extensions;
+﻿using InstaConnect.Follows.Infrastructure.Features.Common.Extensions;
 
 using MongoDB.Bson.Serialization;
 

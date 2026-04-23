@@ -1,4 +1,5 @@
-﻿using InstaConnect.Identity.Presentation.Extensions;
+﻿using InstaConnect.Identity.Presentation.Features.Common.Extensions;
+using InstaConnect.Identity.Tests.Features.Common.Utilities;
 
 namespace InstaConnect.Identity.Presentation.Tests.Unit.Features.Users.Utilities;
 

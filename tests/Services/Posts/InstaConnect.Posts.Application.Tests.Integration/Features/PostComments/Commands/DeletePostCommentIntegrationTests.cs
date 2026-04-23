@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Application.Tests.Integration.Features.PostComments.Commands;
+﻿using InstaConnect.Posts.Tests.Features.Common.Utilities;
+
+namespace InstaConnect.Posts.Application.Tests.Integration.Features.PostComments.Commands;
 
 public class DeletePostCommentIntegrationTests : BasePostCommentApplicationCommandIntegrationTest
 {

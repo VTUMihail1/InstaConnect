@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Chats.Application.Tests.Integration.Features.ChatMessages.Commands;
+﻿using InstaConnect.Chats.Tests.Features.Common.Utilities;
+
+namespace InstaConnect.Chats.Application.Tests.Integration.Features.ChatMessages.Commands;
 
 public class DeleteChatMessageIntegrationTests : BaseChatMessageApplicationCommandIntegrationTest
 {

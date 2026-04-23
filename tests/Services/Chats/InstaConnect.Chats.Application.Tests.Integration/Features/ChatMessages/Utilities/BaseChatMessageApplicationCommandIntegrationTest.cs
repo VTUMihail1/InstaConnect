@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Chats.Application.Tests.Integration.Features.ChatMessages.Utilities;
+﻿using InstaConnect.Chats.Tests.Features.Common.Utilities;
+
+namespace InstaConnect.Chats.Application.Tests.Integration.Features.ChatMessages.Utilities;
 
 public abstract class BaseChatMessageApplicationCommandIntegrationTest : BaseChatMessageWebTest
 {

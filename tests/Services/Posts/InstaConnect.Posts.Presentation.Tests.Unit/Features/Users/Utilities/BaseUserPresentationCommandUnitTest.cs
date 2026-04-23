@@ -1,4 +1,4 @@
-﻿using InstaConnect.Posts.Presentation.Extensions;
+﻿using InstaConnect.Posts.Presentation.Features.Common.Extensions;
 
 namespace InstaConnect.Posts.Presentation.Tests.Unit.Features.Users.Utilities;
 

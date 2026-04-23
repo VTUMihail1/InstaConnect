@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Chats.Presentation.Tests.Functional.Features.Chats.Utilities;
+﻿using InstaConnect.Chats.Tests.Features.Common.Utilities;
+
+namespace InstaConnect.Chats.Presentation.Tests.Functional.Features.Chats.Utilities;
 
 public abstract class BaseChatPresentationQueryFunctionalTest : BaseChatWebTest
 {

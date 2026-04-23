@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Application.Tests.Integration.Features.Users.Commands;
+﻿using InstaConnect.Posts.Tests.Features.Common.Utilities;
+
+namespace InstaConnect.Posts.Application.Tests.Integration.Features.Users.Commands;
 
 public class UpdateUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 {

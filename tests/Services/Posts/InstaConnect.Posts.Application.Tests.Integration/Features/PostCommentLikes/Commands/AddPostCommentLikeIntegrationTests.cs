@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Application.Tests.Integration.Features.PostCommentLikes.Commands;
+﻿using InstaConnect.Posts.Tests.Features.Common.Utilities;
+
+namespace InstaConnect.Posts.Application.Tests.Integration.Features.PostCommentLikes.Commands;
 
 public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeApplicationCommandIntegrationTest
 {

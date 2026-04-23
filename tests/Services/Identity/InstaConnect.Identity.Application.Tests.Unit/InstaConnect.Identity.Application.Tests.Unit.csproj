@@ -41,7 +41,7 @@
     <Using Include="InstaConnect.Common.Tests.DataAttributes.DateTimeOffsets.Base" />
     <Using Include="InstaConnect.Common.Tests.DataAttributes.Booleans.Base" />
     <Using Include="InstaConnect.Common.Tests.DataAttributes.FormFiles.Base" />
-    <Using Include="InstaConnect.Identity.Tests.Utilities" />
+    <Using Include="InstaConnect.Identity.Tests.Features.Common.Utilities" />
   </ItemGroup>
 
   <ItemGroup Label="Users">

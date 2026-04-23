@@ -1,4 +1,5 @@
-﻿using InstaConnect.Chats.Domain.Models.Requests;
+﻿using InstaConnect.Chats.Domain.Features.Common.Models.Requests;
+using InstaConnect.Chats.Infrastructure.Features.Common.Abstractions;
 
 using MongoDB.Driver;
 

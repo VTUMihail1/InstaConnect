@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Application.Tests.Integration.Features.Users.Utilities;
+﻿using InstaConnect.Posts.Tests.Features.Common.Utilities;
+
+namespace InstaConnect.Posts.Application.Tests.Integration.Features.Users.Utilities;
 
 public abstract class BaseUserApplicationCommandIntegrationTest : BaseUserWebTest
 {

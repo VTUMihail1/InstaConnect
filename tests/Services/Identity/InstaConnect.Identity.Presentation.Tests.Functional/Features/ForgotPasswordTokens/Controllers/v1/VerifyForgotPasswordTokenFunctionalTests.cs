@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Models.Bodies;
+using InstaConnect.Identity.Tests.Features.Common.Utilities;
 using InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Assertions;
 using InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.Assertions;
 

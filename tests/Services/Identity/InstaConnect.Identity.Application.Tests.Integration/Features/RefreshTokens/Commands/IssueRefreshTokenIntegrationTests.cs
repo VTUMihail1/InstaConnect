@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Application.Tests.Integration.Features.RefreshTokens.Commands;
+﻿using InstaConnect.Identity.Tests.Features.Common.Utilities;
+
+namespace InstaConnect.Identity.Application.Tests.Integration.Features.RefreshTokens.Commands;
 
 public class IssueRefreshTokenIntegrationTests : BaseRefreshTokenApplicationCommandIntegrationTest
 {

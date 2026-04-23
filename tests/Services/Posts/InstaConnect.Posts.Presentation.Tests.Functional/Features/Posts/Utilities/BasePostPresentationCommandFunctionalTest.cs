@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.Posts.Utilities;
+﻿using InstaConnect.Posts.Tests.Features.Common.Utilities;
+
+namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.Posts.Utilities;
 
 public abstract class BasePostPresentationCommandFunctionalTest : BasePostWebTest
 {

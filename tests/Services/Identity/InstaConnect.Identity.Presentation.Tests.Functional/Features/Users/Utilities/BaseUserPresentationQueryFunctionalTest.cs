@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Presentation.Tests.Functional.Features.Users.Utilities;
+﻿using InstaConnect.Identity.Tests.Features.Common.Utilities;
+
+namespace InstaConnect.Identity.Presentation.Tests.Functional.Features.Users.Utilities;
 
 public abstract class BaseUserPresentationQueryFunctionalTest : BaseUserWebTest
 {

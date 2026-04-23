@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Chats.Presentation.Tests.Functional.Features.ChatMessages.Controllers.v1;
+﻿using InstaConnect.Chats.Tests.Features.Common.Utilities;
+
+namespace InstaConnect.Chats.Presentation.Tests.Functional.Features.ChatMessages.Controllers.v1;
 
 public class GetChatMessageByIdFunctionalTests : BaseChatMessagePresentationQueryFunctionalTest
 {

@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Application.Tests.Integration.Features.ForgotPasswordTokens.Commands;
+﻿using InstaConnect.Identity.Tests.Features.Common.Utilities;
+
+namespace InstaConnect.Identity.Application.Tests.Integration.Features.ForgotPasswordTokens.Commands;
 
 public class AddForgotPasswordTokenIntegrationTests : BaseForgotPasswordTokenApplicationCommandIntegrationTest
 {

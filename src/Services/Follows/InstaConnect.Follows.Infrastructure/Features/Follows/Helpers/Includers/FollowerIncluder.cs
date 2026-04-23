@@ -1,4 +1,5 @@
-﻿using InstaConnect.Follows.Domain.Models.Requests;
+﻿using InstaConnect.Follows.Domain.Features.Common.Models.Requests;
+using InstaConnect.Follows.Infrastructure.Features.Common.Abstractions;
 
 using MongoDB.Driver;
 

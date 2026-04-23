@@ -1,4 +1,5 @@
-﻿using InstaConnect.Follows.Tests.Features.Users.Assertions;
+﻿using InstaConnect.Follows.Tests.Features.Common.Utilities;
+using InstaConnect.Follows.Tests.Features.Users.Assertions;
 
 namespace InstaConnect.Follows.Presentation.Tests.Functional.Features.Users.EventHandlers;
 

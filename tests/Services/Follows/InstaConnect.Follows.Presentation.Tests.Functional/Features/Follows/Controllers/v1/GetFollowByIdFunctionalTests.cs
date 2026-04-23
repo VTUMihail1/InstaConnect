@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Follows.Presentation.Tests.Functional.Features.Follows.Controllers.v1;
+﻿using InstaConnect.Follows.Tests.Features.Common.Utilities;
+
+namespace InstaConnect.Follows.Presentation.Tests.Functional.Features.Follows.Controllers.v1;
 
 public class GetFollowByIdFunctionalTests : BaseFollowPresentationQueryFunctionalTest
 {

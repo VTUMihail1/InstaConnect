@@ -1,5 +1,5 @@
 ﻿using InstaConnect.Common.Domain.Extensions;
-using InstaConnect.Posts.Domain.Models.Requests;
+using InstaConnect.Posts.Domain.Features.Common.Models.Requests;
 
 namespace InstaConnect.Posts.Domain.Features.Posts.Utilities;
 

@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Follows.Application.Tests.Integration.Features.Follows.Queries;
+﻿using InstaConnect.Follows.Tests.Features.Common.Utilities;
+
+namespace InstaConnect.Follows.Application.Tests.Integration.Features.Follows.Queries;
 
 public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowApplicationQueryIntegrationTest
 {

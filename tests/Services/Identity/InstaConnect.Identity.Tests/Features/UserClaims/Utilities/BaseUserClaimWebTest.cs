@@ -1,4 +1,4 @@
-﻿using InstaConnect.Identity.Tests.Utilities;
+﻿using InstaConnect.Identity.Tests.Features.Common.Utilities;
 
 using Microsoft.Extensions.DependencyInjection;
 

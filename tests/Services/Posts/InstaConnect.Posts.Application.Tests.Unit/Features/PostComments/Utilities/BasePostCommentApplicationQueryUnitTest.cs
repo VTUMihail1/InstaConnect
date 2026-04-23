@@ -1,4 +1,4 @@
-﻿using InstaConnect.Posts.Application.Extensions;
+﻿using InstaConnect.Posts.Application.Features.Common.Extensions;
 
 namespace InstaConnect.Posts.Application.Tests.Unit.Features.PostComments.Utilities;
 

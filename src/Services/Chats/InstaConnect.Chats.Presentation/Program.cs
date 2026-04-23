@@ -1,7 +1,7 @@
-using InstaConnect.Chats.Application.Extensions;
-using InstaConnect.Chats.Domain.Extensions;
-using InstaConnect.Chats.Infrastructure.Extensions;
-using InstaConnect.Chats.Presentation.Extensions;
+using InstaConnect.Chats.Application.Features.Common.Extensions;
+using InstaConnect.Chats.Domain.Features.Common.Extensions;
+using InstaConnect.Chats.Infrastructure.Features.Common.Extensions;
+using InstaConnect.Chats.Presentation.Features.Common.Extensions;
 using InstaConnect.Common.Infrastructure.Extensions;
 using InstaConnect.Common.Presentation.Extensions;
 

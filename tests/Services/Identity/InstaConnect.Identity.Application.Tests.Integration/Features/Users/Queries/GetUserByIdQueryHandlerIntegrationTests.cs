@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Application.Tests.Integration.Features.Users.Queries;
+﻿using InstaConnect.Identity.Tests.Features.Common.Utilities;
+
+namespace InstaConnect.Identity.Application.Tests.Integration.Features.Users.Queries;
 
 public class GetUserByIdQueryHandlerIntegrationTests : BaseUserApplicationQueryIntegrationTest
 {

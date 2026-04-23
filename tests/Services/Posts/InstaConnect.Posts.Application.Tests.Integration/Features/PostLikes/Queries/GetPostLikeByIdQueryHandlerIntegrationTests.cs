@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Application.Tests.Integration.Features.PostLikes.Queries;
+﻿using InstaConnect.Posts.Tests.Features.Common.Utilities;
+
+namespace InstaConnect.Posts.Application.Tests.Integration.Features.PostLikes.Queries;
 
 public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeApplicationQueryIntegrationTest
 {

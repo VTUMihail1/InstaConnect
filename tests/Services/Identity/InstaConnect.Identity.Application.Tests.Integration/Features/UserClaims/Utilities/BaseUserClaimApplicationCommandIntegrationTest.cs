@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Application.Tests.Integration.Features.UserClaims.Utilities;
+﻿using InstaConnect.Identity.Tests.Features.Common.Utilities;
+
+namespace InstaConnect.Identity.Application.Tests.Integration.Features.UserClaims.Utilities;
 
 public abstract class BaseUserClaimApplicationCommandIntegrationTest : BaseUserClaimWebTest
 {

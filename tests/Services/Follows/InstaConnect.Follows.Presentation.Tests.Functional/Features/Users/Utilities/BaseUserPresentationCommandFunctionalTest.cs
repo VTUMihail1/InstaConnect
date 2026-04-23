@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Follows.Presentation.Tests.Functional.Features.Users.Utilities;
+﻿using InstaConnect.Follows.Tests.Features.Common.Utilities;
+
+namespace InstaConnect.Follows.Presentation.Tests.Functional.Features.Users.Utilities;
 
 public abstract class BaseUserPresentationCommandFunctionalTest : BaseUserWebTest
 {

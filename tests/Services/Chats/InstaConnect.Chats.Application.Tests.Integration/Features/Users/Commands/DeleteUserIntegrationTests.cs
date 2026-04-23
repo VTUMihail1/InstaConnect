@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Chats.Application.Tests.Integration.Features.Users.Commands;
+﻿using InstaConnect.Chats.Tests.Features.Common.Utilities;
+
+namespace InstaConnect.Chats.Application.Tests.Integration.Features.Users.Commands;
 
 public class DeleteUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 {

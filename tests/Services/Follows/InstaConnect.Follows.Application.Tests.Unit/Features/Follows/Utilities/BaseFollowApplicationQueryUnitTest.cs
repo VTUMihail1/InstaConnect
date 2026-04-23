@@ -1,4 +1,4 @@
-﻿using InstaConnect.Follows.Application.Extensions;
+﻿using InstaConnect.Follows.Application.Features.Common.Extensions;
 
 namespace InstaConnect.Follows.Application.Tests.Unit.Features.Follows.Utilities;
 

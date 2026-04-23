@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Application.Tests.Integration.Features.Users.Utilities;
+﻿using InstaConnect.Identity.Tests.Features.Common.Utilities;
+
+namespace InstaConnect.Identity.Application.Tests.Integration.Features.Users.Utilities;
 
 public abstract class BaseUserApplicationQueryIntegrationTest : BaseUserWebTest
 {

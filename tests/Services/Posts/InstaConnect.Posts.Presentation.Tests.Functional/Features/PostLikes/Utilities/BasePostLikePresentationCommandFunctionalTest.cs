@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.PostLikes.Utilities;
+﻿using InstaConnect.Posts.Tests.Features.Common.Utilities;
+
+namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.PostLikes.Utilities;
 
 public abstract class BasePostLikePresentationCommandFunctionalTest : BasePostLikeWebTest
 {
