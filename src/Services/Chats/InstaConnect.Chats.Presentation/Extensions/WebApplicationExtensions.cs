@@ -13,6 +13,7 @@ public static class WebApplicationExtensions
                 .UseRequestRateLimiting()
                 .UseSecurity()
                 .MapApiEndpoints()
+                .UseGlobalExceptionHandling()
                 .MapHealthCheckEndpoints();
         }
     }
