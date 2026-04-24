@@ -1,11 +1,11 @@
-﻿using InstaConnect.Common.Application.Abstractions;
-using InstaConnect.Common.Application.Tests.Utilities;
-using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
-using InstaConnect.Common.Tests.Extensions;
+﻿using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Domain.Features.Common.Extensions;
+using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
+using InstaConnect.Common.Tests.Features.Extensions;
 using InstaConnect.Identity.Application.Features.Users.Abstractions;
 using InstaConnect.Identity.Application.Features.Users.Models;
 using InstaConnect.Identity.Application.Tests.Features.Users.Utilities;
-using InstaConnect.Identity.Domain.Helpers;
+using InstaConnect.Identity.Domain.Features.Common.Helpers;
 
 namespace InstaConnect.Identity.Application.Tests.Features.Users.Utilities;
 
@@ -100,7 +100,7 @@ public static class UserEquals
     {
         public bool Matches(User user, AddUserCommandRequest request)
         {
-            return response.Id.Matches(user.Id);
+            return response.Response.Matches(user.Id);
         }
     }
 
@@ -108,7 +108,7 @@ public static class UserEquals
     {
         public bool Matches(User user, UpdateCurrentUserCommandRequest request)
         {
-            return response.Id.Matches(user.Id);
+            return response.Response.Matches(user.Id);
         }
     }
 
@@ -116,7 +116,7 @@ public static class UserEquals
     {
         public bool Matches(User user, GetUserByIdQueryRequest request)
         {
-            return response.User.MatchesFull(user, request);
+            return response.Response.MatchesFull(user, request);
         }
     }
 
@@ -124,7 +124,7 @@ public static class UserEquals
     {
         public bool Matches(User user, GetCurrentUserByIdQueryRequest request)
         {
-            return response.User.MatchesFull(user, request);
+            return response.Response.MatchesFull(user, request);
         }
     }
 
@@ -132,7 +132,7 @@ public static class UserEquals
     {
         public bool Matches(User user, GetUserDetailsByIdQueryRequest request)
         {
-            return response.User.MatchesFull(user, request);
+            return response.Response.MatchesFull(user, request);
         }
     }
 
@@ -140,7 +140,7 @@ public static class UserEquals
     {
         public bool Matches(User user, GetCurrentUserDetailsByIdQueryRequest request)
         {
-            return response.User.MatchesFull(user, request);
+            return response.Response.MatchesFull(user, request);
         }
     }
 
@@ -150,7 +150,7 @@ public static class UserEquals
         ICollection<User> users,
         GetAllUsersQueryRequest request)
         {
-            return response.UserCollection.MatchesFull(
+            return response.Response.MatchesFull(
                        (response, user) => response.MatchesFull(user, request),
                        user => user.MatchesFilter(request),
                        users,
@@ -162,7 +162,7 @@ public static class UserEquals
             GetAllUsersQueryRequest request,
             ISortEnumTermTransformer<User> termTransformer)
         {
-            return response.UserCollection.MatchesFull(
+            return response.Response.MatchesFull(
                        (response, user) => response.MatchesFull(user, request),
                        user => user.MatchesFilter(request),
                        users,

@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Utilities;
+﻿using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+
+namespace InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Utilities;
 
 public static class RefreshTokenMockSetups
 {

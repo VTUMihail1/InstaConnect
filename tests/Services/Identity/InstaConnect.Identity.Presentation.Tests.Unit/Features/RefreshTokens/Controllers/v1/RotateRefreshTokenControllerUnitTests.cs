@@ -56,6 +56,6 @@ public class RotateRefreshTokenControllerUnitTests : BaseRefreshTokenPresentatio
         await _controller.RotateAsync(_request, CancellationToken);
 
         // Assert
-        CookieStore.ShouldReceiveOneSet(_request, RefreshToken);
+        CookieStore.ShouldReceiveOneSet(RefreshToken);
     }
 }

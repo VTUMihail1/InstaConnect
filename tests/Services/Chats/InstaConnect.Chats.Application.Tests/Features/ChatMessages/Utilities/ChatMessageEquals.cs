@@ -3,9 +3,9 @@ using InstaConnect.Chats.Application.Features.Users.Abstractions;
 using InstaConnect.Chats.Application.Tests.Features.ChatMessages.Utilities;
 using InstaConnect.Chats.Application.Tests.Features.Chats.Utilities;
 using InstaConnect.Chats.Application.Tests.Features.Users.Utilities;
-using InstaConnect.Common.Application.Abstractions;
-using InstaConnect.Common.Application.Tests.Utilities;
-using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
+using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Domain.Features.Common.Extensions;
+using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 
 namespace InstaConnect.Chats.Application.Tests.Features.ChatMessages.Utilities;
 
@@ -66,7 +66,7 @@ public static class ChatMessageEquals
     {
         public bool Matches(ChatMessage chatMessage, AddChatMessageCommandRequest request)
         {
-            return response.Id.Matches(chatMessage.Id);
+            return response.Response.Matches(chatMessage.Id);
         }
     }
 
@@ -74,7 +74,7 @@ public static class ChatMessageEquals
     {
         public bool Matches(ChatMessage chatMessage, UpdateChatMessageCommandRequest request)
         {
-            return response.Id.Matches(chatMessage.Id);
+            return response.Response.Matches(chatMessage.Id);
         }
     }
 
@@ -82,12 +82,12 @@ public static class ChatMessageEquals
     {
         public bool Matches(ChatMessage chatMessage, GetChatMessageByIdQueryRequest request)
         {
-            return response.ChatMessage.MatchesFull(chatMessage, request);
+            return response.Response.MatchesFull(chatMessage, request);
         }
 
         public bool MatchesInverted(ChatMessage chatMessage, GetChatMessageByIdQueryRequest request)
         {
-            return response.ChatMessage.MatchesFullInverted(chatMessage, request);
+            return response.Response.MatchesFullInverted(chatMessage, request);
         }
     }
 
@@ -95,7 +95,7 @@ public static class ChatMessageEquals
     {
         public bool Matches(Chat chat, ICollection<ChatMessage> chatMessages, GetAllChatMessagesQueryRequest request)
         {
-            return response.ChatMessageCollection.MatchesWithoutSender(
+            return response.Response.MatchesWithoutSender(
                 (response, message) => response.MatchesWithoutChat(message, request),
                 message => message.MatchesFilter(request),
                 chat,
@@ -106,7 +106,7 @@ public static class ChatMessageEquals
 
         public bool Matches(Chat chat, ICollection<ChatMessage> chatMessages, GetAllChatMessagesQueryRequest request, ISortEnumTermTransformer<ChatMessage> termTransformer)
         {
-            return response.ChatMessageCollection.MatchesWithoutSender(
+            return response.Response.MatchesWithoutSender(
                 (response, message) => response.MatchesWithoutChat(message, request),
                 message => message.MatchesFilter(request),
                 chat,
@@ -118,7 +118,7 @@ public static class ChatMessageEquals
 
         public bool MatchesInverted(Chat chat, ICollection<ChatMessage> chatMessages, GetAllChatMessagesQueryRequest request)
         {
-            return response.ChatMessageCollection.MatchesWithoutSenderInverted(
+            return response.Response.MatchesWithoutSenderInverted(
                 (response, message) => response.MatchesWithoutChatInverted(message, request),
                 message => message.MatchesFilter(request),
                 chat,
@@ -129,7 +129,7 @@ public static class ChatMessageEquals
 
         public bool MatchesInverted(Chat chat, ICollection<ChatMessage> chatMessages, GetAllChatMessagesQueryRequest request, ISortEnumTermTransformer<ChatMessage> termTransformer)
         {
-            return response.ChatMessageCollection.MatchesWithoutSenderInverted(
+            return response.Response.MatchesWithoutSenderInverted(
                 (response, message) => response.MatchesWithoutChatInverted(message, request),
                 message => message.MatchesFilter(request),
                 chat,

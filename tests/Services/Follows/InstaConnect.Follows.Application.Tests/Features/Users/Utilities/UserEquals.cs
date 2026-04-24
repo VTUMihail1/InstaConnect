@@ -12,7 +12,7 @@ public static class UserEquals
         User user,
         AddUserCommandRequest request)
         {
-            return response.Id.Matches(user.Id);
+            return response.Response.Matches(user.Id);
         }
     }
 
@@ -22,7 +22,7 @@ public static class UserEquals
         User user,
         UpdateUserCommandRequest request)
         {
-            return response.Id.Matches(user.Id);
+            return response.Response.Matches(user.Id);
         }
     }
 

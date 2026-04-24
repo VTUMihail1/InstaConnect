@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Follows.Application.Tests.Features.Follows.Assertions;
+﻿using InstaConnect.Common.Domain.Features.Messaging.Models;
+
+namespace InstaConnect.Follows.Application.Tests.Features.Follows.Assertions;
 
 public static class FollowValidationAssertions
 {

@@ -1,4 +1,4 @@
-﻿using InstaConnect.Chats.Tests.Utilities;
+﻿using InstaConnect.Chats.Tests.Features.Common.Utilities;
 
 using Microsoft.Extensions.DependencyInjection;
 

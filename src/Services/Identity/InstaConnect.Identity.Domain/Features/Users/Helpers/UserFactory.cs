@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Domain.Features.Users.Helpers;
+﻿using InstaConnect.Common.Domain.Features.ValueObjects.Models;
+
+namespace InstaConnect.Identity.Domain.Features.Users.Helpers;
 
 internal class UserFactory : IUserFactory
 {

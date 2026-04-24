@@ -1,4 +1,5 @@
-﻿using InstaConnect.Identity.Presentation.Features.RefreshTokens.Abstractions;
+﻿using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Identity.Presentation.Features.RefreshTokens.Abstractions;
 using InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Utilities;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Assertions;
@@ -33,17 +34,9 @@ public static class RefreshTokenMockAssertions
     extension(IRefreshTokenCookieStore store)
     {
         public void ShouldReceiveOneSet(
-            RotateRefreshTokenApiRequest request,
             RefreshToken refreshToken)
         {
-            store.ShouldHaveReceivedOne().Set(refreshToken.Id.Id.Id, refreshToken.Id.Value, refreshToken.ExpiresAtUtc);
-        }
-
-        public void ShouldReceiveOneSet(
-            IssueRefreshTokenApiRequest request,
-            RefreshToken refreshToken)
-        {
-            store.ShouldHaveReceivedOne().Set(refreshToken.Id.Id.Id, refreshToken.Id.Value, refreshToken.ExpiresAtUtc);
+            store.ShouldHaveReceivedOne().Set(RefreshTokenMatcher.IsRefreshTokenCookieRequest(refreshToken));
         }
 
         public void ShouldReceiveOneDelete(DeleteCurrentRefreshTokenApiRequest request)

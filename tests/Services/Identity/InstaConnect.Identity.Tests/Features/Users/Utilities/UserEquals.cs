@@ -1,4 +1,5 @@
-﻿using InstaConnect.Identity.Domain.Features.Users.Models.ValueObjects;
+﻿using InstaConnect.Common.Domain.Features.Common.Extensions;
+using InstaConnect.Identity.Domain.Features.Users.Models.ValueObjects;
 using InstaConnect.Identity.Events.Features.Users;
 using InstaConnect.Identity.Tests.Features.Users.Utilities;
 

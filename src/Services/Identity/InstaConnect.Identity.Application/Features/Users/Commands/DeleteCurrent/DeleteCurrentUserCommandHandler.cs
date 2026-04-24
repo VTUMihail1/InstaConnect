@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Application.Features.Users.Commands.DeleteCurrent;
+﻿using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
+
+namespace InstaConnect.Identity.Application.Features.Users.Commands.DeleteCurrent;
 
 internal class DeleteCurrentUserCommandHandler : ICommandHandler<DeleteCurrentUserCommandRequest>
 {

@@ -1,5 +1,4 @@
-﻿using InstaConnect.Common.Domain.Extensions;
-using InstaConnect.Follows.Domain.Models.Requests;
+﻿using InstaConnect.Follows.Domain.Features.Common.Models.Requests;
 
 namespace InstaConnect.Follows.Domain.Features.Users.Helpers;
 

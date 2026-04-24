@@ -2,7 +2,7 @@
 
 public interface IRefreshTokenCookieStore
 {
-    void Set(string id, string value, DateTimeOffset expiresAtUtc);
+    void Set(SetRefreshTokenCookieRequest request);
 
     void Delete();
 }

@@ -35,13 +35,8 @@
     <Using Include="Microsoft.Extensions.Configuration" />
     <Using Include="Microsoft.AspNetCore.RateLimiting" />
     <Using Include="Asp.Versioning" />
-    <Using Include="InstaConnect.Common.Domain.Abstractions" />
-    <Using Include="InstaConnect.Common.Events.Abstractions" />
-    <Using Include="InstaConnect.Common.Application.Abstractions" />
-    <Using Include="InstaConnect.Common.Presentation.Utilities" />
-    <Using Include="InstaConnect.Common.Application.Models" />
-    <Using Include="InstaConnect.Common.Presentation.Abstractions" />
-    <Using Include="InstaConnect.Common.Presentation.Binders.FromClaim" />
+    <Using Include="InstaConnect.Common.Presentation.Features.Controllers.Helpers.FromClaim" />
+    <Using Include="InstaConnect.Common.Presentation.Features.Controllers.Helpers.FromCookie" />
   </ItemGroup>
 
   <ItemGroup Label="Users">

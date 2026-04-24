@@ -1,0 +1,39 @@
+﻿using InstaConnect.Common.Domain.Features.ExceptionHandling.Exceptions;
+using InstaConnect.Common.Presentation.Features.ExceptionHandling.Abstractions;
+
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
+
+namespace InstaConnect.Common.Presentation.Features.ExceptionHandling.Helpers;
+
+public sealed class InvalidValidationExceptionHandler : IExceptionHandler
+{
+    private readonly IApplicationProblemDetailsFactory _problemDetailsFactory;
+    private readonly IApplicationProblemDetailsService _problemDetailsService;
+
+    public InvalidValidationExceptionHandler(
+        IApplicationProblemDetailsFactory problemDetailsFactory,
+        IApplicationProblemDetailsService problemDetailsService)
+    {
+        _problemDetailsFactory = problemDetailsFactory;
+        _problemDetailsService = problemDetailsService;
+    }
+
+    public async ValueTask<bool> TryHandleAsync(
+        HttpContext httpContext,
+        Exception exception,
+        CancellationToken cancellationToken)
+    {
+        var invalidValidationException = exception as InvalidValidationException;
+
+        if (invalidValidationException == null)
+        {
+            return false;
+        }
+
+        var problemDetails = _problemDetailsFactory.Create(invalidValidationException);
+        await _problemDetailsService.WriteAsync(httpContext, exception, problemDetails, cancellationToken);
+
+        return true;
+    }
+}

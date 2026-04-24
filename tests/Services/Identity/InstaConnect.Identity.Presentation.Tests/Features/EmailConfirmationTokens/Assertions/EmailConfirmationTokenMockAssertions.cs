@@ -1,4 +1,5 @@
-﻿using InstaConnect.Identity.Presentation.Tests.Features.EmailConfirmationTokens.Utilities;
+﻿using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Identity.Presentation.Tests.Features.EmailConfirmationTokens.Utilities;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.EmailConfirmationTokens.Assertions;
 

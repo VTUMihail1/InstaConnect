@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Presentation.Tests.Features.PostComments.Utilities;
+﻿using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+
+namespace InstaConnect.Posts.Presentation.Tests.Features.PostComments.Utilities;
 
 public static class PostCommentMockSetups
 {

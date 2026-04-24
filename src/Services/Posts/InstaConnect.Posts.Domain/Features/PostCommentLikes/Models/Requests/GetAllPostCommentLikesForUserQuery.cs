@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Requests;
+﻿using InstaConnect.Common.Domain.Features.Messaging.Abstractions;
+
+namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Requests;
 
 public record GetAllPostCommentLikesForUserQuery(
     PostCommentLikesForUserFilterQuery Filter,

@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Posts.Presentation.Features.PostLikes.Models.Responses;
 
-public record GetPostLikeByIdApiResponse(PostLikeApiResponse PostLike);
+public record GetPostLikeByIdApiResponse(PostLikeApiResponse Response);

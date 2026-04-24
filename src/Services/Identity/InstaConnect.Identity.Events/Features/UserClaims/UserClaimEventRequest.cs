@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Events.Models;
+﻿using InstaConnect.Common.Events.Features.Tokens.Models;
 using InstaConnect.Identity.Events.Features.Users;
 
 namespace InstaConnect.Identity.Events.Features.UserClaims;

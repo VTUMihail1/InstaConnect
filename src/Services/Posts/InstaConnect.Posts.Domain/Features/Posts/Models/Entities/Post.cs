@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
+﻿using InstaConnect.Common.Domain.Features.Entities.Abstractions;
+
+namespace InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
 
 public class Post : IEntityWithId<PostId>
 {

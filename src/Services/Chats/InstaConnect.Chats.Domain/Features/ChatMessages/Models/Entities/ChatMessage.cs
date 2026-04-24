@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Chats.Domain.Features.ChatMessages.Models.Entities;
+﻿using InstaConnect.Common.Domain.Features.Entities.Abstractions;
+
+namespace InstaConnect.Chats.Domain.Features.ChatMessages.Models.Entities;
 
 public class ChatMessage : IEntityWithId<ChatMessageId>
 {

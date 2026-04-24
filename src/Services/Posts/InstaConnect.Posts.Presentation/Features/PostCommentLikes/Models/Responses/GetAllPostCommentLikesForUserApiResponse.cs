@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Responses;
 
-public record GetAllPostCommentLikesForUserApiResponse(PostCommentLikeCollectionApiResponse PostCommentLikeCollection);
+public record GetAllPostCommentLikesForUserApiResponse(PostCommentLikeCollectionApiResponse Response);

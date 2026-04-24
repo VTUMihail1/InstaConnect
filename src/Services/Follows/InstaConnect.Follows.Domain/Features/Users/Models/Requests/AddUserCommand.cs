@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Follows.Domain.Features.Users.Models.Requests;
+﻿using InstaConnect.Common.Domain.Features.ValueObjects.Models;
+
+namespace InstaConnect.Follows.Domain.Features.Users.Models.Requests;
 
 public record AddUserCommand(
     UserId Id,

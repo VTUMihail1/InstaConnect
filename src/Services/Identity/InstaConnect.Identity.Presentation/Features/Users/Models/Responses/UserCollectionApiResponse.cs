@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Presentation.Features.Users.Models.Responses;
+﻿using InstaConnect.Common.Presentation.Features.Messaging.Abstractions;
+
+namespace InstaConnect.Identity.Presentation.Features.Users.Models.Responses;
 
 public record UserCollectionApiResponse(
     ICollection<UserApiResponse> Users,

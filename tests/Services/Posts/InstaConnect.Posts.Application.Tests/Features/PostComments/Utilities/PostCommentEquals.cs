@@ -1,6 +1,6 @@
-﻿using InstaConnect.Common.Application.Abstractions;
-using InstaConnect.Common.Application.Tests.Utilities;
-using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
+﻿using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Domain.Features.Common.Extensions;
+using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 using InstaConnect.Posts.Application.Features.PostComments.Models;
 using InstaConnect.Posts.Application.Features.Users.Abstractions;
 using InstaConnect.Posts.Application.Tests.Features.PostComments.Utilities;
@@ -87,7 +87,7 @@ public static class PostCommentEquals
     {
         public bool Matches(PostComment postComment, AddPostCommentCommandRequest request)
         {
-            return response.Id.Matches(postComment.Id);
+            return response.Response.Matches(postComment.Id);
         }
     }
 
@@ -95,7 +95,7 @@ public static class PostCommentEquals
     {
         public bool Matches(PostComment postComment, UpdatePostCommentCommandRequest request)
         {
-            return response.Id.Matches(postComment.Id);
+            return response.Response.Matches(postComment.Id);
         }
     }
 
@@ -103,7 +103,7 @@ public static class PostCommentEquals
     {
         public bool Matches(PostComment postComment, GetPostCommentByIdQueryRequest request)
         {
-            return response.PostComment.MatchesFull(postComment, request);
+            return response.Response.MatchesFull(postComment, request);
         }
     }
 
@@ -111,7 +111,7 @@ public static class PostCommentEquals
     {
         public bool Matches(Post post, ICollection<PostComment> postComments, GetAllPostCommentsQueryRequest request)
         {
-            return response.PostCommentCollection.MatchesWithoutUser(
+            return response.Response.MatchesWithoutUser(
                 (response, comment) => response.MatchesWithoutPost(comment, request),
                 comment => comment.MatchesFilter(request),
                 post,
@@ -122,7 +122,7 @@ public static class PostCommentEquals
 
         public bool Matches(Post post, ICollection<PostComment> postComments, GetAllPostCommentsQueryRequest request, ISortEnumTermTransformer<PostComment> termTransformer)
         {
-            return response.PostCommentCollection.MatchesWithoutUser(
+            return response.Response.MatchesWithoutUser(
                 (response, comment) => response.MatchesWithoutPost(comment, request),
                 comment => comment.MatchesFilter(request),
                 post,
@@ -137,7 +137,7 @@ public static class PostCommentEquals
     {
         public bool Matches(User user, ICollection<PostComment> postComments, GetAllPostCommentsForUserQueryRequest request)
         {
-            return response.PostCommentCollection.MatchesWithoutPost(
+            return response.Response.MatchesWithoutPost(
                 (response, comment) => response.MatchesWithoutUser(comment, request),
                 comment => comment.MatchesFilter(request),
                 user,
@@ -148,7 +148,7 @@ public static class PostCommentEquals
 
         public bool Matches(User user, ICollection<PostComment> postComments, GetAllPostCommentsForUserQueryRequest request, ISortEnumTermTransformer<PostComment> termTransformer)
         {
-            return response.PostCommentCollection.MatchesWithoutPost(
+            return response.Response.MatchesWithoutPost(
                 (response, comment) => response.MatchesWithoutUser(comment, request),
                 comment => comment.MatchesFilter(request),
                 user,

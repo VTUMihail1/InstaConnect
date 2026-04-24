@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Rotate;
+﻿using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
+
+namespace InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Rotate;
 
 internal class RotateRefreshTokenCommandHandler : ICommandHandler<RotateRefreshTokenCommandRequest, RotateRefreshTokenCommandResponse>
 {

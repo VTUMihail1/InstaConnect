@@ -1,6 +1,5 @@
-﻿using InstaConnect.Common.Application.Abstractions;
-using InstaConnect.Common.Application.Tests.Utilities;
-using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
+﻿using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 using InstaConnect.Identity.Application.Features.UserClaims.Models;
 using InstaConnect.Identity.Application.Features.Users.Abstractions;
 using InstaConnect.Identity.Application.Tests.Features.UserClaims.Utilities;
@@ -47,7 +46,7 @@ public static class UserClaimEquals
     {
         public bool Matches(UserClaim userClaim, AddUserClaimCommandRequest request)
         {
-            return response.Id.Matches(userClaim.Id);
+            return response.Response.Matches(userClaim.Id);
         }
     }
 
@@ -58,7 +57,7 @@ public static class UserClaimEquals
             ICollection<UserClaim> userClaims,
             GetAllUserClaimsQueryRequest request)
         {
-            return response.UserClaimCollection.MatchesFull(
+            return response.Response.MatchesFull(
                        (response, userClaim) => response.MatchesWithoutUser(userClaim, request),
                        userClaim => userClaim.MatchesFilter(request),
                        user,
@@ -72,7 +71,7 @@ public static class UserClaimEquals
             GetAllUserClaimsQueryRequest request,
             ISortEnumTermTransformer<UserClaim> termTransformer)
         {
-            return response.UserClaimCollection.MatchesFull(
+            return response.Response.MatchesFull(
                        (response, userClaim) => response.MatchesWithoutUser(userClaim, request),
                        userClaim => userClaim.MatchesFilter(request),
                        user,

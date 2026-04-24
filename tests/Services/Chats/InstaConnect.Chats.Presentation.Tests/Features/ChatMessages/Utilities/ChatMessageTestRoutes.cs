@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Chats.Presentation.Tests.Features.ChatMessages.Utilities;
+﻿using InstaConnect.Common.Domain.Features.Common.Extensions;
+
+namespace InstaConnect.Chats.Presentation.Tests.Features.ChatMessages.Utilities;
 
 public static class ChatMessageTestRoutes
 {

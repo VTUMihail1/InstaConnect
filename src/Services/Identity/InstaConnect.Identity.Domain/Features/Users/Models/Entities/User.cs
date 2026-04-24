@@ -1,4 +1,7 @@
-﻿namespace InstaConnect.Identity.Domain.Features.Users.Models.Entities;
+﻿using InstaConnect.Common.Domain.Features.Entities.Abstractions;
+using InstaConnect.Common.Domain.Features.ValueObjects.Models;
+
+namespace InstaConnect.Identity.Domain.Features.Users.Models.Entities;
 
 public class User : IEntityWithId<UserId>
 {

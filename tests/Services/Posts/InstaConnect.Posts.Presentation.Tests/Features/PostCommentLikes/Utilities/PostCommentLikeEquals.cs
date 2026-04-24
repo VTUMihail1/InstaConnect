@@ -1,5 +1,6 @@
-﻿using InstaConnect.Common.Presentation.Abstractions;
-using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
+﻿using InstaConnect.Common.Domain.Features.Common.Extensions;
+using InstaConnect.Common.Presentation.Features.Messaging.Abstractions;
+using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Requests;
 using InstaConnect.Posts.Presentation.Features.Users.Abstractions;
 using InstaConnect.Posts.Presentation.Tests.Features.PostCommentLikes.Utilities;
@@ -83,7 +84,7 @@ public static class PostCommentLikeEquals
         PostCommentLike postCommentLike,
         AddPostCommentLikeApiRequest request)
         {
-            return response.Id.Matches(postCommentLike.Id);
+            return response.Response.Matches(postCommentLike.Id);
         }
     }
 
@@ -91,7 +92,7 @@ public static class PostCommentLikeEquals
     {
         public bool Matches(PostCommentLike postCommentLike, GetPostCommentLikeByIdApiRequest request)
         {
-            return response.PostCommentLike.MatchesFull(postCommentLike, request);
+            return response.Response.MatchesFull(postCommentLike, request);
         }
     }
 
@@ -102,7 +103,7 @@ public static class PostCommentLikeEquals
         ICollection<PostCommentLike> postCommentLikes,
         GetAllPostCommentLikesApiRequest request)
         {
-            return response.PostCommentLikeCollection.MatchesWithoutUser(
+            return response.Response.MatchesWithoutUser(
                        (response, postCommentLike) => response.MatchesWithoutPostComment(postCommentLike, request),
                        postCommentLike => postCommentLike.MatchesFilter(request),
                        postComment,
@@ -116,7 +117,7 @@ public static class PostCommentLikeEquals
             GetAllPostCommentLikesApiRequest request,
             ISortEnumTermTransformer<PostCommentLike> termTransformer)
         {
-            return response.PostCommentLikeCollection.MatchesWithoutUser(
+            return response.Response.MatchesWithoutUser(
                        (response, postCommentLike) => response.MatchesWithoutPostComment(postCommentLike, request),
                        postCommentLike => postCommentLike.MatchesFilter(request),
                        postComment,
@@ -133,7 +134,7 @@ public static class PostCommentLikeEquals
         ICollection<PostCommentLike> postCommentLikes,
         GetAllPostCommentLikesForUserApiRequest request)
         {
-            return response.PostCommentLikeCollection.MatchesWithoutPostComment(
+            return response.Response.MatchesWithoutPostComment(
                        (response, postCommentLike) => response.MatchesWithoutUser(postCommentLike, request),
                        postCommentLike => postCommentLike.MatchesFilter(request),
                        user,
@@ -147,7 +148,7 @@ public static class PostCommentLikeEquals
             GetAllPostCommentLikesForUserApiRequest request,
             ISortEnumTermTransformer<PostCommentLike> termTransformer)
         {
-            return response.PostCommentLikeCollection.MatchesWithoutPostComment(
+            return response.Response.MatchesWithoutPostComment(
                        (response, postCommentLike) => response.MatchesWithoutUser(postCommentLike, request),
                        postCommentLike => postCommentLike.MatchesFilter(request),
                        user,

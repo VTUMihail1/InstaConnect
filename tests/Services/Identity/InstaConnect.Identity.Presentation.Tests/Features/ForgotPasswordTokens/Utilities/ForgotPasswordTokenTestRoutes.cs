@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Presentation.Tests.Features.ForgotPasswordTokens.Utilities;
+﻿using InstaConnect.Common.Domain.Features.Common.Extensions;
+
+namespace InstaConnect.Identity.Presentation.Tests.Features.ForgotPasswordTokens.Utilities;
 
 public static class ForgotPasswordTokenTestRoutes
 {

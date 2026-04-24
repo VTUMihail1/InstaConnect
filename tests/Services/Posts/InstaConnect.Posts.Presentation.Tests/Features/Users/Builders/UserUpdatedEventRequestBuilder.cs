@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Presentation.Tests.Features.Users.Builders;
+﻿using InstaConnect.Common.Domain.Features.ValueObjects.Models;
+
+namespace InstaConnect.Posts.Presentation.Tests.Features.Users.Builders;
 
 public class UserUpdatedEventRequestBuilder
 {

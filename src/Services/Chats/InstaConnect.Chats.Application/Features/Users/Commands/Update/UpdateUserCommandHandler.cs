@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Chats.Application.Features.Users.Commands.Update;
+﻿using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
+
+namespace InstaConnect.Chats.Application.Features.Users.Commands.Update;
 
 internal class UpdateUserCommandHandler : ICommandHandler<UpdateUserCommandRequest, UpdateUserCommandResponse>
 {

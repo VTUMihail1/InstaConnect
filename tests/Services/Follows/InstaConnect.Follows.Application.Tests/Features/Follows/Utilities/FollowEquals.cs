@@ -1,6 +1,6 @@
-﻿using InstaConnect.Common.Application.Abstractions;
-using InstaConnect.Common.Application.Tests.Utilities;
-using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
+﻿using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Domain.Features.Common.Extensions;
+using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 using InstaConnect.Follows.Application.Features.Follows.Models;
 using InstaConnect.Follows.Application.Features.Users.Abstractions;
 using InstaConnect.Follows.Application.Tests.Features.Follows.Utilities;
@@ -76,7 +76,7 @@ public static class FollowEquals
         Follow follow,
         AddFollowCommandRequest request)
         {
-            return response.Id.Matches(follow.Id);
+            return response.Response.Matches(follow.Id);
         }
     }
 
@@ -84,7 +84,7 @@ public static class FollowEquals
     {
         public bool Matches(Follow follow, GetFollowByIdQueryRequest request)
         {
-            return response.Follow.MatchesFull(follow, request);
+            return response.Response.MatchesFull(follow, request);
         }
     }
 
@@ -95,7 +95,7 @@ public static class FollowEquals
         ICollection<Follow> follows,
         GetAllFollowsQueryRequest request)
         {
-            return response.FollowCollection.MatchesWithoutFollowing(
+            return response.Response.MatchesWithoutFollowing(
                        (response, follow) => response.MatchesWithoutFollower(follow, request),
                        follow => follow.MatchesFilter(request),
                        follower,
@@ -109,7 +109,7 @@ public static class FollowEquals
             GetAllFollowsQueryRequest request,
             ISortEnumTermTransformer<Follow> termTransformer)
         {
-            return response.FollowCollection.MatchesWithoutFollowing(
+            return response.Response.MatchesWithoutFollowing(
                        (response, follow) => response.MatchesWithoutFollower(follow, request),
                        follow => follow.MatchesFilter(request),
                        follower,
@@ -126,7 +126,7 @@ public static class FollowEquals
         ICollection<Follow> follows,
         GetAllFollowsForFollowingQueryRequest request)
         {
-            return response.FollowCollection.MatchesWithoutFollower(
+            return response.Response.MatchesWithoutFollower(
                        (response, follow) => response.MatchesWithoutFollowing(follow, request),
                        follow => follow.MatchesFilter(request),
                        following,
@@ -140,7 +140,7 @@ public static class FollowEquals
             GetAllFollowsForFollowingQueryRequest request,
             ISortEnumTermTransformer<Follow> termTransformer)
         {
-            return response.FollowCollection.MatchesWithoutFollower(
+            return response.Response.MatchesWithoutFollower(
                        (response, follow) => response.MatchesWithoutFollowing(follow, request),
                        follow => follow.MatchesFilter(request),
                        following,

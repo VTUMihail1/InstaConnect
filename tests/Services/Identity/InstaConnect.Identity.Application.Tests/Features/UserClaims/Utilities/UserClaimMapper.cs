@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Application.Abstractions;
-using InstaConnect.Common.Application.Tests.Utilities;
-using InstaConnect.Common.Infrastructure.Helpers;
+﻿using InstaConnect.Common.Application.Features.Messaging.Abstractions;
 using InstaConnect.Identity.Application.Features.Users.Abstractions;
 using InstaConnect.Identity.Application.Tests.Features.UserClaims.Utilities;
 using InstaConnect.Identity.Application.Tests.Features.Users.Utilities;

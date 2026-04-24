@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Chats.Presentation.Features.ChatMessages.Models.Responses;
+﻿using InstaConnect.Common.Presentation.Features.Messaging.Abstractions;
+
+namespace InstaConnect.Chats.Presentation.Features.ChatMessages.Models.Responses;
 
 public record ChatMessageCollectionApiResponse(
     ChatApiResponse? Chat,

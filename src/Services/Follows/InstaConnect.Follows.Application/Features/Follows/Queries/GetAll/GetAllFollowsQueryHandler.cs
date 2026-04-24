@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Follows.Application.Features.Follows.Queries.GetAll;
+﻿using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
+
+namespace InstaConnect.Follows.Application.Features.Follows.Queries.GetAll;
 
 internal class GetAllFollowsQueryHandler : IQueryHandler<GetAllFollowsQueryRequest, GetAllFollowsQueryResponse>
 {

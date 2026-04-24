@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Chats.Application.Features.Chats.Queries.GetById;
+﻿using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
+
+namespace InstaConnect.Chats.Application.Features.Chats.Queries.GetById;
 
 internal class GetChatByIdQueryHandler : IQueryHandler<GetChatByIdQueryRequest, GetChatByIdQueryResponse>
 {

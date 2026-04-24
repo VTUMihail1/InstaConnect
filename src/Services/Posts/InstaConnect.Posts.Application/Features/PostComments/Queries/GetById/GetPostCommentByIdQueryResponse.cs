@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Posts.Application.Features.PostComments.Queries.GetById;
 
-public record GetPostCommentByIdQueryResponse(PostCommentQueryResponse PostComment);
+public record GetPostCommentByIdQueryResponse(PostCommentQueryResponse Response);

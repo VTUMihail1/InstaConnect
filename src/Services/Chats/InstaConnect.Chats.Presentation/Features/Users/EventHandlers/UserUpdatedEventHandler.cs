@@ -1,4 +1,7 @@
 ﻿using InstaConnect.Chats.Application.Features.Users.Commands.Update;
+using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
+using InstaConnect.Common.Presentation.Features.Events.Abstractions;
 
 namespace InstaConnect.Chats.Presentation.Features.Users.EventHandlers;
 

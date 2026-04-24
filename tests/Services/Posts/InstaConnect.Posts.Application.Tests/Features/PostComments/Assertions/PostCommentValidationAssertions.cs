@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Application.Tests.Features.PostComments.Assertions;
+﻿using InstaConnect.Common.Domain.Features.Messaging.Models;
+
+namespace InstaConnect.Posts.Application.Tests.Features.PostComments.Assertions;
 
 public static class PostCommentValidationAssertions
 {

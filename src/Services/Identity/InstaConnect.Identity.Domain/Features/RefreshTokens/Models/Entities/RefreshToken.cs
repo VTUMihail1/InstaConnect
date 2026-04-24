@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Entities;
+﻿using InstaConnect.Common.Domain.Features.Entities.Abstractions;
+
+namespace InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Entities;
 
 public class RefreshToken : IEntityWithId<RefreshTokenId>
 {

@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Utilities;
+﻿using InstaConnect.Common.Domain.Features.Common.Extensions;
+
+namespace InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Utilities;
 
 public static class RefreshTokenTestRoutes
 {

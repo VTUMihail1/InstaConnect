@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Events.Models;
+﻿using InstaConnect.Common.Events.Features.Tokens.Models;
 using InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Assertions;
 
 namespace InstaConnect.Identity.Presentation.Tests.Functional.Features.UserClaims.Controllers.v1;
@@ -217,7 +217,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
     {
         // Act
         var response = await HttpClient.AddUserClaimAsync(_request, CancellationToken);
-        var userClaim = await ServiceScope.GetUserClaimByIdAsync(response.Id, CancellationToken);
+        var userClaim = await ServiceScope.GetUserClaimByIdAsync(response.Response, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(userClaim, _request);
@@ -232,7 +232,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 
         // Act
         var response = await HttpClient.AddUserClaimAsync(request, CancellationToken);
-        var userClaim = await ServiceScope.GetUserClaimByIdAsync(response.Id, CancellationToken);
+        var userClaim = await ServiceScope.GetUserClaimByIdAsync(response.Response, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(userClaim, request);
@@ -243,7 +243,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
     {
         // Act
         var response = await HttpClient.AddUserClaimAsync(_request, CancellationToken);
-        var userClaim = await ServiceScope.GetUserClaimByIdAsync(response.Id, CancellationToken);
+        var userClaim = await ServiceScope.GetUserClaimByIdAsync(response.Response, CancellationToken);
 
         // Assert
         userClaim.ShouldSatisfy(_request);
@@ -258,7 +258,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 
         // Act
         var response = await HttpClient.AddUserClaimAsync(request, CancellationToken);
-        var userClaim = await ServiceScope.GetUserClaimByIdAsync(response.Id, CancellationToken);
+        var userClaim = await ServiceScope.GetUserClaimByIdAsync(response.Response, CancellationToken);
 
         // Assert
         userClaim.ShouldSatisfy(request);
@@ -269,7 +269,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
     {
         // Act
         var response = await HttpClient.AddUserClaimAsync(_request, CancellationToken);
-        var userClaim = await ServiceScope.GetUserClaimByIdAsync(response.Id, CancellationToken);
+        var userClaim = await ServiceScope.GetUserClaimByIdAsync(response.Response, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedUserClaimAddedAsync(userClaim, CancellationToken);
@@ -284,7 +284,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 
         // Act
         var response = await HttpClient.AddUserClaimAsync(request, CancellationToken);
-        var userClaim = await ServiceScope.GetUserClaimByIdAsync(response.Id, CancellationToken);
+        var userClaim = await ServiceScope.GetUserClaimByIdAsync(response.Response, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedUserClaimAddedAsync(userClaim, CancellationToken);

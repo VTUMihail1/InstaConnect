@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Application.Abstractions;
+﻿using InstaConnect.Common.Application.Features.Messaging.Abstractions;
 using InstaConnect.Follows.Domain.Features.Users.Exceptions;
 
 using MediatR;

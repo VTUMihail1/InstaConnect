@@ -16,7 +16,7 @@ public static class RefreshTokenMapper
             return new(refreshToken.Id.Id.Id, refreshToken.Id.Value);
         }
 
-        public IssueRefreshTokenCommandResponse ToResponse(IssueRefreshTokenApiRequest request)
+        internal SessionTokenCommandResponse ToSessionTokenResponse()
         {
             return new(
                 refreshToken.ToIdResponse(),
@@ -24,12 +24,14 @@ public static class RefreshTokenMapper
                 refreshToken.ExpiresAtUtc);
         }
 
+        public IssueRefreshTokenCommandResponse ToResponse(IssueRefreshTokenApiRequest request)
+        {
+            return new(refreshToken.ToSessionTokenResponse());
+        }
+
         public RotateRefreshTokenCommandResponse ToResponse(RotateRefreshTokenApiRequest request)
         {
-            return new(
-                refreshToken.ToIdResponse(),
-                refreshToken.ToResponse(),
-                refreshToken.ExpiresAtUtc);
+            return new(refreshToken.ToSessionTokenResponse());
         }
     }
 

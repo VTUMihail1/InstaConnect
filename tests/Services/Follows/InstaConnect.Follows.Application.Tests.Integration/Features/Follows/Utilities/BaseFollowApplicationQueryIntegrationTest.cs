@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Follows.Application.Tests.Integration.Features.Follows.Utilities;
+﻿using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+
+namespace InstaConnect.Follows.Application.Tests.Integration.Features.Follows.Utilities;
 
 public abstract class BaseFollowApplicationQueryIntegrationTest : BaseFollowWebTest
 {

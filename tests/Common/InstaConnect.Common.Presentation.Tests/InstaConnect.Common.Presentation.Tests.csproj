@@ -13,8 +13,7 @@
   </ItemGroup>
 
   <ItemGroup Label="Common">
-    <Using Include="InstaConnect.Common.Presentation.Abstractions" />
-	<Using Include="InstaConnect.Common.Tests.Assertions" />
+	<Using Include="InstaConnect.Common.Tests.Features.Assertions" />
   </ItemGroup>
 
 </Project>

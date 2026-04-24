@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Presentation.Tests.Features.Users.Utilities;
+﻿using InstaConnect.Common.Domain.Features.Common.Extensions;
+
+namespace InstaConnect.Identity.Presentation.Tests.Features.Users.Utilities;
 
 public static class UserTestRoutes
 {

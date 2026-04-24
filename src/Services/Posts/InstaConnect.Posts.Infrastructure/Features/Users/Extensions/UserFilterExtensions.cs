@@ -1,5 +1,7 @@
 ﻿using System.Linq.Expressions;
 
+using InstaConnect.Common.Domain.Features.ValueObjects.Models;
+
 using MongoDB.Driver;
 
 namespace InstaConnect.Posts.Infrastructure.Features.Users.Extensions;

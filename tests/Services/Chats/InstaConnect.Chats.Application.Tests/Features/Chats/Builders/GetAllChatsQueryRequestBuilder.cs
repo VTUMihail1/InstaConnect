@@ -1,4 +1,5 @@
-﻿using InstaConnect.Common.Tests.DataAttributes.Base;
+﻿using InstaConnect.Common.Domain.Features.Messaging.Models;
+using InstaConnect.Common.Domain.Features.ValueObjects.Models;
 
 namespace InstaConnect.Chats.Application.Tests.Features.Chats.Builders;
 

@@ -11,8 +11,12 @@
 
   <ItemGroup Label="Common">
     <Using Include="Microsoft.Extensions.DependencyInjection" />
-    <Using Include="InstaConnect.Common.Domain.Abstractions" />
-    <Using Include="InstaConnect.Common.Domain.Models.ValueObjects" />
+    <Using Include="InstaConnect.Common.Domain.Features.Common.Extensions"/>
+    <Using Include="InstaConnect.Common.Domain.Features.Guids.Abstractions" />
+    <Using Include="InstaConnect.Common.Domain.Features.DateTimes.Abstractions" />
+    <Using Include="InstaConnect.Common.Domain.Features.Entities.Abstractions" />
+    <Using Include="InstaConnect.Common.Domain.Features.ValueObjects.Abstractions" />
+    <Using Include="InstaConnect.Common.Domain.Features.ValueObjects.Models" />
   </ItemGroup>
 
   <ItemGroup Label="Users">

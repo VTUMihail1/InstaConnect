@@ -2,29 +2,36 @@ networks:
   instaconnect:
 
 services:
-  otel-lgtm:
+  observability:
     image: grafana/otel-lgtm
-    container_name: otel-lgtm
-    hostname: otel-lgtm
+    container_name: observability
+    hostname: observability
     ports:
       - "3000:3000"
       - "4317:4317"
       - "4318:4318"
     volumes:
-      - ./.containers/grafana:/data
+      - ./.containers/observability:/data
+    healthcheck:
+      test: cat /tmp/ready
+      interval: 1m
+      timeout: 10s
+      retries: 10
+      start_period: 1m
+      start_interval: 10s
     networks:
       - instaconnect
 
-  mongo-primary:
+  mongo:
     image: docker.io/bitnami/mongodb:latest
-    container_name: mongo-primary
-    hostname: mongo-primary
+    container_name: mongo
+    hostname: mongo
     restart: unless-stopped
     volumes:
-      - ./.containers/mongo/primary:/bitnami/mongodb
+      - ./.containers/mongo:/bitnami/mongodb
       - ./mongo/scripts:/docker-entrypoint-initdb.d:ro
     environment:
-      MONGODB_ADVERTISED_HOSTNAME: mongo-primary
+      MONGODB_ADVERTISED_HOSTNAME: mongo
       MONGODB_REPLICA_SET_MODE: primary
       MONGODB_REPLICA_SET_NAME: rs0
       MONGODB_REPLICA_SET_KEY: rs0key
@@ -32,65 +39,14 @@ services:
       MONGODB_ROOT_PASSWORD: ${MONGO_PASSWORD}
       MONGODB_USERNAME: ${MONGO_USERNAME}
       MONGODB_PASSWORD: ${MONGO_PASSWORD}
-      MONGODB_DATABASE: admin
     ports:
-      - 27017:27017
+      - "27017:27017"
     healthcheck:
       test: ["CMD", "mongosh", "--quiet", "-u", "${MONGO_USERNAME}", "-p", "${MONGO_PASSWORD}", "--authenticationDatabase", "admin", "--eval", "db.adminCommand('ping').ok"]
       interval: 10s
       timeout: 5s
       retries: 10
       start_period: 30s
-    networks:
-      - instaconnect
-
-  mongo-secondary:
-    image: docker.io/bitnami/mongodb:latest
-    container_name: mongo-secondary
-    hostname: mongo-secondary
-    restart: unless-stopped
-    depends_on:
-      mongo-primary:
-        condition: service_healthy
-    environment:
-      MONGODB_ADVERTISED_HOSTNAME: mongo-secondary
-      MONGODB_REPLICA_SET_MODE: secondary
-      MONGODB_REPLICA_SET_NAME: rs0
-      MONGODB_REPLICA_SET_KEY: rs0key
-      MONGODB_INITIAL_PRIMARY_HOST: mongo-primary
-      MONGODB_INITIAL_PRIMARY_PORT_NUMBER: 27017
-      MONGODB_INITIAL_PRIMARY_ROOT_USERNAME: ${MONGO_USERNAME}
-      MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD: ${MONGO_PASSWORD}
-    volumes:
-      - ./.containers/mongo/secondary:/bitnami/mongodb
-    healthcheck:
-      test: ["CMD", "mongosh", "--quiet", "-u", "${MONGO_USERNAME}", "-p", "${MONGO_PASSWORD}", "--authenticationDatabase", "admin", "--eval", "db.adminCommand('ping').ok"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 30s
-    networks:
-      - instaconnect
-
-  mongodb-arbiter:
-    image: docker.io/bitnami/mongodb:latest
-    container_name: mongo-arbiter
-    hostname: mongo-arbiter
-    restart: unless-stopped
-    depends_on:
-      mongo-secondary:
-        condition: service_healthy
-    environment:
-      MONGODB_ADVERTISED_HOSTNAME: mongo-arbiter
-      MONGODB_REPLICA_SET_MODE: arbiter
-      MONGODB_REPLICA_SET_NAME: rs0
-      MONGODB_REPLICA_SET_KEY: rs0key
-      MONGODB_INITIAL_PRIMARY_HOST: mongo-primary
-      MONGODB_INITIAL_PRIMARY_PORT_NUMBER: 27017
-      MONGODB_INITIAL_PRIMARY_ROOT_USERNAME: ${MONGO_USERNAME}
-      MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD: ${MONGO_PASSWORD}
-    volumes:
-      - ./.containers/mongo/arbiter:/bitnami/mongodb
     networks:
       - instaconnect
 
@@ -105,6 +61,12 @@ services:
       - "6379:6379"
     volumes:
       - ./.containers/redis/data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
     networks:
       - instaconnect
 
@@ -121,6 +83,12 @@ services:
     volumes:
       - ./.containers/rabbitmq/data:/var/lib/rabbitmq
       - ./.containers/rabbitmq/log:/var/log/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "check_port_connectivity"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
     networks:
       - instaconnect
 
@@ -136,25 +104,27 @@ services:
       ASPNETCORE_URLS: http://+:80
       AccessTokenConfiguration__SecurityKey: "${ACCESS_TOKEN_SECURITY_KEY}"
       MongoConfiguration__Name: "instaconnect_identity"
-      MongoConfiguration__ConnectionString: "mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo-primary:27017,mongo-secondary:27017/instaconnect_identity?replicaSet=rs0&w=majority&readPreference=primaryPreferred&connectTimeoutMS=10000&serverSelectionTimeoutMS=10000&authSource=admin"
+      MongoConfiguration__ConnectionString: "mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo:27017/instaconnect_identity?replicaSet=rs0&authSource=admin"
       RabbitMqConfiguration__ConnectionString: "amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@rabbitmq:5672/"
       RedisConfiguration__ConnectionString: "redis:6379,password=${REDIS_PASSWORD},abortConnect=False"
       CloudinaryConfiguration__CloudName: ${CLOUDINARY_CLOUD_NAME}
       CloudinaryConfiguration__ApiKey: ${CLOUDINARY_API_KEY}
       CloudinaryConfiguration__ApiSecret: ${CLOUDINARY_API_SECRET}
-    ports:
-      - "8083:80"
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider --tries=1 --no-verbose http://127.0.0.1:80/healthz || exit 1"]
+      interval: 15s
+      timeout: 15s
+      retries: 5
+      start_period: 30s
     depends_on:
-      otel-lgtm:
-        condition: service_started
-      mongo-primary:
+      observability:
         condition: service_healthy
-      mongo-secondary:
+      mongo:
         condition: service_healthy
       rabbitmq:
-        condition: service_started
+        condition: service_healthy
       redis:
-        condition: service_started
+        condition: service_healthy
     networks:
       - instaconnect
 
@@ -170,20 +140,22 @@ services:
       ASPNETCORE_URLS: http://+:80
       AccessTokenConfiguration__SecurityKey: "${ACCESS_TOKEN_SECURITY_KEY}"
       MongoConfiguration__Name: "instaconnect_posts"
-      MongoConfiguration__ConnectionString: "mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo-primary:27017,mongo-secondary:27017/instaconnect_posts?replicaSet=rs0&w=majority&readPreference=primaryPreferred&connectTimeoutMS=10000&serverSelectionTimeoutMS=10000&authSource=admin"
+      MongoConfiguration__ConnectionString: "mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo:27017/instaconnect_posts?replicaSet=rs0&authSource=admin"
       RabbitMqConfiguration__ConnectionString: "amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@rabbitmq:5672/"
       RedisConfiguration__ConnectionString: "redis:6379,password=${REDIS_PASSWORD},abortConnect=False"
-    ports:
-      - "8082:80"
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider --tries=1 --no-verbose http://127.0.0.1:80/healthz || exit 1"]
+      interval: 15s
+      timeout: 15s
+      retries: 5
+      start_period: 30s
     depends_on:
-      otel-lgtm:
-        condition: service_started
-      mongo-primary:
+      observability:
         condition: service_healthy
-      mongo-secondary:
+      mongo:
         condition: service_healthy
       rabbitmq:
-        condition: service_started
+        condition: service_healthy
     networks:
       - instaconnect
 
@@ -199,20 +171,22 @@ services:
       ASPNETCORE_URLS: http://+:80
       AccessTokenConfiguration__SecurityKey: "${ACCESS_TOKEN_SECURITY_KEY}"
       MongoConfiguration__Name: "instaconnect_chats"
-      MongoConfiguration__ConnectionString: "mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo-primary:27017,mongo-secondary:27017/instaconnect_chats?replicaSet=rs0&w=majority&readPreference=primaryPreferred&connectTimeoutMS=30000&serverSelectionTimeoutMS=120000&authSource=admin"
+      MongoConfiguration__ConnectionString: "mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo:27017/instaconnect_chats?replicaSet=rs0&authSource=admin"
       RabbitMqConfiguration__ConnectionString: "amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@rabbitmq:5672/"
       RedisConfiguration__ConnectionString: "redis:6379,password=${REDIS_PASSWORD},abortConnect=False"
-    ports:
-      - "8081:80"
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider --tries=1 --no-verbose http://127.0.0.1:80/healthz || exit 1"]
+      interval: 15s
+      timeout: 15s
+      retries: 5
+      start_period: 30s
     depends_on:
-      otel-lgtm:
-        condition: service_started
-      mongo-primary:
+      observability:
         condition: service_healthy
-      mongo-secondary:
+      mongo:
         condition: service_healthy
       rabbitmq:
-        condition: service_started
+        condition: service_healthy
     networks:
       - instaconnect
 
@@ -228,25 +202,27 @@ services:
       ASPNETCORE_URLS: http://+:80
       AccessTokenConfiguration__SecurityKey: "${ACCESS_TOKEN_SECURITY_KEY}"
       MongoConfiguration__Name: "instaconnect_follows"
-      MongoConfiguration__ConnectionString: "mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo-primary:27017,mongo-secondary:27017/instaconnect_follows?replicaSet=rs0&w=majority&readPreference=primaryPreferred&connectTimeoutMS=10000&serverSelectionTimeoutMS=10000&authSource=admin"
+      MongoConfiguration__ConnectionString: "mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo:27017/instaconnect_follows?replicaSet=rs0&authSource=admin"
       RabbitMqConfiguration__ConnectionString: "amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@rabbitmq:5672/"
       RedisConfiguration__ConnectionString: "redis:6379,password=${REDIS_PASSWORD},abortConnect=False"
-    ports:
-      - "8080:80"
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider --tries=1 --no-verbose http://127.0.0.1:80/healthz || exit 1"]
+      interval: 15s
+      timeout: 15s
+      retries: 5
+      start_period: 30s
     depends_on:
-      otel-lgtm:
-        condition: service_started
-      mongo-primary:
+      observability:
         condition: service_healthy
-      mongo-secondary:
+      mongo:
         condition: service_healthy
       rabbitmq:
-        condition: service_started
+        condition: service_healthy
     networks:
       - instaconnect
 
   gateway-svc:
-    image: nginx:latest
+    image: nginx:alpine
     container_name: gateway-svc
     hostname: gateway-svc
     ports:
@@ -256,12 +232,12 @@ services:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
       identity-svc:
-        condition: service_started
+        condition: service_healthy
       posts-svc:
-        condition: service_started
+        condition: service_healthy
       chats-svc:
-        condition: service_started
+        condition: service_healthy
       follows-svc:
-        condition: service_started
+        condition: service_healthy
     networks:
       - instaconnect

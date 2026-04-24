@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Application.Features.PostComments.Queries.GetAllForUser;
+﻿using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
+
+namespace InstaConnect.Posts.Application.Features.PostComments.Queries.GetAllForUser;
 
 internal class GetAllPostCommentsForUserQueryHandler : IQueryHandler<GetAllPostCommentsForUserQueryRequest, GetAllPostCommentsForUserQueryResponse>
 {

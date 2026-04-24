@@ -1,4 +1,5 @@
-﻿using InstaConnect.Posts.Domain.Features.PostComments.Models.Requests;
+﻿using InstaConnect.Common.Domain.Features.Messaging.Models;
+using InstaConnect.Posts.Domain.Features.PostComments.Models.Requests;
 
 namespace InstaConnect.Posts.Presentation.Tests.Features.PostComments.Builders;
 
