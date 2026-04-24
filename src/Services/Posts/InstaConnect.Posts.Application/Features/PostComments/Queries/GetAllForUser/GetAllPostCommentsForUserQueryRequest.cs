@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Domain.Models;
+﻿using InstaConnect.Common.Domain.Features.Messaging.Models;
 using InstaConnect.Posts.Application.Features.Users.Abstractions;
 
 namespace InstaConnect.Posts.Application.Features.PostComments.Queries.GetAllForUser;

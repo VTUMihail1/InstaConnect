@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Application.Features.UserClaims.Commands.Delete;
+﻿using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
+
+namespace InstaConnect.Identity.Application.Features.UserClaims.Commands.Delete;
 
 internal class DeleteUserClaimCommandHandler : ICommandHandler<DeleteUserClaimCommandRequest>
 {

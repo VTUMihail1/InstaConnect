@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Tests.DataAttributes.Base;
-
-namespace InstaConnect.Posts.Application.Tests.Features.Posts.Builders;
+﻿namespace InstaConnect.Posts.Application.Tests.Features.Posts.Builders;
 
 public class GetPostByIdQueryRequestBuilder
 {

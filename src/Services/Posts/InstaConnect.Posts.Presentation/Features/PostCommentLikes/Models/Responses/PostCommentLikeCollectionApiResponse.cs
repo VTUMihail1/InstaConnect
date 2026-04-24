@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Responses;
+﻿using InstaConnect.Common.Presentation.Features.Messaging.Abstractions;
+
+namespace InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Responses;
 
 public record PostCommentLikeCollectionApiResponse(
     PostCommentApiResponse? PostComment,

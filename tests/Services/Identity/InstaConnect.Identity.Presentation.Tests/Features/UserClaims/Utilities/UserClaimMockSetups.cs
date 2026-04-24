@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Utilities;
+﻿using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+
+namespace InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Utilities;
 
 public static class UserClaimMockSetups
 {

@@ -150,7 +150,7 @@ public class AddChatIntegrationTests : BaseChatApplicationCommandIntegrationTest
     {
         // Act
         var response = await Sender.SendAsync(_request, CancellationToken);
-        var chat = await ServiceScope.GetChatByIdAsync(response.Id, CancellationToken);
+        var chat = await ServiceScope.GetChatByIdAsync(response.Response, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(chat, _request);
@@ -166,7 +166,7 @@ public class AddChatIntegrationTests : BaseChatApplicationCommandIntegrationTest
 
         // Act
         var response = await Sender.SendAsync(request, CancellationToken);
-        var chat = await ServiceScope.GetChatByIdAsync(response.Id, CancellationToken);
+        var chat = await ServiceScope.GetChatByIdAsync(response.Response, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(chat, request);
@@ -182,7 +182,7 @@ public class AddChatIntegrationTests : BaseChatApplicationCommandIntegrationTest
 
         // Act
         var response = await Sender.SendAsync(request, CancellationToken);
-        var chat = await ServiceScope.GetChatByIdAsync(response.Id, CancellationToken);
+        var chat = await ServiceScope.GetChatByIdAsync(response.Response, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(chat, request);
@@ -193,7 +193,7 @@ public class AddChatIntegrationTests : BaseChatApplicationCommandIntegrationTest
     {
         // Act
         var response = await Sender.SendAsync(_request, CancellationToken);
-        var chat = await ServiceScope.GetChatByIdAsync(response.Id, CancellationToken);
+        var chat = await ServiceScope.GetChatByIdAsync(response.Response, CancellationToken);
 
         // Assert
         chat.ShouldSatisfy(_request);
@@ -209,7 +209,7 @@ public class AddChatIntegrationTests : BaseChatApplicationCommandIntegrationTest
 
         // Act
         var response = await Sender.SendAsync(request, CancellationToken);
-        var chat = await ServiceScope.GetChatByIdAsync(response.Id, CancellationToken);
+        var chat = await ServiceScope.GetChatByIdAsync(response.Response, CancellationToken);
 
         // Assert
         chat.ShouldSatisfy(request);
@@ -225,7 +225,7 @@ public class AddChatIntegrationTests : BaseChatApplicationCommandIntegrationTest
 
         // Act
         var response = await Sender.SendAsync(request, CancellationToken);
-        var chat = await ServiceScope.GetChatByIdAsync(response.Id, CancellationToken);
+        var chat = await ServiceScope.GetChatByIdAsync(response.Response, CancellationToken);
 
         // Assert
         chat.ShouldSatisfy(request);
@@ -236,7 +236,7 @@ public class AddChatIntegrationTests : BaseChatApplicationCommandIntegrationTest
     {
         // Act
         var response = await Sender.SendAsync(_request, CancellationToken);
-        var chat = await ServiceScope.GetChatByIdAsync(response.Id, CancellationToken);
+        var chat = await ServiceScope.GetChatByIdAsync(response.Response, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedChatAddedAsync(chat, CancellationToken);
@@ -252,7 +252,7 @@ public class AddChatIntegrationTests : BaseChatApplicationCommandIntegrationTest
 
         // Act
         var response = await Sender.SendAsync(request, CancellationToken);
-        var chat = await ServiceScope.GetChatByIdAsync(response.Id, CancellationToken);
+        var chat = await ServiceScope.GetChatByIdAsync(response.Response, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedChatAddedAsync(chat, CancellationToken);
@@ -268,7 +268,7 @@ public class AddChatIntegrationTests : BaseChatApplicationCommandIntegrationTest
 
         // Act
         var response = await Sender.SendAsync(request, CancellationToken);
-        var chat = await ServiceScope.GetChatByIdAsync(response.Id, CancellationToken);
+        var chat = await ServiceScope.GetChatByIdAsync(response.Response, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedChatAddedAsync(chat, CancellationToken);

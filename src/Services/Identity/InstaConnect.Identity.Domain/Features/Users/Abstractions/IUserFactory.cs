@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Domain.Features.Users.Abstractions;
+﻿using InstaConnect.Common.Domain.Features.ValueObjects.Models;
+
+namespace InstaConnect.Identity.Domain.Features.Users.Abstractions;
 
 public interface IUserFactory
 {

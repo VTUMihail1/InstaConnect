@@ -1,6 +1,6 @@
-﻿using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
+﻿using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 using InstaConnect.Identity.Application.Tests.Features.Users.Utilities;
-using InstaConnect.Identity.Domain.Helpers;
+using InstaConnect.Identity.Domain.Features.Common.Helpers;
 
 namespace InstaConnect.Identity.Application.Tests.Features.Users.Assertions;
 

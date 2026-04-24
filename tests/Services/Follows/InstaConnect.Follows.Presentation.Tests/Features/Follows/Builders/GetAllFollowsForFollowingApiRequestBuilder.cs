@@ -1,4 +1,5 @@
-﻿using InstaConnect.Follows.Domain.Features.Follows.Models.Requests;
+﻿using InstaConnect.Common.Domain.Features.Messaging.Models;
+using InstaConnect.Follows.Domain.Features.Follows.Models.Requests;
 
 namespace InstaConnect.Follows.Presentation.Tests.Features.Follows.Builders;
 

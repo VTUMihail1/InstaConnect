@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Tests.DataAttributes.Base;
-
-namespace InstaConnect.Posts.Application.Tests.Features.PostComments.Builders;
+﻿namespace InstaConnect.Posts.Application.Tests.Features.PostComments.Builders;
 
 public class GetPostCommentByIdQueryRequestBuilder
 {

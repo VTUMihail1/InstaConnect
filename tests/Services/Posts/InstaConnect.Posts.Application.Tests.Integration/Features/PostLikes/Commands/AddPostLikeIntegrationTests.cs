@@ -113,7 +113,7 @@ public class AddPostLikeIntegrationTests : BasePostLikeApplicationCommandIntegra
     {
         // Act
         var response = await Sender.SendAsync(_request, CancellationToken);
-        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Id, CancellationToken);
+        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Response, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(postLike, _request);
@@ -129,7 +129,7 @@ public class AddPostLikeIntegrationTests : BasePostLikeApplicationCommandIntegra
 
         // Act
         var response = await Sender.SendAsync(request, CancellationToken);
-        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Id, CancellationToken);
+        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Response, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(postLike, request);
@@ -145,7 +145,7 @@ public class AddPostLikeIntegrationTests : BasePostLikeApplicationCommandIntegra
 
         // Act
         var response = await Sender.SendAsync(request, CancellationToken);
-        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Id, CancellationToken);
+        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Response, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(postLike, request);
@@ -156,7 +156,7 @@ public class AddPostLikeIntegrationTests : BasePostLikeApplicationCommandIntegra
     {
         // Act
         var response = await Sender.SendAsync(_request, CancellationToken);
-        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Id, CancellationToken);
+        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Response, CancellationToken);
 
         // Assert
         postLike.ShouldSatisfy(_request);
@@ -172,7 +172,7 @@ public class AddPostLikeIntegrationTests : BasePostLikeApplicationCommandIntegra
 
         // Act
         var response = await Sender.SendAsync(request, CancellationToken);
-        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Id, CancellationToken);
+        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Response, CancellationToken);
 
         // Assert
         postLike.ShouldSatisfy(request);
@@ -188,7 +188,7 @@ public class AddPostLikeIntegrationTests : BasePostLikeApplicationCommandIntegra
 
         // Act
         var response = await Sender.SendAsync(request, CancellationToken);
-        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Id, CancellationToken);
+        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Response, CancellationToken);
 
         // Assert
         postLike.ShouldSatisfy(request);
@@ -199,7 +199,7 @@ public class AddPostLikeIntegrationTests : BasePostLikeApplicationCommandIntegra
     {
         // Act
         var response = await Sender.SendAsync(_request, CancellationToken);
-        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Id, CancellationToken);
+        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Response, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedPostLikeAddedAsync(postLike, CancellationToken);
@@ -215,7 +215,7 @@ public class AddPostLikeIntegrationTests : BasePostLikeApplicationCommandIntegra
 
         // Act
         var response = await Sender.SendAsync(request, CancellationToken);
-        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Id, CancellationToken);
+        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Response, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedPostLikeAddedAsync(postLike, CancellationToken);
@@ -231,7 +231,7 @@ public class AddPostLikeIntegrationTests : BasePostLikeApplicationCommandIntegra
 
         // Act
         var response = await Sender.SendAsync(request, CancellationToken);
-        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Id, CancellationToken);
+        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Response, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedPostLikeAddedAsync(postLike, CancellationToken);

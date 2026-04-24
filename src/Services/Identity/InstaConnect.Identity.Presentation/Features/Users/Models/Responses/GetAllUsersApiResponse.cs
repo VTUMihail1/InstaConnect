@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Identity.Presentation.Features.Users.Models.Responses;
 
-public record GetAllUsersApiResponse(UserCollectionApiResponse UserCollection);
+public record GetAllUsersApiResponse(UserCollectionApiResponse Response);

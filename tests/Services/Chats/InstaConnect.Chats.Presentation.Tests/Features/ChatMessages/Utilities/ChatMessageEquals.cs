@@ -2,8 +2,9 @@
 using InstaConnect.Chats.Presentation.Features.Users.Abstractions;
 using InstaConnect.Chats.Presentation.Tests.Features.Chats.Utilities;
 using InstaConnect.Chats.Presentation.Tests.Features.Users.Utilities;
-using InstaConnect.Common.Presentation.Abstractions;
-using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
+using InstaConnect.Common.Domain.Features.Common.Extensions;
+using InstaConnect.Common.Presentation.Features.Messaging.Abstractions;
+using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 
 namespace InstaConnect.Chats.Presentation.Tests.Features.ChatMessages.Utilities;
 
@@ -72,7 +73,7 @@ public static class ChatMessageEquals
         ChatMessage chatMessage,
         AddChatMessageApiRequest request)
         {
-            return response.Id.Matches(chatMessage.Id);
+            return response.Response.Matches(chatMessage.Id);
         }
     }
 
@@ -82,7 +83,7 @@ public static class ChatMessageEquals
         ChatMessage chatMessage,
         UpdateChatMessageApiRequest request)
         {
-            return response.Id.Matches(chatMessage.Id);
+            return response.Response.Matches(chatMessage.Id);
         }
     }
 
@@ -90,12 +91,12 @@ public static class ChatMessageEquals
     {
         public bool Matches(ChatMessage chatMessage, GetChatMessageByIdApiRequest request)
         {
-            return response.ChatMessage.MatchesFull(chatMessage, request);
+            return response.Response.MatchesFull(chatMessage, request);
         }
 
         public bool MatchesInverted(ChatMessage chatMessage, GetChatMessageByIdApiRequest request)
         {
-            return response.ChatMessage.MatchesFullInverted(chatMessage, request);
+            return response.Response.MatchesFullInverted(chatMessage, request);
         }
     }
 
@@ -106,7 +107,7 @@ public static class ChatMessageEquals
         ICollection<ChatMessage> chatMessages,
         GetAllChatMessagesApiRequest request)
         {
-            return response.ChatMessageCollection.MatchesWithoutSender(
+            return response.Response.MatchesWithoutSender(
                        (response, chatMessage) => response.MatchesWithoutChat(chatMessage, request),
                        chatMessage => chatMessage.MatchesFilter(request),
                        chat,
@@ -120,7 +121,7 @@ public static class ChatMessageEquals
             GetAllChatMessagesApiRequest request,
             ISortEnumTermTransformer<ChatMessage> termTransformer)
         {
-            return response.ChatMessageCollection.MatchesWithoutSender(
+            return response.Response.MatchesWithoutSender(
                        (response, chatMessage) => response.MatchesWithoutChat(chatMessage, request),
                        chatMessage => chatMessage.MatchesFilter(request),
                        chat,
@@ -131,7 +132,7 @@ public static class ChatMessageEquals
 
         public bool MatchesInverted(Chat chat, ICollection<ChatMessage> chatMessages, GetAllChatMessagesApiRequest request)
         {
-            return response.ChatMessageCollection.MatchesWithoutSenderInverted(
+            return response.Response.MatchesWithoutSenderInverted(
                 (response, message) => response.MatchesWithoutChatInverted(message, request),
                 message => message.MatchesFilter(request),
                 chat,
@@ -142,7 +143,7 @@ public static class ChatMessageEquals
 
         public bool MatchesInverted(Chat chat, ICollection<ChatMessage> chatMessages, GetAllChatMessagesApiRequest request, ISortEnumTermTransformer<ChatMessage> termTransformer)
         {
-            return response.ChatMessageCollection.MatchesWithoutSenderInverted(
+            return response.Response.MatchesWithoutSenderInverted(
                 (response, message) => response.MatchesWithoutChatInverted(message, request),
                 message => message.MatchesFilter(request),
                 chat,

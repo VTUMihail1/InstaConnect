@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Tests.DataAttributes.FormFiles.Base;
+﻿using InstaConnect.Common.Domain.Features.ValueObjects.Models;
 
 using Microsoft.AspNetCore.Http;
 

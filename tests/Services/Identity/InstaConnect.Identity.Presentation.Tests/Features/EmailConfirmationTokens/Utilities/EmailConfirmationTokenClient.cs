@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-using InstaConnect.Common.Presentation.Models;
+using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.EmailConfirmationTokens.Utilities;
 

@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Tests.DataAttributes.Base;
-
-namespace InstaConnect.Identity.Application.Tests.Features.EmailConfirmationTokens.Builders;
+﻿namespace InstaConnect.Identity.Application.Tests.Features.EmailConfirmationTokens.Builders;
 
 public class VerifyEmailConfirmationTokenCommandRequestBuilder
 {

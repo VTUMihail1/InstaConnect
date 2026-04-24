@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Follows.Application.Features.Users.Commands.Delete;
+﻿using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
+
+namespace InstaConnect.Follows.Application.Features.Users.Commands.Delete;
 
 internal class DeleteUserCommandHandler : ICommandHandler<DeleteUserCommandRequest>
 {

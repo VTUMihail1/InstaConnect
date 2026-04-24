@@ -1,6 +1,7 @@
 ﻿using InstaConnect.Chats.Domain.Features.Chats.Models.ValueObjects;
 using InstaConnect.Chats.Events.Features.Chats;
 using InstaConnect.Chats.Tests.Features.Users.Utilities;
+using InstaConnect.Common.Domain.Features.Common.Extensions;
 
 namespace InstaConnect.Chats.Tests.Features.Chats.Utilities;
 

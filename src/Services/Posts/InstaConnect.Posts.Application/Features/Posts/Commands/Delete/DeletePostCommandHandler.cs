@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
+﻿using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
+
+namespace InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
 
 internal class DeletePostCommandHandler : ICommandHandler<DeletePostCommandRequest>
 {

@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Chats.Domain.Features.ChatMessages.Helpers;
+﻿using InstaConnect.Common.Domain.Features.Data.Abstractions;
+
+namespace InstaConnect.Chats.Domain.Features.ChatMessages.Helpers;
 
 internal class ChatMessageCollectionResponseFactory : IChatMessageCollectionResponseFactory
 {

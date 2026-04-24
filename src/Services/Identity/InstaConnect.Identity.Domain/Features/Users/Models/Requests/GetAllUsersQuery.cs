@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Domain.Features.Users.Models.Requests;
+﻿using InstaConnect.Common.Domain.Features.Messaging.Abstractions;
+
+namespace InstaConnect.Identity.Domain.Features.Users.Models.Requests;
 
 public record GetAllUsersQuery(
     UsersFilterQuery Filter,

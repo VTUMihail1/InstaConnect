@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Domain.Features.UserClaims.Helpers;
+﻿using InstaConnect.Common.Domain.Features.Data.Abstractions;
+
+namespace InstaConnect.Identity.Domain.Features.UserClaims.Helpers;
 
 internal class UserClaimCollectionResponseFactory : IUserClaimCollectionResponseFactory
 {

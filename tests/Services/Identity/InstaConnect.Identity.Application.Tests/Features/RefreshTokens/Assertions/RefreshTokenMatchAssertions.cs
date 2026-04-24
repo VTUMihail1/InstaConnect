@@ -1,5 +1,5 @@
 ﻿using InstaConnect.Identity.Application.Tests.Features.RefreshTokens.Utilities;
-using InstaConnect.Identity.Domain.Helpers;
+using InstaConnect.Identity.Domain.Features.Common.Helpers;
 
 namespace InstaConnect.Identity.Application.Tests.Features.RefreshTokens.Assertions;
 

@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Tests.DataAttributes.Base;
-
-namespace InstaConnect.Follows.Application.Tests.Features.Users.Builders;
+﻿namespace InstaConnect.Follows.Application.Tests.Features.Users.Builders;
 
 public class DeleteUserCommandRequestBuilder
 {

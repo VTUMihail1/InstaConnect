@@ -2,6 +2,11 @@
 
 public static class RefreshTokenMatcher
 {
+    public static SetRefreshTokenCookieRequest IsRefreshTokenCookieRequest(RefreshToken refreshToken)
+    {
+        return Matcher.Is<SetRefreshTokenCookieRequest>(p => p.Matches(refreshToken));
+    }
+
     public static IssueRefreshTokenCommandRequest IsIssueRefreshTokenCommandRequest(IssueRefreshTokenApiRequest request)
     {
         return Matcher.Is<IssueRefreshTokenCommandRequest>(p => p.Matches(request));

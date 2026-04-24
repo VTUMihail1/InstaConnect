@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Application.Features.Users.Commands.UpdateCurrent;
+﻿using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
+
+namespace InstaConnect.Identity.Application.Features.Users.Commands.UpdateCurrent;
 
 public class UpdateCurrentUserCommandHandler : ICommandHandler<UpdateCurrentUserCommandRequest, UpdateCurrentUserCommandResponse>
 {

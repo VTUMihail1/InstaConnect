@@ -130,7 +130,7 @@ public class RotateRefreshTokenIntegrationTests : BaseRefreshTokenApplicationCom
     {
         // Act
         var response = await Sender.SendAsync(_request, CancellationToken);
-        var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(response.Id, CancellationToken);
+        var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(response.Response.Id, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(refreshToken, _request);
@@ -146,7 +146,7 @@ public class RotateRefreshTokenIntegrationTests : BaseRefreshTokenApplicationCom
 
         // Act
         var response = await Sender.SendAsync(request, CancellationToken);
-        var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(response.Id, CancellationToken);
+        var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(response.Response.Id, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(refreshToken, request);
@@ -162,7 +162,7 @@ public class RotateRefreshTokenIntegrationTests : BaseRefreshTokenApplicationCom
 
         // Act
         var response = await Sender.SendAsync(request, CancellationToken);
-        var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(response.Id, CancellationToken);
+        var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(response.Response.Id, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(refreshToken, request);
@@ -173,7 +173,7 @@ public class RotateRefreshTokenIntegrationTests : BaseRefreshTokenApplicationCom
     {
         // Act
         var response = await Sender.SendAsync(_request, CancellationToken);
-        var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(response.Id, CancellationToken);
+        var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(response.Response.Id, CancellationToken);
 
         // Assert
         refreshToken.ShouldSatisfy(_request);
@@ -189,7 +189,7 @@ public class RotateRefreshTokenIntegrationTests : BaseRefreshTokenApplicationCom
 
         // Act
         var response = await Sender.SendAsync(request, CancellationToken);
-        var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(response.Id, CancellationToken);
+        var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(response.Response.Id, CancellationToken);
 
         // Assert
         refreshToken.ShouldSatisfy(request);
@@ -205,7 +205,7 @@ public class RotateRefreshTokenIntegrationTests : BaseRefreshTokenApplicationCom
 
         // Act
         var response = await Sender.SendAsync(request, CancellationToken);
-        var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(response.Id, CancellationToken);
+        var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(response.Response.Id, CancellationToken);
 
         // Assert
         refreshToken.ShouldSatisfy(request);

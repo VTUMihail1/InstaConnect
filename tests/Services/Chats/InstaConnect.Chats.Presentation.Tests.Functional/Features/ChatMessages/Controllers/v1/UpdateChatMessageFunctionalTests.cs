@@ -321,7 +321,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 
         // Act
         var response = await HttpClient.UpdateChatMessageAsync(request, CancellationToken);
-        var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Id, CancellationToken);
+        var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(chatMessage, request);
@@ -337,7 +337,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 
         // Act
         var response = await HttpClient.UpdateChatMessageAsync(request, CancellationToken);
-        var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Id, CancellationToken);
+        var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(chatMessage, request);
@@ -363,7 +363,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
     {
         // Act
         var response = await HttpClient.UpdateChatMessageAsync(_request, CancellationToken);
-        var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Id, CancellationToken);
+        var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
 
         // Assert
         chatMessage.ShouldSatisfy(_request);
@@ -379,7 +379,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 
         // Act
         var response = await HttpClient.UpdateChatMessageAsync(request, CancellationToken);
-        var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Id, CancellationToken);
+        var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
 
         // Assert
         chatMessage.ShouldSatisfy(request);
@@ -395,7 +395,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 
         // Act
         var response = await HttpClient.UpdateChatMessageAsync(request, CancellationToken);
-        var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Id, CancellationToken);
+        var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
 
         // Assert
         chatMessage.ShouldSatisfy(request);
@@ -411,7 +411,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 
         // Act
         var response = await HttpClient.UpdateChatMessageAsync(request, CancellationToken);
-        var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Id, CancellationToken);
+        var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
 
         // Assert
         chatMessage.ShouldSatisfy(request);
@@ -510,7 +510,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 
         // Act
         var response = await HttpClient.UpdateChatMessageAsync(request, CancellationToken);
-        var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Id, CancellationToken);
+        var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(chatMessage, request);
@@ -528,7 +528,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 
         // Act
         var response = await HttpClient.UpdateChatMessageAsync(request, CancellationToken);
-        var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Id, CancellationToken);
+        var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(chatMessage, request);
@@ -561,7 +561,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 
         // Act
         var response = await HttpClient.UpdateChatMessageAsync(request, CancellationToken);
-        var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Id, CancellationToken);
+        var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
 
         // Assert
         chatMessage.ShouldSatisfyInverted(request);
@@ -579,7 +579,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 
         // Act
         var response = await HttpClient.UpdateChatMessageAsync(request, CancellationToken);
-        var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Id, CancellationToken);
+        var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
 
         // Assert
         chatMessage.ShouldSatisfyInverted(request);
@@ -597,7 +597,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 
         // Act
         var response = await HttpClient.UpdateChatMessageAsync(request, CancellationToken);
-        var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Id, CancellationToken);
+        var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
 
         // Assert
         chatMessage.ShouldSatisfyInverted(request);
@@ -615,7 +615,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 
         // Act
         var response = await HttpClient.UpdateChatMessageAsync(request, CancellationToken);
-        var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Id, CancellationToken);
+        var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
 
         // Assert
         chatMessage.ShouldSatisfyInverted(request);

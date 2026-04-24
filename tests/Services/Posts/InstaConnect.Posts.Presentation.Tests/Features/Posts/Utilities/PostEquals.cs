@@ -1,5 +1,6 @@
-﻿using InstaConnect.Common.Presentation.Abstractions;
-using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
+﻿using InstaConnect.Common.Domain.Features.Common.Extensions;
+using InstaConnect.Common.Presentation.Features.Messaging.Abstractions;
+using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 using InstaConnect.Posts.Presentation.Features.Users.Abstractions;
 using InstaConnect.Posts.Presentation.Tests.Features.Users.Utilities;
@@ -87,7 +88,7 @@ public static class PostEquals
         Post post,
         AddPostApiRequest request)
         {
-            return response.Id.Matches(post.Id);
+            return response.Response.Matches(post.Id);
         }
     }
 
@@ -97,7 +98,7 @@ public static class PostEquals
         Post post,
         UpdatePostApiRequest request)
         {
-            return response.Id.Matches(post.Id);
+            return response.Response.Matches(post.Id);
         }
     }
 
@@ -105,7 +106,7 @@ public static class PostEquals
     {
         public bool Matches(Post post, GetPostByIdApiRequest request)
         {
-            return response.Post.MatchesFull(post, request);
+            return response.Response.MatchesFull(post, request);
         }
     }
 
@@ -115,7 +116,7 @@ public static class PostEquals
         ICollection<Post> posts,
         GetAllPostsApiRequest request)
         {
-            return response.PostCollection.MatchesWithoutUser(
+            return response.Response.MatchesWithoutUser(
                        (response, post) => response.MatchesFull(post, request),
                        post => post.MatchesFilter(request),
                        posts,
@@ -127,7 +128,7 @@ public static class PostEquals
             GetAllPostsApiRequest request,
             ISortEnumTermTransformer<Post> termTransformer)
         {
-            return response.PostCollection.MatchesWithoutUser(
+            return response.Response.MatchesWithoutUser(
                        (response, post) => response.MatchesFull(post, request),
                        post => post.MatchesFilter(request),
                        posts,
@@ -143,7 +144,7 @@ public static class PostEquals
         ICollection<Post> posts,
         GetAllPostsForUserApiRequest request)
         {
-            return response.PostCollection.MatchesFull(
+            return response.Response.MatchesFull(
                        (response, post) => response.MatchesWithoutUser(post, request),
                        post => post.MatchesFilter(request),
                        user,
@@ -157,7 +158,7 @@ public static class PostEquals
             GetAllPostsForUserApiRequest request,
             ISortEnumTermTransformer<Post> termTransformer)
         {
-            return response.PostCollection.MatchesFull(
+            return response.Response.MatchesFull(
                        (response, post) => response.MatchesWithoutUser(post, request),
                        post => post.MatchesFilter(request),
                        user,

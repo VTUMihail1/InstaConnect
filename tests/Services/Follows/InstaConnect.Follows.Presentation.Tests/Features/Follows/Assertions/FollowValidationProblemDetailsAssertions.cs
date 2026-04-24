@@ -1,4 +1,5 @@
-﻿using InstaConnect.Common.Presentation.Models;
+﻿using InstaConnect.Common.Domain.Features.Messaging.Models;
+using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
 using InstaConnect.Follows.Domain.Features.Follows.Models.Requests;
 
 namespace InstaConnect.Follows.Presentation.Tests.Features.Follows.Assertions;

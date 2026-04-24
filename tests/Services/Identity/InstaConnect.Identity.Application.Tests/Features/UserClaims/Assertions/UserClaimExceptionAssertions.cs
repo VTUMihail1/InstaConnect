@@ -1,5 +1,5 @@
-﻿using InstaConnect.Common.Application.Abstractions;
-using InstaConnect.Common.Events.Models;
+﻿using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Events.Features.Tokens.Models;
 using InstaConnect.Identity.Domain.Features.UserClaims.Exceptions;
 
 using MediatR;

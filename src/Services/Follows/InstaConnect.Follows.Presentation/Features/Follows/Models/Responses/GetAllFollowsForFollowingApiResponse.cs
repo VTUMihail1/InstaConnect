@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Follows.Presentation.Features.Follows.Models.Responses;
 
-public record GetAllFollowsForFollowingApiResponse(FollowCollectionApiResponse FollowCollection);
+public record GetAllFollowsForFollowingApiResponse(FollowCollectionApiResponse Response);

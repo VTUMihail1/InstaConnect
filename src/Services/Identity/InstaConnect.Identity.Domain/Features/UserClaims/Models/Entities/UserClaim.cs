@@ -1,4 +1,5 @@
-﻿using InstaConnect.Common.Events.Models;
+﻿using InstaConnect.Common.Domain.Features.Entities.Abstractions;
+using InstaConnect.Common.Events.Features.Tokens.Models;
 
 namespace InstaConnect.Identity.Domain.Features.UserClaims.Models.Entities;
 

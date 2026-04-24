@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Presentation.Tests.Features.PostCommentLikes.Utilities;
+﻿using InstaConnect.Common.Domain.Features.Common.Extensions;
+
+namespace InstaConnect.Posts.Presentation.Tests.Features.PostCommentLikes.Utilities;
 
 public static class PostCommentLikeTestRoutes
 {

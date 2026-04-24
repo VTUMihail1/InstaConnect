@@ -1,3 +1,5 @@
-﻿namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.ValueObjects;
+﻿using InstaConnect.Common.Domain.Features.Entities.Abstractions;
+
+namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.ValueObjects;
 
 public record EmailConfirmationTokenId(UserId Id, string Value) : IEntityId;

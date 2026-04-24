@@ -1,4 +1,5 @@
-﻿using InstaConnect.Identity.Domain.Features.UserClaims.Models.Requests;
+﻿using InstaConnect.Common.Domain.Features.Messaging.Models;
+using InstaConnect.Identity.Domain.Features.UserClaims.Models.Requests;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Builders;
 

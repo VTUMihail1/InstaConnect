@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAll;
 
-public record GetAllPostCommentLikesQueryResponse(PostCommentLikeCollectionQueryResponse PostCommentLikeCollection);
+public record GetAllPostCommentLikesQueryResponse(PostCommentLikeCollectionQueryResponse Response);

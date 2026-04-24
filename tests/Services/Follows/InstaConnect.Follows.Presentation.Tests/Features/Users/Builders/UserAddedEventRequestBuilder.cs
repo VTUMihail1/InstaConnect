@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Follows.Presentation.Tests.Features.Users.Builders;
+﻿using InstaConnect.Common.Domain.Features.ValueObjects.Models;
+
+namespace InstaConnect.Follows.Presentation.Tests.Features.Users.Builders;
 
 public class UserAddedEventRequestBuilder
 {

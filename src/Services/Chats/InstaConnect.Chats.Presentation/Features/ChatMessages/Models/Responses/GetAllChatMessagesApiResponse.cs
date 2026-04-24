@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Chats.Presentation.Features.ChatMessages.Models.Responses;
 
-public record GetAllChatMessagesApiResponse(ChatMessageCollectionApiResponse ChatMessageCollection);
+public record GetAllChatMessagesApiResponse(ChatMessageCollectionApiResponse Response);

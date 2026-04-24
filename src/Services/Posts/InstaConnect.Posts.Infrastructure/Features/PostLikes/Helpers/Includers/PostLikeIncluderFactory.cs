@@ -1,4 +1,4 @@
-﻿using InstaConnect.Posts.Domain.Models.Requests;
+﻿using InstaConnect.Posts.Domain.Features.Common.Models.Requests;
 
 namespace InstaConnect.Posts.Infrastructure.Features.PostLikes.Helpers.Includers;
 

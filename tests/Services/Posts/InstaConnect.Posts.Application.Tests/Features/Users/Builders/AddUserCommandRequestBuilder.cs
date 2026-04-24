@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Tests.DataAttributes.Base;
+﻿using InstaConnect.Common.Domain.Features.ValueObjects.Models;
 
 namespace InstaConnect.Posts.Application.Tests.Features.Users.Builders;
 

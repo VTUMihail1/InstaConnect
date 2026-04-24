@@ -10,16 +10,19 @@ public class RefreshTokenApplicationMappings : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
+        config.NewConfig<SessionToken, SessionTokenCommandResponse>()
+            .ConstructUsing(src => new(
+                    src.Id.Adapt<RefreshTokenIdCommandResponse>(config)!,
+                    src.AccessToken.Adapt<AccessTokenCommandResponse>(config)!,
+                    src.ExpiresAtUtc));
+
         config.NewConfig<IssueRefreshTokenCommandRequest, IssueRefreshTokenCommand>()
             .ConstructUsing(src => new(
                 new(src.Name),
                 src.Password));
 
         config.NewConfig<SessionToken, IssueRefreshTokenCommandResponse>()
-            .ConstructUsing(src => new(
-                src.Id.Adapt<RefreshTokenIdCommandResponse>(config)!,
-                src.AccessToken.Adapt<AccessTokenCommandResponse>(config)!,
-                src.ExpiresAtUtc));
+            .ConstructUsing(src => new(src.Adapt<SessionTokenCommandResponse>(config)!));
 
         config.NewConfig<RotateRefreshTokenCommandRequest, RotateRefreshTokenCommand>()
             .ConstructUsing(src => new(
@@ -28,10 +31,7 @@ public class RefreshTokenApplicationMappings : IRegister
                                            src.Value)));
 
         config.NewConfig<SessionToken, RotateRefreshTokenCommandResponse>()
-            .ConstructUsing(src => new(
-                src.Id.Adapt<RefreshTokenIdCommandResponse>(config)!,
-                src.AccessToken.Adapt<AccessTokenCommandResponse>(config)!,
-                src.ExpiresAtUtc));
+            .ConstructUsing(src => new(src.Adapt<SessionTokenCommandResponse>(config)!));
 
         config.NewConfig<DeleteCurrentRefreshTokenCommandRequest, DeleteRefreshTokenCommand>()
             .ConstructUsing(src => new(

@@ -1,4 +1,4 @@
-﻿using InstaConnect.Chats.Infrastructure.Extensions;
+﻿using InstaConnect.Chats.Infrastructure.Features.Common.Extensions;
 
 using MongoDB.Bson.Serialization;
 

@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Application.Tests.Features.Users.Assertions;
+﻿using InstaConnect.Common.Domain.Features.Messaging.Models;
+
+namespace InstaConnect.Identity.Application.Tests.Features.Users.Assertions;
 
 public static class UserValidationAssertions
 {

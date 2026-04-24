@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Application.Tests.Integration.Features.PostCommentLikes.Utilities;
+﻿using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+
+namespace InstaConnect.Posts.Application.Tests.Integration.Features.PostCommentLikes.Utilities;
 
 public abstract class BasePostCommentLikeApplicationQueryIntegrationTest : BasePostCommentLikeWebTest
 {

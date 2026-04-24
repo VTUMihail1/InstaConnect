@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Domain.Features.PostLikes.Models.Entities;
+﻿using InstaConnect.Common.Domain.Features.Entities.Abstractions;
+
+namespace InstaConnect.Posts.Domain.Features.PostLikes.Models.Entities;
 
 public class PostLike : IEntityWithId<PostLikeId>
 {

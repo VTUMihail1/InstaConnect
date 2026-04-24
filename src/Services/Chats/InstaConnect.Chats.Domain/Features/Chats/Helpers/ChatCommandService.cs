@@ -1,4 +1,5 @@
-﻿using InstaConnect.Common.Events.Abstractions;
+﻿using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
+using InstaConnect.Common.Events.Features.Common.Abstractions;
 
 namespace InstaConnect.Chats.Domain.Features.Chats.Helpers;
 

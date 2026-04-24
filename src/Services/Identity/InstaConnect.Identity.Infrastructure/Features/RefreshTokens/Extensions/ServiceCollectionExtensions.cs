@@ -1,5 +1,5 @@
 ﻿using InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Options;
-using InstaConnect.Identity.Infrastructure.Extensions;
+using InstaConnect.Identity.Infrastructure.Features.Common.Extensions;
 
 using MongoDB.Bson.Serialization;
 

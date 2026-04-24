@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Chats.Presentation.Tests.Features.Chats.Utilities;
+﻿using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+
+namespace InstaConnect.Chats.Presentation.Tests.Features.Chats.Utilities;
 
 public static class ChatMockSetups
 {

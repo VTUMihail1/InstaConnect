@@ -1,5 +1,6 @@
-﻿using InstaConnect.Common.Events.Abstractions;
-using InstaConnect.Identity.Domain.Helpers;
+﻿using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
+using InstaConnect.Common.Events.Features.Common.Abstractions;
+using InstaConnect.Identity.Domain.Features.Common.Helpers;
 
 namespace InstaConnect.Identity.Domain.Features.Users.Helpers;
 

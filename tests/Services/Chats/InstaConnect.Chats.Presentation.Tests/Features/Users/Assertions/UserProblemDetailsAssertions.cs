@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Presentation.Models;
+﻿using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
 
 namespace InstaConnect.Chats.Presentation.Tests.Features.Users.Assertions;
 

@@ -24,7 +24,7 @@ internal class PostCommentPresentationMappings : IRegister
                 src.PageSize));
 
         config.NewConfig<GetAllPostCommentsQueryResponse, GetAllPostCommentsApiResponse>()
-            .ConstructUsing(src => new(src.PostCommentCollection.Adapt<PostCommentCollectionApiResponse>(config)!));
+            .ConstructUsing(src => new(src.Response.Adapt<PostCommentCollectionApiResponse>(config)!));
 
         config.NewConfig<GetAllPostCommentsForUserApiRequest, GetAllPostCommentsForUserQueryRequest>()
             .ConstructUsing(src => new(
@@ -36,7 +36,7 @@ internal class PostCommentPresentationMappings : IRegister
                     src.PageSize));
 
         config.NewConfig<GetAllPostCommentsForUserQueryResponse, GetAllPostCommentsForUserApiResponse>()
-           .ConstructUsing(src => new(src.PostCommentCollection.Adapt<PostCommentCollectionApiResponse>(config)!));
+           .ConstructUsing(src => new(src.Response.Adapt<PostCommentCollectionApiResponse>(config)!));
 
         config.NewConfig<GetPostCommentByIdApiRequest, GetPostCommentByIdQueryRequest>()
             .ConstructUsing(src => new(src.Id,
@@ -44,7 +44,7 @@ internal class PostCommentPresentationMappings : IRegister
                                        src.CurrentUserId));
 
         config.NewConfig<GetPostCommentByIdQueryResponse, GetPostCommentByIdApiResponse>()
-            .ConstructUsing(src => new(src.PostComment.Adapt<PostCommentApiResponse>(config)!));
+            .ConstructUsing(src => new(src.Response.Adapt<PostCommentApiResponse>(config)!));
 
         config.NewConfig<AddPostCommentApiRequest, AddPostCommentCommandRequest>()
             .ConstructUsing(src => new(
@@ -53,7 +53,7 @@ internal class PostCommentPresentationMappings : IRegister
                 src.UserId));
 
         config.NewConfig<AddPostCommentCommandResponse, AddPostCommentApiResponse>()
-            .ConstructUsing(src => new(src.Id.Adapt<PostCommentIdApiResponse>(config)!));
+            .ConstructUsing(src => new(src.Response.Adapt<PostCommentIdApiResponse>(config)!));
 
         config.NewConfig<UpdatePostCommentApiRequest, UpdatePostCommentCommandRequest>()
             .ConstructUsing(src => new(
@@ -63,7 +63,7 @@ internal class PostCommentPresentationMappings : IRegister
                                        src.Body.Content));
 
         config.NewConfig<UpdatePostCommentCommandResponse, UpdatePostCommentApiResponse>()
-            .ConstructUsing(src => new(src.Id.Adapt<PostCommentIdApiResponse>(config)!));
+            .ConstructUsing(src => new(src.Response.Adapt<PostCommentIdApiResponse>(config)!));
 
         config.NewConfig<DeletePostCommentApiRequest, DeletePostCommentCommandRequest>()
             .ConstructUsing(src => new(src.Id,

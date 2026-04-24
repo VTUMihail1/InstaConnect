@@ -1,9 +1,9 @@
-using InstaConnect.Common.Infrastructure.Extensions;
-using InstaConnect.Common.Presentation.Extensions;
-using InstaConnect.Identity.Application.Extensions;
-using InstaConnect.Identity.Domain.Extensions;
-using InstaConnect.Identity.Infrastructure.Extensions;
-using InstaConnect.Identity.Presentation.Extensions;
+using InstaConnect.Common.Infrastructure.Features.Observability.Extensions;
+using InstaConnect.Common.Presentation.Features.Observability.Extensions;
+using InstaConnect.Identity.Application.Features.Common.Extensions;
+using InstaConnect.Identity.Domain.Features.Common.Extensions;
+using InstaConnect.Identity.Infrastructure.Features.Common.Extensions;
+using InstaConnect.Identity.Presentation.Features.Common.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Domain.Models;
+﻿using InstaConnect.Common.Domain.Features.Messaging.Models;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 
 namespace InstaConnect.Posts.Application.Tests.Unit.Features.Posts.Queries.GetAllForUser;

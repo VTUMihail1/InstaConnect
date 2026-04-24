@@ -1,6 +1,6 @@
-﻿using InstaConnect.Common.Application.Abstractions;
-using InstaConnect.Common.Application.Tests.Utilities;
-using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
+﻿using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Domain.Features.Common.Extensions;
+using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 using InstaConnect.Posts.Application.Features.Posts.Models;
 using InstaConnect.Posts.Application.Features.Users.Abstractions;
 using InstaConnect.Posts.Application.Tests.Features.Posts.Utilities;
@@ -87,7 +87,7 @@ public static class PostEquals
     {
         public bool Matches(Post post, AddPostCommandRequest request)
         {
-            return response.Id.Matches(post.Id);
+            return response.Response.Matches(post.Id);
         }
     }
 
@@ -95,7 +95,7 @@ public static class PostEquals
     {
         public bool Matches(Post post, UpdatePostCommandRequest request)
         {
-            return response.Id.Matches(post.Id);
+            return response.Response.Matches(post.Id);
         }
     }
 
@@ -103,7 +103,7 @@ public static class PostEquals
     {
         public bool Matches(Post post, GetPostByIdQueryRequest request)
         {
-            return response.Post.MatchesFull(post, request);
+            return response.Response.MatchesFull(post, request);
         }
     }
 
@@ -113,7 +113,7 @@ public static class PostEquals
         ICollection<Post> posts,
         GetAllPostsQueryRequest request)
         {
-            return response.PostCollection.MatchesWithoutUser(
+            return response.Response.MatchesWithoutUser(
                        (response, post) => response.MatchesFull(post, request),
                        post => post.MatchesFilter(request),
                        posts,
@@ -125,7 +125,7 @@ public static class PostEquals
             GetAllPostsQueryRequest request,
             ISortEnumTermTransformer<Post> termTransformer)
         {
-            return response.PostCollection.MatchesWithoutUser(
+            return response.Response.MatchesWithoutUser(
                        (response, post) => response.MatchesFull(post, request),
                        post => post.MatchesFilter(request),
                        posts,
@@ -141,7 +141,7 @@ public static class PostEquals
         ICollection<Post> posts,
         GetAllPostsForUserQueryRequest request)
         {
-            return response.PostCollection.MatchesFull(
+            return response.Response.MatchesFull(
                        (response, post) => response.MatchesWithoutUser(post, request),
                        post => post.MatchesFilter(request),
                        user,
@@ -155,7 +155,7 @@ public static class PostEquals
             GetAllPostsForUserQueryRequest request,
             ISortEnumTermTransformer<Post> termTransformer)
         {
-            return response.PostCollection.MatchesFull(
+            return response.Response.MatchesFull(
                        (response, post) => response.MatchesWithoutUser(post, request),
                        post => post.MatchesFilter(request),
                        user,

@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Add;
+﻿using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
+
+namespace InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Add;
 
 internal class AddEmailConfirmationTokenCommandHandler : ICommandHandler<AddEmailConfirmationTokenCommandRequest>
 {

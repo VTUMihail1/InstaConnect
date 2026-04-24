@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Posts.Presentation.Features.PostComments.Models.Responses;
 
-public record GetAllPostCommentsForUserApiResponse(PostCommentCollectionApiResponse PostCommentCollection);
+public record GetAllPostCommentsForUserApiResponse(PostCommentCollectionApiResponse Response);

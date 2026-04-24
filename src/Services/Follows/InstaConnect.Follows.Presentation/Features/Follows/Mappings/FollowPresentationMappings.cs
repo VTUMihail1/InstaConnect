@@ -23,7 +23,7 @@ internal class FollowPresentationMappings : IRegister
                 src.PageSize));
 
         config.NewConfig<GetAllFollowsQueryResponse, GetAllFollowsApiResponse>()
-            .ConstructUsing(src => new(src.FollowCollection.Adapt<FollowCollectionApiResponse>(config)!));
+            .ConstructUsing(src => new(src.Response.Adapt<FollowCollectionApiResponse>(config)!));
 
         config.NewConfig<GetAllFollowsForFollowingApiRequest, GetAllFollowsForFollowingQueryRequest>()
             .ConstructUsing(src => new(
@@ -36,7 +36,7 @@ internal class FollowPresentationMappings : IRegister
                 src.PageSize));
 
         config.NewConfig<GetAllFollowsForFollowingQueryResponse, GetAllFollowsForFollowingApiResponse>()
-            .ConstructUsing(src => new(src.FollowCollection.Adapt<FollowCollectionApiResponse>(config)!));
+            .ConstructUsing(src => new(src.Response.Adapt<FollowCollectionApiResponse>(config)!));
 
         config.NewConfig<GetFollowByIdApiRequest, GetFollowByIdQueryRequest>()
             .ConstructUsing(src => new(src.FollowerId,
@@ -44,14 +44,14 @@ internal class FollowPresentationMappings : IRegister
                                        src.CurrentUserId));
 
         config.NewConfig<GetFollowByIdQueryResponse, GetFollowByIdApiResponse>()
-            .ConstructUsing(src => new(src.Follow.Adapt<FollowApiResponse>(config)!));
+            .ConstructUsing(src => new(src.Response.Adapt<FollowApiResponse>(config)!));
 
         config.NewConfig<AddFollowApiRequest, AddFollowCommandRequest>()
             .ConstructUsing(src => new(src.FollowerId,
                                        src.Body.FollowingId));
 
         config.NewConfig<AddFollowCommandResponse, AddFollowApiResponse>()
-            .ConstructUsing(src => new(src.Id.Adapt<FollowIdApiResponse>(config)!));
+            .ConstructUsing(src => new(src.Response.Adapt<FollowIdApiResponse>(config)!));
 
         config.NewConfig<DeleteFollowApiRequest, DeleteFollowCommandRequest>()
             .ConstructUsing(src => new(src.FollowerId,

@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Chats.Application.Features.Chats.Queries.GetAll;
+﻿using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
+
+namespace InstaConnect.Chats.Application.Features.Chats.Queries.GetAll;
 
 internal class GetAllChatsQueryHandler : IQueryHandler<GetAllChatsQueryRequest, GetAllChatsQueryResponse>
 {

@@ -20,7 +20,7 @@ internal class UserClaimPresentationMappings : IRegister
                 src.PageSize));
 
         config.NewConfig<GetAllUserClaimsQueryResponse, GetAllUserClaimsApiResponse>()
-            .ConstructUsing(src => new(src.UserClaimCollection.Adapt<UserClaimCollectionApiResponse>(config)!));
+            .ConstructUsing(src => new(src.Response.Adapt<UserClaimCollectionApiResponse>(config)!));
 
         config.NewConfig<AddUserClaimApiRequest, AddUserClaimCommandRequest>()
             .ConstructUsing(src => new(
@@ -28,7 +28,7 @@ internal class UserClaimPresentationMappings : IRegister
                 src.Body.Claim));
 
         config.NewConfig<AddUserClaimCommandResponse, AddUserClaimApiResponse>()
-            .ConstructUsing(src => new(src.Id.Adapt<UserClaimIdApiResponse>(config)!));
+            .ConstructUsing(src => new(src.Response.Adapt<UserClaimIdApiResponse>(config)!));
 
         config.NewConfig<DeleteUserClaimApiRequest, DeleteUserClaimCommandRequest>()
             .ConstructUsing(src => new(src.Id, src.Claim));

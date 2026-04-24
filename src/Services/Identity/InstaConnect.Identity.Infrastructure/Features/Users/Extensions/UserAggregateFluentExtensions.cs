@@ -1,4 +1,6 @@
-﻿using MongoDB.Driver;
+﻿using InstaConnect.Common.Domain.Features.ValueObjects.Models;
+
+using MongoDB.Driver;
 
 namespace InstaConnect.Identity.Infrastructure.Features.Users.Extensions;
 

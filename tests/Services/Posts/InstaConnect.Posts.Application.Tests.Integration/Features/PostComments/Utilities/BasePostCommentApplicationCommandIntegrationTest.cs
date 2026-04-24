@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Application.Tests.Integration.Features.PostComments.Utilities;
+﻿using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+
+namespace InstaConnect.Posts.Application.Tests.Integration.Features.PostComments.Utilities;
 
 public abstract class BasePostCommentApplicationCommandIntegrationTest : BasePostCommentWebTest
 {

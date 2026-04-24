@@ -1,5 +1,6 @@
-﻿using InstaConnect.Common.Events.Models;
-using InstaConnect.Common.Presentation.Models;
+﻿using InstaConnect.Common.Domain.Features.Messaging.Models;
+using InstaConnect.Common.Events.Features.Tokens.Models;
+using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
 using InstaConnect.Identity.Domain.Features.UserClaims.Models.Requests;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Assertions;

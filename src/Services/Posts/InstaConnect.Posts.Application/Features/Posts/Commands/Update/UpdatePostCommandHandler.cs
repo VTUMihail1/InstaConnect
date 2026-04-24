@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Application.Features.Posts.Commands.Update;
+﻿using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
+
+namespace InstaConnect.Posts.Application.Features.Posts.Commands.Update;
 
 public class UpdatePostCommandHandler : ICommandHandler<UpdatePostCommandRequest, UpdatePostCommandResponse>
 {

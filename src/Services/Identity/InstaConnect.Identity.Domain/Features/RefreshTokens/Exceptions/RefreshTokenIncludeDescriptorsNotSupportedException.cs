@@ -1,5 +1,5 @@
-﻿using InstaConnect.Common.Domain.Exceptions;
-using InstaConnect.Identity.Domain.Models.Requests;
+﻿using InstaConnect.Common.Domain.Features.ExceptionHandling.Exceptions;
+using InstaConnect.Identity.Domain.Features.Common.Models.Requests;
 
 namespace InstaConnect.Identity.Domain.Features.RefreshTokens.Exceptions;
 

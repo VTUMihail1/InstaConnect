@@ -290,7 +290,7 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
     {
         // Act
         var response = await HttpClient.AddChatAsync(_request, CancellationToken);
-        var chat = await ServiceScope.GetChatByIdAsync(response.Id, CancellationToken);
+        var chat = await ServiceScope.GetChatByIdAsync(response.Response, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(chat, _request);
@@ -306,7 +306,7 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 
         // Act
         var response = await HttpClient.AddChatAsync(request, CancellationToken);
-        var chat = await ServiceScope.GetChatByIdAsync(response.Id, CancellationToken);
+        var chat = await ServiceScope.GetChatByIdAsync(response.Response, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(chat, request);
@@ -322,7 +322,7 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 
         // Act
         var response = await HttpClient.AddChatAsync(request, CancellationToken);
-        var chat = await ServiceScope.GetChatByIdAsync(response.Id, CancellationToken);
+        var chat = await ServiceScope.GetChatByIdAsync(response.Response, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(chat, request);
@@ -333,7 +333,7 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
     {
         // Act
         var response = await HttpClient.AddChatAsync(_request, CancellationToken);
-        var chat = await ServiceScope.GetChatByIdAsync(response.Id, CancellationToken);
+        var chat = await ServiceScope.GetChatByIdAsync(response.Response, CancellationToken);
 
         // Assert
         chat.ShouldSatisfy(_request);
@@ -349,7 +349,7 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 
         // Act
         var response = await HttpClient.AddChatAsync(request, CancellationToken);
-        var chat = await ServiceScope.GetChatByIdAsync(response.Id, CancellationToken);
+        var chat = await ServiceScope.GetChatByIdAsync(response.Response, CancellationToken);
 
         // Assert
         chat.ShouldSatisfy(request);
@@ -365,7 +365,7 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 
         // Act
         var response = await HttpClient.AddChatAsync(request, CancellationToken);
-        var chat = await ServiceScope.GetChatByIdAsync(response.Id, CancellationToken);
+        var chat = await ServiceScope.GetChatByIdAsync(response.Response, CancellationToken);
 
         // Assert
         chat.ShouldSatisfy(request);
@@ -376,7 +376,7 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
     {
         // Act
         var response = await HttpClient.AddChatAsync(_request, CancellationToken);
-        var chat = await ServiceScope.GetChatByIdAsync(response.Id, CancellationToken);
+        var chat = await ServiceScope.GetChatByIdAsync(response.Response, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedChatAddedAsync(chat, CancellationToken);
@@ -392,7 +392,7 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 
         // Act
         var response = await HttpClient.AddChatAsync(request, CancellationToken);
-        var chat = await ServiceScope.GetChatByIdAsync(response.Id, CancellationToken);
+        var chat = await ServiceScope.GetChatByIdAsync(response.Response, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedChatAddedAsync(chat, CancellationToken);
@@ -408,7 +408,7 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 
         // Act
         var response = await HttpClient.AddChatAsync(request, CancellationToken);
-        var chat = await ServiceScope.GetChatByIdAsync(response.Id, CancellationToken);
+        var chat = await ServiceScope.GetChatByIdAsync(response.Response, CancellationToken);
 
         // Assert
         await EventHarness.ShouldHavePublishedChatAddedAsync(chat, CancellationToken);

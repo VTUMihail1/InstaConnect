@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Tests.DataAttributes.Base;
-
-namespace InstaConnect.Posts.Application.Tests.Features.PostCommentLikes.Builders;
+﻿namespace InstaConnect.Posts.Application.Tests.Features.PostCommentLikes.Builders;
 
 public class DeletePostCommentLikeCommandRequestBuilder
 {

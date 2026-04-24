@@ -22,12 +22,8 @@
   <ItemGroup Label="Common">
     <Using Include="FluentValidation" />
     <Using Include="Microsoft.Extensions.DependencyInjection" />
-    <Using Include="InstaConnect.Common.Domain.Utilities" />
-    <Using Include="InstaConnect.Common.Domain.Exceptions" />
-    <Using Include="InstaConnect.Common.Domain.Abstractions" />
-    <Using Include="InstaConnect.Common.Application.Abstractions" />
-    <Using Include="InstaConnect.Common.Application.Models" />
-    <Using Include="InstaConnect.Common.Application.Extensions" />
+    <Using Include="InstaConnect.Common.Application.Features.Messaging.Abstractions"/>
+    <Using Include="InstaConnect.Common.Application.Features.Validations.Extensions" />
   </ItemGroup>
 
   <ItemGroup Label="Users">

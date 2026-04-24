@@ -1,5 +1,5 @@
-﻿using InstaConnect.Chats.Domain.Models.Requests;
-using InstaConnect.Common.Domain.Exceptions;
+﻿using InstaConnect.Chats.Domain.Features.Common.Models.Requests;
+using InstaConnect.Common.Domain.Features.ExceptionHandling.Exceptions;
 
 namespace InstaConnect.Chats.Domain.Features.Users.Exceptions;
 
