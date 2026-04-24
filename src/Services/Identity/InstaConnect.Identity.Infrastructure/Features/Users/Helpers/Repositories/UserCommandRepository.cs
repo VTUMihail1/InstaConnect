@@ -1,4 +1,4 @@
-﻿using InstaConnect.Identity.Infrastructure.Features.Common.Abstractions;
+﻿using InstaConnect.Common.Domain.Features.ValueObjects.Models;
 using InstaConnect.Identity.Infrastructure.Features.RefreshTokens.Extensions;
 using InstaConnect.Identity.Infrastructure.Features.Users.Extensions;
 

@@ -1,5 +1,4 @@
-﻿using InstaConnect.Posts.Tests.Features.Common.Utilities;
-using InstaConnect.Posts.Tests.Features.Users.Assertions;
+﻿using InstaConnect.Posts.Tests.Features.Users.Assertions;
 
 namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.Users.EventHandlers;
 

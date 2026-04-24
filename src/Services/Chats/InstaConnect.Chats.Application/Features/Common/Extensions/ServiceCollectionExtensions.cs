@@ -1,4 +1,6 @@
-﻿using InstaConnect.Common.Domain.Extensions;
+﻿using InstaConnect.Common.Application.Features.Common.Extensions;
+using InstaConnect.Common.Application.Features.Messaging.Extensions;
+using InstaConnect.Common.Domain.Features.Mappers.Extensions;
 
 namespace InstaConnect.Chats.Application.Features.Common.Extensions;
 

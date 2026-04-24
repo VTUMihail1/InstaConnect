@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Application.Abstractions;
+﻿using InstaConnect.Common.Application.Features.Messaging.Abstractions;
 using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Exceptions;
 
 using MediatR;

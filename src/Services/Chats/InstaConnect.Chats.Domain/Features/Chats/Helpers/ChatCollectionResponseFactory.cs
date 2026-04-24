@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Chats.Domain.Features.Users.Models.Responses;
+using InstaConnect.Common.Domain.Features.Data.Abstractions;
 
 namespace InstaConnect.Chats.Domain.Features.Chats.Helpers;
 

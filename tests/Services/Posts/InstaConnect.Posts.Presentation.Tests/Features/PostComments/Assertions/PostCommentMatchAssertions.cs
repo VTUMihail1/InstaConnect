@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
+﻿using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 using InstaConnect.Posts.Presentation.Tests.Features.PostComments.Utilities;
 
 namespace InstaConnect.Posts.Presentation.Tests.Features.PostComments.Assertions;

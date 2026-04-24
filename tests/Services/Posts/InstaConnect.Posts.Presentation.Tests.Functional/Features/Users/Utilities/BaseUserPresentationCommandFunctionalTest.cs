@@ -1,6 +1,4 @@
-﻿using InstaConnect.Posts.Tests.Features.Common.Utilities;
-
-namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.Users.Utilities;
+﻿namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.Users.Utilities;
 
 public abstract class BaseUserPresentationCommandFunctionalTest : BaseUserWebTest
 {

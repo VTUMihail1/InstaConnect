@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Presentation.Tests.Features.Posts.Utilities;
+﻿using InstaConnect.Common.Domain.Features.Common.Extensions;
+
+namespace InstaConnect.Posts.Presentation.Tests.Features.Posts.Utilities;
 
 public static class PostTestRoutes
 {

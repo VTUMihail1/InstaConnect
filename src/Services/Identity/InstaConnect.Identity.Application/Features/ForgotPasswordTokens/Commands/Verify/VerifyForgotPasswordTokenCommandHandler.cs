@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Verify;
+﻿using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
+
+namespace InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Verify;
 
 internal class VerifyForgotPasswordTokenCommandHandler : ICommandHandler<VerifyForgotPasswordTokenCommandRequest>
 {

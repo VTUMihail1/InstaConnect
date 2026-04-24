@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Domain.Exceptions;
+﻿using InstaConnect.Common.Domain.Features.ExceptionHandling.Exceptions;
 using InstaConnect.Identity.Domain.Features.Common.Models.Requests;
 
 namespace InstaConnect.Identity.Domain.Features.UserClaims.Exceptions;

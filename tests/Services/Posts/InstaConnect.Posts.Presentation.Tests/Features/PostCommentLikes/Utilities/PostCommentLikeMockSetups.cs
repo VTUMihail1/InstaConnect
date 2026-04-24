@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Presentation.Tests.Features.PostCommentLikes.Utilities;
+﻿using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+
+namespace InstaConnect.Posts.Presentation.Tests.Features.PostCommentLikes.Utilities;
 
 public static class PostCommentLikeMockSetups
 {

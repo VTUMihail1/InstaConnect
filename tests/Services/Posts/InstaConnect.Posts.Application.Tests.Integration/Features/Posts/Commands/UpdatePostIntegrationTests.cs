@@ -1,6 +1,4 @@
-﻿using InstaConnect.Posts.Tests.Features.Common.Utilities;
-
-namespace InstaConnect.Posts.Application.Tests.Integration.Features.Posts.Commands;
+﻿namespace InstaConnect.Posts.Application.Tests.Integration.Features.Posts.Commands;
 
 public class UpdatePostIntegrationTests : BasePostApplicationCommandIntegrationTest
 {

@@ -1,6 +1,7 @@
 ﻿using InstaConnect.Chats.Infrastructure.Features.Chats.Extensions;
-using InstaConnect.Chats.Infrastructure.Features.Common.Abstractions;
 using InstaConnect.Chats.Infrastructure.Features.Users.Extensions;
+using InstaConnect.Common.Domain.Features.Data.Abstractions;
+using InstaConnect.Common.Infrastructure.Features.Data.Abstractions;
 
 using MongoDB.Driver;
 

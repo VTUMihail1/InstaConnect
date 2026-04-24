@@ -1,6 +1,4 @@
-﻿using InstaConnect.Chats.Tests.Features.Common.Utilities;
-
-namespace InstaConnect.Chats.Presentation.Tests.Functional.Features.ChatMessages.Controllers.v1;
+﻿namespace InstaConnect.Chats.Presentation.Tests.Functional.Features.ChatMessages.Controllers.v1;
 
 public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationCommandFunctionalTest
 {

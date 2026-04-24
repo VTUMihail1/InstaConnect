@@ -1,4 +1,7 @@
-﻿using InstaConnect.Posts.Application.Features.Users.Commands.Add;
+﻿using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
+using InstaConnect.Common.Presentation.Features.Events.Abstractions;
+using InstaConnect.Posts.Application.Features.Users.Commands.Add;
 
 namespace InstaConnect.Posts.Presentation.Features.Users.EventHandlers;
 

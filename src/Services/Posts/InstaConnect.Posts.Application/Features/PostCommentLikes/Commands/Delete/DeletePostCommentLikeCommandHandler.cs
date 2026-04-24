@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Delete;
+﻿using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
+
+namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Delete;
 
 internal class DeletePostCommentLikeCommandHandler : ICommandHandler<DeletePostCommentLikeCommandRequest>
 {

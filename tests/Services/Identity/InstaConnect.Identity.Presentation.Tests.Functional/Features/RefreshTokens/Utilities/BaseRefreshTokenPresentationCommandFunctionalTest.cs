@@ -1,6 +1,4 @@
-﻿using InstaConnect.Identity.Tests.Features.Common.Utilities;
-
-namespace InstaConnect.Identity.Presentation.Tests.Functional.Features.RefreshTokens.Utilities;
+﻿namespace InstaConnect.Identity.Presentation.Tests.Functional.Features.RefreshTokens.Utilities;
 
 public abstract class BaseRefreshTokenPresentationCommandFunctionalTest : BaseRefreshTokenWebTest
 {

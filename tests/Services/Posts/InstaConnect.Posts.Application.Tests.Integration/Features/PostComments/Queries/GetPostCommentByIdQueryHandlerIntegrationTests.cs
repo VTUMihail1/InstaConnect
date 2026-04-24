@@ -1,6 +1,4 @@
-﻿using InstaConnect.Posts.Tests.Features.Common.Utilities;
-
-namespace InstaConnect.Posts.Application.Tests.Integration.Features.PostComments.Queries;
+﻿namespace InstaConnect.Posts.Application.Tests.Integration.Features.PostComments.Queries;
 
 public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentApplicationQueryIntegrationTest
 {

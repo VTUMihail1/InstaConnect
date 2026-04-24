@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Infrastructure;
+﻿using InstaConnect.Common.Infrastructure.Features.Data.Helpers;
 using InstaConnect.Posts.Infrastructure.Features.Common.Utilities;
 
 using MongoDB.Driver;

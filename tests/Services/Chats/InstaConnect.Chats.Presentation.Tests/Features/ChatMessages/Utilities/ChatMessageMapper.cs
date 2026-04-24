@@ -2,8 +2,7 @@
 using InstaConnect.Chats.Presentation.Tests.Features.ChatMessages.Utilities;
 using InstaConnect.Chats.Presentation.Tests.Features.Chats.Utilities;
 using InstaConnect.Chats.Presentation.Tests.Features.Users.Utilities;
-using InstaConnect.Common.Infrastructure.Helpers;
-using InstaConnect.Common.Presentation.Abstractions;
+using InstaConnect.Common.Presentation.Features.Messaging.Abstractions;
 
 namespace InstaConnect.Chats.Presentation.Tests.Features.ChatMessages.Utilities;
 

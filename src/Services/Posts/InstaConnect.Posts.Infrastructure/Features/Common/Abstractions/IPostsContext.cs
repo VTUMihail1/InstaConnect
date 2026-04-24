@@ -1,4 +1,6 @@
-﻿using MongoDB.Driver;
+﻿using InstaConnect.Common.Infrastructure.Features.Data.Abstractions;
+
+using MongoDB.Driver;
 
 namespace InstaConnect.Posts.Infrastructure.Features.Common.Abstractions;
 

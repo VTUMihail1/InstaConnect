@@ -1,6 +1,7 @@
-﻿using InstaConnect.Common.Presentation.Abstractions;
-using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
-using InstaConnect.Common.Tests.Extensions;
+﻿using InstaConnect.Common.Domain.Features.Common.Extensions;
+using InstaConnect.Common.Presentation.Features.Messaging.Abstractions;
+using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
+using InstaConnect.Common.Tests.Features.Extensions;
 using InstaConnect.Identity.Application.Features.Users.Abstractions;
 using InstaConnect.Identity.Domain.Features.Common.Helpers;
 using InstaConnect.Identity.Domain.Features.Users.Models.Requests;

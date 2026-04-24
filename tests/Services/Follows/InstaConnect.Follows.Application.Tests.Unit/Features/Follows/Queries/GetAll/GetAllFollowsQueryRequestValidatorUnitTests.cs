@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Domain.Models;
+﻿using InstaConnect.Common.Domain.Features.Messaging.Models;
 using InstaConnect.Follows.Domain.Features.Follows.Models.Requests;
 
 namespace InstaConnect.Follows.Application.Tests.Unit.Features.Follows.Queries.GetAll;

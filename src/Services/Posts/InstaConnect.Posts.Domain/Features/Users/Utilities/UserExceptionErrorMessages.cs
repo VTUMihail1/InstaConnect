@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Domain.Extensions;
+﻿using InstaConnect.Common.Domain.Features.ValueObjects.Models;
 using InstaConnect.Posts.Domain.Features.Common.Models.Requests;
 
 namespace InstaConnect.Posts.Domain.Features.Users.Utilities;

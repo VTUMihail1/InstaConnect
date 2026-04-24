@@ -1,5 +1,4 @@
-﻿using InstaConnect.Identity.Infrastructure.Features.Common.Abstractions;
-using InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Extensions;
+﻿using InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Extensions;
 using InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Extensions;
 using InstaConnect.Identity.Infrastructure.Features.Users.Extensions;
 

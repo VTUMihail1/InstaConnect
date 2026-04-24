@@ -1,6 +1,4 @@
-﻿using InstaConnect.Identity.Tests.Features.Common.Utilities;
-
-namespace InstaConnect.Identity.Presentation.Tests.Functional.Features.UserClaims.Utilities;
+﻿namespace InstaConnect.Identity.Presentation.Tests.Functional.Features.UserClaims.Utilities;
 
 public abstract class BaseUserClaimPresentationQueryFunctionalTest : BaseUserClaimWebTest
 {

@@ -1,4 +1,5 @@
-﻿using InstaConnect.Posts.Domain.Features.Common.Models.Requests;
+﻿using InstaConnect.Common.Domain.Features.Data.Abstractions;
+using InstaConnect.Posts.Domain.Features.Common.Models.Requests;
 
 namespace InstaConnect.Posts.Domain.Features.PostComments.Models.Requests;
 

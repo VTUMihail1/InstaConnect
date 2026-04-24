@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Add;
+﻿using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
+
+namespace InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Add;
 
 internal class AddForgotPasswordTokenCommandHandler : ICommandHandler<AddForgotPasswordTokenCommandRequest>
 {

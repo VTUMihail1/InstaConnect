@@ -1,6 +1,4 @@
-﻿using InstaConnect.Follows.Tests.Features.Common.Utilities;
-
-namespace InstaConnect.Follows.Presentation.Tests.Functional.Features.Follows.Utilities;
+﻿namespace InstaConnect.Follows.Presentation.Tests.Functional.Features.Follows.Utilities;
 
 public abstract class BaseFollowPresentationQueryFunctionalTest : BaseFollowWebTest
 {

@@ -1,6 +1,4 @@
-﻿using InstaConnect.Follows.Tests.Features.Common.Utilities;
-
-namespace InstaConnect.Follows.Application.Tests.Integration.Features.Users.Commands;
+﻿namespace InstaConnect.Follows.Application.Tests.Integration.Features.Users.Commands;
 
 public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 {

@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Domain.Models;
+﻿using InstaConnect.Common.Domain.Features.Messaging.Models;
 using InstaConnect.Identity.Domain.Features.UserClaims.Models.Requests;
 
 namespace InstaConnect.Identity.Application.Tests.Unit.Features.UserClaims.Queries.GetAll;

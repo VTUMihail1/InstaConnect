@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Application.Tests.Features.PostLikes.Assertions;
+﻿using InstaConnect.Common.Domain.Features.Messaging.Models;
+
+namespace InstaConnect.Posts.Application.Tests.Features.PostLikes.Assertions;
 
 public static class PostLikeValidationAssertions
 {

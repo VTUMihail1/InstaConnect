@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Presentation.Tests.Features.ForgotPasswordTokens.Builders;
+﻿using InstaConnect.Common.Domain.Features.ValueObjects.Models;
+
+namespace InstaConnect.Identity.Presentation.Tests.Features.ForgotPasswordTokens.Builders;
 
 public class AddForgotPasswordTokenApiRequestBuilder
 {

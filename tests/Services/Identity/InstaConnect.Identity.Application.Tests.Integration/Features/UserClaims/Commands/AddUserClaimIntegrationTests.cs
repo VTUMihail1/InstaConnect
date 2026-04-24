@@ -1,5 +1,4 @@
-﻿using InstaConnect.Common.Events.Models;
-using InstaConnect.Identity.Tests.Features.Common.Utilities;
+﻿using InstaConnect.Common.Events.Features.Tokens.Models;
 
 namespace InstaConnect.Identity.Application.Tests.Integration.Features.UserClaims.Commands;
 

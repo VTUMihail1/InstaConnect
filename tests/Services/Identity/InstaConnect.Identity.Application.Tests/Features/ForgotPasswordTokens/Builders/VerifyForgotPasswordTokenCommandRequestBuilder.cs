@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Tests.DataAttributes.Base;
-
-namespace InstaConnect.Identity.Application.Tests.Features.ForgotPasswordTokens.Builders;
+﻿namespace InstaConnect.Identity.Application.Tests.Features.ForgotPasswordTokens.Builders;
 
 public class VerifyForgotPasswordTokenCommandRequestBuilder
 {

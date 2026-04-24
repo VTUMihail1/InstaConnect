@@ -29,18 +29,16 @@
   <ItemGroup Label="Common">
     <Using Include="Xunit" />
     <Using Include="FluentValidation.TestHelper" />
-    <Using Include="InstaConnect.Common.Domain.Abstractions" />
-    <Using Include="InstaConnect.Common.Tests.Events" />
-    <Using Include="InstaConnect.Common.Tests.Assertions" />
-    <Using Include="InstaConnect.Common.Application.Tests.Assertions" />
-    <Using Include="InstaConnect.Common.Tests.Utilities" />
-    <Using Include="InstaConnect.Common.Tests.DataAttributes.Enums" />
-    <Using Include="InstaConnect.Common.Tests.DataAttributes.Enums.Base" />
-    <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.Base" />
-    <Using Include="InstaConnect.Common.Tests.DataAttributes.Ints.Base" />
-    <Using Include="InstaConnect.Common.Tests.DataAttributes.DateTimeOffsets.Base" />
-    <Using Include="InstaConnect.Common.Tests.DataAttributes.Booleans.Base" />
-    <Using Include="InstaConnect.Common.Tests.DataAttributes.FormFiles.Base" />
+    <Using Include="InstaConnect.Common.Tests.Features.Events" />
+    <Using Include="InstaConnect.Common.Tests.Features.Assertions" />
+    <Using Include="InstaConnect.Common.Tests.Features.Utilities" />
+    <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Enums" />
+    <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Enums.Base" />
+    <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Strings.Base" />
+    <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Ints.Base" />
+    <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.DateTimeOffsets.Base" />
+    <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.FormFiles.Base" />
+    <Using Include="InstaConnect.Common.Application.Tests.Features.Assertions" />
     <Using Include="InstaConnect.Identity.Tests.Features.Common.Utilities" />
   </ItemGroup>
 

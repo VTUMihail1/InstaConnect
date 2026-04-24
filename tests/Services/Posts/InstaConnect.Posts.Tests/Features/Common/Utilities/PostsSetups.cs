@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Tests.Extensions;
+﻿using InstaConnect.Common.Tests.Features.Extensions;
 using InstaConnect.Posts.Infrastructure.Features.Common.Abstractions;
 
 using Microsoft.Extensions.DependencyInjection;

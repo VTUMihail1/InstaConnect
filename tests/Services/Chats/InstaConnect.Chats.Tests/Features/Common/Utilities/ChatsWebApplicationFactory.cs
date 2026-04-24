@@ -1,5 +1,5 @@
 ﻿using InstaConnect.Chats.Presentation.Features.Common.Extensions;
-using InstaConnect.Common.Tests.Extensions;
+using InstaConnect.Common.Tests.Features.Extensions;
 
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;

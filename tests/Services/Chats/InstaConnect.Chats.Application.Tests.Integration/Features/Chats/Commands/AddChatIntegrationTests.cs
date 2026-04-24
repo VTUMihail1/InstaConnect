@@ -1,6 +1,4 @@
-﻿using InstaConnect.Chats.Tests.Features.Common.Utilities;
-
-namespace InstaConnect.Chats.Application.Tests.Integration.Features.Chats.Commands;
+﻿namespace InstaConnect.Chats.Application.Tests.Integration.Features.Chats.Commands;
 
 public class AddChatIntegrationTests : BaseChatApplicationCommandIntegrationTest
 {

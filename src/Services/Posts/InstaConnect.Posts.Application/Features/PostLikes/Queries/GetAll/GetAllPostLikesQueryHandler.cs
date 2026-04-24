@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAll;
+﻿using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
+
+namespace InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAll;
 
 internal class GetAllPostLikesQueryHandler : IQueryHandler<GetAllPostLikesQueryRequest, GetAllPostLikesQueryResponse>
 {

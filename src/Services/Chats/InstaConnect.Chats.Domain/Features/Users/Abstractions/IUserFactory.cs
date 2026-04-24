@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Chats.Domain.Features.Users.Abstractions;
+﻿using InstaConnect.Common.Domain.Features.ValueObjects.Models;
+
+namespace InstaConnect.Chats.Domain.Features.Users.Abstractions;
 
 public interface IUserFactory
 {

@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Chats.Domain.Features.Common.Models.Requests;
-using InstaConnect.Common.Domain.Extensions;
 
 namespace InstaConnect.Chats.Domain.Features.ChatMessages.Helpers;
 

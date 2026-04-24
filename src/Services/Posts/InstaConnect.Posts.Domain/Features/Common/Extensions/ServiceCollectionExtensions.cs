@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Domain.Extensions;
+﻿using InstaConnect.Common.Domain.Features.Mappers.Extensions;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Extensions;
 using InstaConnect.Posts.Domain.Features.PostComments.Extensions;
 using InstaConnect.Posts.Domain.Features.PostLikes.Extensions;

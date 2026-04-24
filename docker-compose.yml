@@ -2,16 +2,16 @@ networks:
   instaconnect:
 
 services:
-  otel-lgtm:
+  observability:
     image: grafana/otel-lgtm
-    container_name: otel-lgtm
-    hostname: otel-lgtm
+    container_name: observability
+    hostname: observability
     ports:
       - "3000:3000"
       - "4317:4317"
       - "4318:4318"
     volumes:
-      - ./.containers/otel-lgtm:/data
+      - ./.containers/observability:/data
     healthcheck:
       test: cat /tmp/ready
       interval: 1m
@@ -117,7 +117,7 @@ services:
       retries: 5
       start_period: 30s
     depends_on:
-      otel-lgtm:
+      observability:
         condition: service_healthy
       mongo:
         condition: service_healthy
@@ -150,7 +150,7 @@ services:
       retries: 5
       start_period: 30s
     depends_on:
-      otel-lgtm:
+      observability:
         condition: service_healthy
       mongo:
         condition: service_healthy
@@ -181,7 +181,7 @@ services:
       retries: 5
       start_period: 30s
     depends_on:
-      otel-lgtm:
+      observability:
         condition: service_healthy
       mongo:
         condition: service_healthy
@@ -212,7 +212,7 @@ services:
       retries: 5
       start_period: 30s
     depends_on:
-      otel-lgtm:
+      observability:
         condition: service_healthy
       mongo:
         condition: service_healthy

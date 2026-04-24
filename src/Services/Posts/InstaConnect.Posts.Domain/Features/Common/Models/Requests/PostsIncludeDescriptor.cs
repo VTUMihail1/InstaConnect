@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Domain.Features.Common.Models.Requests;
+﻿using InstaConnect.Common.Domain.Features.Data.Abstractions;
+
+namespace InstaConnect.Posts.Domain.Features.Common.Models.Requests;
 
 public record PostsIncludeDescriptor(
     PostsDestinationType DestinationType,

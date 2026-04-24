@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Follows.Domain.Features.Common.Models.Requests;
+﻿using InstaConnect.Common.Domain.Features.Data.Abstractions;
+
+namespace InstaConnect.Follows.Domain.Features.Common.Models.Requests;
 
 public record FollowsIncludeDescriptor(
     FollowsDestinationType DestinationType,

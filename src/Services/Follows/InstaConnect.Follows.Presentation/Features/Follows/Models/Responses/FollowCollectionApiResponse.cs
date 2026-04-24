@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Follows.Presentation.Features.Follows.Models.Responses;
+﻿using InstaConnect.Common.Presentation.Features.Messaging.Abstractions;
+
+namespace InstaConnect.Follows.Presentation.Features.Follows.Models.Responses;
 
 public record FollowCollectionApiResponse(
     UserApiResponse? Follower,

@@ -1,6 +1,4 @@
-﻿using InstaConnect.Posts.Tests.Features.Common.Utilities;
-
-namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.PostComments.Controllers.v1;
+﻿namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.PostComments.Controllers.v1;
 
 public class UpdatePostCommentFunctionalTests : BasePostCommentPresentationCommandFunctionalTest
 {

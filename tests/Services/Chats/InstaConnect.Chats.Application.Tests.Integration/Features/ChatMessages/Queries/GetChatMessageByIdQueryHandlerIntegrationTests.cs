@@ -1,6 +1,4 @@
-﻿using InstaConnect.Chats.Tests.Features.Common.Utilities;
-
-namespace InstaConnect.Chats.Application.Tests.Integration.Features.ChatMessages.Queries;
+﻿namespace InstaConnect.Chats.Application.Tests.Integration.Features.ChatMessages.Queries;
 
 public class GetChatMessageByIdQueryHandlerIntegrationTests : BaseChatMessageApplicationQueryIntegrationTest
 {

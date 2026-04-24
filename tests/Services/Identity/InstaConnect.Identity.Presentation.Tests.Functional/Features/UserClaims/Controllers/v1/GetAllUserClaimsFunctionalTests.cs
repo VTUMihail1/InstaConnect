@@ -1,7 +1,6 @@
-﻿using InstaConnect.Common.Domain.Models;
-using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
+﻿using InstaConnect.Common.Domain.Features.Messaging.Models;
+using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 using InstaConnect.Identity.Domain.Features.UserClaims.Models.Requests;
-using InstaConnect.Identity.Tests.Features.Common.Utilities;
 
 namespace InstaConnect.Identity.Presentation.Tests.Functional.Features.UserClaims.Controllers.v1;
 

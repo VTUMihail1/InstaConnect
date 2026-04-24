@@ -1,5 +1,5 @@
 ﻿using InstaConnect.Chats.Infrastructure.Features.Common.Abstractions;
-using InstaConnect.Common.Tests.Extensions;
+using InstaConnect.Common.Tests.Features.Extensions;
 
 using Microsoft.Extensions.DependencyInjection;
 

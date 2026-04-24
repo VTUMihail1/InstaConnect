@@ -1,4 +1,4 @@
-﻿using InstaConnect.Posts.Tests.Features.Common.Utilities;
+﻿using InstaConnect.Common.Application.Features.Messaging.Abstractions;
 
 namespace InstaConnect.Posts.Application.Tests.Integration.Features.PostCommentLikes.Utilities;
 

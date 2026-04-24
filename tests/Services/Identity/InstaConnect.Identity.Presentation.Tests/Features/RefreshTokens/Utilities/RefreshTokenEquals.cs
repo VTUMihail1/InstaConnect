@@ -1,4 +1,5 @@
-﻿using InstaConnect.Identity.Domain.Features.Common.Helpers;
+﻿using InstaConnect.Common.Domain.Features.Common.Extensions;
+using InstaConnect.Identity.Domain.Features.Common.Helpers;
 using InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Utilities;
 using InstaConnect.Identity.Presentation.Tests.Features.Users.Utilities;
 

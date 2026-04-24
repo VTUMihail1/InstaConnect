@@ -32,8 +32,7 @@
   </ItemGroup>
 
   <ItemGroup Label="Common">
-    <Using Include="InstaConnect.Common.Application.Abstractions" />
-    <Using Include="InstaConnect.Common.Application.Models" />
+    <Using Include="InstaConnect.Common.Domain.Features.Common.Extensions" />
   </ItemGroup>
 
 </Project>

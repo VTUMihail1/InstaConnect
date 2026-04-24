@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Chats.Application.Tests.Features.Chats.Assertions;
+﻿using InstaConnect.Common.Domain.Features.Messaging.Models;
+
+namespace InstaConnect.Chats.Application.Tests.Features.Chats.Assertions;
 
 public static class ChatValidationAssertions
 {

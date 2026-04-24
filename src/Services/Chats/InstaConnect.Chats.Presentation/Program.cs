@@ -2,8 +2,8 @@ using InstaConnect.Chats.Application.Features.Common.Extensions;
 using InstaConnect.Chats.Domain.Features.Common.Extensions;
 using InstaConnect.Chats.Infrastructure.Features.Common.Extensions;
 using InstaConnect.Chats.Presentation.Features.Common.Extensions;
-using InstaConnect.Common.Infrastructure.Extensions;
-using InstaConnect.Common.Presentation.Extensions;
+using InstaConnect.Common.Infrastructure.Features.Observability.Extensions;
+using InstaConnect.Common.Presentation.Features.Observability.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 

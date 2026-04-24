@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Application.Features.UserClaims.Commands.Add;
+﻿using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
+
+namespace InstaConnect.Identity.Application.Features.UserClaims.Commands.Add;
 
 internal class AddUserClaimCommandHandler : ICommandHandler<AddUserClaimCommandRequest, AddUserClaimCommandResponse>
 {

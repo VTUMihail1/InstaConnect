@@ -1,4 +1,5 @@
-﻿using InstaConnect.Posts.Domain.Features.Posts.Models.ValueObjects;
+﻿using InstaConnect.Common.Domain.Features.Common.Extensions;
+using InstaConnect.Posts.Domain.Features.Posts.Models.ValueObjects;
 using InstaConnect.Posts.Events.Features.Posts;
 using InstaConnect.Posts.Tests.Features.Users.Utilities;
 

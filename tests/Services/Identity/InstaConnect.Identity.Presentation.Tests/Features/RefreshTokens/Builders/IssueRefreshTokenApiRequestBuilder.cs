@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Builders;
+﻿using InstaConnect.Common.Domain.Features.ValueObjects.Models;
+
+namespace InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Builders;
 
 public class IssueRefreshTokenApiRequestBuilder
 {

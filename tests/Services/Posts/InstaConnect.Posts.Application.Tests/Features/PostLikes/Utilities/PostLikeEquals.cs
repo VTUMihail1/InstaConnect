@@ -1,6 +1,6 @@
-﻿using InstaConnect.Common.Application.Abstractions;
-using InstaConnect.Common.Application.Tests.Utilities;
-using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
+﻿using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Domain.Features.Common.Extensions;
+using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 using InstaConnect.Posts.Application.Features.PostLikes.Models;
 using InstaConnect.Posts.Application.Features.Users.Abstractions;
 using InstaConnect.Posts.Application.Tests.Features.PostLikes.Utilities;

@@ -16,31 +16,30 @@
   </ItemGroup>
 
   <ItemGroup Label="Common">
-    <Using Include="InstaConnect.Common.Domain.Extensions" />
-    <Using Include="InstaConnect.Common.Tests.Events" />
-    <Using Include="InstaConnect.Common.Tests.Assertions" />
-    <Using Include="InstaConnect.Common.Tests.Utilities" />
-    <Using Include="InstaConnect.Common.Tests.DataAttributes.DateTimeOffsets.Base" />
-    <Using Include="InstaConnect.Common.Tests.DataAttributes.DateTimeOffsets.Empty" />
-    <Using Include="InstaConnect.Common.Tests.DataAttributes.Ints.Base" />
-    <Using Include="InstaConnect.Common.Tests.DataAttributes.Ints.Empty" />
-    <Using Include="InstaConnect.Common.Tests.DataAttributes.Ints.TooSmall" />
-    <Using Include="InstaConnect.Common.Tests.DataAttributes.Ints.TooLarge" />
-    <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.Base" />
-    <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.DifferentCase" />
-    <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.Empty" />
-    <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.NotEqual" />
-    <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.TooShort" />
-    <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.TooLong" />
-    <Using Include="InstaConnect.Common.Tests.DataAttributes.Strings.Null" />
-    <Using Include="InstaConnect.Common.Tests.DataAttributes.Enums.Base" />
-    <Using Include="InstaConnect.Common.Tests.DataAttributes.Enums.Empty" />
-    <Using Include="InstaConnect.Common.Tests.DataAttributes.Enums.Sort" />
-    <Using Include="InstaConnect.Common.Tests.DataAttributes.Booleans.Base" />
-    <Using Include="InstaConnect.Common.Tests.DataAttributes.Booleans.True" />
-    <Using Include="InstaConnect.Common.Tests.DataAttributes.Booleans.False" />
-    <Using Include="InstaConnect.Common.Tests.DataAttributes.FormFiles.Base" />
-    <Using Include="InstaConnect.Common.Tests.DataAttributes.FormFiles.Null" />
+    <Using Include="InstaConnect.Common.Tests.Features.Events" />
+    <Using Include="InstaConnect.Common.Tests.Features.Assertions" />
+    <Using Include="InstaConnect.Common.Tests.Features.Utilities" />
+    <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.DateTimeOffsets.Base" />
+    <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.DateTimeOffsets.Empty" />
+    <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Ints.Base" />
+    <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Ints.Empty" />
+    <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Ints.TooSmall" />
+    <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Ints.TooLarge" />
+    <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Strings.Base" />
+    <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Strings.DifferentCase" />
+    <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Strings.Empty" />
+    <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Strings.NotEqual" />
+    <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Strings.TooShort" />
+    <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Strings.TooLong" />
+    <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Strings.Null" />
+    <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Enums.Base" />
+    <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Enums.Empty" />
+    <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort" />
+    <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Booleans.Base" />
+    <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Booleans.True" />
+    <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Booleans.False" />
+    <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.FormFiles.Base" />
+    <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.FormFiles.Null" />
   </ItemGroup>
 
   <ItemGroup Label="Users">

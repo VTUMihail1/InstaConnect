@@ -1,6 +1,4 @@
-﻿using InstaConnect.Identity.Tests.Features.Common.Utilities;
-
-namespace InstaConnect.Identity.Application.Tests.Integration.Features.EmailConfirmationTokens.Commands;
+﻿namespace InstaConnect.Identity.Application.Tests.Integration.Features.EmailConfirmationTokens.Commands;
 
 public class AddEmailConfirmationTokenIntegrationTests : BaseEmailConfirmationTokenApplicationCommandIntegrationTest
 {

@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Follows.Application.Features.Users.Commands.Add;
+﻿using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
+
+namespace InstaConnect.Follows.Application.Features.Users.Commands.Add;
 
 internal class AddUserCommandHandler : ICommandHandler<AddUserCommandRequest, AddUserCommandResponse>
 {

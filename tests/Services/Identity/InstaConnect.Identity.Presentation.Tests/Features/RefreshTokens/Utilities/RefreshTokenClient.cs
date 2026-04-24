@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
 
-using InstaConnect.Common.Presentation.Models;
+using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
 using InstaConnect.Identity.Presentation.Features.RefreshTokens.Utilities;
 
 using Microsoft.Net.Http.Headers;

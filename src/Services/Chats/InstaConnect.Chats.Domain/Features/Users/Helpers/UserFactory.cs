@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Chats.Domain.Features.Users.Helpers;
+﻿using InstaConnect.Common.Domain.Features.ValueObjects.Models;
+
+namespace InstaConnect.Chats.Domain.Features.Users.Helpers;
 
 internal class UserFactory : IUserFactory
 {

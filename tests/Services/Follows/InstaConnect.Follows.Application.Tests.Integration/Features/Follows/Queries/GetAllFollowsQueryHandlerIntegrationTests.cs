@@ -1,7 +1,6 @@
-﻿using InstaConnect.Common.Domain.Models;
-using InstaConnect.Common.Tests.DataAttributes.Enums.Sort;
+﻿using InstaConnect.Common.Domain.Features.Messaging.Models;
+using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 using InstaConnect.Follows.Domain.Features.Follows.Models.Requests;
-using InstaConnect.Follows.Tests.Features.Common.Utilities;
 
 namespace InstaConnect.Follows.Application.Tests.Integration.Features.Follows.Queries;
 

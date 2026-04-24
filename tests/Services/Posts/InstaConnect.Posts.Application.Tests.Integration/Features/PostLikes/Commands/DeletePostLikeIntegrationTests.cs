@@ -1,6 +1,4 @@
-﻿using InstaConnect.Posts.Tests.Features.Common.Utilities;
-
-namespace InstaConnect.Posts.Application.Tests.Integration.Features.PostLikes.Commands;
+﻿namespace InstaConnect.Posts.Application.Tests.Integration.Features.PostLikes.Commands;
 
 public class DeletePostLikeIntegrationTests : BasePostLikeApplicationCommandIntegrationTest
 {

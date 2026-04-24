@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Domain.Extensions;
+﻿using InstaConnect.Common.Domain.Features.Mappers.Extensions;
 using InstaConnect.Follows.Domain.Features.Follows.Extensions;
 using InstaConnect.Follows.Domain.Features.Users.Extensions;
 

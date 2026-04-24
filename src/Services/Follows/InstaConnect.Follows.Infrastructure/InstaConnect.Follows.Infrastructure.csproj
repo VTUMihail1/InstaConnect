@@ -13,11 +13,8 @@
     <Using Include="Microsoft.Extensions.DependencyInjection" />
     <Using Include="Microsoft.AspNetCore.Hosting" />
     <Using Include="Microsoft.Extensions.Configuration" />
-    <Using Include="InstaConnect.Common.Domain.Abstractions" />
-    <Using Include="InstaConnect.Common.Domain.Extensions" />
-    <Using Include="InstaConnect.Common.Domain.Models.ValueObjects" />
-    <Using Include="InstaConnect.Common.Infrastructure.Abstractions" />
-    <Using Include="InstaConnect.Common.Infrastructure.Extensions" />
+    <Using Include="InstaConnect.Common.Domain.Features.Common.Extensions"/>
+    <Using Include="InstaConnect.Common.Infrastructure.Features.Data.Extensions" />
     <Using Include="InstaConnect.Follows.Infrastructure.Features.Common.Abstractions" />
   </ItemGroup>
 

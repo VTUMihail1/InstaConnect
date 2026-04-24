@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Issue;
+﻿using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
+
+namespace InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Issue;
 
 internal class IssueRefreshTokenCommandHandler : ICommandHandler<IssueRefreshTokenCommandRequest, IssueRefreshTokenCommandResponse>
 {

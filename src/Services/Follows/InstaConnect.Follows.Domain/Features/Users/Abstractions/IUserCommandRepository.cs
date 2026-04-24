@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Follows.Domain.Features.Users.Abstractions;
+﻿using InstaConnect.Common.Domain.Features.ValueObjects.Models;
+
+namespace InstaConnect.Follows.Domain.Features.Users.Abstractions;
 
 public interface IUserCommandRepository
 {

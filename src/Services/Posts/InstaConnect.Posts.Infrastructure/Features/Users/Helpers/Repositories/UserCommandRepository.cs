@@ -1,4 +1,5 @@
-﻿using InstaConnect.Posts.Infrastructure.Features.Users.Extensions;
+﻿using InstaConnect.Common.Domain.Features.ValueObjects.Models;
+using InstaConnect.Posts.Infrastructure.Features.Users.Extensions;
 
 using MongoDB.Driver;
 

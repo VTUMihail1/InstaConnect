@@ -1,4 +1,5 @@
-﻿using InstaConnect.Posts.Domain.Features.Users.Models.Responses;
+﻿using InstaConnect.Common.Domain.Features.Entities.Abstractions;
+using InstaConnect.Posts.Domain.Features.Users.Models.Responses;
 
 namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Responses;
 

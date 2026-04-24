@@ -1,6 +1,4 @@
-﻿using InstaConnect.Identity.Tests.Features.Common.Utilities;
-
-namespace InstaConnect.Identity.Presentation.Tests.Functional.Features.Users.Controllers.v1;
+﻿namespace InstaConnect.Identity.Presentation.Tests.Functional.Features.Users.Controllers.v1;
 
 public class GetUserByIdFunctionalTests : BaseUserPresentationQueryFunctionalTest
 {

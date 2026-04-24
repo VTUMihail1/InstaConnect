@@ -1,5 +1,5 @@
 ﻿using InstaConnect.Chats.Application.Features.Users.Abstractions;
-using InstaConnect.Common.Domain.Models;
+using InstaConnect.Common.Domain.Features.Messaging.Models;
 
 namespace InstaConnect.Chats.Application.Features.Chats.Queries.GetAll;
 

@@ -1,6 +1,4 @@
-﻿using InstaConnect.Identity.Tests.Features.Common.Utilities;
-
-namespace InstaConnect.Identity.Presentation.Tests.Functional.Features.EmailConfirmationTokens.Utilities;
+﻿namespace InstaConnect.Identity.Presentation.Tests.Functional.Features.EmailConfirmationTokens.Utilities;
 
 public abstract class BaseEmailConfirmationTokenPresentationCommandFunctionalTest : BaseEmailConfirmationTokenWebTest
 {

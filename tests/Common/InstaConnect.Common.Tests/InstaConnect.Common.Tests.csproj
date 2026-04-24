@@ -25,10 +25,8 @@
   </ItemGroup>
 
   <ItemGroup Label="Common">
-    <Using Include="InstaConnect.Common.Domain.Abstractions" />
-    <Using Include="InstaConnect.Common.Events.Abstractions" />
-    <Using Include="InstaConnect.Common.Application.Abstractions" />
-    <Using Include="InstaConnect.Common.Tests.DataAttributes.Base" />
+    <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Base" />
+    <Using Include="InstaConnect.Common.Domain.Features.Common.Extensions" />
   </ItemGroup>
 
 </Project>

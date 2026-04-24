@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Application.Features.Users.Queries.GetAll;
+﻿using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
+
+namespace InstaConnect.Identity.Application.Features.Users.Queries.GetAll;
 
 internal class GetAllUsersQueryHandler : IQueryHandler<GetAllUsersQueryRequest, GetAllUsersQueryResponse>
 {

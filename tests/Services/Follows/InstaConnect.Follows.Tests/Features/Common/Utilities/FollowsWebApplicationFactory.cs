@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Tests.Extensions;
+﻿using InstaConnect.Common.Tests.Features.Extensions;
 using InstaConnect.Follows.Presentation.Features.Common.Extensions;
 
 using Microsoft.AspNetCore.Hosting;

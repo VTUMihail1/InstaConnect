@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Domain.Features.Users.Models.Responses;
+﻿using InstaConnect.Common.Domain.Features.Entities.Abstractions;
+
+namespace InstaConnect.Identity.Domain.Features.Users.Models.Responses;
 
 public record UserCollectionResponse(
     ICollection<UserResponse> Users,
