@@ -2,6 +2,7 @@
 
 using InstaConnect.Common.Domain.Features.Mappers.Extensions;
 using InstaConnect.Common.Infrastructure.Extensions;
+using InstaConnect.Common.Infrastructure.Features.Emails.Extensions;
 using InstaConnect.Identity.Domain.Features.Common.Helpers;
 using InstaConnect.Identity.Infrastructure.Features.Common.Helpers;
 using InstaConnect.Identity.Infrastructure.Features.Common.Utilities;
@@ -34,6 +35,7 @@ public static class ServiceCollectionExtensions
             serviceCollection
                 .AddOpenTelemetry(configuration, webHostEnvironment)
                 .AddMapper(IdentityInfrastructureReference.Assembly)
+                .AddEmailSender(configuration)
                 .AddServicesWithMatchingInterfaces(IdentityInfrastructureReference.Assembly)
                 .AddRedis(configuration)
                 .AddMongo(configuration)

@@ -31,6 +31,7 @@ public class IdentityWebApplicationFactory : WebApplicationFactory<Program>, IAs
         builder.ConfigureTestServices(serviceCollection =>
         {
             serviceCollection.AddMockImageHandler();
+            serviceCollection.AddMockEmailSender();
             serviceCollection.AddTestJwtAuth();
             serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), IdentityPresentationReference.Assembly);
         });
@@ -42,6 +43,7 @@ public class IdentityWebApplicationFactory : WebApplicationFactory<Program>, IAs
         builder.UpdateOpenTelemetryConfiguration();
         builder.UpdateCloudinaryConfiguration();
         builder.UpdateCorsConfiguration();
+        builder.UpdateEmailConfiguration();
     }
 
     public async Task InitializeAsync()

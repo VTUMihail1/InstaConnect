@@ -1,24 +1,24 @@
 ﻿using InstaConnect.Common.Domain.Features.Common.Extensions;
 
-namespace InstaConnect.Follows.Presentation.Tests.Features.Follows.Utilities;
+namespace InstaConnect.Follows.Presentation.Features.Follows.Utilities;
 
-public static class FollowTestRoutes
+public static class FollowRouteFactory
 {
-    private static string GetDefault(string followerId)
+    public static string GetDefault(string followerId)
     {
         const string Format = "api/v1/followers/{0}/follows";
 
         return Format.FormatCurrentCulture(followerId);
     }
 
-    private static string GetForFollowingDefault(string followingId)
+    public static string GetForFollowingDefault(string followingId)
     {
         const string Format = "api/v1/followings/{0}/follows";
 
         return Format.FormatCurrentCulture(followingId);
     }
 
-    private static string GetId(string followerId, string followingId)
+    public static string GetId(string followerId, string followingId)
     {
         const string Format = "{0}/{1}";
 
@@ -27,14 +27,14 @@ public static class FollowTestRoutes
             followingId);
     }
 
-    private static string GetCurrentDefault()
+    public static string GetCurrentDefault()
     {
         const string Route = "api/v1/followers/current/follows";
 
         return Route;
     }
 
-    private static string GetCurrentId(string followingId)
+    public static string GetCurrentId(string followingId)
     {
         const string Format = "{0}/{1}";
 

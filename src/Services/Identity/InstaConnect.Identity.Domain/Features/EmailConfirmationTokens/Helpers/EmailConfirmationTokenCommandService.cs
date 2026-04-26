@@ -11,6 +11,7 @@ internal class EmailConfirmationTokenCommandService : IEmailConfirmationTokenCom
     private readonly IDateTimeProvider _dateTimeProvider;
     private readonly IUserIncludeBuilderFactory _includeQueryBuilderFactory;
     private readonly IEmailConfirmationTokenFactory _emailConfirmationTokenFactory;
+    private readonly IEmailConfirmationTokenEmailSender _emailConfirmationTokenEmailSender;
     private readonly IEmailConfirmationTokenCommandRepository _emailConfirmationTokenRepository;
 
     public EmailConfirmationTokenCommandService(
@@ -20,6 +21,7 @@ internal class EmailConfirmationTokenCommandService : IEmailConfirmationTokenCom
         IDateTimeProvider dateTimeProvider,
         IUserIncludeBuilderFactory includeQueryBuilderFactory,
         IEmailConfirmationTokenFactory emailConfirmationTokenFactory,
+        IEmailConfirmationTokenEmailSender emailConfirmationTokenEmailSender,
         IEmailConfirmationTokenCommandRepository emailConfirmationTokenRepository)
     {
         _mapper = mapper;
@@ -28,6 +30,7 @@ internal class EmailConfirmationTokenCommandService : IEmailConfirmationTokenCom
         _dateTimeProvider = dateTimeProvider;
         _includeQueryBuilderFactory = includeQueryBuilderFactory;
         _emailConfirmationTokenFactory = emailConfirmationTokenFactory;
+        _emailConfirmationTokenEmailSender = emailConfirmationTokenEmailSender;
         _emailConfirmationTokenRepository = emailConfirmationTokenRepository;
     }
 
@@ -50,6 +53,8 @@ internal class EmailConfirmationTokenCommandService : IEmailConfirmationTokenCom
 
         await _eventPublisher.PublishAsync(
             _mapper.Map<EmailConfirmationTokenAddedEventRequest>(newEmailConfirmationToken), cancellationToken);
+
+        await _emailConfirmationTokenEmailSender.SendAsync(newEmailConfirmationToken, cancellationToken);
 
         return newEmailConfirmationToken.Id;
     }

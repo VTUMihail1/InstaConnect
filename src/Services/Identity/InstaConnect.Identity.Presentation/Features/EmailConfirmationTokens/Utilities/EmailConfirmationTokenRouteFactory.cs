@@ -1,17 +1,17 @@
 ﻿using InstaConnect.Common.Domain.Features.Common.Extensions;
 
-namespace InstaConnect.Identity.Presentation.Tests.Features.EmailConfirmationTokens.Utilities;
+namespace InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Utilities;
 
-public static class EmailConfirmationTokenTestRoutes
+public static class EmailConfirmationTokenRouteFactory
 {
-    private static string GetDefaultName(string name)
+    public static string GetDefaultName(string name)
     {
         const string Format = "api/v1/users/{0}/email-confirmation-tokens";
 
         return Format.FormatCurrentCulture(name);
     }
 
-    private static string GetDefaultIdVerify(string id, string value)
+    public static string GetDefaultIdVerify(string id, string value)
     {
         const string Format = "api/v1/users/{0}/email-confirmation-tokens/{1}/verify";
 

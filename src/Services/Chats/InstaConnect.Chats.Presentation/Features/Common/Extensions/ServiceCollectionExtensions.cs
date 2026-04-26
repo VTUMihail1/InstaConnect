@@ -4,6 +4,7 @@ using InstaConnect.Chats.Presentation.Features.Users.Extensions;
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Domain.Features.Mappers.Extensions;
 using InstaConnect.Common.Presentation.Features.Common.Extensions;
+using InstaConnect.Common.Presentation.Features.Common.Models;
 using InstaConnect.Common.Presentation.Features.Controllers.Extensions;
 using InstaConnect.Common.Presentation.Features.ExceptionHandling.Extensions;
 
@@ -21,6 +22,7 @@ public static class ServiceCollectionExtensions
                 .AddChatMessageServices();
 
             serviceCollection
+                .AddValidatedOptions<MainOptions>(MainOptions.SectionName)
                 .AddServicesWithMatchingInterfaces(ChatsPresentationReference.Assembly)
                 .AddApiControllers()
                 .AddMapper(ChatsPresentationReference.Assembly, CommonPresentationReference.Assembly)

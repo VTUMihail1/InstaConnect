@@ -15,6 +15,7 @@ internal class UserCommandService : IUserCommandService
     private readonly IDateTimeProvider _dateTimeProvider;
     private readonly IUserIncludeBuilderFactory _includeBuilderFactory;
     private readonly IEmailConfirmationTokenFactory _emailConfirmationTokenFactory;
+    private readonly IEmailConfirmationTokenEmailSender _emailConfirmationTokenEmailSender;
     private readonly IEmailConfirmationTokenCommandRepository _emailConfirmationTokenRepository;
 
     public UserCommandService(
@@ -27,6 +28,7 @@ internal class UserCommandService : IUserCommandService
         IDateTimeProvider dateTimeProvider,
         IUserIncludeBuilderFactory includeBuilderFactory,
         IEmailConfirmationTokenFactory emailConfirmationTokenFactory,
+        IEmailConfirmationTokenEmailSender emailConfirmationTokenEmailSender,
         IEmailConfirmationTokenCommandRepository emailConfirmationTokenRepository)
     {
         _factory = factory;
@@ -38,6 +40,7 @@ internal class UserCommandService : IUserCommandService
         _dateTimeProvider = dateTimeProvider;
         _includeBuilderFactory = includeBuilderFactory;
         _emailConfirmationTokenFactory = emailConfirmationTokenFactory;
+        _emailConfirmationTokenEmailSender = emailConfirmationTokenEmailSender;
         _emailConfirmationTokenRepository = emailConfirmationTokenRepository;
     }
 
@@ -76,6 +79,8 @@ internal class UserCommandService : IUserCommandService
 
         await _eventPublisher.PublishAsync(
             _mapper.Map<EmailConfirmationTokenAddedEventRequest>(newEmailConfirmationToken.AddUser(newUser)), cancellationToken);
+
+        await _emailConfirmationTokenEmailSender.SendAsync(newEmailConfirmationToken, cancellationToken);
 
         return newUser.Id;
     }

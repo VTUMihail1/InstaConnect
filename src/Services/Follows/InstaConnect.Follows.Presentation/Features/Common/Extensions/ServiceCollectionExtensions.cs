@@ -1,6 +1,7 @@
 ﻿using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Domain.Features.Mappers.Extensions;
 using InstaConnect.Common.Presentation.Features.Common.Extensions;
+using InstaConnect.Common.Presentation.Features.Common.Models;
 using InstaConnect.Common.Presentation.Features.Controllers.Extensions;
 using InstaConnect.Common.Presentation.Features.ExceptionHandling.Extensions;
 using InstaConnect.Follows.Presentation.Features.Follows.Extensions;
@@ -19,6 +20,7 @@ public static class ServiceCollectionExtensions
                 .AddFollowServices();
 
             serviceCollection
+                .AddValidatedOptions<MainOptions>(MainOptions.SectionName)
                 .AddServicesWithMatchingInterfaces(FollowsPresentationReference.Assembly)
                 .AddApiControllers()
                 .AddMapper(FollowsPresentationReference.Assembly, CommonPresentationReference.Assembly)

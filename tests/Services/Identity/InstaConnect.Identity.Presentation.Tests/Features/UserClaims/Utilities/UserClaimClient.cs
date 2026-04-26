@@ -2,6 +2,7 @@
 using System.Net.Http.Json;
 
 using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
+using InstaConnect.Identity.Presentation.Features.UserClaims.Utilities;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Utilities;
 
@@ -13,7 +14,7 @@ public static class UserClaimClient
             GetAllUserClaimsApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = UserClaimTestRoutes.GetRoute(request);
+            var route = UserClaimRouteFactory.GetRoute(request);
 
             return await httpClient
                 .GetAsync(route, cancellationToken);
@@ -23,7 +24,7 @@ public static class UserClaimClient
             GetAllUserClaimsApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = UserClaimTestRoutes.GetRoute(request);
+            var route = UserClaimRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAuthorization(request.CurrentId)
@@ -34,7 +35,7 @@ public static class UserClaimClient
             GetAllUserClaimsApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = UserClaimTestRoutes.GetRoute(request);
+            var route = UserClaimRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAdminAuthorization(request.CurrentId)
@@ -108,7 +109,7 @@ public static class UserClaimClient
             AddUserClaimApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = UserClaimTestRoutes.GetRoute(request);
+            var route = UserClaimRouteFactory.GetRoute(request);
 
             return await httpClient
                 .PostAsJsonAsync(route, request.Body, cancellationToken);
@@ -118,7 +119,7 @@ public static class UserClaimClient
             AddUserClaimApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = UserClaimTestRoutes.GetRoute(request);
+            var route = UserClaimRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAuthorization(request.Id)
@@ -129,7 +130,7 @@ public static class UserClaimClient
             AddUserClaimApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = UserClaimTestRoutes.GetRoute(request);
+            var route = UserClaimRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAdminAuthorization(request.Id)
@@ -203,7 +204,7 @@ public static class UserClaimClient
             DeleteUserClaimApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = UserClaimTestRoutes.GetRoute(request);
+            var route = UserClaimRouteFactory.GetRoute(request);
 
             return await httpClient
                 .DeleteAsync(route, cancellationToken);
@@ -213,7 +214,7 @@ public static class UserClaimClient
             DeleteUserClaimApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = UserClaimTestRoutes.GetRoute(request);
+            var route = UserClaimRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAuthorization(request.Id)
@@ -224,7 +225,7 @@ public static class UserClaimClient
             DeleteUserClaimApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = UserClaimTestRoutes.GetRoute(request);
+            var route = UserClaimRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAdminAuthorization(request.Id)

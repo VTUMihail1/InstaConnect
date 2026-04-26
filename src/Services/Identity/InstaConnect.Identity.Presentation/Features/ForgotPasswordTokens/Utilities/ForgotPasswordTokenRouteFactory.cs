@@ -1,17 +1,17 @@
 ﻿using InstaConnect.Common.Domain.Features.Common.Extensions;
 
-namespace InstaConnect.Identity.Presentation.Tests.Features.ForgotPasswordTokens.Utilities;
+namespace InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Utilities;
 
-public static class ForgotPasswordTokenTestRoutes
+public static class ForgotPasswordTokenRouteFactory
 {
-    private static string GetDefaultName(string name)
+    public static string GetDefaultName(string name)
     {
         const string Format = "api/v1/users/{0}/forgot-password-tokens";
 
         return Format.FormatCurrentCulture(name);
     }
 
-    private static string GetDefaultIdVerify(string id, string value)
+    public static string GetDefaultIdVerify(string id, string value)
     {
         const string Format = "api/v1/users/{0}/forgot-password-tokens/{1}/verify";
 

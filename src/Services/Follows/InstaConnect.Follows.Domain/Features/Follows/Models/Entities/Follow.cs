@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Domain.Features.Entities.Abstractions;
-
-namespace InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
+﻿namespace InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
 
 public class Follow : IEntityWithId<FollowId>
 {

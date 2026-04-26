@@ -2,6 +2,7 @@
 using System.Net.Http.Json;
 
 using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
+using InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Utilities;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.ForgotPasswordTokens.Utilities;
 
@@ -13,7 +14,7 @@ public static class ForgotPasswordTokenClient
             AddForgotPasswordTokenApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = ForgotPasswordTokenTestRoutes.GetRoute(request);
+            var route = ForgotPasswordTokenRouteFactory.GetRoute(request);
 
             return await httpClient
                 .PostAsync(route, null, cancellationToken);
@@ -48,7 +49,7 @@ public static class ForgotPasswordTokenClient
             VerifyForgotPasswordTokenApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = ForgotPasswordTokenTestRoutes.GetRoute(request);
+            var route = ForgotPasswordTokenRouteFactory.GetRoute(request);
 
             return await httpClient
                 .PutAsJsonAsync(route, request.Body, cancellationToken);

@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Domain.Features.Entities.Abstractions;
-
-namespace InstaConnect.Posts.Domain.Features.PostComments.Models.Entities;
+﻿namespace InstaConnect.Posts.Domain.Features.PostComments.Models.Entities;
 
 public class PostComment : IEntityWithId<PostCommentId>
 {

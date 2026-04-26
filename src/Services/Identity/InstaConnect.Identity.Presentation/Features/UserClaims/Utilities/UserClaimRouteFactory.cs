@@ -1,18 +1,18 @@
 ﻿using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Events.Features.Tokens.Models;
 
-namespace InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Utilities;
+namespace InstaConnect.Identity.Presentation.Features.UserClaims.Utilities;
 
-public static class UserClaimTestRoutes
+public static class UserClaimRouteFactory
 {
-    private static string GetDefault(string id)
+    public static string GetDefault(string id)
     {
         const string Format = "api/v1/users/{0}/claims";
 
         return Format.FormatCurrentCulture(id);
     }
 
-    private static string GetId(string id, ApplicationClaims claim)
+    public static string GetId(string id, ApplicationClaims claim)
     {
         const string Format = "{0}/{1}";
 

@@ -1,17 +1,17 @@
 ﻿using InstaConnect.Common.Domain.Features.Common.Extensions;
 
-namespace InstaConnect.Identity.Presentation.Tests.Features.Users.Utilities;
+namespace InstaConnect.Identity.Presentation.Features.Users.Utilities;
 
-public static class UserTestRoutes
+public static class UserRouteFactory
 {
-    private static string GetDefault()
+    public static string GetDefault()
     {
         const string Route = "api/v1/users";
 
         return Route;
     }
 
-    private static string GetId(string id)
+    public static string GetId(string id)
     {
         const string Format = "{0}/{1}";
 
@@ -20,7 +20,7 @@ public static class UserTestRoutes
             id);
     }
 
-    private static string GetCurrent()
+    public static string GetCurrent()
     {
         const string Format = "{0}/current";
 
@@ -28,7 +28,7 @@ public static class UserTestRoutes
             GetDefault());
     }
 
-    private static string GetIdDetails(string id)
+    public static string GetIdDetails(string id)
     {
         const string Format = "{0}/details";
 
@@ -37,7 +37,7 @@ public static class UserTestRoutes
             id);
     }
 
-    private static string GetCurrentDetails()
+    public static string GetCurrentDetails()
     {
         const string Format = "{0}/details";
 

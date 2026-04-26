@@ -2,6 +2,7 @@
 using System.Net.Http.Json;
 
 using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
+using InstaConnect.Follows.Presentation.Features.Follows.Utilities;
 
 namespace InstaConnect.Follows.Presentation.Tests.Features.Follows.Utilities;
 
@@ -13,7 +14,7 @@ public static class FollowClient
             GetAllFollowsApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = FollowTestRoutes.GetRoute(request);
+            var route = FollowRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAuthorization(request.CurrentUserId)
@@ -51,7 +52,7 @@ public static class FollowClient
             GetAllFollowsForFollowingApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = FollowTestRoutes.GetRoute(request);
+            var route = FollowRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAuthorization(request.CurrentUserId)
@@ -89,7 +90,7 @@ public static class FollowClient
             GetFollowByIdApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = FollowTestRoutes.GetRoute(request);
+            var route = FollowRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAuthorization(request.CurrentUserId)
@@ -127,7 +128,7 @@ public static class FollowClient
             AddFollowApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = FollowTestRoutes.GetRoute(request);
+            var route = FollowRouteFactory.GetRoute(request);
 
             return await httpClient
                 .PostAsJsonAsync(route, request.Body, cancellationToken);
@@ -137,7 +138,7 @@ public static class FollowClient
             AddFollowApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = FollowTestRoutes.GetRoute(request);
+            var route = FollowRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAuthorization(request.FollowerId)
@@ -193,7 +194,7 @@ public static class FollowClient
             DeleteFollowApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = FollowTestRoutes.GetRoute(request);
+            var route = FollowRouteFactory.GetRoute(request);
 
             return await httpClient
                 .DeleteAsync(route, cancellationToken);
@@ -203,7 +204,7 @@ public static class FollowClient
             DeleteFollowApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = FollowTestRoutes.GetRoute(request);
+            var route = FollowRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAuthorization(request.FollowerId)

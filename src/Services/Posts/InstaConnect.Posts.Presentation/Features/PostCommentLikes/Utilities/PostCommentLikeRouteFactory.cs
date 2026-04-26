@@ -1,24 +1,24 @@
 ﻿using InstaConnect.Common.Domain.Features.Common.Extensions;
 
-namespace InstaConnect.Posts.Presentation.Tests.Features.PostCommentLikes.Utilities;
+namespace InstaConnect.Posts.Presentation.Features.PostCommentLikes.Utilities;
 
-public static class PostCommentLikeTestRoutes
+public static class PostCommentLikeRouteFactory
 {
-    private static string GetDefault(string id, string commentId)
+    public static string GetDefault(string id, string commentId)
     {
         const string Format = "api/v1/posts/{0}/comments/{1}/likes";
 
         return Format.FormatCurrentCulture(id, commentId);
     }
 
-    private static string GetForUserDefault(string userId)
+    public static string GetForUserDefault(string userId)
     {
         const string Format = "api/v1/users/{0}/post-comment-likes";
 
         return Format.FormatCurrentCulture(userId);
     }
 
-    private static string GetId(string id, string commentId, string userId)
+    public static string GetId(string id, string commentId, string userId)
     {
         const string Format = "{0}/{1}";
 
@@ -27,7 +27,7 @@ public static class PostCommentLikeTestRoutes
             userId);
     }
 
-    private static string GetCurrent(string id, string commentId)
+    public static string GetCurrent(string id, string commentId)
     {
         const string Format = "{0}/current";
 

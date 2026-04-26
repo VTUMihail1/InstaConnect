@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Chats.Domain.Features.Common.Models.Requests;
-using InstaConnect.Common.Domain.Features.ValueObjects.Models;
 
 namespace InstaConnect.Chats.Domain.Features.Users.Utilities;
 

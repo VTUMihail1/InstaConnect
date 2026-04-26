@@ -16,7 +16,7 @@ public static class RefreshTokenClient
             IssueRefreshTokenApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = RefreshTokenTestRoutes.GetRoute(request);
+            var route = RefreshTokenRouteFactory.GetRoute(request);
 
             return await httpClient
                 .PostAsJsonAsync(route, request.Body, cancellationToken);
@@ -62,7 +62,7 @@ public static class RefreshTokenClient
             RotateRefreshTokenApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = RefreshTokenTestRoutes.GetRoute(request);
+            var route = RefreshTokenRouteFactory.GetRoute(request);
 
             return await httpClient
                 .PostAsync(route, null, cancellationToken);
@@ -72,7 +72,7 @@ public static class RefreshTokenClient
             RotateRefreshTokenApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = RefreshTokenTestRoutes.GetRoute(request);
+            var route = RefreshTokenRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithCookies(new(RefreshTokenCookieKeys.Id, request.Id),
@@ -138,7 +138,7 @@ public static class RefreshTokenClient
             DeleteCurrentRefreshTokenApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = RefreshTokenTestRoutes.GetRoute(request);
+            var route = RefreshTokenRouteFactory.GetRoute(request);
 
             return await httpClient
                 .DeleteAsync(route, cancellationToken);
@@ -148,7 +148,7 @@ public static class RefreshTokenClient
             DeleteCurrentRefreshTokenApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = RefreshTokenTestRoutes.GetRoute(request);
+            var route = RefreshTokenRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithCookies(new(RefreshTokenCookieKeys.Id, request.Id),

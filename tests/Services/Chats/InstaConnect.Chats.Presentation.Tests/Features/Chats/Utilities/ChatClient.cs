@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
 
+using InstaConnect.Chats.Presentation.Features.Chats.Utilities;
 using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
 
 namespace InstaConnect.Chats.Presentation.Tests.Features.Chats.Utilities;
@@ -13,7 +14,7 @@ public static class ChatClient
             GetAllChatsApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = ChatTestRoutes.GetRoute(request);
+            var route = ChatRouteFactory.GetRoute(request);
 
             return await httpClient
                 .GetAsync(route, cancellationToken);
@@ -23,7 +24,7 @@ public static class ChatClient
             GetAllChatsApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = ChatTestRoutes.GetRoute(request);
+            var route = ChatRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAuthorization(request.CurrentUserId)
@@ -70,7 +71,7 @@ public static class ChatClient
             GetChatByIdApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = ChatTestRoutes.GetRoute(request);
+            var route = ChatRouteFactory.GetRoute(request);
 
             return await httpClient
                 .GetAsync(route, cancellationToken);
@@ -80,7 +81,7 @@ public static class ChatClient
             GetChatByIdApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = ChatTestRoutes.GetRoute(request);
+            var route = ChatRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAuthorization(request.CurrentUserId)
@@ -127,7 +128,7 @@ public static class ChatClient
             AddChatApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = ChatTestRoutes.GetRoute(request);
+            var route = ChatRouteFactory.GetRoute(request);
 
             return await httpClient
                 .PostAsJsonAsync(route, request.Body, cancellationToken);
@@ -137,7 +138,7 @@ public static class ChatClient
             AddChatApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = ChatTestRoutes.GetRoute(request);
+            var route = ChatRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAuthorization(request.ParticipantOneId)

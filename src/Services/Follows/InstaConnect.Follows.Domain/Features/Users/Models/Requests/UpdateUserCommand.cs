@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Domain.Features.ValueObjects.Models;
-
-namespace InstaConnect.Follows.Domain.Features.Users.Models.Requests;
+﻿namespace InstaConnect.Follows.Domain.Features.Users.Models.Requests;
 
 public record UpdateUserCommand(
     UserId Id,

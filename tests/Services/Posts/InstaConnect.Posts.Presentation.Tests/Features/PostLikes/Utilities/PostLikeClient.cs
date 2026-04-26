@@ -2,6 +2,7 @@
 using System.Net.Http.Json;
 
 using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
+using InstaConnect.Posts.Presentation.Features.PostLikes.Utilities;
 
 namespace InstaConnect.Posts.Presentation.Tests.Features.PostLikes.Utilities;
 
@@ -13,7 +14,7 @@ public static class PostLikeClient
             GetAllPostLikesApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = PostLikeTestRoutes.GetRoute(request);
+            var route = PostLikeRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAuthorization(request.CurrentUserId)
@@ -51,7 +52,7 @@ public static class PostLikeClient
             GetAllPostLikesForUserApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = PostLikeTestRoutes.GetRoute(request);
+            var route = PostLikeRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAuthorization(request.CurrentUserId)
@@ -89,7 +90,7 @@ public static class PostLikeClient
             GetPostLikeByIdApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = PostLikeTestRoutes.GetRoute(request);
+            var route = PostLikeRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAuthorization(request.CurrentUserId)
@@ -127,7 +128,7 @@ public static class PostLikeClient
             AddPostLikeApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = PostLikeTestRoutes.GetRoute(request);
+            var route = PostLikeRouteFactory.GetRoute(request);
 
             return await httpClient
                 .PostAsync(route, null, cancellationToken);
@@ -137,7 +138,7 @@ public static class PostLikeClient
             AddPostLikeApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = PostLikeTestRoutes.GetRoute(request);
+            var route = PostLikeRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAuthorization(request.UserId)
@@ -193,7 +194,7 @@ public static class PostLikeClient
             DeletePostLikeApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = PostLikeTestRoutes.GetRoute(request);
+            var route = PostLikeRouteFactory.GetRoute(request);
 
             return await httpClient
                 .DeleteAsync(route, cancellationToken);
@@ -203,7 +204,7 @@ public static class PostLikeClient
             DeletePostLikeApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = PostLikeTestRoutes.GetRoute(request);
+            var route = PostLikeRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAuthorization(request.UserId)

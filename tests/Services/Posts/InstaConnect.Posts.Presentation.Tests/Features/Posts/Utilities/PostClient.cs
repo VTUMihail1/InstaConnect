@@ -2,6 +2,7 @@
 using System.Net.Http.Json;
 
 using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
+using InstaConnect.Posts.Presentation.Features.Posts.Utilities;
 
 namespace InstaConnect.Posts.Presentation.Tests.Features.Posts.Utilities;
 
@@ -13,7 +14,7 @@ public static class PostClient
             GetAllPostsApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = PostTestRoutes.GetRoute(request);
+            var route = PostRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAuthorization(request.CurrentUserId)
@@ -51,7 +52,7 @@ public static class PostClient
             GetAllPostsForUserApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = PostTestRoutes.GetRoute(request);
+            var route = PostRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAuthorization(request.CurrentUserId)
@@ -89,7 +90,7 @@ public static class PostClient
             GetPostByIdApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = PostTestRoutes.GetRoute(request);
+            var route = PostRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAuthorization(request.CurrentUserId)
@@ -127,7 +128,7 @@ public static class PostClient
             AddPostApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = PostTestRoutes.GetRoute(request);
+            var route = PostRouteFactory.GetRoute(request);
 
             return await httpClient
                 .PostAsJsonAsync(route, request.Body, cancellationToken);
@@ -137,7 +138,7 @@ public static class PostClient
             AddPostApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = PostTestRoutes.GetRoute(request);
+            var route = PostRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAuthorization(request.UserId)
@@ -193,7 +194,7 @@ public static class PostClient
             UpdatePostApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = PostTestRoutes.GetRoute(request);
+            var route = PostRouteFactory.GetRoute(request);
 
             return await httpClient
                 .PutAsJsonAsync(route, request.Body, cancellationToken);
@@ -203,7 +204,7 @@ public static class PostClient
             UpdatePostApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = PostTestRoutes.GetRoute(request);
+            var route = PostRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAuthorization(request.UserId)
@@ -259,7 +260,7 @@ public static class PostClient
             DeletePostApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = PostTestRoutes.GetRoute(request);
+            var route = PostRouteFactory.GetRoute(request);
 
             return await httpClient
                 .DeleteAsync(route, cancellationToken);
@@ -269,7 +270,7 @@ public static class PostClient
             DeletePostApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = PostTestRoutes.GetRoute(request);
+            var route = PostRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAuthorization(request.UserId)

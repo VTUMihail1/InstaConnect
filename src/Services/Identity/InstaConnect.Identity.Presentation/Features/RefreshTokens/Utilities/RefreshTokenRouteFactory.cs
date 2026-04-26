@@ -1,31 +1,31 @@
 ﻿using InstaConnect.Common.Domain.Features.Common.Extensions;
 
-namespace InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Utilities;
+namespace InstaConnect.Identity.Presentation.Features.RefreshTokens.Utilities;
 
-public static class RefreshTokenTestRoutes
+public static class RefreshTokenRouteFactory
 {
-    private static string GetDefaultName(string name)
+    public static string GetDefaultName(string name)
     {
         const string Format = "api/v1/users/{0}/refresh-tokens";
 
         return Format.FormatCurrentCulture(name);
     }
 
-    private static string GetDefaultCurrent()
+    public static string GetDefaultCurrent()
     {
         const string Route = "api/v1/users/current/refresh-tokens";
 
         return Route;
     }
 
-    private static string GetCurrent()
+    public static string GetCurrent()
     {
         const string Format = "{0}/current";
 
         return Format.FormatCurrentCulture(GetDefaultCurrent());
     }
 
-    private static string GetCurrentRotate()
+    public static string GetCurrentRotate()
     {
         const string Format = "{0}/rotate";
 

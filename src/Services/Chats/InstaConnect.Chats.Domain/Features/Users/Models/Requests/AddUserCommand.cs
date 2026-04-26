@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Domain.Features.ValueObjects.Models;
-
-namespace InstaConnect.Chats.Domain.Features.Users.Models.Requests;
+﻿namespace InstaConnect.Chats.Domain.Features.Users.Models.Requests;
 
 public record AddUserCommand(
     UserId Id,

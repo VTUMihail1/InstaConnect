@@ -1,40 +1,33 @@
 ﻿using InstaConnect.Common.Domain.Features.Common.Extensions;
 
-namespace InstaConnect.Posts.Presentation.Tests.Features.PostLikes.Utilities;
+namespace InstaConnect.Posts.Presentation.Features.PostComments.Utilities;
 
-public static class PostLikeTestRoutes
+public static class PostCommentRouteFactory
 {
-    private static string GetDefault(string id)
+    public static string GetDefault(string id)
     {
-        const string Format = "api/v1/posts/{0}/likes";
+        const string Format = "api/v1/posts/{0}/comments";
 
         return Format.FormatCurrentCulture(id);
     }
 
-    private static string GetForUserDefault(string userId)
+    public static string GetForUserDefault(string userId)
     {
-        const string Format = "api/v1/users/{0}/post-likes";
+        const string Format = "api/v1/users/{0}/post-comments";
 
         return Format.FormatCurrentCulture(userId);
     }
 
-    private static string GetId(string id, string userId)
+    public static string GetId(string id, string commentId)
     {
         const string Format = "{0}/{1}";
 
         return Format.FormatCurrentCulture(
             GetDefault(id),
-            userId);
+            commentId);
     }
 
-    private static string GetCurrent(string id)
-    {
-        const string Format = "{0}/current";
-
-        return Format.FormatCurrentCulture(GetDefault(id));
-    }
-
-    public static string GetRoute(GetAllPostLikesApiRequest request)
+    public static string GetRoute(GetAllPostCommentsApiRequest request)
     {
         const string Format = "{0}?userName={1}&sortOrder={2}&sortTerm={3}&page={4}&pageSize={5}";
 
@@ -47,7 +40,7 @@ public static class PostLikeTestRoutes
             request.PageSize);
     }
 
-    public static string GetRoute(GetAllPostLikesForUserApiRequest request)
+    public static string GetRoute(GetAllPostCommentsForUserApiRequest request)
     {
         const string Format = "{0}?sortOrder={1}&sortTerm={2}&page={3}&pageSize={4}";
 
@@ -59,18 +52,23 @@ public static class PostLikeTestRoutes
             request.PageSize);
     }
 
-    public static string GetRoute(GetPostLikeByIdApiRequest request)
+    public static string GetRoute(GetPostCommentByIdApiRequest request)
     {
-        return GetId(request.Id, request.UserId);
+        return GetId(request.Id, request.CommentId);
     }
 
-    public static string GetRoute(AddPostLikeApiRequest request)
+    public static string GetRoute(AddPostCommentApiRequest request)
     {
         return GetDefault(request.Id);
     }
 
-    public static string GetRoute(DeletePostLikeApiRequest request)
+    public static string GetRoute(UpdatePostCommentApiRequest request)
     {
-        return GetCurrent(request.Id);
+        return GetId(request.Id, request.CommentId);
+    }
+
+    public static string GetRoute(DeletePostCommentApiRequest request)
+    {
+        return GetId(request.Id, request.CommentId);
     }
 }

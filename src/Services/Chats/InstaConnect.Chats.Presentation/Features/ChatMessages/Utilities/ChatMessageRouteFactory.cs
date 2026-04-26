@@ -1,17 +1,17 @@
 ﻿using InstaConnect.Common.Domain.Features.Common.Extensions;
 
-namespace InstaConnect.Chats.Presentation.Tests.Features.ChatMessages.Utilities;
+namespace InstaConnect.Chats.Presentation.Features.ChatMessages.Utilities;
 
-public static class ChatMessageTestRoutes
+public static class ChatMessageRouteFactory
 {
-    private static string GetCurrentDefault(string participantTwoId)
+    public static string GetCurrentDefault(string participantTwoId)
     {
         const string Format = "api/v1/participants/current/chats/{0}/messages";
 
         return Format.FormatCurrentCulture(participantTwoId);
     }
 
-    private static string GetId(string participantTwoId, string messageId)
+    public static string GetId(string participantTwoId, string messageId)
     {
         const string Format = "{0}/{1}";
 

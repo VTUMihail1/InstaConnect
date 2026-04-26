@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
 
+using InstaConnect.Chats.Presentation.Features.ChatMessages.Utilities;
 using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
 
 namespace InstaConnect.Chats.Presentation.Tests.Features.ChatMessages.Utilities;
@@ -13,7 +14,7 @@ public static class ChatMessageClient
             GetAllChatMessagesApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = ChatMessageTestRoutes.GetRoute(request);
+            var route = ChatMessageRouteFactory.GetRoute(request);
 
             return await httpClient
                 .GetAsync(route, cancellationToken);
@@ -23,7 +24,7 @@ public static class ChatMessageClient
             GetAllChatMessagesApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = ChatMessageTestRoutes.GetRoute(request);
+            var route = ChatMessageRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAuthorization(request.CurrentUserId)
@@ -70,7 +71,7 @@ public static class ChatMessageClient
             GetChatMessageByIdApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = ChatMessageTestRoutes.GetRoute(request);
+            var route = ChatMessageRouteFactory.GetRoute(request);
 
             return await httpClient
                 .GetAsync(route, cancellationToken);
@@ -80,7 +81,7 @@ public static class ChatMessageClient
             GetChatMessageByIdApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = ChatMessageTestRoutes.GetRoute(request);
+            var route = ChatMessageRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAuthorization(request.CurrentUserId)
@@ -127,7 +128,7 @@ public static class ChatMessageClient
             AddChatMessageApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = ChatMessageTestRoutes.GetRoute(request);
+            var route = ChatMessageRouteFactory.GetRoute(request);
 
             return await httpClient
                 .PostAsJsonAsync(route, request.Body, cancellationToken);
@@ -137,7 +138,7 @@ public static class ChatMessageClient
             AddChatMessageApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = ChatMessageTestRoutes.GetRoute(request);
+            var route = ChatMessageRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAuthorization(request.ParticipantOneId)
@@ -193,7 +194,7 @@ public static class ChatMessageClient
             UpdateChatMessageApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = ChatMessageTestRoutes.GetRoute(request);
+            var route = ChatMessageRouteFactory.GetRoute(request);
 
             return await httpClient
                 .PutAsJsonAsync(route, request.Body, cancellationToken);
@@ -203,7 +204,7 @@ public static class ChatMessageClient
             UpdateChatMessageApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = ChatMessageTestRoutes.GetRoute(request);
+            var route = ChatMessageRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAuthorization(request.ParticipantOneId)
@@ -259,7 +260,7 @@ public static class ChatMessageClient
             DeleteChatMessageApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = ChatMessageTestRoutes.GetRoute(request);
+            var route = ChatMessageRouteFactory.GetRoute(request);
 
             return await httpClient
                 .DeleteAsync(route, cancellationToken);
@@ -269,7 +270,7 @@ public static class ChatMessageClient
             DeleteChatMessageApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = ChatMessageTestRoutes.GetRoute(request);
+            var route = ChatMessageRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAuthorization(request.ParticipantOneId)

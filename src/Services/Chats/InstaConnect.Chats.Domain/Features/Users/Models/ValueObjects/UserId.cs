@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Domain.Features.Entities.Abstractions;
-
-namespace InstaConnect.Chats.Domain.Features.Users.Models.ValueObjects;
+﻿namespace InstaConnect.Chats.Domain.Features.Users.Models.ValueObjects;
 
 public record UserId(string Id) : IEntityId
 {

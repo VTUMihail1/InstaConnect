@@ -1,24 +1,24 @@
 ﻿using InstaConnect.Common.Domain.Features.Common.Extensions;
 
-namespace InstaConnect.Posts.Presentation.Tests.Features.Posts.Utilities;
+namespace InstaConnect.Posts.Presentation.Features.Posts.Utilities;
 
-public static class PostTestRoutes
+public static class PostRouteFactory
 {
-    private static string GetDefault()
+    public static string GetDefault()
     {
         const string Route = "api/v1/posts";
 
         return Route;
     }
 
-    private static string GetForUserDefault(string userId)
+    public static string GetForUserDefault(string userId)
     {
         const string Format = "api/v1/users/{0}/posts";
 
         return Format.FormatCurrentCulture(userId);
     }
 
-    private static string GetId(string id)
+    public static string GetId(string id)
     {
         const string Format = "{0}/{1}";
 

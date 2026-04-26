@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Domain.Features.Entities.Abstractions;
-
-namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entities;
+﻿namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entities;
 
 public class ForgotPasswordToken : IEntityWithId<ForgotPasswordTokenId>
 {

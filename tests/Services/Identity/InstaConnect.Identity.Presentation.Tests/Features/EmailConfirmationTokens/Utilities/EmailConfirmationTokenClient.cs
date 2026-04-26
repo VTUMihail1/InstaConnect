@@ -1,6 +1,7 @@
 ﻿using System.Net;
 
 using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
+using InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Utilities;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.EmailConfirmationTokens.Utilities;
 
@@ -12,7 +13,7 @@ public static class EmailConfirmationTokenClient
             AddEmailConfirmationTokenApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = EmailConfirmationTokenTestRoutes.GetRoute(request);
+            var route = EmailConfirmationTokenRouteFactory.GetRoute(request);
 
             return await httpClient
                 .PostAsync(route, null, cancellationToken);
@@ -47,7 +48,7 @@ public static class EmailConfirmationTokenClient
             VerifyEmailConfirmationTokenApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = EmailConfirmationTokenTestRoutes.GetRoute(request);
+            var route = EmailConfirmationTokenRouteFactory.GetRoute(request);
 
             return await httpClient
                 .PutAsync(route, null, cancellationToken);

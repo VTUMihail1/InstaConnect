@@ -1,17 +1,17 @@
 ﻿using InstaConnect.Common.Domain.Features.Common.Extensions;
 
-namespace InstaConnect.Chats.Presentation.Tests.Features.Chats.Utilities;
+namespace InstaConnect.Chats.Presentation.Features.Chats.Utilities;
 
-public static class ChatTestRoutes
+public static class ChatRouteFactory
 {
-    private static string GetCurrentDefault()
+    public static string GetCurrentDefault()
     {
         const string Route = "api/v1/participants/current/chats";
 
         return Route;
     }
 
-    private static string GetId(string participantTwoId)
+    public static string GetId(string participantTwoId)
     {
         const string Format = "{0}/{1}";
 

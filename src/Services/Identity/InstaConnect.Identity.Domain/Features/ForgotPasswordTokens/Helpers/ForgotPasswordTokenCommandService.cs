@@ -13,6 +13,7 @@ internal class ForgotPasswordTokenCommandService : IForgotPasswordTokenCommandSe
     private readonly IDateTimeProvider _dateTimeProvider;
     private readonly IUserIncludeBuilderFactory _includeQueryBuilderFactory;
     private readonly IForgotPasswordTokenFactory _forgotPasswordTokenFactory;
+    private readonly IForgotPasswordTokenEmailSender _forgotPasswordTokenEmailSender;
     private readonly IForgotPasswordTokenCommandRepository _forgotPasswordTokenRepository;
 
     public ForgotPasswordTokenCommandService(
@@ -23,6 +24,7 @@ internal class ForgotPasswordTokenCommandService : IForgotPasswordTokenCommandSe
         IDateTimeProvider dateTimeProvider,
         IUserIncludeBuilderFactory includeQueryBuilderFactory,
         IForgotPasswordTokenFactory forgotPasswordTokenFactory,
+        IForgotPasswordTokenEmailSender forgotPasswordTokenEmailSender,
         IForgotPasswordTokenCommandRepository forgotPasswordTokenRepository)
     {
         _mapper = mapper;
@@ -32,6 +34,7 @@ internal class ForgotPasswordTokenCommandService : IForgotPasswordTokenCommandSe
         _dateTimeProvider = dateTimeProvider;
         _includeQueryBuilderFactory = includeQueryBuilderFactory;
         _forgotPasswordTokenFactory = forgotPasswordTokenFactory;
+        _forgotPasswordTokenEmailSender = forgotPasswordTokenEmailSender;
         _forgotPasswordTokenRepository = forgotPasswordTokenRepository;
     }
 
@@ -49,6 +52,8 @@ internal class ForgotPasswordTokenCommandService : IForgotPasswordTokenCommandSe
 
         await _eventPublisher.PublishAsync(
             _mapper.Map<ForgotPasswordTokenAddedEventRequest>(newForgotPasswordToken), cancellationToken);
+
+        await _forgotPasswordTokenEmailSender.SendAsync(newForgotPasswordToken, cancellationToken);
 
         return newForgotPasswordToken.Id;
     }

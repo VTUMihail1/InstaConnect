@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Domain.Features.Entities.Abstractions;
-
-namespace InstaConnect.Chats.Domain.Features.Chats.Models.Entities;
+﻿namespace InstaConnect.Chats.Domain.Features.Chats.Models.Entities;
 
 public class Chat : IEntityWithId<ChatId>
 {

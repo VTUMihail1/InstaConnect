@@ -1,5 +1,6 @@
 ﻿using InstaConnect.Common.Infrastructure.Features.Caching.Models;
 using InstaConnect.Common.Infrastructure.Features.Data.Models;
+using InstaConnect.Common.Infrastructure.Features.Emails.Models;
 using InstaConnect.Common.Infrastructure.Features.Events.Models;
 using InstaConnect.Common.Infrastructure.Features.Images.Models;
 using InstaConnect.Common.Infrastructure.Features.Observability.Models;
@@ -52,6 +53,17 @@ public static class WebHostBuilderExtensions
             webHostBuilder.UseSetting(
                 CloudinaryOptions.SectionName.FormatCurrentCultureSectionKey(nameof(CloudinaryOptions.ApiSecret)),
                 MockValues.CloudinaryApiSecret);
+        }
+
+        public void UpdateEmailConfiguration()
+        {
+            webHostBuilder.UseSetting(
+                EmailOptions.SectionName.FormatCurrentCultureSectionKey(nameof(EmailOptions.Sender)),
+                MockValues.EmailSender);
+
+            webHostBuilder.UseSetting(
+                EmailOptions.SectionName.FormatCurrentCultureSectionKey(nameof(EmailOptions.Password)),
+                MockValues.EmailPassword);
         }
 
         public void UpdateAccessTokenConfiguration()

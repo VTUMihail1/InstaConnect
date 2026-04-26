@@ -2,6 +2,7 @@
 using System.Net.Http.Json;
 
 using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
+using InstaConnect.Identity.Presentation.Features.Users.Utilities;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.Users.Utilities;
 
@@ -13,7 +14,7 @@ public static class UserClient
             GetAllUsersApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = UserTestRoutes.GetRoute(request);
+            var route = UserRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAuthorization(request.CurrentId)
@@ -51,7 +52,7 @@ public static class UserClient
             GetUserByIdApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = UserTestRoutes.GetRoute(request);
+            var route = UserRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAuthorization(request.CurrentId)
@@ -89,7 +90,7 @@ public static class UserClient
             GetCurrentUserByIdApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = UserTestRoutes.GetRoute(request);
+            var route = UserRouteFactory.GetRoute(request);
 
             return await httpClient
                 .GetAsync(route, cancellationToken);
@@ -99,7 +100,7 @@ public static class UserClient
             GetCurrentUserByIdApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = UserTestRoutes.GetRoute(request);
+            var route = UserRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAdminAuthorization(request.CurrentId)
@@ -155,7 +156,7 @@ public static class UserClient
             GetUserDetailsByIdApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = UserTestRoutes.GetRoute(request);
+            var route = UserRouteFactory.GetRoute(request);
 
             return await httpClient
                 .GetAsync(route, cancellationToken);
@@ -165,7 +166,7 @@ public static class UserClient
             GetUserDetailsByIdApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = UserTestRoutes.GetRoute(request);
+            var route = UserRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAuthorization(request.CurrentId)
@@ -176,7 +177,7 @@ public static class UserClient
             GetUserDetailsByIdApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = UserTestRoutes.GetRoute(request);
+            var route = UserRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAdminAuthorization(request.CurrentId)
@@ -250,7 +251,7 @@ public static class UserClient
             GetCurrentUserDetailsByIdApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = UserTestRoutes.GetRoute(request);
+            var route = UserRouteFactory.GetRoute(request);
 
             return await httpClient
                 .GetAsync(route, cancellationToken);
@@ -260,7 +261,7 @@ public static class UserClient
             GetCurrentUserDetailsByIdApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = UserTestRoutes.GetRoute(request);
+            var route = UserRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAuthorization(request.CurrentId)
@@ -316,7 +317,7 @@ public static class UserClient
             AddUserApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = UserTestRoutes.GetRoute(request);
+            var route = UserRouteFactory.GetRoute(request);
 
             return await httpClient
                 .PostAsync(route, request.Form.GetContent(), cancellationToken);
@@ -353,7 +354,7 @@ public static class UserClient
             UpdateCurrentUserApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = UserTestRoutes.GetRoute(request);
+            var route = UserRouteFactory.GetRoute(request);
 
             return await httpClient
                 .PutAsJsonAsync(route, request.Form.GetContent(), cancellationToken);
@@ -363,7 +364,7 @@ public static class UserClient
             UpdateCurrentUserApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = UserTestRoutes.GetRoute(request);
+            var route = UserRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAuthorization(request.Id)
@@ -419,7 +420,7 @@ public static class UserClient
             DeleteUserApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = UserTestRoutes.GetRoute(request);
+            var route = UserRouteFactory.GetRoute(request);
 
             return await httpClient
                 .DeleteAsync(route, cancellationToken);
@@ -429,7 +430,7 @@ public static class UserClient
             DeleteUserApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = UserTestRoutes.GetRoute(request);
+            var route = UserRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAuthorization(request.Id)
@@ -440,7 +441,7 @@ public static class UserClient
             DeleteUserApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = UserTestRoutes.GetRoute(request);
+            var route = UserRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAdminAuthorization(request.Id)
@@ -512,7 +513,7 @@ public static class UserClient
             DeleteCurrentUserApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = UserTestRoutes.GetRoute(request);
+            var route = UserRouteFactory.GetRoute(request);
 
             return await httpClient
                 .DeleteAsync(route, cancellationToken);
@@ -522,7 +523,7 @@ public static class UserClient
             DeleteCurrentUserApiRequest request,
             CancellationToken cancellationToken)
         {
-            var route = UserTestRoutes.GetRoute(request);
+            var route = UserRouteFactory.GetRoute(request);
 
             return await httpClient
                 .WithAuthorization(request.CurrentId)

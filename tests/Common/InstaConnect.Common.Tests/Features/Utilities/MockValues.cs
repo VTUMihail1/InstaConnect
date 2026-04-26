@@ -4,6 +4,10 @@ public static class MockValues
 {
     public const string MongoName = "instaconnect";
 
+    public const string EmailSender = "test";
+
+    public const string EmailPassword = "test";
+
     public const string CloudinaryCloudName = "test";
 
     public const string CloudinaryApiKey = "test";

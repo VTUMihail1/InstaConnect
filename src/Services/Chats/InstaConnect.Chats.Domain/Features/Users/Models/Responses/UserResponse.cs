@@ -1,7 +1,4 @@
-﻿using InstaConnect.Common.Domain.Features.Entities.Abstractions;
-using InstaConnect.Common.Domain.Features.ValueObjects.Models;
-
-namespace InstaConnect.Chats.Domain.Features.Users.Models.Responses;
+﻿namespace InstaConnect.Chats.Domain.Features.Users.Models.Responses;
 
 public record UserResponse(
     UserId Id,
