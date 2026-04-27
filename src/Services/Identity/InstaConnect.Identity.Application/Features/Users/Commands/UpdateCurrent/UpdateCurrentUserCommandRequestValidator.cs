@@ -27,6 +27,7 @@ public class UpdateCurrentUserCommandRequestValidator : AbstractValidator<Update
         RuleFor(r => r.Email)
             .NotEmptyWithMessage()
             .UserEmailMinLengthWithMessage()
-            .UserEmailMaxLengthWithMessage();
+            .UserEmailMaxLengthWithMessage()
+            .InvalidEmailWithMessage();
     }
 }
