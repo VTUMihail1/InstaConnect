@@ -1,8 +1,8 @@
-﻿using InstaConnect.Common.Domain.Features.Emails.Models;
+using InstaConnect.Common.Domain.Features.Emails.Models;
 
 namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Abstractions;
 
 public interface IForgotPasswordTokenSendEmailRequestFactory
 {
-    SendEmailRequest Get(ForgotPasswordToken forgotPasswordToken);
+    Task<SendEmailRequest> GetAsync(ForgotPasswordToken forgotPasswordToken, CancellationToken cancellationToken);
 }

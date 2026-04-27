@@ -7,18 +7,6 @@ public static class ChatValidationExceptionAssertions
 {
     extension(IApplicationSender sender)
     {
-        public async Task ShouldThrowInvalidValidationExceptionForParticipantTwoIdAsync(
-            IStringMessageTransformer messageTransformer,
-            GetChatByIdQueryRequest request,
-            CancellationToken cancellationToken)
-        {
-            await sender.ShouldThrowInvalidValidationExceptionAsync<GetChatByIdQueryRequest, string, GetChatByIdQueryResponse>(
-                p => p.ParticipantTwoId,
-                messageTransformer,
-                request,
-                cancellationToken);
-        }
-
         public async Task ShouldThrowInvalidValidationExceptionForParticipantOneIdAsync(
             IStringMessageTransformer messageTransformer,
             AddChatCommandRequest request,
@@ -26,6 +14,18 @@ public static class ChatValidationExceptionAssertions
         {
             await sender.ShouldThrowInvalidValidationExceptionAsync<AddChatCommandRequest, string, AddChatCommandResponse>(
                 p => p.ParticipantOneId,
+                messageTransformer,
+                request,
+                cancellationToken);
+        }
+
+        public async Task ShouldThrowInvalidValidationExceptionForParticipantTwoIdAsync(
+            IStringMessageTransformer messageTransformer,
+            GetChatByIdQueryRequest request,
+            CancellationToken cancellationToken)
+        {
+            await sender.ShouldThrowInvalidValidationExceptionAsync<GetChatByIdQueryRequest, string, GetChatByIdQueryResponse>(
+                p => p.ParticipantTwoId,
                 messageTransformer,
                 request,
                 cancellationToken);

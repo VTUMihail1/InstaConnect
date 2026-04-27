@@ -43,6 +43,30 @@ public static class UserValidationExceptionAssertions
                 cancellationToken);
         }
 
+        public async Task ShouldThrowInvalidValidationExceptionForIdAsync(
+            IStringMessageTransformer messageTransformer,
+            GetUserByIdQueryRequest request,
+            CancellationToken cancellationToken)
+        {
+            await sender.ShouldThrowInvalidValidationExceptionAsync<GetUserByIdQueryRequest, string, GetUserByIdQueryResponse>(
+                p => p.Id,
+                messageTransformer,
+                request,
+                cancellationToken);
+        }
+
+        public async Task ShouldThrowInvalidValidationExceptionForIdAsync(
+            IStringMessageTransformer messageTransformer,
+            GetUserDetailsByIdQueryRequest request,
+            CancellationToken cancellationToken)
+        {
+            await sender.ShouldThrowInvalidValidationExceptionAsync<GetUserDetailsByIdQueryRequest, string, GetUserDetailsByIdQueryResponse>(
+                p => p.Id,
+                messageTransformer,
+                request,
+                cancellationToken);
+        }
+
         public async Task ShouldThrowInvalidValidationExceptionForNameAsync(
             IStringMessageTransformer messageTransformer,
             UpdateCurrentUserCommandRequest request,
@@ -61,6 +85,18 @@ public static class UserValidationExceptionAssertions
             CancellationToken cancellationToken)
         {
             await sender.ShouldThrowInvalidValidationExceptionAsync<AddUserCommandRequest, string, AddUserCommandResponse>(
+                p => p.Name,
+                messageTransformer,
+                request,
+                cancellationToken);
+        }
+
+        public async Task ShouldThrowInvalidValidationExceptionForNameAsync(
+            IStringMessageTransformer messageTransformer,
+            GetAllUsersQueryRequest request,
+            CancellationToken cancellationToken)
+        {
+            await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllUsersQueryRequest, string, GetAllUsersQueryResponse>(
                 p => p.Name,
                 messageTransformer,
                 request,
@@ -85,6 +121,18 @@ public static class UserValidationExceptionAssertions
             CancellationToken cancellationToken)
         {
             await sender.ShouldThrowInvalidValidationExceptionAsync<AddUserCommandRequest, string, AddUserCommandResponse>(
+                p => p.FirstName,
+                messageTransformer,
+                request,
+                cancellationToken);
+        }
+
+        public async Task ShouldThrowInvalidValidationExceptionForFirstNameAsync(
+            IStringMessageTransformer messageTransformer,
+            GetAllUsersQueryRequest request,
+            CancellationToken cancellationToken)
+        {
+            await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllUsersQueryRequest, string, GetAllUsersQueryResponse>(
                 p => p.FirstName,
                 messageTransformer,
                 request,
@@ -109,6 +157,18 @@ public static class UserValidationExceptionAssertions
             CancellationToken cancellationToken)
         {
             await sender.ShouldThrowInvalidValidationExceptionAsync<AddUserCommandRequest, string, AddUserCommandResponse>(
+                p => p.LastName,
+                messageTransformer,
+                request,
+                cancellationToken);
+        }
+
+        public async Task ShouldThrowInvalidValidationExceptionForLastNameAsync(
+            IStringMessageTransformer messageTransformer,
+            GetAllUsersQueryRequest request,
+            CancellationToken cancellationToken)
+        {
+            await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllUsersQueryRequest, string, GetAllUsersQueryResponse>(
                 p => p.LastName,
                 messageTransformer,
                 request,
@@ -158,30 +218,6 @@ public static class UserValidationExceptionAssertions
         {
             await sender.ShouldThrowInvalidValidationExceptionAsync<AddUserCommandRequest, string, AddUserCommandResponse>(
                 p => p.ConfirmPassword,
-                messageTransformer,
-                request,
-                cancellationToken);
-        }
-
-        public async Task ShouldThrowInvalidValidationExceptionForIdAsync(
-            IStringMessageTransformer messageTransformer,
-            GetUserByIdQueryRequest request,
-            CancellationToken cancellationToken)
-        {
-            await sender.ShouldThrowInvalidValidationExceptionAsync<GetUserByIdQueryRequest, string, GetUserByIdQueryResponse>(
-                p => p.Id,
-                messageTransformer,
-                request,
-                cancellationToken);
-        }
-
-        public async Task ShouldThrowInvalidValidationExceptionForIdAsync(
-            IStringMessageTransformer messageTransformer,
-            GetUserDetailsByIdQueryRequest request,
-            CancellationToken cancellationToken)
-        {
-            await sender.ShouldThrowInvalidValidationExceptionAsync<GetUserDetailsByIdQueryRequest, string, GetUserDetailsByIdQueryResponse>(
-                p => p.Id,
                 messageTransformer,
                 request,
                 cancellationToken);
@@ -242,42 +278,6 @@ public static class UserValidationExceptionAssertions
         {
             await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllUsersQueryRequest, string, GetAllUsersQueryResponse>(
                 p => p.CurrentId,
-                messageTransformer,
-                request,
-                cancellationToken);
-        }
-
-        public async Task ShouldThrowInvalidValidationExceptionForNameAsync(
-            IStringMessageTransformer messageTransformer,
-            GetAllUsersQueryRequest request,
-            CancellationToken cancellationToken)
-        {
-            await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllUsersQueryRequest, string, GetAllUsersQueryResponse>(
-                p => p.Name,
-                messageTransformer,
-                request,
-                cancellationToken);
-        }
-
-        public async Task ShouldThrowInvalidValidationExceptionForFirstNameAsync(
-            IStringMessageTransformer messageTransformer,
-            GetAllUsersQueryRequest request,
-            CancellationToken cancellationToken)
-        {
-            await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllUsersQueryRequest, string, GetAllUsersQueryResponse>(
-                p => p.FirstName,
-                messageTransformer,
-                request,
-                cancellationToken);
-        }
-
-        public async Task ShouldThrowInvalidValidationExceptionForLastNameAsync(
-            IStringMessageTransformer messageTransformer,
-            GetAllUsersQueryRequest request,
-            CancellationToken cancellationToken)
-        {
-            await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllUsersQueryRequest, string, GetAllUsersQueryResponse>(
-                p => p.LastName,
                 messageTransformer,
                 request,
                 cancellationToken);

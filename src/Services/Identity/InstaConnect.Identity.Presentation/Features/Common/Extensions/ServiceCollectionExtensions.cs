@@ -4,6 +4,7 @@ using InstaConnect.Common.Presentation.Features.Common.Extensions;
 using InstaConnect.Common.Presentation.Features.Common.Models;
 using InstaConnect.Common.Presentation.Features.Controllers.Extensions;
 using InstaConnect.Common.Presentation.Features.ExceptionHandling.Extensions;
+using InstaConnect.Common.Presentation.Features.Emails.Extensions;
 using InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Extensions;
 using InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Extensions;
 using InstaConnect.Identity.Presentation.Features.RefreshTokens.Extensions;
@@ -18,6 +19,8 @@ internal static class ServiceCollectionExtensions
     {
         public IServiceCollection AddPresentation(IConfiguration configuration)
         {
+            const string RootNamespace = "InstaConnect.Identity.Presentation";
+
             serviceCollection
                 .AddUserServices()
                 .AddUserClaimServices()
@@ -33,6 +36,7 @@ internal static class ServiceCollectionExtensions
                 .AddAuthorizationPolicies()
                 .AddCorsPolicies(configuration)
                 .AddRateLimiterPolicies()
+                .AddRazorEmailRenderer(IdentityPresentationReference.Assembly, RootNamespace)
                 .AddExceptionHandler();
 
             serviceCollection.AddEndpointsApiExplorer();

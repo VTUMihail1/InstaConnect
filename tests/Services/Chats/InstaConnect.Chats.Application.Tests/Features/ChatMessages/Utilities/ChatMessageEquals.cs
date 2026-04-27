@@ -148,15 +148,15 @@ public static class ChatMessageEquals
                    chatMessage.Content == request.Content;
         }
 
-        public bool MatchesInverted(AddChatMessageCommandRequest request)
-        {
-            return chatMessage.Id.Id.Matches(request.ParticipantTwoId, request.ParticipantOneId) &&
-                   chatMessage.Content == request.Content;
-        }
-
         public bool Matches(UpdateChatMessageCommandRequest request)
         {
             return chatMessage.Id.Matches(request.ParticipantOneId, request.ParticipantTwoId, request.MessageId) &&
+                   chatMessage.Content == request.Content;
+        }
+
+        public bool MatchesInverted(AddChatMessageCommandRequest request)
+        {
+            return chatMessage.Id.Id.Matches(request.ParticipantTwoId, request.ParticipantOneId) &&
                    chatMessage.Content == request.Content;
         }
 

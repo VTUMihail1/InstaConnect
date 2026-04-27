@@ -19,18 +19,6 @@ public static class ChatMessageValidationExceptionAssertions
                 cancellationToken);
         }
 
-        public async Task ShouldThrowInvalidValidationExceptionForParticipantTwoIdAsync(
-        IStringMessageTransformer messageTransformer,
-        AddChatMessageCommandRequest request,
-        CancellationToken cancellationToken)
-        {
-            await sender.ShouldThrowInvalidValidationExceptionAsync<AddChatMessageCommandRequest, string, AddChatMessageCommandResponse>(
-                p => p.ParticipantTwoId,
-                messageTransformer,
-                request,
-                cancellationToken);
-        }
-
         public async Task ShouldThrowInvalidValidationExceptionForParticipantOneIdAsync(
         IStringMessageTransformer messageTransformer,
         UpdateChatMessageCommandRequest request,
@@ -38,18 +26,6 @@ public static class ChatMessageValidationExceptionAssertions
         {
             await sender.ShouldThrowInvalidValidationExceptionAsync<UpdateChatMessageCommandRequest, string, UpdateChatMessageCommandResponse>(
                 p => p.ParticipantOneId,
-                messageTransformer,
-                request,
-                cancellationToken);
-        }
-
-        public async Task ShouldThrowInvalidValidationExceptionForParticipantTwoIdAsync(
-        IStringMessageTransformer messageTransformer,
-        UpdateChatMessageCommandRequest request,
-        CancellationToken cancellationToken)
-        {
-            await sender.ShouldThrowInvalidValidationExceptionAsync<UpdateChatMessageCommandRequest, string, UpdateChatMessageCommandResponse>(
-                p => p.ParticipantTwoId,
                 messageTransformer,
                 request,
                 cancellationToken);
@@ -62,6 +38,30 @@ public static class ChatMessageValidationExceptionAssertions
         {
             await sender.ShouldThrowInvalidValidationExceptionAsync(
                 p => p.ParticipantOneId,
+                messageTransformer,
+                request,
+                cancellationToken);
+        }
+
+        public async Task ShouldThrowInvalidValidationExceptionForParticipantTwoIdAsync(
+        IStringMessageTransformer messageTransformer,
+        AddChatMessageCommandRequest request,
+        CancellationToken cancellationToken)
+        {
+            await sender.ShouldThrowInvalidValidationExceptionAsync<AddChatMessageCommandRequest, string, AddChatMessageCommandResponse>(
+                p => p.ParticipantTwoId,
+                messageTransformer,
+                request,
+                cancellationToken);
+        }
+
+        public async Task ShouldThrowInvalidValidationExceptionForParticipantTwoIdAsync(
+        IStringMessageTransformer messageTransformer,
+        UpdateChatMessageCommandRequest request,
+        CancellationToken cancellationToken)
+        {
+            await sender.ShouldThrowInvalidValidationExceptionAsync<UpdateChatMessageCommandRequest, string, UpdateChatMessageCommandResponse>(
+                p => p.ParticipantTwoId,
                 messageTransformer,
                 request,
                 cancellationToken);

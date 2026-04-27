@@ -162,15 +162,15 @@ public static class ChatMessageEquals
                    chatMessage.Content == request.Body.Content;
         }
 
-        public bool MatchesInverted(AddChatMessageApiRequest request)
-        {
-            return chatMessage.Id.Id.Matches(request.ParticipantTwoId, request.ParticipantOneId) &&
-                   chatMessage.Content == request.Body.Content;
-        }
-
         public bool Matches(UpdateChatMessageApiRequest request)
         {
             return chatMessage.Id.Matches(request.ParticipantOneId, request.ParticipantTwoId, request.MessageId) &&
+                   chatMessage.Content == request.Body.Content;
+        }
+
+        public bool MatchesInverted(AddChatMessageApiRequest request)
+        {
+            return chatMessage.Id.Id.Matches(request.ParticipantTwoId, request.ParticipantOneId) &&
                    chatMessage.Content == request.Body.Content;
         }
 

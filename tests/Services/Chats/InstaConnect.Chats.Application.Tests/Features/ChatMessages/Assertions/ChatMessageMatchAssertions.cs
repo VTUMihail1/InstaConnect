@@ -64,14 +64,14 @@ public static class ChatMessageMatchAssertions
             chatMessage.ShouldSatisfy(p => p.Matches(request));
         }
 
-        public void ShouldSatisfyInverted(AddChatMessageCommandRequest request)
-        {
-            chatMessage.ShouldSatisfy(p => p.MatchesInverted(request));
-        }
-
         public void ShouldSatisfy(UpdateChatMessageCommandRequest request)
         {
             chatMessage.ShouldSatisfy(p => p.Matches(request));
+        }
+
+        public void ShouldSatisfyInverted(AddChatMessageCommandRequest request)
+        {
+            chatMessage.ShouldSatisfy(p => p.MatchesInverted(request));
         }
 
         public void ShouldSatisfyInverted(UpdateChatMessageCommandRequest request)

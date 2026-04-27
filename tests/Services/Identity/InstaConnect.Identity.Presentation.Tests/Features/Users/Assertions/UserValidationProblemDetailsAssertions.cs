@@ -10,7 +10,7 @@ public static class UserValidationProblemDetailsAssertions
     {
         public void ShouldSatisfyInvalidValidationForId(
             IStringMessageTransformer messageTransformer,
-            UpdateCurrentUserApiRequest request)
+            DeleteUserApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.Id,
@@ -18,49 +18,9 @@ public static class UserValidationProblemDetailsAssertions
                 request);
         }
 
-        public void ShouldSatisfyInvalidValidationForFirstName(
-            IStringMessageTransformer messageTransformer,
-            UpdateCurrentUserApiRequest request)
-        {
-            problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.Form.FirstName,
-                messageTransformer,
-                request);
-        }
-
-        public void ShouldSatisfyInvalidValidationForLastName(
-            IStringMessageTransformer messageTransformer,
-            UpdateCurrentUserApiRequest request)
-        {
-            problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.Form.LastName,
-                messageTransformer,
-                request);
-        }
-
-        public void ShouldSatisfyInvalidValidationForName(
-            IStringMessageTransformer messageTransformer,
-            UpdateCurrentUserApiRequest request)
-        {
-            problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.Form.Name,
-                messageTransformer,
-                request);
-        }
-
-        public void ShouldSatisfyInvalidValidationForEmail(
-            IStringMessageTransformer messageTransformer,
-            UpdateCurrentUserApiRequest request)
-        {
-            problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.Form.Email,
-                messageTransformer,
-                request);
-        }
-
         public void ShouldSatisfyInvalidValidationForId(
             IStringMessageTransformer messageTransformer,
-            DeleteUserApiRequest request)
+            UpdateCurrentUserApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.Id,
@@ -88,6 +48,16 @@ public static class UserValidationProblemDetailsAssertions
                 request);
         }
 
+        public void ShouldSatisfyInvalidValidationForId(
+            IStringMessageTransformer messageTransformer,
+            GetUserDetailsByIdApiRequest request)
+        {
+            problemDetails.ShouldSatisfyInvalidValidation(
+                p => p.Id,
+                messageTransformer,
+                request);
+        }
+
         public void ShouldSatisfyInvalidValidationForCurrentId(
             IStringMessageTransformer messageTransformer,
             GetUserByIdApiRequest request)
@@ -104,16 +74,6 @@ public static class UserValidationProblemDetailsAssertions
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.CurrentId,
-                messageTransformer,
-                request);
-        }
-
-        public void ShouldSatisfyInvalidValidationForId(
-            IStringMessageTransformer messageTransformer,
-            GetUserDetailsByIdApiRequest request)
-        {
-            problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.Id,
                 messageTransformer,
                 request);
         }
@@ -138,12 +98,42 @@ public static class UserValidationProblemDetailsAssertions
                 request);
         }
 
+        public void ShouldSatisfyInvalidValidationForCurrentId(
+            IStringMessageTransformer messageTransformer,
+            GetAllUsersApiRequest request)
+        {
+            problemDetails.ShouldSatisfyInvalidValidation(
+                p => p.CurrentId,
+                messageTransformer,
+                request);
+        }
+
         public void ShouldSatisfyInvalidValidationForFirstName(
             IStringMessageTransformer messageTransformer,
             AddUserApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.Form.FirstName,
+                messageTransformer,
+                request);
+        }
+
+        public void ShouldSatisfyInvalidValidationForFirstName(
+            IStringMessageTransformer messageTransformer,
+            UpdateCurrentUserApiRequest request)
+        {
+            problemDetails.ShouldSatisfyInvalidValidation(
+                p => p.Form.FirstName,
+                messageTransformer,
+                request);
+        }
+
+        public void ShouldSatisfyInvalidValidationForFirstName(
+            IStringMessageTransformer messageTransformer,
+            GetAllUsersApiRequest request)
+        {
+            problemDetails.ShouldSatisfyInvalidValidation(
+                p => p.FirstName,
                 messageTransformer,
                 request);
         }
@@ -158,6 +148,26 @@ public static class UserValidationProblemDetailsAssertions
                 request);
         }
 
+        public void ShouldSatisfyInvalidValidationForLastName(
+            IStringMessageTransformer messageTransformer,
+            UpdateCurrentUserApiRequest request)
+        {
+            problemDetails.ShouldSatisfyInvalidValidation(
+                p => p.Form.LastName,
+                messageTransformer,
+                request);
+        }
+
+        public void ShouldSatisfyInvalidValidationForLastName(
+            IStringMessageTransformer messageTransformer,
+            GetAllUsersApiRequest request)
+        {
+            problemDetails.ShouldSatisfyInvalidValidation(
+                p => p.LastName,
+                messageTransformer,
+                request);
+        }
+
         public void ShouldSatisfyInvalidValidationForName(
             IStringMessageTransformer messageTransformer,
             AddUserApiRequest request)
@@ -168,9 +178,39 @@ public static class UserValidationProblemDetailsAssertions
                 request);
         }
 
+        public void ShouldSatisfyInvalidValidationForName(
+            IStringMessageTransformer messageTransformer,
+            UpdateCurrentUserApiRequest request)
+        {
+            problemDetails.ShouldSatisfyInvalidValidation(
+                p => p.Form.Name,
+                messageTransformer,
+                request);
+        }
+
+        public void ShouldSatisfyInvalidValidationForName(
+            IStringMessageTransformer messageTransformer,
+            GetAllUsersApiRequest request)
+        {
+            problemDetails.ShouldSatisfyInvalidValidation(
+                p => p.Name,
+                messageTransformer,
+                request);
+        }
+
         public void ShouldSatisfyInvalidValidationForEmail(
             IStringMessageTransformer messageTransformer,
             AddUserApiRequest request)
+        {
+            problemDetails.ShouldSatisfyInvalidValidation(
+                p => p.Form.Email,
+                messageTransformer,
+                request);
+        }
+
+        public void ShouldSatisfyInvalidValidationForEmail(
+            IStringMessageTransformer messageTransformer,
+            UpdateCurrentUserApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.Form.Email,
@@ -194,46 +234,6 @@ public static class UserValidationProblemDetailsAssertions
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.Form.ConfirmPassword,
-                messageTransformer,
-                request);
-        }
-
-        public void ShouldSatisfyInvalidValidationForName(
-            IStringMessageTransformer messageTransformer,
-            GetAllUsersApiRequest request)
-        {
-            problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.Name,
-                messageTransformer,
-                request);
-        }
-
-        public void ShouldSatisfyInvalidValidationForFirstName(
-            IStringMessageTransformer messageTransformer,
-            GetAllUsersApiRequest request)
-        {
-            problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.FirstName,
-                messageTransformer,
-                request);
-        }
-
-        public void ShouldSatisfyInvalidValidationForLastName(
-            IStringMessageTransformer messageTransformer,
-            GetAllUsersApiRequest request)
-        {
-            problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.LastName,
-                messageTransformer,
-                request);
-        }
-
-        public void ShouldSatisfyInvalidValidationForCurrentId(
-            IStringMessageTransformer messageTransformer,
-            GetAllUsersApiRequest request)
-        {
-            problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.CurrentId,
                 messageTransformer,
                 request);
         }

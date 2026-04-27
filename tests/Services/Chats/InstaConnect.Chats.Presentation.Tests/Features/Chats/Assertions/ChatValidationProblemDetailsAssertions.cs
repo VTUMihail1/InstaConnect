@@ -8,22 +8,22 @@ public static class ChatValidationProblemDetailsAssertions
 {
     extension(ApplicationProblemDetails problemDetails)
     {
-        public void ShouldSatisfyInvalidValidationForParticipantTwoId(
-            IStringMessageTransformer messageTransformer,
-            GetChatByIdApiRequest request)
-        {
-            problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.ParticipantTwoId,
-                messageTransformer,
-                request);
-        }
-
         public void ShouldSatisfyInvalidValidationForParticipantOneId(
             IStringMessageTransformer messageTransformer,
             AddChatApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.ParticipantOneId,
+                messageTransformer,
+                request);
+        }
+
+        public void ShouldSatisfyInvalidValidationForParticipantTwoId(
+            IStringMessageTransformer messageTransformer,
+            GetChatByIdApiRequest request)
+        {
+            problemDetails.ShouldSatisfyInvalidValidation(
+                p => p.ParticipantTwoId,
                 messageTransformer,
                 request);
         }

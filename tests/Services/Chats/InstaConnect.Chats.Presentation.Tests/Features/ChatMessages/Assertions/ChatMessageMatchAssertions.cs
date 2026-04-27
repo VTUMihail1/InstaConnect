@@ -118,14 +118,14 @@ public static class ChatMessageMatchAssertions
             chatMessage.ShouldSatisfy(p => p.Matches(request));
         }
 
-        public void ShouldSatisfyInverted(AddChatMessageApiRequest request)
-        {
-            chatMessage.ShouldSatisfy(p => p.MatchesInverted(request));
-        }
-
         public void ShouldSatisfy(UpdateChatMessageApiRequest request)
         {
             chatMessage.ShouldSatisfy(p => p.Matches(request));
+        }
+
+        public void ShouldSatisfyInverted(AddChatMessageApiRequest request)
+        {
+            chatMessage.ShouldSatisfy(p => p.MatchesInverted(request));
         }
 
         public void ShouldSatisfyInverted(UpdateChatMessageApiRequest request)

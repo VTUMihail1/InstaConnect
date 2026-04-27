@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Domain.Features.Emails.Abstractions;
+using InstaConnect.Common.Domain.Features.Emails.Abstractions;
 
 namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Helpers;
 
@@ -17,7 +17,7 @@ public class EmailConfirmationTokenEmailSender : IEmailConfirmationTokenEmailSen
 
     public async Task SendAsync(EmailConfirmationToken emailConfirmationToken, CancellationToken cancellationToken)
     {
-        var request = _emailConfirmationTokenSendEmailRequestFactory.Get(emailConfirmationToken);
+        var request = await _emailConfirmationTokenSendEmailRequestFactory.GetAsync(emailConfirmationToken, cancellationToken);
 
         await _emailSender.SendAsync(request, cancellationToken);
     }

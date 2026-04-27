@@ -18,89 +18,89 @@ public static class ChatMessageValidationProblemDetailsAssertions
                 request);
         }
 
+        public void ShouldSatisfyInvalidValidationForParticipantOneId(
+        IStringMessageTransformer messageTransformer,
+        UpdateChatMessageApiRequest request)
+        {
+            problemDetails.ShouldSatisfyInvalidValidation(
+                p => p.ParticipantOneId,
+                messageTransformer,
+                request);
+        }
+
+        public void ShouldSatisfyInvalidValidationForParticipantOneId(
+        IStringMessageTransformer messageTransformer,
+        DeleteChatMessageApiRequest request)
+        {
+            problemDetails.ShouldSatisfyInvalidValidation(
+                p => p.ParticipantOneId,
+                messageTransformer,
+                request);
+        }
+
+        public void ShouldSatisfyInvalidValidationForParticipantOneId(
+        IStringMessageTransformer messageTransformer,
+        GetChatMessageByIdApiRequest request)
+        {
+            problemDetails.ShouldSatisfyInvalidValidation(
+                p => p.CurrentUserId,
+                messageTransformer,
+                request);
+        }
+
+        public void ShouldSatisfyInvalidValidationForParticipantOneId(
+        IStringMessageTransformer messageTransformer,
+        GetAllChatMessagesApiRequest request)
+        {
+            problemDetails.ShouldSatisfyInvalidValidation(
+                p => p.CurrentUserId,
+                messageTransformer,
+                request);
+        }
+
+        public void ShouldSatisfyInvalidValidationForParticipantTwoId(
+        IStringMessageTransformer messageTransformer,
+        UpdateChatMessageApiRequest request)
+        {
+            problemDetails.ShouldSatisfyInvalidValidation(
+                p => p.ParticipantTwoId,
+                messageTransformer,
+                request);
+        }
+
+        public void ShouldSatisfyInvalidValidationForParticipantTwoId(
+        IStringMessageTransformer messageTransformer,
+        DeleteChatMessageApiRequest request)
+        {
+            problemDetails.ShouldSatisfyInvalidValidation(
+                p => p.ParticipantTwoId,
+                messageTransformer,
+                request);
+        }
+
+        public void ShouldSatisfyInvalidValidationForParticipantTwoId(
+        IStringMessageTransformer messageTransformer,
+        GetChatMessageByIdApiRequest request)
+        {
+            problemDetails.ShouldSatisfyInvalidValidation(
+                p => p.ParticipantTwoId,
+                messageTransformer,
+                request);
+        }
+
+        public void ShouldSatisfyInvalidValidationForParticipantTwoId(
+        IStringMessageTransformer messageTransformer,
+        GetAllChatMessagesApiRequest request)
+        {
+            problemDetails.ShouldSatisfyInvalidValidation(
+                p => p.ParticipantTwoId,
+                messageTransformer,
+                request);
+        }
+
         public void ShouldSatisfyInvalidValidationForParticipantTwoId(
         IStringMessageTransformer messageTransformer,
         AddChatMessageApiRequest request)
-        {
-            problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.ParticipantTwoId,
-                messageTransformer,
-                request);
-        }
-
-        public void ShouldSatisfyInvalidValidationForParticipantOneId(
-        IStringMessageTransformer messageTransformer,
-        UpdateChatMessageApiRequest request)
-        {
-            problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.ParticipantOneId,
-                messageTransformer,
-                request);
-        }
-
-        public void ShouldSatisfyInvalidValidationForParticipantTwoId(
-        IStringMessageTransformer messageTransformer,
-        UpdateChatMessageApiRequest request)
-        {
-            problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.ParticipantTwoId,
-                messageTransformer,
-                request);
-        }
-
-        public void ShouldSatisfyInvalidValidationForParticipantOneId(
-        IStringMessageTransformer messageTransformer,
-        DeleteChatMessageApiRequest request)
-        {
-            problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.ParticipantOneId,
-                messageTransformer,
-                request);
-        }
-
-        public void ShouldSatisfyInvalidValidationForParticipantTwoId(
-        IStringMessageTransformer messageTransformer,
-        DeleteChatMessageApiRequest request)
-        {
-            problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.ParticipantTwoId,
-                messageTransformer,
-                request);
-        }
-
-        public void ShouldSatisfyInvalidValidationForParticipantOneId(
-        IStringMessageTransformer messageTransformer,
-        GetChatMessageByIdApiRequest request)
-        {
-            problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.CurrentUserId,
-                messageTransformer,
-                request);
-        }
-
-        public void ShouldSatisfyInvalidValidationForParticipantTwoId(
-        IStringMessageTransformer messageTransformer,
-        GetChatMessageByIdApiRequest request)
-        {
-            problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.ParticipantTwoId,
-                messageTransformer,
-                request);
-        }
-
-        public void ShouldSatisfyInvalidValidationForParticipantOneId(
-        IStringMessageTransformer messageTransformer,
-        GetAllChatMessagesApiRequest request)
-        {
-            problemDetails.ShouldSatisfyInvalidValidation(
-                p => p.CurrentUserId,
-                messageTransformer,
-                request);
-        }
-
-        public void ShouldSatisfyInvalidValidationForParticipantTwoId(
-        IStringMessageTransformer messageTransformer,
-        GetAllChatMessagesApiRequest request)
         {
             problemDetails.ShouldSatisfyInvalidValidation(
                 p => p.ParticipantTwoId,

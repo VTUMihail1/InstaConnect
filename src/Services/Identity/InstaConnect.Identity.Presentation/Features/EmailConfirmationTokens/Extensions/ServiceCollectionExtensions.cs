@@ -1,4 +1,7 @@
-﻿namespace InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Extensions;
+using InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Abstractions;
+using InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Helpers;
+
+namespace InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Extensions;
 
 internal static class ServiceCollectionExtensions
 {
@@ -6,6 +9,8 @@ internal static class ServiceCollectionExtensions
     {
         public IServiceCollection AddEmailConfirmationTokenServices()
         {
+            serviceCollection.AddScoped<IEmailConfirmationTokenTemplateFactory, EmailConfirmationTokenTemplateFactory>();
+
             return serviceCollection;
         }
     }
