@@ -2,5 +2,5 @@
 
 public static class ForgotPasswordTokenSubjects
 {
-    public const string Added = "Reset your password";
+    public const string Added = "Reset your InstaConnect password";
 }

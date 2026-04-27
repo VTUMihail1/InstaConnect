@@ -1,4 +1,5 @@
 ﻿using System.Net.Mail;
+using System.Text;
 
 using InstaConnect.Common.Infrastructure.Features.Emails.Abstractions;
 using InstaConnect.Common.Infrastructure.Features.Emails.Models;
@@ -18,6 +19,15 @@ internal class MailMessageFactory : IMailMessageFactory
 
     public MailMessage Get(string receiver, string subject, string template)
     {
-        return new MailMessage(_emailOptions.Sender, receiver, subject, template);
+        return new MailMessage
+        {
+            From = new MailAddress(_emailOptions.Sender),
+            To = { new MailAddress(receiver) },
+            Subject = subject,
+            Body = template,
+            IsBodyHtml = true,
+            SubjectEncoding = Encoding.UTF8,
+            BodyEncoding = Encoding.UTF8,
+        };
     }
 }

@@ -2,5 +2,5 @@
 
 public static class EmailConfirmationTokenSubjects
 {
-    public const string Added = "Please confirm your email address";
+    public const string Added = "Verify your InstaConnect account";
 }
