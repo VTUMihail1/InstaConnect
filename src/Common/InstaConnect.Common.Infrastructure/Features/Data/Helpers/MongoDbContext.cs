@@ -6,14 +6,14 @@ using MongoDB.Driver;
 
 namespace InstaConnect.Common.Infrastructure.Features.Data.Helpers;
 
-public class MongoDbContext : IMongoDbContext
+public abstract class MongoDbContext : IMongoDbContext
 {
     private readonly IMongoClient _mongoClient;
     private readonly IMongoDatabase _mongoDatabase;
 
     private IClientSessionHandle? _clientSessionHandle;
 
-    public MongoDbContext(
+    protected MongoDbContext(
         IMongoClient mongoClient,
         IMongoDatabase mongoDatabase)
     {

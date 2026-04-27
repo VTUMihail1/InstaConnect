@@ -26,7 +26,8 @@ public static partial class ServiceCollectionExtensions
             return serviceCollection;
         }
 
-        public IServiceCollection AddMongo(IConfiguration configuration)
+        public IServiceCollection AddMongo<TContext>(IConfiguration configuration)
+            where TContext : class, IMongoDbContext
         {
             const string ConventionName = "ApplicationConventionPack";
 
@@ -40,8 +41,9 @@ public static partial class ServiceCollectionExtensions
                 sp.GetRequiredService<IMongoClient>()
                   .GetDatabase(options.Name));
 
-            serviceCollection.AddScoped<IPaginator, Paginator>()
-                             .AddScoped<IMongoDbContext, MongoDbContext>();
+            serviceCollection.AddScoped<IPaginator, Paginator>();
+
+            serviceCollection.AddScoped<IMongoDbContext>(sp => sp.GetRequiredService<TContext>());
 
             var conventionPack = new ConventionPack
             {

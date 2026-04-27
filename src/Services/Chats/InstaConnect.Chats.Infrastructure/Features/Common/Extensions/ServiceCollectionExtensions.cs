@@ -2,6 +2,7 @@
 
 using InstaConnect.Chats.Infrastructure.Features.ChatMessages.Extensions;
 using InstaConnect.Chats.Infrastructure.Features.Chats.Extensions;
+using InstaConnect.Chats.Infrastructure.Features.Common.Abstractions;
 using InstaConnect.Chats.Infrastructure.Features.Common.Utilities;
 using InstaConnect.Chats.Infrastructure.Features.Users.Extensions;
 using InstaConnect.Common.Domain.Features.Mappers.Extensions;
@@ -28,7 +29,7 @@ public static class ServiceCollectionExtensions
                 .AddOpenTelemetry(configuration, webHostEnvironment)
                 .AddMapper(ChatsInfrastructureReference.Assembly, CommonInfrastructureReference.Assembly)
                 .AddServicesWithMatchingInterfaces(ChatsInfrastructureReference.Assembly)
-                .AddMongo(configuration)
+                .AddMongo<IChatsContext>(configuration)
                 .AddUnitOfWork()
                 .AddRabbitMQ(configuration, ChatsEventHandlerUtilities.Prefix, presentationAssembly)
                 .AddJwtBearer(configuration)
