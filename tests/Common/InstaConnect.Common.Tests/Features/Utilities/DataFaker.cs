@@ -54,9 +54,14 @@ public abstract class DataFaker
         return _faker.Internet.Url();
     }
 
-    public static string GetEmail()
+    public static string GetEmail(int maxLength, int minLength = default)
     {
-        return _faker.Internet.Email();
+        const string Format = "{0}@{1}";
+
+        var name = GetAverageString(maxLength, minLength);
+        var domain = _faker.Internet.DomainName();
+
+        return Format.FormatCurrentCulture(name, domain).Substring(domain.Length - 1);
     }
 
     public static string GetString(int length = DefaultStringLength)
