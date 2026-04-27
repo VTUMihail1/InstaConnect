@@ -43,6 +43,13 @@ public static class RuleBuilderExtensions
                 .MaximumLength(maxLength)
                 .WithMessage((_, typeProperty) => CommonErrorMessages.GetMaxLength(PropertyNamePlaceholder, typeProperty.Length, maxLength));
         }
+
+        public IRuleBuilderOptions<T, string> InvalidEmailWithMessage()
+        {
+            return ruleBuilder
+                .EmailAddress()
+                .WithMessage(CommonErrorMessages.GetInvalidEmail(PropertyNamePlaceholder));
+        }
     }
 
     extension<T>(IRuleBuilder<T, int> ruleBuilder)

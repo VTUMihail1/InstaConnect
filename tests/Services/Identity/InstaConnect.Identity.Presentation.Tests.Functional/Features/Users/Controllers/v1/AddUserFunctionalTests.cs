@@ -132,6 +132,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
     [UserEmailEmptyData]
     [UserEmailTooShortData]
     [UserEmailTooLongData]
+    [UserEmailInvalidData]
     public async Task AddAsync_ShouldHaveBadRequestStatusCode_WhenEmailIsInvalid(IStringTransformer transformer)
     {
         // Arrange
@@ -149,6 +150,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
     [UserEmailEmptyWithMessageData]
     [UserEmailTooShortWithMessageData]
     [UserEmailTooLongWithMessageData]
+    [UserEmailInvalidWithMessageData]
     public async Task AddAsync_ShouldHaveBadRequestProblemDetails_WhenEmailIsInvalid(
         IStringTransformer transformer,
         IStringMessageTransformer messageTransformer)

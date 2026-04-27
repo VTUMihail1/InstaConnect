@@ -93,6 +93,7 @@ public class AddUserPresentationTests : BaseUserPresentationCommandFunctionalTes
     [UserEmailEmptyData]
     [UserEmailTooShortData]
     [UserEmailTooLongData]
+    [UserEmailInvalidData]
     public async Task PublishAsync_ShouldFaultUserAddedEvent_WhenEmailIsInvalid(
         IStringTransformer transformer)
     {
@@ -328,6 +329,7 @@ public class AddUserPresentationTests : BaseUserPresentationCommandFunctionalTes
     [UserEmailEmptyData]
     [UserEmailTooShortData]
     [UserEmailTooLongData]
+    [UserEmailInvalidData]
     public async Task PublishAsync_ShouldNotAddUser_WhenEmailIsInvalid(
         IStringTransformer transformer)
     {

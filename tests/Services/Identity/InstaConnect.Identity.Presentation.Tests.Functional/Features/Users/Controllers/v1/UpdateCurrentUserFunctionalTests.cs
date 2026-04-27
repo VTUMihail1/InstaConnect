@@ -185,6 +185,7 @@ public class UpdateCurrentUserFunctionalTests : BaseUserPresentationCommandFunct
     [UserEmailEmptyData]
     [UserEmailTooShortData]
     [UserEmailTooLongData]
+    [UserEmailInvalidData]
     public async Task UpdateCurrentAsync_ShouldHaveBadRequestStatusCode_WhenEmailIsInvalid(
         IStringTransformer transformer)
     {
@@ -203,6 +204,7 @@ public class UpdateCurrentUserFunctionalTests : BaseUserPresentationCommandFunct
     [UserEmailEmptyWithMessageData]
     [UserEmailTooShortWithMessageData]
     [UserEmailTooLongWithMessageData]
+    [UserEmailInvalidWithMessageData]
     public async Task UpdateCurrentAsync_ShouldHaveBadRequestProblemDetails_WhenEmailIsInvalid(
         IStringTransformer transformer,
         IStringMessageTransformer messageTransformer)

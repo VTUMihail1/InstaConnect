@@ -41,7 +41,7 @@ public static class UserDataFaker
 
     public static string GetEmail()
     {
-        return DataFaker.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength);
+        return DataFaker.GetEmail();
     }
 
     public static string GetEmailWithPrefix(string email)

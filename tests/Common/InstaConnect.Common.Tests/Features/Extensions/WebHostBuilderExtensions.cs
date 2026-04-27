@@ -58,8 +58,20 @@ public static class WebHostBuilderExtensions
         public void UpdateEmailConfiguration()
         {
             webHostBuilder.UseSetting(
+                EmailOptions.SectionName.FormatCurrentCultureSectionKey(nameof(EmailOptions.SmtpServer)),
+                MockValues.EmailSmtpServer);
+
+            webHostBuilder.UseSetting(
+                EmailOptions.SectionName.FormatCurrentCultureSectionKey(nameof(EmailOptions.Port)),
+                MockValues.EmailPort);
+
+            webHostBuilder.UseSetting(
                 EmailOptions.SectionName.FormatCurrentCultureSectionKey(nameof(EmailOptions.Sender)),
                 MockValues.EmailSender);
+
+            webHostBuilder.UseSetting(
+                EmailOptions.SectionName.FormatCurrentCultureSectionKey(nameof(EmailOptions.Username)),
+                MockValues.EmailUsername);
 
             webHostBuilder.UseSetting(
                 EmailOptions.SectionName.FormatCurrentCultureSectionKey(nameof(EmailOptions.Password)),

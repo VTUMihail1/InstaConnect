@@ -66,6 +66,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
     [UserEmailEmptyWithMessageData]
     [UserEmailTooShortWithMessageData]
     [UserEmailTooLongWithMessageData]
+    [UserEmailInvalidWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenEmailIsInvalid(
         IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {

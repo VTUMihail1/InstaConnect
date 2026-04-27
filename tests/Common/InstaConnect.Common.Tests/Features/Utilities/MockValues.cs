@@ -3,8 +3,14 @@
 public static class MockValues
 {
     public const string MongoName = "instaconnect";
+    
+    public const string EmailSmtpServer = "test";
+
+    public const string EmailPort = "50";
 
     public const string EmailSender = "test";
+
+    public const string EmailUsername = "test";
 
     public const string EmailPassword = "test";
 

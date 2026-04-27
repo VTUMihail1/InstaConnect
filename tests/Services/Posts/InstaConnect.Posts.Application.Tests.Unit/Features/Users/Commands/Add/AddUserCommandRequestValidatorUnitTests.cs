@@ -94,6 +94,7 @@ public class AddUserCommandRequestValidatorUnitTests : BaseUserApplicationComman
     [UserEmailEmptyWithMessageData]
     [UserEmailTooShortWithMessageData]
     [UserEmailTooLongWithMessageData]
+    [UserEmailInvalidWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenEmailIsInvalid(
         IStringTransformer transformer, IStringMessageTransformer messageTransformer)
     {

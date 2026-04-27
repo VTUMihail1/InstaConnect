@@ -45,4 +45,11 @@ public static class CommonErrorMessages
 
         return Format.FormatCurrentCulture(propertyName, value, maxValue);
     }
+
+    public static string GetInvalidEmail(string propertyName)
+    {
+        const string Format = "{0} is not a valid email address.";
+
+        return Format.FormatCurrentCulture(propertyName);
+    }
 }

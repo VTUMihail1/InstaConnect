@@ -98,6 +98,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
     [UserEmailEmptyData]
     [UserEmailTooShortData]
     [UserEmailTooLongData]
+    [UserEmailInvalidData]
     public async Task PublishAsync_ShouldFaultUserUpdatedEvent_WhenEmailIsInvalid(
         IStringTransformer transformer)
     {
@@ -303,6 +304,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
     [UserEmailEmptyData]
     [UserEmailTooShortData]
     [UserEmailTooLongData]
+    [UserEmailInvalidData]
     public async Task PublishAsync_ShouldNotUpdateUser_WhenEmailIsInvalid(
         IStringTransformer transformer)
     {

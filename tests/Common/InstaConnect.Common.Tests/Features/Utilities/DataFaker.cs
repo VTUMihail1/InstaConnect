@@ -54,6 +54,11 @@ public abstract class DataFaker
         return _faker.Internet.Url();
     }
 
+    public static string GetEmail()
+    {
+        return _faker.Internet.Email();
+    }
+
     public static string GetString(int length = DefaultStringLength)
     {
         return _faker.Random.AlphaNumeric(length);

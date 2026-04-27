@@ -22,7 +22,8 @@ public class AddUserCommandRequestValidator : AbstractValidator<AddUserCommandRe
         RuleFor(r => r.Email)
             .NotEmptyWithMessage()
             .UserEmailMinLengthWithMessage()
-            .UserEmailMaxLengthWithMessage();
+            .UserEmailMaxLengthWithMessage()
+            .InvalidEmailWithMessage();
 
         RuleFor(r => r.Password)
             .NotEmptyWithMessage()
