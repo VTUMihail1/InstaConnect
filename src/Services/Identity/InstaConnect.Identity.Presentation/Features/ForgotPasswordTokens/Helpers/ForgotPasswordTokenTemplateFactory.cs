@@ -1,6 +1,5 @@
 using InstaConnect.Common.Presentation.Features.Emails.Abstractions;
 using InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Abstractions;
-using InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Models;
 
 namespace InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Helpers;
 
@@ -17,6 +16,6 @@ internal class ForgotPasswordTokenTemplateFactory : IForgotPasswordTokenTemplate
     {
         const string TemplateKey = "Features.ForgotPasswordTokens.Views.Added";
 
-         return await _renderer.RenderAsync(TemplateKey, request, cancellationToken);
+        return await _renderer.RenderAsync(TemplateKey, request, cancellationToken);
     }
 }

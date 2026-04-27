@@ -1,6 +1,5 @@
 using InstaConnect.Common.Presentation.Features.Emails.Abstractions;
 using InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Abstractions;
-using InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Models;
 
 namespace InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Helpers;
 

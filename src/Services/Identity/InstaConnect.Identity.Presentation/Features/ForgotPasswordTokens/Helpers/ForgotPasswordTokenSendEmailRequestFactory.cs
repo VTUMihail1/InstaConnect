@@ -1,7 +1,6 @@
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Domain.Features.Emails.Models;
 using InstaConnect.Common.Presentation.Features.Common.Models;
-using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entities;
 using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Abstractions;
 using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entities;
 using InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Abstractions;

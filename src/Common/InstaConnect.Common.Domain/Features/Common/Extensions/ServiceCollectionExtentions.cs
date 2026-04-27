@@ -2,7 +2,6 @@
 
 using InstaConnect.Common.Domain.Features.Common.Abstractions;
 
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 

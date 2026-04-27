@@ -2,7 +2,6 @@
 
 using InstaConnect.Chats.Infrastructure.Features.ChatMessages.Extensions;
 using InstaConnect.Chats.Infrastructure.Features.Chats.Extensions;
-using InstaConnect.Chats.Infrastructure.Features.Common.Abstractions;
 using InstaConnect.Chats.Infrastructure.Features.Common.Utilities;
 using InstaConnect.Chats.Infrastructure.Features.Users.Extensions;
 using InstaConnect.Common.Domain.Features.Mappers.Extensions;
