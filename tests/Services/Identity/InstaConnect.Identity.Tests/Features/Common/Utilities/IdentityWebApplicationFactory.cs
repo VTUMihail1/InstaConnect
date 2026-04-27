@@ -43,7 +43,7 @@ public class IdentityWebApplicationFactory : WebApplicationFactory<Program>, IAs
         builder.UpdateOpenTelemetryConfiguration();
         builder.UpdateCloudinaryConfiguration();
         builder.UpdateCorsConfiguration();
-        builder.UpdateEmailConfiguration();
+        builder.UpdateSendGridConfiguration();
     }
 
     public async Task InitializeAsync()

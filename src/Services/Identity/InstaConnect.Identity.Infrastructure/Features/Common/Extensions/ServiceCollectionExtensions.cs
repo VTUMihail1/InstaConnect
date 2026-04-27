@@ -36,7 +36,7 @@ public static class ServiceCollectionExtensions
             serviceCollection
                 .AddOpenTelemetry(configuration, webHostEnvironment)
                 .AddMapper(IdentityInfrastructureReference.Assembly)
-                .AddEmailSender(configuration)
+                .AddSendGrid(configuration)
                 .AddServicesWithMatchingInterfaces(IdentityInfrastructureReference.Assembly)
                 .AddRedis(configuration)
                 .AddMongo<IIdentityContext>(configuration)

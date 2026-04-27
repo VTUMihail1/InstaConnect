@@ -55,27 +55,15 @@ public static class WebHostBuilderExtensions
                 MockValues.CloudinaryApiSecret);
         }
 
-        public void UpdateEmailConfiguration()
+        public void UpdateSendGridConfiguration()
         {
             webHostBuilder.UseSetting(
-                EmailOptions.SectionName.FormatCurrentCultureSectionKey(nameof(EmailOptions.SmtpServer)),
-                MockValues.EmailSmtpServer);
+                SendGridConfiguration.SectionName.FormatCurrentCultureSectionKey(nameof(SendGridConfiguration.Sender)),
+                MockValues.SendGridSender);
 
             webHostBuilder.UseSetting(
-                EmailOptions.SectionName.FormatCurrentCultureSectionKey(nameof(EmailOptions.Port)),
-                MockValues.EmailPort);
-
-            webHostBuilder.UseSetting(
-                EmailOptions.SectionName.FormatCurrentCultureSectionKey(nameof(EmailOptions.Sender)),
-                MockValues.EmailSender);
-
-            webHostBuilder.UseSetting(
-                EmailOptions.SectionName.FormatCurrentCultureSectionKey(nameof(EmailOptions.Username)),
-                MockValues.EmailUsername);
-
-            webHostBuilder.UseSetting(
-                EmailOptions.SectionName.FormatCurrentCultureSectionKey(nameof(EmailOptions.Password)),
-                MockValues.EmailPassword);
+                SendGridConfiguration.SectionName.FormatCurrentCultureSectionKey(nameof(SendGridConfiguration.ApiKey)),
+                MockValues.SendGridApiKey);
         }
 
         public void UpdateAccessTokenConfiguration()

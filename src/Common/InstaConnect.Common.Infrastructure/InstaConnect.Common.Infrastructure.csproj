@@ -5,6 +5,7 @@
 	  <PackageReference Include="AspNetCore.HealthChecks.Redis" />
 	  <PackageReference Include="CloudinaryDotNet" />
 	  <PackageReference Include="Dapper" />
+	  <PackageReference Include="SendGrid" />
 	  <PackageReference Include="MassTransit" />
 	  <PackageReference Include="MassTransit.MongoDb" />
 	  <PackageReference Include="MassTransit.RabbitMQ" />
