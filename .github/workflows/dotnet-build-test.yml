@@ -1,0 +1,58 @@
+name: Build & Test
+
+on:
+  push:
+  pull_request:
+
+concurrency:
+  group: dotnet-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  dotnet:
+    name: Build & Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.200-preview.0.26103.119'
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: nuget-${{ runner.os }}-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: nuget-${{ runner.os }}-
+
+      - name: Restore dependencies
+        run: dotnet restore ./InstaConnect.sln
+
+      - name: Check formatting
+        run: dotnet format ./InstaConnect.sln --verify-no-changes
+
+      - name: Check for vulnerable packages
+        run: dotnet list ./InstaConnect.sln package --vulnerable --include-transitive
+
+      - name: Build solution
+        run: dotnet build ./InstaConnect.sln --configuration Release --no-restore
+
+      - name: Run tests
+        run: >
+          dotnet test ./InstaConnect.sln
+          --configuration Release
+          --no-restore
+          --no-build
+          --logger "trx"
+          --results-directory ./test-results
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results
+          path: ./test-results/*.trx
