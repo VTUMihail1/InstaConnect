@@ -15,10 +15,10 @@ public class ForgotPasswordTokenSendEmailRequestFactory : IForgotPasswordTokenSe
     private readonly IForgotPasswordTokenTemplateFactory _templateFactory;
 
     public ForgotPasswordTokenSendEmailRequestFactory(
-        IOptions<MainOptions> options,
+        IOptions<MainOptions> mainOptions,
         IForgotPasswordTokenTemplateFactory templateFactory)
     {
-        _mainOptions = options.Value;
+        _mainOptions = mainOptions.Value;
         _templateFactory = templateFactory;
     }
 

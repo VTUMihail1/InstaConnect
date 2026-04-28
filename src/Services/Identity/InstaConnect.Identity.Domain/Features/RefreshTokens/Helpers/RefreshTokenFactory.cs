@@ -13,11 +13,11 @@ internal class RefreshTokenFactory : IRefreshTokenFactory
     public RefreshTokenFactory(
         IGuidProvider guidProvider,
         IDateTimeProvider dateTimeProvider,
-        IOptions<RefreshTokenOptions> options)
+        IOptions<RefreshTokenOptions> refreshTokenOptions)
     {
         _guidProvider = guidProvider;
         _dateTimeProvider = dateTimeProvider;
-        _refreshTokenOptions = options.Value;
+        _refreshTokenOptions = refreshTokenOptions.Value;
     }
 
     public RefreshToken Create(UserId id)

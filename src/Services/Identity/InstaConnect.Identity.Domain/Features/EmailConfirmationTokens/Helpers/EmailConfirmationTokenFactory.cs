@@ -13,11 +13,11 @@ internal class EmailConfirmationTokenFactory : IEmailConfirmationTokenFactory
     public EmailConfirmationTokenFactory(
         IGuidProvider guidProvider,
         IDateTimeProvider dateTimeProvider,
-        IOptions<EmailConfirmationTokenOptions> options)
+        IOptions<EmailConfirmationTokenOptions> emailConfirmationTokenOptions)
     {
         _guidProvider = guidProvider;
         _dateTimeProvider = dateTimeProvider;
-        _emailConfirmationTokenOptions = options.Value;
+        _emailConfirmationTokenOptions = emailConfirmationTokenOptions.Value;
     }
 
     public EmailConfirmationToken Create(UserId id)

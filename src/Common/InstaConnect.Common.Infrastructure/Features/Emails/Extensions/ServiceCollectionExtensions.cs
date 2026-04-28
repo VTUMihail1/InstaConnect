@@ -15,9 +15,9 @@ public static class ServiceCollectionExtensions
     {
         public IServiceCollection AddSendGrid(IConfiguration configuration)
         {
-            serviceCollection.AddValidatedOptions<SendGridConfiguration>(SendGridConfiguration.SectionName);
+            serviceCollection.AddValidatedOptions<SendGridOptions>(SendGridOptions.SectionName);
 
-            var options = configuration.GetOptions<SendGridConfiguration>(SendGridConfiguration.SectionName);
+            var options = configuration.GetOptions<SendGridOptions>(SendGridOptions.SectionName);
 
             serviceCollection.AddSingleton<ISendGridClient>(_ => new SendGridClient(options.ApiKey));
             serviceCollection.AddScoped<IEmailSender, EmailSender>();

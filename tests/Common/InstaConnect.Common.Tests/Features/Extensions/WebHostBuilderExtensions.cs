@@ -58,11 +58,11 @@ public static class WebHostBuilderExtensions
         public void UpdateSendGridConfiguration()
         {
             webHostBuilder.UseSetting(
-                SendGridConfiguration.SectionName.FormatCurrentCultureSectionKey(nameof(SendGridConfiguration.Sender)),
+                SendGridOptions.SectionName.FormatCurrentCultureSectionKey(nameof(SendGridOptions.Sender)),
                 MockValues.SendGridSender);
 
             webHostBuilder.UseSetting(
-                SendGridConfiguration.SectionName.FormatCurrentCultureSectionKey(nameof(SendGridConfiguration.ApiKey)),
+                SendGridOptions.SectionName.FormatCurrentCultureSectionKey(nameof(SendGridOptions.ApiKey)),
                 MockValues.SendGridApiKey);
         }
 

@@ -15,10 +15,10 @@ public class EmailConfirmationTokenSendEmailRequestFactory : IEmailConfirmationT
     private readonly IEmailConfirmationTokenTemplateFactory _templateFactory;
 
     public EmailConfirmationTokenSendEmailRequestFactory(
-        IOptions<MainOptions> options,
+        IOptions<MainOptions> mainOptions,
         IEmailConfirmationTokenTemplateFactory templateFactory)
     {
-        _mainOptions = options.Value;
+        _mainOptions = mainOptions.Value;
         _templateFactory = templateFactory;
     }
 

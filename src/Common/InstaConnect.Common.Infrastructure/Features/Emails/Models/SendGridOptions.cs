@@ -4,7 +4,7 @@ using InstaConnect.Common.Domain.Features.Common.Abstractions;
 
 namespace InstaConnect.Common.Infrastructure.Features.Emails.Models;
 
-public class SendGridConfiguration : IApplicationOptions
+public class SendGridOptions : IApplicationOptions
 {
     public const string SectionName = "SendGridConfiguration";
 

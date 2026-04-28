@@ -11,19 +11,19 @@ namespace InstaConnect.Common.Infrastructure.Features.Emails.Helpers;
 
 internal class EmailSender : IEmailSender
 {
-    private readonly SendGridConfiguration _emailOptions;
+    private readonly SendGridOptions _sendGridOptions;
     private readonly ISendGridClient _sendGridClient;
 
-    public EmailSender(IOptions<SendGridConfiguration> options, ISendGridClient sendGridClient)
+    public EmailSender(IOptions<SendGridOptions> sendGridOptions, ISendGridClient sendGridClient)
     {
-        _emailOptions = options.Value;
+        _sendGridOptions = sendGridOptions.Value;
         _sendGridClient = sendGridClient;
     }
 
     public async Task SendAsync(SendEmailRequest request, CancellationToken cancellationToken)
     {
         var message = MailHelper.CreateSingleEmail(
-            new EmailAddress(_emailOptions.Sender),
+            new EmailAddress(_sendGridOptions.Sender),
             new EmailAddress(request.Receiver),
             request.Subject,
             plainTextContent: null,

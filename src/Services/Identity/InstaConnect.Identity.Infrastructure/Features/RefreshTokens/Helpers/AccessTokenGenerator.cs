@@ -15,16 +15,16 @@ internal class AccessTokenGenerator : IAccessTokenGenerator
 {
     private readonly IEncoder _encoder;
     private readonly IDateTimeProvider _dateTimeProvider;
-    private readonly AccessTokenOptions _sessionTokenOptions;
+    private readonly AccessTokenOptions _accessTokenOptions;
 
     public AccessTokenGenerator(
         IEncoder encoder,
         IDateTimeProvider dateTimeProvider,
-        IOptions<AccessTokenOptions> options)
+        IOptions<AccessTokenOptions> accessTokenOptions)
     {
         _encoder = encoder;
         _dateTimeProvider = dateTimeProvider;
-        _sessionTokenOptions = options.Value;
+        _accessTokenOptions = accessTokenOptions.Value;
     }
 
     public AccessToken Generate(User user)
@@ -37,15 +37,15 @@ internal class AccessTokenGenerator : IAccessTokenGenerator
              new(DefaultClaims.Name, user.Name.Value),
              ..user.UserClaims.Select(uc => new Claim(uc.Id.Claim.GetName(), uc.Id.Claim.GetName()))]);
 
-        var expiresAtUtc = _dateTimeProvider.GetUtcNow(_sessionTokenOptions.LifetimeSeconds);
-        var signingKey = new SymmetricSecurityKey(_encoder.GetBytesUTF8(_sessionTokenOptions.SecurityKey));
+        var expiresAtUtc = _dateTimeProvider.GetUtcNow(_accessTokenOptions.LifetimeSeconds);
+        var signingKey = new SymmetricSecurityKey(_encoder.GetBytesUTF8(_accessTokenOptions.SecurityKey));
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = claimsIdentity,
             SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha512Signature),
-            Issuer = _sessionTokenOptions.Issuer,
-            Audience = _sessionTokenOptions.Audience,
-            Expires = _dateTimeProvider.GetUtcNow(_sessionTokenOptions.LifetimeSeconds)
+            Issuer = _accessTokenOptions.Issuer,
+            Audience = _accessTokenOptions.Audience,
+            Expires = _dateTimeProvider.GetUtcNow(_accessTokenOptions.LifetimeSeconds)
         };
 
         var tokenHandler = new JwtSecurityTokenHandler();

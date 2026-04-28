@@ -13,11 +13,11 @@ internal class ForgotPasswordTokenFactory : IForgotPasswordTokenFactory
     public ForgotPasswordTokenFactory(
         IGuidProvider guidProvider,
         IDateTimeProvider dateTimeProvider,
-        IOptions<ForgotPasswordTokenOptions> options)
+        IOptions<ForgotPasswordTokenOptions> forgotPasswordTokenOptions)
     {
         _guidProvider = guidProvider;
         _dateTimeProvider = dateTimeProvider;
-        _forgotPasswordTokenOptions = options.Value;
+        _forgotPasswordTokenOptions = forgotPasswordTokenOptions.Value;
     }
 
     public ForgotPasswordToken Create(UserId id)
