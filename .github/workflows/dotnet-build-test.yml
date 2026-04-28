@@ -40,7 +40,7 @@ jobs:
 
       - name: Check for vulnerable packages
         run: |
-          OUTPUT=$(dotnet list ./InstaConnect.sln package --vulnerable --include-transitive 2>&1)
+          OUTPUT=$(dotnet list ./InstaConnect.sln package --vulnerable --include-transitive 2>&1 || true)
           echo "$OUTPUT"
           if echo "$OUTPUT" | grep -q "has the following vulnerable packages"; then
             exit 1

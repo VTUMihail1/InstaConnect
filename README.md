@@ -11,6 +11,7 @@ Before running the project, ensure you have the following installed:
 - Docker Desktop
 - Git
 - Cloudinary account
+- SendGrid account
 
 ---
 
