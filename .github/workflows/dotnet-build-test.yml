@@ -39,7 +39,12 @@ jobs:
         run: dotnet format ./InstaConnect.sln --verify-no-changes
 
       - name: Check for vulnerable packages
-        run: dotnet list ./InstaConnect.sln package --vulnerable --include-transitive
+        run: |
+          OUTPUT=$(dotnet list ./InstaConnect.sln package --vulnerable --include-transitive 2>&1)
+          echo "$OUTPUT"
+          if echo "$OUTPUT" | grep -q "has the following vulnerable packages"; then
+            exit 1
+          fi
 
       - name: Build solution
         run: dotnet build ./InstaConnect.sln --configuration Release --no-restore
