@@ -1,6 +1,6 @@
-﻿namespace InstaConnect.Posts.Domain.Features.PostComments.Models.Requests;
+namespace InstaConnect.Posts.Domain.Features.PostComments.Models.Requests;
 
 public record AddPostCommentCommand(
-    PostId Id,
-    string Content,
-    UserId UserId);
+	PostId Id,
+	string Content,
+	UserId UserId);

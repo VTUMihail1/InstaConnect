@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Messaging.Abstractions;
 using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
 using InstaConnect.Common.Presentation.Features.Controllers.Utilities;
 using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Add;
@@ -11,42 +11,42 @@ namespace InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Co
 [EnableRateLimiting(RateLimiterPolicies.Default)]
 public class EmailConfirmationTokenController : ControllerBase
 {
-    private readonly IApplicationMapper _mapper;
-    private readonly IApplicationSender _sender;
+	private readonly IApplicationMapper _mapper;
+	private readonly IApplicationSender _sender;
 
-    public EmailConfirmationTokenController(
-        IApplicationMapper mapper,
-        IApplicationSender sender)
-    {
-        _mapper = mapper;
-        _sender = sender;
-    }
+	public EmailConfirmationTokenController(
+		IApplicationMapper mapper,
+		IApplicationSender sender)
+	{
+		_mapper = mapper;
+		_sender = sender;
+	}
 
-    // POST: api/users/name/email-confirmation-tokens
-    [HttpPost(EmailConfirmationTokenRoutes.Add)]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> AddAsync(
-        AddEmailConfirmationTokenApiRequest request,
-        CancellationToken cancellationToken)
-    {
-        var commandRequest = _mapper.Map<AddEmailConfirmationTokenCommandRequest>(request);
-        await _sender.SendAsync(commandRequest, cancellationToken);
+	// POST: api/users/name/email-confirmation-tokens
+	[HttpPost(EmailConfirmationTokenRoutes.Add)]
+	[ProducesResponseType(StatusCodes.Status204NoContent)]
+	[ProducesResponseType(StatusCodes.Status400BadRequest)]
+	public async Task<ActionResult> AddAsync(
+		AddEmailConfirmationTokenApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var commandRequest = _mapper.Map<AddEmailConfirmationTokenCommandRequest>(request);
+		await _sender.SendAsync(commandRequest, cancellationToken);
 
-        return NoContent();
-    }
+		return NoContent();
+	}
 
-    // PUT: api/users/5f0f2dd0-e957-4d72-8141-767a36fc6e95/email-confirmation-tokens/Q2ZESjhBTS9wV1d6MW9KS2hVZzBWd1oydStIellLdmhPU0VaNGl5zmtkltuvbahvcxqzsdg/verify
-    [HttpPut(EmailConfirmationTokenRoutes.Verify)]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> VerifyAsync(
-        VerifyEmailConfirmationTokenApiRequest request,
-        CancellationToken cancellationToken)
-    {
-        var commandRequest = _mapper.Map<VerifyEmailConfirmationTokenCommandRequest>(request);
-        await _sender.SendAsync(commandRequest, cancellationToken);
+	// PUT: api/users/5f0f2dd0-e957-4d72-8141-767a36fc6e95/email-confirmation-tokens/Q2ZESjhBTS9wV1d6MW9KS2hVZzBWd1oydStIellLdmhPU0VaNGl5zmtkltuvbahvcxqzsdg/verify
+	[HttpPut(EmailConfirmationTokenRoutes.Verify)]
+	[ProducesResponseType(StatusCodes.Status204NoContent)]
+	[ProducesResponseType(StatusCodes.Status400BadRequest)]
+	public async Task<ActionResult> VerifyAsync(
+		VerifyEmailConfirmationTokenApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var commandRequest = _mapper.Map<VerifyEmailConfirmationTokenCommandRequest>(request);
+		await _sender.SendAsync(commandRequest, cancellationToken);
 
-        return NoContent();
-    }
+		return NoContent();
+	}
 }

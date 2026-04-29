@@ -4,40 +4,40 @@ namespace InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Builders;
 
 public class EmailConfirmationTokenBuilder
 {
-    private readonly string _id;
-    private readonly User _user;
-    private readonly string _value;
-    private DateTimeOffset _expiresAtUtc;
-    private readonly DateTimeOffset _createdAtUtc;
+	private readonly string _id;
+	private readonly User _user;
+	private readonly string _value;
+	private DateTimeOffset _expiresAtUtc;
+	private readonly DateTimeOffset _createdAtUtc;
 
-    public EmailConfirmationTokenBuilder(User user)
-    {
-        _id = user.Id.Id;
-        _user = user;
-        _value = EmailConfirmationTokenDataFaker.GetValue();
-        _expiresAtUtc = EmailConfirmationTokenDataFaker.GetExpiresAtUtc();
-        _createdAtUtc = EmailConfirmationTokenDataFaker.GetCreatedAtUtc();
-    }
+	public EmailConfirmationTokenBuilder(User user)
+	{
+		_id = user.Id.Id;
+		_user = user;
+		_value = EmailConfirmationTokenDataFaker.GetValue();
+		_expiresAtUtc = EmailConfirmationTokenDataFaker.GetExpiresAtUtc();
+		_createdAtUtc = EmailConfirmationTokenDataFaker.GetCreatedAtUtc();
+	}
 
-    public EmailConfirmationTokenBuilder WithAlreadyExpiresAtUtc()
-    {
-        _expiresAtUtc = EmailConfirmationTokenDataFaker.GetAlreadyExpiresAtUtc();
+	public EmailConfirmationTokenBuilder WithAlreadyExpiresAtUtc()
+	{
+		_expiresAtUtc = EmailConfirmationTokenDataFaker.GetAlreadyExpiresAtUtc();
 
-        return this;
-    }
+		return this;
+	}
 
-    public EmailConfirmationToken Build()
-    {
-        var emailConfirmationToken = new EmailConfirmationToken(
-            new(
-                new(_id),
-                _value),
-            _expiresAtUtc,
-            _createdAtUtc);
+	public EmailConfirmationToken Build()
+	{
+		var emailConfirmationToken = new EmailConfirmationToken(
+			new(
+				new(_id),
+				_value),
+			_expiresAtUtc,
+			_createdAtUtc);
 
-        emailConfirmationToken.AddUser(_user);
-        _user.AddEmailConfirmationToken(emailConfirmationToken);
+		emailConfirmationToken.AddUser(_user);
+		_user.AddEmailConfirmationToken(emailConfirmationToken);
 
-        return emailConfirmationToken;
-    }
+		return emailConfirmationToken;
+	}
 }

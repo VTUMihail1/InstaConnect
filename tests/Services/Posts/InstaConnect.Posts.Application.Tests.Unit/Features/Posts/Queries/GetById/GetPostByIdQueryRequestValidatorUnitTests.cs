@@ -1,78 +1,78 @@
-﻿namespace InstaConnect.Posts.Application.Tests.Unit.Features.Posts.Queries.GetById;
+namespace InstaConnect.Posts.Application.Tests.Unit.Features.Posts.Queries.GetById;
 
 public class GetPostByIdQueryRequestValidatorUnitTests : BasePostApplicationQueryUnitTest
 {
-    private readonly GetPostByIdQueryRequestBuilderFactory _requestBuilderFactory;
-    private readonly GetPostByIdQueryRequestBuilder _requestBuilder;
-    private readonly GetPostByIdQueryRequest _request;
+	private readonly GetPostByIdQueryRequestBuilderFactory _requestBuilderFactory;
+	private readonly GetPostByIdQueryRequestBuilder _requestBuilder;
+	private readonly GetPostByIdQueryRequest _request;
 
-    private readonly GetPostByIdQueryRequestValidator _requestValidator;
+	private readonly GetPostByIdQueryRequestValidator _requestValidator;
 
-    public GetPostByIdQueryRequestValidatorUnitTests()
-    {
-        _requestBuilderFactory = new();
-        _requestBuilder = _requestBuilderFactory.Create(Post);
-        _request = _requestBuilder.Build();
+	public GetPostByIdQueryRequestValidatorUnitTests()
+	{
+		_requestBuilderFactory = new();
+		_requestBuilder = _requestBuilderFactory.Create(Post);
+		_request = _requestBuilder.Build();
 
-        _requestValidator = new();
-    }
+		_requestValidator = new();
+	}
 
-    [Theory]
-    [PostIdNullWithMessageData]
-    [PostIdEmptyWithMessageData]
-    [PostIdTooShortWithMessageData]
-    [PostIdTooLongWithMessageData]
-    public void TestValidate_ShouldHaveAnError_WhenIdIsInvalid(
-        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithId(transformer).Build();
+	[Theory]
+	[PostIdNullWithMessageData]
+	[PostIdEmptyWithMessageData]
+	[PostIdTooShortWithMessageData]
+	[PostIdTooLongWithMessageData]
+	public void TestValidate_ShouldHaveAnError_WhenIdIsInvalid(
+		IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithId(transformer).Build();
 
-        // Act
-        var result = _requestValidator.TestValidate(request);
+		// Act
+		var result = _requestValidator.TestValidate(request);
 
-        // Assert
-        result.ShouldHaveValidationErrorForId(messageTransformer, request);
-    }
+		// Assert
+		result.ShouldHaveValidationErrorForId(messageTransformer, request);
+	}
 
-    [Theory]
-    [UserIdTooLongWithMessageData]
-    public void TestValidate_ShouldHaveAnError_WhenCurrentUserIdIsInvalid(
-        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+	[Theory]
+	[UserIdTooLongWithMessageData]
+	public void TestValidate_ShouldHaveAnError_WhenCurrentUserIdIsInvalid(
+		IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
-        // Act
-        var result = _requestValidator.TestValidate(request);
+		// Act
+		var result = _requestValidator.TestValidate(request);
 
-        // Assert
-        result.ShouldHaveValidationErrorForCurrentUserId(messageTransformer, request);
-    }
+		// Assert
+		result.ShouldHaveValidationErrorForCurrentUserId(messageTransformer, request);
+	}
 
-    [Theory]
-    [UserIdNullData]
-    [UserIdEmptyData]
-    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenCurrentUserIdIsValid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+	[Theory]
+	[UserIdNullData]
+	[UserIdEmptyData]
+	public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenCurrentUserIdIsValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
-        // Act
-        var result = _requestValidator.TestValidate(request);
+		// Act
+		var result = _requestValidator.TestValidate(request);
 
-        // Assert
-        result.ShouldNotHaveAnyValidationErrorProperties();
-    }
+		// Assert
+		result.ShouldNotHaveAnyValidationErrorProperties();
+	}
 
-    [Fact]
-    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenRequestIsValid()
-    {
-        // Act
-        var result = _requestValidator.TestValidate(_request);
+	[Fact]
+	public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenRequestIsValid()
+	{
+		// Act
+		var result = _requestValidator.TestValidate(_request);
 
-        // Assert
-        result.ShouldNotHaveAnyValidationErrorProperties();
-    }
+		// Assert
+		result.ShouldNotHaveAnyValidationErrorProperties();
+	}
 }

@@ -1,45 +1,45 @@
-﻿using InstaConnect.Common.Domain.Features.Common.Extensions;
+using InstaConnect.Common.Domain.Features.Common.Extensions;
 
 namespace InstaConnect.Chats.Presentation.Features.Chats.Utilities;
 
 public static class ChatRouteFactory
 {
-    public static string GetCurrentDefault()
-    {
-        const string Route = "api/v1/participants/current/chats";
+	public static string GetCurrentDefault()
+	{
+		const string Route = "api/v1/participants/current/chats";
 
-        return Route;
-    }
+		return Route;
+	}
 
-    public static string GetId(string participantTwoId)
-    {
-        const string Format = "{0}/{1}";
+	public static string GetId(string participantTwoId)
+	{
+		const string Format = "{0}/{1}";
 
-        return Format.FormatCurrentCulture(
-            GetCurrentDefault(),
-            participantTwoId);
-    }
+		return Format.FormatCurrentCulture(
+			GetCurrentDefault(),
+			participantTwoId);
+	}
 
-    public static string GetRoute(GetAllChatsApiRequest request)
-    {
-        const string Format = "{0}?participantTwoName={1}&sortOrder={2}&sortTerm={3}&page={4}&pageSize={5}";
+	public static string GetRoute(GetAllChatsApiRequest request)
+	{
+		const string Format = "{0}?participantTwoName={1}&sortOrder={2}&sortTerm={3}&page={4}&pageSize={5}";
 
-        return Format.FormatCurrentCulture(
-            GetCurrentDefault(),
-            request.ParticipantTwoName,
-            request.SortOrder,
-            request.SortTerm,
-            request.Page,
-            request.PageSize);
-    }
+		return Format.FormatCurrentCulture(
+			GetCurrentDefault(),
+			request.ParticipantTwoName,
+			request.SortOrder,
+			request.SortTerm,
+			request.Page,
+			request.PageSize);
+	}
 
-    public static string GetRoute(GetChatByIdApiRequest request)
-    {
-        return GetId(request.ParticipantTwoId);
-    }
+	public static string GetRoute(GetChatByIdApiRequest request)
+	{
+		return GetId(request.ParticipantTwoId);
+	}
 
-    public static string GetRoute(AddChatApiRequest request)
-    {
-        return GetCurrentDefault();
-    }
+	public static string GetRoute(AddChatApiRequest request)
+	{
+		return GetCurrentDefault();
+	}
 }

@@ -1,4 +1,4 @@
-﻿using InstaConnect.Chats.Presentation.Features.ChatMessages.Extensions;
+using InstaConnect.Chats.Presentation.Features.ChatMessages.Extensions;
 using InstaConnect.Chats.Presentation.Features.Chats.Extensions;
 using InstaConnect.Chats.Presentation.Features.Users.Extensions;
 using InstaConnect.Common.Domain.Features.Common.Extensions;
@@ -12,26 +12,26 @@ namespace InstaConnect.Chats.Presentation.Features.Common.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    extension(IServiceCollection serviceCollection)
-    {
-        public IServiceCollection AddPresentation(IConfiguration configuration)
-        {
-            serviceCollection
-                .AddUserServices()
-                .AddChatServices()
-                .AddChatMessageServices();
+	extension(IServiceCollection serviceCollection)
+	{
+		public IServiceCollection AddPresentation(IConfiguration configuration)
+		{
+			serviceCollection
+				.AddUserServices()
+				.AddChatServices()
+				.AddChatMessageServices();
 
-            serviceCollection
-                .AddValidatedOptions<MainOptions>(MainOptions.SectionName)
-                .AddServicesWithMatchingInterfaces(ChatsPresentationReference.Assembly)
-                .AddApiControllers()
-                .AddMapper(ChatsPresentationReference.Assembly, CommonPresentationReference.Assembly)
-                .AddAuthorizationPolicies()
-                .AddCorsPolicies(configuration)
-                .AddRateLimiterPolicies()
-                .AddExceptionHandler();
+			serviceCollection
+				.AddValidatedOptions<MainOptions>(MainOptions.SectionName)
+				.AddServicesWithMatchingInterfaces(ChatsPresentationReference.Assembly)
+				.AddApiControllers()
+				.AddMapper(ChatsPresentationReference.Assembly, CommonPresentationReference.Assembly)
+				.AddAuthorizationPolicies()
+				.AddCorsPolicies(configuration)
+				.AddRateLimiterPolicies()
+				.AddExceptionHandler();
 
-            return serviceCollection;
-        }
-    }
+			return serviceCollection;
+		}
+	}
 }

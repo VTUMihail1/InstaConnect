@@ -1,11 +1,11 @@
-﻿namespace InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Utilities;
+namespace InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Utilities;
 
 public static class ForgotPasswordTokenRoutes
 {
-    public const string Resource = "api/v{version:apiVersion}/users";
+	public const string Resource = "api/v{version:apiVersion}/users";
 
-    public const string Add = "{name}/forgot-password-tokens";
-    public const string Verify = "{id}/forgot-password-tokens/{value}/verify";
+	public const string Add = "{name}/forgot-password-tokens";
+	public const string Verify = "{id}/forgot-password-tokens/{value}/verify";
 
-    public const string Version1 = "1.0";
+	public const string Version1 = "1.0";
 }

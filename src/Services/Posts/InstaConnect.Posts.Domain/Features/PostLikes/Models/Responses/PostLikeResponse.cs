@@ -1,9 +1,9 @@
-﻿using InstaConnect.Posts.Domain.Features.Users.Models.Responses;
+using InstaConnect.Posts.Domain.Features.Users.Models.Responses;
 
 namespace InstaConnect.Posts.Domain.Features.PostLikes.Models.Responses;
 
 public record PostLikeResponse(
-        PostLikeId Id,
-        UserResponse? User,
-        PostResponse? Post,
-        DateTimeOffset CreatedAtUtc) : IEntityResponse;
+		PostLikeId Id,
+		UserResponse? User,
+		PostResponse? Post,
+		DateTimeOffset CreatedAtUtc) : IEntityResponse;

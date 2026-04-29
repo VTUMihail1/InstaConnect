@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Events.Features.Tokens.Models;
+using InstaConnect.Common.Events.Features.AccessTokens.Models;
 
 namespace InstaConnect.Identity.Domain.Features.UserClaims.Models.ValueObjects;
 

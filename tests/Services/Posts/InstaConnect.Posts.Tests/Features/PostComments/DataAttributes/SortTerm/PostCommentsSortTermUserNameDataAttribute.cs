@@ -1,11 +1,11 @@
-﻿namespace InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.SortTerm;
+namespace InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.SortTerm;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public sealed class PostCommentsSortTermUserNameDataAttribute
-    : SortEnumDataAttribute<PostCommentsSortTerm>
+	: SortEnumDataAttribute<PostCommentsSortTerm>
 {
-    public PostCommentsSortTermUserNameDataAttribute()
-        : base(PostCommentsSortTerm.ByUserName)
-    {
-    }
+	public PostCommentsSortTermUserNameDataAttribute()
+		: base(PostCommentsSortTerm.ByUserName)
+	{
+	}
 }

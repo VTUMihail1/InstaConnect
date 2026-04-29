@@ -1,8 +1,8 @@
-﻿namespace InstaConnect.Common.Application.Features.Caching.Abstractions;
+namespace InstaConnect.Common.Application.Features.Caching.Abstractions;
 
 public interface ICachable
 {
-    public string Key { get; }
+	public string Key { get; }
 
-    public int ExpirationSeconds { get; }
+	public int ExpirationSeconds { get; }
 }

@@ -1,96 +1,96 @@
-﻿namespace InstaConnect.Posts.Application.Tests.Unit.Features.PostComments.Queries.GetById;
+namespace InstaConnect.Posts.Application.Tests.Unit.Features.PostComments.Queries.GetById;
 
 public class GetPostCommentByIdQueryRequestValidatorUnitTests : BasePostCommentApplicationQueryUnitTest
 {
-    private readonly GetPostCommentByIdQueryRequestBuilderFactory _requestBuilderFactory;
-    private readonly GetPostCommentByIdQueryRequestBuilder _requestBuilder;
-    private readonly GetPostCommentByIdQueryRequest _request;
+	private readonly GetPostCommentByIdQueryRequestBuilderFactory _requestBuilderFactory;
+	private readonly GetPostCommentByIdQueryRequestBuilder _requestBuilder;
+	private readonly GetPostCommentByIdQueryRequest _request;
 
-    private readonly GetPostCommentByIdQueryRequestValidator _requestValidator;
+	private readonly GetPostCommentByIdQueryRequestValidator _requestValidator;
 
-    public GetPostCommentByIdQueryRequestValidatorUnitTests()
-    {
-        _requestBuilderFactory = new();
-        _requestBuilder = _requestBuilderFactory.Create(PostComment);
-        _request = _requestBuilder.Build();
+	public GetPostCommentByIdQueryRequestValidatorUnitTests()
+	{
+		_requestBuilderFactory = new();
+		_requestBuilder = _requestBuilderFactory.Create(PostComment);
+		_request = _requestBuilder.Build();
 
-        _requestValidator = new();
-    }
+		_requestValidator = new();
+	}
 
-    [Theory]
-    [PostIdNullWithMessageData]
-    [PostIdEmptyWithMessageData]
-    [PostIdTooShortWithMessageData]
-    [PostIdTooLongWithMessageData]
-    public void TestValidate_ShouldHaveAnError_WhenIdIsInvalid(
-        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithId(transformer).Build();
+	[Theory]
+	[PostIdNullWithMessageData]
+	[PostIdEmptyWithMessageData]
+	[PostIdTooShortWithMessageData]
+	[PostIdTooLongWithMessageData]
+	public void TestValidate_ShouldHaveAnError_WhenIdIsInvalid(
+		IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithId(transformer).Build();
 
-        // Act
-        var result = _requestValidator.TestValidate(request);
+		// Act
+		var result = _requestValidator.TestValidate(request);
 
-        // Assert
-        result.ShouldHaveValidationErrorForId(messageTransformer, request);
-    }
+		// Assert
+		result.ShouldHaveValidationErrorForId(messageTransformer, request);
+	}
 
-    [Theory]
-    [PostCommentIdNullWithMessageData]
-    [PostCommentIdEmptyWithMessageData]
-    [PostCommentIdTooShortWithMessageData]
-    [PostCommentIdTooLongWithMessageData]
-    public void TestValidate_ShouldHaveAnError_WhenCommentIdIsInvalid(
-        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithCommentId(transformer).Build();
+	[Theory]
+	[PostCommentIdNullWithMessageData]
+	[PostCommentIdEmptyWithMessageData]
+	[PostCommentIdTooShortWithMessageData]
+	[PostCommentIdTooLongWithMessageData]
+	public void TestValidate_ShouldHaveAnError_WhenCommentIdIsInvalid(
+		IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithCommentId(transformer).Build();
 
-        // Act
-        var result = _requestValidator.TestValidate(request);
+		// Act
+		var result = _requestValidator.TestValidate(request);
 
-        // Assert
-        result.ShouldHaveValidationErrorForCommentId(messageTransformer, request);
-    }
+		// Assert
+		result.ShouldHaveValidationErrorForCommentId(messageTransformer, request);
+	}
 
-    [Theory]
-    [UserIdTooLongWithMessageData]
-    public void TestValidate_ShouldHaveAnError_WhenCurrentUserIdIsInvalid(
-        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+	[Theory]
+	[UserIdTooLongWithMessageData]
+	public void TestValidate_ShouldHaveAnError_WhenCurrentUserIdIsInvalid(
+		IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
-        // Act
-        var result = _requestValidator.TestValidate(request);
+		// Act
+		var result = _requestValidator.TestValidate(request);
 
-        // Assert
-        result.ShouldHaveValidationErrorForCurrentUserId(messageTransformer, request);
-    }
+		// Assert
+		result.ShouldHaveValidationErrorForCurrentUserId(messageTransformer, request);
+	}
 
-    [Theory]
-    [UserIdNullData]
-    [UserIdEmptyData]
-    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenCurrentUserIdIsValid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+	[Theory]
+	[UserIdNullData]
+	[UserIdEmptyData]
+	public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenCurrentUserIdIsValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
-        // Act
-        var result = _requestValidator.TestValidate(request);
+		// Act
+		var result = _requestValidator.TestValidate(request);
 
-        // Assert
-        result.ShouldNotHaveAnyValidationErrorProperties();
-    }
+		// Assert
+		result.ShouldNotHaveAnyValidationErrorProperties();
+	}
 
-    [Fact]
-    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenRequestIsValid()
-    {
-        // Act
-        var result = _requestValidator.TestValidate(_request);
+	[Fact]
+	public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenRequestIsValid()
+	{
+		// Act
+		var result = _requestValidator.TestValidate(_request);
 
-        // Assert
-        result.ShouldNotHaveAnyValidationErrorProperties();
-    }
+		// Assert
+		result.ShouldNotHaveAnyValidationErrorProperties();
+	}
 }

@@ -6,9 +6,9 @@ public interface IUserIncludeDescriptorFactory
 {
 	public IdentityIncludeDescriptor CreateUserClaims();
 
-    public IdentityIncludeDescriptor CreateRefreshTokens();
+	public IdentityIncludeDescriptor CreateRefreshTokens();
 
-    public IdentityIncludeDescriptor CreateForgotPasswordTokens();
+	public IdentityIncludeDescriptor CreateForgotPasswordTokens();
 
-    public IdentityIncludeDescriptor CreateEmailConfirmationTokens();
+	public IdentityIncludeDescriptor CreateEmailConfirmationTokens();
 }

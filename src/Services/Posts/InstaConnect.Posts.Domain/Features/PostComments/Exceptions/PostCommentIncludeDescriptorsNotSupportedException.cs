@@ -1,17 +1,17 @@
-﻿using InstaConnect.Common.Domain.Features.ExceptionHandling.Exceptions;
+using InstaConnect.Common.Domain.Features.ExceptionHandling.Exceptions;
 using InstaConnect.Posts.Domain.Features.Common.Models.Requests;
 
 namespace InstaConnect.Posts.Domain.Features.PostComments.Exceptions;
 
 public class PostCommentIncludeDescriptorsNotSupportedException : BadRequestException
 {
-    public PostCommentIncludeDescriptorsNotSupportedException(ICollection<PostsIncludeDescriptor> descriptors)
-        : base(PostCommentExceptionErrorMessages.GetIncludePropertyNotSupportedMessage(descriptors))
-    {
-    }
+	public PostCommentIncludeDescriptorsNotSupportedException(ICollection<PostsIncludeDescriptor> descriptors)
+		: base(PostCommentExceptionErrorMessages.GetIncludePropertyNotSupportedMessage(descriptors))
+	{
+	}
 
-    public PostCommentIncludeDescriptorsNotSupportedException(ICollection<PostsIncludeDescriptor> descriptors, Exception exception)
-        : base(PostCommentExceptionErrorMessages.GetIncludePropertyNotSupportedMessage(descriptors), exception)
-    {
-    }
+	public PostCommentIncludeDescriptorsNotSupportedException(ICollection<PostsIncludeDescriptor> descriptors, Exception exception)
+		: base(PostCommentExceptionErrorMessages.GetIncludePropertyNotSupportedMessage(descriptors), exception)
+	{
+	}
 }

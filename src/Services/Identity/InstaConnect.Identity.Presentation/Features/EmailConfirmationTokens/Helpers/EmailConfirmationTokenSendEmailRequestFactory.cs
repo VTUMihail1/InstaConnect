@@ -11,26 +11,26 @@ namespace InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.He
 
 public class EmailConfirmationTokenSendEmailRequestFactory : IEmailConfirmationTokenSendEmailRequestFactory
 {
-    private readonly MainOptions _mainOptions;
-    private readonly IEmailConfirmationTokenTemplateFactory _templateFactory;
+	private readonly MainOptions _mainOptions;
+	private readonly IEmailConfirmationTokenTemplateFactory _templateFactory;
 
-    public EmailConfirmationTokenSendEmailRequestFactory(
-        IOptions<MainOptions> mainOptions,
-        IEmailConfirmationTokenTemplateFactory templateFactory)
-    {
-        _mainOptions = mainOptions.Value;
-        _templateFactory = templateFactory;
-    }
+	public EmailConfirmationTokenSendEmailRequestFactory(
+		IOptions<MainOptions> mainOptions,
+		IEmailConfirmationTokenTemplateFactory templateFactory)
+	{
+		_mainOptions = mainOptions.Value;
+		_templateFactory = templateFactory;
+	}
 
-    public async Task<SendEmailRequest> GetAsync(EmailConfirmationToken emailConfirmationToken, CancellationToken cancellationToken)
-    {
-        const string Subject = "Verify your InstaConnect account";
-        const string Format = "{0}/{1}";
+	public async Task<SendEmailRequest> GetAsync(EmailConfirmationToken emailConfirmationToken, CancellationToken cancellationToken)
+	{
+		const string Subject = "Verify your InstaConnect account";
+		const string Format = "{0}/{1}";
 
-        var route = EmailConfirmationTokenRouteFactory.GetDefaultIdVerify(emailConfirmationToken.Id.Id.Id, emailConfirmationToken.Id.Value);
-        var link = Format.FormatCurrentCulture(_mainOptions.BaseUrl, route);
-        var template = await _templateFactory.GetAddedAsync(new(link), cancellationToken);
+		var route = EmailConfirmationTokenRouteFactory.GetDefaultIdVerify(emailConfirmationToken.Id.Id.Id, emailConfirmationToken.Id.Value);
+		var link = Format.FormatCurrentCulture(_mainOptions.BaseUrl, route);
+		var template = await _templateFactory.GetAddedAsync(new(link), cancellationToken);
 
-        return new(emailConfirmationToken.User!.Email.Value, Subject, template);
-    }
+		return new(emailConfirmationToken.User!.Email.Value, Subject, template);
+	}
 }

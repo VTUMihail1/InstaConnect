@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Presentation.Features.ExceptionHandling.Abstractions;
+using InstaConnect.Common.Presentation.Features.ExceptionHandling.Abstractions;
 
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
@@ -7,25 +7,25 @@ namespace InstaConnect.Common.Presentation.Features.ExceptionHandling.Helpers;
 
 public sealed class ExceptionHandler : IExceptionHandler
 {
-    private readonly IApplicationProblemDetailsFactory _problemDetailsFactory;
-    private readonly IApplicationProblemDetailsService _problemDetailsService;
+	private readonly IApplicationProblemDetailsFactory _problemDetailsFactory;
+	private readonly IApplicationProblemDetailsService _problemDetailsService;
 
-    public ExceptionHandler(
-        IApplicationProblemDetailsFactory problemDetailsFactory,
-        IApplicationProblemDetailsService problemDetailsService)
-    {
-        _problemDetailsFactory = problemDetailsFactory;
-        _problemDetailsService = problemDetailsService;
-    }
+	public ExceptionHandler(
+		IApplicationProblemDetailsFactory problemDetailsFactory,
+		IApplicationProblemDetailsService problemDetailsService)
+	{
+		_problemDetailsFactory = problemDetailsFactory;
+		_problemDetailsService = problemDetailsService;
+	}
 
-    public async ValueTask<bool> TryHandleAsync(
-        HttpContext httpContext,
-        Exception exception,
-        CancellationToken cancellationToken)
-    {
-        var problemDetails = _problemDetailsFactory.Create(exception);
-        await _problemDetailsService.WriteAsync(httpContext, exception, problemDetails, cancellationToken);
+	public async ValueTask<bool> TryHandleAsync(
+		HttpContext httpContext,
+		Exception exception,
+		CancellationToken cancellationToken)
+	{
+		var problemDetails = _problemDetailsFactory.Create(exception);
+		await _problemDetailsService.WriteAsync(httpContext, exception, problemDetails, cancellationToken);
 
-        return true;
-    }
+		return true;
+	}
 }

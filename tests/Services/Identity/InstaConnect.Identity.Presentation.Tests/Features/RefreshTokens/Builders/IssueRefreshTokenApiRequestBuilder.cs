@@ -1,41 +1,41 @@
-﻿using InstaConnect.Common.Domain.Features.ValueObjects.Models;
+using InstaConnect.Common.Domain.Features.ValueObjects.Models;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Builders;
 
 public class IssueRefreshTokenApiRequestBuilder
 {
-    private string _name;
-    private string _password;
+	private string _name;
+	private string _password;
 
-    public IssueRefreshTokenApiRequestBuilder(User user, string password)
-    {
-        _name = user.Name.Value;
-        _password = password;
-    }
+	public IssueRefreshTokenApiRequestBuilder(User user, string password)
+	{
+		_name = user.Name.Value;
+		_password = password;
+	}
 
-    public IssueRefreshTokenApiRequestBuilder WithName(Name name, IStringTransformer? transformer = null)
-    {
-        _name = transformer.TryTransform(name.Value);
+	public IssueRefreshTokenApiRequestBuilder WithName(Name name, IStringTransformer? transformer = null)
+	{
+		_name = transformer.TryTransform(name.Value);
 
-        return this;
-    }
+		return this;
+	}
 
-    public IssueRefreshTokenApiRequestBuilder WithName(IStringTransformer transformer)
-    {
-        _name = transformer.Transform(_name);
+	public IssueRefreshTokenApiRequestBuilder WithName(IStringTransformer transformer)
+	{
+		_name = transformer.Transform(_name);
 
-        return this;
-    }
+		return this;
+	}
 
-    public IssueRefreshTokenApiRequestBuilder WithPassword(IStringTransformer transformer)
-    {
-        _password = transformer.Transform(_password);
+	public IssueRefreshTokenApiRequestBuilder WithPassword(IStringTransformer transformer)
+	{
+		_password = transformer.Transform(_password);
 
-        return this;
-    }
+		return this;
+	}
 
-    public IssueRefreshTokenApiRequest Build()
-    {
-        return new(_name, new(_password));
-    }
+	public IssueRefreshTokenApiRequest Build()
+	{
+		return new(_name, new(_password));
+	}
 }

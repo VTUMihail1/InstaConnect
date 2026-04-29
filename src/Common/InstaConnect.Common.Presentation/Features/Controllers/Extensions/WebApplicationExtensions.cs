@@ -1,4 +1,4 @@
-﻿using HealthChecks.UI.Client;
+using HealthChecks.UI.Client;
 
 using InstaConnect.Common.Presentation.Features.Controllers.Utilities;
 
@@ -8,47 +8,47 @@ namespace InstaConnect.Common.Presentation.Features.Controllers.Extensions;
 
 public static class WebApplicationExtensions
 {
-    extension(WebApplication webApplication)
-    {
-        public WebApplication UseConfiguredCors()
-        {
-            webApplication.UseCors(CorsPolicies.SpecificOrigins);
+	extension(WebApplication webApplication)
+	{
+		public WebApplication UseConfiguredCors()
+		{
+			webApplication.UseCors(CorsPolicies.SpecificOrigins);
 
-            return webApplication;
-        }
+			return webApplication;
+		}
 
-        public WebApplication UseRequestRateLimiting()
-        {
-            webApplication.UseRateLimiter();
+		public WebApplication UseRequestRateLimiting()
+		{
+			webApplication.UseRateLimiter();
 
-            return webApplication;
-        }
+			return webApplication;
+		}
 
-        public WebApplication UseSecurity()
-        {
-            webApplication.UseAuthentication();
-            webApplication.UseAuthorization();
+		public WebApplication UseSecurity()
+		{
+			webApplication.UseAuthentication();
+			webApplication.UseAuthorization();
 
-            return webApplication;
-        }
+			return webApplication;
+		}
 
-        public WebApplication MapApiEndpoints()
-        {
-            webApplication.MapControllers();
+		public WebApplication MapApiEndpoints()
+		{
+			webApplication.MapControllers();
 
-            return webApplication;
-        }
+			return webApplication;
+		}
 
-        public WebApplication MapHealthCheckEndpoints()
-        {
-            const string HealthCheckEndpoint = "/healthz";
+		public WebApplication MapHealthCheckEndpoints()
+		{
+			const string HealthCheckEndpoint = "/healthz";
 
-            webApplication.MapHealthChecks(HealthCheckEndpoint, new()
-            {
-                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-            });
+			webApplication.MapHealthChecks(HealthCheckEndpoint, new()
+			{
+				ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+			});
 
-            return webApplication;
-        }
-    }
+			return webApplication;
+		}
+	}
 }

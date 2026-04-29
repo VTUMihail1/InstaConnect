@@ -1,52 +1,52 @@
-﻿using InstaConnect.Follows.Domain.Features.Common.Models.Requests;
+using InstaConnect.Follows.Domain.Features.Common.Models.Requests;
 
 namespace InstaConnect.Follows.Domain.Features.Users.Helpers;
 
 public class UserIncludeBuilder
 {
-    private readonly IUserIncludeDescriptorFactory _descriptorsFactory;
-    private readonly ICollection<FollowsIncludeDescriptor> _descriptors;
+	private readonly IUserIncludeDescriptorFactory _descriptorsFactory;
+	private readonly ICollection<FollowsIncludeDescriptor> _descriptors;
 
-    public UserIncludeBuilder(
-        IUserIncludeDescriptorFactory descriptorsFactory,
-        ICollection<FollowsIncludeDescriptor> descriptors)
-    {
-        _descriptorsFactory = descriptorsFactory;
-        _descriptors = descriptors;
-    }
+	public UserIncludeBuilder(
+		IUserIncludeDescriptorFactory descriptorsFactory,
+		ICollection<FollowsIncludeDescriptor> descriptors)
+	{
+		_descriptorsFactory = descriptorsFactory;
+		_descriptors = descriptors;
+	}
 
-    public UserIncludeBuilder WithFollowers()
-    {
-        _descriptors.Add(_descriptorsFactory.CreateFollowFollowers());
+	public UserIncludeBuilder WithFollowers()
+	{
+		_descriptors.Add(_descriptorsFactory.CreateFollowFollowers());
 
-        return this;
-    }
+		return this;
+	}
 
-    public UserIncludeBuilder WithFollowFollowers(FollowFollowerInclude include)
-    {
-        _descriptors.Add(_descriptorsFactory.CreateFollowFollowers());
-        _descriptors.AddRange(include.Descriptors);
+	public UserIncludeBuilder WithFollowFollowers(FollowFollowerInclude include)
+	{
+		_descriptors.Add(_descriptorsFactory.CreateFollowFollowers());
+		_descriptors.AddRange(include.Descriptors);
 
-        return this;
-    }
+		return this;
+	}
 
-    public UserIncludeBuilder WithFollowings()
-    {
-        _descriptors.Add(_descriptorsFactory.CreateFollowFollowings());
+	public UserIncludeBuilder WithFollowings()
+	{
+		_descriptors.Add(_descriptorsFactory.CreateFollowFollowings());
 
-        return this;
-    }
+		return this;
+	}
 
-    public UserIncludeBuilder WithFollowFollowings(FollowFollowingInclude include)
-    {
-        _descriptors.Add(_descriptorsFactory.CreateFollowFollowings());
-        _descriptors.AddRange(include.Descriptors);
+	public UserIncludeBuilder WithFollowFollowings(FollowFollowingInclude include)
+	{
+		_descriptors.Add(_descriptorsFactory.CreateFollowFollowings());
+		_descriptors.AddRange(include.Descriptors);
 
-        return this;
-    }
+		return this;
+	}
 
-    public UserInclude Build()
-    {
-        return new(_descriptors);
-    }
+	public UserInclude Build()
+	{
+		return new(_descriptors);
+	}
 }

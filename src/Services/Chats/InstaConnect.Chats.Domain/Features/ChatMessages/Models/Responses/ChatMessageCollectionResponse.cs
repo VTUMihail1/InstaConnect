@@ -1,13 +1,13 @@
-﻿using InstaConnect.Chats.Domain.Features.Users.Models.Responses;
+using InstaConnect.Chats.Domain.Features.Users.Models.Responses;
 
 namespace InstaConnect.Chats.Domain.Features.ChatMessages.Models.Responses;
 
 public record ChatMessageCollectionResponse(
-    ChatResponse? Chat,
-    UserResponse? Sender,
-    ICollection<ChatMessageResponse> ChatMessages,
-    int Page,
-    int PageSize,
-    long TotalCount,
-    bool HasNextPage,
-    bool HasPreviousPage) : IEntityCollectionResponse;
+	ChatResponse? Chat,
+	UserResponse? Sender,
+	ICollection<ChatMessageResponse> ChatMessages,
+	int Page,
+	int PageSize,
+	long TotalCount,
+	bool HasNextPage,
+	bool HasPreviousPage) : IEntityCollectionResponse;

@@ -14,7 +14,6 @@
     <PackageReference Include="Testcontainers.MongoDb" />
     <PackageReference Include="Testcontainers.RabbitMq" />
     <PackageReference Include="Testcontainers.Redis" />
-    <PackageReference Include="WebMotions.Fake.Authentication.JwtBearer" />
   </ItemGroup>
 
   <ItemGroup>

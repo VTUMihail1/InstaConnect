@@ -1,52 +1,52 @@
-﻿using InstaConnect.Posts.Domain.Features.Common.Models.Requests;
+using InstaConnect.Posts.Domain.Features.Common.Models.Requests;
 
 namespace InstaConnect.Posts.Domain.Features.PostLikes.Helpers;
 
 public class PostLikeIncludeBuilder
 {
-    private readonly ICollection<PostsIncludeDescriptor> _descriptors;
-    private readonly IPostLikeIncludeDescriptorFactory _descriptorFactory;
+	private readonly ICollection<PostsIncludeDescriptor> _descriptors;
+	private readonly IPostLikeIncludeDescriptorFactory _descriptorFactory;
 
-    public PostLikeIncludeBuilder(
-        ICollection<PostsIncludeDescriptor> descriptors,
-        IPostLikeIncludeDescriptorFactory descriptorFactory)
-    {
-        _descriptors = descriptors;
-        _descriptorFactory = descriptorFactory;
-    }
+	public PostLikeIncludeBuilder(
+		ICollection<PostsIncludeDescriptor> descriptors,
+		IPostLikeIncludeDescriptorFactory descriptorFactory)
+	{
+		_descriptors = descriptors;
+		_descriptorFactory = descriptorFactory;
+	}
 
-    public PostLikeIncludeBuilder WithUser()
-    {
-        _descriptors.Add(_descriptorFactory.CreateUser());
+	public PostLikeIncludeBuilder WithUser()
+	{
+		_descriptors.Add(_descriptorFactory.CreateUser());
 
-        return this;
-    }
+		return this;
+	}
 
-    public PostLikeIncludeBuilder WithUser(UserInclude include)
-    {
-        _descriptors.Add(_descriptorFactory.CreateUser());
-        _descriptors.AddRange(include.Descriptors);
+	public PostLikeIncludeBuilder WithUser(UserInclude include)
+	{
+		_descriptors.Add(_descriptorFactory.CreateUser());
+		_descriptors.AddRange(include.Descriptors);
 
-        return this;
-    }
+		return this;
+	}
 
-    public PostLikeIncludeBuilder WithPost()
-    {
-        _descriptors.Add(_descriptorFactory.CreatePost());
+	public PostLikeIncludeBuilder WithPost()
+	{
+		_descriptors.Add(_descriptorFactory.CreatePost());
 
-        return this;
-    }
+		return this;
+	}
 
-    public PostLikeIncludeBuilder WithPost(PostInclude include)
-    {
-        _descriptors.Add(_descriptorFactory.CreatePost());
-        _descriptors.AddRange(include.Descriptors);
+	public PostLikeIncludeBuilder WithPost(PostInclude include)
+	{
+		_descriptors.Add(_descriptorFactory.CreatePost());
+		_descriptors.AddRange(include.Descriptors);
 
-        return this;
-    }
+		return this;
+	}
 
-    public PostLikeInclude Build()
-    {
-        return new(_descriptors);
-    }
+	public PostLikeInclude Build()
+	{
+		return new(_descriptors);
+	}
 }

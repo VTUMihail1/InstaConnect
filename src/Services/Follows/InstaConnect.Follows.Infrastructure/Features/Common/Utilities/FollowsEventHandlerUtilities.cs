@@ -1,6 +1,6 @@
-﻿namespace InstaConnect.Follows.Infrastructure.Features.Common.Utilities;
+namespace InstaConnect.Follows.Infrastructure.Features.Common.Utilities;
 
 public static class FollowsEventHandlerUtilities
 {
-    public const string Prefix = "follows";
+	public const string Prefix = "follows";
 }

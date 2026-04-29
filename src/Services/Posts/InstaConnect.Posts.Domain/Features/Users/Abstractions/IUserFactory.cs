@@ -1,14 +1,14 @@
-﻿namespace InstaConnect.Posts.Domain.Features.Users.Abstractions;
+namespace InstaConnect.Posts.Domain.Features.Users.Abstractions;
 
 public interface IUserFactory
 {
-    public User Create(
-        UserId id,
-        string firstName,
-        string lastName,
-        Name name,
-        Email email,
-        Image? profileImage,
-        DateTimeOffset createdAtUtc,
-        DateTimeOffset updatedAtUtc);
+	public User Create(
+		UserId id,
+		string firstName,
+		string lastName,
+		Name name,
+		Email email,
+		Image? profileImage,
+		DateTimeOffset createdAtUtc,
+		DateTimeOffset updatedAtUtc);
 }

@@ -1,6 +1,6 @@
-﻿namespace InstaConnect.Common.Domain.Features.Guids.Abstractions;
+namespace InstaConnect.Common.Domain.Features.Guids.Abstractions;
 
 public interface IGuidProvider
 {
-    public Guid NewGuid();
+	public Guid NewGuid();
 }

@@ -1,7 +1,7 @@
-﻿using InstaConnect.Common.Infrastructure.Features.Data.Abstractions;
+using InstaConnect.Common.Infrastructure.Features.Data.Abstractions;
 using InstaConnect.Identity.Domain.Features.Common.Models.Requests;
 
 namespace InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Abstractions;
 
 internal interface IEmailConfirmationTokenIncluderFactory
-    : IIncluderFactory<IdentityIncludeType, IdentityDestinationType, IdentityIncludeDescriptor, IEmailConfirmationTokenIncluder, EmailConfirmationToken>;
+	: IIncluderFactory<IdentityIncludeType, IdentityDestinationType, IdentityIncludeDescriptor, IEmailConfirmationTokenIncluder, EmailConfirmationToken>;

@@ -1,11 +1,11 @@
-﻿using InstaConnect.Common.Domain.Features.ExceptionHandling.Exceptions;
+using InstaConnect.Common.Domain.Features.ExceptionHandling.Exceptions;
 
 namespace InstaConnect.Follows.Domain.Features.Users.Exceptions;
 
 public class UserNameAlreadyExistsException : BadRequestException
 {
-    public UserNameAlreadyExistsException(Name name)
-        : base(UserExceptionErrorMessages.GetNameAlreadyExistsMessage(name))
-    {
-    }
+	public UserNameAlreadyExistsException(Name name)
+		: base(UserExceptionErrorMessages.GetNameAlreadyExistsMessage(name))
+	{
+	}
 }

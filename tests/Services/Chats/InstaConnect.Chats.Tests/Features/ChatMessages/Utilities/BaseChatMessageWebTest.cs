@@ -1,4 +1,4 @@
-﻿using InstaConnect.Chats.Tests.Features.Common.Utilities;
+using InstaConnect.Chats.Tests.Features.Common.Utilities;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -8,28 +8,28 @@ namespace InstaConnect.Chats.Tests.Features.ChatMessages.Utilities;
 
 public abstract class BaseChatMessageWebTest : BaseChatMessageTest, IClassFixture<ChatsWebApplicationFactory>, IAsyncLifetime
 {
-    protected IServiceScope ServiceScope { get; }
+	protected IServiceScope ServiceScope { get; }
 
-    protected IEventHarness EventHarness { get; }
+	protected IEventHarness EventHarness { get; }
 
-    protected BaseChatMessageWebTest(ChatsWebApplicationFactory webApplicationFactory)
-    {
-        ServiceScope = webApplicationFactory.Services.CreateScope();
-        EventHarness = ServiceScope.GetEventHarness();
-    }
+	protected BaseChatMessageWebTest(ChatsWebApplicationFactory webApplicationFactory)
+	{
+		ServiceScope = webApplicationFactory.Services.CreateScope();
+		EventHarness = ServiceScope.GetEventHarness();
+	}
 
-    public async Task InitializeAsync()
-    {
-        await EventHarness.StartAsync(CancellationToken);
-        await ServiceScope.ResetChatsDatabase(CancellationToken);
-        await OnInitializeAsync();
-    }
+	public async Task InitializeAsync()
+	{
+		await EventHarness.StartAsync(CancellationToken);
+		await ServiceScope.ResetChatsDatabase(CancellationToken);
+		await OnInitializeAsync();
+	}
 
-    public async Task DisposeAsync()
-    {
-        await ServiceScope.ResetChatsDatabase(CancellationToken);
-        await EventHarness.StopAsync(CancellationToken);
-    }
+	public async Task DisposeAsync()
+	{
+		await ServiceScope.ResetChatsDatabase(CancellationToken);
+		await EventHarness.StopAsync(CancellationToken);
+	}
 
-    protected abstract Task OnInitializeAsync();
+	protected abstract Task OnInitializeAsync();
 }

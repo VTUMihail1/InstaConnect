@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Domain.Features.ValueObjects.Models;
+using InstaConnect.Common.Domain.Features.ValueObjects.Models;
 
 using Microsoft.AspNetCore.Http;
 
@@ -6,88 +6,88 @@ namespace InstaConnect.Identity.Presentation.Tests.Features.Users.Builders;
 
 public class UpdateCurrentUserApiRequestBuilder
 {
-    private string _id;
-    private string _name;
-    private string _firstName;
-    private string _lastName;
-    private string _email;
-    private IFormFile? _profileImage;
+	private string _id;
+	private string _name;
+	private string _firstName;
+	private string _lastName;
+	private string _email;
+	private IFormFile? _profileImage;
 
-    public UpdateCurrentUserApiRequestBuilder(User user)
-    {
-        _id = user.Id.Id;
-        _name = UserDataFaker.GetName();
-        _firstName = UserDataFaker.GetFirstName();
-        _lastName = UserDataFaker.GetLastName();
-        _email = UserDataFaker.GetEmail();
-        _profileImage = UserDataFaker.GetProfileImage();
-    }
+	public UpdateCurrentUserApiRequestBuilder(User user)
+	{
+		_id = user.Id.Id;
+		_name = UserDataFaker.GetName();
+		_firstName = UserDataFaker.GetFirstName();
+		_lastName = UserDataFaker.GetLastName();
+		_email = UserDataFaker.GetEmail();
+		_profileImage = UserDataFaker.GetProfileImage();
+	}
 
-    public UpdateCurrentUserApiRequestBuilder WithId(UserId id, IStringTransformer? transformer = null)
-    {
-        _id = transformer.TryTransform(id.Id);
+	public UpdateCurrentUserApiRequestBuilder WithId(UserId id, IStringTransformer? transformer = null)
+	{
+		_id = transformer.TryTransform(id.Id);
 
-        return this;
-    }
+		return this;
+	}
 
-    public UpdateCurrentUserApiRequestBuilder WithId(IStringTransformer transformer)
-    {
-        _id = transformer.Transform(_id);
+	public UpdateCurrentUserApiRequestBuilder WithId(IStringTransformer transformer)
+	{
+		_id = transformer.Transform(_id);
 
-        return this;
-    }
+		return this;
+	}
 
-    public UpdateCurrentUserApiRequestBuilder WithName(Name name, IStringTransformer? transformer = null)
-    {
-        _name = transformer.TryTransform(name.Value);
+	public UpdateCurrentUserApiRequestBuilder WithName(Name name, IStringTransformer? transformer = null)
+	{
+		_name = transformer.TryTransform(name.Value);
 
-        return this;
-    }
+		return this;
+	}
 
-    public UpdateCurrentUserApiRequestBuilder WithName(IStringTransformer transformer)
-    {
-        _name = transformer.Transform(_name);
+	public UpdateCurrentUserApiRequestBuilder WithName(IStringTransformer transformer)
+	{
+		_name = transformer.Transform(_name);
 
-        return this;
-    }
+		return this;
+	}
 
-    public UpdateCurrentUserApiRequestBuilder WithFirstName(IStringTransformer transformer)
-    {
-        _firstName = transformer.Transform(_firstName);
+	public UpdateCurrentUserApiRequestBuilder WithFirstName(IStringTransformer transformer)
+	{
+		_firstName = transformer.Transform(_firstName);
 
-        return this;
-    }
+		return this;
+	}
 
-    public UpdateCurrentUserApiRequestBuilder WithLastName(IStringTransformer transformer)
-    {
-        _lastName = transformer.Transform(_lastName);
+	public UpdateCurrentUserApiRequestBuilder WithLastName(IStringTransformer transformer)
+	{
+		_lastName = transformer.Transform(_lastName);
 
-        return this;
-    }
+		return this;
+	}
 
-    public UpdateCurrentUserApiRequestBuilder WithEmail(Email email, IStringTransformer? transformer = null)
-    {
-        _email = transformer.TryTransform(email.Value);
+	public UpdateCurrentUserApiRequestBuilder WithEmail(Email email, IStringTransformer? transformer = null)
+	{
+		_email = transformer.TryTransform(email.Value);
 
-        return this;
-    }
+		return this;
+	}
 
-    public UpdateCurrentUserApiRequestBuilder WithEmail(IStringTransformer transformer)
-    {
-        _email = transformer.Transform(_email);
+	public UpdateCurrentUserApiRequestBuilder WithEmail(IStringTransformer transformer)
+	{
+		_email = transformer.Transform(_email);
 
-        return this;
-    }
+		return this;
+	}
 
-    public UpdateCurrentUserApiRequestBuilder WithProfileImage(IFormFileTransformer transformer)
-    {
-        _profileImage = transformer.Transform(_profileImage!);
+	public UpdateCurrentUserApiRequestBuilder WithProfileImage(IFormFileTransformer transformer)
+	{
+		_profileImage = transformer.Transform(_profileImage!);
 
-        return this;
-    }
+		return this;
+	}
 
-    public UpdateCurrentUserApiRequest Build()
-    {
-        return new(_id, new(_name, _firstName, _lastName, _email, _profileImage));
-    }
+	public UpdateCurrentUserApiRequest Build()
+	{
+		return new(_id, new(_name, _firstName, _lastName, _email, _profileImage));
+	}
 }

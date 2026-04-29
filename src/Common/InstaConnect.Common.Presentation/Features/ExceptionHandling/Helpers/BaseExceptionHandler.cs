@@ -8,30 +8,30 @@ namespace InstaConnect.Common.Presentation.Features.ExceptionHandling.Helpers;
 
 public sealed class BaseExceptionHandler : IExceptionHandler
 {
-    private readonly IApplicationProblemDetailsFactory _problemDetailsFactory;
-    private readonly IApplicationProblemDetailsService _problemDetailsService;
+	private readonly IApplicationProblemDetailsFactory _problemDetailsFactory;
+	private readonly IApplicationProblemDetailsService _problemDetailsService;
 
-    public BaseExceptionHandler(
-        IApplicationProblemDetailsFactory problemDetailsFactory,
-        IApplicationProblemDetailsService problemDetailsService)
-    {
-        _problemDetailsFactory = problemDetailsFactory;
-        _problemDetailsService = problemDetailsService;
-    }
+	public BaseExceptionHandler(
+		IApplicationProblemDetailsFactory problemDetailsFactory,
+		IApplicationProblemDetailsService problemDetailsService)
+	{
+		_problemDetailsFactory = problemDetailsFactory;
+		_problemDetailsService = problemDetailsService;
+	}
 
-    public async ValueTask<bool> TryHandleAsync(
-        HttpContext httpContext,
-        Exception exception,
-        CancellationToken cancellationToken)
-    {
-        if (exception is not BaseException)
-        {
-            return false;
-        }
+	public async ValueTask<bool> TryHandleAsync(
+		HttpContext httpContext,
+		Exception exception,
+		CancellationToken cancellationToken)
+	{
+		if (exception is not BaseException)
+		{
+			return false;
+		}
 
-        var problemDetails = _problemDetailsFactory.Create(exception);
-        await _problemDetailsService.WriteAsync(httpContext, exception, problemDetails, cancellationToken);
+		var problemDetails = _problemDetailsFactory.Create(exception);
+		await _problemDetailsService.WriteAsync(httpContext, exception, problemDetails, cancellationToken);
 
-        return true;
-    }
+		return true;
+	}
 }

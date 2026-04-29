@@ -1,10 +1,10 @@
-﻿namespace InstaConnect.Follows.Domain.Features.Common.Models.Requests;
+namespace InstaConnect.Follows.Domain.Features.Common.Models.Requests;
 
 public enum FollowsIncludeType
 {
-    None,
-    Follower,
-    Following,
-    FollowFollower,
-    FollowFollowing
+	None,
+	Follower,
+	Following,
+	FollowFollower,
+	FollowFollowing
 }

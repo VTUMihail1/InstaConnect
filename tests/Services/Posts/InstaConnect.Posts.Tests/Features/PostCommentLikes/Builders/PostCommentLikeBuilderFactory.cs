@@ -1,9 +1,9 @@
-﻿namespace InstaConnect.Posts.Tests.Features.PostCommentLikes.Builders;
+namespace InstaConnect.Posts.Tests.Features.PostCommentLikes.Builders;
 
 public class PostCommentLikeBuilderFactory
 {
-    public PostCommentLikeBuilder Create(PostComment postComment, User user)
-    {
-        return new(postComment, user);
-    }
+	public PostCommentLikeBuilder Create(PostComment postComment, User user)
+	{
+		return new(postComment, user);
+	}
 }

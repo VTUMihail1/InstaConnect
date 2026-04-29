@@ -1,10 +1,10 @@
-﻿namespace InstaConnect.Chats.Tests.Features.Users.DataAttributes.FirstName;
+namespace InstaConnect.Chats.Tests.Features.Users.DataAttributes.FirstName;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public sealed class UserFirstNameTooLongDataAttribute : TooLongStringDataAttribute
 {
-    public UserFirstNameTooLongDataAttribute()
-        : base(UserConfigurations.FirstNameMaxLength)
-    {
-    }
+	public UserFirstNameTooLongDataAttribute()
+		: base(UserConfigurations.FirstNameMaxLength)
+	{
+	}
 }

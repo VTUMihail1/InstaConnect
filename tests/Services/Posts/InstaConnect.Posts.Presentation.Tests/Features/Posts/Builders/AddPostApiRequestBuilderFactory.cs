@@ -1,9 +1,9 @@
-﻿namespace InstaConnect.Posts.Presentation.Tests.Features.Posts.Builders;
+namespace InstaConnect.Posts.Presentation.Tests.Features.Posts.Builders;
 
 public class AddPostApiRequestBuilderFactory
 {
-    public AddPostApiRequestBuilder Create(User user)
-    {
-        return new(user);
-    }
+	public AddPostApiRequestBuilder Create(User user)
+	{
+		return new(user);
+	}
 }

@@ -1,30 +1,30 @@
-﻿using InstaConnect.Chats.Domain.Features.Users.Models.Responses;
+using InstaConnect.Chats.Domain.Features.Users.Models.Responses;
 using InstaConnect.Common.Domain.Features.Data.Abstractions;
 
 namespace InstaConnect.Chats.Domain.Features.Chats.Helpers;
 
 internal class ChatCollectionResponseFactory : IChatCollectionResponseFactory
 {
-    private readonly IPaginator _paginator;
+	private readonly IPaginator _paginator;
 
-    public ChatCollectionResponseFactory(IPaginator paginator)
-    {
-        _paginator = paginator;
-    }
+	public ChatCollectionResponseFactory(IPaginator paginator)
+	{
+		_paginator = paginator;
+	}
 
-    public ChatCollectionResponse Create(UserResponse participantOne, ICollection<ChatResponse> chats, long totalCount, ChatsPaginationQuery pagination)
-    {
-        var hasNextPage = _paginator.HasNextPage(pagination.Page, pagination.PageSize, totalCount);
-        var hasPreviousPage = _paginator.HasPreviousPage(pagination.Page);
+	public ChatCollectionResponse Create(UserResponse participantOne, ICollection<ChatResponse> chats, long totalCount, ChatsPaginationQuery pagination)
+	{
+		var hasNextPage = _paginator.HasNextPage(pagination.Page, pagination.PageSize, totalCount);
+		var hasPreviousPage = _paginator.HasPreviousPage(pagination.Page);
 
-        return new ChatCollectionResponse(
-            participantOne,
-            null,
-            chats,
-            pagination.Page,
-            pagination.PageSize,
-            totalCount,
-            hasNextPage,
-            hasPreviousPage);
-    }
+		return new ChatCollectionResponse(
+			participantOne,
+			null,
+			chats,
+			pagination.Page,
+			pagination.PageSize,
+			totalCount,
+			hasNextPage,
+			hasPreviousPage);
+	}
 }

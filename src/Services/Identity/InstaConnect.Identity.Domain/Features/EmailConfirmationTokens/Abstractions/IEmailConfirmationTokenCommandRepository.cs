@@ -3,17 +3,17 @@ namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Abstract
 public interface IEmailConfirmationTokenCommandRepository
 {
 	public Task<EmailConfirmationToken?> GetByIdAsync(
-        EmailConfirmationTokenId id,
-        EmailConfirmationTokenInclude? include,
-        CancellationToken cancellationToken);
+		EmailConfirmationTokenId id,
+		EmailConfirmationTokenInclude? include,
+		CancellationToken cancellationToken);
 
 	public Task<EmailConfirmationToken?> GetByIdAsync(
-        EmailConfirmationTokenId id,
-        CancellationToken cancellationToken);
+		EmailConfirmationTokenId id,
+		CancellationToken cancellationToken);
 
 	public Task<bool> ExistsByIdAsync(
-        EmailConfirmationTokenId id,
-        CancellationToken cancellationToken);
+		EmailConfirmationTokenId id,
+		CancellationToken cancellationToken);
 
 	public Task AddAsync(EmailConfirmationToken entity, CancellationToken cancellationToken);
 

@@ -6,7 +6,7 @@ public interface IPostCommentIncludeDescriptorFactory
 {
 	public PostsIncludeDescriptor CreateUser();
 
-    public PostsIncludeDescriptor CreatePost();
+	public PostsIncludeDescriptor CreatePost();
 
-    public PostsIncludeDescriptor CreatePostCommentLikes();
+	public PostsIncludeDescriptor CreatePostCommentLikes();
 }

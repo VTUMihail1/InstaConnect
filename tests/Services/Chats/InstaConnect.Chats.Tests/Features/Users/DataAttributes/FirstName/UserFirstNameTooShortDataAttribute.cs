@@ -1,10 +1,10 @@
-﻿namespace InstaConnect.Chats.Tests.Features.Users.DataAttributes.FirstName;
+namespace InstaConnect.Chats.Tests.Features.Users.DataAttributes.FirstName;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public sealed class UserFirstNameTooShortDataAttribute : TooShortStringDataAttribute
 {
-    public UserFirstNameTooShortDataAttribute()
-        : base(UserConfigurations.FirstNameMinLength)
-    {
-    }
+	public UserFirstNameTooShortDataAttribute()
+		: base(UserConfigurations.FirstNameMinLength)
+	{
+	}
 }

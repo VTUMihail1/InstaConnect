@@ -1,13 +1,13 @@
-﻿using InstaConnect.Common.Tests.Features.DataAttributes.Ints.Base;
+using InstaConnect.Common.Tests.Features.DataAttributes.Ints.Base;
 
 namespace InstaConnect.Common.Tests.Features.DataAttributes.Ints.TooLarge;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public abstract class TooLargeIntWithMessageDataAttribute : IntWithMessageDataAttribute
 {
-    protected TooLargeIntWithMessageDataAttribute(int maxValue) : base(
-        new TooLargeIntTransformer(maxValue),
-        new TooLargeIntMessageTransformer(maxValue))
-    {
-    }
+	protected TooLargeIntWithMessageDataAttribute(int maxValue) : base(
+		new TooLargeIntTransformer(maxValue),
+		new TooLargeIntMessageTransformer(maxValue))
+	{
+	}
 }

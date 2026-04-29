@@ -4,38 +4,38 @@ namespace InstaConnect.Posts.Tests.Features.Posts.Builders;
 
 public class PostBuilder
 {
-    private readonly string _id;
-    private readonly string _title;
-    private readonly string _content;
-    private readonly string _userId;
-    private readonly User _user;
-    private readonly DateTimeOffset _createdAtUtc;
-    private readonly DateTimeOffset _updatedAtUtc;
+	private readonly string _id;
+	private readonly string _title;
+	private readonly string _content;
+	private readonly string _userId;
+	private readonly User _user;
+	private readonly DateTimeOffset _createdAtUtc;
+	private readonly DateTimeOffset _updatedAtUtc;
 
-    public PostBuilder(User user)
-    {
-        _id = PostDataFaker.GetId();
-        _userId = user.Id.Id;
-        _user = user;
-        _title = PostDataFaker.GetTitle();
-        _content = PostDataFaker.GetContent();
-        _createdAtUtc = PostDataFaker.GetCreatedAtUtc();
-        _updatedAtUtc = PostDataFaker.GetUpdatedAtUtc();
-    }
+	public PostBuilder(User user)
+	{
+		_id = PostDataFaker.GetId();
+		_userId = user.Id.Id;
+		_user = user;
+		_title = PostDataFaker.GetTitle();
+		_content = PostDataFaker.GetContent();
+		_createdAtUtc = PostDataFaker.GetCreatedAtUtc();
+		_updatedAtUtc = PostDataFaker.GetUpdatedAtUtc();
+	}
 
-    public Post Build()
-    {
-        var post = new Post(
-                new(_id),
-                _title,
-                _content,
-                new(_userId),
-                _createdAtUtc,
-                _updatedAtUtc);
+	public Post Build()
+	{
+		var post = new Post(
+				new(_id),
+				_title,
+				_content,
+				new(_userId),
+				_createdAtUtc,
+				_updatedAtUtc);
 
-        post.AddUser(_user);
-        _user.AddPost(post);
+		post.AddUser(_user);
+		_user.AddPost(post);
 
-        return post;
-    }
+		return post;
+	}
 }

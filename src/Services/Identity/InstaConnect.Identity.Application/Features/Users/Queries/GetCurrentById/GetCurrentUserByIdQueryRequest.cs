@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Application.Features.Caching.Abstractions;
+using InstaConnect.Common.Application.Features.Caching.Abstractions;
 using InstaConnect.Identity.Application.Features.Users.Abstractions;
 using InstaConnect.Identity.Application.Features.Users.Utilities;
 
@@ -6,7 +6,7 @@ namespace InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentByI
 
 public record GetCurrentUserByIdQueryRequest(string CurrentId) : IQueryRequest<GetCurrentUserByIdQueryResponse>, ICachable, ICurrentUserableQueryRequest
 {
-    public string Key => UserCacheKeys.GetCurrent(CurrentId);
+	public string Key => UserCacheKeys.GetCurrent(CurrentId);
 
-    public int ExpirationSeconds => UserCacheExpirations.GetCurrent;
+	public int ExpirationSeconds => UserCacheExpirations.GetCurrent;
 }

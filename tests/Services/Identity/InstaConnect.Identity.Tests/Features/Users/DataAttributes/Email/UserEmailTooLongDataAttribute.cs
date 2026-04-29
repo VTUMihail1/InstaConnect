@@ -1,10 +1,10 @@
-﻿namespace InstaConnect.Identity.Tests.Features.Users.DataAttributes.Email;
+namespace InstaConnect.Identity.Tests.Features.Users.DataAttributes.Email;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public sealed class UserEmailTooLongDataAttribute : TooLongStringDataAttribute
 {
-    public UserEmailTooLongDataAttribute()
-        : base(UserConfigurations.EmailMaxLength)
-    {
-    }
+	public UserEmailTooLongDataAttribute()
+		: base(UserConfigurations.EmailMaxLength)
+	{
+	}
 }

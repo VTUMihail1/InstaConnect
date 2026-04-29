@@ -1,19 +1,19 @@
-﻿using InstaConnect.Common.Tests.Features.DataAttributes.Ints.Base;
+using InstaConnect.Common.Tests.Features.DataAttributes.Ints.Base;
 
 namespace InstaConnect.Common.Tests.Features.DataAttributes.Ints.TooSmall;
 
 internal class TooSmallIntTransformer : IIntTransformer
 {
-    private readonly int _minValue;
+	private readonly int _minValue;
 
-    public TooSmallIntTransformer(int minValue)
-    {
-        _minValue = minValue;
-    }
+	public TooSmallIntTransformer(int minValue)
+	{
+		_minValue = minValue;
+	}
 
-    public int Transform(int value)
-    {
-        return _minValue.Decrement();
-    }
+	public int Transform(int value)
+	{
+		return _minValue.Decrement();
+	}
 }
 

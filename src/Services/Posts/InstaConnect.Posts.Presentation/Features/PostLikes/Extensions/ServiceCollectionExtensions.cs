@@ -1,12 +1,12 @@
-﻿namespace InstaConnect.Posts.Presentation.Features.PostLikes.Extensions;
+namespace InstaConnect.Posts.Presentation.Features.PostLikes.Extensions;
 
 internal static class ServiceCollectionExtensions
 {
-    extension(IServiceCollection serviceCollection)
-    {
-        internal IServiceCollection AddPostLikeServices()
-        {
-            return serviceCollection;
-        }
-    }
+	extension(IServiceCollection serviceCollection)
+	{
+		internal IServiceCollection AddPostLikeServices()
+		{
+			return serviceCollection;
+		}
+	}
 }

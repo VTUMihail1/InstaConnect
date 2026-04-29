@@ -11,19 +11,19 @@ namespace InstaConnect.Common.Presentation.Features.Emails.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    extension(IServiceCollection serviceCollection)
-    {
-        public IServiceCollection AddRazorEmailRenderer(Assembly templateAssembly, string rootNamespace)
-        {
-            serviceCollection.AddSingleton<IRazorLightEngine>(_ =>
-                new RazorLightEngineBuilder()
-                    .UseEmbeddedResourcesProject(templateAssembly, rootNamespace)
-                    .UseMemoryCachingProvider()
-                    .Build());
+	extension(IServiceCollection serviceCollection)
+	{
+		public IServiceCollection AddRazorEmailRenderer(Assembly templateAssembly, string rootNamespace)
+		{
+			serviceCollection.AddSingleton<IRazorLightEngine>(_ =>
+				new RazorLightEngineBuilder()
+					.UseEmbeddedResourcesProject(templateAssembly, rootNamespace)
+					.UseMemoryCachingProvider()
+					.Build());
 
-            serviceCollection.AddScoped<IRazorEmailRenderer, RazorEmailRenderer>();
+			serviceCollection.AddScoped<IRazorEmailRenderer, RazorEmailRenderer>();
 
-            return serviceCollection;
-        }
-    }
+			return serviceCollection;
+		}
+	}
 }

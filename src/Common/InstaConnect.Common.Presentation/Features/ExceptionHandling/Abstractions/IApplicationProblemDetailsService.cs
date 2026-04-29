@@ -7,8 +7,8 @@ namespace InstaConnect.Common.Presentation.Features.ExceptionHandling.Abstractio
 public interface IApplicationProblemDetailsService
 {
 	public Task WriteAsync(
-        HttpContext httpContext,
-        Exception exception,
-        ApplicationProblemDetails details,
-        CancellationToken cancellationToken);
+		HttpContext httpContext,
+		Exception exception,
+		ApplicationProblemDetails details,
+		CancellationToken cancellationToken);
 }

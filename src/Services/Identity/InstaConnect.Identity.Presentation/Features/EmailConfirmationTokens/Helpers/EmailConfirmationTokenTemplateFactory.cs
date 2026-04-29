@@ -5,17 +5,17 @@ namespace InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.He
 
 internal class EmailConfirmationTokenTemplateFactory : IEmailConfirmationTokenTemplateFactory
 {
-    private readonly IRazorEmailRenderer _renderer;
+	private readonly IRazorEmailRenderer _renderer;
 
-    public EmailConfirmationTokenTemplateFactory(IRazorEmailRenderer renderer)
-    {
-        _renderer = renderer;
-    }
+	public EmailConfirmationTokenTemplateFactory(IRazorEmailRenderer renderer)
+	{
+		_renderer = renderer;
+	}
 
-    public async Task<string> GetAddedAsync(EmailConfirmationTokenAddedViewRequest request, CancellationToken cancellationToken)
-    {
-        const string TemplateKey = "Features.EmailConfirmationTokens.Views.Added";
+	public async Task<string> GetAddedAsync(EmailConfirmationTokenAddedViewRequest request, CancellationToken cancellationToken)
+	{
+		const string TemplateKey = "Features.EmailConfirmationTokens.Views.Added";
 
-        return await _renderer.RenderAsync(TemplateKey, request, cancellationToken);
-    }
+		return await _renderer.RenderAsync(TemplateKey, request, cancellationToken);
+	}
 }

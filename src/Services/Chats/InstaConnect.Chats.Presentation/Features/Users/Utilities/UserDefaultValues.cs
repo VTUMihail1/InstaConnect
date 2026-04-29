@@ -1,8 +1,8 @@
-﻿namespace InstaConnect.Chats.Presentation.Features.Users.Utilities;
+namespace InstaConnect.Chats.Presentation.Features.Users.Utilities;
 
 public static class UserDefaultValues
 {
-    public const string Id = "";
+	public const string Id = "";
 
-    public const string Name = "";
+	public const string Name = "";
 }

@@ -6,11 +6,11 @@ public interface IFollowCommandRepository
 
 	public Task AddRangeAsync(IEnumerable<Follow> entities, CancellationToken cancellationToken);
 
-    public Task DeleteAsync(Follow entity, CancellationToken cancellationToken);
+	public Task DeleteAsync(Follow entity, CancellationToken cancellationToken);
 
-    public Task<Follow?> GetByIdAsync(FollowId id, CancellationToken cancellationToken);
+	public Task<Follow?> GetByIdAsync(FollowId id, CancellationToken cancellationToken);
 
-    public Task<Follow?> GetByIdAsync(FollowId id, FollowInclude? include, CancellationToken cancellationToken);
+	public Task<Follow?> GetByIdAsync(FollowId id, FollowInclude? include, CancellationToken cancellationToken);
 
-    public Task<bool> ExistsByIdAsync(FollowId id, CancellationToken cancellationToken);
+	public Task<bool> ExistsByIdAsync(FollowId id, CancellationToken cancellationToken);
 }

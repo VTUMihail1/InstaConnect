@@ -1,9 +1,9 @@
-﻿namespace InstaConnect.Chats.Application.Tests.Features.Users.Builders;
+namespace InstaConnect.Chats.Application.Tests.Features.Users.Builders;
 
 public class UpdateUserCommandRequestBuilderFactory
 {
-    public UpdateUserCommandRequestBuilder Create(User user)
-    {
-        return new(user);
-    }
+	public UpdateUserCommandRequestBuilder Create(User user)
+	{
+		return new(user);
+	}
 }

@@ -1,9 +1,9 @@
-﻿namespace InstaConnect.Posts.Application.Tests.Features.Users.Builders;
+namespace InstaConnect.Posts.Application.Tests.Features.Users.Builders;
 
 public class AddUserCommandRequestBuilderFactory
 {
-    public AddUserCommandRequestBuilder Create()
-    {
-        return new();
-    }
+	public AddUserCommandRequestBuilder Create()
+	{
+		return new();
+	}
 }

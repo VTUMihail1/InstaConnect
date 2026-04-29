@@ -1,17 +1,17 @@
-﻿namespace InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Extensions;
+namespace InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Extensions;
 
 internal static class RuleBuilderExtensions
 {
-    extension<T>(IRuleBuilder<T, string> ruleBuilder)
-    {
-        public IRuleBuilderOptions<T, string> ForgotPasswordTokenValueMinLengthWithMessage()
-        {
-            return ruleBuilder.MinLengthWithMessage(ForgotPasswordTokenConfigurations.ValueMinLength);
-        }
+	extension<T>(IRuleBuilder<T, string> ruleBuilder)
+	{
+		public IRuleBuilderOptions<T, string> ForgotPasswordTokenValueMinLengthWithMessage()
+		{
+			return ruleBuilder.MinLengthWithMessage(ForgotPasswordTokenConfigurations.ValueMinLength);
+		}
 
-        public IRuleBuilderOptions<T, string> ForgotPasswordTokenValueMaxLengthWithMessage()
-        {
-            return ruleBuilder.MaxLengthWithMessage(ForgotPasswordTokenConfigurations.ValueMaxLength);
-        }
-    }
+		public IRuleBuilderOptions<T, string> ForgotPasswordTokenValueMaxLengthWithMessage()
+		{
+			return ruleBuilder.MaxLengthWithMessage(ForgotPasswordTokenConfigurations.ValueMaxLength);
+		}
+	}
 }

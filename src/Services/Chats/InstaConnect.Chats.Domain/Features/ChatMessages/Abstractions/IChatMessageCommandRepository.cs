@@ -8,11 +8,11 @@ public interface IChatMessageCommandRepository
 
 	public Task AddRangeAsync(IEnumerable<ChatMessage> entities, CancellationToken cancellationToken);
 
-    public Task DeleteAsync(ChatMessage entity, CancellationToken cancellationToken);
+	public Task DeleteAsync(ChatMessage entity, CancellationToken cancellationToken);
 
-    public Task<ChatMessage?> GetByIdAsync(ChatMessageId id, CancellationToken cancellationToken);
+	public Task<ChatMessage?> GetByIdAsync(ChatMessageId id, CancellationToken cancellationToken);
 
-    public Task<ChatMessage?> GetByIdAsync(ChatMessageId id, ChatMessageInclude? include, CancellationToken cancellationToken);
+	public Task<ChatMessage?> GetByIdAsync(ChatMessageId id, ChatMessageInclude? include, CancellationToken cancellationToken);
 
-    public Task<bool> ExistsByIdAsync(ChatMessageId id, CancellationToken cancellationToken);
+	public Task<bool> ExistsByIdAsync(ChatMessageId id, CancellationToken cancellationToken);
 }

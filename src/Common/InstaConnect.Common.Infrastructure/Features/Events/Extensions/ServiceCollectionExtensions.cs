@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 
 using InstaConnect.Common.Events.Features.Common.Abstractions;
 using InstaConnect.Common.Infrastructure.Features.Events.Extensions;
@@ -16,43 +16,43 @@ namespace InstaConnect.Common.Infrastructure.Extensions;
 
 public static partial class ServiceCollectionExtensions
 {
-    extension(IServiceCollection serviceCollection)
-    {
-        public IServiceCollection AddRabbitMQ(IConfiguration configuration, string prefix, params Assembly[] currentAssemblies)
-        {
-            serviceCollection.AddValidatedOptions<RabbitMqOptions>(RabbitMqOptions.SectionName);
-            var options = configuration.GetOptions<RabbitMqOptions>(RabbitMqOptions.SectionName);
+	extension(IServiceCollection serviceCollection)
+	{
+		public IServiceCollection AddRabbitMQ(IConfiguration configuration, string prefix, params Assembly[] currentAssemblies)
+		{
+			serviceCollection.AddValidatedOptions<RabbitMqOptions>(RabbitMqOptions.SectionName);
+			var options = configuration.GetOptions<RabbitMqOptions>(RabbitMqOptions.SectionName);
 
-            serviceCollection.AddMassTransit(busConfigurator =>
-            {
-                busConfigurator.SetKebabCaseEndpointNameFormatterWithPrefix(prefix);
+			serviceCollection.AddMassTransit(busConfigurator =>
+			{
+				busConfigurator.SetKebabCaseEndpointNameFormatterWithPrefix(prefix);
 
-                busConfigurator.AddConsumers(currentAssemblies);
+				busConfigurator.AddConsumers(currentAssemblies);
 
-                busConfigurator.AddMongoDbOutbox(o =>
-                {
-                    o.ClientFactory(provider => provider.GetRequiredService<IMongoClient>());
-                    o.DatabaseFactory(provider => provider.GetRequiredService<IMongoDatabase>());
+				busConfigurator.AddMongoDbOutbox(o =>
+				{
+					o.ClientFactory(provider => provider.GetRequiredService<IMongoClient>());
+					o.DatabaseFactory(provider => provider.GetRequiredService<IMongoDatabase>());
 
-                    o.UseBusOutbox();
-                });
+					o.UseBusOutbox();
+				});
 
-                busConfigurator.AddConfigureEndpointsCallback((context, name, cfg) =>
-                {
-                    cfg.UseMongoDbOutbox(context);
-                });
+				busConfigurator.AddConfigureEndpointsCallback((context, name, cfg) =>
+				{
+					cfg.UseMongoDbOutbox(context);
+				});
 
-                busConfigurator.UsingRabbitMq((context, configurator) =>
-                {
-                    configurator.Host(options.ConnectionString);
+				busConfigurator.UsingRabbitMq((context, configurator) =>
+				{
+					configurator.Host(options.ConnectionString);
 
-                    configurator.ConfigureEndpoints(context);
-                });
-            });
+					configurator.ConfigureEndpoints(context);
+				});
+			});
 
-            serviceCollection.AddScoped<IEventPublisher, EventPublisher>();
+			serviceCollection.AddScoped<IEventPublisher, EventPublisher>();
 
-            return serviceCollection;
-        }
-    }
+			return serviceCollection;
+		}
+	}
 }

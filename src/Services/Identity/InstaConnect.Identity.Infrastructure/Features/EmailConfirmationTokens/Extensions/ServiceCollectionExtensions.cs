@@ -1,4 +1,4 @@
-﻿using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Options;
+using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Options;
 using InstaConnect.Identity.Infrastructure.Features.Common.Extensions;
 
 using MongoDB.Bson.Serialization;
@@ -7,33 +7,33 @@ namespace InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.
 
 internal static class ServiceCollectionExtensions
 {
-    extension(IServiceCollection serviceCollection)
-    {
-        internal IServiceCollection AddEmailConfirmationTokenServices()
-        {
-            serviceCollection.AddValidatedOptions<EmailConfirmationTokenOptions>(EmailConfirmationTokenOptions.SectionName);
+	extension(IServiceCollection serviceCollection)
+	{
+		internal IServiceCollection AddEmailConfirmationTokenServices()
+		{
+			serviceCollection.AddValidatedOptions<EmailConfirmationTokenOptions>(EmailConfirmationTokenOptions.SectionName);
 
-            serviceCollection.AddImplementationsOf<IEmailConfirmationTokenIncluder>(IdentityInfrastructureReference.Assembly);
+			serviceCollection.AddImplementationsOf<IEmailConfirmationTokenIncluder>(IdentityInfrastructureReference.Assembly);
 
-            BsonClassMap.TryRegisterClassMap<EmailConfirmationToken>(cm =>
-            {
-                cm.MapIdMember(c => c.Id);
+			BsonClassMap.TryRegisterClassMap<EmailConfirmationToken>(cm =>
+			{
+				cm.MapIdMember(c => c.Id);
 
-                cm.MapMember(c => c.Id);
-                cm.MapMember(c => c.ExpiresAtUtc);
-                cm.MapMember(c => c.CreatedAtUtc);
+				cm.MapMember(c => c.Id);
+				cm.MapMember(c => c.ExpiresAtUtc);
+				cm.MapMember(c => c.CreatedAtUtc);
 
-                cm.MapMemberWithoutSerialization(c => c.User);
+				cm.MapMemberWithoutSerialization(c => c.User);
 
-                cm.MapCreator(c => new EmailConfirmationToken(
-                    c.Id,
-                    c.ExpiresAtUtc,
-                    c.CreatedAtUtc));
+				cm.MapCreator(c => new EmailConfirmationToken(
+					c.Id,
+					c.ExpiresAtUtc,
+					c.CreatedAtUtc));
 
-                cm.SetIgnoreExtraElements(true);
-            });
+				cm.SetIgnoreExtraElements(true);
+			});
 
-            return serviceCollection;
-        }
-    }
+			return serviceCollection;
+		}
+	}
 }

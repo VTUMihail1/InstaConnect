@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 
 using FluentValidation;
 
@@ -8,15 +8,15 @@ namespace InstaConnect.Common.Application.Features.Validations.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    extension(IServiceCollection serviceCollection)
-    {
-        public IServiceCollection AddValidators(params Assembly[] assemblies)
-        {
-            ValidatorOptions.Global.DefaultRuleLevelCascadeMode = CascadeMode.Stop;
+	extension(IServiceCollection serviceCollection)
+	{
+		public IServiceCollection AddValidators(params Assembly[] assemblies)
+		{
+			ValidatorOptions.Global.DefaultRuleLevelCascadeMode = CascadeMode.Stop;
 
-            serviceCollection.AddValidatorsFromAssemblies(assemblies);
+			serviceCollection.AddValidatorsFromAssemblies(assemblies);
 
-            return serviceCollection;
-        }
-    }
+			return serviceCollection;
+		}
+	}
 }

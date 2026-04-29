@@ -1,8 +1,8 @@
-﻿namespace InstaConnect.Posts.Domain.Features.PostLikes.Models.Requests;
+namespace InstaConnect.Posts.Domain.Features.PostLikes.Models.Requests;
 
 public enum PostLikesSortTerm
 {
-    None,
-    ByCreatedAt,
-    ByUserName
+	None,
+	ByCreatedAt,
+	ByUserName
 }

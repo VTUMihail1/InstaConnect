@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Domain.Features.Messaging.Models;
+using InstaConnect.Common.Domain.Features.Messaging.Models;
 using InstaConnect.Common.Presentation.Features.Controllers.Utilities;
 using InstaConnect.Common.Presentation.Features.Messaging.Abstractions;
 using InstaConnect.Follows.Domain.Features.Follows.Models.Requests;
@@ -8,10 +8,10 @@ using InstaConnect.Follows.Presentation.Features.Users.Utilities;
 namespace InstaConnect.Follows.Presentation.Features.Follows.Models.Requests;
 
 public record GetAllFollowsForFollowingApiRequest(
-    [FromRoute] string FollowingId,
-    [UserIdFromClaim] string CurrentUserId,
-    [FromQuery] string FollowerName = UserDefaultValues.Name,
-    [FromQuery] CommonSortOrder SortOrder = CommonDefaultValues.SortOrder,
-    [FromQuery] FollowsForFollowingSortTerm SortTerm = FollowDefaultValues.ByFollowingSortTerm,
-    [FromQuery] int Page = FollowDefaultValues.Page,
-    [FromQuery] int PageSize = FollowDefaultValues.PageSize) : ISortableApiRequest<FollowsForFollowingSortTerm>, IPaginatableApiRequest, ICurrentUserableApiRequest;
+	[FromRoute] string FollowingId,
+	[UserIdFromClaim] string CurrentUserId,
+	[FromQuery] string FollowerName = UserDefaultValues.Name,
+	[FromQuery] CommonSortOrder SortOrder = CommonDefaultValues.SortOrder,
+	[FromQuery] FollowsForFollowingSortTerm SortTerm = FollowDefaultValues.ByFollowingSortTerm,
+	[FromQuery] int Page = FollowDefaultValues.Page,
+	[FromQuery] int PageSize = FollowDefaultValues.PageSize) : ISortableApiRequest<FollowsForFollowingSortTerm>, IPaginatableApiRequest, ICurrentUserableApiRequest;

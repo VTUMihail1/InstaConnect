@@ -5,13 +5,13 @@ namespace InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Exten
 
 internal static class ServiceCollectionExtensions
 {
-    extension(IServiceCollection serviceCollection)
-    {
-        public IServiceCollection AddForgotPasswordTokenServices()
-        {
-            serviceCollection.AddScoped<IForgotPasswordTokenTemplateFactory, ForgotPasswordTokenTemplateFactory>();
+	extension(IServiceCollection serviceCollection)
+	{
+		public IServiceCollection AddForgotPasswordTokenServices()
+		{
+			serviceCollection.AddScoped<IForgotPasswordTokenTemplateFactory, ForgotPasswordTokenTemplateFactory>();
 
-            return serviceCollection;
-        }
-    }
+			return serviceCollection;
+		}
+	}
 }

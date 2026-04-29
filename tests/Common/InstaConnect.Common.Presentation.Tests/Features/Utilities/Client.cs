@@ -1,84 +1,84 @@
-﻿using System.Net;
+using System.Net;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
+using InstaConnect.Common.Domain.Features.AccessTokens.Utilities;
 using InstaConnect.Common.Domain.Features.Common.Extensions;
-using InstaConnect.Common.Domain.Features.Tokens.Utilities;
-using InstaConnect.Common.Events.Features.Tokens.Models;
+using InstaConnect.Common.Events.Features.AccessTokens.Models;
+using InstaConnect.Common.Infrastructure.Features.AccessTokens.Abstractions;
 using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Net.Http.Headers;
 
 namespace InstaConnect.Common.Presentation.Tests.Features.Utilities;
 
 public static class Client
 {
-    extension(HttpClient httpClient)
-    {
-        public HttpClient WithAuthorization(string userId)
-        {
-            httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>()
-            {
-                { DefaultClaims.Id, userId }
-            });
+	extension(HttpClient httpClient)
+	{
+		public HttpClient WithAuthorization(string userId, IBaseAccessTokenGenerator baseAccessTokenGenerator)
+		{
+			httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+				JwtBearerDefaults.AuthenticationScheme,
+				baseAccessTokenGenerator.Generate([new(DefaultClaims.Id, userId)]).Value);
 
-            return httpClient;
-        }
+			return httpClient;
+		}
 
-        public HttpClient WithAdminAuthorization(string userId)
-        {
-            httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>()
-            {
-                { DefaultClaims.Id, userId },
-                { ApplicationClaims.Admin.GetName(), ApplicationClaims.Admin.GetName() }
-            });
+		public HttpClient WithAdminAuthorization(string userId, IBaseAccessTokenGenerator baseAccessTokenGenerator)
+		{
+			httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+				JwtBearerDefaults.AuthenticationScheme,
+				baseAccessTokenGenerator.Generate([new(DefaultClaims.Id, userId), new(ApplicationClaims.Admin.GetName(), ApplicationClaims.Admin.GetName())]).Value);
 
-            return httpClient;
-        }
+			return httpClient;
+		}
 
-        public HttpClient WithCookies(params Cookie[] cookies)
-        {
-            const string CookieHeader = "Cookie";
-            const string Format = "{0}={1}";
+		public HttpClient WithCookies(params Cookie[] cookies)
+		{
+			const string CookieHeader = "Cookie";
+			const string Format = "{0}={1}";
 
-            var cookieHeader = cookies.Select(cookie => Format.FormatCurrentCulture(cookie.Name, cookie.Value)).JoinAsStringWithSemicolon();
+			var cookieHeader = cookies.Select(cookie => Format.FormatCurrentCulture(cookie.Name, cookie.Value)).JoinAsStringWithSemicolon();
 
-            httpClient.DefaultRequestHeaders.Remove(CookieHeader);
-            httpClient.DefaultRequestHeaders.TryAddWithoutValidation(CookieHeader, cookieHeader);
+			httpClient.DefaultRequestHeaders.Remove(CookieHeader);
+			httpClient.DefaultRequestHeaders.TryAddWithoutValidation(CookieHeader, cookieHeader);
 
-            return httpClient;
-        }
-    }
+			return httpClient;
+		}
+	}
 
-    extension(HttpResponseMessage httpResponseMessage)
-    {
-        public async Task<T> GetFromJsonAsync<T>(CancellationToken cancellationToken)
-        {
-            var options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true,
-                Converters = { new JsonStringEnumConverter() }
-            };
+	extension(HttpResponseMessage httpResponseMessage)
+	{
+		public async Task<T> GetFromJsonAsync<T>(CancellationToken cancellationToken)
+		{
+			var options = new JsonSerializerOptions
+			{
+				PropertyNameCaseInsensitive = true,
+				Converters = { new JsonStringEnumConverter() }
+			};
 
-            return (await httpResponseMessage.Content.ReadFromJsonAsync<T>(options, cancellationToken))!;
-        }
+			return (await httpResponseMessage.Content.ReadFromJsonAsync<T>(options, cancellationToken))!;
+		}
 
-        public async Task<ApplicationProblemDetails> GetProblemDetailsFromJsonAsync(CancellationToken cancellationToken)
-        {
-            return await httpResponseMessage.GetFromJsonAsync<ApplicationProblemDetails>(cancellationToken);
-        }
+		public async Task<ApplicationProblemDetails> GetProblemDetailsFromJsonAsync(CancellationToken cancellationToken)
+		{
+			return await httpResponseMessage.GetFromJsonAsync<ApplicationProblemDetails>(cancellationToken);
+		}
 
-        public HttpStatusCode GetStatusCode()
-        {
-            return httpResponseMessage.StatusCode;
-        }
+		public HttpStatusCode GetStatusCode()
+		{
+			return httpResponseMessage.StatusCode;
+		}
 
-        public ICollection<SetCookieHeaderValue> GetCookies()
-        {
-            const string SetCookieHeader = "Set-Cookie";
+		public ICollection<SetCookieHeaderValue> GetCookies()
+		{
+			const string SetCookieHeader = "Set-Cookie";
 
-            return [.. httpResponseMessage.Headers.GetValues(SetCookieHeader).Select(header => SetCookieHeaderValue.Parse(header))];
-        }
-    }
+			return [.. httpResponseMessage.Headers.GetValues(SetCookieHeader).Select(header => SetCookieHeaderValue.Parse(header))];
+		}
+	}
 }

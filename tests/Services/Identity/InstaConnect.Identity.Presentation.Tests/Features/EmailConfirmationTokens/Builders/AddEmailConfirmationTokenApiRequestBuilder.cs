@@ -1,32 +1,32 @@
-﻿using InstaConnect.Common.Domain.Features.ValueObjects.Models;
+using InstaConnect.Common.Domain.Features.ValueObjects.Models;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.EmailConfirmationTokens.Builders;
 
 public class AddEmailConfirmationTokenApiRequestBuilder
 {
-    private string _name;
+	private string _name;
 
-    public AddEmailConfirmationTokenApiRequestBuilder(User user)
-    {
-        _name = user.Name.Value;
-    }
+	public AddEmailConfirmationTokenApiRequestBuilder(User user)
+	{
+		_name = user.Name.Value;
+	}
 
-    public AddEmailConfirmationTokenApiRequestBuilder WithName(Name name, IStringTransformer? transformer = null)
-    {
-        _name = transformer.TryTransform(name.Value);
+	public AddEmailConfirmationTokenApiRequestBuilder WithName(Name name, IStringTransformer? transformer = null)
+	{
+		_name = transformer.TryTransform(name.Value);
 
-        return this;
-    }
+		return this;
+	}
 
-    public AddEmailConfirmationTokenApiRequestBuilder WithName(IStringTransformer transformer)
-    {
-        _name = transformer.Transform(_name);
+	public AddEmailConfirmationTokenApiRequestBuilder WithName(IStringTransformer transformer)
+	{
+		_name = transformer.Transform(_name);
 
-        return this;
-    }
+		return this;
+	}
 
-    public AddEmailConfirmationTokenApiRequest Build()
-    {
-        return new(_name);
-    }
+	public AddEmailConfirmationTokenApiRequest Build()
+	{
+		return new(_name);
+	}
 }

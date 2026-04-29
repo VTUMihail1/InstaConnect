@@ -1,62 +1,62 @@
-﻿namespace InstaConnect.Chats.Presentation.Tests.Features.ChatMessages.Builders;
+namespace InstaConnect.Chats.Presentation.Tests.Features.ChatMessages.Builders;
 
 public class GetChatMessageByIdApiRequestBuilder
 {
-    private string _participantTwoId;
-    private string _messageId;
-    private string _currentUserId;
+	private string _participantTwoId;
+	private string _messageId;
+	private string _currentUserId;
 
-    public GetChatMessageByIdApiRequestBuilder(ChatMessage chatMessage)
-    {
-        _participantTwoId = chatMessage.Id.Id.ParticipantTwoId.Id;
-        _messageId = chatMessage.Id.MessageId;
-        _currentUserId = chatMessage.Id.Id.ParticipantOneId.Id;
-    }
+	public GetChatMessageByIdApiRequestBuilder(ChatMessage chatMessage)
+	{
+		_participantTwoId = chatMessage.Id.Id.ParticipantTwoId.Id;
+		_messageId = chatMessage.Id.MessageId;
+		_currentUserId = chatMessage.Id.Id.ParticipantOneId.Id;
+	}
 
-    public GetChatMessageByIdApiRequestBuilder WithParticipantTwoId(UserId participantTwoId, IStringTransformer? transformer = null)
-    {
-        _participantTwoId = transformer.TryTransform(participantTwoId.Id);
+	public GetChatMessageByIdApiRequestBuilder WithParticipantTwoId(UserId participantTwoId, IStringTransformer? transformer = null)
+	{
+		_participantTwoId = transformer.TryTransform(participantTwoId.Id);
 
-        return this;
-    }
+		return this;
+	}
 
-    public GetChatMessageByIdApiRequestBuilder WithParticipantTwoId(IStringTransformer transformer)
-    {
-        _participantTwoId = transformer.Transform(_participantTwoId);
+	public GetChatMessageByIdApiRequestBuilder WithParticipantTwoId(IStringTransformer transformer)
+	{
+		_participantTwoId = transformer.Transform(_participantTwoId);
 
-        return this;
-    }
+		return this;
+	}
 
-    public GetChatMessageByIdApiRequestBuilder WithMessageId(ChatMessageId messageId, IStringTransformer? transformer = null)
-    {
-        _messageId = transformer.TryTransform(messageId.MessageId);
+	public GetChatMessageByIdApiRequestBuilder WithMessageId(ChatMessageId messageId, IStringTransformer? transformer = null)
+	{
+		_messageId = transformer.TryTransform(messageId.MessageId);
 
-        return this;
-    }
+		return this;
+	}
 
-    public GetChatMessageByIdApiRequestBuilder WithMessageId(IStringTransformer transformer)
-    {
-        _messageId = transformer.Transform(_messageId);
+	public GetChatMessageByIdApiRequestBuilder WithMessageId(IStringTransformer transformer)
+	{
+		_messageId = transformer.Transform(_messageId);
 
-        return this;
-    }
+		return this;
+	}
 
-    public GetChatMessageByIdApiRequestBuilder WithCurrentUserId(UserId currentUserId, IStringTransformer? transformer = null)
-    {
-        _currentUserId = transformer.TryTransform(currentUserId.Id);
+	public GetChatMessageByIdApiRequestBuilder WithCurrentUserId(UserId currentUserId, IStringTransformer? transformer = null)
+	{
+		_currentUserId = transformer.TryTransform(currentUserId.Id);
 
-        return this;
-    }
+		return this;
+	}
 
-    public GetChatMessageByIdApiRequestBuilder WithCurrentUserId(IStringTransformer transformer)
-    {
-        _currentUserId = transformer.Transform(_currentUserId);
+	public GetChatMessageByIdApiRequestBuilder WithCurrentUserId(IStringTransformer transformer)
+	{
+		_currentUserId = transformer.Transform(_currentUserId);
 
-        return this;
-    }
+		return this;
+	}
 
-    public GetChatMessageByIdApiRequest Build()
-    {
-        return new(_participantTwoId, _messageId, _currentUserId);
-    }
+	public GetChatMessageByIdApiRequest Build()
+	{
+		return new(_participantTwoId, _messageId, _currentUserId);
+	}
 }

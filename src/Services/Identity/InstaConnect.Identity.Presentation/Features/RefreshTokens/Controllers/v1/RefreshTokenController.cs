@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Messaging.Abstractions;
 using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
 using InstaConnect.Common.Presentation.Features.Controllers.Utilities;
 using InstaConnect.Identity.Application.Features.RefreshTokens.Commands.DeleteCurrent;
@@ -13,72 +13,72 @@ namespace InstaConnect.Identity.Presentation.Features.RefreshTokens.Controllers.
 [EnableRateLimiting(RateLimiterPolicies.Default)]
 public class RefreshTokenController : ControllerBase
 {
-    private readonly IApplicationMapper _mapper;
-    private readonly IApplicationSender _sender;
-    private readonly IRefreshTokenCookieStore _refreshTokenCookieStore;
+	private readonly IApplicationMapper _mapper;
+	private readonly IApplicationSender _sender;
+	private readonly IRefreshTokenCookieStore _refreshTokenCookieStore;
 
-    public RefreshTokenController(
-        IApplicationMapper mapper,
-        IApplicationSender sender,
-        IRefreshTokenCookieStore refreshTokenCookieStore)
-    {
-        _mapper = mapper;
-        _sender = sender;
-        _refreshTokenCookieStore = refreshTokenCookieStore;
-    }
+	public RefreshTokenController(
+		IApplicationMapper mapper,
+		IApplicationSender sender,
+		IRefreshTokenCookieStore refreshTokenCookieStore)
+	{
+		_mapper = mapper;
+		_sender = sender;
+		_refreshTokenCookieStore = refreshTokenCookieStore;
+	}
 
-    // POST: api/users/name/refresh-tokens/issue
-    [HttpPost(RefreshTokenRoutes.Issue)]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<IssueRefreshTokenApiResponse>> IssueAsync(
-        IssueRefreshTokenApiRequest request,
-        CancellationToken cancellationToken)
-    {
-        var commandRequest = _mapper.Map<IssueRefreshTokenCommandRequest>(request);
-        var commandResponse = await _sender.SendAsync(commandRequest, cancellationToken);
+	// POST: api/users/name/refresh-tokens/issue
+	[HttpPost(RefreshTokenRoutes.Issue)]
+	[ProducesResponseType(StatusCodes.Status204NoContent)]
+	[ProducesResponseType(StatusCodes.Status400BadRequest)]
+	public async Task<ActionResult<IssueRefreshTokenApiResponse>> IssueAsync(
+		IssueRefreshTokenApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var commandRequest = _mapper.Map<IssueRefreshTokenCommandRequest>(request);
+		var commandResponse = await _sender.SendAsync(commandRequest, cancellationToken);
 
-        var cookie = _mapper.Map<SetRefreshTokenCookieRequest>(commandResponse.Response);
-        _refreshTokenCookieStore.Set(cookie);
+		var cookie = _mapper.Map<SetRefreshTokenCookieRequest>(commandResponse.Response);
+		_refreshTokenCookieStore.Set(cookie);
 
-        var response = _mapper.Map<IssueRefreshTokenApiResponse>(commandResponse);
+		var response = _mapper.Map<IssueRefreshTokenApiResponse>(commandResponse);
 
-        return Ok(response);
-    }
+		return Ok(response);
+	}
 
-    // POST: api/users/current/refresh-tokens/current/rotate
-    [HttpPost(RefreshTokenRoutes.CurrentRotate)]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<RotateRefreshTokenApiResponse>> RotateAsync(
-        RotateRefreshTokenApiRequest request,
-        CancellationToken cancellationToken)
-    {
-        var commandRequest = _mapper.Map<RotateRefreshTokenCommandRequest>(request);
-        var commandResponse = await _sender.SendAsync(commandRequest, cancellationToken);
+	// POST: api/users/current/refresh-tokens/current/rotate
+	[HttpPost(RefreshTokenRoutes.CurrentRotate)]
+	[ProducesResponseType(StatusCodes.Status204NoContent)]
+	[ProducesResponseType(StatusCodes.Status400BadRequest)]
+	public async Task<ActionResult<RotateRefreshTokenApiResponse>> RotateAsync(
+		RotateRefreshTokenApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var commandRequest = _mapper.Map<RotateRefreshTokenCommandRequest>(request);
+		var commandResponse = await _sender.SendAsync(commandRequest, cancellationToken);
 
-        var cookie = _mapper.Map<SetRefreshTokenCookieRequest>(commandResponse.Response);
-        _refreshTokenCookieStore.Set(cookie);
+		var cookie = _mapper.Map<SetRefreshTokenCookieRequest>(commandResponse.Response);
+		_refreshTokenCookieStore.Set(cookie);
 
-        var response = _mapper.Map<RotateRefreshTokenApiResponse>(commandResponse);
+		var response = _mapper.Map<RotateRefreshTokenApiResponse>(commandResponse);
 
-        return Ok(response);
-    }
+		return Ok(response);
+	}
 
 
-    // DELETE: api/users/current/refresh-tokens/current
-    [HttpDelete(RefreshTokenRoutes.Current)]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> DeleteCurrentAsync(
-        DeleteCurrentRefreshTokenApiRequest request,
-        CancellationToken cancellationToken)
-    {
-        var commandRequest = _mapper.Map<DeleteCurrentRefreshTokenCommandRequest>(request);
-        await _sender.SendAsync(commandRequest, cancellationToken);
+	// DELETE: api/users/current/refresh-tokens/current
+	[HttpDelete(RefreshTokenRoutes.Current)]
+	[ProducesResponseType(StatusCodes.Status204NoContent)]
+	[ProducesResponseType(StatusCodes.Status400BadRequest)]
+	public async Task<ActionResult> DeleteCurrentAsync(
+		DeleteCurrentRefreshTokenApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var commandRequest = _mapper.Map<DeleteCurrentRefreshTokenCommandRequest>(request);
+		await _sender.SendAsync(commandRequest, cancellationToken);
 
-        _refreshTokenCookieStore.Delete();
+		_refreshTokenCookieStore.Delete();
 
-        return NoContent();
-    }
+		return NoContent();
+	}
 }

@@ -1,94 +1,94 @@
-﻿using InstaConnect.Common.Domain.Features.Messaging.Models;
+using InstaConnect.Common.Domain.Features.Messaging.Models;
 using InstaConnect.Follows.Domain.Features.Follows.Models.Requests;
 
 namespace InstaConnect.Follows.Presentation.Tests.Features.Follows.Builders;
 
 public class GetAllFollowsApiRequestBuilder
 {
-    private string _followerId;
-    private string _followingName;
-    private string _currentUserId;
-    private int _page;
-    private int _pageSize;
-    private CommonSortOrder _sortOrder;
-    private FollowsSortTerm _sortTerm;
+	private string _followerId;
+	private string _followingName;
+	private string _currentUserId;
+	private int _page;
+	private int _pageSize;
+	private CommonSortOrder _sortOrder;
+	private FollowsSortTerm _sortTerm;
 
-    public GetAllFollowsApiRequestBuilder(Follow follow)
-    {
-        _followerId = follow.Id.FollowerId.Id;
-        _followingName = DataFaker.GetPrefixString(follow.Following!.Name.Value);
-        _currentUserId = follow.Id.FollowerId.Id;
-        _page = FollowDataFaker.GetPage();
-        _pageSize = FollowDataFaker.GetPageSize();
-        _sortOrder = DataFaker.GetSortOrder();
-        _sortTerm = FollowDataFaker.GetSortTerm();
-    }
+	public GetAllFollowsApiRequestBuilder(Follow follow)
+	{
+		_followerId = follow.Id.FollowerId.Id;
+		_followingName = DataFaker.GetPrefixString(follow.Following!.Name.Value);
+		_currentUserId = follow.Id.FollowerId.Id;
+		_page = FollowDataFaker.GetPage();
+		_pageSize = FollowDataFaker.GetPageSize();
+		_sortOrder = DataFaker.GetSortOrder();
+		_sortTerm = FollowDataFaker.GetSortTerm();
+	}
 
-    public GetAllFollowsApiRequestBuilder WithFollowerId(UserId followerId, IStringTransformer? transformer = null)
-    {
-        _followerId = transformer.TryTransform(followerId.Id);
+	public GetAllFollowsApiRequestBuilder WithFollowerId(UserId followerId, IStringTransformer? transformer = null)
+	{
+		_followerId = transformer.TryTransform(followerId.Id);
 
-        return this;
-    }
+		return this;
+	}
 
-    public GetAllFollowsApiRequestBuilder WithFollowerId(IStringTransformer transformer)
-    {
-        _followerId = transformer.Transform(_followerId);
+	public GetAllFollowsApiRequestBuilder WithFollowerId(IStringTransformer transformer)
+	{
+		_followerId = transformer.Transform(_followerId);
 
-        return this;
-    }
+		return this;
+	}
 
-    public GetAllFollowsApiRequestBuilder WithFollowingName(IStringTransformer transformer)
-    {
-        _followingName = transformer.Transform(_followingName);
+	public GetAllFollowsApiRequestBuilder WithFollowingName(IStringTransformer transformer)
+	{
+		_followingName = transformer.Transform(_followingName);
 
-        return this;
-    }
+		return this;
+	}
 
-    public GetAllFollowsApiRequestBuilder WithCurrentUserId(UserId currentUserId, IStringTransformer? transformer = null)
-    {
-        _currentUserId = transformer.TryTransform(currentUserId.Id);
+	public GetAllFollowsApiRequestBuilder WithCurrentUserId(UserId currentUserId, IStringTransformer? transformer = null)
+	{
+		_currentUserId = transformer.TryTransform(currentUserId.Id);
 
-        return this;
-    }
+		return this;
+	}
 
-    public GetAllFollowsApiRequestBuilder WithCurrentUserId(IStringTransformer transformer)
-    {
-        _currentUserId = transformer.Transform(_currentUserId);
+	public GetAllFollowsApiRequestBuilder WithCurrentUserId(IStringTransformer transformer)
+	{
+		_currentUserId = transformer.Transform(_currentUserId);
 
-        return this;
-    }
+		return this;
+	}
 
-    public GetAllFollowsApiRequestBuilder WithPage(IIntTransformer transformer)
-    {
-        _page = transformer.Transform(_page);
+	public GetAllFollowsApiRequestBuilder WithPage(IIntTransformer transformer)
+	{
+		_page = transformer.Transform(_page);
 
-        return this;
-    }
+		return this;
+	}
 
-    public GetAllFollowsApiRequestBuilder WithPageSize(IIntTransformer transformer)
-    {
-        _pageSize = transformer.Transform(_pageSize);
+	public GetAllFollowsApiRequestBuilder WithPageSize(IIntTransformer transformer)
+	{
+		_pageSize = transformer.Transform(_pageSize);
 
-        return this;
-    }
+		return this;
+	}
 
-    public GetAllFollowsApiRequestBuilder WithSortOrder(IEnumTransformer<CommonSortOrder> transformer)
-    {
-        _sortOrder = transformer.Transform(_sortOrder);
+	public GetAllFollowsApiRequestBuilder WithSortOrder(IEnumTransformer<CommonSortOrder> transformer)
+	{
+		_sortOrder = transformer.Transform(_sortOrder);
 
-        return this;
-    }
+		return this;
+	}
 
-    public GetAllFollowsApiRequestBuilder WithSortTerm(IEnumTransformer<FollowsSortTerm> transformer)
-    {
-        _sortTerm = transformer.Transform(_sortTerm);
+	public GetAllFollowsApiRequestBuilder WithSortTerm(IEnumTransformer<FollowsSortTerm> transformer)
+	{
+		_sortTerm = transformer.Transform(_sortTerm);
 
-        return this;
-    }
+		return this;
+	}
 
-    public GetAllFollowsApiRequest Build()
-    {
-        return new(_followerId, _currentUserId, _followingName, _sortOrder, _sortTerm, _page, _pageSize);
-    }
+	public GetAllFollowsApiRequest Build()
+	{
+		return new(_followerId, _currentUserId, _followingName, _sortOrder, _sortTerm, _page, _pageSize);
+	}
 }

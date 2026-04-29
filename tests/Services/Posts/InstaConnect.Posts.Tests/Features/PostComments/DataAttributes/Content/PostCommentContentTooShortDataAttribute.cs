@@ -1,10 +1,10 @@
-﻿namespace InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.Content;
+namespace InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.Content;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public sealed class PostCommentContentTooShortDataAttribute : TooShortStringDataAttribute
 {
-    public PostCommentContentTooShortDataAttribute()
-        : base(PostCommentConfigurations.ContentMinLength)
-    {
-    }
+	public PostCommentContentTooShortDataAttribute()
+		: base(PostCommentConfigurations.ContentMinLength)
+	{
+	}
 }

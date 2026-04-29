@@ -1,52 +1,52 @@
-﻿using InstaConnect.Chats.Domain.Features.Common.Models.Requests;
+using InstaConnect.Chats.Domain.Features.Common.Models.Requests;
 
 namespace InstaConnect.Chats.Domain.Features.Users.Helpers;
 
 public class SenderIncludeBuilder
 {
-    private readonly ICollection<ChatsIncludeDescriptor> _descriptors;
-    private readonly ISenderIncludeDescriptorFactory _descriptorsFactory;
+	private readonly ICollection<ChatsIncludeDescriptor> _descriptors;
+	private readonly ISenderIncludeDescriptorFactory _descriptorsFactory;
 
-    public SenderIncludeBuilder(
-        ICollection<ChatsIncludeDescriptor> descriptors,
-        ISenderIncludeDescriptorFactory descriptorsFactory)
-    {
-        _descriptors = descriptors;
-        _descriptorsFactory = descriptorsFactory;
-    }
+	public SenderIncludeBuilder(
+		ICollection<ChatsIncludeDescriptor> descriptors,
+		ISenderIncludeDescriptorFactory descriptorsFactory)
+	{
+		_descriptors = descriptors;
+		_descriptorsFactory = descriptorsFactory;
+	}
 
-    public SenderIncludeBuilder WithChats()
-    {
-        _descriptors.Add(_descriptorsFactory.CreateChats());
+	public SenderIncludeBuilder WithChats()
+	{
+		_descriptors.Add(_descriptorsFactory.CreateChats());
 
-        return this;
-    }
+		return this;
+	}
 
-    public SenderIncludeBuilder WithChats(ChatInclude include)
-    {
-        _descriptors.Add(_descriptorsFactory.CreateChats());
-        _descriptors.AddRange(include.Descriptors);
+	public SenderIncludeBuilder WithChats(ChatInclude include)
+	{
+		_descriptors.Add(_descriptorsFactory.CreateChats());
+		_descriptors.AddRange(include.Descriptors);
 
-        return this;
-    }
+		return this;
+	}
 
-    public SenderIncludeBuilder WithChatMessages()
-    {
-        _descriptors.Add(_descriptorsFactory.CreateChatMessages());
+	public SenderIncludeBuilder WithChatMessages()
+	{
+		_descriptors.Add(_descriptorsFactory.CreateChatMessages());
 
-        return this;
-    }
+		return this;
+	}
 
-    public SenderIncludeBuilder WithChatMessages(ChatMessageInclude include)
-    {
-        _descriptors.Add(_descriptorsFactory.CreateChatMessages());
-        _descriptors.AddRange(include.Descriptors);
+	public SenderIncludeBuilder WithChatMessages(ChatMessageInclude include)
+	{
+		_descriptors.Add(_descriptorsFactory.CreateChatMessages());
+		_descriptors.AddRange(include.Descriptors);
 
-        return this;
-    }
+		return this;
+	}
 
-    public SenderInclude Build()
-    {
-        return new(_descriptors);
-    }
+	public SenderInclude Build()
+	{
+		return new(_descriptors);
+	}
 }

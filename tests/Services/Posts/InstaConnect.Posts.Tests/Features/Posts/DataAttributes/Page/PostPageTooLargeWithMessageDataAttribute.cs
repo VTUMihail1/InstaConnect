@@ -1,12 +1,12 @@
-﻿namespace InstaConnect.Posts.Tests.Features.Posts.DataAttributes.Page;
+namespace InstaConnect.Posts.Tests.Features.Posts.DataAttributes.Page;
 
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public sealed class PostPageTooLargeWithMessageDataAttribute : TooLargeIntWithMessageDataAttribute
 {
-    public PostPageTooLargeWithMessageDataAttribute()
-        : base(PostConfigurations.PageMaxValue)
-    {
-    }
+	public PostPageTooLargeWithMessageDataAttribute()
+		: base(PostConfigurations.PageMaxValue)
+	{
+	}
 }
 

@@ -1,11 +1,11 @@
-﻿using InstaConnect.Identity.Domain.Features.Common.Models.Requests;
+using InstaConnect.Identity.Domain.Features.Common.Models.Requests;
 
 namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Helpers;
 
 public class ForgotPasswordTokenIncludeDescriptorFactory : IForgotPasswordTokenIncludeDescriptorFactory
 {
-    public IdentityIncludeDescriptor CreateUser()
-    {
-        return new(IdentityDestinationType.ForgotPasswordToken, IdentityIncludeType.User);
-    }
+	public IdentityIncludeDescriptor CreateUser()
+	{
+		return new(IdentityDestinationType.ForgotPasswordToken, IdentityIncludeType.User);
+	}
 }

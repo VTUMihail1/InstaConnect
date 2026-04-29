@@ -1,9 +1,9 @@
-﻿namespace InstaConnect.Posts.Tests.Features.PostLikes.Builders;
+namespace InstaConnect.Posts.Tests.Features.PostLikes.Builders;
 
 public class PostLikeBuilderFactory
 {
-    public PostLikeBuilder Create(Post post, User user)
-    {
-        return new(post, user);
-    }
+	public PostLikeBuilder Create(Post post, User user)
+	{
+		return new(post, user);
+	}
 }

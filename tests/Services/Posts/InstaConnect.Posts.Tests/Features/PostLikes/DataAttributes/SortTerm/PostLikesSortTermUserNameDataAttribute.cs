@@ -1,11 +1,11 @@
-﻿namespace InstaConnect.Posts.Tests.Features.PostLikes.DataAttributes.SortTerm;
+namespace InstaConnect.Posts.Tests.Features.PostLikes.DataAttributes.SortTerm;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public sealed class PostLikesSortTermUserNameDataAttribute
-    : SortEnumDataAttribute<PostLikesSortTerm>
+	: SortEnumDataAttribute<PostLikesSortTerm>
 {
-    public PostLikesSortTermUserNameDataAttribute()
-        : base(PostLikesSortTerm.ByUserName)
-    {
-    }
+	public PostLikesSortTermUserNameDataAttribute()
+		: base(PostLikesSortTerm.ByUserName)
+	{
+	}
 }

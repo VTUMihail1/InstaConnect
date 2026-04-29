@@ -1,4 +1,5 @@
-﻿using InstaConnect.Identity.Application.Features.RefreshTokens.Commands.DeleteCurrent;
+using InstaConnect.Common.Application.Features.AccessTokens.Models;
+using InstaConnect.Identity.Application.Features.RefreshTokens.Commands.DeleteCurrent;
 using InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Issue;
 using InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Rotate;
 
@@ -8,35 +9,35 @@ namespace InstaConnect.Identity.Presentation.Features.RefreshTokens.Mappings;
 
 internal class RefreshTokenPresentationMappings : IRegister
 {
-    public void Register(TypeAdapterConfig config)
-    {
-        config.NewConfig<SessionTokenCommandResponse, SetRefreshTokenCookieRequest>()
-            .ConstructUsing(src => new(src.Id.Id, src.Id.Value, src.ExpiresAtUtc));
+	public void Register(TypeAdapterConfig config)
+	{
+		config.NewConfig<SessionTokenCommandResponse, SetRefreshTokenCookieRequest>()
+			.ConstructUsing(src => new(src.Id.Id, src.Id.Value, src.ExpiresAtUtc));
 
-        config.NewConfig<IssueRefreshTokenApiRequest, IssueRefreshTokenCommandRequest>()
-            .ConstructUsing(src => new(
-                                       src.Name,
-                                       src.Body.Password));
+		config.NewConfig<IssueRefreshTokenApiRequest, IssueRefreshTokenCommandRequest>()
+			.ConstructUsing(src => new(
+									   src.Name,
+									   src.Body.Password));
 
-        config.NewConfig<IssueRefreshTokenCommandResponse, IssueRefreshTokenApiResponse>()
-            .ConstructUsing(src => new(src.Response.AccessToken.Adapt<AccessTokenApiResponse>(config)!));
+		config.NewConfig<IssueRefreshTokenCommandResponse, IssueRefreshTokenApiResponse>()
+			.ConstructUsing(src => new(src.Response.AccessToken.Adapt<AccessTokenApiResponse>(config)!));
 
-        config.NewConfig<RotateRefreshTokenApiRequest, RotateRefreshTokenCommandRequest>()
-            .ConstructUsing(src => new(
-                src.Id,
-                src.Value));
+		config.NewConfig<RotateRefreshTokenApiRequest, RotateRefreshTokenCommandRequest>()
+			.ConstructUsing(src => new(
+				src.Id,
+				src.Value));
 
-        config.NewConfig<RotateRefreshTokenCommandResponse, RotateRefreshTokenApiResponse>()
-            .ConstructUsing(src => new(src.Response.AccessToken.Adapt<AccessTokenApiResponse>(config)!));
+		config.NewConfig<RotateRefreshTokenCommandResponse, RotateRefreshTokenApiResponse>()
+			.ConstructUsing(src => new(src.Response.AccessToken.Adapt<AccessTokenApiResponse>(config)!));
 
-        config.NewConfig<DeleteCurrentRefreshTokenApiRequest, DeleteCurrentRefreshTokenCommandRequest>()
-            .ConstructUsing(src => new(
-                src.Id,
-                src.Value));
+		config.NewConfig<DeleteCurrentRefreshTokenApiRequest, DeleteCurrentRefreshTokenCommandRequest>()
+			.ConstructUsing(src => new(
+				src.Id,
+				src.Value));
 
-        config.NewConfig<AccessTokenCommandResponse, AccessTokenApiResponse>()
-            .ConstructUsing(src => new(
-                src.Value,
-                src.ExpiresAtUtc));
-    }
+		config.NewConfig<AccessTokenCommandResponse, AccessTokenApiResponse>()
+			.ConstructUsing(src => new(
+				src.Value,
+				src.ExpiresAtUtc));
+	}
 }

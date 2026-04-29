@@ -1,7 +1,7 @@
-﻿namespace InstaConnect.Chats.Application.Features.ChatMessages.Commands.Update;
+namespace InstaConnect.Chats.Application.Features.ChatMessages.Commands.Update;
 
 public record UpdateChatMessageCommandRequest(
-    string ParticipantOneId,
-    string ParticipantTwoId,
-    string MessageId,
-    string Content) : ICommandRequest<UpdateChatMessageCommandResponse>;
+	string ParticipantOneId,
+	string ParticipantTwoId,
+	string MessageId,
+	string Content) : ICommandRequest<UpdateChatMessageCommandResponse>;

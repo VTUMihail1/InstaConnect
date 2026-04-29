@@ -1,16 +1,16 @@
-﻿using InstaConnect.Common.Domain.Features.ExceptionHandling.Exceptions;
+using InstaConnect.Common.Domain.Features.ExceptionHandling.Exceptions;
 
 namespace InstaConnect.Chats.Domain.Features.Chats.Exceptions;
 
 public class ChatsSortTermNotSupportedException : BadRequestException
 {
-    public ChatsSortTermNotSupportedException(ChatsSortTerm sortTerm)
-        : base(ChatExceptionErrorMessages.GetSortTermNotSupportedMessage(sortTerm))
-    {
-    }
+	public ChatsSortTermNotSupportedException(ChatsSortTerm sortTerm)
+		: base(ChatExceptionErrorMessages.GetSortTermNotSupportedMessage(sortTerm))
+	{
+	}
 
-    public ChatsSortTermNotSupportedException(ChatsSortTerm sortTerm, Exception exception)
-        : base(ChatExceptionErrorMessages.GetSortTermNotSupportedMessage(sortTerm), exception)
-    {
-    }
+	public ChatsSortTermNotSupportedException(ChatsSortTerm sortTerm, Exception exception)
+		: base(ChatExceptionErrorMessages.GetSortTermNotSupportedMessage(sortTerm), exception)
+	{
+	}
 }

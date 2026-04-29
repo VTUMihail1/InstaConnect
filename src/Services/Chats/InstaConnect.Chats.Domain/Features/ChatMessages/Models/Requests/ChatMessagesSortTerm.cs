@@ -1,7 +1,7 @@
-﻿namespace InstaConnect.Chats.Domain.Features.ChatMessages.Models.Requests;
+namespace InstaConnect.Chats.Domain.Features.ChatMessages.Models.Requests;
 
 public enum ChatMessagesSortTerm
 {
-    None,
-    ByCreatedAt
+	None,
+	ByCreatedAt
 }

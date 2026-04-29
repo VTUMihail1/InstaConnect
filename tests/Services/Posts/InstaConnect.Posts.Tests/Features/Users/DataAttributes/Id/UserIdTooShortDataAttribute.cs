@@ -1,10 +1,10 @@
-﻿namespace InstaConnect.Posts.Tests.Features.Users.DataAttributes.Id;
+namespace InstaConnect.Posts.Tests.Features.Users.DataAttributes.Id;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public sealed class UserIdTooShortDataAttribute : TooShortStringDataAttribute
 {
-    public UserIdTooShortDataAttribute()
-        : base(UserConfigurations.IdMinLength)
-    {
-    }
+	public UserIdTooShortDataAttribute()
+		: base(UserConfigurations.IdMinLength)
+	{
+	}
 }

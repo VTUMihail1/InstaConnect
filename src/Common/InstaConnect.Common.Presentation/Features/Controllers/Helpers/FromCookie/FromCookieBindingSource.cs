@@ -4,9 +4,9 @@ namespace InstaConnect.Common.Presentation.Features.Controllers.Helpers.FromCook
 
 public static class FromCookieBindingSource
 {
-    public static readonly BindingSource Instance = new(
-        "Cookie",
-        "BindingSource_Cookie",
-        false,
-        true);
+	public static readonly BindingSource Instance = new(
+		"Cookie",
+		"BindingSource_Cookie",
+		false,
+		true);
 }

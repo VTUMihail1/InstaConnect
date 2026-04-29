@@ -1,12 +1,12 @@
-﻿using InstaConnect.Common.Domain.Features.Messaging.Models;
+using InstaConnect.Common.Domain.Features.Messaging.Models;
 
 namespace InstaConnect.Identity.Tests.Features.Users.DataAttributes.SortOrder;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public sealed class UsersSortOrderDescendingDataAttribute : SortEnumDataAttribute<CommonSortOrder>
 {
-    public UsersSortOrderDescendingDataAttribute()
-        : base(CommonSortOrder.Descending)
-    {
-    }
+	public UsersSortOrderDescendingDataAttribute()
+		: base(CommonSortOrder.Descending)
+	{
+	}
 }

@@ -1,6 +1,6 @@
-﻿namespace InstaConnect.Identity.Domain.Features.Users.Models.Requests;
+namespace InstaConnect.Identity.Domain.Features.Users.Models.Requests;
 
 public record UsersFilterQuery(
-    string FirstName,
-    string LastName,
-    Name Name);
+	string FirstName,
+	string LastName,
+	Name Name);

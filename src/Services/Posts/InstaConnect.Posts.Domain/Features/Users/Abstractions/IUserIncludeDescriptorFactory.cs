@@ -6,9 +6,9 @@ public interface IUserIncludeDescriptorFactory
 {
 	public PostsIncludeDescriptor CreatePosts();
 
-    public PostsIncludeDescriptor CreatePostLikes();
+	public PostsIncludeDescriptor CreatePostLikes();
 
-    public PostsIncludeDescriptor CreatePostComments();
+	public PostsIncludeDescriptor CreatePostComments();
 
-    public PostsIncludeDescriptor CreatePostCommentLikes();
+	public PostsIncludeDescriptor CreatePostCommentLikes();
 }

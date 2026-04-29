@@ -1,9 +1,9 @@
-﻿namespace InstaConnect.Identity.Application.Tests.Features.Users.Builders;
+namespace InstaConnect.Identity.Application.Tests.Features.Users.Builders;
 
 public class DeleteCurrentUserCommandRequestBuilderFactory
 {
-    public DeleteCurrentUserCommandRequestBuilder Create(User user)
-    {
-        return new(user);
-    }
+	public DeleteCurrentUserCommandRequestBuilder Create(User user)
+	{
+		return new(user);
+	}
 }

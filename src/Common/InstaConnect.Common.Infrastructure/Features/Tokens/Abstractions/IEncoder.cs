@@ -1,6 +1,0 @@
-namespace InstaConnect.Common.Infrastructure.Features.Tokens.Abstractions;
-
-public interface IEncoder
-{
-	public byte[] GetBytesUTF8(string key);
-}

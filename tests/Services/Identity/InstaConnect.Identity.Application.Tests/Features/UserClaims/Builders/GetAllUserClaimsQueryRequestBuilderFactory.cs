@@ -1,9 +1,9 @@
-﻿namespace InstaConnect.Identity.Application.Tests.Features.UserClaims.Builders;
+namespace InstaConnect.Identity.Application.Tests.Features.UserClaims.Builders;
 
 public class GetAllUserClaimsQueryRequestBuilderFactory
 {
-    public GetAllUserClaimsQueryRequestBuilder Create(UserClaim userClaim)
-    {
-        return new(userClaim);
-    }
+	public GetAllUserClaimsQueryRequestBuilder Create(UserClaim userClaim)
+	{
+		return new(userClaim);
+	}
 }

@@ -1,14 +1,14 @@
-﻿using InstaConnect.Common.Domain.Features.Messaging.Models;
+using InstaConnect.Common.Domain.Features.Messaging.Models;
 using InstaConnect.Posts.Application.Features.Users.Abstractions;
 
 namespace InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAll;
 
 public record GetAllPostLikesQueryRequest(
-    string Id,
-    string UserName,
-    string CurrentUserId,
-    CommonSortOrder SortOrder,
-    PostLikesSortTerm SortTerm,
-    int Page,
-    int PageSize)
-    : IQueryRequest<GetAllPostLikesQueryResponse>, ISortableQueryRequest<PostLikesSortTerm>, IPaginatableQueryRequest, ICurrentUserableQueryRequest;
+	string Id,
+	string UserName,
+	string CurrentUserId,
+	CommonSortOrder SortOrder,
+	PostLikesSortTerm SortTerm,
+	int Page,
+	int PageSize)
+	: IQueryRequest<GetAllPostLikesQueryResponse>, ISortableQueryRequest<PostLikesSortTerm>, IPaginatableQueryRequest, ICurrentUserableQueryRequest;

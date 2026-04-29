@@ -1,13 +1,13 @@
-﻿using InstaConnect.Common.Domain.Features.Messaging.Models;
+using InstaConnect.Common.Domain.Features.Messaging.Models;
 
 namespace InstaConnect.Posts.Tests.Features.PostLikes.DataAttributes.SortOrder;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public sealed class PostLikesSortOrderWithAscendingTermDataAttribute
-    : SortEnumWithAscendingTermDataAttribute<CommonSortOrder, PostLike, DateTimeOffset>
+	: SortEnumWithAscendingTermDataAttribute<CommonSortOrder, PostLike, DateTimeOffset>
 {
-    public PostLikesSortOrderWithAscendingTermDataAttribute()
-        : base(CommonSortOrder.Ascending, p => p.CreatedAtUtc)
-    {
-    }
+	public PostLikesSortOrderWithAscendingTermDataAttribute()
+		: base(CommonSortOrder.Ascending, p => p.CreatedAtUtc)
+	{
+	}
 }

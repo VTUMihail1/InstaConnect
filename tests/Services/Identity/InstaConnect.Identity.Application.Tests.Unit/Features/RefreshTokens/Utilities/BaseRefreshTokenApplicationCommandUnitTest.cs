@@ -1,17 +1,17 @@
-﻿using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
+using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
 using InstaConnect.Identity.Application.Features.Common.Extensions;
 
 namespace InstaConnect.Identity.Application.Tests.Unit.Features.RefreshTokens.Utilities;
 
 public abstract class BaseRefreshTokenApplicationCommandUnitTest : BaseRefreshTokenTest
 {
-    protected IApplicationMapper Mapper { get; }
+	protected IApplicationMapper Mapper { get; }
 
-    protected IRefreshTokenCommandService Service { get; }
+	protected IRefreshTokenCommandService Service { get; }
 
-    protected BaseRefreshTokenApplicationCommandUnitTest() : base(IdentityMockFactory.CreatePasswordHasher())
-    {
-        Mapper = MockFactory.CreateMapper(IdentityApplicationReference.Assembly);
-        Service = RefreshTokenMockFactory.CreateCommandService();
-    }
+	protected BaseRefreshTokenApplicationCommandUnitTest() : base(IdentityMockFactory.CreatePasswordHasher())
+	{
+		Mapper = MockFactory.CreateMapper(IdentityApplicationReference.Assembly);
+		Service = RefreshTokenMockFactory.CreateCommandService();
+	}
 }

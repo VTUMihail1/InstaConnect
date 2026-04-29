@@ -1,17 +1,17 @@
-﻿namespace InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Issue;
+namespace InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Issue;
 
 public class IssueRefreshTokenCommandRequestValidator : AbstractValidator<IssueRefreshTokenCommandRequest>
 {
-    public IssueRefreshTokenCommandRequestValidator()
-    {
-        RuleFor(r => r.Name)
-            .NotEmptyWithMessage()
-            .UserNameMinLengthWithMessage()
-            .UserNameMaxLengthWithMessage();
+	public IssueRefreshTokenCommandRequestValidator()
+	{
+		RuleFor(r => r.Name)
+			.NotEmptyWithMessage()
+			.UserNameMinLengthWithMessage()
+			.UserNameMaxLengthWithMessage();
 
-        RuleFor(r => r.Password)
-            .NotEmptyWithMessage()
-            .UserPasswordMinLengthWithMessage()
-            .UserPasswordMaxLengthWithMessage();
-    }
+		RuleFor(r => r.Password)
+			.NotEmptyWithMessage()
+			.UserPasswordMinLengthWithMessage()
+			.UserPasswordMaxLengthWithMessage();
+	}
 }

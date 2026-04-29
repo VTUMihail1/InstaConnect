@@ -1,8 +1,8 @@
-﻿namespace InstaConnect.Posts.Domain.Features.PostComments.Models.Requests;
+namespace InstaConnect.Posts.Domain.Features.PostComments.Models.Requests;
 
 public enum PostCommentsSortTerm
 {
-    None,
-    ByCreatedAt,
-    ByUserName
+	None,
+	ByCreatedAt,
+	ByUserName
 }
