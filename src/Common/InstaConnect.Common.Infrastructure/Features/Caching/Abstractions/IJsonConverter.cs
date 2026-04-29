@@ -1,7 +1,7 @@
-﻿namespace InstaConnect.Common.Infrastructure.Features.Caching.Abstractions;
+namespace InstaConnect.Common.Infrastructure.Features.Caching.Abstractions;
 
 public interface IJsonConverter
 {
-    T? Deserialize<T>(string value);
-    string Serialize(object? obj);
+	public T? Deserialize<T>(string value);
+	public string Serialize(object? obj);
 }

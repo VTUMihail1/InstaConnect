@@ -1,14 +1,14 @@
-﻿using InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Utilities;
+using InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Utilities;
 
 namespace InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Builders;
 
 public class EmailConfirmationTokenBuilder
 {
-    private string _id;
-    private User _user;
-    private string _value;
+    private readonly string _id;
+    private readonly User _user;
+    private readonly string _value;
     private DateTimeOffset _expiresAtUtc;
-    private DateTimeOffset _createdAtUtc;
+    private readonly DateTimeOffset _createdAtUtc;
 
     public EmailConfirmationTokenBuilder(User user)
     {

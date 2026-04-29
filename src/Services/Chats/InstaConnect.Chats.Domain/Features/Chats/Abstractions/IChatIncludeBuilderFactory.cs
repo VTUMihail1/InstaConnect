@@ -1,8 +1,8 @@
-﻿using InstaConnect.Chats.Domain.Features.Chats.Helpers;
+using InstaConnect.Chats.Domain.Features.Chats.Helpers;
 
 namespace InstaConnect.Chats.Domain.Features.Chats.Abstractions;
 
 public interface IChatIncludeBuilderFactory
 {
-    ChatIncludeBuilder Create();
+	public ChatIncludeBuilder Create();
 }

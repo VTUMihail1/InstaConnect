@@ -4,5 +4,5 @@ namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Abstract
 
 public interface IEmailConfirmationTokenSendEmailRequestFactory
 {
-    Task<SendEmailRequest> GetAsync(EmailConfirmationToken emailConfirmationToken, CancellationToken cancellationToken);
+	public Task<SendEmailRequest> GetAsync(EmailConfirmationToken emailConfirmationToken, CancellationToken cancellationToken);
 }

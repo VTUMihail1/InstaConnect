@@ -1,17 +1,17 @@
-﻿using InstaConnect.Posts.Tests.Features.PostComments.Utilities;
+using InstaConnect.Posts.Tests.Features.PostComments.Utilities;
 
 namespace InstaConnect.Posts.Tests.Features.PostComments.Builders;
 
 public class PostCommentBuilder
 {
-    private string _id;
-    private Post _post;
-    private string _content;
-    private string _commentId;
-    private string _userId;
-    private User _user;
-    private DateTimeOffset _createdAtUtc;
-    private DateTimeOffset _updatedAtUtc;
+    private readonly string _id;
+    private readonly Post _post;
+    private readonly string _content;
+    private readonly string _commentId;
+    private readonly string _userId;
+    private readonly User _user;
+    private readonly DateTimeOffset _createdAtUtc;
+    private readonly DateTimeOffset _updatedAtUtc;
 
     public PostCommentBuilder(Post post, User user)
     {

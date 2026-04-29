@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Domain.Features.ExceptionHandling.Exceptions;
+using InstaConnect.Common.Domain.Features.ExceptionHandling.Exceptions;
 using InstaConnect.Common.Presentation.Features.ExceptionHandling.Abstractions;
 
 using Microsoft.AspNetCore.Diagnostics;
@@ -24,14 +24,12 @@ public sealed class InvalidValidationExceptionHandler : IExceptionHandler
         Exception exception,
         CancellationToken cancellationToken)
     {
-        var invalidValidationException = exception as InvalidValidationException;
+		if (exception is not InvalidValidationException)
+		{
+			return false;
+		}
 
-        if (invalidValidationException == null)
-        {
-            return false;
-        }
-
-        var problemDetails = _problemDetailsFactory.Create(invalidValidationException);
+		var problemDetails = _problemDetailsFactory.Create(exception);
         await _problemDetailsService.WriteAsync(httpContext, exception, problemDetails, cancellationToken);
 
         return true;

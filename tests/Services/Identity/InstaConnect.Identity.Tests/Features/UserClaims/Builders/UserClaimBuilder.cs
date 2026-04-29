@@ -1,14 +1,14 @@
-﻿using InstaConnect.Common.Events.Features.Tokens.Models;
+using InstaConnect.Common.Events.Features.Tokens.Models;
 using InstaConnect.Identity.Tests.Features.UserClaims.Utilities;
 
 namespace InstaConnect.Identity.Tests.Features.UserClaims.Builders;
 
 public class UserClaimBuilder
 {
-    private string _id;
-    private User _user;
-    private ApplicationClaims _claim;
-    private DateTimeOffset _createdAtUtc;
+    private readonly string _id;
+    private readonly User _user;
+    private readonly ApplicationClaims _claim;
+    private readonly DateTimeOffset _createdAtUtc;
 
     public UserClaimBuilder(User user)
     {

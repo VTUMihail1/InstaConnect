@@ -1,20 +1,20 @@
-﻿using InstaConnect.Common.Events.Features.Common.Abstractions;
+using InstaConnect.Common.Events.Features.Common.Abstractions;
 
 namespace InstaConnect.Common.Tests.Features.Events;
 
 public interface IEventHarness
 {
-    Task ShouldHaveConsumedAsync<TRequest>(Func<TRequest, bool> predicate, CancellationToken cancellationToken) where TRequest : class, IEventRequest;
+	public Task ShouldHaveConsumedAsync<TRequest>(Func<TRequest, bool> predicate, CancellationToken cancellationToken) where TRequest : class, IEventRequest;
 
-    Task ShouldHaveFaultedAsync<TRequest>(Func<TRequest, bool> predicate, CancellationToken cancellationToken) where TRequest : class, IEventRequest;
+	public Task ShouldHaveFaultedAsync<TRequest>(Func<TRequest, bool> predicate, CancellationToken cancellationToken) where TRequest : class, IEventRequest;
 
-    Task PublishAsync<TRequest>(TRequest message, CancellationToken cancellationToken) where TRequest : class, IEventRequest;
+	public Task PublishAsync<TRequest>(TRequest message, CancellationToken cancellationToken) where TRequest : class, IEventRequest;
 
-    Task ShouldHavePublishedAsync<TRequest>(Func<TRequest, bool> predicate, CancellationToken cancellationToken) where TRequest : class, IEventRequest;
+	public Task ShouldHavePublishedAsync<TRequest>(Func<TRequest, bool> predicate, CancellationToken cancellationToken) where TRequest : class, IEventRequest;
 
-    Task ShouldHaveNotPublishedAsync<TRequest>(Func<TRequest, bool> predicate, CancellationToken cancellationToken) where TRequest : class, IEventRequest;
+	public Task ShouldHaveNotPublishedAsync<TRequest>(Func<TRequest, bool> predicate, CancellationToken cancellationToken) where TRequest : class, IEventRequest;
 
-    Task StartAsync(CancellationToken cancellationToken);
+	public Task StartAsync(CancellationToken cancellationToken);
 
-    Task StopAsync(CancellationToken cancellationToken);
+	public Task StopAsync(CancellationToken cancellationToken);
 }

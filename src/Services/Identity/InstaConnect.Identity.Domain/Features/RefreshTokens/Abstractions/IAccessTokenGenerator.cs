@@ -1,6 +1,6 @@
-﻿namespace InstaConnect.Identity.Domain.Features.RefreshTokens.Abstractions;
+namespace InstaConnect.Identity.Domain.Features.RefreshTokens.Abstractions;
 
 public interface IAccessTokenGenerator
 {
-    AccessToken Generate(User user);
+	public AccessToken Generate(User user);
 }

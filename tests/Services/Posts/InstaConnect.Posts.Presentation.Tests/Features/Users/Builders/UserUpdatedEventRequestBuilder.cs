@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Domain.Features.ValueObjects.Models;
+using InstaConnect.Common.Domain.Features.ValueObjects.Models;
 
 namespace InstaConnect.Posts.Presentation.Tests.Features.Users.Builders;
 
@@ -10,7 +10,7 @@ public class UserUpdatedEventRequestBuilder
     private string _lastName;
     private string _email;
     private string? _profileImage;
-    private DateTimeOffset _createdAtUtc;
+    private readonly DateTimeOffset _createdAtUtc;
     private DateTimeOffset _updatedAtUtc;
 
     public UserUpdatedEventRequestBuilder(User user)

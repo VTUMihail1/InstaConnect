@@ -1,14 +1,14 @@
-﻿using InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.Utilities;
+using InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.Utilities;
 
 namespace InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.Builders;
 
 public class ForgotPasswordTokenBuilder
 {
-    private string _id;
-    private User _user;
-    private string _value;
+    private readonly string _id;
+    private readonly User _user;
+    private readonly string _value;
     private DateTimeOffset _expiresAtUtc;
-    private DateTimeOffset _createdAtUtc;
+    private readonly DateTimeOffset _createdAtUtc;
 
     public ForgotPasswordTokenBuilder(User user)
     {

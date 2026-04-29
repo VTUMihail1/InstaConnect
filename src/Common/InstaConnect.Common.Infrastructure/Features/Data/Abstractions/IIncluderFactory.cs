@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Domain.Features.Data.Abstractions;
+using InstaConnect.Common.Domain.Features.Data.Abstractions;
 
 namespace InstaConnect.Common.Infrastructure.Features.Data.Abstractions;
 
@@ -9,5 +9,5 @@ public interface IIncluderFactory<
     where TIncluder : IIncluder<TEntity, TIncludeType, TDestinationType>
     where TIncludeDescriptor : IIncludeDescriptor<TDestinationType, TIncludeType>
 {
-    IEnumerable<TIncluder> Create(ICollection<TIncludeDescriptor>? descriptor);
+	public IEnumerable<TIncluder> Create(ICollection<TIncludeDescriptor>? descriptor);
 }

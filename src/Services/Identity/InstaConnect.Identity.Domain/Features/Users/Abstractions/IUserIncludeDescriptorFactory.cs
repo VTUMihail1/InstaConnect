@@ -1,14 +1,14 @@
-﻿using InstaConnect.Identity.Domain.Features.Common.Models.Requests;
+using InstaConnect.Identity.Domain.Features.Common.Models.Requests;
 
 namespace InstaConnect.Identity.Domain.Features.Users.Abstractions;
 
 public interface IUserIncludeDescriptorFactory
 {
-    IdentityIncludeDescriptor CreateUserClaims();
+	public IdentityIncludeDescriptor CreateUserClaims();
 
-    IdentityIncludeDescriptor CreateRefreshTokens();
+    public IdentityIncludeDescriptor CreateRefreshTokens();
 
-    IdentityIncludeDescriptor CreateForgotPasswordTokens();
+    public IdentityIncludeDescriptor CreateForgotPasswordTokens();
 
-    IdentityIncludeDescriptor CreateEmailConfirmationTokens();
+    public IdentityIncludeDescriptor CreateEmailConfirmationTokens();
 }

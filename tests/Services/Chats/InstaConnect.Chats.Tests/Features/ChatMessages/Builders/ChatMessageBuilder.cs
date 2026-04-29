@@ -1,19 +1,19 @@
-﻿using InstaConnect.Chats.Domain.Features.Users.Models.ValueObjects;
+using InstaConnect.Chats.Domain.Features.Users.Models.ValueObjects;
 using InstaConnect.Chats.Tests.Features.ChatMessages.Utilities;
 
 namespace InstaConnect.Chats.Tests.Features.ChatMessages.Builders;
 
 public class ChatMessageBuilder
 {
-    private string _participantOneId;
-    private string _participantTwoId;
-    private Chat _chat;
-    private string _messageId;
+    private readonly string _participantOneId;
+    private readonly string _participantTwoId;
+    private readonly Chat _chat;
+    private readonly string _messageId;
     private string _senderId;
-    private User _sender;
-    private string _content;
-    private DateTimeOffset _createdAtUtc;
-    private DateTimeOffset _updatedAtUtc;
+    private readonly User _sender;
+    private readonly string _content;
+    private readonly DateTimeOffset _createdAtUtc;
+    private readonly DateTimeOffset _updatedAtUtc;
 
     public ChatMessageBuilder(Chat chat)
     {

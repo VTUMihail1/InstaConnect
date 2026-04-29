@@ -2,5 +2,5 @@ namespace InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Ab
 
 public interface IEmailConfirmationTokenTemplateFactory
 {
-    Task<string> GetAddedAsync(EmailConfirmationTokenAddedViewRequest request, CancellationToken cancellationToken);
+	public Task<string> GetAddedAsync(EmailConfirmationTokenAddedViewRequest request, CancellationToken cancellationToken);
 }

@@ -1,14 +1,14 @@
-﻿using InstaConnect.Chats.Tests.Features.Chats.Utilities;
+using InstaConnect.Chats.Tests.Features.Chats.Utilities;
 
 namespace InstaConnect.Chats.Tests.Features.Chats.Builders;
 
 public class ChatBuilder
 {
-    private string _participantOneId;
-    private string _participantTwoId;
-    private User _participantOne;
-    private User _participantTwo;
-    private DateTimeOffset _createdAtUtc;
+    private readonly string _participantOneId;
+    private readonly string _participantTwoId;
+    private readonly User _participantOne;
+    private readonly User _participantTwo;
+    private readonly DateTimeOffset _createdAtUtc;
 
     public ChatBuilder(User participantOne, User participantTwo)
     {

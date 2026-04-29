@@ -1,24 +1,24 @@
-﻿namespace InstaConnect.Identity.Domain.Features.Users.Abstractions;
+namespace InstaConnect.Identity.Domain.Features.Users.Abstractions;
 
 public interface IUserQueryRepository
 {
-    Task<ICollection<UserResponse>> GetAllAsync(
+	public Task<ICollection<UserResponse>> GetAllAsync(
         UsersFilterQuery filter,
         CurrentUserQuery current,
         UsersSortingQuery sorting,
         UsersPaginationQuery pagination,
         CancellationToken cancellationToken);
 
-    Task<long> GetTotalCountAsync(
+    public Task<long> GetTotalCountAsync(
         UsersFilterQuery filter,
         CancellationToken cancellationToken);
 
-    Task<UserResponse?> GetByIdAsync(
+    public Task<UserResponse?> GetByIdAsync(
         UserId id,
         CurrentUserQuery current,
         CancellationToken cancellationToken);
 
-    Task<bool> ExistsByIdAsync(
+    public Task<bool> ExistsByIdAsync(
         UserId id,
         CancellationToken cancellationToken);
 }

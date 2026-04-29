@@ -1,8 +1,8 @@
-﻿using InstaConnect.Posts.Domain.Features.Posts.Helpers;
+using InstaConnect.Posts.Domain.Features.Posts.Helpers;
 
 namespace InstaConnect.Posts.Domain.Features.Posts.Abstractions;
 
 public interface IPostIncludeBuilderFactory
 {
-    PostIncludeBuilder Create();
+	public PostIncludeBuilder Create();
 }

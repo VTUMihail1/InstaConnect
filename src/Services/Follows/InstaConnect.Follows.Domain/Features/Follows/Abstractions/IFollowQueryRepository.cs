@@ -1,35 +1,35 @@
-﻿namespace InstaConnect.Follows.Domain.Features.Follows.Abstractions;
+namespace InstaConnect.Follows.Domain.Features.Follows.Abstractions;
 
 public interface IFollowQueryRepository
 {
-    Task<ICollection<FollowResponse>> GetAllAsync(
+	public Task<ICollection<FollowResponse>> GetAllAsync(
         FollowsFilterQuery filter,
         CurrentUserQuery currentUser,
         FollowsSortingQuery sorting,
         FollowsPaginationQuery pagination,
         CancellationToken cancellationToken);
 
-    Task<ICollection<FollowResponse>> GetAllForFollowingAsync(
+	public Task<ICollection<FollowResponse>> GetAllForFollowingAsync(
         FollowsForFollowingFilterQuery filter,
         CurrentUserQuery currentUser,
         FollowsForFollowingSortingQuery sorting,
         FollowsPaginationQuery pagination,
         CancellationToken cancellationToken);
 
-    Task<long> GetTotalCountAsync(
+    public Task<long> GetTotalCountAsync(
         FollowsFilterQuery filter,
         CancellationToken cancellationToken);
 
-    Task<long> GetTotalCountForFollowingAsync(
+    public Task<long> GetTotalCountForFollowingAsync(
         FollowsForFollowingFilterQuery filter,
         CancellationToken cancellationToken);
 
-    Task<FollowResponse?> GetByIdAsync(
+    public Task<FollowResponse?> GetByIdAsync(
         FollowId id,
         CurrentUserQuery currentUser,
         CancellationToken cancellationToken);
 
-    Task<bool> ExistsByIdAsync(
+    public Task<bool> ExistsByIdAsync(
         FollowId id,
         CancellationToken cancellationToken);
 }

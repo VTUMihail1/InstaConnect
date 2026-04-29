@@ -1,15 +1,15 @@
-﻿namespace InstaConnect.Posts.Presentation.Tests.Features.Users.Builders;
+namespace InstaConnect.Posts.Presentation.Tests.Features.Users.Builders;
 
 public class UserDeletedEventRequestBuilder
 {
     private string _id;
-    private string _name;
-    private string _firstName;
-    private string _lastName;
-    private string _email;
-    private string? _profileImage;
-    private DateTimeOffset _createdAtUtc;
-    private DateTimeOffset _updatedAtUtc;
+    private readonly string _name;
+    private readonly string _firstName;
+    private readonly string _lastName;
+    private readonly string _email;
+    private readonly string? _profileImage;
+    private readonly DateTimeOffset _createdAtUtc;
+    private readonly DateTimeOffset _updatedAtUtc;
 
     public UserDeletedEventRequestBuilder(User user)
     {

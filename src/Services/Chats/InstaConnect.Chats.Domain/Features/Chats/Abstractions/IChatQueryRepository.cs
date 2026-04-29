@@ -1,24 +1,24 @@
-﻿namespace InstaConnect.Chats.Domain.Features.Chats.Abstractions;
+namespace InstaConnect.Chats.Domain.Features.Chats.Abstractions;
 
 public interface IChatQueryRepository
 {
-    Task<ICollection<ChatResponse>> GetAllAsync(
+	public Task<ICollection<ChatResponse>> GetAllAsync(
         ChatsFilterQuery filter,
         CurrentUserQuery currentUser,
         ChatsSortingQuery sorting,
         ChatsPaginationQuery pagination,
         CancellationToken cancellationToken);
 
-    Task<long> GetTotalCountAsync(
+	public Task<long> GetTotalCountAsync(
         ChatsFilterQuery filter,
         CancellationToken cancellationToken);
 
-    Task<ChatResponse?> GetByIdAsync(
+    public Task<ChatResponse?> GetByIdAsync(
         ChatId id,
         CurrentUserQuery currentUser,
         CancellationToken cancellationToken);
 
-    Task<bool> ExistsByIdAsync(
+    public Task<bool> ExistsByIdAsync(
         ChatId id,
         CancellationToken cancellationToken);
 }

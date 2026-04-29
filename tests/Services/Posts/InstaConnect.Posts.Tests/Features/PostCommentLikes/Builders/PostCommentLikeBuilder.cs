@@ -1,15 +1,15 @@
-﻿using InstaConnect.Posts.Tests.Features.PostCommentLikes.Utilities;
+using InstaConnect.Posts.Tests.Features.PostCommentLikes.Utilities;
 
 namespace InstaConnect.Posts.Tests.Features.PostCommentLikes.Builders;
 
 public class PostCommentLikeBuilder
 {
-    private string _id;
-    private string _commentId;
-    private PostComment _postComment;
-    private string _userId;
-    private User _user;
-    private DateTimeOffset _createdAtUtc;
+    private readonly string _id;
+    private readonly string _commentId;
+    private readonly PostComment _postComment;
+    private readonly string _userId;
+    private readonly User _user;
+    private readonly DateTimeOffset _createdAtUtc;
 
     public PostCommentLikeBuilder(PostComment postComment, User user)
     {

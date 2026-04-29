@@ -1,35 +1,35 @@
-﻿namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstractions;
+namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstractions;
 
 public interface IPostCommentLikeQueryRepository
 {
-    Task<ICollection<PostCommentLikeResponse>> GetAllAsync(
+	public Task<ICollection<PostCommentLikeResponse>> GetAllAsync(
         PostCommentLikesFilterQuery filter,
         CurrentUserQuery currentUser,
         PostCommentLikesSortingQuery sorting,
         PostCommentLikesPaginationQuery pagination,
         CancellationToken cancellationToken);
 
-    Task<ICollection<PostCommentLikeResponse>> GetAllForUserAsync(
+    public Task<ICollection<PostCommentLikeResponse>> GetAllForUserAsync(
         PostCommentLikesForUserFilterQuery filter,
         CurrentUserQuery currentUser,
         PostCommentLikesForUserSortingQuery sorting,
         PostCommentLikesPaginationQuery pagination,
         CancellationToken cancellationToken);
 
-    Task<long> GetTotalCountAsync(
+    public Task<long> GetTotalCountAsync(
         PostCommentLikesFilterQuery filter,
         CancellationToken cancellationToken);
 
-    Task<long> GetTotalCountForUserAsync(
+    public Task<long> GetTotalCountForUserAsync(
         PostCommentLikesForUserFilterQuery filter,
         CancellationToken cancellationToken);
 
-    Task<PostCommentLikeResponse?> GetByIdAsync(
+    public Task<PostCommentLikeResponse?> GetByIdAsync(
         PostCommentLikeId id,
         CurrentUserQuery currentUser,
         CancellationToken cancellationToken);
 
-    Task<bool> ExistsByIdAsync(
+    public Task<bool> ExistsByIdAsync(
         PostCommentLikeId id,
         CancellationToken cancellationToken);
 }

@@ -1,14 +1,14 @@
-﻿using InstaConnect.Follows.Tests.Features.Follows.Utilities;
+using InstaConnect.Follows.Tests.Features.Follows.Utilities;
 
 namespace InstaConnect.Follows.Tests.Features.Follows.Builders;
 
 public class FollowBuilder
 {
-    private string _followerId;
-    private User _follower;
-    private string _followingId;
-    private User _following;
-    private DateTimeOffset _createdAtUtc;
+    private readonly string _followerId;
+    private readonly User _follower;
+    private readonly string _followingId;
+    private readonly User _following;
+    private readonly DateTimeOffset _createdAtUtc;
 
     public FollowBuilder(User follower, User following)
     {

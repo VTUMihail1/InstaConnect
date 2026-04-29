@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Domain.Features.ExceptionHandling.Exceptions;
+using InstaConnect.Common.Domain.Features.ExceptionHandling.Exceptions;
 using InstaConnect.Common.Presentation.Features.ExceptionHandling.Abstractions;
 
 using Microsoft.AspNetCore.Diagnostics;
@@ -24,14 +24,12 @@ public sealed class BaseExceptionHandler : IExceptionHandler
         Exception exception,
         CancellationToken cancellationToken)
     {
-        var baseException = exception as BaseException;
-
-        if (baseException == null)
+        if (exception is not BaseException)
         {
             return false;
         }
 
-        var problemDetails = _problemDetailsFactory.Create(baseException);
+        var problemDetails = _problemDetailsFactory.Create(exception);
         await _problemDetailsService.WriteAsync(httpContext, exception, problemDetails, cancellationToken);
 
         return true;

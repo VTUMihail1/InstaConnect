@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
+using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
 
 using Microsoft.AspNetCore.Http;
 
@@ -6,7 +6,7 @@ namespace InstaConnect.Common.Presentation.Features.ExceptionHandling.Abstractio
 
 public interface IApplicationProblemDetailsService
 {
-    Task WriteAsync(
+	public Task WriteAsync(
         HttpContext httpContext,
         Exception exception,
         ApplicationProblemDetails details,

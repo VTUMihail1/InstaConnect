@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Follows.Domain.Features.Users.Helpers;
+namespace InstaConnect.Follows.Domain.Features.Users.Helpers;
 
 internal class UserCommandService : IUserCommandService
 {

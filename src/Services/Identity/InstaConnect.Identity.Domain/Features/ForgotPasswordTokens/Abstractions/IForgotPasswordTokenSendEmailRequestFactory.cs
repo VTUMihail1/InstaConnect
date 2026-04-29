@@ -4,5 +4,5 @@ namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Abstraction
 
 public interface IForgotPasswordTokenSendEmailRequestFactory
 {
-    Task<SendEmailRequest> GetAsync(ForgotPasswordToken forgotPasswordToken, CancellationToken cancellationToken);
+	public Task<SendEmailRequest> GetAsync(ForgotPasswordToken forgotPasswordToken, CancellationToken cancellationToken);
 }

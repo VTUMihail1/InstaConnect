@@ -2,5 +2,5 @@ namespace InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Abstr
 
 public interface IForgotPasswordTokenTemplateFactory
 {
-    Task<string> GetAddedAsync(ForgotPasswordTokenAddedViewRequest request, CancellationToken cancellationToken);
+	public Task<string> GetAddedAsync(ForgotPasswordTokenAddedViewRequest request, CancellationToken cancellationToken);
 }

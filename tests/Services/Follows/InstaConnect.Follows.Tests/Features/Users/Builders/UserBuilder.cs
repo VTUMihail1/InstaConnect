@@ -1,17 +1,17 @@
-﻿using InstaConnect.Follows.Tests.Features.Users.Utilities;
+using InstaConnect.Follows.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Follows.Tests.Features.Users.Builders;
 
 public class UserBuilder
 {
-    private string _id;
-    private string _name;
-    private string _firstName;
-    private string _lastName;
-    private string _email;
-    private string? _profileImage;
-    private DateTimeOffset _createdAtUtc;
-    private DateTimeOffset _updatedAtUtc;
+    private readonly string _id;
+    private readonly string _name;
+    private readonly string _firstName;
+    private readonly string _lastName;
+    private readonly string _email;
+    private readonly string? _profileImage;
+    private readonly DateTimeOffset _createdAtUtc;
+    private readonly DateTimeOffset _updatedAtUtc;
 
     public UserBuilder()
     {
