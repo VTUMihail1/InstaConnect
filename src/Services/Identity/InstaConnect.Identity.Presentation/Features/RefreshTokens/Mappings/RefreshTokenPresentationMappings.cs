@@ -1,4 +1,5 @@
 using InstaConnect.Common.Application.Features.AccessTokens.Models;
+using InstaConnect.Common.Presentation.Features.AccessTokens.Models.Responses;
 using InstaConnect.Identity.Application.Features.RefreshTokens.Commands.DeleteCurrent;
 using InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Issue;
 using InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Rotate;

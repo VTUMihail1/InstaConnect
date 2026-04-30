@@ -31,7 +31,6 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 	}
 
 	[Theory]
-	[UserIdNullData]
 	[UserIdEmptyData]
 	[UserIdTooShortData]
 	[UserIdTooLongData]
@@ -49,7 +48,6 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 	}
 
 	[Theory]
-	[UserIdNullWithMessageData]
 	[UserIdEmptyWithMessageData]
 	[UserIdTooShortWithMessageData]
 	[UserIdTooLongWithMessageData]

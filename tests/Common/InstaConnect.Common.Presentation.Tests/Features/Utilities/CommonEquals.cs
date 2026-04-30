@@ -2,6 +2,7 @@ using InstaConnect.Common.Application.Features.Messaging.Abstractions;
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Domain.Features.Entities.Abstractions;
 using InstaConnect.Common.Infrastructure.Features.Data.Helpers;
+using InstaConnect.Common.Presentation.Features.AccessTokens.Models.Responses;
 using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
 using InstaConnect.Common.Presentation.Features.Messaging.Abstractions;
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
@@ -12,6 +13,15 @@ namespace InstaConnect.Common.Presentation.Tests.Features.Utilities;
 
 public static class CommonEquals
 {
+	extension(AccessTokenApiResponse response)
+	{
+		public bool Matches()
+		{
+			return response.Value.IsNotNullOrEmptyOrWhiteSpace() &&
+				   response.ExpiresAtUtc != default;
+		}
+	}
+
 	extension(ApplicationProblemDetails d)
 	{
 		public bool Matches(int statusCode, string detail)

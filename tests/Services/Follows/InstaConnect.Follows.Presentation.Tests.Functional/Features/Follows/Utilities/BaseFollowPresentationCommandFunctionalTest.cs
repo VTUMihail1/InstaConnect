@@ -1,4 +1,3 @@
-using InstaConnect.Common.Presentation.Tests.Features.Utilities;
 using InstaConnect.Follows.Presentation.Tests.Features.Follows.Abstractions;
 using InstaConnect.Follows.Presentation.Tests.Features.Follows.Extensions;
 

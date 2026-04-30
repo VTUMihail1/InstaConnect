@@ -3,81 +3,86 @@ using System.Net;
 using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
 using InstaConnect.Common.Presentation.Tests.Features.Extensions;
 using InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Utilities;
+using InstaConnect.Identity.Presentation.Tests.Features.EmailConfirmationTokens.Abstractions;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.EmailConfirmationTokens.Utilities;
 
-public static class EmailConfirmationTokenClient
+internal class EmailConfirmationTokenClient : IEmailConfirmationTokenClient
 {
-	extension(HttpClient httpClient)
+	private readonly HttpClient _httpClient;
+
+	public EmailConfirmationTokenClient(HttpClient httpClient)
 	{
-		private async Task<HttpResponseMessage> AddEmailConfirmationTokenResponseMessageAsync(
-			AddEmailConfirmationTokenApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var route = EmailConfirmationTokenRouteFactory.GetRoute(request);
+		_httpClient = httpClient;
+	}
 
-			return await httpClient
-				.PostAsync(route, null, cancellationToken);
-		}
+	private async Task<HttpResponseMessage> AddResponseMessageAsync(
+		AddEmailConfirmationTokenApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var route = EmailConfirmationTokenRouteFactory.GetRoute(request);
 
-		public async Task<ApplicationProblemDetails> AddEmailConfirmationTokenProblemDetailsAsync(
-			AddEmailConfirmationTokenApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var response = await httpClient.AddEmailConfirmationTokenResponseMessageAsync(request, cancellationToken);
+		return await _httpClient
+			.PostAsync(route, null, cancellationToken);
+	}
 
-			return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
-		}
+	public async Task<ApplicationProblemDetails> AddProblemDetailsAsync(
+		AddEmailConfirmationTokenApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await AddResponseMessageAsync(request, cancellationToken);
 
-		public async Task AddEmailConfirmationTokenAsync(
-			AddEmailConfirmationTokenApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			await httpClient.AddEmailConfirmationTokenResponseMessageAsync(request, cancellationToken);
-		}
+		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
+	}
 
-		public async Task<HttpStatusCode> AddEmailConfirmationTokenStatusCodeAsync(
-			AddEmailConfirmationTokenApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var response = await httpClient.AddEmailConfirmationTokenResponseMessageAsync(request, cancellationToken);
+	public async Task AddAsync(
+		AddEmailConfirmationTokenApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		await AddResponseMessageAsync(request, cancellationToken);
+	}
 
-			return response.GetStatusCode();
-		}
+	public async Task<HttpStatusCode> AddStatusCodeAsync(
+		AddEmailConfirmationTokenApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await AddResponseMessageAsync(request, cancellationToken);
 
-		private async Task<HttpResponseMessage> VerifyEmailConfirmationTokenResponseMessageAsync(
-			VerifyEmailConfirmationTokenApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var route = EmailConfirmationTokenRouteFactory.GetRoute(request);
+		return response.GetStatusCode();
+	}
 
-			return await httpClient
-				.PutAsync(route, null, cancellationToken);
-		}
+	private async Task<HttpResponseMessage> VerifyResponseMessageAsync(
+		VerifyEmailConfirmationTokenApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var route = EmailConfirmationTokenRouteFactory.GetRoute(request);
 
-		public async Task<ApplicationProblemDetails> VerifyEmailConfirmationTokenProblemDetailsAsync(
-			VerifyEmailConfirmationTokenApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var response = await httpClient.VerifyEmailConfirmationTokenResponseMessageAsync(request, cancellationToken);
+		return await _httpClient
+			.PutAsync(route, null, cancellationToken);
+	}
 
-			return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
-		}
+	public async Task<ApplicationProblemDetails> VerifyProblemDetailsAsync(
+		VerifyEmailConfirmationTokenApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await VerifyResponseMessageAsync(request, cancellationToken);
 
-		public async Task VerifyEmailConfirmationTokenAsync(
-			VerifyEmailConfirmationTokenApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			await httpClient.VerifyEmailConfirmationTokenResponseMessageAsync(request, cancellationToken);
-		}
+		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
+	}
 
-		public async Task<HttpStatusCode> VerifyEmailConfirmationTokenStatusCodeAsync(
-			VerifyEmailConfirmationTokenApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var response = await httpClient.VerifyEmailConfirmationTokenResponseMessageAsync(request, cancellationToken);
+	public async Task VerifyAsync(
+		VerifyEmailConfirmationTokenApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		await VerifyResponseMessageAsync(request, cancellationToken);
+	}
 
-			return response.GetStatusCode();
-		}
+	public async Task<HttpStatusCode> VerifyStatusCodeAsync(
+		VerifyEmailConfirmationTokenApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await VerifyResponseMessageAsync(request, cancellationToken);
+
+		return response.GetStatusCode();
 	}
 }

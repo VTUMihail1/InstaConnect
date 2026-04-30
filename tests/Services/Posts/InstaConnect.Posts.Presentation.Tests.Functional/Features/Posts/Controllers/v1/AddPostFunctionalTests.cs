@@ -23,14 +23,13 @@ public class AddPostFunctionalTests : BasePostPresentationCommandFunctionalTest
 	public async Task AddAsync_ShouldReturnUnauthorizedStatusCode_WhenRequestIsUnauthorized()
 	{
 		// Act
-		var response = await HttpClient.AddPostStatusCodeUnauthorizedAsync(_request, CancellationToken);
+		var response = await Client.AddUnauthorizedStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeUnauthorized();
 	}
 
 	[Theory]
-	[UserIdNullData]
 	[UserIdEmptyData]
 	[UserIdTooShortData]
 	[UserIdTooLongData]
@@ -41,14 +40,13 @@ public class AddPostFunctionalTests : BasePostPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddPostStatusCodeAsync(request, CancellationToken);
+		var response = await Client.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
 	}
 
 	[Theory]
-	[UserIdNullWithMessageData]
 	[UserIdEmptyWithMessageData]
 	[UserIdTooShortWithMessageData]
 	[UserIdTooLongWithMessageData]
@@ -59,7 +57,7 @@ public class AddPostFunctionalTests : BasePostPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddPostProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForUserId(messageTransformer, request);
@@ -77,7 +75,7 @@ public class AddPostFunctionalTests : BasePostPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithTitle(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddPostStatusCodeAsync(request, CancellationToken);
+		var response = await Client.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -95,7 +93,7 @@ public class AddPostFunctionalTests : BasePostPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithTitle(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddPostProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForTitle(messageTransformer, request);
@@ -113,7 +111,7 @@ public class AddPostFunctionalTests : BasePostPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithContent(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddPostStatusCodeAsync(request, CancellationToken);
+		var response = await Client.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -131,7 +129,7 @@ public class AddPostFunctionalTests : BasePostPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithContent(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddPostProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForContent(messageTransformer, request);
@@ -144,7 +142,7 @@ public class AddPostFunctionalTests : BasePostPresentationCommandFunctionalTest
 		await ServiceScope.DeleteUserAsync(User, CancellationToken);
 
 		// Act
-		var response = await HttpClient.AddPostStatusCodeAsync(_request, CancellationToken);
+		var response = await Client.AddStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNotFound();
@@ -157,7 +155,7 @@ public class AddPostFunctionalTests : BasePostPresentationCommandFunctionalTest
 		await ServiceScope.DeleteUserAsync(User, CancellationToken);
 
 		// Act
-		var response = await HttpClient.AddPostProblemDetailsAsync(_request, CancellationToken);
+		var response = await Client.AddProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyUserNotFound(_request);
@@ -167,7 +165,7 @@ public class AddPostFunctionalTests : BasePostPresentationCommandFunctionalTest
 	public async Task AddAsync_ShouldHaveOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var response = await HttpClient.AddPostStatusCodeAsync(_request, CancellationToken);
+		var response = await Client.AddStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -182,7 +180,7 @@ public class AddPostFunctionalTests : BasePostPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddPostStatusCodeAsync(request, CancellationToken);
+		var response = await Client.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -192,7 +190,7 @@ public class AddPostFunctionalTests : BasePostPresentationCommandFunctionalTest
 	public async Task AddAsync_ShouldReturnResponse_WhenRequestIsValid()
 	{
 		// Act
-		var response = await HttpClient.AddPostAsync(_request, CancellationToken);
+		var response = await Client.AddAsync(_request, CancellationToken);
 		var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -208,7 +206,7 @@ public class AddPostFunctionalTests : BasePostPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddPostAsync(request, CancellationToken);
+		var response = await Client.AddAsync(request, CancellationToken);
 		var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -219,7 +217,7 @@ public class AddPostFunctionalTests : BasePostPresentationCommandFunctionalTest
 	public async Task AddAsync_ShouldAddPost_WhenRequestIsValid()
 	{
 		// Act
-		var response = await HttpClient.AddPostAsync(_request, CancellationToken);
+		var response = await Client.AddAsync(_request, CancellationToken);
 		var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -235,7 +233,7 @@ public class AddPostFunctionalTests : BasePostPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddPostAsync(request, CancellationToken);
+		var response = await Client.AddAsync(request, CancellationToken);
 		var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -246,7 +244,7 @@ public class AddPostFunctionalTests : BasePostPresentationCommandFunctionalTest
 	public async Task AddAsync_ShouldPublishPostAddedEvent_WhenRequestIsValid()
 	{
 		// Act
-		var response = await HttpClient.AddPostAsync(_request, CancellationToken);
+		var response = await Client.AddAsync(_request, CancellationToken);
 		var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -262,7 +260,7 @@ public class AddPostFunctionalTests : BasePostPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddPostAsync(request, CancellationToken);
+		var response = await Client.AddAsync(request, CancellationToken);
 		var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
 
 		// Assert

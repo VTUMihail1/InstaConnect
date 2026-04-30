@@ -1,4 +1,3 @@
-using InstaConnect.Common.Application.Features.AccessTokens.Models;
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Identity.Application.Features.RefreshTokens.Models;
 using InstaConnect.Identity.Application.Tests.Features.RefreshTokens.Utilities;
@@ -78,16 +77,6 @@ public static class RefreshTokenEquals
 			return response.Id.Matches(refreshToken.Id) &&
 				   response.AccessToken.Matches() &&
 				   response.ExpiresAtUtc == refreshToken.ExpiresAtUtc;
-		}
-	}
-
-
-	extension(AccessTokenCommandResponse response)
-	{
-		public bool Matches()
-		{
-			return response.Value.IsNotNullOrEmptyOrWhiteSpace() &&
-				   response.ExpiresAtUtc != default;
 		}
 	}
 }

@@ -27,7 +27,6 @@ public class PostsWebApplicationFactory : WebApplicationFactory<Program>, IAsync
 	{
 		builder.ConfigureTestServices(serviceCollection =>
 		{
-			serviceCollection.AddTestJwtAuth();
 			serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), PostsPresentationReference.Assembly);
 		});
 

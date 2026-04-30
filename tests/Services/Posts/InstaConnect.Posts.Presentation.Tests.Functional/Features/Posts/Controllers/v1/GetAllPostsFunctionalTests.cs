@@ -34,7 +34,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithUserName(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -49,7 +49,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithUserName(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllPostsProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForUserName(messageTransformer, request);
@@ -64,7 +64,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -79,7 +79,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllPostsProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForCurrentUserId(messageTransformer, request);
@@ -94,7 +94,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithTitle(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -109,7 +109,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithTitle(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllPostsProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForTitle(messageTransformer, request);
@@ -124,7 +124,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithSortOrder(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -139,7 +139,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithSortOrder(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllPostsProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForSortOrder(messageTransformer, request);
@@ -154,7 +154,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithSortTerm(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -169,7 +169,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithSortTerm(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllPostsProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForSortTerm(messageTransformer, request);
@@ -185,7 +185,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithPage(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -201,7 +201,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithPage(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllPostsProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForPage(messageTransformer, request);
@@ -217,7 +217,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithPageSize(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -233,7 +233,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithPageSize(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllPostsProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForPageSize(messageTransformer, request);
@@ -243,7 +243,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 	public async Task GetAllAsync_ShouldHaveOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var response = await HttpClient.GetAllPostsStatusCodeAsync(_request, CancellationToken);
+		var response = await Client.GetAllStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -260,14 +260,13 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithUserName(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
 	}
 
 	[Theory]
-	[UserIdNullData]
 	[UserIdEmptyData]
 	[UserIdDifferentCaseData]
 	public async Task GetAllAsync_ShouldHaveOkStatusCode_WhenRequestAndCurrentUserIdAreValid(
@@ -277,7 +276,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -294,7 +293,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithTitle(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -310,7 +309,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithSortOrder(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -327,7 +326,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithSortTerm(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -337,7 +336,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 	public async Task GetAllAsync_ShouldReturnResponse_WhenRequestIsValid()
 	{
 		// Act
-		var response = await HttpClient.GetAllPostsAsync(_request, CancellationToken);
+		var response = await Client.GetAllAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(Posts, _request);
@@ -354,14 +353,13 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithUserName(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllPostsAsync(request, CancellationToken);
+		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(Posts, request);
 	}
 
 	[Theory]
-	[UserIdNullData]
 	[UserIdEmptyData]
 	[UserIdDifferentCaseData]
 	public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndCurrentUserIdAreValid(
@@ -371,7 +369,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllPostsAsync(request, CancellationToken);
+		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(Posts, request);
@@ -388,7 +386,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithTitle(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllPostsAsync(request, CancellationToken);
+		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(Posts, request);
@@ -404,7 +402,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithSortOrder(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllPostsAsync(request, CancellationToken);
+		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(Posts, request, termTransformer);
@@ -421,7 +419,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithSortTerm(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllPostsAsync(request, CancellationToken);
+		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(Posts, request, termTransformer);

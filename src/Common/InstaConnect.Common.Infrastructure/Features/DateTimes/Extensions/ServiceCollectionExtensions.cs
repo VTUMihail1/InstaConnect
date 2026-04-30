@@ -11,7 +11,7 @@ public static partial class ServiceCollectionExtensions
 	{
 		public IServiceCollection AddDateTimeProvider()
 		{
-			serviceCollection.AddScoped<IDateTimeProvider, DateTimeProvider>();
+			serviceCollection.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 
 			return serviceCollection;
 		}

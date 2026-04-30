@@ -27,7 +27,6 @@ public class FollowsWebApplicationFactory : WebApplicationFactory<Program>, IAsy
 	{
 		builder.ConfigureTestServices(serviceCollection =>
 		{
-			serviceCollection.AddTestJwtAuth();
 			serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), FollowsPresentationReference.Assembly);
 		});
 

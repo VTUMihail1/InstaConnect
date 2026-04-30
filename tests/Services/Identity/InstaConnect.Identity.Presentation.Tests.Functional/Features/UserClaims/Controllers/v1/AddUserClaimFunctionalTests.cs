@@ -26,7 +26,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 	public async Task AddAsync_ShouldReturnUnauthorizedStatusCode_WhenRequestIsUnauthorized()
 	{
 		// Act
-		var response = await HttpClient.AddUserClaimStatusCodeUnauthorizedAsync(_request, CancellationToken);
+		var response = await Client.AddUnauthorizedStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeUnauthorized();
@@ -36,7 +36,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 	public async Task AddAsync_ShouldReturnForbiddenStatusCode_WhenRequestIsForbidden()
 	{
 		// Act
-		var response = await HttpClient.AddUserClaimStatusCodeForbiddenAsync(_request, CancellationToken);
+		var response = await Client.AddForbiddenStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeForbidden();
@@ -51,7 +51,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddUserClaimStatusCodeAsync(request, CancellationToken);
+		var response = await Client.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -68,7 +68,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddUserClaimProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForId(messageTransformer, request);
@@ -82,7 +82,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 		var request = _requestBuilder.WithClaim(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddUserClaimStatusCodeAsync(request, CancellationToken);
+		var response = await Client.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -98,7 +98,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 		var request = _requestBuilder.WithClaim(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddUserClaimProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForClaim(messageTransformer, request);
@@ -111,7 +111,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 		await ServiceScope.DeleteUserAsync(User, CancellationToken);
 
 		// Act
-		var response = await HttpClient.AddUserClaimStatusCodeAsync(_request, CancellationToken);
+		var response = await Client.AddStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNotFound();
@@ -124,7 +124,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 		await ServiceScope.DeleteUserAsync(User, CancellationToken);
 
 		// Act
-		var response = await HttpClient.AddUserClaimProblemDetailsAsync(_request, CancellationToken);
+		var response = await Client.AddProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyUserNotFound(_request);
@@ -137,7 +137,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 		await ServiceScope.AddUserClaimAsync(UserClaim, CancellationToken);
 
 		// Act
-		var response = await HttpClient.AddUserClaimStatusCodeAsync(_request, CancellationToken);
+		var response = await Client.AddStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -153,7 +153,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddUserClaimStatusCodeAsync(request, CancellationToken);
+		var response = await Client.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -166,7 +166,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 		await ServiceScope.AddUserClaimAsync(UserClaim, CancellationToken);
 
 		// Act
-		var response = await HttpClient.AddUserClaimProblemDetailsAsync(_request, CancellationToken);
+		var response = await Client.AddProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyUserClaimAlreadyExists(_request);
@@ -182,7 +182,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddUserClaimProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyUserClaimAlreadyExists(request);
@@ -192,7 +192,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 	public async Task AddAsync_ShouldHaveOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var response = await HttpClient.AddUserClaimStatusCodeAsync(_request, CancellationToken);
+		var response = await Client.AddStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -206,7 +206,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddUserClaimStatusCodeAsync(request, CancellationToken);
+		var response = await Client.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -216,7 +216,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 	public async Task AddAsync_ShouldReturnResponse_WhenRequestIsValid()
 	{
 		// Act
-		var response = await HttpClient.AddUserClaimAsync(_request, CancellationToken);
+		var response = await Client.AddAsync(_request, CancellationToken);
 		var userClaim = await ServiceScope.GetUserClaimByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -231,7 +231,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddUserClaimAsync(request, CancellationToken);
+		var response = await Client.AddAsync(request, CancellationToken);
 		var userClaim = await ServiceScope.GetUserClaimByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -242,7 +242,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 	public async Task AddAsync_ShouldAddUserClaim_WhenRequestIsValid()
 	{
 		// Act
-		var response = await HttpClient.AddUserClaimAsync(_request, CancellationToken);
+		var response = await Client.AddAsync(_request, CancellationToken);
 		var userClaim = await ServiceScope.GetUserClaimByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -257,7 +257,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddUserClaimAsync(request, CancellationToken);
+		var response = await Client.AddAsync(request, CancellationToken);
 		var userClaim = await ServiceScope.GetUserClaimByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -268,7 +268,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 	public async Task AddAsync_ShouldPublishUserClaimAddedEvent_WhenRequestIsValid()
 	{
 		// Act
-		var response = await HttpClient.AddUserClaimAsync(_request, CancellationToken);
+		var response = await Client.AddAsync(_request, CancellationToken);
 		var userClaim = await ServiceScope.GetUserClaimByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -283,7 +283,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddUserClaimAsync(request, CancellationToken);
+		var response = await Client.AddAsync(request, CancellationToken);
 		var userClaim = await ServiceScope.GetUserClaimByIdAsync(response.Response, CancellationToken);
 
 		// Assert

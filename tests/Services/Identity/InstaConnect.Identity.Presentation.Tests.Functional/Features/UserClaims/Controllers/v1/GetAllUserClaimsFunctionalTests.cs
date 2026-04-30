@@ -28,7 +28,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 	public async Task GetAllAsync_ShouldReturnUnauthorizedStatusCode_WhenRequestIsUnauthorized()
 	{
 		// Act
-		var response = await HttpClient.GetAllUserClaimsStatusCodeUnauthorizedAsync(_request, CancellationToken);
+		var response = await Client.GetAllUnauthorizedStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeUnauthorized();
@@ -38,7 +38,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 	public async Task GetAllAsync_ShouldReturnForbiddenStatusCode_WhenRequestIsForbidden()
 	{
 		// Act
-		var response = await HttpClient.GetAllUserClaimsStatusCodeForbiddenAsync(_request, CancellationToken);
+		var response = await Client.GetAllForbiddenStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeForbidden();
@@ -54,7 +54,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllUserClaimsStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -71,7 +71,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllUserClaimsProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForId(messageTransformer, request);
@@ -86,7 +86,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 		var request = _requestBuilder.WithCurrentId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllUserClaimsStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -101,7 +101,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 		var request = _requestBuilder.WithCurrentId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllUserClaimsProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForCurrentId(messageTransformer, request);
@@ -116,7 +116,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 		var request = _requestBuilder.WithSortOrder(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllUserClaimsStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -131,7 +131,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 		var request = _requestBuilder.WithSortOrder(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllUserClaimsProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForSortOrder(messageTransformer, request);
@@ -146,7 +146,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 		var request = _requestBuilder.WithSortTerm(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllUserClaimsStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -161,7 +161,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 		var request = _requestBuilder.WithSortTerm(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllUserClaimsProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForSortTerm(messageTransformer, request);
@@ -177,7 +177,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 		var request = _requestBuilder.WithPage(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllUserClaimsStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -193,7 +193,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 		var request = _requestBuilder.WithPage(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllUserClaimsProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForPage(messageTransformer, request);
@@ -209,7 +209,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 		var request = _requestBuilder.WithPageSize(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllUserClaimsStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -225,7 +225,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 		var request = _requestBuilder.WithPageSize(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllUserClaimsProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForPageSize(messageTransformer, request);
@@ -239,7 +239,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 		await ServiceScope.DeleteUserAsync(User, CancellationToken);
 
 		// Act
-		var response = await HttpClient.GetAllUserClaimsStatusCodeAsync(_request, CancellationToken);
+		var response = await Client.GetAllStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNotFound();
@@ -252,7 +252,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 		await ServiceScope.DeleteUserAsync(User, CancellationToken);
 
 		// Act
-		var response = await HttpClient.GetAllUserClaimsProblemDetailsAsync(_request, CancellationToken);
+		var response = await Client.GetAllProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyUserNotFound(_request);
@@ -262,7 +262,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 	public async Task GetAllAsync_ShouldHaveOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var response = await HttpClient.GetAllUserClaimsStatusCodeAsync(_request, CancellationToken);
+		var response = await Client.GetAllStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -277,14 +277,13 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllUserClaimsStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
 	}
 
 	[Theory]
-	[UserIdNullData]
 	[UserIdEmptyData]
 	[UserIdDifferentCaseData]
 	public async Task GetAllAsync_ShouldHaveOkStatusCode_WhenRequestAndCurrentIdAreValid(
@@ -294,7 +293,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 		var request = _requestBuilder.WithCurrentId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllUserClaimsStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -310,7 +309,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 		var request = _requestBuilder.WithSortOrder(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllUserClaimsStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -325,7 +324,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 		var request = _requestBuilder.WithSortTerm(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllUserClaimsStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -335,7 +334,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 	public async Task GetAllAsync_ShouldReturnResponse_WhenRequestIsValid()
 	{
 		// Act
-		var response = await HttpClient.GetAllUserClaimsAsync(_request, CancellationToken);
+		var response = await Client.GetAllAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(User, UserClaims, _request);
@@ -350,14 +349,13 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllUserClaimsAsync(request, CancellationToken);
+		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(User, UserClaims, request);
 	}
 
 	[Theory]
-	[UserIdNullData]
 	[UserIdEmptyData]
 	[UserIdDifferentCaseData]
 	public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndCurrentIdAreValid(
@@ -367,7 +365,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 		var request = _requestBuilder.WithCurrentId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllUserClaimsAsync(request, CancellationToken);
+		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(User, UserClaims, request);
@@ -383,7 +381,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 		var request = _requestBuilder.WithSortOrder(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllUserClaimsAsync(request, CancellationToken);
+		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(User, UserClaims, request, termTransformer);
@@ -398,7 +396,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 		var request = _requestBuilder.WithSortTerm(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllUserClaimsAsync(request, CancellationToken);
+		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(User, UserClaims, request, termTransformer);

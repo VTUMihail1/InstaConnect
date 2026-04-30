@@ -1,5 +1,4 @@
 using InstaConnect.Common.Domain.Features.Common.Extensions;
-using InstaConnect.Common.Presentation.Features.AccessTokens.Models.Responses;
 using InstaConnect.Identity.Domain.Features.Common.Helpers;
 using InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Utilities;
 using InstaConnect.Identity.Presentation.Tests.Features.Users.Utilities;
@@ -76,15 +75,6 @@ public static class RefreshTokenEquals
 		public bool Matches(RotateRefreshTokenApiRequest request)
 		{
 			return refreshToken.Id.Matches(request.Id, request.Value);
-		}
-	}
-
-	extension(AccessTokenApiResponse response)
-	{
-		public bool Matches()
-		{
-			return response.Value.IsNotNullOrEmptyOrWhiteSpace() &&
-				   response.ExpiresAtUtc != default;
 		}
 	}
 

@@ -31,7 +31,7 @@ public class AddForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenPres
 		var request = _requestBuilder.WithName(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddForgotPasswordTokenStatusCodeAsync(request, CancellationToken);
+		var response = await Client.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -48,7 +48,7 @@ public class AddForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenPres
 		var request = _requestBuilder.WithName(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddForgotPasswordTokenProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForName(messageTransformer, request);
@@ -61,7 +61,7 @@ public class AddForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenPres
 		await ServiceScope.DeleteUserAsync(User, CancellationToken);
 
 		// Act
-		var response = await HttpClient.AddForgotPasswordTokenStatusCodeAsync(_request, CancellationToken);
+		var response = await Client.AddStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNotFound();
@@ -74,7 +74,7 @@ public class AddForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenPres
 		await ServiceScope.DeleteUserAsync(User, CancellationToken);
 
 		// Act
-		var response = await HttpClient.AddForgotPasswordTokenProblemDetailsAsync(_request, CancellationToken);
+		var response = await Client.AddProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyUserNameNotFound(_request);
@@ -84,7 +84,7 @@ public class AddForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenPres
 	public async Task AddAsync_ShouldHaveOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var response = await HttpClient.AddForgotPasswordTokenStatusCodeAsync(_request, CancellationToken);
+		var response = await Client.AddStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNoContent();
@@ -98,7 +98,7 @@ public class AddForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenPres
 		var request = _requestBuilder.WithName(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddForgotPasswordTokenStatusCodeAsync(request, CancellationToken);
+		var response = await Client.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNoContent();
@@ -108,7 +108,7 @@ public class AddForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenPres
 	public async Task AddAsync_ShouldAddForgotPasswordToken_WhenRequestIsValid()
 	{
 		// Act
-		await HttpClient.AddForgotPasswordTokenAsync(_request, CancellationToken);
+		await Client.AddAsync(_request, CancellationToken);
 		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
 
 		// Assert
@@ -123,7 +123,7 @@ public class AddForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenPres
 		var request = _requestBuilder.WithName(transformer).Build();
 
 		// Act
-		await HttpClient.AddForgotPasswordTokenAsync(request, CancellationToken);
+		await Client.AddAsync(request, CancellationToken);
 		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
 
 		// Assert
@@ -134,7 +134,7 @@ public class AddForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenPres
 	public async Task AddAsync_ShouldPublishForgotPasswordTokenAddedEvent_WhenRequestIsValid()
 	{
 		// Act
-		await HttpClient.AddForgotPasswordTokenAsync(_request, CancellationToken);
+		await Client.AddAsync(_request, CancellationToken);
 		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
 
 		// Assert
@@ -150,7 +150,7 @@ public class AddForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenPres
 		var request = _requestBuilder.WithName(transformer).Build();
 
 		// Act
-		await HttpClient.AddForgotPasswordTokenAsync(request, CancellationToken);
+		await Client.AddAsync(request, CancellationToken);
 		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
 
 		// Assert

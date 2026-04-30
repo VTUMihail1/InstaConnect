@@ -1,11 +1,14 @@
+using InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Abstractions;
+using InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Extensions;
+
 namespace InstaConnect.Identity.Presentation.Tests.Functional.Features.UserClaims.Utilities;
 
 public abstract class BaseUserClaimPresentationQueryFunctionalTest : BaseUserClaimWebTest
 {
-	protected HttpClient HttpClient { get; }
+	protected IUserClaimClient Client { get; }
 
 	protected BaseUserClaimPresentationQueryFunctionalTest(IdentityWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
-		HttpClient = webApplicationFactory.CreateClient();
+		Client = webApplicationFactory.CreateUserClaimClient();
 	}
 }

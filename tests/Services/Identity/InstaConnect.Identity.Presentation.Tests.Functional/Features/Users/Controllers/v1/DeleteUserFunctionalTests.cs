@@ -24,7 +24,7 @@ public class DeleteUserFunctionalTests : BaseUserPresentationCommandFunctionalTe
 	public async Task DeleteAsync_ShouldReturnUnauthorizedStatusCode_WhenRequestIsUnauthorized()
 	{
 		// Act
-		var response = await HttpClient.DeleteUserStatusCodeUnauthorizedAsync(_request, CancellationToken);
+		var response = await Client.DeleteUnauthorizedStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeUnauthorized();
@@ -34,7 +34,7 @@ public class DeleteUserFunctionalTests : BaseUserPresentationCommandFunctionalTe
 	public async Task DeleteAsync_ShouldReturnForbiddenStatusCode_WhenRequestIsForbidden()
 	{
 		// Act
-		var response = await HttpClient.DeleteUserStatusCodeForbiddenAsync(_request, CancellationToken);
+		var response = await Client.DeleteForbiddenStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeForbidden();
@@ -50,7 +50,7 @@ public class DeleteUserFunctionalTests : BaseUserPresentationCommandFunctionalTe
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.DeleteUserStatusCodeAsync(request, CancellationToken);
+		var response = await Client.DeleteStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -67,7 +67,7 @@ public class DeleteUserFunctionalTests : BaseUserPresentationCommandFunctionalTe
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.DeleteUserProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.DeleteProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForId(messageTransformer, request);
@@ -80,7 +80,7 @@ public class DeleteUserFunctionalTests : BaseUserPresentationCommandFunctionalTe
 		await ServiceScope.DeleteUserAsync(User, CancellationToken);
 
 		// Act
-		var response = await HttpClient.DeleteUserStatusCodeAsync(_request, CancellationToken);
+		var response = await Client.DeleteStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNotFound();
@@ -93,7 +93,7 @@ public class DeleteUserFunctionalTests : BaseUserPresentationCommandFunctionalTe
 		await ServiceScope.DeleteUserAsync(User, CancellationToken);
 
 		// Act
-		var response = await HttpClient.DeleteUserProblemDetailsAsync(_request, CancellationToken);
+		var response = await Client.DeleteProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyUserNotFound(_request);
@@ -103,7 +103,7 @@ public class DeleteUserFunctionalTests : BaseUserPresentationCommandFunctionalTe
 	public async Task DeleteAsync_ShouldHaveNoContentStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var response = await HttpClient.DeleteUserStatusCodeAsync(_request, CancellationToken);
+		var response = await Client.DeleteStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNoContent();
@@ -118,7 +118,7 @@ public class DeleteUserFunctionalTests : BaseUserPresentationCommandFunctionalTe
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.DeleteUserStatusCodeAsync(request, CancellationToken);
+		var response = await Client.DeleteStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNoContent();
@@ -128,7 +128,7 @@ public class DeleteUserFunctionalTests : BaseUserPresentationCommandFunctionalTe
 	public async Task DeleteAsync_ShouldDeleteUser_WhenRequestIsValid()
 	{
 		// Act
-		await HttpClient.DeleteUserAsync(_request, CancellationToken);
+		await Client.DeleteAsync(_request, CancellationToken);
 		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
 
 		// Assert
@@ -144,7 +144,7 @@ public class DeleteUserFunctionalTests : BaseUserPresentationCommandFunctionalTe
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		await HttpClient.DeleteUserAsync(request, CancellationToken);
+		await Client.DeleteAsync(request, CancellationToken);
 		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
 
 		// Assert
@@ -155,7 +155,7 @@ public class DeleteUserFunctionalTests : BaseUserPresentationCommandFunctionalTe
 	public async Task DeleteAsync_ShouldPublishUserDeletedEvent_WhenRequestIsValid()
 	{
 		// Act
-		await HttpClient.DeleteUserAsync(_request, CancellationToken);
+		await Client.DeleteAsync(_request, CancellationToken);
 
 		// Assert
 		await EventHarness.ShouldHavePublishedUserDeletedAsync(User, CancellationToken);
@@ -170,7 +170,7 @@ public class DeleteUserFunctionalTests : BaseUserPresentationCommandFunctionalTe
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		await HttpClient.DeleteUserAsync(request, CancellationToken);
+		await Client.DeleteAsync(request, CancellationToken);
 
 		// Assert
 		await EventHarness.ShouldHavePublishedUserDeletedAsync(User, CancellationToken);

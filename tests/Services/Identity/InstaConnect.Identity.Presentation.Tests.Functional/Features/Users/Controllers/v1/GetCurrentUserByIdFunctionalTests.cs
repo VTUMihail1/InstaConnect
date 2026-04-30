@@ -23,7 +23,7 @@ public class GetCurrentUserByIdFunctionalTests : BaseUserPresentationQueryFuncti
 	public async Task GetCurrentByIdAsync_ShouldReturnUnauthorizedStatusCode_WhenRequestIsUnauthorized()
 	{
 		// Act
-		var response = await HttpClient.GetCurrentUserByIdStatusCodeUnauthorizedAsync(_request, CancellationToken);
+		var response = await Client.GetCurrentByIdUnauthorizedStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeUnauthorized();
@@ -39,7 +39,7 @@ public class GetCurrentUserByIdFunctionalTests : BaseUserPresentationQueryFuncti
 		var request = _requestBuilder.WithCurrentId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetCurrentUserByIdStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetCurrentByIdStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -55,7 +55,7 @@ public class GetCurrentUserByIdFunctionalTests : BaseUserPresentationQueryFuncti
 		var request = _requestBuilder.WithCurrentId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetCurrentUserByIdProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.GetCurrentByIdProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForCurrentId(messageTransformer, request);
@@ -68,7 +68,7 @@ public class GetCurrentUserByIdFunctionalTests : BaseUserPresentationQueryFuncti
 		await ServiceScope.DeleteUserAsync(User, CancellationToken);
 
 		// Act
-		var response = await HttpClient.GetCurrentUserByIdStatusCodeAsync(_request, CancellationToken);
+		var response = await Client.GetCurrentByIdStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNotFound();
@@ -81,7 +81,7 @@ public class GetCurrentUserByIdFunctionalTests : BaseUserPresentationQueryFuncti
 		await ServiceScope.DeleteUserAsync(User, CancellationToken);
 
 		// Act
-		var response = await HttpClient.GetCurrentUserByIdProblemDetailsAsync(_request, CancellationToken);
+		var response = await Client.GetCurrentByIdProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyUserNotFound(_request);
@@ -91,7 +91,7 @@ public class GetCurrentUserByIdFunctionalTests : BaseUserPresentationQueryFuncti
 	public async Task GetCurrentByIdAsync_ShouldHaveOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var response = await HttpClient.GetCurrentUserByIdStatusCodeAsync(_request, CancellationToken);
+		var response = await Client.GetCurrentByIdStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -106,7 +106,7 @@ public class GetCurrentUserByIdFunctionalTests : BaseUserPresentationQueryFuncti
 		var request = _requestBuilder.WithCurrentId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetCurrentUserByIdStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetCurrentByIdStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -116,7 +116,7 @@ public class GetCurrentUserByIdFunctionalTests : BaseUserPresentationQueryFuncti
 	public async Task GetCurrentByIdAsync_ShouldHaveResponse_WhenRequestIsValid()
 	{
 		// Act
-		var response = await HttpClient.GetCurrentUserByIdAsync(_request, CancellationToken);
+		var response = await Client.GetCurrentByIdAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(User, _request);
@@ -131,7 +131,7 @@ public class GetCurrentUserByIdFunctionalTests : BaseUserPresentationQueryFuncti
 		var request = _requestBuilder.WithCurrentId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetCurrentUserByIdAsync(request, CancellationToken);
+		var response = await Client.GetCurrentByIdAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(User, request);
@@ -141,7 +141,7 @@ public class GetCurrentUserByIdFunctionalTests : BaseUserPresentationQueryFuncti
 	public async Task GetCurrentByIdAsync_ShouldCacheResponse_WhenRequestIsValid()
 	{
 		// Act
-		await HttpClient.GetCurrentUserByIdAsync(_request, CancellationToken);
+		await Client.GetCurrentByIdAsync(_request, CancellationToken);
 		var response = await ServiceScope.GetResponseFromCache(_request, CancellationToken);
 
 		// Assert
@@ -157,7 +157,7 @@ public class GetCurrentUserByIdFunctionalTests : BaseUserPresentationQueryFuncti
 		var request = _requestBuilder.WithCurrentId(transformer).Build();
 
 		// Act
-		await HttpClient.GetCurrentUserByIdAsync(request, CancellationToken);
+		await Client.GetCurrentByIdAsync(request, CancellationToken);
 		var response = await ServiceScope.GetResponseFromCache(request, CancellationToken);
 
 		// Assert

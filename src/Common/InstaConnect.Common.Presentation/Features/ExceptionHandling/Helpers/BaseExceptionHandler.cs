@@ -24,13 +24,13 @@ public sealed class BaseExceptionHandler : IExceptionHandler
 		Exception exception,
 		CancellationToken cancellationToken)
 	{
-		if (exception is not BaseException)
+		if (exception is not BaseException baseException)
 		{
 			return false;
 		}
 
-		var problemDetails = _problemDetailsFactory.Create(exception);
-		await _problemDetailsService.WriteAsync(httpContext, exception, problemDetails, cancellationToken);
+		var problemDetails = _problemDetailsFactory.Create(baseException);
+		await _problemDetailsService.WriteAsync(httpContext, baseException, problemDetails, cancellationToken);
 
 		return true;
 	}

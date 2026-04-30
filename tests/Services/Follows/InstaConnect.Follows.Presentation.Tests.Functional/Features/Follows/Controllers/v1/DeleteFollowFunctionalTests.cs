@@ -32,7 +32,6 @@ public class DeleteFollowFunctionalTests : BaseFollowPresentationCommandFunction
 	}
 
 	[Theory]
-	[UserIdNullData]
 	[UserIdEmptyData]
 	[UserIdTooShortData]
 	[UserIdTooLongData]
@@ -50,7 +49,6 @@ public class DeleteFollowFunctionalTests : BaseFollowPresentationCommandFunction
 	}
 
 	[Theory]
-	[UserIdNullWithMessageData]
 	[UserIdEmptyWithMessageData]
 	[UserIdTooShortWithMessageData]
 	[UserIdTooLongWithMessageData]

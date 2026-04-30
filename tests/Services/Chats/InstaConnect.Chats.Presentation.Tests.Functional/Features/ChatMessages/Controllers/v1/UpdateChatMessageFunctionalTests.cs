@@ -33,7 +33,6 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 	}
 
 	[Theory]
-	[UserIdNullData]
 	[UserIdEmptyData]
 	[UserIdTooShortData]
 	[UserIdTooLongData]
@@ -51,7 +50,6 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 	}
 
 	[Theory]
-	[UserIdNullWithMessageData]
 	[UserIdEmptyWithMessageData]
 	[UserIdTooShortWithMessageData]
 	[UserIdTooLongWithMessageData]

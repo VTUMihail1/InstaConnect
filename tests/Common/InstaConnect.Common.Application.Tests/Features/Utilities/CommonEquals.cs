@@ -1,5 +1,6 @@
 using FluentValidation.Results;
 
+using InstaConnect.Common.Application.Features.AccessTokens.Models;
 using InstaConnect.Common.Application.Features.Messaging.Abstractions;
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Domain.Features.Entities.Abstractions;
@@ -11,6 +12,15 @@ namespace InstaConnect.Common.Application.Tests.Features.Utilities;
 
 public static class CommonEquals
 {
+	extension(AccessTokenCommandResponse response)
+	{
+		public bool Matches()
+		{
+			return response.Value.IsNotNullOrEmptyOrWhiteSpace() &&
+				   response.ExpiresAtUtc != default;
+		}
+	}
+
 	extension(ValidationFailure v)
 	{
 		public bool Matches(

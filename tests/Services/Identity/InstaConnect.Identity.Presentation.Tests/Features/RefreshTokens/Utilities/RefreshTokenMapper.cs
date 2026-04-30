@@ -1,5 +1,4 @@
 using InstaConnect.Common.Application.Features.AccessTokens.Models;
-using InstaConnect.Common.Domain.Features.AccessTokens.Models;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Utilities;
 
@@ -33,14 +32,6 @@ public static class RefreshTokenMapper
 		public RotateRefreshTokenCommandResponse ToResponse(RotateRefreshTokenApiRequest request)
 		{
 			return new(refreshToken.ToSessionTokenResponse());
-		}
-	}
-
-	extension(AccessToken accessToken)
-	{
-		internal AccessTokenCommandResponse ToResponse()
-		{
-			return new(accessToken.Value, accessToken.ExpiresAtUtc);
 		}
 	}
 }

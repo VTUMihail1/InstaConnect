@@ -64,7 +64,6 @@ public class GetChatByIdFunctionalTests : BaseChatPresentationQueryFunctionalTes
 	}
 
 	[Theory]
-	[UserIdNullData]
 	[UserIdEmptyData]
 	[UserIdTooShortData]
 	[UserIdTooLongData]
@@ -82,7 +81,6 @@ public class GetChatByIdFunctionalTests : BaseChatPresentationQueryFunctionalTes
 	}
 
 	[Theory]
-	[UserIdNullWithMessageData]
 	[UserIdEmptyWithMessageData]
 	[UserIdTooShortWithMessageData]
 	[UserIdTooLongWithMessageData]

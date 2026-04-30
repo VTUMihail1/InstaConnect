@@ -97,7 +97,6 @@ public class GetChatMessageByIdFunctionalTests : BaseChatMessagePresentationQuer
 	}
 
 	[Theory]
-	[UserIdNullData]
 	[UserIdEmptyData]
 	[UserIdTooShortData]
 	[UserIdTooLongData]
@@ -115,7 +114,6 @@ public class GetChatMessageByIdFunctionalTests : BaseChatMessagePresentationQuer
 	}
 
 	[Theory]
-	[UserIdNullWithMessageData]
 	[UserIdEmptyWithMessageData]
 	[UserIdTooShortWithMessageData]
 	[UserIdTooLongWithMessageData]

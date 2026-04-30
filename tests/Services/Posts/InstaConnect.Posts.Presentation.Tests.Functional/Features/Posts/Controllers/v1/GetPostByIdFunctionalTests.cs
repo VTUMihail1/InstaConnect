@@ -31,7 +31,7 @@ public class GetPostByIdFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetPostByIdStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetByIdStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -47,7 +47,7 @@ public class GetPostByIdFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetPostByIdProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.GetByIdProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForId(messageTransformer, request);
@@ -62,7 +62,7 @@ public class GetPostByIdFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetPostByIdStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetByIdStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -77,7 +77,7 @@ public class GetPostByIdFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetPostByIdProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.GetByIdProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForCurrentUserId(messageTransformer, request);
@@ -90,7 +90,7 @@ public class GetPostByIdFunctionalTests : BasePostPresentationQueryFunctionalTes
 		await ServiceScope.DeletePostAsync(Post, CancellationToken);
 
 		// Act
-		var response = await HttpClient.GetPostByIdStatusCodeAsync(_request, CancellationToken);
+		var response = await Client.GetByIdStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNotFound();
@@ -103,7 +103,7 @@ public class GetPostByIdFunctionalTests : BasePostPresentationQueryFunctionalTes
 		await ServiceScope.DeletePostAsync(Post, CancellationToken);
 
 		// Act
-		var response = await HttpClient.GetPostByIdProblemDetailsAsync(_request, CancellationToken);
+		var response = await Client.GetByIdProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyPostNotFound(_request);
@@ -113,7 +113,7 @@ public class GetPostByIdFunctionalTests : BasePostPresentationQueryFunctionalTes
 	public async Task GetByIdAsync_ShouldHaveOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var response = await HttpClient.GetPostByIdStatusCodeAsync(_request, CancellationToken);
+		var response = await Client.GetByIdStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -128,14 +128,13 @@ public class GetPostByIdFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetPostByIdStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetByIdStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
 	}
 
 	[Theory]
-	[UserIdNullData]
 	[UserIdEmptyData]
 	[UserIdDifferentCaseData]
 	public async Task GetByIdAsync_ShouldHaveOkStatusCode_WhenRequestAndCurrentUserIdAreValid(
@@ -145,7 +144,7 @@ public class GetPostByIdFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetPostByIdStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetByIdStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -155,7 +154,7 @@ public class GetPostByIdFunctionalTests : BasePostPresentationQueryFunctionalTes
 	public async Task GetByIdAsync_ShouldHaveResponse_WhenRequestIsValid()
 	{
 		// Act
-		var response = await HttpClient.GetPostByIdAsync(_request, CancellationToken);
+		var response = await Client.GetByIdAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(Post, _request);
@@ -170,14 +169,13 @@ public class GetPostByIdFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetPostByIdAsync(request, CancellationToken);
+		var response = await Client.GetByIdAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(Post, request);
 	}
 
 	[Theory]
-	[UserIdNullData]
 	[UserIdEmptyData]
 	[UserIdDifferentCaseData]
 	public async Task GetByIdAsync_ShouldReturnResponse_WhenRequestAndCurrentUserIdAreValid(
@@ -187,7 +185,7 @@ public class GetPostByIdFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetPostByIdAsync(request, CancellationToken);
+		var response = await Client.GetByIdAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(Post, request);

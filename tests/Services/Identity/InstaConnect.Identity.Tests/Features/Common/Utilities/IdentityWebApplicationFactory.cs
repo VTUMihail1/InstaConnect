@@ -32,7 +32,6 @@ public class IdentityWebApplicationFactory : WebApplicationFactory<Program>, IAs
 		{
 			serviceCollection.AddMockImageHandler();
 			serviceCollection.AddMockEmailSender();
-			serviceCollection.AddTestJwtAuth();
 			serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), IdentityPresentationReference.Assembly);
 		});
 

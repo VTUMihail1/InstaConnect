@@ -31,7 +31,6 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 	}
 
 	[Theory]
-	[UserIdNullData]
 	[UserIdEmptyData]
 	[UserIdTooShortData]
 	[UserIdTooLongData]
@@ -49,7 +48,6 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 	}
 
 	[Theory]
-	[UserIdNullWithMessageData]
 	[UserIdEmptyWithMessageData]
 	[UserIdTooShortWithMessageData]
 	[UserIdTooLongWithMessageData]

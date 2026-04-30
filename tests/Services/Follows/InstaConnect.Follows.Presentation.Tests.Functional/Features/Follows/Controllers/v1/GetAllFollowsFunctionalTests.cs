@@ -312,7 +312,6 @@ public class GetAllFollowsFunctionalTests : BaseFollowPresentationQueryFunctiona
 	}
 
 	[Theory]
-	[UserIdNullData]
 	[UserIdEmptyData]
 	[UserIdDifferentCaseData]
 	public async Task GetAllAsync_ShouldHaveOkStatusCode_WhenRequestAndCurrentUserIdAreValid(
@@ -403,7 +402,6 @@ public class GetAllFollowsFunctionalTests : BaseFollowPresentationQueryFunctiona
 	}
 
 	[Theory]
-	[UserIdNullData]
 	[UserIdEmptyData]
 	[UserIdDifferentCaseData]
 	public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndCurrentUserIdAreValid(

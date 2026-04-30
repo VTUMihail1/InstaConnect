@@ -24,13 +24,13 @@ public sealed class InvalidValidationExceptionHandler : IExceptionHandler
 		Exception exception,
 		CancellationToken cancellationToken)
 	{
-		if (exception is not InvalidValidationException)
+		if (exception is not InvalidValidationException invalidValidationException)
 		{
 			return false;
 		}
 
-		var problemDetails = _problemDetailsFactory.Create(exception);
-		await _problemDetailsService.WriteAsync(httpContext, exception, problemDetails, cancellationToken);
+		var problemDetails = _problemDetailsFactory.Create(invalidValidationException);
+		await _problemDetailsService.WriteAsync(httpContext, invalidValidationException, problemDetails, cancellationToken);
 
 		return true;
 	}
