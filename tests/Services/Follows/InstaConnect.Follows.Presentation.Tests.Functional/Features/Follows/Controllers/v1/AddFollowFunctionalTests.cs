@@ -18,6 +18,8 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 	{
 		await ServiceScope.AddUserAsync(Follower, CancellationToken);
 		await ServiceScope.AddUserAsync(Following, CancellationToken);
+
+		await NotificationClient.ConnectAsync(CancellationToken);
 	}
 
 	[Fact]
@@ -405,5 +407,51 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 
 		// Assert
 		await EventHarness.ShouldHavePublishedFollowAddedAsync(follow, CancellationToken);
+	}
+
+	[Fact]
+	public async Task AddAsync_ShouldPublishFollowAddedNotification_WhenRequestIsValid()
+	{
+		// Act
+		var response = await Client.AddAsync(_request, CancellationToken);
+		var follow = await ServiceScope.GetFollowByIdAsync(response.Response, CancellationToken);
+		var notification = await NotificationClient.AddedAsync(CancellationToken);
+
+		// Assert
+		notification.ShouldSatisfy(follow);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task AddAsync_ShouldPublishFollowAddedNotification_WhenRequestAndFollowerIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithFollowerId(transformer).Build();
+
+		// Act
+		var response = await Client.AddAsync(request, CancellationToken);
+		var follow = await ServiceScope.GetFollowByIdAsync(response.Response, CancellationToken);
+		var notification = await NotificationClient.AddedAsync(CancellationToken);
+
+		// Assert
+		notification.ShouldSatisfy(follow);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task AddAsync_ShouldPublishFollowAddedNotification_WhenRequestAndFollowingIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithFollowingId(transformer).Build();
+
+		// Act
+		var response = await Client.AddAsync(request, CancellationToken);
+		var follow = await ServiceScope.GetFollowByIdAsync(response.Response, CancellationToken);
+		var notification = await NotificationClient.AddedAsync(CancellationToken);
+
+		// Assert
+		notification.ShouldSatisfy(follow);
 	}
 }

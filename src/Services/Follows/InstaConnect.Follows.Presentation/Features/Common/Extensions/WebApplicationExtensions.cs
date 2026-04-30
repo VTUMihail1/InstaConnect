@@ -1,5 +1,6 @@
 using InstaConnect.Common.Presentation.Features.Controllers.Extensions;
 using InstaConnect.Common.Presentation.Features.ExceptionHandling.Extensions;
+using InstaConnect.Follows.Presentation.Features.Follows.Extensions;
 
 namespace InstaConnect.Follows.Presentation.Features.Common.Extensions;
 
@@ -9,13 +10,16 @@ public static class WebApplicationExtensions
 	{
 		public WebApplication UsePresentation()
 		{
-			return application
+			application
 				.UseConfiguredCors()
 				.UseRequestRateLimiting()
 				.UseSecurity()
 				.MapApiEndpoints()
 				.UseGlobalExceptionHandling()
-				.MapHealthCheckEndpoints();
+				.MapHealthCheckEndpoints()
+				.MapFollowHub();
+
+			return application;
 		}
 	}
 }

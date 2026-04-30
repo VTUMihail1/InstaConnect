@@ -1,3 +1,4 @@
+using InstaConnect.Follows.Domain.Features.Follows.Models.Responses;
 using InstaConnect.Follows.Domain.Features.Follows.Models.ValueObjects;
 using InstaConnect.Follows.Events.Features.Follows;
 using InstaConnect.Follows.Tests.Features.Follows.Utilities;
@@ -23,6 +24,14 @@ public static class FollowEquals
 		}
 	}
 
+	extension(FollowAddedNotificationRequest request)
+	{
+		public bool Matches(Follow entity)
+		{
+			return entity.Matches(request.Follow);
+		}
+	}
+
 	extension(FollowEventRequest r)
 	{
 		public bool Matches(FollowEventRequest request)
@@ -38,6 +47,14 @@ public static class FollowEquals
 	extension(Follow entity)
 	{
 		public bool Matches(FollowEventRequest request)
+		{
+			return entity.Id.Matches(request.FollowerId, request.FollowingId) &&
+				   entity.Follower != null && entity.Follower.Matches(request.Follower) &&
+				   entity.Following != null && entity.Following.Matches(request.Following) &&
+				   entity.CreatedAtUtc == request.CreatedAtUtc;
+		}
+
+		public bool Matches(FollowNotificationRequest request)
 		{
 			return entity.Id.Matches(request.FollowerId, request.FollowingId) &&
 				   entity.Follower != null && entity.Follower.Matches(request.Follower) &&

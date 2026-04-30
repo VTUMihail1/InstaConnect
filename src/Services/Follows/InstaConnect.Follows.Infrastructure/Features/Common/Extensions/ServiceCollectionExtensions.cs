@@ -29,6 +29,8 @@ public static class ServiceCollectionExtensions
 				.AddUnitOfWork()
 				.AddRabbitMQ(configuration, FollowsEventHandlerUtilities.Prefix, presentationAssembly)
 				.AddJwtBearer(configuration)
+				.AddRedis(configuration)
+				.AddSignalR(configuration)
 				.AddGuidProvider()
 				.AddDateTimeProvider()
 				.AddSortOrders();

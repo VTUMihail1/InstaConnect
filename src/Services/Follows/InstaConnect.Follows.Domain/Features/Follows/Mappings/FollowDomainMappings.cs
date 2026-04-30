@@ -1,3 +1,4 @@
+using InstaConnect.Follows.Domain.Features.Users.Models.Responses;
 using InstaConnect.Identity.Events.Features.Users;
 
 using Mapster;
@@ -21,5 +22,16 @@ internal class FollowDomainMappings : IRegister
 				src.Follower.Adapt<UserEventRequest>(config)!,
 				src.Following.Adapt<UserEventRequest>(config)!,
 				src.CreatedAtUtc));
+
+		config.NewConfig<Follow, FollowNotificationRequest>()
+			.ConstructUsing(src => new(
+				src.Id.FollowerId.Id,
+				src.Id.FollowingId.Id,
+				src.Follower.Adapt<UserNotificationRequest>(config)!,
+				src.Following.Adapt<UserNotificationRequest>(config)!,
+				src.CreatedAtUtc));
+
+		config.NewConfig<Follow, FollowAddedNotificationRequest>()
+			.ConstructUsing(src => new(src.Adapt<FollowNotificationRequest>(config)!));
 	}
 }

@@ -1,4 +1,5 @@
 using InstaConnect.Common.Domain.Features.Common.Extensions;
+using InstaConnect.Follows.Domain.Features.Users.Models.Responses;
 using InstaConnect.Follows.Domain.Features.Users.Models.ValueObjects;
 using InstaConnect.Identity.Events.Features.Users;
 
@@ -57,6 +58,18 @@ public static class UserEquals
 				   entity.ProfileImage.Matches(request.ProfileImageUrl) &&
 				   entity.CreatedAtUtc == request.CreatedAtUtc &&
 				   entity.UpdatedAtUtc == request.UpdatedAtUtc;
+		}
+
+		public bool Matches(UserNotificationRequest response)
+		{
+			return entity.Id.Matches(response.Id) &&
+				   entity.Name.Matches(response.Name) &&
+				   entity.Email.Matches(response.Email) &&
+				   entity.FirstName == response.FirstName &&
+				   entity.LastName == response.LastName &&
+				   entity.ProfileImage.Matches(response.ProfileImageUrl) &&
+				   entity.CreatedAtUtc == response.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == response.UpdatedAtUtc;
 		}
 	}
 

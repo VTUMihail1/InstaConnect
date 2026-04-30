@@ -10,6 +10,7 @@ internal class FollowCommandService : IFollowCommandService
 	private readonly IEventPublisher _eventPublisher;
 	private readonly IFollowCommandRepository _repository;
 	private readonly IUserCommandRepository _userRepository;
+	private readonly IFollowNotificationService _notificationService;
 	private readonly IFollowIncludeBuilderFactory _includeBuilderFactory;
 
 	public FollowCommandService(
@@ -18,6 +19,7 @@ internal class FollowCommandService : IFollowCommandService
 		IEventPublisher eventPublisher,
 		IFollowCommandRepository repository,
 		IUserCommandRepository userRepository,
+		IFollowNotificationService notificationService,
 		IFollowIncludeBuilderFactory includeBuilderFactory)
 	{
 		_factory = factory;
@@ -26,6 +28,7 @@ internal class FollowCommandService : IFollowCommandService
 		_repository = repository;
 		_userRepository = userRepository;
 		_includeBuilderFactory = includeBuilderFactory;
+		_notificationService = notificationService;
 	}
 
 	public async Task<FollowId> AddAsync(AddFollowCommand command, CancellationToken cancellationToken)
@@ -56,6 +59,9 @@ internal class FollowCommandService : IFollowCommandService
 
 		await _eventPublisher.PublishAsync(
 			_mapper.Map<FollowAddedEventRequest>(newFollow), cancellationToken);
+
+		await _notificationService.AddedAsync(
+			_mapper.Map<FollowAddedNotificationRequest>(newFollow), cancellationToken);
 
 		return newFollow.Id;
 	}

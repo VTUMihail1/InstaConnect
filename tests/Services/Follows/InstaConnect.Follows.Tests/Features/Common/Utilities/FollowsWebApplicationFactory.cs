@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.TestHost;
 
 using Testcontainers.MongoDb;
 using Testcontainers.RabbitMq;
+using Testcontainers.Redis;
 
 using Xunit;
 
@@ -14,11 +15,13 @@ namespace InstaConnect.Follows.Tests.Features.Common.Utilities;
 
 public class FollowsWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
+	private readonly RedisContainer _redisContainer;
 	private readonly MongoDbContainer _mongoDbContainer;
 	private readonly RabbitMqContainer _rabbitMqContainer;
 
 	public FollowsWebApplicationFactory()
 	{
+		_redisContainer = ContainerFactory.GetRedisContainer();
 		_mongoDbContainer = ContainerFactory.GetMongoDbContainer();
 		_rabbitMqContainer = ContainerFactory.GetRabbitMqContainer();
 	}
@@ -30,6 +33,7 @@ public class FollowsWebApplicationFactory : WebApplicationFactory<Program>, IAsy
 			serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), FollowsPresentationReference.Assembly);
 		});
 
+		builder.UpdateRedisConfiguration(_redisContainer.GetConnectionString());
 		builder.UpdateMongoConfiguration(_mongoDbContainer.GetConnectionString());
 		builder.UpdateRabbitMqConfiguration(_rabbitMqContainer.GetConnectionString());
 		builder.UpdateAccessTokenConfiguration();
@@ -39,12 +43,14 @@ public class FollowsWebApplicationFactory : WebApplicationFactory<Program>, IAsy
 
 	public async Task InitializeAsync()
 	{
+		await _redisContainer.StartAsync();
 		await _mongoDbContainer.StartAsync();
 		await _rabbitMqContainer.StartAsync();
 	}
 
 	public new async Task DisposeAsync()
 	{
+		await _redisContainer.DisposeAsync().AsTask();
 		await _mongoDbContainer.DisposeAsync().AsTask();
 		await _rabbitMqContainer.DisposeAsync().AsTask();
 	}
