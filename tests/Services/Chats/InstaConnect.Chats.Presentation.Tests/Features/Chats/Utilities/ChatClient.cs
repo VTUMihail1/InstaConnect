@@ -2,192 +2,203 @@ using System.Net;
 using System.Net.Http.Json;
 
 using InstaConnect.Chats.Presentation.Features.Chats.Utilities;
+using InstaConnect.Chats.Presentation.Tests.Features.Chats.Abstractions;
+using InstaConnect.Common.Infrastructure.Features.AccessTokens.Abstractions;
 using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
+using InstaConnect.Common.Presentation.Tests.Features.Extensions;
 
 namespace InstaConnect.Chats.Presentation.Tests.Features.Chats.Utilities;
 
-public static class ChatClient
+internal class ChatClient : IChatClient
 {
-	extension(HttpClient httpClient)
+	private readonly HttpClient _httpClient;
+	private readonly IBaseAccessTokenGenerator _baseAccessTokenGenerator;
+
+	public ChatClient(
+		HttpClient httpClient,
+		IBaseAccessTokenGenerator baseAccessTokenGenerator)
 	{
-		private async Task<HttpResponseMessage> GetAllChatsUnauthorizedResponseMessageAsync(
+		_httpClient = httpClient;
+		_baseAccessTokenGenerator = baseAccessTokenGenerator;
+	}
+
+	private async Task<HttpResponseMessage> GetAllUnauthorizedResponseMessageAsync(
 			GetAllChatsApiRequest request,
 			CancellationToken cancellationToken)
-		{
-			var route = ChatRouteFactory.GetRoute(request);
+	{
+		var route = ChatRouteFactory.GetRoute(request);
 
-			return await httpClient
-				.GetAsync(route, cancellationToken);
-		}
+		return await _httpClient
+			.GetAsync(route, cancellationToken);
+	}
 
-		private async Task<HttpResponseMessage> GetAllChatsResponseMessageAsync(
-			GetAllChatsApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var route = ChatRouteFactory.GetRoute(request);
+	private async Task<HttpResponseMessage> GetAllResponseMessageAsync(
+		GetAllChatsApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var route = ChatRouteFactory.GetRoute(request);
 
-			return await httpClient
-				.WithAuthorization(request.CurrentUserId)
-				.GetAsync(route, cancellationToken);
-		}
+		return await _httpClient
+			.WithAuthorization(request.CurrentUserId, _baseAccessTokenGenerator)
+			.GetAsync(route, cancellationToken);
+	}
 
-		public async Task<ApplicationProblemDetails> GetAllChatsProblemDetailsAsync(
-			GetAllChatsApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var response = await httpClient.GetAllChatsResponseMessageAsync(request, cancellationToken);
+	public async Task<ApplicationProblemDetails> GetAllProblemDetailsAsync(
+		GetAllChatsApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await GetAllResponseMessageAsync(request, cancellationToken);
 
-			return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
-		}
+		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
+	}
 
-		public async Task<GetAllChatsApiResponse> GetAllChatsAsync(
-			GetAllChatsApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var response = await httpClient.GetAllChatsResponseMessageAsync(request, cancellationToken);
+	public async Task<GetAllChatsApiResponse> GetAllAsync(
+		GetAllChatsApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await GetAllResponseMessageAsync(request, cancellationToken);
 
-			return await response.GetFromJsonAsync<GetAllChatsApiResponse>(cancellationToken);
-		}
+		return await response.GetFromJsonAsync<GetAllChatsApiResponse>(cancellationToken);
+	}
 
-		public async Task<HttpStatusCode> GetAllChatsStatusCodeUnauthorizedAsync(
-			GetAllChatsApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var response = await httpClient.GetAllChatsUnauthorizedResponseMessageAsync(request, cancellationToken);
+	public async Task<HttpStatusCode> GetAllUnauthorizedStatusCodeAsync(
+		GetAllChatsApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await GetAllUnauthorizedResponseMessageAsync(request, cancellationToken);
 
-			return response.GetStatusCode();
-		}
+		return response.GetStatusCode();
+	}
 
-		public async Task<HttpStatusCode> GetAllChatsStatusCodeAsync(
-			GetAllChatsApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var response = await httpClient.GetAllChatsResponseMessageAsync(request, cancellationToken);
+	public async Task<HttpStatusCode> GetAllStatusCodeAsync(
+		GetAllChatsApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await GetAllResponseMessageAsync(request, cancellationToken);
 
-			return response.GetStatusCode();
-		}
+		return response.GetStatusCode();
+	}
 
-		private async Task<HttpResponseMessage> GetChatByIdUnauthorizedResponseMessageAsync(
-			GetChatByIdApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var route = ChatRouteFactory.GetRoute(request);
+	private async Task<HttpResponseMessage> GetByIdUnauthorizedResponseMessageAsync(
+		GetChatByIdApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var route = ChatRouteFactory.GetRoute(request);
 
-			return await httpClient
-				.GetAsync(route, cancellationToken);
-		}
+		return await _httpClient
+			.GetAsync(route, cancellationToken);
+	}
 
-		private async Task<HttpResponseMessage> GetChatByIdResponseMessageAsync(
-			GetChatByIdApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var route = ChatRouteFactory.GetRoute(request);
+	private async Task<HttpResponseMessage> GetByIdResponseMessageAsync(
+		GetChatByIdApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var route = ChatRouteFactory.GetRoute(request);
 
-			return await httpClient
-				.WithAuthorization(request.CurrentUserId)
-				.GetAsync(route, cancellationToken);
-		}
+		return await _httpClient
+			.WithAuthorization(request.CurrentUserId, _baseAccessTokenGenerator)
+			.GetAsync(route, cancellationToken);
+	}
 
-		public async Task<ApplicationProblemDetails> GetChatByIdProblemDetailsAsync(
-			GetChatByIdApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var response = await httpClient.GetChatByIdResponseMessageAsync(request, cancellationToken);
+	public async Task<ApplicationProblemDetails> GetByIdProblemDetailsAsync(
+		GetChatByIdApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await GetByIdResponseMessageAsync(request, cancellationToken);
 
-			return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
-		}
+		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
+	}
 
-		public async Task<GetChatByIdApiResponse> GetChatByIdAsync(
-			GetChatByIdApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var response = await httpClient.GetChatByIdResponseMessageAsync(request, cancellationToken);
+	public async Task<GetChatByIdApiResponse> GetByIdAsync(
+		GetChatByIdApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await GetByIdResponseMessageAsync(request, cancellationToken);
 
-			return await response.GetFromJsonAsync<GetChatByIdApiResponse>(cancellationToken);
-		}
+		return await response.GetFromJsonAsync<GetChatByIdApiResponse>(cancellationToken);
+	}
 
-		public async Task<HttpStatusCode> GetChatByIdStatusCodeUnauthorizedAsync(
-			GetChatByIdApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var response = await httpClient.GetChatByIdUnauthorizedResponseMessageAsync(request, cancellationToken);
+	public async Task<HttpStatusCode> GetByIdUnauthorizedStatusCodeAsync(
+		GetChatByIdApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await GetByIdUnauthorizedResponseMessageAsync(request, cancellationToken);
 
-			return response.GetStatusCode();
-		}
+		return response.GetStatusCode();
+	}
 
-		public async Task<HttpStatusCode> GetChatByIdStatusCodeAsync(
-			GetChatByIdApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var response = await httpClient.GetChatByIdResponseMessageAsync(request, cancellationToken);
+	public async Task<HttpStatusCode> GetByIdStatusCodeAsync(
+		GetChatByIdApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await GetByIdResponseMessageAsync(request, cancellationToken);
 
-			return response.GetStatusCode();
-		}
+		return response.GetStatusCode();
+	}
 
-		private async Task<HttpResponseMessage> AddChatUnauthorizedResponseMessageAsync(
-			AddChatApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var route = ChatRouteFactory.GetRoute(request);
+	private async Task<HttpResponseMessage> AddUnauthorizedResponseMessageAsync(
+		AddChatApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var route = ChatRouteFactory.GetRoute(request);
 
-			return await httpClient
-				.PostAsJsonAsync(route, request.Body, cancellationToken);
-		}
+		return await _httpClient
+			.PostAsJsonAsync(route, request.Body, cancellationToken);
+	}
 
-		private async Task<HttpResponseMessage> AddChatResponseMessageAsync(
-			AddChatApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var route = ChatRouteFactory.GetRoute(request);
+	private async Task<HttpResponseMessage> AddResponseMessageAsync(
+		AddChatApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var route = ChatRouteFactory.GetRoute(request);
 
-			return await httpClient
-				.WithAuthorization(request.ParticipantOneId)
-				.PostAsJsonAsync(route, request.Body, cancellationToken);
-		}
+		return await _httpClient
+			.WithAuthorization(request.ParticipantOneId, _baseAccessTokenGenerator)
+			.PostAsJsonAsync(route, request.Body, cancellationToken);
+	}
 
-		public async Task<ApplicationProblemDetails> AddChatProblemDetailsUnauthorizedAsync(
-			AddChatApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var response = await httpClient.AddChatUnauthorizedResponseMessageAsync(request, cancellationToken);
+	public async Task<ApplicationProblemDetails> AddUnauthorizedProblemDetailsAsync(
+		AddChatApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await AddUnauthorizedResponseMessageAsync(request, cancellationToken);
 
-			return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
-		}
+		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
+	}
 
-		public async Task<ApplicationProblemDetails> AddChatProblemDetailsAsync(
-			AddChatApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var response = await httpClient.AddChatResponseMessageAsync(request, cancellationToken);
+	public async Task<ApplicationProblemDetails> AddProblemDetailsAsync(
+		AddChatApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await AddResponseMessageAsync(request, cancellationToken);
 
-			return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
-		}
+		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
+	}
 
-		public async Task<AddChatApiResponse> AddChatAsync(
-			AddChatApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var response = await httpClient.AddChatResponseMessageAsync(request, cancellationToken);
+	public async Task<AddChatApiResponse> AddAsync(
+		AddChatApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await AddResponseMessageAsync(request, cancellationToken);
 
-			return await response.GetFromJsonAsync<AddChatApiResponse>(cancellationToken);
-		}
+		return await response.GetFromJsonAsync<AddChatApiResponse>(cancellationToken);
+	}
 
-		public async Task<HttpStatusCode> AddChatStatusCodeUnauthorizedAsync(
-			AddChatApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var response = await httpClient.AddChatUnauthorizedResponseMessageAsync(request, cancellationToken);
+	public async Task<HttpStatusCode> AddUnauthorizedStatusCodeAsync(
+		AddChatApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await AddUnauthorizedResponseMessageAsync(request, cancellationToken);
 
-			return response.GetStatusCode();
-		}
+		return response.GetStatusCode();
+	}
 
-		public async Task<HttpStatusCode> AddChatStatusCodeAsync(
-			AddChatApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var response = await httpClient.AddChatResponseMessageAsync(request, cancellationToken);
+	public async Task<HttpStatusCode> AddStatusCodeAsync(
+		AddChatApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await AddResponseMessageAsync(request, cancellationToken);
 
-			return response.GetStatusCode();
-		}
+		return response.GetStatusCode();
 	}
 }

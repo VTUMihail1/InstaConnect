@@ -35,7 +35,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var request = _requestBuilder.WithFollowingId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllFollowsForFollowingStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetAllForFollowingStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -51,7 +51,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var request = _requestBuilder.WithFollowingId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllFollowsForFollowingProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.GetAllForFollowingProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForFollowingId(messageTransformer, request);
@@ -66,7 +66,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var request = _requestBuilder.WithFollowerName(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllFollowsForFollowingStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetAllForFollowingStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -81,7 +81,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var request = _requestBuilder.WithFollowerName(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllFollowsForFollowingProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.GetAllForFollowingProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForFollowerName(messageTransformer, request);
@@ -96,7 +96,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllFollowsForFollowingStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetAllForFollowingStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -111,7 +111,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllFollowsForFollowingProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.GetAllForFollowingProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForCurrentUserId(messageTransformer, request);
@@ -126,7 +126,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var request = _requestBuilder.WithSortOrder(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllFollowsForFollowingStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetAllForFollowingStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -141,7 +141,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var request = _requestBuilder.WithSortOrder(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllFollowsForFollowingProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.GetAllForFollowingProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForSortOrder(messageTransformer, request);
@@ -156,7 +156,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var request = _requestBuilder.WithSortTerm(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllFollowsForFollowingStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetAllForFollowingStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -171,7 +171,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var request = _requestBuilder.WithSortTerm(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllFollowsForFollowingProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.GetAllForFollowingProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForSortTerm(messageTransformer, request);
@@ -187,7 +187,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var request = _requestBuilder.WithPage(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllFollowsForFollowingStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetAllForFollowingStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -203,7 +203,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var request = _requestBuilder.WithPage(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllFollowsForFollowingProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.GetAllForFollowingProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForPage(messageTransformer, request);
@@ -219,7 +219,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var request = _requestBuilder.WithPageSize(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllFollowsForFollowingStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetAllForFollowingStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -235,7 +235,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var request = _requestBuilder.WithPageSize(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllFollowsForFollowingProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.GetAllForFollowingProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForPageSize(messageTransformer, request);
@@ -245,7 +245,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 	public async Task GetAllForFollowingAsync_ShouldHaveOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var response = await HttpClient.GetAllFollowsForFollowingStatusCodeAsync(_request, CancellationToken);
+		var response = await Client.GetAllForFollowingStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -260,7 +260,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var request = _requestBuilder.WithFollowingId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllFollowsForFollowingStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetAllForFollowingStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -277,7 +277,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var request = _requestBuilder.WithFollowerName(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllFollowsForFollowingStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetAllForFollowingStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -294,7 +294,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllFollowsForFollowingStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetAllForFollowingStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -310,7 +310,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var request = _requestBuilder.WithSortOrder(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllFollowsForFollowingStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetAllForFollowingStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -326,7 +326,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var request = _requestBuilder.WithSortTerm(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllFollowsForFollowingStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetAllForFollowingStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -336,7 +336,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 	public async Task GetAllForFollowingAsync_ShouldReturnResponse_WhenRequestIsValid()
 	{
 		// Act
-		var response = await HttpClient.GetAllFollowsForFollowingAsync(_request, CancellationToken);
+		var response = await Client.GetAllForFollowingAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(Following, Follows, _request);
@@ -351,7 +351,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var request = _requestBuilder.WithFollowingId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllFollowsForFollowingAsync(request, CancellationToken);
+		var response = await Client.GetAllForFollowingAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(Following, Follows, request);
@@ -368,7 +368,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var request = _requestBuilder.WithFollowerName(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllFollowsForFollowingAsync(request, CancellationToken);
+		var response = await Client.GetAllForFollowingAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(Following, Follows, request);
@@ -385,7 +385,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllFollowsForFollowingAsync(request, CancellationToken);
+		var response = await Client.GetAllForFollowingAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(Following, Follows, request);
@@ -401,7 +401,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var request = _requestBuilder.WithSortOrder(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllFollowsForFollowingAsync(request, CancellationToken);
+		var response = await Client.GetAllForFollowingAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(Following, Follows, request, termTransformer);
@@ -417,7 +417,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var request = _requestBuilder.WithSortTerm(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetAllFollowsForFollowingAsync(request, CancellationToken);
+		var response = await Client.GetAllForFollowingAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(Following, Follows, request, termTransformer);

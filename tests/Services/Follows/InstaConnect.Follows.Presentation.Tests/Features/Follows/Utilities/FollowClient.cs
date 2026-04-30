@@ -1,257 +1,268 @@
 using System.Net;
 using System.Net.Http.Json;
 
+using InstaConnect.Common.Infrastructure.Features.AccessTokens.Abstractions;
 using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
+using InstaConnect.Common.Presentation.Tests.Features.Extensions;
 using InstaConnect.Follows.Presentation.Features.Follows.Utilities;
+using InstaConnect.Follows.Presentation.Tests.Features.Follows.Abstractions;
 
 namespace InstaConnect.Follows.Presentation.Tests.Features.Follows.Utilities;
 
-public static class FollowClient
+internal class FollowClient : IFollowClient
 {
-	extension(HttpClient httpClient)
+	private readonly HttpClient _httpClient;
+	private readonly IBaseAccessTokenGenerator _baseAccessTokenGenerator;
+
+	public FollowClient(
+		HttpClient httpClient,
+		IBaseAccessTokenGenerator baseAccessTokenGenerator)
 	{
-		private async Task<HttpResponseMessage> GetAllFollowsResponseMessageAsync(
+		_httpClient = httpClient;
+		_baseAccessTokenGenerator = baseAccessTokenGenerator;
+	}
+
+	private async Task<HttpResponseMessage> GetAllResponseMessageAsync(
 			GetAllFollowsApiRequest request,
 			CancellationToken cancellationToken)
-		{
-			var route = FollowRouteFactory.GetRoute(request);
+	{
+		var route = FollowRouteFactory.GetRoute(request);
 
-			return await httpClient
-				.WithAuthorization(request.CurrentUserId)
-				.GetAsync(route, cancellationToken);
-		}
+		return await _httpClient
+			.WithAuthorization(request.CurrentUserId, _baseAccessTokenGenerator)
+			.GetAsync(route, cancellationToken);
+	}
 
-		public async Task<ApplicationProblemDetails> GetAllFollowsProblemDetailsAsync(
-			GetAllFollowsApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var response = await httpClient.GetAllFollowsResponseMessageAsync(request, cancellationToken);
+	public async Task<ApplicationProblemDetails> GetAllProblemDetailsAsync(
+		GetAllFollowsApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await GetAllResponseMessageAsync(request, cancellationToken);
 
-			return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
-		}
+		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
+	}
 
-		public async Task<GetAllFollowsApiResponse> GetAllFollowsAsync(
-			GetAllFollowsApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var response = await httpClient.GetAllFollowsResponseMessageAsync(request, cancellationToken);
+	public async Task<GetAllFollowsApiResponse> GetAllAsync(
+		GetAllFollowsApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await GetAllResponseMessageAsync(request, cancellationToken);
 
-			return await response.GetFromJsonAsync<GetAllFollowsApiResponse>(cancellationToken);
-		}
+		return await response.GetFromJsonAsync<GetAllFollowsApiResponse>(cancellationToken);
+	}
 
-		public async Task<HttpStatusCode> GetAllFollowsStatusCodeAsync(
-			GetAllFollowsApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var response = await httpClient.GetAllFollowsResponseMessageAsync(request, cancellationToken);
+	public async Task<HttpStatusCode> GetAllStatusCodeAsync(
+		GetAllFollowsApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await GetAllResponseMessageAsync(request, cancellationToken);
 
-			return response.GetStatusCode();
-		}
+		return response.GetStatusCode();
+	}
 
-		private async Task<HttpResponseMessage> GetAllFollowsForFollowingResponseMessageAsync(
-			GetAllFollowsForFollowingApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var route = FollowRouteFactory.GetRoute(request);
+	private async Task<HttpResponseMessage> GetAllForFollowingResponseMessageAsync(
+		GetAllFollowsForFollowingApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var route = FollowRouteFactory.GetRoute(request);
 
-			return await httpClient
-				.WithAuthorization(request.CurrentUserId)
-				.GetAsync(route, cancellationToken);
-		}
+		return await _httpClient
+			.WithAuthorization(request.CurrentUserId, _baseAccessTokenGenerator)
+			.GetAsync(route, cancellationToken);
+	}
 
-		public async Task<ApplicationProblemDetails> GetAllFollowsForFollowingProblemDetailsAsync(
-			GetAllFollowsForFollowingApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var response = await httpClient.GetAllFollowsForFollowingResponseMessageAsync(request, cancellationToken);
+	public async Task<ApplicationProblemDetails> GetAllForFollowingProblemDetailsAsync(
+		GetAllFollowsForFollowingApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await GetAllForFollowingResponseMessageAsync(request, cancellationToken);
 
-			return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
-		}
+		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
+	}
 
-		public async Task<GetAllFollowsForFollowingApiResponse> GetAllFollowsForFollowingAsync(
-			GetAllFollowsForFollowingApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var response = await httpClient.GetAllFollowsForFollowingResponseMessageAsync(request, cancellationToken);
+	public async Task<GetAllFollowsForFollowingApiResponse> GetAllForFollowingAsync(
+		GetAllFollowsForFollowingApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await GetAllForFollowingResponseMessageAsync(request, cancellationToken);
 
-			return await response.GetFromJsonAsync<GetAllFollowsForFollowingApiResponse>(cancellationToken);
-		}
+		return await response.GetFromJsonAsync<GetAllFollowsForFollowingApiResponse>(cancellationToken);
+	}
 
-		public async Task<HttpStatusCode> GetAllFollowsForFollowingStatusCodeAsync(
-			GetAllFollowsForFollowingApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var response = await httpClient.GetAllFollowsForFollowingResponseMessageAsync(request, cancellationToken);
+	public async Task<HttpStatusCode> GetAllForFollowingStatusCodeAsync(
+		GetAllFollowsForFollowingApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await GetAllForFollowingResponseMessageAsync(request, cancellationToken);
 
-			return response.GetStatusCode();
-		}
+		return response.GetStatusCode();
+	}
 
-		private async Task<HttpResponseMessage> GetFollowByIdResponseMessageAsync(
-			GetFollowByIdApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var route = FollowRouteFactory.GetRoute(request);
+	private async Task<HttpResponseMessage> GetByIdResponseMessageAsync(
+		GetFollowByIdApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var route = FollowRouteFactory.GetRoute(request);
 
-			return await httpClient
-				.WithAuthorization(request.CurrentUserId)
-				.GetAsync(route, cancellationToken);
-		}
+		return await _httpClient
+			.WithAuthorization(request.CurrentUserId, _baseAccessTokenGenerator)
+			.GetAsync(route, cancellationToken);
+	}
 
-		public async Task<ApplicationProblemDetails> GetFollowByIdProblemDetailsAsync(
-			GetFollowByIdApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var response = await httpClient.GetFollowByIdResponseMessageAsync(request, cancellationToken);
+	public async Task<ApplicationProblemDetails> GetByIdProblemDetailsAsync(
+		GetFollowByIdApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await GetByIdResponseMessageAsync(request, cancellationToken);
 
-			return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
-		}
+		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
+	}
 
-		public async Task<GetFollowByIdApiResponse> GetFollowByIdAsync(
-			GetFollowByIdApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var response = await httpClient.GetFollowByIdResponseMessageAsync(request, cancellationToken);
+	public async Task<GetFollowByIdApiResponse> GetByIdAsync(
+		GetFollowByIdApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await GetByIdResponseMessageAsync(request, cancellationToken);
 
-			return await response.GetFromJsonAsync<GetFollowByIdApiResponse>(cancellationToken);
-		}
+		return await response.GetFromJsonAsync<GetFollowByIdApiResponse>(cancellationToken);
+	}
 
-		public async Task<HttpStatusCode> GetFollowByIdStatusCodeAsync(
-			GetFollowByIdApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var response = await httpClient.GetFollowByIdResponseMessageAsync(request, cancellationToken);
+	public async Task<HttpStatusCode> GetByIdStatusCodeAsync(
+		GetFollowByIdApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await GetByIdResponseMessageAsync(request, cancellationToken);
 
-			return response.GetStatusCode();
-		}
+		return response.GetStatusCode();
+	}
 
-		private async Task<HttpResponseMessage> AddFollowUnauthorizedResponseMessageAsync(
-			AddFollowApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var route = FollowRouteFactory.GetRoute(request);
+	private async Task<HttpResponseMessage> AddUnauthorizedResponseMessageAsync(
+		AddFollowApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var route = FollowRouteFactory.GetRoute(request);
 
-			return await httpClient
-				.PostAsJsonAsync(route, request.Body, cancellationToken);
-		}
+		return await _httpClient
+			.PostAsJsonAsync(route, request.Body, cancellationToken);
+	}
 
-		private async Task<HttpResponseMessage> AddFollowResponseMessageAsync(
-			AddFollowApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var route = FollowRouteFactory.GetRoute(request);
+	private async Task<HttpResponseMessage> AddResponseMessageAsync(
+		AddFollowApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var route = FollowRouteFactory.GetRoute(request);
 
-			return await httpClient
-				.WithAuthorization(request.FollowerId)
-				.PostAsJsonAsync(route, request.Body, cancellationToken);
-		}
+		return await _httpClient
+			.WithAuthorization(request.FollowerId, _baseAccessTokenGenerator)
+			.PostAsJsonAsync(route, request.Body, cancellationToken);
+	}
 
-		public async Task<ApplicationProblemDetails> AddFollowProblemDetailsUnauthorizedAsync(
-			AddFollowApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var response = await httpClient.AddFollowUnauthorizedResponseMessageAsync(request, cancellationToken);
+	public async Task<ApplicationProblemDetails> AddUnauthorizedProblemDetailsAsync(
+		AddFollowApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await AddUnauthorizedResponseMessageAsync(request, cancellationToken);
 
-			return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
-		}
+		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
+	}
 
-		public async Task<ApplicationProblemDetails> AddFollowProblemDetailsAsync(
-			AddFollowApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var response = await httpClient.AddFollowResponseMessageAsync(request, cancellationToken);
+	public async Task<ApplicationProblemDetails> AddProblemDetailsAsync(
+		AddFollowApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await AddResponseMessageAsync(request, cancellationToken);
 
-			return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
-		}
+		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
+	}
 
-		public async Task<AddFollowApiResponse> AddFollowAsync(
-			AddFollowApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var response = await httpClient.AddFollowResponseMessageAsync(request, cancellationToken);
+	public async Task<AddFollowApiResponse> AddAsync(
+		AddFollowApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await AddResponseMessageAsync(request, cancellationToken);
 
-			return await response.GetFromJsonAsync<AddFollowApiResponse>(cancellationToken);
-		}
+		return await response.GetFromJsonAsync<AddFollowApiResponse>(cancellationToken);
+	}
 
-		public async Task<HttpStatusCode> AddFollowStatusCodeUnauthorizedAsync(
-			AddFollowApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var response = await httpClient.AddFollowUnauthorizedResponseMessageAsync(request, cancellationToken);
+	public async Task<HttpStatusCode> AddUnauthorizedStatusCodeAsync(
+		AddFollowApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await AddUnauthorizedResponseMessageAsync(request, cancellationToken);
 
-			return response.GetStatusCode();
-		}
+		return response.GetStatusCode();
+	}
 
-		public async Task<HttpStatusCode> AddFollowStatusCodeAsync(
-			AddFollowApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var response = await httpClient.AddFollowResponseMessageAsync(request, cancellationToken);
+	public async Task<HttpStatusCode> AddStatusCodeAsync(
+		AddFollowApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await AddResponseMessageAsync(request, cancellationToken);
 
-			return response.GetStatusCode();
-		}
+		return response.GetStatusCode();
+	}
 
-		private async Task<HttpResponseMessage> DeleteFollowUnauthorizedResponseMessageAsync(
-			DeleteFollowApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var route = FollowRouteFactory.GetRoute(request);
+	private async Task<HttpResponseMessage> DeleteUnauthorizedResponseMessageAsync(
+		DeleteFollowApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var route = FollowRouteFactory.GetRoute(request);
 
-			return await httpClient
-				.DeleteAsync(route, cancellationToken);
-		}
+		return await _httpClient
+			.DeleteAsync(route, cancellationToken);
+	}
 
-		private async Task<HttpResponseMessage> DeleteFollowResponseMessageAsync(
-			DeleteFollowApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var route = FollowRouteFactory.GetRoute(request);
+	private async Task<HttpResponseMessage> DeleteResponseMessageAsync(
+		DeleteFollowApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var route = FollowRouteFactory.GetRoute(request);
 
-			return await httpClient
-				.WithAuthorization(request.FollowerId)
-				.DeleteAsync(route, cancellationToken);
-		}
+		return await _httpClient
+			.WithAuthorization(request.FollowerId, _baseAccessTokenGenerator)
+			.DeleteAsync(route, cancellationToken);
+	}
 
-		public async Task<ApplicationProblemDetails> DeleteFollowProblemDetailsUnauthorizedAsync(
-			DeleteFollowApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var response = await httpClient.DeleteFollowUnauthorizedResponseMessageAsync(request, cancellationToken);
+	public async Task<ApplicationProblemDetails> DeleteUnauthorizedProblemDetailsAsync(
+		DeleteFollowApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await DeleteUnauthorizedResponseMessageAsync(request, cancellationToken);
 
-			return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
-		}
+		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
+	}
 
-		public async Task<ApplicationProblemDetails> DeleteFollowProblemDetailsAsync(
-			DeleteFollowApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var response = await httpClient.DeleteFollowResponseMessageAsync(request, cancellationToken);
+	public async Task<ApplicationProblemDetails> DeleteProblemDetailsAsync(
+		DeleteFollowApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await DeleteResponseMessageAsync(request, cancellationToken);
 
-			return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
-		}
+		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
+	}
 
-		public async Task DeleteFollowAsync(
-			DeleteFollowApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			await httpClient.DeleteFollowResponseMessageAsync(request, cancellationToken);
-		}
+	public async Task DeleteAsync(
+		DeleteFollowApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		await DeleteResponseMessageAsync(request, cancellationToken);
+	}
 
-		public async Task<HttpStatusCode> DeleteFollowStatusCodeUnauthorizedAsync(
-			DeleteFollowApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var response = await httpClient.DeleteFollowUnauthorizedResponseMessageAsync(request, cancellationToken);
+	public async Task<HttpStatusCode> DeleteUnauthorizedStatusCodeAsync(
+		DeleteFollowApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await DeleteUnauthorizedResponseMessageAsync(request, cancellationToken);
 
-			return response.GetStatusCode();
-		}
+		return response.GetStatusCode();
+	}
 
-		public async Task<HttpStatusCode> DeleteFollowStatusCodeAsync(
-			DeleteFollowApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var response = await httpClient.DeleteFollowResponseMessageAsync(request, cancellationToken);
+	public async Task<HttpStatusCode> DeleteStatusCodeAsync(
+		DeleteFollowApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await DeleteResponseMessageAsync(request, cancellationToken);
 
-			return response.GetStatusCode();
-		}
+		return response.GetStatusCode();
 	}
 }

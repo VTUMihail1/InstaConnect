@@ -24,7 +24,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 	public async Task AddAsync_ShouldReturnUnauthorizedStatusCode_WhenRequestIsUnauthorized()
 	{
 		// Act
-		var response = await HttpClient.AddFollowStatusCodeUnauthorizedAsync(_request, CancellationToken);
+		var response = await Client.AddUnauthorizedStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeUnauthorized();
@@ -42,7 +42,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 		var request = _requestBuilder.WithFollowerId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddFollowStatusCodeAsync(request, CancellationToken);
+		var response = await Client.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -60,7 +60,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 		var request = _requestBuilder.WithFollowerId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddFollowProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForFollowerId(messageTransformer, request);
@@ -76,7 +76,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 		var request = _requestBuilder.WithFollowingId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddFollowStatusCodeAsync(request, CancellationToken);
+		var response = await Client.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -92,7 +92,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 		var request = _requestBuilder.WithFollowingId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddFollowProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForFollowingId(messageTransformer, request);
@@ -105,7 +105,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 		await ServiceScope.DeleteUserAsync(Follower, CancellationToken);
 
 		// Act
-		var response = await HttpClient.AddFollowStatusCodeAsync(_request, CancellationToken);
+		var response = await Client.AddStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNotFound();
@@ -118,7 +118,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 		await ServiceScope.DeleteUserAsync(Follower, CancellationToken);
 
 		// Act
-		var response = await HttpClient.AddFollowProblemDetailsAsync(_request, CancellationToken);
+		var response = await Client.AddProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyFollowerNotFound(_request);
@@ -131,7 +131,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 		await ServiceScope.DeleteUserAsync(Following, CancellationToken);
 
 		// Act
-		var response = await HttpClient.AddFollowStatusCodeAsync(_request, CancellationToken);
+		var response = await Client.AddStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNotFound();
@@ -144,7 +144,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 		await ServiceScope.DeleteUserAsync(Following, CancellationToken);
 
 		// Act
-		var response = await HttpClient.AddFollowProblemDetailsAsync(_request, CancellationToken);
+		var response = await Client.AddProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyFollowingNotFound(_request);
@@ -157,7 +157,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 		await ServiceScope.AddFollowAsync(Follow, CancellationToken);
 
 		// Act
-		var response = await HttpClient.AddFollowStatusCodeAsync(_request, CancellationToken);
+		var response = await Client.AddStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -173,7 +173,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 		var request = _requestBuilder.WithFollowerId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddFollowStatusCodeAsync(request, CancellationToken);
+		var response = await Client.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -189,7 +189,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 		var request = _requestBuilder.WithFollowingId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddFollowStatusCodeAsync(request, CancellationToken);
+		var response = await Client.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -202,7 +202,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 		await ServiceScope.AddFollowAsync(Follow, CancellationToken);
 
 		// Act
-		var response = await HttpClient.AddFollowProblemDetailsAsync(_request, CancellationToken);
+		var response = await Client.AddProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyFollowAlreadyExists(_request);
@@ -218,7 +218,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 		var request = _requestBuilder.WithFollowerId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddFollowProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyFollowAlreadyExists(request);
@@ -234,7 +234,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 		var request = _requestBuilder.WithFollowingId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddFollowProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyFollowAlreadyExists(request);
@@ -244,7 +244,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 	public async Task AddAsync_ShouldHaveOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var response = await HttpClient.AddFollowStatusCodeAsync(_request, CancellationToken);
+		var response = await Client.AddStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -259,7 +259,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 		var request = _requestBuilder.WithFollowerId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddFollowStatusCodeAsync(request, CancellationToken);
+		var response = await Client.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -274,7 +274,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 		var request = _requestBuilder.WithFollowingId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddFollowStatusCodeAsync(request, CancellationToken);
+		var response = await Client.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -284,7 +284,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 	public async Task AddAsync_ShouldReturnResponse_WhenRequestIsValid()
 	{
 		// Act
-		var response = await HttpClient.AddFollowAsync(_request, CancellationToken);
+		var response = await Client.AddAsync(_request, CancellationToken);
 		var follow = await ServiceScope.GetFollowByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -300,7 +300,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 		var request = _requestBuilder.WithFollowerId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddFollowAsync(request, CancellationToken);
+		var response = await Client.AddAsync(request, CancellationToken);
 		var follow = await ServiceScope.GetFollowByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -316,7 +316,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 		var request = _requestBuilder.WithFollowingId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddFollowAsync(request, CancellationToken);
+		var response = await Client.AddAsync(request, CancellationToken);
 		var follow = await ServiceScope.GetFollowByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -327,7 +327,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 	public async Task AddAsync_ShouldAddFollow_WhenRequestIsValid()
 	{
 		// Act
-		var response = await HttpClient.AddFollowAsync(_request, CancellationToken);
+		var response = await Client.AddAsync(_request, CancellationToken);
 		var follow = await ServiceScope.GetFollowByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -343,7 +343,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 		var request = _requestBuilder.WithFollowerId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddFollowAsync(request, CancellationToken);
+		var response = await Client.AddAsync(request, CancellationToken);
 		var follow = await ServiceScope.GetFollowByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -359,7 +359,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 		var request = _requestBuilder.WithFollowingId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddFollowAsync(request, CancellationToken);
+		var response = await Client.AddAsync(request, CancellationToken);
 		var follow = await ServiceScope.GetFollowByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -370,7 +370,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 	public async Task AddAsync_ShouldPublishFollowAddedEvent_WhenRequestIsValid()
 	{
 		// Act
-		var response = await HttpClient.AddFollowAsync(_request, CancellationToken);
+		var response = await Client.AddAsync(_request, CancellationToken);
 		var follow = await ServiceScope.GetFollowByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -386,7 +386,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 		var request = _requestBuilder.WithFollowerId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddFollowAsync(request, CancellationToken);
+		var response = await Client.AddAsync(request, CancellationToken);
 		var follow = await ServiceScope.GetFollowByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -402,7 +402,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 		var request = _requestBuilder.WithFollowingId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddFollowAsync(request, CancellationToken);
+		var response = await Client.AddAsync(request, CancellationToken);
 		var follow = await ServiceScope.GetFollowByIdAsync(response.Response, CancellationToken);
 
 		// Assert

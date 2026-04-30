@@ -15,7 +15,7 @@
 
   <ItemGroup Label="Common">
     <Using Include="Microsoft.AspNetCore.Mvc" />
-    <Using Include="InstaConnect.Common.Infrastructure.Features.Data.Helpers"/>
+    <Using Include="InstaConnect.Common.Infrastructure.Features.Data.Helpers" />
     <Using Include="InstaConnect.Common.Tests.Features.Events" />
     <Using Include="InstaConnect.Common.Tests.Features.Assertions" />
     <Using Include="InstaConnect.Common.Tests.Features.Utilities" />

@@ -1,5 +1,4 @@
 using System.Reflection;
-using System.Text;
 
 using InstaConnect.Common.Domain.Features.Emails.Abstractions;
 using InstaConnect.Common.Domain.Features.Images.Abstractions;
@@ -8,9 +7,7 @@ using InstaConnect.Common.Tests.Features.Utilities;
 
 using MassTransit;
 
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 
 namespace InstaConnect.Common.Tests.Features.Extensions;
 
@@ -57,27 +54,6 @@ public static class ServiceCollectionExtensions
 					configurator.ConfigureEndpoints(context);
 				});
 			});
-
-			return serviceCollection;
-		}
-
-		public IServiceCollection AddTestJwtAuth()
-		{
-			serviceCollection
-				.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-				.AddJwtBearer(options =>
-				{
-					options.TokenValidationParameters = new TokenValidationParameters
-					{
-						ValidateIssuerSigningKey = true,
-						IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(MockValues.AccessTokenSecurityKey)),
-						ValidateIssuer = true,
-						ValidIssuer = MockValues.AccessTokenIssuer,
-						ValidateAudience = true,
-						ValidAudience = MockValues.AccessTokenAudience,
-						ValidateLifetime = true,
-					};
-				});
 
 			return serviceCollection;
 		}

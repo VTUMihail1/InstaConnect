@@ -31,7 +31,7 @@ public class GetFollowByIdFunctionalTests : BaseFollowPresentationQueryFunctiona
 		var request = _requestBuilder.WithFollowerId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetFollowByIdStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetByIdStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -47,7 +47,7 @@ public class GetFollowByIdFunctionalTests : BaseFollowPresentationQueryFunctiona
 		var request = _requestBuilder.WithFollowerId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetFollowByIdProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.GetByIdProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForFollowerId(messageTransformer, request);
@@ -63,7 +63,7 @@ public class GetFollowByIdFunctionalTests : BaseFollowPresentationQueryFunctiona
 		var request = _requestBuilder.WithFollowingId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetFollowByIdStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetByIdStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -79,7 +79,7 @@ public class GetFollowByIdFunctionalTests : BaseFollowPresentationQueryFunctiona
 		var request = _requestBuilder.WithFollowingId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetFollowByIdProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.GetByIdProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForFollowingId(messageTransformer, request);
@@ -94,7 +94,7 @@ public class GetFollowByIdFunctionalTests : BaseFollowPresentationQueryFunctiona
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetFollowByIdStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetByIdStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -109,7 +109,7 @@ public class GetFollowByIdFunctionalTests : BaseFollowPresentationQueryFunctiona
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetFollowByIdProblemDetailsAsync(request, CancellationToken);
+		var response = await Client.GetByIdProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForCurrentUserId(messageTransformer, request);
@@ -122,7 +122,7 @@ public class GetFollowByIdFunctionalTests : BaseFollowPresentationQueryFunctiona
 		await ServiceScope.DeleteFollowAsync(Follow, CancellationToken);
 
 		// Act
-		var response = await HttpClient.GetFollowByIdStatusCodeAsync(_request, CancellationToken);
+		var response = await Client.GetByIdStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNotFound();
@@ -135,7 +135,7 @@ public class GetFollowByIdFunctionalTests : BaseFollowPresentationQueryFunctiona
 		await ServiceScope.DeleteFollowAsync(Follow, CancellationToken);
 
 		// Act
-		var response = await HttpClient.GetFollowByIdProblemDetailsAsync(_request, CancellationToken);
+		var response = await Client.GetByIdProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyFollowNotFound(_request);
@@ -145,7 +145,7 @@ public class GetFollowByIdFunctionalTests : BaseFollowPresentationQueryFunctiona
 	public async Task GetByIdAsync_ShouldHaveOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var response = await HttpClient.GetFollowByIdStatusCodeAsync(_request, CancellationToken);
+		var response = await Client.GetByIdStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -160,7 +160,7 @@ public class GetFollowByIdFunctionalTests : BaseFollowPresentationQueryFunctiona
 		var request = _requestBuilder.WithFollowerId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetFollowByIdStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetByIdStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -175,7 +175,7 @@ public class GetFollowByIdFunctionalTests : BaseFollowPresentationQueryFunctiona
 		var request = _requestBuilder.WithFollowingId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetFollowByIdStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetByIdStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -192,7 +192,7 @@ public class GetFollowByIdFunctionalTests : BaseFollowPresentationQueryFunctiona
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetFollowByIdStatusCodeAsync(request, CancellationToken);
+		var response = await Client.GetByIdStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -202,7 +202,7 @@ public class GetFollowByIdFunctionalTests : BaseFollowPresentationQueryFunctiona
 	public async Task GetByIdAsync_ShouldHaveResponse_WhenRequestIsValid()
 	{
 		// Act
-		var response = await HttpClient.GetFollowByIdAsync(_request, CancellationToken);
+		var response = await Client.GetByIdAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(Follow, _request);
@@ -217,7 +217,7 @@ public class GetFollowByIdFunctionalTests : BaseFollowPresentationQueryFunctiona
 		var request = _requestBuilder.WithFollowerId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetFollowByIdAsync(request, CancellationToken);
+		var response = await Client.GetByIdAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(Follow, request);
@@ -232,7 +232,7 @@ public class GetFollowByIdFunctionalTests : BaseFollowPresentationQueryFunctiona
 		var request = _requestBuilder.WithFollowingId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetFollowByIdAsync(request, CancellationToken);
+		var response = await Client.GetByIdAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(Follow, request);
@@ -249,7 +249,7 @@ public class GetFollowByIdFunctionalTests : BaseFollowPresentationQueryFunctiona
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.GetFollowByIdAsync(request, CancellationToken);
+		var response = await Client.GetByIdAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(Follow, request);

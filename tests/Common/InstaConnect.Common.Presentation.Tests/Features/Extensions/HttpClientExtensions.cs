@@ -13,9 +13,9 @@ using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Net.Http.Headers;
 
-namespace InstaConnect.Common.Presentation.Tests.Features.Utilities;
+namespace InstaConnect.Common.Presentation.Tests.Features.Extensions;
 
-public static class Client
+public static class HttpClientExtensions
 {
 	extension(HttpClient httpClient)
 	{
