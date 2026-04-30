@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Domain.Features.ValueObjects.Abstractions;
+using InstaConnect.Common.Domain.Features.ValueObjects.Abstractions;
 
 namespace InstaConnect.Common.Domain.Features.Entities.Abstractions;
 

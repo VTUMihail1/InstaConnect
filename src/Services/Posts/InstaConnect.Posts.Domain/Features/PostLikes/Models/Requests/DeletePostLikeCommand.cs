@@ -1,3 +1,3 @@
-﻿namespace InstaConnect.Posts.Domain.Features.PostLikes.Models.Requests;
+namespace InstaConnect.Posts.Domain.Features.PostLikes.Models.Requests;
 
 public record DeletePostLikeCommand(PostLikeId Id);

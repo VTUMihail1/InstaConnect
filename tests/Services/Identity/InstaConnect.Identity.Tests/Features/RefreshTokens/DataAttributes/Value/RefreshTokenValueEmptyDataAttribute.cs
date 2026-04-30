@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Identity.Tests.Features.RefreshTokens.DataAttributes.Value;
+namespace InstaConnect.Identity.Tests.Features.RefreshTokens.DataAttributes.Value;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public sealed class RefreshTokenValueEmptyDataAttribute : EmptyStringDataAttribute

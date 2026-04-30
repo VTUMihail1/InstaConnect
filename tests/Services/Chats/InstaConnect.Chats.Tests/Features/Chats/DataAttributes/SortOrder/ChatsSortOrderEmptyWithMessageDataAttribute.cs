@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Domain.Features.Messaging.Models;
+using InstaConnect.Common.Domain.Features.Messaging.Models;
 
 namespace InstaConnect.Chats.Tests.Features.Chats.DataAttributes.SortOrder;
 

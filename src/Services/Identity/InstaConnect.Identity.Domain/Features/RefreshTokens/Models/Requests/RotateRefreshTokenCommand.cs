@@ -1,3 +1,3 @@
-﻿namespace InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Requests;
+namespace InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Requests;
 
 public record RotateRefreshTokenCommand(RefreshTokenId Id);
