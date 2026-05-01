@@ -1,46 +1,46 @@
-﻿namespace InstaConnect.Posts.Application.Tests.Features.Posts.Builders;
+namespace InstaConnect.Posts.Application.Tests.Features.Posts.Builders;
 
 public class DeletePostCommandRequestBuilder
 {
-    private string _id;
-    private string _userId;
+	private string _id;
+	private string _userId;
 
-    public DeletePostCommandRequestBuilder(Post post)
-    {
-        _id = post.Id.Id;
-        _userId = post.UserId.Id;
-    }
+	public DeletePostCommandRequestBuilder(Post post)
+	{
+		_id = post.Id.Id;
+		_userId = post.UserId.Id;
+	}
 
-    public DeletePostCommandRequestBuilder WithId(PostId id, IStringTransformer? transformer = null)
-    {
-        _id = transformer.TryTransform(id.Id);
+	public DeletePostCommandRequestBuilder WithId(PostId id, IStringTransformer? transformer = null)
+	{
+		_id = transformer.TryTransform(id.Id);
 
-        return this;
-    }
+		return this;
+	}
 
-    public DeletePostCommandRequestBuilder WithId(IStringTransformer transformer)
-    {
-        _id = transformer.Transform(_id);
+	public DeletePostCommandRequestBuilder WithId(IStringTransformer transformer)
+	{
+		_id = transformer.Transform(_id);
 
-        return this;
-    }
+		return this;
+	}
 
-    public DeletePostCommandRequestBuilder WithUserId(UserId userId, IStringTransformer? transformer = null)
-    {
-        _userId = transformer.TryTransform(userId.Id);
+	public DeletePostCommandRequestBuilder WithUserId(UserId userId, IStringTransformer? transformer = null)
+	{
+		_userId = transformer.TryTransform(userId.Id);
 
-        return this;
-    }
+		return this;
+	}
 
-    public DeletePostCommandRequestBuilder WithUserId(IStringTransformer transformer)
-    {
-        _userId = transformer.Transform(_userId);
+	public DeletePostCommandRequestBuilder WithUserId(IStringTransformer transformer)
+	{
+		_userId = transformer.Transform(_userId);
 
-        return this;
-    }
+		return this;
+	}
 
-    public DeletePostCommandRequest Build()
-    {
-        return new(_id, _userId);
-    }
+	public DeletePostCommandRequest Build()
+	{
+		return new(_id, _userId);
+	}
 }

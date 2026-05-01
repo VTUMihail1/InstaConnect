@@ -1,3 +1,3 @@
-﻿namespace InstaConnect.Common.Domain.Features.ValueObjects.Abstractions;
+namespace InstaConnect.Common.Domain.Features.ValueObjects.Abstractions;
 
 public interface IValueObject;

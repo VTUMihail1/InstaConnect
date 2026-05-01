@@ -1,10 +1,10 @@
-﻿using Mapster;
+using Mapster;
 
 namespace InstaConnect.Identity.Infrastructure.Features.RefreshTokens.Mappings;
 
 internal class RefreshTokenInfrastructureMappings : IRegister
 {
-    public void Register(TypeAdapterConfig config)
-    {
-    }
+	public void Register(TypeAdapterConfig config)
+	{
+	}
 }

@@ -1,211 +1,217 @@
-﻿using System.Net;
+using System.Net;
 using System.Net.Http.Json;
 
 using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
+using InstaConnect.Common.Presentation.Tests.Features.Extensions;
 using InstaConnect.Identity.Presentation.Features.RefreshTokens.Utilities;
+using InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Abstractions;
 
 using Microsoft.Net.Http.Headers;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Utilities;
 
-public static class RefreshTokenClient
+internal class RefreshTokenClient : IRefreshTokenClient
 {
-    extension(HttpClient httpClient)
-    {
-        private async Task<HttpResponseMessage> IssueRefreshTokenResponseMessageAsync(
-            IssueRefreshTokenApiRequest request,
-            CancellationToken cancellationToken)
-        {
-            var route = RefreshTokenTestRoutes.GetRoute(request);
+	private readonly HttpClient _httpClient;
 
-            return await httpClient
-                .PostAsJsonAsync(route, request.Body, cancellationToken);
-        }
+	public RefreshTokenClient(HttpClient httpClient)
+	{
+		_httpClient = httpClient;
+	}
 
-        public async Task<ApplicationProblemDetails> IssueRefreshTokenProblemDetailsAsync(
-            IssueRefreshTokenApiRequest request,
-            CancellationToken cancellationToken)
-        {
-            var response = await httpClient.IssueRefreshTokenResponseMessageAsync(request, cancellationToken);
+	private async Task<HttpResponseMessage> IssueResponseMessageAsync(
+		IssueRefreshTokenApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var route = RefreshTokenRouteFactory.GetRoute(request);
 
-            return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
-        }
+		return await _httpClient
+			.PostAsJsonAsync(route, request.Body, cancellationToken);
+	}
 
-        public async Task<IssueRefreshTokenApiResponse> IssueRefreshTokenAsync(
-            IssueRefreshTokenApiRequest request,
-            CancellationToken cancellationToken)
-        {
-            var response = await httpClient.IssueRefreshTokenResponseMessageAsync(request, cancellationToken);
+	public async Task<ApplicationProblemDetails> IssueProblemDetailsAsync(
+		IssueRefreshTokenApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await IssueResponseMessageAsync(request, cancellationToken);
 
-            return await response.GetFromJsonAsync<IssueRefreshTokenApiResponse>(cancellationToken);
-        }
+		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
+	}
 
-        public async Task<ICollection<SetCookieHeaderValue>> IssueRefreshTokenResponseCookiesAsync(
-            IssueRefreshTokenApiRequest request,
-            CancellationToken cancellationToken)
-        {
-            var response = await httpClient.IssueRefreshTokenResponseMessageAsync(request, cancellationToken);
+	public async Task<IssueRefreshTokenApiResponse> IssueAsync(
+		IssueRefreshTokenApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await IssueResponseMessageAsync(request, cancellationToken);
 
-            return response.GetCookies();
-        }
+		return await response.GetFromJsonAsync<IssueRefreshTokenApiResponse>(cancellationToken);
+	}
 
-        public async Task<HttpStatusCode> IssueRefreshTokenStatusCodeAsync(
-            IssueRefreshTokenApiRequest request,
-            CancellationToken cancellationToken)
-        {
-            var response = await httpClient.IssueRefreshTokenResponseMessageAsync(request, cancellationToken);
+	public async Task<ICollection<SetCookieHeaderValue>> IssueResponseCookiesAsync(
+		IssueRefreshTokenApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await IssueResponseMessageAsync(request, cancellationToken);
 
-            return response.GetStatusCode();
-        }
+		return response.GetCookies();
+	}
 
-        private async Task<HttpResponseMessage> RotateRefreshTokenWithoutCookiesResponseMessageAsync(
-            RotateRefreshTokenApiRequest request,
-            CancellationToken cancellationToken)
-        {
-            var route = RefreshTokenTestRoutes.GetRoute(request);
+	public async Task<HttpStatusCode> IssueStatusCodeAsync(
+		IssueRefreshTokenApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await IssueResponseMessageAsync(request, cancellationToken);
 
-            return await httpClient
-                .PostAsync(route, null, cancellationToken);
-        }
+		return response.GetStatusCode();
+	}
 
-        private async Task<HttpResponseMessage> RotateRefreshTokenResponseMessageAsync(
-            RotateRefreshTokenApiRequest request,
-            CancellationToken cancellationToken)
-        {
-            var route = RefreshTokenTestRoutes.GetRoute(request);
+	private async Task<HttpResponseMessage> RotateWithoutCookiesResponseMessageAsync(
+		RotateRefreshTokenApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var route = RefreshTokenRouteFactory.GetRoute(request);
 
-            return await httpClient
-                .WithCookies(new(RefreshTokenCookieKeys.Id, request.Id),
-                             new(RefreshTokenCookieKeys.Value, request.Value))
-                .PostAsync(route, null, cancellationToken);
-        }
+		return await _httpClient
+			.PostAsync(route, null, cancellationToken);
+	}
 
-        public async Task<ApplicationProblemDetails> RotateRefreshTokenProblemDetailsWithoutCookiesAsync(
-            RotateRefreshTokenApiRequest request,
-            CancellationToken cancellationToken)
-        {
-            var response = await httpClient.RotateRefreshTokenWithoutCookiesResponseMessageAsync(request, cancellationToken);
+	private async Task<HttpResponseMessage> RotateResponseMessageAsync(
+		RotateRefreshTokenApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var route = RefreshTokenRouteFactory.GetRoute(request);
 
-            return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
-        }
+		return await _httpClient
+			.WithCookies(new(RefreshTokenCookieKeys.Id, request.Id),
+						 new(RefreshTokenCookieKeys.Value, request.Value))
+			.PostAsync(route, null, cancellationToken);
+	}
 
-        public async Task<ApplicationProblemDetails> RotateRefreshTokenProblemDetailsAsync(
-            RotateRefreshTokenApiRequest request,
-            CancellationToken cancellationToken)
-        {
-            var response = await httpClient.RotateRefreshTokenResponseMessageAsync(request, cancellationToken);
+	public async Task<ApplicationProblemDetails> RotateWithoutCookiesProblemDetailsAsync(
+		RotateRefreshTokenApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await RotateWithoutCookiesResponseMessageAsync(request, cancellationToken);
 
-            return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
-        }
+		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
+	}
 
-        public async Task<RotateRefreshTokenApiResponse> RotateRefreshTokenAsync(
-            RotateRefreshTokenApiRequest request,
-            CancellationToken cancellationToken)
-        {
-            var response = await httpClient.RotateRefreshTokenResponseMessageAsync(request, cancellationToken);
+	public async Task<ApplicationProblemDetails> RotateProblemDetailsAsync(
+		RotateRefreshTokenApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await RotateResponseMessageAsync(request, cancellationToken);
 
-            return await response.GetFromJsonAsync<RotateRefreshTokenApiResponse>(cancellationToken);
-        }
+		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
+	}
 
-        public async Task<ICollection<SetCookieHeaderValue>> RotateRefreshTokenResponseCookiesAsync(
-            RotateRefreshTokenApiRequest request,
-            CancellationToken cancellationToken)
-        {
-            var response = await httpClient.RotateRefreshTokenResponseMessageAsync(request, cancellationToken);
+	public async Task<RotateRefreshTokenApiResponse> RotateAsync(
+		RotateRefreshTokenApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await RotateResponseMessageAsync(request, cancellationToken);
 
-            return response.GetCookies();
-        }
+		return await response.GetFromJsonAsync<RotateRefreshTokenApiResponse>(cancellationToken);
+	}
 
-        public async Task<HttpStatusCode> RotateRefreshTokenStatusCodeWithoutCookiesAsync(
-            RotateRefreshTokenApiRequest request,
-            CancellationToken cancellationToken)
-        {
-            var response = await httpClient.RotateRefreshTokenWithoutCookiesResponseMessageAsync(request, cancellationToken);
+	public async Task<ICollection<SetCookieHeaderValue>> RotateResponseCookiesAsync(
+		RotateRefreshTokenApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await RotateResponseMessageAsync(request, cancellationToken);
 
-            return response.GetStatusCode();
-        }
+		return response.GetCookies();
+	}
 
-        public async Task<HttpStatusCode> RotateRefreshTokenStatusCodeAsync(
-            RotateRefreshTokenApiRequest request,
-            CancellationToken cancellationToken)
-        {
-            var response = await httpClient.RotateRefreshTokenResponseMessageAsync(request, cancellationToken);
+	public async Task<HttpStatusCode> RotateWithoutCookiesStatusCodeAsync(
+		RotateRefreshTokenApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await RotateWithoutCookiesResponseMessageAsync(request, cancellationToken);
 
-            return response.GetStatusCode();
-        }
+		return response.GetStatusCode();
+	}
 
-        private async Task<HttpResponseMessage> DeleteCurrentRefreshTokenWithoutCookiesResponseMessageAsync(
-            DeleteCurrentRefreshTokenApiRequest request,
-            CancellationToken cancellationToken)
-        {
-            var route = RefreshTokenTestRoutes.GetRoute(request);
+	public async Task<HttpStatusCode> RotateStatusCodeAsync(
+		RotateRefreshTokenApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await RotateResponseMessageAsync(request, cancellationToken);
 
-            return await httpClient
-                .DeleteAsync(route, cancellationToken);
-        }
+		return response.GetStatusCode();
+	}
 
-        private async Task<HttpResponseMessage> DeleteCurrentRefreshTokenResponseMessageAsync(
-            DeleteCurrentRefreshTokenApiRequest request,
-            CancellationToken cancellationToken)
-        {
-            var route = RefreshTokenTestRoutes.GetRoute(request);
+	private async Task<HttpResponseMessage> DeleteCurrentWithoutCookiesResponseMessageAsync(
+		DeleteCurrentRefreshTokenApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var route = RefreshTokenRouteFactory.GetRoute(request);
 
-            return await httpClient
-                .WithCookies(new(RefreshTokenCookieKeys.Id, request.Id),
-                             new(RefreshTokenCookieKeys.Value, request.Value))
-                .DeleteAsync(route, cancellationToken);
-        }
+		return await _httpClient
+			.DeleteAsync(route, cancellationToken);
+	}
 
-        public async Task<ApplicationProblemDetails> DeleteCurrentRefreshTokenProblemDetailsWithoutCookiesAsync(
-            DeleteCurrentRefreshTokenApiRequest request,
-            CancellationToken cancellationToken)
-        {
-            var response = await httpClient.DeleteCurrentRefreshTokenWithoutCookiesResponseMessageAsync(request, cancellationToken);
+	private async Task<HttpResponseMessage> DeleteCurrentResponseMessageAsync(
+		DeleteCurrentRefreshTokenApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var route = RefreshTokenRouteFactory.GetRoute(request);
 
-            return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
-        }
+		return await _httpClient
+			.WithCookies(new(RefreshTokenCookieKeys.Id, request.Id),
+						 new(RefreshTokenCookieKeys.Value, request.Value))
+			.DeleteAsync(route, cancellationToken);
+	}
 
-        public async Task<ApplicationProblemDetails> DeleteCurrentRefreshTokenProblemDetailsAsync(
-            DeleteCurrentRefreshTokenApiRequest request,
-            CancellationToken cancellationToken)
-        {
-            var response = await httpClient.DeleteCurrentRefreshTokenResponseMessageAsync(request, cancellationToken);
+	public async Task<ApplicationProblemDetails> DeleteCurrentWithoutCookiesProblemDetailsAsync(
+		DeleteCurrentRefreshTokenApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await DeleteCurrentWithoutCookiesResponseMessageAsync(request, cancellationToken);
 
-            return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
-        }
+		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
+	}
 
-        public async Task DeleteCurrentRefreshTokenAsync(
-            DeleteCurrentRefreshTokenApiRequest request,
-            CancellationToken cancellationToken)
-        {
-            await httpClient.DeleteCurrentRefreshTokenResponseMessageAsync(request, cancellationToken);
-        }
+	public async Task<ApplicationProblemDetails> DeleteCurrentProblemDetailsAsync(
+		DeleteCurrentRefreshTokenApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await DeleteCurrentResponseMessageAsync(request, cancellationToken);
 
-        public async Task<ICollection<SetCookieHeaderValue>> DeleteCurrentRefreshTokenResponseCookiesAsync(
-            DeleteCurrentRefreshTokenApiRequest request,
-            CancellationToken cancellationToken)
-        {
-            var response = await httpClient.DeleteCurrentRefreshTokenResponseMessageAsync(request, cancellationToken);
+		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
+	}
 
-            return response.GetCookies();
-        }
+	public async Task DeleteCurrentAsync(
+		DeleteCurrentRefreshTokenApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		await DeleteCurrentResponseMessageAsync(request, cancellationToken);
+	}
 
-        public async Task<HttpStatusCode> DeleteCurrentRefreshTokenStatusCodeWithoutCookiesAsync(
-            DeleteCurrentRefreshTokenApiRequest request,
-            CancellationToken cancellationToken)
-        {
-            var response = await httpClient.DeleteCurrentRefreshTokenWithoutCookiesResponseMessageAsync(request, cancellationToken);
+	public async Task<ICollection<SetCookieHeaderValue>> DeleteCurrentResponseCookiesAsync(
+		DeleteCurrentRefreshTokenApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await DeleteCurrentResponseMessageAsync(request, cancellationToken);
 
-            return response.GetStatusCode();
-        }
+		return response.GetCookies();
+	}
 
-        public async Task<HttpStatusCode> DeleteCurrentRefreshTokenStatusCodeAsync(
-            DeleteCurrentRefreshTokenApiRequest request,
-            CancellationToken cancellationToken)
-        {
-            var response = await httpClient.DeleteCurrentRefreshTokenResponseMessageAsync(request, cancellationToken);
+	public async Task<HttpStatusCode> DeleteCurrentWithoutCookiesStatusCodeAsync(
+		DeleteCurrentRefreshTokenApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await DeleteCurrentWithoutCookiesResponseMessageAsync(request, cancellationToken);
 
-            return response.GetStatusCode();
-        }
-    }
+		return response.GetStatusCode();
+	}
+
+	public async Task<HttpStatusCode> DeleteCurrentStatusCodeAsync(
+		DeleteCurrentRefreshTokenApiRequest request,
+		CancellationToken cancellationToken)
+	{
+		var response = await DeleteCurrentResponseMessageAsync(request, cancellationToken);
+
+		return response.GetStatusCode();
+	}
 }

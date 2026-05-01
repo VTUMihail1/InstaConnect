@@ -1,51 +1,51 @@
-﻿namespace InstaConnect.Posts.Presentation.Tests.Unit.Features.PostComments.Controllers.v1;
+namespace InstaConnect.Posts.Presentation.Tests.Unit.Features.PostComments.Controllers.v1;
 
 public class GetPostCommentByIdControllerUnitTests : BasePostCommentPresentationQueryUnitTest
 {
-    private readonly GetPostCommentByIdApiRequestBuilderFactory _requestBuilderFactory;
-    private readonly GetPostCommentByIdApiRequestBuilder _requestBuilder;
-    private readonly GetPostCommentByIdApiRequest _request;
+	private readonly GetPostCommentByIdApiRequestBuilderFactory _requestBuilderFactory;
+	private readonly GetPostCommentByIdApiRequestBuilder _requestBuilder;
+	private readonly GetPostCommentByIdApiRequest _request;
 
-    private readonly PostCommentController _controller;
+	private readonly PostCommentController _controller;
 
-    public GetPostCommentByIdControllerUnitTests()
-    {
-        _requestBuilderFactory = new();
-        _requestBuilder = _requestBuilderFactory.Create(PostComment);
-        _request = _requestBuilder.Build();
+	public GetPostCommentByIdControllerUnitTests()
+	{
+		_requestBuilderFactory = new();
+		_requestBuilder = _requestBuilderFactory.Create(PostComment);
+		_request = _requestBuilder.Build();
 
-        _controller = new(Mapper, Sender);
+		_controller = new(Mapper, Sender);
 
-        Sender.SetupGetByIdQueryRequest(_request, PostComment, CancellationToken);
-    }
+		Sender.SetupGetByIdQueryRequest(_request, PostComment, CancellationToken);
+	}
 
-    [Fact]
-    public async Task GetByIdAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
-    {
-        // Act
-        var response = await _controller.GetByIdAsync(_request, CancellationToken);
+	[Fact]
+	public async Task GetByIdAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
+	{
+		// Act
+		var response = await _controller.GetByIdAsync(_request, CancellationToken);
 
-        // Assert
-        response.ShouldBeActionResultWithOkStatusCode();
-    }
+		// Assert
+		response.ShouldBeActionResultWithOkStatusCode();
+	}
 
-    [Fact]
-    public async Task GetByIdAsync_ShouldReturnResponse_WhenRequestIsValid()
-    {
-        // Act
-        var response = await _controller.GetByIdAsync(_request, CancellationToken);
+	[Fact]
+	public async Task GetByIdAsync_ShouldReturnResponse_WhenRequestIsValid()
+	{
+		// Act
+		var response = await _controller.GetByIdAsync(_request, CancellationToken);
 
-        // Assert
-        response.ShouldSatisfy(PostComment, _request);
-    }
+		// Assert
+		response.ShouldSatisfy(PostComment, _request);
+	}
 
-    [Fact]
-    public async Task GetByIdAsync_ShouldCallTheSenderSendAsync_WhenRequestIsValid()
-    {
-        // Act
-        await _controller.GetByIdAsync(_request, CancellationToken);
+	[Fact]
+	public async Task GetByIdAsync_ShouldCallTheSenderSendAsync_WhenRequestIsValid()
+	{
+		// Act
+		await _controller.GetByIdAsync(_request, CancellationToken);
 
-        // Assert
-        await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);
-    }
+		// Assert
+		await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);
+	}
 }

@@ -1,9 +1,9 @@
-﻿namespace InstaConnect.Chats.Presentation.Tests.Features.Chats.Builders;
+namespace InstaConnect.Chats.Presentation.Tests.Features.Chats.Builders;
 
 public class GetChatByIdApiRequestBuilderFactory
 {
-    public GetChatByIdApiRequestBuilder Create(Chat chat)
-    {
-        return new(chat);
-    }
+	public GetChatByIdApiRequestBuilder Create(Chat chat)
+	{
+		return new(chat);
+	}
 }

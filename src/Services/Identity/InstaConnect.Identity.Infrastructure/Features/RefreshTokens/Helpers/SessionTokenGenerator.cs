@@ -1,18 +1,18 @@
-﻿namespace InstaConnect.Identity.Infrastructure.Features.RefreshTokens.Helpers;
+namespace InstaConnect.Identity.Infrastructure.Features.RefreshTokens.Helpers;
 
 internal class SessionTokenGenerator : ISessionTokenGenerator
 {
-    private readonly IAccessTokenGenerator _accessTokenGenerator;
+	private readonly IAccessTokenGenerator _accessTokenGenerator;
 
-    public SessionTokenGenerator(IAccessTokenGenerator accessTokenGenerator)
-    {
-        _accessTokenGenerator = accessTokenGenerator;
-    }
+	public SessionTokenGenerator(IAccessTokenGenerator accessTokenGenerator)
+	{
+		_accessTokenGenerator = accessTokenGenerator;
+	}
 
-    public SessionToken Generate(RefreshToken refreshToken)
-    {
-        var accessToken = _accessTokenGenerator.Generate(refreshToken.User!);
+	public SessionToken Generate(RefreshToken refreshToken)
+	{
+		var accessToken = _accessTokenGenerator.Generate(refreshToken.User!);
 
-        return new(refreshToken.Id, accessToken, refreshToken.ExpiresAtUtc);
-    }
+		return new(refreshToken.Id, accessToken, refreshToken.ExpiresAtUtc);
+	}
 }

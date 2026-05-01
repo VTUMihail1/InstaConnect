@@ -1,16 +1,16 @@
-﻿using InstaConnect.Common.Domain.Features.ExceptionHandling.Exceptions;
+using InstaConnect.Common.Domain.Features.ExceptionHandling.Exceptions;
 
 namespace InstaConnect.Posts.Domain.Features.Posts.Exceptions;
 
 public class PostNotFoundException : NotFoundException
 {
-    public PostNotFoundException(PostId id)
-        : base(PostExceptionErrorMessages.GetNotFoundMessage(id))
-    {
-    }
+	public PostNotFoundException(PostId id)
+		: base(PostExceptionErrorMessages.GetNotFoundMessage(id))
+	{
+	}
 
-    public PostNotFoundException(PostId id, Exception exception)
-        : base(PostExceptionErrorMessages.GetNotFoundMessage(id), exception)
-    {
-    }
+	public PostNotFoundException(PostId id, Exception exception)
+		: base(PostExceptionErrorMessages.GetNotFoundMessage(id), exception)
+	{
+	}
 }

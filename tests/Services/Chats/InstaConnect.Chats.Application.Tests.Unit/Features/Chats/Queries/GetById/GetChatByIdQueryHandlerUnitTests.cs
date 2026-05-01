@@ -1,41 +1,41 @@
-﻿namespace InstaConnect.Chats.Application.Tests.Unit.Features.Chats.Queries.GetById;
+namespace InstaConnect.Chats.Application.Tests.Unit.Features.Chats.Queries.GetById;
 
 public class GetChatByIdQueryHandlerUnitTests : BaseChatApplicationQueryUnitTest
 {
-    private readonly GetChatByIdQueryRequestBuilderFactory _requestBuilderFactory;
-    private readonly GetChatByIdQueryRequestBuilder _requestBuilder;
-    private readonly GetChatByIdQueryRequest _request;
+	private readonly GetChatByIdQueryRequestBuilderFactory _requestBuilderFactory;
+	private readonly GetChatByIdQueryRequestBuilder _requestBuilder;
+	private readonly GetChatByIdQueryRequest _request;
 
-    private readonly GetChatByIdQueryHandler _handler;
+	private readonly GetChatByIdQueryHandler _handler;
 
-    public GetChatByIdQueryHandlerUnitTests()
-    {
-        _requestBuilderFactory = new();
-        _requestBuilder = _requestBuilderFactory.Create(Chat);
-        _request = _requestBuilder.Build();
+	public GetChatByIdQueryHandlerUnitTests()
+	{
+		_requestBuilderFactory = new();
+		_requestBuilder = _requestBuilderFactory.Create(Chat);
+		_request = _requestBuilder.Build();
 
-        _handler = new(Mapper, Service);
+		_handler = new(Mapper, Service);
 
-        Service.SetupGetByIdQuery(_request, Chat, CancellationToken);
-    }
+		Service.SetupGetByIdQuery(_request, Chat, CancellationToken);
+	}
 
-    [Fact]
-    public async Task Handle_ShouldReturnResponse_WhenRequestIsValid()
-    {
-        // Act
-        var response = await _handler.Handle(_request, CancellationToken);
+	[Fact]
+	public async Task Handle_ShouldReturnResponse_WhenRequestIsValid()
+	{
+		// Act
+		var response = await _handler.Handle(_request, CancellationToken);
 
-        // Assert
-        response.ShouldSatisfy(Chat, _request);
-    }
+		// Assert
+		response.ShouldSatisfy(Chat, _request);
+	}
 
-    [Fact]
-    public async Task Handle_ShouldCallServiceGetByIdAsync_WhenRequestIsValid()
-    {
-        // Act
-        await _handler.Handle(_request, CancellationToken);
+	[Fact]
+	public async Task Handle_ShouldCallServiceGetByIdAsync_WhenRequestIsValid()
+	{
+		// Act
+		await _handler.Handle(_request, CancellationToken);
 
-        // Assert
-        await Service.ShouldReceiveOneGetByIdAsync(_request, CancellationToken);
-    }
+		// Assert
+		await Service.ShouldReceiveOneGetByIdAsync(_request, CancellationToken);
+	}
 }

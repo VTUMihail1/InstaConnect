@@ -1,0 +1,60 @@
+using System.Net;
+
+using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
+
+namespace InstaConnect.Identity.Presentation.Tests.Features.Users.Abstractions;
+
+public interface IUserClient
+{
+	public Task<GetAllUsersApiResponse> GetAllAsync(GetAllUsersApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> GetAllProblemDetailsAsync(GetAllUsersApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> GetAllStatusCodeAsync(GetAllUsersApiRequest request, CancellationToken cancellationToken);
+
+	public Task<GetUserByIdApiResponse> GetByIdAsync(GetUserByIdApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> GetByIdProblemDetailsAsync(GetUserByIdApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> GetByIdStatusCodeAsync(GetUserByIdApiRequest request, CancellationToken cancellationToken);
+
+	public Task<GetCurrentUserByIdApiResponse> GetCurrentByIdAsync(GetCurrentUserByIdApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> GetCurrentByIdProblemDetailsAsync(GetCurrentUserByIdApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> GetCurrentByIdUnauthorizedProblemDetailsAsync(GetCurrentUserByIdApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> GetCurrentByIdStatusCodeAsync(GetCurrentUserByIdApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> GetCurrentByIdUnauthorizedStatusCodeAsync(GetCurrentUserByIdApiRequest request, CancellationToken cancellationToken);
+
+	public Task<GetUserDetailsByIdApiResponse> GetDetailsByIdAsync(GetUserDetailsByIdApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> GetDetailsByIdProblemDetailsAsync(GetUserDetailsByIdApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> GetDetailsByIdUnauthorizedProblemDetailsAsync(GetUserDetailsByIdApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> GetDetailsByIdForbiddenProblemDetailsAsync(GetUserDetailsByIdApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> GetDetailsByIdStatusCodeAsync(GetUserDetailsByIdApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> GetDetailsByIdUnauthorizedStatusCodeAsync(GetUserDetailsByIdApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> GetDetailsByIdForbiddenStatusCodeAsync(GetUserDetailsByIdApiRequest request, CancellationToken cancellationToken);
+
+	public Task<GetCurrentUserDetailsByIdApiResponse> GetCurrentDetailsByIdAsync(GetCurrentUserDetailsByIdApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> GetCurrentDetailsByIdProblemDetailsAsync(GetCurrentUserDetailsByIdApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> GetCurrentDetailsByIdUnauthorizedProblemDetailsAsync(GetCurrentUserDetailsByIdApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> GetCurrentDetailsByIdStatusCodeAsync(GetCurrentUserDetailsByIdApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> GetCurrentDetailsByIdUnauthorizedStatusCodeAsync(GetCurrentUserDetailsByIdApiRequest request, CancellationToken cancellationToken);
+
+	public Task<AddUserApiResponse> AddAsync(AddUserApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> AddProblemDetailsAsync(AddUserApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> AddStatusCodeAsync(AddUserApiRequest request, CancellationToken cancellationToken);
+
+	public Task<UpdateCurrentUserApiResponse> UpdateCurrentAsync(UpdateCurrentUserApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> UpdateCurrentProblemDetailsAsync(UpdateCurrentUserApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> UpdateCurrentUnauthorizedProblemDetailsAsync(UpdateCurrentUserApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> UpdateCurrentStatusCodeAsync(UpdateCurrentUserApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> UpdateCurrentUnauthorizedStatusCodeAsync(UpdateCurrentUserApiRequest request, CancellationToken cancellationToken);
+
+	public Task DeleteAsync(DeleteUserApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> DeleteProblemDetailsAsync(DeleteUserApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> DeleteUnauthorizedProblemDetailsAsync(DeleteUserApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> DeleteForbiddenProblemDetailsAsync(DeleteUserApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> DeleteStatusCodeAsync(DeleteUserApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> DeleteUnauthorizedStatusCodeAsync(DeleteUserApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> DeleteForbiddenStatusCodeAsync(DeleteUserApiRequest request, CancellationToken cancellationToken);
+
+	public Task DeleteCurrentAsync(DeleteCurrentUserApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> DeleteCurrentProblemDetailsAsync(DeleteCurrentUserApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> DeleteCurrentUnauthorizedProblemDetailsAsync(DeleteCurrentUserApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> DeleteCurrentStatusCodeAsync(DeleteCurrentUserApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> DeleteCurrentUnauthorizedStatusCodeAsync(DeleteCurrentUserApiRequest request, CancellationToken cancellationToken);
+}

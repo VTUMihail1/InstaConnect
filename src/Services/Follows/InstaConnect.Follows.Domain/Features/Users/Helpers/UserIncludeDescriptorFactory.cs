@@ -1,16 +1,16 @@
-﻿using InstaConnect.Follows.Domain.Features.Common.Models.Requests;
+using InstaConnect.Follows.Domain.Features.Common.Models.Requests;
 
 namespace InstaConnect.Follows.Domain.Features.Users.Helpers;
 
 public class UserIncludeDescriptorFactory : IUserIncludeDescriptorFactory
 {
-    public FollowsIncludeDescriptor CreateFollowFollowers()
-    {
-        return new(FollowsDestinationType.User, FollowsIncludeType.FollowFollower);
-    }
+	public FollowsIncludeDescriptor CreateFollowFollowers()
+	{
+		return new(FollowsDestinationType.User, FollowsIncludeType.FollowFollower);
+	}
 
-    public FollowsIncludeDescriptor CreateFollowFollowings()
-    {
-        return new(FollowsDestinationType.User, FollowsIncludeType.Following);
-    }
+	public FollowsIncludeDescriptor CreateFollowFollowings()
+	{
+		return new(FollowsDestinationType.User, FollowsIncludeType.Following);
+	}
 }

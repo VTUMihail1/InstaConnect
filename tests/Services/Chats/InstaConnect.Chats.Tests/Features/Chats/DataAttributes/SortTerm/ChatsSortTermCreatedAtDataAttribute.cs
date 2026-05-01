@@ -1,11 +1,11 @@
-﻿namespace InstaConnect.Chats.Tests.Features.Chats.DataAttributes.SortTerm;
+namespace InstaConnect.Chats.Tests.Features.Chats.DataAttributes.SortTerm;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public sealed class ChatsSortTermCreatedAtDataAttribute
-    : SortEnumDataAttribute<ChatsSortTerm>
+	: SortEnumDataAttribute<ChatsSortTerm>
 {
-    public ChatsSortTermCreatedAtDataAttribute()
-        : base(ChatsSortTerm.ByCreatedAt)
-    {
-    }
+	public ChatsSortTermCreatedAtDataAttribute()
+		: base(ChatsSortTerm.ByCreatedAt)
+	{
+	}
 }

@@ -1,7 +1,7 @@
-﻿namespace InstaConnect.Common.Domain.Features.Entities.Abstractions;
+namespace InstaConnect.Common.Domain.Features.Entities.Abstractions;
 
 public interface IEntityWithId<out TKey> : IEntity
-    where TKey : IEntityId
+	where TKey : IEntityId
 {
-    public TKey Id { get; }
+	public TKey Id { get; }
 }

@@ -1,5 +1,5 @@
-﻿namespace InstaConnect.Posts.Domain.Features.PostLikes.Models.Requests;
+namespace InstaConnect.Posts.Domain.Features.PostLikes.Models.Requests;
 
 public record GetPostLikeByIdQuery(
-    PostLikeId Id,
-    CurrentUserQuery CurrentUser) : ICurrentUserableQuery;
+	PostLikeId Id,
+	CurrentUserQuery CurrentUser) : ICurrentUserableQuery;

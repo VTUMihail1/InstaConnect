@@ -1,10 +1,10 @@
-﻿namespace InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.DataAttributes.Value;
+namespace InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.DataAttributes.Value;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public sealed class EmailConfirmationTokenValueTooShortWithMessageDataAttribute : TooShortStringWithMessageDataAttribute
 {
-    public EmailConfirmationTokenValueTooShortWithMessageDataAttribute()
-        : base(EmailConfirmationTokenConfigurations.ValueMinLength)
-    {
-    }
+	public EmailConfirmationTokenValueTooShortWithMessageDataAttribute()
+		: base(EmailConfirmationTokenConfigurations.ValueMinLength)
+	{
+	}
 }

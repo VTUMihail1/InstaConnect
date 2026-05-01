@@ -1,30 +1,30 @@
-﻿namespace InstaConnect.Identity.Application.Tests.Features.Users.Builders;
+namespace InstaConnect.Identity.Application.Tests.Features.Users.Builders;
 
 public class DeleteCurrentUserCommandRequestBuilder
 {
-    private string _id;
+	private string _id;
 
-    public DeleteCurrentUserCommandRequestBuilder(User user)
-    {
-        _id = user.Id.Id;
-    }
+	public DeleteCurrentUserCommandRequestBuilder(User user)
+	{
+		_id = user.Id.Id;
+	}
 
-    public DeleteCurrentUserCommandRequestBuilder WithId(UserId id, IStringTransformer? transformer = null)
-    {
-        _id = transformer.TryTransform(id.Id);
+	public DeleteCurrentUserCommandRequestBuilder WithId(UserId id, IStringTransformer? transformer = null)
+	{
+		_id = transformer.TryTransform(id.Id);
 
-        return this;
-    }
+		return this;
+	}
 
-    public DeleteCurrentUserCommandRequestBuilder WithId(IStringTransformer transformer)
-    {
-        _id = transformer.Transform(_id);
+	public DeleteCurrentUserCommandRequestBuilder WithId(IStringTransformer transformer)
+	{
+		_id = transformer.Transform(_id);
 
-        return this;
-    }
+		return this;
+	}
 
-    public DeleteCurrentUserCommandRequest Build()
-    {
-        return new(_id);
-    }
+	public DeleteCurrentUserCommandRequest Build()
+	{
+		return new(_id);
+	}
 }

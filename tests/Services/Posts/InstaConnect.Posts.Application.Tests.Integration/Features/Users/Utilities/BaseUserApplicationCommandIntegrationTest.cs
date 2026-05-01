@@ -1,13 +1,13 @@
-﻿using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Messaging.Abstractions;
 
 namespace InstaConnect.Posts.Application.Tests.Integration.Features.Users.Utilities;
 
 public abstract class BaseUserApplicationCommandIntegrationTest : BaseUserWebTest
 {
-    protected IApplicationSender Sender { get; }
+	protected IApplicationSender Sender { get; }
 
-    protected BaseUserApplicationCommandIntegrationTest(PostsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
-    {
-        Sender = ServiceScope.GetSender();
-    }
+	protected BaseUserApplicationCommandIntegrationTest(PostsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
+	{
+		Sender = ServiceScope.GetSender();
+	}
 }

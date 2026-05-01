@@ -4,9 +4,9 @@ namespace InstaConnect.Common.Presentation.Features.Controllers.Helpers.FromClai
 
 public static class FromClaimBindingSource
 {
-    public static readonly BindingSource Claim = new(
-      "Claim",
-      "BindingSource_Claim",
-      false,
-      true);
+	public static readonly BindingSource Claim = new(
+	  "Claim",
+	  "BindingSource_Claim",
+	  false,
+	  true);
 }

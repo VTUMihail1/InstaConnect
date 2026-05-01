@@ -1,29 +1,29 @@
-﻿namespace InstaConnect.Posts.Application.Tests.Unit.Features.PostCommentLikes.Commands.Delete;
+namespace InstaConnect.Posts.Application.Tests.Unit.Features.PostCommentLikes.Commands.Delete;
 
 public class DeletePostCommentLikeCommandHandlerUnitTests : BasePostCommentLikeApplicationCommandUnitTest
 {
-    private readonly DeletePostCommentLikeCommandRequestBuilderFactory _requestBuilderFactory;
-    private readonly DeletePostCommentLikeCommandRequestBuilder _requestBuilder;
-    private readonly DeletePostCommentLikeCommandRequest _request;
+	private readonly DeletePostCommentLikeCommandRequestBuilderFactory _requestBuilderFactory;
+	private readonly DeletePostCommentLikeCommandRequestBuilder _requestBuilder;
+	private readonly DeletePostCommentLikeCommandRequest _request;
 
-    private readonly DeletePostCommentLikeCommandHandler _handler;
+	private readonly DeletePostCommentLikeCommandHandler _handler;
 
-    public DeletePostCommentLikeCommandHandlerUnitTests()
-    {
-        _requestBuilderFactory = new();
-        _requestBuilder = _requestBuilderFactory.Create(PostCommentLike);
-        _request = _requestBuilder.Build();
+	public DeletePostCommentLikeCommandHandlerUnitTests()
+	{
+		_requestBuilderFactory = new();
+		_requestBuilder = _requestBuilderFactory.Create(PostCommentLike);
+		_request = _requestBuilder.Build();
 
-        _handler = new(Mapper, CommentLikeService);
-    }
+		_handler = new(Mapper, CommentLikeService);
+	}
 
-    [Fact]
-    public async Task Handle_ShouldCallCommentLikeServiceDeleteAsync_WhenRequestIsValid()
-    {
-        // Act
-        await _handler.Handle(_request, CancellationToken);
+	[Fact]
+	public async Task Handle_ShouldCallCommentLikeServiceDeleteAsync_WhenRequestIsValid()
+	{
+		// Act
+		await _handler.Handle(_request, CancellationToken);
 
-        // Assert
-        await CommentLikeService.ShouldReceiveOneDeleteAsync(_request, CancellationToken);
-    }
+		// Assert
+		await CommentLikeService.ShouldReceiveOneDeleteAsync(_request, CancellationToken);
+	}
 }

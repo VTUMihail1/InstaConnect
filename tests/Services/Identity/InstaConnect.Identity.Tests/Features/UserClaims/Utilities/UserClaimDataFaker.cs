@@ -1,39 +1,39 @@
-﻿using InstaConnect.Common.Events.Features.Tokens.Models;
+using InstaConnect.Common.Events.Features.AccessTokens.Models;
 
 namespace InstaConnect.Identity.Tests.Features.UserClaims.Utilities;
 
 public static class UserClaimDataFaker
 {
-    public static ApplicationClaims GetClaim()
-    {
-        const ApplicationClaims Claim = ApplicationClaims.Admin;
+	public static ApplicationClaims GetClaim()
+	{
+		const ApplicationClaims Claim = ApplicationClaims.Admin;
 
-        return Claim;
-    }
+		return Claim;
+	}
 
-    public static DateTimeOffset GetCreatedAtUtc()
-    {
-        return DataFaker.GetRecentDate();
-    }
+	public static DateTimeOffset GetCreatedAtUtc()
+	{
+		return DataFaker.GetRecentDate();
+	}
 
-    public static int GetPage()
-    {
-        const int Page = 1;
+	public static int GetPage()
+	{
+		const int Page = 1;
 
-        return Page;
-    }
+		return Page;
+	}
 
-    public static int GetPageSize()
-    {
-        const int PageSize = 20;
+	public static int GetPageSize()
+	{
+		const int PageSize = 20;
 
-        return PageSize;
-    }
+		return PageSize;
+	}
 
-    public static UserClaimsSortTerm GetSortTerm()
-    {
-        const UserClaimsSortTerm SortTerm = UserClaimsSortTerm.ByCreatedAt;
+	public static UserClaimsSortTerm GetSortTerm()
+	{
+		const UserClaimsSortTerm SortTerm = UserClaimsSortTerm.ByCreatedAt;
 
-        return SortTerm;
-    }
+		return SortTerm;
+	}
 }

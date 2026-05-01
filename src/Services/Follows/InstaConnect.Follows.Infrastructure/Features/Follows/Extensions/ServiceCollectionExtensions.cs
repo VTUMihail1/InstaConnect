@@ -1,4 +1,4 @@
-﻿using InstaConnect.Follows.Infrastructure.Features.Common.Extensions;
+using InstaConnect.Follows.Infrastructure.Features.Common.Extensions;
 
 using MongoDB.Bson.Serialization;
 
@@ -6,32 +6,32 @@ namespace InstaConnect.Follows.Infrastructure.Features.Follows.Extensions;
 
 internal static class ServiceCollectionExtensions
 {
-    extension(IServiceCollection serviceCollection)
-    {
-        internal IServiceCollection AddFollowServices()
-        {
-            serviceCollection.AddImplementationsOf<IFollowsSortTermer>(FollowsInfrastructureReference.Assembly);
-            serviceCollection.AddImplementationsOf<IFollowsForFollowingSortTermer>(FollowsInfrastructureReference.Assembly);
-            serviceCollection.AddImplementationsOf<IFollowIncluder>(FollowsInfrastructureReference.Assembly);
+	extension(IServiceCollection serviceCollection)
+	{
+		internal IServiceCollection AddFollowServices()
+		{
+			serviceCollection.AddImplementationsOf<IFollowsSortTermer>(FollowsInfrastructureReference.Assembly);
+			serviceCollection.AddImplementationsOf<IFollowsForFollowingSortTermer>(FollowsInfrastructureReference.Assembly);
+			serviceCollection.AddImplementationsOf<IFollowIncluder>(FollowsInfrastructureReference.Assembly);
 
-            BsonClassMap.TryRegisterClassMap<Follow>(cm =>
-            {
-                cm.MapIdMember(c => c.Id);
+			BsonClassMap.TryRegisterClassMap<Follow>(cm =>
+			{
+				cm.MapIdMember(c => c.Id);
 
-                cm.MapMember(c => c.Id);
-                cm.MapMember(c => c.CreatedAtUtc);
+				cm.MapMember(c => c.Id);
+				cm.MapMember(c => c.CreatedAtUtc);
 
-                cm.MapMemberWithoutSerialization(c => c.Follower);
-                cm.MapMemberWithoutSerialization(c => c.Following);
+				cm.MapMemberWithoutSerialization(c => c.Follower);
+				cm.MapMemberWithoutSerialization(c => c.Following);
 
-                cm.MapCreator(c => new Follow(
-                    c.Id,
-                    c.CreatedAtUtc));
+				cm.MapCreator(c => new Follow(
+					c.Id,
+					c.CreatedAtUtc));
 
-                cm.SetIgnoreExtraElements(true);
-            });
+				cm.SetIgnoreExtraElements(true);
+			});
 
-            return serviceCollection;
-        }
-    }
+			return serviceCollection;
+		}
+	}
 }

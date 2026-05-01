@@ -1,4 +1,4 @@
-﻿using InstaConnect.Posts.Domain.Features.Common.Models.Requests;
+using InstaConnect.Posts.Domain.Features.Common.Models.Requests;
 
 using MongoDB.Driver;
 
@@ -6,25 +6,25 @@ namespace InstaConnect.Posts.Infrastructure.Features.PostComments.Helpers.Includ
 
 internal class PostIncluder : IPostCommentIncluder
 {
-    private readonly IPostsContext _context;
+	private readonly IPostsContext _context;
 
-    public PostIncluder(IPostsContext context)
-    {
-        _context = context;
-    }
+	public PostIncluder(IPostsContext context)
+	{
+		_context = context;
+	}
 
-    public PostsDestinationType DestinationType => PostsDestinationType.PostComment;
+	public PostsDestinationType DestinationType => PostsDestinationType.PostComment;
 
-    public PostsIncludeType IncludeType => PostsIncludeType.Post;
+	public PostsIncludeType IncludeType => PostsIncludeType.Post;
 
-    public IAggregateFluent<PostComment> Include(IAggregateFluent<PostComment> aggregate)
-    {
-        return aggregate
-            .IncludeOne(
-                _context.Posts,
-                pc => pc.Id.Id,
-                p => p.Id,
-                pc => pc.Post!
-            );
-    }
+	public IAggregateFluent<PostComment> Include(IAggregateFluent<PostComment> aggregate)
+	{
+		return aggregate
+			.IncludeOne(
+				_context.Posts,
+				pc => pc.Id.Id,
+				p => p.Id,
+				pc => pc.Post!
+			);
+	}
 }

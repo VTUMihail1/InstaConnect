@@ -1,25 +1,25 @@
-﻿namespace InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Utilities;
+namespace InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Utilities;
 
 public static class EmailConfirmationTokenGenerator
 {
-    extension(EmailConfirmationToken baseEmailConfirmationToken)
-    {
-        public ICollection<EmailConfirmationToken> Generate(IEnumerable<User> users, int numberOfIterations = 3)
-        {
-            return [baseEmailConfirmationToken, .. users
-               .SelectMany(user =>
-                   Enumerable.Range(default, numberOfIterations).Select(_ =>
-                   {
-                      var emailConfirmationToken = new EmailConfirmationToken(
-                          new(user.Id, EmailConfirmationTokenDataFaker.GetValue()),
-                          EmailConfirmationTokenDataFaker.GetExpiresAtUtc(),
-                          EmailConfirmationTokenDataFaker.GetCreatedAtUtc());
+	extension(EmailConfirmationToken baseEmailConfirmationToken)
+	{
+		public ICollection<EmailConfirmationToken> Generate(IEnumerable<User> users, int numberOfIterations = 3)
+		{
+			return [baseEmailConfirmationToken, .. users
+			   .SelectMany(user =>
+				   Enumerable.Range(default, numberOfIterations).Select(_ =>
+				   {
+					  var emailConfirmationToken = new EmailConfirmationToken(
+						  new(user.Id, EmailConfirmationTokenDataFaker.GetValue()),
+						  EmailConfirmationTokenDataFaker.GetExpiresAtUtc(),
+						  EmailConfirmationTokenDataFaker.GetCreatedAtUtc());
 
-                      user.AddEmailConfirmationToken(emailConfirmationToken);
-                      emailConfirmationToken.AddUser(user);
+					  user.AddEmailConfirmationToken(emailConfirmationToken);
+					  emailConfirmationToken.AddUser(user);
 
-                      return emailConfirmationToken;
-                   }))];
-        }
-    }
+					  return emailConfirmationToken;
+				   }))];
+		}
+	}
 }

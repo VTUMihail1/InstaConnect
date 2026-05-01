@@ -1,3 +1,3 @@
-﻿namespace InstaConnect.Identity.Application.Features.UserClaims.Queries.GetAll;
+namespace InstaConnect.Identity.Application.Features.UserClaims.Queries.GetAll;
 
 public record GetAllUserClaimsQueryResponse(UserClaimCollectionQueryResponse Response);

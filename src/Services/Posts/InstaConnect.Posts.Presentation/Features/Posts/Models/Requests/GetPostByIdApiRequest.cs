@@ -1,7 +1,7 @@
-﻿using InstaConnect.Posts.Presentation.Features.Users.Abstractions;
+using InstaConnect.Posts.Presentation.Features.Users.Abstractions;
 
 namespace InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 
 public record GetPostByIdApiRequest(
-    [FromRoute] string Id,
-    [UserIdFromClaim] string CurrentUserId) : ICurrentUserableApiRequest;
+	[FromRoute] string Id,
+	[UserIdFromClaim] string CurrentUserId) : ICurrentUserableApiRequest;

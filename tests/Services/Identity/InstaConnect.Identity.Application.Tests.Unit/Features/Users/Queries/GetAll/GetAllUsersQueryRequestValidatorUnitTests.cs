@@ -1,218 +1,218 @@
-﻿using InstaConnect.Common.Domain.Features.Messaging.Models;
+using InstaConnect.Common.Domain.Features.Messaging.Models;
 using InstaConnect.Identity.Domain.Features.Users.Models.Requests;
 
 namespace InstaConnect.Identity.Application.Tests.Unit.Features.Users.Queries.GetAll;
 
 public class GetAllUsersQueryRequestValidatorUnitTests : BaseUserApplicationQueryUnitTest
 {
-    private readonly GetAllUsersQueryRequestBuilderFactory _requestBuilderFactory;
-    private readonly GetAllUsersQueryRequestBuilder _requestBuilder;
-    private readonly GetAllUsersQueryRequest _request;
+	private readonly GetAllUsersQueryRequestBuilderFactory _requestBuilderFactory;
+	private readonly GetAllUsersQueryRequestBuilder _requestBuilder;
+	private readonly GetAllUsersQueryRequest _request;
 
-    private readonly GetAllUsersQueryRequestValidator _requestValidator;
+	private readonly GetAllUsersQueryRequestValidator _requestValidator;
 
-    public GetAllUsersQueryRequestValidatorUnitTests()
-    {
-        _requestBuilderFactory = new();
-        _requestBuilder = _requestBuilderFactory.Create(User);
-        _request = _requestBuilder.Build();
+	public GetAllUsersQueryRequestValidatorUnitTests()
+	{
+		_requestBuilderFactory = new();
+		_requestBuilder = _requestBuilderFactory.Create(User);
+		_request = _requestBuilder.Build();
 
-        _requestValidator = new();
-    }
+		_requestValidator = new();
+	}
 
-    [Theory]
-    [UserNameTooLongWithMessageData]
-    public void TestValidate_ShouldHaveAnError_WhenNameIsInvalid(
-        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithName(transformer).Build();
+	[Theory]
+	[UserNameTooLongWithMessageData]
+	public void TestValidate_ShouldHaveAnError_WhenNameIsInvalid(
+		IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithName(transformer).Build();
 
-        // Act
-        var result = _requestValidator.TestValidate(request);
+		// Act
+		var result = _requestValidator.TestValidate(request);
 
-        // Assert
-        result.ShouldHaveValidationErrorForName(messageTransformer, request);
-    }
+		// Assert
+		result.ShouldHaveValidationErrorForName(messageTransformer, request);
+	}
 
-    [Theory]
-    [UserFirstNameTooLongWithMessageData]
-    public void TestValidate_ShouldHaveAnError_WhenFirstNameIsInvalid(
-        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithFirstName(transformer).Build();
+	[Theory]
+	[UserFirstNameTooLongWithMessageData]
+	public void TestValidate_ShouldHaveAnError_WhenFirstNameIsInvalid(
+		IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithFirstName(transformer).Build();
 
-        // Act
-        var result = _requestValidator.TestValidate(request);
+		// Act
+		var result = _requestValidator.TestValidate(request);
 
-        // Assert
-        result.ShouldHaveValidationErrorForFirstName(messageTransformer, request);
-    }
+		// Assert
+		result.ShouldHaveValidationErrorForFirstName(messageTransformer, request);
+	}
 
-    [Theory]
-    [UserLastNameTooLongWithMessageData]
-    public void TestValidate_ShouldHaveAnError_WhenLastNameIsInvalid(
-        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithLastName(transformer).Build();
+	[Theory]
+	[UserLastNameTooLongWithMessageData]
+	public void TestValidate_ShouldHaveAnError_WhenLastNameIsInvalid(
+		IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithLastName(transformer).Build();
 
-        // Act
-        var result = _requestValidator.TestValidate(request);
+		// Act
+		var result = _requestValidator.TestValidate(request);
 
-        // Assert
-        result.ShouldHaveValidationErrorForLastName(messageTransformer, request);
-    }
+		// Assert
+		result.ShouldHaveValidationErrorForLastName(messageTransformer, request);
+	}
 
-    [Theory]
-    [UserIdTooLongWithMessageData]
-    public void TestValidate_ShouldHaveAnError_WhenCurrentIdIsInvalid(
-        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithCurrentId(transformer).Build();
+	[Theory]
+	[UserIdTooLongWithMessageData]
+	public void TestValidate_ShouldHaveAnError_WhenCurrentIdIsInvalid(
+		IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithCurrentId(transformer).Build();
 
-        // Act
-        var result = _requestValidator.TestValidate(request);
+		// Act
+		var result = _requestValidator.TestValidate(request);
 
-        // Assert
-        result.ShouldHaveValidationErrorForCurrentId(messageTransformer, request);
-    }
+		// Assert
+		result.ShouldHaveValidationErrorForCurrentId(messageTransformer, request);
+	}
 
-    [Theory]
-    [UsersSortOrderEmptyWithMessageData]
-    public void TestValidate_ShouldHaveAnError_WhenSortOrderIsInvalid(
-        IEnumTransformer<CommonSortOrder> transformer, IEnumMessageTransformer<CommonSortOrder> messageTransformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithSortOrder(transformer).Build();
+	[Theory]
+	[UsersSortOrderEmptyWithMessageData]
+	public void TestValidate_ShouldHaveAnError_WhenSortOrderIsInvalid(
+		IEnumTransformer<CommonSortOrder> transformer, IEnumMessageTransformer<CommonSortOrder> messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithSortOrder(transformer).Build();
 
-        // Act
-        var result = _requestValidator.TestValidate(request);
+		// Act
+		var result = _requestValidator.TestValidate(request);
 
-        // Assert
-        result.ShouldHaveValidationErrorForSortOrder(messageTransformer, request);
-    }
+		// Assert
+		result.ShouldHaveValidationErrorForSortOrder(messageTransformer, request);
+	}
 
-    [Theory]
-    [UsersSortTermEmptyWithMessageData]
-    public void TestValidate_ShouldHaveAnError_WhenSortTermIsInvalid(
-        IEnumTransformer<UsersSortTerm> transformer, IEnumMessageTransformer<UsersSortTerm> messageTransformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithSortTerm(transformer).Build();
+	[Theory]
+	[UsersSortTermEmptyWithMessageData]
+	public void TestValidate_ShouldHaveAnError_WhenSortTermIsInvalid(
+		IEnumTransformer<UsersSortTerm> transformer, IEnumMessageTransformer<UsersSortTerm> messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithSortTerm(transformer).Build();
 
-        // Act
-        var result = _requestValidator.TestValidate(request);
+		// Act
+		var result = _requestValidator.TestValidate(request);
 
-        // Assert
-        result.ShouldHaveValidationErrorForSortTerm(messageTransformer, request);
-    }
+		// Assert
+		result.ShouldHaveValidationErrorForSortTerm(messageTransformer, request);
+	}
 
-    [Theory]
-    [UserPageTooSmallWithMessageData]
-    [UserPageTooLargeWithMessageData]
-    public void TestValidate_ShouldHaveAnError_WhenPageIsInvalid(
-        IIntTransformer transformer, IIntMessageTransformer messageTransformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithPage(transformer).Build();
+	[Theory]
+	[UserPageTooSmallWithMessageData]
+	[UserPageTooLargeWithMessageData]
+	public void TestValidate_ShouldHaveAnError_WhenPageIsInvalid(
+		IIntTransformer transformer, IIntMessageTransformer messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithPage(transformer).Build();
 
-        // Act
-        var result = _requestValidator.TestValidate(request);
+		// Act
+		var result = _requestValidator.TestValidate(request);
 
-        // Assert
-        result.ShouldHaveValidationErrorForPage(messageTransformer, request);
-    }
+		// Assert
+		result.ShouldHaveValidationErrorForPage(messageTransformer, request);
+	}
 
-    [Theory]
-    [UserPageSizeTooSmallWithMessageData]
-    [UserPageSizeTooLargeWithMessageData]
-    public void TestValidate_ShouldHaveAnError_WhenPageSizeIsInvalid(
-        IIntTransformer transformer, IIntMessageTransformer messageTransformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithPageSize(transformer).Build();
+	[Theory]
+	[UserPageSizeTooSmallWithMessageData]
+	[UserPageSizeTooLargeWithMessageData]
+	public void TestValidate_ShouldHaveAnError_WhenPageSizeIsInvalid(
+		IIntTransformer transformer, IIntMessageTransformer messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithPageSize(transformer).Build();
 
-        // Act
-        var result = _requestValidator.TestValidate(request);
+		// Act
+		var result = _requestValidator.TestValidate(request);
 
-        // Assert
-        result.ShouldHaveValidationErrorForPageSize(messageTransformer, request);
-    }
+		// Assert
+		result.ShouldHaveValidationErrorForPageSize(messageTransformer, request);
+	}
 
-    [Theory]
-    [UserNameEmptyData]
-    [UserNameNullData]
-    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenNameIsValid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithName(transformer).Build();
+	[Theory]
+	[UserNameEmptyData]
+	[UserNameNullData]
+	public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenNameIsValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithName(transformer).Build();
 
-        // Act
-        var result = _requestValidator.TestValidate(request);
+		// Act
+		var result = _requestValidator.TestValidate(request);
 
-        // Assert
-        result.ShouldNotHaveAnyValidationErrorProperties();
-    }
+		// Assert
+		result.ShouldNotHaveAnyValidationErrorProperties();
+	}
 
-    [Theory]
-    [UserFirstNameEmptyData]
-    [UserFirstNameNullData]
-    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenFirstNameIsValid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithFirstName(transformer).Build();
+	[Theory]
+	[UserFirstNameEmptyData]
+	[UserFirstNameNullData]
+	public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenFirstNameIsValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithFirstName(transformer).Build();
 
-        // Act
-        var result = _requestValidator.TestValidate(request);
+		// Act
+		var result = _requestValidator.TestValidate(request);
 
-        // Assert
-        result.ShouldNotHaveAnyValidationErrorProperties();
-    }
+		// Assert
+		result.ShouldNotHaveAnyValidationErrorProperties();
+	}
 
-    [Theory]
-    [UserLastNameEmptyData]
-    [UserLastNameNullData]
-    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenLastNameIsValid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithLastName(transformer).Build();
+	[Theory]
+	[UserLastNameEmptyData]
+	[UserLastNameNullData]
+	public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenLastNameIsValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithLastName(transformer).Build();
 
-        // Act
-        var result = _requestValidator.TestValidate(request);
+		// Act
+		var result = _requestValidator.TestValidate(request);
 
-        // Assert
-        result.ShouldNotHaveAnyValidationErrorProperties();
-    }
+		// Assert
+		result.ShouldNotHaveAnyValidationErrorProperties();
+	}
 
-    [Theory]
-    [UserIdNullData]
-    [UserIdEmptyData]
-    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenCurrentIdIsValid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithCurrentId(transformer).Build();
+	[Theory]
+	[UserIdNullData]
+	[UserIdEmptyData]
+	public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenCurrentIdIsValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithCurrentId(transformer).Build();
 
-        // Act
-        var result = _requestValidator.TestValidate(request);
+		// Act
+		var result = _requestValidator.TestValidate(request);
 
-        // Assert
-        result.ShouldNotHaveAnyValidationErrorProperties();
-    }
+		// Assert
+		result.ShouldNotHaveAnyValidationErrorProperties();
+	}
 
-    [Fact]
-    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenRequestIsValid()
-    {
-        // Act
-        var result = _requestValidator.TestValidate(_request);
+	[Fact]
+	public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenRequestIsValid()
+	{
+		// Act
+		var result = _requestValidator.TestValidate(_request);
 
-        // Assert
-        result.ShouldNotHaveAnyValidationErrorProperties();
-    }
+		// Assert
+		result.ShouldNotHaveAnyValidationErrorProperties();
+	}
 }

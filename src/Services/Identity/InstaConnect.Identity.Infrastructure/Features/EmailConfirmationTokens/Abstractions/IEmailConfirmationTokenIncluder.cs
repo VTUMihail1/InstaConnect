@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Infrastructure.Features.Data.Abstractions;
+using InstaConnect.Common.Infrastructure.Features.Data.Abstractions;
 using InstaConnect.Identity.Domain.Features.Common.Models.Requests;
 
 namespace InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Abstractions;

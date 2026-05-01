@@ -1,3 +1,3 @@
-﻿namespace InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAllForUser;
+namespace InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAllForUser;
 
 public record GetAllPostLikesForUserQueryResponse(PostLikeCollectionQueryResponse Response);

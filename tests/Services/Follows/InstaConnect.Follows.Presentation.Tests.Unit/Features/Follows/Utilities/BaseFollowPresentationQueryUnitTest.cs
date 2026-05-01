@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Messaging.Abstractions;
 using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
 using InstaConnect.Follows.Presentation.Features.Common.Extensions;
 
@@ -6,13 +6,13 @@ namespace InstaConnect.Follows.Presentation.Tests.Unit.Features.Follows.Utilitie
 
 public abstract class BaseFollowPresentationQueryUnitTest : BaseFollowTest
 {
-    protected IApplicationSender Sender { get; }
+	protected IApplicationSender Sender { get; }
 
-    protected IApplicationMapper Mapper { get; }
+	protected IApplicationMapper Mapper { get; }
 
-    protected BaseFollowPresentationQueryUnitTest()
-    {
-        Sender = MockFactory.CreateApplicationSender();
-        Mapper = MockFactory.CreateMapper(FollowsPresentationReference.Assembly);
-    }
+	protected BaseFollowPresentationQueryUnitTest()
+	{
+		Sender = MockFactory.CreateApplicationSender();
+		Mapper = MockFactory.CreateMapper(FollowsPresentationReference.Assembly);
+	}
 }

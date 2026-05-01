@@ -1,0 +1,33 @@
+using System.Net;
+
+using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
+
+namespace InstaConnect.Posts.Presentation.Tests.Features.PostComments.Abstractions;
+
+public interface IPostCommentClient
+{
+	public Task<GetAllPostCommentsApiResponse> GetAllAsync(GetAllPostCommentsApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> GetAllProblemDetailsAsync(GetAllPostCommentsApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> GetAllStatusCodeAsync(GetAllPostCommentsApiRequest request, CancellationToken cancellationToken);
+	public Task<GetAllPostCommentsForUserApiResponse> GetAllForUserAsync(GetAllPostCommentsForUserApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> GetAllForUserProblemDetailsAsync(GetAllPostCommentsForUserApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> GetAllForUserStatusCodeAsync(GetAllPostCommentsForUserApiRequest request, CancellationToken cancellationToken);
+	public Task<GetPostCommentByIdApiResponse> GetByIdAsync(GetPostCommentByIdApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> GetByIdProblemDetailsAsync(GetPostCommentByIdApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> GetByIdStatusCodeAsync(GetPostCommentByIdApiRequest request, CancellationToken cancellationToken);
+	public Task<AddPostCommentApiResponse> AddAsync(AddPostCommentApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> AddUnauthorizedProblemDetailsAsync(AddPostCommentApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> AddProblemDetailsAsync(AddPostCommentApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> AddUnauthorizedStatusCodeAsync(AddPostCommentApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> AddStatusCodeAsync(AddPostCommentApiRequest request, CancellationToken cancellationToken);
+	public Task<UpdatePostCommentApiResponse> UpdateAsync(UpdatePostCommentApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> UpdateUnauthorizedProblemDetailsAsync(UpdatePostCommentApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> UpdateProblemDetailsAsync(UpdatePostCommentApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> UpdateUnauthorizedStatusCodeAsync(UpdatePostCommentApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> UpdateStatusCodeAsync(UpdatePostCommentApiRequest request, CancellationToken cancellationToken);
+	public Task DeleteAsync(DeletePostCommentApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> DeleteUnauthorizedProblemDetailsAsync(DeletePostCommentApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> DeleteProblemDetailsAsync(DeletePostCommentApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> DeleteUnauthorizedStatusCodeAsync(DeletePostCommentApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> DeleteStatusCodeAsync(DeletePostCommentApiRequest request, CancellationToken cancellationToken);
+}

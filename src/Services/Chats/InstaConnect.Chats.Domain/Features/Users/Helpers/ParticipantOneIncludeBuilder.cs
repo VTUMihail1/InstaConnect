@@ -1,52 +1,52 @@
-﻿using InstaConnect.Chats.Domain.Features.Common.Models.Requests;
+using InstaConnect.Chats.Domain.Features.Common.Models.Requests;
 
 namespace InstaConnect.Chats.Domain.Features.Users.Helpers;
 
 public class ParticipantOneIncludeBuilder
 {
-    private readonly ICollection<ChatsIncludeDescriptor> _descriptors;
-    private readonly IParticipantOneIncludeDescriptorFactory _descriptorsFactory;
+	private readonly ICollection<ChatsIncludeDescriptor> _descriptors;
+	private readonly IParticipantOneIncludeDescriptorFactory _descriptorsFactory;
 
-    public ParticipantOneIncludeBuilder(
-        ICollection<ChatsIncludeDescriptor> descriptors,
-        IParticipantOneIncludeDescriptorFactory descriptorsFactory)
-    {
-        _descriptors = descriptors;
-        _descriptorsFactory = descriptorsFactory;
-    }
+	public ParticipantOneIncludeBuilder(
+		ICollection<ChatsIncludeDescriptor> descriptors,
+		IParticipantOneIncludeDescriptorFactory descriptorsFactory)
+	{
+		_descriptors = descriptors;
+		_descriptorsFactory = descriptorsFactory;
+	}
 
-    public ParticipantOneIncludeBuilder WithChats()
-    {
-        _descriptors.Add(_descriptorsFactory.CreateChats());
+	public ParticipantOneIncludeBuilder WithChats()
+	{
+		_descriptors.Add(_descriptorsFactory.CreateChats());
 
-        return this;
-    }
+		return this;
+	}
 
-    public ParticipantOneIncludeBuilder WithChats(ChatInclude include)
-    {
-        _descriptors.Add(_descriptorsFactory.CreateChats());
-        _descriptors.AddRange(include.Descriptors);
+	public ParticipantOneIncludeBuilder WithChats(ChatInclude include)
+	{
+		_descriptors.Add(_descriptorsFactory.CreateChats());
+		_descriptors.AddRange(include.Descriptors);
 
-        return this;
-    }
+		return this;
+	}
 
-    public ParticipantOneIncludeBuilder WithChatMessages()
-    {
-        _descriptors.Add(_descriptorsFactory.CreateChatMessages());
+	public ParticipantOneIncludeBuilder WithChatMessages()
+	{
+		_descriptors.Add(_descriptorsFactory.CreateChatMessages());
 
-        return this;
-    }
+		return this;
+	}
 
-    public ParticipantOneIncludeBuilder WithChatMessages(ChatMessageInclude include)
-    {
-        _descriptors.Add(_descriptorsFactory.CreateChatMessages());
-        _descriptors.AddRange(include.Descriptors);
+	public ParticipantOneIncludeBuilder WithChatMessages(ChatMessageInclude include)
+	{
+		_descriptors.Add(_descriptorsFactory.CreateChatMessages());
+		_descriptors.AddRange(include.Descriptors);
 
-        return this;
-    }
+		return this;
+	}
 
-    public ParticipantOneInclude Build()
-    {
-        return new(_descriptors);
-    }
+	public ParticipantOneInclude Build()
+	{
+		return new(_descriptors);
+	}
 }

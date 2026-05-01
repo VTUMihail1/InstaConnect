@@ -1,3 +1,3 @@
-﻿namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetById;
+namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetById;
 
 public record GetPostCommentLikeByIdQueryResponse(PostCommentLikeQueryResponse Response);

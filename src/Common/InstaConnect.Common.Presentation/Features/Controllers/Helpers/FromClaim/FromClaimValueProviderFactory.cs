@@ -4,12 +4,12 @@ namespace InstaConnect.Common.Presentation.Features.Controllers.Helpers.FromClai
 
 public class FromClaimValueProviderFactory : IValueProviderFactory
 {
-    public Task CreateValueProviderAsync(ValueProviderFactoryContext context)
-    {
-        context.ValueProviders.Add(new FromClaimValueProvider(
-          FromClaimBindingSource.Claim,
-          context.ActionContext.HttpContext.User));
+	public Task CreateValueProviderAsync(ValueProviderFactoryContext context)
+	{
+		context.ValueProviders.Add(new FromClaimValueProvider(
+		  FromClaimBindingSource.Claim,
+		  context.ActionContext.HttpContext.User));
 
-        return Task.CompletedTask;
-    }
+		return Task.CompletedTask;
+	}
 }

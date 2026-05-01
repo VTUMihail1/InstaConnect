@@ -1,41 +1,41 @@
-﻿using InstaConnect.Common.Events.Features.Tokens.Models;
+using InstaConnect.Common.Events.Features.AccessTokens.Models;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Builders;
 
 public class DeleteUserClaimApiRequestBuilder
 {
-    private string _id;
-    private ApplicationClaims _claim;
+	private string _id;
+	private ApplicationClaims _claim;
 
-    public DeleteUserClaimApiRequestBuilder(UserClaim userClaim)
-    {
-        _id = userClaim.Id.Id.Id;
-        _claim = userClaim.Id.Claim;
-    }
+	public DeleteUserClaimApiRequestBuilder(UserClaim userClaim)
+	{
+		_id = userClaim.Id.Id.Id;
+		_claim = userClaim.Id.Claim;
+	}
 
-    public DeleteUserClaimApiRequestBuilder WithId(UserId id, IStringTransformer? transformer = null)
-    {
-        _id = transformer.TryTransform(id.Id);
+	public DeleteUserClaimApiRequestBuilder WithId(UserId id, IStringTransformer? transformer = null)
+	{
+		_id = transformer.TryTransform(id.Id);
 
-        return this;
-    }
+		return this;
+	}
 
-    public DeleteUserClaimApiRequestBuilder WithId(IStringTransformer transformer)
-    {
-        _id = transformer.Transform(_id);
+	public DeleteUserClaimApiRequestBuilder WithId(IStringTransformer transformer)
+	{
+		_id = transformer.Transform(_id);
 
-        return this;
-    }
+		return this;
+	}
 
-    public DeleteUserClaimApiRequestBuilder WithClaim(IEnumTransformer<ApplicationClaims> transformer)
-    {
-        _claim = transformer.Transform(_claim);
+	public DeleteUserClaimApiRequestBuilder WithClaim(IEnumTransformer<ApplicationClaims> transformer)
+	{
+		_claim = transformer.Transform(_claim);
 
-        return this;
-    }
+		return this;
+	}
 
-    public DeleteUserClaimApiRequest Build()
-    {
-        return new(_id, _claim);
-    }
+	public DeleteUserClaimApiRequest Build()
+	{
+		return new(_id, _claim);
+	}
 }

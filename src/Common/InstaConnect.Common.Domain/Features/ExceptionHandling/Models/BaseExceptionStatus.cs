@@ -1,10 +1,10 @@
-﻿namespace InstaConnect.Common.Domain.Features.ExceptionHandling.Models;
+namespace InstaConnect.Common.Domain.Features.ExceptionHandling.Models;
 
 public enum BaseExceptionStatus
 {
-    None,
-    BadRequest,
-    Unauthorized,
-    Forbidden,
-    NotFound
+	None,
+	BadRequest,
+	Unauthorized,
+	Forbidden,
+	NotFound
 }

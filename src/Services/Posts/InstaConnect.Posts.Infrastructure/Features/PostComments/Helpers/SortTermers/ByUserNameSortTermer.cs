@@ -1,10 +1,10 @@
-﻿using System.Linq.Expressions;
+using System.Linq.Expressions;
 
 namespace InstaConnect.Posts.Infrastructure.Features.PostComments.Helpers.SortTermers;
 
 internal class ByUserNameSortTermer : IPostCommentsSortTermer
 {
-    public PostCommentsSortTerm SortTerm => PostCommentsSortTerm.ByUserName;
+	public PostCommentsSortTerm SortTerm => PostCommentsSortTerm.ByUserName;
 
-    public Expression<Func<PostCommentResponse, object>> Term => p => p.User!.Name;
+	public Expression<Func<PostCommentResponse, object>> Term => p => p.User!.Name;
 }

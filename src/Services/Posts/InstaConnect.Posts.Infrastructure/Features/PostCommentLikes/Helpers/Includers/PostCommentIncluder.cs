@@ -1,4 +1,4 @@
-﻿using InstaConnect.Posts.Domain.Features.Common.Models.Requests;
+using InstaConnect.Posts.Domain.Features.Common.Models.Requests;
 
 using MongoDB.Driver;
 
@@ -6,25 +6,25 @@ namespace InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Helpers.In
 
 internal class PostCommentIncluder : IPostCommentLikeIncluder
 {
-    private readonly IPostsContext _context;
+	private readonly IPostsContext _context;
 
-    public PostCommentIncluder(IPostsContext context)
-    {
-        _context = context;
-    }
+	public PostCommentIncluder(IPostsContext context)
+	{
+		_context = context;
+	}
 
-    public PostsDestinationType DestinationType => PostsDestinationType.PostCommentLike;
+	public PostsDestinationType DestinationType => PostsDestinationType.PostCommentLike;
 
-    public PostsIncludeType IncludeType => PostsIncludeType.PostComment;
+	public PostsIncludeType IncludeType => PostsIncludeType.PostComment;
 
-    public IAggregateFluent<PostCommentLike> Include(IAggregateFluent<PostCommentLike> aggregate)
-    {
-        return aggregate
-            .IncludeOne(
-                _context.PostComments,
-                pcl => pcl.Id.CommentId,
-                pc => pc.Id,
-                pcl => pcl.PostComment!
-            );
-    }
+	public IAggregateFluent<PostCommentLike> Include(IAggregateFluent<PostCommentLike> aggregate)
+	{
+		return aggregate
+			.IncludeOne(
+				_context.PostComments,
+				pcl => pcl.Id.CommentId,
+				pc => pc.Id,
+				pcl => pcl.PostComment!
+			);
+	}
 }

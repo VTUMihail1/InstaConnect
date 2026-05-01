@@ -1,11 +1,11 @@
-﻿namespace InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.PageSize;
+namespace InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.PageSize;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public sealed class PostCommentPageSizeTooLargeDataAttribute : TooLargeIntDataAttribute
 {
-    public PostCommentPageSizeTooLargeDataAttribute()
-        : base(PostCommentConfigurations.PageSizeMaxValue)
-    {
-    }
+	public PostCommentPageSizeTooLargeDataAttribute()
+		: base(PostCommentConfigurations.PageSizeMaxValue)
+	{
+	}
 }
 

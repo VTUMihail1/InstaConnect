@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Application.Features.Data.Abstractions;
+using InstaConnect.Common.Application.Features.Data.Abstractions;
 using InstaConnect.Common.Domain.Features.Data.Abstractions;
 using InstaConnect.Common.Infrastructure.Features.Common.Extensions;
 using InstaConnect.Common.Infrastructure.Features.Data.Abstractions;
@@ -17,53 +17,55 @@ namespace InstaConnect.Common.Infrastructure.Extensions;
 
 public static partial class ServiceCollectionExtensions
 {
-    extension(IServiceCollection serviceCollection)
-    {
-        public IServiceCollection AddUnitOfWork()
-        {
-            serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
+	extension(IServiceCollection serviceCollection)
+	{
+		public IServiceCollection AddUnitOfWork()
+		{
+			serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            return serviceCollection;
-        }
+			return serviceCollection;
+		}
 
-        public IServiceCollection AddMongo(IConfiguration configuration)
-        {
-            const string ConventionName = "ApplicationConventionPack";
+		public IServiceCollection AddMongo<TContext>(IConfiguration configuration)
+			where TContext : class, IMongoDbContext
+		{
+			const string ConventionName = "ApplicationConventionPack";
 
-            serviceCollection.AddValidatedOptions<MongoOptions>(MongoOptions.SectionName);
-            var options = configuration.GetOptions<MongoOptions>(MongoOptions.SectionName);
+			serviceCollection.AddValidatedOptions<MongoOptions>(MongoOptions.SectionName);
+			var options = configuration.GetOptions<MongoOptions>(MongoOptions.SectionName);
 
-            serviceCollection.AddSingleton<IMongoClient>(_ =>
-                new MongoClient(options.ConnectionString));
+			serviceCollection.AddSingleton<IMongoClient>(_ =>
+				new MongoClient(options.ConnectionString));
 
-            serviceCollection.AddSingleton(sp =>
-                sp.GetRequiredService<IMongoClient>()
-                  .GetDatabase(options.Name));
+			serviceCollection.AddSingleton(sp =>
+				sp.GetRequiredService<IMongoClient>()
+				  .GetDatabase(options.Name));
 
-            serviceCollection.AddScoped<IPaginator, Paginator>()
-                             .AddScoped<IMongoDbContext, MongoDbContext>();
+			serviceCollection.AddScoped<IPaginator, Paginator>();
 
-            var conventionPack = new ConventionPack
-            {
-                new SnakeCaseElementNameConvention(),
-                new IgnoreExtraElementsConvention(true)
-            };
+			serviceCollection.AddScoped<IMongoDbContext>(sp => sp.GetRequiredService<TContext>());
 
-            ConventionRegistry.Register(ConventionName, conventionPack, t => true);
+			var conventionPack = new ConventionPack
+			{
+				new SnakeCaseElementNameConvention(),
+				new IgnoreExtraElementsConvention(true)
+			};
 
-            serviceCollection.AddHealthChecks()
-                 .AddMongoDb(sp => sp.GetRequiredService<IMongoClient>(),
-                             _ => options.Name);
+			ConventionRegistry.Register(ConventionName, conventionPack, t => true);
 
-            return serviceCollection;
-        }
+			serviceCollection.AddHealthChecks()
+				 .AddMongoDb(sp => sp.GetRequiredService<IMongoClient>(),
+							 _ => options.Name);
 
-        public IServiceCollection AddSortOrders()
-        {
-            serviceCollection.AddScoped<ISortOrdererFactory, SortOrdererFactory>()
-                             .AddImplementationsOf<ISortOrderer>(CommonInfrastructureReference.Assembly);
+			return serviceCollection;
+		}
 
-            return serviceCollection;
-        }
-    }
+		public IServiceCollection AddSortOrders()
+		{
+			serviceCollection.AddScoped<ISortOrdererFactory, SortOrdererFactory>()
+							 .AddImplementationsOf<ISortOrderer>(CommonInfrastructureReference.Assembly);
+
+			return serviceCollection;
+		}
+	}
 }

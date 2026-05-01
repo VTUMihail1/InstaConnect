@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Infrastructure.Extensions;
+using InstaConnect.Common.Infrastructure.Extensions;
 using InstaConnect.Common.Infrastructure.Features.Observability.Models;
 
 using Microsoft.AspNetCore.Hosting;
@@ -13,24 +13,24 @@ namespace InstaConnect.Common.Infrastructure.Features.Observability.Extensions;
 
 public static class LoggingBuilderExtensions
 {
-    extension(ILoggingBuilder loggingBuilder)
-    {
-        public ILoggingBuilder AddLogging(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
-        {
-            var openTelemetryOptions = configuration.GetOptions<OpenTelemetryOptions>(OpenTelemetryOptions.SectionName);
+	extension(ILoggingBuilder loggingBuilder)
+	{
+		public ILoggingBuilder AddLogging(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
+		{
+			var openTelemetryOptions = configuration.GetOptions<OpenTelemetryOptions>(OpenTelemetryOptions.SectionName);
 
-            var resourceBuilder = ResourceBuilder.CreateDefault().AddService(webHostEnvironment.ApplicationName);
+			var resourceBuilder = ResourceBuilder.CreateDefault().AddService(webHostEnvironment.ApplicationName);
 
-            loggingBuilder.AddOpenTelemetry(options =>
-            {
-                options.SetResourceBuilder(resourceBuilder);
-                options.AddOtlpExporter(options =>
-                {
-                    options.Endpoint = new Uri(openTelemetryOptions.Endpoint);
-                });
-            });
+			loggingBuilder.AddOpenTelemetry(options =>
+			{
+				options.SetResourceBuilder(resourceBuilder);
+				options.AddOtlpExporter(options =>
+				{
+					options.Endpoint = new Uri(openTelemetryOptions.Endpoint);
+				});
+			});
 
-            return loggingBuilder;
-        }
-    }
+			return loggingBuilder;
+		}
+	}
 }

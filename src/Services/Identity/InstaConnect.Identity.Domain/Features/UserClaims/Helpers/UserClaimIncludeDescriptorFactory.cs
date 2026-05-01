@@ -1,11 +1,11 @@
-﻿using InstaConnect.Identity.Domain.Features.Common.Models.Requests;
+using InstaConnect.Identity.Domain.Features.Common.Models.Requests;
 
 namespace InstaConnect.Identity.Domain.Features.UserClaims.Helpers;
 
 public class UserClaimIncludeDescriptorFactory : IUserClaimIncludeDescriptorFactory
 {
-    public IdentityIncludeDescriptor CreateUser()
-    {
-        return new(IdentityDestinationType.UserClaim, IdentityIncludeType.User);
-    }
+	public IdentityIncludeDescriptor CreateUser()
+	{
+		return new(IdentityDestinationType.UserClaim, IdentityIncludeType.User);
+	}
 }

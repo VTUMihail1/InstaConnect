@@ -1,6 +1,6 @@
-﻿namespace InstaConnect.Posts.Domain.Features.PostComments.Models.Requests;
+namespace InstaConnect.Posts.Domain.Features.PostComments.Models.Requests;
 
 public record UpdatePostCommentCommand(
-    PostCommentId Id,
-    UserId UserId,
-    string Content);
+	PostCommentId Id,
+	UserId UserId,
+	string Content);

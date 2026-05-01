@@ -1,10 +1,10 @@
-﻿namespace InstaConnect.Posts.Tests.Features.Posts.DataAttributes.Id;
+namespace InstaConnect.Posts.Tests.Features.Posts.DataAttributes.Id;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public sealed class PostIdTooShortWithMessageDataAttribute : TooShortStringWithMessageDataAttribute
 {
-    public PostIdTooShortWithMessageDataAttribute()
-        : base(PostConfigurations.IdMinLength)
-    {
-    }
+	public PostIdTooShortWithMessageDataAttribute()
+		: base(PostConfigurations.IdMinLength)
+	{
+	}
 }

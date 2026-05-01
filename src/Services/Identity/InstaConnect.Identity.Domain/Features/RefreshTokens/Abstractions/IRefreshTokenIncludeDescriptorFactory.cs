@@ -1,8 +1,8 @@
-﻿using InstaConnect.Identity.Domain.Features.Common.Models.Requests;
+using InstaConnect.Identity.Domain.Features.Common.Models.Requests;
 
 namespace InstaConnect.Identity.Domain.Features.RefreshTokens.Abstractions;
 
 public interface IRefreshTokenIncludeDescriptorFactory
 {
-    IdentityIncludeDescriptor CreateUser();
+	public IdentityIncludeDescriptor CreateUser();
 }

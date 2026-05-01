@@ -1,9 +1,9 @@
-﻿using InstaConnect.Chats.Domain.Features.Common.Models.Requests;
+using InstaConnect.Chats.Domain.Features.Common.Models.Requests;
 
 namespace InstaConnect.Chats.Domain.Features.Chats.Abstractions;
 
 public interface IChatIncludeDescriptorFactory
 {
-    ChatsIncludeDescriptor CreateParticipantOne();
-    ChatsIncludeDescriptor CreateParticipantTwo();
+	public ChatsIncludeDescriptor CreateParticipantOne();
+	public ChatsIncludeDescriptor CreateParticipantTwo();
 }

@@ -1,46 +1,46 @@
-﻿namespace InstaConnect.Chats.Application.Tests.Features.Chats.Builders;
+namespace InstaConnect.Chats.Application.Tests.Features.Chats.Builders;
 
 public class GetChatByIdQueryRequestBuilder
 {
-    private string _participantTwoId;
-    private string _currentUserId;
+	private string _participantTwoId;
+	private string _currentUserId;
 
-    public GetChatByIdQueryRequestBuilder(Chat chat)
-    {
-        _participantTwoId = chat.Id.ParticipantTwoId.Id;
-        _currentUserId = chat.Id.ParticipantOneId.Id;
-    }
+	public GetChatByIdQueryRequestBuilder(Chat chat)
+	{
+		_participantTwoId = chat.Id.ParticipantTwoId.Id;
+		_currentUserId = chat.Id.ParticipantOneId.Id;
+	}
 
-    public GetChatByIdQueryRequestBuilder WithParticipantTwoId(UserId participantTwoId, IStringTransformer? transformer = null)
-    {
-        _participantTwoId = transformer.TryTransform(participantTwoId.Id);
+	public GetChatByIdQueryRequestBuilder WithParticipantTwoId(UserId participantTwoId, IStringTransformer? transformer = null)
+	{
+		_participantTwoId = transformer.TryTransform(participantTwoId.Id);
 
-        return this;
-    }
+		return this;
+	}
 
-    public GetChatByIdQueryRequestBuilder WithParticipantTwoId(IStringTransformer transformer)
-    {
-        _participantTwoId = transformer.Transform(_participantTwoId);
+	public GetChatByIdQueryRequestBuilder WithParticipantTwoId(IStringTransformer transformer)
+	{
+		_participantTwoId = transformer.Transform(_participantTwoId);
 
-        return this;
-    }
+		return this;
+	}
 
-    public GetChatByIdQueryRequestBuilder WithCurrentUserId(UserId userId, IStringTransformer? transformer = null)
-    {
-        _currentUserId = transformer.TryTransform(userId.Id);
+	public GetChatByIdQueryRequestBuilder WithCurrentUserId(UserId userId, IStringTransformer? transformer = null)
+	{
+		_currentUserId = transformer.TryTransform(userId.Id);
 
-        return this;
-    }
+		return this;
+	}
 
-    public GetChatByIdQueryRequestBuilder WithCurrentUserId(IStringTransformer transformer)
-    {
-        _currentUserId = transformer.Transform(_currentUserId);
+	public GetChatByIdQueryRequestBuilder WithCurrentUserId(IStringTransformer transformer)
+	{
+		_currentUserId = transformer.Transform(_currentUserId);
 
-        return this;
-    }
+		return this;
+	}
 
-    public GetChatByIdQueryRequest Build()
-    {
-        return new(_participantTwoId, _currentUserId);
-    }
+	public GetChatByIdQueryRequest Build()
+	{
+		return new(_participantTwoId, _currentUserId);
+	}
 }

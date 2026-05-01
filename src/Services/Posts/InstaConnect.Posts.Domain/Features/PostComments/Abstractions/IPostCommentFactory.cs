@@ -1,6 +1,6 @@
-﻿namespace InstaConnect.Posts.Domain.Features.PostComments.Abstractions;
+namespace InstaConnect.Posts.Domain.Features.PostComments.Abstractions;
 
 public interface IPostCommentFactory
 {
-    public PostComment Create(PostId id, UserId userId, string content);
+	public PostComment Create(PostId id, UserId userId, string content);
 }

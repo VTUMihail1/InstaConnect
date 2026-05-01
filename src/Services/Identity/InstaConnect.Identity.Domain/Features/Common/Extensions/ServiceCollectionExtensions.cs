@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Domain.Features.Mappers.Extensions;
+using InstaConnect.Common.Domain.Features.Mappers.Extensions;
 using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Extensions;
 using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Extensions;
 using InstaConnect.Identity.Domain.Features.RefreshTokens.Extensions;
@@ -9,22 +9,22 @@ namespace InstaConnect.Identity.Domain.Features.Common.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    extension(IServiceCollection serviceCollection)
-    {
-        public IServiceCollection AddDomain()
-        {
-            serviceCollection
-                .AddUserServices()
-                .AddUserClaimsServices()
-                .AddRefreshTokenServices()
-                .AddForgotPasswordTokenServices()
-                .AddEmailConfirmationTokenServices();
+	extension(IServiceCollection serviceCollection)
+	{
+		public IServiceCollection AddDomain()
+		{
+			serviceCollection
+				.AddUserServices()
+				.AddUserClaimsServices()
+				.AddRefreshTokenServices()
+				.AddForgotPasswordTokenServices()
+				.AddEmailConfirmationTokenServices();
 
-            serviceCollection
-                .AddMapper(IdentityDomainReference.Assembly, CommonDomainReference.Assembly)
-                .AddServicesWithMatchingInterfaces(IdentityDomainReference.Assembly);
+			serviceCollection
+				.AddMapper(IdentityDomainReference.Assembly, CommonDomainReference.Assembly)
+				.AddServicesWithMatchingInterfaces(IdentityDomainReference.Assembly);
 
-            return serviceCollection;
-        }
-    }
+			return serviceCollection;
+		}
+	}
 }

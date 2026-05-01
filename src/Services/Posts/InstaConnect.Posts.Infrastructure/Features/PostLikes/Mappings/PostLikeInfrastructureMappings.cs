@@ -1,10 +1,10 @@
-﻿using Mapster;
+using Mapster;
 
 namespace InstaConnect.Posts.Infrastructure.Features.PostLikes.Mappings;
 
 internal class PostLikeInfrastructureMappings : IRegister
 {
-    public void Register(TypeAdapterConfig config)
-    {
-    }
+	public void Register(TypeAdapterConfig config)
+	{
+	}
 }

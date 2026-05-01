@@ -1,10 +1,10 @@
-﻿using InstaConnect.Common.Domain.Features.Messaging.Abstractions;
+using InstaConnect.Common.Domain.Features.Messaging.Abstractions;
 
 namespace InstaConnect.Chats.Domain.Features.Chats.Models.Requests;
 
 public record GetAllChatsQuery(
-    ChatsFilterQuery Filter,
-    ChatsSortingQuery Sorting,
-    ChatsPaginationQuery Pagination,
-    CurrentUserQuery CurrentUser)
-    : ISortableQuery<ChatsSortingQuery, ChatsSortTerm>, IPaginatableQuery<ChatsPaginationQuery>, ICurrentUserableQuery;
+	ChatsFilterQuery Filter,
+	ChatsSortingQuery Sorting,
+	ChatsPaginationQuery Pagination,
+	CurrentUserQuery CurrentUser)
+	: ISortableQuery<ChatsSortingQuery, ChatsSortTerm>, IPaginatableQuery<ChatsPaginationQuery>, ICurrentUserableQuery;

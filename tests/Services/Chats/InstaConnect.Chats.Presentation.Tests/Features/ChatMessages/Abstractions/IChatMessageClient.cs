@@ -1,0 +1,36 @@
+using System.Net;
+
+using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
+
+namespace InstaConnect.Chats.Presentation.Tests.Features.ChatMessages.Abstractions;
+
+public interface IChatMessageClient
+{
+	public Task<AddChatMessageApiResponse> AddAsync(AddChatMessageApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> AddProblemDetailsAsync(AddChatMessageApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> AddUnauthorizedProblemDetailsAsync(AddChatMessageApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> AddStatusCodeAsync(AddChatMessageApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> AddUnauthorizedStatusCodeAsync(AddChatMessageApiRequest request, CancellationToken cancellationToken);
+
+	public Task DeleteAsync(DeleteChatMessageApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> DeleteProblemDetailsAsync(DeleteChatMessageApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> DeleteUnauthorizedProblemDetailsAsync(DeleteChatMessageApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> DeleteStatusCodeAsync(DeleteChatMessageApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> DeleteUnauthorizedStatusCodeAsync(DeleteChatMessageApiRequest request, CancellationToken cancellationToken);
+
+	public Task<GetAllChatMessagesApiResponse> GetAllAsync(GetAllChatMessagesApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> GetAllProblemDetailsAsync(GetAllChatMessagesApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> GetAllStatusCodeAsync(GetAllChatMessagesApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> GetAllUnauthorizedStatusCodeAsync(GetAllChatMessagesApiRequest request, CancellationToken cancellationToken);
+
+	public Task<GetChatMessageByIdApiResponse> GetByIdAsync(GetChatMessageByIdApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> GetByIdProblemDetailsAsync(GetChatMessageByIdApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> GetByIdStatusCodeAsync(GetChatMessageByIdApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> GetByIdUnauthorizedStatusCodeAsync(GetChatMessageByIdApiRequest request, CancellationToken cancellationToken);
+
+	public Task<UpdateChatMessageApiResponse> UpdateAsync(UpdateChatMessageApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> UpdateProblemDetailsAsync(UpdateChatMessageApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> UpdateUnauthorizedProblemDetailsAsync(UpdateChatMessageApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> UpdateStatusCodeAsync(UpdateChatMessageApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> UpdateUnauthorizedStatusCodeAsync(UpdateChatMessageApiRequest request, CancellationToken cancellationToken);
+}

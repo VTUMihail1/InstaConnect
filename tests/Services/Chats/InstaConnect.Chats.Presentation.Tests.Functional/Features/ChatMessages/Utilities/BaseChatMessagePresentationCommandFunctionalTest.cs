@@ -1,11 +1,17 @@
-﻿namespace InstaConnect.Chats.Presentation.Tests.Functional.Features.ChatMessages.Utilities;
+using InstaConnect.Chats.Presentation.Tests.Features.ChatMessages.Abstractions;
+using InstaConnect.Chats.Presentation.Tests.Features.ChatMessages.Extensions;
+
+namespace InstaConnect.Chats.Presentation.Tests.Functional.Features.ChatMessages.Utilities;
 
 public abstract class BaseChatMessagePresentationCommandFunctionalTest : BaseChatMessageWebTest
 {
-    protected HttpClient HttpClient { get; }
+	protected IChatMessageClient HttpClient { get; }
 
-    protected BaseChatMessagePresentationCommandFunctionalTest(ChatsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
-    {
-        HttpClient = webApplicationFactory.CreateClient();
-    }
+	protected IChatMessageNotificationClient NotificationClient { get; }
+
+	protected BaseChatMessagePresentationCommandFunctionalTest(ChatsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
+	{
+		HttpClient = webApplicationFactory.CreateChatMessageClient();
+		NotificationClient = webApplicationFactory.CreateChatMessageNotificationClient(ParticipantTwo.Id);
+	}
 }

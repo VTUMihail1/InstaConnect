@@ -1,9 +1,9 @@
-﻿using InstaConnect.Follows.Domain.Features.Common.Models.Requests;
+using InstaConnect.Follows.Domain.Features.Common.Models.Requests;
 
 namespace InstaConnect.Follows.Domain.Features.Follows.Abstractions;
 
 public interface IFollowFollowerIncludeDescriptorFactory
 {
-    FollowsIncludeDescriptor CreateFollower();
-    FollowsIncludeDescriptor CreateFollowing();
+	public FollowsIncludeDescriptor CreateFollower();
+	public FollowsIncludeDescriptor CreateFollowing();
 }

@@ -1,12 +1,12 @@
-﻿using InstaConnect.Identity.Events.Features.Users;
+using InstaConnect.Identity.Events.Features.Users;
 using InstaConnect.Posts.Events.Features.PostComments;
 
 namespace InstaConnect.Posts.Events.Features.PostCommentLikes;
 
 public record PostCommentLikeEventRequest(
-    string Id,
-    string CommentId,
-    string UserId,
-    UserEventRequest User,
-    PostCommentEventRequest PostComment,
-    DateTimeOffset CreatedAtUtc);
+	string Id,
+	string CommentId,
+	string UserId,
+	UserEventRequest User,
+	PostCommentEventRequest PostComment,
+	DateTimeOffset CreatedAtUtc);

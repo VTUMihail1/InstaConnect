@@ -1,12 +1,12 @@
-﻿namespace InstaConnect.Follows.Application.Features.Users.Extensions;
+namespace InstaConnect.Follows.Application.Features.Users.Extensions;
 
 internal static class ServiceCollectionExtensions
 {
-    extension(IServiceCollection serviceCollection)
-    {
-        internal IServiceCollection AddUserServices()
-        {
-            return serviceCollection;
-        }
-    }
+	extension(IServiceCollection serviceCollection)
+	{
+		internal IServiceCollection AddUserServices()
+		{
+			return serviceCollection;
+		}
+	}
 }

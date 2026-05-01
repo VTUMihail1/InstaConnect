@@ -1,6 +1,6 @@
-﻿namespace InstaConnect.Identity.Domain.Features.Users.Abstractions;
+namespace InstaConnect.Identity.Domain.Features.Users.Abstractions;
 
 public interface ICurrentUserableQuery
 {
-    public CurrentUserQuery Current { get; }
+	public CurrentUserQuery Current { get; }
 }

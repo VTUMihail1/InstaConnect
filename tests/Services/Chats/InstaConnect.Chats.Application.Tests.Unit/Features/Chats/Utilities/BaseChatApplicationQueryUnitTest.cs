@@ -1,17 +1,17 @@
-﻿using InstaConnect.Chats.Application.Features.Common.Extensions;
+using InstaConnect.Chats.Application.Features.Common.Extensions;
 using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
 
 namespace InstaConnect.Chats.Application.Tests.Unit.Features.Chats.Utilities;
 
 public abstract class BaseChatApplicationQueryUnitTest : BaseChatTest
 {
-    protected IApplicationMapper Mapper { get; }
+	protected IApplicationMapper Mapper { get; }
 
-    protected IChatQueryService Service { get; }
+	protected IChatQueryService Service { get; }
 
-    protected BaseChatApplicationQueryUnitTest()
-    {
-        Mapper = MockFactory.CreateMapper(ChatsApplicationReference.Assembly);
-        Service = ChatMockFactory.CreateQueryService();
-    }
+	protected BaseChatApplicationQueryUnitTest()
+	{
+		Mapper = MockFactory.CreateMapper(ChatsApplicationReference.Assembly);
+		Service = ChatMockFactory.CreateQueryService();
+	}
 }

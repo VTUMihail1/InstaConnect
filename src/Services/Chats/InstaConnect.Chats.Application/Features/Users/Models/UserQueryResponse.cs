@@ -1,10 +1,10 @@
-﻿namespace InstaConnect.Chats.Application.Features.Users.Models;
+namespace InstaConnect.Chats.Application.Features.Users.Models;
 
 public record UserQueryResponse(
-    string Id,
-    string FirstName,
-    string LastName,
-    string Name,
-    string? ProfileImageUrl,
-    DateTimeOffset CreatedAtUtc,
-    DateTimeOffset UpdatedAtUtc);
+	string Id,
+	string FirstName,
+	string LastName,
+	string Name,
+	string? ProfileImageUrl,
+	DateTimeOffset CreatedAtUtc,
+	DateTimeOffset UpdatedAtUtc);

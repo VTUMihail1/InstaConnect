@@ -1,5 +1,5 @@
-﻿namespace InstaConnect.Posts.Domain.Features.PostComments.Models.Requests;
+namespace InstaConnect.Posts.Domain.Features.PostComments.Models.Requests;
 
 public record GetPostCommentByIdQuery(
-    PostCommentId Id,
-    CurrentUserQuery CurrentUser) : ICurrentUserableQuery;
+	PostCommentId Id,
+	CurrentUserQuery CurrentUser) : ICurrentUserableQuery;

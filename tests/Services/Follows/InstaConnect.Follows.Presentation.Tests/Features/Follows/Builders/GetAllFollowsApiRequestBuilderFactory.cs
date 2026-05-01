@@ -1,9 +1,9 @@
-﻿namespace InstaConnect.Follows.Presentation.Tests.Features.Follows.Builders;
+namespace InstaConnect.Follows.Presentation.Tests.Features.Follows.Builders;
 
 public class GetAllFollowsApiRequestBuilderFactory
 {
-    public GetAllFollowsApiRequestBuilder Create(Follow follow)
-    {
-        return new(follow);
-    }
+	public GetAllFollowsApiRequestBuilder Create(Follow follow)
+	{
+		return new(follow);
+	}
 }

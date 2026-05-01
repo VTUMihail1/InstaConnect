@@ -1,10 +1,10 @@
-﻿using InstaConnect.Common.Domain.Features.Messaging.Abstractions;
+using InstaConnect.Common.Domain.Features.Messaging.Abstractions;
 
 namespace InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 
 public record GetAllPostsQuery(
-    PostsFilterQuery Filter,
-    PostsSortingQuery Sorting,
-    PostsPaginationQuery Pagination,
-    CurrentUserQuery CurrentUser)
-    : ISortableQuery<PostsSortingQuery, PostsSortTerm>, IPaginatableQuery<PostsPaginationQuery>, ICurrentUserableQuery;
+	PostsFilterQuery Filter,
+	PostsSortingQuery Sorting,
+	PostsPaginationQuery Pagination,
+	CurrentUserQuery CurrentUser)
+	: ISortableQuery<PostsSortingQuery, PostsSortTerm>, IPaginatableQuery<PostsPaginationQuery>, ICurrentUserableQuery;

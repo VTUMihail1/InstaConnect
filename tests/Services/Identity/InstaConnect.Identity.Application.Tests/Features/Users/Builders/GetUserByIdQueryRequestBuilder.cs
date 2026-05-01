@@ -1,46 +1,46 @@
-﻿namespace InstaConnect.Identity.Application.Tests.Features.Users.Builders;
+namespace InstaConnect.Identity.Application.Tests.Features.Users.Builders;
 
 public class GetUserByIdQueryRequestBuilder
 {
-    private string _id;
-    private string _currentId;
+	private string _id;
+	private string _currentId;
 
-    public GetUserByIdQueryRequestBuilder(User user)
-    {
-        _id = user.Id.Id;
-        _currentId = user.Id.Id;
-    }
+	public GetUserByIdQueryRequestBuilder(User user)
+	{
+		_id = user.Id.Id;
+		_currentId = user.Id.Id;
+	}
 
-    public GetUserByIdQueryRequestBuilder WithId(UserId id, IStringTransformer? transformer = null)
-    {
-        _id = transformer.TryTransform(id.Id);
+	public GetUserByIdQueryRequestBuilder WithId(UserId id, IStringTransformer? transformer = null)
+	{
+		_id = transformer.TryTransform(id.Id);
 
-        return this;
-    }
+		return this;
+	}
 
-    public GetUserByIdQueryRequestBuilder WithId(IStringTransformer transformer)
-    {
-        _id = transformer.Transform(_id);
+	public GetUserByIdQueryRequestBuilder WithId(IStringTransformer transformer)
+	{
+		_id = transformer.Transform(_id);
 
-        return this;
-    }
+		return this;
+	}
 
-    public GetUserByIdQueryRequestBuilder WithCurrentId(UserId currentId, IStringTransformer? transformer = null)
-    {
-        _currentId = transformer.TryTransform(currentId.Id);
+	public GetUserByIdQueryRequestBuilder WithCurrentId(UserId currentId, IStringTransformer? transformer = null)
+	{
+		_currentId = transformer.TryTransform(currentId.Id);
 
-        return this;
-    }
+		return this;
+	}
 
-    public GetUserByIdQueryRequestBuilder WithCurrentId(IStringTransformer transformer)
-    {
-        _currentId = transformer.Transform(_currentId);
+	public GetUserByIdQueryRequestBuilder WithCurrentId(IStringTransformer transformer)
+	{
+		_currentId = transformer.Transform(_currentId);
 
-        return this;
-    }
+		return this;
+	}
 
-    public GetUserByIdQueryRequest Build()
-    {
-        return new(_id, _currentId);
-    }
+	public GetUserByIdQueryRequest Build()
+	{
+		return new(_id, _currentId);
+	}
 }

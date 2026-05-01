@@ -1,10 +1,10 @@
-﻿namespace InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.PageSize;
+namespace InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.PageSize;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public sealed class PostCommentPageSizeTooSmallWithMessageDataAttribute : TooSmallIntWithMessageDataAttribute
 {
-    public PostCommentPageSizeTooSmallWithMessageDataAttribute()
-        : base(PostCommentConfigurations.PageSizeMinValue)
-    {
-    }
+	public PostCommentPageSizeTooSmallWithMessageDataAttribute()
+		: base(PostCommentConfigurations.PageSizeMinValue)
+	{
+	}
 }

@@ -32,6 +32,7 @@
     <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Strings.TooShort" />
     <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Strings.TooLong" />
     <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Strings.Null" />
+    <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Strings.InvalidEmail" />
     <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Enums.Base" />
     <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Enums.Empty" />
     <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort" />

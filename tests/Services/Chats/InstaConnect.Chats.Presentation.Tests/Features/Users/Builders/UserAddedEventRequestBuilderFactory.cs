@@ -1,9 +1,9 @@
-﻿namespace InstaConnect.Chats.Presentation.Tests.Features.Users.Builders;
+namespace InstaConnect.Chats.Presentation.Tests.Features.Users.Builders;
 
 public class UserAddedEventRequestBuilderFactory
 {
-    public UserAddedEventRequestBuilder Create(User user)
-    {
-        return new(user);
-    }
+	public UserAddedEventRequestBuilder Create(User user)
+	{
+		return new(user);
+	}
 }

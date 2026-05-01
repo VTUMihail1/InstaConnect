@@ -1,0 +1,28 @@
+using System.Net;
+
+using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
+
+namespace InstaConnect.Posts.Presentation.Tests.Features.PostCommentLikes.Abstractions;
+
+public interface IPostCommentLikeClient
+{
+	public Task<GetAllPostCommentLikesApiResponse> GetAllAsync(GetAllPostCommentLikesApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> GetAllProblemDetailsAsync(GetAllPostCommentLikesApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> GetAllStatusCodeAsync(GetAllPostCommentLikesApiRequest request, CancellationToken cancellationToken);
+	public Task<GetAllPostCommentLikesForUserApiResponse> GetAllForUserAsync(GetAllPostCommentLikesForUserApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> GetAllForUserProblemDetailsAsync(GetAllPostCommentLikesForUserApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> GetAllForUserStatusCodeAsync(GetAllPostCommentLikesForUserApiRequest request, CancellationToken cancellationToken);
+	public Task<GetPostCommentLikeByIdApiResponse> GetByIdAsync(GetPostCommentLikeByIdApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> GetByIdProblemDetailsAsync(GetPostCommentLikeByIdApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> GetByIdStatusCodeAsync(GetPostCommentLikeByIdApiRequest request, CancellationToken cancellationToken);
+	public Task<AddPostCommentLikeApiResponse> AddAsync(AddPostCommentLikeApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> AddUnauthorizedProblemDetailsAsync(AddPostCommentLikeApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> AddProblemDetailsAsync(AddPostCommentLikeApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> AddUnauthorizedStatusCodeAsync(AddPostCommentLikeApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> AddStatusCodeAsync(AddPostCommentLikeApiRequest request, CancellationToken cancellationToken);
+	public Task DeleteAsync(DeletePostCommentLikeApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> DeleteUnauthorizedProblemDetailsAsync(DeletePostCommentLikeApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> DeleteProblemDetailsAsync(DeletePostCommentLikeApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> DeleteUnauthorizedStatusCodeAsync(DeletePostCommentLikeApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> DeleteStatusCodeAsync(DeletePostCommentLikeApiRequest request, CancellationToken cancellationToken);
+}

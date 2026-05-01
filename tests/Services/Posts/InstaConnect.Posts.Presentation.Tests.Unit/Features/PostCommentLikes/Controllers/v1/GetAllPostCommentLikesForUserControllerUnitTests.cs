@@ -1,51 +1,51 @@
-﻿namespace InstaConnect.Posts.Presentation.Tests.Unit.Features.PostCommentLikes.Controllers.v1;
+namespace InstaConnect.Posts.Presentation.Tests.Unit.Features.PostCommentLikes.Controllers.v1;
 
 public class GetAllPostCommentLikesForUserControllerUnitTests : BasePostCommentLikePresentationQueryUnitTest
 {
-    private readonly GetAllPostCommentLikesForUserApiRequestBuilderFactory _requestBuilderFactory;
-    private readonly GetAllPostCommentLikesForUserApiRequestBuilder _requestBuilder;
-    private readonly GetAllPostCommentLikesForUserApiRequest _request;
+	private readonly GetAllPostCommentLikesForUserApiRequestBuilderFactory _requestBuilderFactory;
+	private readonly GetAllPostCommentLikesForUserApiRequestBuilder _requestBuilder;
+	private readonly GetAllPostCommentLikesForUserApiRequest _request;
 
-    private readonly UserPostCommentLikeController _controller;
+	private readonly UserPostCommentLikeController _controller;
 
-    public GetAllPostCommentLikesForUserControllerUnitTests()
-    {
-        _requestBuilderFactory = new();
-        _requestBuilder = _requestBuilderFactory.Create(PostCommentLike);
-        _request = _requestBuilder.Build();
+	public GetAllPostCommentLikesForUserControllerUnitTests()
+	{
+		_requestBuilderFactory = new();
+		_requestBuilder = _requestBuilderFactory.Create(PostCommentLike);
+		_request = _requestBuilder.Build();
 
-        _controller = new(Mapper, Sender);
+		_controller = new(Mapper, Sender);
 
-        Sender.SetupGetAllForUserQueryRequest(_request, User, PostCommentLikes, CancellationToken);
-    }
+		Sender.SetupGetAllForUserQueryRequest(_request, User, PostCommentLikes, CancellationToken);
+	}
 
-    [Fact]
-    public async Task GetAllAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
-    {
-        // Act
-        var response = await _controller.GetAllAsync(_request, CancellationToken);
+	[Fact]
+	public async Task GetAllAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
+	{
+		// Act
+		var response = await _controller.GetAllAsync(_request, CancellationToken);
 
-        // Assert
-        response.ShouldBeActionResultWithOkStatusCode();
-    }
+		// Assert
+		response.ShouldBeActionResultWithOkStatusCode();
+	}
 
-    [Fact]
-    public async Task GetAllAsync_ShouldReturnResponse_WhenRequestIsValid()
-    {
-        // Act
-        var response = await _controller.GetAllAsync(_request, CancellationToken);
+	[Fact]
+	public async Task GetAllAsync_ShouldReturnResponse_WhenRequestIsValid()
+	{
+		// Act
+		var response = await _controller.GetAllAsync(_request, CancellationToken);
 
-        // Assert
-        response.ShouldSatisfy(User, PostCommentLikes, _request);
-    }
+		// Assert
+		response.ShouldSatisfy(User, PostCommentLikes, _request);
+	}
 
-    [Fact]
-    public async Task GetAllAsync_ShouldCallTheSenderSendAsync_WhenRequestIsValid()
-    {
-        // Act
-        await _controller.GetAllAsync(_request, CancellationToken);
+	[Fact]
+	public async Task GetAllAsync_ShouldCallTheSenderSendAsync_WhenRequestIsValid()
+	{
+		// Act
+		await _controller.GetAllAsync(_request, CancellationToken);
 
-        // Assert
-        await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);
-    }
+		// Assert
+		await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);
+	}
 }

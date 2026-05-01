@@ -1,11 +1,11 @@
-﻿namespace InstaConnect.Posts.Tests.Features.Posts.DataAttributes.SortTerm.ForUser;
+namespace InstaConnect.Posts.Tests.Features.Posts.DataAttributes.SortTerm.ForUser;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public sealed class PostsForUserSortTermCreatedAtDataAttribute
-    : SortEnumDataAttribute<PostsForUserSortTerm>
+	: SortEnumDataAttribute<PostsForUserSortTerm>
 {
-    public PostsForUserSortTermCreatedAtDataAttribute()
-        : base(PostsForUserSortTerm.ByCreatedAt)
-    {
-    }
+	public PostsForUserSortTermCreatedAtDataAttribute()
+		: base(PostsForUserSortTerm.ByCreatedAt)
+	{
+	}
 }

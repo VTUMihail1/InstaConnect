@@ -1,4 +1,4 @@
-﻿using InstaConnect.Posts.Domain.Features.Common.Models.Requests;
+using InstaConnect.Posts.Domain.Features.Common.Models.Requests;
 
 using MongoDB.Driver;
 
@@ -6,29 +6,29 @@ namespace InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Helpers.In
 
 internal class PostCommentLikeIncluderFactory : IPostCommentLikeIncluderFactory
 {
-    private readonly IEnumerable<IPostCommentLikeIncluder> _includers;
+	private readonly IEnumerable<IPostCommentLikeIncluder> _includers;
 
-    public PostCommentLikeIncluderFactory(IEnumerable<IPostCommentLikeIncluder> includeProperties)
-    {
-        _includers = includeProperties;
-    }
+	public PostCommentLikeIncluderFactory(IEnumerable<IPostCommentLikeIncluder> includeProperties)
+	{
+		_includers = includeProperties;
+	}
 
-    public IEnumerable<IPostCommentLikeIncluder> Create(ICollection<PostsIncludeDescriptor>? descriptors)
-    {
-        if (descriptors == null)
-        {
-            return [];
-        }
+	public IEnumerable<IPostCommentLikeIncluder> Create(ICollection<PostsIncludeDescriptor>? descriptors)
+	{
+		if (descriptors == null)
+		{
+			return [];
+		}
 
-        var includers = _includers.Where(s => descriptors.Any(p =>
-                                                        p.IncludeType == s.IncludeType &&
-                                                        p.DestinationType == s.DestinationType));
+		var includers = _includers.Where(s => descriptors.Any(p =>
+														p.IncludeType == s.IncludeType &&
+														p.DestinationType == s.DestinationType));
 
-        if (includers.IsEmpty())
-        {
-            throw new PostCommentLikeIncludeDescriptorsNotSupportedException(descriptors);
-        }
+		if (includers.IsEmpty())
+		{
+			throw new PostCommentLikeIncludeDescriptorsNotSupportedException(descriptors);
+		}
 
-        return includers;
-    }
+		return includers;
+	}
 }

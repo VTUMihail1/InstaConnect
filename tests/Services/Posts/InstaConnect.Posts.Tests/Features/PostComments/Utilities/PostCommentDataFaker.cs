@@ -1,52 +1,52 @@
-﻿namespace InstaConnect.Posts.Tests.Features.PostComments.Utilities;
+namespace InstaConnect.Posts.Tests.Features.PostComments.Utilities;
 
 public static class PostCommentDataFaker
 {
-    public static string GetId()
-    {
-        return DataFaker.GetAverageString(PostCommentConfigurations.IdMaxLength, PostCommentConfigurations.IdMinLength);
-    }
+	public static string GetId()
+	{
+		return DataFaker.GetAverageString(PostCommentConfigurations.IdMaxLength, PostCommentConfigurations.IdMinLength);
+	}
 
-    public static string GetContent()
-    {
-        return DataFaker.GetAverageString(PostCommentConfigurations.ContentMaxLength, PostCommentConfigurations.ContentMinLength);
-    }
+	public static string GetContent()
+	{
+		return DataFaker.GetAverageString(PostCommentConfigurations.ContentMaxLength, PostCommentConfigurations.ContentMinLength);
+	}
 
-    public static DateTimeOffset GetCreatedAtUtc()
-    {
-        return DataFaker.GetRecentDate();
-    }
+	public static DateTimeOffset GetCreatedAtUtc()
+	{
+		return DataFaker.GetRecentDate();
+	}
 
-    public static DateTimeOffset GetUpdatedAtUtc()
-    {
-        return DataFaker.GetRecentDate();
-    }
+	public static DateTimeOffset GetUpdatedAtUtc()
+	{
+		return DataFaker.GetRecentDate();
+	}
 
-    public static int GetPage()
-    {
-        const int Page = 1;
+	public static int GetPage()
+	{
+		const int Page = 1;
 
-        return Page;
-    }
+		return Page;
+	}
 
-    public static int GetPageSize()
-    {
-        const int PageSize = 20;
+	public static int GetPageSize()
+	{
+		const int PageSize = 20;
 
-        return PageSize;
-    }
+		return PageSize;
+	}
 
-    public static PostCommentsSortTerm GetSortTerm()
-    {
-        const PostCommentsSortTerm SortTerm = PostCommentsSortTerm.ByCreatedAt;
+	public static PostCommentsSortTerm GetSortTerm()
+	{
+		const PostCommentsSortTerm SortTerm = PostCommentsSortTerm.ByCreatedAt;
 
-        return SortTerm;
-    }
+		return SortTerm;
+	}
 
-    public static PostCommentsForUserSortTerm GetForUserSortTerm()
-    {
-        const PostCommentsForUserSortTerm SortTerm = PostCommentsForUserSortTerm.ByCreatedAt;
+	public static PostCommentsForUserSortTerm GetForUserSortTerm()
+	{
+		const PostCommentsForUserSortTerm SortTerm = PostCommentsForUserSortTerm.ByCreatedAt;
 
-        return SortTerm;
-    }
+		return SortTerm;
+	}
 }

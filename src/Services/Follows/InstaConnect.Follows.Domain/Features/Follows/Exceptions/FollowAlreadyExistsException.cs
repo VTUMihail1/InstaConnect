@@ -1,16 +1,16 @@
-﻿using InstaConnect.Common.Domain.Features.ExceptionHandling.Exceptions;
+using InstaConnect.Common.Domain.Features.ExceptionHandling.Exceptions;
 
 namespace InstaConnect.Follows.Domain.Features.Follows.Exceptions;
 
 public class FollowAlreadyExistsException : BadRequestException
 {
-    public FollowAlreadyExistsException(FollowId id)
-        : base(FollowExceptionErrorMessages.GetAlreadyExistsMessage(id))
-    {
-    }
+	public FollowAlreadyExistsException(FollowId id)
+		: base(FollowExceptionErrorMessages.GetAlreadyExistsMessage(id))
+	{
+	}
 
-    public FollowAlreadyExistsException(FollowId id, Exception exception)
-        : base(FollowExceptionErrorMessages.GetAlreadyExistsMessage(id), exception)
-    {
-    }
+	public FollowAlreadyExistsException(FollowId id, Exception exception)
+		: base(FollowExceptionErrorMessages.GetAlreadyExistsMessage(id), exception)
+	{
+	}
 }

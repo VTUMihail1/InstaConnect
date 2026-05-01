@@ -1,10 +1,10 @@
-﻿namespace InstaConnect.Identity.Tests.Features.Users.DataAttributes.LastName;
+namespace InstaConnect.Identity.Tests.Features.Users.DataAttributes.LastName;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public sealed class UserLastNameTooShortDataAttribute : TooShortStringDataAttribute
 {
-    public UserLastNameTooShortDataAttribute()
-        : base(UserConfigurations.LastNameMinLength)
-    {
-    }
+	public UserLastNameTooShortDataAttribute()
+		: base(UserConfigurations.LastNameMinLength)
+	{
+	}
 }

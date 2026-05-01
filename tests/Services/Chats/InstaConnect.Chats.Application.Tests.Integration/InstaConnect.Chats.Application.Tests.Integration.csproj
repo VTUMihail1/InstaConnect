@@ -94,6 +94,7 @@
     <Using Include="InstaConnect.Chats.Application.Features.ChatMessages.Commands.Delete" />
     <Using Include="InstaConnect.Chats.Application.Tests.Integration.Features.ChatMessages.Utilities" />
     <Using Include="InstaConnect.Chats.Application.Tests.Features.ChatMessages.Assertions" />
+    <Using Include="InstaConnect.Chats.Tests.Features.ChatMessages.Assertions" />
     <Using Include="InstaConnect.Chats.Tests.Features.ChatMessages.Builders" />
     <Using Include="InstaConnect.Chats.Tests.Features.ChatMessages.Utilities" />
     <Using Include="InstaConnect.Chats.Tests.Features.ChatMessages.DataAttributes.Id" />

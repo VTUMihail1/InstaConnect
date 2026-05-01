@@ -1,21 +1,21 @@
-﻿using InstaConnect.Common.Domain.Features.Data.Abstractions;
+using InstaConnect.Common.Domain.Features.Data.Abstractions;
 
 namespace InstaConnect.Common.Infrastructure.Features.Data.Helpers;
 
 public class Paginator : IPaginator
 {
-    public int GetOffset(int page, int pageSize)
-    {
-        return (page - 1) * pageSize;
-    }
+	public int GetOffset(int page, int pageSize)
+	{
+		return (page - 1) * pageSize;
+	}
 
-    public bool HasNextPage(int page, int pageSize, long totalCount)
-    {
-        return page * pageSize < totalCount;
-    }
+	public bool HasNextPage(int page, int pageSize, long totalCount)
+	{
+		return page * pageSize < totalCount;
+	}
 
-    public bool HasPreviousPage(int page)
-    {
-        return page > 1;
-    }
+	public bool HasPreviousPage(int page)
+	{
+		return page > 1;
+	}
 }

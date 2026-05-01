@@ -1,9 +1,9 @@
-﻿namespace InstaConnect.Identity.Application.Tests.Features.Users.Builders;
+namespace InstaConnect.Identity.Application.Tests.Features.Users.Builders;
 
 public class GetCurrentUserByIdQueryRequestBuilderFactory
 {
-    public GetCurrentUserByIdQueryRequestBuilder Create(User user)
-    {
-        return new(user);
-    }
+	public GetCurrentUserByIdQueryRequestBuilder Create(User user)
+	{
+		return new(user);
+	}
 }

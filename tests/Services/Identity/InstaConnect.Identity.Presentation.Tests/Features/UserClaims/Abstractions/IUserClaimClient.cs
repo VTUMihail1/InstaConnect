@@ -1,0 +1,32 @@
+using System.Net;
+
+using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
+
+namespace InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Abstractions;
+
+public interface IUserClaimClient
+{
+	public Task<GetAllUserClaimsApiResponse> GetAllAsync(GetAllUserClaimsApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> GetAllProblemDetailsAsync(GetAllUserClaimsApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> GetAllUnauthorizedProblemDetailsAsync(GetAllUserClaimsApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> GetAllForbiddenProblemDetailsAsync(GetAllUserClaimsApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> GetAllStatusCodeAsync(GetAllUserClaimsApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> GetAllUnauthorizedStatusCodeAsync(GetAllUserClaimsApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> GetAllForbiddenStatusCodeAsync(GetAllUserClaimsApiRequest request, CancellationToken cancellationToken);
+
+	public Task<AddUserClaimApiResponse> AddAsync(AddUserClaimApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> AddProblemDetailsAsync(AddUserClaimApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> AddUnauthorizedProblemDetailsAsync(AddUserClaimApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> AddForbiddenProblemDetailsAsync(AddUserClaimApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> AddStatusCodeAsync(AddUserClaimApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> AddUnauthorizedStatusCodeAsync(AddUserClaimApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> AddForbiddenStatusCodeAsync(AddUserClaimApiRequest request, CancellationToken cancellationToken);
+
+	public Task DeleteAsync(DeleteUserClaimApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> DeleteProblemDetailsAsync(DeleteUserClaimApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> DeleteUnauthorizedProblemDetailsAsync(DeleteUserClaimApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> DeleteForbiddenProblemDetailsAsync(DeleteUserClaimApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> DeleteStatusCodeAsync(DeleteUserClaimApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> DeleteUnauthorizedStatusCodeAsync(DeleteUserClaimApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> DeleteForbiddenStatusCodeAsync(DeleteUserClaimApiRequest request, CancellationToken cancellationToken);
+}

@@ -1,11 +1,11 @@
-﻿namespace InstaConnect.Posts.Tests.Features.Posts.DataAttributes.SortTerm;
+namespace InstaConnect.Posts.Tests.Features.Posts.DataAttributes.SortTerm;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public sealed class PostsSortTermWithTitleTermDataAttribute
-    : SortEnumWithAscendingTermDataAttribute<PostsSortTerm, Post, string>
+	: SortEnumWithAscendingTermDataAttribute<PostsSortTerm, Post, string>
 {
-    public PostsSortTermWithTitleTermDataAttribute()
-        : base(PostsSortTerm.ByTitle, p => p.Title)
-    {
-    }
+	public PostsSortTermWithTitleTermDataAttribute()
+		: base(PostsSortTerm.ByTitle, p => p.Title)
+	{
+	}
 }
