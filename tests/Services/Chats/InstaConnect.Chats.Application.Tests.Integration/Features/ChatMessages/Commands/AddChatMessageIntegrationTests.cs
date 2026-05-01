@@ -20,7 +20,7 @@ public class AddChatMessageIntegrationTests : BaseChatMessageApplicationCommandI
 		await ServiceScope.AddUserAsync(ParticipantTwo, CancellationToken);
 		await ServiceScope.AddChatAsync(Chat, CancellationToken);
 
-		await NotificationClient.ConnectAsync(CancellationToken);
+		await base.OnInitializeAsync();
 	}
 
 	[Theory]

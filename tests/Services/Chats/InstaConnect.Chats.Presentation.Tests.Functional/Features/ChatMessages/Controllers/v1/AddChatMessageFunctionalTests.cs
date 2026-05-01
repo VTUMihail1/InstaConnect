@@ -19,7 +19,8 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		await ServiceScope.AddUserAsync(ParticipantOne, CancellationToken);
 		await ServiceScope.AddUserAsync(ParticipantTwo, CancellationToken);
 		await ServiceScope.AddChatAsync(Chat, CancellationToken);
-		await NotificationClient.ConnectAsync(CancellationToken);
+
+		await base.OnInitializeAsync();
 	}
 
 	[Fact]

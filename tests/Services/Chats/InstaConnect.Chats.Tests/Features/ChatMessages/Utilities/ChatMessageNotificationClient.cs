@@ -29,6 +29,11 @@ public class ChatMessageNotificationClient : IChatMessageNotificationClient
 		await _connection.StartAsync(cancellationToken);
 	}
 
+	public async Task DisconnectAsync(CancellationToken cancellationToken)
+	{
+		await _connection.StopAsync(cancellationToken);
+	}
+
 	public async Task<ChatMessageAddedNotificationRequest> AddedAsync(CancellationToken cancellationToken)
 	{
 		const int Timeout = 10;

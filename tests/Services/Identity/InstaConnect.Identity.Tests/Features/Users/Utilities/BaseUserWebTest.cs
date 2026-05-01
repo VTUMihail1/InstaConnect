@@ -39,4 +39,9 @@ public abstract class BaseUserWebTest : BaseUserTest, IClassFixture<IdentityWebA
 	{
 		return Task.CompletedTask;
 	}
+
+	protected virtual Task OnDisposeAsync()
+	{
+		return Task.CompletedTask;
+	}
 }

@@ -24,6 +24,11 @@ public class FollowNotificationClient : IFollowNotificationClient
 		await _connection.StartAsync(cancellationToken);
 	}
 
+	public async Task DisconnectAsync(CancellationToken cancellationToken)
+	{
+		await _connection.StopAsync(cancellationToken);
+	}
+
 	public async Task<FollowAddedNotificationRequest> AddedAsync(CancellationToken cancellationToken)
 	{
 		const int Timeout = 10;
