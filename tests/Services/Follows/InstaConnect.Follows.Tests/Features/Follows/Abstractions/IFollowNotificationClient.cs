@@ -1,5 +1,3 @@
-using InstaConnect.Follows.Domain.Features.Follows.Models.Responses;
-
 namespace InstaConnect.Follows.Tests.Features.Follows.Abstractions;
 
 public interface IFollowNotificationClient

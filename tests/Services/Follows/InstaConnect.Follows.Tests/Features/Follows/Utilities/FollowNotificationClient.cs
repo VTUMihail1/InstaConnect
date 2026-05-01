@@ -1,6 +1,5 @@
 using System.Threading.Channels;
 
-using InstaConnect.Follows.Domain.Features.Follows.Models.Responses;
 using InstaConnect.Follows.Presentation.Features.Follows.Abstractions;
 using InstaConnect.Follows.Tests.Features.Follows.Abstractions;
 

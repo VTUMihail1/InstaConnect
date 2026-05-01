@@ -295,6 +295,7 @@ public class DeleteChatMessageIntegrationTests : BaseChatMessageApplicationComma
 	{
 		// Arrange
 		var updatedChatMessage = ChatMessageBuilder.WithSenderId(ParticipantTwo.Id).Build();
+		updatedChatMessage.AddSender(ParticipantTwo);
 		await ServiceScope.UpdateChatMessageAsync(updatedChatMessage, CancellationToken);
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).Build();
 
@@ -303,7 +304,7 @@ public class DeleteChatMessageIntegrationTests : BaseChatMessageApplicationComma
 		var notification = await NotificationClient.DeletedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(ChatMessage);
+		notification.ShouldSatisfy(updatedChatMessage);
 	}
 
 	[Theory]
@@ -313,6 +314,7 @@ public class DeleteChatMessageIntegrationTests : BaseChatMessageApplicationComma
 	{
 		// Arrange
 		var updatedChatMessage = ChatMessageBuilder.WithSenderId(ParticipantTwo.Id).Build();
+		updatedChatMessage.AddSender(ParticipantTwo);
 		await ServiceScope.UpdateChatMessageAsync(updatedChatMessage, CancellationToken);
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id, transformer).WithParticipantTwoId(ParticipantOne.Id).Build();
 
@@ -321,7 +323,7 @@ public class DeleteChatMessageIntegrationTests : BaseChatMessageApplicationComma
 		var notification = await NotificationClient.DeletedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(ChatMessage);
+		notification.ShouldSatisfy(updatedChatMessage);
 	}
 
 	[Theory]
@@ -331,6 +333,7 @@ public class DeleteChatMessageIntegrationTests : BaseChatMessageApplicationComma
 	{
 		// Arrange
 		var updatedChatMessage = ChatMessageBuilder.WithSenderId(ParticipantTwo.Id).Build();
+		updatedChatMessage.AddSender(ParticipantTwo);
 		await ServiceScope.UpdateChatMessageAsync(updatedChatMessage, CancellationToken);
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id, transformer).Build();
 
@@ -339,7 +342,7 @@ public class DeleteChatMessageIntegrationTests : BaseChatMessageApplicationComma
 		var notification = await NotificationClient.DeletedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(ChatMessage);
+		notification.ShouldSatisfy(updatedChatMessage);
 	}
 
 	[Theory]
@@ -349,6 +352,7 @@ public class DeleteChatMessageIntegrationTests : BaseChatMessageApplicationComma
 	{
 		// Arrange
 		var updatedChatMessage = ChatMessageBuilder.WithSenderId(ParticipantTwo.Id).Build();
+		updatedChatMessage.AddSender(ParticipantTwo);
 		await ServiceScope.UpdateChatMessageAsync(updatedChatMessage, CancellationToken);
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).WithMessageId(transformer).Build();
 
@@ -357,6 +361,6 @@ public class DeleteChatMessageIntegrationTests : BaseChatMessageApplicationComma
 		var notification = await NotificationClient.DeletedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(ChatMessage);
+		notification.ShouldSatisfy(updatedChatMessage);
 	}
 }

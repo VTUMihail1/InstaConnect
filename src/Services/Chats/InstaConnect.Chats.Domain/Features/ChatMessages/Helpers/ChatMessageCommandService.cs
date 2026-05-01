@@ -35,14 +35,15 @@ internal class ChatMessageCommandService : IChatMessageCommandService
 
 	public async Task<ChatMessageId> AddAsync(AddChatMessageCommand command, CancellationToken cancellationToken)
 	{
-		var chat = await _repository.GetByIdAsync(command.Id, cancellationToken);
+		var chatInclude = _includeBuilderFactory.Create().WithParticipantOne().WithParticipantTwo().Build();
+		var chat = await _repository.GetByIdAsync(command.Id, chatInclude, cancellationToken);
 
 		if (chat == null)
 		{
 			throw new ChatNotFoundException(command.Id);
 		}
 
-		var newChatMessage = _messageFactory.Create(chat.Id, chat.Id.ParticipantOneId, command.Content);
+		var newChatMessage = _messageFactory.Create(chat.Id, chat.Id.ParticipantOneId, command.Content).AddSender(chat.ParticipantOne).AddChat(chat);
 		await _messageRepository.AddAsync(newChatMessage, cancellationToken);
 
 		await _messageNotificationService.AddedAsync(

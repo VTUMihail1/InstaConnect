@@ -1,4 +1,4 @@
-using InstaConnect.Chats.Domain.Features.ChatMessages.Models.Responses;
+using InstaConnect.Chats.Domain.Features.ChatMessages.Models.Requests;
 
 namespace InstaConnect.Chats.Presentation.Features.ChatMessages.Abstractions;
 

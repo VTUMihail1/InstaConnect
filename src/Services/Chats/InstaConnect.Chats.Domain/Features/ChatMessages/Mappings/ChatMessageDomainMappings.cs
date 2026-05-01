@@ -1,4 +1,3 @@
-
 using Mapster;
 
 namespace InstaConnect.Chats.Domain.Features.ChatMessages.Mappings;
@@ -13,6 +12,7 @@ internal class ChatMessageDomainMappings : IRegister
 				src.Id.Id.ParticipantTwoId.Id,
 				src.Id.MessageId,
 				src.Sender.Adapt<UserNotificationRequest>(config)!,
+				src.Chat.Adapt<ChatNotificationRequest>(config)!,
 				src.Content,
 				src.CreatedAtUtc,
 				src.UpdatedAtUtc));

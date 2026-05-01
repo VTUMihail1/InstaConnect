@@ -473,9 +473,10 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		// Act
 		var response = await HttpClient.UpdateAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
+		var notification = await NotificationClient.UpdatedAsync(CancellationToken);
 
 		// Assert
-		chatMessage.ShouldSatisfyInverted(request);
+		notification.ShouldSatisfy(chatMessage);
 	}
 
 	[Fact]

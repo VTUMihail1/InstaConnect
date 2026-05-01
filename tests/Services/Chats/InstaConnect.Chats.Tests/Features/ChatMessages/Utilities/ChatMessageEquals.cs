@@ -37,6 +37,7 @@ public static class ChatMessageEquals
 		{
 			return entity.Id.Matches(request.ParticipantOneId, request.ParticipantTwoId, request.MessageId) &&
 				   entity.Sender != null && entity.Sender.Matches(request.Sender) &&
+				   entity.Chat != null && entity.Chat.Matches(request.Chat) &&
 				   entity.Content == request.Content &&
 				   entity.CreatedAtUtc == request.CreatedAtUtc &&
 				   entity.UpdatedAtUtc == request.UpdatedAtUtc;

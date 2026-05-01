@@ -1,4 +1,3 @@
-using InstaConnect.Follows.Domain.Features.Follows.Models.Responses;
 using InstaConnect.Follows.Domain.Features.Follows.Models.ValueObjects;
 using InstaConnect.Follows.Events.Features.Follows;
 using InstaConnect.Follows.Tests.Features.Follows.Utilities;

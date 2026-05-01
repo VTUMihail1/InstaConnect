@@ -1,4 +1,4 @@
-namespace InstaConnect.Chats.Domain.Features.Users.Models.Responses;
+namespace InstaConnect.Follows.Domain.Features.Users.Models.Requests;
 
 public record UserNotificationRequest(
 	string Id,

@@ -1,4 +1,3 @@
-using InstaConnect.Follows.Domain.Features.Users.Models.Responses;
 using InstaConnect.Identity.Events.Features.Users;
 
 using Mapster;

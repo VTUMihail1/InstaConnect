@@ -18,5 +18,13 @@ internal class ChatDomainMappings : IRegister
 				src.ParticipantOne.Adapt<UserEventRequest>(config)!,
 				src.ParticipantTwo.Adapt<UserEventRequest>(config)!,
 				src.CreatedAtUtc));
+
+		config.NewConfig<Chat, ChatNotificationRequest>()
+			.ConstructUsing(src => new(
+				src.Id.ParticipantOneId.Id,
+				src.Id.ParticipantTwoId.Id,
+				src.ParticipantOne.Adapt<UserNotificationRequest>(config)!,
+				src.ParticipantTwo.Adapt<UserNotificationRequest>(config)!,
+				src.CreatedAtUtc));
 	}
 }

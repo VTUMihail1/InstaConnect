@@ -36,6 +36,14 @@ public static class ChatEquals
 				   entity.ParticipantTwo != null && entity.ParticipantTwo.Matches(request.ParticipantTwo) &&
 				   entity.CreatedAtUtc == request.CreatedAtUtc;
 		}
+
+		public bool Matches(ChatNotificationRequest request)
+		{
+			return entity.Id.Matches(request.ParticipantOneId, request.ParticipantTwoId) &&
+				   entity.ParticipantOne != null && entity.ParticipantOne.Matches(request.ParticipantOne) &&
+				   entity.ParticipantTwo != null && entity.ParticipantTwo.Matches(request.ParticipantTwo) &&
+				   entity.CreatedAtUtc == request.CreatedAtUtc;
+		}
 	}
 
 	extension(ChatId p)
