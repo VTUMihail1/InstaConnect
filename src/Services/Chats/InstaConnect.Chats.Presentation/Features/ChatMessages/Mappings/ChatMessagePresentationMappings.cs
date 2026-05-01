@@ -3,8 +3,11 @@ using InstaConnect.Chats.Application.Features.ChatMessages.Commands.Delete;
 using InstaConnect.Chats.Application.Features.ChatMessages.Commands.Update;
 using InstaConnect.Chats.Application.Features.ChatMessages.Queries.GetAll;
 using InstaConnect.Chats.Application.Features.ChatMessages.Queries.GetById;
+using InstaConnect.Chats.Domain.Features.ChatMessages.Models.Requests;
 
 using Mapster;
+
+using Microsoft.AspNetCore.SignalR;
 
 namespace InstaConnect.Chats.Presentation.Features.ChatMessages.Mappings;
 
@@ -86,5 +89,8 @@ internal class ChatMessagePresentationMappings : IRegister
 				  src.TotalCount,
 				  src.HasNextPage,
 				  src.HasPreviousPage));
+
+		config.NewConfig<HubCallerContext, TypingStartedNotificationRequest>()
+			.ConstructUsing(src => new(src.UserIdentifier!));
 	}
 }
