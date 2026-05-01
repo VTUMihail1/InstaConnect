@@ -20,6 +20,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		await ServiceScope.AddUserAsync(ParticipantTwo, CancellationToken);
 		await ServiceScope.AddChatAsync(Chat, CancellationToken);
 		await ServiceScope.AddChatMessageAsync(ChatMessage, CancellationToken);
+		await NotificationClient.ConnectAsync(CancellationToken);
 	}
 
 	[Fact]
@@ -456,5 +457,48 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 
 		// Assert
 		chatMessage.ShouldBeNull();
+	}
+
+	[Fact]
+	public async Task DeleteAsync_ShouldPublishChatMessageDeletedNotification_WhenRequestIsValid()
+	{
+		// Act
+		await HttpClient.DeleteAsync(_request, CancellationToken);
+		var notification = await NotificationClient.DeletedAsync(CancellationToken);
+
+		// Assert
+		notification.ShouldSatisfy(ChatMessage);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task DeleteAsync_ShouldPublishChatMessageDeletedNotification_WhenRequestAndParticipantOneIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithParticipantOneId(transformer).Build();
+
+		// Act
+		await HttpClient.DeleteAsync(request, CancellationToken);
+		var notification = await NotificationClient.DeletedAsync(CancellationToken);
+
+		// Assert
+		notification.ShouldSatisfy(ChatMessage);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task DeleteAsync_ShouldPublishChatMessageDeletedNotification_WhenRequestAndParticipantTwoIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
+
+		// Act
+		await HttpClient.DeleteAsync(request, CancellationToken);
+		var notification = await NotificationClient.DeletedAsync(CancellationToken);
+
+		// Assert
+		notification.ShouldSatisfy(ChatMessage);
 	}
 }

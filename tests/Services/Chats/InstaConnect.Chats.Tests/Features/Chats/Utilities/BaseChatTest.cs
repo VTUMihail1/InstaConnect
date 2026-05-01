@@ -1,4 +1,3 @@
-using InstaConnect.Chats.Tests.Features.ChatMessages.Utilities;
 using InstaConnect.Chats.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Chats.Tests.Features.Chats.Utilities;

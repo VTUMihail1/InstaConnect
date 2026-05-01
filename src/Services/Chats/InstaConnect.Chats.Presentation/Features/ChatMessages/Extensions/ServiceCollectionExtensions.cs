@@ -1,3 +1,6 @@
+using InstaConnect.Chats.Domain.Features.ChatMessages.Abstractions;
+using InstaConnect.Chats.Presentation.Features.ChatMessages.Helpers;
+
 namespace InstaConnect.Chats.Presentation.Features.ChatMessages.Extensions;
 
 internal static class ServiceCollectionExtensions
@@ -6,6 +9,9 @@ internal static class ServiceCollectionExtensions
 	{
 		internal IServiceCollection AddChatMessageServices()
 		{
+			serviceCollection.AddSignalR();
+			serviceCollection.AddScoped<IChatMessageNotificationService, ChatMessageNotificationService>();
+
 			return serviceCollection;
 		}
 	}

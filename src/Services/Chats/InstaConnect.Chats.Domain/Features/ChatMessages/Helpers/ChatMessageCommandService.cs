@@ -1,27 +1,35 @@
+using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
+
 namespace InstaConnect.Chats.Domain.Features.ChatMessages.Helpers;
 
 internal class ChatMessageCommandService : IChatMessageCommandService
 {
+	private readonly IApplicationMapper _mapper;
 	private readonly IChatCommandRepository _repository;
 	private readonly IDateTimeProvider _dateTimeProvider;
 	private readonly IChatMessageFactory _messageFactory;
 	private readonly IChatMessageCommandRepository _messageRepository;
 	private readonly IChatIncludeBuilderFactory _includeBuilderFactory;
+	private readonly IChatMessageNotificationService _messageNotificationService;
 	private readonly IChatMessageIncludeBuilderFactory _messageIncludeBuilderFactory;
 
 	public ChatMessageCommandService(
+		IApplicationMapper mapper,
 		IChatCommandRepository repository,
 		IDateTimeProvider dateTimeProvider,
 		IChatMessageFactory messageFactory,
 		IChatMessageCommandRepository messageRepository,
 		IChatIncludeBuilderFactory includeBuilderFactory,
+		IChatMessageNotificationService messageNotificationService,
 		IChatMessageIncludeBuilderFactory messageIncludeBuilderFactory)
 	{
+		_mapper = mapper;
 		_repository = repository;
 		_dateTimeProvider = dateTimeProvider;
 		_messageFactory = messageFactory;
 		_messageRepository = messageRepository;
 		_includeBuilderFactory = includeBuilderFactory;
+		_messageNotificationService = messageNotificationService;
 		_messageIncludeBuilderFactory = messageIncludeBuilderFactory;
 	}
 
@@ -36,6 +44,9 @@ internal class ChatMessageCommandService : IChatMessageCommandService
 
 		var newChatMessage = _messageFactory.Create(chat.Id, chat.Id.ParticipantOneId, command.Content);
 		await _messageRepository.AddAsync(newChatMessage, cancellationToken);
+
+		await _messageNotificationService.AddedAsync(
+			_mapper.Map<ChatMessageAddedNotificationRequest>(newChatMessage), cancellationToken);
 
 		return newChatMessage.Id;
 	}
@@ -67,6 +78,9 @@ internal class ChatMessageCommandService : IChatMessageCommandService
 		chatMessage.Update(command.Content, utcNow);
 		await _messageRepository.UpdateAsync(chatMessage, cancellationToken);
 
+		await _messageNotificationService.UpdatedAsync(
+			_mapper.Map<ChatMessageUpdatedNotificationRequest>(chatMessage), cancellationToken);
+
 		return chatMessage.Id;
 	}
 
@@ -94,5 +108,8 @@ internal class ChatMessageCommandService : IChatMessageCommandService
 		}
 
 		await _messageRepository.DeleteAsync(chatMessage, cancellationToken);
+
+		await _messageNotificationService.DeletedAsync(
+			_mapper.Map<ChatMessageDeletedNotificationRequest>(chatMessage), cancellationToken);
 	}
 }

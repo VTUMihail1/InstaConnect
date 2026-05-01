@@ -18,5 +18,16 @@ internal class UserDomainMappings : IRegister
 				src.ProfileImage == null ? null : src.ProfileImage.Url,
 				src.CreatedAtUtc,
 				src.UpdatedAtUtc));
+
+		config.NewConfig<User, UserNotificationRequest>()
+			.ConstructUsing(src => new(
+				src.Id.Id,
+				src.Name.Value,
+				src.Email.Value,
+				src.FirstName,
+				src.LastName,
+				src.ProfileImage == null ? null : src.ProfileImage.Url,
+				src.CreatedAtUtc,
+				src.UpdatedAtUtc));
 	}
 }

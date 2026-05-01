@@ -1,3 +1,4 @@
+using InstaConnect.Chats.Presentation.Features.ChatMessages.Extensions;
 using InstaConnect.Common.Presentation.Features.Controllers.Extensions;
 using InstaConnect.Common.Presentation.Features.ExceptionHandling.Extensions;
 
@@ -15,7 +16,8 @@ public static class WebApplicationExtensions
 				.UseSecurity()
 				.MapApiEndpoints()
 				.UseGlobalExceptionHandling()
-				.MapHealthCheckEndpoints();
+				.MapHealthCheckEndpoints()
+				.MapChatMessageHub();
 		}
 	}
 }

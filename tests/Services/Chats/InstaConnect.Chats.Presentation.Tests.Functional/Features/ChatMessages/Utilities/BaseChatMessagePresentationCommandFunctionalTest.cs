@@ -7,8 +7,11 @@ public abstract class BaseChatMessagePresentationCommandFunctionalTest : BaseCha
 {
 	protected IChatMessageClient HttpClient { get; }
 
+	protected IChatMessageNotificationClient NotificationClient { get; }
+
 	protected BaseChatMessagePresentationCommandFunctionalTest(ChatsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
 		HttpClient = webApplicationFactory.CreateChatMessageClient();
+		NotificationClient = webApplicationFactory.CreateChatMessageNotificationClient(ParticipantTwo.Id);
 	}
 }

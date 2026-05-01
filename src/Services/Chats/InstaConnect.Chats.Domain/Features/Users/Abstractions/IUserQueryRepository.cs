@@ -1,4 +1,3 @@
-using InstaConnect.Chats.Domain.Features.Users.Models.Responses;
 
 namespace InstaConnect.Chats.Domain.Features.Users.Abstractions;
 

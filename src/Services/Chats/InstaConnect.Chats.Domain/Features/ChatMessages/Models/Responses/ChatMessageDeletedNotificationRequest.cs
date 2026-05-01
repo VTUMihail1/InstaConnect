@@ -1,0 +1,3 @@
+namespace InstaConnect.Chats.Domain.Features.ChatMessages.Models.Responses;
+
+public record ChatMessageDeletedNotificationRequest(ChatMessageNotificationRequest ChatMessage);
