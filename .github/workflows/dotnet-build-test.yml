@@ -58,8 +58,6 @@ jobs:
           --logger "trx"
           --results-directory ./test-results
           --blame-hang-timeout 3m
-          --
-          xUnit.StopOnFail=true
 
       - name: Upload test results
         uses: actions/upload-artifact@v4

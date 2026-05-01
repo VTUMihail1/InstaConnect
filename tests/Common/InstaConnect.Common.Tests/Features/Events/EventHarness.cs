@@ -10,18 +10,21 @@ public class EventHarness : IEventHarness
 {
 	private readonly ITestHarnessFactory _testHarnessFactory;
 
-	private ITestHarness _testHarness = null!;
+	private ITestHarness _testHarness;
 
 	public EventHarness(
-		ITestHarnessFactory testHarnessFactory)
+		ITestHarnessFactory testHarnessFactory,
+		ITestHarness testHarness)
 	{
 		_testHarnessFactory = testHarnessFactory;
+		_testHarness = testHarness;
 	}
 
 	public async Task PublishAsync<TRequest>(TRequest message, CancellationToken cancellationToken)
 		where TRequest : class, IEventRequest
 	{
 		await StopAsync(cancellationToken);
+		_testHarness = _testHarnessFactory.Create();
 		await StartAsync(cancellationToken);
 
 		await _testHarness.Bus.Publish(message, cancellationToken);
@@ -69,7 +72,6 @@ public class EventHarness : IEventHarness
 
 	public async Task StartAsync(CancellationToken cancellationToken)
 	{
-		_testHarness = _testHarnessFactory.Create();
 		await _testHarness.Start();
 	}
 
