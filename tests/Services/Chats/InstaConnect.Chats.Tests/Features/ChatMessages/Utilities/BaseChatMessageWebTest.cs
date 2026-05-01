@@ -27,9 +27,18 @@ public abstract class BaseChatMessageWebTest : BaseChatMessageTest, IClassFixtur
 
 	public async Task DisposeAsync()
 	{
+		await OnDisposeAsync();
 		await ServiceScope.ResetChatsDatabase(CancellationToken);
 		await EventHarness.StopAsync(CancellationToken);
 	}
 
-	protected abstract Task OnInitializeAsync();
+	protected virtual Task OnInitializeAsync()
+	{
+		return Task.CompletedTask;
+	}
+
+	protected virtual Task OnDisposeAsync()
+	{
+		return Task.CompletedTask;
+	}
 }

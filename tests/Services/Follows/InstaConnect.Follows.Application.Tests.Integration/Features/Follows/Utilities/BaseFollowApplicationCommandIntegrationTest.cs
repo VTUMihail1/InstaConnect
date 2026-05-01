@@ -16,4 +16,14 @@ public abstract class BaseFollowApplicationCommandIntegrationTest : BaseFollowWe
 		Sender = ServiceScope.GetSender();
 		NotificationClient = webApplicationFactory.CreateFollowNotificationClient(Following.Id);
 	}
+
+	protected override async Task OnInitializeAsync()
+	{
+		await NotificationClient.ConnectAsync(CancellationToken);
+	}
+
+	protected override async Task OnDisposeAsync()
+	{
+		await NotificationClient.DisconnectAsync(CancellationToken);
+	}
 }

@@ -31,5 +31,13 @@ public abstract class BaseUserClaimWebTest : BaseUserClaimTest, IClassFixture<Id
 		await EventHarness.StopAsync(CancellationToken);
 	}
 
-	protected abstract Task OnInitializeAsync();
+	protected virtual Task OnInitializeAsync()
+	{
+		return Task.CompletedTask;
+	}
+
+	protected virtual Task OnDisposeAsync()
+	{
+		return Task.CompletedTask;
+	}
 }

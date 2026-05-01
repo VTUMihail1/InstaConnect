@@ -20,7 +20,8 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		await ServiceScope.AddUserAsync(ParticipantTwo, CancellationToken);
 		await ServiceScope.AddChatAsync(Chat, CancellationToken);
 		await ServiceScope.AddChatMessageAsync(ChatMessage, CancellationToken);
-		await NotificationClient.ConnectAsync(CancellationToken);
+
+		await base.OnInitializeAsync();
 	}
 
 	[Fact]

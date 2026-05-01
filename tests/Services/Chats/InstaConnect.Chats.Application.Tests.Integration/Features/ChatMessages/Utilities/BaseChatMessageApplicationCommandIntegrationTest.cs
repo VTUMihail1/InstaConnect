@@ -17,4 +17,14 @@ public abstract class BaseChatMessageApplicationCommandIntegrationTest : BaseCha
 		Sender = ServiceScope.GetSender();
 		NotificationClient = webApplicationFactory.CreateChatMessageNotificationClient(ParticipantTwo.Id);
 	}
+
+	protected override async Task OnInitializeAsync()
+	{
+		await NotificationClient.ConnectAsync(CancellationToken);
+	}
+
+	protected override async Task OnDisposeAsync()
+	{
+		await NotificationClient.DisconnectAsync(CancellationToken);
+	}
 }

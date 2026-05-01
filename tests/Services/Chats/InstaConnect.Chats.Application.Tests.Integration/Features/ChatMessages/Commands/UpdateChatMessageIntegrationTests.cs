@@ -21,7 +21,7 @@ public class UpdateChatMessageIntegrationTests : BaseChatMessageApplicationComma
 		await ServiceScope.AddChatAsync(Chat, CancellationToken);
 		await ServiceScope.AddChatMessageAsync(ChatMessage, CancellationToken);
 
-		await NotificationClient.ConnectAsync(CancellationToken);
+		await base.OnInitializeAsync();
 	}
 
 	[Theory]
