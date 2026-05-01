@@ -19,7 +19,7 @@ public class AddFollowIntegrationTests : BaseFollowApplicationCommandIntegration
 		await ServiceScope.AddUserAsync(Follower, CancellationToken);
 		await ServiceScope.AddUserAsync(Following, CancellationToken);
 
-		await NotificationClient.ConnectAsync(CancellationToken);
+		await base.OnInitializeAsync();
 	}
 
 	[Theory]

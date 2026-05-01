@@ -16,4 +16,14 @@ public abstract class BaseFollowPresentationCommandFunctionalTest : BaseFollowWe
 		Client = webApplicationFactory.CreateFollowClient();
 		NotificationClient = webApplicationFactory.CreateFollowNotificationClient(Following.Id);
 	}
+
+	protected override async Task OnInitializeAsync()
+	{
+		await NotificationClient.ConnectAsync(CancellationToken);
+	}
+
+	protected override async Task OnDisposeAsync()
+	{
+		await NotificationClient.DisconnectAsync(CancellationToken);
+	}
 }
