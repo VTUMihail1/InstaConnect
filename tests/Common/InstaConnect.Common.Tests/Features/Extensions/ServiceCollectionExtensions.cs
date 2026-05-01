@@ -55,14 +55,6 @@ public static class ServiceCollectionExtensions
 				});
 			});
 
-			serviceCollection.AddOptions<MassTransitHostOptions>().Configure(options =>
-			{
-				options.WaitUntilStarted = true;
-				options.StartTimeout = TimeSpan.FromSeconds(10);
-				options.StopTimeout = TimeSpan.FromSeconds(30);
-				options.ConsumerStopTimeout = TimeSpan.FromSeconds(10);
-			});
-
 			return serviceCollection;
 		}
 	}
