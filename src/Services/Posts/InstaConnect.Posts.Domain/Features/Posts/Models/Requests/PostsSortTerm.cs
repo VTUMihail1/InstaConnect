@@ -1,9 +1,9 @@
-﻿namespace InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
+namespace InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 
 public enum PostsSortTerm
 {
-    None,
-    ByCreatedAt,
-    ByTitle,
-    ByUserName
+	None,
+	ByCreatedAt,
+	ByTitle,
+	ByUserName
 }

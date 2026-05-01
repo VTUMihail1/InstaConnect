@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Domain.Features.ExceptionHandling.Exceptions;
+using InstaConnect.Common.Domain.Features.ExceptionHandling.Exceptions;
 using InstaConnect.Common.Presentation.Features.ExceptionHandling.Abstractions;
 
 using Microsoft.AspNetCore.Diagnostics;
@@ -8,32 +8,30 @@ namespace InstaConnect.Common.Presentation.Features.ExceptionHandling.Helpers;
 
 public sealed class InvalidValidationExceptionHandler : IExceptionHandler
 {
-    private readonly IApplicationProblemDetailsFactory _problemDetailsFactory;
-    private readonly IApplicationProblemDetailsService _problemDetailsService;
+	private readonly IApplicationProblemDetailsFactory _problemDetailsFactory;
+	private readonly IApplicationProblemDetailsService _problemDetailsService;
 
-    public InvalidValidationExceptionHandler(
-        IApplicationProblemDetailsFactory problemDetailsFactory,
-        IApplicationProblemDetailsService problemDetailsService)
-    {
-        _problemDetailsFactory = problemDetailsFactory;
-        _problemDetailsService = problemDetailsService;
-    }
+	public InvalidValidationExceptionHandler(
+		IApplicationProblemDetailsFactory problemDetailsFactory,
+		IApplicationProblemDetailsService problemDetailsService)
+	{
+		_problemDetailsFactory = problemDetailsFactory;
+		_problemDetailsService = problemDetailsService;
+	}
 
-    public async ValueTask<bool> TryHandleAsync(
-        HttpContext httpContext,
-        Exception exception,
-        CancellationToken cancellationToken)
-    {
-        var invalidValidationException = exception as InvalidValidationException;
+	public async ValueTask<bool> TryHandleAsync(
+		HttpContext httpContext,
+		Exception exception,
+		CancellationToken cancellationToken)
+	{
+		if (exception is not InvalidValidationException invalidValidationException)
+		{
+			return false;
+		}
 
-        if (invalidValidationException == null)
-        {
-            return false;
-        }
+		var problemDetails = _problemDetailsFactory.Create(invalidValidationException);
+		await _problemDetailsService.WriteAsync(httpContext, invalidValidationException, problemDetails, cancellationToken);
 
-        var problemDetails = _problemDetailsFactory.Create(invalidValidationException);
-        await _problemDetailsService.WriteAsync(httpContext, exception, problemDetails, cancellationToken);
-
-        return true;
-    }
+		return true;
+	}
 }

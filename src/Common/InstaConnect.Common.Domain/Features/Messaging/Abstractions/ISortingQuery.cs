@@ -1,11 +1,11 @@
-﻿using InstaConnect.Common.Domain.Features.Messaging.Models;
+using InstaConnect.Common.Domain.Features.Messaging.Models;
 
 namespace InstaConnect.Common.Domain.Features.Messaging.Abstractions;
 
 public interface ISortingQuery<out TSortTerm>
-    where TSortTerm : Enum
+	where TSortTerm : Enum
 {
-    CommonSortOrder Order { get; }
+	public CommonSortOrder Order { get; }
 
-    TSortTerm Term { get; }
+	public TSortTerm Term { get; }
 }

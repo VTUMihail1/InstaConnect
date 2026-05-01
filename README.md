@@ -11,6 +11,7 @@ Before running the project, ensure you have the following installed:
 - Docker Desktop
 - Git
 - Cloudinary account
+- SendGrid account
 
 ---
 
@@ -38,6 +39,8 @@ MONGO_PASSWORD=your_mongo_password
 REDIS_PASSWORD=your_redis_password
 RABBITMQ_USERNAME=your_rabbitmq_username
 RABBITMQ_PASSWORD=your_rabbitmq_password
+SEND_GRID_SENDER=your_sendgrid_sender
+SEND_GRID_API_KEY=your_sendgrid_api_key
 ACCESS_TOKEN_SECURITY_KEY=your_secret_key_here
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
@@ -54,6 +57,8 @@ MONGO_PASSWORD=your_mongo_password
 REDIS_PASSWORD=your_redis_password
 RABBITMQ_USERNAME=your_rabbitmq_username
 RABBITMQ_PASSWORD=your_rabbitmq_password
+SEND_GRID_SENDER=your_sendgrid_sender
+SEND_GRID_API_KEY=your_sendgrid_api_key
 ACCESS_TOKEN_SECURITY_KEY=your_secret_key_here
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key

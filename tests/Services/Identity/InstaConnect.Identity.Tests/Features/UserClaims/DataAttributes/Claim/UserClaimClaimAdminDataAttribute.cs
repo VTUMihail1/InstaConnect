@@ -1,13 +1,13 @@
-﻿using InstaConnect.Common.Events.Features.Tokens.Models;
+using InstaConnect.Common.Events.Features.AccessTokens.Models;
 
 namespace InstaConnect.Identity.Tests.Features.UserClaims.DataAttributes.Claim;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public sealed class UserClaimClaimAdminDataAttribute
-    : SortEnumDataAttribute<ApplicationClaims>
+	: SortEnumDataAttribute<ApplicationClaims>
 {
-    public UserClaimClaimAdminDataAttribute()
-        : base(ApplicationClaims.Admin)
-    {
-    }
+	public UserClaimClaimAdminDataAttribute()
+		: base(ApplicationClaims.Admin)
+	{
+	}
 }

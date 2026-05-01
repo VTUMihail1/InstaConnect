@@ -1,0 +1,3 @@
+namespace InstaConnect.Chats.Domain.Features.ChatMessages.Models.Requests;
+
+public record ChatMessageAddedNotificationRequest(ChatMessageNotificationRequest ChatMessage);

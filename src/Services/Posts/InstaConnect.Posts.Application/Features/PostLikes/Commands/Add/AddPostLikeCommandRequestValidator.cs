@@ -1,17 +1,17 @@
-﻿namespace InstaConnect.Posts.Application.Features.PostLikes.Commands.Add;
+namespace InstaConnect.Posts.Application.Features.PostLikes.Commands.Add;
 
 public class AddPostLikeCommandRequestValidator : AbstractValidator<AddPostLikeCommandRequest>
 {
-    public AddPostLikeCommandRequestValidator()
-    {
-        RuleFor(r => r.Id)
-            .NotEmptyWithMessage()
-            .PostIdMinLengthWithMessage()
-            .PostIdMaxLengthWithMessage();
+	public AddPostLikeCommandRequestValidator()
+	{
+		RuleFor(r => r.Id)
+			.NotEmptyWithMessage()
+			.PostIdMinLengthWithMessage()
+			.PostIdMaxLengthWithMessage();
 
-        RuleFor(r => r.UserId)
-            .NotEmptyWithMessage()
-            .UserIdMinLengthWithMessage()
-            .UserIdMaxLengthWithMessage();
-    }
+		RuleFor(r => r.UserId)
+			.NotEmptyWithMessage()
+			.UserIdMinLengthWithMessage()
+			.UserIdMaxLengthWithMessage();
+	}
 }

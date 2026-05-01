@@ -1,9 +1,9 @@
-﻿namespace InstaConnect.Identity.Application.Tests.Features.UserClaims.Builders;
+namespace InstaConnect.Identity.Application.Tests.Features.UserClaims.Builders;
 
 public class AddUserClaimCommandRequestBuilderFactory
 {
-    public AddUserClaimCommandRequestBuilder Create(User user)
-    {
-        return new(user);
-    }
+	public AddUserClaimCommandRequestBuilder Create(User user)
+	{
+		return new(user);
+	}
 }

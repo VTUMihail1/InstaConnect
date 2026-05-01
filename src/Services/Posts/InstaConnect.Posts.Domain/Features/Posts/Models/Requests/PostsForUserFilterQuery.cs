@@ -1,5 +1,5 @@
-﻿namespace InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
+namespace InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 
 public record PostsForUserFilterQuery(
-    UserId UserId,
-    string Title);
+	UserId UserId,
+	string Title);

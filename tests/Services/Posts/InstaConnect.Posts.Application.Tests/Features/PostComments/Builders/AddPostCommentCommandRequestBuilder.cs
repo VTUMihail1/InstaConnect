@@ -1,55 +1,55 @@
-﻿namespace InstaConnect.Posts.Application.Tests.Features.PostComments.Builders;
+namespace InstaConnect.Posts.Application.Tests.Features.PostComments.Builders;
 
 public class AddPostCommentCommandRequestBuilder
 {
-    private string _id;
-    private string _userId;
-    private string _content;
+	private string _id;
+	private string _userId;
+	private string _content;
 
-    public AddPostCommentCommandRequestBuilder(Post post, User user)
-    {
-        _id = post.Id.Id;
-        _userId = user.Id.Id;
-        _content = PostCommentDataFaker.GetContent();
-    }
+	public AddPostCommentCommandRequestBuilder(Post post, User user)
+	{
+		_id = post.Id.Id;
+		_userId = user.Id.Id;
+		_content = PostCommentDataFaker.GetContent();
+	}
 
-    public AddPostCommentCommandRequestBuilder WithId(PostId id, IStringTransformer? transformer = null)
-    {
-        _id = transformer.TryTransform(id.Id);
+	public AddPostCommentCommandRequestBuilder WithId(PostId id, IStringTransformer? transformer = null)
+	{
+		_id = transformer.TryTransform(id.Id);
 
-        return this;
-    }
+		return this;
+	}
 
-    public AddPostCommentCommandRequestBuilder WithId(IStringTransformer transformer)
-    {
-        _id = transformer.Transform(_id);
+	public AddPostCommentCommandRequestBuilder WithId(IStringTransformer transformer)
+	{
+		_id = transformer.Transform(_id);
 
-        return this;
-    }
+		return this;
+	}
 
-    public AddPostCommentCommandRequestBuilder WithUserId(UserId userId, IStringTransformer? transformer = null)
-    {
-        _userId = transformer.TryTransform(userId.Id);
+	public AddPostCommentCommandRequestBuilder WithUserId(UserId userId, IStringTransformer? transformer = null)
+	{
+		_userId = transformer.TryTransform(userId.Id);
 
-        return this;
-    }
+		return this;
+	}
 
-    public AddPostCommentCommandRequestBuilder WithUserId(IStringTransformer transformer)
-    {
-        _userId = transformer.Transform(_userId);
+	public AddPostCommentCommandRequestBuilder WithUserId(IStringTransformer transformer)
+	{
+		_userId = transformer.Transform(_userId);
 
-        return this;
-    }
+		return this;
+	}
 
-    public AddPostCommentCommandRequestBuilder WithContent(IStringTransformer transformer)
-    {
-        _content = transformer.Transform(_content);
+	public AddPostCommentCommandRequestBuilder WithContent(IStringTransformer transformer)
+	{
+		_content = transformer.Transform(_content);
 
-        return this;
-    }
+		return this;
+	}
 
-    public AddPostCommentCommandRequest Build()
-    {
-        return new(_id, _content, _userId);
-    }
+	public AddPostCommentCommandRequest Build()
+	{
+		return new(_id, _content, _userId);
+	}
 }

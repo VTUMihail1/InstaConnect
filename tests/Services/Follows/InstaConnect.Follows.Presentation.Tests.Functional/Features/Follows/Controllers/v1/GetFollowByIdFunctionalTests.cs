@@ -1,257 +1,255 @@
-﻿namespace InstaConnect.Follows.Presentation.Tests.Functional.Features.Follows.Controllers.v1;
+namespace InstaConnect.Follows.Presentation.Tests.Functional.Features.Follows.Controllers.v1;
 
 public class GetFollowByIdFunctionalTests : BaseFollowPresentationQueryFunctionalTest
 {
-    private readonly GetFollowByIdApiRequestBuilderFactory _requestBuilderFactory;
-    private readonly GetFollowByIdApiRequestBuilder _requestBuilder;
-    private readonly GetFollowByIdApiRequest _request;
+	private readonly GetFollowByIdApiRequestBuilderFactory _requestBuilderFactory;
+	private readonly GetFollowByIdApiRequestBuilder _requestBuilder;
+	private readonly GetFollowByIdApiRequest _request;
 
-    public GetFollowByIdFunctionalTests(FollowsWebApplicationFactory webApplicationFactory)
-        : base(webApplicationFactory)
-    {
-        _requestBuilderFactory = new();
-        _requestBuilder = _requestBuilderFactory.Create(Follow);
-        _request = _requestBuilder.Build();
-    }
+	public GetFollowByIdFunctionalTests(FollowsWebApplicationFactory webApplicationFactory)
+		: base(webApplicationFactory)
+	{
+		_requestBuilderFactory = new();
+		_requestBuilder = _requestBuilderFactory.Create(Follow);
+		_request = _requestBuilder.Build();
+	}
 
-    protected override async Task OnInitializeAsync()
-    {
-        await ServiceScope.AddUserAsync(Follower, CancellationToken);
-        await ServiceScope.AddUserAsync(Following, CancellationToken);
-        await ServiceScope.AddFollowAsync(Follow, CancellationToken);
-    }
+	protected override async Task OnInitializeAsync()
+	{
+		await ServiceScope.AddUserAsync(Follower, CancellationToken);
+		await ServiceScope.AddUserAsync(Following, CancellationToken);
+		await ServiceScope.AddFollowAsync(Follow, CancellationToken);
+	}
 
-    [Theory]
-    [UserIdTooShortData]
-    [UserIdTooLongData]
-    public async Task GetByIdAsync_ShouldHaveBadRequestStatusCode_WhenFollowerIdIsInvalid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithFollowerId(transformer).Build();
+	[Theory]
+	[UserIdTooShortData]
+	[UserIdTooLongData]
+	public async Task GetByIdAsync_ShouldHaveBadRequestStatusCode_WhenFollowerIdIsInvalid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithFollowerId(transformer).Build();
 
-        // Act
-        var response = await HttpClient.GetFollowByIdStatusCodeAsync(request, CancellationToken);
+		// Act
+		var response = await Client.GetByIdStatusCodeAsync(request, CancellationToken);
 
-        // Assert
-        response.ShouldBeBadRequest();
-    }
+		// Assert
+		response.ShouldBeBadRequest();
+	}
 
-    [Theory]
-    [UserIdTooShortWithMessageData]
-    [UserIdTooLongWithMessageData]
-    public async Task GetByIdAsync_ShouldHaveBadRequestProblemDetails_WhenFollowerIdIsInvalid(
-        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithFollowerId(transformer).Build();
+	[Theory]
+	[UserIdTooShortWithMessageData]
+	[UserIdTooLongWithMessageData]
+	public async Task GetByIdAsync_ShouldHaveBadRequestProblemDetails_WhenFollowerIdIsInvalid(
+		IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithFollowerId(transformer).Build();
 
-        // Act
-        var response = await HttpClient.GetFollowByIdProblemDetailsAsync(request, CancellationToken);
+		// Act
+		var response = await Client.GetByIdProblemDetailsAsync(request, CancellationToken);
 
-        // Assert
-        response.ShouldSatisfyInvalidValidationForFollowerId(messageTransformer, request);
-    }
+		// Assert
+		response.ShouldSatisfyInvalidValidationForFollowerId(messageTransformer, request);
+	}
 
-    [Theory]
-    [UserIdTooShortData]
-    [UserIdTooLongData]
-    public async Task GetByIdAsync_ShouldHaveBadRequestStatusCode_WhenFollowingIdIsInvalid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithFollowingId(transformer).Build();
+	[Theory]
+	[UserIdTooShortData]
+	[UserIdTooLongData]
+	public async Task GetByIdAsync_ShouldHaveBadRequestStatusCode_WhenFollowingIdIsInvalid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithFollowingId(transformer).Build();
 
-        // Act
-        var response = await HttpClient.GetFollowByIdStatusCodeAsync(request, CancellationToken);
+		// Act
+		var response = await Client.GetByIdStatusCodeAsync(request, CancellationToken);
 
-        // Assert
-        response.ShouldBeBadRequest();
-    }
+		// Assert
+		response.ShouldBeBadRequest();
+	}
 
-    [Theory]
-    [UserIdTooShortWithMessageData]
-    [UserIdTooLongWithMessageData]
-    public async Task GetByIdAsync_ShouldHaveBadRequestProblemDetails_WhenFollowingIdIsInvalid(
-        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithFollowingId(transformer).Build();
+	[Theory]
+	[UserIdTooShortWithMessageData]
+	[UserIdTooLongWithMessageData]
+	public async Task GetByIdAsync_ShouldHaveBadRequestProblemDetails_WhenFollowingIdIsInvalid(
+		IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithFollowingId(transformer).Build();
 
-        // Act
-        var response = await HttpClient.GetFollowByIdProblemDetailsAsync(request, CancellationToken);
+		// Act
+		var response = await Client.GetByIdProblemDetailsAsync(request, CancellationToken);
 
-        // Assert
-        response.ShouldSatisfyInvalidValidationForFollowingId(messageTransformer, request);
-    }
+		// Assert
+		response.ShouldSatisfyInvalidValidationForFollowingId(messageTransformer, request);
+	}
 
-    [Theory]
-    [UserIdTooLongData]
-    public async Task GetByIdAsync_ShouldHaveBadRequestStatusCode_WhenCurrentUserIdIsInvalid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+	[Theory]
+	[UserIdTooLongData]
+	public async Task GetByIdAsync_ShouldHaveBadRequestStatusCode_WhenCurrentUserIdIsInvalid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
-        // Act
-        var response = await HttpClient.GetFollowByIdStatusCodeAsync(request, CancellationToken);
+		// Act
+		var response = await Client.GetByIdStatusCodeAsync(request, CancellationToken);
 
-        // Assert
-        response.ShouldBeBadRequest();
-    }
+		// Assert
+		response.ShouldBeBadRequest();
+	}
 
-    [Theory]
-    [UserIdTooLongWithMessageData]
-    public async Task GetByIdAsync_ShouldHaveBadRequestProblemDetails_WhenCurrentUserIdIsInvalid(
-        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+	[Theory]
+	[UserIdTooLongWithMessageData]
+	public async Task GetByIdAsync_ShouldHaveBadRequestProblemDetails_WhenCurrentUserIdIsInvalid(
+		IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
-        // Act
-        var response = await HttpClient.GetFollowByIdProblemDetailsAsync(request, CancellationToken);
+		// Act
+		var response = await Client.GetByIdProblemDetailsAsync(request, CancellationToken);
 
-        // Assert
-        response.ShouldSatisfyInvalidValidationForCurrentUserId(messageTransformer, request);
-    }
+		// Assert
+		response.ShouldSatisfyInvalidValidationForCurrentUserId(messageTransformer, request);
+	}
 
-    [Fact]
-    public async Task GetByIdAsync_ShouldHaveNotFoundStatusCode_WhenUserIdIsInvalid()
-    {
-        // Arrange
-        await ServiceScope.DeleteFollowAsync(Follow, CancellationToken);
+	[Fact]
+	public async Task GetByIdAsync_ShouldHaveNotFoundStatusCode_WhenUserIdIsInvalid()
+	{
+		// Arrange
+		await ServiceScope.DeleteFollowAsync(Follow, CancellationToken);
 
-        // Act
-        var response = await HttpClient.GetFollowByIdStatusCodeAsync(_request, CancellationToken);
+		// Act
+		var response = await Client.GetByIdStatusCodeAsync(_request, CancellationToken);
 
-        // Assert
-        response.ShouldBeNotFound();
-    }
+		// Assert
+		response.ShouldBeNotFound();
+	}
 
-    [Fact]
-    public async Task GetByIdAsync_ShouldHaveFollowNotFoundProblemDetails_WhenUserIdIsInvalid()
-    {
-        // Arrange
-        await ServiceScope.DeleteFollowAsync(Follow, CancellationToken);
+	[Fact]
+	public async Task GetByIdAsync_ShouldHaveFollowNotFoundProblemDetails_WhenUserIdIsInvalid()
+	{
+		// Arrange
+		await ServiceScope.DeleteFollowAsync(Follow, CancellationToken);
 
-        // Act
-        var response = await HttpClient.GetFollowByIdProblemDetailsAsync(_request, CancellationToken);
+		// Act
+		var response = await Client.GetByIdProblemDetailsAsync(_request, CancellationToken);
 
-        // Assert
-        response.ShouldSatisfyFollowNotFound(_request);
-    }
+		// Assert
+		response.ShouldSatisfyFollowNotFound(_request);
+	}
 
-    [Fact]
-    public async Task GetByIdAsync_ShouldHaveOkStatusCode_WhenRequestIsValid()
-    {
-        // Act
-        var response = await HttpClient.GetFollowByIdStatusCodeAsync(_request, CancellationToken);
+	[Fact]
+	public async Task GetByIdAsync_ShouldHaveOkStatusCode_WhenRequestIsValid()
+	{
+		// Act
+		var response = await Client.GetByIdStatusCodeAsync(_request, CancellationToken);
 
-        // Assert
-        response.ShouldBeOk();
-    }
+		// Assert
+		response.ShouldBeOk();
+	}
 
-    [Theory]
-    [UserIdDifferentCaseData]
-    public async Task GetByIdAsync_ShouldHaveOkStatusCode_WhenRequestAndFollowerIdAreValid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithFollowerId(transformer).Build();
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task GetByIdAsync_ShouldHaveOkStatusCode_WhenRequestAndFollowerIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithFollowerId(transformer).Build();
 
-        // Act
-        var response = await HttpClient.GetFollowByIdStatusCodeAsync(request, CancellationToken);
+		// Act
+		var response = await Client.GetByIdStatusCodeAsync(request, CancellationToken);
 
-        // Assert
-        response.ShouldBeOk();
-    }
+		// Assert
+		response.ShouldBeOk();
+	}
 
-    [Theory]
-    [UserIdDifferentCaseData]
-    public async Task GetByIdAsync_ShouldHaveOkStatusCode_WhenRequestAndFollowingIdAreValid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithFollowingId(transformer).Build();
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task GetByIdAsync_ShouldHaveOkStatusCode_WhenRequestAndFollowingIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithFollowingId(transformer).Build();
 
-        // Act
-        var response = await HttpClient.GetFollowByIdStatusCodeAsync(request, CancellationToken);
+		// Act
+		var response = await Client.GetByIdStatusCodeAsync(request, CancellationToken);
 
-        // Assert
-        response.ShouldBeOk();
-    }
+		// Assert
+		response.ShouldBeOk();
+	}
 
-    [Theory]
-    [UserIdNullData]
-    [UserIdEmptyData]
-    [UserIdDifferentCaseData]
-    public async Task GetByIdAsync_ShouldHaveOkStatusCode_WhenRequestAndCurrentUserIdAreValid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+	[Theory]
+	[UserIdEmptyData]
+	[UserIdDifferentCaseData]
+	public async Task GetByIdAsync_ShouldHaveOkStatusCode_WhenRequestAndCurrentUserIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
-        // Act
-        var response = await HttpClient.GetFollowByIdStatusCodeAsync(request, CancellationToken);
+		// Act
+		var response = await Client.GetByIdStatusCodeAsync(request, CancellationToken);
 
-        // Assert
-        response.ShouldBeOk();
-    }
+		// Assert
+		response.ShouldBeOk();
+	}
 
-    [Fact]
-    public async Task GetByIdAsync_ShouldHaveResponse_WhenRequestIsValid()
-    {
-        // Act
-        var response = await HttpClient.GetFollowByIdAsync(_request, CancellationToken);
+	[Fact]
+	public async Task GetByIdAsync_ShouldHaveResponse_WhenRequestIsValid()
+	{
+		// Act
+		var response = await Client.GetByIdAsync(_request, CancellationToken);
 
-        // Assert
-        response.ShouldSatisfy(Follow, _request);
-    }
+		// Assert
+		response.ShouldSatisfy(Follow, _request);
+	}
 
-    [Theory]
-    [UserIdDifferentCaseData]
-    public async Task GetByIdAsync_ShouldHaveResponse_WhenRequestAndFollowerIdAreValid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithFollowerId(transformer).Build();
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task GetByIdAsync_ShouldHaveResponse_WhenRequestAndFollowerIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithFollowerId(transformer).Build();
 
-        // Act
-        var response = await HttpClient.GetFollowByIdAsync(request, CancellationToken);
+		// Act
+		var response = await Client.GetByIdAsync(request, CancellationToken);
 
-        // Assert
-        response.ShouldSatisfy(Follow, request);
-    }
+		// Assert
+		response.ShouldSatisfy(Follow, request);
+	}
 
-    [Theory]
-    [UserIdDifferentCaseData]
-    public async Task GetByIdAsync_ShouldHaveResponse_WhenRequestAndFollowingIdAreValid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithFollowingId(transformer).Build();
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task GetByIdAsync_ShouldHaveResponse_WhenRequestAndFollowingIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithFollowingId(transformer).Build();
 
-        // Act
-        var response = await HttpClient.GetFollowByIdAsync(request, CancellationToken);
+		// Act
+		var response = await Client.GetByIdAsync(request, CancellationToken);
 
-        // Assert
-        response.ShouldSatisfy(Follow, request);
-    }
+		// Assert
+		response.ShouldSatisfy(Follow, request);
+	}
 
-    [Theory]
-    [UserIdNullData]
-    [UserIdEmptyData]
-    [UserIdDifferentCaseData]
-    public async Task GetByIdAsync_ShouldReturnResponse_WhenRequestAndCurrentUserIdAreValid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+	[Theory]
+	[UserIdEmptyData]
+	[UserIdDifferentCaseData]
+	public async Task GetByIdAsync_ShouldReturnResponse_WhenRequestAndCurrentUserIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
-        // Act
-        var response = await HttpClient.GetFollowByIdAsync(request, CancellationToken);
+		// Act
+		var response = await Client.GetByIdAsync(request, CancellationToken);
 
-        // Assert
-        response.ShouldSatisfy(Follow, request);
-    }
+		// Assert
+		response.ShouldSatisfy(Follow, request);
+	}
 }

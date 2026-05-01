@@ -1,55 +1,55 @@
-﻿namespace InstaConnect.Chats.Application.Tests.Features.ChatMessages.Builders;
+namespace InstaConnect.Chats.Application.Tests.Features.ChatMessages.Builders;
 
 public class AddChatMessageCommandRequestBuilder
 {
-    private string _participantOneId;
-    private string _participantTwoId;
-    private string _content;
+	private string _participantOneId;
+	private string _participantTwoId;
+	private string _content;
 
-    public AddChatMessageCommandRequestBuilder(Chat chat)
-    {
-        _participantOneId = chat.Id.ParticipantOneId.Id;
-        _participantTwoId = chat.Id.ParticipantTwoId.Id;
-        _content = ChatMessageDataFaker.GetContent();
-    }
+	public AddChatMessageCommandRequestBuilder(Chat chat)
+	{
+		_participantOneId = chat.Id.ParticipantOneId.Id;
+		_participantTwoId = chat.Id.ParticipantTwoId.Id;
+		_content = ChatMessageDataFaker.GetContent();
+	}
 
-    public AddChatMessageCommandRequestBuilder WithParticipantOneId(UserId participantOneId, IStringTransformer? transformer = null)
-    {
-        _participantOneId = transformer.TryTransform(participantOneId.Id);
+	public AddChatMessageCommandRequestBuilder WithParticipantOneId(UserId participantOneId, IStringTransformer? transformer = null)
+	{
+		_participantOneId = transformer.TryTransform(participantOneId.Id);
 
-        return this;
-    }
+		return this;
+	}
 
-    public AddChatMessageCommandRequestBuilder WithParticipantOneId(IStringTransformer transformer)
-    {
-        _participantOneId = transformer.Transform(_participantOneId);
+	public AddChatMessageCommandRequestBuilder WithParticipantOneId(IStringTransformer transformer)
+	{
+		_participantOneId = transformer.Transform(_participantOneId);
 
-        return this;
-    }
+		return this;
+	}
 
-    public AddChatMessageCommandRequestBuilder WithParticipantTwoId(UserId participantTwoId, IStringTransformer? transformer = null)
-    {
-        _participantTwoId = transformer.TryTransform(participantTwoId.Id);
+	public AddChatMessageCommandRequestBuilder WithParticipantTwoId(UserId participantTwoId, IStringTransformer? transformer = null)
+	{
+		_participantTwoId = transformer.TryTransform(participantTwoId.Id);
 
-        return this;
-    }
+		return this;
+	}
 
-    public AddChatMessageCommandRequestBuilder WithParticipantTwoId(IStringTransformer transformer)
-    {
-        _participantTwoId = transformer.Transform(_participantTwoId);
+	public AddChatMessageCommandRequestBuilder WithParticipantTwoId(IStringTransformer transformer)
+	{
+		_participantTwoId = transformer.Transform(_participantTwoId);
 
-        return this;
-    }
+		return this;
+	}
 
-    public AddChatMessageCommandRequestBuilder WithContent(IStringTransformer transformer)
-    {
-        _content = transformer.Transform(_content);
+	public AddChatMessageCommandRequestBuilder WithContent(IStringTransformer transformer)
+	{
+		_content = transformer.Transform(_content);
 
-        return this;
-    }
+		return this;
+	}
 
-    public AddChatMessageCommandRequest Build()
-    {
-        return new(_participantOneId, _participantTwoId, _content);
-    }
+	public AddChatMessageCommandRequest Build()
+	{
+		return new(_participantOneId, _participantTwoId, _content);
+	}
 }

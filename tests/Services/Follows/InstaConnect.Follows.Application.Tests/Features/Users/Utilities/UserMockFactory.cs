@@ -1,9 +1,9 @@
-﻿namespace InstaConnect.Follows.Application.Tests.Features.Users.Utilities;
+namespace InstaConnect.Follows.Application.Tests.Features.Users.Utilities;
 
 public static class UserMockFactory
 {
-    public static IUserCommandService CreateCommandService()
-    {
-        return Mocker.Mock<IUserCommandService>();
-    }
+	public static IUserCommandService CreateCommandService()
+	{
+		return Mocker.Mock<IUserCommandService>();
+	}
 }

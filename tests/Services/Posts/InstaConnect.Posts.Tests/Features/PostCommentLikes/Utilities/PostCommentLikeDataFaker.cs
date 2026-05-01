@@ -1,37 +1,37 @@
-﻿namespace InstaConnect.Posts.Tests.Features.PostCommentLikes.Utilities;
+namespace InstaConnect.Posts.Tests.Features.PostCommentLikes.Utilities;
 
 public static class PostCommentLikeDataFaker
 {
-    public static DateTimeOffset GetCreatedAtUtc()
-    {
-        return DataFaker.GetRecentDate();
-    }
+	public static DateTimeOffset GetCreatedAtUtc()
+	{
+		return DataFaker.GetRecentDate();
+	}
 
-    public static int GetPage()
-    {
-        const int Page = 1;
+	public static int GetPage()
+	{
+		const int Page = 1;
 
-        return Page;
-    }
+		return Page;
+	}
 
-    public static int GetPageSize()
-    {
-        const int PageSize = 20;
+	public static int GetPageSize()
+	{
+		const int PageSize = 20;
 
-        return PageSize;
-    }
+		return PageSize;
+	}
 
-    public static PostCommentLikesSortTerm GetSortTerm()
-    {
-        const PostCommentLikesSortTerm SortTerm = PostCommentLikesSortTerm.ByCreatedAt;
+	public static PostCommentLikesSortTerm GetSortTerm()
+	{
+		const PostCommentLikesSortTerm SortTerm = PostCommentLikesSortTerm.ByCreatedAt;
 
-        return SortTerm;
-    }
+		return SortTerm;
+	}
 
-    public static PostCommentLikesForUserSortTerm GetForUserSortTerm()
-    {
-        const PostCommentLikesForUserSortTerm SortTerm = PostCommentLikesForUserSortTerm.ByCreatedAt;
+	public static PostCommentLikesForUserSortTerm GetForUserSortTerm()
+	{
+		const PostCommentLikesForUserSortTerm SortTerm = PostCommentLikesForUserSortTerm.ByCreatedAt;
 
-        return SortTerm;
-    }
+		return SortTerm;
+	}
 }

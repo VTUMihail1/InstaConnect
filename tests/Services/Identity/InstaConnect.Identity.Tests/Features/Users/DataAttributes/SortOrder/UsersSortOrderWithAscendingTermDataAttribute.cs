@@ -1,13 +1,13 @@
-﻿using InstaConnect.Common.Domain.Features.Messaging.Models;
+using InstaConnect.Common.Domain.Features.Messaging.Models;
 
 namespace InstaConnect.Identity.Tests.Features.Users.DataAttributes.SortOrder;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public sealed class UsersSortOrderWithAscendingTermDataAttribute
-    : SortEnumWithAscendingTermDataAttribute<CommonSortOrder, User, DateTimeOffset>
+	: SortEnumWithAscendingTermDataAttribute<CommonSortOrder, User, DateTimeOffset>
 {
-    public UsersSortOrderWithAscendingTermDataAttribute()
-        : base(CommonSortOrder.Ascending, p => p.CreatedAtUtc)
-    {
-    }
+	public UsersSortOrderWithAscendingTermDataAttribute()
+		: base(CommonSortOrder.Ascending, p => p.CreatedAtUtc)
+	{
+	}
 }

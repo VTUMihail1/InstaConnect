@@ -1,13 +1,13 @@
-﻿using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Messaging.Abstractions;
 
 namespace InstaConnect.Follows.Application.Tests.Integration.Features.Follows.Utilities;
 
 public abstract class BaseFollowApplicationQueryIntegrationTest : BaseFollowWebTest
 {
-    protected IApplicationSender Sender { get; }
+	protected IApplicationSender Sender { get; }
 
-    protected BaseFollowApplicationQueryIntegrationTest(FollowsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
-    {
-        Sender = ServiceScope.GetSender();
-    }
+	protected BaseFollowApplicationQueryIntegrationTest(FollowsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
+	{
+		Sender = ServiceScope.GetSender();
+	}
 }

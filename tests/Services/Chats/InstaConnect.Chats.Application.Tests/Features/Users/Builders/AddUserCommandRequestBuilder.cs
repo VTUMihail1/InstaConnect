@@ -1,109 +1,109 @@
-﻿using InstaConnect.Common.Domain.Features.ValueObjects.Models;
+using InstaConnect.Common.Domain.Features.ValueObjects.Models;
 
 namespace InstaConnect.Chats.Application.Tests.Features.Users.Builders;
 
 public class AddUserCommandRequestBuilder
 {
-    private string _id;
-    private string _name;
-    private string _firstName;
-    private string _lastName;
-    private string _email;
-    private string? _profileImage;
-    private DateTimeOffset _createdAtUtc;
-    private DateTimeOffset _updatedAtUtc;
+	private string _id;
+	private string _name;
+	private string _firstName;
+	private string _lastName;
+	private string _email;
+	private string? _profileImage;
+	private DateTimeOffset _createdAtUtc;
+	private DateTimeOffset _updatedAtUtc;
 
-    public AddUserCommandRequestBuilder()
-    {
-        _id = UserDataFaker.GetId();
-        _name = UserDataFaker.GetName();
-        _firstName = UserDataFaker.GetFirstName();
-        _lastName = UserDataFaker.GetLastName();
-        _email = UserDataFaker.GetEmail();
-        _profileImage = UserDataFaker.GetProfileImage();
-        _createdAtUtc = UserDataFaker.GetCreatedAtUtc();
-        _updatedAtUtc = UserDataFaker.GetUpdatedAtUtc();
-    }
+	public AddUserCommandRequestBuilder()
+	{
+		_id = UserDataFaker.GetId();
+		_name = UserDataFaker.GetName();
+		_firstName = UserDataFaker.GetFirstName();
+		_lastName = UserDataFaker.GetLastName();
+		_email = UserDataFaker.GetEmail();
+		_profileImage = UserDataFaker.GetProfileImage();
+		_createdAtUtc = UserDataFaker.GetCreatedAtUtc();
+		_updatedAtUtc = UserDataFaker.GetUpdatedAtUtc();
+	}
 
-    public AddUserCommandRequestBuilder WithId(UserId id, IStringTransformer? transformer = null)
-    {
-        _id = transformer.TryTransform(id.Id);
+	public AddUserCommandRequestBuilder WithId(UserId id, IStringTransformer? transformer = null)
+	{
+		_id = transformer.TryTransform(id.Id);
 
-        return this;
-    }
+		return this;
+	}
 
-    public AddUserCommandRequestBuilder WithId(IStringTransformer transformer)
-    {
-        _id = transformer.Transform(_id);
+	public AddUserCommandRequestBuilder WithId(IStringTransformer transformer)
+	{
+		_id = transformer.Transform(_id);
 
-        return this;
-    }
+		return this;
+	}
 
-    public AddUserCommandRequestBuilder WithName(Name name, IStringTransformer? transformer = null)
-    {
-        _name = transformer.TryTransform(name.Value);
+	public AddUserCommandRequestBuilder WithName(Name name, IStringTransformer? transformer = null)
+	{
+		_name = transformer.TryTransform(name.Value);
 
-        return this;
-    }
+		return this;
+	}
 
-    public AddUserCommandRequestBuilder WithName(IStringTransformer transformer)
-    {
-        _name = transformer.Transform(_name);
+	public AddUserCommandRequestBuilder WithName(IStringTransformer transformer)
+	{
+		_name = transformer.Transform(_name);
 
-        return this;
-    }
+		return this;
+	}
 
-    public AddUserCommandRequestBuilder WithFirstName(IStringTransformer transformer)
-    {
-        _firstName = transformer.Transform(_firstName);
+	public AddUserCommandRequestBuilder WithFirstName(IStringTransformer transformer)
+	{
+		_firstName = transformer.Transform(_firstName);
 
-        return this;
-    }
+		return this;
+	}
 
-    public AddUserCommandRequestBuilder WithLastName(IStringTransformer transformer)
-    {
-        _lastName = transformer.Transform(_lastName);
+	public AddUserCommandRequestBuilder WithLastName(IStringTransformer transformer)
+	{
+		_lastName = transformer.Transform(_lastName);
 
-        return this;
-    }
+		return this;
+	}
 
-    public AddUserCommandRequestBuilder WithEmail(Email email, IStringTransformer? transformer = null)
-    {
-        _email = transformer.TryTransform(email.Value);
+	public AddUserCommandRequestBuilder WithEmail(Email email, IStringTransformer? transformer = null)
+	{
+		_email = transformer.TryTransform(email.Value);
 
-        return this;
-    }
+		return this;
+	}
 
-    public AddUserCommandRequestBuilder WithEmail(IStringTransformer transformer)
-    {
-        _email = transformer.Transform(_email);
+	public AddUserCommandRequestBuilder WithEmail(IStringTransformer transformer)
+	{
+		_email = transformer.Transform(_email);
 
-        return this;
-    }
+		return this;
+	}
 
-    public AddUserCommandRequestBuilder WithProfileImage(IStringTransformer transformer)
-    {
-        _profileImage = transformer.Transform(_profileImage ?? string.Empty);
+	public AddUserCommandRequestBuilder WithProfileImage(IStringTransformer transformer)
+	{
+		_profileImage = transformer.Transform(_profileImage ?? string.Empty);
 
-        return this;
-    }
+		return this;
+	}
 
-    public AddUserCommandRequestBuilder WithCreatedAtUtc(IDateTimeOffsetTransformer transformer)
-    {
-        _createdAtUtc = transformer.Transform(_createdAtUtc);
+	public AddUserCommandRequestBuilder WithCreatedAtUtc(IDateTimeOffsetTransformer transformer)
+	{
+		_createdAtUtc = transformer.Transform(_createdAtUtc);
 
-        return this;
-    }
+		return this;
+	}
 
-    public AddUserCommandRequestBuilder WithUpdatedAtUtc(IDateTimeOffsetTransformer transformer)
-    {
-        _updatedAtUtc = transformer.Transform(_updatedAtUtc);
+	public AddUserCommandRequestBuilder WithUpdatedAtUtc(IDateTimeOffsetTransformer transformer)
+	{
+		_updatedAtUtc = transformer.Transform(_updatedAtUtc);
 
-        return this;
-    }
+		return this;
+	}
 
-    public AddUserCommandRequest Build()
-    {
-        return new(_id, _firstName, _lastName, _name, _email, _profileImage, _createdAtUtc, _updatedAtUtc);
-    }
+	public AddUserCommandRequest Build()
+	{
+		return new(_id, _firstName, _lastName, _name, _email, _profileImage, _createdAtUtc, _updatedAtUtc);
+	}
 }

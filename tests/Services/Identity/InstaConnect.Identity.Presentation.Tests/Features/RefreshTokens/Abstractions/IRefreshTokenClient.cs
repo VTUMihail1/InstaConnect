@@ -1,0 +1,29 @@
+using System.Net;
+
+using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
+
+using Microsoft.Net.Http.Headers;
+
+namespace InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Abstractions;
+
+public interface IRefreshTokenClient
+{
+	public Task<IssueRefreshTokenApiResponse> IssueAsync(IssueRefreshTokenApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> IssueProblemDetailsAsync(IssueRefreshTokenApiRequest request, CancellationToken cancellationToken);
+	public Task<ICollection<SetCookieHeaderValue>> IssueResponseCookiesAsync(IssueRefreshTokenApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> IssueStatusCodeAsync(IssueRefreshTokenApiRequest request, CancellationToken cancellationToken);
+
+	public Task<RotateRefreshTokenApiResponse> RotateAsync(RotateRefreshTokenApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> RotateProblemDetailsAsync(RotateRefreshTokenApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> RotateWithoutCookiesProblemDetailsAsync(RotateRefreshTokenApiRequest request, CancellationToken cancellationToken);
+	public Task<ICollection<SetCookieHeaderValue>> RotateResponseCookiesAsync(RotateRefreshTokenApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> RotateStatusCodeAsync(RotateRefreshTokenApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> RotateWithoutCookiesStatusCodeAsync(RotateRefreshTokenApiRequest request, CancellationToken cancellationToken);
+
+	public Task DeleteCurrentAsync(DeleteCurrentRefreshTokenApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> DeleteCurrentProblemDetailsAsync(DeleteCurrentRefreshTokenApiRequest request, CancellationToken cancellationToken);
+	public Task<ApplicationProblemDetails> DeleteCurrentWithoutCookiesProblemDetailsAsync(DeleteCurrentRefreshTokenApiRequest request, CancellationToken cancellationToken);
+	public Task<ICollection<SetCookieHeaderValue>> DeleteCurrentResponseCookiesAsync(DeleteCurrentRefreshTokenApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> DeleteCurrentStatusCodeAsync(DeleteCurrentRefreshTokenApiRequest request, CancellationToken cancellationToken);
+	public Task<HttpStatusCode> DeleteCurrentWithoutCookiesStatusCodeAsync(DeleteCurrentRefreshTokenApiRequest request, CancellationToken cancellationToken);
+}

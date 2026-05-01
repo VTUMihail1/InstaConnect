@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Domain.Features.ValueObjects.Models;
+using InstaConnect.Common.Domain.Features.ValueObjects.Models;
 
 using Microsoft.AspNetCore.Http;
 
@@ -6,91 +6,91 @@ namespace InstaConnect.Identity.Presentation.Tests.Features.Users.Builders;
 
 public class AddUserApiRequestBuilder
 {
-    private string _name;
-    private string _firstName;
-    private string _lastName;
-    private string _email;
-    private string _password;
-    private string _confirmPassword;
-    private IFormFile? _profileImage;
+	private string _name;
+	private string _firstName;
+	private string _lastName;
+	private string _email;
+	private string _password;
+	private string _confirmPassword;
+	private IFormFile? _profileImage;
 
-    public AddUserApiRequestBuilder()
-    {
-        _name = UserDataFaker.GetName();
-        _firstName = UserDataFaker.GetFirstName();
-        _lastName = UserDataFaker.GetLastName();
-        _email = UserDataFaker.GetEmail();
-        _password = UserDataFaker.GetPassword();
-        _confirmPassword = _password;
-        _profileImage = UserDataFaker.GetProfileImage();
-    }
+	public AddUserApiRequestBuilder()
+	{
+		_name = UserDataFaker.GetName();
+		_firstName = UserDataFaker.GetFirstName();
+		_lastName = UserDataFaker.GetLastName();
+		_email = UserDataFaker.GetEmail();
+		_password = UserDataFaker.GetPassword();
+		_confirmPassword = _password;
+		_profileImage = UserDataFaker.GetProfileImage();
+	}
 
-    public AddUserApiRequestBuilder WithName(Name name, IStringTransformer? transformer = null)
-    {
-        _name = transformer.TryTransform(name.Value);
+	public AddUserApiRequestBuilder WithName(Name name, IStringTransformer? transformer = null)
+	{
+		_name = transformer.TryTransform(name.Value);
 
-        return this;
-    }
+		return this;
+	}
 
-    public AddUserApiRequestBuilder WithName(IStringTransformer transformer)
-    {
-        _name = transformer.Transform(_name);
+	public AddUserApiRequestBuilder WithName(IStringTransformer transformer)
+	{
+		_name = transformer.Transform(_name);
 
-        return this;
-    }
+		return this;
+	}
 
-    public AddUserApiRequestBuilder WithFirstName(IStringTransformer transformer)
-    {
-        _firstName = transformer.Transform(_firstName);
+	public AddUserApiRequestBuilder WithFirstName(IStringTransformer transformer)
+	{
+		_firstName = transformer.Transform(_firstName);
 
-        return this;
-    }
+		return this;
+	}
 
-    public AddUserApiRequestBuilder WithLastName(IStringTransformer transformer)
-    {
-        _lastName = transformer.Transform(_lastName);
+	public AddUserApiRequestBuilder WithLastName(IStringTransformer transformer)
+	{
+		_lastName = transformer.Transform(_lastName);
 
-        return this;
-    }
+		return this;
+	}
 
-    public AddUserApiRequestBuilder WithEmail(Email email, IStringTransformer? transformer = null)
-    {
-        _email = transformer.TryTransform(email.Value);
+	public AddUserApiRequestBuilder WithEmail(Email email, IStringTransformer? transformer = null)
+	{
+		_email = transformer.TryTransform(email.Value);
 
-        return this;
-    }
+		return this;
+	}
 
-    public AddUserApiRequestBuilder WithEmail(IStringTransformer transformer)
-    {
-        _email = transformer.Transform(_email);
+	public AddUserApiRequestBuilder WithEmail(IStringTransformer transformer)
+	{
+		_email = transformer.Transform(_email);
 
-        return this;
-    }
+		return this;
+	}
 
-    public AddUserApiRequestBuilder WithPassword(IStringTransformer transformer)
-    {
-        _password = transformer.Transform(_password);
-        _confirmPassword = _password;
+	public AddUserApiRequestBuilder WithPassword(IStringTransformer transformer)
+	{
+		_password = transformer.Transform(_password);
+		_confirmPassword = _password;
 
-        return this;
-    }
+		return this;
+	}
 
-    public AddUserApiRequestBuilder WithConfirmPassword(IStringTransformer transformer)
-    {
-        _confirmPassword = transformer.Transform(_confirmPassword);
+	public AddUserApiRequestBuilder WithConfirmPassword(IStringTransformer transformer)
+	{
+		_confirmPassword = transformer.Transform(_confirmPassword);
 
-        return this;
-    }
+		return this;
+	}
 
-    public AddUserApiRequestBuilder WithProfileImage(IFormFileTransformer transformer)
-    {
-        _profileImage = transformer.Transform(_profileImage!);
+	public AddUserApiRequestBuilder WithProfileImage(IFormFileTransformer transformer)
+	{
+		_profileImage = transformer.Transform(_profileImage!);
 
-        return this;
-    }
+		return this;
+	}
 
-    public AddUserApiRequest Build()
-    {
-        return new(new(_name, _email, _password, _confirmPassword, _firstName, _lastName, _profileImage));
-    }
+	public AddUserApiRequest Build()
+	{
+		return new(new(_name, _email, _password, _confirmPassword, _firstName, _lastName, _profileImage));
+	}
 }

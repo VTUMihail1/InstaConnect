@@ -1,9 +1,9 @@
-﻿namespace InstaConnect.Follows.Application.Tests.Features.Users.Builders;
+namespace InstaConnect.Follows.Application.Tests.Features.Users.Builders;
 
 public class DeleteUserCommandRequestBuilderFactory
 {
-    public DeleteUserCommandRequestBuilder Create(User user)
-    {
-        return new(user);
-    }
+	public DeleteUserCommandRequestBuilder Create(User user)
+	{
+		return new(user);
+	}
 }

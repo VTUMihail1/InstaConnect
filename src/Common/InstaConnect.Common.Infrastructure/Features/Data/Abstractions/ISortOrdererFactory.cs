@@ -1,8 +1,8 @@
-﻿using InstaConnect.Common.Domain.Features.Messaging.Models;
+using InstaConnect.Common.Domain.Features.Messaging.Models;
 
 namespace InstaConnect.Common.Infrastructure.Features.Data.Abstractions;
 
 public interface ISortOrdererFactory
 {
-    ISortOrderer Create(CommonSortOrder sortOrder);
+	public ISortOrderer Create(CommonSortOrder sortOrder);
 }

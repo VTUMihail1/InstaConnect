@@ -1,11 +1,11 @@
-﻿namespace InstaConnect.Chats.Tests.Features.ChatMessages.DataAttributes.PageSize;
+namespace InstaConnect.Chats.Tests.Features.ChatMessages.DataAttributes.PageSize;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public sealed class ChatMessagePageSizeTooSmallDataAttribute : TooSmallValueIntDataAttribute
 {
-    public ChatMessagePageSizeTooSmallDataAttribute()
-        : base(ChatMessageConfigurations.PageSizeMinValue)
-    {
-    }
+	public ChatMessagePageSizeTooSmallDataAttribute()
+		: base(ChatMessageConfigurations.PageSizeMinValue)
+	{
+	}
 }
 

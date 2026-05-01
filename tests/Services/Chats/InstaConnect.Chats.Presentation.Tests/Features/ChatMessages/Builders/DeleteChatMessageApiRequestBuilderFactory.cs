@@ -1,9 +1,9 @@
-﻿namespace InstaConnect.Chats.Presentation.Tests.Features.ChatMessages.Builders;
+namespace InstaConnect.Chats.Presentation.Tests.Features.ChatMessages.Builders;
 
 public class DeleteChatMessageApiRequestBuilderFactory
 {
-    public DeleteChatMessageApiRequestBuilder Create(ChatMessage chatMessage)
-    {
-        return new(chatMessage);
-    }
+	public DeleteChatMessageApiRequestBuilder Create(ChatMessage chatMessage)
+	{
+		return new(chatMessage);
+	}
 }

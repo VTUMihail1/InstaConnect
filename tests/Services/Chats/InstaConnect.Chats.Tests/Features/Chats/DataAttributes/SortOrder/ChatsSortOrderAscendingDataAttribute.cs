@@ -1,12 +1,12 @@
-﻿using InstaConnect.Common.Domain.Features.Messaging.Models;
+using InstaConnect.Common.Domain.Features.Messaging.Models;
 
 namespace InstaConnect.Chats.Tests.Features.Chats.DataAttributes.SortOrder;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public sealed class ChatsSortOrderAscendingDataAttribute : SortEnumDataAttribute<CommonSortOrder>
 {
-    public ChatsSortOrderAscendingDataAttribute()
-        : base(CommonSortOrder.Ascending)
-    {
-    }
+	public ChatsSortOrderAscendingDataAttribute()
+		: base(CommonSortOrder.Ascending)
+	{
+	}
 }

@@ -1,51 +1,51 @@
-﻿namespace InstaConnect.Identity.Presentation.Tests.Unit.Features.Users.Controllers.v1;
+namespace InstaConnect.Identity.Presentation.Tests.Unit.Features.Users.Controllers.v1;
 
 public class GetCurrentUserDetailsByIdControllerUnitTests : BaseUserPresentationQueryUnitTest
 {
-    private readonly GetCurrentUserDetailsByIdApiRequestBuilderFactory _requestBuilderFactory;
-    private readonly GetCurrentUserDetailsByIdApiRequestBuilder _requestBuilder;
-    private readonly GetCurrentUserDetailsByIdApiRequest _request;
+	private readonly GetCurrentUserDetailsByIdApiRequestBuilderFactory _requestBuilderFactory;
+	private readonly GetCurrentUserDetailsByIdApiRequestBuilder _requestBuilder;
+	private readonly GetCurrentUserDetailsByIdApiRequest _request;
 
-    private readonly UserController _controller;
+	private readonly UserController _controller;
 
-    public GetCurrentUserDetailsByIdControllerUnitTests()
-    {
-        _requestBuilderFactory = new();
-        _requestBuilder = _requestBuilderFactory.Create(User);
-        _request = _requestBuilder.Build();
+	public GetCurrentUserDetailsByIdControllerUnitTests()
+	{
+		_requestBuilderFactory = new();
+		_requestBuilder = _requestBuilderFactory.Create(User);
+		_request = _requestBuilder.Build();
 
-        _controller = new(Mapper, Sender);
+		_controller = new(Mapper, Sender);
 
-        Sender.SetupGetCurrentDetailsByIdQueryRequest(_request, User, CancellationToken);
-    }
+		Sender.SetupGetCurrentDetailsByIdQueryRequest(_request, User, CancellationToken);
+	}
 
-    [Fact]
-    public async Task GetCurrentDetailsByIdAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
-    {
-        // Act
-        var response = await _controller.GetCurrentDetailsByIdAsync(_request, CancellationToken);
+	[Fact]
+	public async Task GetCurrentDetailsByIdAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
+	{
+		// Act
+		var response = await _controller.GetCurrentDetailsByIdAsync(_request, CancellationToken);
 
-        // Assert
-        response.ShouldBeActionResultWithOkStatusCode();
-    }
+		// Assert
+		response.ShouldBeActionResultWithOkStatusCode();
+	}
 
-    [Fact]
-    public async Task GetCurrentDetailsByIdAsync_ShouldReturnResponse_WhenRequestIsValid()
-    {
-        // Act
-        var response = await _controller.GetCurrentDetailsByIdAsync(_request, CancellationToken);
+	[Fact]
+	public async Task GetCurrentDetailsByIdAsync_ShouldReturnResponse_WhenRequestIsValid()
+	{
+		// Act
+		var response = await _controller.GetCurrentDetailsByIdAsync(_request, CancellationToken);
 
-        // Assert
-        response.ShouldSatisfy(User, _request);
-    }
+		// Assert
+		response.ShouldSatisfy(User, _request);
+	}
 
-    [Fact]
-    public async Task GetCurrentDetailsByIdAsync_ShouldCallTheSenderSendAsync_WhenRequestIsValid()
-    {
-        // Act
-        await _controller.GetCurrentDetailsByIdAsync(_request, CancellationToken);
+	[Fact]
+	public async Task GetCurrentDetailsByIdAsync_ShouldCallTheSenderSendAsync_WhenRequestIsValid()
+	{
+		// Act
+		await _controller.GetCurrentDetailsByIdAsync(_request, CancellationToken);
 
-        // Assert
-        await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);
-    }
+		// Assert
+		await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);
+	}
 }

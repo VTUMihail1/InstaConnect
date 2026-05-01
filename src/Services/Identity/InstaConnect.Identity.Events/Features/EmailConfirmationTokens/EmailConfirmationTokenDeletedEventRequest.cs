@@ -1,3 +1,3 @@
-﻿namespace InstaConnect.Identity.Events.Features.EmailConfirmationTokens;
+namespace InstaConnect.Identity.Events.Features.EmailConfirmationTokens;
 
 public record EmailConfirmationTokenDeletedEventRequest(EmailConfirmationTokenEventRequest EmailConfirmationToken) : IEventRequest;

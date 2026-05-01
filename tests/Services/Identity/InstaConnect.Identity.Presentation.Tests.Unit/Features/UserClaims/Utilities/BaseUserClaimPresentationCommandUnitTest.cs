@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Messaging.Abstractions;
 using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
 using InstaConnect.Identity.Presentation.Features.Common.Extensions;
 
@@ -6,13 +6,13 @@ namespace InstaConnect.Identity.Presentation.Tests.Unit.Features.UserClaims.Util
 
 public abstract class BaseUserClaimPresentationCommandUnitTest : BaseUserClaimTest
 {
-    protected IApplicationSender Sender { get; }
+	protected IApplicationSender Sender { get; }
 
-    protected IApplicationMapper Mapper { get; }
+	protected IApplicationMapper Mapper { get; }
 
-    protected BaseUserClaimPresentationCommandUnitTest() : base(IdentityMockFactory.CreatePasswordHasher())
-    {
-        Sender = MockFactory.CreateApplicationSender();
-        Mapper = MockFactory.CreateMapper(IdentityPresentationReference.Assembly);
-    }
+	protected BaseUserClaimPresentationCommandUnitTest() : base(IdentityMockFactory.CreatePasswordHasher())
+	{
+		Sender = MockFactory.CreateApplicationSender();
+		Mapper = MockFactory.CreateMapper(IdentityPresentationReference.Assembly);
+	}
 }

@@ -1,45 +1,43 @@
-﻿using InstaConnect.Common.Domain.Features.Entities.Abstractions;
-
 namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entities;
 
 public class EmailConfirmationToken : IEntityWithId<EmailConfirmationTokenId>
 {
-    private EmailConfirmationToken()
-    {
-        Id = new(new(string.Empty), string.Empty);
-    }
+	private EmailConfirmationToken()
+	{
+		Id = new(new(string.Empty), string.Empty);
+	}
 
-    public EmailConfirmationToken(
-        EmailConfirmationTokenId id,
-        DateTimeOffset expiresAtUtc,
-        DateTimeOffset createdAtUtc)
-    {
-        Id = id;
-        ExpiresAtUtc = expiresAtUtc;
-        CreatedAtUtc = createdAtUtc;
-    }
+	public EmailConfirmationToken(
+		EmailConfirmationTokenId id,
+		DateTimeOffset expiresAtUtc,
+		DateTimeOffset createdAtUtc)
+	{
+		Id = id;
+		ExpiresAtUtc = expiresAtUtc;
+		CreatedAtUtc = createdAtUtc;
+	}
 
-    public EmailConfirmationTokenId Id { get; }
+	public EmailConfirmationTokenId Id { get; }
 
-    public DateTimeOffset ExpiresAtUtc { get; }
+	public DateTimeOffset ExpiresAtUtc { get; }
 
-    public DateTimeOffset CreatedAtUtc { get; }
+	public DateTimeOffset CreatedAtUtc { get; }
 
-    public User? User { get; private set; }
+	public User? User { get; private set; }
 
-    public EmailConfirmationToken AddUser(User? user)
-    {
-        User = user;
+	public EmailConfirmationToken AddUser(User? user)
+	{
+		User = user;
 
-        return this;
-    }
+		return this;
+	}
 
-    public bool HasExpired(DateTimeOffset utcNow)
-    {
-        var hasExpired = ExpiresAtUtc < utcNow;
+	public bool HasExpired(DateTimeOffset utcNow)
+	{
+		var hasExpired = ExpiresAtUtc < utcNow;
 
-        return hasExpired;
-    }
+		return hasExpired;
+	}
 }
 
 

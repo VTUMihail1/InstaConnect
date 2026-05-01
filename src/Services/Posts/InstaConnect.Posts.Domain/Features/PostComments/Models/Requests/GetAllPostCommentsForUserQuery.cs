@@ -1,10 +1,10 @@
-﻿using InstaConnect.Common.Domain.Features.Messaging.Abstractions;
+using InstaConnect.Common.Domain.Features.Messaging.Abstractions;
 
 namespace InstaConnect.Posts.Domain.Features.PostComments.Models.Requests;
 
 public record GetAllPostCommentsForUserQuery(
-    PostCommentsForUserFilterQuery Filter,
-    PostCommentsForUserSortingQuery Sorting,
-    PostCommentsPaginationQuery Pagination,
-    CurrentUserQuery CurrentUser)
-    : ISortableQuery<PostCommentsForUserSortingQuery, PostCommentsForUserSortTerm>, IPaginatableQuery<PostCommentsPaginationQuery>, ICurrentUserableQuery;
+	PostCommentsForUserFilterQuery Filter,
+	PostCommentsForUserSortingQuery Sorting,
+	PostCommentsPaginationQuery Pagination,
+	CurrentUserQuery CurrentUser)
+	: ISortableQuery<PostCommentsForUserSortingQuery, PostCommentsForUserSortTerm>, IPaginatableQuery<PostCommentsPaginationQuery>, ICurrentUserableQuery;

@@ -1,15 +1,15 @@
-﻿using InstaConnect.Posts.Domain.Features.Users.Models.Responses;
+using InstaConnect.Posts.Domain.Features.Users.Models.Responses;
 
 namespace InstaConnect.Posts.Domain.Features.Users.Abstractions;
 
 public interface IUserQueryRepository
 {
-    Task<UserResponse?> GetByIdAsync(
-        UserId id,
-        CurrentUserQuery currentUser,
-        CancellationToken cancellationToken);
+	public Task<UserResponse?> GetByIdAsync(
+		UserId id,
+		CurrentUserQuery currentUser,
+		CancellationToken cancellationToken);
 
-    Task<bool> ExistsByIdAsync(
-        UserId id,
-        CancellationToken cancellationToken);
+	public Task<bool> ExistsByIdAsync(
+		UserId id,
+		CancellationToken cancellationToken);
 }

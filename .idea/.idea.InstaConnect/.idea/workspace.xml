@@ -29,18 +29,17 @@
     <projectFile profileName="http">src/Services/Posts/InstaConnect.Posts.Presentation/InstaConnect.Posts.Presentation.csproj</projectFile>
     <projectFile profileName="https">src/Services/Posts/InstaConnect.Posts.Presentation/InstaConnect.Posts.Presentation.csproj</projectFile>
   </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CMakeProjectFlavorService">
+    <option name="flavorId" value="CMakePlainProjectFlavor" />
+  </component>
+  <component name="CMakeSettings">
+    <configurations />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="58db8c6f-e30d-4c26-9530-74a68642af41" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/.editorconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.InstaConnect/.idea/projectSettingsUpdater.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.InstaConnect/.idea/projectSettingsUpdater.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.InstaConnect/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.InstaConnect/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/InstaConnect.sln" beforeDir="false" afterPath="$PROJECT_DIR$/InstaConnect.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Common/InstaConnect.Common.Application/Extensions/RuleBuilderExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Common/InstaConnect.Common.Application/Extensions/RuleBuilderExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Common/InstaConnect.Common.Application/Utilities/CommonErrorMessages.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Common/InstaConnect.Common.Application/Utilities/CommonErrorMessages.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Services/Identity/InstaConnect.Identity.Application/InstaConnect.Identity.Application.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/Identity/InstaConnect.Identity.Application/InstaConnect.Identity.Application.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Services/Identity/InstaConnect.Identity.Infrastructure/Helpers/PasswordHasher.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/Identity/InstaConnect.Identity.Infrastructure/Helpers/PasswordHasher.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Services/Identity/InstaConnect.Identity.Tests/InstaConnect.Identity.Tests.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Services/Identity/InstaConnect.Identity.Tests/InstaConnect.Identity.Tests.csproj" afterDir="false" />
-    </list>
+    <list default="true" id="58db8c6f-e30d-4c26-9530-74a68642af41" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -77,9 +76,14 @@
     "cidr.known.project.marker": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "feature/add-domain-services",
+    "git-widget-placeholder": "feature/add-signalr-and-emails",
     "junie.onboarding.icon.badge.shown": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
     "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
   }
@@ -537,11 +541,17 @@
       <method v="2" />
     </configuration>
     <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
-      <deployment type="docker-compose.yml" />
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
+      <EXTENSION ID="com.jetbrains.rider.docker.debug" isFastModeEnabled="true" isSslEnabled="false" />
       <method v="2" />
     </configuration>
     <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
-      <deployment type="dockerfile" />
+      <deployment type="dockerfile">
+        <settings />
+      </deployment>
+      <EXTENSION ID="com.jetbrains.rider.docker.debug" isFastModeEnabled="true" isSslEnabled="false" />
       <method v="2" />
     </configuration>
     <configuration name="docker-compose.yml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" server-name="Docker">
@@ -569,6 +579,7 @@
       <updated>1698496236477</updated>
       <workItem from="1698496241476" duration="101000" />
       <workItem from="1774966512843" duration="137000" />
+      <workItem from="1777344723947" duration="647000" />
     </task>
     <servers />
   </component>

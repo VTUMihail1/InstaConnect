@@ -1,11 +1,14 @@
-﻿namespace InstaConnect.Follows.Presentation.Tests.Functional.Features.Follows.Utilities;
+using InstaConnect.Follows.Presentation.Tests.Features.Follows.Abstractions;
+using InstaConnect.Follows.Presentation.Tests.Features.Follows.Extensions;
+
+namespace InstaConnect.Follows.Presentation.Tests.Functional.Features.Follows.Utilities;
 
 public abstract class BaseFollowPresentationQueryFunctionalTest : BaseFollowWebTest
 {
-    protected HttpClient HttpClient { get; }
+	protected IFollowClient Client { get; }
 
-    protected BaseFollowPresentationQueryFunctionalTest(FollowsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
-    {
-        HttpClient = webApplicationFactory.CreateClient();
-    }
+	protected BaseFollowPresentationQueryFunctionalTest(FollowsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
+	{
+		Client = webApplicationFactory.CreateFollowClient();
+	}
 }

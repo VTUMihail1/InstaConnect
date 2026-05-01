@@ -1,36 +1,36 @@
-﻿using InstaConnect.Identity.Domain.Features.Common.Models.Requests;
+using InstaConnect.Identity.Domain.Features.Common.Models.Requests;
 
 namespace InstaConnect.Identity.Domain.Features.RefreshTokens.Helpers;
 
 public class RefreshTokenIncludeBuilder
 {
-    private readonly ICollection<IdentityIncludeDescriptor> _descriptors;
-    private readonly IRefreshTokenIncludeDescriptorFactory _descriptorsFactory;
+	private readonly ICollection<IdentityIncludeDescriptor> _descriptors;
+	private readonly IRefreshTokenIncludeDescriptorFactory _descriptorsFactory;
 
-    public RefreshTokenIncludeBuilder(
-        ICollection<IdentityIncludeDescriptor> descriptors,
-        IRefreshTokenIncludeDescriptorFactory descriptorsFactory)
-    {
-        _descriptors = descriptors;
-        _descriptorsFactory = descriptorsFactory;
-    }
-    public RefreshTokenIncludeBuilder WithUser()
-    {
-        _descriptors.Add(_descriptorsFactory.CreateUser());
+	public RefreshTokenIncludeBuilder(
+		ICollection<IdentityIncludeDescriptor> descriptors,
+		IRefreshTokenIncludeDescriptorFactory descriptorsFactory)
+	{
+		_descriptors = descriptors;
+		_descriptorsFactory = descriptorsFactory;
+	}
+	public RefreshTokenIncludeBuilder WithUser()
+	{
+		_descriptors.Add(_descriptorsFactory.CreateUser());
 
-        return this;
-    }
+		return this;
+	}
 
-    public RefreshTokenIncludeBuilder WithUser(UserInclude include)
-    {
-        _descriptors.Add(_descriptorsFactory.CreateUser());
-        _descriptors.AddRange(include.Descriptors);
+	public RefreshTokenIncludeBuilder WithUser(UserInclude include)
+	{
+		_descriptors.Add(_descriptorsFactory.CreateUser());
+		_descriptors.AddRange(include.Descriptors);
 
-        return this;
-    }
+		return this;
+	}
 
-    public RefreshTokenInclude Build()
-    {
-        return new(_descriptors);
-    }
+	public RefreshTokenInclude Build()
+	{
+		return new(_descriptors);
+	}
 }

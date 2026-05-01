@@ -1,4 +1,4 @@
-﻿using InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Options;
+using InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Options;
 using InstaConnect.Identity.Infrastructure.Features.Common.Extensions;
 
 using MongoDB.Bson.Serialization;
@@ -7,33 +7,33 @@ namespace InstaConnect.Identity.Infrastructure.Features.RefreshTokens.Extensions
 
 internal static class ServiceCollectionExtensions
 {
-    extension(IServiceCollection serviceCollection)
-    {
-        internal IServiceCollection AddRefreshTokenServices()
-        {
-            serviceCollection.AddOptions<RefreshTokenOptions>(RefreshTokenOptions.SectionName);
+	extension(IServiceCollection serviceCollection)
+	{
+		internal IServiceCollection AddRefreshTokenServices()
+		{
+			serviceCollection.AddOptions<RefreshTokenOptions>(RefreshTokenOptions.SectionName);
 
-            serviceCollection.AddImplementationsOf<IRefreshTokenIncluder>(IdentityInfrastructureReference.Assembly);
+			serviceCollection.AddImplementationsOf<IRefreshTokenIncluder>(IdentityInfrastructureReference.Assembly);
 
-            BsonClassMap.TryRegisterClassMap<RefreshToken>(cm =>
-            {
-                cm.MapIdMember(c => c.Id);
+			BsonClassMap.TryRegisterClassMap<RefreshToken>(cm =>
+			{
+				cm.MapIdMember(c => c.Id);
 
-                cm.MapMember(c => c.Id);
-                cm.MapMember(c => c.ExpiresAtUtc);
-                cm.MapMember(c => c.CreatedAtUtc);
+				cm.MapMember(c => c.Id);
+				cm.MapMember(c => c.ExpiresAtUtc);
+				cm.MapMember(c => c.CreatedAtUtc);
 
-                cm.MapMemberWithoutSerialization(c => c.User);
+				cm.MapMemberWithoutSerialization(c => c.User);
 
-                cm.MapCreator(c => new RefreshToken(
-                    c.Id,
-                    c.ExpiresAtUtc,
-                    c.CreatedAtUtc));
+				cm.MapCreator(c => new RefreshToken(
+					c.Id,
+					c.ExpiresAtUtc,
+					c.CreatedAtUtc));
 
-                cm.SetIgnoreExtraElements(true);
-            });
+				cm.SetIgnoreExtraElements(true);
+			});
 
-            return serviceCollection;
-        }
-    }
+			return serviceCollection;
+		}
+	}
 }

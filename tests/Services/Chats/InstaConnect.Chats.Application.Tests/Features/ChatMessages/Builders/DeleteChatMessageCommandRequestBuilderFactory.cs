@@ -1,9 +1,9 @@
-﻿namespace InstaConnect.Chats.Application.Tests.Features.ChatMessages.Builders;
+namespace InstaConnect.Chats.Application.Tests.Features.ChatMessages.Builders;
 
 public class DeleteChatMessageCommandRequestBuilderFactory
 {
-    public DeleteChatMessageCommandRequestBuilder Create(ChatMessage chatMessage)
-    {
-        return new(chatMessage);
-    }
+	public DeleteChatMessageCommandRequestBuilder Create(ChatMessage chatMessage)
+	{
+		return new(chatMessage);
+	}
 }

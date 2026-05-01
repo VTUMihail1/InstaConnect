@@ -1,17 +1,16 @@
-﻿using InstaConnect.Common.Domain.Features.ExceptionHandling.Exceptions;
-using InstaConnect.Common.Domain.Features.ValueObjects.Models;
+using InstaConnect.Common.Domain.Features.ExceptionHandling.Exceptions;
 
 namespace InstaConnect.Identity.Domain.Features.Users.Exceptions;
 
 public class UserNameEmailNotConfirmedException : BadRequestException
 {
-    public UserNameEmailNotConfirmedException(Name name) : base(
-        UserExceptionErrorMessages.GetNameEmailNotConfirmedMessage(name))
-    {
-    }
+	public UserNameEmailNotConfirmedException(Name name) : base(
+		UserExceptionErrorMessages.GetNameEmailNotConfirmedMessage(name))
+	{
+	}
 
-    public UserNameEmailNotConfirmedException(Name name, Exception exception) : base(
-        UserExceptionErrorMessages.GetNameEmailNotConfirmedMessage(name), exception)
-    {
-    }
+	public UserNameEmailNotConfirmedException(Name name, Exception exception) : base(
+		UserExceptionErrorMessages.GetNameEmailNotConfirmedMessage(name), exception)
+	{
+	}
 }

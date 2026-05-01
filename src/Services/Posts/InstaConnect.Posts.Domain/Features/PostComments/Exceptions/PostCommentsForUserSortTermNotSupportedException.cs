@@ -1,16 +1,16 @@
-﻿using InstaConnect.Common.Domain.Features.ExceptionHandling.Exceptions;
+using InstaConnect.Common.Domain.Features.ExceptionHandling.Exceptions;
 
 namespace InstaConnect.Posts.Domain.Features.PostComments.Exceptions;
 
 public class PostCommentsForUserSortTermNotSupportedException : BadRequestException
 {
-    public PostCommentsForUserSortTermNotSupportedException(PostCommentsForUserSortTerm sortTerm)
-        : base(PostCommentExceptionErrorMessages.GetSortTermNotSupportedMessage(sortTerm))
-    {
-    }
+	public PostCommentsForUserSortTermNotSupportedException(PostCommentsForUserSortTerm sortTerm)
+		: base(PostCommentExceptionErrorMessages.GetSortTermNotSupportedMessage(sortTerm))
+	{
+	}
 
-    public PostCommentsForUserSortTermNotSupportedException(PostCommentsForUserSortTerm sortTerm, Exception exception)
-        : base(PostCommentExceptionErrorMessages.GetSortTermNotSupportedMessage(sortTerm), exception)
-    {
-    }
+	public PostCommentsForUserSortTermNotSupportedException(PostCommentsForUserSortTerm sortTerm, Exception exception)
+		: base(PostCommentExceptionErrorMessages.GetSortTermNotSupportedMessage(sortTerm), exception)
+	{
+	}
 }

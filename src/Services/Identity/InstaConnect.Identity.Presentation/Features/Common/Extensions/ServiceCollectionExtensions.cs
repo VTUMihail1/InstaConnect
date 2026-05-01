@@ -1,7 +1,9 @@
-﻿using InstaConnect.Common.Domain.Features.Common.Extensions;
+using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Domain.Features.Mappers.Extensions;
 using InstaConnect.Common.Presentation.Features.Common.Extensions;
+using InstaConnect.Common.Presentation.Features.Common.Models;
 using InstaConnect.Common.Presentation.Features.Controllers.Extensions;
+using InstaConnect.Common.Presentation.Features.Emails.Extensions;
 using InstaConnect.Common.Presentation.Features.ExceptionHandling.Extensions;
 using InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Extensions;
 using InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Extensions;
@@ -13,29 +15,33 @@ namespace InstaConnect.Identity.Presentation.Features.Common.Extensions;
 
 internal static class ServiceCollectionExtensions
 {
-    extension(IServiceCollection serviceCollection)
-    {
-        public IServiceCollection AddPresentation(IConfiguration configuration)
-        {
-            serviceCollection
-                .AddUserServices()
-                .AddUserClaimServices()
-                .AddRefreshTokenServices()
-                .AddForgotPasswordTokenServices()
-                .AddEmailConfirmationTokenServices();
+	extension(IServiceCollection serviceCollection)
+	{
+		public IServiceCollection AddPresentation(IConfiguration configuration)
+		{
+			const string RootNamespace = "InstaConnect.Identity.Presentation";
 
-            serviceCollection
-                .AddServicesWithMatchingInterfaces(IdentityPresentationReference.Assembly)
-                .AddApiControllers()
-                .AddMapper(IdentityPresentationReference.Assembly, CommonPresentationReference.Assembly)
-                .AddAuthorizationPolicies()
-                .AddCorsPolicies(configuration)
-                .AddRateLimiterPolicies()
-                .AddExceptionHandler();
+			serviceCollection
+				.AddUserServices()
+				.AddUserClaimServices()
+				.AddRefreshTokenServices()
+				.AddForgotPasswordTokenServices()
+				.AddEmailConfirmationTokenServices();
 
-            serviceCollection.AddEndpointsApiExplorer();
+			serviceCollection
+				.AddValidatedOptions<MainOptions>(MainOptions.SectionName)
+				.AddServicesWithMatchingInterfaces(IdentityPresentationReference.Assembly)
+				.AddApiControllers()
+				.AddMapper(IdentityPresentationReference.Assembly, CommonPresentationReference.Assembly)
+				.AddAuthorizationPolicies()
+				.AddCorsPolicies(configuration)
+				.AddRateLimiterPolicies()
+				.AddRazorEmailRenderer(IdentityPresentationReference.Assembly, RootNamespace)
+				.AddExceptionHandler();
 
-            return serviceCollection;
-        }
-    }
+			serviceCollection.AddEndpointsApiExplorer();
+
+			return serviceCollection;
+		}
+	}
 }

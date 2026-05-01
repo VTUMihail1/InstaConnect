@@ -1,9 +1,9 @@
-﻿namespace InstaConnect.Follows.Presentation.Tests.Features.Users.Builders;
+namespace InstaConnect.Follows.Presentation.Tests.Features.Users.Builders;
 
 public class UserUpdatedEventRequestBuilderFactory
 {
-    public UserUpdatedEventRequestBuilder Create(User user)
-    {
-        return new(user);
-    }
+	public UserUpdatedEventRequestBuilder Create(User user)
+	{
+		return new(user);
+	}
 }

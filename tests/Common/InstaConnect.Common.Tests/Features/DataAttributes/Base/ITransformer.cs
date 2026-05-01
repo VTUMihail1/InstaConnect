@@ -1,6 +1,6 @@
-﻿namespace InstaConnect.Common.Tests.Features.DataAttributes.Base;
+namespace InstaConnect.Common.Tests.Features.DataAttributes.Base;
 
 public interface ITransformer<TValue>
 {
-    public TValue Transform(TValue value);
+	public TValue Transform(TValue value);
 }

@@ -1,257 +1,258 @@
-﻿namespace InstaConnect.Posts.Application.Tests.Integration.Features.Users.Commands;
+namespace InstaConnect.Posts.Application.Tests.Integration.Features.Users.Commands;
 
 public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 {
-    private readonly AddUserCommandRequestBuilderFactory _requestBuilderFactory;
-    private readonly AddUserCommandRequestBuilder _requestBuilder;
-    private readonly AddUserCommandRequest _request;
+	private readonly AddUserCommandRequestBuilderFactory _requestBuilderFactory;
+	private readonly AddUserCommandRequestBuilder _requestBuilder;
+	private readonly AddUserCommandRequest _request;
 
-    public AddUserIntegrationTests(PostsWebApplicationFactory webApplicationFactory)
-        : base(webApplicationFactory)
-    {
-        _requestBuilderFactory = new();
-        _requestBuilder = _requestBuilderFactory.Create();
-        _request = _requestBuilder.Build();
-    }
+	public AddUserIntegrationTests(PostsWebApplicationFactory webApplicationFactory)
+		: base(webApplicationFactory)
+	{
+		_requestBuilderFactory = new();
+		_requestBuilder = _requestBuilderFactory.Create();
+		_request = _requestBuilder.Build();
+	}
 
-    [Theory]
-    [UserIdNullWithMessageData]
-    [UserIdEmptyWithMessageData]
-    [UserIdTooShortWithMessageData]
-    [UserIdTooLongWithMessageData]
-    public async Task SendAsync_ShouldThrowValidationException_WhenIdIsInvalid(
-        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithId(transformer).Build();
+	[Theory]
+	[UserIdNullWithMessageData]
+	[UserIdEmptyWithMessageData]
+	[UserIdTooShortWithMessageData]
+	[UserIdTooLongWithMessageData]
+	public async Task SendAsync_ShouldThrowValidationException_WhenIdIsInvalid(
+		IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithId(transformer).Build();
 
-        // Assert
-        await Sender.ShouldThrowInvalidValidationExceptionForIdAsync(messageTransformer, request, CancellationToken);
-    }
+		// Assert
+		await Sender.ShouldThrowInvalidValidationExceptionForIdAsync(messageTransformer, request, CancellationToken);
+	}
 
-    [Theory]
-    [UserNameNullWithMessageData]
-    [UserNameEmptyWithMessageData]
-    [UserNameTooShortWithMessageData]
-    [UserNameTooLongWithMessageData]
-    public async Task SendAsync_ShouldThrowValidationException_WhenNameIsInvalid(
-        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithName(transformer).Build();
+	[Theory]
+	[UserNameNullWithMessageData]
+	[UserNameEmptyWithMessageData]
+	[UserNameTooShortWithMessageData]
+	[UserNameTooLongWithMessageData]
+	public async Task SendAsync_ShouldThrowValidationException_WhenNameIsInvalid(
+		IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithName(transformer).Build();
 
-        // Assert
-        await Sender.ShouldThrowInvalidValidationExceptionForNameAsync(messageTransformer, request, CancellationToken);
-    }
+		// Assert
+		await Sender.ShouldThrowInvalidValidationExceptionForNameAsync(messageTransformer, request, CancellationToken);
+	}
 
-    [Theory]
-    [UserFirstNameNullWithMessageData]
-    [UserFirstNameEmptyWithMessageData]
-    [UserFirstNameTooShortWithMessageData]
-    [UserFirstNameTooLongWithMessageData]
-    public async Task SendAsync_ShouldThrowValidationException_WhenFirstNameIsInvalid(
-        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithFirstName(transformer).Build();
+	[Theory]
+	[UserFirstNameNullWithMessageData]
+	[UserFirstNameEmptyWithMessageData]
+	[UserFirstNameTooShortWithMessageData]
+	[UserFirstNameTooLongWithMessageData]
+	public async Task SendAsync_ShouldThrowValidationException_WhenFirstNameIsInvalid(
+		IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithFirstName(transformer).Build();
 
-        // Assert
-        await Sender.ShouldThrowInvalidValidationExceptionForFirstNameAsync(messageTransformer, request, CancellationToken);
-    }
+		// Assert
+		await Sender.ShouldThrowInvalidValidationExceptionForFirstNameAsync(messageTransformer, request, CancellationToken);
+	}
 
-    [Theory]
-    [UserLastNameNullWithMessageData]
-    [UserLastNameEmptyWithMessageData]
-    [UserLastNameTooShortWithMessageData]
-    [UserLastNameTooLongWithMessageData]
-    public async Task SendAsync_ShouldThrowValidationException_WhenLastNameIsInvalid(
-        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithLastName(transformer).Build();
+	[Theory]
+	[UserLastNameNullWithMessageData]
+	[UserLastNameEmptyWithMessageData]
+	[UserLastNameTooShortWithMessageData]
+	[UserLastNameTooLongWithMessageData]
+	public async Task SendAsync_ShouldThrowValidationException_WhenLastNameIsInvalid(
+		IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithLastName(transformer).Build();
 
-        // Assert
-        await Sender.ShouldThrowInvalidValidationExceptionForLastNameAsync(messageTransformer, request, CancellationToken);
-    }
+		// Assert
+		await Sender.ShouldThrowInvalidValidationExceptionForLastNameAsync(messageTransformer, request, CancellationToken);
+	}
 
-    [Theory]
-    [UserEmailNullWithMessageData]
-    [UserEmailEmptyWithMessageData]
-    [UserEmailTooShortWithMessageData]
-    [UserEmailTooLongWithMessageData]
-    public async Task SendAsync_ShouldThrowValidationException_WhenEmailIsInvalid(
-        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithEmail(transformer).Build();
+	[Theory]
+	[UserEmailNullWithMessageData]
+	[UserEmailEmptyWithMessageData]
+	[UserEmailTooShortWithMessageData]
+	[UserEmailTooLongWithMessageData]
+	[UserEmailInvalidWithMessageData]
+	public async Task SendAsync_ShouldThrowValidationException_WhenEmailIsInvalid(
+		IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithEmail(transformer).Build();
 
-        // Assert
-        await Sender.ShouldThrowInvalidValidationExceptionForEmailAsync(messageTransformer, request, CancellationToken);
-    }
+		// Assert
+		await Sender.ShouldThrowInvalidValidationExceptionForEmailAsync(messageTransformer, request, CancellationToken);
+	}
 
-    [Theory]
-    [UserProfileImageTooLongWithMessageData]
-    public async Task SendAsync_ShouldThrowValidationException_WhenProfileImageIsInvalid(
-        IStringTransformer transformer, IStringMessageTransformer messageTransformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithProfileImage(transformer).Build();
+	[Theory]
+	[UserProfileImageTooLongWithMessageData]
+	public async Task SendAsync_ShouldThrowValidationException_WhenProfileImageIsInvalid(
+		IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithProfileImage(transformer).Build();
 
-        // Assert
-        await Sender.ShouldThrowInvalidValidationExceptionForProfileImageAsync(messageTransformer, request, CancellationToken);
-    }
+		// Assert
+		await Sender.ShouldThrowInvalidValidationExceptionForProfileImageAsync(messageTransformer, request, CancellationToken);
+	}
 
-    [Theory]
-    [UserCreatedAtUtcEmptyWithMessageData]
-    public async Task SendAsync_ShouldThrowValidationException_WhenCreatedAtUtcIsInvalid(
-        IDateTimeOffsetTransformer transformer, IDateTimeOffsetMessageTransformer messageTransformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithCreatedAtUtc(transformer).Build();
+	[Theory]
+	[UserCreatedAtUtcEmptyWithMessageData]
+	public async Task SendAsync_ShouldThrowValidationException_WhenCreatedAtUtcIsInvalid(
+		IDateTimeOffsetTransformer transformer, IDateTimeOffsetMessageTransformer messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithCreatedAtUtc(transformer).Build();
 
-        // Assert
-        await Sender.ShouldThrowInvalidValidationExceptionForCreatedAtUtcAsync(
-            messageTransformer, request, CancellationToken);
-    }
+		// Assert
+		await Sender.ShouldThrowInvalidValidationExceptionForCreatedAtUtcAsync(
+			messageTransformer, request, CancellationToken);
+	}
 
-    [Theory]
-    [UserCreatedAtUtcEmptyWithMessageData]
-    public async Task SendAsync_ShouldThrowValidationException_WhenUpdatedAtUtcIsInvalid(
-        IDateTimeOffsetTransformer transformer, IDateTimeOffsetMessageTransformer messageTransformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithUpdatedAtUtc(transformer).Build();
+	[Theory]
+	[UserCreatedAtUtcEmptyWithMessageData]
+	public async Task SendAsync_ShouldThrowValidationException_WhenUpdatedAtUtcIsInvalid(
+		IDateTimeOffsetTransformer transformer, IDateTimeOffsetMessageTransformer messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithUpdatedAtUtc(transformer).Build();
 
-        // Assert
-        await Sender.ShouldThrowInvalidValidationExceptionForUpdatedAtUtcAsync(
-            messageTransformer, request, CancellationToken);
-    }
+		// Assert
+		await Sender.ShouldThrowInvalidValidationExceptionForUpdatedAtUtcAsync(
+			messageTransformer, request, CancellationToken);
+	}
 
-    [Fact]
-    public async Task SendAsync_ShouldThrowUserAlreadyExistsException_WhenRequestIsInvalid()
-    {
-        // Arrange
-        await ServiceScope.AddUserAsync(User, CancellationToken);
-        var request = _requestBuilder.WithId(User.Id).Build();
+	[Fact]
+	public async Task SendAsync_ShouldThrowUserAlreadyExistsException_WhenRequestIsInvalid()
+	{
+		// Arrange
+		await ServiceScope.AddUserAsync(User, CancellationToken);
+		var request = _requestBuilder.WithId(User.Id).Build();
 
-        // Assert
-        await Sender.ShouldThrowUserAlreadyExistsExceptionAsync(request, CancellationToken);
-    }
+		// Assert
+		await Sender.ShouldThrowUserAlreadyExistsExceptionAsync(request, CancellationToken);
+	}
 
-    [Theory]
-    [UserIdDifferentCaseData]
-    public async Task SendAsync_ShouldThrowUserAlreadyExistsException_WhenIdIsInvalid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        await ServiceScope.AddUserAsync(User, CancellationToken);
-        var request = _requestBuilder.WithId(User.Id, transformer).Build();
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task SendAsync_ShouldThrowUserAlreadyExistsException_WhenIdIsInvalid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		await ServiceScope.AddUserAsync(User, CancellationToken);
+		var request = _requestBuilder.WithId(User.Id, transformer).Build();
 
-        // Assert
-        await Sender.ShouldThrowUserAlreadyExistsExceptionAsync(request, CancellationToken);
-    }
+		// Assert
+		await Sender.ShouldThrowUserAlreadyExistsExceptionAsync(request, CancellationToken);
+	}
 
-    [Fact]
-    public async Task SendAsync_ShouldThrowUserEmailAlreadyExistsException_WhenRequestIsInvalid()
-    {
-        // Arrange
-        await ServiceScope.AddUserAsync(User, CancellationToken);
-        var request = _requestBuilder.WithEmail(User.Email).Build();
+	[Fact]
+	public async Task SendAsync_ShouldThrowUserEmailAlreadyExistsException_WhenRequestIsInvalid()
+	{
+		// Arrange
+		await ServiceScope.AddUserAsync(User, CancellationToken);
+		var request = _requestBuilder.WithEmail(User.Email).Build();
 
-        // Assert
-        await Sender.ShouldThrowUserEmailAlreadyExistsExceptionAsync(request, CancellationToken);
-    }
+		// Assert
+		await Sender.ShouldThrowUserEmailAlreadyExistsExceptionAsync(request, CancellationToken);
+	}
 
-    [Theory]
-    [UserEmailDifferentCaseData]
-    public async Task SendAsync_ShouldThrowUserEmailAlreadyExistsException_WhenEmailIsInvalid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        await ServiceScope.AddUserAsync(User, CancellationToken);
-        var request = _requestBuilder.WithEmail(User.Email, transformer).Build();
+	[Theory]
+	[UserEmailDifferentCaseData]
+	public async Task SendAsync_ShouldThrowUserEmailAlreadyExistsException_WhenEmailIsInvalid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		await ServiceScope.AddUserAsync(User, CancellationToken);
+		var request = _requestBuilder.WithEmail(User.Email, transformer).Build();
 
-        // Assert
-        await Sender.ShouldThrowUserEmailAlreadyExistsExceptionAsync(request, CancellationToken);
-    }
+		// Assert
+		await Sender.ShouldThrowUserEmailAlreadyExistsExceptionAsync(request, CancellationToken);
+	}
 
-    [Fact]
-    public async Task SendAsync_ShouldThrowUserNameAlreadyExistsException_WhenRequestIsInvalid()
-    {
-        // Arrange
-        await ServiceScope.AddUserAsync(User, CancellationToken);
-        var request = _requestBuilder.WithName(User.Name).Build();
+	[Fact]
+	public async Task SendAsync_ShouldThrowUserNameAlreadyExistsException_WhenRequestIsInvalid()
+	{
+		// Arrange
+		await ServiceScope.AddUserAsync(User, CancellationToken);
+		var request = _requestBuilder.WithName(User.Name).Build();
 
-        // Assert
-        await Sender.ShouldThrowUserNameAlreadyExistsExceptionAsync(request, CancellationToken);
-    }
+		// Assert
+		await Sender.ShouldThrowUserNameAlreadyExistsExceptionAsync(request, CancellationToken);
+	}
 
-    [Theory]
-    [UserNameDifferentCaseData]
-    public async Task SendAsync_ShouldThrowUserNameAlreadyExistsException_WhenNameIsInvalid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        await ServiceScope.AddUserAsync(User, CancellationToken);
-        var request = _requestBuilder.WithName(User.Name, transformer).Build();
+	[Theory]
+	[UserNameDifferentCaseData]
+	public async Task SendAsync_ShouldThrowUserNameAlreadyExistsException_WhenNameIsInvalid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		await ServiceScope.AddUserAsync(User, CancellationToken);
+		var request = _requestBuilder.WithName(User.Name, transformer).Build();
 
-        // Assert
-        await Sender.ShouldThrowUserNameAlreadyExistsExceptionAsync(request, CancellationToken);
-    }
+		// Assert
+		await Sender.ShouldThrowUserNameAlreadyExistsExceptionAsync(request, CancellationToken);
+	}
 
-    [Fact]
-    public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValid()
-    {
-        // Act
-        var response = await Sender.SendAsync(_request, CancellationToken);
-        var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
+	[Fact]
+	public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValid()
+	{
+		// Act
+		var response = await Sender.SendAsync(_request, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
 
-        // Assert
-        response.ShouldSatisfy(user, _request);
-    }
+		// Assert
+		response.ShouldSatisfy(user, _request);
+	}
 
-    [Theory]
-    [UserProfileImageNullData]
-    [UserProfileImageEmptyData]
-    public async Task SendAsync_ShouldReturnResponse_WhenProfileImageIsValid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithProfileImage(transformer).Build();
+	[Theory]
+	[UserProfileImageNullData]
+	[UserProfileImageEmptyData]
+	public async Task SendAsync_ShouldReturnResponse_WhenProfileImageIsValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithProfileImage(transformer).Build();
 
-        // Act
-        var response = await Sender.SendAsync(request, CancellationToken);
-        var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
+		// Act
+		var response = await Sender.SendAsync(request, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
 
-        // Assert
-        response.ShouldSatisfy(user, request);
-    }
+		// Assert
+		response.ShouldSatisfy(user, request);
+	}
 
-    [Fact]
-    public async Task SendAsync_ShouldAddUser_WhenRequestIsValid()
-    {
-        // Act
-        var response = await Sender.SendAsync(_request, CancellationToken);
-        var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
+	[Fact]
+	public async Task SendAsync_ShouldAddUser_WhenRequestIsValid()
+	{
+		// Act
+		var response = await Sender.SendAsync(_request, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
 
-        // Assert
-        user.ShouldSatisfy(_request);
-    }
+		// Assert
+		user.ShouldSatisfy(_request);
+	}
 
-    [Theory]
-    [UserProfileImageNullData]
-    [UserProfileImageEmptyData]
-    public async Task SendAsync_ShouldAddUser_WhenProfileImageIsValid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithProfileImage(transformer).Build();
+	[Theory]
+	[UserProfileImageNullData]
+	[UserProfileImageEmptyData]
+	public async Task SendAsync_ShouldAddUser_WhenProfileImageIsValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithProfileImage(transformer).Build();
 
-        // Act
-        var response = await Sender.SendAsync(request, CancellationToken);
-        var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
+		// Act
+		var response = await Sender.SendAsync(request, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
 
-        // Assert
-        user.ShouldSatisfy(request);
-    }
+		// Assert
+		user.ShouldSatisfy(request);
+	}
 }

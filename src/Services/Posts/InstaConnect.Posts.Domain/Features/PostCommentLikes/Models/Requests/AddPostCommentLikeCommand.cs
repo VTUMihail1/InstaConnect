@@ -1,5 +1,5 @@
-﻿namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Requests;
+namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Requests;
 
 public record AddPostCommentLikeCommand(
-    PostCommentId CommentId,
-    UserId UserId);
+	PostCommentId CommentId,
+	UserId UserId);

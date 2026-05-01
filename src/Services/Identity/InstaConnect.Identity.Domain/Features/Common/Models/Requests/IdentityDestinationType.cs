@@ -1,11 +1,11 @@
-﻿namespace InstaConnect.Identity.Domain.Features.Common.Models.Requests;
+namespace InstaConnect.Identity.Domain.Features.Common.Models.Requests;
 
 public enum IdentityDestinationType
 {
-    None,
-    User,
-    UserClaim,
-    RefreshToken,
-    ForgotPasswordToken,
-    EmailConfirmationToken
+	None,
+	User,
+	UserClaim,
+	RefreshToken,
+	ForgotPasswordToken,
+	EmailConfirmationToken
 }

@@ -1,9 +1,9 @@
-﻿namespace InstaConnect.Posts.Presentation.Tests.Features.PostComments.Builders;
+namespace InstaConnect.Posts.Presentation.Tests.Features.PostComments.Builders;
 
 public class UpdatePostCommentApiRequestBuilderFactory
 {
-    public UpdatePostCommentApiRequestBuilder Create(PostComment postComment)
-    {
-        return new(postComment);
-    }
+	public UpdatePostCommentApiRequestBuilder Create(PostComment postComment)
+	{
+		return new(postComment);
+	}
 }

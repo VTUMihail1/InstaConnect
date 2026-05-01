@@ -1,51 +1,51 @@
-﻿namespace InstaConnect.Identity.Presentation.Tests.Unit.Features.Users.Controllers.v1;
+namespace InstaConnect.Identity.Presentation.Tests.Unit.Features.Users.Controllers.v1;
 
 public class GetAllUsersControllerUnitTests : BaseUserPresentationQueryUnitTest
 {
-    private readonly GetAllUsersApiRequestBuilderFactory _requestBuilderFactory;
-    private readonly GetAllUsersApiRequestBuilder _requestBuilder;
-    private readonly GetAllUsersApiRequest _request;
+	private readonly GetAllUsersApiRequestBuilderFactory _requestBuilderFactory;
+	private readonly GetAllUsersApiRequestBuilder _requestBuilder;
+	private readonly GetAllUsersApiRequest _request;
 
-    private readonly UserController _controller;
+	private readonly UserController _controller;
 
-    public GetAllUsersControllerUnitTests()
-    {
-        _requestBuilderFactory = new();
-        _requestBuilder = _requestBuilderFactory.Create(User);
-        _request = _requestBuilder.Build();
+	public GetAllUsersControllerUnitTests()
+	{
+		_requestBuilderFactory = new();
+		_requestBuilder = _requestBuilderFactory.Create(User);
+		_request = _requestBuilder.Build();
 
-        _controller = new(Mapper, Sender);
+		_controller = new(Mapper, Sender);
 
-        Sender.SetupGetAllQueryRequest(_request, Users, CancellationToken);
-    }
+		Sender.SetupGetAllQueryRequest(_request, Users, CancellationToken);
+	}
 
-    [Fact]
-    public async Task GetAllAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
-    {
-        // Act
-        var response = await _controller.GetAllAsync(_request, CancellationToken);
+	[Fact]
+	public async Task GetAllAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
+	{
+		// Act
+		var response = await _controller.GetAllAsync(_request, CancellationToken);
 
-        // Assert
-        response.ShouldBeActionResultWithOkStatusCode();
-    }
+		// Assert
+		response.ShouldBeActionResultWithOkStatusCode();
+	}
 
-    [Fact]
-    public async Task GetAllAsync_ShouldReturnResponse_WhenRequestIsValid()
-    {
-        // Act
-        var response = await _controller.GetAllAsync(_request, CancellationToken);
+	[Fact]
+	public async Task GetAllAsync_ShouldReturnResponse_WhenRequestIsValid()
+	{
+		// Act
+		var response = await _controller.GetAllAsync(_request, CancellationToken);
 
-        // Assert
-        response.ShouldSatisfy(Users, _request);
-    }
+		// Assert
+		response.ShouldSatisfy(Users, _request);
+	}
 
-    [Fact]
-    public async Task GetAllAsync_ShouldCallTheSenderSendAsync_WhenRequestIsValid()
-    {
-        // Act
-        await _controller.GetAllAsync(_request, CancellationToken);
+	[Fact]
+	public async Task GetAllAsync_ShouldCallTheSenderSendAsync_WhenRequestIsValid()
+	{
+		// Act
+		await _controller.GetAllAsync(_request, CancellationToken);
 
-        // Assert
-        await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);
-    }
+		// Assert
+		await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);
+	}
 }

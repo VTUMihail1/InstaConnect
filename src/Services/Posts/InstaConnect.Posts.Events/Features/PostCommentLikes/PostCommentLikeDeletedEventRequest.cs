@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Posts.Events.Features.PostCommentLikes;
+namespace InstaConnect.Posts.Events.Features.PostCommentLikes;
 
 public record PostCommentLikeDeletedEventRequest(PostCommentLikeEventRequest PostCommentLike)
-    : IEventRequest;
+	: IEventRequest;

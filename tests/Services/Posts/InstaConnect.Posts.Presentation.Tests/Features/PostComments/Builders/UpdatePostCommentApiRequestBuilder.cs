@@ -1,76 +1,76 @@
-﻿namespace InstaConnect.Posts.Presentation.Tests.Features.PostComments.Builders;
+namespace InstaConnect.Posts.Presentation.Tests.Features.PostComments.Builders;
 
 public class UpdatePostCommentApiRequestBuilder
 {
-    private string _id;
-    private string _commentId;
-    private string _userId;
-    private string _content;
+	private string _id;
+	private string _commentId;
+	private string _userId;
+	private string _content;
 
-    public UpdatePostCommentApiRequestBuilder(PostComment postComment)
-    {
-        _id = postComment.Id.Id.Id;
-        _commentId = postComment.Id.CommentId;
-        _userId = postComment.UserId.Id;
-        _content = PostCommentDataFaker.GetContent();
-    }
+	public UpdatePostCommentApiRequestBuilder(PostComment postComment)
+	{
+		_id = postComment.Id.Id.Id;
+		_commentId = postComment.Id.CommentId;
+		_userId = postComment.UserId.Id;
+		_content = PostCommentDataFaker.GetContent();
+	}
 
-    public UpdatePostCommentApiRequestBuilder WithId(PostId id, IStringTransformer? transformer = null)
-    {
-        _id = transformer.TryTransform(id.Id);
+	public UpdatePostCommentApiRequestBuilder WithId(PostId id, IStringTransformer? transformer = null)
+	{
+		_id = transformer.TryTransform(id.Id);
 
-        return this;
-    }
+		return this;
+	}
 
-    public UpdatePostCommentApiRequestBuilder WithId(IStringTransformer transformer)
-    {
-        _id = transformer.Transform(_id);
+	public UpdatePostCommentApiRequestBuilder WithId(IStringTransformer transformer)
+	{
+		_id = transformer.Transform(_id);
 
-        return this;
-    }
+		return this;
+	}
 
-    public UpdatePostCommentApiRequestBuilder WithCommentId(PostCommentId commentId, IStringTransformer? transformer = null)
-    {
-        _commentId = transformer.TryTransform(commentId.CommentId);
+	public UpdatePostCommentApiRequestBuilder WithCommentId(PostCommentId commentId, IStringTransformer? transformer = null)
+	{
+		_commentId = transformer.TryTransform(commentId.CommentId);
 
-        return this;
-    }
+		return this;
+	}
 
-    public UpdatePostCommentApiRequestBuilder WithCommentId(IStringTransformer transformer)
-    {
-        _commentId = transformer.Transform(_commentId);
+	public UpdatePostCommentApiRequestBuilder WithCommentId(IStringTransformer transformer)
+	{
+		_commentId = transformer.Transform(_commentId);
 
-        return this;
-    }
+		return this;
+	}
 
-    public UpdatePostCommentApiRequestBuilder WithUserId(UserId userId, IStringTransformer? transformer = null)
-    {
-        _userId = transformer.TryTransform(userId.Id);
+	public UpdatePostCommentApiRequestBuilder WithUserId(UserId userId, IStringTransformer? transformer = null)
+	{
+		_userId = transformer.TryTransform(userId.Id);
 
-        return this;
-    }
+		return this;
+	}
 
-    public UpdatePostCommentApiRequestBuilder WithUserId(IStringTransformer transformer)
-    {
-        _userId = transformer.Transform(_userId);
+	public UpdatePostCommentApiRequestBuilder WithUserId(IStringTransformer transformer)
+	{
+		_userId = transformer.Transform(_userId);
 
-        return this;
-    }
+		return this;
+	}
 
-    public UpdatePostCommentApiRequestBuilder WithContent(IStringTransformer transformer)
-    {
-        _content = transformer.Transform(_content);
+	public UpdatePostCommentApiRequestBuilder WithContent(IStringTransformer transformer)
+	{
+		_content = transformer.Transform(_content);
 
-        return this;
-    }
+		return this;
+	}
 
-    public UpdatePostCommentApiRequest Build()
-    {
-        return new(
-            _id,
-            _commentId,
-            _userId,
-            new(_content)
-        );
-    }
+	public UpdatePostCommentApiRequest Build()
+	{
+		return new(
+			_id,
+			_commentId,
+			_userId,
+			new(_content)
+		);
+	}
 }

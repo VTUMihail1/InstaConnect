@@ -1,9 +1,9 @@
-﻿namespace InstaConnect.Identity.Tests.Features.RefreshTokens.Builders;
+namespace InstaConnect.Identity.Tests.Features.RefreshTokens.Builders;
 
 public class RefreshTokenBuilderFactory
 {
-    public RefreshTokenBuilder Create(User user)
-    {
-        return new(user);
-    }
+	public RefreshTokenBuilder Create(User user)
+	{
+		return new(user);
+	}
 }

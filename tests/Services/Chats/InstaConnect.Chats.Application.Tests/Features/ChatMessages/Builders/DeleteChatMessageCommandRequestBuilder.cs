@@ -1,62 +1,62 @@
-﻿namespace InstaConnect.Chats.Application.Tests.Features.ChatMessages.Builders;
+namespace InstaConnect.Chats.Application.Tests.Features.ChatMessages.Builders;
 
 public class DeleteChatMessageCommandRequestBuilder
 {
-    private string _participantOneId;
-    private string _participantTwoId;
-    private string _messageId;
+	private string _participantOneId;
+	private string _participantTwoId;
+	private string _messageId;
 
-    public DeleteChatMessageCommandRequestBuilder(ChatMessage chatMessage)
-    {
-        _participantOneId = chatMessage.Id.Id.ParticipantOneId.Id;
-        _participantTwoId = chatMessage.Id.Id.ParticipantTwoId.Id;
-        _messageId = chatMessage.Id.MessageId;
-    }
+	public DeleteChatMessageCommandRequestBuilder(ChatMessage chatMessage)
+	{
+		_participantOneId = chatMessage.Id.Id.ParticipantOneId.Id;
+		_participantTwoId = chatMessage.Id.Id.ParticipantTwoId.Id;
+		_messageId = chatMessage.Id.MessageId;
+	}
 
-    public DeleteChatMessageCommandRequestBuilder WithParticipantOneId(UserId participantOneId, IStringTransformer? transformer = null)
-    {
-        _participantOneId = transformer.TryTransform(participantOneId.Id);
+	public DeleteChatMessageCommandRequestBuilder WithParticipantOneId(UserId participantOneId, IStringTransformer? transformer = null)
+	{
+		_participantOneId = transformer.TryTransform(participantOneId.Id);
 
-        return this;
-    }
+		return this;
+	}
 
-    public DeleteChatMessageCommandRequestBuilder WithParticipantOneId(IStringTransformer transformer)
-    {
-        _participantOneId = transformer.Transform(_participantOneId);
+	public DeleteChatMessageCommandRequestBuilder WithParticipantOneId(IStringTransformer transformer)
+	{
+		_participantOneId = transformer.Transform(_participantOneId);
 
-        return this;
-    }
+		return this;
+	}
 
-    public DeleteChatMessageCommandRequestBuilder WithParticipantTwoId(UserId participantTwoId, IStringTransformer? transformer = null)
-    {
-        _participantTwoId = transformer.TryTransform(participantTwoId.Id);
+	public DeleteChatMessageCommandRequestBuilder WithParticipantTwoId(UserId participantTwoId, IStringTransformer? transformer = null)
+	{
+		_participantTwoId = transformer.TryTransform(participantTwoId.Id);
 
-        return this;
-    }
+		return this;
+	}
 
-    public DeleteChatMessageCommandRequestBuilder WithParticipantTwoId(IStringTransformer transformer)
-    {
-        _participantTwoId = transformer.Transform(_participantTwoId);
+	public DeleteChatMessageCommandRequestBuilder WithParticipantTwoId(IStringTransformer transformer)
+	{
+		_participantTwoId = transformer.Transform(_participantTwoId);
 
-        return this;
-    }
+		return this;
+	}
 
-    public DeleteChatMessageCommandRequestBuilder WithMessageId(ChatMessageId messageId, IStringTransformer? transformer = null)
-    {
-        _messageId = transformer.TryTransform(messageId.MessageId);
+	public DeleteChatMessageCommandRequestBuilder WithMessageId(ChatMessageId messageId, IStringTransformer? transformer = null)
+	{
+		_messageId = transformer.TryTransform(messageId.MessageId);
 
-        return this;
-    }
+		return this;
+	}
 
-    public DeleteChatMessageCommandRequestBuilder WithMessageId(IStringTransformer transformer)
-    {
-        _messageId = transformer.Transform(_messageId);
+	public DeleteChatMessageCommandRequestBuilder WithMessageId(IStringTransformer transformer)
+	{
+		_messageId = transformer.Transform(_messageId);
 
-        return this;
-    }
+		return this;
+	}
 
-    public DeleteChatMessageCommandRequest Build()
-    {
-        return new(_participantOneId, _participantTwoId, _messageId);
-    }
+	public DeleteChatMessageCommandRequest Build()
+	{
+		return new(_participantOneId, _participantTwoId, _messageId);
+	}
 }

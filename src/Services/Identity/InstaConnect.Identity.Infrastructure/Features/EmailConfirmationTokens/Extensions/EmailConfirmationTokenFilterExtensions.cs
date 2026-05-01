@@ -1,4 +1,4 @@
-﻿using System.Linq.Expressions;
+using System.Linq.Expressions;
 
 using InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Extensions;
 using InstaConnect.Identity.Infrastructure.Features.RefreshTokens.Extensions;
@@ -10,36 +10,36 @@ namespace InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.
 
 public static class EmailConfirmationTokenFilterExtensions
 {
-    extension(EmailConfirmationTokenId filter)
-    {
-        public FilterDefinition<EmailConfirmationToken> GetFilter()
-        {
-            return filter.GetFilterForIdEquals<EmailConfirmationToken>(p => p.Id.Id.Id, p => p.Id.Value);
-        }
+	extension(EmailConfirmationTokenId filter)
+	{
+		public FilterDefinition<EmailConfirmationToken> GetFilter()
+		{
+			return filter.GetFilterForIdEquals<EmailConfirmationToken>(p => p.Id.Id.Id, p => p.Id.Value);
+		}
 
-        public FilterDefinition<T> GetFilterForIdEquals<T>(
-            Expression<Func<T, object>> idField,
-            Expression<Func<T, object>> valueField)
-        {
-            var id = filter.Id.GetFilterForIdEquals(idField);
-            var value = Builders<T>.Filter.EqualsCaseInsensitive(valueField, filter.Value, filter.Value.IsNullOrEmptyOrWhiteSpace());
+		public FilterDefinition<T> GetFilterForIdEquals<T>(
+			Expression<Func<T, object>> idField,
+			Expression<Func<T, object>> valueField)
+		{
+			var id = filter.Id.GetFilterForIdEquals(idField);
+			var value = Builders<T>.Filter.EqualsCaseInsensitive(valueField, filter.Value, filter.Value.IsNullOrEmptyOrWhiteSpace());
 
-            return Builders<T>.Filter.And(id, value);
-        }
-    }
+			return Builders<T>.Filter.And(id, value);
+		}
+	}
 
-    extension(IEnumerable<EmailConfirmationTokenId> filter)
-    {
-        public FilterDefinition<EmailConfirmationToken> GetFilter()
-        {
-            return filter.GetFilterForIdRange<EmailConfirmationToken>(p => p.Id.Id.Id, p => p.Id.Value);
-        }
+	extension(IEnumerable<EmailConfirmationTokenId> filter)
+	{
+		public FilterDefinition<EmailConfirmationToken> GetFilter()
+		{
+			return filter.GetFilterForIdRange<EmailConfirmationToken>(p => p.Id.Id.Id, p => p.Id.Value);
+		}
 
-        public FilterDefinition<T> GetFilterForIdRange<T>(
-            Expression<Func<T, object>> idField,
-            Expression<Func<T, object>> valueField)
-        {
-            return Builders<T>.Filter.Or(filter.Select(item => item.GetFilterForIdEquals(idField, valueField)));
-        }
-    }
+		public FilterDefinition<T> GetFilterForIdRange<T>(
+			Expression<Func<T, object>> idField,
+			Expression<Func<T, object>> valueField)
+		{
+			return Builders<T>.Filter.Or(filter.Select(item => item.GetFilterForIdEquals(idField, valueField)));
+		}
+	}
 }

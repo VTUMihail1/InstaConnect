@@ -102,6 +102,8 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Docker
       ASPNETCORE_URLS: http://+:80
+      SendGridConfiguration__Sender: "${SEND_GRID_SENDER}"
+      SendGridConfiguration__ApiKey: "${SEND_GRID_API_KEY}"
       AccessTokenConfiguration__SecurityKey: "${ACCESS_TOKEN_SECURITY_KEY}"
       MongoConfiguration__Name: "instaconnect_identity"
       MongoConfiguration__ConnectionString: "mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo:27017/instaconnect_identity?replicaSet=rs0&authSource=admin"
@@ -230,6 +232,12 @@ services:
       - "443:443"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider --tries=1 --no-verbose http://127.0.0.1:80/nginx_status || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
     depends_on:
       identity-svc:
         condition: service_healthy

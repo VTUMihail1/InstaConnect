@@ -1,17 +1,16 @@
-﻿using InstaConnect.Common.Domain.Features.ExceptionHandling.Exceptions;
-using InstaConnect.Common.Domain.Features.ValueObjects.Models;
+using InstaConnect.Common.Domain.Features.ExceptionHandling.Exceptions;
 
 namespace InstaConnect.Identity.Domain.Features.Users.Exceptions;
 
 public class UserInvalidDetailsException : BadRequestException
 {
-    public UserInvalidDetailsException(Name name) : base(
-        UserExceptionErrorMessages.GetInvalidDetailsMessage(name))
-    {
-    }
+	public UserInvalidDetailsException(Name name) : base(
+		UserExceptionErrorMessages.GetInvalidDetailsMessage(name))
+	{
+	}
 
-    public UserInvalidDetailsException(Name name, Exception exception) : base(
-        UserExceptionErrorMessages.GetInvalidDetailsMessage(name), exception)
-    {
-    }
+	public UserInvalidDetailsException(Name name, Exception exception) : base(
+		UserExceptionErrorMessages.GetInvalidDetailsMessage(name), exception)
+	{
+	}
 }

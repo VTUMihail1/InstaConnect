@@ -1,12 +1,12 @@
-﻿using InstaConnect.Common.Tests.Features.DataAttributes.Booleans.Base;
+using InstaConnect.Common.Tests.Features.DataAttributes.Booleans.Base;
 
 namespace InstaConnect.Common.Tests.Features.DataAttributes.Booleans.False;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public abstract class FalseBooleanDataAttribute : BooleanDataAttribute
 {
-    protected FalseBooleanDataAttribute() : base(new FalseBooleanTransformer())
-    {
+	protected FalseBooleanDataAttribute() : base(new FalseBooleanTransformer())
+	{
 
-    }
+	}
 }

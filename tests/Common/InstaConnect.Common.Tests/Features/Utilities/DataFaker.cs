@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 
 using Bogus;
 
@@ -10,112 +10,122 @@ namespace InstaConnect.Common.Tests.Features.Utilities;
 
 public abstract class DataFaker
 {
-    private const int DefaultStringLength = 100;
+	private const int DefaultStringLength = 100;
 
-    private static readonly Faker _faker = new();
+	private static readonly Faker _faker = new();
 
-    public static IFormFile GetFormFile()
-    {
-        var name = _faker.System.FileName();
-        var formFile = Mocker.Mock<IFormFile>();
+	public static IFormFile GetFormFile()
+	{
+		var name = _faker.System.FileName();
+		var formFile = Mocker.Mock<IFormFile>();
 
-        var fileContent = Encoding.UTF8.GetBytes("This is a test file.");
-        var stream = new MemoryStream(fileContent)
-        {
-            Position = 0
-        };
+		var fileContent = Encoding.UTF8.GetBytes("This is a test file.");
+		var stream = new MemoryStream(fileContent)
+		{
+			Position = 0
+		};
 
-        formFile.OpenReadStream().ReturnsResponse(stream);
-        formFile.Name.ReturnsResponse(name);
-        formFile.FileName.ReturnsResponse(name);
-        formFile.ContentType.ReturnsResponse("text/plain");
-        formFile.Length.ReturnsResponse(stream.Length);
+		formFile.OpenReadStream().ReturnsResponse(stream);
+		formFile.Name.ReturnsResponse(name);
+		formFile.FileName.ReturnsResponse(name);
+		formFile.ContentType.ReturnsResponse("text/plain");
+		formFile.Length.ReturnsResponse(stream.Length);
 
-        return formFile;
-    }
+		return formFile;
+	}
 
-    public static string GetGuid()
-    {
-        return _faker.Random.Guid().ToString();
-    }
+	public static string GetGuid()
+	{
+		return _faker.Random.Guid().ToString();
+	}
 
-    public static DateTimeOffset GetRecentDate()
-    {
-        return _faker.Date.FutureOffset();
-    }
+	public static DateTimeOffset GetRecentDate()
+	{
+		return _faker.Date.FutureOffset();
+	}
 
-    public static DateTimeOffset GetPastDate()
-    {
-        return _faker.Date.PastOffset();
-    }
+	public static DateTimeOffset GetPastDate()
+	{
+		return _faker.Date.PastOffset();
+	}
 
-    public static string GetUrl()
-    {
-        return _faker.Internet.Url();
-    }
+	public static string GetUrl()
+	{
+		return _faker.Internet.Url();
+	}
 
-    public static string GetString(int length = DefaultStringLength)
-    {
-        return _faker.Random.AlphaNumeric(length);
-    }
+	public static string GetEmail(int maxLength, int minLength = default)
+	{
+		const string Format = "{0}@{1}";
 
-    public static string GetAverageString(int maxLength, int minLength = default)
-    {
-        return _faker.Random.AlphaNumeric(GetAverageNumber(maxLength, minLength));
-    }
+		var name = GetAverageString(maxLength, minLength);
+		var domain = _faker.Internet.DomainName();
 
-    public static int GetAverageNumber(int maxLength, int minLength)
-    {
-        return (maxLength + minLength) / 2;
-    }
+		return Format.FormatCurrentCulture(name, domain).Substring(domain.Length - 1);
+	}
 
-    public static string GetPrefixString(string? value)
-    {
-        if (string.IsNullOrEmpty(value))
-        {
-            return string.Empty;
-        }
+	public static string GetString(int length = DefaultStringLength)
+	{
+		return _faker.Random.AlphaNumeric(length);
+	}
 
-        return value[..(value.Length / 2)];
-    }
+	public static string GetAverageString(int maxLength, int minLength = default)
+	{
+		return _faker.Random.AlphaNumeric(GetAverageNumber(maxLength, minLength));
+	}
 
-    public static string GetAverageWithPrefixString(string? value, int maxLength, int minLength = default)
-    {
-        var average = GetAverageString(maxLength, minLength);
+	public static int GetAverageNumber(int maxLength, int minLength)
+	{
+		return (maxLength + minLength) / 2;
+	}
 
-        if (string.IsNullOrEmpty(value))
-        {
-            return average;
-        }
+	public static string GetPrefixString(string? value)
+	{
+		if (string.IsNullOrEmpty(value))
+		{
+			return string.Empty;
+		}
 
-        var mid = value.Length / 2;
+		return value[..(value.Length / 2)];
+	}
 
-        return string.Concat(
-            value.AsSpan(0, mid),
-            average.AsSpan(mid)
-        );
-    }
+	public static string GetAverageWithPrefixString(string? value, int maxLength, int minLength = default)
+	{
+		var average = GetAverageString(maxLength, minLength);
 
-    public static string GetDifferentCaseString(string? value)
-    {
-        if (string.IsNullOrEmpty(value))
-        {
-            return string.Empty;
-        }
+		if (string.IsNullOrEmpty(value))
+		{
+			return average;
+		}
 
-        return value.ToUpperCurrentCulture();
-    }
+		var mid = value.Length / 2;
 
-    public static TEnum GetEmptyEnum<TEnum>()
-        where TEnum : Enum
-    {
-        return default!;
-    }
+		return string.Concat(
+			value.AsSpan(0, mid),
+			average.AsSpan(mid)
+		);
+	}
 
-    public static CommonSortOrder GetSortOrder()
-    {
-        const CommonSortOrder SortOrder = CommonSortOrder.Ascending;
+	public static string GetDifferentCaseString(string? value)
+	{
+		if (string.IsNullOrEmpty(value))
+		{
+			return string.Empty;
+		}
 
-        return SortOrder;
-    }
+		return value.ToUpperCurrentCulture();
+	}
+
+	public static TEnum GetEmptyEnum<TEnum>()
+		where TEnum : Enum
+	{
+		return default!;
+	}
+
+	public static CommonSortOrder GetSortOrder()
+	{
+		const CommonSortOrder SortOrder = CommonSortOrder.Ascending;
+
+		return SortOrder;
+	}
 }

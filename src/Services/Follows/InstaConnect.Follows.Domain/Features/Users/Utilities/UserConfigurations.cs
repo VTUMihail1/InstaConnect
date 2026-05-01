@@ -1,21 +1,21 @@
-﻿namespace InstaConnect.Follows.Domain.Features.Users.Utilities;
+namespace InstaConnect.Follows.Domain.Features.Users.Utilities;
 
 public static class UserConfigurations
 {
-    public const int IdMinLength = 7;
-    public const int IdMaxLength = 100;
+	public const int IdMinLength = 7;
+	public const int IdMaxLength = 100;
 
-    public const int EmailMinLength = 7;
-    public const int EmailMaxLength = 100;
+	public const int EmailMinLength = 7;
+	public const int EmailMaxLength = 100;
 
-    public const int FirstNameMinLength = 7;
-    public const int FirstNameMaxLength = 100;
+	public const int FirstNameMinLength = 7;
+	public const int FirstNameMaxLength = 100;
 
-    public const int LastNameMinLength = 7;
-    public const int LastNameMaxLength = 100;
+	public const int LastNameMinLength = 7;
+	public const int LastNameMaxLength = 100;
 
-    public const int NameMinLength = 7;
-    public const int NameMaxLength = 100;
+	public const int NameMinLength = 7;
+	public const int NameMaxLength = 100;
 
-    public const int ProfileImageUrlMaxLength = 100;
+	public const int ProfileImageUrlMaxLength = 100;
 }

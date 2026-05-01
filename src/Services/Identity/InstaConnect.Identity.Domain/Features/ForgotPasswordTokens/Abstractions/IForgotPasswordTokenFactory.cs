@@ -1,6 +1,6 @@
-﻿namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Abstractions;
+namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Abstractions;
 
 public interface IForgotPasswordTokenFactory
 {
-    public ForgotPasswordToken Create(UserId id);
+	public ForgotPasswordToken Create(UserId id);
 }

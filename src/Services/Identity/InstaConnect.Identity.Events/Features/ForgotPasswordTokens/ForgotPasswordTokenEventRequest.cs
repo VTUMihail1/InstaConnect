@@ -1,10 +1,10 @@
-﻿using InstaConnect.Identity.Events.Features.Users;
+using InstaConnect.Identity.Events.Features.Users;
 
 namespace InstaConnect.Identity.Events.Features.ForgotPasswordTokens;
 
 public record ForgotPasswordTokenEventRequest(
-    string Id,
-    string Value,
-    UserEventRequest User,
-    DateTimeOffset ExpiresAtUtc,
-    DateTimeOffset CreatedAtUtc);
+	string Id,
+	string Value,
+	UserEventRequest User,
+	DateTimeOffset ExpiresAtUtc,
+	DateTimeOffset CreatedAtUtc);

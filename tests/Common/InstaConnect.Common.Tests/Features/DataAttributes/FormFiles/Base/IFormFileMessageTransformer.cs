@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 
 namespace InstaConnect.Common.Tests.Features.DataAttributes.FormFiles.Base;
 

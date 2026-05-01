@@ -1,12 +1,12 @@
-﻿using InstaConnect.Common.Domain.Features.Messaging.Models;
+using InstaConnect.Common.Domain.Features.Messaging.Models;
 
 namespace InstaConnect.Posts.Tests.Features.PostCommentLikes.DataAttributes.SortOrder;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public sealed class PostCommentLikesSortOrderAscendingDataAttribute : SortEnumDataAttribute<CommonSortOrder>
 {
-    public PostCommentLikesSortOrderAscendingDataAttribute()
-        : base(CommonSortOrder.Ascending)
-    {
-    }
+	public PostCommentLikesSortOrderAscendingDataAttribute()
+		: base(CommonSortOrder.Ascending)
+	{
+	}
 }

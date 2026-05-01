@@ -1,4 +1,4 @@
-﻿using System.Linq.Expressions;
+using System.Linq.Expressions;
 
 using MongoDB.Bson.Serialization;
 
@@ -6,11 +6,11 @@ namespace InstaConnect.Common.Infrastructure.Features.Data.Extensions;
 
 public static class BsonClassMapExtensions
 {
-    extension<TClass, TMember>(BsonClassMap<TClass> bsonClassMap)
-    {
-        public BsonMemberMap MapMemberWithoutSerialization(Expression<Func<TClass, TMember>> member)
-        {
-            return bsonClassMap.MapMember(member).SetShouldSerializeMethod(_ => false);
-        }
-    }
+	extension<TClass, TMember>(BsonClassMap<TClass> bsonClassMap)
+	{
+		public BsonMemberMap MapMemberWithoutSerialization(Expression<Func<TClass, TMember>> member)
+		{
+			return bsonClassMap.MapMember(member).SetShouldSerializeMethod(_ => false);
+		}
+	}
 }

@@ -1,12 +1,12 @@
-﻿namespace InstaConnect.Identity.Presentation.Features.Users.Extensions;
+namespace InstaConnect.Identity.Presentation.Features.Users.Extensions;
 
 internal static class ServiceCollectionExtensions
 {
-    extension(IServiceCollection serviceCollection)
-    {
-        public IServiceCollection AddUserServices()
-        {
-            return serviceCollection;
-        }
-    }
+	extension(IServiceCollection serviceCollection)
+	{
+		public IServiceCollection AddUserServices()
+		{
+			return serviceCollection;
+		}
+	}
 }

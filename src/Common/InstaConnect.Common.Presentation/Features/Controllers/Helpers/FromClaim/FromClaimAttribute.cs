@@ -5,12 +5,12 @@ namespace InstaConnect.Common.Presentation.Features.Controllers.Helpers.FromClai
 [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property, AllowMultiple = false)]
 public abstract class FromClaimAttribute : Attribute, IBindingSourceMetadata, IModelNameProvider
 {
-    protected FromClaimAttribute(string name)
-    {
-        Name = name;
-    }
+	protected FromClaimAttribute(string name)
+	{
+		Name = name;
+	}
 
-    public BindingSource BindingSource => FromClaimBindingSource.Claim;
+	public BindingSource BindingSource => FromClaimBindingSource.Claim;
 
-    public string Name { get; }
+	public string Name { get; }
 }

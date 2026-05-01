@@ -1,5 +1,5 @@
-﻿namespace InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
+namespace InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 
 public record DeletePostCommand(
-    PostId Id,
-    UserId UserId);
+	PostId Id,
+	UserId UserId);

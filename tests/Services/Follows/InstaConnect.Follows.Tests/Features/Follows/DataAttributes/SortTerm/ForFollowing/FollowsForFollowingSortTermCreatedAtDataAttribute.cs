@@ -1,11 +1,11 @@
-﻿namespace InstaConnect.Follows.Tests.Features.Follows.DataAttributes.SortTerm.ForFollowing;
+namespace InstaConnect.Follows.Tests.Features.Follows.DataAttributes.SortTerm.ForFollowing;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public sealed class FollowsForFollowingSortTermCreatedAtDataAttribute
-    : SortEnumDataAttribute<FollowsForFollowingSortTerm>
+	: SortEnumDataAttribute<FollowsForFollowingSortTerm>
 {
-    public FollowsForFollowingSortTermCreatedAtDataAttribute()
-        : base(FollowsForFollowingSortTerm.ByCreatedAt)
-    {
-    }
+	public FollowsForFollowingSortTermCreatedAtDataAttribute()
+		: base(FollowsForFollowingSortTerm.ByCreatedAt)
+	{
+	}
 }

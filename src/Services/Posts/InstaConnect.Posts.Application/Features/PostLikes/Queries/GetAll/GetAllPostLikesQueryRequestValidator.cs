@@ -1,32 +1,32 @@
-﻿namespace InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAll;
+namespace InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAll;
 
 public class GetAllPostLikesQueryRequestValidator : AbstractValidator<GetAllPostLikesQueryRequest>
 {
-    public GetAllPostLikesQueryRequestValidator()
-    {
-        RuleFor(c => c.CurrentUserId)
-            .UserIdMaxLengthWithMessage();
+	public GetAllPostLikesQueryRequestValidator()
+	{
+		RuleFor(c => c.CurrentUserId)
+			.UserIdMaxLengthWithMessage();
 
-        RuleFor(r => r.Id)
-            .NotEmptyWithMessage()
-            .PostIdMinLengthWithMessage()
-            .PostIdMaxLengthWithMessage();
+		RuleFor(r => r.Id)
+			.NotEmptyWithMessage()
+			.PostIdMinLengthWithMessage()
+			.PostIdMaxLengthWithMessage();
 
-        RuleFor(c => c.UserName)
-            .UserNameMaxLengthWithMessage();
+		RuleFor(c => c.UserName)
+			.UserNameMaxLengthWithMessage();
 
-        RuleFor(q => q.SortOrder)
-            .NotEmptyWithMessage();
+		RuleFor(q => q.SortOrder)
+			.NotEmptyWithMessage();
 
-        RuleFor(q => q.SortTerm)
-            .NotEmptyWithMessage();
+		RuleFor(q => q.SortTerm)
+			.NotEmptyWithMessage();
 
-        RuleFor(q => q.Page)
-            .PostLikePageMinValueWithMessage()
-            .PostLikePageMaxValueWithMessage();
+		RuleFor(q => q.Page)
+			.PostLikePageMinValueWithMessage()
+			.PostLikePageMaxValueWithMessage();
 
-        RuleFor(q => q.PageSize)
-            .PostLikePageSizeMinValueWithMessage()
-            .PostLikePageSizeMaxValueWithMessage();
-    }
+		RuleFor(q => q.PageSize)
+			.PostLikePageSizeMinValueWithMessage()
+			.PostLikePageSizeMaxValueWithMessage();
+	}
 }

@@ -1,11 +1,11 @@
-﻿namespace InstaConnect.Posts.Tests.Features.PostCommentLikes.DataAttributes.SortTerm.ForUser;
+namespace InstaConnect.Posts.Tests.Features.PostCommentLikes.DataAttributes.SortTerm.ForUser;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public sealed class PostCommentLikesForUserSortTermCreatedAtDataAttribute
-    : SortEnumDataAttribute<PostCommentLikesForUserSortTerm>
+	: SortEnumDataAttribute<PostCommentLikesForUserSortTerm>
 {
-    public PostCommentLikesForUserSortTermCreatedAtDataAttribute()
-        : base(PostCommentLikesForUserSortTerm.ByCreatedAt)
-    {
-    }
+	public PostCommentLikesForUserSortTermCreatedAtDataAttribute()
+		: base(PostCommentLikesForUserSortTerm.ByCreatedAt)
+	{
+	}
 }

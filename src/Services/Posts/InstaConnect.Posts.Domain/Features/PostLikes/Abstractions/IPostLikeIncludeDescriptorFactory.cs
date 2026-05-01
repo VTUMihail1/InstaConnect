@@ -1,10 +1,10 @@
-﻿using InstaConnect.Posts.Domain.Features.Common.Models.Requests;
+using InstaConnect.Posts.Domain.Features.Common.Models.Requests;
 
 namespace InstaConnect.Posts.Domain.Features.PostLikes.Abstractions;
 
 public interface IPostLikeIncludeDescriptorFactory
 {
-    PostsIncludeDescriptor CreateUser();
+	public PostsIncludeDescriptor CreateUser();
 
-    PostsIncludeDescriptor CreatePost();
+	public PostsIncludeDescriptor CreatePost();
 }

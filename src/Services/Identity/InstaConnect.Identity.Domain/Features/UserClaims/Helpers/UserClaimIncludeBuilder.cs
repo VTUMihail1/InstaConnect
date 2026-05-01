@@ -1,36 +1,36 @@
-﻿using InstaConnect.Identity.Domain.Features.Common.Models.Requests;
+using InstaConnect.Identity.Domain.Features.Common.Models.Requests;
 
 namespace InstaConnect.Identity.Domain.Features.UserClaims.Helpers;
 
 public class UserClaimIncludeBuilder
 {
-    private readonly ICollection<IdentityIncludeDescriptor> _descriptors;
-    private readonly IUserClaimIncludeDescriptorFactory _descriptorsFactory;
+	private readonly ICollection<IdentityIncludeDescriptor> _descriptors;
+	private readonly IUserClaimIncludeDescriptorFactory _descriptorsFactory;
 
-    public UserClaimIncludeBuilder(
-        ICollection<IdentityIncludeDescriptor> descriptors,
-        IUserClaimIncludeDescriptorFactory descriptorsFactory)
-    {
-        _descriptors = descriptors;
-        _descriptorsFactory = descriptorsFactory;
-    }
-    public UserClaimIncludeBuilder WithUser()
-    {
-        _descriptors.Add(_descriptorsFactory.CreateUser());
+	public UserClaimIncludeBuilder(
+		ICollection<IdentityIncludeDescriptor> descriptors,
+		IUserClaimIncludeDescriptorFactory descriptorsFactory)
+	{
+		_descriptors = descriptors;
+		_descriptorsFactory = descriptorsFactory;
+	}
+	public UserClaimIncludeBuilder WithUser()
+	{
+		_descriptors.Add(_descriptorsFactory.CreateUser());
 
-        return this;
-    }
+		return this;
+	}
 
-    public UserClaimIncludeBuilder WithUser(UserInclude include)
-    {
-        _descriptors.Add(_descriptorsFactory.CreateUser());
-        _descriptors.AddRange(include.Descriptors);
+	public UserClaimIncludeBuilder WithUser(UserInclude include)
+	{
+		_descriptors.Add(_descriptorsFactory.CreateUser());
+		_descriptors.AddRange(include.Descriptors);
 
-        return this;
-    }
+		return this;
+	}
 
-    public UserClaimInclude Build()
-    {
-        return new(_descriptors);
-    }
+	public UserClaimInclude Build()
+	{
+		return new(_descriptors);
+	}
 }

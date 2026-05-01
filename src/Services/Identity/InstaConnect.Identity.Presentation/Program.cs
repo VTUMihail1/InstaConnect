@@ -8,10 +8,10 @@ using InstaConnect.Identity.Presentation.Features.Common.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
-    .AddDomain()
-    .AddApplication()
-    .AddInfrastructure(builder.Configuration, builder.Environment, IdentityPresentationReference.Assembly)
-    .AddPresentation(builder.Configuration);
+	.AddDomain()
+	.AddApplication()
+	.AddInfrastructure(builder.Configuration, builder.Environment, IdentityPresentationReference.Assembly)
+	.AddPresentation(builder.Configuration);
 
 builder.Host.AddSerilog();
 
@@ -27,7 +27,7 @@ await app.RunAsync();
 // Utils for testing
 public partial class Program
 {
-    private Program()
-    {
-    }
+	private Program()
+	{
+	}
 }

@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 
 namespace InstaConnect.Common.Application.Features.Messaging.Abstractions;
 

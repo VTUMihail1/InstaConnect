@@ -1,16 +1,16 @@
-﻿using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Base;
+using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Base;
 
 namespace InstaConnect.Common.Tests.Features.DataAttributes.Enums.Empty;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public abstract class EmptyEnumWithMessageDataAttribute<TEnum> : EnumWithMessageDataAttribute<TEnum>
-    where TEnum : Enum
+	where TEnum : Enum
 {
-    protected EmptyEnumWithMessageDataAttribute() : base(
-        new EmptyEnumTransformer<TEnum>(),
-        new EmptyEnumMessageTransformer<TEnum>())
-    {
+	protected EmptyEnumWithMessageDataAttribute() : base(
+		new EmptyEnumTransformer<TEnum>(),
+		new EmptyEnumMessageTransformer<TEnum>())
+	{
 
-    }
+	}
 }
 

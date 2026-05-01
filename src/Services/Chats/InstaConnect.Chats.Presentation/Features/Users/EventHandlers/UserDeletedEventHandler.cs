@@ -1,4 +1,4 @@
-﻿using InstaConnect.Chats.Application.Features.Users.Commands.Delete;
+using InstaConnect.Chats.Application.Features.Users.Commands.Delete;
 using InstaConnect.Common.Application.Features.Messaging.Abstractions;
 using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
 using InstaConnect.Common.Presentation.Features.Events.Abstractions;
@@ -7,20 +7,20 @@ namespace InstaConnect.Chats.Presentation.Features.Users.EventHandlers;
 
 public class UserDeletedEventHandler : IEventHandler<UserDeletedEventRequest>
 {
-    private readonly IApplicationMapper _mapper;
-    private readonly IApplicationSender _sender;
+	private readonly IApplicationMapper _mapper;
+	private readonly IApplicationSender _sender;
 
-    public UserDeletedEventHandler(
-        IApplicationMapper mapper,
-        IApplicationSender sender)
-    {
-        _mapper = mapper;
-        _sender = sender;
-    }
+	public UserDeletedEventHandler(
+		IApplicationMapper mapper,
+		IApplicationSender sender)
+	{
+		_mapper = mapper;
+		_sender = sender;
+	}
 
-    public async Task Consume(ConsumeContext<UserDeletedEventRequest> context)
-    {
-        var request = _mapper.Map<DeleteUserCommandRequest>(context.Message);
-        await _sender.SendAsync(request, context.CancellationToken);
-    }
+	public async Task Consume(ConsumeContext<UserDeletedEventRequest> context)
+	{
+		var request = _mapper.Map<DeleteUserCommandRequest>(context.Message);
+		await _sender.SendAsync(request, context.CancellationToken);
+	}
 }

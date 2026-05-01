@@ -1,37 +1,37 @@
-﻿namespace InstaConnect.Follows.Tests.Features.Follows.Utilities;
+namespace InstaConnect.Follows.Tests.Features.Follows.Utilities;
 
 public static class FollowDataFaker
 {
-    public static DateTimeOffset GetCreatedAtUtc()
-    {
-        return DataFaker.GetRecentDate();
-    }
+	public static DateTimeOffset GetCreatedAtUtc()
+	{
+		return DataFaker.GetRecentDate();
+	}
 
-    public static int GetPage()
-    {
-        const int Page = 1;
+	public static int GetPage()
+	{
+		const int Page = 1;
 
-        return Page;
-    }
+		return Page;
+	}
 
-    public static int GetPageSize()
-    {
-        const int PageSize = 20;
+	public static int GetPageSize()
+	{
+		const int PageSize = 20;
 
-        return PageSize;
-    }
+		return PageSize;
+	}
 
-    public static FollowsSortTerm GetSortTerm()
-    {
-        const FollowsSortTerm SortTerm = FollowsSortTerm.ByCreatedAt;
+	public static FollowsSortTerm GetSortTerm()
+	{
+		const FollowsSortTerm SortTerm = FollowsSortTerm.ByCreatedAt;
 
-        return SortTerm;
-    }
+		return SortTerm;
+	}
 
-    public static FollowsForFollowingSortTerm GetForFollowingSortTerm()
-    {
-        const FollowsForFollowingSortTerm SortTerm = FollowsForFollowingSortTerm.ByCreatedAt;
+	public static FollowsForFollowingSortTerm GetForFollowingSortTerm()
+	{
+		const FollowsForFollowingSortTerm SortTerm = FollowsForFollowingSortTerm.ByCreatedAt;
 
-        return SortTerm;
-    }
+		return SortTerm;
+	}
 }

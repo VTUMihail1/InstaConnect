@@ -1,7 +1,8 @@
-﻿using System.Reflection;
+using System.Reflection;
 
 using InstaConnect.Common.Domain.Features.Mappers.Extensions;
 using InstaConnect.Common.Infrastructure.Extensions;
+using InstaConnect.Common.Infrastructure.Features.Emails.Extensions;
 using InstaConnect.Identity.Domain.Features.Common.Helpers;
 using InstaConnect.Identity.Infrastructure.Features.Common.Helpers;
 using InstaConnect.Identity.Infrastructure.Features.Common.Utilities;
@@ -15,37 +16,38 @@ namespace InstaConnect.Identity.Infrastructure.Features.Common.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    extension(IServiceCollection serviceCollection)
-    {
-        public IServiceCollection AddInfrastructure(
-            IConfiguration configuration,
-            IWebHostEnvironment webHostEnvironment,
-            Assembly presentationAssembly)
-        {
-            serviceCollection.AddSingleton<IPasswordHasher, PasswordHasher>();
+	extension(IServiceCollection serviceCollection)
+	{
+		public IServiceCollection AddInfrastructure(
+			IConfiguration configuration,
+			IWebHostEnvironment webHostEnvironment,
+			Assembly presentationAssembly)
+		{
+			serviceCollection.AddSingleton<IPasswordHasher, PasswordHasher>();
 
-            serviceCollection
-                .AddUserServices()
-                .AddUserClaimServices()
-                .AddRefreshTokenServices()
-                .AddForgotPasswordTokenServices()
-                .AddEmailConfirmationTokenServices();
+			serviceCollection
+				.AddUserServices()
+				.AddUserClaimServices()
+				.AddRefreshTokenServices()
+				.AddForgotPasswordTokenServices()
+				.AddEmailConfirmationTokenServices();
 
-            serviceCollection
-                .AddOpenTelemetry(configuration, webHostEnvironment)
-                .AddMapper(IdentityInfrastructureReference.Assembly)
-                .AddServicesWithMatchingInterfaces(IdentityInfrastructureReference.Assembly)
-                .AddRedis(configuration)
-                .AddMongo(configuration)
-                .AddCloudinary(configuration)
-                .AddUnitOfWork()
-                .AddRabbitMQ(configuration, IdentityEventHandlerUtilities.Prefix, presentationAssembly)
-                .AddJwtBearer(configuration)
-                .AddGuidProvider()
-                .AddDateTimeProvider()
-                .AddSortOrders();
+			serviceCollection
+				.AddOpenTelemetry(configuration, webHostEnvironment)
+				.AddMapper(IdentityInfrastructureReference.Assembly)
+				.AddSendGrid(configuration)
+				.AddServicesWithMatchingInterfaces(IdentityInfrastructureReference.Assembly)
+				.AddRedis(configuration)
+				.AddMongo<IIdentityContext>(configuration)
+				.AddCloudinary(configuration)
+				.AddUnitOfWork()
+				.AddRabbitMQ(configuration, IdentityEventHandlerUtilities.Prefix, presentationAssembly)
+				.AddJwtBearer(configuration)
+				.AddGuidProvider()
+				.AddDateTimeProvider()
+				.AddSortOrders();
 
-            return serviceCollection;
-        }
-    }
+			return serviceCollection;
+		}
+	}
 }

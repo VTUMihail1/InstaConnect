@@ -1,9 +1,9 @@
-﻿namespace InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Builders;
+namespace InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Builders;
 
 public class EmailConfirmationTokenBuilderFactory
 {
-    public EmailConfirmationTokenBuilder Create(User user)
-    {
-        return new(user);
-    }
+	public EmailConfirmationTokenBuilder Create(User user)
+	{
+		return new(user);
+	}
 }

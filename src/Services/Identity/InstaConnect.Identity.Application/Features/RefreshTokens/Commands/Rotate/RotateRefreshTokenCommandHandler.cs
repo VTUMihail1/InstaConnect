@@ -1,27 +1,27 @@
-﻿using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
+using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
 
 namespace InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Rotate;
 
 internal class RotateRefreshTokenCommandHandler : ICommandHandler<RotateRefreshTokenCommandRequest, RotateRefreshTokenCommandResponse>
 {
-    private readonly IApplicationMapper _mapper;
-    private readonly IRefreshTokenCommandService _refreshTokenService;
+	private readonly IApplicationMapper _mapper;
+	private readonly IRefreshTokenCommandService _refreshTokenService;
 
-    public RotateRefreshTokenCommandHandler(
-        IApplicationMapper mapper,
-        IRefreshTokenCommandService refreshTokenService)
-    {
-        _mapper = mapper;
-        _refreshTokenService = refreshTokenService;
-    }
+	public RotateRefreshTokenCommandHandler(
+		IApplicationMapper mapper,
+		IRefreshTokenCommandService refreshTokenService)
+	{
+		_mapper = mapper;
+		_refreshTokenService = refreshTokenService;
+	}
 
-    public async Task<RotateRefreshTokenCommandResponse> Handle(RotateRefreshTokenCommandRequest request, CancellationToken cancellationToken)
-    {
-        var serviceRequest = _mapper.Map<RotateRefreshTokenCommand>(request);
-        var serviceResponse = await _refreshTokenService.RotateAsync(serviceRequest, cancellationToken);
+	public async Task<RotateRefreshTokenCommandResponse> Handle(RotateRefreshTokenCommandRequest request, CancellationToken cancellationToken)
+	{
+		var serviceRequest = _mapper.Map<RotateRefreshTokenCommand>(request);
+		var serviceResponse = await _refreshTokenService.RotateAsync(serviceRequest, cancellationToken);
 
-        var response = _mapper.Map<RotateRefreshTokenCommandResponse>(serviceResponse);
+		var response = _mapper.Map<RotateRefreshTokenCommandResponse>(serviceResponse);
 
-        return response;
-    }
+		return response;
+	}
 }

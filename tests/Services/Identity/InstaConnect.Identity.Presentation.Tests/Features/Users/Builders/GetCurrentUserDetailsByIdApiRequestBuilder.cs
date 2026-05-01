@@ -1,30 +1,30 @@
-﻿namespace InstaConnect.Identity.Presentation.Tests.Features.Users.Builders;
+namespace InstaConnect.Identity.Presentation.Tests.Features.Users.Builders;
 
 public class GetCurrentUserDetailsByIdApiRequestBuilder
 {
-    private string _currentId;
+	private string _currentId;
 
-    public GetCurrentUserDetailsByIdApiRequestBuilder(User user)
-    {
-        _currentId = user.Id.Id;
-    }
+	public GetCurrentUserDetailsByIdApiRequestBuilder(User user)
+	{
+		_currentId = user.Id.Id;
+	}
 
-    public GetCurrentUserDetailsByIdApiRequestBuilder WithCurrentId(UserId currentId, IStringTransformer? transformer = null)
-    {
-        _currentId = transformer.TryTransform(currentId.Id);
+	public GetCurrentUserDetailsByIdApiRequestBuilder WithCurrentId(UserId currentId, IStringTransformer? transformer = null)
+	{
+		_currentId = transformer.TryTransform(currentId.Id);
 
-        return this;
-    }
+		return this;
+	}
 
-    public GetCurrentUserDetailsByIdApiRequestBuilder WithCurrentId(IStringTransformer transformer)
-    {
-        _currentId = transformer.Transform(_currentId);
+	public GetCurrentUserDetailsByIdApiRequestBuilder WithCurrentId(IStringTransformer transformer)
+	{
+		_currentId = transformer.Transform(_currentId);
 
-        return this;
-    }
+		return this;
+	}
 
-    public GetCurrentUserDetailsByIdApiRequest Build()
-    {
-        return new(_currentId);
-    }
+	public GetCurrentUserDetailsByIdApiRequest Build()
+	{
+		return new(_currentId);
+	}
 }

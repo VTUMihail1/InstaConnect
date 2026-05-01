@@ -1,10 +1,10 @@
-﻿namespace InstaConnect.Common.Application.Features.Data.Abstractions;
+namespace InstaConnect.Common.Application.Features.Data.Abstractions;
 
 public interface IUnitOfWork
 {
-    Task BeginAsync(CancellationToken cancellationToken);
+	public Task BeginAsync(CancellationToken cancellationToken);
 
-    Task CommitAsync(CancellationToken cancellationToken);
+	public Task CommitAsync(CancellationToken cancellationToken);
 
-    Task AbortAsync(CancellationToken cancellationToken);
+	public Task AbortAsync(CancellationToken cancellationToken);
 }

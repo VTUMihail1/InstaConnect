@@ -1,4 +1,4 @@
-﻿using InstaConnect.Follows.Domain.Features.Common.Models.Requests;
+using InstaConnect.Follows.Domain.Features.Common.Models.Requests;
 
 using MongoDB.Driver;
 
@@ -6,25 +6,25 @@ namespace InstaConnect.Follows.Infrastructure.Features.Follows.Helpers.Includers
 
 internal class FollowingIncluder : IFollowIncluder
 {
-    private readonly IFollowsContext _context;
+	private readonly IFollowsContext _context;
 
-    public FollowingIncluder(IFollowsContext context)
-    {
-        _context = context;
-    }
+	public FollowingIncluder(IFollowsContext context)
+	{
+		_context = context;
+	}
 
-    public FollowsDestinationType DestinationType => FollowsDestinationType.Follow;
+	public FollowsDestinationType DestinationType => FollowsDestinationType.Follow;
 
-    public FollowsIncludeType IncludeType => FollowsIncludeType.Following;
+	public FollowsIncludeType IncludeType => FollowsIncludeType.Following;
 
-    public IAggregateFluent<Follow> Include(IAggregateFluent<Follow> aggregate)
-    {
-        return aggregate
-            .IncludeOne(
-                _context.Users,
-                p => p.Id.FollowingId,
-                u => u.Id,
-                p => p.Following!
-            );
-    }
+	public IAggregateFluent<Follow> Include(IAggregateFluent<Follow> aggregate)
+	{
+		return aggregate
+			.IncludeOne(
+				_context.Users,
+				p => p.Id.FollowingId,
+				u => u.Id,
+				p => p.Following!
+			);
+	}
 }
