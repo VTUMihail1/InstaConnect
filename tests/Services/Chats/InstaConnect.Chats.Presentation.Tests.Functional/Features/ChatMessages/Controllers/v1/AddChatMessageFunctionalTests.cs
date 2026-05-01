@@ -286,6 +286,53 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		chatMessage.ShouldSatisfy(request);
 	}
 
+
+	[Fact]
+	public async Task AddAsync_ShouldPublishChatMessageAddedNotification_WhenRequestIsValid()
+	{
+		// Act
+		var response = await HttpClient.AddAsync(_request, CancellationToken);
+		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
+		var notification = await NotificationClient.AddedAsync(CancellationToken);
+
+		// Assert
+		notification.ShouldSatisfy(chatMessage);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task AddAsync_ShouldPublishChatMessageAddedNotification_WhenRequestAndParticipantOneIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithParticipantOneId(transformer).Build();
+
+		// Act
+		var response = await HttpClient.AddAsync(request, CancellationToken);
+		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
+		var notification = await NotificationClient.AddedAsync(CancellationToken);
+
+		// Assert
+		notification.ShouldSatisfy(chatMessage);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task AddAsync_ShouldPublishChatMessageAddedNotification_WhenRequestAndParticipantTwoIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
+
+		// Act
+		var response = await HttpClient.AddAsync(request, CancellationToken);
+		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
+		var notification = await NotificationClient.AddedAsync(CancellationToken);
+
+		// Assert
+		notification.ShouldSatisfy(chatMessage);
+	}
+
 	[Fact]
 	public async Task AddAsync_ShouldHaveInvertedOkStatusCode_WhenRequestIsValid()
 	{
@@ -422,24 +469,10 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 	}
 
 	[Fact]
-	public async Task AddAsync_ShouldPublishChatMessageAddedNotification_WhenRequestIsValid()
-	{
-		// Act
-		var response = await HttpClient.AddAsync(_request, CancellationToken);
-		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
-		var notification = await NotificationClient.AddedAsync(CancellationToken);
-
-		// Assert
-		notification.ShouldSatisfy(chatMessage);
-	}
-
-	[Theory]
-	[UserIdDifferentCaseData]
-	public async Task AddAsync_ShouldPublishChatMessageAddedNotification_WhenRequestAndParticipantOneIdAreValid(
-		IStringTransformer transformer)
+	public async Task AddAsync_ShouldPublishInvertedChatMessageAddedNotification_WhenRequestIsValid()
 	{
 		// Arrange
-		var request = _requestBuilder.WithParticipantOneId(transformer).Build();
+		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
 		var response = await HttpClient.AddAsync(request, CancellationToken);
@@ -452,11 +485,28 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 
 	[Theory]
 	[UserIdDifferentCaseData]
-	public async Task AddAsync_ShouldPublishChatMessageAddedNotification_WhenRequestAndParticipantTwoIdAreValid(
+	public async Task AddAsync_ShouldPublishInvertedChatMessageAddedNotification_WhenRequestAndParticipantOneIdAreValid(
 		IStringTransformer transformer)
 	{
 		// Arrange
-		var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
+		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id, transformer).WithParticipantTwoId(ParticipantOne.Id).Build();
+
+		// Act
+		var response = await HttpClient.AddAsync(request, CancellationToken);
+		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
+		var notification = await NotificationClient.AddedAsync(CancellationToken);
+
+		// Assert
+		notification.ShouldSatisfy(chatMessage);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task AddAsync_ShouldPublishInvertedChatMessageAddedNotification_WhenRequestAndParticipantTwoIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id, transformer).Build();
 
 		// Act
 		var response = await HttpClient.AddAsync(request, CancellationToken);

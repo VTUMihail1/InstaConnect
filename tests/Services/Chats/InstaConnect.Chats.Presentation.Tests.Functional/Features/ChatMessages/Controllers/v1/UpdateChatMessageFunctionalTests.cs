@@ -417,6 +417,68 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 	}
 
 	[Fact]
+	public async Task UpdateAsync_ShouldPublishChatMessageUpdatedNotification_WhenRequestIsValid()
+	{
+		// Act
+		var response = await HttpClient.UpdateAsync(_request, CancellationToken);
+		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
+		var notification = await NotificationClient.UpdatedAsync(CancellationToken);
+
+		// Assert
+		notification.ShouldSatisfy(chatMessage);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task UpdateAsync_ShouldPublishChatMessageUpdatedNotification_WhenRequestAndParticipantOneIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithParticipantOneId(transformer).Build();
+
+		// Act
+		var response = await HttpClient.UpdateAsync(request, CancellationToken);
+		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
+		var notification = await NotificationClient.UpdatedAsync(CancellationToken);
+
+		// Assert
+		notification.ShouldSatisfy(chatMessage);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task UpdateAsync_ShouldPublishChatMessageUpdatedNotification_WhenRequestAndParticipantTwoIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
+
+		// Act
+		var response = await HttpClient.UpdateAsync(request, CancellationToken);
+		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
+		var notification = await NotificationClient.UpdatedAsync(CancellationToken);
+
+		// Assert
+		notification.ShouldSatisfy(chatMessage);
+	}
+
+	[Theory]
+	[ChatMessageIdDifferentCaseData]
+	public async Task UpdateAsync_ShouldPublishChatMessageUpdatedNotification_WhenRequestAndMessageIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithMessageId(transformer).Build();
+
+		// Act
+		var response = await HttpClient.UpdateAsync(request, CancellationToken);
+		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
+
+		// Assert
+		chatMessage.ShouldSatisfyInverted(request);
+	}
+
+	[Fact]
 	public async Task UpdateAsync_ShouldHaveInvertedOkStatusCode_WhenRequestIsValid()
 	{
 		// Arrange
@@ -621,24 +683,12 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 	}
 
 	[Fact]
-	public async Task UpdateAsync_ShouldPublishChatMessageUpdatedNotification_WhenRequestIsValid()
-	{
-		// Act
-		var response = await HttpClient.UpdateAsync(_request, CancellationToken);
-		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
-		var notification = await NotificationClient.UpdatedAsync(CancellationToken);
-
-		// Assert
-		notification.ShouldSatisfy(chatMessage);
-	}
-
-	[Theory]
-	[UserIdDifferentCaseData]
-	public async Task UpdateAsync_ShouldPublishChatMessageUpdatedNotification_WhenRequestAndParticipantOneIdAreValid(
-		IStringTransformer transformer)
+	public async Task UpdateAsync_ShouldPublishInvertedChatMessageUpdatedNotification_WhenRequestIsValid()
 	{
 		// Arrange
-		var request = _requestBuilder.WithParticipantOneId(transformer).Build();
+		var updatedChatMessage = ChatMessageBuilder.WithSenderId(ParticipantTwo.Id).Build();
+		await ServiceScope.UpdateChatMessageAsync(updatedChatMessage, CancellationToken);
+		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
 		var response = await HttpClient.UpdateAsync(request, CancellationToken);
@@ -651,11 +701,51 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 
 	[Theory]
 	[UserIdDifferentCaseData]
-	public async Task UpdateAsync_ShouldPublishChatMessageUpdatedNotification_WhenRequestAndParticipantTwoIdAreValid(
+	public async Task UpdateAsync_ShouldPublishInvertedChatMessageUpdatedNotification_WhenRequestAndParticipantOneIdAreValid(
 		IStringTransformer transformer)
 	{
 		// Arrange
-		var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
+		var updatedChatMessage = ChatMessageBuilder.WithSenderId(ParticipantTwo.Id).Build();
+		await ServiceScope.UpdateChatMessageAsync(updatedChatMessage, CancellationToken);
+		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id, transformer).WithParticipantTwoId(ParticipantOne.Id).Build();
+
+		// Act
+		var response = await HttpClient.UpdateAsync(request, CancellationToken);
+		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
+		var notification = await NotificationClient.UpdatedAsync(CancellationToken);
+
+		// Assert
+		notification.ShouldSatisfy(chatMessage);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task UpdateAsync_ShouldPublishInvertedChatMessageUpdatedNotification_WhenRequestAndParticipantTwoIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var updatedChatMessage = ChatMessageBuilder.WithSenderId(ParticipantTwo.Id).Build();
+		await ServiceScope.UpdateChatMessageAsync(updatedChatMessage, CancellationToken);
+		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id, transformer).Build();
+
+		// Act
+		var response = await HttpClient.UpdateAsync(request, CancellationToken);
+		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
+		var notification = await NotificationClient.UpdatedAsync(CancellationToken);
+
+		// Assert
+		notification.ShouldSatisfy(chatMessage);
+	}
+
+	[Theory]
+	[ChatMessageIdDifferentCaseData]
+	public async Task UpdateAsync_ShouldPublishInvertedChatMessageUpdatedNotification_WhenRequestAndMessageIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var updatedChatMessage = ChatMessageBuilder.WithSenderId(ParticipantTwo.Id).Build();
+		await ServiceScope.UpdateChatMessageAsync(updatedChatMessage, CancellationToken);
+		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).WithMessageId(transformer).Build();
 
 		// Act
 		var response = await HttpClient.UpdateAsync(request, CancellationToken);
