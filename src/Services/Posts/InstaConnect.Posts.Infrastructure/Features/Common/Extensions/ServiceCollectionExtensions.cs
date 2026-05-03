@@ -32,7 +32,6 @@ public static class ServiceCollectionExtensions
 				.AddMapper(PostsInfrastructureReference.Assembly)
 				.AddServicesWithMatchingInterfaces(PostsInfrastructureReference.Assembly)
 				.AddMongo<IPostsContext>(configuration)
-				.AddUnitOfWork()
 				.AddRabbitMQ(configuration, PostsEventHandlerUtilities.Prefix, presentationAssembly)
 				.AddJwtBearer(configuration)
 				.AddGuidProvider()

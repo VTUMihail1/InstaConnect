@@ -19,7 +19,7 @@ builder.Logging.AddLogging(builder.Configuration, builder.Environment);
 
 var app = builder.Build();
 
-app.UsePresentation();
+await app.UsePresentationAsync();
 
 await app.RunAsync();
 
