@@ -2,6 +2,8 @@ namespace InstaConnect.Identity.Domain.Features.Users.Abstractions;
 
 public interface IUserCommandRepository
 {
+	public Task<bool> AnyAsync(CancellationToken cancellationToken);
+
 	public Task<User?> GetByIdAsync(
 		UserId id,
 		UserInclude? include,

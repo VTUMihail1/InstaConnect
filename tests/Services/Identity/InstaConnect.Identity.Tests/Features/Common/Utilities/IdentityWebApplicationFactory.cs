@@ -1,5 +1,6 @@
 using InstaConnect.Common.Tests.Features.Extensions;
 using InstaConnect.Identity.Presentation.Features.Common.Extensions;
+using InstaConnect.Identity.Tests.Features.Common.Extensions;
 
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -43,6 +44,7 @@ public class IdentityWebApplicationFactory : WebApplicationFactory<Program>, IAs
 		builder.UpdateCloudinaryConfiguration();
 		builder.UpdateCorsConfiguration();
 		builder.UpdateSendGridConfiguration();
+		builder.UpdateAdminConfiguration();
 	}
 
 	public async Task InitializeAsync()

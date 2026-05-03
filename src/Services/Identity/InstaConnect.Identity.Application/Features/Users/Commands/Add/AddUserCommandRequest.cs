@@ -9,4 +9,4 @@ public record AddUserCommandRequest(
 	string ConfirmPassword,
 	string FirstName,
 	string LastName,
-	IFormFile? ProfileImage) : ICommandRequest<AddUserCommandResponse>;
+	IFormFile? ProfileImage = null) : ICommandRequest<AddUserCommandResponse>;

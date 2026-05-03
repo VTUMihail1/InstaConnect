@@ -5,6 +5,7 @@ using InstaConnect.Common.Infrastructure.Extensions;
 using InstaConnect.Common.Infrastructure.Features.Emails.Extensions;
 using InstaConnect.Identity.Domain.Features.Common.Helpers;
 using InstaConnect.Identity.Infrastructure.Features.Common.Helpers;
+using InstaConnect.Identity.Infrastructure.Features.Common.Models.Options;
 using InstaConnect.Identity.Infrastructure.Features.Common.Utilities;
 using InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Extensions;
 using InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Extensions;
@@ -23,6 +24,8 @@ public static class ServiceCollectionExtensions
 			IWebHostEnvironment webHostEnvironment,
 			Assembly presentationAssembly)
 		{
+			serviceCollection.AddValidatedOptions<AdminOptions>(AdminOptions.SectionName);
+
 			serviceCollection.AddSingleton<IPasswordHasher, PasswordHasher>();
 
 			serviceCollection
@@ -39,8 +42,8 @@ public static class ServiceCollectionExtensions
 				.AddServicesWithMatchingInterfaces(IdentityInfrastructureReference.Assembly)
 				.AddRedis(configuration)
 				.AddMongo<IIdentityContext>(configuration)
+				.AddDatabaseSeeder<IIdentityDatabaseSeeder>()
 				.AddCloudinary(configuration)
-				.AddUnitOfWork()
 				.AddRabbitMQ(configuration, IdentityEventHandlerUtilities.Prefix, presentationAssembly)
 				.AddJwtBearer(configuration)
 				.AddGuidProvider()

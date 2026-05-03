@@ -102,6 +102,8 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Docker
       ASPNETCORE_URLS: http://+:80
+      AdminConfiguration__Email: "${ADMIN_EMAIL}"
+      AdminConfiguration__Password: "${ADMIN_PASSWORD}"
       SendGridConfiguration__Sender: "${SEND_GRID_SENDER}"
       SendGridConfiguration__ApiKey: "${SEND_GRID_API_KEY}"
       AccessTokenConfiguration__SecurityKey: "${ACCESS_TOKEN_SECURITY_KEY}"

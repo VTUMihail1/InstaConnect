@@ -14,7 +14,7 @@ internal class EmailConfirmationTokenTemplateFactory : IEmailConfirmationTokenTe
 
 	public async Task<string> GetAddedAsync(EmailConfirmationTokenAddedViewRequest request, CancellationToken cancellationToken)
 	{
-		const string TemplateKey = "Features.EmailConfirmationTokens.Views.Added";
+		const string TemplateKey = "Features.EmailConfirmationTokens.Templates.Added";
 
 		return await _renderer.RenderAsync(TemplateKey, request, cancellationToken);
 	}

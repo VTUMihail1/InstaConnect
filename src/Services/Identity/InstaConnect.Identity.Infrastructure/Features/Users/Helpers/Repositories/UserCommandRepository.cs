@@ -19,6 +19,14 @@ internal class UserCommandRepository : IUserCommandRepository
 		_includePropertyFactory = includePropertyFactory;
 	}
 
+	public async Task<bool> AnyAsync(CancellationToken cancellationToken)
+	{
+		return await _context
+			.Users
+			.AggregateWithCaseInsensitiveCollation()
+			.AnyAsync(cancellationToken);
+	}
+
 	public async Task<User?> GetByIdAsync(
 		UserId id,
 		UserInclude? include,
