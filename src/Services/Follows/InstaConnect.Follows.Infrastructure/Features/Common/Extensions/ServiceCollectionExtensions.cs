@@ -26,7 +26,6 @@ public static class ServiceCollectionExtensions
 				.AddMapper(FollowsInfrastructureReference.Assembly)
 				.AddServicesWithMatchingInterfaces(FollowsInfrastructureReference.Assembly)
 				.AddMongo<IFollowsContext>(configuration)
-				.AddUnitOfWork()
 				.AddRabbitMQ(configuration, FollowsEventHandlerUtilities.Prefix, presentationAssembly)
 				.AddJwtBearer(configuration)
 				.AddRedis(configuration)

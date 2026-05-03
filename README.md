@@ -34,6 +34,8 @@ Create `.env` via terminal
 
 ```powershell
 @"
+ADMIN_EMAIL=your_admin_email
+ADMIN_PASSWORD=your_admin_password
 MONGO_USERNAME=your_mongo_username
 MONGO_PASSWORD=your_mongo_password
 REDIS_PASSWORD=your_redis_password
@@ -52,6 +54,8 @@ CLOUDINARY_API_SECRET=your_api_secret
 
 ```bash
 cat > .env << EOF
+ADMIN_EMAIL=your_admin_email
+ADMIN_PASSWORD=your_admin_password
 MONGO_USERNAME=your_mongo_username
 MONGO_PASSWORD=your_mongo_password
 REDIS_PASSWORD=your_redis_password

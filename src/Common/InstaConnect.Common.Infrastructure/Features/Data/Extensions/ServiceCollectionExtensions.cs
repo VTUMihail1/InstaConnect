@@ -19,13 +19,6 @@ public static partial class ServiceCollectionExtensions
 {
 	extension(IServiceCollection serviceCollection)
 	{
-		public IServiceCollection AddUnitOfWork()
-		{
-			serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
-
-			return serviceCollection;
-		}
-
 		public IServiceCollection AddMongo<TContext>(IConfiguration configuration)
 			where TContext : class, IMongoDbContext
 		{
@@ -41,7 +34,9 @@ public static partial class ServiceCollectionExtensions
 				sp.GetRequiredService<IMongoClient>()
 				  .GetDatabase(options.Name));
 
-			serviceCollection.AddScoped<IPaginator, Paginator>();
+			serviceCollection
+				.AddScoped<IPaginator, Paginator>()
+				.AddScoped<IUnitOfWork, UnitOfWork>();
 
 			serviceCollection.AddScoped<IMongoDbContext>(sp => sp.GetRequiredService<TContext>());
 

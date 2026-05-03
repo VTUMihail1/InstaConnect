@@ -14,7 +14,7 @@ internal class ForgotPasswordTokenTemplateFactory : IForgotPasswordTokenTemplate
 
 	public async Task<string> GetAddedAsync(ForgotPasswordTokenAddedViewRequest request, CancellationToken cancellationToken)
 	{
-		const string TemplateKey = "Features.ForgotPasswordTokens.Views.Added";
+		const string TemplateKey = "Features.ForgotPasswordTokens.Templates.Added";
 
 		return await _renderer.RenderAsync(TemplateKey, request, cancellationToken);
 	}

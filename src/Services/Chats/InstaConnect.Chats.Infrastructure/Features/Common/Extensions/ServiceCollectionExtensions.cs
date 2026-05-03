@@ -29,7 +29,6 @@ public static class ServiceCollectionExtensions
 				.AddMapper(ChatsInfrastructureReference.Assembly, CommonInfrastructureReference.Assembly)
 				.AddServicesWithMatchingInterfaces(ChatsInfrastructureReference.Assembly)
 				.AddMongo<IChatsContext>(configuration)
-				.AddUnitOfWork()
 				.AddRabbitMQ(configuration, ChatsEventHandlerUtilities.Prefix, presentationAssembly)
 				.AddJwtBearer(configuration)
 				.AddRedis(configuration)

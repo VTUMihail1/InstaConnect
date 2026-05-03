@@ -23,8 +23,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Features\**\Views\*.cshtml" />
-    <EmbeddedResource Include="Features\**\Views\*.cshtml" />
+    <Content Remove="Features\**\Templates\*.cshtml" />
+    <EmbeddedResource Include="Features\**\Templates\*.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Features\EmailConfirmationTokens\Templates\Added.cshtml" />
+    <Content Include="Features\ForgotPasswordTokens\Templates\Added.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
