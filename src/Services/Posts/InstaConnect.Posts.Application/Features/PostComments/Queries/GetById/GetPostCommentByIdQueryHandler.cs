@@ -20,9 +20,9 @@ internal class GetPostCommentByIdQueryHandler : IQueryHandler<GetPostCommentById
 		CancellationToken cancellationToken)
 	{
 		var serviceRequest = _mapper.Map<GetPostCommentByIdQuery>(request);
-		var postComment = await _commentService.GetByIdAsync(serviceRequest, cancellationToken);
+		var serviceResponse = await _commentService.GetByIdAsync(serviceRequest, cancellationToken);
 
-		var response = _mapper.Map<GetPostCommentByIdQueryResponse>(postComment);
+		var response = _mapper.Map<GetPostCommentByIdQueryResponse>(serviceResponse);
 
 		return response;
 	}

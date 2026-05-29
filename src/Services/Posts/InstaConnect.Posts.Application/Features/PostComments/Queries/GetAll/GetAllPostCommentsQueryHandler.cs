@@ -20,9 +20,9 @@ internal class GetAllPostCommentsQueryHandler : IQueryHandler<GetAllPostComments
 		CancellationToken cancellationToken)
 	{
 		var serviceRequest = _mapper.Map<GetAllPostCommentsQuery>(request);
-		var collection = await _commentService.GetAllAsync(serviceRequest, cancellationToken);
+		var serviceResponse = await _commentService.GetAllAsync(serviceRequest, cancellationToken);
 
-		var response = _mapper.Map<GetAllPostCommentsQueryResponse>(collection);
+		var response = _mapper.Map<GetAllPostCommentsQueryResponse>(serviceResponse);
 
 		return response;
 	}
