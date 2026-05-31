@@ -1,0 +1,52 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Nullable>disable</Nullable>
+
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\Services\Posts\InstaConnect.Posts.Infrastructure\InstaConnect.Posts.Infrastructure.csproj" />
+    <ProjectReference Include="..\InstaConnect.Posts.Infrastructure.Tests\InstaConnect.Posts.Infrastructure.Tests.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup Label="Common">
+    <Using Include="Xunit" />
+    <Using Include="InstaConnect.Common.Tests.Features.Events" />
+    <Using Include="InstaConnect.Common.Tests.Features.Assertions" />
+    <Using Include="InstaConnect.Common.Tests.Features.Utilities" />
+    <Using Include="InstaConnect.Posts.Tests.Features.Common.Utilities" />
+  </ItemGroup>
+
+  <ItemGroup Label="Users">
+  	<Using Include="InstaConnect.Identity.Events.Features.Users" />
+  	<Using Include="InstaConnect.Posts.Infrastructure.Features.Users.EventHandlers" />
+  	<Using Include="InstaConnect.Posts.Domain.Features.Users.Abstractions" />
+  	<Using Include="InstaConnect.Posts.Domain.Features.Users.Models.Entities" />
+  	<Using Include="InstaConnect.Posts.Infrastructure.Tests.Features.Users.Builders" />
+  	<Using Include="InstaConnect.Posts.Infrastructure.Tests.Features.Users.Utilities" />
+  	<Using Include="InstaConnect.Posts.Application.Features.Users.Commands.Add" />
+  	<Using Include="InstaConnect.Posts.Application.Features.Users.Commands.Update" />
+  	<Using Include="InstaConnect.Posts.Application.Features.Users.Commands.Delete" />
+  	<Using Include="InstaConnect.Posts.Infrastructure.Tests.Unit.Features.Users.Utilities" />
+  	<Using Include="InstaConnect.Posts.Infrastructure.Tests.Features.Users.Assertions" />
+  	<Using Include="InstaConnect.Posts.Tests.Features.Users.Builders" />
+  	<Using Include="InstaConnect.Posts.Tests.Features.Users.Utilities" />
+  </ItemGroup>
+
+</Project>

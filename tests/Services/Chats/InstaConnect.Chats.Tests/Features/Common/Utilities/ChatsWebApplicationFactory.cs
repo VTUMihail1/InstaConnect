@@ -1,4 +1,4 @@
-using InstaConnect.Chats.Presentation.Features.Common.Extensions;
+using InstaConnect.Chats.Infrastructure.Features.Common.Extensions;
 using InstaConnect.Common.Tests.Features.Extensions;
 
 using Microsoft.AspNetCore.Hosting;
@@ -30,7 +30,7 @@ public class ChatsWebApplicationFactory : WebApplicationFactory<Program>, IAsync
 	{
 		builder.ConfigureTestServices(serviceCollection =>
 		{
-			serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), ChatsPresentationReference.Assembly);
+			serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), ChatsInfrastructureReference.Assembly);
 		});
 
 		builder.UpdateRedisConfiguration(_redisContainer.GetConnectionString());

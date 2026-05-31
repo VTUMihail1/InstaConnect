@@ -41,19 +41,12 @@
   </ItemGroup>
 
   <ItemGroup Label="Users">
-    <Using Include="InstaConnect.Identity.Events.Features.Users" />
-    <Using Include="InstaConnect.Follows.Presentation.Features.Users.EventHandlers" />
-    <Using Include="InstaConnect.Follows.Domain.Features.Users.Abstractions" />
-    <Using Include="InstaConnect.Follows.Domain.Features.Users.Models.Entities" />
-    <Using Include="InstaConnect.Follows.Presentation.Tests.Features.Users.Builders" />
-    <Using Include="InstaConnect.Follows.Presentation.Tests.Features.Users.Utilities" />
-    <Using Include="InstaConnect.Follows.Application.Features.Users.Commands.Add" />
-    <Using Include="InstaConnect.Follows.Application.Features.Users.Commands.Update" />
-    <Using Include="InstaConnect.Follows.Application.Features.Users.Commands.Delete" />
-    <Using Include="InstaConnect.Follows.Presentation.Tests.Unit.Features.Users.Utilities" />
-    <Using Include="InstaConnect.Follows.Presentation.Tests.Features.Users.Assertions" />
-    <Using Include="InstaConnect.Follows.Tests.Features.Users.Builders" />
-    <Using Include="InstaConnect.Follows.Tests.Features.Users.Utilities" />
+  	<Using Include="InstaConnect.Follows.Domain.Features.Users.Abstractions" />
+  	<Using Include="InstaConnect.Follows.Domain.Features.Users.Models.Entities" />
+  	<Using Include="InstaConnect.Follows.Presentation.Tests.Features.Users.Utilities" />
+  	<Using Include="InstaConnect.Follows.Presentation.Tests.Features.Users.Assertions" />
+  	<Using Include="InstaConnect.Follows.Tests.Features.Users.Builders" />
+  	<Using Include="InstaConnect.Follows.Tests.Features.Users.Utilities" />
   </ItemGroup>
 
   <ItemGroup Label="Follows">

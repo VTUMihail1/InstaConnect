@@ -1,3 +1,4 @@
+using InstaConnect.Chats.Presentation.Tests.Features.Users.Assertions;
 using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
 
 namespace InstaConnect.Chats.Presentation.Tests.Features.Chats.Assertions;

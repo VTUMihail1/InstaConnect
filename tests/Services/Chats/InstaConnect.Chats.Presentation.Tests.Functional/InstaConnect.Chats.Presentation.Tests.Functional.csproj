@@ -41,25 +41,19 @@
   </ItemGroup>
 
   <ItemGroup Label="Users">
-    <Using Include="InstaConnect.Identity.Events.Features.Users" />
-    <Using Include="InstaConnect.Chats.Domain.Features.Users.Abstractions" />
-    <Using Include="InstaConnect.Chats.Presentation.Tests.Features.Users.Builders" />
-    <Using Include="InstaConnect.Chats.Presentation.Tests.Features.Users.Utilities" />
-    <Using Include="InstaConnect.Chats.Application.Features.Users.Commands.Add" />
-    <Using Include="InstaConnect.Chats.Application.Features.Users.Commands.Update" />
-    <Using Include="InstaConnect.Chats.Application.Features.Users.Commands.Delete" />
-    <Using Include="InstaConnect.Chats.Presentation.Tests.Functional.Features.Users.Utilities" />
-    <Using Include="InstaConnect.Chats.Presentation.Tests.Features.Users.Assertions" />
-    <Using Include="InstaConnect.Chats.Tests.Features.Users.Builders" />
-    <Using Include="InstaConnect.Chats.Tests.Features.Users.Utilities" />
-    <Using Include="InstaConnect.Chats.Tests.Features.Users.DataAttributes.Id" />
-    <Using Include="InstaConnect.Chats.Tests.Features.Users.DataAttributes.FirstName" />
-    <Using Include="InstaConnect.Chats.Tests.Features.Users.DataAttributes.LastName" />
-    <Using Include="InstaConnect.Chats.Tests.Features.Users.DataAttributes.Name" />
-    <Using Include="InstaConnect.Chats.Tests.Features.Users.DataAttributes.Email" />
-    <Using Include="InstaConnect.Chats.Tests.Features.Users.DataAttributes.ProfileImage" />
-    <Using Include="InstaConnect.Chats.Tests.Features.Users.DataAttributes.CreatedAtUtc" />
-    <Using Include="InstaConnect.Chats.Tests.Features.Users.DataAttributes.UpdatedAtUtc" />
+  	<Using Include="InstaConnect.Chats.Domain.Features.Users.Abstractions" />
+  	<Using Include="InstaConnect.Chats.Presentation.Tests.Features.Users.Utilities" />
+  	<Using Include="InstaConnect.Chats.Presentation.Tests.Features.Users.Assertions" />
+  	<Using Include="InstaConnect.Chats.Tests.Features.Users.Builders" />
+  	<Using Include="InstaConnect.Chats.Tests.Features.Users.Utilities" />
+  	<Using Include="InstaConnect.Chats.Tests.Features.Users.DataAttributes.Id" />
+  	<Using Include="InstaConnect.Chats.Tests.Features.Users.DataAttributes.FirstName" />
+  	<Using Include="InstaConnect.Chats.Tests.Features.Users.DataAttributes.LastName" />
+  	<Using Include="InstaConnect.Chats.Tests.Features.Users.DataAttributes.Name" />
+  	<Using Include="InstaConnect.Chats.Tests.Features.Users.DataAttributes.Email" />
+  	<Using Include="InstaConnect.Chats.Tests.Features.Users.DataAttributes.ProfileImage" />
+  	<Using Include="InstaConnect.Chats.Tests.Features.Users.DataAttributes.CreatedAtUtc" />
+  	<Using Include="InstaConnect.Chats.Tests.Features.Users.DataAttributes.UpdatedAtUtc" />
   </ItemGroup>
 
   <ItemGroup Label="Chats">

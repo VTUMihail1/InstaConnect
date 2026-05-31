@@ -1,5 +1,5 @@
 using InstaConnect.Common.Tests.Features.Extensions;
-using InstaConnect.Follows.Presentation.Features.Common.Extensions;
+using InstaConnect.Follows.Infrastructure.Features.Common.Extensions;
 
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -30,7 +30,7 @@ public class FollowsWebApplicationFactory : WebApplicationFactory<Program>, IAsy
 	{
 		builder.ConfigureTestServices(serviceCollection =>
 		{
-			serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), FollowsPresentationReference.Assembly);
+			serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), FollowsInfrastructureReference.Assembly);
 		});
 
 		builder.UpdateRedisConfiguration(_redisContainer.GetConnectionString());

@@ -28,7 +28,6 @@
   </ItemGroup>
 
   <ItemGroup Label="Common">
-    <Using Include="MassTransit" />
     <Using Include="Microsoft.AspNetCore.Mvc" />
     <Using Include="Microsoft.AspNetCore.Authorization" />
     <Using Include="Microsoft.Extensions.DependencyInjection" />
@@ -40,7 +39,6 @@
   </ItemGroup>
 
   <ItemGroup Label="Users">
-    <Using Include="InstaConnect.Identity.Events.Features.Users" />
     <Using Include="InstaConnect.Posts.Presentation.Features.Users.Models" />
     <Using Include="InstaConnect.Posts.Presentation.Features.Users.Models.Responses" />
   </ItemGroup>

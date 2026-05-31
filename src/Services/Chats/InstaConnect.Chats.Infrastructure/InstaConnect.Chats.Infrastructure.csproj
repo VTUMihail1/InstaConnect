@@ -9,7 +9,17 @@
     <ProjectReference Include="..\InstaConnect.Chats.Application\InstaConnect.Chats.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+  	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+  	  <_Parameter1>InstaConnect.Chats.Infrastructure.Tests.Unit</_Parameter1>
+  	</AssemblyAttribute>
+  	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+	  <_Parameter1>InstaConnect.Chats.Infrastructure.Tests.Integration</_Parameter1>
+  	</AssemblyAttribute>
+  </ItemGroup>
+
   <ItemGroup Label="Common">
+	<Using Include="MassTransit" />
     <Using Include="Microsoft.Extensions.DependencyInjection" />
     <Using Include="Microsoft.AspNetCore.Hosting" />
     <Using Include="Microsoft.Extensions.Configuration" />
@@ -19,6 +29,7 @@
   </ItemGroup>
   
   <ItemGroup Label="Users">
+	<Using Include="InstaConnect.Identity.Events.Features.Users" />
     <Using Include="InstaConnect.Chats.Domain.Features.Users.Exceptions" />
     <Using Include="InstaConnect.Chats.Domain.Features.Users.Abstractions" />
     <Using Include="InstaConnect.Chats.Domain.Features.Users.Models.Entities" />

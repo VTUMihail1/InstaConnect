@@ -1,4 +1,5 @@
 using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
+using InstaConnect.Posts.Presentation.Tests.Features.Users.Assertions;
 
 namespace InstaConnect.Posts.Presentation.Tests.Features.PostLikes.Assertions;
 

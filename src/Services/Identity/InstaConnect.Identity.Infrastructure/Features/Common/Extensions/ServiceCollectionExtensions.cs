@@ -1,5 +1,3 @@
-using System.Reflection;
-
 using InstaConnect.Common.Domain.Features.Mappers.Extensions;
 using InstaConnect.Common.Infrastructure.Extensions;
 using InstaConnect.Common.Infrastructure.Features.Emails.Extensions;
@@ -21,8 +19,7 @@ public static class ServiceCollectionExtensions
 	{
 		public IServiceCollection AddInfrastructure(
 			IConfiguration configuration,
-			IWebHostEnvironment webHostEnvironment,
-			Assembly presentationAssembly)
+			IWebHostEnvironment webHostEnvironment)
 		{
 			serviceCollection.AddValidatedOptions<AdminOptions>(AdminOptions.SectionName);
 
@@ -44,7 +41,7 @@ public static class ServiceCollectionExtensions
 				.AddMongo<IIdentityContext>(configuration)
 				.AddDatabaseSeeder<IIdentityDatabaseSeeder>()
 				.AddCloudinary(configuration)
-				.AddRabbitMQ(configuration, IdentityEventHandlerUtilities.Prefix, presentationAssembly)
+				.AddRabbitMQ(configuration, IdentityEventHandlerUtilities.Prefix, IdentityInfrastructureReference.Assembly)
 				.AddJwtBearer(configuration)
 				.AddGuidProvider()
 				.AddDateTimeProvider()

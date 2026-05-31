@@ -5,7 +5,6 @@
     <ProjectReference Include="..\InstaConnect.Follows.Domain\InstaConnect.Follows.Domain.csproj" />
   </ItemGroup>
 
-
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
       <_Parameter1>InstaConnect.Follows.Application.Tests.Unit</_Parameter1>
@@ -14,7 +13,6 @@
       <_Parameter1>InstaConnect.Follows.Application.Tests.Integration</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
-
 
   <ItemGroup>
     <PackageReference Include="MediatR" />

@@ -41,16 +41,9 @@
   </ItemGroup>
 
   <ItemGroup Label="Users">
-    <Using Include="InstaConnect.Identity.Events.Features.Users" />
-    <Using Include="InstaConnect.Posts.Presentation.Features.Users.EventHandlers" />
     <Using Include="InstaConnect.Posts.Domain.Features.Users.Abstractions" />
     <Using Include="InstaConnect.Posts.Domain.Features.Users.Models.Entities" />
-    <Using Include="InstaConnect.Posts.Presentation.Tests.Features.Users.Builders" />
     <Using Include="InstaConnect.Posts.Presentation.Tests.Features.Users.Utilities" />
-    <Using Include="InstaConnect.Posts.Application.Features.Users.Commands.Add" />
-    <Using Include="InstaConnect.Posts.Application.Features.Users.Commands.Update" />
-    <Using Include="InstaConnect.Posts.Application.Features.Users.Commands.Delete" />
-    <Using Include="InstaConnect.Posts.Presentation.Tests.Unit.Features.Users.Utilities" />
     <Using Include="InstaConnect.Posts.Presentation.Tests.Features.Users.Assertions" />
     <Using Include="InstaConnect.Posts.Tests.Features.Users.Builders" />
     <Using Include="InstaConnect.Posts.Tests.Features.Users.Utilities" />

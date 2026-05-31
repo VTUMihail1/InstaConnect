@@ -9,7 +9,17 @@
     <ProjectReference Include="..\InstaConnect.Posts.Application\InstaConnect.Posts.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+  	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+  	  <_Parameter1>InstaConnect.Posts.Domain.Tests.Unit</_Parameter1>
+  	</AssemblyAttribute>
+  	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+  	  <_Parameter1>InstaConnect.Posts.Domain.Tests.Integration</_Parameter1>
+  	</AssemblyAttribute>
+  </ItemGroup>
+
   <ItemGroup Label="Common">
+	<Using Include="MassTransit" />
     <Using Include="Microsoft.Extensions.DependencyInjection" />
     <Using Include="Microsoft.AspNetCore.Hosting" />
     <Using Include="Microsoft.Extensions.Configuration" />
@@ -19,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup Label="Users">
+	<Using Include="InstaConnect.Identity.Events.Features.Users" />
     <Using Include="InstaConnect.Posts.Domain.Features.Users.Exceptions" />
     <Using Include="InstaConnect.Posts.Domain.Features.Users.Abstractions" />
     <Using Include="InstaConnect.Posts.Domain.Features.Users.Models.Entities" />

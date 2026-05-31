@@ -11,7 +11,17 @@
     <ProjectReference Include="..\InstaConnect.Identity.Domain\InstaConnect.Identity.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+  	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+  	  <_Parameter1>InstaConnect.Identity.Infrastructure.Tests.Unit</_Parameter1>
+  	</AssemblyAttribute>
+  	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+  	  <_Parameter1>InstaConnect.Identity.Infrastructure.Tests.Integration</_Parameter1>
+  	</AssemblyAttribute>
+  </ItemGroup>
+
   <ItemGroup Label="Common">
+	<Using Include="MassTransit" />
     <Using Include="Microsoft.Extensions.DependencyInjection" />
     <Using Include="Microsoft.AspNetCore.Hosting" />
     <Using Include="Microsoft.Extensions.Configuration" />

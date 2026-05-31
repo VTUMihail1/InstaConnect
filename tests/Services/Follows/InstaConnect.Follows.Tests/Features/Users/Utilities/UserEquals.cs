@@ -1,5 +1,6 @@
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Follows.Domain.Features.Users.Models.ValueObjects;
+using InstaConnect.Follows.Tests.Features.Users.Utilities;
 using InstaConnect.Identity.Events.Features.Users;
 
 namespace InstaConnect.Follows.Tests.Features.Users.Utilities;
@@ -59,16 +60,28 @@ public static class UserEquals
 				   entity.UpdatedAtUtc == request.UpdatedAtUtc;
 		}
 
-		public bool Matches(UserNotificationRequest response)
+		public bool Matches(User u)
 		{
-			return entity.Id.Matches(response.Id) &&
-				   entity.Name.Matches(response.Name) &&
-				   entity.Email.Matches(response.Email) &&
-				   entity.FirstName == response.FirstName &&
-				   entity.LastName == response.LastName &&
-				   entity.ProfileImage.Matches(response.ProfileImageUrl) &&
-				   entity.CreatedAtUtc == response.CreatedAtUtc &&
-				   entity.UpdatedAtUtc == response.UpdatedAtUtc;
+			return entity.Id.Matches(u.Id.Id) &&
+				   entity.Email.Matches(u.Email.Value) &&
+				   entity.FirstName == u.FirstName &&
+				   entity.LastName == u.LastName &&
+				   entity.Name.Matches(u.Name.Value) &&
+				   entity.ProfileImage.Matches(u.ProfileImage?.Url) &&
+				   entity.CreatedAtUtc == u.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == u.UpdatedAtUtc;
+		}
+
+		public bool Matches(UserNotificationRequest request)
+		{
+			return entity.Id.Matches(request.Id) &&
+				   entity.Name.Matches(request.Name) &&
+				   entity.Email.Matches(request.Email) &&
+				   entity.FirstName == request.FirstName &&
+				   entity.LastName == request.LastName &&
+				   entity.ProfileImage.Matches(request.ProfileImageUrl) &&
+				   entity.CreatedAtUtc == request.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == request.UpdatedAtUtc;
 		}
 	}
 

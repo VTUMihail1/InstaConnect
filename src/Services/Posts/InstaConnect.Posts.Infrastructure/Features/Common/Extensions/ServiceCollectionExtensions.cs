@@ -1,5 +1,3 @@
-using System.Reflection;
-
 using InstaConnect.Common.Domain.Features.Mappers.Extensions;
 using InstaConnect.Common.Infrastructure.Extensions;
 using InstaConnect.Posts.Infrastructure.Features.Common.Utilities;
@@ -17,8 +15,7 @@ public static class ServiceCollectionExtensions
 	{
 		public IServiceCollection AddInfrastructure(
 			IConfiguration configuration,
-			IWebHostEnvironment webHostEnvironment,
-			Assembly presentationAssembly)
+			IWebHostEnvironment webHostEnvironment)
 		{
 			serviceCollection
 				.AddUserServices()
@@ -32,7 +29,7 @@ public static class ServiceCollectionExtensions
 				.AddMapper(PostsInfrastructureReference.Assembly)
 				.AddServicesWithMatchingInterfaces(PostsInfrastructureReference.Assembly)
 				.AddMongo<IPostsContext>(configuration)
-				.AddRabbitMQ(configuration, PostsEventHandlerUtilities.Prefix, presentationAssembly)
+				.AddRabbitMQ(configuration, PostsEventHandlerUtilities.Prefix, PostsInfrastructureReference.Assembly)
 				.AddJwtBearer(configuration)
 				.AddGuidProvider()
 				.AddDateTimeProvider()

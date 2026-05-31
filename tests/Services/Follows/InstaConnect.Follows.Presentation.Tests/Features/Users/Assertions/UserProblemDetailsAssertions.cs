@@ -6,62 +6,6 @@ public static class UserProblemDetailsAssertions
 {
 	extension(ApplicationProblemDetails problemDetails)
 	{
-		public void ShouldSatisfyUserNotFound(
-		UpdateUserCommandRequest request)
-		{
-			problemDetails.ShouldSatisfyUserNotFound(
-				r => r.Id,
-				request);
-		}
-
-		public void ShouldSatisfyUserNotFound(
-			DeleteUserCommandRequest request)
-		{
-			problemDetails.ShouldSatisfyUserNotFound(
-				r => r.Id,
-				request);
-		}
-
-		public void ShouldSatisfyUserAlreadyExists(
-			AddUserCommandRequest request)
-		{
-			problemDetails.ShouldSatisfyUserAlreadyExists(
-				r => r.Id,
-				request);
-		}
-
-		public void ShouldSatisfyUserNameAlreadyExists(
-			AddUserCommandRequest request)
-		{
-			problemDetails.ShouldSatisfyUserNameAlreadyExists(
-				r => r.Name,
-				request);
-		}
-
-		public void ShouldSatisfyUserNameAlreadyExists(
-			UpdateUserCommandRequest request)
-		{
-			problemDetails.ShouldSatisfyUserNameAlreadyExists(
-				r => r.Name,
-				request);
-		}
-
-		public void ShouldSatisfyUserEmailAlreadyExists(
-			AddUserCommandRequest request)
-		{
-			problemDetails.ShouldSatisfyUserEmailAlreadyExists(
-				r => r.Email,
-				request);
-		}
-
-		public void ShouldSatisfyUserEmailAlreadyExists(
-			UpdateUserCommandRequest request)
-		{
-			problemDetails.ShouldSatisfyUserEmailAlreadyExists(
-				r => r.Email,
-				request);
-		}
-
 		internal void ShouldSatisfyUserNotFound<TRequest>(
 			Func<TRequest, string> idPropertyExpression,
 			TRequest request)

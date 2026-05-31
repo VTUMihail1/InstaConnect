@@ -62,11 +62,6 @@ public static class ServiceCollectionExtensions
 			{
 				options.DefaultApiVersion = new ApiVersion(1);
 				options.ReportApiVersions = true;
-			})
-			.AddApiExplorer(options =>
-			{
-				options.GroupNameFormat = "'v'VVV";
-				options.SubstituteApiVersionInUrl = true;
 			});
 
 			return serviceCollection;
