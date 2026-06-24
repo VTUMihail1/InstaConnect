@@ -1,7 +1,7 @@
 using InstaConnect.Common.Application.Features.Messaging.Abstractions;
-using InstaConnect.Posts.Domain.Features.PostComments.Exceptions;
-
-using MediatR;
+using InstaConnect.Posts.Tests.Features.PostComments.Assertions;
+using InstaConnect.Posts.Tests.Features.Posts.Assertions;
+using InstaConnect.Posts.Tests.Features.Users.Assertions;
 
 namespace InstaConnect.Posts.Application.Tests.Features.PostComments.Assertions;
 
@@ -13,7 +13,9 @@ public static class PostCommentExceptionAssertions
 			AddPostCommentCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowUserNotFoundExceptionAsync<AddPostCommentCommandRequest, AddPostCommentCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.UserId,
 				request,
 				cancellationToken);
@@ -23,7 +25,9 @@ public static class PostCommentExceptionAssertions
 			GetAllPostCommentsForUserQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowUserNotFoundExceptionAsync<GetAllPostCommentsForUserQueryRequest, GetAllPostCommentsForUserQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.UserId,
 				request,
 				cancellationToken);
@@ -33,7 +37,9 @@ public static class PostCommentExceptionAssertions
 			AddPostCommentCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowPostNotFoundExceptionAsync<AddPostCommentCommandRequest, AddPostCommentCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowPostNotFoundExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -43,7 +49,9 @@ public static class PostCommentExceptionAssertions
 			UpdatePostCommentCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowPostNotFoundExceptionAsync<UpdatePostCommentCommandRequest, UpdatePostCommentCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowPostNotFoundExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -53,7 +61,9 @@ public static class PostCommentExceptionAssertions
 			DeletePostCommentCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowPostNotFoundExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowPostNotFoundExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -63,7 +73,9 @@ public static class PostCommentExceptionAssertions
 			GetPostCommentByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowPostNotFoundExceptionAsync<GetPostCommentByIdQueryRequest, GetPostCommentByIdQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowPostNotFoundExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -73,7 +85,9 @@ public static class PostCommentExceptionAssertions
 			GetAllPostCommentsQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowPostNotFoundExceptionAsync<GetAllPostCommentsQueryRequest, GetAllPostCommentsQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowPostNotFoundExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -83,7 +97,9 @@ public static class PostCommentExceptionAssertions
 			UpdatePostCommentCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowPostCommentNotFoundExceptionAsync<UpdatePostCommentCommandRequest, UpdatePostCommentCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowPostCommentNotFoundExceptionAsync(
 				r => r.Id,
 				r => r.CommentId,
 				request,
@@ -94,7 +110,9 @@ public static class PostCommentExceptionAssertions
 			DeletePostCommentCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowPostCommentNotFoundExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowPostCommentNotFoundExceptionAsync(
 				r => r.Id,
 				r => r.CommentId,
 				request,
@@ -105,7 +123,9 @@ public static class PostCommentExceptionAssertions
 			GetPostCommentByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowPostCommentNotFoundExceptionAsync<GetPostCommentByIdQueryRequest, GetPostCommentByIdQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowPostCommentNotFoundExceptionAsync(
 				r => r.Id,
 				r => r.CommentId,
 				request,
@@ -116,7 +136,9 @@ public static class PostCommentExceptionAssertions
 			DeletePostCommentCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowPostCommentForbiddenExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowPostCommentForbiddenExceptionAsync(
 				r => r.Id,
 				r => r.CommentId,
 				r => r.UserId,
@@ -128,78 +150,12 @@ public static class PostCommentExceptionAssertions
 			UpdatePostCommentCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowPostCommentForbiddenExceptionAsync<UpdatePostCommentCommandRequest, UpdatePostCommentCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowPostCommentForbiddenExceptionAsync(
 				r => r.Id,
 				r => r.CommentId,
 				r => r.UserId,
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowPostCommentNotFoundExceptionAsync<TRequest>(
-			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> commentIdPropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest
-		{
-			await sender.ShouldThrowAsync<PostCommentNotFoundException, TRequest>(
-				PostCommentExceptionErrorMessages.GetNotFoundMessage(
-					new(
-						new(idPropertyExpression(request)),
-						new(commentIdPropertyExpression(request)))),
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowPostCommentNotFoundExceptionAsync<TRequest, TResponse>(
-			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> commentIdPropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest<TResponse>
-		{
-			await sender.ShouldThrowAsync<PostCommentNotFoundException, TRequest, TResponse>(
-				PostCommentExceptionErrorMessages.GetNotFoundMessage(
-					new(
-						new(idPropertyExpression(request)),
-						new(commentIdPropertyExpression(request)))),
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowPostCommentForbiddenExceptionAsync<TRequest>(
-			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> commentIdPropertyExpression,
-			Func<TRequest, string> userIdPropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest
-		{
-			await sender.ShouldThrowAsync<PostCommentForbiddenException, TRequest>(
-				PostCommentExceptionErrorMessages.GetForbiddenMessage(
-					new(
-						new(idPropertyExpression(request)),
-						new(commentIdPropertyExpression(request))),
-					new(userIdPropertyExpression(request))),
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowPostCommentForbiddenExceptionAsync<TRequest, TResponse>(
-			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> commentIdPropertyExpression,
-			Func<TRequest, string> userIdPropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest<TResponse>
-		{
-			await sender.ShouldThrowAsync<PostCommentForbiddenException, TRequest, TResponse>(
-				PostCommentExceptionErrorMessages.GetForbiddenMessage(
-					new(
-						new(idPropertyExpression(request)),
-						new(commentIdPropertyExpression(request))),
-					new(userIdPropertyExpression(request))),
 				request,
 				cancellationToken);
 		}

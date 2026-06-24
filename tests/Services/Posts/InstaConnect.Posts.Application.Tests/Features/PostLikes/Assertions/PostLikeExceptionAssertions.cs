@@ -1,7 +1,7 @@
 using InstaConnect.Common.Application.Features.Messaging.Abstractions;
-using InstaConnect.Posts.Domain.Features.PostLikes.Exceptions;
-
-using MediatR;
+using InstaConnect.Posts.Tests.Features.PostLikes.Assertions;
+using InstaConnect.Posts.Tests.Features.Posts.Assertions;
+using InstaConnect.Posts.Tests.Features.Users.Assertions;
 
 namespace InstaConnect.Posts.Application.Tests.Features.PostLikes.Assertions;
 
@@ -13,7 +13,9 @@ public static class PostLikeExceptionAssertions
 		GetAllPostLikesForUserQueryRequest request,
 		CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowUserNotFoundExceptionAsync<GetAllPostLikesForUserQueryRequest, GetAllPostLikesForUserQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.UserId,
 				request,
 				cancellationToken);
@@ -23,7 +25,9 @@ public static class PostLikeExceptionAssertions
 			AddPostLikeCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowUserNotFoundExceptionAsync<AddPostLikeCommandRequest, AddPostLikeCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.UserId,
 				request,
 				cancellationToken);
@@ -33,7 +37,9 @@ public static class PostLikeExceptionAssertions
 			AddPostLikeCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowPostNotFoundExceptionAsync<AddPostLikeCommandRequest, AddPostLikeCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowPostNotFoundExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -43,7 +49,9 @@ public static class PostLikeExceptionAssertions
 			DeletePostLikeCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowPostNotFoundExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowPostNotFoundExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -53,7 +61,9 @@ public static class PostLikeExceptionAssertions
 			GetPostLikeByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowPostNotFoundExceptionAsync<GetPostLikeByIdQueryRequest, GetPostLikeByIdQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowPostNotFoundExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -63,7 +73,9 @@ public static class PostLikeExceptionAssertions
 			GetAllPostLikesQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowPostNotFoundExceptionAsync<GetAllPostLikesQueryRequest, GetAllPostLikesQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowPostNotFoundExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -73,7 +85,9 @@ public static class PostLikeExceptionAssertions
 			DeletePostLikeCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowPostLikeNotFoundExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowPostLikeNotFoundExceptionAsync(
 				r => r.Id,
 				r => r.UserId,
 				request,
@@ -84,7 +98,9 @@ public static class PostLikeExceptionAssertions
 			GetPostLikeByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowPostLikeNotFoundExceptionAsync<GetPostLikeByIdQueryRequest, GetPostLikeByIdQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowPostLikeNotFoundExceptionAsync(
 				r => r.Id,
 				r => r.UserId,
 				request,
@@ -95,73 +111,11 @@ public static class PostLikeExceptionAssertions
 			AddPostLikeCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowPostLikeAlreadyExistsExceptionAsync<AddPostLikeCommandRequest, AddPostLikeCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowPostLikeAlreadyExistsExceptionAsync(
 				r => r.Id,
 				r => r.UserId,
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowPostLikeNotFoundExceptionAsync<TRequest>(
-			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> userIdPropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest
-		{
-			await sender.ShouldThrowAsync<PostLikeNotFoundException, TRequest>(
-				PostLikeExceptionErrorMessages.GetNotFoundMessage(
-				new(
-					new(idPropertyExpression(request)),
-					new(userIdPropertyExpression(request)))),
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowPostLikeNotFoundExceptionAsync<TRequest, TResponse>(
-			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> userIdPropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest<TResponse>
-		{
-			await sender.ShouldThrowAsync<PostLikeNotFoundException, TRequest, TResponse>(
-				PostLikeExceptionErrorMessages.GetNotFoundMessage(
-				new(
-					new(idPropertyExpression(request)),
-					new(userIdPropertyExpression(request)))),
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowPostLikeAlreadyExistsExceptionAsync<TRequest>(
-			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> userIdPropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest
-		{
-			await sender.ShouldThrowAsync<PostLikeAlreadyExistsException, TRequest>(
-				PostLikeExceptionErrorMessages.GetAlreadyExistsMessage(
-				new(
-					new(idPropertyExpression(request)),
-					new(userIdPropertyExpression(request)))),
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowPostLikeAlreadyExistsExceptionAsync<TRequest, TResponse>(
-			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> userIdPropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest<TResponse>
-		{
-			await sender.ShouldThrowAsync<PostLikeAlreadyExistsException, TRequest, TResponse>(
-				PostLikeExceptionErrorMessages.GetAlreadyExistsMessage(
-				new(
-					new(idPropertyExpression(request)),
-					new(userIdPropertyExpression(request)))),
 				request,
 				cancellationToken);
 		}

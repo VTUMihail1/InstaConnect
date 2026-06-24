@@ -12,7 +12,9 @@ public static class PostCommentLikeValidationExceptionAssertions
 			DeletePostCommentLikeCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Id,
 				messageTransformer,
 				request,
@@ -24,7 +26,9 @@ public static class PostCommentLikeValidationExceptionAssertions
 			GetPostCommentLikeByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetPostCommentLikeByIdQueryRequest, string, GetPostCommentLikeByIdQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Id,
 				messageTransformer,
 				request,
@@ -36,7 +40,9 @@ public static class PostCommentLikeValidationExceptionAssertions
 			AddPostCommentLikeCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<AddPostCommentLikeCommandRequest, string, AddPostCommentLikeCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Id,
 				messageTransformer,
 				request,
@@ -48,7 +54,9 @@ public static class PostCommentLikeValidationExceptionAssertions
 			GetAllPostCommentLikesQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostCommentLikesQueryRequest, string, GetAllPostCommentLikesQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Id,
 				messageTransformer,
 				request,
@@ -60,7 +68,9 @@ public static class PostCommentLikeValidationExceptionAssertions
 			DeletePostCommentLikeCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.CommentId,
 				messageTransformer,
 				request,
@@ -72,7 +82,9 @@ public static class PostCommentLikeValidationExceptionAssertions
 			GetPostCommentLikeByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetPostCommentLikeByIdQueryRequest, string, GetPostCommentLikeByIdQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.CommentId,
 				messageTransformer,
 				request,
@@ -84,7 +96,9 @@ public static class PostCommentLikeValidationExceptionAssertions
 			AddPostCommentLikeCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<AddPostCommentLikeCommandRequest, string, AddPostCommentLikeCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.CommentId,
 				messageTransformer,
 				request,
@@ -96,7 +110,9 @@ public static class PostCommentLikeValidationExceptionAssertions
 			GetAllPostCommentLikesQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostCommentLikesQueryRequest, string, GetAllPostCommentLikesQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.CommentId,
 				messageTransformer,
 				request,
@@ -108,7 +124,9 @@ public static class PostCommentLikeValidationExceptionAssertions
 			DeletePostCommentLikeCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.UserId,
 				messageTransformer,
 				request,
@@ -120,7 +138,9 @@ public static class PostCommentLikeValidationExceptionAssertions
 			GetAllPostCommentLikesForUserQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostCommentLikesForUserQueryRequest, string, GetAllPostCommentLikesForUserQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.UserId,
 				messageTransformer,
 				request,
@@ -132,7 +152,9 @@ public static class PostCommentLikeValidationExceptionAssertions
 			GetPostCommentLikeByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetPostCommentLikeByIdQueryRequest, string, GetPostCommentLikeByIdQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.UserId,
 				messageTransformer,
 				request,
@@ -144,7 +166,9 @@ public static class PostCommentLikeValidationExceptionAssertions
 			AddPostCommentLikeCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<AddPostCommentLikeCommandRequest, string, AddPostCommentLikeCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.UserId,
 				messageTransformer,
 				request,
@@ -156,7 +180,9 @@ public static class PostCommentLikeValidationExceptionAssertions
 			GetPostCommentLikeByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetPostCommentLikeByIdQueryRequest, string, GetPostCommentLikeByIdQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.CurrentUserId,
 				messageTransformer,
 				request,
@@ -168,7 +194,9 @@ public static class PostCommentLikeValidationExceptionAssertions
 			GetAllPostCommentLikesQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostCommentLikesQueryRequest, string, GetAllPostCommentLikesQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.CurrentUserId,
 				messageTransformer,
 				request,
@@ -180,7 +208,9 @@ public static class PostCommentLikeValidationExceptionAssertions
 			GetAllPostCommentLikesForUserQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostCommentLikesForUserQueryRequest, string, GetAllPostCommentLikesForUserQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.CurrentUserId,
 				messageTransformer,
 				request,
@@ -192,7 +222,9 @@ public static class PostCommentLikeValidationExceptionAssertions
 			GetAllPostCommentLikesQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostCommentLikesQueryRequest, string, GetAllPostCommentLikesQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.UserName,
 				messageTransformer,
 				request,
@@ -204,7 +236,9 @@ public static class PostCommentLikeValidationExceptionAssertions
 			GetAllPostCommentLikesQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostCommentLikesQueryRequest, int, GetAllPostCommentLikesQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Page,
 				messageTransformer,
 				request,
@@ -216,7 +250,9 @@ public static class PostCommentLikeValidationExceptionAssertions
 			GetAllPostCommentLikesForUserQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostCommentLikesForUserQueryRequest, int, GetAllPostCommentLikesForUserQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Page,
 				messageTransformer,
 				request,
@@ -228,7 +264,9 @@ public static class PostCommentLikeValidationExceptionAssertions
 			GetAllPostCommentLikesQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostCommentLikesQueryRequest, int, GetAllPostCommentLikesQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.PageSize,
 				messageTransformer,
 				request,
@@ -240,7 +278,9 @@ public static class PostCommentLikeValidationExceptionAssertions
 			GetAllPostCommentLikesForUserQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostCommentLikesForUserQueryRequest, int, GetAllPostCommentLikesForUserQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.PageSize,
 				messageTransformer,
 				request,
@@ -252,7 +292,9 @@ public static class PostCommentLikeValidationExceptionAssertions
 			GetAllPostCommentLikesQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostCommentLikesQueryRequest, CommonSortOrder, GetAllPostCommentLikesQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.SortOrder,
 				messageTransformer,
 				request,
@@ -264,7 +306,9 @@ public static class PostCommentLikeValidationExceptionAssertions
 			GetAllPostCommentLikesForUserQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostCommentLikesForUserQueryRequest, CommonSortOrder, GetAllPostCommentLikesForUserQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.SortOrder,
 				messageTransformer,
 				request,
@@ -276,7 +320,9 @@ public static class PostCommentLikeValidationExceptionAssertions
 			GetAllPostCommentLikesQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostCommentLikesQueryRequest, PostCommentLikesSortTerm, GetAllPostCommentLikesQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.SortTerm,
 				messageTransformer,
 				request,
@@ -288,7 +334,9 @@ public static class PostCommentLikeValidationExceptionAssertions
 			GetAllPostCommentLikesForUserQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllPostCommentLikesForUserQueryRequest, PostCommentLikesForUserSortTerm, GetAllPostCommentLikesForUserQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.SortTerm,
 				messageTransformer,
 				request,

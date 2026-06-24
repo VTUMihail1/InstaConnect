@@ -1,5 +1,6 @@
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Identity.Events.Features.Users;
+using InstaConnect.Posts.Domain.Features.Users.Models.Responses;
 using InstaConnect.Posts.Domain.Features.Users.Models.ValueObjects;
 
 namespace InstaConnect.Posts.Tests.Features.Users.Utilities;
@@ -58,6 +59,18 @@ public static class UserEquals
 				   entity.CreatedAtUtc == request.CreatedAtUtc &&
 				   entity.UpdatedAtUtc == request.UpdatedAtUtc;
 		}
+
+		public bool Matches(User u)
+		{
+			return entity.Id.Matches(u.Id.Id) &&
+				   entity.Email.Matches(u.Email.Value) &&
+				   entity.FirstName == u.FirstName &&
+				   entity.LastName == u.LastName &&
+				   entity.Name.Matches(u.Name.Value) &&
+				   entity.ProfileImage.Matches(u.ProfileImage?.Url) &&
+				   entity.CreatedAtUtc == u.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == u.UpdatedAtUtc;
+		}
 	}
 
 	extension(UserId p)
@@ -65,6 +78,27 @@ public static class UserEquals
 		public bool Matches(string id)
 		{
 			return p.Id.EqualsOrdinalIgnoreCase(id);
+		}
+
+		public bool Matches(UserId id)
+		{
+			return p.Matches(id.Id);
+		}
+	}
+
+	extension(UserResponse? response)
+	{
+		public bool MatchesFull(User? user)
+		{
+			return response != null &&
+				   user != null &&
+				   user.Id.Matches(response.Id) &&
+				   user.FirstName == response.FirstName &&
+				   user.LastName == response.LastName &&
+				   user.Name.Matches(response.Name) &&
+				   user.ProfileImage.Matches(response.ProfileImage) &&
+				   user.CreatedAtUtc == response.CreatedAtUtc &&
+				   user.UpdatedAtUtc == response.UpdatedAtUtc;
 		}
 	}
 }

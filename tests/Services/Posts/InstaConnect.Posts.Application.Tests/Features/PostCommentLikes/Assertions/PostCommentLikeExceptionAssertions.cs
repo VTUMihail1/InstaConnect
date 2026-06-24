@@ -1,7 +1,8 @@
 using InstaConnect.Common.Application.Features.Messaging.Abstractions;
-using InstaConnect.Posts.Domain.Features.PostCommentLikes.Exceptions;
-
-using MediatR;
+using InstaConnect.Posts.Tests.Features.PostCommentLikes.Assertions;
+using InstaConnect.Posts.Tests.Features.PostComments.Assertions;
+using InstaConnect.Posts.Tests.Features.Posts.Assertions;
+using InstaConnect.Posts.Tests.Features.Users.Assertions;
 
 namespace InstaConnect.Posts.Application.Tests.Features.PostCommentLikes.Assertions;
 
@@ -13,7 +14,9 @@ public static class PostCommentLikeExceptionAssertions
 			AddPostCommentLikeCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowUserNotFoundExceptionAsync<AddPostCommentLikeCommandRequest, AddPostCommentLikeCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.UserId,
 				request,
 				cancellationToken);
@@ -23,7 +26,9 @@ public static class PostCommentLikeExceptionAssertions
 			GetAllPostCommentLikesForUserQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowUserNotFoundExceptionAsync<GetAllPostCommentLikesForUserQueryRequest, GetAllPostCommentLikesForUserQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.UserId,
 				request,
 				cancellationToken);
@@ -33,7 +38,9 @@ public static class PostCommentLikeExceptionAssertions
 			AddPostCommentLikeCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowPostNotFoundExceptionAsync<AddPostCommentLikeCommandRequest, AddPostCommentLikeCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowPostNotFoundExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -43,7 +50,9 @@ public static class PostCommentLikeExceptionAssertions
 			DeletePostCommentLikeCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowPostNotFoundExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowPostNotFoundExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -53,7 +62,9 @@ public static class PostCommentLikeExceptionAssertions
 			GetPostCommentLikeByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowPostNotFoundExceptionAsync<GetPostCommentLikeByIdQueryRequest, GetPostCommentLikeByIdQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowPostNotFoundExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -63,7 +74,9 @@ public static class PostCommentLikeExceptionAssertions
 			GetAllPostCommentLikesQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowPostNotFoundExceptionAsync<GetAllPostCommentLikesQueryRequest, GetAllPostCommentLikesQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowPostNotFoundExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -73,7 +86,9 @@ public static class PostCommentLikeExceptionAssertions
 			AddPostCommentLikeCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowPostCommentNotFoundExceptionAsync<AddPostCommentLikeCommandRequest, AddPostCommentLikeCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowPostCommentNotFoundExceptionAsync(
 				r => r.Id,
 				r => r.CommentId,
 				request,
@@ -84,7 +99,9 @@ public static class PostCommentLikeExceptionAssertions
 			DeletePostCommentLikeCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowPostCommentNotFoundExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowPostCommentNotFoundExceptionAsync(
 				r => r.Id,
 				r => r.CommentId,
 				request,
@@ -95,7 +112,9 @@ public static class PostCommentLikeExceptionAssertions
 			GetPostCommentLikeByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowPostCommentNotFoundExceptionAsync<GetPostCommentLikeByIdQueryRequest, GetPostCommentLikeByIdQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowPostCommentNotFoundExceptionAsync(
 				r => r.Id,
 				r => r.CommentId,
 				request,
@@ -106,7 +125,9 @@ public static class PostCommentLikeExceptionAssertions
 			GetAllPostCommentLikesQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowPostCommentNotFoundExceptionAsync<GetAllPostCommentLikesQueryRequest, GetAllPostCommentLikesQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowPostCommentNotFoundExceptionAsync(
 				r => r.Id,
 				r => r.CommentId,
 				request,
@@ -117,7 +138,9 @@ public static class PostCommentLikeExceptionAssertions
 			DeletePostCommentLikeCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowPostCommentLikeNotFoundExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowPostCommentLikeNotFoundExceptionAsync(
 				r => r.Id,
 				r => r.CommentId,
 				r => r.UserId,
@@ -129,7 +152,9 @@ public static class PostCommentLikeExceptionAssertions
 			GetPostCommentLikeByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowPostCommentLikeNotFoundExceptionAsync<GetPostCommentLikeByIdQueryRequest, GetPostCommentLikeByIdQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowPostCommentLikeNotFoundExceptionAsync(
 				r => r.Id,
 				r => r.CommentId,
 				r => r.UserId,
@@ -141,86 +166,12 @@ public static class PostCommentLikeExceptionAssertions
 			AddPostCommentLikeCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowPostCommentLikeAlreadyExistsExceptionAsync<AddPostCommentLikeCommandRequest, AddPostCommentLikeCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowPostCommentLikeAlreadyExistsExceptionAsync(
 				r => r.Id,
 				r => r.CommentId,
 				r => r.UserId,
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowPostCommentLikeNotFoundExceptionAsync<TRequest>(
-			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> commentIdPropertyExpression,
-			Func<TRequest, string> userIdPropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest
-		{
-			await sender.ShouldThrowAsync<PostCommentLikeNotFoundException, TRequest>(
-				PostCommentLikeExceptionErrorMessages.GetNotFoundMessage(
-					new(
-						new(
-							new(idPropertyExpression(request)),
-							commentIdPropertyExpression(request)),
-						new(userIdPropertyExpression(request)))),
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowPostCommentLikeNotFoundExceptionAsync<TRequest, TResponse>(
-			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> commentIdPropertyExpression,
-			Func<TRequest, string> userIdPropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest<TResponse>
-		{
-			await sender.ShouldThrowAsync<PostCommentLikeNotFoundException, TRequest, TResponse>(
-				PostCommentLikeExceptionErrorMessages.GetNotFoundMessage(
-					new(
-						new(
-							new(idPropertyExpression(request)),
-							commentIdPropertyExpression(request)),
-						new(userIdPropertyExpression(request)))),
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowPostCommentLikeAlreadyExistsExceptionAsync<TRequest>(
-			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> commentIdPropertyExpression,
-			Func<TRequest, string> userIdPropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest
-		{
-			await sender.ShouldThrowAsync<PostCommentLikeAlreadyExistsException, TRequest>(
-				PostCommentLikeExceptionErrorMessages.GetAlreadyExistsMessage(
-					new(
-						new(
-							new(idPropertyExpression(request)),
-							commentIdPropertyExpression(request)),
-						new(userIdPropertyExpression(request)))),
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowPostCommentLikeAlreadyExistsExceptionAsync<TRequest, TResponse>(
-			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> commentIdPropertyExpression,
-			Func<TRequest, string> userIdPropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest<TResponse>
-		{
-			await sender.ShouldThrowAsync<PostCommentLikeAlreadyExistsException, TRequest, TResponse>(
-				PostCommentLikeExceptionErrorMessages.GetAlreadyExistsMessage(
-					new(
-						new(
-							new(idPropertyExpression(request)),
-							commentIdPropertyExpression(request)),
-						new(userIdPropertyExpression(request)))),
 				request,
 				cancellationToken);
 		}
