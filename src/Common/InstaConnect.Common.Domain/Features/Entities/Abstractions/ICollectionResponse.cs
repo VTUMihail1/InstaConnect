@@ -1,6 +1,6 @@
 namespace InstaConnect.Common.Domain.Features.Entities.Abstractions;
 
-public interface IEntityCollectionResponse
+public interface ICollectionResponse
 {
 	public int Page { get; }
 

@@ -10,4 +10,4 @@ public record PostCommentCollectionResponse(
 	int PageSize,
 	long TotalCount,
 	bool HasNextPage,
-	bool HasPreviousPage) : IEntityCollectionResponse;
+	bool HasPreviousPage) : ICollectionResponse;
