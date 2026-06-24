@@ -10,9 +10,9 @@ public static class UserExceptionAssertions
 			UpdateCurrentUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserNotFoundExceptionAsync(
+			await func.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -22,9 +22,9 @@ public static class UserExceptionAssertions
 			GetUserByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserNotFoundExceptionAsync(
+			await func.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -34,9 +34,9 @@ public static class UserExceptionAssertions
 			GetUserDetailsByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserNotFoundExceptionAsync(
+			await func.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -46,9 +46,9 @@ public static class UserExceptionAssertions
 			GetCurrentUserByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserNotFoundExceptionAsync(
+			await func.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.CurrentId,
 				request,
 				cancellationToken);
@@ -58,9 +58,9 @@ public static class UserExceptionAssertions
 			GetCurrentUserDetailsByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserNotFoundExceptionAsync(
+			await func.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.CurrentId,
 				request,
 				cancellationToken);
@@ -70,9 +70,9 @@ public static class UserExceptionAssertions
 			DeleteUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserNotFoundExceptionAsync(
+			await func.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -82,9 +82,9 @@ public static class UserExceptionAssertions
 			DeleteCurrentUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserNotFoundExceptionAsync(
+			await func.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.CurrentId,
 				request,
 				cancellationToken);
@@ -94,9 +94,9 @@ public static class UserExceptionAssertions
 			AddUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserNameAlreadyTakenExceptionAsync(
+			await func.ShouldThrowUserNameAlreadyTakenExceptionAsync(
 				r => r.Name,
 				request,
 				cancellationToken);
@@ -106,9 +106,9 @@ public static class UserExceptionAssertions
 			UpdateCurrentUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserNameAlreadyTakenExceptionAsync(
+			await func.ShouldThrowUserNameAlreadyTakenExceptionAsync(
 				r => r.Name,
 				request,
 				cancellationToken);
@@ -118,9 +118,9 @@ public static class UserExceptionAssertions
 			AddUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserEmailAlreadyTakenExceptionAsync(
+			await func.ShouldThrowUserEmailAlreadyTakenExceptionAsync(
 				r => r.Email,
 				request,
 				cancellationToken);
@@ -130,9 +130,9 @@ public static class UserExceptionAssertions
 			UpdateCurrentUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserEmailAlreadyTakenExceptionAsync(
+			await func.ShouldThrowUserEmailAlreadyTakenExceptionAsync(
 				r => r.Email,
 				request,
 				cancellationToken);

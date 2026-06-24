@@ -6,14 +6,14 @@ namespace InstaConnect.Follows.Tests.Features.Users.Assertions;
 
 public static class UserExceptionAssertions
 {
-	extension(Func<Task> action)
+	extension(Func<Task> func)
 	{
 		public async Task ShouldThrowUserNotFoundExceptionAsync<TRequest>(
 			Func<TRequest, string> idPropertyExpression,
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<UserNotFoundException>(
+			await func.ShouldThrowAsync<UserNotFoundException>(
 				UserExceptionErrorMessages.GetNotFoundMessage(new(idPropertyExpression(request))),
 				cancellationToken);
 		}
@@ -23,7 +23,7 @@ public static class UserExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<UserNotFoundException>(
+			await func.ShouldThrowAsync<UserNotFoundException>(
 				UserExceptionErrorMessages.GetNotFoundMessage(idPropertyExpression(request)),
 				cancellationToken);
 		}
@@ -33,7 +33,7 @@ public static class UserExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<UserAlreadyExistsException>(
+			await func.ShouldThrowAsync<UserAlreadyExistsException>(
 				UserExceptionErrorMessages.GetAlreadyExistsMessage(new(idPropertyExpression(request))),
 				cancellationToken);
 		}
@@ -43,7 +43,7 @@ public static class UserExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<UserAlreadyExistsException>(
+			await func.ShouldThrowAsync<UserAlreadyExistsException>(
 				UserExceptionErrorMessages.GetAlreadyExistsMessage(idPropertyExpression(request)),
 				cancellationToken);
 		}
@@ -53,7 +53,7 @@ public static class UserExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<UserNameAlreadyExistsException>(
+			await func.ShouldThrowAsync<UserNameAlreadyExistsException>(
 				UserExceptionErrorMessages.GetNameAlreadyExistsMessage(new(namePropertyExpression(request))),
 				cancellationToken);
 		}
@@ -63,7 +63,7 @@ public static class UserExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<UserNameAlreadyExistsException>(
+			await func.ShouldThrowAsync<UserNameAlreadyExistsException>(
 				UserExceptionErrorMessages.GetNameAlreadyExistsMessage(namePropertyExpression(request)),
 				cancellationToken);
 		}
@@ -73,7 +73,7 @@ public static class UserExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<UserEmailAlreadyExistsException>(
+			await func.ShouldThrowAsync<UserEmailAlreadyExistsException>(
 				UserExceptionErrorMessages.GetEmailAlreadyExistsMessage(new(emailPropertyExpression(request))),
 				cancellationToken);
 		}
@@ -83,7 +83,7 @@ public static class UserExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<UserEmailAlreadyExistsException>(
+			await func.ShouldThrowAsync<UserEmailAlreadyExistsException>(
 				UserExceptionErrorMessages.GetEmailAlreadyExistsMessage(emailPropertyExpression(request)),
 				cancellationToken);
 		}

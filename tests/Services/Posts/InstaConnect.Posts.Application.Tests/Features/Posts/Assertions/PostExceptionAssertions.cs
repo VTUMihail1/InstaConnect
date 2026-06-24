@@ -10,9 +10,9 @@ public static class PostExceptionAssertions
 		GetAllPostsForUserQueryRequest request,
 		CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserNotFoundExceptionAsync(
+			await func.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.UserId,
 				request,
 				cancellationToken);
@@ -22,9 +22,9 @@ public static class PostExceptionAssertions
 			AddPostCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserNotFoundExceptionAsync(
+			await func.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.UserId,
 				request,
 				cancellationToken);
@@ -34,9 +34,9 @@ public static class PostExceptionAssertions
 			UpdatePostCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowPostNotFoundExceptionAsync(
+			await func.ShouldThrowPostNotFoundExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -46,9 +46,9 @@ public static class PostExceptionAssertions
 			GetPostByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowPostNotFoundExceptionAsync(
+			await func.ShouldThrowPostNotFoundExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -58,9 +58,9 @@ public static class PostExceptionAssertions
 			DeletePostCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowPostNotFoundExceptionAsync(
+			await func.ShouldThrowPostNotFoundExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -70,9 +70,9 @@ public static class PostExceptionAssertions
 			UpdatePostCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowPostForbiddenExceptionAsync(
+			await func.ShouldThrowPostForbiddenExceptionAsync(
 				r => r.Id,
 				r => r.UserId,
 				request,
@@ -83,9 +83,9 @@ public static class PostExceptionAssertions
 			DeletePostCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowPostForbiddenExceptionAsync(
+			await func.ShouldThrowPostForbiddenExceptionAsync(
 				r => r.Id,
 				r => r.UserId,
 				request,

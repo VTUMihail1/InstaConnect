@@ -6,14 +6,14 @@ namespace InstaConnect.Posts.Tests.Features.Posts.Assertions;
 
 public static class PostExceptionAssertions
 {
-	extension(Func<Task> action)
+	extension(Func<Task> func)
 	{
 		public async Task ShouldThrowPostNotFoundExceptionAsync<TRequest>(
 			Func<TRequest, string> idPropertyExpression,
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<PostNotFoundException>(
+			await func.ShouldThrowAsync<PostNotFoundException>(
 				PostExceptionErrorMessages.GetNotFoundMessage(new(idPropertyExpression(request))),
 				cancellationToken);
 		}
@@ -22,7 +22,7 @@ public static class PostExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<PostNotFoundException>(
+			await func.ShouldThrowAsync<PostNotFoundException>(
 				PostExceptionErrorMessages.GetNotFoundMessage(idPropertyExpression(request)),
 				cancellationToken);
 		}
@@ -33,7 +33,7 @@ public static class PostExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<PostForbiddenException>(
+			await func.ShouldThrowAsync<PostForbiddenException>(
 				PostExceptionErrorMessages.GetForbiddenMessage(new(idPropertyExpression(request)), new(userIdPropertyExpression(request))),
 				cancellationToken);
 		}
@@ -44,7 +44,7 @@ public static class PostExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<PostForbiddenException>(
+			await func.ShouldThrowAsync<PostForbiddenException>(
 				PostExceptionErrorMessages.GetForbiddenMessage(idPropertyExpression(request), userIdPropertyExpression(request)),
 				cancellationToken);
 		}

@@ -8,21 +8,21 @@ public static class UserClaimMapper
 {
 	extension(UserClaim userClaim)
 	{
-		internal UserClaimIdCommandResponse ToIdResponse(
+		internal UserClaimIdCommandResponse ToIdCommandResponse(
 )
 		{
 			return new(userClaim.Id.Id.Id, userClaim.Id.Claim);
 		}
 
-		internal UserClaimQueryResponse ToFullResponse()
+		internal UserClaimQueryResponse ToFullQueryResponse()
 		{
 			return new(userClaim.Id.Id.Id,
 					   userClaim.Id.Claim,
-					   userClaim.User?.ToFullResponse(),
+					   userClaim.User?.ToFullQueryResponse(),
 					   userClaim.CreatedAtUtc);
 		}
 
-		internal UserClaimQueryResponse ToResponseWithoutUser()
+		internal UserClaimQueryResponse ToQueryResponseWithoutUser()
 		{
 			return new(userClaim.Id.Id.Id,
 					   userClaim.Id.Claim,
@@ -33,13 +33,13 @@ public static class UserClaimMapper
 		public AddUserClaimCommandResponse ToResponse(
 			AddUserClaimApiRequest request)
 		{
-			return new(userClaim.ToIdResponse());
+			return new(userClaim.ToIdCommandResponse());
 		}
 	}
 
 	extension(ICollection<UserClaim> userClaims)
 	{
-		internal UserClaimCollectionQueryResponse ToFullResponse<TRequest>(
+		internal UserClaimCollectionQueryResponse ToFullQueryResponse<TRequest>(
 			 User user,
 			 Func<UserClaim, TRequest, bool> filter,
 			 Func<UserClaim, TRequest, UserClaimQueryResponse> transform,
@@ -49,7 +49,7 @@ public static class UserClaimMapper
 			var paginator = new Paginator();
 			var totalCount = userClaims.Count(userClaim => filter(userClaim, request));
 
-			return new(user.ToFullResponse(),
+			return new(user.ToFullQueryResponse(),
 					   userClaims.Filter(userClaim => filter(userClaim, request), request, userClaim => transform(userClaim, request)),
 					   request.Page,
 					   request.PageSize,
@@ -58,7 +58,7 @@ public static class UserClaimMapper
 					   paginator.HasPreviousPage(request.Page));
 		}
 
-		internal UserClaimCollectionQueryResponse ToResponseWithoutUser<TRequest>(
+		internal UserClaimCollectionQueryResponse ToQueryResponseWithoutUser<TRequest>(
 			 Func<UserClaim, TRequest, bool> filter,
 			 Func<UserClaim, TRequest, UserClaimQueryResponse> transform,
 			 TRequest request)
@@ -80,10 +80,10 @@ public static class UserClaimMapper
 			User user,
 			GetAllUserClaimsApiRequest request)
 		{
-			return new(userClaims.ToFullResponse(
+			return new(userClaims.ToFullQueryResponse(
 				user,
 				(userClaim, request) => userClaim.MatchesFilter(request),
-				(userClaim, request) => userClaim.ToResponseWithoutUser(),
+				(userClaim, request) => userClaim.ToQueryResponseWithoutUser(),
 				request));
 		}
 	}

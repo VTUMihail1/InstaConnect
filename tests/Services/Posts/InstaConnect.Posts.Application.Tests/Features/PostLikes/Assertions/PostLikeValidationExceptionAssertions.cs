@@ -12,9 +12,9 @@ public static class PostLikeValidationExceptionAssertions
 		DeletePostLikeCommandRequest request,
 		CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Id,
 				messageTransformer,
 				request,
@@ -26,9 +26,9 @@ public static class PostLikeValidationExceptionAssertions
 			GetPostLikeByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Id,
 				messageTransformer,
 				request,
@@ -40,9 +40,9 @@ public static class PostLikeValidationExceptionAssertions
 			AddPostLikeCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Id,
 				messageTransformer,
 				request,
@@ -54,9 +54,9 @@ public static class PostLikeValidationExceptionAssertions
 			GetAllPostLikesQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Id,
 				messageTransformer,
 				request,
@@ -69,9 +69,9 @@ public static class PostLikeValidationExceptionAssertions
 			GetAllPostLikesForUserQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.UserId,
 				messageTransformer,
 				request,
@@ -83,9 +83,9 @@ public static class PostLikeValidationExceptionAssertions
 			GetPostLikeByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.UserId,
 				messageTransformer,
 				request,
@@ -97,9 +97,9 @@ public static class PostLikeValidationExceptionAssertions
 			AddPostLikeCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.UserId,
 				messageTransformer,
 				request,
@@ -111,9 +111,9 @@ public static class PostLikeValidationExceptionAssertions
 			DeletePostLikeCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.UserId,
 				messageTransformer,
 				request,
@@ -125,9 +125,9 @@ public static class PostLikeValidationExceptionAssertions
 			GetPostLikeByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.CurrentUserId,
 				messageTransformer,
 				request,
@@ -139,9 +139,9 @@ public static class PostLikeValidationExceptionAssertions
 			GetAllPostLikesQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.CurrentUserId,
 				messageTransformer,
 				request,
@@ -153,9 +153,9 @@ public static class PostLikeValidationExceptionAssertions
 			GetAllPostLikesForUserQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.CurrentUserId,
 				messageTransformer,
 				request,
@@ -167,9 +167,9 @@ public static class PostLikeValidationExceptionAssertions
 			GetAllPostLikesQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.UserName,
 				messageTransformer,
 				request,
@@ -181,9 +181,9 @@ public static class PostLikeValidationExceptionAssertions
 			GetAllPostLikesQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Page,
 				messageTransformer,
 				request,
@@ -195,9 +195,9 @@ public static class PostLikeValidationExceptionAssertions
 			GetAllPostLikesForUserQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Page,
 				messageTransformer,
 				request,
@@ -209,9 +209,9 @@ public static class PostLikeValidationExceptionAssertions
 			GetAllPostLikesQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.PageSize,
 				messageTransformer,
 				request,
@@ -223,9 +223,9 @@ public static class PostLikeValidationExceptionAssertions
 			GetAllPostLikesForUserQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.PageSize,
 				messageTransformer,
 				request,
@@ -237,9 +237,9 @@ public static class PostLikeValidationExceptionAssertions
 			GetAllPostLikesQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.SortOrder,
 				messageTransformer,
 				request,
@@ -251,9 +251,9 @@ public static class PostLikeValidationExceptionAssertions
 			GetAllPostLikesForUserQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.SortOrder,
 				messageTransformer,
 				request,
@@ -265,9 +265,9 @@ public static class PostLikeValidationExceptionAssertions
 			GetAllPostLikesQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.SortTerm,
 				messageTransformer,
 				request,
@@ -279,9 +279,9 @@ public static class PostLikeValidationExceptionAssertions
 			GetAllPostLikesForUserQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.SortTerm,
 				messageTransformer,
 				request,

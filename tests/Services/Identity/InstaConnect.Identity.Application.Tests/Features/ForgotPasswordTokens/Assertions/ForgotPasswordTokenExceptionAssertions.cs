@@ -10,9 +10,9 @@ public static class ForgotPasswordTokenExceptionAssertions
 			AddForgotPasswordTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserNameNotFoundExceptionAsync(
+			await func.ShouldThrowUserNameNotFoundExceptionAsync(
 				r => r.Name,
 				request,
 				cancellationToken);
@@ -22,9 +22,9 @@ public static class ForgotPasswordTokenExceptionAssertions
 			VerifyForgotPasswordTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserNotFoundExceptionAsync(
+			await func.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -34,9 +34,9 @@ public static class ForgotPasswordTokenExceptionAssertions
 			VerifyForgotPasswordTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowForgotPasswordTokenNotFoundExceptionAsync(
+			await func.ShouldThrowForgotPasswordTokenNotFoundExceptionAsync(
 				r => r.Id,
 				r => r.Value,
 				request,
@@ -47,9 +47,9 @@ public static class ForgotPasswordTokenExceptionAssertions
 			VerifyForgotPasswordTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowForgotPasswordTokenExpiredExceptionAsync(
+			await func.ShouldThrowForgotPasswordTokenExpiredExceptionAsync(
 				r => r.Id,
 				r => r.Value,
 				request,

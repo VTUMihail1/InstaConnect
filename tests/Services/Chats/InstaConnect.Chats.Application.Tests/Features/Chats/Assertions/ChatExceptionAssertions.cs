@@ -10,9 +10,9 @@ public static class ChatExceptionAssertions
 		GetAllChatsQueryRequest request,
 		CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserNotFoundExceptionAsync(
+			await func.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.CurrentUserId,
 				request,
 				cancellationToken);
@@ -22,9 +22,9 @@ public static class ChatExceptionAssertions
 		AddChatCommandRequest request,
 		CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserNotFoundExceptionAsync(
+			await func.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.ParticipantOneId,
 				request,
 				cancellationToken);
@@ -34,9 +34,9 @@ public static class ChatExceptionAssertions
 		AddChatCommandRequest request,
 		CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserNotFoundExceptionAsync(
+			await func.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.ParticipantTwoId,
 				request,
 				cancellationToken);
@@ -46,9 +46,9 @@ public static class ChatExceptionAssertions
 			GetChatByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowChatNotFoundExceptionAsync(
+			await func.ShouldThrowChatNotFoundExceptionAsync(
 				r => r.CurrentUserId,
 				r => r.ParticipantTwoId,
 				request,
@@ -59,9 +59,9 @@ public static class ChatExceptionAssertions
 			AddChatCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowChatAlreadyExistsExceptionAsync(
+			await func.ShouldThrowChatAlreadyExistsExceptionAsync(
 				r => r.ParticipantOneId,
 				r => r.ParticipantTwoId,
 				request,

@@ -11,9 +11,9 @@ public static class UserValidationExceptionAssertions
 		UpdateUserCommandRequest request,
 		CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Id,
 				messageTransformer,
 				request,
@@ -25,9 +25,9 @@ public static class UserValidationExceptionAssertions
 			AddUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Id,
 				messageTransformer,
 				request,
@@ -39,9 +39,9 @@ public static class UserValidationExceptionAssertions
 			DeleteUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Id,
 				messageTransformer,
 				request,
@@ -53,9 +53,9 @@ public static class UserValidationExceptionAssertions
 			UpdateUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Name,
 				messageTransformer,
 				request,
@@ -67,9 +67,9 @@ public static class UserValidationExceptionAssertions
 			AddUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Name,
 				messageTransformer,
 				request,
@@ -81,9 +81,9 @@ public static class UserValidationExceptionAssertions
 			UpdateUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.FirstName,
 				messageTransformer,
 				request,
@@ -95,9 +95,9 @@ public static class UserValidationExceptionAssertions
 			AddUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.FirstName,
 				messageTransformer,
 				request,
@@ -109,9 +109,9 @@ public static class UserValidationExceptionAssertions
 			UpdateUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.LastName,
 				messageTransformer,
 				request,
@@ -123,9 +123,9 @@ public static class UserValidationExceptionAssertions
 			AddUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.LastName,
 				messageTransformer,
 				request,
@@ -137,9 +137,9 @@ public static class UserValidationExceptionAssertions
 			UpdateUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Email,
 				messageTransformer,
 				request,
@@ -151,9 +151,9 @@ public static class UserValidationExceptionAssertions
 			AddUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Email,
 				messageTransformer,
 				request,
@@ -165,9 +165,9 @@ public static class UserValidationExceptionAssertions
 			UpdateUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.ProfileImageUrl,
 				messageTransformer!,
 				request,
@@ -179,9 +179,9 @@ public static class UserValidationExceptionAssertions
 			AddUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.ProfileImageUrl,
 				messageTransformer!,
 				request,
@@ -193,9 +193,9 @@ public static class UserValidationExceptionAssertions
 			AddUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.CreatedAtUtc,
 				messageTransformer!,
 				request,
@@ -207,9 +207,9 @@ public static class UserValidationExceptionAssertions
 			AddUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.UpdatedAtUtc,
 				messageTransformer!,
 				request,
@@ -221,9 +221,9 @@ public static class UserValidationExceptionAssertions
 			UpdateUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.UpdatedAtUtc,
 				messageTransformer!,
 				request,

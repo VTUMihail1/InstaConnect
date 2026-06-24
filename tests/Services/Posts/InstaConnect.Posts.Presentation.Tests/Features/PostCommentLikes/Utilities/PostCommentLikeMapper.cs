@@ -11,13 +11,13 @@ public static class PostCommentLikeMapper
 {
 	extension(PostCommentLike postCommentLike)
 	{
-		internal PostCommentLikeIdCommandResponse ToIdResponse(
+		internal PostCommentLikeIdCommandResponse ToIdCommandResponse(
 )
 		{
 			return new(postCommentLike.Id.CommentId.Id.Id, postCommentLike.Id.CommentId.CommentId, postCommentLike.Id.UserId.Id);
 		}
 
-		internal PostCommentLikeQueryResponse ToFullResponse<TRequest>(
+		internal PostCommentLikeQueryResponse ToFullQueryResponse<TRequest>(
 			TRequest request)
 			where TRequest : ICurrentUserableApiRequest
 		{
@@ -25,11 +25,11 @@ public static class PostCommentLikeMapper
 					   postCommentLike.Id.CommentId.CommentId,
 					   postCommentLike.Id.UserId.Id,
 					   postCommentLike.User?.ToFullResponse(),
-					   postCommentLike.PostComment?.ToFullResponse(request),
+					   postCommentLike.PostComment?.ToFullQueryResponse(request),
 					   postCommentLike.CreatedAtUtc);
 		}
 
-		internal PostCommentLikeQueryResponse ToResponseWithoutUser<TRequest>(
+		internal PostCommentLikeQueryResponse ToQueryResponseWithoutUser<TRequest>(
 			TRequest request)
 			where TRequest : ICurrentUserableApiRequest
 		{
@@ -37,11 +37,11 @@ public static class PostCommentLikeMapper
 					   postCommentLike.Id.CommentId.CommentId,
 					   postCommentLike.Id.UserId.Id,
 					   null,
-					   postCommentLike.PostComment?.ToFullResponse(request),
+					   postCommentLike.PostComment?.ToFullQueryResponse(request),
 					   postCommentLike.CreatedAtUtc);
 		}
 
-		internal PostCommentLikeQueryResponse ToResponseWithoutPostComment<TRequest>(
+		internal PostCommentLikeQueryResponse ToQueryResponseWithoutPostComment<TRequest>(
 			TRequest request)
 			where TRequest : ICurrentUserableApiRequest
 		{
@@ -56,19 +56,19 @@ public static class PostCommentLikeMapper
 		public AddPostCommentLikeCommandResponse ToResponse(
 			AddPostCommentLikeApiRequest request)
 		{
-			return new(postCommentLike.ToIdResponse());
+			return new(postCommentLike.ToIdCommandResponse());
 		}
 
 		public GetPostCommentLikeByIdQueryResponse ToResponse(
 			GetPostCommentLikeByIdApiRequest request)
 		{
-			return new(postCommentLike.ToFullResponse(request));
+			return new(postCommentLike.ToFullQueryResponse(request));
 		}
 	}
 
 	extension(ICollection<PostCommentLike> postCommentLikes)
 	{
-		internal PostCommentLikeCollectionQueryResponse ToResponseWithoutUser<TRequest>(
+		internal PostCommentLikeCollectionQueryResponse ToQueryResponseWithoutUser<TRequest>(
 		PostComment postComment,
 		Func<PostCommentLike, TRequest, bool> filter,
 		Func<PostCommentLike, TRequest, PostCommentLikeQueryResponse> transform,
@@ -78,7 +78,7 @@ public static class PostCommentLikeMapper
 			var paginator = new Paginator();
 			var totalCount = postCommentLikes.Count(postCommentLike => filter(postCommentLike, request));
 
-			return new(postComment.ToFullResponse(request),
+			return new(postComment.ToFullQueryResponse(request),
 					   null,
 					   postCommentLikes.Filter(postCommentLike => filter(postCommentLike, request), request, postCommentLike => transform(postCommentLike, request)),
 					   request.Page,
@@ -88,7 +88,7 @@ public static class PostCommentLikeMapper
 					   paginator.HasPreviousPage(request.Page));
 		}
 
-		internal PostCommentLikeCollectionQueryResponse ToResponseWithoutPostComment<TRequest>(
+		internal PostCommentLikeCollectionQueryResponse ToQueryResponseWithoutPostComment<TRequest>(
 			User user,
 			Func<PostCommentLike, TRequest, bool> filter,
 			Func<PostCommentLike, TRequest, PostCommentLikeQueryResponse> transform,
@@ -112,9 +112,9 @@ public static class PostCommentLikeMapper
 			PostComment postComment,
 			GetAllPostCommentLikesApiRequest request)
 		{
-			return new(postCommentLikes.ToResponseWithoutUser(postComment,
+			return new(postCommentLikes.ToQueryResponseWithoutUser(postComment,
 															  (postCommentLike, request) => postCommentLike.MatchesFilter(request),
-															  (postCommentLike, request) => postCommentLike.ToResponseWithoutPostComment(request),
+															  (postCommentLike, request) => postCommentLike.ToQueryResponseWithoutPostComment(request),
 															  request));
 		}
 
@@ -122,9 +122,9 @@ public static class PostCommentLikeMapper
 			User user,
 			GetAllPostCommentLikesForUserApiRequest request)
 		{
-			return new(postCommentLikes.ToResponseWithoutPostComment(user,
+			return new(postCommentLikes.ToQueryResponseWithoutPostComment(user,
 																	 (postCommentLike, request) => postCommentLike.MatchesFilter(request),
-																	 (postCommentLike, request) => postCommentLike.ToResponseWithoutUser(request),
+																	 (postCommentLike, request) => postCommentLike.ToQueryResponseWithoutUser(request),
 																	 request));
 		}
 	}

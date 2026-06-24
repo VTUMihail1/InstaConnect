@@ -11,9 +11,9 @@ public static class EmailConfirmationTokenValidationExceptionAssertions
 			AddEmailConfirmationTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Name,
 				messageTransformer,
 				request,
@@ -25,9 +25,9 @@ public static class EmailConfirmationTokenValidationExceptionAssertions
 			VerifyEmailConfirmationTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Id,
 				messageTransformer,
 				request,
@@ -39,9 +39,9 @@ public static class EmailConfirmationTokenValidationExceptionAssertions
 			VerifyEmailConfirmationTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Value,
 				messageTransformer,
 				request,

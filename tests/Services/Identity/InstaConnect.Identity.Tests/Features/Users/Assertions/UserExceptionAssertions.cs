@@ -6,14 +6,14 @@ namespace InstaConnect.Identity.Tests.Features.Users.Assertions;
 
 public static class UserExceptionAssertions
 {
-	extension(Func<Task> action)
+	extension(Func<Task> func)
 	{
 		public async Task ShouldThrowUserNotFoundExceptionAsync<TRequest>(
 			Func<TRequest, string> idPropertyExpression,
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<UserNotFoundException>(
+			await func.ShouldThrowAsync<UserNotFoundException>(
 				UserExceptionErrorMessages.GetNotFoundMessage(new(idPropertyExpression(request))),
 				cancellationToken);
 		}
@@ -23,7 +23,7 @@ public static class UserExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<UserNotFoundException>(
+			await func.ShouldThrowAsync<UserNotFoundException>(
 				UserExceptionErrorMessages.GetNotFoundMessage(idPropertyExpression(request)),
 				cancellationToken);
 		}
@@ -33,7 +33,7 @@ public static class UserExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<UserNameNotFoundException>(
+			await func.ShouldThrowAsync<UserNameNotFoundException>(
 				UserExceptionErrorMessages.GetNameNotFoundMessage(new(namePropertyExpression(request))),
 				cancellationToken);
 		}
@@ -43,7 +43,7 @@ public static class UserExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<UserNameNotFoundException>(
+			await func.ShouldThrowAsync<UserNameNotFoundException>(
 				UserExceptionErrorMessages.GetNameNotFoundMessage(namePropertyExpression(request)),
 				cancellationToken);
 		}
@@ -53,7 +53,7 @@ public static class UserExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<UserEmailAlreadyTakenException>(
+			await func.ShouldThrowAsync<UserEmailAlreadyTakenException>(
 				UserExceptionErrorMessages.GetEmailAlreadyTakenMessage(new(emailPropertyExpression(request))),
 				cancellationToken);
 		}
@@ -63,7 +63,7 @@ public static class UserExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<UserEmailAlreadyTakenException>(
+			await func.ShouldThrowAsync<UserEmailAlreadyTakenException>(
 				UserExceptionErrorMessages.GetEmailAlreadyTakenMessage(emailPropertyExpression(request)),
 				cancellationToken);
 		}
@@ -73,7 +73,7 @@ public static class UserExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<UserNameAlreadyTakenException>(
+			await func.ShouldThrowAsync<UserNameAlreadyTakenException>(
 				UserExceptionErrorMessages.GetNameAlreadyTakenMessage(new(namePropertyExpression(request))),
 				cancellationToken);
 		}
@@ -83,7 +83,7 @@ public static class UserExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<UserNameAlreadyTakenException>(
+			await func.ShouldThrowAsync<UserNameAlreadyTakenException>(
 				UserExceptionErrorMessages.GetNameAlreadyTakenMessage(namePropertyExpression(request)),
 				cancellationToken);
 		}
@@ -93,7 +93,7 @@ public static class UserExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<UserInvalidDetailsException>(
+			await func.ShouldThrowAsync<UserInvalidDetailsException>(
 				UserExceptionErrorMessages.GetInvalidDetailsMessage(new(namePropertyExpression(request))),
 				cancellationToken);
 		}
@@ -103,7 +103,7 @@ public static class UserExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<UserInvalidDetailsException>(
+			await func.ShouldThrowAsync<UserInvalidDetailsException>(
 				UserExceptionErrorMessages.GetInvalidDetailsMessage(namePropertyExpression(request)),
 				cancellationToken);
 		}
@@ -113,7 +113,7 @@ public static class UserExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<UserEmailAlreadyConfirmedException>(
+			await func.ShouldThrowAsync<UserEmailAlreadyConfirmedException>(
 				UserExceptionErrorMessages.GetEmailAlreadyConfirmedMessage(new(idPropertyExpression(request))),
 				cancellationToken);
 		}
@@ -123,7 +123,7 @@ public static class UserExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<UserEmailAlreadyConfirmedException>(
+			await func.ShouldThrowAsync<UserEmailAlreadyConfirmedException>(
 				UserExceptionErrorMessages.GetEmailAlreadyConfirmedMessage(idPropertyExpression(request)),
 				cancellationToken);
 		}
@@ -133,7 +133,7 @@ public static class UserExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<UserNameEmailAlreadyConfirmedException>(
+			await func.ShouldThrowAsync<UserNameEmailAlreadyConfirmedException>(
 				UserExceptionErrorMessages.GetNameEmailAlreadyConfirmedMessage(new(namePropertyExpression(request))),
 				cancellationToken);
 		}
@@ -143,7 +143,7 @@ public static class UserExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<UserNameEmailAlreadyConfirmedException>(
+			await func.ShouldThrowAsync<UserNameEmailAlreadyConfirmedException>(
 				UserExceptionErrorMessages.GetNameEmailAlreadyConfirmedMessage(namePropertyExpression(request)),
 				cancellationToken);
 		}
@@ -153,7 +153,7 @@ public static class UserExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<UserEmailNotConfirmedException>(
+			await func.ShouldThrowAsync<UserEmailNotConfirmedException>(
 				UserExceptionErrorMessages.GetEmailNotConfirmedMessage(new(idPropertyExpression(request))),
 				cancellationToken);
 		}
@@ -163,7 +163,7 @@ public static class UserExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<UserEmailNotConfirmedException>(
+			await func.ShouldThrowAsync<UserEmailNotConfirmedException>(
 				UserExceptionErrorMessages.GetEmailNotConfirmedMessage(idPropertyExpression(request)),
 				cancellationToken);
 		}
@@ -173,7 +173,7 @@ public static class UserExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<UserNameEmailNotConfirmedException>(
+			await func.ShouldThrowAsync<UserNameEmailNotConfirmedException>(
 				UserExceptionErrorMessages.GetNameEmailNotConfirmedMessage(new(namePropertyExpression(request))),
 				cancellationToken);
 		}
@@ -183,7 +183,7 @@ public static class UserExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<UserNameEmailNotConfirmedException>(
+			await func.ShouldThrowAsync<UserNameEmailNotConfirmedException>(
 				UserExceptionErrorMessages.GetNameEmailNotConfirmedMessage(namePropertyExpression(request)),
 				cancellationToken);
 		}

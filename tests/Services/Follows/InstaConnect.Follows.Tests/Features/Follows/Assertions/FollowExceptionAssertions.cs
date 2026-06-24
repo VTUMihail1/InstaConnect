@@ -5,7 +5,7 @@ namespace InstaConnect.Follows.Tests.Features.Follows.Assertions;
 
 public static class FollowExceptionAssertions
 {
-	extension(Func<Task> action)
+	extension(Func<Task> func)
 	{
 		public async Task ShouldThrowFollowNotFoundExceptionAsync<TRequest>(
 			Func<TRequest, string> followerIdPropertyExpression,
@@ -13,7 +13,7 @@ public static class FollowExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<FollowNotFoundException>(
+			await func.ShouldThrowAsync<FollowNotFoundException>(
 				FollowExceptionErrorMessages.GetNotFoundMessage(
 				new(
 					new(followerIdPropertyExpression(request)),
@@ -26,7 +26,7 @@ public static class FollowExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<FollowNotFoundException>(
+			await func.ShouldThrowAsync<FollowNotFoundException>(
 				FollowExceptionErrorMessages.GetNotFoundMessage(idPropertyExpression(request)),
 				cancellationToken);
 		}
@@ -37,7 +37,7 @@ public static class FollowExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<FollowAlreadyExistsException>(
+			await func.ShouldThrowAsync<FollowAlreadyExistsException>(
 				FollowExceptionErrorMessages.GetAlreadyExistsMessage(
 				new(
 					new(followerIdPropertyExpression(request)),
@@ -50,7 +50,7 @@ public static class FollowExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<FollowAlreadyExistsException>(
+			await func.ShouldThrowAsync<FollowAlreadyExistsException>(
 				FollowExceptionErrorMessages.GetAlreadyExistsMessage(idPropertyExpression(request)),
 				cancellationToken);
 		}

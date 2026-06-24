@@ -11,9 +11,9 @@ public static class RefreshTokenValidationExceptionAssertions
 			IssueRefreshTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Name,
 				messageTransformer,
 				request,
@@ -25,9 +25,9 @@ public static class RefreshTokenValidationExceptionAssertions
 			IssueRefreshTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Password,
 				messageTransformer,
 				request,
@@ -39,9 +39,9 @@ public static class RefreshTokenValidationExceptionAssertions
 			DeleteCurrentRefreshTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Id,
 				messageTransformer,
 				request,
@@ -53,9 +53,9 @@ public static class RefreshTokenValidationExceptionAssertions
 			RotateRefreshTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Id,
 				messageTransformer,
 				request,
@@ -67,9 +67,9 @@ public static class RefreshTokenValidationExceptionAssertions
 			DeleteCurrentRefreshTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Value,
 				messageTransformer,
 				request,
@@ -81,9 +81,9 @@ public static class RefreshTokenValidationExceptionAssertions
 			RotateRefreshTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowInvalidValidationExceptionAsync(
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Value,
 				messageTransformer,
 				request,

@@ -10,9 +10,9 @@ public static class UserClaimExceptionAssertions
 			GetAllUserClaimsQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserNotFoundExceptionAsync(
+			await func.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -22,9 +22,9 @@ public static class UserClaimExceptionAssertions
 			AddUserClaimCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserNotFoundExceptionAsync(
+			await func.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -34,9 +34,9 @@ public static class UserClaimExceptionAssertions
 			DeleteUserClaimCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserNotFoundExceptionAsync(
+			await func.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -46,9 +46,9 @@ public static class UserClaimExceptionAssertions
 			AddUserClaimCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserClaimAlreadyExistsExceptionAsync(
+			await func.ShouldThrowUserClaimAlreadyExistsExceptionAsync(
 				r => r.Id,
 				r => r.Claim,
 				request,
@@ -59,9 +59,9 @@ public static class UserClaimExceptionAssertions
 			DeleteUserClaimCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserClaimNotFoundExceptionAsync(
+			await func.ShouldThrowUserClaimNotFoundExceptionAsync(
 				r => r.Id,
 				r => r.Claim,
 				request,

@@ -4,12 +4,12 @@ namespace InstaConnect.Common.Tests.Features.Assertions;
 
 public static class ExceptionAssertions
 {
-	extension(Func<Task> action)
+	extension(Func<Task> func)
 	{
 		public async Task ShouldThrowAsync<TException>(string message, CancellationToken cancellationToken)
 			where TException : Exception
 		{
-			await action.Should().ThrowAsync<TException>().WithMessage(message);
+			await func.Should().ThrowAsync<TException>().WithMessage(message);
 		}
 	}
 }

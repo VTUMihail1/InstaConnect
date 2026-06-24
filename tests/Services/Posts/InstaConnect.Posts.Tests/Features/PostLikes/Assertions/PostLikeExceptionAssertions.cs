@@ -5,7 +5,7 @@ namespace InstaConnect.Posts.Tests.Features.PostLikes.Assertions;
 
 public static class PostLikeExceptionAssertions
 {
-	extension(Func<Task> action)
+	extension(Func<Task> func)
 	{
 		public async Task ShouldThrowPostLikeNotFoundExceptionAsync<TRequest>(
 			Func<TRequest, string> idPropertyExpression,
@@ -13,7 +13,7 @@ public static class PostLikeExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<PostLikeNotFoundException>(
+			await func.ShouldThrowAsync<PostLikeNotFoundException>(
 				PostLikeExceptionErrorMessages.GetNotFoundMessage(
 				new(
 					new(idPropertyExpression(request)),
@@ -26,7 +26,7 @@ public static class PostLikeExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<PostLikeNotFoundException>(
+			await func.ShouldThrowAsync<PostLikeNotFoundException>(
 				PostLikeExceptionErrorMessages.GetNotFoundMessage(idPropertyExpression(request)),
 				cancellationToken);
 		}
@@ -37,7 +37,7 @@ public static class PostLikeExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<PostLikeAlreadyExistsException>(
+			await func.ShouldThrowAsync<PostLikeAlreadyExistsException>(
 				PostLikeExceptionErrorMessages.GetAlreadyExistsMessage(
 				new(
 					new(idPropertyExpression(request)),
@@ -50,7 +50,7 @@ public static class PostLikeExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<PostLikeAlreadyExistsException>(
+			await func.ShouldThrowAsync<PostLikeAlreadyExistsException>(
 				PostLikeExceptionErrorMessages.GetAlreadyExistsMessage(idPropertyExpression(request)),
 				cancellationToken);
 		}

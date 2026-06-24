@@ -9,13 +9,13 @@ public static class PostMapper
 {
 	extension(Post post)
 	{
-		internal PostIdCommandResponse ToIdResponse(
+		internal PostIdCommandResponse ToIdCommandResponse(
 )
 		{
 			return new(post.Id.Id);
 		}
 
-		internal PostQueryResponse ToFullResponse<TRequest>(
+		internal PostQueryResponse ToFullQueryResponse<TRequest>(
 			TRequest request)
 			where TRequest : ICurrentUserableApiRequest
 		{
@@ -29,7 +29,7 @@ public static class PostMapper
 					   post.UpdatedAtUtc);
 		}
 
-		internal PostQueryResponse ToResponseWithoutUser<TRequest>(
+		internal PostQueryResponse ToQueryResponseWithoutUser<TRequest>(
 			TRequest request)
 			where TRequest : ICurrentUserableApiRequest
 		{
@@ -46,25 +46,25 @@ public static class PostMapper
 		public AddPostCommandResponse ToResponse(
 			AddPostApiRequest request)
 		{
-			return new(post.ToIdResponse());
+			return new(post.ToIdCommandResponse());
 		}
 
 		public UpdatePostCommandResponse ToResponse(
 			UpdatePostApiRequest request)
 		{
-			return new(post.ToIdResponse());
+			return new(post.ToIdCommandResponse());
 		}
 
 		public GetPostByIdQueryResponse ToResponse(
 			GetPostByIdApiRequest request)
 		{
-			return new(post.ToFullResponse(request));
+			return new(post.ToFullQueryResponse(request));
 		}
 	}
 
 	extension(ICollection<Post> posts)
 	{
-		internal PostCollectionQueryResponse ToFullResponse<TRequest>(
+		internal PostCollectionQueryResponse ToFullQueryResponse<TRequest>(
 		User user,
 		Func<Post, TRequest, bool> filter,
 		Func<Post, TRequest, PostQueryResponse> transform,
@@ -74,7 +74,7 @@ public static class PostMapper
 			var paginator = new Paginator();
 			var totalCount = posts.Count(post => filter(post, request));
 
-			return new (user.ToFullResponse(),
+			return new(user.ToFullResponse(),
 						posts.Filter(post => filter(post, request), request, post => transform(post, request)),
 						request.Page,
 						request.PageSize,
@@ -83,7 +83,7 @@ public static class PostMapper
 						paginator.HasPreviousPage(request.Page));
 		}
 
-		internal PostCollectionQueryResponse ToResponseWithoutUser<TRequest>(
+		internal PostCollectionQueryResponse ToQueryResponseWithoutUser<TRequest>(
 			Func<Post, TRequest, bool> filter,
 			Func<Post, TRequest, PostQueryResponse> transform,
 			TRequest request)
@@ -104,8 +104,8 @@ public static class PostMapper
 		public GetAllPostsQueryResponse ToResponse(
 			GetAllPostsApiRequest request)
 		{
-			return new(posts.ToResponseWithoutUser((post, request) => post.MatchesFilter(request),
-												   (post, request) => post.ToFullResponse(request),
+			return new(posts.ToQueryResponseWithoutUser((post, request) => post.MatchesFilter(request),
+												   (post, request) => post.ToFullQueryResponse(request),
 												   request));
 		}
 
@@ -113,9 +113,9 @@ public static class PostMapper
 			User user,
 			GetAllPostsForUserApiRequest request)
 		{
-			return new(posts.ToFullResponse(user,
+			return new(posts.ToFullQueryResponse(user,
 											(post, request) => post.MatchesFilter(request),
-											(post, request) => post.ToResponseWithoutUser(request),
+											(post, request) => post.ToQueryResponseWithoutUser(request),
 											request));
 		}
 	}

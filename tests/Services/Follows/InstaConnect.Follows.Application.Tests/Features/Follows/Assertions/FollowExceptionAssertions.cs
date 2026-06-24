@@ -10,9 +10,9 @@ public static class FollowExceptionAssertions
 		GetAllFollowsForFollowingQueryRequest request,
 		CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserNotFoundExceptionAsync(
+			await func.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.FollowingId,
 				request,
 				cancellationToken);
@@ -22,9 +22,9 @@ public static class FollowExceptionAssertions
 			AddFollowCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserNotFoundExceptionAsync(
+			await func.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.FollowingId,
 				request,
 				cancellationToken);
@@ -34,9 +34,9 @@ public static class FollowExceptionAssertions
 			AddFollowCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserNotFoundExceptionAsync(
+			await func.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.FollowerId,
 				request,
 				cancellationToken);
@@ -46,9 +46,9 @@ public static class FollowExceptionAssertions
 			DeleteFollowCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserNotFoundExceptionAsync(
+			await func.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.FollowerId,
 				request,
 				cancellationToken);
@@ -58,9 +58,9 @@ public static class FollowExceptionAssertions
 			GetFollowByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserNotFoundExceptionAsync(
+			await func.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.FollowerId,
 				request,
 				cancellationToken);
@@ -70,9 +70,9 @@ public static class FollowExceptionAssertions
 			GetAllFollowsQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserNotFoundExceptionAsync(
+			await func.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.FollowerId,
 				request,
 				cancellationToken);
@@ -82,9 +82,9 @@ public static class FollowExceptionAssertions
 			DeleteFollowCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowFollowNotFoundExceptionAsync(
+			await func.ShouldThrowFollowNotFoundExceptionAsync(
 				r => r.FollowerId,
 				r => r.FollowingId,
 				request,
@@ -95,9 +95,9 @@ public static class FollowExceptionAssertions
 			GetFollowByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowFollowNotFoundExceptionAsync(
+			await func.ShouldThrowFollowNotFoundExceptionAsync(
 				r => r.FollowerId,
 				r => r.FollowingId,
 				request,
@@ -108,9 +108,9 @@ public static class FollowExceptionAssertions
 			AddFollowCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowFollowAlreadyExistsExceptionAsync(
+			await func.ShouldThrowFollowAlreadyExistsExceptionAsync(
 				r => r.FollowerId,
 				r => r.FollowingId,
 				request,

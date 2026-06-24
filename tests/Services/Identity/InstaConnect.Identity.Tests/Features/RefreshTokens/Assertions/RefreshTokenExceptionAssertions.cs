@@ -5,7 +5,7 @@ namespace InstaConnect.Identity.Tests.Features.RefreshTokens.Assertions;
 
 public static class RefreshTokenExceptionAssertions
 {
-	extension(Func<Task> action)
+	extension(Func<Task> func)
 	{
 		public async Task ShouldThrowRefreshTokenNotFoundExceptionAsync<TRequest>(
 			Func<TRequest, string> idPropertyExpression,
@@ -13,7 +13,7 @@ public static class RefreshTokenExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<RefreshTokenNotFoundException>(
+			await func.ShouldThrowAsync<RefreshTokenNotFoundException>(
 				RefreshTokenExceptionErrorMessages.GetNotFoundMessage(
 					new(
 						new(idPropertyExpression(request)),
@@ -26,7 +26,7 @@ public static class RefreshTokenExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<RefreshTokenNotFoundException>(
+			await func.ShouldThrowAsync<RefreshTokenNotFoundException>(
 				RefreshTokenExceptionErrorMessages.GetNotFoundMessage(idPropertyExpression(request)),
 				cancellationToken);
 		}
@@ -37,7 +37,7 @@ public static class RefreshTokenExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<RefreshTokenExpiredException>(
+			await func.ShouldThrowAsync<RefreshTokenExpiredException>(
 				RefreshTokenExceptionErrorMessages.GetExpiredMessage(
 					new(
 						new(idPropertyExpression(request)),
@@ -50,7 +50,7 @@ public static class RefreshTokenExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<RefreshTokenExpiredException>(
+			await func.ShouldThrowAsync<RefreshTokenExpiredException>(
 				RefreshTokenExceptionErrorMessages.GetExpiredMessage(idPropertyExpression(request)),
 				cancellationToken);
 		}

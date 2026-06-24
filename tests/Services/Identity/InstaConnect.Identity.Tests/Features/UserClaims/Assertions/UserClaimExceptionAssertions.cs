@@ -6,7 +6,7 @@ namespace InstaConnect.Identity.Tests.Features.UserClaims.Assertions;
 
 public static class UserClaimExceptionAssertions
 {
-	extension(Func<Task> action)
+	extension(Func<Task> func)
 	{
 		public async Task ShouldThrowUserClaimNotFoundExceptionAsync<TRequest>(
 			Func<TRequest, string> idPropertyExpression,
@@ -14,7 +14,7 @@ public static class UserClaimExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<UserClaimNotFoundException>(
+			await func.ShouldThrowAsync<UserClaimNotFoundException>(
 				UserClaimExceptionErrorMessages.GetNotFoundMessage(
 					new(
 						new(idPropertyExpression(request)),
@@ -27,7 +27,7 @@ public static class UserClaimExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<UserClaimNotFoundException>(
+			await func.ShouldThrowAsync<UserClaimNotFoundException>(
 				UserClaimExceptionErrorMessages.GetNotFoundMessage(idPropertyExpression(request)),
 				cancellationToken);
 		}
@@ -38,7 +38,7 @@ public static class UserClaimExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<UserClaimAlreadyExistsException>(
+			await func.ShouldThrowAsync<UserClaimAlreadyExistsException>(
 				UserClaimExceptionErrorMessages.GetAlreadyExistsMessage(
 					new(
 						new(idPropertyExpression(request)),
@@ -51,7 +51,7 @@ public static class UserClaimExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<UserClaimAlreadyExistsException>(
+			await func.ShouldThrowAsync<UserClaimAlreadyExistsException>(
 				UserClaimExceptionErrorMessages.GetAlreadyExistsMessage(idPropertyExpression(request)),
 				cancellationToken);
 		}

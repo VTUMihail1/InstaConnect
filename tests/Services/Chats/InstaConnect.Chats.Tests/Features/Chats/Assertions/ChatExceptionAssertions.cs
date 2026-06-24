@@ -5,7 +5,7 @@ namespace InstaConnect.Chats.Tests.Features.Chats.Assertions;
 
 public static class ChatExceptionAssertions
 {
-	extension(Func<Task> action)
+	extension(Func<Task> func)
 	{
 		public async Task ShouldThrowChatNotFoundExceptionAsync<TRequest>(
 			Func<TRequest, string> participantOneIdPropertyExpression,
@@ -13,7 +13,7 @@ public static class ChatExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<ChatNotFoundException>(
+			await func.ShouldThrowAsync<ChatNotFoundException>(
 				ChatExceptionErrorMessages.GetNotFoundMessage(new(new(participantOneIdPropertyExpression(request)), new(participantTwoIdPropertyExpression(request)))),
 				cancellationToken);
 		}
@@ -23,7 +23,7 @@ public static class ChatExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<ChatNotFoundException>(
+			await func.ShouldThrowAsync<ChatNotFoundException>(
 				ChatExceptionErrorMessages.GetNotFoundMessage(idPropertyExpression(request)),
 				cancellationToken);
 		}
@@ -34,7 +34,7 @@ public static class ChatExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<ChatAlreadyExistsException>(
+			await func.ShouldThrowAsync<ChatAlreadyExistsException>(
 				ChatExceptionErrorMessages.GetAlreadyExistsMessage(new(new(participantOneIdPropertyExpression(request)), new(participantTwoIdPropertyExpression(request)))),
 				cancellationToken);
 		}
@@ -44,7 +44,7 @@ public static class ChatExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<ChatAlreadyExistsException>(
+			await func.ShouldThrowAsync<ChatAlreadyExistsException>(
 				ChatExceptionErrorMessages.GetAlreadyExistsMessage(idPropertyExpression(request)),
 				cancellationToken);
 		}

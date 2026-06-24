@@ -10,9 +10,9 @@ public static class ChatMessageExceptionAssertions
 			AddChatMessageCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowChatNotFoundExceptionAsync(
+			await func.ShouldThrowChatNotFoundExceptionAsync(
 				r => r.ParticipantOneId,
 				r => r.ParticipantTwoId,
 				request,
@@ -23,9 +23,9 @@ public static class ChatMessageExceptionAssertions
 			UpdateChatMessageCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowChatNotFoundExceptionAsync(
+			await func.ShouldThrowChatNotFoundExceptionAsync(
 				r => r.ParticipantOneId,
 				r => r.ParticipantTwoId,
 				request,
@@ -36,9 +36,9 @@ public static class ChatMessageExceptionAssertions
 			DeleteChatMessageCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowChatNotFoundExceptionAsync(
+			await func.ShouldThrowChatNotFoundExceptionAsync(
 				r => r.ParticipantOneId,
 				r => r.ParticipantTwoId,
 				request,
@@ -49,9 +49,9 @@ public static class ChatMessageExceptionAssertions
 			GetChatMessageByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowChatNotFoundExceptionAsync(
+			await func.ShouldThrowChatNotFoundExceptionAsync(
 				r => r.CurrentUserId,
 				r => r.ParticipantTwoId,
 				request,
@@ -62,9 +62,9 @@ public static class ChatMessageExceptionAssertions
 			GetAllChatMessagesQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowChatNotFoundExceptionAsync(
+			await func.ShouldThrowChatNotFoundExceptionAsync(
 				r => r.CurrentUserId,
 				r => r.ParticipantTwoId,
 				request,
@@ -75,9 +75,9 @@ public static class ChatMessageExceptionAssertions
 			UpdateChatMessageCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowChatMessageNotFoundExceptionAsync(
+			await func.ShouldThrowChatMessageNotFoundExceptionAsync(
 				r => r.ParticipantOneId,
 				r => r.ParticipantTwoId,
 				r => r.MessageId,
@@ -89,9 +89,9 @@ public static class ChatMessageExceptionAssertions
 			DeleteChatMessageCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowChatMessageNotFoundExceptionAsync(
+			await func.ShouldThrowChatMessageNotFoundExceptionAsync(
 				r => r.ParticipantOneId,
 				r => r.ParticipantTwoId,
 				r => r.MessageId,
@@ -103,9 +103,9 @@ public static class ChatMessageExceptionAssertions
 			GetChatMessageByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowChatMessageNotFoundExceptionAsync(
+			await func.ShouldThrowChatMessageNotFoundExceptionAsync(
 				r => r.CurrentUserId,
 				r => r.ParticipantTwoId,
 				r => r.MessageId,
@@ -117,9 +117,9 @@ public static class ChatMessageExceptionAssertions
 			DeleteChatMessageCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowChatMessageForbiddenExceptionAsync(
+			await func.ShouldThrowChatMessageForbiddenExceptionAsync(
 				r => r.ParticipantOneId,
 				r => r.ParticipantTwoId,
 				r => r.MessageId,
@@ -132,9 +132,9 @@ public static class ChatMessageExceptionAssertions
 			UpdateChatMessageCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowChatMessageForbiddenExceptionAsync(
+			await func.ShouldThrowChatMessageForbiddenExceptionAsync(
 				r => r.ParticipantOneId,
 				r => r.ParticipantTwoId,
 				r => r.MessageId,

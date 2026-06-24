@@ -6,7 +6,7 @@ namespace InstaConnect.Chats.Tests.Features.ChatMessages.Assertions;
 
 public static class ChatMessageExceptionAssertions
 {
-	extension(Func<Task> action)
+	extension(Func<Task> func)
 	{
 		public async Task ShouldThrowChatMessageNotFoundExceptionAsync<TRequest>(
 			Func<TRequest, string> participantOneIdPropertyExpression,
@@ -15,7 +15,7 @@ public static class ChatMessageExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<ChatMessageNotFoundException>(
+			await func.ShouldThrowAsync<ChatMessageNotFoundException>(
 				ChatMessageExceptionErrorMessages.GetNotFoundMessage(
 					new(
 						new(
@@ -30,7 +30,7 @@ public static class ChatMessageExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<ChatMessageNotFoundException>(
+			await func.ShouldThrowAsync<ChatMessageNotFoundException>(
 				ChatMessageExceptionErrorMessages.GetNotFoundMessage(idPropertyExpression(request)),
 				cancellationToken);
 		}
@@ -43,7 +43,7 @@ public static class ChatMessageExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<ChatMessageForbiddenException>(
+			await func.ShouldThrowAsync<ChatMessageForbiddenException>(
 				ChatMessageExceptionErrorMessages.GetForbiddenMessage(
 					new(
 						new(
@@ -60,7 +60,7 @@ public static class ChatMessageExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<ChatMessageForbiddenException>(
+			await func.ShouldThrowAsync<ChatMessageForbiddenException>(
 				ChatMessageExceptionErrorMessages.GetForbiddenMessage(idPropertyExpression(request), senderIdPropertyExpression(request)),
 				cancellationToken);
 		}

@@ -9,7 +9,7 @@ namespace InstaConnect.Common.Tests.Features.Assertions;
 
 public static class ValidationExceptionAssertions
 {
-	extension(Func<Task> action)
+	extension(Func<Task> func)
 	{
 		public async Task ShouldThrowInvalidValidationExceptionAsync<TRequest, TValue>(
 			Expression<Func<TRequest, TValue>> propertyExpression,
@@ -17,7 +17,7 @@ public static class ValidationExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			var exception = await action.Should().ThrowAsync<InvalidValidationException>().WithMessage(CommonExceptionErrorMessages.GetInvalidValidation());
+			var exception = await func.Should().ThrowAsync<InvalidValidationException>().WithMessage(CommonExceptionErrorMessages.GetInvalidValidation());
 
 			exception
 				.Which

@@ -5,7 +5,7 @@ namespace InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Assertion
 
 public static class EmailConfirmationTokenExceptionAssertions
 {
-	extension(Func<Task> action)
+	extension(Func<Task> func)
 	{
 		public async Task ShouldThrowEmailConfirmationTokenNotFoundExceptionAsync<TRequest>(
 			Func<TRequest, string> idPropertyExpression,
@@ -13,7 +13,7 @@ public static class EmailConfirmationTokenExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<EmailConfirmationTokenNotFoundException>(
+			await func.ShouldThrowAsync<EmailConfirmationTokenNotFoundException>(
 				EmailConfirmationTokenExceptionErrorMessages.GetNotFoundMessage(
 					new(
 						new(idPropertyExpression(request)),
@@ -26,7 +26,7 @@ public static class EmailConfirmationTokenExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<EmailConfirmationTokenNotFoundException>(
+			await func.ShouldThrowAsync<EmailConfirmationTokenNotFoundException>(
 				EmailConfirmationTokenExceptionErrorMessages.GetNotFoundMessage(idPropertyExpression(request)),
 				cancellationToken);
 		}
@@ -37,7 +37,7 @@ public static class EmailConfirmationTokenExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<EmailConfirmationTokenExpiredException>(
+			await func.ShouldThrowAsync<EmailConfirmationTokenExpiredException>(
 				EmailConfirmationTokenExceptionErrorMessages.GetExpiredMessage(
 					new(
 						new(idPropertyExpression(request)),
@@ -50,7 +50,7 @@ public static class EmailConfirmationTokenExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<EmailConfirmationTokenExpiredException>(
+			await func.ShouldThrowAsync<EmailConfirmationTokenExpiredException>(
 				EmailConfirmationTokenExceptionErrorMessages.GetExpiredMessage(idPropertyExpression(request)),
 				cancellationToken);
 		}

@@ -10,9 +10,9 @@ public static class EmailConfirmationTokenExceptionAssertions
 			AddEmailConfirmationTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserNameNotFoundExceptionAsync(
+			await func.ShouldThrowUserNameNotFoundExceptionAsync(
 				r => r.Name,
 				request,
 				cancellationToken);
@@ -22,9 +22,9 @@ public static class EmailConfirmationTokenExceptionAssertions
 			VerifyEmailConfirmationTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserNotFoundExceptionAsync(
+			await func.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -34,9 +34,9 @@ public static class EmailConfirmationTokenExceptionAssertions
 			AddEmailConfirmationTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserNameEmailAlreadyConfirmedExceptionAsync(
+			await func.ShouldThrowUserNameEmailAlreadyConfirmedExceptionAsync(
 				r => r.Name,
 				request,
 				cancellationToken);
@@ -46,9 +46,9 @@ public static class EmailConfirmationTokenExceptionAssertions
 			VerifyEmailConfirmationTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserEmailAlreadyConfirmedExceptionAsync(
+			await func.ShouldThrowUserEmailAlreadyConfirmedExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -58,9 +58,9 @@ public static class EmailConfirmationTokenExceptionAssertions
 			VerifyEmailConfirmationTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowEmailConfirmationTokenNotFoundExceptionAsync(
+			await func.ShouldThrowEmailConfirmationTokenNotFoundExceptionAsync(
 				r => r.Id,
 				r => r.Value,
 				request,
@@ -71,9 +71,9 @@ public static class EmailConfirmationTokenExceptionAssertions
 			VerifyEmailConfirmationTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowEmailConfirmationTokenExpiredExceptionAsync(
+			await func.ShouldThrowEmailConfirmationTokenExpiredExceptionAsync(
 				r => r.Id,
 				r => r.Value,
 				request,

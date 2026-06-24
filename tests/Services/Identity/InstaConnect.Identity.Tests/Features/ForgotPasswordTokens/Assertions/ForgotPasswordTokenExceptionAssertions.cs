@@ -5,7 +5,7 @@ namespace InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.Assertions;
 
 public static class ForgotPasswordTokenExceptionAssertions
 {
-	extension(Func<Task> action)
+	extension(Func<Task> func)
 	{
 		public async Task ShouldThrowForgotPasswordTokenNotFoundExceptionAsync<TRequest>(
 			Func<TRequest, string> idPropertyExpression,
@@ -13,7 +13,7 @@ public static class ForgotPasswordTokenExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<ForgotPasswordTokenNotFoundException>(
+			await func.ShouldThrowAsync<ForgotPasswordTokenNotFoundException>(
 				ForgotPasswordTokenExceptionErrorMessages.GetNotFoundMessage(
 					new(
 						new(idPropertyExpression(request)),
@@ -26,7 +26,7 @@ public static class ForgotPasswordTokenExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<ForgotPasswordTokenNotFoundException>(
+			await func.ShouldThrowAsync<ForgotPasswordTokenNotFoundException>(
 				ForgotPasswordTokenExceptionErrorMessages.GetNotFoundMessage(idPropertyExpression(request)),
 				cancellationToken);
 		}
@@ -37,7 +37,7 @@ public static class ForgotPasswordTokenExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<ForgotPasswordTokenExpiredException>(
+			await func.ShouldThrowAsync<ForgotPasswordTokenExpiredException>(
 				ForgotPasswordTokenExceptionErrorMessages.GetExpiredMessage(
 					new(
 						new(idPropertyExpression(request)),
@@ -50,7 +50,7 @@ public static class ForgotPasswordTokenExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<ForgotPasswordTokenExpiredException>(
+			await func.ShouldThrowAsync<ForgotPasswordTokenExpiredException>(
 				ForgotPasswordTokenExceptionErrorMessages.GetExpiredMessage(idPropertyExpression(request)),
 				cancellationToken);
 		}

@@ -10,9 +10,9 @@ public static class PostLikeExceptionAssertions
 		GetAllPostLikesForUserQueryRequest request,
 		CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserNotFoundExceptionAsync(
+			await func.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.UserId,
 				request,
 				cancellationToken);
@@ -22,9 +22,9 @@ public static class PostLikeExceptionAssertions
 			AddPostLikeCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserNotFoundExceptionAsync(
+			await func.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.UserId,
 				request,
 				cancellationToken);
@@ -34,9 +34,9 @@ public static class PostLikeExceptionAssertions
 			AddPostLikeCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowPostNotFoundExceptionAsync(
+			await func.ShouldThrowPostNotFoundExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -46,9 +46,9 @@ public static class PostLikeExceptionAssertions
 			DeletePostLikeCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowPostNotFoundExceptionAsync(
+			await func.ShouldThrowPostNotFoundExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -58,9 +58,9 @@ public static class PostLikeExceptionAssertions
 			GetPostLikeByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowPostNotFoundExceptionAsync(
+			await func.ShouldThrowPostNotFoundExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -70,9 +70,9 @@ public static class PostLikeExceptionAssertions
 			GetAllPostLikesQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowPostNotFoundExceptionAsync(
+			await func.ShouldThrowPostNotFoundExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -82,9 +82,9 @@ public static class PostLikeExceptionAssertions
 			DeletePostLikeCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowPostLikeNotFoundExceptionAsync(
+			await func.ShouldThrowPostLikeNotFoundExceptionAsync(
 				r => r.Id,
 				r => r.UserId,
 				request,
@@ -95,9 +95,9 @@ public static class PostLikeExceptionAssertions
 			GetPostLikeByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowPostLikeNotFoundExceptionAsync(
+			await func.ShouldThrowPostLikeNotFoundExceptionAsync(
 				r => r.Id,
 				r => r.UserId,
 				request,
@@ -108,9 +108,9 @@ public static class PostLikeExceptionAssertions
 			AddPostLikeCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowPostLikeAlreadyExistsExceptionAsync(
+			await func.ShouldThrowPostLikeAlreadyExistsExceptionAsync(
 				r => r.Id,
 				r => r.UserId,
 				request,

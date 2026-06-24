@@ -5,7 +5,7 @@ namespace InstaConnect.Posts.Tests.Features.PostCommentLikes.Assertions;
 
 public static class PostCommentLikeExceptionAssertions
 {
-	extension(Func<Task> action)
+	extension(Func<Task> func)
 	{
 		public async Task ShouldThrowPostCommentLikeNotFoundExceptionAsync<TRequest>(
 			Func<TRequest, string> idPropertyExpression,
@@ -14,7 +14,7 @@ public static class PostCommentLikeExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<PostCommentLikeNotFoundException>(
+			await func.ShouldThrowAsync<PostCommentLikeNotFoundException>(
 				PostCommentLikeExceptionErrorMessages.GetNotFoundMessage(
 					new(
 						new(
@@ -29,7 +29,7 @@ public static class PostCommentLikeExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<PostCommentLikeNotFoundException>(
+			await func.ShouldThrowAsync<PostCommentLikeNotFoundException>(
 				PostCommentLikeExceptionErrorMessages.GetNotFoundMessage(idPropertyExpression(request)),
 				cancellationToken);
 		}
@@ -41,7 +41,7 @@ public static class PostCommentLikeExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<PostCommentLikeAlreadyExistsException>(
+			await func.ShouldThrowAsync<PostCommentLikeAlreadyExistsException>(
 				PostCommentLikeExceptionErrorMessages.GetAlreadyExistsMessage(
 					new(
 						new(
@@ -56,7 +56,7 @@ public static class PostCommentLikeExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<PostCommentLikeAlreadyExistsException>(
+			await func.ShouldThrowAsync<PostCommentLikeAlreadyExistsException>(
 				PostCommentLikeExceptionErrorMessages.GetAlreadyExistsMessage(idPropertyExpression(request)),
 				cancellationToken);
 		}

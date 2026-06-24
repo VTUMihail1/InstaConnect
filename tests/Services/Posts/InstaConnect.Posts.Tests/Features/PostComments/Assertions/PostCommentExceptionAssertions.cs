@@ -6,7 +6,7 @@ namespace InstaConnect.Posts.Tests.Features.PostComments.Assertions;
 
 public static class PostCommentExceptionAssertions
 {
-	extension(Func<Task> action)
+	extension(Func<Task> func)
 	{
 		public async Task ShouldThrowPostCommentNotFoundExceptionAsync<TRequest>(
 			Func<TRequest, string> idPropertyExpression,
@@ -14,7 +14,7 @@ public static class PostCommentExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<PostCommentNotFoundException>(
+			await func.ShouldThrowAsync<PostCommentNotFoundException>(
 				PostCommentExceptionErrorMessages.GetNotFoundMessage(
 					new(
 						new(idPropertyExpression(request)),
@@ -27,7 +27,7 @@ public static class PostCommentExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<PostCommentNotFoundException>(
+			await func.ShouldThrowAsync<PostCommentNotFoundException>(
 				PostCommentExceptionErrorMessages.GetNotFoundMessage(idPropertyExpression(request)),
 				cancellationToken);
 		}
@@ -39,7 +39,7 @@ public static class PostCommentExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<PostCommentForbiddenException>(
+			await func.ShouldThrowAsync<PostCommentForbiddenException>(
 				PostCommentExceptionErrorMessages.GetForbiddenMessage(
 					new(
 						new(idPropertyExpression(request)),
@@ -54,7 +54,7 @@ public static class PostCommentExceptionAssertions
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
-			await action.ShouldThrowAsync<PostCommentForbiddenException>(
+			await func.ShouldThrowAsync<PostCommentForbiddenException>(
 				PostCommentExceptionErrorMessages.GetForbiddenMessage(
 					idPropertyExpression(request),
 					userIdPropertyExpression(request)),

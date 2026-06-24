@@ -10,9 +10,9 @@ public static class UserExceptionAssertions
 		UpdateUserCommandRequest request,
 		CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserNotFoundExceptionAsync(
+			await func.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -22,9 +22,9 @@ public static class UserExceptionAssertions
 			DeleteUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserNotFoundExceptionAsync(
+			await func.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -34,9 +34,9 @@ public static class UserExceptionAssertions
 			AddUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserAlreadyExistsExceptionAsync(
+			await func.ShouldThrowUserAlreadyExistsExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -46,9 +46,9 @@ public static class UserExceptionAssertions
 			AddUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserNameAlreadyExistsExceptionAsync(
+			await func.ShouldThrowUserNameAlreadyExistsExceptionAsync(
 				r => r.Name,
 				request,
 				cancellationToken);
@@ -58,9 +58,9 @@ public static class UserExceptionAssertions
 			UpdateUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserNameAlreadyExistsExceptionAsync(
+			await func.ShouldThrowUserNameAlreadyExistsExceptionAsync(
 				r => r.Name,
 				request,
 				cancellationToken);
@@ -70,9 +70,9 @@ public static class UserExceptionAssertions
 			AddUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserEmailAlreadyExistsExceptionAsync(
+			await func.ShouldThrowUserEmailAlreadyExistsExceptionAsync(
 				r => r.Email,
 				request,
 				cancellationToken);
@@ -82,9 +82,9 @@ public static class UserExceptionAssertions
 			UpdateUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			var action = () => sender.SendAsync(request, cancellationToken);
+			var func = () => sender.SendAsync(request, cancellationToken);
 
-			await action.ShouldThrowUserEmailAlreadyExistsExceptionAsync(
+			await func.ShouldThrowUserEmailAlreadyExistsExceptionAsync(
 				r => r.Email,
 				request,
 				cancellationToken);
