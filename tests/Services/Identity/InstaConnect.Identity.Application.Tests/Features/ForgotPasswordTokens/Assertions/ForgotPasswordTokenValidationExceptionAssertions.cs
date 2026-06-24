@@ -11,7 +11,9 @@ public static class ForgotPasswordTokenValidationExceptionAssertions
 			AddForgotPasswordTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Name,
 				messageTransformer,
 				request,
@@ -23,7 +25,9 @@ public static class ForgotPasswordTokenValidationExceptionAssertions
 			VerifyForgotPasswordTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Id,
 				messageTransformer,
 				request,
@@ -35,7 +39,9 @@ public static class ForgotPasswordTokenValidationExceptionAssertions
 			VerifyForgotPasswordTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Value,
 				messageTransformer,
 				request,
@@ -47,7 +53,9 @@ public static class ForgotPasswordTokenValidationExceptionAssertions
 			VerifyForgotPasswordTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Password,
 				messageTransformer,
 				request,
@@ -59,7 +67,9 @@ public static class ForgotPasswordTokenValidationExceptionAssertions
 			VerifyForgotPasswordTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.ConfirmPassword,
 				messageTransformer,
 				request,

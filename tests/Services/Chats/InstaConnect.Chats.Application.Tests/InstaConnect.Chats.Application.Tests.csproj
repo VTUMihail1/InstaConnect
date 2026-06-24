@@ -35,6 +35,7 @@
     <Using Include="InstaConnect.Chats.Domain.Features.Users.Models.Requests" />
     <Using Include="InstaConnect.Chats.Domain.Features.Users.Utilities" />
     <Using Include="InstaConnect.Chats.Application.Tests.Features.Users.Assertions" />
+	<Using Include="InstaConnect.Chats.Tests.Features.Users.Assertions"/>
     <Using Include="InstaConnect.Chats.Tests.Features.Users.Builders" />
     <Using Include="InstaConnect.Chats.Tests.Features.Users.Utilities" />
     <Using Include="InstaConnect.Chats.Domain.Features.Users.Utilities" />
@@ -51,6 +52,7 @@
     <Using Include="InstaConnect.Chats.Domain.Features.Chats.Models.Responses" />
     <Using Include="InstaConnect.Chats.Domain.Features.Chats.Utilities" />
     <Using Include="InstaConnect.Chats.Application.Tests.Features.Chats.Assertions" />
+	<Using Include="InstaConnect.Chats.Tests.Features.Chats.Assertions"/>
     <Using Include="InstaConnect.Chats.Tests.Features.Chats.Builders" />
     <Using Include="InstaConnect.Chats.Tests.Features.Chats.Utilities" />
     <Using Include="InstaConnect.Chats.Application.Features.Chats.Queries.GetAll" />
@@ -66,6 +68,7 @@
     <Using Include="InstaConnect.Chats.Domain.Features.ChatMessages.Models.Responses" />
     <Using Include="InstaConnect.Chats.Domain.Features.ChatMessages.Utilities" />
     <Using Include="InstaConnect.Chats.Application.Tests.Features.ChatMessages.Assertions" />
+	<Using Include="InstaConnect.Chats.Tests.Features.ChatMessages.Assertions"/>
     <Using Include="InstaConnect.Chats.Tests.Features.ChatMessages.Builders" />
     <Using Include="InstaConnect.Chats.Tests.Features.ChatMessages.Utilities" />
     <Using Include="InstaConnect.Chats.Application.Features.ChatMessages.Queries.GetAll" />

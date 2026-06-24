@@ -11,7 +11,9 @@ public static class EmailConfirmationTokenValidationExceptionAssertions
 			AddEmailConfirmationTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Name,
 				messageTransformer,
 				request,
@@ -23,7 +25,9 @@ public static class EmailConfirmationTokenValidationExceptionAssertions
 			VerifyEmailConfirmationTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Id,
 				messageTransformer,
 				request,
@@ -35,7 +39,9 @@ public static class EmailConfirmationTokenValidationExceptionAssertions
 			VerifyEmailConfirmationTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Value,
 				messageTransformer,
 				request,

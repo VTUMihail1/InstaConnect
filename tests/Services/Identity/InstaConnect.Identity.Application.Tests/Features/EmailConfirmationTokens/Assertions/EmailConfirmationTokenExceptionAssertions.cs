@@ -1,7 +1,4 @@
 using InstaConnect.Common.Application.Features.Messaging.Abstractions;
-using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Exceptions;
-
-using MediatR;
 
 namespace InstaConnect.Identity.Application.Tests.Features.EmailConfirmationTokens.Assertions;
 
@@ -13,7 +10,9 @@ public static class EmailConfirmationTokenExceptionAssertions
 			AddEmailConfirmationTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowUserNameNotFoundExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowUserNameNotFoundExceptionAsync(
 				r => r.Name,
 				request,
 				cancellationToken);
@@ -23,7 +22,9 @@ public static class EmailConfirmationTokenExceptionAssertions
 			VerifyEmailConfirmationTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowUserNotFoundExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -33,7 +34,9 @@ public static class EmailConfirmationTokenExceptionAssertions
 			AddEmailConfirmationTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowUserNameEmailAlreadyConfirmedExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowUserNameEmailAlreadyConfirmedExceptionAsync(
 				r => r.Name,
 				request,
 				cancellationToken);
@@ -43,7 +46,9 @@ public static class EmailConfirmationTokenExceptionAssertions
 			VerifyEmailConfirmationTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowUserEmailAlreadyConfirmedExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowUserEmailAlreadyConfirmedExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -53,7 +58,9 @@ public static class EmailConfirmationTokenExceptionAssertions
 			VerifyEmailConfirmationTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowEmailConfirmationTokenNotFoundExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowEmailConfirmationTokenNotFoundExceptionAsync(
 				r => r.Id,
 				r => r.Value,
 				request,
@@ -64,61 +71,11 @@ public static class EmailConfirmationTokenExceptionAssertions
 			VerifyEmailConfirmationTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowEmailConfirmationTokenExpiredExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowEmailConfirmationTokenExpiredExceptionAsync(
 				r => r.Id,
 				r => r.Value,
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowEmailConfirmationTokenNotFoundExceptionAsync<TRequest>(
-			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> valueropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest
-		{
-			await sender.ShouldThrowAsync<EmailConfirmationTokenNotFoundException, TRequest>(
-				EmailConfirmationTokenExceptionErrorMessages.GetNotFoundMessage(new EmailConfirmationTokenId(new UserId(idPropertyExpression(request)), valueropertyExpression(request))),
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowEmailConfirmationTokenNotFoundExceptionAsync<TRequest, TResponse>(
-			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> valuePropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest<TResponse>
-		{
-			await sender.ShouldThrowAsync<EmailConfirmationTokenNotFoundException, TRequest, TResponse>(
-				EmailConfirmationTokenExceptionErrorMessages.GetNotFoundMessage(new EmailConfirmationTokenId(new UserId(idPropertyExpression(request)), valuePropertyExpression(request))),
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowEmailConfirmationTokenExpiredExceptionAsync<TRequest>(
-			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> valuePropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest
-		{
-			await sender.ShouldThrowAsync<EmailConfirmationTokenExpiredException, TRequest>(
-				EmailConfirmationTokenExceptionErrorMessages.GetExpiredMessage(new EmailConfirmationTokenId(new UserId(idPropertyExpression(request)), valuePropertyExpression(request))),
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowEmailConfirmationTokenExpiredExceptionAsync<TRequest, TResponse>(
-			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> valuePropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest<TResponse>
-		{
-			await sender.ShouldThrowAsync<EmailConfirmationTokenExpiredException, TRequest, TResponse>(
-				EmailConfirmationTokenExceptionErrorMessages.GetExpiredMessage(new EmailConfirmationTokenId(new UserId(idPropertyExpression(request)), valuePropertyExpression(request))),
 				request,
 				cancellationToken);
 		}

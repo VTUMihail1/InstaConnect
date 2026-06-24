@@ -1,7 +1,4 @@
 using InstaConnect.Common.Application.Features.Messaging.Abstractions;
-using InstaConnect.Follows.Domain.Features.Follows.Exceptions;
-
-using MediatR;
 
 namespace InstaConnect.Follows.Application.Tests.Features.Follows.Assertions;
 
@@ -13,7 +10,9 @@ public static class FollowExceptionAssertions
 		GetAllFollowsForFollowingQueryRequest request,
 		CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowUserNotFoundExceptionAsync<GetAllFollowsForFollowingQueryRequest, GetAllFollowsForFollowingQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.FollowingId,
 				request,
 				cancellationToken);
@@ -23,7 +22,9 @@ public static class FollowExceptionAssertions
 			AddFollowCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowUserNotFoundExceptionAsync<AddFollowCommandRequest, AddFollowCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.FollowingId,
 				request,
 				cancellationToken);
@@ -33,7 +34,9 @@ public static class FollowExceptionAssertions
 			AddFollowCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowUserNotFoundExceptionAsync<AddFollowCommandRequest, AddFollowCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.FollowerId,
 				request,
 				cancellationToken);
@@ -43,7 +46,9 @@ public static class FollowExceptionAssertions
 			DeleteFollowCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowUserNotFoundExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.FollowerId,
 				request,
 				cancellationToken);
@@ -53,7 +58,9 @@ public static class FollowExceptionAssertions
 			GetFollowByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowUserNotFoundExceptionAsync<GetFollowByIdQueryRequest, GetFollowByIdQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.FollowerId,
 				request,
 				cancellationToken);
@@ -63,7 +70,9 @@ public static class FollowExceptionAssertions
 			GetAllFollowsQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowUserNotFoundExceptionAsync<GetAllFollowsQueryRequest, GetAllFollowsQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.FollowerId,
 				request,
 				cancellationToken);
@@ -73,7 +82,9 @@ public static class FollowExceptionAssertions
 			DeleteFollowCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowFollowNotFoundExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowFollowNotFoundExceptionAsync(
 				r => r.FollowerId,
 				r => r.FollowingId,
 				request,
@@ -84,7 +95,9 @@ public static class FollowExceptionAssertions
 			GetFollowByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowFollowNotFoundExceptionAsync<GetFollowByIdQueryRequest, GetFollowByIdQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowFollowNotFoundExceptionAsync(
 				r => r.FollowerId,
 				r => r.FollowingId,
 				request,
@@ -95,73 +108,11 @@ public static class FollowExceptionAssertions
 			AddFollowCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowFollowAlreadyExistsExceptionAsync<AddFollowCommandRequest, AddFollowCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowFollowAlreadyExistsExceptionAsync(
 				r => r.FollowerId,
 				r => r.FollowingId,
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowFollowNotFoundExceptionAsync<TRequest>(
-			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> userIdPropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest
-		{
-			await sender.ShouldThrowAsync<FollowNotFoundException, TRequest>(
-				FollowExceptionErrorMessages.GetNotFoundMessage(
-				new(
-					new(idPropertyExpression(request)),
-					new(userIdPropertyExpression(request)))),
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowFollowNotFoundExceptionAsync<TRequest, TResponse>(
-			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> userIdPropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest<TResponse>
-		{
-			await sender.ShouldThrowAsync<FollowNotFoundException, TRequest, TResponse>(
-				FollowExceptionErrorMessages.GetNotFoundMessage(
-				new(
-					new(idPropertyExpression(request)),
-					new(userIdPropertyExpression(request)))),
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowFollowAlreadyExistsExceptionAsync<TRequest>(
-			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> userIdPropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest
-		{
-			await sender.ShouldThrowAsync<FollowAlreadyExistsException, TRequest>(
-				FollowExceptionErrorMessages.GetAlreadyExistsMessage(
-				new(
-					new(idPropertyExpression(request)),
-					new(userIdPropertyExpression(request)))),
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowFollowAlreadyExistsExceptionAsync<TRequest, TResponse>(
-			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> userIdPropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest<TResponse>
-		{
-			await sender.ShouldThrowAsync<FollowAlreadyExistsException, TRequest, TResponse>(
-				FollowExceptionErrorMessages.GetAlreadyExistsMessage(
-				new(
-					new(idPropertyExpression(request)),
-					new(userIdPropertyExpression(request)))),
 				request,
 				cancellationToken);
 		}

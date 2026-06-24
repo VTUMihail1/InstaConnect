@@ -12,7 +12,9 @@ public static class ChatValidationExceptionAssertions
 			AddChatCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<AddChatCommandRequest, string, AddChatCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.ParticipantOneId,
 				messageTransformer,
 				request,
@@ -24,7 +26,9 @@ public static class ChatValidationExceptionAssertions
 			GetChatByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetChatByIdQueryRequest, string, GetChatByIdQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.ParticipantTwoId,
 				messageTransformer,
 				request,
@@ -36,7 +40,9 @@ public static class ChatValidationExceptionAssertions
 			AddChatCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<AddChatCommandRequest, string, AddChatCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.ParticipantTwoId,
 				messageTransformer,
 				request,
@@ -48,7 +54,9 @@ public static class ChatValidationExceptionAssertions
 			GetAllChatsQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllChatsQueryRequest, string, GetAllChatsQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.ParticipantTwoName,
 				messageTransformer,
 				request,
@@ -60,7 +68,9 @@ public static class ChatValidationExceptionAssertions
 			GetChatByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetChatByIdQueryRequest, string, GetChatByIdQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.CurrentUserId,
 				messageTransformer,
 				request,
@@ -72,7 +82,9 @@ public static class ChatValidationExceptionAssertions
 			GetAllChatsQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllChatsQueryRequest, string, GetAllChatsQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.CurrentUserId,
 				messageTransformer,
 				request,
@@ -84,7 +96,9 @@ public static class ChatValidationExceptionAssertions
 			GetAllChatsQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllChatsQueryRequest, int, GetAllChatsQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Page,
 				messageTransformer,
 				request,
@@ -96,7 +110,9 @@ public static class ChatValidationExceptionAssertions
 			GetAllChatsQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllChatsQueryRequest, int, GetAllChatsQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.PageSize,
 				messageTransformer,
 				request,
@@ -108,7 +124,9 @@ public static class ChatValidationExceptionAssertions
 			GetAllChatsQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllChatsQueryRequest, CommonSortOrder, GetAllChatsQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.SortOrder,
 				messageTransformer,
 				request,
@@ -120,7 +138,9 @@ public static class ChatValidationExceptionAssertions
 			GetAllChatsQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllChatsQueryRequest, ChatsSortTerm, GetAllChatsQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.SortTerm,
 				messageTransformer,
 				request,

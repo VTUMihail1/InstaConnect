@@ -74,7 +74,7 @@ public static class PostMapper
 			var paginator = new Paginator();
 			var totalCount = posts.Count(post => filter(post, request));
 
-			return new(user.ToFullResponse(),
+			return new (user.ToFullResponse(),
 						posts.Filter(post => filter(post, request), request, post => transform(post, request)),
 						request.Page,
 						request.PageSize,

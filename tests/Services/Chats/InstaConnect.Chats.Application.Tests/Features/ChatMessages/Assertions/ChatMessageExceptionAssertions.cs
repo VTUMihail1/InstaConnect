@@ -1,7 +1,4 @@
-using InstaConnect.Chats.Domain.Features.ChatMessages.Exceptions;
 using InstaConnect.Common.Application.Features.Messaging.Abstractions;
-
-using MediatR;
 
 namespace InstaConnect.Chats.Application.Tests.Features.ChatMessages.Assertions;
 
@@ -13,7 +10,9 @@ public static class ChatMessageExceptionAssertions
 			AddChatMessageCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowChatNotFoundExceptionAsync<AddChatMessageCommandRequest, AddChatMessageCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowChatNotFoundExceptionAsync(
 				r => r.ParticipantOneId,
 				r => r.ParticipantTwoId,
 				request,
@@ -24,7 +23,9 @@ public static class ChatMessageExceptionAssertions
 			UpdateChatMessageCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowChatNotFoundExceptionAsync<UpdateChatMessageCommandRequest, UpdateChatMessageCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowChatNotFoundExceptionAsync(
 				r => r.ParticipantOneId,
 				r => r.ParticipantTwoId,
 				request,
@@ -35,7 +36,9 @@ public static class ChatMessageExceptionAssertions
 			DeleteChatMessageCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowChatNotFoundExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowChatNotFoundExceptionAsync(
 				r => r.ParticipantOneId,
 				r => r.ParticipantTwoId,
 				request,
@@ -46,7 +49,9 @@ public static class ChatMessageExceptionAssertions
 			GetChatMessageByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowChatNotFoundExceptionAsync<GetChatMessageByIdQueryRequest, GetChatMessageByIdQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowChatNotFoundExceptionAsync(
 				r => r.CurrentUserId,
 				r => r.ParticipantTwoId,
 				request,
@@ -57,7 +62,9 @@ public static class ChatMessageExceptionAssertions
 			GetAllChatMessagesQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowChatNotFoundExceptionAsync<GetAllChatMessagesQueryRequest, GetAllChatMessagesQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowChatNotFoundExceptionAsync(
 				r => r.CurrentUserId,
 				r => r.ParticipantTwoId,
 				request,
@@ -68,7 +75,9 @@ public static class ChatMessageExceptionAssertions
 			UpdateChatMessageCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowChatMessageNotFoundExceptionAsync<UpdateChatMessageCommandRequest, UpdateChatMessageCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowChatMessageNotFoundExceptionAsync(
 				r => r.ParticipantOneId,
 				r => r.ParticipantTwoId,
 				r => r.MessageId,
@@ -80,7 +89,9 @@ public static class ChatMessageExceptionAssertions
 			DeleteChatMessageCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowChatMessageNotFoundExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowChatMessageNotFoundExceptionAsync(
 				r => r.ParticipantOneId,
 				r => r.ParticipantTwoId,
 				r => r.MessageId,
@@ -92,7 +103,9 @@ public static class ChatMessageExceptionAssertions
 			GetChatMessageByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowChatMessageNotFoundExceptionAsync<GetChatMessageByIdQueryRequest, GetChatMessageByIdQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowChatMessageNotFoundExceptionAsync(
 				r => r.CurrentUserId,
 				r => r.ParticipantTwoId,
 				r => r.MessageId,
@@ -104,7 +117,9 @@ public static class ChatMessageExceptionAssertions
 			DeleteChatMessageCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowChatMessageForbiddenExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowChatMessageForbiddenExceptionAsync(
 				r => r.ParticipantOneId,
 				r => r.ParticipantTwoId,
 				r => r.MessageId,
@@ -117,69 +132,13 @@ public static class ChatMessageExceptionAssertions
 			UpdateChatMessageCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowChatMessageForbiddenExceptionAsync<UpdateChatMessageCommandRequest, UpdateChatMessageCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowChatMessageForbiddenExceptionAsync(
 				r => r.ParticipantOneId,
 				r => r.ParticipantTwoId,
 				r => r.MessageId,
 				r => r.ParticipantOneId,
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowChatMessageNotFoundExceptionAsync<TRequest>(
-			Func<TRequest, string> participantOneIdPropertyExpression,
-			Func<TRequest, string> participantTwoIdPropertyExpression,
-			Func<TRequest, string> messageIdPropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest
-		{
-			await sender.ShouldThrowAsync<ChatMessageNotFoundException, TRequest>(
-				ChatMessageExceptionErrorMessages.GetNotFoundMessage(new(new(new(participantOneIdPropertyExpression(request)), new(participantTwoIdPropertyExpression(request))), messageIdPropertyExpression(request))),
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowChatMessageNotFoundExceptionAsync<TRequest, TResponse>(
-			Func<TRequest, string> participantOneIdPropertyExpression,
-			Func<TRequest, string> participantTwoIdPropertyExpression,
-			Func<TRequest, string> messageIdPropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest<TResponse>
-		{
-			await sender.ShouldThrowAsync<ChatMessageNotFoundException, TRequest, TResponse>(
-				ChatMessageExceptionErrorMessages.GetNotFoundMessage(new(new(new(participantOneIdPropertyExpression(request)), new(participantTwoIdPropertyExpression(request))), messageIdPropertyExpression(request))),
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowChatMessageForbiddenExceptionAsync<TRequest>(
-			Func<TRequest, string> participantOneIdPropertyExpression,
-			Func<TRequest, string> participantTwoIdPropertyExpression,
-			Func<TRequest, string> messageIdPropertyExpression,
-			Func<TRequest, string> senderIdPropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest
-		{
-			await sender.ShouldThrowAsync<ChatMessageForbiddenException, TRequest>(
-				ChatMessageExceptionErrorMessages.GetForbiddenMessage(new(new(new(participantOneIdPropertyExpression(request)), new(participantTwoIdPropertyExpression(request))), messageIdPropertyExpression(request)), new(senderIdPropertyExpression(request))),
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowChatMessageForbiddenExceptionAsync<TRequest, TResponse>(
-			Func<TRequest, string> participantOneIdPropertyExpression,
-			Func<TRequest, string> participantTwoIdPropertyExpression,
-			Func<TRequest, string> messageIdPropertyExpression,
-			Func<TRequest, string> senderIdPropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest<TResponse>
-		{
-			await sender.ShouldThrowAsync<ChatMessageForbiddenException, TRequest, TResponse>(
-				ChatMessageExceptionErrorMessages.GetForbiddenMessage(new(new(new(participantOneIdPropertyExpression(request)), new(participantTwoIdPropertyExpression(request))), messageIdPropertyExpression(request)), new(senderIdPropertyExpression(request))),
 				request,
 				cancellationToken);
 		}

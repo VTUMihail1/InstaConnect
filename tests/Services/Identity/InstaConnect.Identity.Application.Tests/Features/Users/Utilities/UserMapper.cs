@@ -7,13 +7,13 @@ public static class UserMapper
 {
 	extension(User user)
 	{
-		internal UserId ToIdResponse(
+		public UserId ToIdResponse(
 )
 		{
 			return user.Id;
 		}
 
-		internal UserResponse ToFullResponse()
+		public UserResponse ToFullResponse()
 		{
 			return new(user.Id,
 					   user.FirstName,

@@ -22,12 +22,12 @@ public static class PostLikeExceptionAssertions
 		}
 
 		public async Task ShouldThrowPostLikeNotFoundExceptionAsync<TRequest>(
-			Func<TRequest, PostLikeId> likeIdPropertyExpression,
+			Func<TRequest, PostLikeId> idPropertyExpression,
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
 			await action.ShouldThrowAsync<PostLikeNotFoundException>(
-				PostLikeExceptionErrorMessages.GetNotFoundMessage(likeIdPropertyExpression(request)),
+				PostLikeExceptionErrorMessages.GetNotFoundMessage(idPropertyExpression(request)),
 				cancellationToken);
 		}
 
@@ -46,12 +46,12 @@ public static class PostLikeExceptionAssertions
 		}
 
 		public async Task ShouldThrowPostLikeAlreadyExistsExceptionAsync<TRequest>(
-			Func<TRequest, PostLikeId> likeIdPropertyExpression,
+			Func<TRequest, PostLikeId> idPropertyExpression,
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
 			await action.ShouldThrowAsync<PostLikeAlreadyExistsException>(
-				PostLikeExceptionErrorMessages.GetAlreadyExistsMessage(likeIdPropertyExpression(request)),
+				PostLikeExceptionErrorMessages.GetAlreadyExistsMessage(idPropertyExpression(request)),
 				cancellationToken);
 		}
 	}

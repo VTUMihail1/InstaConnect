@@ -13,7 +13,9 @@ public static class UserClaimValidationExceptionAssertions
 			DeleteUserClaimCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Id,
 				messageTransformer,
 				request,
@@ -25,7 +27,9 @@ public static class UserClaimValidationExceptionAssertions
 			AddUserClaimCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<AddUserClaimCommandRequest, string, AddUserClaimCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Id,
 				messageTransformer,
 				request,
@@ -37,7 +41,9 @@ public static class UserClaimValidationExceptionAssertions
 			GetAllUserClaimsQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllUserClaimsQueryRequest, string, GetAllUserClaimsQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Id,
 				messageTransformer,
 				request,
@@ -49,7 +55,9 @@ public static class UserClaimValidationExceptionAssertions
 			DeleteUserClaimCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Claim,
 				messageTransformer,
 				request,
@@ -61,7 +69,9 @@ public static class UserClaimValidationExceptionAssertions
 			AddUserClaimCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<AddUserClaimCommandRequest, ApplicationClaims, AddUserClaimCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Claim,
 				messageTransformer,
 				request,
@@ -73,7 +83,9 @@ public static class UserClaimValidationExceptionAssertions
 			GetAllUserClaimsQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllUserClaimsQueryRequest, string, GetAllUserClaimsQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.CurrentId,
 				messageTransformer,
 				request,
@@ -85,7 +97,9 @@ public static class UserClaimValidationExceptionAssertions
 			GetAllUserClaimsQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllUserClaimsQueryRequest, int, GetAllUserClaimsQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Page,
 				messageTransformer,
 				request,
@@ -97,7 +111,9 @@ public static class UserClaimValidationExceptionAssertions
 			GetAllUserClaimsQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllUserClaimsQueryRequest, int, GetAllUserClaimsQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.PageSize,
 				messageTransformer,
 				request,
@@ -109,7 +125,9 @@ public static class UserClaimValidationExceptionAssertions
 			GetAllUserClaimsQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllUserClaimsQueryRequest, CommonSortOrder, GetAllUserClaimsQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.SortOrder,
 				messageTransformer,
 				request,
@@ -121,7 +139,9 @@ public static class UserClaimValidationExceptionAssertions
 			GetAllUserClaimsQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllUserClaimsQueryRequest, UserClaimsSortTerm, GetAllUserClaimsQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.SortTerm,
 				messageTransformer,
 				request,

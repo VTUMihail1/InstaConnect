@@ -12,7 +12,9 @@ public static class FollowValidationExceptionAssertions
 		DeleteFollowCommandRequest request,
 		CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.FollowerId,
 				messageTransformer,
 				request,
@@ -24,7 +26,9 @@ public static class FollowValidationExceptionAssertions
 			GetFollowByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetFollowByIdQueryRequest, string, GetFollowByIdQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.FollowerId,
 				messageTransformer,
 				request,
@@ -36,7 +40,9 @@ public static class FollowValidationExceptionAssertions
 			AddFollowCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<AddFollowCommandRequest, string, AddFollowCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.FollowerId,
 				messageTransformer,
 				request,
@@ -48,7 +54,9 @@ public static class FollowValidationExceptionAssertions
 			GetAllFollowsQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllFollowsQueryRequest, string, GetAllFollowsQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.FollowerId,
 				messageTransformer,
 				request,
@@ -61,7 +69,9 @@ public static class FollowValidationExceptionAssertions
 			GetAllFollowsForFollowingQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllFollowsForFollowingQueryRequest, string, GetAllFollowsForFollowingQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.FollowingId,
 				messageTransformer,
 				request,
@@ -73,7 +83,9 @@ public static class FollowValidationExceptionAssertions
 			GetFollowByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetFollowByIdQueryRequest, string, GetFollowByIdQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.FollowingId,
 				messageTransformer,
 				request,
@@ -85,7 +97,9 @@ public static class FollowValidationExceptionAssertions
 			AddFollowCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<AddFollowCommandRequest, string, AddFollowCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.FollowingId,
 				messageTransformer,
 				request,
@@ -97,7 +111,9 @@ public static class FollowValidationExceptionAssertions
 			DeleteFollowCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.FollowingId,
 				messageTransformer,
 				request,
@@ -109,7 +125,9 @@ public static class FollowValidationExceptionAssertions
 			GetFollowByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetFollowByIdQueryRequest, string, GetFollowByIdQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.CurrentUserId,
 				messageTransformer,
 				request,
@@ -121,7 +139,9 @@ public static class FollowValidationExceptionAssertions
 			GetAllFollowsQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllFollowsQueryRequest, string, GetAllFollowsQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.CurrentUserId,
 				messageTransformer,
 				request,
@@ -133,7 +153,9 @@ public static class FollowValidationExceptionAssertions
 			GetAllFollowsForFollowingQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllFollowsForFollowingQueryRequest, string, GetAllFollowsForFollowingQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.CurrentUserId,
 				messageTransformer,
 				request,
@@ -145,7 +167,9 @@ public static class FollowValidationExceptionAssertions
 			GetAllFollowsQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllFollowsQueryRequest, string, GetAllFollowsQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.FollowingName,
 				messageTransformer,
 				request,
@@ -157,7 +181,9 @@ public static class FollowValidationExceptionAssertions
 			GetAllFollowsForFollowingQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllFollowsForFollowingQueryRequest, string, GetAllFollowsForFollowingQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.FollowerName,
 				messageTransformer,
 				request,
@@ -169,7 +195,9 @@ public static class FollowValidationExceptionAssertions
 			GetAllFollowsQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllFollowsQueryRequest, int, GetAllFollowsQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Page,
 				messageTransformer,
 				request,
@@ -181,7 +209,9 @@ public static class FollowValidationExceptionAssertions
 			GetAllFollowsForFollowingQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllFollowsForFollowingQueryRequest, int, GetAllFollowsForFollowingQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Page,
 				messageTransformer,
 				request,
@@ -193,7 +223,9 @@ public static class FollowValidationExceptionAssertions
 			GetAllFollowsQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllFollowsQueryRequest, int, GetAllFollowsQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.PageSize,
 				messageTransformer,
 				request,
@@ -205,7 +237,9 @@ public static class FollowValidationExceptionAssertions
 			GetAllFollowsForFollowingQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllFollowsForFollowingQueryRequest, int, GetAllFollowsForFollowingQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.PageSize,
 				messageTransformer,
 				request,
@@ -217,7 +251,9 @@ public static class FollowValidationExceptionAssertions
 			GetAllFollowsQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllFollowsQueryRequest, CommonSortOrder, GetAllFollowsQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.SortOrder,
 				messageTransformer,
 				request,
@@ -229,7 +265,9 @@ public static class FollowValidationExceptionAssertions
 			GetAllFollowsForFollowingQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllFollowsForFollowingQueryRequest, CommonSortOrder, GetAllFollowsForFollowingQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.SortOrder,
 				messageTransformer,
 				request,
@@ -241,7 +279,9 @@ public static class FollowValidationExceptionAssertions
 			GetAllFollowsQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllFollowsQueryRequest, FollowsSortTerm, GetAllFollowsQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.SortTerm,
 				messageTransformer,
 				request,
@@ -253,7 +293,9 @@ public static class FollowValidationExceptionAssertions
 			GetAllFollowsForFollowingQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllFollowsForFollowingQueryRequest, FollowsForFollowingSortTerm, GetAllFollowsForFollowingQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.SortTerm,
 				messageTransformer,
 				request,

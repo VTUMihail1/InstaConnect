@@ -23,12 +23,12 @@ public static class PostCommentExceptionAssertions
 		}
 
 		public async Task ShouldThrowPostCommentNotFoundExceptionAsync<TRequest>(
-			Func<TRequest, PostCommentId> commentIdPropertyExpression,
+			Func<TRequest, PostCommentId> idPropertyExpression,
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
 			await action.ShouldThrowAsync<PostCommentNotFoundException>(
-				PostCommentExceptionErrorMessages.GetNotFoundMessage(commentIdPropertyExpression(request)),
+				PostCommentExceptionErrorMessages.GetNotFoundMessage(idPropertyExpression(request)),
 				cancellationToken);
 		}
 
@@ -49,14 +49,14 @@ public static class PostCommentExceptionAssertions
 		}
 
 		public async Task ShouldThrowPostCommentForbiddenExceptionAsync<TRequest>(
-			Func<TRequest, PostCommentId> commentIdPropertyExpression,
+			Func<TRequest, PostCommentId> idPropertyExpression,
 			Func<TRequest, UserId> userIdPropertyExpression,
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
 			await action.ShouldThrowAsync<PostCommentForbiddenException>(
 				PostCommentExceptionErrorMessages.GetForbiddenMessage(
-					commentIdPropertyExpression(request),
+					idPropertyExpression(request),
 					userIdPropertyExpression(request)),
 				cancellationToken);
 		}

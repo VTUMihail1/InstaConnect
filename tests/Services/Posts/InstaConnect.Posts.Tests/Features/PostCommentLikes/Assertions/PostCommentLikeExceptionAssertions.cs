@@ -25,12 +25,12 @@ public static class PostCommentLikeExceptionAssertions
 		}
 
 		public async Task ShouldThrowPostCommentLikeNotFoundExceptionAsync<TRequest>(
-			Func<TRequest, PostCommentLikeId> commentLikeIdPropertyExpression,
+			Func<TRequest, PostCommentLikeId> idPropertyExpression,
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
 			await action.ShouldThrowAsync<PostCommentLikeNotFoundException>(
-				PostCommentLikeExceptionErrorMessages.GetNotFoundMessage(commentLikeIdPropertyExpression(request)),
+				PostCommentLikeExceptionErrorMessages.GetNotFoundMessage(idPropertyExpression(request)),
 				cancellationToken);
 		}
 
@@ -52,12 +52,12 @@ public static class PostCommentLikeExceptionAssertions
 		}
 
 		public async Task ShouldThrowPostCommentLikeAlreadyExistsExceptionAsync<TRequest>(
-			Func<TRequest, PostCommentLikeId> commentLikeIdPropertyExpression,
+			Func<TRequest, PostCommentLikeId> idPropertyExpression,
 			TRequest request,
 			CancellationToken cancellationToken)
 		{
 			await action.ShouldThrowAsync<PostCommentLikeAlreadyExistsException>(
-				PostCommentLikeExceptionErrorMessages.GetAlreadyExistsMessage(commentLikeIdPropertyExpression(request)),
+				PostCommentLikeExceptionErrorMessages.GetAlreadyExistsMessage(idPropertyExpression(request)),
 				cancellationToken);
 		}
 	}

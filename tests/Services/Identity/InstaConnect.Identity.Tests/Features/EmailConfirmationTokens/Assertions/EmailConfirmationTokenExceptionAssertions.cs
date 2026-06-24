@@ -1,0 +1,58 @@
+using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Exceptions;
+using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.ValueObjects;
+
+namespace InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Assertions;
+
+public static class EmailConfirmationTokenExceptionAssertions
+{
+	extension(Func<Task> action)
+	{
+		public async Task ShouldThrowEmailConfirmationTokenNotFoundExceptionAsync<TRequest>(
+			Func<TRequest, string> idPropertyExpression,
+			Func<TRequest, string> valueropertyExpression,
+			TRequest request,
+			CancellationToken cancellationToken)
+		{
+			await action.ShouldThrowAsync<EmailConfirmationTokenNotFoundException>(
+				EmailConfirmationTokenExceptionErrorMessages.GetNotFoundMessage(
+					new(
+						new(idPropertyExpression(request)),
+						valueropertyExpression(request))),
+				cancellationToken);
+		}
+
+		public async Task ShouldThrowEmailConfirmationTokenNotFoundExceptionAsync<TRequest>(
+			Func<TRequest, EmailConfirmationTokenId> idPropertyExpression,
+			TRequest request,
+			CancellationToken cancellationToken)
+		{
+			await action.ShouldThrowAsync<EmailConfirmationTokenNotFoundException>(
+				EmailConfirmationTokenExceptionErrorMessages.GetNotFoundMessage(idPropertyExpression(request)),
+				cancellationToken);
+		}
+
+		public async Task ShouldThrowEmailConfirmationTokenExpiredExceptionAsync<TRequest>(
+			Func<TRequest, string> idPropertyExpression,
+			Func<TRequest, string> valuePropertyExpression,
+			TRequest request,
+			CancellationToken cancellationToken)
+		{
+			await action.ShouldThrowAsync<EmailConfirmationTokenExpiredException>(
+				EmailConfirmationTokenExceptionErrorMessages.GetExpiredMessage(
+					new(
+						new(idPropertyExpression(request)),
+						valuePropertyExpression(request))),
+				cancellationToken);
+		}
+
+		public async Task ShouldThrowEmailConfirmationTokenExpiredExceptionAsync<TRequest>(
+			Func<TRequest, EmailConfirmationTokenId> idPropertyExpression,
+			TRequest request,
+			CancellationToken cancellationToken)
+		{
+			await action.ShouldThrowAsync<EmailConfirmationTokenExpiredException>(
+				EmailConfirmationTokenExceptionErrorMessages.GetExpiredMessage(idPropertyExpression(request)),
+				cancellationToken);
+		}
+	}
+}

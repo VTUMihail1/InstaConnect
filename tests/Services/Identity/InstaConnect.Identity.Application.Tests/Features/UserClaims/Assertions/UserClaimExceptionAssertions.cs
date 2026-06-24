@@ -1,8 +1,4 @@
 using InstaConnect.Common.Application.Features.Messaging.Abstractions;
-using InstaConnect.Common.Events.Features.AccessTokens.Models;
-using InstaConnect.Identity.Domain.Features.UserClaims.Exceptions;
-
-using MediatR;
 
 namespace InstaConnect.Identity.Application.Tests.Features.UserClaims.Assertions;
 
@@ -14,7 +10,9 @@ public static class UserClaimExceptionAssertions
 			GetAllUserClaimsQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowUserNotFoundExceptionAsync<GetAllUserClaimsQueryRequest, GetAllUserClaimsQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -24,7 +22,9 @@ public static class UserClaimExceptionAssertions
 			AddUserClaimCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowUserNotFoundExceptionAsync<AddUserClaimCommandRequest, AddUserClaimCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -34,7 +34,9 @@ public static class UserClaimExceptionAssertions
 			DeleteUserClaimCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowUserNotFoundExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowUserNotFoundExceptionAsync(
 				r => r.Id,
 				request,
 				cancellationToken);
@@ -44,7 +46,9 @@ public static class UserClaimExceptionAssertions
 			AddUserClaimCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowUserClaimAlreadyExistsExceptionAsync<AddUserClaimCommandRequest, AddUserClaimCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowUserClaimAlreadyExistsExceptionAsync(
 				r => r.Id,
 				r => r.Claim,
 				request,
@@ -55,61 +59,11 @@ public static class UserClaimExceptionAssertions
 			DeleteUserClaimCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowUserClaimNotFoundExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowUserClaimNotFoundExceptionAsync(
 				r => r.Id,
 				r => r.Claim,
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowUserClaimNotFoundExceptionAsync<TRequest>(
-			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, ApplicationClaims> claimPropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest
-		{
-			await sender.ShouldThrowAsync<UserClaimNotFoundException, TRequest>(
-				UserClaimExceptionErrorMessages.GetNotFoundMessage(new UserClaimId(new UserId(idPropertyExpression(request)), claimPropertyExpression(request))),
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowUserClaimNotFoundExceptionAsync<TRequest, TResponse>(
-			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, ApplicationClaims> claimPropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest<TResponse>
-		{
-			await sender.ShouldThrowAsync<UserClaimNotFoundException, TRequest, TResponse>(
-				UserClaimExceptionErrorMessages.GetNotFoundMessage(new UserClaimId(new UserId(idPropertyExpression(request)), claimPropertyExpression(request))),
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowUserClaimAlreadyExistsExceptionAsync<TRequest>(
-			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, ApplicationClaims> claimPropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest
-		{
-			await sender.ShouldThrowAsync<UserClaimAlreadyExistsException, TRequest>(
-				UserClaimExceptionErrorMessages.GetAlreadyExistsMessage(new UserClaimId(new UserId(idPropertyExpression(request)), claimPropertyExpression(request))),
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowUserClaimAlreadyExistsExceptionAsync<TRequest, TResponse>(
-			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, ApplicationClaims> claimPropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest<TResponse>
-		{
-			await sender.ShouldThrowAsync<UserClaimAlreadyExistsException, TRequest, TResponse>(
-				UserClaimExceptionErrorMessages.GetAlreadyExistsMessage(new UserClaimId(new UserId(idPropertyExpression(request)), claimPropertyExpression(request))),
 				request,
 				cancellationToken);
 		}

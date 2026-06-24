@@ -36,6 +36,7 @@
     <Using Include="InstaConnect.Identity.Domain.Features.Users.Models.Responses" />
     <Using Include="InstaConnect.Identity.Domain.Features.Users.Utilities" />
     <Using Include="InstaConnect.Identity.Application.Tests.Features.Users.Assertions" />
+	<Using Include="InstaConnect.Identity.Tests.Features.Users.Assertions"/>
     <Using Include="InstaConnect.Identity.Tests.Features.Users.Builders" />
     <Using Include="InstaConnect.Identity.Tests.Features.Users.Utilities" />
     <Using Include="InstaConnect.Identity.Application.Features.Users.Queries.GetAll" />
@@ -57,6 +58,7 @@
     <Using Include="InstaConnect.Identity.Domain.Features.UserClaims.Models.Responses" />
     <Using Include="InstaConnect.Identity.Domain.Features.UserClaims.Utilities" />
     <Using Include="InstaConnect.Identity.Application.Tests.Features.UserClaims.Assertions" />
+	<Using Include="InstaConnect.Identity.Tests.Features.UserClaims.Assertions"/>
     <Using Include="InstaConnect.Identity.Tests.Features.UserClaims.Builders" />
     <Using Include="InstaConnect.Identity.Tests.Features.UserClaims.Utilities" />
     <Using Include="InstaConnect.Identity.Application.Features.UserClaims.Queries.GetAll" />
@@ -72,6 +74,7 @@
     <Using Include="InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Responses" />
     <Using Include="InstaConnect.Identity.Domain.Features.RefreshTokens.Utilities" />
     <Using Include="InstaConnect.Identity.Application.Tests.Features.RefreshTokens.Assertions" />
+	<Using Include="InstaConnect.Identity.Tests.Features.RefreshTokens.Assertions"/>
     <Using Include="InstaConnect.Identity.Tests.Features.RefreshTokens.Builders" />
     <Using Include="InstaConnect.Identity.Tests.Features.RefreshTokens.Utilities" />
     <Using Include="InstaConnect.Identity.Application.Features.RefreshTokens.Commands.Issue" />
@@ -86,6 +89,7 @@
     <Using Include="InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Requests" />
     <Using Include="InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Utilities" />
     <Using Include="InstaConnect.Identity.Application.Tests.Features.ForgotPasswordTokens.Assertions" />
+	<Using Include="InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.Assertions"/>
     <Using Include="InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.Builders" />
     <Using Include="InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.Utilities" />
     <Using Include="InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Add" />
@@ -99,6 +103,7 @@
     <Using Include="InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Requests" />
     <Using Include="InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Utilities" />
     <Using Include="InstaConnect.Identity.Application.Tests.Features.EmailConfirmationTokens.Assertions" />
+	<Using Include="InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Assertions"/>
     <Using Include="InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Builders" />
     <Using Include="InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Utilities" />
     <Using Include="InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Add" />

@@ -12,7 +12,9 @@ public static class UserValidationExceptionAssertions
 		UpdateCurrentUserCommandRequest request,
 		CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<UpdateCurrentUserCommandRequest, string, UpdateCurrentUserCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Id,
 				messageTransformer,
 				request,
@@ -24,7 +26,9 @@ public static class UserValidationExceptionAssertions
 			DeleteUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Id,
 				messageTransformer,
 				request,
@@ -36,7 +40,9 @@ public static class UserValidationExceptionAssertions
 			DeleteCurrentUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.CurrentId,
 				messageTransformer,
 				request,
@@ -48,7 +54,9 @@ public static class UserValidationExceptionAssertions
 			GetUserByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetUserByIdQueryRequest, string, GetUserByIdQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Id,
 				messageTransformer,
 				request,
@@ -60,7 +68,9 @@ public static class UserValidationExceptionAssertions
 			GetUserDetailsByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetUserDetailsByIdQueryRequest, string, GetUserDetailsByIdQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Id,
 				messageTransformer,
 				request,
@@ -72,7 +82,9 @@ public static class UserValidationExceptionAssertions
 			UpdateCurrentUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<UpdateCurrentUserCommandRequest, string, UpdateCurrentUserCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Name,
 				messageTransformer,
 				request,
@@ -84,7 +96,9 @@ public static class UserValidationExceptionAssertions
 			AddUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<AddUserCommandRequest, string, AddUserCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Name,
 				messageTransformer,
 				request,
@@ -96,7 +110,9 @@ public static class UserValidationExceptionAssertions
 			GetAllUsersQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllUsersQueryRequest, string, GetAllUsersQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Name,
 				messageTransformer,
 				request,
@@ -108,7 +124,9 @@ public static class UserValidationExceptionAssertions
 			UpdateCurrentUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<UpdateCurrentUserCommandRequest, string, UpdateCurrentUserCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.FirstName,
 				messageTransformer,
 				request,
@@ -120,7 +138,9 @@ public static class UserValidationExceptionAssertions
 			AddUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<AddUserCommandRequest, string, AddUserCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.FirstName,
 				messageTransformer,
 				request,
@@ -132,7 +152,9 @@ public static class UserValidationExceptionAssertions
 			GetAllUsersQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllUsersQueryRequest, string, GetAllUsersQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.FirstName,
 				messageTransformer,
 				request,
@@ -144,7 +166,9 @@ public static class UserValidationExceptionAssertions
 			UpdateCurrentUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<UpdateCurrentUserCommandRequest, string, UpdateCurrentUserCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.LastName,
 				messageTransformer,
 				request,
@@ -156,7 +180,9 @@ public static class UserValidationExceptionAssertions
 			AddUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<AddUserCommandRequest, string, AddUserCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.LastName,
 				messageTransformer,
 				request,
@@ -168,7 +194,9 @@ public static class UserValidationExceptionAssertions
 			GetAllUsersQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllUsersQueryRequest, string, GetAllUsersQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.LastName,
 				messageTransformer,
 				request,
@@ -180,7 +208,9 @@ public static class UserValidationExceptionAssertions
 			UpdateCurrentUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<UpdateCurrentUserCommandRequest, string, UpdateCurrentUserCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Email,
 				messageTransformer,
 				request,
@@ -192,7 +222,9 @@ public static class UserValidationExceptionAssertions
 			AddUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<AddUserCommandRequest, string, AddUserCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Email,
 				messageTransformer,
 				request,
@@ -204,7 +236,9 @@ public static class UserValidationExceptionAssertions
 			AddUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<AddUserCommandRequest, string, AddUserCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Password,
 				messageTransformer,
 				request,
@@ -216,7 +250,9 @@ public static class UserValidationExceptionAssertions
 			AddUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<AddUserCommandRequest, string, AddUserCommandResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.ConfirmPassword,
 				messageTransformer,
 				request,
@@ -228,7 +264,9 @@ public static class UserValidationExceptionAssertions
 			GetUserByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetUserByIdQueryRequest, string, GetUserByIdQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.CurrentId,
 				messageTransformer,
 				request,
@@ -240,7 +278,9 @@ public static class UserValidationExceptionAssertions
 			GetCurrentUserByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetCurrentUserByIdQueryRequest, string, GetCurrentUserByIdQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.CurrentId,
 				messageTransformer,
 				request,
@@ -252,7 +292,9 @@ public static class UserValidationExceptionAssertions
 			GetUserDetailsByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetUserDetailsByIdQueryRequest, string, GetUserDetailsByIdQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.CurrentId,
 				messageTransformer,
 				request,
@@ -264,7 +306,9 @@ public static class UserValidationExceptionAssertions
 			GetCurrentUserDetailsByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetCurrentUserDetailsByIdQueryRequest, string, GetCurrentUserDetailsByIdQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.CurrentId,
 				messageTransformer,
 				request,
@@ -276,7 +320,9 @@ public static class UserValidationExceptionAssertions
 			GetAllUsersQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllUsersQueryRequest, string, GetAllUsersQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.CurrentId,
 				messageTransformer,
 				request,
@@ -288,7 +334,9 @@ public static class UserValidationExceptionAssertions
 			GetAllUsersQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllUsersQueryRequest, int, GetAllUsersQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.Page,
 				messageTransformer,
 				request,
@@ -300,7 +348,9 @@ public static class UserValidationExceptionAssertions
 			GetAllUsersQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllUsersQueryRequest, int, GetAllUsersQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.PageSize,
 				messageTransformer,
 				request,
@@ -312,7 +362,9 @@ public static class UserValidationExceptionAssertions
 			GetAllUsersQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllUsersQueryRequest, CommonSortOrder, GetAllUsersQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.SortOrder,
 				messageTransformer,
 				request,
@@ -324,7 +376,9 @@ public static class UserValidationExceptionAssertions
 			GetAllUsersQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllUsersQueryRequest, UsersSortTerm, GetAllUsersQueryResponse>(
+			var action = () => sender.SendAsync(request, cancellationToken);
+
+			await action.ShouldThrowInvalidValidationExceptionAsync(
 				p => p.SortTerm,
 				messageTransformer,
 				request,
