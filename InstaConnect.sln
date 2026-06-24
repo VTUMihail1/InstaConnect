@@ -152,6 +152,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Follows.Tests"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{81DDED9D-158B-E303-5F62-77A2896D2A5A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Common.Domain.Tests", "tests\Common\InstaConnect.Common.Domain.Tests\InstaConnect.Common.Domain.Tests.csproj", "{E9D0E6B0-C9D5-3FC8-048F-17BAB3A645EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -386,6 +388,10 @@ Global
 		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9D0E6B0-C9D5-3FC8-048F-17BAB3A645EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9D0E6B0-C9D5-3FC8-048F-17BAB3A645EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9D0E6B0-C9D5-3FC8-048F-17BAB3A645EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9D0E6B0-C9D5-3FC8-048F-17BAB3A645EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -459,6 +465,7 @@ Global
 		{DF754B80-AD24-151B-7336-954022348AB1} = {FA401F1C-FBB6-4929-BFB1-126DFBC926A0}
 		{95F2194E-02A6-86F2-3075-36FAD20CEB51} = {FA401F1C-FBB6-4929-BFB1-126DFBC926A0}
 		{3516F337-9B61-7FF8-AC3B-39DE2279D2B8} = {FA401F1C-FBB6-4929-BFB1-126DFBC926A0}
+		{E9D0E6B0-C9D5-3FC8-048F-17BAB3A645EA} = {8A5F3AF7-46E0-462D-B066-FC98C474FCF6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {74CDCE11-9171-4345-A1A8-63E51F48297C}
