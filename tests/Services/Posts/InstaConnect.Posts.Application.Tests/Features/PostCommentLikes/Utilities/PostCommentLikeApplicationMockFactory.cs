@@ -1,6 +1,6 @@
 namespace InstaConnect.Posts.Application.Tests.Features.PostCommentLikes.Utilities;
 
-public static class PostCommentLikeMockFactory
+public static class PostCommentLikeApplicationMockFactory
 {
 	public static IPostCommentLikeCommandService CreateCommandService()
 	{

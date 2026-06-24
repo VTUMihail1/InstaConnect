@@ -12,6 +12,6 @@ public abstract class BaseChatApplicationCommandUnitTest : BaseChatTest
 	protected BaseChatApplicationCommandUnitTest()
 	{
 		Mapper = MockFactory.CreateMapper(ChatsApplicationReference.Assembly);
-		Service = ChatMockFactory.CreateCommandService();
+		Service = ChatApplicationMockFactory.CreateCommandService();
 	}
 }

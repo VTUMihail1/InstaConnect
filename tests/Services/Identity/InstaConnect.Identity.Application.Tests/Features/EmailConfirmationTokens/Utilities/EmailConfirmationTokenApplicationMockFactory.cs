@@ -1,6 +1,6 @@
 namespace InstaConnect.Identity.Application.Tests.Features.EmailConfirmationTokens.Utilities;
 
-public static class EmailConfirmationTokenMockFactory
+public static class EmailConfirmationTokenApplicationMockFactory
 {
 	public static IEmailConfirmationTokenCommandService CreateCommandService()
 	{

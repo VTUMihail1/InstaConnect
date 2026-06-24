@@ -1,6 +1,6 @@
 namespace InstaConnect.Identity.Application.Tests.Features.RefreshTokens.Utilities;
 
-public static class RefreshTokenMockFactory
+public static class RefreshTokenApplicationMockFactory
 {
 	public static IRefreshTokenCommandService CreateCommandService()
 	{

@@ -1,6 +1,6 @@
 namespace InstaConnect.Chats.Application.Tests.Features.ChatMessages.Utilities;
 
-public static class ChatMessageMockFactory
+public static class ChatMessageApplicationMockFactory
 {
 	public static IChatMessageCommandService CreateCommandService()
 	{

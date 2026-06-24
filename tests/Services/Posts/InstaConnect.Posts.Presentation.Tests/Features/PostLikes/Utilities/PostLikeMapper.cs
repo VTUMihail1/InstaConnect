@@ -21,7 +21,7 @@ public static class PostLikeMapper
 		{
 			return new(postLike.Id.Id.Id,
 					   postLike.Id.UserId.Id,
-					   postLike.User?.ToFullResponse(),
+					   postLike.User?.ToFullQueryResponse(),
 					   postLike.Post?.ToFullQueryResponse(request),
 					   postLike.CreatedAtUtc);
 		}
@@ -43,7 +43,7 @@ public static class PostLikeMapper
 		{
 			return new(postLike.Id.Id.Id,
 					   postLike.Id.UserId.Id,
-					   postLike.User?.ToFullResponse(),
+					   postLike.User?.ToFullQueryResponse(),
 					   null,
 					   postLike.CreatedAtUtc);
 		}
@@ -94,7 +94,7 @@ public static class PostLikeMapper
 			var totalCount = postLikes.Count(postLike => filter(postLike, request));
 
 			return new(null,
-					   user.ToFullResponse(),
+					   user.ToFullQueryResponse(),
 					   postLikes.Filter(postLike => filter(postLike, request), request, postLike => transform(postLike, request)),
 					   request.Page,
 					   request.PageSize,

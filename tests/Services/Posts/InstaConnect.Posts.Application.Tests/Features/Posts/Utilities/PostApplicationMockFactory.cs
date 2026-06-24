@@ -1,6 +1,6 @@
 namespace InstaConnect.Posts.Application.Tests.Features.Posts.Utilities;
 
-public static class PostMockFactory
+public static class PostApplicationMockFactory
 {
 	public static IPostCommandService CreateCommandService()
 	{

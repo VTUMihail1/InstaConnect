@@ -1,6 +1,6 @@
 namespace InstaConnect.Follows.Application.Tests.Features.Follows.Utilities;
 
-public static class FollowMockFactory
+public static class FollowApplicationMockFactory
 {
 	public static IFollowCommandService CreateCommandService()
 	{

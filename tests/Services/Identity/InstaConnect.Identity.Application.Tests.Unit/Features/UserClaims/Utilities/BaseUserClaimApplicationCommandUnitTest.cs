@@ -12,6 +12,6 @@ public abstract class BaseUserClaimApplicationCommandUnitTest : BaseUserClaimTes
 	protected BaseUserClaimApplicationCommandUnitTest() : base(IdentityMockFactory.CreatePasswordHasher())
 	{
 		Mapper = MockFactory.CreateMapper(IdentityApplicationReference.Assembly);
-		Service = UserClaimMockFactory.CreateCommandService();
+		Service = UserClaimApplicationMockFactory.CreateCommandService();
 	}
 }

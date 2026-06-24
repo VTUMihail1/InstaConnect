@@ -2,7 +2,7 @@ using InstaConnect.Identity.Presentation.Features.RefreshTokens.Abstractions;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Utilities;
 
-public static class RefreshTokenMockFactory
+public static class RefreshTokenPresentationMockFactory
 {
 	public static IRefreshTokenCookieStore CreateCookieStore()
 	{

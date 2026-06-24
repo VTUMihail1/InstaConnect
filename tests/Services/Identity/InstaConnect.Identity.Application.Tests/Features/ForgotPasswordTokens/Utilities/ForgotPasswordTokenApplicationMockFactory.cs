@@ -1,6 +1,6 @@
 namespace InstaConnect.Identity.Application.Tests.Features.ForgotPasswordTokens.Utilities;
 
-public static class ForgotPasswordTokenMockFactory
+public static class ForgotPasswordTokenApplicationMockFactory
 {
 	public static IForgotPasswordTokenCommandService CreateCommandService()
 	{

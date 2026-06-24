@@ -12,6 +12,6 @@ public abstract class BasePostCommentLikeApplicationQueryUnitTest : BasePostComm
 	protected BasePostCommentLikeApplicationQueryUnitTest()
 	{
 		Mapper = MockFactory.CreateMapper(PostsApplicationReference.Assembly);
-		CommentLikeService = PostCommentLikeMockFactory.CreateQueryService();
+		CommentLikeService = PostCommentLikeApplicationMockFactory.CreateQueryService();
 	}
 }

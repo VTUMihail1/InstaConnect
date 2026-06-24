@@ -24,7 +24,7 @@ public static class PostCommentLikeMapper
 			return new(postCommentLike.Id.CommentId.Id.Id,
 					   postCommentLike.Id.CommentId.CommentId,
 					   postCommentLike.Id.UserId.Id,
-					   postCommentLike.User?.ToFullResponse(),
+					   postCommentLike.User?.ToFullQueryResponse(),
 					   postCommentLike.PostComment?.ToFullQueryResponse(request),
 					   postCommentLike.CreatedAtUtc);
 		}
@@ -48,7 +48,7 @@ public static class PostCommentLikeMapper
 			return new(postCommentLike.Id.CommentId.Id.Id,
 					   postCommentLike.Id.CommentId.CommentId,
 					   postCommentLike.Id.UserId.Id,
-					   postCommentLike.User?.ToFullResponse(),
+					   postCommentLike.User?.ToFullQueryResponse(),
 					   null,
 					   postCommentLike.CreatedAtUtc);
 		}
@@ -99,7 +99,7 @@ public static class PostCommentLikeMapper
 			var totalCount = postCommentLikes.Count(postCommentLike => filter(postCommentLike, request));
 
 			return new(null,
-					   user.ToFullResponse(),
+					   user.ToFullQueryResponse(),
 					   postCommentLikes.Filter(postCommentLike => filter(postCommentLike, request), request, postCommentLike => transform(postCommentLike, request)),
 					   request.Page,
 					   request.PageSize,

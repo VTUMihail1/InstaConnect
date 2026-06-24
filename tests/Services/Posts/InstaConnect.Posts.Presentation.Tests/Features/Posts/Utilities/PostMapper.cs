@@ -23,7 +23,7 @@ public static class PostMapper
 					   post.UserId.Id,
 					   post.Title,
 					   post.Content,
-					   post.User?.ToFullResponse(),
+					   post.User?.ToFullQueryResponse(),
 					   post.PostLikes.Any(pl => pl.Id.UserId.Matches(request.CurrentUserId)),
 					   post.CreatedAtUtc,
 					   post.UpdatedAtUtc);
@@ -74,7 +74,7 @@ public static class PostMapper
 			var paginator = new Paginator();
 			var totalCount = posts.Count(post => filter(post, request));
 
-			return new(user.ToFullResponse(),
+			return new(user.ToFullQueryResponse(),
 						posts.Filter(post => filter(post, request), request, post => transform(post, request)),
 						request.Page,
 						request.PageSize,
