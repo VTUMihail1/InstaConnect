@@ -14,7 +14,7 @@ public static class ChatMessageMockSetups
 		{
 			sender
 				.SendAsync(ChatMessageMatcher.IsGetAllChatMessagesQueryRequest(request), cancellationToken)
-				.ReturnsResponse(chatMessages.ToResponse(chat, request));
+				.ReturnsTaskResponse(chatMessages.ToResponse(chat, request));
 		}
 
 		public void SetupGetByIdQueryRequest(
@@ -24,7 +24,7 @@ public static class ChatMessageMockSetups
 		{
 			sender
 				.SendAsync(ChatMessageMatcher.IsGetChatMessageByIdQueryRequest(request), cancellationToken)
-				.ReturnsResponse(chatMessage.ToResponse(request));
+				.ReturnsTaskResponse(chatMessage.ToResponse(request));
 		}
 
 		public void SetupAddCommandRequest(
@@ -34,7 +34,7 @@ public static class ChatMessageMockSetups
 		{
 			sender
 				.SendAsync(ChatMessageMatcher.IsAddChatMessageCommandRequest(request), cancellationToken)
-				.ReturnsResponse(chatMessage.ToResponse(request));
+				.ReturnsTaskResponse(chatMessage.ToResponse(request));
 		}
 
 		public void SetupUpdateCommandRequest(
@@ -44,7 +44,7 @@ public static class ChatMessageMockSetups
 		{
 			sender
 				.SendAsync(ChatMessageMatcher.IsUpdateChatMessageCommandRequest(request), cancellationToken)
-				.ReturnsResponse(chatMessage.ToResponse(request));
+				.ReturnsTaskResponse(chatMessage.ToResponse(request));
 		}
 	}
 }

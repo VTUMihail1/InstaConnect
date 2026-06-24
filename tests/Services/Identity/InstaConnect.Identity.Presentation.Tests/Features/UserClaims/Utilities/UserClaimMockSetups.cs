@@ -14,7 +14,7 @@ public static class UserClaimMockSetups
 		{
 			sender
 				.SendAsync(UserClaimMatcher.IsGetAllUserClaimsQueryRequest(request), cancellationToken)
-				.ReturnsResponse(userClaims.ToResponse(user, request));
+				.ReturnsTaskResponse(userClaims.ToResponse(user, request));
 		}
 
 		public void SetupAddCommandRequest(
@@ -24,7 +24,7 @@ public static class UserClaimMockSetups
 		{
 			sender
 				.SendAsync(UserClaimMatcher.IsAddUserClaimCommandRequest(request), cancellationToken)
-				.ReturnsResponse(userClaim.ToResponse(request));
+				.ReturnsTaskResponse(userClaim.ToResponse(request));
 		}
 	}
 }

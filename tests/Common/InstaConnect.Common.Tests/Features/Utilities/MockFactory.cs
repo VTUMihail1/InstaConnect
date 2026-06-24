@@ -11,8 +11,6 @@ using MapsterMapper;
 
 using MassTransit;
 
-using NSubstitute;
-
 namespace InstaConnect.Common.Tests.Features.Utilities;
 
 public static class MockFactory
@@ -32,8 +30,8 @@ public static class MockFactory
 	{
 		var consumeContext = Mocker.Mock<ConsumeContext<TEvent>>();
 
-		consumeContext.Message.Returns(message);
-		consumeContext.CancellationToken.Returns(cancellationToken);
+		consumeContext.Message.ReturnsResponse(message);
+		consumeContext.CancellationToken.ReturnsResponse(cancellationToken);
 
 		return consumeContext;
 	}

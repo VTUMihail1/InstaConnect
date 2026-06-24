@@ -11,7 +11,7 @@ public static class RefreshTokenMockSetups
 		{
 			service
 				.IssueAsync(RefreshTokenMatcher.IsIssueRefreshTokenCommand(request), cancellationToken)
-				.ReturnsResponse(refreshToken.ToResponse(request));
+				.ReturnsTaskResponse(refreshToken.ToResponse(request));
 		}
 
 		public void SetupRotateCommand(
@@ -21,7 +21,7 @@ public static class RefreshTokenMockSetups
 		{
 			service
 				.RotateAsync(RefreshTokenMatcher.IsRotateRefreshTokenCommand(request), cancellationToken)
-				.ReturnsResponse(refreshToken.ToResponse(request));
+				.ReturnsTaskResponse(refreshToken.ToResponse(request));
 		}
 	}
 }

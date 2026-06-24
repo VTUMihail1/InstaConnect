@@ -11,7 +11,7 @@ public static class ForgotPasswordTokenMockSetups
 		{
 			service
 				.AddAsync(ForgotPasswordTokenMatcher.IsAddForgotPasswordTokenCommand(request), cancellationToken)
-				.ReturnsResponse(forgotPasswordToken.ToResponse(request));
+				.ReturnsTaskResponse(forgotPasswordToken.ToResponse(request));
 		}
 	}
 }

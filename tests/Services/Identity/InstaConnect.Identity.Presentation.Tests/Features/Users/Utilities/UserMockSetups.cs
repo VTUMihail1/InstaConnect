@@ -13,7 +13,7 @@ public static class UserMockSetups
 		{
 			sender
 				.SendAsync(UserMatcher.IsGetAllUsersQueryRequest(request), cancellationToken)
-				.ReturnsResponse(users.ToResponse(request));
+				.ReturnsTaskResponse(users.ToResponse(request));
 		}
 
 		public void SetupGetByIdQueryRequest(
@@ -23,7 +23,7 @@ public static class UserMockSetups
 		{
 			sender
 				.SendAsync(UserMatcher.IsGetUserByIdQueryRequest(request), cancellationToken)
-				.ReturnsResponse(user.ToResponse(request));
+				.ReturnsTaskResponse(user.ToResponse(request));
 		}
 
 		public void SetupGetDetailsByIdQueryRequest(
@@ -33,7 +33,7 @@ public static class UserMockSetups
 		{
 			sender
 				.SendAsync(UserMatcher.IsGetUserDetailsByIdQueryRequest(request), cancellationToken)
-				.ReturnsResponse(user.ToResponse(request));
+				.ReturnsTaskResponse(user.ToResponse(request));
 		}
 
 		public void SetupGetCurrentByIdQueryRequest(
@@ -43,7 +43,7 @@ public static class UserMockSetups
 		{
 			sender
 				.SendAsync(UserMatcher.IsGetCurrentUserByIdQueryRequest(request), cancellationToken)
-				.ReturnsResponse(user.ToResponse(request));
+				.ReturnsTaskResponse(user.ToResponse(request));
 		}
 
 		public void SetupGetCurrentDetailsByIdQueryRequest(
@@ -53,7 +53,7 @@ public static class UserMockSetups
 		{
 			sender
 				.SendAsync(UserMatcher.IsGetCurrentUserDetailsByIdQueryRequest(request), cancellationToken)
-				.ReturnsResponse(user.ToResponse(request));
+				.ReturnsTaskResponse(user.ToResponse(request));
 		}
 
 		public void SetupAddCommandRequest(
@@ -63,7 +63,7 @@ public static class UserMockSetups
 		{
 			sender
 				.SendAsync(UserMatcher.IsAddUserCommandRequest(request), cancellationToken)
-				.ReturnsResponse(user.ToResponse(request));
+				.ReturnsTaskResponse(user.ToResponse(request));
 		}
 
 		public void SetupUpdateCurrentCommandRequest(
@@ -73,7 +73,7 @@ public static class UserMockSetups
 		{
 			sender
 				.SendAsync(UserMatcher.IsUpdateCurrentUserCommandRequest(request), cancellationToken)
-				.ReturnsResponse(user.ToResponse(request));
+				.ReturnsTaskResponse(user.ToResponse(request));
 		}
 	}
 }

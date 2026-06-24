@@ -11,7 +11,7 @@ public static class UserMockSetups
 		{
 			service
 				.GetAllAsync(UserMatcher.IsGetAllUsersQuery(request), cancellationToken)
-				.ReturnsResponse(users.ToResponse(request));
+				.ReturnsTaskResponse(users.ToResponse(request));
 		}
 
 		public void SetupGetByIdQuery(
@@ -21,7 +21,7 @@ public static class UserMockSetups
 		{
 			service
 				.GetByIdAsync(UserMatcher.IsGetUserByIdQuery(request), cancellationToken)
-				.ReturnsResponse(user.ToResponse(request));
+				.ReturnsTaskResponse(user.ToResponse(request));
 		}
 
 		public void SetupGetByIdQuery(
@@ -31,7 +31,7 @@ public static class UserMockSetups
 		{
 			service
 				.GetByIdAsync(UserMatcher.IsGetUserByIdQuery(request), cancellationToken)
-				.ReturnsResponse(user.ToResponse(request));
+				.ReturnsTaskResponse(user.ToResponse(request));
 		}
 
 		public void SetupGetByIdQuery(
@@ -41,7 +41,7 @@ public static class UserMockSetups
 		{
 			service
 				.GetByIdAsync(UserMatcher.IsGetUserByIdQuery(request), cancellationToken)
-				.ReturnsResponse(user.ToResponse(request));
+				.ReturnsTaskResponse(user.ToResponse(request));
 		}
 
 		public void SetupGetByIdQuery(
@@ -51,7 +51,7 @@ public static class UserMockSetups
 		{
 			service
 				.GetByIdAsync(UserMatcher.IsGetUserByIdQuery(request), cancellationToken)
-				.ReturnsResponse(user.ToResponse(request));
+				.ReturnsTaskResponse(user.ToResponse(request));
 		}
 	}
 
@@ -64,7 +64,7 @@ public static class UserMockSetups
 		{
 			service
 				.AddAsync(UserMatcher.IsAddUserCommand(request), cancellationToken)
-				.ReturnsResponse(user.ToResponse(request));
+				.ReturnsTaskResponse(user.ToResponse(request));
 		}
 
 		public void SetupUpdateCommand(
@@ -74,7 +74,7 @@ public static class UserMockSetups
 		{
 			service
 				.UpdateAsync(UserMatcher.IsUpdateUserCommand(request), cancellationToken)
-				.ReturnsResponse(user.ToResponse(request));
+				.ReturnsTaskResponse(user.ToResponse(request));
 		}
 	}
 }

@@ -11,7 +11,7 @@ public static class UserMockSetups
 		{
 			userService
 				.AddAsync(UserMatcher.IsAddUserCommand(request), cancellationToken)
-				.ReturnsResponse(user.ToResponse(request));
+				.ReturnsTaskResponse(user.ToResponse(request));
 		}
 
 		public void SetupUpdateCommand(
@@ -21,7 +21,7 @@ public static class UserMockSetups
 		{
 			userService
 				.UpdateAsync(UserMatcher.IsUpdateUserCommand(request), cancellationToken)
-				.ReturnsResponse(user.ToResponse(request));
+				.ReturnsTaskResponse(user.ToResponse(request));
 		}
 	}
 }

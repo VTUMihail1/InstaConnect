@@ -12,7 +12,7 @@ public static class PostCommentMockSetups
 		{
 			commentService
 				.GetAllAsync(PostCommentMatcher.IsGetAllPostCommentsQuery(request), cancellationToken)
-				.ReturnsResponse(postComments.ToResponse(post, request));
+				.ReturnsTaskResponse(postComments.ToResponse(post, request));
 		}
 
 		public void SetupGetAllForUserQuery(
@@ -23,7 +23,7 @@ public static class PostCommentMockSetups
 		{
 			commentService
 				.GetAllForUserAsync(PostCommentMatcher.IsGetAllPostCommentsForUserQuery(request), cancellationToken)
-				.ReturnsResponse(postComments.ToResponse(user, request));
+				.ReturnsTaskResponse(postComments.ToResponse(user, request));
 		}
 
 		public void SetupGetByIdQuery(
@@ -33,7 +33,7 @@ public static class PostCommentMockSetups
 		{
 			commentService
 				.GetByIdAsync(PostCommentMatcher.IsGetPostCommentByIdQuery(request), cancellationToken)
-				.ReturnsResponse(postComment.ToResponse(request));
+				.ReturnsTaskResponse(postComment.ToResponse(request));
 		}
 	}
 
@@ -46,7 +46,7 @@ public static class PostCommentMockSetups
 		{
 			commentService
 				.AddAsync(PostCommentMatcher.IsAddPostCommentCommand(request), cancellationToken)
-				.ReturnsResponse(postComment.ToResponse(request));
+				.ReturnsTaskResponse(postComment.ToResponse(request));
 		}
 
 		public void SetupUpdateCommand(
@@ -56,7 +56,7 @@ public static class PostCommentMockSetups
 		{
 			commentService
 				.UpdateAsync(PostCommentMatcher.IsUpdatePostCommentCommand(request), cancellationToken)
-				.ReturnsResponse(postComment.ToResponse(request));
+				.ReturnsTaskResponse(postComment.ToResponse(request));
 		}
 	}
 }

@@ -12,7 +12,7 @@ public static class ChatMockSetups
 		{
 			service
 				.GetAllAsync(ChatMatcher.IsGetAllChatsQuery(request), cancellationToken)
-				.ReturnsResponse(chats.ToResponse(participantOne, request));
+				.ReturnsTaskResponse(chats.ToResponse(participantOne, request));
 		}
 
 		public void SetupGetByIdQuery(
@@ -22,7 +22,7 @@ public static class ChatMockSetups
 		{
 			service
 				.GetByIdAsync(ChatMatcher.IsGetChatByIdQuery(request), cancellationToken)
-				.ReturnsResponse(chat.ToResponse(request));
+				.ReturnsTaskResponse(chat.ToResponse(request));
 		}
 	}
 
@@ -35,7 +35,7 @@ public static class ChatMockSetups
 		{
 			service
 				.AddAsync(ChatMatcher.IsAddChatCommand(request), cancellationToken)
-				.ReturnsResponse(chat.ToResponse(request));
+				.ReturnsTaskResponse(chat.ToResponse(request));
 		}
 	}
 }

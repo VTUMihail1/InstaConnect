@@ -6,12 +6,10 @@ public static class ExceptionAssertions
 {
 	extension(Func<Task> action)
 	{
-		public async Task ShouldThrowAsync<TException>(string message, Action<TException>? additionalAssertions = null)
+		public async Task ShouldThrowAsync<TException>(string message, CancellationToken cancellationToken)
 			where TException : Exception
 		{
-			var exception = await action.Should().ThrowAsync<TException>().WithMessage(message);
-
-			additionalAssertions?.Invoke(exception.Which);
+			await action.Should().ThrowAsync<TException>().WithMessage(message);
 		}
 	}
 }

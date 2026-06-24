@@ -17,18 +17,9 @@ public static class MockSetups
 	extension<TResponse>(Task<TResponse> response)
 		where TResponse : class?
 	{
-		public void ReturnsResponse(TResponse returnThis)
+		public void ReturnsTaskResponse(TResponse returnThis)
 		{
 			response.Returns(returnThis);
-		}
-	}
-
-	extension<T>(T obj)
-		where T : class
-	{
-		public void WhenDo(Action<T> setup, Action callback)
-		{
-			obj.When(setup).Do(_ => callback());
 		}
 	}
 }
