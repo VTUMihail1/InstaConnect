@@ -7,7 +7,7 @@ public static class UserMapper
 		public UserId ToResponse(
 			AddUserCommandRequest request)
 		{
-			return user.ToIdResponse();
+			return new(request.Id);
 		}
 
 		public UserId ToResponse(

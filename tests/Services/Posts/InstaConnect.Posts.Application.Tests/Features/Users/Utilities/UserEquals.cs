@@ -94,7 +94,7 @@ public static class UserEquals
 	{
 		public bool Matches(UserId id)
 		{
-			return id.Id.EqualsOrdinalIgnoreCase(response.Id);
+			return id.Matches(response.Id);
 		}
 
 		public bool Matches(string id)

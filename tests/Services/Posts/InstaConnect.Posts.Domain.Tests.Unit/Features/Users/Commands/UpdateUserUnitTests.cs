@@ -7,7 +7,6 @@ using InstaConnect.Posts.Domain.Tests.Features.Users.Utilities;
 using InstaConnect.Posts.Domain.Tests.Unit.Features.Users.Utilities;
 using InstaConnect.Posts.Tests.Features.Users.DataAttributes.Email;
 using InstaConnect.Posts.Tests.Features.Users.DataAttributes.Name;
-using InstaConnect.Posts.Tests.Features.Users.DataAttributes.ProfileImage;
 
 namespace InstaConnect.Posts.Domain.Tests.Unit.Features.Users.Commands;
 
@@ -132,22 +131,6 @@ public class UpdateUserUnitTests : BaseUserDomainCommandUnitTest
 		response.ShouldSatisfy(User, command);
 	}
 
-	[Theory]
-	[UserProfileImageNullData]
-	[UserProfileImageEmptyData]
-	public async Task UpdateAsync_ShouldReturnResponse_WhenProfileImageIsValid(
-		IStringTransformer transformer)
-	{
-		// Arrange
-		var command = _commandBuilder.WithProfileImage(transformer).Build();
-
-		// Act
-		var response = await _service.UpdateAsync(command, CancellationToken);
-
-		// Assert
-		response.ShouldSatisfy(User, command);
-	}
-
 	[Fact]
 	public async Task UpdateAsync_ShouldCallTheUserRepositoryGetByIdAsync_WhenCommandIsValid()
 	{
@@ -206,22 +189,6 @@ public class UpdateUserUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithEmail(User.Email, transformer).Build();
-
-		// Act
-		await _service.UpdateAsync(command, CancellationToken);
-
-		// Assert
-		await UserRepository.ShouldReceiveOneGetByIdAsync(command, CancellationToken);
-	}
-
-	[Theory]
-	[UserProfileImageNullData]
-	[UserProfileImageEmptyData]
-	public async Task UpdateAsync_ShouldCallTheUserRepositoryGetByIdAsync_WhenProfileImageIsValid(
-		IStringTransformer transformer)
-	{
-		// Arrange
-		var command = _commandBuilder.WithProfileImage(transformer).Build();
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -296,22 +263,6 @@ public class UpdateUserUnitTests : BaseUserDomainCommandUnitTest
 		await UserRepository.ShouldReceiveOneIsNameUniqueAsync(command, CancellationToken);
 	}
 
-	[Theory]
-	[UserProfileImageNullData]
-	[UserProfileImageEmptyData]
-	public async Task UpdateAsync_ShouldCallTheUserRepositoryGetByNameAsync_WhenProfileImageIsValid(
-		IStringTransformer transformer)
-	{
-		// Arrange
-		var command = _commandBuilder.WithProfileImage(transformer).Build();
-
-		// Act
-		await _service.UpdateAsync(command, CancellationToken);
-
-		// Assert
-		await UserRepository.ShouldReceiveOneIsNameUniqueAsync(command, CancellationToken);
-	}
-
 	[Fact]
 	public async Task UpdateAsync_ShouldCallTheUserRepositoryGetByEmailAsync_WhenCommandIsValid()
 	{
@@ -370,22 +321,6 @@ public class UpdateUserUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithEmail(User.Email, transformer).Build();
-
-		// Act
-		await _service.UpdateAsync(command, CancellationToken);
-
-		// Assert
-		await UserRepository.ShouldReceiveOneIsEmailUniqueAsync(command, CancellationToken);
-	}
-
-	[Theory]
-	[UserProfileImageNullData]
-	[UserProfileImageEmptyData]
-	public async Task UpdateAsync_ShouldCallTheUserRepositoryGetByEmailAsync_WhenProfileImageIsValid(
-		IStringTransformer transformer)
-	{
-		// Arrange
-		var command = _commandBuilder.WithProfileImage(transformer).Build();
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);

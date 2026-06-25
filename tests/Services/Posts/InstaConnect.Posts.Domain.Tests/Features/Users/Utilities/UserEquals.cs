@@ -10,14 +10,14 @@ public static class UserEquals
 		User user,
 		AddUserCommand request)
 		{
-			return response.Matches(user.Id);
+			return response.Matches(request.Id);
 		}
 
 		public bool Matches(
 		User user,
 		UpdateUserCommand request)
 		{
-			return response.Matches(user.Id);
+			return response.Matches(request.Id);
 		}
 	}
 
