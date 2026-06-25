@@ -9,6 +9,15 @@
     <ProjectReference Include="..\InstaConnect.Posts.Events\InstaConnect.Posts.Events.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+  	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+  	  <_Parameter1>InstaConnect.Posts.Domain.Tests.Unit</_Parameter1>
+  	</AssemblyAttribute>
+  	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+  	  <_Parameter1>InstaConnect.Posts.Domain.Tests.Integration</_Parameter1>
+  	</AssemblyAttribute>
+  </ItemGroup>
+
   <ItemGroup Label="Common">
     <Using Include="Microsoft.Extensions.DependencyInjection" />
     <Using Include="InstaConnect.Common.Domain.Features.Common.Extensions"/>

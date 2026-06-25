@@ -1,0 +1,66 @@
+using InstaConnect.Common.Tests.Features.DataAttributes.Strings.Base;
+using InstaConnect.Posts.Domain.Features.Users.Models.Requests;
+using InstaConnect.Posts.Domain.Tests.Features.Users.Assertions;
+using InstaConnect.Posts.Domain.Tests.Features.Users.Builders;
+using InstaConnect.Posts.Domain.Tests.Integration.Features.Users.Utilities;
+using InstaConnect.Posts.Tests.Features.Users.DataAttributes.Id;
+using InstaConnect.Posts.Tests.Features.Users.Utilities;
+
+namespace InstaConnect.Posts.Domain.Tests.Integration.Features.Users.Commands;
+
+public class DeleteUserIntegrationTests : BaseUserDomainCommandIntegrationTest
+{
+	private readonly DeleteUserCommandBuilderFactory _commandBuilderFactory;
+	private readonly DeleteUserCommandBuilder _commandBuilder;
+	private readonly DeleteUserCommand _command;
+
+	public DeleteUserIntegrationTests(PostsWebApplicationFactory webApplicationFactory)
+		: base(webApplicationFactory)
+	{
+		_commandBuilderFactory = new();
+		_commandBuilder = _commandBuilderFactory.Create(User);
+		_command = _commandBuilder.Build();
+	}
+
+	protected override async Task OnInitializeAsync()
+	{
+		await ServiceScope.AddUserAsync(User, CancellationToken);
+	}
+
+	[Fact]
+	public async Task DeleteAsync_ShouldThrowUserNotFoundException_WhenCommandIsInvalid()
+	{
+		// Arrange
+		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+
+		// Assert
+		await UserService.ShouldThrowUserNotFoundExceptionAsync(_command, CancellationToken);
+	}
+
+	[Fact]
+	public async Task DeleteAsync_ShouldDeleteUser_WhenCommandIsValid()
+	{
+		// Act
+		await UserService.DeleteAsync(_command, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+
+		// Assert
+		user.ShouldBeNull();
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task DeleteAsync_ShouldDeleteUser_WhenIdIsValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithId(transformer).Build();
+
+		// Act
+		await UserService.DeleteAsync(command, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+
+		// Assert
+		user.ShouldBeNull();
+	}
+}

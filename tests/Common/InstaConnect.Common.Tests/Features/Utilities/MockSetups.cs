@@ -13,7 +13,6 @@ public static class MockSetups
 	}
 
 	extension<TResponse>(Task<TResponse> response)
-		where TResponse : class?
 	{
 		public void ReturnsTaskResponse(TResponse returnThis)
 		{
