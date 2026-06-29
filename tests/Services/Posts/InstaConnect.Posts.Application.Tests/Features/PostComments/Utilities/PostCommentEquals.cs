@@ -177,14 +177,14 @@ public static class PostCommentEquals
 
 		public bool MatchesFilter(GetAllPostCommentsQueryRequest request)
 		{
-			return postComment.Id.Id.Id.EqualsOrdinalIgnoreCase(request.Id) &&
+			return postComment.Id.Id.Matches(request.Id) &&
 				   postComment.User != null &&
 				   postComment.User.Name.Value.StartsWithOrdinalIgnoreCase(request.UserName);
 		}
 
 		public bool MatchesFilter(GetAllPostCommentsForUserQueryRequest request)
 		{
-			return postComment.UserId.Id.EqualsOrdinalIgnoreCase(request.UserId);
+			return postComment.UserId.Matches(request.UserId);
 		}
 	}
 

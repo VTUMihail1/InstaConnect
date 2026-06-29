@@ -2,13 +2,13 @@ namespace InstaConnect.Posts.Domain.Tests.Features.Users.Utilities;
 
 public static class UserMockSetups
 {
-	extension(IUserFactory userFactory)
+	extension(IUserFactory factory)
 	{
 		public void SetupCreate(
 			AddUserCommand command,
 			User user)
 		{
-			userFactory
+			factory
 				.Create(
 				    command.Id,
 					command.FirstName,
@@ -18,18 +18,18 @@ public static class UserMockSetups
 					command.ProfileImage,
 					command.CreatedAtUtc,
 					command.UpdatedAtUtc)
-				.ReturnsResponse(user.ToEntity(command));
+				.ReturnsResponse(user.ToFull(command));
 		}
 	}
 
-	extension(IUserCommandRepository userRepository)
+	extension(IUserCommandRepository repository)
 	{
 		public void SetupExistsById(
 			AddUserCommand command,
 		    User user,
 		    CancellationToken cancellationToken)
 		{
-			userRepository
+			repository
 				.ExistsByIdAsync(command.Id, cancellationToken)
 				.ReturnsTaskResponse(true);
 		}
@@ -39,7 +39,7 @@ public static class UserMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			userRepository
+			repository
 				.GetByIdAsync(command.Id, cancellationToken)
 				.ReturnsTaskResponse(user);
 		}
@@ -49,7 +49,7 @@ public static class UserMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			userRepository
+			repository
 				.GetByIdAsync(command.Id, cancellationToken)
 				.ReturnsTaskResponse(user);
 		}
@@ -59,7 +59,7 @@ public static class UserMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			userRepository
+			repository
 				.ExistsByIdAsync(command.Id, cancellationToken)
 				.ReturnsTaskResponse(false);
 		}
@@ -69,7 +69,7 @@ public static class UserMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			userRepository
+			repository
 				.GetByIdAsync(command.Id, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -79,7 +79,7 @@ public static class UserMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			userRepository
+			repository
 				.GetByIdAsync(command.Id, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -89,7 +89,7 @@ public static class UserMockSetups
 			User user,
 		    CancellationToken cancellationToken)
 		{
-			userRepository
+			repository
 				.IsNameUniqueAsync(command.Name, cancellationToken)
 				.ReturnsTaskResponse(true);
 		}
@@ -99,7 +99,7 @@ public static class UserMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			userRepository
+			repository
 				.IsNameUniqueAsync(command.Name, cancellationToken)
 				.ReturnsTaskResponse(true);
 		}
@@ -109,7 +109,7 @@ public static class UserMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			userRepository
+			repository
 				.IsNameUniqueAsync(command.Name, cancellationToken)
 				.ReturnsTaskResponse(false);
 		}
@@ -119,7 +119,7 @@ public static class UserMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			userRepository
+			repository
 				.IsNameUniqueAsync(command.Name, cancellationToken)
 				.ReturnsTaskResponse(false);
 		}
@@ -129,7 +129,7 @@ public static class UserMockSetups
 			User user,
 		    CancellationToken cancellationToken)
 		{
-			userRepository
+			repository
 				.IsEmailUniqueAsync(command.Email, cancellationToken)
 				.ReturnsTaskResponse(true);
 		}
@@ -139,7 +139,7 @@ public static class UserMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			userRepository
+			repository
 				.IsEmailUniqueAsync(command.Email, cancellationToken)
 				.ReturnsTaskResponse(true);
 		}
@@ -149,7 +149,7 @@ public static class UserMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			userRepository
+			repository
 				.IsEmailUniqueAsync(command.Email, cancellationToken)
 				.ReturnsTaskResponse(false);
 		}
@@ -159,7 +159,7 @@ public static class UserMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			userRepository
+			repository
 				.IsEmailUniqueAsync(command.Email, cancellationToken)
 				.ReturnsTaskResponse(false);
 		}

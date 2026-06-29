@@ -161,16 +161,16 @@ public static class FollowEquals
 
 		public bool MatchesFilter(GetAllFollowsApiRequest request)
 		{
-			return follow.Id.FollowerId.Id.EqualsOrdinalIgnoreCase(request.FollowerId) &&
+			return follow.Id.FollowerId.Matches(request.FollowerId) &&
 				   follow.Following != null &&
 				   follow.Following.Name.Value.StartsWithOrdinalIgnoreCase(request.FollowingName);
 		}
 
 		public bool MatchesFilter(GetAllFollowsForFollowingApiRequest request)
 		{
-			return follow.Id.FollowingId.Id.EqualsOrdinalIgnoreCase(request.FollowingId) &&
+			return follow.Id.FollowingId.Matches(request.FollowingId) &&
 				   follow.Follower != null &&
-				   follow.Follower.Name.Value.StartsWithOrdinalIgnoreCase(request.FollowerName);
+				   follow.Follower.Name.Matches(request.FollowerName);
 		}
 	}
 

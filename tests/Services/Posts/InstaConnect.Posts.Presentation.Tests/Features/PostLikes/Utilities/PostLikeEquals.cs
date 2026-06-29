@@ -162,14 +162,14 @@ public static class PostLikeEquals
 
 		public bool MatchesFilter(GetAllPostLikesApiRequest request)
 		{
-			return postLike.Id.Id.Id.EqualsOrdinalIgnoreCase(request.Id) &&
+			return postLike.Id.Id.Matches(request.Id) &&
 				   postLike.User != null &&
 				   postLike.User.Name.Value.StartsWithOrdinalIgnoreCase(request.UserName);
 		}
 
 		public bool MatchesFilter(GetAllPostLikesForUserApiRequest request)
 		{
-			return postLike.Id.UserId.Id.StartsWithOrdinalIgnoreCase(request.UserId);
+			return postLike.Id.UserId.Matches(request.UserId);
 		}
 	}
 

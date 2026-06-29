@@ -1,19 +1,10 @@
-using InstaConnect.Posts.Domain.Features.Users.Models.Responses;
-using InstaConnect.Posts.Domain.Features.Users.Models.ValueObjects;
-
 namespace InstaConnect.Posts.Tests.Features.Users.Utilities;
 
 public static class UserMapper
 {
 	extension(User user)
 	{
-		public UserId ToIdResponse(
-)
-		{
-			return user.Id;
-		}
-
-		public UserResponse ToFullResponse()
+		public User ToFull()
 		{
 			return new(user.Id,
 					   user.FirstName,

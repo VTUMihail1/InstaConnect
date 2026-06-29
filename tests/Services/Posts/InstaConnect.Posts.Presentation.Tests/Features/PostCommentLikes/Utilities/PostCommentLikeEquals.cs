@@ -167,15 +167,14 @@ public static class PostCommentLikeEquals
 
 		public bool MatchesFilter(GetAllPostCommentLikesApiRequest request)
 		{
-			return postCommentLike.Id.CommentId.Id.Id.EqualsOrdinalIgnoreCase(request.Id) &&
-				   postCommentLike.Id.CommentId.CommentId.EqualsOrdinalIgnoreCase(request.CommentId) &&
+			return postCommentLike.Id.CommentId.Matches(request.Id, request.CommentId) &&
 				   postCommentLike.User != null &&
 				   postCommentLike.User.Name.Value.StartsWithOrdinalIgnoreCase(request.UserName);
 		}
 
 		public bool MatchesFilter(GetAllPostCommentLikesForUserApiRequest request)
 		{
-			return postCommentLike.Id.UserId.Id.EqualsOrdinalIgnoreCase(request.UserId);
+			return postCommentLike.Id.UserId.Matches(request.UserId);
 		}
 	}
 

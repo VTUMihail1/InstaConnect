@@ -6,6 +6,7 @@ using InstaConnect.Posts.Domain.Tests.Integration.Features.Users.Utilities;
 using InstaConnect.Posts.Tests.Features.Users.DataAttributes.Email;
 using InstaConnect.Posts.Tests.Features.Users.DataAttributes.Id;
 using InstaConnect.Posts.Tests.Features.Users.DataAttributes.Name;
+using InstaConnect.Posts.Tests.Features.Users.DataAttributes.ProfileImage;
 using InstaConnect.Posts.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Posts.Domain.Tests.Integration.Features.Users.Commands;
@@ -214,6 +215,23 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 		response.ShouldSatisfy(user, command);
 	}
 
+	[Theory]
+	[UserProfileImageNullData]
+	[UserProfileImageEmptyData]
+	public async Task UpdateAsync_ShouldReturnResponse_WhenProfileImageIsValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithProfileImage(transformer).Build();
+
+		// Act
+		var response = await UserService.UpdateAsync(command, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(user, command);
+	}
+
 	[Fact]
 	public async Task UpdateAsync_ShouldUpdateUser_WhenCommandIsValid()
 	{
@@ -324,6 +342,23 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithEmail(User.Email, transformer).Build();
+
+		// Act
+		var response = await UserService.UpdateAsync(command, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+
+		// Assert
+		user.ShouldSatisfy(command);
+	}
+
+	[Theory]
+	[UserProfileImageNullData]
+	[UserProfileImageEmptyData]
+	public async Task UpdateAsync_ShouldUpdateUser_WhenProfileImageIsValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithProfileImage(transformer).Build();
 
 		// Act
 		var response = await UserService.UpdateAsync(command, CancellationToken);

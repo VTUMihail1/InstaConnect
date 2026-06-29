@@ -21,16 +21,16 @@ public static class UserMatchAssertions
 		}
 	}
 
-	extension(User user)
+	extension(User u)
 	{
 		public void ShouldSatisfy(AddUserCommand request)
 		{
-			user.ShouldSatisfy(u => u.Matches(request));
+			u.ShouldSatisfy(u => u.Matches(request));
 		}
 
 		public void ShouldSatisfy(UpdateUserCommand request)
 		{
-			user.ShouldSatisfy(u => u.Matches(request));
+			u.ShouldSatisfy(u => u.Matches(request));
 		}
 	}
 }

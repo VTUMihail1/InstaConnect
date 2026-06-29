@@ -1,3 +1,4 @@
+using InstaConnect.Posts.Domain.Features.Users.Models.Responses;
 using InstaConnect.Posts.Domain.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Posts.Domain.Tests.Features.Users.Utilities;
@@ -8,47 +9,63 @@ public static class UserEquals
 	{
 		public bool Matches(
 		User user,
-		AddUserCommand request)
+		AddUserCommand command)
 		{
-			return response.Matches(request.Id);
+			return response.Matches(command.Id);
 		}
 
 		public bool Matches(
 		User user,
-		UpdateUserCommand request)
+		UpdateUserCommand command)
 		{
-			return response.Matches(request.Id);
+			return response.Matches(command.Id);
 		}
 	}
 
-	extension(User user)
+	extension(User u)
 	{
 		public bool Matches(AddUserCommand command)
 		{
-			return user.Id.Matches(command.Id) &&
-				   user.FirstName == command.FirstName &&
-				   user.LastName == command.LastName &&
-				   user.Name.Matches(command.Name) &&
-				   user.Email.Matches(command.Email) &&
-				   user.ProfileImage.Matches(command.ProfileImage) &&
-				   user.CreatedAtUtc == command.CreatedAtUtc &&
-				   user.UpdatedAtUtc == command.UpdatedAtUtc;
+			return u.Id.Matches(command.Id) &&
+				   u.FirstName == command.FirstName &&
+				   u.LastName == command.LastName &&
+				   u.Name.Matches(command.Name) &&
+				   u.Email.Matches(command.Email) &&
+				   u.ProfileImage.Matches(command.ProfileImage) &&
+				   u.CreatedAtUtc == command.CreatedAtUtc &&
+				   u.UpdatedAtUtc == command.UpdatedAtUtc;
 		}
 
 		public bool Matches(UpdateUserCommand command)
 		{
-			return user.Id.Matches(command.Id) &&
-				   user.FirstName == command.FirstName &&
-				   user.LastName == command.LastName &&
-				   user.Name.Matches(command.Name) &&
-				   user.Email.Matches(command.Email) &&
-				   user.ProfileImage.Matches(command.ProfileImage) &&
-				   user.UpdatedAtUtc == command.UpdatedAtUtc;
+			return u.Id.Matches(command.Id) &&
+				   u.FirstName == command.FirstName &&
+				   u.LastName == command.LastName &&
+				   u.Name.Matches(command.Name) &&
+				   u.Email.Matches(command.Email) &&
+				   u.ProfileImage.Matches(command.ProfileImage) &&
+				   u.UpdatedAtUtc == command.UpdatedAtUtc;
 		}
 
 		public bool Matches(DeleteUserCommand command)
 		{
-			return user.Id.Matches(command.Id);
+			return u.Id.Matches(command.Id);
+		}
+	}
+
+	extension(UserResponse? response)
+	{
+		public bool MatchesFull(User? user)
+		{
+			return response != null &&
+				   user != null &&
+				   user.Id.Matches(response.Id) &&
+				   user.FirstName == response.FirstName &&
+				   user.LastName == response.LastName &&
+				   user.Name.Matches(response.Name) &&
+				   user.ProfileImage.Matches(response.ProfileImage) &&
+				   user.CreatedAtUtc == response.CreatedAtUtc &&
+				   user.UpdatedAtUtc == response.UpdatedAtUtc;
 		}
 	}
 }

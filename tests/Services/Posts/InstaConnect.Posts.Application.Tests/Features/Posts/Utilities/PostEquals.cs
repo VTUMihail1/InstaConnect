@@ -191,7 +191,7 @@ public static class PostEquals
 
 		public bool MatchesFilter(GetAllPostsForUserQueryRequest request)
 		{
-			return post.UserId.Id.StartsWithOrdinalIgnoreCase(request.UserId) &&
+			return post.UserId.Matches(request.UserId) &&
 				   post.Title.StartsWithOrdinalIgnoreCase(request.Title);
 		}
 	}

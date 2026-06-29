@@ -44,7 +44,7 @@ public static class CommonEquals
 		}
 	}
 
-	extension<TExpected>(ICollection<TExpected> expected)
+	extension<TExpected>(ICollection<TExpected> e)
 	{
 		public bool MatchesCollection<TEntity, TKey>(
 		ICollection<TEntity> entities,
@@ -58,11 +58,16 @@ public static class CommonEquals
 				.OrderBy(a => a.CreatedAtUtc)
 				.ToDictionary(entityKey);
 
-			return expected.Count == entitiesByKey.Count &&
-				   expected.Any() &&
-				   expected.All(e =>
+			return e.Count == entitiesByKey.Count &&
+				   e.Any() &&
+				   e.All(e =>
 				   entitiesByKey.TryGetValue(expectedKey(e), out var a) &&
 				   matcher(e, a));
+		}
+
+		public bool MatchesCollection(ICollection<TExpected> expected)
+		{
+			return e.OrderBy(x => x).SequenceEqual(expected);
 		}
 	}
 }

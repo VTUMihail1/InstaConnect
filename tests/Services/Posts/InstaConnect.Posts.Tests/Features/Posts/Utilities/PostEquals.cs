@@ -61,6 +61,11 @@ public static class PostEquals
 
 	extension(PostId p)
 	{
+		public bool Matches(PostId id)
+		{
+			return p.Matches(id.Id);
+		}
+
 		public bool Matches(string id)
 		{
 			return p.Id.EqualsOrdinalIgnoreCase(id);

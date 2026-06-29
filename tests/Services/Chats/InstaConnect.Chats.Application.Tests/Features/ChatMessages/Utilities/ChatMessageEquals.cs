@@ -168,10 +168,10 @@ public static class ChatMessageEquals
 
 		public bool MatchesFilter(GetAllChatMessagesQueryRequest request)
 		{
-			return (chatMessage.Id.Id.ParticipantOneId.Id.EqualsOrdinalIgnoreCase(request.CurrentUserId) &&
-				   chatMessage.Id.Id.ParticipantTwoId.Id.EqualsOrdinalIgnoreCase(request.ParticipantTwoId)) ||
-				   (chatMessage.Id.Id.ParticipantOneId.Id.EqualsOrdinalIgnoreCase(request.ParticipantTwoId) &&
-				   chatMessage.Id.Id.ParticipantTwoId.Id.EqualsOrdinalIgnoreCase(request.CurrentUserId));
+			return (chatMessage.Id.Id.ParticipantOneId.Matches(request.CurrentUserId) &&
+				   chatMessage.Id.Id.ParticipantTwoId.Matches(request.ParticipantTwoId)) ||
+				   (chatMessage.Id.Id.ParticipantOneId.Matches(request.ParticipantTwoId) &&
+				   chatMessage.Id.Id.ParticipantTwoId.Matches(request.CurrentUserId));
 		}
 	}
 
