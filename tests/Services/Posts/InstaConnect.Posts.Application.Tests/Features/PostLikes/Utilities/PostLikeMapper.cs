@@ -2,6 +2,7 @@ using InstaConnect.Common.Application.Features.Messaging.Abstractions;
 using InstaConnect.Posts.Application.Features.Users.Abstractions;
 using InstaConnect.Posts.Application.Tests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Application.Tests.Features.Posts.Utilities;
+using InstaConnect.Posts.Application.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Posts.Application.Tests.Features.PostLikes.Utilities;
 

@@ -4,7 +4,6 @@ using InstaConnect.Chats.Application.Tests.Features.ChatMessages.Utilities;
 using InstaConnect.Chats.Application.Tests.Features.Chats.Utilities;
 using InstaConnect.Chats.Application.Tests.Features.Users.Utilities;
 using InstaConnect.Common.Application.Features.Messaging.Abstractions;
-using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 
 namespace InstaConnect.Chats.Application.Tests.Features.ChatMessages.Utilities;
