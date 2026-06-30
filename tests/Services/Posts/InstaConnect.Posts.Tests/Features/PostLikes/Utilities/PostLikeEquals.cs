@@ -48,6 +48,11 @@ public static class PostLikeEquals
 
 	extension(PostLikeId p)
 	{
+		public bool Matches(PostLikeId id)
+		{
+			return p.Matches(id.Id.Id, id.UserId.Id);
+		}
+
 		public bool Matches(string id, string userId)
 		{
 			return p.Id.Matches(id) &&

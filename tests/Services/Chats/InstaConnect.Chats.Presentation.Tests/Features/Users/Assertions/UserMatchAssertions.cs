@@ -16,12 +16,4 @@ public static class UserMatchAssertions
 			user.ShouldSatisfy(u => u.Matches(request));
 		}
 	}
-
-	extension(User u)
-	{
-		public void ShouldSatisfy(User user)
-		{
-			user.ShouldSatisfy(u => u.Matches(user));
-		}
-	}
 }

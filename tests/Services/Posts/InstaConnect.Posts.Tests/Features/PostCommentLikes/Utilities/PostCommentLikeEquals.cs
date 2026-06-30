@@ -50,6 +50,10 @@ public static class PostCommentLikeEquals
 
 	extension(PostCommentLikeId p)
 	{
+		public bool Matches(PostCommentLikeId id)
+		{
+			return p.Matches(id.CommentId.Id.Id, id.CommentId.CommentId, id.UserId.Id);
+		}
 		public bool Matches(string id, string commentId, string userId)
 		{
 			return p.CommentId.Matches(id, commentId) &&

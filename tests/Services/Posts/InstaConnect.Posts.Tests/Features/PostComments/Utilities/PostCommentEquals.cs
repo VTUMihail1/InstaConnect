@@ -62,6 +62,11 @@ public static class PostCommentEquals
 
 	extension(PostCommentId p)
 	{
+		public bool Matches(PostCommentId id)
+		{
+			return p.Matches(id.Id.Id, id.CommentId);
+		}
+
 		public bool Matches(string id, string commentId)
 		{
 			return p.Id.Matches(id) &&
