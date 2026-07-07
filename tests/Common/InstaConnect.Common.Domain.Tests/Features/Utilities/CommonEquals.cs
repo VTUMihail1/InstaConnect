@@ -2,6 +2,7 @@ using FluentValidation.Results;
 
 using InstaConnect.Common.Domain.Features.AccessTokens.Models;
 using InstaConnect.Common.Domain.Features.Common.Extensions;
+using InstaConnect.Common.Domain.Features.Data.Abstractions;
 using InstaConnect.Common.Domain.Features.Entities.Abstractions;
 using InstaConnect.Common.Domain.Features.Messaging.Abstractions;
 using InstaConnect.Common.Infrastructure.Features.Data.Helpers;
@@ -86,6 +87,22 @@ public static class CommonEquals
 				   response.TotalCount == totalCount &&
 				   response.HasPreviousPage == paginator.HasPreviousPage(response.Page) &&
 				   response.HasNextPage == paginator.HasNextPage(response.Page, response.PageSize, response.TotalCount);
+		}
+	}
+
+	extension<TDestinationType, TIncludeType, TIncludeDescriptor>(IInclude<TDestinationType, TIncludeType, TIncludeDescriptor> i)
+	    where TDestinationType : Enum
+	    where TIncludeType : Enum
+	    where TIncludeDescriptor : IIncludeDescriptor<TDestinationType, TIncludeType>
+	{
+		public bool Matches(IInclude<TDestinationType, TIncludeType, TIncludeDescriptor> include)
+		{
+			return i.Descriptors
+					.OrderBy(descriptor => descriptor.DestinationType)
+					.ThenBy(descriptor => descriptor.IncludeType)
+					.SequenceEqual(include.Descriptors
+									 .OrderBy(descriptor => descriptor.DestinationType)
+									 .ThenBy(descriptor => descriptor.IncludeType));
 		}
 	}
 }

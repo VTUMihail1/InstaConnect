@@ -26,14 +26,6 @@ public static class PostEquals
 		}
 	}
 
-	extension(PostInclude i)
-	{
-		public bool Matches(PostInclude include)
-		{
-			return i.Descriptors.MatchesCollection(include.Descriptors);
-		}
-	}
-
 	extension(Post p)
 	{
 		public bool Matches(AddPostCommand command)

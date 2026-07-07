@@ -2,7 +2,7 @@ using InstaConnect.Posts.Domain.Features.Users.Models.Responses;
 
 namespace InstaConnect.Posts.Domain.Features.PostLikes.Abstractions;
 
-internal interface IPostLikeCollectionResponseFactory
+public interface IPostLikeCollectionResponseFactory
 {
 	public PostLikeCollectionResponse Create(
 		PostResponse? post,
