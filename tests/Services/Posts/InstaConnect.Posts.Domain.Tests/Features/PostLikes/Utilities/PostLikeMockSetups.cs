@@ -137,7 +137,7 @@ public static class PostLikeMockSetups
 		{
 			repository
 				.GetByIdAsync(query.Filter.Id, query.CurrentUser, cancellationToken)
-				.ReturnsTaskResponse(post.ToFullResponse(query));
+				.ReturnsTaskResponse(post.ToResponse(query));
 		}
 
 		public void RemoveGetById(
@@ -178,10 +178,10 @@ public static class PostLikeMockSetups
 		{
 			repository
 				.GetByIdAsync(query.Filter.UserId, query.CurrentUser, cancellationToken)
-				.ReturnsTaskResponse(user.ToFullResponse());
+				.ReturnsTaskResponse(user.ToResponse(query));
 		}
 
-		public void RemoveGetById(
+		public void RemoveGetById(	
 			GetAllPostLikesForUserQuery query,
 			User user,
 			CancellationToken cancellationToken)

@@ -161,7 +161,7 @@ public static class PostCommentMockSetups
 		{
 			repository
 				.GetByIdAsync(query.Filter.Id, query.CurrentUser, cancellationToken)
-				.ReturnsTaskResponse(post.ToFullResponse(query));
+				.ReturnsTaskResponse(post.ToResponse(query));
 		}
 
 		public void RemoveGetById(
@@ -202,7 +202,7 @@ public static class PostCommentMockSetups
 		{
 			repository
 				.GetByIdAsync(query.Filter.UserId, query.CurrentUser, cancellationToken)
-				.ReturnsTaskResponse(user.ToFullResponse());
+				.ReturnsTaskResponse(user.ToResponse(query));
 		}
 
 		public void RemoveGetById(

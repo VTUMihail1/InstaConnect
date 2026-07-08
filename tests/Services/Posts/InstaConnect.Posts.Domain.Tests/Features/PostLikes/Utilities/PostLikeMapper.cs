@@ -1,3 +1,4 @@
+using InstaConnect.Posts.Domain.Features.Users.Models.Responses;
 using InstaConnect.Posts.Domain.Tests.Features.Posts.Utilities;
 using InstaConnect.Posts.Domain.Tests.Features.Users.Utilities;
 
@@ -5,6 +6,24 @@ namespace InstaConnect.Posts.Domain.Tests.Features.PostLikes.Utilities;
 
 public static class PostLikeMapper
 {
+	extension(User user)
+	{
+		public UserResponse ToResponse(
+			GetAllPostLikesForUserQuery query)
+		{
+			return user.ToFullResponse();
+		}
+	}
+
+	extension(Post post)
+	{
+		public PostResponse ToResponse(
+			GetAllPostLikesQuery query)
+		{
+			return post.ToFullResponse(query);
+		}
+	}
+
 	extension(PostLike postLike)
 	{
 		internal PostLikeResponse ToFullResponse<T>(

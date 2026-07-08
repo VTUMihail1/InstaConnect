@@ -140,7 +140,7 @@ public static class PostMockSetups
 		{
 			repository
 				.GetByIdAsync(query.Filter.UserId, query.CurrentUser, cancellationToken)
-				.ReturnsTaskResponse(user.ToFullResponse());
+				.ReturnsTaskResponse(user.ToResponse(query));
 		}
 
 		public void RemoveGetById(

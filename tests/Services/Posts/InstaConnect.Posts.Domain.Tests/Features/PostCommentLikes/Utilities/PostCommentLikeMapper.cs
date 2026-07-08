@@ -1,10 +1,30 @@
+using InstaConnect.Posts.Domain.Features.Users.Models.Responses;
 using InstaConnect.Posts.Domain.Tests.Features.PostComments.Utilities;
+using InstaConnect.Posts.Domain.Tests.Features.Posts.Utilities;
 using InstaConnect.Posts.Domain.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Posts.Domain.Tests.Features.PostCommentLikes.Utilities;
 
 public static class PostCommentLikeMapper
 {
+	extension(User user)
+	{
+		public UserResponse ToResponse(
+			GetAllPostCommentLikesForUserQuery query)
+		{
+			return user.ToFullResponse();
+		}
+	}
+
+	extension(PostComment postComment)
+	{
+		public PostCommentResponse ToResponse(
+			GetAllPostCommentLikesQuery query)
+		{
+			return postComment.ToFullResponse(query);
+		}
+	}
+
 	extension(PostCommentLike postCommentLike)
 	{
 		internal PostCommentLikeResponse ToFullResponse<T>(

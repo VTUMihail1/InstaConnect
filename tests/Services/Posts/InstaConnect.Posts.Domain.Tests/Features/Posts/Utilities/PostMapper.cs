@@ -1,3 +1,4 @@
+using InstaConnect.Posts.Domain.Features.Users.Models.Responses;
 using InstaConnect.Posts.Domain.Tests.Features.Posts.Utilities;
 using InstaConnect.Posts.Domain.Tests.Features.Users.Utilities;
 
@@ -5,6 +6,15 @@ namespace InstaConnect.Posts.Domain.Tests.Features.Posts.Utilities;
 
 public static class PostMapper
 {
+	extension(User user)
+	{
+		public UserResponse ToResponse(
+			GetAllPostsForUserQuery query)
+		{
+			return user.ToFullResponse();
+		}
+	}
+
 	extension(Post post)
 	{
 		internal PostResponse ToFullResponse<T>(
