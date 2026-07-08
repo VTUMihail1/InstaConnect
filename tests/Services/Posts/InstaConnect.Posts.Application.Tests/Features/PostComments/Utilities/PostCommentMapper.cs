@@ -11,12 +11,6 @@ public static class PostCommentMapper
 {
 	extension(PostComment postComment)
 	{
-		internal PostCommentId ToIdResponse(
-)
-		{
-			return postComment.Id;
-		}
-
 		internal PostCommentResponse ToFullResponse<TRequest>(
 			TRequest request)
 			where TRequest : ICurrentUserableQueryRequest
@@ -62,13 +56,13 @@ public static class PostCommentMapper
 		public PostCommentId ToResponse(
 			AddPostCommentCommandRequest request)
 		{
-			return postComment.ToIdResponse();
+			return postComment.ToId();
 		}
 
 		public PostCommentId ToResponse(
 			UpdatePostCommentCommandRequest request)
 		{
-			return postComment.ToIdResponse();
+			return postComment.ToId();
 		}
 
 		public PostCommentResponse ToResponse(

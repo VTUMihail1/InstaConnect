@@ -9,12 +9,6 @@ public static class FollowMapper
 {
 	extension(Follow follow)
 	{
-		internal FollowId ToIdResponse(
-)
-		{
-			return follow.Id;
-		}
-
 		internal FollowResponse ToFullResponse<TRequest>(
 			TRequest request)
 			where TRequest : ICurrentUserableQueryRequest
@@ -51,7 +45,7 @@ public static class FollowMapper
 		public FollowId ToResponse(
 			AddFollowCommandRequest request)
 		{
-			return follow.ToIdResponse();
+			return follow.ToId();
 		}
 
 		public FollowResponse ToResponse(

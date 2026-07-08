@@ -10,11 +10,6 @@ public static class PostCommentLikeMapper
 {
 	extension(PostCommentLike postCommentLike)
 	{
-		internal PostCommentLikeId ToIdResponse()
-		{
-			return postCommentLike.Id;
-		}
-
 		internal PostCommentLikeResponse ToFullResponse<TRequest>(TRequest request)
 			where TRequest : ICurrentUserableQueryRequest
 		{
@@ -44,7 +39,7 @@ public static class PostCommentLikeMapper
 
 		public PostCommentLikeId ToResponse(AddPostCommentLikeCommandRequest request)
 		{
-			return postCommentLike.ToIdResponse();
+			return postCommentLike.ToId();
 		}
 
 		public PostCommentLikeResponse ToResponse(GetPostCommentLikeByIdQueryRequest request)

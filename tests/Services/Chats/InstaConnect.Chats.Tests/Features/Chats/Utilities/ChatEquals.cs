@@ -48,6 +48,11 @@ public static class ChatEquals
 
 	extension(ChatId p)
 	{
+		public bool Matches(ChatId id)
+		{
+			return p.Matches(id.ParticipantOneId.Id, id.ParticipantTwoId.Id);
+		}
+
 		public bool Matches(string participantOneId, string participantTwoId)
 		{
 			return p.ParticipantOneId.Id.EqualsOrdinalIgnoreCase(participantOneId) &&

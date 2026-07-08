@@ -265,7 +265,7 @@ public static class PostCommentMockSetups
 		{
 			repository
 				.GetByIdAsync(query.Id, query.CurrentUser, cancellationToken)
-				.ReturnsTaskResponse(postComment.ToFullResponse(query));
+				.ReturnsTaskResponse(postComment.ToResponse(query));
 		}
 
 		public void RemoveGetById(

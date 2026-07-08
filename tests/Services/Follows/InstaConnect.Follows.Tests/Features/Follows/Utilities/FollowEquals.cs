@@ -64,6 +64,11 @@ public static class FollowEquals
 
 	extension(FollowId p)
 	{
+		public bool Matches(FollowId id)
+		{
+			return p.Matches(id.FollowerId.Id, id.FollowingId.Id);
+		}
+
 		public bool Matches(string followerId, string followingId)
 		{
 			return p.FollowerId.Matches(followerId) &&

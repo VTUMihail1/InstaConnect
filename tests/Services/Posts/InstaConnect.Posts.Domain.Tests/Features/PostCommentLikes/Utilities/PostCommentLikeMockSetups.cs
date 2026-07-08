@@ -319,7 +319,7 @@ public static class PostCommentLikeMockSetups
 		{
 			repository
 				.GetByIdAsync(query.Id, query.CurrentUser, cancellationToken)
-				.ReturnsTaskResponse(postCommentLike.ToFullResponse(query));
+				.ReturnsTaskResponse(postCommentLike.ToResponse(query));
 		}
 
 		public void RemoveGetById(

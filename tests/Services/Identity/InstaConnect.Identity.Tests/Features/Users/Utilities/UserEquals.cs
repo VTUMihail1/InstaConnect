@@ -63,6 +63,11 @@ public static class UserEquals
 
 	extension(UserId p)
 	{
+		public bool Matches(UserId id)
+		{
+			return p.Matches(id.Id);
+		}
+
 		public bool Matches(string id)
 		{
 			return p.Id.EqualsOrdinalIgnoreCase(id);

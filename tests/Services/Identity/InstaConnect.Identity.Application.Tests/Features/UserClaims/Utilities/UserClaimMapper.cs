@@ -9,12 +9,6 @@ public static class UserClaimMapper
 {
 	extension(UserClaim userClaim)
 	{
-		internal UserClaimId ToIdResponse(
-)
-		{
-			return userClaim.Id;
-		}
-
 		internal UserClaimResponse ToFullResponse()
 		{
 			return new(userClaim.Id,
@@ -32,7 +26,7 @@ public static class UserClaimMapper
 		public UserClaimId ToResponse(
 			AddUserClaimCommandRequest request)
 		{
-			return userClaim.ToIdResponse();
+			return userClaim.ToId();
 		}
 	}
 

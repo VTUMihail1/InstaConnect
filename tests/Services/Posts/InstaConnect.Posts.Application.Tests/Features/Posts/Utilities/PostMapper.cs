@@ -9,12 +9,6 @@ public static class PostMapper
 {
 	extension(Post post)
 	{
-		internal PostId ToIdResponse(
-)
-		{
-			return post.Id;
-		}
-
 		internal PostResponse ToFullResponse<TRequest>(
 			TRequest request)
 			where TRequest : ICurrentUserableQueryRequest
@@ -46,13 +40,13 @@ public static class PostMapper
 		public PostId ToResponse(
 			AddPostCommandRequest request)
 		{
-			return post.ToIdResponse();
+			return post.ToId();
 		}
 
 		public PostId ToResponse(
 			UpdatePostCommandRequest request)
 		{
-			return post.ToIdResponse();
+			return post.ToId();
 		}
 
 		public PostResponse ToResponse(

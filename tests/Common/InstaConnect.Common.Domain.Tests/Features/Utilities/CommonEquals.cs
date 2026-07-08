@@ -91,9 +91,9 @@ public static class CommonEquals
 	}
 
 	extension<TDestinationType, TIncludeType, TIncludeDescriptor>(IInclude<TDestinationType, TIncludeType, TIncludeDescriptor> i)
-	    where TDestinationType : Enum
-	    where TIncludeType : Enum
-	    where TIncludeDescriptor : IIncludeDescriptor<TDestinationType, TIncludeType>
+		where TDestinationType : Enum
+		where TIncludeType : Enum
+		where TIncludeDescriptor : IIncludeDescriptor<TDestinationType, TIncludeType>
 	{
 		public bool Matches(IInclude<TDestinationType, TIncludeType, TIncludeDescriptor> include)
 		{

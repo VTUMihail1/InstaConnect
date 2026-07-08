@@ -57,6 +57,11 @@ public static class ForgotPasswordTokenEquals
 
 	extension(ForgotPasswordTokenId p)
 	{
+		public bool Matches(ForgotPasswordTokenId id)
+		{
+			return p.Matches(id.Id.Id, id.Value);
+		}
+
 		public bool Matches(string id, string value)
 		{
 			return p.Id.Matches(id) &&

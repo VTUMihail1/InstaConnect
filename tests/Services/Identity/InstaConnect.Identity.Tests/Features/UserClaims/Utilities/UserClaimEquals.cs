@@ -54,6 +54,11 @@ public static class UserClaimEquals
 
 	extension(UserClaimId p)
 	{
+		public bool Matches(UserClaimId id)
+		{
+			return p.Matches(id.Id.Id, id.Claim);
+		}
+
 		public bool Matches(string id, ApplicationClaims claim)
 		{
 			return p.Id.Matches(id) &&

@@ -9,12 +9,6 @@ public static class ChatMapper
 {
 	extension(Chat chat)
 	{
-		internal ChatId ToIdResponse(
-)
-		{
-			return chat.Id;
-		}
-
 		internal ChatResponse ToFullResponse()
 		{
 			return new(chat.Id,
@@ -42,7 +36,7 @@ public static class ChatMapper
 		public ChatId ToResponse(
 			AddChatCommandRequest request)
 		{
-			return chat.ToIdResponse();
+			return chat.ToId();
 		}
 
 		public ChatResponse ToResponse(

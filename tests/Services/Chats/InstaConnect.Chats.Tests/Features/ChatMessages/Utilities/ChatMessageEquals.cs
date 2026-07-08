@@ -46,6 +46,11 @@ public static class ChatMessageEquals
 
 	extension(ChatMessageId p)
 	{
+		public bool Matches(ChatMessageId id)
+		{
+			return p.Matches(id.Id.ParticipantOneId.Id, id.Id.ParticipantTwoId.Id, id.MessageId);
+		}
+
 		public bool Matches(string participantOneId, string participantTwoId, string messageId)
 		{
 			return p.Id.Matches(participantOneId, participantTwoId) &&

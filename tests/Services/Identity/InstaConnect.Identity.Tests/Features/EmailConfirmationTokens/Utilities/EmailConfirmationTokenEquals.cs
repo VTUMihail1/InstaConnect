@@ -56,6 +56,11 @@ public static class EmailConfirmationTokenEquals
 
 	extension(EmailConfirmationTokenId p)
 	{
+		public bool Matches(EmailConfirmationTokenId id)
+		{
+			return p.Matches(id.Id.Id, id.Value);
+		}
+
 		public bool Matches(string id, string value)
 		{
 			return p.Id.Matches(id) &&
