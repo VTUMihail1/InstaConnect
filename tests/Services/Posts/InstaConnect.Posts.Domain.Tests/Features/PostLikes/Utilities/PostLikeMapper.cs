@@ -7,12 +7,6 @@ public static class PostLikeMapper
 {
 	extension(PostLike postLike)
 	{
-		internal PostLikeId ToIdResponse(
-)
-		{
-			return postLike.Id;
-		}
-
 		internal PostLikeResponse ToFullResponse<T>(
 			T request)
 			where T : ICurrentUserableQuery
@@ -46,7 +40,7 @@ public static class PostLikeMapper
 		public PostLikeId ToResponse(
 			AddPostLikeCommand command)
 		{
-			return postLike.ToIdResponse();
+			return postLike.ToId();
 		}
 
 		public PostLikeResponse ToResponse(

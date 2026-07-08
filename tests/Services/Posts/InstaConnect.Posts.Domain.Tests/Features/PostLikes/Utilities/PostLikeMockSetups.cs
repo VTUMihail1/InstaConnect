@@ -38,7 +38,7 @@ public static class PostLikeMockSetups
 		{
 			repository
 				.GetByIdAsync(command.Id, PostLikeMatcher.IsPostLikeInclude(command, include), cancellationToken)
-				.ReturnsTaskResponse(postLike);
+				.ReturnsTaskResponse(postLike.ToFull());
 		}
 
 		public void SetupGetByIdExists(
@@ -47,7 +47,7 @@ public static class PostLikeMockSetups
 		{
 			repository
 				.GetByIdAsync(postLike.Id, cancellationToken)
-				.ReturnsTaskResponse(postLike);
+				.ReturnsTaskResponse(postLike.ToFull());
 		}
 
 		public void RemoveGetById(
