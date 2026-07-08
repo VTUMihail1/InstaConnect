@@ -1,6 +1,3 @@
-using InstaConnect.Posts.Domain.Tests.Features.Posts.Utilities;
-using InstaConnect.Posts.Domain.Tests.Features.Users.Utilities;
-
 namespace InstaConnect.Posts.Domain.Tests.Features.PostLikes.Utilities;
 
 public static class PostLikeMockSetups
@@ -15,7 +12,7 @@ public static class PostLikeMockSetups
 				.Create(
 					command.Id,
 					command.UserId)
-				.ReturnsResponse(postLike);
+				.ReturnsResponse(postLike.To(command));
 		}
 	}
 
@@ -38,7 +35,7 @@ public static class PostLikeMockSetups
 		{
 			repository
 				.GetByIdAsync(command.Id, PostLikeMatcher.IsPostLikeInclude(command, include), cancellationToken)
-				.ReturnsTaskResponse(postLike.ToFull());
+				.ReturnsTaskResponse(postLike);
 		}
 
 		public void SetupGetByIdExists(
@@ -47,7 +44,7 @@ public static class PostLikeMockSetups
 		{
 			repository
 				.GetByIdAsync(postLike.Id, cancellationToken)
-				.ReturnsTaskResponse(postLike.ToFull());
+				.ReturnsTaskResponse(postLike);
 		}
 
 		public void RemoveGetById(
@@ -72,7 +69,7 @@ public static class PostLikeMockSetups
 		{
 			repository
 				.GetByIdAsync(command.Id, PostLikeMatcher.IsPostInclude(command, include), cancellationToken)
-				.ReturnsTaskResponse(post.ToFull());
+				.ReturnsTaskResponse(post);
 		}
 
 		public void RemoveGetById(
@@ -114,7 +111,7 @@ public static class PostLikeMockSetups
 		{
 			repository
 				.GetByIdAsync(command.UserId, cancellationToken)
-				.ReturnsTaskResponse(user.ToFull());
+				.ReturnsTaskResponse(user);
 		}
 
 		public void RemoveGetById(
@@ -181,7 +178,7 @@ public static class PostLikeMockSetups
 				.ReturnsTaskResponse(user.ToResponse(query));
 		}
 
-		public void RemoveGetById(	
+		public void RemoveGetById(
 			GetAllPostLikesForUserQuery query,
 			User user,
 			CancellationToken cancellationToken)

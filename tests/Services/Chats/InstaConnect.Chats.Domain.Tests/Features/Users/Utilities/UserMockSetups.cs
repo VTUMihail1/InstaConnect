@@ -18,7 +18,7 @@ public static class UserMockSetups
 					command.ProfileImage,
 					command.CreatedAtUtc,
 					command.UpdatedAtUtc)
-				.ReturnsResponse(user.ToFull(command));
+				.ReturnsResponse(user.To(command));
 		}
 	}
 

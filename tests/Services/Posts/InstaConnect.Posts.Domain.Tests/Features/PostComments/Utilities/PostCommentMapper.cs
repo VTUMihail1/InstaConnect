@@ -68,7 +68,7 @@ public static class PostCommentMapper
 					   postComment.UpdatedAtUtc);
 		}
 
-		public PostComment ToFull(AddPostCommentCommand command)
+		public PostComment To(AddPostCommentCommand command)
 		{
 			return new(postComment.Id,
 					   command.Content,

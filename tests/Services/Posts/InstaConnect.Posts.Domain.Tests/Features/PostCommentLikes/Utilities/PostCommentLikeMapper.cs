@@ -57,6 +57,13 @@ public static class PostCommentLikeMapper
 					   postCommentLike.CreatedAtUtc);
 		}
 
+		public PostCommentLike To(AddPostCommentLikeCommand command)
+		{
+			return new(
+				new(command.CommentId, command.UserId),
+				postCommentLike.CreatedAtUtc);
+		}
+
 		public PostCommentLikeId ToResponse(
 			AddPostCommentLikeCommand command)
 		{

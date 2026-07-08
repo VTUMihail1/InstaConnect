@@ -1,5 +1,4 @@
 using InstaConnect.Common.Domain.Features.DateTimes.Abstractions;
-using InstaConnect.Posts.Domain.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Posts.Domain.Tests.Features.Posts.Utilities;
 
@@ -16,7 +15,7 @@ public static class PostMockSetups
 					command.UserId,
 					command.Title,
 					command.Content)
-				.ReturnsResponse(post.ToFull(command));
+				.ReturnsResponse(post.To(command));
 		}
 	}
 
@@ -94,7 +93,7 @@ public static class PostMockSetups
 		{
 			repository
 				.GetByIdAsync(command.Id, PostMatcher.IsPostInclude(command, include), cancellationToken)
-				.ReturnsTaskResponse(post.ToFull());
+				.ReturnsTaskResponse(post);
 		}
 
 		public void SetupGetById(
@@ -105,7 +104,7 @@ public static class PostMockSetups
 		{
 			repository
 				.GetByIdAsync(command.Id, PostMatcher.IsPostInclude(command, include), cancellationToken)
-				.ReturnsTaskResponse(post.ToFull());
+				.ReturnsTaskResponse(post);
 		}
 
 		public void RemoveGetById(
@@ -163,7 +162,7 @@ public static class PostMockSetups
 		{
 			repository
 				.GetByIdAsync(command.UserId, cancellationToken)
-				.ReturnsTaskResponse(user.ToFull());
+				.ReturnsTaskResponse(user);
 		}
 
 		public void RemoveGetById(

@@ -45,7 +45,7 @@ public static class PostMapper
 					   post.UpdatedAtUtc);
 		}
 
-		public Post ToFull(AddPostCommand command)
+		public Post To(AddPostCommand command)
 		{
 			return new(post.Id,
 					   command.Title,

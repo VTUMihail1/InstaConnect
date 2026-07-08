@@ -1,6 +1,4 @@
 using InstaConnect.Common.Domain.Features.DateTimes.Abstractions;
-using InstaConnect.Posts.Domain.Tests.Features.Posts.Utilities;
-using InstaConnect.Posts.Domain.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Posts.Domain.Tests.Features.PostComments.Utilities;
 
@@ -17,7 +15,7 @@ public static class PostCommentMockSetups
 					command.Id,
 					command.UserId,
 					command.Content)
-				.ReturnsResponse(postComment.ToFull(command));
+				.ReturnsResponse(postComment.To(command));
 		}
 	}
 
@@ -31,7 +29,7 @@ public static class PostCommentMockSetups
 		{
 			repository
 				.GetByIdAsync(command.Id, PostCommentMatcher.IsPostInclude(command, include), cancellationToken)
-				.ReturnsTaskResponse(post.ToFull());
+				.ReturnsTaskResponse(post);
 		}
 
 		public void RemoveGetById(
@@ -92,7 +90,7 @@ public static class PostCommentMockSetups
 		{
 			repository
 				.GetByIdAsync(command.Id, PostCommentMatcher.IsPostCommentInclude(command, include), cancellationToken)
-				.ReturnsTaskResponse(postComment.ToFull());
+				.ReturnsTaskResponse(postComment);
 		}
 
 		public void SetupGetById(
@@ -103,7 +101,7 @@ public static class PostCommentMockSetups
 		{
 			repository
 				.GetByIdAsync(command.Id, PostCommentMatcher.IsPostCommentInclude(command, include), cancellationToken)
-				.ReturnsTaskResponse(postComment.ToFull());
+				.ReturnsTaskResponse(postComment);
 		}
 
 		public void RemoveGetById(
@@ -138,7 +136,7 @@ public static class PostCommentMockSetups
 		{
 			repository
 				.GetByIdAsync(command.UserId, cancellationToken)
-				.ReturnsTaskResponse(user.ToFull());
+				.ReturnsTaskResponse(user);
 		}
 
 		public void RemoveGetById(

@@ -18,7 +18,7 @@ public static class UserMapper
 					   user.UpdatedAtUtc);
 		}
 
-		public User ToFull(AddUserCommand command)
+		public User To(AddUserCommand command)
 		{
 			return new(command.Id,
 					   command.FirstName,
