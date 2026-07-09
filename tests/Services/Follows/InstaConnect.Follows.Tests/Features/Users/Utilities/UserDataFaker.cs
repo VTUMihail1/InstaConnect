@@ -4,7 +4,7 @@ public static class UserDataFaker
 {
 	public static string GetId()
 	{
-		return DataFaker.GetGuid();
+		return DataFaker.GetAverageString(UserConfigurations.IdMaxLength, UserConfigurations.IdMinLength);
 	}
 
 	public static string GetName()

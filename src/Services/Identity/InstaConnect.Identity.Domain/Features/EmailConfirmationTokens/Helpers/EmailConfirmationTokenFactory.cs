@@ -22,7 +22,7 @@ internal class EmailConfirmationTokenFactory : IEmailConfirmationTokenFactory
 
 	public EmailConfirmationToken Create(UserId id)
 	{
-		var value = _guidProvider.NewGuid().ToString();
+		var value = _guidProvider.NewStringGuid();
 		var expiresAt = _dateTimeProvider.GetOffsetUtcNow(_emailConfirmationTokenOptions.LifetimeSeconds);
 		var utcNow = _dateTimeProvider.GetOffsetUtcNow();
 		var emailConfirmationToken = new EmailConfirmationToken(

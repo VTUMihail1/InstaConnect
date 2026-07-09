@@ -5,7 +5,7 @@ using InstaConnect.Posts.Domain.Tests.Features.Users.Builders;
 using InstaConnect.Posts.Domain.Tests.Features.Users.Utilities;
 using InstaConnect.Posts.Domain.Tests.Unit.Features.Users.Utilities;
 
-namespace InstaConnect.Posts.Domain.Tests.Unit.Features.Users.Service;
+namespace InstaConnect.Posts.Domain.Tests.Unit.Features.Users.Services;
 
 public class AddUserServiceUnitTests : BaseUserDomainCommandUnitTest
 {

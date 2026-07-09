@@ -6,7 +6,7 @@ public static class FollowMockSetups
 {
 	extension(IDateTimeProvider dateTimeProvider)
 	{
-		public void SetupNewGuid(Follow follow)
+		public void SetupGetOffsetUtcNow(Follow follow)
 		{
 			dateTimeProvider.GetOffsetUtcNow()
 				.ReturnsResponse(follow.CreatedAtUtc);

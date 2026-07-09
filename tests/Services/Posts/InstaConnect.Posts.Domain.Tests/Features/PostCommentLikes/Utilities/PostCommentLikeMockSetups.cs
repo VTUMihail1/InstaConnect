@@ -6,7 +6,7 @@ public static class PostCommentLikeMockSetups
 {
 	extension(IDateTimeProvider dateTimeProvider)
 	{
-		public void SetupNewGuid(PostCommentLike postCommentLike)
+		public void SetupGetOffsetUtcNow(PostCommentLike postCommentLike)
 		{
 			dateTimeProvider.GetOffsetUtcNow()
 				.ReturnsResponse(postCommentLike.CreatedAtUtc);

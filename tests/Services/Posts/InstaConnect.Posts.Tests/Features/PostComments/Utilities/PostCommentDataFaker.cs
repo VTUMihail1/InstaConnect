@@ -4,7 +4,7 @@ public static class PostCommentDataFaker
 {
 	public static string GetId()
 	{
-		return DataFaker.GetGuid();
+		return DataFaker.GetAverageString(PostCommentConfigurations.IdMaxLength, PostCommentConfigurations.IdMinLength);
 	}
 
 	public static string GetContent()

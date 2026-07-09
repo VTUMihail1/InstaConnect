@@ -8,7 +8,7 @@ using InstaConnect.Posts.Domain.Tests.Unit.Features.Users.Utilities;
 using InstaConnect.Posts.Tests.Features.Users.DataAttributes.Email;
 using InstaConnect.Posts.Tests.Features.Users.DataAttributes.Name;
 
-namespace InstaConnect.Posts.Domain.Tests.Unit.Features.Users.Service;
+namespace InstaConnect.Posts.Domain.Tests.Unit.Features.Users.Services;
 
 public class UpdateUserServiceUnitTests : BaseUserDomainCommandUnitTest
 {

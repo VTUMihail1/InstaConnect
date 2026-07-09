@@ -15,7 +15,7 @@ public class CreatePostCommentLikeFactoryUnitTests : BasePostCommentLikeDomainCo
 	{
 		_factory = new(DateTimeProvider);
 
-		DateTimeProvider.SetupNewGuid(PostCommentLike);
+		DateTimeProvider.SetupGetOffsetUtcNow(PostCommentLike);
 	}
 
 	[Fact]
@@ -29,7 +29,7 @@ public class CreatePostCommentLikeFactoryUnitTests : BasePostCommentLikeDomainCo
 	}
 
 	[Fact]
-	public void Create_ShouldCallTheGuidProviderGetOffsetUtcNow_WhenRequestIsValid()
+	public void Create_ShouldCallTheDateTimeProviderGetOffsetUtcNow_WhenRequestIsValid()
 	{
 		// Act
 		_factory.Create(PostCommentLike.Id.CommentId, PostCommentLike.Id.UserId);

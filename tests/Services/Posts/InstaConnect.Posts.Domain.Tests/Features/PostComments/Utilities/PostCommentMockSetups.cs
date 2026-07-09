@@ -7,16 +7,16 @@ public static class PostCommentMockSetups
 {
 	extension(IGuidProvider guidProvider)
 	{
-		public void SetupNewGuid(PostComment postComment)
+		public void SetupNewStringGuid(PostComment postComment)
 		{
-			guidProvider.NewGuid()
-				.ReturnsResponse(new(postComment.Id.CommentId));
+			guidProvider.NewStringGuid()
+				.ReturnsResponse(postComment.Id.CommentId);
 		}
 	}
 
 	extension(IDateTimeProvider dateTimeProvider)
 	{
-		public void SetupNewGuid(PostComment postComment)
+		public void SetupGetOffsetUtcNow(PostComment postComment)
 		{
 			dateTimeProvider.GetOffsetUtcNow()
 				.ReturnsResponse(postComment.CreatedAtUtc);

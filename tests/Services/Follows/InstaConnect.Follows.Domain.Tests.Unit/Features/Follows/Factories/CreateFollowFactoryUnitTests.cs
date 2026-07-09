@@ -15,7 +15,7 @@ public class CreateFollowFactoryUnitTests : BaseFollowDomainCommandUnitTest
 	{
 		_factory = new(DateTimeProvider);
 
-		DateTimeProvider.SetupNewGuid(Follow);
+		DateTimeProvider.SetupGetOffsetUtcNow(Follow);
 	}
 
 	[Fact]
@@ -29,7 +29,7 @@ public class CreateFollowFactoryUnitTests : BaseFollowDomainCommandUnitTest
 	}
 
 	[Fact]
-	public void Create_ShouldCallTheGuidProviderGetOffsetUtcNow_WhenRequestIsValid()
+	public void Create_ShouldCallTheDateTimeProviderGetOffsetUtcNow_WhenRequestIsValid()
 	{
 		// Act
 		_factory.Create(Follow.Id.FollowerId, Follow.Id.FollowingId);

@@ -15,8 +15,8 @@ public class CreatePostFactoryUnitTests : BasePostDomainCommandUnitTest
 	{
 		_factory = new(GuidProvider, DateTimeProvider);
 
-		GuidProvider.SetupNewGuid(Post);
-		DateTimeProvider.SetupNewGuid(Post);
+		GuidProvider.SetupNewStringGuid(Post);
+		DateTimeProvider.SetupGetOffsetUtcNow(Post);
 	}
 
 	[Fact]
@@ -30,17 +30,17 @@ public class CreatePostFactoryUnitTests : BasePostDomainCommandUnitTest
 	}
 
 	[Fact]
-	public void Create_ShouldCallTheGuidProviderNewGuid_WhenRequestIsValid()
+	public void Create_ShouldCallTheGuidProviderNewStringGuid_WhenRequestIsValid()
 	{
 		// Act
 		_factory.Create(Post.UserId, Post.Title, Post.Content);
 
 		// Assert
-		GuidProvider.ShouldReceiveOneNewGuid();
+		GuidProvider.ShouldReceiveOneNewStringGuid();
 	}
 
 	[Fact]
-	public void Create_ShouldCallTheGuidProviderGetOffsetUtcNow_WhenRequestIsValid()
+	public void Create_ShouldCallTheDateTimeProviderGetOffsetUtcNow_WhenRequestIsValid()
 	{
 		// Act
 		_factory.Create(Post.UserId, Post.Title, Post.Content);

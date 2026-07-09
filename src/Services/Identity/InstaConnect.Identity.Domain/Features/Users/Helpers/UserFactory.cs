@@ -20,7 +20,7 @@ internal class UserFactory : IUserFactory
 		Email email,
 		string passwordHash)
 	{
-		var id = _guidProvider.NewGuid().ToString();
+		var id = _guidProvider.NewStringGuid();
 		var utcNow = _dateTimeProvider.GetOffsetUtcNow();
 		var user = new User(
 			new(id),

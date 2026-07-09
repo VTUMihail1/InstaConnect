@@ -7,9 +7,9 @@ public static class MockAssertions
 {
 	extension(IGuidProvider guidProvider)
 	{
-		public void ShouldReceiveOneNewGuid()
+		public void ShouldReceiveOneNewStringGuid()
 		{
-			guidProvider.ShouldHaveReceivedOne().NewGuid();
+			guidProvider.ShouldHaveReceivedOne().NewStringGuid();
 		}
 	}
 

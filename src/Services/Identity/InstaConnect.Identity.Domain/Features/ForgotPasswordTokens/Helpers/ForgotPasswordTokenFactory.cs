@@ -22,7 +22,7 @@ internal class ForgotPasswordTokenFactory : IForgotPasswordTokenFactory
 
 	public ForgotPasswordToken Create(UserId id)
 	{
-		var value = _guidProvider.NewGuid().ToString();
+		var value = _guidProvider.NewStringGuid();
 		var expiresAt = _dateTimeProvider.GetOffsetUtcNow(_forgotPasswordTokenOptions.LifetimeSeconds);
 		var utcNow = _dateTimeProvider.GetOffsetUtcNow();
 		var forgotPasswordToken = new ForgotPasswordToken(

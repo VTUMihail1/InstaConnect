@@ -15,7 +15,7 @@ internal class PostCommentFactory : IPostCommentFactory
 
 	public PostComment Create(PostId id, UserId userId, string content)
 	{
-		var commentId = _guidProvider.NewGuid().ToString();
+		var commentId = _guidProvider.NewStringGuid();
 		var utcNow = _dateTimeProvider.GetOffsetUtcNow();
 		var postComment = new PostComment(
 			new(id, commentId),
