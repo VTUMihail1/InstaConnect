@@ -68,7 +68,7 @@ public class AddPostUnitTests : BasePostDomainCommandUnitTest
 	}
 
 	[Fact]
-	public async Task UpdateAsync_ShouldCallTheFactoryCreate_WhenCommandIsValid()
+	public async Task AddAsync_ShouldCallTheFactoryCreate_WhenCommandIsValid()
 	{
 		// Act
 		await _service.AddAsync(_command, CancellationToken);
@@ -78,7 +78,7 @@ public class AddPostUnitTests : BasePostDomainCommandUnitTest
 	}
 
 	[Fact]
-	public async Task UpdateAsync_ShouldCallTheEventPublisherPublishAsync_WhenCommandIsValid()
+	public async Task AddAsync_ShouldCallTheEventPublisherPublishAsync_WhenCommandIsValid()
 	{
 		// Act
 		await _service.AddAsync(_command, CancellationToken);

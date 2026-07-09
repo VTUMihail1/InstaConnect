@@ -52,7 +52,7 @@ public class DeletePostUnitTests : BasePostDomainCommandUnitTest
 	}
 
 	[Fact]
-	public async Task UpdateAsync_ShouldCallTheRepositoryGetByIdAsync_WhenCommandIsValid()
+	public async Task DeleteAsync_ShouldCallTheRepositoryGetByIdAsync_WhenCommandIsValid()
 	{
 		// Act
 		await _service.DeleteAsync(_command, CancellationToken);
@@ -62,7 +62,7 @@ public class DeletePostUnitTests : BasePostDomainCommandUnitTest
 	}
 
 	[Fact]
-	public async Task UpdateAsync_ShouldCallTheRepositoryDeleteAsync_WhenCommandIsValid()
+	public async Task DeleteAsync_ShouldCallTheRepositoryDeleteAsync_WhenCommandIsValid()
 	{
 		// Act
 		await _service.DeleteAsync(_command, CancellationToken);
