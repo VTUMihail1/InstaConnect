@@ -10,58 +10,55 @@ public static class CommonCollectionFiltering
 	extension<TEntity>(ICollection<TEntity> entities)
 		where TEntity : IEntity
 	{
-		public IDictionary<TKey, TEntity> FilterToDictionary<TRequest, TPaginationQuery, TKey>(
+		public IDictionary<TKey, TEntity> FilterToDictionary<TRequest, TKey>(
 			Func<TEntity, bool> filter,
 			TRequest request,
 			Func<TEntity, TKey> entityKey)
-			where TRequest : IPaginatableQuery<TPaginationQuery>
-			where TPaginationQuery : IPaginationQuery
+			where TRequest : IPaginationQuery
 			where TKey : notnull
 		{
 			var paginator = new Paginator();
-			var offset = paginator.GetOffset(request.Pagination.Page, request.Pagination.PageSize);
+			var offset = paginator.GetOffset(request.Page, request.PageSize);
 
 			return entities.Where(filter)
 				.OrderBy(a => a.CreatedAtUtc)
 				.Skip(offset)
-				.Take(request.Pagination.PageSize)
+				.Take(request.PageSize)
 				.ToDictionary(entityKey);
 		}
 
-		public ICollection<TEntity> Filter<TRequest, TPaginationQuery>(
+		public ICollection<TEntity> Filter<TRequest>(
 			ISortEnumTermTransformer<TEntity> termTransformer,
 			TRequest request,
 			Func<TEntity, bool> filter)
-			where TRequest : IPaginatableQuery<TPaginationQuery>
-			where TPaginationQuery : IPaginationQuery
+			where TRequest : IPaginationQuery
 		{
 			var paginator = new Paginator();
-			var offset = paginator.GetOffset(request.Pagination.Page, request.Pagination.PageSize);
+			var offset = paginator.GetOffset(request.Page, request.PageSize);
 
 			var filteredEntities = entities.Where(filter);
 
 			return [.. termTransformer
 				.Transform(filteredEntities)
 				.Skip(offset)
-				.Take(request.Pagination.PageSize)];
+				.Take(request.PageSize)];
 		}
 
-		public ICollection<TResponse> Filter<TRequest, TPaginationQuery, TResponse>(
+		public ICollection<TResponse> Filter<TRequest, TResponse>(
 			Func<TEntity, bool> filter,
 			TRequest request,
 			Func<TEntity, TResponse> select)
-			where TRequest : IPaginatableQuery<TPaginationQuery>
-			where TPaginationQuery : IPaginationQuery
+			where TRequest : IPaginationQuery
 		{
 			var paginator = new Paginator();
-			var offset = paginator.GetOffset(request.Pagination.Page, request.Pagination.PageSize);
+			var offset = paginator.GetOffset(request.Page, request.PageSize);
 
 			return [.. entities
 				.Where(filter)
 				.OrderBy(a => a.CreatedAtUtc)
 				.Select(select)
 				.Skip(offset)
-				.Take(request.Pagination.PageSize)];
+				.Take(request.PageSize)];
 		}
 	}
 }

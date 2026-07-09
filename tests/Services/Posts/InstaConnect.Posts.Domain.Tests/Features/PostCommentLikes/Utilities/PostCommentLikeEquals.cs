@@ -30,16 +30,16 @@ public static class PostCommentLikeEquals
 			return postCommentLike.Id.Matches(command.Id);
 		}
 
-		public bool MatchesFilter(GetAllPostCommentLikesQuery query)
+		public bool MatchesFilter(PostCommentLikesFilterQuery query)
 		{
-			return postCommentLike.Id.CommentId.Matches(query.Filter.CommentId) &&
+			return postCommentLike.Id.CommentId.Matches(query.CommentId) &&
 				   postCommentLike.User != null &&
-				   postCommentLike.User.Name.Value.StartsWithOrdinalIgnoreCase(query.Filter.UserName.Value);
+				   postCommentLike.User.Name.Value.StartsWithOrdinalIgnoreCase(query.UserName.Value);
 		}
 
-		public bool MatchesFilter(GetAllPostCommentLikesForUserQuery query)
+		public bool MatchesFilter(PostCommentLikesForUserFilterQuery query)
 		{
-			return postCommentLike.Id.UserId.Matches(query.Filter.UserId);
+			return postCommentLike.Id.UserId.Matches(query.UserId);
 		}
 	}
 
@@ -94,14 +94,14 @@ public static class PostCommentLikeEquals
 		T request)
 		where T : ICurrentUserableQuery, IPaginatableQuery<PostCommentLikesPaginationQuery>
 		{
-			return response.MatchesCollectionResponse<PostCommentLikeCollectionResponse, T, PostCommentLikesPaginationQuery>(postCommentLikes.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(postCommentLikes.Count(matchesFilter), request.Pagination) &&
 				   response.User == null &&
 				   response.PostComment.MatchesFull(postComment, request) &&
-				   response.PostCommentLikes.MatchesCollection<PostCommentLikeResponse, PostCommentLike, PostCommentLikeId, T, PostCommentLikesPaginationQuery>(postCommentLikes,
+				   response.PostCommentLikes.MatchesCollection(postCommentLikes,
 													response => response.Id,
 													postCommentLike => postCommentLike.Id,
 													matches,
-													request,
+													request.Pagination,
 													matchesFilter);
 		}
 
@@ -114,13 +114,13 @@ public static class PostCommentLikeEquals
 			ISortEnumTermTransformer<PostCommentLike> termTransformer)
 			where T : ICurrentUserableQuery, IPaginatableQuery<PostCommentLikesPaginationQuery>
 		{
-			return response.MatchesCollectionResponse<PostCommentLikeCollectionResponse, T, PostCommentLikesPaginationQuery>(postCommentLikes.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(postCommentLikes.Count(matchesFilter), request.Pagination) &&
 				   response.User == null &&
 				   response.PostComment.MatchesFull(postComment, request) &&
-				   response.PostCommentLikes.MatchesSortedCollection<PostCommentLikeResponse, PostCommentLike, T, PostCommentLikesPaginationQuery>(postCommentLikes,
+				   response.PostCommentLikes.MatchesSortedCollection(postCommentLikes,
 														  matches,
 														  termTransformer,
-														  request,
+														  request.Pagination,
 														  matchesFilter);
 		}
 
@@ -132,14 +132,14 @@ public static class PostCommentLikeEquals
 			T request)
 			where T : ICurrentUserableQuery, IPaginatableQuery<PostCommentLikesPaginationQuery>
 		{
-			return response.MatchesCollectionResponse<PostCommentLikeCollectionResponse, T, PostCommentLikesPaginationQuery>(postCommentLikes.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(postCommentLikes.Count(matchesFilter), request.Pagination) &&
 				   response.User.MatchesFull(user) &&
 				   response.PostComment == null &&
-				   response.PostCommentLikes.MatchesCollection<PostCommentLikeResponse, PostCommentLike, PostCommentLikeId, T, PostCommentLikesPaginationQuery>(postCommentLikes,
+				   response.PostCommentLikes.MatchesCollection(postCommentLikes,
 													response => response.Id,
 													postCommentLike => postCommentLike.Id,
 													matches,
-													request,
+													request.Pagination,
 													matchesFilter);
 		}
 
@@ -152,13 +152,13 @@ public static class PostCommentLikeEquals
 			ISortEnumTermTransformer<PostCommentLike> termTransformer)
 			where T : ICurrentUserableQuery, IPaginatableQuery<PostCommentLikesPaginationQuery>
 		{
-			return response.MatchesCollectionResponse<PostCommentLikeCollectionResponse, T, PostCommentLikesPaginationQuery>(postCommentLikes.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(postCommentLikes.Count(matchesFilter), request.Pagination) &&
 				   response.User.MatchesFull(user) &&
 				   response.PostComment == null &&
-				   response.PostCommentLikes.MatchesSortedCollection<PostCommentLikeResponse, PostCommentLike, T, PostCommentLikesPaginationQuery>(postCommentLikes,
+				   response.PostCommentLikes.MatchesSortedCollection(postCommentLikes,
 														  matches,
 														  termTransformer,
-														  request,
+														  request.Pagination,
 														  matchesFilter);
 		}
 
@@ -169,7 +169,7 @@ public static class PostCommentLikeEquals
 		{
 			return response.MatchesWithoutUser(
 					   (response, postCommentLike) => response.MatchesWithoutPostComment(postCommentLike, query),
-					   postCommentLike => postCommentLike.MatchesFilter(query),
+					   postCommentLike => postCommentLike.MatchesFilter(query.Filter),
 					   postComment,
 					   postCommentLikes,
 					   query);
@@ -183,7 +183,7 @@ public static class PostCommentLikeEquals
 		{
 			return response.MatchesWithoutUser(
 					   (response, postCommentLike) => response.MatchesWithoutPostComment(postCommentLike, query),
-					   postCommentLike => postCommentLike.MatchesFilter(query),
+					   postCommentLike => postCommentLike.MatchesFilter(query.Filter),
 					   postComment,
 					   postCommentLikes,
 					   query,
@@ -197,7 +197,7 @@ public static class PostCommentLikeEquals
 		{
 			return response.MatchesWithoutPostComment(
 					   (response, postCommentLike) => response.MatchesWithoutUser(postCommentLike, query),
-					   postCommentLike => postCommentLike.MatchesFilter(query),
+					   postCommentLike => postCommentLike.MatchesFilter(query.Filter),
 					   user,
 					   postCommentLikes,
 					   query);
@@ -211,7 +211,7 @@ public static class PostCommentLikeEquals
 		{
 			return response.MatchesWithoutPostComment(
 					   (response, postCommentLike) => response.MatchesWithoutUser(postCommentLike, query),
-					   postCommentLike => postCommentLike.MatchesFilter(query),
+					   postCommentLike => postCommentLike.MatchesFilter(query.Filter),
 					   user,
 					   postCommentLikes,
 					   query,

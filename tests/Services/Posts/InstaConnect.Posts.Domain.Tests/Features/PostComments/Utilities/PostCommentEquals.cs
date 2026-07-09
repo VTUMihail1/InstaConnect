@@ -48,16 +48,16 @@ public static class PostCommentEquals
 				   postComment.UserId.Matches(command.UserId);
 		}
 
-		public bool MatchesFilter(GetAllPostCommentsQuery query)
+		public bool MatchesFilter(PostCommentsFilterQuery query)
 		{
-			return postComment.Id.Id.Matches(query.Filter.Id) &&
+			return postComment.Id.Id.Matches(query.Id) &&
 				   postComment.User != null &&
-				   postComment.User.Name.Value.StartsWithOrdinalIgnoreCase(query.Filter.UserName.Value);
+				   postComment.User.Name.Value.StartsWithOrdinalIgnoreCase(query.UserName.Value);
 		}
 
-		public bool MatchesFilter(GetAllPostCommentsForUserQuery query)
+		public bool MatchesFilter(PostCommentsForUserFilterQuery query)
 		{
-			return postComment.UserId.Matches(query.Filter.UserId);
+			return postComment.UserId.Matches(query.UserId);
 		}
 	}
 
@@ -166,14 +166,14 @@ public static class PostCommentEquals
 		T request)
 		where T : ICurrentUserableQuery, IPaginatableQuery<PostCommentsPaginationQuery>
 		{
-			return response.MatchesCollectionResponse<PostCommentCollectionResponse, T, PostCommentsPaginationQuery>(postComments.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(postComments.Count(matchesFilter), request.Pagination) &&
 				   response.User == null &&
 				   response.Post.MatchesFull(post, request) &&
-				   response.PostComments.MatchesCollection<PostCommentResponse, PostComment, PostCommentId, T, PostCommentsPaginationQuery>(postComments,
+				   response.PostComments.MatchesCollection(postComments,
 													response => response.Id,
 													postComment => postComment.Id,
 													matches,
-													request,
+													request.Pagination,
 													matchesFilter);
 		}
 
@@ -186,13 +186,13 @@ public static class PostCommentEquals
 			ISortEnumTermTransformer<PostComment> termTransformer)
 			where T : ICurrentUserableQuery, IPaginatableQuery<PostCommentsPaginationQuery>
 		{
-			return response.MatchesCollectionResponse<PostCommentCollectionResponse, T, PostCommentsPaginationQuery>(postComments.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(postComments.Count(matchesFilter), request.Pagination) &&
 				   response.User == null &&
 				   response.Post.MatchesFull(post, request) &&
-				   response.PostComments.MatchesSortedCollection<PostCommentResponse, PostComment, T, PostCommentsPaginationQuery>(postComments,
+				   response.PostComments.MatchesSortedCollection(postComments,
 														  matches,
 														  termTransformer,
-														  request,
+														  request.Pagination,
 														  matchesFilter);
 		}
 
@@ -204,14 +204,14 @@ public static class PostCommentEquals
 			T request)
 			where T : ICurrentUserableQuery, IPaginatableQuery<PostCommentsPaginationQuery>
 		{
-			return response.MatchesCollectionResponse<PostCommentCollectionResponse, T, PostCommentsPaginationQuery>(postComments.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(postComments.Count(matchesFilter), request.Pagination) &&
 				   response.User.MatchesFull(user) &&
 				   response.Post == null &&
-				   response.PostComments.MatchesCollection<PostCommentResponse, PostComment, PostCommentId, T, PostCommentsPaginationQuery>(postComments,
+				   response.PostComments.MatchesCollection(postComments,
 													response => response.Id,
 													postComment => postComment.Id,
 													matches,
-													request,
+													request.Pagination,
 													matchesFilter);
 		}
 
@@ -224,13 +224,13 @@ public static class PostCommentEquals
 			ISortEnumTermTransformer<PostComment> termTransformer)
 			where T : ICurrentUserableQuery, IPaginatableQuery<PostCommentsPaginationQuery>
 		{
-			return response.MatchesCollectionResponse<PostCommentCollectionResponse, T, PostCommentsPaginationQuery>(postComments.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(postComments.Count(matchesFilter), request.Pagination) &&
 				   response.User.MatchesFull(user) &&
 				   response.Post == null &&
-				   response.PostComments.MatchesSortedCollection<PostCommentResponse, PostComment, T, PostCommentsPaginationQuery>(postComments,
+				   response.PostComments.MatchesSortedCollection(postComments,
 														  matches,
 														  termTransformer,
-														  request,
+														  request.Pagination,
 														  matchesFilter);
 		}
 
@@ -241,7 +241,7 @@ public static class PostCommentEquals
 		{
 			return response.MatchesWithoutUser(
 					   (response, postComment) => response.MatchesWithoutPost(postComment, query),
-					   postComment => postComment.MatchesFilter(query),
+					   postComment => postComment.MatchesFilter(query.Filter),
 					   post,
 					   postComments,
 					   query);
@@ -255,7 +255,7 @@ public static class PostCommentEquals
 		{
 			return response.MatchesWithoutUser(
 					   (response, postComment) => response.MatchesWithoutPost(postComment, query),
-					   postComment => postComment.MatchesFilter(query),
+					   postComment => postComment.MatchesFilter(query.Filter),
 					   post,
 					   postComments,
 					   query,
@@ -269,7 +269,7 @@ public static class PostCommentEquals
 		{
 			return response.MatchesWithoutPost(
 					   (response, postComment) => response.MatchesWithoutUser(postComment, query),
-					   postComment => postComment.MatchesFilter(query),
+					   postComment => postComment.MatchesFilter(query.Filter),
 					   user,
 					   postComments,
 					   query);
@@ -283,7 +283,7 @@ public static class PostCommentEquals
 		{
 			return response.MatchesWithoutPost(
 					   (response, postComment) => response.MatchesWithoutUser(postComment, query),
-					   postComment => postComment.MatchesFilter(query),
+					   postComment => postComment.MatchesFilter(query.Filter),
 					   user,
 					   postComments,
 					   query,

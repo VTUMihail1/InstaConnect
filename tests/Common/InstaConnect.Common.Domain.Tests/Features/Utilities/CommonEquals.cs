@@ -32,19 +32,18 @@ public static class CommonEquals
 
 	extension<TExpected>(ICollection<TExpected> expected)
 	{
-		public bool MatchesCollection<TEntity, TKey, TRequest, TPaginationQuery>(
+		public bool MatchesCollection<TEntity, TKey, TRequest>(
 		ICollection<TEntity> entities,
 		Func<TExpected, TKey> expectedKey,
 		Func<TEntity, TKey> entityKey,
 		Func<TExpected, TEntity, bool> matcher,
 		TRequest request,
 		Func<TEntity, bool> filter)
-		where TRequest : IPaginatableQuery<TPaginationQuery>
-		where TPaginationQuery : IPaginationQuery
+		where TRequest : IPaginationQuery
 		where TEntity : IEntity
 		where TKey : notnull
 		{
-			var entitiesByKey = entities.FilterToDictionary<TEntity, TRequest, TPaginationQuery, TKey>(filter, request, entityKey);
+			var entitiesByKey = entities.FilterToDictionary(filter, request, entityKey);
 
 			return expected.Count == entitiesByKey.Count &&
 				   expected.Any() &&
@@ -53,17 +52,16 @@ public static class CommonEquals
 				   matcher(e, a));
 		}
 
-		public bool MatchesSortedCollection<TEntity, TRequest, TPaginationQuery>(
+		public bool MatchesSortedCollection<TEntity, TRequest>(
 			ICollection<TEntity> entities,
 			Func<TExpected, TEntity, bool> matcher,
 			ISortEnumTermTransformer<TEntity> termTransformer,
 			TRequest request,
 			Func<TEntity, bool> filter)
-			where TRequest : IPaginatableQuery<TPaginationQuery>
-			where TPaginationQuery : IPaginationQuery
+			where TRequest : IPaginationQuery
 			where TEntity : IEntity
 		{
-			var sortedEntities = entities.Filter<TEntity, TRequest, TPaginationQuery>(termTransformer, request, filter);
+			var sortedEntities = entities.Filter(termTransformer, request, filter);
 
 			return expected.Count == sortedEntities.Count &&
 				   expected.Any() &&
@@ -74,16 +72,15 @@ public static class CommonEquals
 
 	extension<TResponse>(TResponse response) where TResponse : ICollectionResponse
 	{
-		public bool MatchesCollectionResponse<TRequest, TPaginationQuery>(
+		public bool MatchesCollectionResponse<TRequest>(
 		int totalCount,
 		TRequest request)
-			where TRequest : IPaginatableQuery<TPaginationQuery>
-			where TPaginationQuery : IPaginationQuery
+			where TRequest : IPaginationQuery
 		{
 			var paginator = new Paginator();
 
-			return response.Page == request.Pagination.Page &&
-				   response.PageSize == request.Pagination.PageSize &&
+			return response.Page == request.Page &&
+				   response.PageSize == request.PageSize &&
 				   response.TotalCount == totalCount &&
 				   response.HasPreviousPage == paginator.HasPreviousPage(response.Page) &&
 				   response.HasNextPage == paginator.HasNextPage(response.Page, response.PageSize, response.TotalCount);

@@ -30,16 +30,16 @@ public static class PostLikeEquals
 			return postLike.Id.Matches(command.Id);
 		}
 
-		public bool MatchesFilter(GetAllPostLikesQuery query)
+		public bool MatchesFilter(PostLikesFilterQuery query)
 		{
-			return postLike.Id.Id.Matches(query.Filter.Id) &&
+			return postLike.Id.Id.Matches(query.Id) &&
 				   postLike.User != null &&
-				   postLike.User.Name.Value.StartsWithOrdinalIgnoreCase(query.Filter.UserName.Value);
+				   postLike.User.Name.Value.StartsWithOrdinalIgnoreCase(query.UserName.Value);
 		}
 
-		public bool MatchesFilter(GetAllPostLikesForUserQuery query)
+		public bool MatchesFilter(PostLikesForUserFilterQuery query)
 		{
-			return postLike.Id.UserId.Matches(query.Filter.UserId);
+			return postLike.Id.UserId.Matches(query.UserId);
 		}
 	}
 
@@ -94,14 +94,14 @@ public static class PostLikeEquals
 		T request)
 		where T : ICurrentUserableQuery, IPaginatableQuery<PostLikesPaginationQuery>
 		{
-			return response.MatchesCollectionResponse<PostLikeCollectionResponse, T, PostLikesPaginationQuery>(postLikes.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(postLikes.Count(matchesFilter), request.Pagination) &&
 				   response.User == null &&
 				   response.Post.MatchesFull(post, request) &&
-				   response.PostLikes.MatchesCollection<PostLikeResponse, PostLike, PostLikeId, T, PostLikesPaginationQuery>(postLikes,
+				   response.PostLikes.MatchesCollection(postLikes,
 													response => response.Id,
 													postLike => postLike.Id,
 													matches,
-													request,
+													request.Pagination,
 													matchesFilter);
 		}
 
@@ -114,13 +114,13 @@ public static class PostLikeEquals
 			ISortEnumTermTransformer<PostLike> termTransformer)
 			where T : ICurrentUserableQuery, IPaginatableQuery<PostLikesPaginationQuery>
 		{
-			return response.MatchesCollectionResponse<PostLikeCollectionResponse, T, PostLikesPaginationQuery>(postLikes.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(postLikes.Count(matchesFilter), request.Pagination) &&
 				   response.User == null &&
 				   response.Post.MatchesFull(post, request) &&
-				   response.PostLikes.MatchesSortedCollection<PostLikeResponse, PostLike, T, PostLikesPaginationQuery>(postLikes,
+				   response.PostLikes.MatchesSortedCollection(postLikes,
 														  matches,
 														  termTransformer,
-														  request,
+														  request.Pagination,
 														  matchesFilter);
 		}
 
@@ -132,14 +132,14 @@ public static class PostLikeEquals
 			T request)
 			where T : ICurrentUserableQuery, IPaginatableQuery<PostLikesPaginationQuery>
 		{
-			return response.MatchesCollectionResponse<PostLikeCollectionResponse, T, PostLikesPaginationQuery>(postLikes.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(postLikes.Count(matchesFilter), request.Pagination) &&
 				   response.User.MatchesFull(user) &&
 				   response.Post == null &&
-				   response.PostLikes.MatchesCollection<PostLikeResponse, PostLike, PostLikeId, T, PostLikesPaginationQuery>(postLikes,
+				   response.PostLikes.MatchesCollection(postLikes,
 													response => response.Id,
 													postLike => postLike.Id,
 													matches,
-													request,
+													request.Pagination,
 													matchesFilter);
 		}
 
@@ -152,13 +152,13 @@ public static class PostLikeEquals
 			ISortEnumTermTransformer<PostLike> termTransformer)
 			where T : ICurrentUserableQuery, IPaginatableQuery<PostLikesPaginationQuery>
 		{
-			return response.MatchesCollectionResponse<PostLikeCollectionResponse, T, PostLikesPaginationQuery>(postLikes.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(postLikes.Count(matchesFilter), request.Pagination) &&
 				   response.User.MatchesFull(user) &&
 				   response.Post == null &&
-				   response.PostLikes.MatchesSortedCollection<PostLikeResponse, PostLike, T, PostLikesPaginationQuery>(postLikes,
+				   response.PostLikes.MatchesSortedCollection(postLikes,
 														  matches,
 														  termTransformer,
-														  request,
+														  request.Pagination,
 														  matchesFilter);
 		}
 
@@ -169,7 +169,7 @@ public static class PostLikeEquals
 		{
 			return response.MatchesWithoutUser(
 					   (response, postLike) => response.MatchesWithoutPost(postLike, query),
-					   postLike => postLike.MatchesFilter(query),
+					   postLike => postLike.MatchesFilter(query.Filter),
 					   post,
 					   postLikes,
 					   query);
@@ -183,7 +183,7 @@ public static class PostLikeEquals
 		{
 			return response.MatchesWithoutUser(
 					   (response, postLike) => response.MatchesWithoutPost(postLike, query),
-					   postLike => postLike.MatchesFilter(query),
+					   postLike => postLike.MatchesFilter(query.Filter),
 					   post,
 					   postLikes,
 					   query,
@@ -197,7 +197,7 @@ public static class PostLikeEquals
 		{
 			return response.MatchesWithoutPost(
 					   (response, postLike) => response.MatchesWithoutUser(postLike, query),
-					   postLike => postLike.MatchesFilter(query),
+					   postLike => postLike.MatchesFilter(query.Filter),
 					   user,
 					   postLikes,
 					   query);
@@ -211,7 +211,7 @@ public static class PostLikeEquals
 		{
 			return response.MatchesWithoutPost(
 					   (response, postLike) => response.MatchesWithoutUser(postLike, query),
-					   postLike => postLike.MatchesFilter(query),
+					   postLike => postLike.MatchesFilter(query.Filter),
 					   user,
 					   postLikes,
 					   query,

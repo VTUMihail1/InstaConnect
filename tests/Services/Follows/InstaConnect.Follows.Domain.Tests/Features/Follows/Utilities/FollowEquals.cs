@@ -29,18 +29,18 @@ public static class FollowEquals
 			return follow.Id.Matches(command.Id);
 		}
 
-		public bool MatchesFilter(GetAllFollowsQuery query)
+		public bool MatchesFilter(FollowsFilterQuery query)
 		{
-			return follow.Id.FollowerId.Matches(query.Filter.FollowerId) &&
+			return follow.Id.FollowerId.Matches(query.FollowerId) &&
 				   follow.Following != null &&
-				   follow.Following.Name.Value.StartsWithOrdinalIgnoreCase(query.Filter.FollowingName.Value);
+				   follow.Following.Name.Value.StartsWithOrdinalIgnoreCase(query.FollowingName.Value);
 		}
 
-		public bool MatchesFilter(GetAllFollowsForFollowingQuery query)
+		public bool MatchesFilter(FollowsForFollowingFilterQuery query)
 		{
-			return follow.Id.FollowingId.Matches(query.Filter.FollowingId) &&
+			return follow.Id.FollowingId.Matches(query.FollowingId) &&
 				   follow.Follower != null &&
-				   follow.Follower.Name.Value.StartsWithOrdinalIgnoreCase(query.Filter.FollowerName.Value);
+				   follow.Follower.Name.Value.StartsWithOrdinalIgnoreCase(query.FollowerName.Value);
 		}
 	}
 
@@ -98,14 +98,14 @@ public static class FollowEquals
 		T request)
 		where T : ICurrentUserableQuery, IPaginatableQuery<FollowsPaginationQuery>
 		{
-			return response.MatchesCollectionResponse<FollowCollectionResponse, T, FollowsPaginationQuery>(follows.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(follows.Count(matchesFilter), request.Pagination) &&
 				   response.Following == null &&
 				   response.Follower.MatchesFull(follower) &&
-				   response.Follows.MatchesCollection<FollowResponse, Follow, FollowId, T, FollowsPaginationQuery>(follows,
+				   response.Follows.MatchesCollection(follows,
 													response => response.Id,
 													follow => follow.Id,
 													matches,
-													request,
+													request.Pagination,
 													matchesFilter);
 		}
 
@@ -118,13 +118,13 @@ public static class FollowEquals
 			ISortEnumTermTransformer<Follow> termTransformer)
 			where T : ICurrentUserableQuery, IPaginatableQuery<FollowsPaginationQuery>
 		{
-			return response.MatchesCollectionResponse<FollowCollectionResponse, T, FollowsPaginationQuery>(follows.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(follows.Count(matchesFilter), request.Pagination) &&
 				   response.Following == null &&
 				   response.Follower.MatchesFull(follower) &&
-				   response.Follows.MatchesSortedCollection<FollowResponse, Follow, T, FollowsPaginationQuery>(follows,
+				   response.Follows.MatchesSortedCollection(follows,
 														  matches,
 														  termTransformer,
-														  request,
+														  request.Pagination,
 														  matchesFilter);
 		}
 
@@ -136,14 +136,14 @@ public static class FollowEquals
 			T request)
 			where T : ICurrentUserableQuery, IPaginatableQuery<FollowsPaginationQuery>
 		{
-			return response.MatchesCollectionResponse<FollowCollectionResponse, T, FollowsPaginationQuery>(follows.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(follows.Count(matchesFilter), request.Pagination) &&
 				   response.Following.MatchesFull(following) &&
 				   response.Follower == null &&
-				   response.Follows.MatchesCollection<FollowResponse, Follow, FollowId, T, FollowsPaginationQuery>(follows,
+				   response.Follows.MatchesCollection(follows,
 													response => response.Id,
 													follow => follow.Id,
 													matches,
-													request,
+													request.Pagination,
 													matchesFilter);
 		}
 
@@ -156,13 +156,13 @@ public static class FollowEquals
 			ISortEnumTermTransformer<Follow> termTransformer)
 			where T : ICurrentUserableQuery, IPaginatableQuery<FollowsPaginationQuery>
 		{
-			return response.MatchesCollectionResponse<FollowCollectionResponse, T, FollowsPaginationQuery>(follows.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(follows.Count(matchesFilter), request.Pagination) &&
 				   response.Following.MatchesFull(following) &&
 				   response.Follower == null &&
-				   response.Follows.MatchesSortedCollection<FollowResponse, Follow, T, FollowsPaginationQuery>(follows,
+				   response.Follows.MatchesSortedCollection(follows,
 														  matches,
 														  termTransformer,
-														  request,
+														  request.Pagination,
 														  matchesFilter);
 		}
 
@@ -173,7 +173,7 @@ public static class FollowEquals
 		{
 			return response.MatchesWithoutFollowing(
 					   (response, follow) => response.MatchesWithoutFollower(follow, query),
-					   follow => follow.MatchesFilter(query),
+					   follow => follow.MatchesFilter(query.Filter),
 					   follower,
 					   follows,
 					   query);
@@ -187,7 +187,7 @@ public static class FollowEquals
 		{
 			return response.MatchesWithoutFollowing(
 					   (response, follow) => response.MatchesWithoutFollower(follow, query),
-					   follow => follow.MatchesFilter(query),
+					   follow => follow.MatchesFilter(query.Filter),
 					   follower,
 					   follows,
 					   query,
@@ -201,7 +201,7 @@ public static class FollowEquals
 		{
 			return response.MatchesWithoutFollower(
 					   (response, follow) => response.MatchesWithoutFollowing(follow, query),
-					   follow => follow.MatchesFilter(query),
+					   follow => follow.MatchesFilter(query.Filter),
 					   following,
 					   follows,
 					   query);
@@ -215,7 +215,7 @@ public static class FollowEquals
 		{
 			return response.MatchesWithoutFollower(
 					   (response, follow) => response.MatchesWithoutFollowing(follow, query),
-					   follow => follow.MatchesFilter(query),
+					   follow => follow.MatchesFilter(query.Filter),
 					   following,
 					   follows,
 					   query,

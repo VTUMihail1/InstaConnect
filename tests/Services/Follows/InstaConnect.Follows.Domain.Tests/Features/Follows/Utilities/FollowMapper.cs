@@ -80,25 +80,25 @@ public static class FollowMapper
 		public ICollection<FollowResponse> ToResponse(
 			GetAllFollowsQuery query)
 		{
-			return follows.Filter<Follow, GetAllFollowsQuery, FollowsPaginationQuery, FollowResponse>(follow => follow.MatchesFilter(query), query, follow => follow.ToResponseWithoutFollower(query));
+			return follows.Filter(follow => follow.MatchesFilter(query.Filter), query.Pagination, follow => follow.ToResponseWithoutFollower(query));
 		}
 
 		public ICollection<FollowResponse> ToResponse(
 			GetAllFollowsForFollowingQuery query)
 		{
-			return follows.Filter<Follow, GetAllFollowsForFollowingQuery, FollowsPaginationQuery, FollowResponse>(follow => follow.MatchesFilter(query), query, follow => follow.ToResponseWithoutFollowing(query));
+			return follows.Filter(follow => follow.MatchesFilter(query.Filter), query.Pagination, follow => follow.ToResponseWithoutFollowing(query));
 		}
 
 		public long ToTotalCountResponse(
 			GetAllFollowsQuery query)
 		{
-			return follows.Count(follow => follow.MatchesFilter(query));
+			return follows.Count(follow => follow.MatchesFilter(query.Filter));
 		}
 
 		public long ToTotalCountResponse(
 			GetAllFollowsForFollowingQuery query)
 		{
-			return follows.Count(follow => follow.MatchesFilter(query));
+			return follows.Count(follow => follow.MatchesFilter(query.Filter));
 		}
 	}
 }

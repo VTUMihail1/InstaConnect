@@ -101,25 +101,25 @@ public static class PostCommentMapper
 		public ICollection<PostCommentResponse> ToResponse(
 			GetAllPostCommentsQuery query)
 		{
-			return postComments.Filter<PostComment, GetAllPostCommentsQuery, PostCommentsPaginationQuery, PostCommentResponse>(postComment => postComment.MatchesFilter(query), query, postComment => postComment.ToResponseWithoutPost(query));
+			return postComments.Filter(postComment => postComment.MatchesFilter(query.Filter), query.Pagination, postComment => postComment.ToResponseWithoutPost(query));
 		}
 
 		public ICollection<PostCommentResponse> ToResponse(
 			GetAllPostCommentsForUserQuery query)
 		{
-			return postComments.Filter<PostComment, GetAllPostCommentsForUserQuery, PostCommentsPaginationQuery, PostCommentResponse>(postComment => postComment.MatchesFilter(query), query, postComment => postComment.ToResponseWithoutUser(query));
+			return postComments.Filter(postComment => postComment.MatchesFilter(query.Filter), query.Pagination, postComment => postComment.ToResponseWithoutUser(query));
 		}
 
 		public long ToTotalCountResponse(
 			GetAllPostCommentsQuery query)
 		{
-			return postComments.Count(postComment => postComment.MatchesFilter(query));
+			return postComments.Count(postComment => postComment.MatchesFilter(query.Filter));
 		}
 
 		public long ToTotalCountResponse(
 			GetAllPostCommentsForUserQuery query)
 		{
-			return postComments.Count(postComment => postComment.MatchesFilter(query));
+			return postComments.Count(postComment => postComment.MatchesFilter(query.Filter));
 		}
 	}
 }

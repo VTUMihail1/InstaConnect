@@ -49,17 +49,17 @@ public static class PostEquals
 				   p.UserId.Matches(command.UserId);
 		}
 
-		public bool MatchesFilter(GetAllPostsQuery query)
+		public bool MatchesFilter(PostsFilterQuery query)
 		{
 			return p.User != null &&
-				   p.User.Name.Value.StartsWithOrdinalIgnoreCase(query.Filter.UserName.Value) &&
-				   p.Title.StartsWithOrdinalIgnoreCase(query.Filter.Title);
+				   p.User.Name.Value.StartsWithOrdinalIgnoreCase(query.UserName.Value) &&
+				   p.Title.StartsWithOrdinalIgnoreCase(query.Title);
 		}
 
-		public bool MatchesFilter(GetAllPostsForUserQuery query)
+		public bool MatchesFilter(PostsForUserFilterQuery query)
 		{
-			return p.UserId.Matches(query.Filter.UserId) &&
-				   p.Title.StartsWithOrdinalIgnoreCase(query.Filter.Title);
+			return p.UserId.Matches(query.UserId) &&
+				   p.Title.StartsWithOrdinalIgnoreCase(query.Title);
 		}
 	}
 
@@ -156,13 +156,13 @@ public static class PostEquals
 		T request)
 		where T : ICurrentUserableQuery, IPaginatableQuery<PostsPaginationQuery>
 		{
-			return response.MatchesCollectionResponse<PostCollectionResponse, T, PostsPaginationQuery>(posts.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(posts.Count(matchesFilter), request.Pagination) &&
 				   response.User.MatchesFull(user) &&
-				   response.Posts.MatchesCollection<PostResponse, Post, PostId, T, PostsPaginationQuery>(posts,
+				   response.Posts.MatchesCollection(posts,
 													response => response.Id,
 													post => post.Id,
 													matches,
-													request,
+													request.Pagination,
 													matchesFilter);
 		}
 
@@ -175,12 +175,12 @@ public static class PostEquals
 			ISortEnumTermTransformer<Post> termTransformer)
 			where T : ICurrentUserableQuery, IPaginatableQuery<PostsPaginationQuery>
 		{
-			return response.MatchesCollectionResponse<PostCollectionResponse, T, PostsPaginationQuery>(posts.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(posts.Count(matchesFilter), request.Pagination) &&
 				   response.User.MatchesFull(user) &&
-				   response.Posts.MatchesSortedCollection<PostResponse, Post, T, PostsPaginationQuery>(posts,
+				   response.Posts.MatchesSortedCollection(posts,
 														  matches,
 														  termTransformer,
-														  request,
+														  request.Pagination,
 														  matchesFilter);
 		}
 
@@ -191,13 +191,13 @@ public static class PostEquals
 			T request)
 			where T : ICurrentUserableQuery, IPaginatableQuery<PostsPaginationQuery>
 		{
-			return response.MatchesCollectionResponse<PostCollectionResponse, T, PostsPaginationQuery>(posts.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(posts.Count(matchesFilter), request.Pagination) &&
 				   response.User == null &&
-				   response.Posts.MatchesCollection<PostResponse, Post, PostId, T, PostsPaginationQuery>(posts,
+				   response.Posts.MatchesCollection(posts,
 													response => response.Id,
 													post => post.Id,
 													matches,
-													request,
+													request.Pagination,
 													matchesFilter);
 		}
 
@@ -209,12 +209,12 @@ public static class PostEquals
 			ISortEnumTermTransformer<Post> termTransformer)
 			where T : ICurrentUserableQuery, IPaginatableQuery<PostsPaginationQuery>
 		{
-			return response.MatchesCollectionResponse<PostCollectionResponse, T, PostsPaginationQuery>(posts.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(posts.Count(matchesFilter), request.Pagination) &&
 				   response.User == null &&
-				   response.Posts.MatchesSortedCollection<PostResponse, Post, T, PostsPaginationQuery>(posts,
+				   response.Posts.MatchesSortedCollection(posts,
 														  matches,
 														  termTransformer,
-														  request,
+														  request.Pagination,
 														  matchesFilter);
 		}
 
@@ -224,7 +224,7 @@ public static class PostEquals
 		{
 			return response.MatchesWithoutUser(
 					   (response, post) => response.MatchesFull(post, query),
-					   post => post.MatchesFilter(query),
+					   post => post.MatchesFilter(query.Filter),
 					   posts,
 					   query);
 		}
@@ -236,7 +236,7 @@ public static class PostEquals
 		{
 			return response.MatchesWithoutUser(
 					   (response, post) => response.MatchesFull(post, query),
-					   post => post.MatchesFilter(query),
+					   post => post.MatchesFilter(query.Filter),
 					   posts,
 					   query,
 					   termTransformer);
@@ -249,7 +249,7 @@ public static class PostEquals
 		{
 			return response.MatchesFull(
 					   (response, post) => response.MatchesWithoutUser(post, query),
-					   post => post.MatchesFilter(query),
+					   post => post.MatchesFilter(query.Filter),
 					   user,
 					   posts,
 					   query);
@@ -263,7 +263,7 @@ public static class PostEquals
 		{
 			return response.MatchesFull(
 					   (response, post) => response.MatchesWithoutUser(post, query),
-					   post => post.MatchesFilter(query),
+					   post => post.MatchesFilter(query.Filter),
 					   user,
 					   posts,
 					   query,
