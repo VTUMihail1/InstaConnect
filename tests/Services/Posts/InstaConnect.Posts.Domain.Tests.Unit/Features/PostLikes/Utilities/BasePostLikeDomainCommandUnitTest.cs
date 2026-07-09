@@ -32,8 +32,8 @@ public abstract class BasePostLikeDomainCommandUnitTest : BasePostLikeTest
 
 	protected BasePostLikeDomainCommandUnitTest()
 	{
-		Mapper = MockFactory.CreateMapper(PostsDomainReference.Assembly);
 		Factory = PostLikeDomainMockFactory.CreateFactory();
+		Mapper = MockFactory.CreateMapper(PostsDomainReference.Assembly);
 		EventPublisher = DomainMockFactory.CreateEventPublisher();
 		Repository = PostDomainMockFactory.CreateCommandRepository();
 		UserRepository = UserDomainMockFactory.CreateCommandRepository();
