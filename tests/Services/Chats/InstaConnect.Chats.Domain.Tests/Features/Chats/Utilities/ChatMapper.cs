@@ -1,0 +1,73 @@
+using InstaConnect.Chats.Domain.Features.Users.Models.Responses;
+using InstaConnect.Chats.Domain.Tests.Features.Users.Utilities;
+
+namespace InstaConnect.Chats.Domain.Tests.Features.Chats.Utilities;
+
+public static class ChatMapper
+{
+	extension(User user)
+	{
+		public UserResponse ToResponse(
+			GetAllChatsQuery query)
+		{
+			return user.ToFullResponse();
+		}
+	}
+
+	extension(Chat chat)
+	{
+		internal ChatResponse ToFullResponse<T>(
+			T request)
+			where T : ICurrentUserableQuery
+		{
+			return new(chat.Id,
+					   chat.ParticipantOne?.ToFullResponse(),
+					   chat.ParticipantTwo?.ToFullResponse(),
+					   chat.CreatedAtUtc);
+		}
+
+		internal ChatResponse ToResponseWithoutParticipantOne<T>(
+			T request)
+			where T : ICurrentUserableQuery
+		{
+			return new(chat.Id,
+					   null,
+					   chat.ParticipantTwo?.ToFullResponse(),
+					   chat.CreatedAtUtc);
+		}
+
+		public Chat To(AddChatCommand command)
+		{
+			return new(
+				new(command.ParticipantOneId, command.ParticipantTwoId),
+				chat.CreatedAtUtc);
+		}
+
+		public ChatId ToResponse(
+			AddChatCommand command)
+		{
+			return chat.ToId();
+		}
+
+		public ChatResponse ToResponse(
+			GetChatByIdQuery query)
+		{
+			return chat.ToFullResponse(query);
+		}
+	}
+
+	extension(ICollection<Chat> chats)
+	{
+		public ICollection<ChatResponse> ToResponse(
+			GetAllChatsQuery query)
+		{
+			return chats.Filter(chat => chat.MatchesFilter(query.Filter), query.Pagination, chat => chat.ToResponseWithoutParticipantOne(query));
+		}
+
+		public long ToTotalCountResponse(
+			GetAllChatsQuery query)
+		{
+			return chats.Count(chat => chat.MatchesFilter(query.Filter));
+		}
+	}
+}
