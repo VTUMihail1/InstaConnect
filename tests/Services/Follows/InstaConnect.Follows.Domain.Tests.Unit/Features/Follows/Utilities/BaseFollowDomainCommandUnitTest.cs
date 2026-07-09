@@ -1,3 +1,4 @@
+using InstaConnect.Common.Domain.Features.DateTimes.Abstractions;
 using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
 using InstaConnect.Common.Domain.Tests.Features.Utilities;
 using InstaConnect.Common.Events.Features.Common.Abstractions;
@@ -18,6 +19,8 @@ public abstract class BaseFollowDomainCommandUnitTest : BaseFollowTest
 
 	protected IEventPublisher EventPublisher { get; }
 
+	protected IDateTimeProvider DateTimeProvider { get; }
+
 	protected IFollowCommandRepository Repository { get; }
 
 	protected IUserCommandRepository UserRepository { get; }
@@ -31,6 +34,7 @@ public abstract class BaseFollowDomainCommandUnitTest : BaseFollowTest
 		Factory = FollowDomainMockFactory.CreateFactory();
 		Mapper = MockFactory.CreateMapper(FollowsDomainReference.Assembly);
 		EventPublisher = DomainMockFactory.CreateEventPublisher();
+		DateTimeProvider = DomainMockFactory.CreateDateTimeProvider();
 		Repository = FollowDomainMockFactory.CreateCommandRepository();
 		UserRepository = UserDomainMockFactory.CreateCommandRepository();
 		NotificationService = FollowDomainMockFactory.CreateNotificationService();

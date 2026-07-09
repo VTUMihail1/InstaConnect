@@ -20,7 +20,7 @@ public class PostBuilder
 		_title = PostDataFaker.GetTitle();
 		_content = PostDataFaker.GetContent();
 		_createdAtUtc = PostDataFaker.GetCreatedAtUtc();
-		_updatedAtUtc = PostDataFaker.GetUpdatedAtUtc();
+		_updatedAtUtc = _createdAtUtc;
 	}
 
 	public Post Build()

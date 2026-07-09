@@ -47,7 +47,7 @@ public static class UserClaimEquals
 
 		public bool Matches(UserClaim e)
 		{
-			return entity.Id.Matches(e.Id.Id.Id, e.Id.Claim) &&
+			return entity.Id.Matches(e.Id) &&
 				   entity.CreatedAtUtc == e.CreatedAtUtc;
 		}
 	}

@@ -48,7 +48,7 @@ public static class EmailConfirmationTokenEquals
 
 		public bool Matches(EmailConfirmationToken e)
 		{
-			return entity.Id.Matches(e.Id.Id.Id, e.Id.Value) &&
+			return entity.Id.Matches(e.Id) &&
 				   entity.ExpiresAtUtc == e.ExpiresAtUtc &&
 				   entity.CreatedAtUtc == e.CreatedAtUtc;
 		}

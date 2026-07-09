@@ -4,7 +4,7 @@ public static class ChatMessageDataFaker
 {
 	public static string GetId()
 	{
-		return DataFaker.GetAverageString(ChatMessageConfigurations.IdMaxLength, ChatMessageConfigurations.IdMinLength);
+		return DataFaker.GetGuid();
 	}
 
 	public static string GetContent()

@@ -11,4 +11,12 @@ public static class EmailConfirmationTokenMatchAssertions
 			emailConfirmationTokens.ShouldSatisfy(p => p.Matches(e));
 		}
 	}
+
+	extension(EmailConfirmationToken u)
+	{
+		public void ShouldSatisfy(EmailConfirmationToken emailConfirmationToken)
+		{
+			u.ShouldSatisfy(u => u.Matches(emailConfirmationToken));
+		}
+	}
 }

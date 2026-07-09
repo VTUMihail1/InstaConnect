@@ -46,6 +46,12 @@ public static class PostCommentLikeEquals
 				   entity.PostComment != null && entity.PostComment.Matches(request.PostComment) &&
 				   entity.CreatedAtUtc == request.CreatedAtUtc;
 		}
+
+		public bool Matches(PostCommentLike postCommentLike)
+		{
+			return entity.Id.Matches(postCommentLike.Id) &&
+				   entity.CreatedAtUtc == postCommentLike.CreatedAtUtc;
+		}
 	}
 
 	extension(PostCommentLikeId p)

@@ -57,6 +57,16 @@ public static class PostEquals
 				   entity.CreatedAtUtc == request.CreatedAtUtc &&
 				   entity.UpdatedAtUtc == request.UpdatedAtUtc;
 		}
+
+		public bool Matches(Post post)
+		{
+			return entity.Id.Matches(post.Id) &&
+				   entity.UserId.Matches(post.UserId) &&
+				   entity.Title == post.Title &&
+				   entity.Content == post.Content &&
+				   entity.CreatedAtUtc == post.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == post.UpdatedAtUtc;
+		}
 	}
 
 	extension(PostId p)

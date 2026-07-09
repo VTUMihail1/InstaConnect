@@ -59,6 +59,18 @@ public static class UserEquals
 				   entity.CreatedAtUtc == request.CreatedAtUtc &&
 				   entity.UpdatedAtUtc == request.UpdatedAtUtc;
 		}
+
+		public bool Matches(User user)
+		{
+			return entity.Id.Matches(user.Id) &&
+				   entity.Name.Matches(user.Name) &&
+				   entity.Email.Matches(user.Email) &&
+				   entity.FirstName == user.FirstName &&
+				   entity.LastName == user.LastName &&
+				   entity.ProfileImage.Matches(user.ProfileImage) &&
+				   entity.CreatedAtUtc == user.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == user.UpdatedAtUtc;
+		}
 	}
 
 	extension(UserId p)

@@ -58,6 +58,14 @@ public static class PostCommentEquals
 				   entity.CreatedAtUtc == request.CreatedAtUtc &&
 				   entity.UpdatedAtUtc == request.UpdatedAtUtc;
 		}
+
+		public bool Matches(PostComment postComment)
+		{
+			return entity.Id.Matches(postComment.Id) &&
+				   entity.Content == postComment.Content &&
+				   entity.CreatedAtUtc == postComment.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == postComment.UpdatedAtUtc;
+		}
 	}
 
 	extension(PostCommentId p)

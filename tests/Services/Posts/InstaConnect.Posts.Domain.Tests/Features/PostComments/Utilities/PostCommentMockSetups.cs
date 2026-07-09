@@ -1,9 +1,28 @@
 using InstaConnect.Common.Domain.Features.DateTimes.Abstractions;
+using InstaConnect.Common.Domain.Features.Guids.Abstractions;
 
 namespace InstaConnect.Posts.Domain.Tests.Features.PostComments.Utilities;
 
 public static class PostCommentMockSetups
 {
+	extension(IGuidProvider guidProvider)
+	{
+		public void SetupNewGuid(PostComment postComment)
+		{
+			guidProvider.NewGuid()
+				.ReturnsResponse(new(postComment.Id.CommentId));
+		}
+	}
+
+	extension(IDateTimeProvider dateTimeProvider)
+	{
+		public void SetupNewGuid(PostComment postComment)
+		{
+			dateTimeProvider.GetOffsetUtcNow()
+				.ReturnsResponse(postComment.CreatedAtUtc);
+		}
+	}
+
 	extension(IPostCommentFactory factory)
 	{
 		public void SetupCreate(

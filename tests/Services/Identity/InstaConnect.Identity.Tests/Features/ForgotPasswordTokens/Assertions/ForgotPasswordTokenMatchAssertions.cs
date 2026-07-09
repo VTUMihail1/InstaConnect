@@ -14,4 +14,12 @@ public static class ForgotPasswordTokenMatchAssertions
 			forgotPasswordTokens.ShouldSatisfy(p => p.Matches(f));
 		}
 	}
+
+	extension(ForgotPasswordToken u)
+	{
+		public void ShouldSatisfy(ForgotPasswordToken forgotPasswordToken)
+		{
+			u.ShouldSatisfy(u => u.Matches(forgotPasswordToken));
+		}
+	}
 }

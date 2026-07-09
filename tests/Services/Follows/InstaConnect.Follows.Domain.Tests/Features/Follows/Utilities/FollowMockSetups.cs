@@ -1,7 +1,18 @@
+using InstaConnect.Common.Domain.Features.DateTimes.Abstractions;
+
 namespace InstaConnect.Follows.Domain.Tests.Features.Follows.Utilities;
 
 public static class FollowMockSetups
 {
+	extension(IDateTimeProvider dateTimeProvider)
+	{
+		public void SetupNewGuid(Follow follow)
+		{
+			dateTimeProvider.GetOffsetUtcNow()
+				.ReturnsResponse(follow.CreatedAtUtc);
+		}
+	}
+
 	extension(IFollowFactory factory)
 	{
 		public void SetupCreate(

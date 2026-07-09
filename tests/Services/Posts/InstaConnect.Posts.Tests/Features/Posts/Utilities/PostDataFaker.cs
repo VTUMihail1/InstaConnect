@@ -4,7 +4,7 @@ public static class PostDataFaker
 {
 	public static string GetId()
 	{
-		return DataFaker.GetAverageString(PostConfigurations.IdMaxLength, PostConfigurations.IdMinLength);
+		return DataFaker.GetGuid();
 	}
 
 	public static string GetTitle()

@@ -1,7 +1,18 @@
+using InstaConnect.Common.Domain.Features.DateTimes.Abstractions;
+
 namespace InstaConnect.Posts.Domain.Tests.Features.PostLikes.Utilities;
 
 public static class PostLikeMockSetups
 {
+	extension(IDateTimeProvider dateTimeProvider)
+	{
+		public void SetupNewGuid(PostLike postLike)
+		{
+			dateTimeProvider.GetOffsetUtcNow()
+				.ReturnsResponse(postLike.CreatedAtUtc);
+		}
+	}
+
 	extension(IPostLikeFactory factory)
 	{
 		public void SetupCreate(

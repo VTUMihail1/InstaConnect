@@ -1,4 +1,5 @@
 using InstaConnect.Common.Domain.Features.DateTimes.Abstractions;
+using InstaConnect.Common.Domain.Features.Guids.Abstractions;
 using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
 using InstaConnect.Common.Domain.Tests.Features.Utilities;
 using InstaConnect.Common.Events.Features.Common.Abstractions;
@@ -17,6 +18,8 @@ public abstract class BasePostDomainCommandUnitTest : BasePostTest
 
 	protected IApplicationMapper Mapper { get; }
 
+	protected IGuidProvider GuidProvider { get; }
+
 	protected IEventPublisher EventPublisher { get; }
 
 	protected IPostCommandRepository Repository { get; }
@@ -31,6 +34,7 @@ public abstract class BasePostDomainCommandUnitTest : BasePostTest
 	{
 		Factory = PostDomainMockFactory.CreateFactory();
 		Mapper = MockFactory.CreateMapper(PostsDomainReference.Assembly);
+		GuidProvider = DomainMockFactory.CreateGuidProvider();
 		EventPublisher = DomainMockFactory.CreateEventPublisher();
 		Repository = PostDomainMockFactory.CreateCommandRepository();
 		DateTimeProvider = DomainMockFactory.CreateDateTimeProvider();

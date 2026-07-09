@@ -1,4 +1,5 @@
 using InstaConnect.Common.Domain.Features.DateTimes.Abstractions;
+using InstaConnect.Common.Domain.Features.Guids.Abstractions;
 using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
 using InstaConnect.Common.Domain.Tests.Features.Utilities;
 using InstaConnect.Common.Events.Features.Common.Abstractions;
@@ -16,6 +17,8 @@ namespace InstaConnect.Posts.Domain.Tests.Unit.Features.PostComments.Utilities;
 public abstract class BasePostCommentDomainCommandUnitTest : BasePostCommentTest
 {
 	protected IApplicationMapper Mapper { get; }
+
+	protected IGuidProvider GuidProvider { get; }
 
 	protected IPostCommentFactory Factory { get; }
 
@@ -36,6 +39,7 @@ public abstract class BasePostCommentDomainCommandUnitTest : BasePostCommentTest
 	protected BasePostCommentDomainCommandUnitTest()
 	{
 		Mapper = MockFactory.CreateMapper(PostsDomainReference.Assembly);
+		GuidProvider = DomainMockFactory.CreateGuidProvider();
 		Factory = PostCommentDomainMockFactory.CreateFactory();
 		EventPublisher = DomainMockFactory.CreateEventPublisher();
 		Repository = PostDomainMockFactory.CreateCommandRepository();

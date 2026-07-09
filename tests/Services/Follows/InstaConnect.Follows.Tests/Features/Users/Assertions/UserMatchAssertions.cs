@@ -9,7 +9,7 @@ public static class UserMatchAssertions
 	{
 		public void ShouldSatisfy(User user)
 		{
-			user.ShouldSatisfy(u => u.Matches(user));
+			u.ShouldSatisfy(u => u.Matches(user));
 		}
 	}
 }

@@ -60,6 +60,12 @@ public static class FollowEquals
 				   entity.Following != null && entity.Following.Matches(request.Following) &&
 				   entity.CreatedAtUtc == request.CreatedAtUtc;
 		}
+
+		public bool Matches(Follow follow)
+		{
+			return entity.Id.Matches(follow.Id) &&
+				   entity.CreatedAtUtc == follow.CreatedAtUtc;
+		}
 	}
 
 	extension(FollowId p)

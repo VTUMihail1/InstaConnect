@@ -42,6 +42,14 @@ public static class ChatMessageEquals
 				   entity.CreatedAtUtc == request.CreatedAtUtc &&
 				   entity.UpdatedAtUtc == request.UpdatedAtUtc;
 		}
+
+		public bool Matches(ChatMessage chatMessage)
+		{
+			return entity.Id.Matches(chatMessage.Id) &&
+				   entity.Content == chatMessage.Content &&
+				   entity.CreatedAtUtc == chatMessage.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == chatMessage.UpdatedAtUtc;
+		}
 	}
 
 	extension(ChatMessageId p)

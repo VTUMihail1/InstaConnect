@@ -1,3 +1,4 @@
+using InstaConnect.Common.Domain.Features.DateTimes.Abstractions;
 using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
 using InstaConnect.Common.Domain.Tests.Features.Utilities;
 using InstaConnect.Common.Events.Features.Common.Abstractions;
@@ -22,6 +23,8 @@ public abstract class BasePostLikeDomainCommandUnitTest : BasePostLikeTest
 
 	protected IPostCommandRepository Repository { get; }
 
+	protected IDateTimeProvider DateTimeProvider { get; }
+
 	protected IUserCommandRepository UserRepository { get; }
 
 	protected IPostLikeCommandRepository LikeRepository { get; }
@@ -36,6 +39,7 @@ public abstract class BasePostLikeDomainCommandUnitTest : BasePostLikeTest
 		Mapper = MockFactory.CreateMapper(PostsDomainReference.Assembly);
 		EventPublisher = DomainMockFactory.CreateEventPublisher();
 		Repository = PostDomainMockFactory.CreateCommandRepository();
+		DateTimeProvider = DomainMockFactory.CreateDateTimeProvider();
 		UserRepository = UserDomainMockFactory.CreateCommandRepository();
 		LikeRepository = PostLikeDomainMockFactory.CreateCommandRepository();
 		IncludeBuilderFactory = PostDomainMockFactory.CreateIncludeBuilderFactory();
