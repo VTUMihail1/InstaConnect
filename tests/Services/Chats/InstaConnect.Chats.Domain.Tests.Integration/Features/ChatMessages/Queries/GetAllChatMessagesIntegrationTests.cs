@@ -1,0 +1,195 @@
+using InstaConnect.Chats.Domain.Features.ChatMessages.Models.Entities;
+using InstaConnect.Chats.Domain.Features.ChatMessages.Models.Requests;
+using InstaConnect.Chats.Domain.Tests.Features.ChatMessages.Assertions;
+using InstaConnect.Chats.Domain.Tests.Features.ChatMessages.Builders;
+using InstaConnect.Chats.Domain.Tests.Integration.Features.ChatMessages.Utilities;
+using InstaConnect.Chats.Tests.Features.ChatMessages.DataAttributes.SortOrder;
+using InstaConnect.Chats.Tests.Features.ChatMessages.DataAttributes.SortTerm;
+using InstaConnect.Chats.Tests.Features.ChatMessages.Utilities;
+using InstaConnect.Chats.Tests.Features.Chats.Utilities;
+using InstaConnect.Chats.Tests.Features.Users.DataAttributes.Id;
+using InstaConnect.Chats.Tests.Features.Users.Utilities;
+using InstaConnect.Common.Domain.Features.Messaging.Models;
+using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Base;
+using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
+using InstaConnect.Common.Tests.Features.DataAttributes.Strings.Base;
+
+namespace InstaConnect.Chats.Domain.Tests.Integration.Features.ChatMessages.Queries;
+
+public class GetAllChatMessagesIntegrationTests : BaseChatMessageDomainQueryIntegrationTest
+{
+	private readonly GetAllChatMessagesQueryBuilderFactory _queryBuilderFactory;
+	private readonly GetAllChatMessagesQueryBuilder _queryBuilder;
+	private readonly GetAllChatMessagesQuery _query;
+
+	public GetAllChatMessagesIntegrationTests(ChatsWebApplicationFactory webApplicationFactory)
+		: base(webApplicationFactory)
+	{
+		_queryBuilderFactory = new();
+		_queryBuilder = _queryBuilderFactory.Create(ChatMessage);
+		_query = _queryBuilder.Build();
+	}
+
+	protected override async Task OnInitializeAsync()
+	{
+		await ServiceScope.AddUserRangeAsync(ParticipantOnes, CancellationToken);
+		await ServiceScope.AddUserRangeAsync(ParticipantTwos, CancellationToken);
+		await ServiceScope.AddChatRangeAsync(Chats, CancellationToken);
+		await ServiceScope.AddChatMessageRangeAsync(ChatMessages, CancellationToken);
+	}
+
+	[Fact]
+	public async Task GetAllAsync_ShouldThrowChatNotFoundException_WhenIdIsInvalid()
+	{
+		// Arrange
+		await ServiceScope.DeleteChatAsync(Chat, CancellationToken);
+
+		// Assert
+		await Service.ShouldThrowChatNotFoundExceptionAsync(_query, CancellationToken);
+	}
+
+	[Fact]
+	public async Task GetAllAsync_ShouldReturnResponse_WhenQueryIsValid()
+	{
+		// Act
+		var response = await Service.GetAllAsync(_query, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(Chat, ChatMessages, _query);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task GetAllAsync_ShouldReturnResponse_WhenQueryAndParticipantTwoIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var query = _queryBuilder.WithParticipantTwoId(transformer).Build();
+
+		// Act
+		var response = await Service.GetAllAsync(query, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(Chat, ChatMessages, query);
+	}
+
+	[Theory]
+	[ChatMessagesSortOrderWithAscendingTermData]
+	[ChatMessagesSortOrderWithDescendingTermData]
+	public async Task GetAllAsync_ShouldReturnResponse_WhenQueryAndSortOrderAreValid(
+		IEnumTransformer<CommonSortOrder> transformer, ISortEnumTermTransformer<ChatMessage> termTransformer)
+	{
+		// Arrange
+		var query = _queryBuilder.WithSortOrder(transformer).Build();
+
+		// Act
+		var response = await Service.GetAllAsync(query, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(Chat, ChatMessages, query, termTransformer);
+	}
+
+	[Theory]
+	[ChatMessagesSortTermWithCreatedAtTermData]
+	public async Task GetAllAsync_ShouldReturnResponse_WhenQueryAndSortTermAreValid(
+		IEnumTransformer<ChatMessagesSortTerm> transformer, ISortEnumTermTransformer<ChatMessage> termTransformer)
+	{
+		// Arrange
+		var query = _queryBuilder.WithSortTerm(transformer).Build();
+
+		// Act
+		var response = await Service.GetAllAsync(query, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(Chat, ChatMessages, query, termTransformer);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task GetAllAsync_ShouldReturnResponse_WhenQueryAndCurrentUserIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var query = _queryBuilder.WithCurrentUserId(transformer).Build();
+
+		// Act
+		var response = await Service.GetAllAsync(query, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(Chat, ChatMessages, query);
+	}
+
+	[Fact]
+	public async Task GetAllAsync_ShouldReturnInvertedResponse_WhenQueryIsValid()
+	{
+		// Arrange
+		var query = _queryBuilder.WithParticipantTwoId(ParticipantOne.Id).WithCurrentUserId(ParticipantTwo.Id).Build();
+
+		// Act
+		var response = await Service.GetAllAsync(query, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfyInverted(Chat, ChatMessages, query);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task GetAllAsync_ShouldReturnInvertedResponse_WhenQueryAndParticipantTwoIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var query = _queryBuilder.WithParticipantTwoId(ParticipantOne.Id, transformer).WithCurrentUserId(ParticipantTwo.Id).Build();
+
+		// Act
+		var response = await Service.GetAllAsync(query, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfyInverted(Chat, ChatMessages, query);
+	}
+
+	[Theory]
+	[ChatMessagesSortOrderWithAscendingTermData]
+	[ChatMessagesSortOrderWithDescendingTermData]
+	public async Task GetAllAsync_ShouldReturnInvertedResponse_WhenQueryAndSortOrderAreValid(
+		IEnumTransformer<CommonSortOrder> transformer, ISortEnumTermTransformer<ChatMessage> termTransformer)
+	{
+		// Arrange
+		var query = _queryBuilder.WithParticipantTwoId(ParticipantOne.Id).WithCurrentUserId(ParticipantTwo.Id).WithSortOrder(transformer).Build();
+
+		// Act
+		var response = await Service.GetAllAsync(query, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfyInverted(Chat, ChatMessages, query, termTransformer);
+	}
+
+	[Theory]
+	[ChatMessagesSortTermWithCreatedAtTermData]
+	public async Task GetAllAsync_ShouldReturnInvertedResponse_WhenQueryAndSortTermAreValid(
+		IEnumTransformer<ChatMessagesSortTerm> transformer, ISortEnumTermTransformer<ChatMessage> termTransformer)
+	{
+		// Arrange
+		var query = _queryBuilder.WithParticipantTwoId(ParticipantOne.Id).WithCurrentUserId(ParticipantTwo.Id).WithSortTerm(transformer).Build();
+
+		// Act
+		var response = await Service.GetAllAsync(query, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfyInverted(Chat, ChatMessages, query, termTransformer);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task GetAllAsync_ShouldReturnInvertedResponse_WhenQueryAndCurrentUserIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var query = _queryBuilder.WithParticipantTwoId(ParticipantOne.Id).WithCurrentUserId(ParticipantTwo.Id, transformer).Build();
+
+		// Act
+		var response = await Service.GetAllAsync(query, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfyInverted(Chat, ChatMessages, query);
+	}
+}

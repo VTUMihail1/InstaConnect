@@ -1,0 +1,463 @@
+using InstaConnect.Chats.Domain.Features.ChatMessages.Models.Requests;
+using InstaConnect.Chats.Domain.Tests.Features.ChatMessages.Assertions;
+using InstaConnect.Chats.Domain.Tests.Features.ChatMessages.Builders;
+using InstaConnect.Chats.Domain.Tests.Integration.Features.ChatMessages.Utilities;
+using InstaConnect.Chats.Tests.Features.ChatMessages.Assertions;
+using InstaConnect.Chats.Tests.Features.ChatMessages.DataAttributes.Id;
+using InstaConnect.Chats.Tests.Features.ChatMessages.Utilities;
+using InstaConnect.Chats.Tests.Features.Chats.Utilities;
+using InstaConnect.Chats.Tests.Features.Users.DataAttributes.Id;
+using InstaConnect.Chats.Tests.Features.Users.Utilities;
+using InstaConnect.Common.Tests.Features.DataAttributes.Strings.Base;
+
+namespace InstaConnect.Chats.Domain.Tests.Integration.Features.ChatMessages.Commands;
+
+public class UpdateChatMessageIntegrationTests : BaseChatMessageDomainCommandIntegrationTest
+{
+	private readonly UpdateChatMessageCommandBuilderFactory _commandBuilderFactory;
+	private readonly UpdateChatMessageCommandBuilder _commandBuilder;
+	private readonly UpdateChatMessageCommand _command;
+
+	public UpdateChatMessageIntegrationTests(ChatsWebApplicationFactory webApplicationFactory)
+		: base(webApplicationFactory)
+	{
+		_commandBuilderFactory = new();
+		_commandBuilder = _commandBuilderFactory.Create(ChatMessage);
+		_command = _commandBuilder.Build();
+	}
+
+	protected override async Task OnInitializeAsync()
+	{
+		await ServiceScope.AddUserAsync(ParticipantOne, CancellationToken);
+		await ServiceScope.AddUserAsync(ParticipantTwo, CancellationToken);
+		await ServiceScope.AddChatAsync(Chat, CancellationToken);
+		await ServiceScope.AddChatMessageAsync(ChatMessage, CancellationToken);
+
+		await base.OnInitializeAsync();
+	}
+
+	[Fact]
+	public async Task UpdateAsync_ShouldThrowChatNotFoundException_WhenIdIsInvalid()
+	{
+		// Arrange
+		await ServiceScope.DeleteChatAsync(Chat, CancellationToken);
+
+		// Assert
+		await Service.ShouldThrowChatNotFoundExceptionAsync(_command, CancellationToken);
+	}
+
+	[Fact]
+	public async Task UpdateAsync_ShouldThrowChatMessageNotFoundException_WhenMessageIdIsInvalid()
+	{
+		// Arrange
+		await ServiceScope.DeleteChatMessageAsync(ChatMessage, CancellationToken);
+
+		// Assert
+		await Service.ShouldThrowChatMessageNotFoundExceptionAsync(_command, CancellationToken);
+	}
+
+	[Fact]
+	public async Task UpdateAsync_ShouldThrowChatMessageForbiddenException_WhenParticipantOneIdIsInvalid()
+	{
+		// Arrange
+		var command = _commandBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).Build();
+
+		// Assert
+		await Service.ShouldThrowChatMessageForbiddenExceptionAsync(command, CancellationToken);
+	}
+
+	[Fact]
+	public async Task UpdateAsync_ShouldReturnResponse_WhenCommandIsValid()
+	{
+		// Act
+		var response = await Service.UpdateAsync(_command, CancellationToken);
+		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(chatMessage, _command);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task UpdateAsync_ShouldReturnResponse_WhenCommandAndParticipantOneIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithParticipantOneId(transformer).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(chatMessage, command);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task UpdateAsync_ShouldReturnResponse_WhenCommandAndParticipantTwoIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithParticipantTwoId(transformer).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(chatMessage, command);
+	}
+
+	[Theory]
+	[ChatMessageIdDifferentCaseData]
+	public async Task UpdateAsync_ShouldReturnResponse_WhenCommandAndMessageIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithMessageId(transformer).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(chatMessage, command);
+	}
+
+	[Fact]
+	public async Task UpdateAsync_ShouldUpdateChatMessage_WhenCommandIsValid()
+	{
+		// Act
+		var response = await Service.UpdateAsync(_command, CancellationToken);
+		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response, CancellationToken);
+
+		// Assert
+		chatMessage.ShouldSatisfy(_command);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task UpdateAsync_ShouldUpdateChatMessage_WhenCommandAndParticipantOneIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithParticipantOneId(transformer).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response, CancellationToken);
+
+		// Assert
+		chatMessage.ShouldSatisfy(command);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task UpdateAsync_ShouldUpdateChatMessage_WhenCommandAndParticipantTwoIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithParticipantTwoId(transformer).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response, CancellationToken);
+
+		// Assert
+		chatMessage.ShouldSatisfy(command);
+	}
+
+	[Theory]
+	[ChatMessageIdDifferentCaseData]
+	public async Task UpdateAsync_ShouldUpdateChatMessage_WhenCommandAndMessageIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithMessageId(transformer).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response, CancellationToken);
+
+		// Assert
+		chatMessage.ShouldSatisfy(command);
+	}
+
+	[Fact]
+	public async Task UpdateAsync_ShouldPublishChatMessageUpdatedNotification_WhenCommandIsValid()
+	{
+		// Act
+		var response = await Service.UpdateAsync(_command, CancellationToken);
+		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response, CancellationToken);
+		var notification = await NotificationClient.UpdatedAsync(CancellationToken);
+
+		// Assert
+		notification.ShouldSatisfy(chatMessage);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task UpdateAsync_ShouldPublishChatMessageUpdatedNotification_WhenCommandAndParticipantOneIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithParticipantOneId(transformer).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response, CancellationToken);
+		var notification = await NotificationClient.UpdatedAsync(CancellationToken);
+
+		// Assert
+		notification.ShouldSatisfy(chatMessage);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task UpdateAsync_ShouldPublishChatMessageUpdatedNotification_WhenCommandAndParticipantTwoIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithParticipantTwoId(transformer).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response, CancellationToken);
+		var notification = await NotificationClient.UpdatedAsync(CancellationToken);
+
+		// Assert
+		notification.ShouldSatisfy(chatMessage);
+	}
+
+	[Theory]
+	[ChatMessageIdDifferentCaseData]
+	public async Task UpdateAsync_ShouldPublishChatMessageUpdatedNotification_WhenCommandAndMessageIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithMessageId(transformer).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response, CancellationToken);
+		var notification = await NotificationClient.UpdatedAsync(CancellationToken);
+
+		// Assert
+		notification.ShouldSatisfy(chatMessage);
+	}
+
+	[Fact]
+	public async Task UpdateAsync_ShouldReturnInvertedResponse_WhenCommandIsValid()
+	{
+		// Arrange
+		var updatedChatMessage = ChatMessageBuilder.WithSenderId(ParticipantTwo.Id).Build();
+		await ServiceScope.UpdateChatMessageAsync(updatedChatMessage, CancellationToken);
+		var command = _commandBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(chatMessage, command);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task UpdateAsync_ShouldReturnInvertedResponse_WhenCommandAndParticipantOneIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var updatedChatMessage = ChatMessageBuilder.WithSenderId(ParticipantTwo.Id).Build();
+		await ServiceScope.UpdateChatMessageAsync(updatedChatMessage, CancellationToken);
+		var command = _commandBuilder.WithParticipantOneId(ParticipantTwo.Id, transformer).WithParticipantTwoId(ParticipantOne.Id).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(chatMessage, command);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task UpdateAsync_ShouldReturnInvertedResponse_WhenCommandAndParticipantTwoIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var updatedChatMessage = ChatMessageBuilder.WithSenderId(ParticipantTwo.Id).Build();
+		await ServiceScope.UpdateChatMessageAsync(updatedChatMessage, CancellationToken);
+		var command = _commandBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id, transformer).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(chatMessage, command);
+	}
+
+	[Theory]
+	[ChatMessageIdDifferentCaseData]
+	public async Task UpdateAsync_ShouldReturnInvertedResponse_WhenCommandAndMessageIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var updatedChatMessage = ChatMessageBuilder.WithSenderId(ParticipantTwo.Id).Build();
+		await ServiceScope.UpdateChatMessageAsync(updatedChatMessage, CancellationToken);
+		var command = _commandBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).WithMessageId(transformer).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(chatMessage, command);
+	}
+
+	[Fact]
+	public async Task UpdateAsync_ShouldUpdateInvertedChatMessage_WhenCommandIsValid()
+	{
+		// Arrange
+		var updatedChatMessage = ChatMessageBuilder.WithSenderId(ParticipantTwo.Id).Build();
+		await ServiceScope.UpdateChatMessageAsync(updatedChatMessage, CancellationToken);
+		var command = _commandBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response, CancellationToken);
+
+		// Assert
+		chatMessage.ShouldSatisfyInverted(command);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task UpdateAsync_ShouldUpdateInvertedChatMessage_WhenCommandAndParticipantOneIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var updatedChatMessage = ChatMessageBuilder.WithSenderId(ParticipantTwo.Id).Build();
+		await ServiceScope.UpdateChatMessageAsync(updatedChatMessage, CancellationToken);
+		var command = _commandBuilder.WithParticipantOneId(ParticipantTwo.Id, transformer).WithParticipantTwoId(ParticipantOne.Id).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response, CancellationToken);
+
+		// Assert
+		chatMessage.ShouldSatisfyInverted(command);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task UpdateAsync_ShouldUpdateInvertedChatMessage_WhenCommandAndParticipantTwoIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var updatedChatMessage = ChatMessageBuilder.WithSenderId(ParticipantTwo.Id).Build();
+		await ServiceScope.UpdateChatMessageAsync(updatedChatMessage, CancellationToken);
+		var command = _commandBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id, transformer).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response, CancellationToken);
+
+		// Assert
+		chatMessage.ShouldSatisfyInverted(command);
+	}
+
+	[Theory]
+	[ChatMessageIdDifferentCaseData]
+	public async Task UpdateAsync_ShouldUpdateInvertedChatMessage_WhenCommandAndMessageIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var updatedChatMessage = ChatMessageBuilder.WithSenderId(ParticipantTwo.Id).Build();
+		await ServiceScope.UpdateChatMessageAsync(updatedChatMessage, CancellationToken);
+		var command = _commandBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).WithMessageId(transformer).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response, CancellationToken);
+
+		// Assert
+		chatMessage.ShouldSatisfyInverted(command);
+	}
+
+	[Fact]
+	public async Task UpdateAsync_ShouldPublishInvertedChatMessageUpdatedNotification_WhenCommandIsValid()
+	{
+		// Arrange
+		var updatedChatMessage = ChatMessageBuilder.WithSenderId(ParticipantTwo.Id).Build();
+		await ServiceScope.UpdateChatMessageAsync(updatedChatMessage, CancellationToken);
+		var command = _commandBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response, CancellationToken);
+		var notification = await NotificationClient.UpdatedAsync(CancellationToken);
+
+		// Assert
+		notification.ShouldSatisfy(chatMessage);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task UpdateAsync_ShouldPublishInvertedChatMessageUpdatedNotification_WhenCommandAndParticipantOneIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var updatedChatMessage = ChatMessageBuilder.WithSenderId(ParticipantTwo.Id).Build();
+		await ServiceScope.UpdateChatMessageAsync(updatedChatMessage, CancellationToken);
+		var command = _commandBuilder.WithParticipantOneId(ParticipantTwo.Id, transformer).WithParticipantTwoId(ParticipantOne.Id).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response, CancellationToken);
+		var notification = await NotificationClient.UpdatedAsync(CancellationToken);
+
+		// Assert
+		notification.ShouldSatisfy(chatMessage);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task UpdateAsync_ShouldPublishInvertedChatMessageUpdatedNotification_WhenCommandAndParticipantTwoIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var updatedChatMessage = ChatMessageBuilder.WithSenderId(ParticipantTwo.Id).Build();
+		await ServiceScope.UpdateChatMessageAsync(updatedChatMessage, CancellationToken);
+		var command = _commandBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id, transformer).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response, CancellationToken);
+		var notification = await NotificationClient.UpdatedAsync(CancellationToken);
+
+		// Assert
+		notification.ShouldSatisfy(chatMessage);
+	}
+
+	[Theory]
+	[ChatMessageIdDifferentCaseData]
+	public async Task UpdateAsync_ShouldPublishInvertedChatMessageUpdatedNotification_WhenCommandAndMessageIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var updatedChatMessage = ChatMessageBuilder.WithSenderId(ParticipantTwo.Id).Build();
+		await ServiceScope.UpdateChatMessageAsync(updatedChatMessage, CancellationToken);
+		var command = _commandBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).WithMessageId(transformer).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response, CancellationToken);
+		var notification = await NotificationClient.UpdatedAsync(CancellationToken);
+
+		// Assert
+		notification.ShouldSatisfy(chatMessage);
+	}
+}
