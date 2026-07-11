@@ -174,7 +174,7 @@ public static class UserMockSetups
 		{
 			repository
 				.GetByIdAsync(command.Id, UserMatcher.IsUserInclude(command, include), cancellationToken)
-				.ReturnsTaskResponse(user);
+				.ReturnsTaskResponse(user.ToEntity());
 		}
 
 		public void SetupGetById(

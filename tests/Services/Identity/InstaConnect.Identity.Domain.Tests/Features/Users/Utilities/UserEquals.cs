@@ -39,7 +39,7 @@ public static class UserEquals
 				   command.Email.Matches(request.Email) &&
 				   command.FirstName == request.FirstName &&
 				   command.LastName == request.LastName &&
-				   user.ProfileImage.Matches(command.ProfileImage?.GetUrl()) &&
+				   command.ProfileImage?.GetUrl() == request.ProfileImageUrl &&
 				   user.CreatedAtUtc == request.CreatedAtUtc &&
 				   user.UpdatedAtUtc == request.UpdatedAtUtc;
 		}
@@ -62,7 +62,7 @@ public static class UserEquals
 				   command.Email.Matches(request.Email) &&
 				   command.FirstName == request.FirstName &&
 				   command.LastName == request.LastName &&
-				   user.ProfileImage.Matches(command.ProfileImage?.GetUrl()) &&
+				   command.ProfileImage?.GetUrl() == request.ProfileImageUrl &&
 				   user.CreatedAtUtc == request.CreatedAtUtc &&
 				   user.UpdatedAtUtc == request.UpdatedAtUtc;
 		}
@@ -200,6 +200,17 @@ public static class UserEquals
 		}
 	}
 
+	extension(ICollection<EmailConfirmationToken> emailConfirmationTokens)
+	{
+		public bool Matches(UpdateUserCommand command, User user)
+		{
+			return user.EmailConfirmationTokens.MatchesCollection(emailConfirmationTokens,
+											  e => e.Id,
+											  e => e.Id,
+											  (emailConfirmationToken, e) => emailConfirmationToken.Matches(e));
+		}
+	}
+
 	extension(EmailConfirmationTokenAddedEventRequest request)
 	{
 		public bool Matches(AddUserCommand command, EmailConfirmationToken entity)
@@ -214,7 +225,7 @@ public static class UserEquals
 		public bool Matches(UpdateUserCommand command, EmailConfirmationToken entity)
 		{
 			return entity.Id.Matches(request.EmailConfirmationToken.Id, request.EmailConfirmationToken.Value) &&
-				   entity.User != null && entity.User.Matches(command, request.EmailConfirmationToken.User) &&
+				   entity.User != null && entity.User.Matches(request.EmailConfirmationToken.User) &&
 				   entity.ExpiresAtUtc == request.EmailConfirmationToken.ExpiresAtUtc &&
 				   entity.CreatedAtUtc == request.EmailConfirmationToken.CreatedAtUtc;
 		}
