@@ -1,6 +1,5 @@
 using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
 using InstaConnect.Common.Events.Features.Common.Abstractions;
-using InstaConnect.Identity.Domain.Features.Common.Helpers;
 
 namespace InstaConnect.Identity.Domain.Features.Users.Helpers;
 
@@ -9,7 +8,6 @@ internal class UserCommandService : IUserCommandService
 	private readonly IUserFactory _factory;
 	private readonly IApplicationMapper _mapper;
 	private readonly IImageHandler _imageHandler;
-	private readonly IPasswordHasher _passwordHasher;
 	private readonly IEventPublisher _eventPublisher;
 	private readonly IUserCommandRepository _repository;
 	private readonly IDateTimeProvider _dateTimeProvider;
@@ -22,7 +20,6 @@ internal class UserCommandService : IUserCommandService
 		IUserFactory factory,
 		IApplicationMapper mapper,
 		IImageHandler imageHandler,
-		IPasswordHasher passwordHasher,
 		IEventPublisher eventPublisher,
 		IUserCommandRepository repository,
 		IDateTimeProvider dateTimeProvider,
@@ -34,7 +31,6 @@ internal class UserCommandService : IUserCommandService
 		_factory = factory;
 		_mapper = mapper;
 		_imageHandler = imageHandler;
-		_passwordHasher = passwordHasher;
 		_eventPublisher = eventPublisher;
 		_repository = repository;
 		_dateTimeProvider = dateTimeProvider;
@@ -60,9 +56,8 @@ internal class UserCommandService : IUserCommandService
 			throw new UserNameAlreadyTakenException(command.Name);
 		}
 
-		var passwordHash = _passwordHasher.Hash(command.Password);
 		var newUser = _factory.Create(
-			command.Name, command.FirstName, command.LastName, command.Email, passwordHash);
+			command.Name, command.FirstName, command.LastName, command.Email, command.Password);
 
 		if (command.ProfileImage != null)
 		{

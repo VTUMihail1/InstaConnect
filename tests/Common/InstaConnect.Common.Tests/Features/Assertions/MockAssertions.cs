@@ -12,6 +12,11 @@ public static class MockAssertions
 			return substitute.Received(numberOfCalls);
 		}
 
+		public T ShouldHaveReceivedZero()
+		{
+			return substitute.ShouldHaveReceived(0);
+		}
+
 		public T ShouldHaveReceivedOne()
 		{
 			return substitute.ShouldHaveReceived(1);
