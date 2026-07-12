@@ -259,7 +259,7 @@ public class AddUserServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.AddAsync(command, CancellationToken);
 
 		// Assert
-		EmailConfirmationTokenFactory.ShouldReceiveOneCreate(_command, User);
+		EmailConfirmationTokenFactory.ShouldReceiveOneCreate(command, User);
 	}
 
 	[Fact]
