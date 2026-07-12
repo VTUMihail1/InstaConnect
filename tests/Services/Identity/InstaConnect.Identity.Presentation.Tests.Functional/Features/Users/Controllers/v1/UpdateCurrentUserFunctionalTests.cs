@@ -1041,10 +1041,11 @@ public class UpdateCurrentUserFunctionalTests : BaseUserPresentationCommandFunct
 	public async Task UpdateCurrentAsync_ShouldPublishEmailConfirmationTokenDeletedEvents_WhenRequestIsValid()
 	{
 		// Act
-		await Client.UpdateCurrentAsync(_request, CancellationToken);
+		var response = await Client.UpdateCurrentAsync(_request, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(User, CancellationToken);
+		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(user, CancellationToken);
 	}
 
 	[Theory]
@@ -1056,10 +1057,11 @@ public class UpdateCurrentUserFunctionalTests : BaseUserPresentationCommandFunct
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		await Client.UpdateCurrentAsync(request, CancellationToken);
+		var response = await Client.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(User, CancellationToken);
+		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(user, CancellationToken);
 	}
 
 	[Theory]
@@ -1071,10 +1073,11 @@ public class UpdateCurrentUserFunctionalTests : BaseUserPresentationCommandFunct
 		var request = _requestBuilder.WithName(transformer).Build();
 
 		// Act
-		await Client.UpdateCurrentAsync(request, CancellationToken);
+		var response = await Client.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(User, CancellationToken);
+		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(user, CancellationToken);
 	}
 
 	[Fact]
@@ -1084,10 +1087,11 @@ public class UpdateCurrentUserFunctionalTests : BaseUserPresentationCommandFunct
 		var request = _requestBuilder.WithName(User.Name).Build();
 
 		// Act
-		await Client.UpdateCurrentAsync(request, CancellationToken);
+		var response = await Client.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(User, CancellationToken);
+		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(user, CancellationToken);
 	}
 
 	[Theory]
@@ -1099,10 +1103,11 @@ public class UpdateCurrentUserFunctionalTests : BaseUserPresentationCommandFunct
 		var request = _requestBuilder.WithName(User.Name, transformer).Build();
 
 		// Act
-		await Client.UpdateCurrentAsync(request, CancellationToken);
+		var response = await Client.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(User, CancellationToken);
+		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(user, CancellationToken);
 	}
 
 	[Fact]
@@ -1112,10 +1117,11 @@ public class UpdateCurrentUserFunctionalTests : BaseUserPresentationCommandFunct
 		var request = _requestBuilder.WithEmail(User.Email).Build();
 
 		// Act
-		await Client.UpdateCurrentAsync(request, CancellationToken);
+		var response = await Client.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveNotPublishedEmailConfirmationTokenDeletedRangeAsync(User, CancellationToken);
+		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(user, CancellationToken);
 	}
 
 	[Theory]
@@ -1127,10 +1133,11 @@ public class UpdateCurrentUserFunctionalTests : BaseUserPresentationCommandFunct
 		var request = _requestBuilder.WithEmail(User.Email, transformer).Build();
 
 		// Act
-		await Client.UpdateCurrentAsync(request, CancellationToken);
+		var response = await Client.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveNotPublishedEmailConfirmationTokenDeletedRangeAsync(User, CancellationToken);
+		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(user, CancellationToken);
 	}
 
 	[Theory]
@@ -1142,10 +1149,11 @@ public class UpdateCurrentUserFunctionalTests : BaseUserPresentationCommandFunct
 		var request = _requestBuilder.WithEmail(transformer).Build();
 
 		// Act
-		await Client.UpdateCurrentAsync(request, CancellationToken);
+		var response = await Client.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(User, CancellationToken);
+		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(user, CancellationToken);
 	}
 
 	[Theory]
@@ -1157,9 +1165,10 @@ public class UpdateCurrentUserFunctionalTests : BaseUserPresentationCommandFunct
 		var request = _requestBuilder.WithProfileImage(transformer).Build();
 
 		// Act
-		await Client.UpdateCurrentAsync(request, CancellationToken);
+		var response = await Client.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(User, CancellationToken);
+		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(user, CancellationToken);
 	}
 }

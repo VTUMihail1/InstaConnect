@@ -35,6 +35,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 		await ServiceScope.AddEmailConfirmationTokenRangeAsync(User.EmailConfirmationTokens, CancellationToken);
 	}
 
+
 	[Fact]
 	public async Task UpdateAsync_ShouldThrowUserNotFoundException_WhenUserNotFound()
 	{
@@ -46,11 +47,12 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 	}
 
 	[Fact]
-	public async Task UpdateAsync_ShouldThrowUserEmailAlreadyTakenException_WhenEmailIsNotUnique()
+	public async Task UpdateAsync_ShouldThrowUserEmailAlreadyTakenException_WhenCommandIsInvalid()
 	{
 		// Arrange
 		var user = UserBuilderFactory.Create(User.PasswordHash, User.ProfileImage.Url).Build();
 		await ServiceScope.AddUserAsync(user, CancellationToken);
+
 		var command = _commandBuilder.WithEmail(user.Email).Build();
 
 		// Assert
@@ -59,12 +61,13 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 	[Theory]
 	[UserEmailDifferentCaseData]
-	public async Task UpdateAsync_ShouldThrowUserEmailAlreadyTakenException_WhenEmailIsNotUniqueAndDifferentCase(
+	public async Task UpdateAsync_ShouldThrowUserEmailAlreadyTakenException_WhenEmailIsInvalid(
 		IStringTransformer transformer)
 	{
 		// Arrange
 		var user = UserBuilderFactory.Create(User.PasswordHash, User.ProfileImage.Url).Build();
 		await ServiceScope.AddUserAsync(user, CancellationToken);
+
 		var command = _commandBuilder.WithEmail(user.Email, transformer).Build();
 
 		// Assert
@@ -72,11 +75,12 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 	}
 
 	[Fact]
-	public async Task UpdateAsync_ShouldThrowUserNameAlreadyTakenException_WhenNameIsNotUnique()
+	public async Task UpdateAsync_ShouldThrowUserNameAlreadyTakenException_WhenCommandIsInvalid()
 	{
 		// Arrange
 		var user = UserBuilderFactory.Create(User.PasswordHash, User.ProfileImage.Url).Build();
 		await ServiceScope.AddUserAsync(user, CancellationToken);
+
 		var command = _commandBuilder.WithName(user.Name).Build();
 
 		// Assert
@@ -85,12 +89,13 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 	[Theory]
 	[UserNameDifferentCaseData]
-	public async Task UpdateAsync_ShouldThrowUserNameAlreadyTakenException_WhenNameIsNotUniqueAndDifferentCase(
+	public async Task UpdateAsync_ShouldThrowUserNameAlreadyTakenException_WhenNameIsInvalid(
 		IStringTransformer transformer)
 	{
 		// Arrange
 		var user = UserBuilderFactory.Create(User.PasswordHash, User.ProfileImage.Url).Build();
 		await ServiceScope.AddUserAsync(user, CancellationToken);
+
 		var command = _commandBuilder.WithName(user.Name, transformer).Build();
 
 		// Assert
@@ -110,7 +115,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 	[Theory]
 	[UserIdDifferentCaseData]
-	public async Task UpdateAsync_ShouldReturnResponse_WhenIdIsValidAndDifferentCase(
+	public async Task UpdateAsync_ShouldReturnResponse_WhenIdIsValid(
 		IStringTransformer transformer)
 	{
 		// Arrange
@@ -124,11 +129,13 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 		response.ShouldSatisfy(user, command);
 	}
 
-	[Fact]
-	public async Task UpdateAsync_ShouldReturnResponse_WhenEmailIsNotChanged()
+	[Theory]
+	[UserNameDifferentCaseData]
+	public async Task UpdateAsync_ShouldReturnResponse_WhenNameIsValid(
+		IStringTransformer transformer)
 	{
 		// Arrange
-		var command = _commandBuilder.WithEmail(User.Email).Build();
+		var command = _commandBuilder.WithName(transformer).Build();
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
@@ -139,7 +146,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 	}
 
 	[Fact]
-	public async Task UpdateAsync_ShouldReturnResponse_WhenNameIsNotChanged()
+	public async Task UpdateAsync_ShouldReturnResponse_WhenNameHasNotChanged()
 	{
 		// Arrange
 		var command = _commandBuilder.WithName(User.Name).Build();
@@ -170,11 +177,57 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 	[Theory]
 	[UserEmailDifferentCaseData]
+	public async Task UpdateAsync_ShouldReturnResponse_WhenEmailIsValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithEmail(transformer).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(user, command);
+	}
+
+	[Fact]
+	public async Task UpdateAsync_ShouldReturnResponse_WhenEmailHasNotChanged()
+	{
+		// Arrange
+		var command = _commandBuilder.WithEmail(User.Email).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(user, command);
+	}
+
+	[Theory]
+	[UserEmailDifferentCaseData]
 	public async Task UpdateAsync_ShouldReturnResponse_WhenEmailIsValidAndHasNotChanged(
 		IStringTransformer transformer)
 	{
 		// Arrange
 		var command = _commandBuilder.WithEmail(User.Email, transformer).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(user, command);
+	}
+
+	[Theory]
+	[UserProfileImageNullData]
+	public async Task UpdateAsync_ShouldReturnResponse_WhenProfileImageIsValid(
+		IFormFileTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithProfileImage(transformer).Build();
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
@@ -196,8 +249,24 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 	}
 
 	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task UpdateAsync_ShouldUpdateUser_WhenIdIsValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithId(transformer).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+
+		// Assert
+		user.ShouldSatisfy(command);
+	}
+
+	[Theory]
 	[UserNameDifferentCaseData]
-	public async Task UpdateAsync_ShouldUpdateUser_WhenNameIsValidAndDifferentCase(
+	public async Task UpdateAsync_ShouldUpdateUser_WhenNameIsValid(
 		IStringTransformer transformer)
 	{
 		// Arrange
@@ -211,13 +280,11 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 		user.ShouldSatisfy(command);
 	}
 
-	[Theory]
-	[UserEmailDifferentCaseData]
-	public async Task UpdateAsync_ShouldUpdateUser_WhenEmailIsValidAndDifferentCase(
-		IStringTransformer transformer)
+	[Fact]
+	public async Task UpdateAsync_ShouldUpdateUser_WhenNameHasNotChanged()
 	{
 		// Arrange
-		var command = _commandBuilder.WithEmail(transformer).Build();
+		var command = _commandBuilder.WithName(User.Name).Build();
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
@@ -245,6 +312,36 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 	[Theory]
 	[UserEmailDifferentCaseData]
+	public async Task UpdateAsync_ShouldUpdateUser_WhenEmailIsValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithEmail(transformer).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+
+		// Assert
+		user.ShouldSatisfy(command);
+	}
+
+	[Fact]
+	public async Task UpdateAsync_ShouldUpdateUser_WhenEmailHasNotChanged()
+	{
+		// Arrange
+		var command = _commandBuilder.WithEmail(User.Email).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+
+		// Assert
+		user.ShouldSatisfy(command);
+	}
+
+	[Theory]
+	[UserEmailDifferentCaseData]
 	public async Task UpdateAsync_ShouldUpdateUser_WhenEmailIsValidAndHasNotChanged(
 		IStringTransformer transformer)
 	{
@@ -261,7 +358,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 	[Theory]
 	[UserProfileImageNullData]
-	public async Task UpdateAsync_ShouldUpdateUser_WhenProfileImageIsValid(
+	public async Task UpdateAsync_ShouldUpdateUser_WhenCommandAndProfileImageAreValid(
 		IFormFileTransformer transformer)
 	{
 		// Arrange
@@ -287,12 +384,42 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 	}
 
 	[Theory]
-	[UserProfileImageNullData]
-	public async Task UpdateAsync_ShouldPublishUserUpdatedEvent_WhenProfileImageIsValid(
-		IFormFileTransformer transformer)
+	[UserIdDifferentCaseData]
+	public async Task UpdateAsync_ShouldPublishUserUpdatedEvent_WhenIdIsValid(
+		IStringTransformer transformer)
 	{
 		// Arrange
-		var command = _commandBuilder.WithProfileImage(transformer).Build();
+		var command = _commandBuilder.WithId(transformer).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+
+		// Assert
+		await EventHarness.ShouldHavePublishedUserUpdatedAsync(user, CancellationToken);
+	}
+
+	[Theory]
+	[UserNameDifferentCaseData]
+	public async Task UpdateAsync_ShouldPublishUserUpdatedEvent_WhenNameIsValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithName(transformer).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+
+		// Assert
+		await EventHarness.ShouldHavePublishedUserUpdatedAsync(user, CancellationToken);
+	}
+
+	[Fact]
+	public async Task UpdateAsync_ShouldPublishUserUpdatedEvent_WhenNameHasNotChanged()
+	{
+		// Arrange
+		var command = _commandBuilder.WithName(User.Name).Build();
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
@@ -320,6 +447,36 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 	[Theory]
 	[UserEmailDifferentCaseData]
+	public async Task UpdateAsync_ShouldPublishUserUpdatedEvent_WhenEmailIsValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithEmail(transformer).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+
+		// Assert
+		await EventHarness.ShouldHavePublishedUserUpdatedAsync(user, CancellationToken);
+	}
+
+	[Fact]
+	public async Task UpdateAsync_ShouldPublishUserUpdatedEvent_WhenEmailHasNotChanged()
+	{
+		// Arrange
+		var command = _commandBuilder.WithEmail(User.Email).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+
+		// Assert
+		await EventHarness.ShouldHavePublishedUserUpdatedAsync(user, CancellationToken);
+	}
+
+	[Theory]
+	[UserEmailDifferentCaseData]
 	public async Task UpdateAsync_ShouldPublishUserUpdatedEvent_WhenEmailIsValidAndHasNotChanged(
 		IStringTransformer transformer)
 	{
@@ -334,8 +491,24 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 		await EventHarness.ShouldHavePublishedUserUpdatedAsync(user, CancellationToken);
 	}
 
+	[Theory]
+	[UserProfileImageNullData]
+	public async Task UpdateAsync_ShouldPublishUserUpdatedEvent_WhenCommandAndProfileImageAreValid(
+		IFormFileTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithProfileImage(transformer).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+
+		// Assert
+		await EventHarness.ShouldHavePublishedUserUpdatedAsync(user, CancellationToken);
+	}
+
 	[Fact]
-	public async Task UpdateAsync_ShouldDeleteEmailConfirmationTokens_WhenEmailIsChanged()
+	public async Task UpdateAsync_ShouldDeleteEmailConfirmationTokens_WhenCommandIsValid()
 	{
 		// Act
 		var response = await Service.UpdateAsync(_command, CancellationToken);
@@ -345,18 +518,50 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 		user.EmailConfirmationTokens.ShouldBeEmpty();
 	}
 
-	[Fact]
-	public async Task UpdateAsync_ShouldNotDeleteEmailConfirmationTokens_WhenEmailIsNotChanged()
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task UpdateAsync_ShouldDeleteEmailConfirmationTokens_WhenIdIsValid(
+		IStringTransformer transformer)
 	{
 		// Arrange
-		var command = _commandBuilder.WithEmail(User.Email).Build();
+		var command = _commandBuilder.WithId(transformer).Build();
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
 		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
 
 		// Assert
-		user.EmailConfirmationTokens.ShouldNotBeEmpty();
+		user.EmailConfirmationTokens.ShouldBeEmpty();
+	}
+
+	[Theory]
+	[UserNameDifferentCaseData]
+	public async Task UpdateAsync_ShouldDeleteEmailConfirmationTokens_WhenNameIsValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithName(transformer).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+
+		// Assert
+		user.EmailConfirmationTokens.ShouldBeEmpty();
+	}
+
+	[Fact]
+	public async Task UpdateAsync_ShouldDeleteEmailConfirmationTokens_WhenNameHasNotChanged()
+	{
+		// Arrange
+		var command = _commandBuilder.WithName(User.Name).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+
+		// Assert
+		user.EmailConfirmationTokens.ShouldBeEmpty();
 	}
 
 	[Theory]
@@ -375,6 +580,20 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 		user.EmailConfirmationTokens.ShouldBeEmpty();
 	}
 
+	[Fact]
+	public async Task UpdateAsync_ShouldDeleteEmailConfirmationTokens_WhenEmailHasNotChanged()
+	{
+		// Arrange
+		var command = _commandBuilder.WithEmail(User.Email).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+
+		// Assert
+		user.EmailConfirmationTokens.ShouldSatisfy(User.EmailConfirmationTokens);
+	}
+
 	[Theory]
 	[UserEmailDifferentCaseData]
 	public async Task UpdateAsync_ShouldDeleteEmailConfirmationTokens_WhenEmailIsValidAndHasNotChanged(
@@ -388,30 +607,96 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
 
 		// Assert
-		user.EmailConfirmationTokens.ShouldNotBeEmpty();
+		user.EmailConfirmationTokens.ShouldSatisfy(User.EmailConfirmationTokens);
 	}
 
-	[Fact]
-	public async Task UpdateAsync_ShouldPublishEmailConfirmationTokenDeletedEvents_WhenEmailIsChanged()
-	{
-		// Act
-		await Service.UpdateAsync(_command, CancellationToken);
-
-		// Assert
-		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(User, CancellationToken);
-	}
-
-	[Fact]
-	public async Task UpdateAsync_ShouldNotPublishEmailConfirmationTokenDeletedEvents_WhenEmailIsNotChanged()
+	[Theory]
+	[UserEmailDifferentCaseData]
+	public async Task UpdateAsync_ShouldDeleteEmailConfirmationTokens_WhenEmailIsValid(
+		IStringTransformer transformer)
 	{
 		// Arrange
-		var command = _commandBuilder.WithEmail(User.Email).Build();
+		var command = _commandBuilder.WithEmail(transformer).Build();
 
 		// Act
-		await Service.UpdateAsync(command, CancellationToken);
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveNotPublishedEmailConfirmationTokenDeletedRangeAsync(User, CancellationToken);
+		user.EmailConfirmationTokens.ShouldBeEmpty();
+	}
+
+	[Theory]
+	[UserProfileImageNullData]
+	public async Task UpdateAsync_ShouldDeleteEmailConfirmationTokens_WhenCommandAndProfileImageAreValid(
+		IFormFileTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithProfileImage(transformer).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+
+		// Assert
+		user.EmailConfirmationTokens.ShouldBeEmpty();
+	}
+
+	[Fact]
+	public async Task UpdateAsync_ShouldPublishEmailConfirmationTokenDeletedEvents_WhenCommandIsValid()
+	{
+		// Act
+		var response = await Service.UpdateAsync(_command, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+
+		// Assert
+		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(user, CancellationToken);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task UpdateAsync_ShouldPublishEmailConfirmationTokenDeletedEvents_WhenIdIsValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithId(transformer).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+
+		// Assert
+		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(user, CancellationToken);
+	}
+
+	[Theory]
+	[UserNameDifferentCaseData]
+	public async Task UpdateAsync_ShouldPublishEmailConfirmationTokenDeletedEvents_WhenNameIsValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithName(transformer).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+
+		// Assert
+		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(user, CancellationToken);
+	}
+
+	[Fact]
+	public async Task UpdateAsync_ShouldPublishEmailConfirmationTokenDeletedEvents_WhenNameHasNotChanged()
+	{
+		// Arrange
+		var command = _commandBuilder.WithName(User.Name).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+
+		// Assert
+		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(user, CancellationToken);
 	}
 
 	[Theory]
@@ -423,10 +708,25 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 		var command = _commandBuilder.WithName(User.Name, transformer).Build();
 
 		// Act
-		await Service.UpdateAsync(command, CancellationToken);
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(User, CancellationToken);
+		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(user, CancellationToken);
+	}
+
+	[Fact]
+	public async Task UpdateAsync_ShouldNotPublishEmailConfirmationTokenDeletedEvents_WhenEmailHasNotChanged()
+	{
+		// Arrange
+		var command = _commandBuilder.WithEmail(User.Email).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+
+		// Assert
+		await EventHarness.ShouldHaveNotPublishedEmailConfirmationTokenDeletedRangeAsync(user, CancellationToken);
 	}
 
 	[Theory]
@@ -438,9 +738,42 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 		var command = _commandBuilder.WithEmail(User.Email, transformer).Build();
 
 		// Act
-		await Service.UpdateAsync(command, CancellationToken);
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveNotPublishedEmailConfirmationTokenDeletedRangeAsync(User, CancellationToken);
+		await EventHarness.ShouldHaveNotPublishedEmailConfirmationTokenDeletedRangeAsync(user, CancellationToken);
+	}
+
+	[Theory]
+	[UserEmailDifferentCaseData]
+	public async Task UpdateAsync_ShouldPublishEmailConfirmationTokenDeletedEvents_WhenEmailIsValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithEmail(transformer).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+
+		// Assert
+		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(user, CancellationToken);
+	}
+
+	[Theory]
+	[UserProfileImageNullData]
+	public async Task UpdateAsync_ShouldPublishEmailConfirmationTokenDeletedEvents_WhenCommandAndProfileImageAreValid(
+		IFormFileTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithProfileImage(transformer).Build();
+
+		// Act
+		var response = await Service.UpdateAsync(command, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+
+		// Assert
+		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(user, CancellationToken);
 	}
 }

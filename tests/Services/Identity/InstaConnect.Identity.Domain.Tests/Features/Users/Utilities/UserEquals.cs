@@ -200,17 +200,6 @@ public static class UserEquals
 		}
 	}
 
-	extension(ICollection<EmailConfirmationToken> emailConfirmationTokens)
-	{
-		public bool Matches(UpdateUserCommand command, User user)
-		{
-			return user.EmailConfirmationTokens.MatchesCollection(emailConfirmationTokens,
-											  e => e.Id,
-											  e => e.Id,
-											  (emailConfirmationToken, e) => emailConfirmationToken.Matches(e));
-		}
-	}
-
 	extension(EmailConfirmationTokenAddedEventRequest request)
 	{
 		public bool Matches(AddUserCommand command, EmailConfirmationToken entity)

@@ -90,24 +90,6 @@ internal class UserCommandService : IUserCommandService
 			throw new UserNotFoundException(command.Id);
 		}
 
-		var emailIsNotUnique = !await _repository.IsEmailUniqueAsync(command.Email, cancellationToken);
-
-		if (user.Email.IsNot(command.Email) && emailIsNotUnique)
-		{
-			throw new UserEmailAlreadyTakenException(command.Email);
-		}
-
-		if (user.Email.IsNot(command.Email))
-		{
-			await _emailConfirmationTokenRepository.DeleteRangeAsync(user.EmailConfirmationTokens, cancellationToken);
-
-			var s = _mapper.Map<ICollection<EmailConfirmationTokenDeletedEventRequest>>(user);
-
-			await _eventPublisher.PublishAsync(
-				s, cancellationToken);
-			user.UpdateEmail(command.Email);
-		}
-
 		var nameIsNotUnique = !await _repository.IsNameUniqueAsync(command.Name, cancellationToken);
 
 		if (user.Name.IsNot(command.Name) && nameIsNotUnique)
@@ -115,12 +97,30 @@ internal class UserCommandService : IUserCommandService
 			throw new UserNameAlreadyTakenException(command.Name);
 		}
 
+		var emailIsNotUnique = !await _repository.IsEmailUniqueAsync(command.Email, cancellationToken);
+
+		if (user.Email.IsNot(command.Email) && emailIsNotUnique)
+		{
+			throw new UserEmailAlreadyTakenException(command.Email);
+		}
+
+		user.Update(command.FirstName, command.LastName, command.Name, _dateTimeProvider.GetOffsetUtcNow());
+
 		if (command.ProfileImage != null)
 		{
 			user.UpdateProfileImage(await _imageHandler.UploadAsync(command.ProfileImage, cancellationToken));
 		}
 
-		user.Update(command.FirstName, command.LastName, command.Name, _dateTimeProvider.GetOffsetUtcNow());
+		if (user.Email.IsNot(command.Email))
+		{
+			user.UpdateEmail(command.Email);
+
+			await _emailConfirmationTokenRepository.DeleteRangeAsync(user.EmailConfirmationTokens, cancellationToken);
+
+			await _eventPublisher.PublishAsync(
+				_mapper.Map<ICollection<EmailConfirmationTokenDeletedEventRequest>>(user), cancellationToken);
+		}
+
 		await _repository.UpdateAsync(user, cancellationToken);
 
 		await _eventPublisher.PublishAsync(

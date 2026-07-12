@@ -43,7 +43,7 @@ public class AddUserServiceUnitTests : BaseUserDomainCommandUnitTest
 	}
 
 	[Fact]
-	public async Task AddAsync_ShouldThrowUserEmailAlreadyTakenException_WhenEmailIsNotUnique()
+	public async Task AddAsync_ShouldThrowUserEmailAlreadyTakenException_WhenEmailIsInvalid()
 	{
 		// Arrange
 		Repository.RemoveIsEmailUnique(_command, CancellationToken);
@@ -53,7 +53,7 @@ public class AddUserServiceUnitTests : BaseUserDomainCommandUnitTest
 	}
 
 	[Fact]
-	public async Task AddAsync_ShouldThrowUserNameAlreadyTakenException_WhenNameIsNotUnique()
+	public async Task AddAsync_ShouldThrowUserNameAlreadyTakenException_WhenNameIsInvalid()
 	{
 		// Arrange
 		Repository.RemoveIsNameUnique(_command, CancellationToken);
@@ -74,7 +74,7 @@ public class AddUserServiceUnitTests : BaseUserDomainCommandUnitTest
 
 	[Theory]
 	[UserProfileImageNullData]
-	public async Task AddAsync_ShouldReturnResponse_WhenProfileImageIsNull(
+	public async Task AddAsync_ShouldReturnResponse_WhenProfileImageIsValid(
 		IFormFileTransformer transformer)
 	{
 		// Arrange

@@ -45,11 +45,6 @@ public static class UserMatcher
 		return Matcher.Is<EmailConfirmationToken>(p => p.Matches(command, user));
 	}
 
-	public static ICollection<EmailConfirmationToken> IsEmailConfirmationTokens(UpdateUserCommand command, User user)
-	{
-		return Matcher.Is<ICollection<EmailConfirmationToken>>(p => p.Matches(command, user));
-	}
-
 	public static EmailConfirmationTokenAddedEventRequest IsEmailConfirmationTokenAddedEventRequest(AddUserCommand command, EmailConfirmationToken emailConfirmationToken)
 	{
 		return Matcher.Is<EmailConfirmationTokenAddedEventRequest>(p => p.Matches(command, emailConfirmationToken));

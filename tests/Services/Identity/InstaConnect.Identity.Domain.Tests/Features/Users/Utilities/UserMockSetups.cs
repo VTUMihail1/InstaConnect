@@ -33,6 +33,7 @@ public static class UserMockSetups
 			string password)
 		{
 			passwordHasher
+				.ClearCalls()
 				.Hash(password)
 				.ReturnsResponse(user.PasswordHash);
 		}
@@ -174,7 +175,7 @@ public static class UserMockSetups
 		{
 			repository
 				.GetByIdAsync(command.Id, UserMatcher.IsUserInclude(command, include), cancellationToken)
-				.ReturnsTaskResponse(user.ToEntity());
+				.ReturnsTaskResponse(user);
 		}
 
 		public void SetupGetById(
