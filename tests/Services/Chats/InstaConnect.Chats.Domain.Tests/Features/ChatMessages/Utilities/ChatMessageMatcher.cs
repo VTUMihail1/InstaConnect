@@ -4,17 +4,17 @@ public static class ChatMessageMatcher
 {
 	public static ChatInclude IsChatInclude(AddChatMessageCommand command, ChatInclude include)
 	{
-		return Matcher.Is<ChatInclude>(p => p.Matches(include));
+		return Matcher.Is<ChatInclude>(p => p.Matches(command, include));
 	}
 
 	public static ChatMessageInclude IsChatMessageInclude(UpdateChatMessageCommand command, ChatMessageInclude include)
 	{
-		return Matcher.Is<ChatMessageInclude>(p => p.Matches(include));
+		return Matcher.Is<ChatMessageInclude>(p => p.Matches(command, include));
 	}
 
 	public static ChatMessageInclude IsChatMessageInclude(DeleteChatMessageCommand command, ChatMessageInclude include)
 	{
-		return Matcher.Is<ChatMessageInclude>(p => p.Matches(include));
+		return Matcher.Is<ChatMessageInclude>(p => p.Matches(command, include));
 	}
 
 	public static ChatMessage IsChatMessage(AddChatMessageCommand command)
@@ -41,11 +41,11 @@ public static class ChatMessageMatcher
 
 	public static ChatMessageUpdatedNotificationRequest IsChatMessageUpdatedNotificationRequest(UpdateChatMessageCommand command, ChatMessage chatMessage)
 	{
-		return Matcher.Is<ChatMessageUpdatedNotificationRequest>(p => p.Matches(chatMessage));
+		return Matcher.Is<ChatMessageUpdatedNotificationRequest>(p => p.Matches(command, chatMessage));
 	}
 
 	public static ChatMessageDeletedNotificationRequest IsChatMessageDeletedNotificationRequest(DeleteChatMessageCommand command, ChatMessage chatMessage)
 	{
-		return Matcher.Is<ChatMessageDeletedNotificationRequest>(p => p.Matches(chatMessage));
+		return Matcher.Is<ChatMessageDeletedNotificationRequest>(p => p.Matches(command, chatMessage));
 	}
 }

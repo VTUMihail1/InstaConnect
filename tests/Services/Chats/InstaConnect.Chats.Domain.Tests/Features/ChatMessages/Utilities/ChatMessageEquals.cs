@@ -25,6 +25,53 @@ public static class ChatMessageEquals
 		}
 	}
 
+	extension(ChatInclude p)
+	{
+		public bool Matches(AddChatMessageCommand command, ChatInclude include)
+		{
+			return p.Matches(include);
+		}
+	}
+
+	extension(ChatMessageInclude p)
+	{
+		public bool Matches(UpdateChatMessageCommand command, ChatMessageInclude include)
+		{
+			return p.Matches(include);
+		}
+
+		public bool Matches(DeleteChatMessageCommand command, ChatMessageInclude include)
+		{
+			return p.Matches(include);
+		}
+	}
+
+	extension(ChatMessageUpdatedNotificationRequest request)
+	{
+		public bool Matches(UpdateChatMessageCommand command, ChatMessage entity)
+		{
+			return command.Id.Matches(request.ChatMessage.ParticipantOneId, request.ChatMessage.ParticipantTwoId, request.ChatMessage.MessageId) &&
+				   entity.Sender != null && entity.Sender.Matches(request.ChatMessage.Sender) &&
+				   entity.Chat != null && entity.Chat.Matches(request.ChatMessage.Chat) &&
+				   command.Content == request.ChatMessage.Content &&
+				   entity.CreatedAtUtc == request.ChatMessage.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == request.ChatMessage.UpdatedAtUtc;
+		}
+	}
+
+	extension(ChatMessageDeletedNotificationRequest request)
+	{
+		public bool Matches(DeleteChatMessageCommand command, ChatMessage entity)
+		{
+			return entity.Id.Matches(command.Id) &&
+				   entity.Sender != null && entity.Sender.Matches(request.ChatMessage.Sender) &&
+				   entity.Chat != null && entity.Chat.Matches(request.ChatMessage.Chat) &&
+				   entity.Content == request.ChatMessage.Content &&
+				   entity.CreatedAtUtc == request.ChatMessage.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == request.ChatMessage.UpdatedAtUtc;
+		}
+	}
+
 	extension(ChatMessage chatMessage)
 	{
 		public bool Matches(AddChatMessageCommand command)

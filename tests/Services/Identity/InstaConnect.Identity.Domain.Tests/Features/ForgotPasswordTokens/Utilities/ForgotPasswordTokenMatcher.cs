@@ -6,7 +6,7 @@ public static class ForgotPasswordTokenMatcher
 {
 	public static UserInclude IsUserInclude(VerifyForgotPasswordTokenCommand command, UserInclude include)
 	{
-		return Matcher.Is<UserInclude>(p => p.Matches(include));
+		return Matcher.Is<UserInclude>(p => p.Matches(command, include));
 	}
 
 	public static ForgotPasswordToken IsForgotPasswordToken(AddForgotPasswordTokenCommand command, ForgotPasswordToken forgotPasswordToken)

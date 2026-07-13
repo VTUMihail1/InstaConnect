@@ -4,12 +4,12 @@ public static class RefreshTokenMatcher
 {
 	public static UserInclude IsUserInclude(IssueRefreshTokenCommand command, UserInclude include)
 	{
-		return Matcher.Is<UserInclude>(p => p.Matches(include));
+		return Matcher.Is<UserInclude>(p => p.Matches(command, include));
 	}
 
 	public static UserInclude IsUserInclude(RotateRefreshTokenCommand command, UserInclude include)
 	{
-		return Matcher.Is<UserInclude>(p => p.Matches(include));
+		return Matcher.Is<UserInclude>(p => p.Matches(command, include));
 	}
 
 	public static RefreshToken IsRefreshToken(IssueRefreshTokenCommand command, RefreshToken refreshToken)

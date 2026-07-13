@@ -160,7 +160,7 @@ public static class FollowMockAssertions
 			Follow follow,
 			CancellationToken cancellationToken)
 		{
-			await notificationService.ShouldHaveReceivedOne().AddedAsync(FollowMatcher.IsFollowAddedNotificationRequest(follow), cancellationToken);
+			await notificationService.ShouldHaveReceivedOne().AddedAsync(FollowMatcher.IsFollowAddedNotificationRequest(command, follow), cancellationToken);
 		}
 	}
 

@@ -6,7 +6,7 @@ public static class EmailConfirmationTokenMatcher
 {
 	public static UserInclude IsUserInclude(VerifyEmailConfirmationTokenCommand command, UserInclude include)
 	{
-		return Matcher.Is<UserInclude>(p => p.Matches(include));
+		return Matcher.Is<UserInclude>(p => p.Matches(command, include));
 	}
 
 	public static EmailConfirmationToken IsEmailConfirmationToken(AddEmailConfirmationTokenCommand command, EmailConfirmationToken emailConfirmationToken)

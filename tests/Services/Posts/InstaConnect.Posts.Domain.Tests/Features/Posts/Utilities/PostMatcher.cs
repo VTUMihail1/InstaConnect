@@ -6,12 +6,12 @@ public static class PostMatcher
 {
 	public static PostInclude IsPostInclude(UpdatePostCommand command, PostInclude include)
 	{
-		return Matcher.Is<PostInclude>(p => p.Matches(include));
+		return Matcher.Is<PostInclude>(p => p.Matches(command, include));
 	}
 
 	public static PostInclude IsPostInclude(DeletePostCommand command, PostInclude include)
 	{
-		return Matcher.Is<PostInclude>(p => p.Matches(include));
+		return Matcher.Is<PostInclude>(p => p.Matches(command, include));
 	}
 
 	public static Post IsPost(AddPostCommand command)

@@ -22,7 +22,11 @@ public static class ChatEquals
 	{
 		public bool Matches(AddChatCommand command, Chat entity)
 		{
-			return entity.Matches(request.Chat) && entity.Matches(command);
+			return command.ParticipantOneId.Matches(request.Chat.ParticipantOneId) &&
+				   command.ParticipantTwoId.Matches(request.Chat.ParticipantTwoId) &&
+				   entity.ParticipantOne != null && entity.ParticipantOne.Matches(request.Chat.ParticipantOne) &&
+				   entity.ParticipantTwo != null && entity.ParticipantTwo.Matches(request.Chat.ParticipantTwo) &&
+				   entity.CreatedAtUtc == request.Chat.CreatedAtUtc;
 		}
 	}
 

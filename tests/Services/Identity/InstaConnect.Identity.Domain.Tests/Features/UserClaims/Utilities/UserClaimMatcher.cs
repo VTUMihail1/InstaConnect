@@ -6,7 +6,7 @@ public static class UserClaimMatcher
 {
 	public static UserClaimInclude IsUserClaimInclude(DeleteUserClaimCommand command, UserClaimInclude include)
 	{
-		return Matcher.Is<UserClaimInclude>(p => p.Matches(include));
+		return Matcher.Is<UserClaimInclude>(p => p.Matches(command, include));
 	}
 
 	public static UserClaim IsUserClaim(AddUserClaimCommand command)

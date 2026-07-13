@@ -6,17 +6,17 @@ public static class PostCommentMatcher
 {
 	public static PostInclude IsPostInclude(AddPostCommentCommand command, PostInclude include)
 	{
-		return Matcher.Is<PostInclude>(p => p.Matches(include));
+		return Matcher.Is<PostInclude>(p => p.Matches(command, include));
 	}
 
 	public static PostCommentInclude IsPostCommentInclude(UpdatePostCommentCommand command, PostCommentInclude include)
 	{
-		return Matcher.Is<PostCommentInclude>(p => p.Matches(include));
+		return Matcher.Is<PostCommentInclude>(p => p.Matches(command, include));
 	}
 
 	public static PostCommentInclude IsPostCommentInclude(DeletePostCommentCommand command, PostCommentInclude include)
 	{
-		return Matcher.Is<PostCommentInclude>(p => p.Matches(include));
+		return Matcher.Is<PostCommentInclude>(p => p.Matches(command, include));
 	}
 
 	public static PostComment IsPostComment(AddPostCommentCommand command)

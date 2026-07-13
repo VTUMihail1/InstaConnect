@@ -39,4 +39,17 @@ public static class RefreshTokenEquals
 				   refreshToken.Id.Value.IsNotNullOrEmptyOrWhiteSpace();
 		}
 	}
+
+	extension(UserInclude p)
+	{
+		public bool Matches(IssueRefreshTokenCommand command, UserInclude include)
+		{
+			return p.Matches(include);
+		}
+
+		public bool Matches(RotateRefreshTokenCommand command, UserInclude include)
+		{
+			return p.Matches(include);
+		}
+	}
 }

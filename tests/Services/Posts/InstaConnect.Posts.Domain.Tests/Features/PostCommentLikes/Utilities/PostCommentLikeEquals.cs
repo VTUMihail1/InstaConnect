@@ -23,7 +23,12 @@ public static class PostCommentLikeEquals
 	{
 		public bool Matches(AddPostCommentLikeCommand command, PostCommentLike entity)
 		{
-			return entity.Matches(request.PostCommentLike) && entity.Matches(command);
+			return command.CommentId.Id.Matches(request.PostCommentLike.Id) &&
+				   command.CommentId.CommentId == request.PostCommentLike.CommentId &&
+				   command.UserId.Matches(request.PostCommentLike.UserId) &&
+				   entity.User != null && entity.User.Matches(request.PostCommentLike.User) &&
+				   entity.PostComment != null && entity.PostComment.Matches(request.PostCommentLike.PostComment) &&
+				   entity.CreatedAtUtc == request.PostCommentLike.CreatedAtUtc;
 		}
 	}
 
@@ -31,7 +36,10 @@ public static class PostCommentLikeEquals
 	{
 		public bool Matches(DeletePostCommentLikeCommand command, PostCommentLike entity)
 		{
-			return entity.Matches(request.PostCommentLike) && entity.Matches(command);
+			return entity.Id.Matches(command.Id) &&
+				   entity.User != null && entity.User.Matches(request.PostCommentLike.User) &&
+				   entity.PostComment != null && entity.PostComment.Matches(request.PostCommentLike.PostComment) &&
+				   entity.CreatedAtUtc == request.PostCommentLike.CreatedAtUtc;
 		}
 	}
 
@@ -57,6 +65,22 @@ public static class PostCommentLikeEquals
 		public bool MatchesFilter(PostCommentLikesForUserFilterQuery query)
 		{
 			return postCommentLike.Id.UserId.Matches(query.UserId);
+		}
+	}
+
+	extension(PostCommentInclude p)
+	{
+		public bool Matches(AddPostCommentLikeCommand command, PostCommentInclude include)
+		{
+			return p.Matches(include);
+		}
+	}
+
+	extension(PostCommentLikeInclude p)
+	{
+		public bool Matches(DeletePostCommentLikeCommand command, PostCommentLikeInclude include)
+		{
+			return p.Matches(include);
 		}
 	}
 

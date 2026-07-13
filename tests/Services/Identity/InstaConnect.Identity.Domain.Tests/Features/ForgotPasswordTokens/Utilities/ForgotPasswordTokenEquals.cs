@@ -37,11 +37,11 @@ public static class ForgotPasswordTokenEquals
 		}
 	}
 
-	extension(ForgotPasswordToken entity)
+	extension(UserInclude p)
 	{
-		public bool Matches(AddForgotPasswordTokenCommand command)
+		public bool Matches(VerifyForgotPasswordTokenCommand command, UserInclude include)
 		{
-			return entity.User != null && entity.User.Name.Matches(command.Name);
+			return p.Matches(include);
 		}
 	}
 
@@ -49,7 +49,11 @@ public static class ForgotPasswordTokenEquals
 	{
 		public bool Matches(AddForgotPasswordTokenCommand command, ForgotPasswordToken entity)
 		{
-			return entity.Matches(request.ForgotPasswordToken) && entity.Matches(command);
+			return entity.Id.Matches(request.ForgotPasswordToken.Id, request.ForgotPasswordToken.Value) &&
+				   command.Name.Matches(request.ForgotPasswordToken.User.Name) &&
+				   entity.User != null && entity.User.Matches(request.ForgotPasswordToken.User) &&
+				   entity.ExpiresAtUtc == request.ForgotPasswordToken.ExpiresAtUtc &&
+				   entity.CreatedAtUtc == request.ForgotPasswordToken.CreatedAtUtc;
 		}
 	}
 }

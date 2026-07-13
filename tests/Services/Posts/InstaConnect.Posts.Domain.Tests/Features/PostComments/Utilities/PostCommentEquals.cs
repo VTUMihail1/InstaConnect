@@ -61,6 +61,27 @@ public static class PostCommentEquals
 		}
 	}
 
+	extension(PostInclude p)
+	{
+		public bool Matches(AddPostCommentCommand command, PostInclude include)
+		{
+			return p.Matches(include);
+		}
+	}
+
+	extension(PostCommentInclude p)
+	{
+		public bool Matches(UpdatePostCommentCommand command, PostCommentInclude include)
+		{
+			return p.Matches(include);
+		}
+
+		public bool Matches(DeletePostCommentCommand command, PostCommentInclude include)
+		{
+			return p.Matches(include);
+		}
+	}
+
 	extension(PostCommentAddedEventRequest p)
 	{
 		public bool Matches(AddPostCommentCommand command, PostComment postComment)

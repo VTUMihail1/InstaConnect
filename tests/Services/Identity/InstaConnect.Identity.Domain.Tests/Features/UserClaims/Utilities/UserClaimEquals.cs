@@ -16,11 +16,22 @@ public static class UserClaimEquals
 		}
 	}
 
+	extension(UserClaimInclude p)
+	{
+		public bool Matches(DeleteUserClaimCommand command, UserClaimInclude include)
+		{
+			return p.Matches(include);
+		}
+	}
+
 	extension(UserClaimAddedEventRequest request)
 	{
 		public bool Matches(AddUserClaimCommand command, UserClaim entity)
 		{
-			return entity.Matches(request.UserClaim) && entity.Matches(command);
+			return command.Id.Matches(request.UserClaim.Id) &&
+				   command.Claim == request.UserClaim.Claim &&
+				   entity.User != null && entity.User.Matches(request.UserClaim.User) &&
+				   entity.CreatedAtUtc == request.UserClaim.CreatedAtUtc;
 		}
 	}
 
@@ -28,7 +39,9 @@ public static class UserClaimEquals
 	{
 		public bool Matches(DeleteUserClaimCommand command, UserClaim entity)
 		{
-			return entity.Matches(request.UserClaim) && entity.Matches(command);
+			return entity.Id.Matches(command.Id) &&
+				   entity.User != null && entity.User.Matches(request.UserClaim.User) &&
+				   entity.CreatedAtUtc == request.UserClaim.CreatedAtUtc;
 		}
 	}
 

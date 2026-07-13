@@ -23,7 +23,11 @@ public static class PostLikeEquals
 	{
 		public bool Matches(AddPostLikeCommand command, PostLike entity)
 		{
-			return entity.Matches(request.PostLike) && entity.Matches(command);
+			return command.Id.Matches(request.PostLike.Id) &&
+				   command.UserId.Matches(request.PostLike.UserId) &&
+				   entity.User != null && entity.User.Matches(request.PostLike.User) &&
+				   entity.Post != null && entity.Post.Matches(request.PostLike.Post) &&
+				   entity.CreatedAtUtc == request.PostLike.CreatedAtUtc;
 		}
 	}
 
@@ -31,7 +35,10 @@ public static class PostLikeEquals
 	{
 		public bool Matches(DeletePostLikeCommand command, PostLike entity)
 		{
-			return entity.Matches(request.PostLike) && entity.Matches(command);
+			return entity.Id.Matches(command.Id) &&
+				   entity.User != null && entity.User.Matches(request.PostLike.User) &&
+				   entity.Post != null && entity.Post.Matches(request.PostLike.Post) &&
+				   entity.CreatedAtUtc == request.PostLike.CreatedAtUtc;
 		}
 	}
 
@@ -57,6 +64,22 @@ public static class PostLikeEquals
 		public bool MatchesFilter(PostLikesForUserFilterQuery query)
 		{
 			return postLike.Id.UserId.Matches(query.UserId);
+		}
+	}
+
+	extension(PostInclude p)
+	{
+		public bool Matches(AddPostLikeCommand command, PostInclude include)
+		{
+			return p.Matches(include);
+		}
+	}
+
+	extension(PostLikeInclude p)
+	{
+		public bool Matches(DeletePostLikeCommand command, PostLikeInclude include)
+		{
+			return p.Matches(include);
 		}
 	}
 

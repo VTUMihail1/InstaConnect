@@ -80,6 +80,14 @@ public static class UserEquals
 		}
 	}
 
+	extension(UserInclude p)
+	{
+		public bool Matches(UpdateUserCommand command, UserInclude include)
+		{
+			return p.Matches(include);
+		}
+	}
+
 	extension(UserResponse? response)
 	{
 		public bool MatchesFull(User? user)

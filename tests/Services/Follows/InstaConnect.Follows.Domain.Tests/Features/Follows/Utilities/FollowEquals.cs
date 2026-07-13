@@ -18,11 +18,23 @@ public static class FollowEquals
 		}
 	}
 
+	extension(FollowInclude p)
+	{
+		public bool Matches(DeleteFollowCommand command, FollowInclude include)
+		{
+			return p.Matches(include);
+		}
+	}
+
 	extension(FollowAddedEventRequest request)
 	{
 		public bool Matches(AddFollowCommand command, Follow entity)
 		{
-			return entity.Matches(request.Follow) && entity.Matches(command);
+			return command.FollowerId.Matches(request.Follow.FollowerId) &&
+				   command.FollowingId.Matches(request.Follow.FollowingId) &&
+				   entity.Follower != null && entity.Follower.Matches(request.Follow.Follower) &&
+				   entity.Following != null && entity.Following.Matches(request.Follow.Following) &&
+				   entity.CreatedAtUtc == request.Follow.CreatedAtUtc;
 		}
 	}
 
@@ -30,7 +42,22 @@ public static class FollowEquals
 	{
 		public bool Matches(DeleteFollowCommand command, Follow entity)
 		{
-			return entity.Matches(request.Follow) && entity.Matches(command);
+			return entity.Id.Matches(command.Id) &&
+				   entity.Follower != null && entity.Follower.Matches(request.Follow.Follower) &&
+				   entity.Following != null && entity.Following.Matches(request.Follow.Following) &&
+				   entity.CreatedAtUtc == request.Follow.CreatedAtUtc;
+		}
+	}
+
+	extension(FollowAddedNotificationRequest request)
+	{
+		public bool Matches(AddFollowCommand command, Follow entity)
+		{
+			return command.FollowerId.Matches(request.Follow.FollowerId) &&
+				   command.FollowingId.Matches(request.Follow.FollowingId) &&
+				   entity.Follower != null && entity.Follower.Matches(request.Follow.Follower) &&
+				   entity.Following != null && entity.Following.Matches(request.Follow.Following) &&
+				   entity.CreatedAtUtc == request.Follow.CreatedAtUtc;
 		}
 	}
 

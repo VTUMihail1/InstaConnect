@@ -6,7 +6,7 @@ public static class FollowMatcher
 {
 	public static FollowInclude IsFollowInclude(DeleteFollowCommand command, FollowInclude include)
 	{
-		return Matcher.Is<FollowInclude>(p => p.Matches(include));
+		return Matcher.Is<FollowInclude>(p => p.Matches(command, include));
 	}
 
 	public static Follow IsFollow(AddFollowCommand command)
@@ -29,8 +29,8 @@ public static class FollowMatcher
 		return Matcher.Is<FollowDeletedEventRequest>(p => p.Matches(command, follow));
 	}
 
-	public static FollowAddedNotificationRequest IsFollowAddedNotificationRequest(Follow follow)
+	public static FollowAddedNotificationRequest IsFollowAddedNotificationRequest(AddFollowCommand command, Follow follow)
 	{
-		return Matcher.Is<FollowAddedNotificationRequest>(p => p.Matches(follow));
+		return Matcher.Is<FollowAddedNotificationRequest>(p => p.Matches(command, follow));
 	}
 }

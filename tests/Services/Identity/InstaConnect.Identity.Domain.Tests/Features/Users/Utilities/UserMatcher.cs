@@ -7,7 +7,7 @@ public static class UserMatcher
 {
 	public static UserInclude IsUserInclude(UpdateUserCommand command, UserInclude include)
 	{
-		return Matcher.Is<UserInclude>(p => p.Matches(include));
+		return Matcher.Is<UserInclude>(p => p.Matches(command, include));
 	}
 
 	public static User IsUser(AddUserCommand command)

@@ -36,11 +36,11 @@ public static class EmailConfirmationTokenEquals
 		}
 	}
 
-	extension(EmailConfirmationToken entity)
+	extension(UserInclude p)
 	{
-		public bool Matches(AddEmailConfirmationTokenCommand command)
+		public bool Matches(VerifyEmailConfirmationTokenCommand command, UserInclude include)
 		{
-			return entity.User != null && entity.User.Name.Matches(command.Name);
+			return p.Matches(include);
 		}
 	}
 
@@ -48,7 +48,11 @@ public static class EmailConfirmationTokenEquals
 	{
 		public bool Matches(AddEmailConfirmationTokenCommand command, EmailConfirmationToken entity)
 		{
-			return entity.Matches(request.EmailConfirmationToken) && entity.Matches(command);
+			return entity.Id.Matches(request.EmailConfirmationToken.Id, request.EmailConfirmationToken.Value) &&
+				   command.Name.Matches(request.EmailConfirmationToken.User.Name) &&
+				   entity.User != null && entity.User.Matches(request.EmailConfirmationToken.User) &&
+				   entity.ExpiresAtUtc == request.EmailConfirmationToken.ExpiresAtUtc &&
+				   entity.CreatedAtUtc == request.EmailConfirmationToken.CreatedAtUtc;
 		}
 	}
 }
