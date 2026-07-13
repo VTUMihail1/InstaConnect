@@ -19,9 +19,9 @@ public abstract class BaseChatDomainCommandUnitTest : BaseChatTest
 
 	protected IEventPublisher EventPublisher { get; }
 
-	protected IDateTimeProvider DateTimeProvider { get; }
-
 	protected IChatCommandRepository Repository { get; }
+
+	protected IDateTimeProvider DateTimeProvider { get; }
 
 	protected IUserCommandRepository UserRepository { get; }
 
@@ -30,8 +30,8 @@ public abstract class BaseChatDomainCommandUnitTest : BaseChatTest
 		Factory = ChatDomainMockFactory.CreateFactory();
 		Mapper = MockFactory.CreateMapper(ChatsDomainReference.Assembly);
 		EventPublisher = DomainMockFactory.CreateEventPublisher();
-		DateTimeProvider = DomainMockFactory.CreateDateTimeProvider();
 		Repository = ChatDomainMockFactory.CreateCommandRepository();
+		DateTimeProvider = DomainMockFactory.CreateDateTimeProvider();
 		UserRepository = UserDomainMockFactory.CreateCommandRepository();
 	}
 }

@@ -19,15 +19,15 @@ public abstract class BaseChatMessageDomainCommandUnitTest : BaseChatMessageTest
 
 	protected IChatMessageFactory Factory { get; }
 
-	protected IDateTimeProvider DateTimeProvider { get; }
-
 	protected IChatCommandRepository Repository { get; }
+
+	protected IDateTimeProvider DateTimeProvider { get; }
 
 	protected IChatMessageCommandRepository MessageRepository { get; }
 
-	protected IChatMessageNotificationService NotificationService { get; }
-
 	protected IChatIncludeBuilderFactory IncludeBuilderFactory { get; }
+
+	protected IChatMessageNotificationService NotificationService { get; }
 
 	protected IChatMessageIncludeBuilderFactory MessageIncludeBuilderFactory { get; }
 
@@ -36,11 +36,11 @@ public abstract class BaseChatMessageDomainCommandUnitTest : BaseChatMessageTest
 		Mapper = MockFactory.CreateMapper(ChatsDomainReference.Assembly);
 		GuidProvider = DomainMockFactory.CreateGuidProvider();
 		Factory = ChatMessageDomainMockFactory.CreateFactory();
-		DateTimeProvider = DomainMockFactory.CreateDateTimeProvider();
 		Repository = ChatDomainMockFactory.CreateCommandRepository();
+		DateTimeProvider = DomainMockFactory.CreateDateTimeProvider();
 		MessageRepository = ChatMessageDomainMockFactory.CreateCommandRepository();
-		NotificationService = ChatMessageDomainMockFactory.CreateNotificationService();
 		IncludeBuilderFactory = ChatMessageDomainMockFactory.CreateChatIncludeBuilderFactory();
+		NotificationService = ChatMessageDomainMockFactory.CreateNotificationService();
 		MessageIncludeBuilderFactory = ChatMessageDomainMockFactory.CreateIncludeBuilderFactory();
 	}
 }

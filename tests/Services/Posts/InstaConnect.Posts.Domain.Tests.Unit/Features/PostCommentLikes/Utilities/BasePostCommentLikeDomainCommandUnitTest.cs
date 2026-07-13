@@ -31,9 +31,9 @@ public abstract class BasePostCommentLikeDomainCommandUnitTest : BasePostComment
 
 	protected IPostCommentCommandRepository CommentRepository { get; }
 
-	protected IPostCommentLikeCommandRepository CommentLikeRepository { get; }
-
 	protected IPostIncludeBuilderFactory IncludeBuilderFactory { get; }
+
+	protected IPostCommentLikeCommandRepository CommentLikeRepository { get; }
 
 	protected IPostCommentIncludeBuilderFactory CommentIncludeBuilderFactory { get; }
 
@@ -48,8 +48,8 @@ public abstract class BasePostCommentLikeDomainCommandUnitTest : BasePostComment
 		DateTimeProvider = DomainMockFactory.CreateDateTimeProvider();
 		UserRepository = UserDomainMockFactory.CreateCommandRepository();
 		CommentRepository = PostCommentDomainMockFactory.CreateCommandRepository();
-		CommentLikeRepository = PostCommentLikeDomainMockFactory.CreateCommandRepository();
 		IncludeBuilderFactory = PostDomainMockFactory.CreateIncludeBuilderFactory();
+		CommentLikeRepository = PostCommentLikeDomainMockFactory.CreateCommandRepository();
 		CommentIncludeBuilderFactory = PostCommentDomainMockFactory.CreateIncludeBuilderFactory();
 		CommentLikeIncludeBuilderFactory = PostCommentLikeDomainMockFactory.CreateIncludeBuilderFactory();
 	}

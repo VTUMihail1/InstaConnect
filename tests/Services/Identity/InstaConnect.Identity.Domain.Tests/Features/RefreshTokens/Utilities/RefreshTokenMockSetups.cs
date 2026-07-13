@@ -32,11 +32,11 @@ public static class RefreshTokenMockSetups
 				.ReturnsResponse(refreshToken.ExpiresAtUtc);
 		}
 
-		public void SetupGetOffsetUtcNow(RotateRefreshTokenCommand command, DateTimeOffset expiresAt)
+		public void SetupGetOffsetUtcNow(RotateRefreshTokenCommand command, DateTimeOffset utcNow)
 		{
 			dateTimeProvider
 				.GetOffsetUtcNow()
-				.ReturnsResponse(expiresAt);
+				.ReturnsResponse(utcNow);
 		}
 	}
 

@@ -40,8 +40,8 @@ public abstract class BaseRefreshTokenTest : BaseTest
 		Password = UserDataFaker.GetPassword();
 		NewPassword = UserDataFaker.GetPassword();
 		ProfileImage = UserDataFaker.GetProfileImage();
-		ExpiredDate = RefreshTokenDataFaker.GetAlreadyExpiresAtUtc();
-		UnexpiredDate = RefreshTokenDataFaker.GetUnexpiresAtUtc();
+		ExpiredDate = RefreshTokenDataFaker.GetUnexpiresAtUtc();
+		UnexpiredDate = RefreshTokenDataFaker.GetAlreadyExpiresAtUtc();
 
 		UserBuilderFactory = new();
 		UserBuilder = UserBuilderFactory.Create(PasswordHasher.Hash(Password), ProfileImage.GetUrl());
