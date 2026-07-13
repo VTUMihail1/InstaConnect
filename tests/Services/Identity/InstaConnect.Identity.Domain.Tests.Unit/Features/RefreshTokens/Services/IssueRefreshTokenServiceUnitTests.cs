@@ -30,7 +30,7 @@ public class IssueRefreshTokenServiceUnitTests : BaseRefreshTokenDomainCommandUn
 
 		Repository.SetupGetByName(_command, _include, User, CancellationToken);
 		PasswordHasher.SetupIsMismatch(_command, User);
-		Factory.SetupCreate(RefreshToken);
+		Factory.SetupCreate(_command, RefreshToken);
 		SessionTokenGenerator.SetupGenerate(_command, RefreshToken);
 	}
 
@@ -103,7 +103,7 @@ public class IssueRefreshTokenServiceUnitTests : BaseRefreshTokenDomainCommandUn
 		await _service.IssueAsync(_command, CancellationToken);
 
 		// Assert
-		Factory.ShouldReceiveOneCreate(RefreshToken);
+		Factory.ShouldReceiveOneCreate(_command, RefreshToken);
 	}
 
 	[Fact]

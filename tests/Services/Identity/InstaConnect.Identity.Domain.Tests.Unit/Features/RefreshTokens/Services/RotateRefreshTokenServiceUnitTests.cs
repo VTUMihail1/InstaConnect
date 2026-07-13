@@ -36,7 +36,7 @@ public class RotateRefreshTokenServiceUnitTests : BaseRefreshTokenDomainCommandU
 		Repository.SetupGetById(_command, _include, User, CancellationToken);
 		RefreshTokenRepository.SetupGetById(_command, RefreshToken, CancellationToken);
 		DateTimeProvider.SetupGetOffsetUtcNow(_command, UnexpiredDate);
-		Factory.SetupCreate(_newRefreshToken);
+		Factory.SetupCreate(_command, _newRefreshToken);
 		SessionTokenGenerator.SetupGenerate(_command, _newRefreshToken);
 	}
 
@@ -138,7 +138,7 @@ public class RotateRefreshTokenServiceUnitTests : BaseRefreshTokenDomainCommandU
 		await _service.RotateAsync(_command, CancellationToken);
 
 		// Assert
-		Factory.ShouldReceiveOneCreate(_newRefreshToken);
+		Factory.ShouldReceiveOneCreate(_command);
 	}
 
 	[Fact]

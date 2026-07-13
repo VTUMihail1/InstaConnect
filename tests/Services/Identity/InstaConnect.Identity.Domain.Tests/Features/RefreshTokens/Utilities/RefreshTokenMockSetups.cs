@@ -59,10 +59,17 @@ public static class RefreshTokenMockSetups
 
 	extension(IRefreshTokenFactory factory)
 	{
-		public void SetupCreate(RefreshToken refreshToken)
+		public void SetupCreate(IssueRefreshTokenCommand command, RefreshToken refreshToken)
 		{
 			factory
 				.Create(refreshToken.Id.Id)
+				.ReturnsResponse(refreshToken);
+		}
+
+		public void SetupCreate(RotateRefreshTokenCommand command, RefreshToken refreshToken)
+		{
+			factory
+				.Create(command.Id.Id)
 				.ReturnsResponse(refreshToken);
 		}
 	}

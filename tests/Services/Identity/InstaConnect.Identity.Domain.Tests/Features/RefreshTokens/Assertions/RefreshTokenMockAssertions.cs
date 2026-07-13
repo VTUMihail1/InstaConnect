@@ -29,9 +29,14 @@ public static class RefreshTokenMockAssertions
 
 	extension(IRefreshTokenFactory factory)
 	{
-		public void ShouldReceiveOneCreate(RefreshToken refreshToken)
+		public void ShouldReceiveOneCreate(IssueRefreshTokenCommand command, RefreshToken refreshToken)
 		{
 			factory.ShouldHaveReceivedOne().Create(refreshToken.Id.Id);
+		}
+
+		public void ShouldReceiveOneCreate(RotateRefreshTokenCommand command)
+		{
+			factory.ShouldHaveReceivedOne().Create(command.Id.Id);
 		}
 	}
 
