@@ -25,7 +25,7 @@ public class AddUserClaimServiceUnitTests : BaseUserClaimDomainCommandUnitTest
 
 		Repository.SetupGetById(_command, User, CancellationToken);
 		Factory.SetupCreate(_command, UserClaim);
-		ClaimRepository.SetupGetById(UserClaim, CancellationToken);
+		ClaimRepository.SetupGetById(_command, UserClaim, CancellationToken);
 	}
 
 	[Fact]
@@ -42,7 +42,7 @@ public class AddUserClaimServiceUnitTests : BaseUserClaimDomainCommandUnitTest
 	public async Task AddAsync_ShouldThrowUserClaimAlreadyExistsException_WhenUserClaimAlreadyExists()
 	{
 		// Arrange
-		ClaimRepository.SetupGetByIdExists(UserClaim, CancellationToken);
+		ClaimRepository.SetupGetByIdExists(_command, UserClaim, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowUserClaimAlreadyExistsExceptionAsync(_command, CancellationToken);

@@ -30,6 +30,7 @@ public static class PostLikeMockSetups
 	extension(IPostLikeCommandRepository repository)
 	{
 		public void SetupGetById(
+			AddPostLikeCommand command,
 			PostLike postLike,
 			CancellationToken cancellationToken)
 		{
@@ -50,6 +51,7 @@ public static class PostLikeMockSetups
 		}
 
 		public void SetupGetByIdExists(
+			AddPostLikeCommand command,
 			PostLike postLike,
 			CancellationToken cancellationToken)
 		{

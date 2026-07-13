@@ -31,6 +31,7 @@ public static class UserClaimMockSetups
 	extension(IUserClaimCommandRepository repository)
 	{
 		public void SetupGetById(
+			AddUserClaimCommand command,
 			UserClaim userClaim,
 			CancellationToken cancellationToken)
 		{
@@ -51,6 +52,7 @@ public static class UserClaimMockSetups
 		}
 
 		public void SetupGetByIdExists(
+			AddUserClaimCommand command,
 			UserClaim userClaim,
 			CancellationToken cancellationToken)
 		{

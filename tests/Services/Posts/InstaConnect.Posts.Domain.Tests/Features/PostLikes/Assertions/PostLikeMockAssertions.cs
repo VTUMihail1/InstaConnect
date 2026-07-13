@@ -19,6 +19,7 @@ public static class PostLikeMockAssertions
 	extension(IPostLikeCommandRepository repository)
 	{
 		public async Task ShouldReceiveOneGetByIdAsync(
+			AddPostLikeCommand command,
 			PostLike postLike,
 			CancellationToken cancellationToken)
 		{

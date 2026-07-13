@@ -40,6 +40,7 @@ public static class ChatMockAssertions
 	extension(IChatCommandRepository repository)
 	{
 		public async Task ShouldReceiveOneGetByIdAsync(
+			AddChatCommand command,
 			Chat chat,
 			CancellationToken cancellationToken)
 		{

@@ -26,7 +26,7 @@ public class AddChatServiceUnitTests : BaseChatDomainCommandUnitTest
 		UserRepository.SetupGetByParticipantOneId(_command, ParticipantOne, CancellationToken);
 		UserRepository.SetupGetByParticipantTwoId(_command, ParticipantTwo, CancellationToken);
 		Factory.SetupCreate(_command, Chat);
-		Repository.SetupGetById(Chat, CancellationToken);
+		Repository.SetupGetById(_command, Chat, CancellationToken);
 	}
 
 	[Fact]
@@ -53,7 +53,7 @@ public class AddChatServiceUnitTests : BaseChatDomainCommandUnitTest
 	public async Task AddAsync_ShouldThrowChatAlreadyExistsException_WhenChatAlreadyExists()
 	{
 		// Arrange
-		Repository.SetupGetByIdExists(Chat, CancellationToken);
+		Repository.SetupGetByIdExists(_command, Chat, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowChatAlreadyExistsExceptionAsync(_command, CancellationToken);
@@ -106,7 +106,7 @@ public class AddChatServiceUnitTests : BaseChatDomainCommandUnitTest
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneGetByIdAsync(Chat, CancellationToken);
+		await Repository.ShouldReceiveOneGetByIdAsync(_command, Chat, CancellationToken);
 	}
 
 	[Fact]

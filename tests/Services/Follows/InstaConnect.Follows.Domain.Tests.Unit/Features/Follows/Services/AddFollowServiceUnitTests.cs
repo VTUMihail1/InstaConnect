@@ -26,7 +26,7 @@ public class AddFollowServiceUnitTests : BaseFollowDomainCommandUnitTest
 		UserRepository.SetupGetByFollowerId(_command, Follower, CancellationToken);
 		UserRepository.SetupGetByFollowingId(_command, Following, CancellationToken);
 		Factory.SetupCreate(_command, Follow);
-		Repository.SetupExistsById(Follow, CancellationToken);
+		Repository.SetupExistsById(_command, Follow, CancellationToken);
 	}
 
 	[Fact]
@@ -53,7 +53,7 @@ public class AddFollowServiceUnitTests : BaseFollowDomainCommandUnitTest
 	public async Task AddAsync_ShouldThrowFollowAlreadyExistsException_WhenFollowAlreadyExists()
 	{
 		// Arrange
-		Repository.SetupExistsByIdExists(Follow, CancellationToken);
+		Repository.SetupExistsByIdExists(_command, Follow, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowFollowAlreadyExistsExceptionAsync(_command, CancellationToken);
@@ -106,7 +106,7 @@ public class AddFollowServiceUnitTests : BaseFollowDomainCommandUnitTest
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneExistsByIdAsync(Follow, CancellationToken);
+		await Repository.ShouldReceiveOneExistsByIdAsync(_command, Follow, CancellationToken);
 	}
 
 	[Fact]

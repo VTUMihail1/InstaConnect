@@ -73,6 +73,7 @@ public static class ChatMockSetups
 	extension(IChatCommandRepository repository)
 	{
 		public void SetupGetById(
+			AddChatCommand command,
 			Chat chat,
 			CancellationToken cancellationToken)
 		{
@@ -82,6 +83,7 @@ public static class ChatMockSetups
 		}
 
 		public void SetupGetByIdExists(
+			AddChatCommand command,
 			Chat chat,
 			CancellationToken cancellationToken)
 		{

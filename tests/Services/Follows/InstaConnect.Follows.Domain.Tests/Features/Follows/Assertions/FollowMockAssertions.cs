@@ -40,6 +40,7 @@ public static class FollowMockAssertions
 	extension(IFollowCommandRepository repository)
 	{
 		public async Task ShouldReceiveOneExistsByIdAsync(
+			AddFollowCommand command,
 			Follow follow,
 			CancellationToken cancellationToken)
 		{

@@ -73,6 +73,7 @@ public static class FollowMockSetups
 	extension(IFollowCommandRepository repository)
 	{
 		public void SetupExistsById(
+			AddFollowCommand command,
 			Follow follow,
 			CancellationToken cancellationToken)
 		{
@@ -82,6 +83,7 @@ public static class FollowMockSetups
 		}
 
 		public void SetupExistsByIdExists(
+			AddFollowCommand command,
 			Follow follow,
 			CancellationToken cancellationToken)
 		{

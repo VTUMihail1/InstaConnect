@@ -31,7 +31,7 @@ public class AddPostLikeServiceUnitTests : BasePostLikeDomainCommandUnitTest
 		UserRepository.SetupGetById(_command, User, CancellationToken);
 		Repository.SetupGetById(_command, _include, Post, CancellationToken);
 		Factory.SetupCreate(_command, PostLike);
-		LikeRepository.SetupGetById(PostLike, CancellationToken);
+		LikeRepository.SetupGetById(_command, PostLike, CancellationToken);
 	}
 
 	[Fact]
@@ -58,7 +58,7 @@ public class AddPostLikeServiceUnitTests : BasePostLikeDomainCommandUnitTest
 	public async Task AddAsync_ShouldThrowPostLikeAlreadyExistsException_WhenPostLikeAlreadyExists()
 	{
 		// Arrange
-		LikeRepository.SetupGetByIdExists(PostLike, CancellationToken);
+		LikeRepository.SetupGetByIdExists(_command, PostLike, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowPostLikeAlreadyExistsExceptionAsync(_command, CancellationToken);
@@ -111,7 +111,7 @@ public class AddPostLikeServiceUnitTests : BasePostLikeDomainCommandUnitTest
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await LikeRepository.ShouldReceiveOneGetByIdAsync(PostLike, CancellationToken);
+		await LikeRepository.ShouldReceiveOneGetByIdAsync(_command, PostLike, CancellationToken);
 	}
 
 	[Fact]

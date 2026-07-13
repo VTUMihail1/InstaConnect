@@ -35,7 +35,7 @@ public class AddPostCommentLikeServiceUnitTests : BasePostCommentLikeDomainComma
 		Repository.SetupExistsById(_command, CancellationToken);
 		CommentRepository.SetupGetById(_command, _commentInclude, PostComment, CancellationToken);
 		Factory.SetupCreate(_command, PostCommentLike);
-		CommentLikeRepository.SetupGetById(PostCommentLike, CancellationToken);
+		CommentLikeRepository.SetupGetById(_command, PostCommentLike, CancellationToken);
 	}
 
 	[Fact]
@@ -72,7 +72,7 @@ public class AddPostCommentLikeServiceUnitTests : BasePostCommentLikeDomainComma
 	public async Task AddAsync_ShouldThrowPostCommentLikeAlreadyExistsException_WhenPostCommentLikeAlreadyExists()
 	{
 		// Arrange
-		CommentLikeRepository.SetupGetByIdExists(PostCommentLike, CancellationToken);
+		CommentLikeRepository.SetupGetByIdExists(_command, PostCommentLike, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowPostCommentLikeAlreadyExistsExceptionAsync(_command, CancellationToken);
@@ -135,7 +135,7 @@ public class AddPostCommentLikeServiceUnitTests : BasePostCommentLikeDomainComma
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await CommentLikeRepository.ShouldReceiveOneGetByIdAsync(PostCommentLike, CancellationToken);
+		await CommentLikeRepository.ShouldReceiveOneGetByIdAsync(_command, PostCommentLike, CancellationToken);
 	}
 
 	[Fact]
