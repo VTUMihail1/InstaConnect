@@ -1,3 +1,7 @@
+using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Options;
+
+using Microsoft.Extensions.Options;
+
 namespace InstaConnect.Identity.Domain.Tests.Features.EmailConfirmationTokens.Utilities;
 
 public static class EmailConfirmationTokenDomainMockFactory
@@ -15,5 +19,10 @@ public static class EmailConfirmationTokenDomainMockFactory
 	public static IEmailConfirmationTokenEmailSender CreateEmailSender()
 	{
 		return Mocker.Mock<IEmailConfirmationTokenEmailSender>();
+	}
+
+	public static IOptions<EmailConfirmationTokenOptions> CreateOptions()
+	{
+		return Options.Create(new EmailConfirmationTokenOptions { LifetimeSeconds = EmailConfirmationTokenDataFaker.GetLifetimeSeconds() });
 	}
 }

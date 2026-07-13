@@ -1,7 +1,6 @@
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 using InstaConnect.Common.Tests.Features.Extensions;
-using InstaConnect.Identity.Domain.Features.Common.Helpers;
 using InstaConnect.Identity.Events.Features.EmailConfirmationTokens;
 using InstaConnect.Identity.Events.Features.Users;
 
@@ -71,11 +70,6 @@ public static class UserEquals
 		public bool Matches(DeleteUserCommand command)
 		{
 			return user.Id.Matches(command.Id);
-		}
-
-		public bool Matches(VerifyForgotPasswordTokenCommand command, IPasswordHasher passwordHasher)
-		{
-			return passwordHasher.IsMatch(command.Password, user.PasswordHash);
 		}
 
 		public bool MatchesFilter(GetAllUsersQuery query)

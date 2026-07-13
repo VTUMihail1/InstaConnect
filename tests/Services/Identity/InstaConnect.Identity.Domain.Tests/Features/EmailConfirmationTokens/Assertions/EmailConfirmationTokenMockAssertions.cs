@@ -1,0 +1,114 @@
+using InstaConnect.Common.Domain.Features.DateTimes.Abstractions;
+using InstaConnect.Common.Events.Features.Common.Abstractions;
+using InstaConnect.Identity.Domain.Tests.Features.EmailConfirmationTokens.Utilities;
+
+namespace InstaConnect.Identity.Domain.Tests.Features.EmailConfirmationTokens.Assertions;
+
+public static class EmailConfirmationTokenMockAssertions
+{
+	extension(IDateTimeProvider dateTimeProvider)
+	{
+		public void ShouldReceiveOneGetOffsetUtcNow(int lifetimeSeconds)
+		{
+			dateTimeProvider.ShouldHaveReceivedOne().GetOffsetUtcNow(lifetimeSeconds);
+		}
+
+		public void ShouldReceiveOneGetOffsetUtcNow(VerifyEmailConfirmationTokenCommand command)
+		{
+			dateTimeProvider.ShouldHaveReceivedOne().GetOffsetUtcNow();
+		}
+	}
+
+	extension(IEmailConfirmationTokenFactory factory)
+	{
+		public void ShouldReceiveOneCreate(AddEmailConfirmationTokenCommand command, EmailConfirmationToken emailConfirmationToken)
+		{
+			factory.ShouldHaveReceivedOne().Create(emailConfirmationToken.Id.Id);
+		}
+	}
+
+	extension(IEmailConfirmationTokenEmailSender emailSender)
+	{
+		public async Task ShouldReceiveOneSendAsync(
+			AddEmailConfirmationTokenCommand command,
+			EmailConfirmationToken emailConfirmationToken,
+			CancellationToken cancellationToken)
+		{
+			await emailSender.ShouldHaveReceivedOne().SendAsync(EmailConfirmationTokenMatcher.IsEmailConfirmationToken(command, emailConfirmationToken), cancellationToken);
+		}
+	}
+
+	extension(IEventPublisher eventPublisher)
+	{
+		public async Task ShouldReceiveOnePublishAsync(
+			AddEmailConfirmationTokenCommand command,
+			EmailConfirmationToken emailConfirmationToken,
+			CancellationToken cancellationToken)
+		{
+			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(EmailConfirmationTokenMatcher.IsEmailConfirmationTokenAddedEventRequest(command, emailConfirmationToken), cancellationToken);
+		}
+
+		public async Task ShouldReceiveOnePublishAsync(
+			VerifyEmailConfirmationTokenCommand command,
+			User user,
+			CancellationToken cancellationToken)
+		{
+			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(EmailConfirmationTokenMatcher.IsEmailConfirmationTokenDeletedEventRequestCollection(command, user), cancellationToken);
+		}
+	}
+
+	extension(IUserCommandRepository repository)
+	{
+		public async Task ShouldReceiveOneGetByNameAsync(
+			AddEmailConfirmationTokenCommand command,
+			CancellationToken cancellationToken)
+		{
+			await repository.ShouldHaveReceivedOne().GetByNameAsync(command.Name, cancellationToken);
+		}
+
+		public async Task ShouldReceiveOneGetByIdAsync(
+			VerifyEmailConfirmationTokenCommand command,
+			UserInclude include,
+			CancellationToken cancellationToken)
+		{
+			await repository.ShouldHaveReceivedOne().GetByIdAsync(
+				command.Id.Id,
+				EmailConfirmationTokenMatcher.IsUserInclude(command, include),
+				cancellationToken);
+		}
+
+		public async Task ShouldReceiveOneUpdateAsync(
+			VerifyEmailConfirmationTokenCommand command,
+			User user,
+			CancellationToken cancellationToken)
+		{
+			await repository.ShouldHaveReceivedOne().UpdateAsync(user, cancellationToken);
+		}
+	}
+
+	extension(IEmailConfirmationTokenCommandRepository repository)
+	{
+		public async Task ShouldReceiveOneAddAsync(
+			AddEmailConfirmationTokenCommand command,
+			EmailConfirmationToken emailConfirmationToken,
+			CancellationToken cancellationToken)
+		{
+			await repository.ShouldHaveReceivedOne().AddAsync(EmailConfirmationTokenMatcher.IsEmailConfirmationToken(command, emailConfirmationToken), cancellationToken);
+		}
+
+		public async Task ShouldReceiveOneGetByIdAsync(
+			VerifyEmailConfirmationTokenCommand command,
+			CancellationToken cancellationToken)
+		{
+			await repository.ShouldHaveReceivedOne().GetByIdAsync(command.Id, cancellationToken);
+		}
+
+		public async Task ShouldReceiveOneDeleteRangeAsync(
+			VerifyEmailConfirmationTokenCommand command,
+			User user,
+			CancellationToken cancellationToken)
+		{
+			await repository.ShouldHaveReceivedOne().DeleteRangeAsync(user.EmailConfirmationTokens, cancellationToken);
+		}
+	}
+}

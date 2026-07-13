@@ -1,0 +1,202 @@
+using InstaConnect.Common.Tests.Features.DataAttributes.Strings.Base;
+using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Requests;
+using InstaConnect.Identity.Domain.Tests.Features.EmailConfirmationTokens.Assertions;
+using InstaConnect.Identity.Domain.Tests.Features.EmailConfirmationTokens.Builders;
+using InstaConnect.Identity.Domain.Tests.Features.EmailConfirmationTokens.Utilities;
+using InstaConnect.Identity.Domain.Tests.Integration.Features.EmailConfirmationTokens.Utilities;
+using InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Assertions;
+using InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.DataAttributes.Value;
+using InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Utilities;
+using InstaConnect.Identity.Tests.Features.Users.DataAttributes.Id;
+using InstaConnect.Identity.Tests.Features.Users.Utilities;
+
+namespace InstaConnect.Identity.Domain.Tests.Integration.Features.EmailConfirmationTokens.Commands;
+
+public class VerifyEmailConfirmationTokenIntegrationTests : BaseEmailConfirmationTokenDomainCommandIntegrationTest
+{
+	private readonly VerifyEmailConfirmationTokenCommandBuilderFactory _commandBuilderFactory;
+	private readonly VerifyEmailConfirmationTokenCommandBuilder _commandBuilder;
+	private readonly VerifyEmailConfirmationTokenCommand _command;
+
+	public VerifyEmailConfirmationTokenIntegrationTests(IdentityWebApplicationFactory webApplicationFactory)
+		: base(webApplicationFactory)
+	{
+		_commandBuilderFactory = new();
+		_commandBuilder = _commandBuilderFactory.Create(EmailConfirmationToken);
+		_command = _commandBuilder.Build();
+	}
+
+	protected override async Task OnInitializeAsync()
+	{
+		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddEmailConfirmationTokenRangeAsync(User.EmailConfirmationTokens, CancellationToken);
+	}
+
+	[Fact]
+	public async Task VerifyAsync_ShouldThrowUserNotFoundException_WhenUserNotFound()
+	{
+		// Arrange
+		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+
+		// Assert
+		await Service.ShouldThrowUserNotFoundExceptionAsync(_command, CancellationToken);
+	}
+
+	[Fact]
+	public async Task VerifyAsync_ShouldThrowEmailConfirmationTokenNotFoundException_WhenEmailConfirmationTokenNotFound()
+	{
+		// Arrange
+		await ServiceScope.DeleteEmailConfirmationTokenAsync(EmailConfirmationToken, CancellationToken);
+
+		// Assert
+		await Service.ShouldThrowEmailConfirmationTokenNotFoundExceptionAsync(_command, CancellationToken);
+	}
+
+	[Fact]
+	public async Task VerifyAsync_ShouldThrowUserEmailAlreadyConfirmedException_WhenEmailIsConfirmed()
+	{
+		// Arrange
+		var updatedUser = UserBuilder.WithConfirmedEmail().Build();
+		await ServiceScope.UpdateUserAsync(updatedUser, CancellationToken);
+
+		// Assert
+		await Service.ShouldThrowUserEmailAlreadyConfirmedExceptionAsync(_command, CancellationToken);
+	}
+
+	[Fact]
+	public async Task VerifyAsync_ShouldThrowEmailConfirmationTokenExpiredException_WhenEmailConfirmationTokenHasExpired()
+	{
+		// Arrange
+		var updatedEmailConfirmationToken = EmailConfirmationTokenBuilder.WithAlreadyExpiresAtUtc().Build();
+		await ServiceScope.UpdateEmailConfirmationTokenAsync(updatedEmailConfirmationToken, CancellationToken);
+
+		// Assert
+		await Service.ShouldThrowEmailConfirmationTokenExpiredExceptionAsync(_command, CancellationToken);
+	}
+
+	[Fact]
+	public async Task VerifyAsync_ShouldUpdatedUser_WhenCommandIsValid()
+	{
+		// Act
+		await Service.VerifyAsync(_command, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+
+		// Assert
+		user.ShouldSatisfy(_command);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task VerifyAsync_ShouldUpdatedUser_WhenCommandAndIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithId(transformer).Build();
+
+		// Act
+		await Service.VerifyAsync(command, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+
+		// Assert
+		user.ShouldSatisfy(_command);
+	}
+
+	[Theory]
+	[EmailConfirmationTokenValueDifferentCaseData]
+	public async Task VerifyAsync_ShouldUpdatedUser_WhenCommandAndValueAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithValue(transformer).Build();
+
+		// Act
+		await Service.VerifyAsync(command, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+
+		// Assert
+		user.ShouldSatisfy(_command);
+	}
+
+	[Fact]
+	public async Task VerifyAsync_ShouldDeleteEmailConfirmationToken_WhenCommandIsValid()
+	{
+		// Act
+		await Service.VerifyAsync(_command, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+
+		// Assert
+		user.EmailConfirmationTokens.ShouldBeEmpty();
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task VerifyAsync_ShouldDeleteEmailConfirmationToken_WhenCommandAndIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithId(transformer).Build();
+
+		// Act
+		await Service.VerifyAsync(command, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+
+		// Assert
+		user.EmailConfirmationTokens.ShouldBeEmpty();
+	}
+
+	[Theory]
+	[EmailConfirmationTokenValueDifferentCaseData]
+	public async Task VerifyAsync_ShouldDeleteEmailConfirmationToken_WhenCommandAndValueAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithValue(transformer).Build();
+
+		// Act
+		await Service.VerifyAsync(command, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+
+		// Assert
+		user.EmailConfirmationTokens.ShouldBeEmpty();
+	}
+
+	[Fact]
+	public async Task VerifyAsync_ShouldPublishEmailConfirmationTokenUpdatedEvents_WhenCommandIsValid()
+	{
+		// Act
+		await Service.VerifyAsync(_command, CancellationToken);
+
+		// Assert
+		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(User, CancellationToken);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task VerifyAsync_ShouldPublishEmailConfirmationTokenUpdatedEvents_WhenCommandAndIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithId(transformer).Build();
+
+		// Act
+		await Service.VerifyAsync(command, CancellationToken);
+
+		// Assert
+		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(User, CancellationToken);
+	}
+
+	[Theory]
+	[EmailConfirmationTokenValueDifferentCaseData]
+	public async Task VerifyAsync_ShouldPublishEmailConfirmationTokenUpdatedEvents_WhenCommandAndValueAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithValue(transformer).Build();
+
+		// Act
+		await Service.VerifyAsync(command, CancellationToken);
+
+		// Assert
+		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(User, CancellationToken);
+	}
+}
