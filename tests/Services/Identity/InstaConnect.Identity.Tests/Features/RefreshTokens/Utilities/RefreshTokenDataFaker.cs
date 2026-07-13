@@ -17,6 +17,16 @@ public static class RefreshTokenDataFaker
 		return DataFaker.GetRecentDate();
 	}
 
+	public static int GetLifetimeSeconds()
+	{
+		return DataFaker.GetRandomNumber();
+	}
+
+	public static DateTimeOffset GetUnexpiresAtUtc()
+	{
+		return DataFaker.GetFutureDate();
+	}
+
 	public static DateTimeOffset GetAlreadyExpiresAtUtc()
 	{
 		return DataFaker.GetPastDate();

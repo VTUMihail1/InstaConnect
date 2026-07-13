@@ -1,0 +1,128 @@
+using InstaConnect.Identity.Domain.Features.RefreshTokens.Helpers;
+using InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Requests;
+using InstaConnect.Identity.Domain.Features.Users.Models.Requests;
+using InstaConnect.Identity.Domain.Tests.Features.RefreshTokens.Assertions;
+using InstaConnect.Identity.Domain.Tests.Features.RefreshTokens.Builders;
+using InstaConnect.Identity.Domain.Tests.Features.RefreshTokens.Utilities;
+using InstaConnect.Identity.Domain.Tests.Unit.Features.RefreshTokens.Utilities;
+
+namespace InstaConnect.Identity.Domain.Tests.Unit.Features.RefreshTokens.Services;
+
+public class IssueRefreshTokenServiceUnitTests : BaseRefreshTokenDomainCommandUnitTest
+{
+	private readonly IssueRefreshTokenCommandBuilderFactory _commandBuilderFactory;
+	private readonly IssueRefreshTokenCommandBuilder _commandBuilder;
+	private readonly IssueRefreshTokenCommand _command;
+
+	private readonly UserInclude _include;
+
+	private readonly RefreshTokenCommandService _service;
+
+	public IssueRefreshTokenServiceUnitTests()
+	{
+		_commandBuilderFactory = new();
+		_commandBuilder = _commandBuilderFactory.Create(User, Password);
+		_command = _commandBuilder.Build();
+
+		_include = IncludeBuilderFactory.Create().WithUserClaims().Build();
+
+		_service = new(PasswordHasher, Repository, DateTimeProvider, Factory, SessionTokenGenerator, RefreshTokenRepository, IncludeBuilderFactory);
+
+		Repository.SetupGetByName(_command, _include, User, CancellationToken);
+		PasswordHasher.SetupIsMismatch(_command, User);
+		Factory.SetupCreate(RefreshToken);
+		SessionTokenGenerator.SetupGenerate(_command, RefreshToken);
+	}
+
+	[Fact]
+	public async Task IssueAsync_ShouldThrowUserInvalidDetailsException_WhenUserNotFound()
+	{
+		// Arrange
+		Repository.RemoveGetByName(_command, _include, User, CancellationToken);
+
+		// Assert
+		await _service.ShouldThrowUserInvalidDetailsExceptionAsync(_command, CancellationToken);
+	}
+
+	[Fact]
+	public async Task IssueAsync_ShouldThrowUserInvalidDetailsException_WhenPasswordDoesNotMatch()
+	{
+		// Arrange
+		PasswordHasher.SetupIsMismatchExists(_command, User);
+
+		// Assert
+		await _service.ShouldThrowUserInvalidDetailsExceptionAsync(_command, CancellationToken);
+	}
+
+	[Fact]
+	public async Task IssueAsync_ShouldThrowUserNameEmailNotConfirmedException_WhenEmailIsNotConfirmed()
+	{
+		// Arrange
+		var unconfirmedUser = UserBuilder.WithUnconfirmedEmail().Build();
+		Repository.SetupGetByName(_command, _include, unconfirmedUser, CancellationToken);
+		PasswordHasher.SetupIsMismatch(_command, unconfirmedUser);
+
+		// Assert
+		await _service.ShouldThrowUserNameEmailNotConfirmedExceptionAsync(_command, CancellationToken);
+	}
+
+	[Fact]
+	public async Task IssueAsync_ShouldReturnResponse_WhenCommandIsValid()
+	{
+		// Act
+		var response = await _service.IssueAsync(_command, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(RefreshToken, _command);
+	}
+
+	[Fact]
+	public async Task IssueAsync_ShouldCallTheRepositoryGetByNameAsync_WhenCommandIsValid()
+	{
+		// Act
+		await _service.IssueAsync(_command, CancellationToken);
+
+		// Assert
+		await Repository.ShouldReceiveOneGetByNameAsync(_command, _include, CancellationToken);
+	}
+
+	[Fact]
+	public async Task IssueAsync_ShouldCallThePasswordHasherIsMismatch_WhenCommandIsValid()
+	{
+		// Act
+		await _service.IssueAsync(_command, CancellationToken);
+
+		// Assert
+		PasswordHasher.ShouldReceiveOneIsMismatch(_command, User);
+	}
+
+	[Fact]
+	public async Task IssueAsync_ShouldCallTheFactoryCreate_WhenCommandIsValid()
+	{
+		// Act
+		await _service.IssueAsync(_command, CancellationToken);
+
+		// Assert
+		Factory.ShouldReceiveOneCreate(RefreshToken);
+	}
+
+	[Fact]
+	public async Task IssueAsync_ShouldCallTheRefreshTokenRepositoryAddAsync_WhenCommandIsValid()
+	{
+		// Act
+		await _service.IssueAsync(_command, CancellationToken);
+
+		// Assert
+		await RefreshTokenRepository.ShouldReceiveOneAddAsync(_command, RefreshToken, CancellationToken);
+	}
+
+	[Fact]
+	public async Task IssueAsync_ShouldCallTheSessionTokenGeneratorGenerate_WhenCommandIsValid()
+	{
+		// Act
+		await _service.IssueAsync(_command, CancellationToken);
+
+		// Assert
+		SessionTokenGenerator.ShouldReceiveOneGenerate(_command, RefreshToken);
+	}
+}

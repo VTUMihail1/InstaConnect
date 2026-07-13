@@ -1,0 +1,95 @@
+using InstaConnect.Common.Tests.Features.DataAttributes.Strings.Base;
+using InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Requests;
+using InstaConnect.Identity.Domain.Tests.Features.RefreshTokens.Assertions;
+using InstaConnect.Identity.Domain.Tests.Features.RefreshTokens.Builders;
+using InstaConnect.Identity.Domain.Tests.Integration.Features.RefreshTokens.Utilities;
+using InstaConnect.Identity.Tests.Features.RefreshTokens.DataAttributes.Value;
+using InstaConnect.Identity.Tests.Features.RefreshTokens.Utilities;
+using InstaConnect.Identity.Tests.Features.Users.DataAttributes.Id;
+using InstaConnect.Identity.Tests.Features.Users.Utilities;
+
+namespace InstaConnect.Identity.Domain.Tests.Integration.Features.RefreshTokens.Commands;
+
+public class DeleteRefreshTokenIntegrationTests : BaseRefreshTokenDomainCommandIntegrationTest
+{
+	private readonly DeleteRefreshTokenCommandBuilderFactory _commandBuilderFactory;
+	private readonly DeleteRefreshTokenCommandBuilder _commandBuilder;
+	private readonly DeleteRefreshTokenCommand _command;
+
+	public DeleteRefreshTokenIntegrationTests(IdentityWebApplicationFactory webApplicationFactory)
+		: base(webApplicationFactory)
+	{
+		_commandBuilderFactory = new();
+		_commandBuilder = _commandBuilderFactory.Create(RefreshToken);
+		_command = _commandBuilder.Build();
+	}
+
+	protected override async Task OnInitializeAsync()
+	{
+		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddRefreshTokenAsync(RefreshToken, CancellationToken);
+	}
+
+	[Fact]
+	public async Task DeleteAsync_ShouldThrowUserNotFoundException_WhenUserNotFound()
+	{
+		// Arrange
+		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+
+		// Assert
+		await Service.ShouldThrowUserNotFoundExceptionAsync(_command, CancellationToken);
+	}
+
+	[Fact]
+	public async Task DeleteAsync_ShouldThrowRefreshTokenNotFoundException_WhenRefreshTokenNotFound()
+	{
+		// Arrange
+		await ServiceScope.DeleteRefreshTokenAsync(RefreshToken, CancellationToken);
+
+		// Assert
+		await Service.ShouldThrowRefreshTokenNotFoundExceptionAsync(_command, CancellationToken);
+	}
+
+	[Fact]
+	public async Task DeleteAsync_ShouldDeleteRefreshToken_WhenCommandIsValid()
+	{
+		// Act
+		await Service.DeleteAsync(_command, CancellationToken);
+		var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(RefreshToken.Id, CancellationToken);
+
+		// Assert
+		refreshToken.ShouldBeNull();
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task DeleteAsync_ShouldDeleteRefreshToken_WhenCommandAndIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithId(transformer).Build();
+
+		// Act
+		await Service.DeleteAsync(command, CancellationToken);
+		var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(RefreshToken.Id, CancellationToken);
+
+		// Assert
+		refreshToken.ShouldBeNull();
+	}
+
+	[Theory]
+	[RefreshTokenValueDifferentCaseData]
+	public async Task DeleteAsync_ShouldDeleteRefreshToken_WhenCommandAndValueAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithValue(transformer).Build();
+
+		// Act
+		await Service.DeleteAsync(command, CancellationToken);
+		var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(RefreshToken.Id, CancellationToken);
+
+		// Assert
+		refreshToken.ShouldBeNull();
+	}
+}

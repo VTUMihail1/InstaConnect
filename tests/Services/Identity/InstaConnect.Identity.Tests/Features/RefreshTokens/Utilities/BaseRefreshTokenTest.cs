@@ -14,6 +14,8 @@ public abstract class BaseRefreshTokenTest : BaseTest
 	protected string Password { get; }
 	protected string NewPassword { get; }
 	protected IFormFile ProfileImage { get; }
+	protected DateTimeOffset ExpiredDate { get; }
+	protected DateTimeOffset UnexpiredDate { get; }
 
 	protected UserBuilderFactory UserBuilderFactory { get; }
 	protected UserBuilder UserBuilder { get; }
@@ -38,6 +40,8 @@ public abstract class BaseRefreshTokenTest : BaseTest
 		Password = UserDataFaker.GetPassword();
 		NewPassword = UserDataFaker.GetPassword();
 		ProfileImage = UserDataFaker.GetProfileImage();
+		ExpiredDate = RefreshTokenDataFaker.GetAlreadyExpiresAtUtc();
+		UnexpiredDate = RefreshTokenDataFaker.GetUnexpiresAtUtc();
 
 		UserBuilderFactory = new();
 		UserBuilder = UserBuilderFactory.Create(PasswordHasher.Hash(Password), ProfileImage.GetUrl());
