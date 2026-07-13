@@ -1,4 +1,5 @@
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
+using InstaConnect.Identity.Domain.Features.Common.Helpers;
 using InstaConnect.Identity.Domain.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Identity.Domain.Tests.Features.Users.Assertions;
@@ -54,6 +55,11 @@ public static class UserMatchAssertions
 		public void ShouldSatisfy(UpdateUserCommand command)
 		{
 			user.ShouldSatisfy(p => p.Matches(command));
+		}
+
+		public void ShouldSatisfy(VerifyForgotPasswordTokenCommand command, IPasswordHasher passwordHasher)
+		{
+			user.ShouldSatisfy(p => p.Matches(command, passwordHasher));
 		}
 	}
 }

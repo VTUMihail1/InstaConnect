@@ -17,8 +17,18 @@ public static class ForgotPasswordTokenDataFaker
 		return DataFaker.GetRecentDate();
 	}
 
-	public static DateTimeOffset GetAlreadyExpiresAtUtc()
+	public static int GetLifetimeSeconds()
 	{
-		return DataFaker.GetPastDate();
+		return DataFaker.GetRandomNumber();
+	}
+
+	public static DateTimeOffset GetExpired(DateTimeOffset expiresAtUtc)
+	{
+		return DataFaker.GetFutureDate(expiresAtUtc);
+	}
+
+	public static DateTimeOffset GetUnexpired(DateTimeOffset expiresAtUtc)
+	{
+		return DataFaker.GetPastDate(expiresAtUtc);
 	}
 }

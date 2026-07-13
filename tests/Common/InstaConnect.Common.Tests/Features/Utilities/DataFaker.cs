@@ -41,17 +41,17 @@ public abstract class DataFaker
 
 	public static DateTimeOffset GetRecentDate()
 	{
-		return _faker.Date.FutureOffset();
+		return _faker.Date.RecentOffset();
 	}
 
-	public static DateTimeOffset GetFutureDate()
+	public static DateTimeOffset GetFutureDate(DateTimeOffset date)
 	{
-		return _faker.Date.FutureOffset();
+		return _faker.Date.FutureOffset(refDate: date);
 	}
 
-	public static DateTimeOffset GetPastDate()
+	public static DateTimeOffset GetPastDate(DateTimeOffset date)
 	{
-		return _faker.Date.PastOffset();
+		return _faker.Date.PastOffset(refDate: date);
 	}
 
 	public static string GetUrl()

@@ -22,13 +22,13 @@ public static class RefreshTokenDataFaker
 		return DataFaker.GetRandomNumber();
 	}
 
-	public static DateTimeOffset GetUnexpiresAtUtc()
+	public static DateTimeOffset GetExpired(DateTimeOffset expiresAtUtc)
 	{
-		return DataFaker.GetFutureDate();
+		return DataFaker.GetFutureDate(expiresAtUtc);
 	}
 
-	public static DateTimeOffset GetAlreadyExpiresAtUtc()
+	public static DateTimeOffset GetUnexpired(DateTimeOffset expiresAtUtc)
 	{
-		return DataFaker.GetPastDate();
+		return DataFaker.GetPastDate(expiresAtUtc);
 	}
 }

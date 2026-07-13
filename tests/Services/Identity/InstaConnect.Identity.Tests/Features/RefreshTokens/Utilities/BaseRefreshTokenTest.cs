@@ -40,8 +40,6 @@ public abstract class BaseRefreshTokenTest : BaseTest
 		Password = UserDataFaker.GetPassword();
 		NewPassword = UserDataFaker.GetPassword();
 		ProfileImage = UserDataFaker.GetProfileImage();
-		ExpiredDate = RefreshTokenDataFaker.GetUnexpiresAtUtc();
-		UnexpiredDate = RefreshTokenDataFaker.GetAlreadyExpiresAtUtc();
 
 		UserBuilderFactory = new();
 		UserBuilder = UserBuilderFactory.Create(PasswordHasher.Hash(Password), ProfileImage.GetUrl());
@@ -57,6 +55,9 @@ public abstract class BaseRefreshTokenTest : BaseTest
 		RefreshTokenBuilder = RefreshTokenBuilderFactory.Create(User);
 		RefreshToken = RefreshTokenBuilder.Build();
 		RefreshTokens = RefreshToken.Generate(Users);
+
+		ExpiredDate = RefreshTokenDataFaker.GetExpired(RefreshToken.ExpiresAtUtc);
+		UnexpiredDate = RefreshTokenDataFaker.GetUnexpired(RefreshToken.ExpiresAtUtc);
 
 		CancellationToken = MockFactory.CreateCancellationToken();
 	}

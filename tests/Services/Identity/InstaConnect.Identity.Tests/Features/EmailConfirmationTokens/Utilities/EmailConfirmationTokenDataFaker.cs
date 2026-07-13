@@ -16,9 +16,4 @@ public static class EmailConfirmationTokenDataFaker
 	{
 		return DataFaker.GetRecentDate();
 	}
-
-	public static DateTimeOffset GetAlreadyExpiresAtUtc()
-	{
-		return DataFaker.GetPastDate();
-	}
 }
