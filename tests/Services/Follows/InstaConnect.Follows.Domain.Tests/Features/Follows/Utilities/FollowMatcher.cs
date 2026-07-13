@@ -19,14 +19,14 @@ public static class FollowMatcher
 		return Matcher.Is<Follow>(p => p.Matches(command));
 	}
 
-	public static FollowAddedEventRequest IsFollowAddedEventRequest(Follow follow)
+	public static FollowAddedEventRequest IsFollowAddedEventRequest(AddFollowCommand command, Follow follow)
 	{
-		return Matcher.Is<FollowAddedEventRequest>(p => p.Matches(follow));
+		return Matcher.Is<FollowAddedEventRequest>(p => p.Matches(command, follow));
 	}
 
-	public static FollowDeletedEventRequest IsFollowDeletedEventRequest(Follow follow)
+	public static FollowDeletedEventRequest IsFollowDeletedEventRequest(DeleteFollowCommand command, Follow follow)
 	{
-		return Matcher.Is<FollowDeletedEventRequest>(p => p.Matches(follow));
+		return Matcher.Is<FollowDeletedEventRequest>(p => p.Matches(command, follow));
 	}
 
 	public static FollowAddedNotificationRequest IsFollowAddedNotificationRequest(Follow follow)

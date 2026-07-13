@@ -119,7 +119,7 @@ public static class UserClaimMockAssertions
 			UserClaim userClaim,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(UserClaimMatcher.IsUserClaimAddedEventRequest(userClaim), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(UserClaimMatcher.IsUserClaimAddedEventRequest(command, userClaim), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOnePublishAsync(
@@ -127,7 +127,7 @@ public static class UserClaimMockAssertions
 			UserClaim userClaim,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(UserClaimMatcher.IsUserClaimDeletedEventRequest(userClaim), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(UserClaimMatcher.IsUserClaimDeletedEventRequest(command, userClaim), cancellationToken);
 		}
 	}
 }

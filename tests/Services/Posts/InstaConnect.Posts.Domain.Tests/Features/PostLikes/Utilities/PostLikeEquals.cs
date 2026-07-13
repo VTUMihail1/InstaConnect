@@ -3,6 +3,7 @@ using InstaConnect.Common.Domain.Features.Messaging.Abstractions;
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 using InstaConnect.Posts.Domain.Tests.Features.Posts.Utilities;
 using InstaConnect.Posts.Domain.Tests.Features.Users.Utilities;
+using InstaConnect.Posts.Events.Features.PostLikes;
 
 namespace InstaConnect.Posts.Domain.Tests.Features.PostLikes.Utilities;
 
@@ -15,6 +16,22 @@ public static class PostLikeEquals
 		AddPostLikeCommand command)
 		{
 			return response.Matches(postLike.Id);
+		}
+	}
+
+	extension(PostLikeAddedEventRequest request)
+	{
+		public bool Matches(AddPostLikeCommand command, PostLike entity)
+		{
+			return entity.Matches(request.PostLike) && entity.Matches(command);
+		}
+	}
+
+	extension(PostLikeDeletedEventRequest request)
+	{
+		public bool Matches(DeletePostLikeCommand command, PostLike entity)
+		{
+			return entity.Matches(request.PostLike) && entity.Matches(command);
 		}
 	}
 

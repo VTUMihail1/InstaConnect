@@ -1,5 +1,6 @@
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 using InstaConnect.Identity.Domain.Tests.Features.Users.Utilities;
+using InstaConnect.Identity.Events.Features.UserClaims;
 
 namespace InstaConnect.Identity.Domain.Tests.Features.UserClaims.Utilities;
 
@@ -12,6 +13,22 @@ public static class UserClaimEquals
 			AddUserClaimCommand command)
 		{
 			return response.Matches(userClaim.Id);
+		}
+	}
+
+	extension(UserClaimAddedEventRequest request)
+	{
+		public bool Matches(AddUserClaimCommand command, UserClaim entity)
+		{
+			return entity.Matches(request.UserClaim) && entity.Matches(command);
+		}
+	}
+
+	extension(UserClaimDeletedEventRequest request)
+	{
+		public bool Matches(DeleteUserClaimCommand command, UserClaim entity)
+		{
+			return entity.Matches(request.UserClaim) && entity.Matches(command);
 		}
 	}
 

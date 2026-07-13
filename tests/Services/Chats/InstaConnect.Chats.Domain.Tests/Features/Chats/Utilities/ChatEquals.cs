@@ -1,4 +1,5 @@
 using InstaConnect.Chats.Domain.Tests.Features.Users.Utilities;
+using InstaConnect.Chats.Events.Features.Chats;
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Domain.Features.Messaging.Abstractions;
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
@@ -14,6 +15,14 @@ public static class ChatEquals
 			AddChatCommand command)
 		{
 			return response.Matches(chat.Id);
+		}
+	}
+
+	extension(ChatAddedEventRequest request)
+	{
+		public bool Matches(AddChatCommand command, Chat entity)
+		{
+			return entity.Matches(request.Chat) && entity.Matches(command);
 		}
 	}
 

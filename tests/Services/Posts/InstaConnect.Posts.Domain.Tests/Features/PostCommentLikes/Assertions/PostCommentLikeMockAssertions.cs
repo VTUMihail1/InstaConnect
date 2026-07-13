@@ -228,7 +228,7 @@ public static class PostCommentLikeMockAssertions
 			PostCommentLike postCommentLike,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(PostCommentLikeMatcher.IsPostCommentLikeAddedEventRequest(postCommentLike), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(PostCommentLikeMatcher.IsPostCommentLikeAddedEventRequest(command, postCommentLike), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOnePublishAsync(
@@ -236,7 +236,7 @@ public static class PostCommentLikeMockAssertions
 			PostCommentLike postCommentLike,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(PostCommentLikeMatcher.IsPostCommentLikeDeletedEventRequest(postCommentLike), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(PostCommentLikeMatcher.IsPostCommentLikeDeletedEventRequest(command, postCommentLike), cancellationToken);
 		}
 	}
 }

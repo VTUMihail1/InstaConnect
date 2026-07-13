@@ -16,7 +16,7 @@ public static class EmailConfirmationTokenMatcher
 
 	public static EmailConfirmationTokenAddedEventRequest IsEmailConfirmationTokenAddedEventRequest(AddEmailConfirmationTokenCommand command, EmailConfirmationToken emailConfirmationToken)
 	{
-		return Matcher.Is<EmailConfirmationTokenAddedEventRequest>(p => p.Matches(emailConfirmationToken));
+		return Matcher.Is<EmailConfirmationTokenAddedEventRequest>(p => p.Matches(command, emailConfirmationToken));
 	}
 
 	public static ICollection<EmailConfirmationTokenDeletedEventRequest> IsEmailConfirmationTokenDeletedEventRequestCollection(VerifyEmailConfirmationTokenCommand command, User user)

@@ -35,4 +35,20 @@ public static class EmailConfirmationTokenEquals
 			user.ShouldSatisfy(p => p.Matches(command));
 		}
 	}
+
+	extension(EmailConfirmationToken entity)
+	{
+		public bool Matches(AddEmailConfirmationTokenCommand command)
+		{
+			return entity.User != null && entity.User.Name.Matches(command.Name);
+		}
+	}
+
+	extension(EmailConfirmationTokenAddedEventRequest request)
+	{
+		public bool Matches(AddEmailConfirmationTokenCommand command, EmailConfirmationToken entity)
+		{
+			return entity.Matches(request.EmailConfirmationToken) && entity.Matches(command);
+		}
+	}
 }

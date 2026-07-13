@@ -186,7 +186,7 @@ public static class PostLikeMockAssertions
 			PostLike postLike,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(PostLikeMatcher.IsPostLikeAddedEventRequest(postLike), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(PostLikeMatcher.IsPostLikeAddedEventRequest(command, postLike), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOnePublishAsync(
@@ -194,7 +194,7 @@ public static class PostLikeMockAssertions
 			PostLike postLike,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(PostLikeMatcher.IsPostLikeDeletedEventRequest(postLike), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(PostLikeMatcher.IsPostLikeDeletedEventRequest(command, postLike), cancellationToken);
 		}
 	}
 }

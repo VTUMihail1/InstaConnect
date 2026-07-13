@@ -2,6 +2,7 @@ using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Domain.Features.Messaging.Abstractions;
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 using InstaConnect.Follows.Domain.Tests.Features.Users.Utilities;
+using InstaConnect.Follows.Events.Features.Follows;
 
 namespace InstaConnect.Follows.Domain.Tests.Features.Follows.Utilities;
 
@@ -14,6 +15,22 @@ public static class FollowEquals
 		AddFollowCommand command)
 		{
 			return response.Matches(follow.Id);
+		}
+	}
+
+	extension(FollowAddedEventRequest request)
+	{
+		public bool Matches(AddFollowCommand command, Follow entity)
+		{
+			return entity.Matches(request.Follow) && entity.Matches(command);
+		}
+	}
+
+	extension(FollowDeletedEventRequest request)
+	{
+		public bool Matches(DeleteFollowCommand command, Follow entity)
+		{
+			return entity.Matches(request.Follow) && entity.Matches(command);
 		}
 	}
 

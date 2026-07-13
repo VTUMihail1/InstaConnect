@@ -36,4 +36,20 @@ public static class ForgotPasswordTokenEquals
 			user.ShouldSatisfy(p => p.Matches(command, passwordHasher));
 		}
 	}
+
+	extension(ForgotPasswordToken entity)
+	{
+		public bool Matches(AddForgotPasswordTokenCommand command)
+		{
+			return entity.User != null && entity.User.Name.Matches(command.Name);
+		}
+	}
+
+	extension(ForgotPasswordTokenAddedEventRequest request)
+	{
+		public bool Matches(AddForgotPasswordTokenCommand command, ForgotPasswordToken entity)
+		{
+			return entity.Matches(request.ForgotPasswordToken) && entity.Matches(command);
+		}
+	}
 }

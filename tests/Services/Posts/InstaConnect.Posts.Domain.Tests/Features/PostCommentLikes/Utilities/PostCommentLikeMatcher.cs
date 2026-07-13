@@ -24,13 +24,13 @@ public static class PostCommentLikeMatcher
 		return Matcher.Is<PostCommentLike>(p => p.Matches(command));
 	}
 
-	public static PostCommentLikeAddedEventRequest IsPostCommentLikeAddedEventRequest(PostCommentLike postCommentLike)
+	public static PostCommentLikeAddedEventRequest IsPostCommentLikeAddedEventRequest(AddPostCommentLikeCommand command, PostCommentLike postCommentLike)
 	{
-		return Matcher.Is<PostCommentLikeAddedEventRequest>(p => p.Matches(postCommentLike));
+		return Matcher.Is<PostCommentLikeAddedEventRequest>(p => p.Matches(command, postCommentLike));
 	}
 
-	public static PostCommentLikeDeletedEventRequest IsPostCommentLikeDeletedEventRequest(PostCommentLike postCommentLike)
+	public static PostCommentLikeDeletedEventRequest IsPostCommentLikeDeletedEventRequest(DeletePostCommentLikeCommand command, PostCommentLike postCommentLike)
 	{
-		return Matcher.Is<PostCommentLikeDeletedEventRequest>(p => p.Matches(postCommentLike));
+		return Matcher.Is<PostCommentLikeDeletedEventRequest>(p => p.Matches(command, postCommentLike));
 	}
 }

@@ -19,13 +19,13 @@ public static class UserClaimMatcher
 		return Matcher.Is<UserClaim>(p => p.Matches(command));
 	}
 
-	public static UserClaimAddedEventRequest IsUserClaimAddedEventRequest(UserClaim userClaim)
+	public static UserClaimAddedEventRequest IsUserClaimAddedEventRequest(AddUserClaimCommand command, UserClaim userClaim)
 	{
-		return Matcher.Is<UserClaimAddedEventRequest>(p => p.Matches(userClaim));
+		return Matcher.Is<UserClaimAddedEventRequest>(p => p.Matches(command, userClaim));
 	}
 
-	public static UserClaimDeletedEventRequest IsUserClaimDeletedEventRequest(UserClaim userClaim)
+	public static UserClaimDeletedEventRequest IsUserClaimDeletedEventRequest(DeleteUserClaimCommand command, UserClaim userClaim)
 	{
-		return Matcher.Is<UserClaimDeletedEventRequest>(p => p.Matches(userClaim));
+		return Matcher.Is<UserClaimDeletedEventRequest>(p => p.Matches(command, userClaim));
 	}
 }

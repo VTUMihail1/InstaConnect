@@ -171,7 +171,7 @@ public static class FollowMockAssertions
 			Follow follow,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(FollowMatcher.IsFollowAddedEventRequest(follow), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(FollowMatcher.IsFollowAddedEventRequest(command, follow), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOnePublishAsync(
@@ -179,7 +179,7 @@ public static class FollowMockAssertions
 			Follow follow,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(FollowMatcher.IsFollowDeletedEventRequest(follow), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(FollowMatcher.IsFollowDeletedEventRequest(command, follow), cancellationToken);
 		}
 	}
 }

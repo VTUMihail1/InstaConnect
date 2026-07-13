@@ -111,7 +111,7 @@ public static class ChatMockAssertions
 			Chat chat,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(ChatMatcher.IsChatAddedEventRequest(chat), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(ChatMatcher.IsChatAddedEventRequest(command, chat), cancellationToken);
 		}
 	}
 }
