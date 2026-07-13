@@ -1,0 +1,80 @@
+using InstaConnect.Identity.Domain.Features.UserClaims.Helpers;
+using InstaConnect.Identity.Domain.Features.UserClaims.Models.Requests;
+using InstaConnect.Identity.Domain.Tests.Features.UserClaims.Assertions;
+using InstaConnect.Identity.Domain.Tests.Features.UserClaims.Builders;
+using InstaConnect.Identity.Domain.Tests.Features.UserClaims.Utilities;
+using InstaConnect.Identity.Domain.Tests.Unit.Features.UserClaims.Utilities;
+
+namespace InstaConnect.Identity.Domain.Tests.Unit.Features.UserClaims.Services;
+
+public class GetAllUserClaimsServiceUnitTests : BaseUserClaimDomainQueryUnitTest
+{
+	private readonly GetAllUserClaimsQueryBuilderFactory _queryBuilderFactory;
+	private readonly GetAllUserClaimsQueryBuilder _queryBuilder;
+	private readonly GetAllUserClaimsQuery _query;
+
+	private readonly UserClaimQueryService _service;
+
+	public GetAllUserClaimsServiceUnitTests()
+	{
+		_queryBuilderFactory = new();
+		_queryBuilder = _queryBuilderFactory.Create(UserClaim);
+		_query = _queryBuilder.Build();
+
+		_service = new(Repository, ClaimRepository, CollectionResponseFactory);
+
+		Repository.SetupGetById(_query, User, CancellationToken);
+		ClaimRepository.SetupGetAllQuery(_query, UserClaims, CancellationToken);
+		ClaimRepository.SetupGetTotalCount(_query, UserClaims, CancellationToken);
+	}
+
+	[Fact]
+	public async Task GetAllAsync_ShouldThrowUserNotFoundException_WhenUserIdIsInvalid()
+	{
+		// Arrange
+		Repository.RemoveGetById(_query, User, CancellationToken);
+
+		// Assert
+		await _service.ShouldThrowUserNotFoundExceptionAsync(_query, CancellationToken);
+	}
+
+	[Fact]
+	public async Task GetAllAsync_ShouldReturnResponse_WhenQueryIsValid()
+	{
+		// Act
+		var response = await _service.GetAllAsync(_query, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(User, UserClaims, _query);
+	}
+
+	[Fact]
+	public async Task GetAllAsync_ShouldCallTheRepositoryGetByIdAsync_WhenQueryIsValid()
+	{
+		// Act
+		await _service.GetAllAsync(_query, CancellationToken);
+
+		// Assert
+		await Repository.ShouldReceiveOneGetByIdAsync(_query, CancellationToken);
+	}
+
+	[Fact]
+	public async Task GetAllAsync_ShouldCallTheClaimRepositoryGetAllAsync_WhenQueryIsValid()
+	{
+		// Act
+		await _service.GetAllAsync(_query, CancellationToken);
+
+		// Assert
+		await ClaimRepository.ShouldReceiveOneGetAllAsync(_query, CancellationToken);
+	}
+
+	[Fact]
+	public async Task GetAllAsync_ShouldCallTheClaimRepositoryGetTotalCountAsync_WhenQueryIsValid()
+	{
+		// Act
+		await _service.GetAllAsync(_query, CancellationToken);
+
+		// Assert
+		await ClaimRepository.ShouldReceiveOneGetTotalCountAsync(_query, CancellationToken);
+	}
+}
