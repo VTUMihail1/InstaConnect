@@ -8,11 +8,38 @@ using InstaConnect.Posts.Presentation.Tests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Presentation.Tests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Presentation.Tests.Features.Posts.Utilities;
 using InstaConnect.Posts.Presentation.Tests.Features.Users.Utilities;
+using InstaConnect.Posts.Events.Features.PostCommentLikes;
 
 namespace InstaConnect.Posts.Presentation.Tests.Features.PostCommentLikes.Utilities;
 
 public static class PostCommentLikeEquals
 {
+	extension(PostCommentLikeAddedEventRequest r)
+	{
+		public bool Matches(AddPostCommentLikeApiRequest request, PostCommentLike entity)
+		{
+			return request.Id.EqualsOrdinalIgnoreCase(r.PostCommentLike.Id) &&
+				   request.CommentId.EqualsOrdinalIgnoreCase(r.PostCommentLike.CommentId) &&
+				   request.UserId.EqualsOrdinalIgnoreCase(r.PostCommentLike.UserId) &&
+				   entity.User != null && entity.User.Matches(r.PostCommentLike.User) &&
+				   entity.PostComment != null && entity.PostComment.Matches(r.PostCommentLike.PostComment) &&
+				   entity.CreatedAtUtc == r.PostCommentLike.CreatedAtUtc;
+		}
+	}
+
+	extension(PostCommentLikeDeletedEventRequest r)
+	{
+		public bool Matches(DeletePostCommentLikeApiRequest request, PostCommentLike entity)
+		{
+			return request.Id.EqualsOrdinalIgnoreCase(r.PostCommentLike.Id) &&
+				   request.CommentId.EqualsOrdinalIgnoreCase(r.PostCommentLike.CommentId) &&
+				   request.UserId.EqualsOrdinalIgnoreCase(r.PostCommentLike.UserId) &&
+				   entity.User != null && entity.User.Matches(r.PostCommentLike.User) &&
+				   entity.PostComment != null && entity.PostComment.Matches(r.PostCommentLike.PostComment) &&
+				   entity.CreatedAtUtc == r.PostCommentLike.CreatedAtUtc;
+		}
+	}
+
 	extension(GetAllPostCommentLikesQueryRequest query)
 	{
 		public bool Matches(GetAllPostCommentLikesApiRequest request)

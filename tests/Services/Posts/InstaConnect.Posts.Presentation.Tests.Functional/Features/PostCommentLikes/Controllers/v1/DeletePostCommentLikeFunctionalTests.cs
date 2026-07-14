@@ -329,7 +329,7 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
 		await Client.DeleteAsync(_request, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedPostCommentLikeDeletedAsync(PostCommentLike, CancellationToken);
+		await EventHarness.ShouldHavePublishedPostCommentLikeDeletedAsync(_request, PostCommentLike, CancellationToken);
 	}
 
 	[Theory]
@@ -344,7 +344,7 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
 		await Client.DeleteAsync(request, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedPostCommentLikeDeletedAsync(PostCommentLike, CancellationToken);
+		await EventHarness.ShouldHavePublishedPostCommentLikeDeletedAsync(request, PostCommentLike, CancellationToken);
 	}
 
 	[Theory]
@@ -359,7 +359,7 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
 		await Client.DeleteAsync(request, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedPostCommentLikeDeletedAsync(PostCommentLike, CancellationToken);
+		await EventHarness.ShouldHavePublishedPostCommentLikeDeletedAsync(request, PostCommentLike, CancellationToken);
 	}
 
 	[Theory]
@@ -374,6 +374,6 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
 		await Client.DeleteAsync(request, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedPostCommentLikeDeletedAsync(PostCommentLike, CancellationToken);
+		await EventHarness.ShouldHavePublishedPostCommentLikeDeletedAsync(request, PostCommentLike, CancellationToken);
 	}
 }

@@ -132,7 +132,7 @@ public class DeletePostCommentLikeIntegrationTests : BasePostCommentLikeDomainCo
 		await Service.DeleteAsync(_command, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedPostCommentLikeDeletedAsync(PostCommentLike, CancellationToken);
+		await EventHarness.ShouldHavePublishedPostCommentLikeDeletedAsync(_command, PostCommentLike, CancellationToken);
 	}
 
 	[Theory]
@@ -147,7 +147,7 @@ public class DeletePostCommentLikeIntegrationTests : BasePostCommentLikeDomainCo
 		await Service.DeleteAsync(command, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedPostCommentLikeDeletedAsync(PostCommentLike, CancellationToken);
+		await EventHarness.ShouldHavePublishedPostCommentLikeDeletedAsync(command, PostCommentLike, CancellationToken);
 	}
 
 	[Theory]
@@ -162,7 +162,7 @@ public class DeletePostCommentLikeIntegrationTests : BasePostCommentLikeDomainCo
 		await Service.DeleteAsync(command, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedPostCommentLikeDeletedAsync(PostCommentLike, CancellationToken);
+		await EventHarness.ShouldHavePublishedPostCommentLikeDeletedAsync(command, PostCommentLike, CancellationToken);
 	}
 
 	[Theory]
@@ -177,6 +177,6 @@ public class DeletePostCommentLikeIntegrationTests : BasePostCommentLikeDomainCo
 		await Service.DeleteAsync(command, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedPostCommentLikeDeletedAsync(PostCommentLike, CancellationToken);
+		await EventHarness.ShouldHavePublishedPostCommentLikeDeletedAsync(command, PostCommentLike, CancellationToken);
 	}
 }
