@@ -1,5 +1,6 @@
 using InstaConnect.Chats.Domain.Features.ChatMessages.Models.Requests;
 using InstaConnect.Chats.Presentation.Features.Users.Abstractions;
+using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Chats.Presentation.Tests.Features.Chats.Utilities;
 using InstaConnect.Chats.Presentation.Tests.Features.Users.Utilities;
 using InstaConnect.Common.Presentation.Features.Messaging.Abstractions;
@@ -9,6 +10,50 @@ namespace InstaConnect.Chats.Presentation.Tests.Features.ChatMessages.Utilities;
 
 public static class ChatMessageEquals
 {
+	extension(ChatMessageAddedNotificationRequest r)
+	{
+		public bool Matches(AddChatMessageApiRequest request, ChatMessage entity)
+		{
+			return request.ParticipantOneId.EqualsOrdinalIgnoreCase(r.ChatMessage.ParticipantOneId) &&
+				   request.ParticipantTwoId.EqualsOrdinalIgnoreCase(r.ChatMessage.ParticipantTwoId) &&
+				   entity.Sender != null && entity.Sender.Matches(r.ChatMessage.Sender) &&
+				   entity.Chat != null && entity.Chat.Matches(r.ChatMessage.Chat) &&
+				   request.Body.Content == r.ChatMessage.Content &&
+				   entity.CreatedAtUtc == r.ChatMessage.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == r.ChatMessage.UpdatedAtUtc;
+		}
+	}
+
+	extension(ChatMessageUpdatedNotificationRequest r)
+	{
+		public bool Matches(UpdateChatMessageApiRequest request, ChatMessage entity)
+		{
+			return request.ParticipantOneId.EqualsOrdinalIgnoreCase(r.ChatMessage.ParticipantOneId) &&
+				   request.ParticipantTwoId.EqualsOrdinalIgnoreCase(r.ChatMessage.ParticipantTwoId) &&
+				   request.MessageId.EqualsOrdinalIgnoreCase(r.ChatMessage.MessageId) &&
+				   entity.Sender != null && entity.Sender.Matches(r.ChatMessage.Sender) &&
+				   entity.Chat != null && entity.Chat.Matches(r.ChatMessage.Chat) &&
+				   request.Body.Content == r.ChatMessage.Content &&
+				   entity.CreatedAtUtc == r.ChatMessage.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == r.ChatMessage.UpdatedAtUtc;
+		}
+	}
+
+	extension(ChatMessageDeletedNotificationRequest r)
+	{
+		public bool Matches(DeleteChatMessageApiRequest request, ChatMessage entity)
+		{
+			return request.ParticipantOneId.EqualsOrdinalIgnoreCase(r.ChatMessage.ParticipantOneId) &&
+				   request.ParticipantTwoId.EqualsOrdinalIgnoreCase(r.ChatMessage.ParticipantTwoId) &&
+				   request.MessageId.EqualsOrdinalIgnoreCase(r.ChatMessage.MessageId) &&
+				   entity.Sender != null && entity.Sender.Matches(r.ChatMessage.Sender) &&
+				   entity.Chat != null && entity.Chat.Matches(r.ChatMessage.Chat) &&
+				   entity.Content == r.ChatMessage.Content &&
+				   entity.CreatedAtUtc == r.ChatMessage.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == r.ChatMessage.UpdatedAtUtc;
+		}
+	}
+
 	extension(GetAllChatMessagesQueryRequest query)
 	{
 		public bool Matches(GetAllChatMessagesApiRequest request)

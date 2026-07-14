@@ -176,7 +176,7 @@ public class AddChatMessageIntegrationTests : BaseChatMessageApplicationCommandI
 		var notification = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(chatMessage);
+		notification.ShouldSatisfy(_request, chatMessage);
 	}
 
 	[Theory]
@@ -193,7 +193,7 @@ public class AddChatMessageIntegrationTests : BaseChatMessageApplicationCommandI
 		var notification = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(chatMessage);
+		notification.ShouldSatisfy(request, chatMessage);
 	}
 
 	[Theory]
@@ -210,7 +210,7 @@ public class AddChatMessageIntegrationTests : BaseChatMessageApplicationCommandI
 		var notification = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(chatMessage);
+		notification.ShouldSatisfy(request, chatMessage);
 	}
 
 	[Fact]
@@ -317,7 +317,7 @@ public class AddChatMessageIntegrationTests : BaseChatMessageApplicationCommandI
 		var notification = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(chatMessage);
+		notification.ShouldSatisfy(request, chatMessage);
 	}
 
 	[Theory]
@@ -334,7 +334,7 @@ public class AddChatMessageIntegrationTests : BaseChatMessageApplicationCommandI
 		var notification = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(chatMessage);
+		notification.ShouldSatisfy(request, chatMessage);
 	}
 
 	[Theory]
@@ -351,6 +351,6 @@ public class AddChatMessageIntegrationTests : BaseChatMessageApplicationCommandI
 		var notification = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(chatMessage);
+		notification.ShouldSatisfy(request, chatMessage);
 	}
 }

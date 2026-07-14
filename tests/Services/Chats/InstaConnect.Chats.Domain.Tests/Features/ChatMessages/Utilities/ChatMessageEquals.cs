@@ -46,6 +46,19 @@ public static class ChatMessageEquals
 		}
 	}
 
+	extension(ChatMessageAddedNotificationRequest request)
+	{
+		public bool Matches(AddChatMessageCommand command, ChatMessage entity)
+		{
+			return command.Id.Matches(request.ChatMessage.ParticipantOneId, request.ChatMessage.ParticipantTwoId) &&
+				   entity.Sender != null && entity.Sender.Matches(request.ChatMessage.Sender) &&
+				   entity.Chat != null && entity.Chat.Matches(request.ChatMessage.Chat) &&
+				   command.Content == request.ChatMessage.Content &&
+				   entity.CreatedAtUtc == request.ChatMessage.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == request.ChatMessage.UpdatedAtUtc;
+		}
+	}
+
 	extension(ChatMessageUpdatedNotificationRequest request)
 	{
 		public bool Matches(UpdateChatMessageCommand command, ChatMessage entity)

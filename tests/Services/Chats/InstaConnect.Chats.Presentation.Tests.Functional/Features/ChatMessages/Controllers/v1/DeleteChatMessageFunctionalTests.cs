@@ -332,7 +332,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var notification = await NotificationClient.DeletedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(ChatMessage);
+		notification.ShouldSatisfy(_request, ChatMessage);
 	}
 
 	[Theory]
@@ -348,7 +348,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var notification = await NotificationClient.DeletedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(ChatMessage);
+		notification.ShouldSatisfy(request, ChatMessage);
 	}
 
 	[Theory]
@@ -364,7 +364,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var notification = await NotificationClient.DeletedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(ChatMessage);
+		notification.ShouldSatisfy(request, ChatMessage);
 	}
 
 	[Theory]
@@ -380,7 +380,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var notification = await NotificationClient.DeletedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(ChatMessage);
+		notification.ShouldSatisfy(request, ChatMessage);
 	}
 
 	[Fact]
@@ -533,7 +533,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var notification = await NotificationClient.DeletedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(updatedChatMessage);
+		notification.ShouldSatisfy(request, updatedChatMessage);
 	}
 
 	[Theory]
@@ -552,7 +552,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var notification = await NotificationClient.DeletedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(updatedChatMessage);
+		notification.ShouldSatisfy(request, updatedChatMessage);
 	}
 
 	[Theory]
@@ -571,7 +571,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var notification = await NotificationClient.DeletedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(updatedChatMessage);
+		notification.ShouldSatisfy(request, updatedChatMessage);
 	}
 
 	[Theory]
@@ -590,6 +590,6 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var notification = await NotificationClient.DeletedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(updatedChatMessage);
+		notification.ShouldSatisfy(request, updatedChatMessage);
 	}
 }

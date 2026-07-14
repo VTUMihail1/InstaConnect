@@ -245,7 +245,7 @@ public class UpdateChatMessageIntegrationTests : BaseChatMessageApplicationComma
 		var notification = await NotificationClient.UpdatedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(chatMessage);
+		notification.ShouldSatisfy(_request, chatMessage);
 	}
 
 	[Theory]
@@ -262,7 +262,7 @@ public class UpdateChatMessageIntegrationTests : BaseChatMessageApplicationComma
 		var notification = await NotificationClient.UpdatedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(chatMessage);
+		notification.ShouldSatisfy(request, chatMessage);
 	}
 
 	[Theory]
@@ -279,7 +279,7 @@ public class UpdateChatMessageIntegrationTests : BaseChatMessageApplicationComma
 		var notification = await NotificationClient.UpdatedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(chatMessage);
+		notification.ShouldSatisfy(request, chatMessage);
 	}
 
 	[Theory]
@@ -296,7 +296,7 @@ public class UpdateChatMessageIntegrationTests : BaseChatMessageApplicationComma
 		var notification = await NotificationClient.UpdatedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(chatMessage);
+		notification.ShouldSatisfy(request, chatMessage);
 	}
 
 	[Fact]
@@ -453,7 +453,7 @@ public class UpdateChatMessageIntegrationTests : BaseChatMessageApplicationComma
 		var notification = await NotificationClient.UpdatedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(chatMessage);
+		notification.ShouldSatisfy(request, chatMessage);
 	}
 
 	[Theory]
@@ -472,7 +472,7 @@ public class UpdateChatMessageIntegrationTests : BaseChatMessageApplicationComma
 		var notification = await NotificationClient.UpdatedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(chatMessage);
+		notification.ShouldSatisfy(request, chatMessage);
 	}
 
 	[Theory]
@@ -491,7 +491,7 @@ public class UpdateChatMessageIntegrationTests : BaseChatMessageApplicationComma
 		var notification = await NotificationClient.UpdatedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(chatMessage);
+		notification.ShouldSatisfy(request, chatMessage);
 	}
 
 	[Theory]
@@ -510,6 +510,6 @@ public class UpdateChatMessageIntegrationTests : BaseChatMessageApplicationComma
 		var notification = await NotificationClient.UpdatedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(chatMessage);
+		notification.ShouldSatisfy(request, chatMessage);
 	}
 }
