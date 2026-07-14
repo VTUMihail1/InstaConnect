@@ -101,7 +101,7 @@ public class AddPostIntegrationTests : BasePostDomainCommandIntegrationTest
 		var post = await ServiceScope.GetPostByIdAsync(response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedPostAddedAsync(post, CancellationToken);
+		await EventHarness.ShouldHavePublishedPostAddedAsync(_command, post, CancellationToken);
 	}
 
 	[Theory]
@@ -117,6 +117,6 @@ public class AddPostIntegrationTests : BasePostDomainCommandIntegrationTest
 		var post = await ServiceScope.GetPostByIdAsync(response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedPostAddedAsync(post, CancellationToken);
+		await EventHarness.ShouldHavePublishedPostAddedAsync(command, post, CancellationToken);
 	}
 }

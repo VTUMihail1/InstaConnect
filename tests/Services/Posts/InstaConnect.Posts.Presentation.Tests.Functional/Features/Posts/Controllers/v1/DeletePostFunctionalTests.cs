@@ -242,7 +242,7 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		await Client.DeleteAsync(_request, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedPostDeletedAsync(Post, CancellationToken);
+		await EventHarness.ShouldHavePublishedPostDeletedAsync(_request, Post, CancellationToken);
 	}
 
 	[Theory]
@@ -257,7 +257,7 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		await Client.DeleteAsync(request, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedPostDeletedAsync(Post, CancellationToken);
+		await EventHarness.ShouldHavePublishedPostDeletedAsync(request, Post, CancellationToken);
 	}
 
 	[Theory]
@@ -272,6 +272,6 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		await Client.DeleteAsync(request, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedPostDeletedAsync(Post, CancellationToken);
+		await EventHarness.ShouldHavePublishedPostDeletedAsync(request, Post, CancellationToken);
 	}
 }

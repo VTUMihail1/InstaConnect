@@ -147,7 +147,7 @@ public class UpdatePostIntegrationTests : BasePostDomainCommandIntegrationTest
 		var post = await ServiceScope.GetPostByIdAsync(response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedPostUpdatedAsync(post, CancellationToken);
+		await EventHarness.ShouldHavePublishedPostUpdatedAsync(_command, post, CancellationToken);
 	}
 
 	[Theory]
@@ -163,7 +163,7 @@ public class UpdatePostIntegrationTests : BasePostDomainCommandIntegrationTest
 		var post = await ServiceScope.GetPostByIdAsync(response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedPostUpdatedAsync(post, CancellationToken);
+		await EventHarness.ShouldHavePublishedPostUpdatedAsync(command, post, CancellationToken);
 	}
 
 	[Theory]
@@ -179,6 +179,6 @@ public class UpdatePostIntegrationTests : BasePostDomainCommandIntegrationTest
 		var post = await ServiceScope.GetPostByIdAsync(response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedPostUpdatedAsync(post, CancellationToken);
+		await EventHarness.ShouldHavePublishedPostUpdatedAsync(command, post, CancellationToken);
 	}
 }

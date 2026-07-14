@@ -5,11 +5,54 @@ using InstaConnect.Posts.Application.Features.Posts.Models;
 using InstaConnect.Posts.Application.Features.Users.Abstractions;
 using InstaConnect.Posts.Application.Tests.Features.Posts.Utilities;
 using InstaConnect.Posts.Application.Tests.Features.Users.Utilities;
+using InstaConnect.Posts.Events.Features.Posts;
 
 namespace InstaConnect.Posts.Application.Tests.Features.Posts.Utilities;
 
 public static class PostEquals
 {
+	extension(PostAddedEventRequest r)
+	{
+		public bool Matches(AddPostCommandRequest request, Post entity)
+		{
+			return entity.Id.Matches(r.Post.Id) &&
+				   request.UserId.EqualsOrdinalIgnoreCase(r.Post.UserId) &&
+				   entity.User != null && entity.User.Matches(r.Post.User) &&
+				   request.Title == r.Post.Title &&
+				   request.Content == r.Post.Content &&
+				   entity.CreatedAtUtc == r.Post.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == r.Post.UpdatedAtUtc;
+		}
+	}
+
+	extension(PostUpdatedEventRequest r)
+	{
+		public bool Matches(UpdatePostCommandRequest request, Post entity)
+		{
+			return request.Id.EqualsOrdinalIgnoreCase(r.Post.Id) &&
+				   request.UserId.EqualsOrdinalIgnoreCase(r.Post.UserId) &&
+				   entity.User != null && entity.User.Matches(r.Post.User) &&
+				   request.Title == r.Post.Title &&
+				   request.Content == r.Post.Content &&
+				   entity.CreatedAtUtc == r.Post.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == r.Post.UpdatedAtUtc;
+		}
+	}
+
+	extension(PostDeletedEventRequest r)
+	{
+		public bool Matches(DeletePostCommandRequest request, Post entity)
+		{
+			return request.Id.EqualsOrdinalIgnoreCase(r.Post.Id) &&
+				   request.UserId.EqualsOrdinalIgnoreCase(r.Post.UserId) &&
+				   entity.User != null && entity.User.Matches(r.Post.User) &&
+				   entity.Title == r.Post.Title &&
+				   entity.Content == r.Post.Content &&
+				   entity.CreatedAtUtc == r.Post.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == r.Post.UpdatedAtUtc;
+		}
+	}
+
 	extension(GetAllPostsQuery query)
 	{
 		public bool Matches(GetAllPostsQueryRequest request)

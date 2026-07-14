@@ -2,6 +2,7 @@ using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Presentation.Features.Messaging.Abstractions;
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
+using InstaConnect.Posts.Events.Features.Posts;
 using InstaConnect.Posts.Presentation.Features.Users.Abstractions;
 using InstaConnect.Posts.Presentation.Tests.Features.Users.Utilities;
 
@@ -9,6 +10,48 @@ namespace InstaConnect.Posts.Presentation.Tests.Features.Posts.Utilities;
 
 public static class PostEquals
 {
+	extension(PostAddedEventRequest r)
+	{
+		public bool Matches(AddPostApiRequest request, Post entity)
+		{
+			return entity.Id.Matches(r.Post.Id) &&
+				   request.UserId.EqualsOrdinalIgnoreCase(r.Post.UserId) &&
+				   entity.User != null && entity.User.Matches(r.Post.User) &&
+				   request.Body.Title == r.Post.Title &&
+				   request.Body.Content == r.Post.Content &&
+				   entity.CreatedAtUtc == r.Post.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == r.Post.UpdatedAtUtc;
+		}
+	}
+
+	extension(PostUpdatedEventRequest r)
+	{
+		public bool Matches(UpdatePostApiRequest request, Post entity)
+		{
+			return request.Id.EqualsOrdinalIgnoreCase(r.Post.Id) &&
+				   request.UserId.EqualsOrdinalIgnoreCase(r.Post.UserId) &&
+				   entity.User != null && entity.User.Matches(r.Post.User) &&
+				   request.Body.Title == r.Post.Title &&
+				   request.Body.Content == r.Post.Content &&
+				   entity.CreatedAtUtc == r.Post.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == r.Post.UpdatedAtUtc;
+		}
+	}
+
+	extension(PostDeletedEventRequest r)
+	{
+		public bool Matches(DeletePostApiRequest request, Post entity)
+		{
+			return request.Id.EqualsOrdinalIgnoreCase(r.Post.Id) &&
+				   request.UserId.EqualsOrdinalIgnoreCase(r.Post.UserId) &&
+				   entity.User != null && entity.User.Matches(r.Post.User) &&
+				   entity.Title == r.Post.Title &&
+				   entity.Content == r.Post.Content &&
+				   entity.CreatedAtUtc == r.Post.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == r.Post.UpdatedAtUtc;
+		}
+	}
+
 	extension(GetAllPostsQueryRequest query)
 	{
 		public bool Matches(GetAllPostsApiRequest request)

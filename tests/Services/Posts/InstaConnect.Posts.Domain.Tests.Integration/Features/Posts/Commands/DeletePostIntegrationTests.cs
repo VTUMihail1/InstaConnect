@@ -103,7 +103,7 @@ public class DeletePostIntegrationTests : BasePostDomainCommandIntegrationTest
 		await Service.DeleteAsync(_command, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedPostDeletedAsync(Post, CancellationToken);
+		await EventHarness.ShouldHavePublishedPostDeletedAsync(_command, Post, CancellationToken);
 	}
 
 	[Theory]
@@ -118,7 +118,7 @@ public class DeletePostIntegrationTests : BasePostDomainCommandIntegrationTest
 		await Service.DeleteAsync(command, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedPostDeletedAsync(Post, CancellationToken);
+		await EventHarness.ShouldHavePublishedPostDeletedAsync(command, Post, CancellationToken);
 	}
 
 	[Theory]
@@ -133,6 +133,6 @@ public class DeletePostIntegrationTests : BasePostDomainCommandIntegrationTest
 		await Service.DeleteAsync(command, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedPostDeletedAsync(Post, CancellationToken);
+		await EventHarness.ShouldHavePublishedPostDeletedAsync(command, Post, CancellationToken);
 	}
 }
