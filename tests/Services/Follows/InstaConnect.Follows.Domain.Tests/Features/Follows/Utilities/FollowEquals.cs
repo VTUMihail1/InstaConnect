@@ -26,38 +26,38 @@ public static class FollowEquals
 		}
 	}
 
-	extension(FollowAddedEventRequest request)
+	extension(FollowAddedEventRequest r)
 	{
 		public bool Matches(AddFollowCommand command, Follow entity)
 		{
-			return command.FollowerId.Matches(request.Follow.FollowerId) &&
-				   command.FollowingId.Matches(request.Follow.FollowingId) &&
-				   entity.Follower != null && entity.Follower.Matches(request.Follow.Follower) &&
-				   entity.Following != null && entity.Following.Matches(request.Follow.Following) &&
-				   entity.CreatedAtUtc == request.Follow.CreatedAtUtc;
+			return command.FollowerId.Matches(r.Follow.FollowerId) &&
+				   command.FollowingId.Matches(r.Follow.FollowingId) &&
+				   entity.Follower != null && entity.Follower.Matches(r.Follow.Follower) &&
+				   entity.Following != null && entity.Following.Matches(r.Follow.Following) &&
+				   entity.CreatedAtUtc == r.Follow.CreatedAtUtc;
 		}
 	}
 
-	extension(FollowDeletedEventRequest request)
+	extension(FollowDeletedEventRequest r)
 	{
 		public bool Matches(DeleteFollowCommand command, Follow entity)
 		{
-			return entity.Id.Matches(command.Id) &&
-				   entity.Follower != null && entity.Follower.Matches(request.Follow.Follower) &&
-				   entity.Following != null && entity.Following.Matches(request.Follow.Following) &&
-				   entity.CreatedAtUtc == request.Follow.CreatedAtUtc;
+			return command.Id.Matches(r.Follow.FollowerId, r.Follow.FollowingId) &&
+				   entity.Follower != null && entity.Follower.Matches(r.Follow.Follower) &&
+				   entity.Following != null && entity.Following.Matches(r.Follow.Following) &&
+				   entity.CreatedAtUtc == r.Follow.CreatedAtUtc;
 		}
 	}
 
-	extension(FollowAddedNotificationRequest request)
+	extension(FollowAddedNotificationRequest r)
 	{
 		public bool Matches(AddFollowCommand command, Follow entity)
 		{
-			return command.FollowerId.Matches(request.Follow.FollowerId) &&
-				   command.FollowingId.Matches(request.Follow.FollowingId) &&
-				   entity.Follower != null && entity.Follower.Matches(request.Follow.Follower) &&
-				   entity.Following != null && entity.Following.Matches(request.Follow.Following) &&
-				   entity.CreatedAtUtc == request.Follow.CreatedAtUtc;
+			return command.FollowerId.Matches(r.Follow.FollowerId) &&
+				   command.FollowingId.Matches(r.Follow.FollowingId) &&
+				   entity.Follower != null && entity.Follower.Matches(r.Follow.Follower) &&
+				   entity.Following != null && entity.Following.Matches(r.Follow.Following) &&
+				   entity.CreatedAtUtc == r.Follow.CreatedAtUtc;
 		}
 	}
 

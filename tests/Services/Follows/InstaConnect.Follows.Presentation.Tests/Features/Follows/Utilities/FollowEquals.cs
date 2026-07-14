@@ -2,6 +2,7 @@ using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Presentation.Features.Messaging.Abstractions;
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 using InstaConnect.Follows.Domain.Features.Follows.Models.Requests;
+using InstaConnect.Follows.Events.Features.Follows;
 using InstaConnect.Follows.Presentation.Features.Users.Abstractions;
 using InstaConnect.Follows.Presentation.Tests.Features.Follows.Utilities;
 using InstaConnect.Follows.Presentation.Tests.Features.Users.Utilities;
@@ -10,6 +11,43 @@ namespace InstaConnect.Follows.Presentation.Tests.Features.Follows.Utilities;
 
 public static class FollowEquals
 {
+
+	extension(FollowAddedEventRequest r)
+	{
+		public bool Matches(AddFollowApiRequest request, Follow entity)
+		{
+			return request.FollowerId.EqualsOrdinalIgnoreCase(r.Follow.FollowerId) &&
+				   request.Body.FollowingId.EqualsOrdinalIgnoreCase(r.Follow.FollowingId) &&
+				   entity.Follower != null && entity.Follower.Matches(r.Follow.Follower) &&
+				   entity.Following != null && entity.Following.Matches(r.Follow.Following) &&
+				   entity.CreatedAtUtc == r.Follow.CreatedAtUtc;
+		}
+	}
+
+	extension(FollowDeletedEventRequest r)
+	{
+		public bool Matches(DeleteFollowApiRequest request, Follow entity)
+		{
+			return request.FollowerId.EqualsOrdinalIgnoreCase(r.Follow.FollowerId) &&
+				   request.FollowingId.EqualsOrdinalIgnoreCase(r.Follow.FollowingId) &&
+				   entity.Follower != null && entity.Follower.Matches(r.Follow.Follower) &&
+				   entity.Following != null && entity.Following.Matches(r.Follow.Following) &&
+				   entity.CreatedAtUtc == r.Follow.CreatedAtUtc;
+		}
+	}
+
+	extension(FollowAddedNotificationRequest r)
+	{
+		public bool Matches(AddFollowApiRequest request, Follow entity)
+		{
+			return request.FollowerId.EqualsOrdinalIgnoreCase(r.Follow.FollowerId) &&
+				   request.Body.FollowingId.EqualsOrdinalIgnoreCase(r.Follow.FollowingId) &&
+				   entity.Follower != null && entity.Follower.Matches(r.Follow.Follower) &&
+				   entity.Following != null && entity.Following.Matches(r.Follow.Following) &&
+				   entity.CreatedAtUtc == r.Follow.CreatedAtUtc;
+		}
+	}
+
 	extension(GetAllFollowsQueryRequest query)
 	{
 		public bool Matches(GetAllFollowsApiRequest request)

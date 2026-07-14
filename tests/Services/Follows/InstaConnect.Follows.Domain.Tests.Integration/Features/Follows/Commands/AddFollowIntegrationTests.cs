@@ -182,7 +182,7 @@ public class AddFollowIntegrationTests : BaseFollowDomainCommandIntegrationTest
 		var follow = await ServiceScope.GetFollowByIdAsync(response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedFollowAddedAsync(follow, CancellationToken);
+		await EventHarness.ShouldHavePublishedFollowAddedAsync(_command, follow, CancellationToken);
 	}
 
 	[Theory]
@@ -198,7 +198,7 @@ public class AddFollowIntegrationTests : BaseFollowDomainCommandIntegrationTest
 		var follow = await ServiceScope.GetFollowByIdAsync(response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedFollowAddedAsync(follow, CancellationToken);
+		await EventHarness.ShouldHavePublishedFollowAddedAsync(command, follow, CancellationToken);
 	}
 
 	[Theory]
@@ -214,7 +214,7 @@ public class AddFollowIntegrationTests : BaseFollowDomainCommandIntegrationTest
 		var follow = await ServiceScope.GetFollowByIdAsync(response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedFollowAddedAsync(follow, CancellationToken);
+		await EventHarness.ShouldHavePublishedFollowAddedAsync(command, follow, CancellationToken);
 	}
 
 	[Fact]
@@ -226,7 +226,7 @@ public class AddFollowIntegrationTests : BaseFollowDomainCommandIntegrationTest
 		var notification = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(follow);
+		notification.ShouldSatisfy(_command, follow);
 	}
 
 	[Theory]
@@ -243,7 +243,7 @@ public class AddFollowIntegrationTests : BaseFollowDomainCommandIntegrationTest
 		var notification = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(follow);
+		notification.ShouldSatisfy(command, follow);
 	}
 
 	[Theory]
@@ -260,6 +260,6 @@ public class AddFollowIntegrationTests : BaseFollowDomainCommandIntegrationTest
 		var notification = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(follow);
+		notification.ShouldSatisfy(command, follow);
 	}
 }

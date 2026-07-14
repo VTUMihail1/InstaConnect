@@ -115,7 +115,7 @@ public class AddFollowIntegrationTests : BaseFollowApplicationCommandIntegration
 	{
 		// Act
 		var response = await Sender.SendAsync(_request, CancellationToken);
-		var follow = await ServiceScope.GetFollowByIdAsync(response.Response, CancellationToken);
+		var follow = await ServiceScope.GetFollowByIdAsync(response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(follow, _request);
@@ -131,7 +131,7 @@ public class AddFollowIntegrationTests : BaseFollowApplicationCommandIntegration
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var follow = await ServiceScope.GetFollowByIdAsync(response.Response, CancellationToken);
+		var follow = await ServiceScope.GetFollowByIdAsync(response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(follow, request);
@@ -147,7 +147,7 @@ public class AddFollowIntegrationTests : BaseFollowApplicationCommandIntegration
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var follow = await ServiceScope.GetFollowByIdAsync(response.Response, CancellationToken);
+		var follow = await ServiceScope.GetFollowByIdAsync(response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(follow, request);
@@ -158,7 +158,7 @@ public class AddFollowIntegrationTests : BaseFollowApplicationCommandIntegration
 	{
 		// Act
 		var response = await Sender.SendAsync(_request, CancellationToken);
-		var follow = await ServiceScope.GetFollowByIdAsync(response.Response, CancellationToken);
+		var follow = await ServiceScope.GetFollowByIdAsync(response, CancellationToken);
 
 		// Assert
 		follow.ShouldSatisfy(_request);
@@ -174,7 +174,7 @@ public class AddFollowIntegrationTests : BaseFollowApplicationCommandIntegration
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var follow = await ServiceScope.GetFollowByIdAsync(response.Response, CancellationToken);
+		var follow = await ServiceScope.GetFollowByIdAsync(response, CancellationToken);
 
 		// Assert
 		follow.ShouldSatisfy(request);
@@ -190,7 +190,7 @@ public class AddFollowIntegrationTests : BaseFollowApplicationCommandIntegration
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var follow = await ServiceScope.GetFollowByIdAsync(response.Response, CancellationToken);
+		var follow = await ServiceScope.GetFollowByIdAsync(response, CancellationToken);
 
 		// Assert
 		follow.ShouldSatisfy(request);
@@ -201,10 +201,10 @@ public class AddFollowIntegrationTests : BaseFollowApplicationCommandIntegration
 	{
 		// Act
 		var response = await Sender.SendAsync(_request, CancellationToken);
-		var follow = await ServiceScope.GetFollowByIdAsync(response.Response, CancellationToken);
+		var follow = await ServiceScope.GetFollowByIdAsync(response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedFollowAddedAsync(follow, CancellationToken);
+		await EventHarness.ShouldHavePublishedFollowAddedAsync(_request, follow, CancellationToken);
 	}
 
 	[Theory]
@@ -217,10 +217,10 @@ public class AddFollowIntegrationTests : BaseFollowApplicationCommandIntegration
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var follow = await ServiceScope.GetFollowByIdAsync(response.Response, CancellationToken);
+		var follow = await ServiceScope.GetFollowByIdAsync(response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedFollowAddedAsync(follow, CancellationToken);
+		await EventHarness.ShouldHavePublishedFollowAddedAsync(request, follow, CancellationToken);
 	}
 
 	[Theory]
@@ -233,10 +233,10 @@ public class AddFollowIntegrationTests : BaseFollowApplicationCommandIntegration
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var follow = await ServiceScope.GetFollowByIdAsync(response.Response, CancellationToken);
+		var follow = await ServiceScope.GetFollowByIdAsync(response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedFollowAddedAsync(follow, CancellationToken);
+		await EventHarness.ShouldHavePublishedFollowAddedAsync(request, follow, CancellationToken);
 	}
 
 	[Fact]
@@ -244,11 +244,11 @@ public class AddFollowIntegrationTests : BaseFollowApplicationCommandIntegration
 	{
 		// Act
 		var response = await Sender.SendAsync(_request, CancellationToken);
-		var follow = await ServiceScope.GetFollowByIdAsync(response.Response, CancellationToken);
+		var follow = await ServiceScope.GetFollowByIdAsync(response, CancellationToken);
 		var notification = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(follow);
+		notification.ShouldSatisfy(_request, follow);
 	}
 
 	[Theory]
@@ -261,11 +261,11 @@ public class AddFollowIntegrationTests : BaseFollowApplicationCommandIntegration
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var follow = await ServiceScope.GetFollowByIdAsync(response.Response, CancellationToken);
+		var follow = await ServiceScope.GetFollowByIdAsync(response, CancellationToken);
 		var notification = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(follow);
+		notification.ShouldSatisfy(request, follow);
 	}
 
 	[Theory]
@@ -278,10 +278,10 @@ public class AddFollowIntegrationTests : BaseFollowApplicationCommandIntegration
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var follow = await ServiceScope.GetFollowByIdAsync(response.Response, CancellationToken);
+		var follow = await ServiceScope.GetFollowByIdAsync(response, CancellationToken);
 		var notification = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(follow);
+		notification.ShouldSatisfy(request, follow);
 	}
 }

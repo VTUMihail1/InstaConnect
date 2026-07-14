@@ -113,7 +113,7 @@ public class DeleteFollowIntegrationTests : BaseFollowApplicationCommandIntegrat
 		await Sender.SendAsync(_request, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedFollowDeletedAsync(Follow, CancellationToken);
+		await EventHarness.ShouldHavePublishedFollowDeletedAsync(_request, Follow, CancellationToken);
 	}
 
 	[Theory]
@@ -128,7 +128,7 @@ public class DeleteFollowIntegrationTests : BaseFollowApplicationCommandIntegrat
 		await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedFollowDeletedAsync(Follow, CancellationToken);
+		await EventHarness.ShouldHavePublishedFollowDeletedAsync(request, Follow, CancellationToken);
 	}
 
 	[Theory]
@@ -143,6 +143,6 @@ public class DeleteFollowIntegrationTests : BaseFollowApplicationCommandIntegrat
 		await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedFollowDeletedAsync(Follow, CancellationToken);
+		await EventHarness.ShouldHavePublishedFollowDeletedAsync(request, Follow, CancellationToken);
 	}
 }

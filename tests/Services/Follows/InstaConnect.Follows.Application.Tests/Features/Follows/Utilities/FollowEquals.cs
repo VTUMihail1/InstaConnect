@@ -5,11 +5,49 @@ using InstaConnect.Follows.Application.Features.Follows.Models;
 using InstaConnect.Follows.Application.Features.Users.Abstractions;
 using InstaConnect.Follows.Application.Tests.Features.Follows.Utilities;
 using InstaConnect.Follows.Application.Tests.Features.Users.Utilities;
+using InstaConnect.Follows.Events.Features.Follows;
 
 namespace InstaConnect.Follows.Application.Tests.Features.Follows.Utilities;
 
 public static class FollowEquals
 {
+
+	extension(FollowAddedEventRequest r)
+	{
+		public bool Matches(AddFollowCommandRequest request, Follow entity)
+		{
+			return request.FollowerId.EqualsOrdinalIgnoreCase(r.Follow.FollowerId) &&
+				   request.FollowingId.EqualsOrdinalIgnoreCase(r.Follow.FollowingId) &&
+				   entity.Follower != null && entity.Follower.Matches(r.Follow.Follower) &&
+				   entity.Following != null && entity.Following.Matches(r.Follow.Following) &&
+				   entity.CreatedAtUtc == r.Follow.CreatedAtUtc;
+		}
+	}
+
+	extension(FollowDeletedEventRequest r)
+	{
+		public bool Matches(DeleteFollowCommandRequest request, Follow entity)
+		{
+			return request.FollowerId.EqualsOrdinalIgnoreCase(r.Follow.FollowerId) &&
+				   request.FollowingId.EqualsOrdinalIgnoreCase(r.Follow.FollowingId) &&
+				   entity.Follower != null && entity.Follower.Matches(r.Follow.Follower) &&
+				   entity.Following != null && entity.Following.Matches(r.Follow.Following) &&
+				   entity.CreatedAtUtc == r.Follow.CreatedAtUtc;
+		}
+	}
+
+	extension(FollowAddedNotificationRequest r)
+	{
+		public bool Matches(AddFollowCommandRequest request, Follow entity)
+		{
+			return request.FollowerId.EqualsOrdinalIgnoreCase(r.Follow.FollowerId) &&
+				   request.FollowingId.EqualsOrdinalIgnoreCase(r.Follow.FollowingId) &&
+				   entity.Follower != null && entity.Follower.Matches(r.Follow.Follower) &&
+				   entity.Following != null && entity.Following.Matches(r.Follow.Following) &&
+				   entity.CreatedAtUtc == r.Follow.CreatedAtUtc;
+		}
+	}
+
 	extension(GetAllFollowsQuery query)
 	{
 		public bool Matches(GetAllFollowsQueryRequest request)

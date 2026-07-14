@@ -360,7 +360,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 	[UserNameNullData]
 	[UserNameEmptyData]
 	[UserNameDifferentCaseData]
-	public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndFollowerNameAreValid(
+	public async Task GetAllForFollowingAsync_ShouldReturnResponse_WhenRequestAndFollowerNameAreValid(
 		IStringTransformer transformer)
 	{
 		// Arrange
