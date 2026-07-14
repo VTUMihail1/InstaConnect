@@ -103,7 +103,7 @@ public class DeleteUserClaimIntegrationTests : BaseUserClaimApplicationCommandIn
 		await Sender.SendAsync(_request, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserClaimDeletedAsync(UserClaim, CancellationToken);
+		await EventHarness.ShouldHavePublishedUserClaimDeletedAsync(_request, UserClaim, CancellationToken);
 	}
 
 	[Theory]
@@ -118,6 +118,6 @@ public class DeleteUserClaimIntegrationTests : BaseUserClaimApplicationCommandIn
 		await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserClaimDeletedAsync(UserClaim, CancellationToken);
+		await EventHarness.ShouldHavePublishedUserClaimDeletedAsync(request, UserClaim, CancellationToken);
 	}
 }

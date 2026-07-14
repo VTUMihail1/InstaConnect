@@ -143,7 +143,7 @@ public class AddUserClaimIntegrationTests : BaseUserClaimApplicationCommandInteg
 		var userClaim = await ServiceScope.GetUserClaimByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserClaimAddedAsync(userClaim, CancellationToken);
+		await EventHarness.ShouldHavePublishedUserClaimAddedAsync(_request, userClaim, CancellationToken);
 	}
 
 	[Theory]
@@ -159,6 +159,6 @@ public class AddUserClaimIntegrationTests : BaseUserClaimApplicationCommandInteg
 		var userClaim = await ServiceScope.GetUserClaimByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserClaimAddedAsync(userClaim, CancellationToken);
+		await EventHarness.ShouldHavePublishedUserClaimAddedAsync(request, userClaim, CancellationToken);
 	}
 }

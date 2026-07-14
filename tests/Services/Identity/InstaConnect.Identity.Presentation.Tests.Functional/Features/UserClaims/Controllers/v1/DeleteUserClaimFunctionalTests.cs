@@ -216,7 +216,7 @@ public class DeleteUserClaimFunctionalTests : BaseUserClaimPresentationCommandFu
 		await Client.DeleteAsync(_request, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserClaimDeletedAsync(UserClaim, CancellationToken);
+		await EventHarness.ShouldHavePublishedUserClaimDeletedAsync(_request, UserClaim, CancellationToken);
 	}
 
 	[Theory]
@@ -231,6 +231,6 @@ public class DeleteUserClaimFunctionalTests : BaseUserClaimPresentationCommandFu
 		await Client.DeleteAsync(request, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserClaimDeletedAsync(UserClaim, CancellationToken);
+		await EventHarness.ShouldHavePublishedUserClaimDeletedAsync(request, UserClaim, CancellationToken);
 	}
 }

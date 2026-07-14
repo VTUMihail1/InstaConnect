@@ -84,7 +84,7 @@ public class DeleteUserClaimIntegrationTests : BaseUserClaimDomainCommandIntegra
 		await Service.DeleteAsync(_command, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserClaimDeletedAsync(UserClaim, CancellationToken);
+		await EventHarness.ShouldHavePublishedUserClaimDeletedAsync(_command, UserClaim, CancellationToken);
 	}
 
 	[Theory]
@@ -99,6 +99,6 @@ public class DeleteUserClaimIntegrationTests : BaseUserClaimDomainCommandIntegra
 		await Service.DeleteAsync(command, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserClaimDeletedAsync(UserClaim, CancellationToken);
+		await EventHarness.ShouldHavePublishedUserClaimDeletedAsync(command, UserClaim, CancellationToken);
 	}
 }

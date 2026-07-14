@@ -1,6 +1,8 @@
+using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Presentation.Features.Messaging.Abstractions;
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 using InstaConnect.Identity.Domain.Features.UserClaims.Models.Requests;
+using InstaConnect.Identity.Events.Features.UserClaims;
 using InstaConnect.Identity.Presentation.Features.Users.Abstractions;
 using InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Utilities;
 using InstaConnect.Identity.Presentation.Tests.Features.Users.Utilities;
@@ -11,6 +13,27 @@ namespace InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Utilities
 
 public static class UserClaimEquals
 {
+	extension(UserClaimAddedEventRequest r)
+	{
+		public bool Matches(AddUserClaimApiRequest request, UserClaim entity)
+		{
+			return request.Id.EqualsOrdinalIgnoreCase(r.UserClaim.Id) &&
+				   request.Body.Claim == r.UserClaim.Claim &&
+				   entity.User != null && entity.User.Matches(r.UserClaim.User) &&
+				   entity.CreatedAtUtc == r.UserClaim.CreatedAtUtc;
+		}
+	}
+
+	extension(UserClaimDeletedEventRequest r)
+	{
+		public bool Matches(DeleteUserClaimApiRequest request, UserClaim entity)
+		{
+			return request.Id.EqualsOrdinalIgnoreCase(r.UserClaim.Id) &&
+				   entity.User != null && entity.User.Matches(r.UserClaim.User) &&
+				   entity.CreatedAtUtc == r.UserClaim.CreatedAtUtc;
+		}
+	}
+
 	extension(GetAllUserClaimsQueryRequest query)
 	{
 		public bool Matches(GetAllUserClaimsApiRequest request)

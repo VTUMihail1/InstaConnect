@@ -272,7 +272,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 		var userClaim = await ServiceScope.GetUserClaimByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserClaimAddedAsync(userClaim, CancellationToken);
+		await EventHarness.ShouldHavePublishedUserClaimAddedAsync(_request, userClaim, CancellationToken);
 	}
 
 	[Theory]
@@ -287,6 +287,6 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 		var userClaim = await ServiceScope.GetUserClaimByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserClaimAddedAsync(userClaim, CancellationToken);
+		await EventHarness.ShouldHavePublishedUserClaimAddedAsync(request, userClaim, CancellationToken);
 	}
 }
