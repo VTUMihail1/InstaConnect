@@ -168,7 +168,7 @@ public static class FollowEquals
 		{
 			return follow.Id.FollowingId.Matches(request.FollowingId) &&
 				   follow.Follower != null &&
-				   follow.Follower.Name.Matches(request.FollowerName);
+				   follow.Follower.Name.Value.StartsWithOrdinalIgnoreCase(request.FollowerName);
 		}
 	}
 
