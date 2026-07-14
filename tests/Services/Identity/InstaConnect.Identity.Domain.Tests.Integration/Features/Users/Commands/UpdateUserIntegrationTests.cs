@@ -380,7 +380,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserUpdatedAsync(user, CancellationToken);
+		await EventHarness.ShouldHavePublishedUserUpdatedAsync(_command, user, CancellationToken);
 	}
 
 	[Theory]
@@ -396,7 +396,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserUpdatedAsync(user, CancellationToken);
+		await EventHarness.ShouldHavePublishedUserUpdatedAsync(command, user, CancellationToken);
 	}
 
 	[Theory]
@@ -412,7 +412,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserUpdatedAsync(user, CancellationToken);
+		await EventHarness.ShouldHavePublishedUserUpdatedAsync(command, user, CancellationToken);
 	}
 
 	[Fact]
@@ -426,7 +426,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserUpdatedAsync(user, CancellationToken);
+		await EventHarness.ShouldHavePublishedUserUpdatedAsync(command, user, CancellationToken);
 	}
 
 	[Theory]
@@ -442,7 +442,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserUpdatedAsync(user, CancellationToken);
+		await EventHarness.ShouldHavePublishedUserUpdatedAsync(command, user, CancellationToken);
 	}
 
 	[Theory]
@@ -458,7 +458,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserUpdatedAsync(user, CancellationToken);
+		await EventHarness.ShouldHavePublishedUserUpdatedAsync(command, user, CancellationToken);
 	}
 
 	[Fact]
@@ -472,7 +472,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserUpdatedAsync(user, CancellationToken);
+		await EventHarness.ShouldHavePublishedUserUpdatedAsync(command, user, CancellationToken);
 	}
 
 	[Theory]
@@ -488,7 +488,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserUpdatedAsync(user, CancellationToken);
+		await EventHarness.ShouldHavePublishedUserUpdatedAsync(command, user, CancellationToken);
 	}
 
 	[Theory]
@@ -504,7 +504,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserUpdatedAsync(user, CancellationToken);
+		await EventHarness.ShouldHavePublishedUserUpdatedAsync(command, user, CancellationToken);
 	}
 
 	[Fact]

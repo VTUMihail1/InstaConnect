@@ -72,7 +72,7 @@ public class DeleteUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 		await Service.DeleteAsync(_command, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserDeletedAsync(User, CancellationToken);
+		await EventHarness.ShouldHavePublishedUserDeletedAsync(_command, User, CancellationToken);
 	}
 
 	[Theory]
@@ -87,6 +87,6 @@ public class DeleteUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 		await Service.DeleteAsync(command, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserDeletedAsync(User, CancellationToken);
+		await EventHarness.ShouldHavePublishedUserDeletedAsync(command, User, CancellationToken);
 	}
 }

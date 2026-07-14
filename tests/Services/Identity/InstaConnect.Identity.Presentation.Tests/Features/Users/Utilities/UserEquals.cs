@@ -5,6 +5,7 @@ using InstaConnect.Common.Tests.Features.Extensions;
 using InstaConnect.Identity.Application.Features.Users.Abstractions;
 using InstaConnect.Identity.Domain.Features.Common.Helpers;
 using InstaConnect.Identity.Domain.Features.Users.Models.Requests;
+using InstaConnect.Identity.Events.Features.Users;
 using InstaConnect.Identity.Presentation.Features.Users.Abstractions;
 using InstaConnect.Identity.Presentation.Tests.Features.Users.Utilities;
 
@@ -12,6 +13,64 @@ namespace InstaConnect.Identity.Presentation.Tests.Features.Users.Utilities;
 
 public static class UserEquals
 {
+	extension(UserAddedEventRequest r)
+	{
+		public bool Matches(AddUserApiRequest request, User entity)
+		{
+			return entity.Id.Matches(r.User.Id) &&
+				   request.Form.Name.EqualsOrdinalIgnoreCase(r.User.Name) &&
+				   request.Form.Email.EqualsOrdinalIgnoreCase(r.User.Email) &&
+				   request.Form.FirstName == r.User.FirstName &&
+				   request.Form.LastName == r.User.LastName &&
+				   request.Form.ProfileImage?.GetUrl() == r.User.ProfileImageUrl &&
+				   entity.CreatedAtUtc == r.User.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == r.User.UpdatedAtUtc;
+		}
+	}
+
+	extension(UserUpdatedEventRequest r)
+	{
+		public bool Matches(UpdateCurrentUserApiRequest request, User entity)
+		{
+			return request.Id.EqualsOrdinalIgnoreCase(r.User.Id) &&
+				   request.Form.Name.EqualsOrdinalIgnoreCase(r.User.Name) &&
+				   request.Form.Email.EqualsOrdinalIgnoreCase(r.User.Email) &&
+				   request.Form.FirstName == r.User.FirstName &&
+				   request.Form.LastName == r.User.LastName &&
+				   (request.Form.ProfileImage == null ||
+				   request.Form.ProfileImage.GetUrl() == r.User.ProfileImageUrl) &&
+				   entity.CreatedAtUtc == r.User.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == r.User.UpdatedAtUtc;
+		}
+	}
+
+	extension(UserDeletedEventRequest r)
+	{
+		public bool Matches(DeleteUserApiRequest request, User entity)
+		{
+			return request.Id.EqualsOrdinalIgnoreCase(r.User.Id) &&
+				   entity.Name.Matches(r.User.Name) &&
+				   entity.Email.Matches(r.User.Email) &&
+				   entity.FirstName == r.User.FirstName &&
+				   entity.LastName == r.User.LastName &&
+				   entity.ProfileImage.Matches(r.User.ProfileImageUrl) &&
+				   entity.CreatedAtUtc == r.User.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == r.User.UpdatedAtUtc;
+		}
+
+		public bool Matches(DeleteCurrentUserApiRequest request, User entity)
+		{
+			return request.CurrentId.EqualsOrdinalIgnoreCase(r.User.Id) &&
+				   entity.Name.Matches(r.User.Name) &&
+				   entity.Email.Matches(r.User.Email) &&
+				   entity.FirstName == r.User.FirstName &&
+				   entity.LastName == r.User.LastName &&
+				   entity.ProfileImage.Matches(r.User.ProfileImageUrl) &&
+				   entity.CreatedAtUtc == r.User.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == r.User.UpdatedAtUtc;
+		}
+	}
+
 	extension(GetAllUsersQueryRequest query)
 	{
 		public bool Matches(GetAllUsersApiRequest request)

@@ -461,7 +461,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserAddedAsync(user, CancellationToken);
+		await EventHarness.ShouldHavePublishedUserAddedAsync(_request, user, CancellationToken);
 	}
 
 	[Theory]
@@ -476,7 +476,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserAddedAsync(user, CancellationToken);
+		await EventHarness.ShouldHavePublishedUserAddedAsync(request, user, CancellationToken);
 	}
 
 	[Fact]

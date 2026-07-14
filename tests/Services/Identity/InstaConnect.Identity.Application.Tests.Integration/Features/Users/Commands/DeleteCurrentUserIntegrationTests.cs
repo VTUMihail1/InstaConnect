@@ -79,7 +79,7 @@ public class DeleteCurrentUserIntegrationTests : BaseUserApplicationCommandInteg
 		await Sender.SendAsync(_request, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserDeletedAsync(User, CancellationToken);
+		await EventHarness.ShouldHavePublishedUserDeletedAsync(_request, User, CancellationToken);
 	}
 
 	[Theory]
@@ -94,6 +94,6 @@ public class DeleteCurrentUserIntegrationTests : BaseUserApplicationCommandInteg
 		await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserDeletedAsync(User, CancellationToken);
+		await EventHarness.ShouldHavePublishedUserDeletedAsync(request, User, CancellationToken);
 	}
 }

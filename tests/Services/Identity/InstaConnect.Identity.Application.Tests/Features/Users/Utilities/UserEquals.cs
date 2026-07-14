@@ -6,11 +6,70 @@ using InstaConnect.Identity.Application.Features.Users.Abstractions;
 using InstaConnect.Identity.Application.Features.Users.Models;
 using InstaConnect.Identity.Application.Tests.Features.Users.Utilities;
 using InstaConnect.Identity.Domain.Features.Common.Helpers;
+using InstaConnect.Identity.Events.Features.Users;
 
 namespace InstaConnect.Identity.Application.Tests.Features.Users.Utilities;
 
 public static class UserEquals
 {
+	extension(UserAddedEventRequest r)
+	{
+		public bool Matches(AddUserCommandRequest request, User entity)
+		{
+			return entity.Id.Matches(r.User.Id) &&
+				   request.Name.EqualsOrdinalIgnoreCase(r.User.Name) &&
+				   request.Email.EqualsOrdinalIgnoreCase(r.User.Email) &&
+				   request.FirstName == r.User.FirstName &&
+				   request.LastName == r.User.LastName &&
+				   request.ProfileImage?.GetUrl() == r.User.ProfileImageUrl &&
+				   entity.CreatedAtUtc == r.User.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == r.User.UpdatedAtUtc;
+		}
+	}
+
+	extension(UserUpdatedEventRequest r)
+	{
+		public bool Matches(UpdateCurrentUserCommandRequest request, User entity)
+		{
+			return request.Id.EqualsOrdinalIgnoreCase(r.User.Id) &&
+				   request.Name.EqualsOrdinalIgnoreCase(r.User.Name) &&
+				   request.Email.EqualsOrdinalIgnoreCase(r.User.Email) &&
+				   request.FirstName == r.User.FirstName &&
+				   request.LastName == r.User.LastName &&
+				   (request.ProfileImage == null ||
+				   request.ProfileImage.GetUrl() == r.User.ProfileImageUrl) &&
+				   entity.CreatedAtUtc == r.User.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == r.User.UpdatedAtUtc;
+		}
+	}
+
+	extension(UserDeletedEventRequest r)
+	{
+		public bool Matches(DeleteUserCommandRequest request, User entity)
+		{
+			return request.Id.EqualsOrdinalIgnoreCase(r.User.Id) &&
+				   entity.Name.Matches(r.User.Name) &&
+				   entity.Email.Matches(r.User.Email) &&
+				   entity.FirstName == r.User.FirstName &&
+				   entity.LastName == r.User.LastName &&
+				   entity.ProfileImage.Matches(r.User.ProfileImageUrl) &&
+				   entity.CreatedAtUtc == r.User.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == r.User.UpdatedAtUtc;
+		}
+
+		public bool Matches(DeleteCurrentUserCommandRequest request, User entity)
+		{
+			return request.CurrentId.EqualsOrdinalIgnoreCase(r.User.Id) &&
+				   entity.Name.Matches(r.User.Name) &&
+				   entity.Email.Matches(r.User.Email) &&
+				   entity.FirstName == r.User.FirstName &&
+				   entity.LastName == r.User.LastName &&
+				   entity.ProfileImage.Matches(r.User.ProfileImageUrl) &&
+				   entity.CreatedAtUtc == r.User.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == r.User.UpdatedAtUtc;
+		}
+	}
+
 	extension(GetAllUsersQuery query)
 	{
 		public bool Matches(GetAllUsersQueryRequest request)

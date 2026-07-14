@@ -164,7 +164,7 @@ public class AddUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserAddedAsync(user, CancellationToken);
+		await EventHarness.ShouldHavePublishedUserAddedAsync(_command, user, CancellationToken);
 	}
 
 	[Theory]
@@ -180,7 +180,7 @@ public class AddUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserAddedAsync(user, CancellationToken);
+		await EventHarness.ShouldHavePublishedUserAddedAsync(command, user, CancellationToken);
 	}
 
 	[Fact]

@@ -150,7 +150,7 @@ public class DeleteCurrentUserFunctionalTests : BaseUserPresentationCommandFunct
 		await Client.DeleteCurrentAsync(_request, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserDeletedAsync(User, CancellationToken);
+		await EventHarness.ShouldHavePublishedUserDeletedAsync(_request, User, CancellationToken);
 	}
 
 	[Theory]
@@ -165,6 +165,6 @@ public class DeleteCurrentUserFunctionalTests : BaseUserPresentationCommandFunct
 		await Client.DeleteCurrentAsync(request, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserDeletedAsync(User, CancellationToken);
+		await EventHarness.ShouldHavePublishedUserDeletedAsync(request, User, CancellationToken);
 	}
 }
