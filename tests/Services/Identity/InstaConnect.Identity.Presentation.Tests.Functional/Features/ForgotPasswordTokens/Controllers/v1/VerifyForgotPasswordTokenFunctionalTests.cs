@@ -371,7 +371,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenP
 		await Client.VerifyAsync(_request, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedForgotPasswordTokenDeletedRangeAsync(User, CancellationToken);
+		await EventHarness.ShouldHavePublishedForgotPasswordTokenDeletedRangeAsync(_request, User, CancellationToken);
 	}
 
 	[Theory]
@@ -386,7 +386,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenP
 		await Client.VerifyAsync(request, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedForgotPasswordTokenDeletedRangeAsync(User, CancellationToken);
+		await EventHarness.ShouldHavePublishedForgotPasswordTokenDeletedRangeAsync(request, User, CancellationToken);
 	}
 
 	[Theory]
@@ -401,6 +401,6 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenP
 		await Client.VerifyAsync(request, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedForgotPasswordTokenDeletedRangeAsync(User, CancellationToken);
+		await EventHarness.ShouldHavePublishedForgotPasswordTokenDeletedRangeAsync(request, User, CancellationToken);
 	}
 }

@@ -156,7 +156,7 @@ public class VerifyForgotPasswordTokenIntegrationTests : BaseForgotPasswordToken
 		await Service.VerifyAsync(_command, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedForgotPasswordTokenDeletedRangeAsync(User, CancellationToken);
+		await EventHarness.ShouldHavePublishedForgotPasswordTokenDeletedRangeAsync(_command, User, CancellationToken);
 	}
 
 	[Theory]
@@ -171,7 +171,7 @@ public class VerifyForgotPasswordTokenIntegrationTests : BaseForgotPasswordToken
 		await Service.VerifyAsync(command, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedForgotPasswordTokenDeletedRangeAsync(User, CancellationToken);
+		await EventHarness.ShouldHavePublishedForgotPasswordTokenDeletedRangeAsync(command, User, CancellationToken);
 	}
 
 	[Theory]
@@ -186,6 +186,6 @@ public class VerifyForgotPasswordTokenIntegrationTests : BaseForgotPasswordToken
 		await Service.VerifyAsync(command, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedForgotPasswordTokenDeletedRangeAsync(User, CancellationToken);
+		await EventHarness.ShouldHavePublishedForgotPasswordTokenDeletedRangeAsync(command, User, CancellationToken);
 	}
 }

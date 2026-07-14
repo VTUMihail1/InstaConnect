@@ -56,4 +56,15 @@ public static class ForgotPasswordTokenEquals
 				   entity.CreatedAtUtc == request.ForgotPasswordToken.CreatedAtUtc;
 		}
 	}
+
+	extension(ForgotPasswordTokenDeletedEventRequest request)
+	{
+		public bool Matches(VerifyForgotPasswordTokenCommand command, ForgotPasswordToken entity)
+		{
+			return entity.Id.Matches(request.ForgotPasswordToken.Id, request.ForgotPasswordToken.Value) &&
+				   entity.User != null && entity.User.Matches(request.ForgotPasswordToken.User) &&
+				   entity.ExpiresAtUtc == request.ForgotPasswordToken.ExpiresAtUtc &&
+				   entity.CreatedAtUtc == request.ForgotPasswordToken.CreatedAtUtc;
+		}
+	}
 }

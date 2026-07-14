@@ -79,7 +79,7 @@ public class AddForgotPasswordTokenIntegrationTests : BaseForgotPasswordTokenApp
 		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedForgotPasswordTokenAddedRangeAsync(user, CancellationToken);
+		await EventHarness.ShouldHavePublishedForgotPasswordTokenAddedRangeAsync(_request, user, CancellationToken);
 	}
 
 	[Theory]
@@ -95,6 +95,6 @@ public class AddForgotPasswordTokenIntegrationTests : BaseForgotPasswordTokenApp
 		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedForgotPasswordTokenAddedRangeAsync(user, CancellationToken);
+		await EventHarness.ShouldHavePublishedForgotPasswordTokenAddedRangeAsync(request, user, CancellationToken);
 	}
 }

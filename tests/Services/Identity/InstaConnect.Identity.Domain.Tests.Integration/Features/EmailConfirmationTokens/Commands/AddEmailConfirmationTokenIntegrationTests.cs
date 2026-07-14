@@ -3,7 +3,6 @@ using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Reque
 using InstaConnect.Identity.Domain.Tests.Features.EmailConfirmationTokens.Assertions;
 using InstaConnect.Identity.Domain.Tests.Features.EmailConfirmationTokens.Builders;
 using InstaConnect.Identity.Domain.Tests.Integration.Features.EmailConfirmationTokens.Utilities;
-using InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Assertions;
 using InstaConnect.Identity.Tests.Features.Users.DataAttributes.Name;
 using InstaConnect.Identity.Tests.Features.Users.Utilities;
 
@@ -84,7 +83,7 @@ public class AddEmailConfirmationTokenIntegrationTests : BaseEmailConfirmationTo
 		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedEmailConfirmationTokenAddedRangeAsync(user, CancellationToken);
+		await EventHarness.ShouldHavePublishedEmailConfirmationTokenAddedRangeAsync(_command, user, CancellationToken);
 	}
 
 	[Theory]
@@ -100,6 +99,6 @@ public class AddEmailConfirmationTokenIntegrationTests : BaseEmailConfirmationTo
 		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedEmailConfirmationTokenAddedRangeAsync(user, CancellationToken);
+		await EventHarness.ShouldHavePublishedEmailConfirmationTokenAddedRangeAsync(command, user, CancellationToken);
 	}
 }

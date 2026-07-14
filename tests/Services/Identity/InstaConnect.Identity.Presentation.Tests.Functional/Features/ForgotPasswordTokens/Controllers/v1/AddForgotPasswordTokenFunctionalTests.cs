@@ -1,5 +1,3 @@
-using InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.Assertions;
-
 namespace InstaConnect.Identity.Presentation.Tests.Functional.Features.ForgotPasswordTokens.Controllers.v1;
 
 public class AddForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenPresentationCommandFunctionalTest
@@ -138,7 +136,7 @@ public class AddForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenPres
 		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedForgotPasswordTokenAddedRangeAsync(user, CancellationToken);
+		await EventHarness.ShouldHavePublishedForgotPasswordTokenAddedRangeAsync(_request, user, CancellationToken);
 	}
 
 	[Theory]
@@ -154,6 +152,6 @@ public class AddForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenPres
 		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedForgotPasswordTokenAddedRangeAsync(user, CancellationToken);
+		await EventHarness.ShouldHavePublishedForgotPasswordTokenAddedRangeAsync(request, user, CancellationToken);
 	}
 }

@@ -3,7 +3,6 @@ using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Requests
 using InstaConnect.Identity.Domain.Tests.Features.ForgotPasswordTokens.Assertions;
 using InstaConnect.Identity.Domain.Tests.Features.ForgotPasswordTokens.Builders;
 using InstaConnect.Identity.Domain.Tests.Integration.Features.ForgotPasswordTokens.Utilities;
-using InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.Assertions;
 using InstaConnect.Identity.Tests.Features.Users.DataAttributes.Name;
 using InstaConnect.Identity.Tests.Features.Users.Utilities;
 
@@ -73,7 +72,7 @@ public class AddForgotPasswordTokenIntegrationTests : BaseForgotPasswordTokenDom
 		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedForgotPasswordTokenAddedRangeAsync(user, CancellationToken);
+		await EventHarness.ShouldHavePublishedForgotPasswordTokenAddedRangeAsync(_command, user, CancellationToken);
 	}
 
 	[Theory]
@@ -89,6 +88,6 @@ public class AddForgotPasswordTokenIntegrationTests : BaseForgotPasswordTokenDom
 		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedForgotPasswordTokenAddedRangeAsync(user, CancellationToken);
+		await EventHarness.ShouldHavePublishedForgotPasswordTokenAddedRangeAsync(command, user, CancellationToken);
 	}
 }

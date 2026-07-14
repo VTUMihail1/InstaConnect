@@ -1,3 +1,5 @@
+using InstaConnect.Common.Domain.Features.Common.Extensions;
+using InstaConnect.Identity.Events.Features.EmailConfirmationTokens;
 using InstaConnect.Identity.Presentation.Tests.Features.EmailConfirmationTokens.Utilities;
 using InstaConnect.Identity.Presentation.Tests.Features.Users.Utilities;
 
@@ -6,6 +8,29 @@ namespace InstaConnect.Identity.Presentation.Tests.Features.EmailConfirmationTok
 
 public static class EmailConfirmationTokenEquals
 {
+	extension(EmailConfirmationTokenAddedEventRequest r)
+	{
+		public bool Matches(AddEmailConfirmationTokenApiRequest request, EmailConfirmationToken entity)
+		{
+			return entity.Id.Matches(r.EmailConfirmationToken.Id, r.EmailConfirmationToken.Value) &&
+				   request.Name.EqualsOrdinalIgnoreCase(r.EmailConfirmationToken.User.Name) &&
+				   entity.User != null && entity.User.Matches(r.EmailConfirmationToken.User) &&
+				   entity.ExpiresAtUtc == r.EmailConfirmationToken.ExpiresAtUtc &&
+				   entity.CreatedAtUtc == r.EmailConfirmationToken.CreatedAtUtc;
+		}
+	}
+
+	extension(EmailConfirmationTokenDeletedEventRequest r)
+	{
+		public bool Matches(VerifyEmailConfirmationTokenApiRequest request, EmailConfirmationToken entity)
+		{
+			return entity.Id.Matches(r.EmailConfirmationToken.Id, r.EmailConfirmationToken.Value) &&
+				   entity.User != null && entity.User.Matches(r.EmailConfirmationToken.User) &&
+				   entity.ExpiresAtUtc == r.EmailConfirmationToken.ExpiresAtUtc &&
+				   entity.CreatedAtUtc == r.EmailConfirmationToken.CreatedAtUtc;
+		}
+	}
+
 	extension(AddEmailConfirmationTokenCommandRequest command)
 	{
 		public bool Matches(AddEmailConfirmationTokenApiRequest request)

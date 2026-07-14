@@ -55,4 +55,15 @@ public static class EmailConfirmationTokenEquals
 				   entity.CreatedAtUtc == request.EmailConfirmationToken.CreatedAtUtc;
 		}
 	}
+
+	extension(EmailConfirmationTokenDeletedEventRequest request)
+	{
+		public bool Matches(VerifyEmailConfirmationTokenCommand command, EmailConfirmationToken entity)
+		{
+			return entity.Id.Matches(request.EmailConfirmationToken.Id, request.EmailConfirmationToken.Value) &&
+				   entity.User != null && entity.User.Matches(request.EmailConfirmationToken.User) &&
+				   entity.ExpiresAtUtc == request.EmailConfirmationToken.ExpiresAtUtc &&
+				   entity.CreatedAtUtc == request.EmailConfirmationToken.CreatedAtUtc;
+		}
+	}
 }

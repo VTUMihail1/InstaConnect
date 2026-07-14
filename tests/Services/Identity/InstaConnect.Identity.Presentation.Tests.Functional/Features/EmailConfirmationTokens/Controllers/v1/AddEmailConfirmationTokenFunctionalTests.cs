@@ -1,5 +1,3 @@
-using InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Assertions;
-
 namespace InstaConnect.Identity.Presentation.Tests.Functional.Features.EmailConfirmationTokens.Controllers.v1;
 
 public class AddEmailConfirmationTokenFunctionalTests : BaseEmailConfirmationTokenPresentationCommandFunctionalTest
@@ -166,7 +164,7 @@ public class AddEmailConfirmationTokenFunctionalTests : BaseEmailConfirmationTok
 		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedEmailConfirmationTokenAddedRangeAsync(user, CancellationToken);
+		await EventHarness.ShouldHavePublishedEmailConfirmationTokenAddedRangeAsync(_request, user, CancellationToken);
 	}
 
 	[Theory]
@@ -182,6 +180,6 @@ public class AddEmailConfirmationTokenFunctionalTests : BaseEmailConfirmationTok
 		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedEmailConfirmationTokenAddedRangeAsync(user, CancellationToken);
+		await EventHarness.ShouldHavePublishedEmailConfirmationTokenAddedRangeAsync(request, user, CancellationToken);
 	}
 }

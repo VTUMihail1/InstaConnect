@@ -329,7 +329,7 @@ public class VerifyEmailConfirmationTokenFunctionalTests : BaseEmailConfirmation
 		await Client.VerifyAsync(_request, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(User, CancellationToken);
+		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(_request, User, CancellationToken);
 	}
 
 	[Theory]
@@ -344,7 +344,7 @@ public class VerifyEmailConfirmationTokenFunctionalTests : BaseEmailConfirmation
 		await Client.VerifyAsync(request, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(User, CancellationToken);
+		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(request, User, CancellationToken);
 	}
 
 	[Theory]
@@ -359,6 +359,6 @@ public class VerifyEmailConfirmationTokenFunctionalTests : BaseEmailConfirmation
 		await Client.VerifyAsync(request, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(User, CancellationToken);
+		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(request, User, CancellationToken);
 	}
 }

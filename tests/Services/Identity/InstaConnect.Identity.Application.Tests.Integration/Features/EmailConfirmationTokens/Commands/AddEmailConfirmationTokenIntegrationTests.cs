@@ -90,7 +90,7 @@ public class AddEmailConfirmationTokenIntegrationTests : BaseEmailConfirmationTo
 		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedEmailConfirmationTokenAddedRangeAsync(user, CancellationToken);
+		await EventHarness.ShouldHavePublishedEmailConfirmationTokenAddedRangeAsync(_request, user, CancellationToken);
 	}
 
 	[Theory]
@@ -106,6 +106,6 @@ public class AddEmailConfirmationTokenIntegrationTests : BaseEmailConfirmationTo
 		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedEmailConfirmationTokenAddedRangeAsync(user, CancellationToken);
+		await EventHarness.ShouldHavePublishedEmailConfirmationTokenAddedRangeAsync(request, user, CancellationToken);
 	}
 }
