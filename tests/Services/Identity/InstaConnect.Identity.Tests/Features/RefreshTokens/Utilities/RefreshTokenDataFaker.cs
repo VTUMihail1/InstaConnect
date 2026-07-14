@@ -9,12 +9,12 @@ public static class RefreshTokenDataFaker
 
 	public static DateTimeOffset GetCreatedAtUtc()
 	{
-		return DataFaker.GetRecentDate();
+		return DataFaker.GetSoonDate();
 	}
 
 	public static DateTimeOffset GetExpiresAtUtc()
 	{
-		return DataFaker.GetRecentDate();
+		return DataFaker.GetSoonDate();
 	}
 
 	public static int GetLifetimeSeconds()

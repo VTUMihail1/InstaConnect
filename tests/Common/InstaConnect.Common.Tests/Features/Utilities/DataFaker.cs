@@ -39,9 +39,9 @@ public abstract class DataFaker
 		return _faker.Random.Guid().ToString();
 	}
 
-	public static DateTimeOffset GetRecentDate()
+	public static DateTimeOffset GetSoonDate()
 	{
-		return _faker.Date.RecentOffset();
+		return _faker.Date.SoonOffset();
 	}
 
 	public static DateTimeOffset GetFutureDate(DateTimeOffset date)
