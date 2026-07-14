@@ -239,7 +239,7 @@ public class AddChatIntegrationTests : BaseChatApplicationCommandIntegrationTest
 		var chat = await ServiceScope.GetChatByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedChatAddedAsync(chat, CancellationToken);
+		await EventHarness.ShouldHavePublishedChatAddedAsync(_request, chat, CancellationToken);
 	}
 
 	[Theory]
@@ -255,7 +255,7 @@ public class AddChatIntegrationTests : BaseChatApplicationCommandIntegrationTest
 		var chat = await ServiceScope.GetChatByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedChatAddedAsync(chat, CancellationToken);
+		await EventHarness.ShouldHavePublishedChatAddedAsync(request, chat, CancellationToken);
 	}
 
 	[Theory]
@@ -271,6 +271,6 @@ public class AddChatIntegrationTests : BaseChatApplicationCommandIntegrationTest
 		var chat = await ServiceScope.GetChatByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedChatAddedAsync(chat, CancellationToken);
+		await EventHarness.ShouldHavePublishedChatAddedAsync(request, chat, CancellationToken);
 	}
 }

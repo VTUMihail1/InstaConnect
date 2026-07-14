@@ -2,6 +2,7 @@ using InstaConnect.Chats.Application.Features.Chats.Models;
 using InstaConnect.Chats.Application.Features.Users.Abstractions;
 using InstaConnect.Chats.Application.Tests.Features.Chats.Utilities;
 using InstaConnect.Chats.Application.Tests.Features.Users.Utilities;
+using InstaConnect.Chats.Events.Features.Chats;
 using InstaConnect.Common.Application.Features.Messaging.Abstractions;
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
@@ -10,6 +11,18 @@ namespace InstaConnect.Chats.Application.Tests.Features.Chats.Utilities;
 
 public static class ChatEquals
 {
+	extension(ChatAddedEventRequest r)
+	{
+		public bool Matches(AddChatCommandRequest request, Chat entity)
+		{
+			return request.ParticipantOneId.EqualsOrdinalIgnoreCase(r.Chat.ParticipantOneId) &&
+				   request.ParticipantTwoId.EqualsOrdinalIgnoreCase(r.Chat.ParticipantTwoId) &&
+				   entity.ParticipantOne != null && entity.ParticipantOne.Matches(r.Chat.ParticipantOne) &&
+				   entity.ParticipantTwo != null && entity.ParticipantTwo.Matches(r.Chat.ParticipantTwo) &&
+				   entity.CreatedAtUtc == r.Chat.CreatedAtUtc;
+		}
+	}
+
 	extension(GetAllChatsQuery query)
 	{
 		public bool Matches(GetAllChatsQueryRequest request)

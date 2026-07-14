@@ -1,4 +1,5 @@
 using InstaConnect.Chats.Domain.Features.Chats.Models.Requests;
+using InstaConnect.Chats.Events.Features.Chats;
 using InstaConnect.Chats.Presentation.Features.Users.Abstractions;
 using InstaConnect.Chats.Presentation.Tests.Features.Users.Utilities;
 using InstaConnect.Common.Domain.Features.Common.Extensions;
@@ -9,6 +10,18 @@ namespace InstaConnect.Chats.Presentation.Tests.Features.Chats.Utilities;
 
 public static class ChatEquals
 {
+	extension(ChatAddedEventRequest r)
+	{
+		public bool Matches(AddChatApiRequest request, Chat entity)
+		{
+			return request.ParticipantOneId.EqualsOrdinalIgnoreCase(r.Chat.ParticipantOneId) &&
+				   request.Body.ParticipantTwoId.EqualsOrdinalIgnoreCase(r.Chat.ParticipantTwoId) &&
+				   entity.ParticipantOne != null && entity.ParticipantOne.Matches(r.Chat.ParticipantOne) &&
+				   entity.ParticipantTwo != null && entity.ParticipantTwo.Matches(r.Chat.ParticipantTwo) &&
+				   entity.CreatedAtUtc == r.Chat.CreatedAtUtc;
+		}
+	}
+
 	extension(GetAllChatsQueryRequest query)
 	{
 		public bool Matches(GetAllChatsApiRequest request)
