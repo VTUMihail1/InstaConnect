@@ -146,7 +146,7 @@ public class AddPostCommentIntegrationTests : BasePostCommentDomainCommandIntegr
 		var postComment = await ServiceScope.GetPostCommentByIdAsync(response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedPostCommentAddedAsync(postComment, CancellationToken);
+		await EventHarness.ShouldHavePublishedPostCommentAddedAsync(_command, postComment, CancellationToken);
 	}
 
 	[Theory]
@@ -162,7 +162,7 @@ public class AddPostCommentIntegrationTests : BasePostCommentDomainCommandIntegr
 		var postComment = await ServiceScope.GetPostCommentByIdAsync(response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedPostCommentAddedAsync(postComment, CancellationToken);
+		await EventHarness.ShouldHavePublishedPostCommentAddedAsync(command, postComment, CancellationToken);
 	}
 
 	[Theory]
@@ -178,6 +178,6 @@ public class AddPostCommentIntegrationTests : BasePostCommentDomainCommandIntegr
 		var postComment = await ServiceScope.GetPostCommentByIdAsync(response, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedPostCommentAddedAsync(postComment, CancellationToken);
+		await EventHarness.ShouldHavePublishedPostCommentAddedAsync(command, postComment, CancellationToken);
 	}
 }

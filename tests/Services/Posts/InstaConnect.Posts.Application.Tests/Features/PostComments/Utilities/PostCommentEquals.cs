@@ -7,11 +7,53 @@ using InstaConnect.Posts.Application.Tests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Application.Tests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Application.Tests.Features.Posts.Utilities;
 using InstaConnect.Posts.Application.Tests.Features.Users.Utilities;
+using InstaConnect.Posts.Events.Features.PostComments;
 
 namespace InstaConnect.Posts.Application.Tests.Features.PostComments.Utilities;
 
 public static class PostCommentEquals
 {
+	extension(PostCommentAddedEventRequest r)
+	{
+		public bool Matches(AddPostCommentCommandRequest request, PostComment entity)
+		{
+			return entity.Id.Matches(r.PostComment.Id, r.PostComment.CommentId) &&
+				   request.UserId.EqualsOrdinalIgnoreCase(r.PostComment.UserId) &&
+				   entity.User != null && entity.User.Matches(r.PostComment.User) &&
+				   request.Content == r.PostComment.Content &&
+				   entity.CreatedAtUtc == r.PostComment.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == r.PostComment.UpdatedAtUtc;
+		}
+	}
+
+	extension(PostCommentUpdatedEventRequest r)
+	{
+		public bool Matches(UpdatePostCommentCommandRequest request, PostComment entity)
+		{
+			return request.Id.EqualsOrdinalIgnoreCase(r.PostComment.Id) &&
+				   request.CommentId.EqualsOrdinalIgnoreCase(r.PostComment.CommentId) &&
+				   request.UserId.EqualsOrdinalIgnoreCase(r.PostComment.UserId) &&
+				   entity.User != null && entity.User.Matches(r.PostComment.User) &&
+				   request.Content == r.PostComment.Content &&
+				   entity.CreatedAtUtc == r.PostComment.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == r.PostComment.UpdatedAtUtc;
+		}
+	}
+
+	extension(PostCommentDeletedEventRequest r)
+	{
+		public bool Matches(DeletePostCommentCommandRequest request, PostComment entity)
+		{
+			return request.Id.EqualsOrdinalIgnoreCase(r.PostComment.Id) &&
+				   request.CommentId.EqualsOrdinalIgnoreCase(r.PostComment.CommentId) &&
+				   request.UserId.EqualsOrdinalIgnoreCase(r.PostComment.UserId) &&
+				   entity.User != null && entity.User.Matches(r.PostComment.User) &&
+				   entity.Content == r.PostComment.Content &&
+				   entity.CreatedAtUtc == r.PostComment.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == r.PostComment.UpdatedAtUtc;
+		}
+	}
+
 	extension(GetAllPostCommentsQuery query)
 	{
 		public bool Matches(GetAllPostCommentsQueryRequest request)
