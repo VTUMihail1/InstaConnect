@@ -6,11 +6,36 @@ using InstaConnect.Posts.Application.Features.Users.Abstractions;
 using InstaConnect.Posts.Application.Tests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Application.Tests.Features.Posts.Utilities;
 using InstaConnect.Posts.Application.Tests.Features.Users.Utilities;
+using InstaConnect.Posts.Events.Features.PostLikes;
 
 namespace InstaConnect.Posts.Application.Tests.Features.PostLikes.Utilities;
 
 public static class PostLikeEquals
 {
+	extension(PostLikeAddedEventRequest r)
+	{
+		public bool Matches(AddPostLikeCommandRequest request, PostLike entity)
+		{
+			return request.Id.EqualsOrdinalIgnoreCase(r.PostLike.Id) &&
+				   request.UserId.EqualsOrdinalIgnoreCase(r.PostLike.UserId) &&
+				   entity.User != null && entity.User.Matches(r.PostLike.User) &&
+				   entity.Post != null && entity.Post.Matches(r.PostLike.Post) &&
+				   entity.CreatedAtUtc == r.PostLike.CreatedAtUtc;
+		}
+	}
+
+	extension(PostLikeDeletedEventRequest r)
+	{
+		public bool Matches(DeletePostLikeCommandRequest request, PostLike entity)
+		{
+			return request.Id.EqualsOrdinalIgnoreCase(r.PostLike.Id) &&
+				   request.UserId.EqualsOrdinalIgnoreCase(r.PostLike.UserId) &&
+				   entity.User != null && entity.User.Matches(r.PostLike.User) &&
+				   entity.Post != null && entity.Post.Matches(r.PostLike.Post) &&
+				   entity.CreatedAtUtc == r.PostLike.CreatedAtUtc;
+		}
+	}
+
 	extension(GetAllPostLikesQuery query)
 	{
 		public bool Matches(GetAllPostLikesQueryRequest request)
