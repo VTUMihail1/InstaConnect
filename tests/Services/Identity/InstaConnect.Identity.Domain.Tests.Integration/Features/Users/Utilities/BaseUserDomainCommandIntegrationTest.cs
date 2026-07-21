@@ -11,6 +11,6 @@ public abstract class BaseUserDomainCommandIntegrationTest : BaseUserWebTest
 	protected BaseUserDomainCommandIntegrationTest(IdentityWebApplicationFactory webApplicationFactory)
 		: base(webApplicationFactory)
 	{
-		Service = ServiceScope.GetUserCommandService();
+		Service = ServiceScope.GetCommandService();
 	}
 }

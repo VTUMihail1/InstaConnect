@@ -86,7 +86,7 @@ public class AddUserClaimIntegrationTests : BaseUserClaimApplicationCommandInteg
 	{
 		// Act
 		var response = await Sender.SendAsync(_request, CancellationToken);
-		var userClaim = await ServiceScope.GetUserClaimByIdAsync(response, CancellationToken);
+		var userClaim = await ServiceScope.GetClaimByIdAsync(response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(_request, userClaim);
@@ -102,7 +102,7 @@ public class AddUserClaimIntegrationTests : BaseUserClaimApplicationCommandInteg
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var userClaim = await ServiceScope.GetUserClaimByIdAsync(response, CancellationToken);
+		var userClaim = await ServiceScope.GetClaimByIdAsync(response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(request, userClaim);
@@ -113,7 +113,7 @@ public class AddUserClaimIntegrationTests : BaseUserClaimApplicationCommandInteg
 	{
 		// Act
 		var response = await Sender.SendAsync(_request, CancellationToken);
-		var userClaim = await ServiceScope.GetUserClaimByIdAsync(response, CancellationToken);
+		var userClaim = await ServiceScope.GetClaimByIdAsync(response, CancellationToken);
 
 		// Assert
 		userClaim.ShouldSatisfy(_request);
@@ -129,7 +129,7 @@ public class AddUserClaimIntegrationTests : BaseUserClaimApplicationCommandInteg
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var userClaim = await ServiceScope.GetUserClaimByIdAsync(response, CancellationToken);
+		var userClaim = await ServiceScope.GetClaimByIdAsync(response, CancellationToken);
 
 		// Assert
 		userClaim.ShouldSatisfy(_request);
@@ -140,7 +140,7 @@ public class AddUserClaimIntegrationTests : BaseUserClaimApplicationCommandInteg
 	{
 		// Act
 		var response = await Sender.SendAsync(_request, CancellationToken);
-		var userClaim = await ServiceScope.GetUserClaimByIdAsync(response, CancellationToken);
+		var userClaim = await ServiceScope.GetClaimByIdAsync(response, CancellationToken);
 		var eventRequest = await EventHarness.PublishedClaimAddedEventRequest(CancellationToken);
 
 		// Assert
@@ -157,7 +157,7 @@ public class AddUserClaimIntegrationTests : BaseUserClaimApplicationCommandInteg
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var userClaim = await ServiceScope.GetUserClaimByIdAsync(response, CancellationToken);
+		var userClaim = await ServiceScope.GetClaimByIdAsync(response, CancellationToken);
 		var eventRequest = await EventHarness.PublishedClaimAddedEventRequest(CancellationToken);
 
 		// Assert

@@ -12,9 +12,9 @@ public static class ValidationExceptionAssertions
 	extension(Func<Task> func)
 	{
 		public async Task ShouldThrowInvalidValidationExceptionAsync<TRequest, TValue>(
+			TRequest request,
 			Expression<Func<TRequest, TValue>> propertyExpression,
 			IMessageTransformer<TValue> messageTransformer,
-			TRequest request,
 			CancellationToken cancellationToken)
 		{
 			var exception = await func.Should().ThrowAsync<InvalidValidationException>().WithMessage(CommonExceptionErrorMessages.GetInvalidValidation());

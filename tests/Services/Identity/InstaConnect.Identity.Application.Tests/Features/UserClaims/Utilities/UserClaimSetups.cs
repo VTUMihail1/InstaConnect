@@ -8,7 +8,7 @@ public static class UserClaimSetups
 {
 	extension(IServiceScope serviceScope)
 	{
-		internal async Task<UserClaim?> GetUserClaimByIdAsync(
+		internal async Task<UserClaim?> GetClaimByIdAsync(
 		UserClaimIdCommandResponse id,
 		CancellationToken cancellationToken)
 		{
@@ -17,11 +17,11 @@ public static class UserClaimSetups
 				cancellationToken);
 		}
 
-		public async Task<UserClaim?> GetUserClaimByIdAsync(
+		public async Task<UserClaim?> GetClaimByIdAsync(
 		AddUserClaimCommandResponse response,
 		CancellationToken cancellationToken)
 		{
-			return await serviceScope.GetUserClaimByIdAsync(
+			return await serviceScope.GetClaimByIdAsync(
 				response.Response,
 				cancellationToken);
 		}

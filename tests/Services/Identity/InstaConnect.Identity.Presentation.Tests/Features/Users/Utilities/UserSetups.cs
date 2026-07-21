@@ -6,7 +6,7 @@ public static class UserSetups
 {
 	extension(IServiceScope serviceScope)
 	{
-		internal async Task<User?> GetUserByIdAsync(
+		internal async Task<User?> GetByIdAsync(
 		UserIdApiResponse id,
 		CancellationToken cancellationToken)
 		{
@@ -15,32 +15,32 @@ public static class UserSetups
 				cancellationToken);
 		}
 
-		public async Task<User?> GetUserByIdAsync(
+		public async Task<User?> GetByIdAsync(
 		AddUserApiResponse response,
 		CancellationToken cancellationToken)
 		{
-			return await serviceScope.GetUserByIdAsync(
+			return await serviceScope.GetByIdAsync(
 				response.Response,
 				cancellationToken);
 		}
 
-		public async Task<User?> GetUserByIdAsync(
+		public async Task<User?> GetByIdAsync(
 		UpdateCurrentUserApiResponse response,
 		CancellationToken cancellationToken)
 		{
-			return await serviceScope.GetUserByIdAsync(
+			return await serviceScope.GetByIdAsync(
 				response.Response,
 				cancellationToken);
 		}
 
-		public async Task<GetCurrentUserByIdApiResponse> GetResponseFromCache(
+		public async Task<GetCurrentUserByIdApiResponse> GetCachedAsync(
 		GetCurrentUserByIdApiRequest request,
 		CancellationToken cancellationToken)
 		{
 			return (await serviceScope.GetCacheHandler().GetAsync<GetCurrentUserByIdApiResponse>(new GetCurrentUserByIdQueryRequest(request.CurrentId).Key, cancellationToken))!;
 		}
 
-		public async Task<GetCurrentUserDetailsByIdApiResponse?> GetResponseFromCache(
+		public async Task<GetCurrentUserDetailsByIdApiResponse?> GetCachedAsync(
 		GetCurrentUserDetailsByIdApiRequest request,
 		CancellationToken cancellationToken)
 		{

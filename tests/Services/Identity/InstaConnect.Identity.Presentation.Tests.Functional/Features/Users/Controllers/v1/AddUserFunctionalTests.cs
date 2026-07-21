@@ -380,7 +380,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 	{
 		// Act
 		var response = await Client.AddAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(_request, user);
@@ -395,7 +395,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 
 		// Act
 		var response = await Client.AddAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(request, user);
@@ -406,7 +406,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 	{
 		// Act
 		var response = await Client.AddAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(_request, PasswordHasher);
@@ -421,7 +421,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 
 		// Act
 		var response = await Client.AddAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(request, PasswordHasher);
@@ -432,7 +432,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 	{
 		// Act
 		var response = await Client.AddAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.EmailConfirmationTokens.ShouldNotBeEmpty();
@@ -447,7 +447,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 
 		// Act
 		var response = await Client.AddAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.EmailConfirmationTokens.ShouldNotBeEmpty();
@@ -458,7 +458,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 	{
 		// Act
 		var response = await Client.AddAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var eventRequest = await EventHarness.PublishedAddedEventRequest(CancellationToken);
 
 		// Assert
@@ -474,7 +474,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 
 		// Act
 		var response = await Client.AddAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var eventRequest = await EventHarness.PublishedAddedEventRequest(CancellationToken);
 
 		// Assert
@@ -486,7 +486,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 	{
 		// Act
 		var response = await Client.AddAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var eventRequests = await EventHarness.PublishedEmailConfirmationTokenAddedEventRequestRange(CancellationToken);
 
 		// Assert
@@ -502,7 +502,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 
 		// Act
 		var response = await Client.AddAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var eventRequests = await EventHarness.PublishedEmailConfirmationTokenAddedEventRequestRange(CancellationToken);
 
 		// Assert

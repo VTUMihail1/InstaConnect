@@ -8,28 +8,28 @@ public static class ForgotPasswordTokenValidationAssertions
 			IStringMessageTransformer messageTransformer,
 			VerifyForgotPasswordTokenCommandRequest request)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Id, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.Id, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForValue(
 			IStringMessageTransformer messageTransformer,
 			VerifyForgotPasswordTokenCommandRequest request)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Value, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.Value, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForPassword(
 			IStringMessageTransformer messageTransformer,
 			VerifyForgotPasswordTokenCommandRequest request)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Password, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.Password, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForConfirmPassword(
 			IStringMessageTransformer messageTransformer,
 			VerifyForgotPasswordTokenCommandRequest request)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.ConfirmPassword, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.ConfirmPassword, messageTransformer);
 		}
 	}
 
@@ -39,7 +39,7 @@ public static class ForgotPasswordTokenValidationAssertions
 			IStringMessageTransformer messageTransformer,
 			AddForgotPasswordTokenCommandRequest request)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Name, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.Name, messageTransformer);
 		}
 	}
 }

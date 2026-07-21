@@ -8,14 +8,14 @@ public static class RefreshTokenValidationAssertions
 			IStringMessageTransformer messageTransformer,
 			DeleteCurrentRefreshTokenCommandRequest request)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Id, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.Id, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForValue(
 			IStringMessageTransformer messageTransformer,
 			DeleteCurrentRefreshTokenCommandRequest request)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Value, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.Value, messageTransformer);
 		}
 	}
 
@@ -25,14 +25,14 @@ public static class RefreshTokenValidationAssertions
 			IStringMessageTransformer messageTransformer,
 			IssueRefreshTokenCommandRequest request)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Name, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.Name, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForPassword(
 			IStringMessageTransformer messageTransformer,
 			IssueRefreshTokenCommandRequest request)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Password, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.Password, messageTransformer);
 		}
 	}
 
@@ -42,14 +42,14 @@ public static class RefreshTokenValidationAssertions
 			IStringMessageTransformer messageTransformer,
 			RotateRefreshTokenCommandRequest request)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Id, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.Id, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForValue(
 			IStringMessageTransformer messageTransformer,
 			RotateRefreshTokenCommandRequest request)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Value, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.Value, messageTransformer);
 		}
 	}
 }

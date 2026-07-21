@@ -75,7 +75,7 @@ public class GetCurrentUserByIdQueryHandlerIntegrationTests : BaseUserApplicatio
 	{
 		// Act
 		await Sender.SendAsync(_request, CancellationToken);
-		var response = await ServiceScope.GetResponseFromCache(_request, CancellationToken);
+		var response = await ServiceScope.GetCachedAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(_request, User);
@@ -91,7 +91,7 @@ public class GetCurrentUserByIdQueryHandlerIntegrationTests : BaseUserApplicatio
 
 		// Act
 		await Sender.SendAsync(request, CancellationToken);
-		var response = await ServiceScope.GetResponseFromCache(request, CancellationToken);
+		var response = await ServiceScope.GetCachedAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(request, User);

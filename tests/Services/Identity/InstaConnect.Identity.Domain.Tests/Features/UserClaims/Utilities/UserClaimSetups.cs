@@ -6,12 +6,12 @@ public static class UserClaimDomainSetups
 {
 	extension(IServiceProvider serviceProvider)
 	{
-		public IUserClaimCommandService GetUserClaimCommandService()
+		public IUserClaimCommandService GetClaimCommandService()
 		{
 			return serviceProvider.GetRequiredService<IUserClaimCommandService>();
 		}
 
-		public IUserClaimQueryService GetUserClaimQueryService()
+		public IUserClaimQueryService GetClaimQueryService()
 		{
 			return serviceProvider.GetRequiredService<IUserClaimQueryService>();
 		}
@@ -19,14 +19,14 @@ public static class UserClaimDomainSetups
 
 	extension(IServiceScope serviceScope)
 	{
-		public IUserClaimCommandService GetUserClaimCommandService()
+		public IUserClaimCommandService GetClaimCommandService()
 		{
-			return serviceScope.ServiceProvider.GetUserClaimCommandService();
+			return serviceScope.ServiceProvider.GetClaimCommandService();
 		}
 
-		public IUserClaimQueryService GetUserClaimQueryService()
+		public IUserClaimQueryService GetClaimQueryService()
 		{
-			return serviceScope.ServiceProvider.GetUserClaimQueryService();
+			return serviceScope.ServiceProvider.GetClaimQueryService();
 		}
 	}
 }

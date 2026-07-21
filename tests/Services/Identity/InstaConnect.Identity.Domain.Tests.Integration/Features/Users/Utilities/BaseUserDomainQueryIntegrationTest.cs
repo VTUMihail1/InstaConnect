@@ -11,6 +11,6 @@ public abstract class BaseUserDomainQueryIntegrationTest : BaseUserWebTest
 	protected BaseUserDomainQueryIntegrationTest(IdentityWebApplicationFactory webApplicationFactory)
 		: base(webApplicationFactory)
 	{
-		Service = ServiceScope.GetUserQueryService();
+		Service = ServiceScope.GetQueryService();
 	}
 }

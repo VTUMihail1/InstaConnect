@@ -8,14 +8,14 @@ public static class EmailConfirmationTokenValidationAssertions
 			IStringMessageTransformer messageTransformer,
 			VerifyEmailConfirmationTokenCommandRequest request)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Id, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.Id, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForValue(
 			IStringMessageTransformer messageTransformer,
 			VerifyEmailConfirmationTokenCommandRequest request)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Value, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.Value, messageTransformer);
 		}
 	}
 
@@ -25,7 +25,7 @@ public static class EmailConfirmationTokenValidationAssertions
 			IStringMessageTransformer messageTransformer,
 			AddEmailConfirmationTokenCommandRequest request)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Name, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.Name, messageTransformer);
 		}
 	}
 }

@@ -35,14 +35,14 @@ public static class UserSetups
 				cancellationToken);
 		}
 
-		public async Task<GetCurrentUserByIdQueryResponse> GetResponseFromCache(
+		public async Task<GetCurrentUserByIdQueryResponse> GetCachedAsync(
 		GetCurrentUserByIdQueryRequest request,
 		CancellationToken cancellationToken)
 		{
 			return (await serviceScope.GetCacheHandler().GetAsync<GetCurrentUserByIdQueryResponse>(request.Key, cancellationToken))!;
 		}
 
-		public async Task<GetCurrentUserDetailsByIdQueryResponse?> GetResponseFromCache(
+		public async Task<GetCurrentUserDetailsByIdQueryResponse?> GetCachedAsync(
 		GetCurrentUserDetailsByIdQueryRequest request,
 		CancellationToken cancellationToken)
 		{

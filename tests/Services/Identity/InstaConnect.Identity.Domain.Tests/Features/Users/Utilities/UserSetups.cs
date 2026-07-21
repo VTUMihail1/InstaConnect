@@ -6,12 +6,12 @@ public static class UserSetups
 {
 	extension(IServiceProvider serviceProvider)
 	{
-		public IUserCommandService GetUserCommandService()
+		public IUserCommandService GetCommandService()
 		{
 			return serviceProvider.GetRequiredService<IUserCommandService>();
 		}
 
-		public IUserQueryService GetUserQueryService()
+		public IUserQueryService GetQueryService()
 		{
 			return serviceProvider.GetRequiredService<IUserQueryService>();
 		}
@@ -19,14 +19,14 @@ public static class UserSetups
 
 	extension(IServiceScope serviceScope)
 	{
-		public IUserCommandService GetUserCommandService()
+		public IUserCommandService GetCommandService()
 		{
-			return serviceScope.ServiceProvider.GetUserCommandService();
+			return serviceScope.ServiceProvider.GetCommandService();
 		}
 
-		public IUserQueryService GetUserQueryService()
+		public IUserQueryService GetQueryService()
 		{
-			return serviceScope.ServiceProvider.GetUserQueryService();
+			return serviceScope.ServiceProvider.GetQueryService();
 		}
 	}
 }
