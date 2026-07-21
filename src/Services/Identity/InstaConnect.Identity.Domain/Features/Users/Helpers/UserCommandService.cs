@@ -69,11 +69,11 @@ internal class UserCommandService : IUserCommandService
 		await _eventPublisher.PublishAsync(
 			_mapper.Map<UserAddedEventRequest>(newUser), cancellationToken);
 
-		var newEmailConfirmationToken = _emailConfirmationTokenFactory.Create(newUser.Id);
+		var newEmailConfirmationToken = _emailConfirmationTokenFactory.Create(newUser.Id).AddUser(newUser);
 		await _emailConfirmationTokenRepository.AddAsync(newEmailConfirmationToken, cancellationToken);
 
 		await _eventPublisher.PublishAsync(
-			_mapper.Map<EmailConfirmationTokenAddedEventRequest>(newEmailConfirmationToken.AddUser(newUser)), cancellationToken);
+			_mapper.Map<EmailConfirmationTokenAddedEventRequest>(newEmailConfirmationToken), cancellationToken);
 
 		await _emailConfirmationTokenEmailSender.SendAsync(newEmailConfirmationToken, cancellationToken);
 

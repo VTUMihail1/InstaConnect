@@ -12,15 +12,15 @@ public static class PostCommentEquals
 	extension(PostCommentId response)
 	{
 		public bool Matches(
-		PostComment postComment,
-		AddPostCommentCommand command)
+		AddPostCommentCommand command,
+		PostComment postComment)
 		{
 			return response.Matches(postComment.Id);
 		}
 
 		public bool Matches(
-		PostComment postComment,
-		UpdatePostCommentCommand command)
+		UpdatePostCommentCommand command,
+		PostComment postComment)
 		{
 			return response.Matches(postComment.Id);
 		}
@@ -110,17 +110,17 @@ public static class PostCommentEquals
 		}
 	}
 
-	extension(PostCommentDeletedEventRequest p)
+	extension(PostCommentDeletedEventRequest r)
 	{
 		public bool Matches(DeletePostCommentCommand command, PostComment postComment)
 		{
-			return postComment.Id.Matches(command.Id) &&
-				   postComment.UserId.Matches(command.UserId) &&
+			return command.Id.Matches(r.PostComment.Id, r.PostComment.CommentId) &&
+				   command.UserId.Matches(r.PostComment.UserId) &&
 				   postComment.User != null &&
-				   postComment.User.Matches(p.PostComment.User) &&
-				   postComment.Content == p.PostComment.Content &&
-				   postComment.CreatedAtUtc == p.PostComment.CreatedAtUtc &&
-				   postComment.UpdatedAtUtc == p.PostComment.UpdatedAtUtc;
+				   postComment.User.Matches(r.PostComment.User) &&
+				   postComment.Content == r.PostComment.Content &&
+				   postComment.CreatedAtUtc == r.PostComment.CreatedAtUtc &&
+				   postComment.UpdatedAtUtc == r.PostComment.UpdatedAtUtc;
 		}
 	}
 

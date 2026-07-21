@@ -40,9 +40,9 @@ public static class UserMatcher
 		return Matcher.Is<UserDeletedEventRequest>(p => p.Matches(command, user));
 	}
 
-	public static EmailConfirmationToken IsEmailConfirmationToken(AddUserCommand command, User user)
+	public static EmailConfirmationToken IsEmailConfirmationToken(AddUserCommand command)
 	{
-		return Matcher.Is<EmailConfirmationToken>(p => p.Matches(command, user));
+		return Matcher.Is<EmailConfirmationToken>(p => p.Matches(command));
 	}
 
 	public static EmailConfirmationTokenAddedEventRequest IsEmailConfirmationTokenAddedEventRequest(AddUserCommand command, EmailConfirmationToken emailConfirmationToken)

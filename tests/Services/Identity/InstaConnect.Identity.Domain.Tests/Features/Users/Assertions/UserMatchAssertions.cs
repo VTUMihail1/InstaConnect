@@ -7,40 +7,40 @@ public static class UserMatchAssertions
 {
 	extension(UserId response)
 	{
-		public void ShouldSatisfy(User user, AddUserCommand command)
+		public void ShouldSatisfy(AddUserCommand command, User user)
 		{
-			response.ShouldSatisfy(p => p.Matches(user, command));
+			response.ShouldSatisfy(p => p.Matches(command, user));
 		}
 
-		public void ShouldSatisfy(User user, UpdateUserCommand command)
+		public void ShouldSatisfy(UpdateUserCommand command, User user)
 		{
-			response.ShouldSatisfy(p => p.Matches(user, command));
+			response.ShouldSatisfy(p => p.Matches(command, user));
 		}
 	}
 
 	extension(UserResponse response)
 	{
-		public void ShouldSatisfy(User user, GetUserByIdQuery query)
+		public void ShouldSatisfy(GetUserByIdQuery query, User user)
 		{
-			response.ShouldSatisfy(p => p.Matches(user, query));
+			response.ShouldSatisfy(p => p.Matches(query, user));
 		}
 	}
 
 	extension(UserCollectionResponse response)
 	{
 		public void ShouldSatisfy(
-			ICollection<User> users,
-			GetAllUsersQuery query)
+			GetAllUsersQuery query,
+			ICollection<User> users)
 		{
-			response.ShouldSatisfy(p => p.Matches(users, query));
+			response.ShouldSatisfy(p => p.Matches(query, users));
 		}
 
 		public void ShouldSatisfy(
-			ICollection<User> users,
 			GetAllUsersQuery query,
+			ICollection<User> users,
 			ISortEnumTermTransformer<User> termTransformer)
 		{
-			response.ShouldSatisfy(p => p.Matches(users, query, termTransformer));
+			response.ShouldSatisfy(p => p.Matches(query, users, termTransformer));
 		}
 	}
 
@@ -54,6 +54,14 @@ public static class UserMatchAssertions
 		public void ShouldSatisfy(UpdateUserCommand command)
 		{
 			user.ShouldSatisfy(p => p.Matches(command));
+		}
+	}
+
+	extension(ICollection<EmailConfirmationToken> emailConfirmationTokens)
+	{
+		public void ShouldSatisfy(UpdateUserCommand command)
+		{
+			emailConfirmationTokens.ShouldSatisfy(p => p.Matches(command));
 		}
 	}
 }

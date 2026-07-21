@@ -1,5 +1,4 @@
 using InstaConnect.Common.Events.Features.Common.Abstractions;
-using InstaConnect.Common.Tests.Features.Assertions;
 
 using MassTransit;
 using MassTransit.Testing;
@@ -31,43 +30,41 @@ public class EventHarness : IEventHarness
 		await _testHarness.InactivityTask;
 	}
 
-	public async Task ShouldHavePublishedAsync<TRequest>(Func<TRequest, bool> predicate, CancellationToken cancellationToken)
+	public async Task<TRequest> PublishedAsync<TRequest>(CancellationToken cancellationToken)
 		where TRequest : class, IEventRequest
 	{
-		var isPublished = await _testHarness.Published
-				.Any<TRequest>(e => predicate(e.Context.Message), cancellationToken);
-
-		isPublished.ShouldBeTrue();
+		return await _testHarness.Published
+				.SelectAsync<TRequest>(cancellationToken)
+				.Select(a => a.Context.Message)
+				.FirstAsync(cancellationToken);
 	}
 
-	public async Task ShouldHaveNotPublishedAsync<TRequest>(Func<TRequest, bool> predicate, CancellationToken cancellationToken)
+	public async Task<ICollection<TRequest>> PublishedRangeAsync<TRequest>(CancellationToken cancellationToken)
 		where TRequest : class, IEventRequest
 	{
-		var isPublished = await _testHarness.Published
-				.Any<TRequest>(e => predicate(e.Context.Message), cancellationToken);
-
-		isPublished.ShouldBeFalse();
+		return await _testHarness.Published
+				.SelectAsync<TRequest>(cancellationToken)
+				.Select(a => a.Context.Message)
+				.ToListAsync(cancellationToken);
 	}
 
-	public async Task ShouldHaveFaultedAsync<TRequest>(
-		Func<TRequest, bool> predicate,
-		CancellationToken cancellationToken)
+	public async Task<TRequest> FaultedAsync<TRequest>(CancellationToken cancellationToken)
 		where TRequest : class, IEventRequest
 	{
-		var result = await _testHarness.Published
-								   .Any<Fault<TRequest>>(e => predicate(e.Context.Message.Message),
-								   cancellationToken);
-
-		result.ShouldBeTrue();
+		return await _testHarness
+				.Published
+				.SelectAsync<Fault<TRequest>>(cancellationToken)
+				.Select(a => a.Context.Message.Message)
+				.FirstAsync(cancellationToken);
 	}
 
-	public async Task ShouldHaveConsumedAsync<TRequest>(Func<TRequest, bool> predicate, CancellationToken cancellationToken)
+	public async Task<TRequest> ConsumedAsync<TRequest>(CancellationToken cancellationToken)
 		where TRequest : class, IEventRequest
 	{
-		var result = await _testHarness.Consumed
-				.Any<TRequest>(e => predicate(e.Context.Message), cancellationToken);
-
-		result.ShouldBeTrue();
+		return await _testHarness.Consumed
+				.SelectAsync<TRequest>(cancellationToken)
+				.Select(a => a.Context.Message)
+				.FirstAsync(cancellationToken);
 	}
 
 	public async Task StartAsync(CancellationToken cancellationToken)

@@ -12,15 +12,15 @@ public static class PostEquals
 	extension(PostId response)
 	{
 		public bool Matches(
-		Post post,
-		AddPostCommand command)
+		AddPostCommand command,
+		Post post)
 		{
 			return response.Matches(post.Id);
 		}
 
 		public bool Matches(
-		Post post,
-		UpdatePostCommand command)
+		UpdatePostCommand command,
+		Post post)
 		{
 			return response.Matches(post.Id);
 		}
@@ -123,7 +123,7 @@ public static class PostEquals
 
 	extension(PostResponse? response)
 	{
-		public bool MatchesFull<T>(Post? post, T request)
+		public bool MatchesFull<T>(T request, Post? post)
 		where T : ICurrentUserableQuery
 		{
 			return response != null &&
@@ -138,7 +138,7 @@ public static class PostEquals
 				   response.User.MatchesFull(post.User);
 		}
 
-		public bool MatchesWithoutUser<T>(Post? post, T request)
+		public bool MatchesWithoutUser<T>(T request, Post? post)
 			where T : ICurrentUserableQuery
 		{
 			return response != null &&
@@ -153,133 +153,133 @@ public static class PostEquals
 				   response.User == null;
 		}
 
-		public bool Matches(Post post, GetPostByIdQuery query)
+		public bool Matches(GetPostByIdQuery query, Post post)
 		{
-			return response.MatchesFull(post, query);
+			return response.MatchesFull(query, post);
 		}
 	}
 
 	extension(PostCollectionResponse response)
 	{
 		public bool MatchesFull<T>(
+		T request,
 		Func<PostResponse, Post, bool> matches,
 		Func<Post, bool> matchesFilter,
 		User user,
-		ICollection<Post> posts,
-		T request)
+		ICollection<Post> posts)
 		where T : ICurrentUserableQuery, IPaginatableQuery<PostsPaginationQuery>
 		{
-			return response.MatchesCollectionResponse(posts.Count(matchesFilter), request.Pagination) &&
+			return response.MatchesCollectionResponse(request.Pagination, posts.Count(matchesFilter)) &&
 				   response.User.MatchesFull(user) &&
-				   response.Posts.MatchesCollection(posts,
+				   response.Posts.MatchesCollection(request.Pagination,
+				                                    posts,
 													response => response.Id,
 													post => post.Id,
 													matches,
-													request.Pagination,
 													matchesFilter);
 		}
 
 		public bool MatchesFull<T>(
+			T request,
 			Func<PostResponse, Post, bool> matches,
 			Func<Post, bool> matchesFilter,
 			User user,
 			ICollection<Post> posts,
-			T request,
 			ISortEnumTermTransformer<Post> termTransformer)
 			where T : ICurrentUserableQuery, IPaginatableQuery<PostsPaginationQuery>
 		{
-			return response.MatchesCollectionResponse(posts.Count(matchesFilter), request.Pagination) &&
+			return response.MatchesCollectionResponse(request.Pagination, posts.Count(matchesFilter)) &&
 				   response.User.MatchesFull(user) &&
-				   response.Posts.MatchesSortedCollection(posts,
+				   response.Posts.MatchesSortedCollection(request.Pagination,
+														  posts,
 														  matches,
 														  termTransformer,
-														  request.Pagination,
 														  matchesFilter);
 		}
 
 		public bool MatchesWithoutUser<T>(
+			T request,
 			Func<PostResponse, Post, bool> matches,
 			Func<Post, bool> matchesFilter,
-			ICollection<Post> posts,
-			T request)
+			ICollection<Post> posts)
 			where T : ICurrentUserableQuery, IPaginatableQuery<PostsPaginationQuery>
 		{
-			return response.MatchesCollectionResponse(posts.Count(matchesFilter), request.Pagination) &&
+			return response.MatchesCollectionResponse(request.Pagination, posts.Count(matchesFilter)) &&
 				   response.User == null &&
-				   response.Posts.MatchesCollection(posts,
+				   response.Posts.MatchesCollection(request.Pagination,
+													posts,
 													response => response.Id,
 													post => post.Id,
 													matches,
-													request.Pagination,
 													matchesFilter);
 		}
 
 		public bool MatchesWithoutUser<T>(
+			T request,
 			Func<PostResponse, Post, bool> matches,
 			Func<Post, bool> matchesFilter,
 			ICollection<Post> posts,
-			T request,
 			ISortEnumTermTransformer<Post> termTransformer)
 			where T : ICurrentUserableQuery, IPaginatableQuery<PostsPaginationQuery>
 		{
-			return response.MatchesCollectionResponse(posts.Count(matchesFilter), request.Pagination) &&
+			return response.MatchesCollectionResponse(request.Pagination, posts.Count(matchesFilter)) &&
 				   response.User == null &&
-				   response.Posts.MatchesSortedCollection(posts,
+				   response.Posts.MatchesSortedCollection(request.Pagination,
+														  posts,
 														  matches,
 														  termTransformer,
-														  request.Pagination,
 														  matchesFilter);
 		}
 
 		public bool Matches(
-		ICollection<Post> posts,
-		GetAllPostsQuery query)
+		GetAllPostsQuery query,
+		ICollection<Post> posts)
 		{
 			return response.MatchesWithoutUser(
-					   (response, post) => response.MatchesFull(post, query),
+					   query,
+					   (response, post) => response.MatchesFull(query, post),
 					   post => post.MatchesFilter(query.Filter),
-					   posts,
-					   query);
+					   posts);
 		}
 
 		public bool Matches(
-			ICollection<Post> posts,
 			GetAllPostsQuery query,
+			ICollection<Post> posts,
 			ISortEnumTermTransformer<Post> termTransformer)
 		{
 			return response.MatchesWithoutUser(
-					   (response, post) => response.MatchesFull(post, query),
+					   query,
+					   (response, post) => response.MatchesFull(query, post),
 					   post => post.MatchesFilter(query.Filter),
 					   posts,
-					   query,
 					   termTransformer);
 		}
 
 		public bool Matches(
+		GetAllPostsForUserQuery query,
 		User user,
-		ICollection<Post> posts,
-		GetAllPostsForUserQuery query)
+		ICollection<Post> posts)
 		{
 			return response.MatchesFull(
-					   (response, post) => response.MatchesWithoutUser(post, query),
+					   query,
+					   (response, post) => response.MatchesWithoutUser(query, post),
 					   post => post.MatchesFilter(query.Filter),
 					   user,
-					   posts,
-					   query);
+					   posts);
 		}
 
 		public bool Matches(
+			GetAllPostsForUserQuery query,
 			User user,
 			ICollection<Post> posts,
-			GetAllPostsForUserQuery query,
 			ISortEnumTermTransformer<Post> termTransformer)
 		{
 			return response.MatchesFull(
-					   (response, post) => response.MatchesWithoutUser(post, query),
+					   query,
+					   (response, post) => response.MatchesWithoutUser(query, post),
 					   post => post.MatchesFilter(query.Filter),
 					   user,
 					   posts,
-					   query,
 					   termTransformer);
 		}
 	}

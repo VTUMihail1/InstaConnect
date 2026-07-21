@@ -20,7 +20,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserApplicationQueryI
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserRangeAsync(Users, CancellationToken);
+		await ServiceScope.AddRangeAsync(Users, CancellationToken);
 	}
 
 	[Theory]
@@ -136,7 +136,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserApplicationQueryI
 		var response = await Sender.SendAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Users, _request);
+		response.ShouldSatisfy(_request, Users);
 	}
 
 	[Theory]
@@ -153,7 +153,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserApplicationQueryI
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Users, request);
+		response.ShouldSatisfy(request, Users);
 	}
 
 	[Theory]
@@ -170,7 +170,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserApplicationQueryI
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Users, request);
+		response.ShouldSatisfy(request, Users);
 	}
 
 	[Theory]
@@ -187,7 +187,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserApplicationQueryI
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Users, request);
+		response.ShouldSatisfy(request, Users);
 	}
 
 	[Theory]
@@ -204,7 +204,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserApplicationQueryI
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Users, request);
+		response.ShouldSatisfy(request, Users);
 	}
 
 	[Theory]
@@ -220,7 +220,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserApplicationQueryI
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Users, request, termTransformer);
+		response.ShouldSatisfy(request, Users, termTransformer);
 	}
 
 	[Theory]
@@ -238,6 +238,6 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserApplicationQueryI
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Users, request, termTransformer);
+		response.ShouldSatisfy(request, Users, termTransformer);
 	}
 }

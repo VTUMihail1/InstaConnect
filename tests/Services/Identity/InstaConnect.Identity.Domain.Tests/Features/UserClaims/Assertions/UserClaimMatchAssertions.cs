@@ -7,29 +7,29 @@ public static class UserClaimMatchAssertions
 {
 	extension(UserClaimId response)
 	{
-		public void ShouldSatisfy(UserClaim userClaim, AddUserClaimCommand command)
+		public void ShouldSatisfy(AddUserClaimCommand command, UserClaim userClaim)
 		{
-			response.ShouldSatisfy(p => p.Matches(userClaim, command));
+			response.ShouldSatisfy(p => p.Matches(command, userClaim));
 		}
 	}
 
 	extension(UserClaimCollectionResponse response)
 	{
 		public void ShouldSatisfy(
+			GetAllUserClaimsQuery query,
 			User user,
-			ICollection<UserClaim> userClaims,
-			GetAllUserClaimsQuery query)
+			ICollection<UserClaim> userClaims)
 		{
-			response.ShouldSatisfy(p => p.Matches(user, userClaims, query));
+			response.ShouldSatisfy(p => p.Matches(query, user, userClaims));
 		}
 
 		public void ShouldSatisfy(
+			GetAllUserClaimsQuery query,
 			User user,
 			ICollection<UserClaim> userClaims,
-			GetAllUserClaimsQuery query,
 			ISortEnumTermTransformer<UserClaim> termTransformer)
 		{
-			response.ShouldSatisfy(p => p.Matches(user, userClaims, query, termTransformer));
+			response.ShouldSatisfy(p => p.Matches(query, user, userClaims, termTransformer));
 		}
 	}
 

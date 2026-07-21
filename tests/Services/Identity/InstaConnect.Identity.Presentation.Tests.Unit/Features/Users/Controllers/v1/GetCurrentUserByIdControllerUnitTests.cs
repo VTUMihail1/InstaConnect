@@ -36,7 +36,7 @@ public class GetCurrentUserByIdControllerUnitTests : BaseUserPresentationQueryUn
 		var response = await _controller.GetCurrentByIdAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, _request);
+		response.ShouldSatisfy(_request, User);
 	}
 
 	[Fact]

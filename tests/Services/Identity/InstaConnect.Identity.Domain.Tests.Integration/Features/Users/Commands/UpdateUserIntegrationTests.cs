@@ -32,7 +32,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 		await ServiceScope.AddEmailConfirmationTokenRangeAsync(User.EmailConfirmationTokens, CancellationToken);
 	}
 
@@ -41,7 +41,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 	public async Task UpdateAsync_ShouldThrowUserNotFoundException_WhenUserNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowUserNotFoundExceptionAsync(_command, CancellationToken);
@@ -52,7 +52,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 	{
 		// Arrange
 		var user = UserBuilderFactory.Create(User.PasswordHash, User.ProfileImage.Url).Build();
-		await ServiceScope.AddUserAsync(user, CancellationToken);
+		await ServiceScope.AddAsync(user, CancellationToken);
 
 		var command = _commandBuilder.WithEmail(user.Email).Build();
 
@@ -67,7 +67,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 	{
 		// Arrange
 		var user = UserBuilderFactory.Create(User.PasswordHash, User.ProfileImage.Url).Build();
-		await ServiceScope.AddUserAsync(user, CancellationToken);
+		await ServiceScope.AddAsync(user, CancellationToken);
 
 		var command = _commandBuilder.WithEmail(user.Email, transformer).Build();
 
@@ -80,7 +80,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 	{
 		// Arrange
 		var user = UserBuilderFactory.Create(User.PasswordHash, User.ProfileImage.Url).Build();
-		await ServiceScope.AddUserAsync(user, CancellationToken);
+		await ServiceScope.AddAsync(user, CancellationToken);
 
 		var command = _commandBuilder.WithName(user.Name).Build();
 
@@ -95,7 +95,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 	{
 		// Arrange
 		var user = UserBuilderFactory.Create(User.PasswordHash, User.ProfileImage.Url).Build();
-		await ServiceScope.AddUserAsync(user, CancellationToken);
+		await ServiceScope.AddAsync(user, CancellationToken);
 
 		var command = _commandBuilder.WithName(user.Name, transformer).Build();
 
@@ -108,10 +108,10 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 	{
 		// Act
 		var response = await Service.UpdateAsync(_command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(user, _command);
+		response.ShouldSatisfy(_command, user);
 	}
 
 	[Theory]
@@ -124,10 +124,10 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(user, command);
+		response.ShouldSatisfy(command, user);
 	}
 
 	[Theory]
@@ -140,10 +140,10 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(user, command);
+		response.ShouldSatisfy(command, user);
 	}
 
 	[Fact]
@@ -154,10 +154,10 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(user, command);
+		response.ShouldSatisfy(command, user);
 	}
 
 	[Theory]
@@ -170,10 +170,10 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(user, command);
+		response.ShouldSatisfy(command, user);
 	}
 
 	[Theory]
@@ -186,10 +186,10 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(user, command);
+		response.ShouldSatisfy(command, user);
 	}
 
 	[Fact]
@@ -200,10 +200,10 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(user, command);
+		response.ShouldSatisfy(command, user);
 	}
 
 	[Theory]
@@ -216,10 +216,10 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(user, command);
+		response.ShouldSatisfy(command, user);
 	}
 
 	[Theory]
@@ -232,10 +232,10 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(user, command);
+		response.ShouldSatisfy(command, user);
 	}
 
 	[Fact]
@@ -243,7 +243,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 	{
 		// Act
 		var response = await Service.UpdateAsync(_command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(_command);
@@ -259,7 +259,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(command);
@@ -275,7 +275,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(command);
@@ -289,7 +289,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(command);
@@ -305,7 +305,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(command);
@@ -321,7 +321,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(command);
@@ -335,7 +335,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(command);
@@ -351,7 +351,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(command);
@@ -367,7 +367,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(command);
@@ -378,10 +378,11 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 	{
 		// Act
 		var response = await Service.UpdateAsync(_command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
+		var eventRequest = await EventHarness.PublishedUpdatedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserUpdatedAsync(_command, user, CancellationToken);
+		eventRequest.ShouldSatisfy(_command, user);
 	}
 
 	[Theory]
@@ -394,10 +395,11 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
+		var eventRequest = await EventHarness.PublishedUpdatedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserUpdatedAsync(command, user, CancellationToken);
+		eventRequest.ShouldSatisfy(command, user);
 	}
 
 	[Theory]
@@ -410,10 +412,11 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
+		var eventRequest = await EventHarness.PublishedUpdatedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserUpdatedAsync(command, user, CancellationToken);
+		eventRequest.ShouldSatisfy(command, user);
 	}
 
 	[Fact]
@@ -424,10 +427,11 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
+		var eventRequest = await EventHarness.PublishedUpdatedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserUpdatedAsync(command, user, CancellationToken);
+		eventRequest.ShouldSatisfy(command, user);
 	}
 
 	[Theory]
@@ -440,10 +444,11 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
+		var eventRequest = await EventHarness.PublishedUpdatedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserUpdatedAsync(command, user, CancellationToken);
+		eventRequest.ShouldSatisfy(command, user);
 	}
 
 	[Theory]
@@ -456,10 +461,11 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
+		var eventRequest = await EventHarness.PublishedUpdatedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserUpdatedAsync(command, user, CancellationToken);
+		eventRequest.ShouldSatisfy(command, user);
 	}
 
 	[Fact]
@@ -470,10 +476,11 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
+		var eventRequest = await EventHarness.PublishedUpdatedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserUpdatedAsync(command, user, CancellationToken);
+		eventRequest.ShouldSatisfy(command, user);
 	}
 
 	[Theory]
@@ -486,10 +493,11 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
+		var eventRequest = await EventHarness.PublishedUpdatedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserUpdatedAsync(command, user, CancellationToken);
+		eventRequest.ShouldSatisfy(command, user);
 	}
 
 	[Theory]
@@ -502,10 +510,11 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
+		var eventRequest = await EventHarness.PublishedUpdatedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserUpdatedAsync(command, user, CancellationToken);
+		eventRequest.ShouldSatisfy(command, user);
 	}
 
 	[Fact]
@@ -513,7 +522,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 	{
 		// Act
 		var response = await Service.UpdateAsync(_command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.EmailConfirmationTokens.ShouldBeEmpty();
@@ -529,7 +538,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.EmailConfirmationTokens.ShouldBeEmpty();
@@ -545,7 +554,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.EmailConfirmationTokens.ShouldBeEmpty();
@@ -559,7 +568,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.EmailConfirmationTokens.ShouldBeEmpty();
@@ -575,29 +584,29 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.EmailConfirmationTokens.ShouldBeEmpty();
 	}
 
 	[Fact]
-	public async Task UpdateAsync_ShouldDeleteEmailConfirmationTokens_WhenEmailHasNotChanged()
+	public async Task UpdateAsync_ShouldNotDeleteEmailConfirmationTokens_WhenEmailHasNotChanged()
 	{
 		// Arrange
 		var command = _commandBuilder.WithEmail(User.Email).Build();
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		user.EmailConfirmationTokens.ShouldSatisfy(User.EmailConfirmationTokens);
+		user.EmailConfirmationTokens.ShouldSatisfy(command);
 	}
 
 	[Theory]
 	[UserEmailDifferentCaseData]
-	public async Task UpdateAsync_ShouldDeleteEmailConfirmationTokens_WhenEmailIsValidAndHasNotChanged(
+	public async Task UpdateAsync_ShouldNotDeleteEmailConfirmationTokens_WhenEmailIsValidAndHasNotChanged(
 		IStringTransformer transformer)
 	{
 		// Arrange
@@ -605,10 +614,10 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		user.EmailConfirmationTokens.ShouldSatisfy(User.EmailConfirmationTokens);
+		user.EmailConfirmationTokens.ShouldSatisfy(command);
 	}
 
 	[Theory]
@@ -621,7 +630,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.EmailConfirmationTokens.ShouldBeEmpty();
@@ -637,7 +646,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.EmailConfirmationTokens.ShouldBeEmpty();
@@ -648,10 +657,11 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 	{
 		// Act
 		var response = await Service.UpdateAsync(_command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
+		var eventRequests = await EventHarness.PublishedEmailConfirmationTokenDeletedEventRequestRange(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(user, CancellationToken);
+		eventRequests.ShouldSatisfy(_command, user.EmailConfirmationTokens);
 	}
 
 	[Theory]
@@ -664,10 +674,11 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
+		var eventRequests = await EventHarness.PublishedEmailConfirmationTokenDeletedEventRequestRange(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(user, CancellationToken);
+		eventRequests.ShouldSatisfy(command, user.EmailConfirmationTokens);
 	}
 
 	[Theory]
@@ -680,10 +691,11 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
+		var eventRequests = await EventHarness.PublishedEmailConfirmationTokenDeletedEventRequestRange(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(user, CancellationToken);
+		eventRequests.ShouldSatisfy(command, user.EmailConfirmationTokens);
 	}
 
 	[Fact]
@@ -694,10 +706,11 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
+		var eventRequests = await EventHarness.PublishedEmailConfirmationTokenDeletedEventRequestRange(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(user, CancellationToken);
+		eventRequests.ShouldSatisfy(command, user.EmailConfirmationTokens);
 	}
 
 	[Theory]
@@ -710,10 +723,11 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
+		var eventRequests = await EventHarness.PublishedEmailConfirmationTokenDeletedEventRequestRange(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(user, CancellationToken);
+		eventRequests.ShouldSatisfy(command, user.EmailConfirmationTokens);
 	}
 
 	[Fact]
@@ -723,11 +737,11 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 		var command = _commandBuilder.WithEmail(User.Email).Build();
 
 		// Act
-		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		await Service.UpdateAsync(command, CancellationToken);
+		var eventRequests = await EventHarness.PublishedEmailConfirmationTokenDeletedEventRequestRange(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveNotPublishedEmailConfirmationTokenDeletedRangeAsync(user, CancellationToken);
+		eventRequests.ShouldBeEmpty();
 	}
 
 	[Theory]
@@ -739,11 +753,11 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 		var command = _commandBuilder.WithEmail(User.Email, transformer).Build();
 
 		// Act
-		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		await Service.UpdateAsync(command, CancellationToken);
+		var eventRequests = await EventHarness.PublishedEmailConfirmationTokenDeletedEventRequestRange(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveNotPublishedEmailConfirmationTokenDeletedRangeAsync(user, CancellationToken);
+		eventRequests.ShouldBeEmpty();
 	}
 
 	[Theory]
@@ -756,10 +770,11 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
+		var eventRequests = await EventHarness.PublishedEmailConfirmationTokenDeletedEventRequestRange(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(user, CancellationToken);
+		eventRequests.ShouldSatisfy(command, user.EmailConfirmationTokens);
 	}
 
 	[Theory]
@@ -772,9 +787,10 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
+		var eventRequests = await EventHarness.PublishedEmailConfirmationTokenDeletedEventRequestRange(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedEmailConfirmationTokenDeletedRangeAsync(user, CancellationToken);
+		eventRequests.ShouldSatisfy(command, user.EmailConfirmationTokens);
 	}
 }

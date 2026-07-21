@@ -16,7 +16,7 @@ public class DeleteUserFunctionalTests : BaseUserPresentationCommandFunctionalTe
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 		await ServiceScope.AddEmailConfirmationTokenRangeAsync(User.EmailConfirmationTokens, CancellationToken);
 	}
 
@@ -77,7 +77,7 @@ public class DeleteUserFunctionalTests : BaseUserPresentationCommandFunctionalTe
 	public async Task DeleteAsync_ShouldHaveNotFoundStatusCode_WhenUserNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Act
 		var response = await Client.DeleteStatusCodeAsync(_request, CancellationToken);
@@ -90,7 +90,7 @@ public class DeleteUserFunctionalTests : BaseUserPresentationCommandFunctionalTe
 	public async Task DeleteAsync_ShouldHaveUserNotFoundProblemDetails_WhenUserNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Act
 		var response = await Client.DeleteProblemDetailsAsync(_request, CancellationToken);
@@ -129,7 +129,7 @@ public class DeleteUserFunctionalTests : BaseUserPresentationCommandFunctionalTe
 	{
 		// Act
 		await Client.DeleteAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ShouldBeNull();
@@ -145,7 +145,7 @@ public class DeleteUserFunctionalTests : BaseUserPresentationCommandFunctionalTe
 
 		// Act
 		await Client.DeleteAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ShouldBeNull();
@@ -156,9 +156,10 @@ public class DeleteUserFunctionalTests : BaseUserPresentationCommandFunctionalTe
 	{
 		// Act
 		await Client.DeleteAsync(_request, CancellationToken);
+		var eventRequest = await EventHarness.PublishedDeletedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserDeletedAsync(_request, User, CancellationToken);
+		eventRequest.ShouldSatisfy(_request, User);
 	}
 
 	[Theory]
@@ -171,8 +172,9 @@ public class DeleteUserFunctionalTests : BaseUserPresentationCommandFunctionalTe
 
 		// Act
 		await Client.DeleteAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.PublishedDeletedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserDeletedAsync(request, User, CancellationToken);
+		eventRequest.ShouldSatisfy(request, User);
 	}
 }

@@ -1,3 +1,4 @@
+using InstaConnect.Identity.Domain.Tests.Features.Users.Utilities;
 using InstaConnect.Identity.Events.Features.EmailConfirmationTokens;
 
 namespace InstaConnect.Identity.Domain.Tests.Features.EmailConfirmationTokens.Utilities;
@@ -19,8 +20,8 @@ public static class EmailConfirmationTokenMatcher
 		return Matcher.Is<EmailConfirmationTokenAddedEventRequest>(p => p.Matches(command, emailConfirmationToken));
 	}
 
-	public static ICollection<EmailConfirmationTokenDeletedEventRequest> IsEmailConfirmationTokenDeletedEventRequestCollection(VerifyEmailConfirmationTokenCommand command, User user)
+	public static ICollection<EmailConfirmationTokenDeletedEventRequest> IsEmailConfirmationTokenDeletedEventRequestCollection(VerifyEmailConfirmationTokenCommand command, ICollection<EmailConfirmationToken> emailConfirmationTokens)
 	{
-		return Matcher.Is<ICollection<EmailConfirmationTokenDeletedEventRequest>>(p => p.Matches(user));
+		return Matcher.Is<ICollection<EmailConfirmationTokenDeletedEventRequest>>(p => p.Matches(command, emailConfirmationTokens));
 	}
 }

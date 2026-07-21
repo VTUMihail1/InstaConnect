@@ -33,7 +33,7 @@ public class GetAllUsersIntegrationTests : BaseUserDomainQueryIntegrationTest
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserRangeAsync(Users, CancellationToken);
+		await ServiceScope.AddRangeAsync(Users, CancellationToken);
 	}
 
 	[Fact]
@@ -43,7 +43,7 @@ public class GetAllUsersIntegrationTests : BaseUserDomainQueryIntegrationTest
 		var response = await Service.GetAllAsync(_query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Users, _query);
+		response.ShouldSatisfy(_query, Users);
 	}
 
 	[Theory]
@@ -60,7 +60,7 @@ public class GetAllUsersIntegrationTests : BaseUserDomainQueryIntegrationTest
 		var response = await Service.GetAllAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Users, query);
+		response.ShouldSatisfy(query, Users);
 	}
 
 	[Theory]
@@ -77,7 +77,7 @@ public class GetAllUsersIntegrationTests : BaseUserDomainQueryIntegrationTest
 		var response = await Service.GetAllAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Users, query);
+		response.ShouldSatisfy(query, Users);
 	}
 
 	[Theory]
@@ -94,7 +94,7 @@ public class GetAllUsersIntegrationTests : BaseUserDomainQueryIntegrationTest
 		var response = await Service.GetAllAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Users, query);
+		response.ShouldSatisfy(query, Users);
 	}
 
 	[Theory]
@@ -111,7 +111,7 @@ public class GetAllUsersIntegrationTests : BaseUserDomainQueryIntegrationTest
 		var response = await Service.GetAllAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Users, query);
+		response.ShouldSatisfy(query, Users);
 	}
 
 	[Theory]
@@ -127,7 +127,7 @@ public class GetAllUsersIntegrationTests : BaseUserDomainQueryIntegrationTest
 		var response = await Service.GetAllAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Users, query, termTransformer);
+		response.ShouldSatisfy(query, Users, termTransformer);
 	}
 
 	[Theory]
@@ -145,6 +145,6 @@ public class GetAllUsersIntegrationTests : BaseUserDomainQueryIntegrationTest
 		var response = await Service.GetAllAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Users, query, termTransformer);
+		response.ShouldSatisfy(query, Users, termTransformer);
 	}
 }

@@ -235,7 +235,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 	public async Task AddAsync_ShouldHaveBadRequestStatusCode_WhenEmailAlreadyExists()
 	{
 		// Arrange
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 		var request = _requestBuilder.WithEmail(User.Email).Build();
 
 		// Act
@@ -251,7 +251,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		IStringTransformer transformer)
 	{
 		// Arrange
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 		var request = _requestBuilder.WithEmail(User.Email, transformer).Build();
 
 		// Act
@@ -265,7 +265,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 	public async Task AddAsync_ShouldHaveUserEmailAlreadyTakenProblemDetails_WhenEmailAlreadyExists()
 	{
 		// Arrange
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 		var request = _requestBuilder.WithEmail(User.Email).Build();
 
 		// Act
@@ -281,7 +281,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		IStringTransformer transformer)
 	{
 		// Arrange
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 		var request = _requestBuilder.WithEmail(User.Email, transformer).Build();
 
 		// Act
@@ -295,7 +295,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 	public async Task AddAsync_ShouldHaveBadRequestStatusCode_WhenUserNameAlreadyExists()
 	{
 		// Arrange
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 		var request = _requestBuilder.WithName(User.Name).Build();
 
 		// Act
@@ -311,7 +311,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		IStringTransformer transformer)
 	{
 		// Arrange
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 		var request = _requestBuilder.WithName(User.Name, transformer).Build();
 
 		// Act
@@ -325,7 +325,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 	public async Task AddAsync_ShouldHaveUserNameAlreadyTakenProblemDetails_WhenUserNameAlreadyExists()
 	{
 		// Arrange
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 		var request = _requestBuilder.WithName(User.Name).Build();
 
 		// Act
@@ -341,7 +341,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		IStringTransformer transformer)
 	{
 		// Arrange
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 		var request = _requestBuilder.WithName(User.Name, transformer).Build();
 
 		// Act
@@ -380,10 +380,10 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 	{
 		// Act
 		var response = await Client.AddAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(user, _request);
+		response.ShouldSatisfy(_request, user);
 	}
 
 	[Theory]
@@ -395,10 +395,10 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 
 		// Act
 		var response = await Client.AddAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(user, request);
+		response.ShouldSatisfy(request, user);
 	}
 
 	[Fact]
@@ -406,7 +406,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 	{
 		// Act
 		var response = await Client.AddAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(_request, PasswordHasher);
@@ -421,7 +421,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 
 		// Act
 		var response = await Client.AddAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(request, PasswordHasher);
@@ -432,7 +432,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 	{
 		// Act
 		var response = await Client.AddAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.EmailConfirmationTokens.ShouldNotBeEmpty();
@@ -447,7 +447,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 
 		// Act
 		var response = await Client.AddAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.EmailConfirmationTokens.ShouldNotBeEmpty();
@@ -458,10 +458,11 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 	{
 		// Act
 		var response = await Client.AddAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var eventRequest = await EventHarness.PublishedAddedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserAddedAsync(_request, user, CancellationToken);
+		eventRequest.ShouldSatisfy(_request, user);
 	}
 
 	[Theory]
@@ -473,10 +474,11 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 
 		// Act
 		var response = await Client.AddAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var eventRequest = await EventHarness.PublishedAddedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserAddedAsync(request, user, CancellationToken);
+		eventRequest.ShouldSatisfy(request, user);
 	}
 
 	[Fact]
@@ -484,10 +486,11 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 	{
 		// Act
 		var response = await Client.AddAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var eventRequests = await EventHarness.PublishedEmailConfirmationTokenAddedEventRequestRange(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedEmailConfirmationTokenAddedRangeAsync(user, CancellationToken);
+		eventRequests.ShouldSatisfy(_request, user.EmailConfirmationTokens);
 	}
 
 	[Theory]
@@ -499,9 +502,10 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 
 		// Act
 		var response = await Client.AddAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
+		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var eventRequests = await EventHarness.PublishedEmailConfirmationTokenAddedEventRequestRange(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedEmailConfirmationTokenAddedRangeAsync(user, CancellationToken);
+		eventRequests.ShouldSatisfy(request, user.EmailConfirmationTokens);
 	}
 }

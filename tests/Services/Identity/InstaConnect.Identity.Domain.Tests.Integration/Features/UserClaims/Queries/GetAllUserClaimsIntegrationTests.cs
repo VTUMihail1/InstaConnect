@@ -31,15 +31,15 @@ public class GetAllUserClaimsIntegrationTests : BaseUserClaimDomainQueryIntegrat
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserRangeAsync(Users, CancellationToken);
-		await ServiceScope.AddUserClaimRangeAsync(UserClaims, CancellationToken);
+		await ServiceScope.AddRangeAsync(Users, CancellationToken);
+		await ServiceScope.AddClaimRangeAsync(UserClaims, CancellationToken);
 	}
 
 	[Fact]
 	public async Task GetAllAsync_ShouldThrowUserNotFoundException_WhenUserNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowUserNotFoundExceptionAsync(_query, CancellationToken);
@@ -52,7 +52,7 @@ public class GetAllUserClaimsIntegrationTests : BaseUserClaimDomainQueryIntegrat
 		var response = await Service.GetAllAsync(_query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, UserClaims, _query);
+		response.ShouldSatisfy(_query, User, UserClaims);
 	}
 
 	[Theory]
@@ -67,7 +67,7 @@ public class GetAllUserClaimsIntegrationTests : BaseUserClaimDomainQueryIntegrat
 		var response = await Service.GetAllAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, UserClaims, query);
+		response.ShouldSatisfy(query, User, UserClaims);
 	}
 
 	[Theory]
@@ -84,7 +84,7 @@ public class GetAllUserClaimsIntegrationTests : BaseUserClaimDomainQueryIntegrat
 		var response = await Service.GetAllAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, UserClaims, query);
+		response.ShouldSatisfy(query, User, UserClaims);
 	}
 
 	[Theory]
@@ -100,7 +100,7 @@ public class GetAllUserClaimsIntegrationTests : BaseUserClaimDomainQueryIntegrat
 		var response = await Service.GetAllAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, UserClaims, query, termTransformer);
+		response.ShouldSatisfy(query, User, UserClaims, termTransformer);
 	}
 
 	[Theory]
@@ -115,6 +115,6 @@ public class GetAllUserClaimsIntegrationTests : BaseUserClaimDomainQueryIntegrat
 		var response = await Service.GetAllAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, UserClaims, query, termTransformer);
+		response.ShouldSatisfy(query, User, UserClaims, termTransformer);
 	}
 }

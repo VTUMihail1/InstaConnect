@@ -8,51 +8,51 @@ public static class UserClaimMatchAssertions
 	extension(AddUserClaimApiResponse response)
 	{
 		public void ShouldSatisfy(
-		UserClaim userClaim,
-		AddUserClaimApiRequest request)
+		AddUserClaimApiRequest request,
+		UserClaim userClaim)
 		{
-			response.ShouldSatisfy(p => p.Matches(userClaim, request));
+			response.ShouldSatisfy(p => p.Matches(request, userClaim));
 		}
 	}
 
 	extension(GetAllUserClaimsApiResponse response)
 	{
 		public void ShouldSatisfy(
+		GetAllUserClaimsApiRequest request,
 		User user,
-		ICollection<UserClaim> userClaims,
-		GetAllUserClaimsApiRequest request)
+		ICollection<UserClaim> userClaims)
 		{
-			response.ShouldSatisfy(p => p.Matches(user, userClaims, request));
+			response.ShouldSatisfy(p => p.Matches(request, user, userClaims));
 		}
 
 		public void ShouldSatisfy(
+			GetAllUserClaimsApiRequest request,
 			User user,
 			ICollection<UserClaim> userClaims,
-			GetAllUserClaimsApiRequest request,
 			ISortEnumTermTransformer<UserClaim> termTransformer)
 		{
-			response.ShouldSatisfy(p => p.Matches(user, userClaims, request, termTransformer));
+			response.ShouldSatisfy(p => p.Matches(request, user, userClaims, termTransformer));
 		}
 	}
 
 	extension(ActionResult<AddUserClaimApiResponse> response)
 	{
 		public void ShouldSatisfy(
-		UserClaim userClaim,
-		AddUserClaimApiRequest request)
+		AddUserClaimApiRequest request,
+		UserClaim userClaim)
 		{
-			response.ShouldBeActionResultAndSatisfy(p => p.Matches(userClaim, request));
+			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, userClaim));
 		}
 	}
 
 	extension(ActionResult<GetAllUserClaimsApiResponse> response)
 	{
 		public void ShouldSatisfy(
+		GetAllUserClaimsApiRequest request,
 		User user,
-		ICollection<UserClaim> userClaims,
-		GetAllUserClaimsApiRequest request)
+		ICollection<UserClaim> userClaims)
 		{
-			response.ShouldBeActionResultAndSatisfy(p => p.Matches(user, userClaims, request));
+			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, user, userClaims));
 		}
 	}
 

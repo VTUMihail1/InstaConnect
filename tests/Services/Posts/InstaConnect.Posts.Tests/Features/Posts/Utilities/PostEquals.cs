@@ -7,57 +7,23 @@ namespace InstaConnect.Posts.Tests.Features.Posts.Utilities;
 
 public static class PostEquals
 {
-	extension(PostAddedEventRequest request)
-	{
-		public bool Matches(Post entity)
-		{
-			return entity.Matches(request.Post);
-		}
-	}
-
-	extension(PostUpdatedEventRequest request)
-	{
-		public bool Matches(Post entity)
-		{
-			return entity.Matches(request.Post);
-		}
-	}
-
-	extension(PostDeletedEventRequest request)
-	{
-		public bool Matches(Post entity)
-		{
-			return entity.Matches(request.Post);
-		}
-	}
-
-	extension(PostEventRequest r)
+	extension(Post? entity)
 	{
 		public bool Matches(PostEventRequest request)
 		{
-			return r.Id == request.Id &&
-				   r.UserId == request.UserId &&
-				   r.User.Matches(request.User) &&
-				   r.Title == request.Title &&
-				   r.Content == request.Content &&
-				   r.CreatedAtUtc == request.CreatedAtUtc &&
-				   r.UpdatedAtUtc == request.UpdatedAtUtc;
-		}
-	}
-
-	extension(Post entity)
-	{
-		public bool Matches(PostEventRequest request)
-		{
-			return entity.Id.Matches(request.Id) &&
+			return entity != null &&
+				   entity.Id.Matches(request.Id) &&
 				   entity.UserId.Matches(request.UserId) &&
-				   entity.User != null && entity.User.Matches(request.User) &&
+				   entity.User.Matches(request.User) &&
 				   entity.Title == request.Title &&
 				   entity.Content == request.Content &&
 				   entity.CreatedAtUtc == request.CreatedAtUtc &&
 				   entity.UpdatedAtUtc == request.UpdatedAtUtc;
 		}
+	}
 
+	extension(Post entity)
+	{
 		public bool Matches(Post post)
 		{
 			return entity.Id.Matches(post.Id) &&

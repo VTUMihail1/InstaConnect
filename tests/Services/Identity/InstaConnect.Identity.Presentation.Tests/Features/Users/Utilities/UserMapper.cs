@@ -76,15 +76,15 @@ public static class UserMapper
 	extension(ICollection<User> users)
 	{
 		internal UserCollectionQueryResponse ToFullQueryResponse<TRequest>(
-		Func<User, TRequest, bool> filter,
-		Func<User, TRequest, UserQueryResponse> transform,
-		TRequest request)
+		TRequest request,
+		Func<TRequest, User, bool> filter,
+		Func<TRequest, User, UserQueryResponse> transform)
 		where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = users.Count(user => filter(user, request));
+			var totalCount = users.Count(user => filter(request, user));
 
-			return new(users.Filter(user => filter(user, request), request, user => transform(user, request)),
+			return new(users.Filter(request, user => filter(request, user), user => transform(request, user)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -95,9 +95,9 @@ public static class UserMapper
 		public GetAllUsersQueryResponse ToResponse(
 			GetAllUsersApiRequest request)
 		{
-			return new(users.ToFullQueryResponse((user, request) => user.MatchesFilter(request),
-												   (user, request) => user.ToFullQueryResponse(),
-												   request));
+			return new(users.ToFullQueryResponse(request,
+												 (request, user) => user.MatchesFilter(request),
+												 (request, user) => user.ToFullQueryResponse()));
 		}
 	}
 }

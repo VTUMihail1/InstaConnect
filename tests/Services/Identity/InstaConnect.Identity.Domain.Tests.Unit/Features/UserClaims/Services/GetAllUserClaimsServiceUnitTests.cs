@@ -45,7 +45,7 @@ public class GetAllUserClaimsServiceUnitTests : BaseUserClaimDomainQueryUnitTest
 		var response = await _service.GetAllAsync(_query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, UserClaims, _query);
+		response.ShouldSatisfy(_query, User, UserClaims);
 	}
 
 	[Fact]

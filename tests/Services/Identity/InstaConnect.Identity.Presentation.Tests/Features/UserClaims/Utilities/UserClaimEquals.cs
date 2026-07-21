@@ -19,7 +19,7 @@ public static class UserClaimEquals
 		{
 			return request.Id.EqualsOrdinalIgnoreCase(r.UserClaim.Id) &&
 				   request.Body.Claim == r.UserClaim.Claim &&
-				   entity.User != null && entity.User.Matches(r.UserClaim.User) &&
+				   entity.User.Matches(r.UserClaim.User) &&
 				   entity.CreatedAtUtc == r.UserClaim.CreatedAtUtc;
 		}
 	}
@@ -29,7 +29,7 @@ public static class UserClaimEquals
 		public bool Matches(DeleteUserClaimApiRequest request, UserClaim entity)
 		{
 			return request.Id.EqualsOrdinalIgnoreCase(r.UserClaim.Id) &&
-				   entity.User != null && entity.User.Matches(r.UserClaim.User) &&
+				   entity.User.Matches(r.UserClaim.User) &&
 				   entity.CreatedAtUtc == r.UserClaim.CreatedAtUtc;
 		}
 	}
@@ -70,7 +70,7 @@ public static class UserClaimEquals
 
 	extension(AddUserClaimApiResponse response)
 	{
-		public bool Matches(UserClaim userClaim, AddUserClaimApiRequest request)
+		public bool Matches(AddUserClaimApiRequest request, UserClaim userClaim)
 		{
 			return response.Response.Matches(userClaim.Id);
 		}
@@ -79,30 +79,30 @@ public static class UserClaimEquals
 	extension(GetAllUserClaimsApiResponse response)
 	{
 		public bool Matches(
+			GetAllUserClaimsApiRequest request,
 			User user,
-			ICollection<UserClaim> userClaims,
-			GetAllUserClaimsApiRequest request)
+			ICollection<UserClaim> userClaims)
 		{
 			return response.Response.MatchesFull(
-					   (response, userClaim) => response.MatchesWithoutUser(userClaim, request),
+					   request,
+					   (response, userClaim) => response.MatchesWithoutUser(userClaim),
 					   userClaim => userClaim.MatchesFilter(request),
 					   user,
-					   userClaims,
-					   request);
+					   userClaims);
 		}
 
 		public bool Matches(
+			GetAllUserClaimsApiRequest request,
 			User user,
 			ICollection<UserClaim> userClaims,
-			GetAllUserClaimsApiRequest request,
 			ISortEnumTermTransformer<UserClaim> termTransformer)
 		{
 			return response.Response.MatchesFull(
-					   (response, userClaim) => response.MatchesWithoutUser(userClaim, request),
+					   request,
+					   (response, userClaim) => response.MatchesWithoutUser(userClaim),
 					   userClaim => userClaim.MatchesFilter(request),
 					   user,
 					   userClaims,
-					   request,
 					   termTransformer);
 		}
 	}
@@ -130,18 +130,16 @@ public static class UserClaimEquals
 
 	extension(UserClaimApiResponse? response)
 	{
-		public bool MatchesFull<TRequest>(UserClaim? userClaim, TRequest request)
-		where TRequest : ICurrentUserableApiRequest
+		public bool MatchesFull(UserClaim? userClaim)
 		{
 			return response != null &&
 				   userClaim != null &&
 				   userClaim.Id.Matches(response.Id, response.Claim) &&
-				   response.User.MatchesFull(userClaim.User, request) &&
+				   response.User.MatchesFull(userClaim.User) &&
 				   userClaim.CreatedAtUtc == response.CreatedAtUtc;
 		}
 
-		public bool MatchesWithoutUser<TRequest>(UserClaim? userClaim, TRequest request)
-		where TRequest : ICurrentUserableApiRequest
+		public bool MatchesWithoutUser(UserClaim? userClaim)
 		{
 			return response != null &&
 				   userClaim != null &&
@@ -154,72 +152,76 @@ public static class UserClaimEquals
 	extension(UserClaimCollectionApiResponse response)
 	{
 		public bool MatchesFull<TRequest>(
+		TRequest request,
 		Func<UserClaimApiResponse, UserClaim, bool> matches,
 		Func<UserClaim, bool> matchesFilter,
 		User user,
-		ICollection<UserClaim> userClaims,
-		TRequest request)
+		ICollection<UserClaim> userClaims)
 		where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
-			return response.MatchesCollectionResponse(userClaims.Count(matchesFilter), request) &&
-				   response.User.MatchesFull(user, request) &&
-				   response.UserClaims.MatchesCollection(userClaims,
+			return response.MatchesCollectionResponse(request, userClaims.Count(matchesFilter)) &&
+				   response.User.MatchesFull(user) &&
+				   response.UserClaims.MatchesCollection(
+													request,
+					                                userClaims,
 													response => new(new(response.Id), response.Claim),
 													userClaim => userClaim.Id,
 													matches,
-													request,
 													matchesFilter);
 		}
 
 		public bool MatchesFull<TRequest>(
+			TRequest request,
 			Func<UserClaimApiResponse, UserClaim, bool> matches,
 			Func<UserClaim, bool> matchesFilter,
 			User user,
 			ICollection<UserClaim> userClaims,
-			TRequest request,
 			ISortEnumTermTransformer<UserClaim> termTransformer)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
-			return response.MatchesCollectionResponse(userClaims.Count(matchesFilter), request) &&
-				   response.User.MatchesFull(user, request) &&
-				   response.UserClaims.MatchesSortedCollection(userClaims,
+			return response.MatchesCollectionResponse(request, userClaims.Count(matchesFilter)) &&
+				   response.User.MatchesFull(user) &&
+				   response.UserClaims.MatchesSortedCollection(
+														  request,
+														  userClaims,
 														  matches,
 														  termTransformer,
-														  request,
 														  matchesFilter);
 		}
 
 		public bool MatchesWithoutUser<TRequest>(
+		TRequest request,
 		Func<UserClaimApiResponse, UserClaim, bool> matches,
 		Func<UserClaim, bool> matchesFilter,
-		ICollection<UserClaim> userClaims,
-		TRequest request)
+		ICollection<UserClaim> userClaims)
 		where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
-			return response.MatchesCollectionResponse(userClaims.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, userClaims.Count(matchesFilter)) &&
 				   response.User == null &&
-				   response.UserClaims.MatchesCollection(userClaims,
+				   response.UserClaims.MatchesCollection(
+													request,
+													userClaims,
 													response => new(new(response.Id), response.Claim),
 													userClaim => userClaim.Id,
 													matches,
-													request,
 													matchesFilter);
 		}
 
 		public bool MatchesWithoutUser<TRequest>(
+			TRequest request,
 			Func<UserClaimApiResponse, UserClaim, bool> matches,
 			Func<UserClaim, bool> matchesFilter,
 			ICollection<UserClaim> userClaims,
-			TRequest request,
 			ISortEnumTermTransformer<UserClaim> termTransformer)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
-			return response.MatchesCollectionResponse(userClaims.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, userClaims.Count(matchesFilter)) &&
 				   response.User == null &&
-				   response.UserClaims.MatchesSortedCollection(userClaims,
+				   response.UserClaims.MatchesSortedCollection(
+														  request,
+					                                      userClaims,
 														  matches,
 														  termTransformer,
-														  request,
 														  matchesFilter);
 		}
 	}

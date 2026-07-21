@@ -6,30 +6,6 @@ namespace InstaConnect.Follows.Tests.Features.Users.Utilities;
 
 public static class UserEquals
 {
-	extension(UserAddedEventRequest p)
-	{
-		public bool Matches(UserAddedEventRequest request)
-		{
-			return p.User.Matches(request.User);
-		}
-	}
-
-	extension(UserUpdatedEventRequest p)
-	{
-		public bool Matches(UserUpdatedEventRequest request)
-		{
-			return p.User.Matches(request.User);
-		}
-	}
-
-	extension(UserDeletedEventRequest p)
-	{
-		public bool Matches(UserDeletedEventRequest request)
-		{
-			return p.User.Matches(request.User);
-		}
-	}
-
 	extension(UserEventRequest r)
 	{
 		public bool Matches(UserEventRequest request)
@@ -45,11 +21,12 @@ public static class UserEquals
 		}
 	}
 
-	extension(User entity)
+	extension(User? entity)
 	{
 		public bool Matches(UserEventRequest request)
 		{
-			return entity.Id.Matches(request.Id) &&
+			return entity != null &&
+				   entity.Id.Matches(request.Id) &&
 				   entity.Name.Matches(request.Name) &&
 				   entity.Email.Matches(request.Email) &&
 				   entity.FirstName == request.FirstName &&
@@ -61,7 +38,8 @@ public static class UserEquals
 
 		public bool Matches(UserNotificationRequest response)
 		{
-			return entity.Id.Matches(response.Id) &&
+			return entity != null &&
+				   entity.Id.Matches(response.Id) &&
 				   entity.Name.Matches(response.Name) &&
 				   entity.Email.Matches(response.Email) &&
 				   entity.FirstName == response.FirstName &&
@@ -70,7 +48,10 @@ public static class UserEquals
 				   entity.CreatedAtUtc == response.CreatedAtUtc &&
 				   entity.UpdatedAtUtc == response.UpdatedAtUtc;
 		}
+	}
 
+	extension(User entity)
+	{
 		public bool Matches(User u)
 		{
 			return entity.Id.Matches(u.Id.Id) &&

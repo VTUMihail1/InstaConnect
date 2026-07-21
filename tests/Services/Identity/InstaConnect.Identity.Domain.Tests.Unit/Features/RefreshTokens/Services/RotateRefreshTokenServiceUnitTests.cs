@@ -17,7 +17,7 @@ public class RotateRefreshTokenServiceUnitTests : BaseRefreshTokenDomainCommandU
 
 	private readonly UserInclude _include;
 
-	private readonly RefreshToken _newRefreshToken;
+	private readonly RefreshToken _refreshToken;
 
 	private readonly RefreshTokenCommandService _service;
 
@@ -29,15 +29,15 @@ public class RotateRefreshTokenServiceUnitTests : BaseRefreshTokenDomainCommandU
 
 		_include = IncludeBuilderFactory.Create().WithUserClaims().Build();
 
-		_newRefreshToken = RefreshTokenBuilderFactory.Create(User).Build();
+		_refreshToken = RefreshTokenBuilderFactory.Create(User).Build();
 
-		_service = new(PasswordHasher, Repository, DateTimeProvider, Factory, SessionTokenGenerator, RefreshTokenRepository, IncludeBuilderFactory);
+		_service = new(PasswordHasher, Repository, DateTimeProvider, Factory, SessionTokenGenerator, IncludeBuilderFactory, RefreshTokenRepository);
 
 		Repository.SetupGetById(_command, _include, User, CancellationToken);
 		RefreshTokenRepository.SetupGetById(_command, RefreshToken, CancellationToken);
 		DateTimeProvider.SetupGetOffsetUtcNow(_command, UnexpiredDate);
-		Factory.SetupCreate(_command, _newRefreshToken);
-		SessionTokenGenerator.SetupGenerate(_command, _newRefreshToken);
+		Factory.SetupCreate(_command, _refreshToken);
+		SessionTokenGenerator.SetupGenerate(_command, _refreshToken);
 	}
 
 	[Fact]
@@ -88,7 +88,7 @@ public class RotateRefreshTokenServiceUnitTests : BaseRefreshTokenDomainCommandU
 		var response = await _service.RotateAsync(_command, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(_newRefreshToken, _command);
+		response.ShouldSatisfy(_command, _refreshToken);
 	}
 
 	[Fact]
@@ -148,7 +148,7 @@ public class RotateRefreshTokenServiceUnitTests : BaseRefreshTokenDomainCommandU
 		await _service.RotateAsync(_command, CancellationToken);
 
 		// Assert
-		await RefreshTokenRepository.ShouldReceiveOneAddAsync(_command, _newRefreshToken, CancellationToken);
+		await RefreshTokenRepository.ShouldReceiveOneAddAsync(_command, _refreshToken, CancellationToken);
 	}
 
 	[Fact]
@@ -158,6 +158,6 @@ public class RotateRefreshTokenServiceUnitTests : BaseRefreshTokenDomainCommandU
 		await _service.RotateAsync(_command, CancellationToken);
 
 		// Assert
-		SessionTokenGenerator.ShouldReceiveOneGenerate(_command, _newRefreshToken);
+		SessionTokenGenerator.ShouldReceiveOneGenerate(_command, _refreshToken);
 	}
 }

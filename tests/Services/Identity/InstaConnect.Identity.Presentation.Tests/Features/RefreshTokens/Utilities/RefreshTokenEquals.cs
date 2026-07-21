@@ -10,13 +10,20 @@ namespace InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Utilit
 
 public static class RefreshTokenEquals
 {
-	extension(SetRefreshTokenCookieRequest request)
+	extension(SetRefreshTokenCookieRequest r)
 	{
-		public bool Matches(RefreshToken refreshToken)
+		public bool Matches(IssueRefreshTokenApiRequest request, RefreshToken refreshToken)
 		{
-			return request.Id == refreshToken.Id.Id.Id &&
-				   request.Value == refreshToken.Id.Value &&
-				   request.ExpiresAtUtc == refreshToken.ExpiresAtUtc;
+			return r.Id == refreshToken.Id.Id.Id &&
+				   r.Value == refreshToken.Id.Value &&
+				   r.ExpiresAtUtc == refreshToken.ExpiresAtUtc;
+		}
+
+		public bool Matches(RotateRefreshTokenApiRequest request, RefreshToken refreshToken)
+		{
+			return r.Id == refreshToken.Id.Id.Id &&
+				   r.Value == refreshToken.Id.Value &&
+				   r.ExpiresAtUtc == refreshToken.ExpiresAtUtc;
 		}
 	}
 

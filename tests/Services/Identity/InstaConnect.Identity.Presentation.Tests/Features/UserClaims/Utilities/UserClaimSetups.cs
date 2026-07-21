@@ -1,5 +1,3 @@
-using InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Utilities;
-
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Utilities;
@@ -12,8 +10,17 @@ public static class UserClaimSetups
 		UserClaimIdApiResponse id,
 		CancellationToken cancellationToken)
 		{
-			return await serviceScope.GetUserClaimByIdAsync(
+			return await serviceScope.GetClaimByIdAsync(
 				new UserClaimId(new(id.Id), id.Claim),
+				cancellationToken);
+		}
+
+		public async Task<UserClaim?> GetUserClaimByIdAsync(
+		AddUserClaimApiResponse response,
+		CancellationToken cancellationToken)
+		{
+			return await serviceScope.GetUserClaimByIdAsync(
+				response.Response,
 				cancellationToken);
 		}
 	}

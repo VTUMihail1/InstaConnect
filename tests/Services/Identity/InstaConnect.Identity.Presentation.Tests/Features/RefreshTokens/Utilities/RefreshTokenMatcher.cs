@@ -2,9 +2,14 @@ namespace InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Utilit
 
 public static class RefreshTokenMatcher
 {
-	public static SetRefreshTokenCookieRequest IsRefreshTokenCookieRequest(RefreshToken refreshToken)
+	public static SetRefreshTokenCookieRequest IsRefreshTokenCookieRequest(IssueRefreshTokenApiRequest request, RefreshToken refreshToken)
 	{
-		return Matcher.Is<SetRefreshTokenCookieRequest>(p => p.Matches(refreshToken));
+		return Matcher.Is<SetRefreshTokenCookieRequest>(p => p.Matches(request, refreshToken));
+	}
+
+	public static SetRefreshTokenCookieRequest IsRefreshTokenCookieRequest(RotateRefreshTokenApiRequest request, RefreshToken refreshToken)
+	{
+		return Matcher.Is<SetRefreshTokenCookieRequest>(p => p.Matches(request, refreshToken));
 	}
 
 	public static IssueRefreshTokenCommandRequest IsIssueRefreshTokenCommandRequest(IssueRefreshTokenApiRequest request)

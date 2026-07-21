@@ -20,8 +20,8 @@ public class GetAllUserClaimsQueryHandlerIntegrationTests : BaseUserClaimApplica
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserRangeAsync(Users, CancellationToken);
-		await ServiceScope.AddUserClaimRangeAsync(UserClaims, CancellationToken);
+		await ServiceScope.AddRangeAsync(Users, CancellationToken);
+		await ServiceScope.AddClaimRangeAsync(UserClaims, CancellationToken);
 	}
 
 	[Theory]
@@ -111,7 +111,7 @@ public class GetAllUserClaimsQueryHandlerIntegrationTests : BaseUserClaimApplica
 	public async Task SendAsync_ShouldThrowUserNotFoundException_WhenUserNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Assert
 		await Sender.ShouldThrowUserNotFoundExceptionAsync(_request, CancellationToken);
@@ -124,7 +124,7 @@ public class GetAllUserClaimsQueryHandlerIntegrationTests : BaseUserClaimApplica
 		var response = await Sender.SendAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, UserClaims, _request);
+		response.ShouldSatisfy(_request, User, UserClaims);
 	}
 
 	[Theory]
@@ -139,7 +139,7 @@ public class GetAllUserClaimsQueryHandlerIntegrationTests : BaseUserClaimApplica
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, UserClaims, request);
+		response.ShouldSatisfy(request, User, UserClaims);
 	}
 
 	[Theory]
@@ -156,7 +156,7 @@ public class GetAllUserClaimsQueryHandlerIntegrationTests : BaseUserClaimApplica
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, UserClaims, request);
+		response.ShouldSatisfy(request, User, UserClaims);
 	}
 
 	[Theory]
@@ -172,7 +172,7 @@ public class GetAllUserClaimsQueryHandlerIntegrationTests : BaseUserClaimApplica
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, UserClaims, request, termTransformer);
+		response.ShouldSatisfy(request, User, UserClaims, termTransformer);
 	}
 
 	[Theory]
@@ -187,6 +187,6 @@ public class GetAllUserClaimsQueryHandlerIntegrationTests : BaseUserClaimApplica
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, UserClaims, request, termTransformer);
+		response.ShouldSatisfy(request, User, UserClaims, termTransformer);
 	}
 }

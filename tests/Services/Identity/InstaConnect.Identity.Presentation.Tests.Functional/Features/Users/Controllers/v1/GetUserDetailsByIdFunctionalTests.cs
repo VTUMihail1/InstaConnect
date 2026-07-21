@@ -16,7 +16,7 @@ public class GetUserDetailsByIdFunctionalTests : BaseUserPresentationQueryFuncti
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 	}
 
 	[Fact]
@@ -105,7 +105,7 @@ public class GetUserDetailsByIdFunctionalTests : BaseUserPresentationQueryFuncti
 	public async Task GetDetailsByIdAsync_ShouldHaveNotFoundStatusCode_WhenUserNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Act
 		var response = await Client.GetDetailsByIdStatusCodeAsync(_request, CancellationToken);
@@ -118,7 +118,7 @@ public class GetUserDetailsByIdFunctionalTests : BaseUserPresentationQueryFuncti
 	public async Task GetDetailsByIdAsync_ShouldHaveUserNotFoundProblemDetails_WhenUserNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Act
 		var response = await Client.GetDetailsByIdProblemDetailsAsync(_request, CancellationToken);
@@ -175,7 +175,7 @@ public class GetUserDetailsByIdFunctionalTests : BaseUserPresentationQueryFuncti
 		var response = await Client.GetDetailsByIdAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, _request);
+		response.ShouldSatisfy(_request, User);
 	}
 
 	[Theory]
@@ -190,7 +190,7 @@ public class GetUserDetailsByIdFunctionalTests : BaseUserPresentationQueryFuncti
 		var response = await Client.GetDetailsByIdAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, request);
+		response.ShouldSatisfy(request, User);
 	}
 
 	[Theory]
@@ -206,6 +206,6 @@ public class GetUserDetailsByIdFunctionalTests : BaseUserPresentationQueryFuncti
 		var response = await Client.GetDetailsByIdAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, request);
+		response.ShouldSatisfy(request, User);
 	}
 }

@@ -16,7 +16,7 @@ public class GetUserByIdFunctionalTests : BaseUserPresentationQueryFunctionalTes
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 	}
 
 	[Theory]
@@ -85,7 +85,7 @@ public class GetUserByIdFunctionalTests : BaseUserPresentationQueryFunctionalTes
 	public async Task GetByIdAsync_ShouldHaveNotFoundStatusCode_WhenUserNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Act
 		var response = await Client.GetByIdStatusCodeAsync(_request, CancellationToken);
@@ -98,7 +98,7 @@ public class GetUserByIdFunctionalTests : BaseUserPresentationQueryFunctionalTes
 	public async Task GetByIdAsync_ShouldHaveUserNotFoundProblemDetails_WhenUserNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Act
 		var response = await Client.GetByIdProblemDetailsAsync(_request, CancellationToken);
@@ -155,7 +155,7 @@ public class GetUserByIdFunctionalTests : BaseUserPresentationQueryFunctionalTes
 		var response = await Client.GetByIdAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, _request);
+		response.ShouldSatisfy(_request, User);
 	}
 
 	[Theory]
@@ -170,7 +170,7 @@ public class GetUserByIdFunctionalTests : BaseUserPresentationQueryFunctionalTes
 		var response = await Client.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, request);
+		response.ShouldSatisfy(request, User);
 	}
 
 	[Theory]
@@ -186,6 +186,6 @@ public class GetUserByIdFunctionalTests : BaseUserPresentationQueryFunctionalTes
 		var response = await Client.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, request);
+		response.ShouldSatisfy(request, User);
 	}
 }

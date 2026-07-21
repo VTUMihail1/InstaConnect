@@ -8,67 +8,67 @@ public static class UserMatchAssertions
 {
 	extension(AddUserCommandResponse response)
 	{
-		public void ShouldSatisfy(User user, AddUserCommandRequest request)
+		public void ShouldSatisfy(AddUserCommandRequest request, User user)
 		{
-			response.ShouldSatisfy(p => p.Matches(user, request));
+			response.ShouldSatisfy(p => p.Matches(request, user));
 		}
 	}
 
 	extension(UpdateCurrentUserCommandResponse response)
 	{
-		public void ShouldSatisfy(User user, UpdateCurrentUserCommandRequest request)
+		public void ShouldSatisfy(UpdateCurrentUserCommandRequest request, User user)
 		{
-			response.ShouldSatisfy(p => p.Matches(user, request));
+			response.ShouldSatisfy(p => p.Matches(request, user));
 		}
 	}
 
 	extension(GetUserByIdQueryResponse response)
 	{
-		public void ShouldSatisfy(User user, GetUserByIdQueryRequest request)
+		public void ShouldSatisfy(GetUserByIdQueryRequest request, User user)
 		{
-			response.ShouldSatisfy(p => p.Matches(user, request));
+			response.ShouldSatisfy(p => p.Matches(request, user));
 		}
 	}
 
 	extension(GetCurrentUserByIdQueryResponse response)
 	{
-		public void ShouldSatisfy(User user, GetCurrentUserByIdQueryRequest request)
+		public void ShouldSatisfy(GetCurrentUserByIdQueryRequest request, User user)
 		{
-			response.ShouldSatisfy(p => p.Matches(user, request));
+			response.ShouldSatisfy(p => p.Matches(request, user));
 		}
 	}
 
 	extension(GetUserDetailsByIdQueryResponse response)
 	{
-		public void ShouldSatisfy(User user, GetUserDetailsByIdQueryRequest request)
+		public void ShouldSatisfy(GetUserDetailsByIdQueryRequest request, User user)
 		{
-			response.ShouldSatisfy(p => p.Matches(user, request));
+			response.ShouldSatisfy(p => p.Matches(request, user));
 		}
 	}
 
 	extension(GetCurrentUserDetailsByIdQueryResponse response)
 	{
-		public void ShouldSatisfy(User user, GetCurrentUserDetailsByIdQueryRequest request)
+		public void ShouldSatisfy(GetCurrentUserDetailsByIdQueryRequest request, User user)
 		{
-			response.ShouldSatisfy(p => p.Matches(user, request));
+			response.ShouldSatisfy(p => p.Matches(request, user));
 		}
 	}
 
 	extension(GetAllUsersQueryResponse response)
 	{
 		public void ShouldSatisfy(
-		ICollection<User> users,
-		GetAllUsersQueryRequest request)
+		GetAllUsersQueryRequest request,
+		ICollection<User> users)
 		{
-			response.ShouldSatisfy(p => p.Matches(users, request));
+			response.ShouldSatisfy(p => p.Matches(request, users));
 		}
 
 		public void ShouldSatisfy(
-			ICollection<User> users,
 			GetAllUsersQueryRequest request,
+			ICollection<User> users,
 			ISortEnumTermTransformer<User> termTransformer)
 		{
-			response.ShouldSatisfy(p => p.Matches(users, request, termTransformer));
+			response.ShouldSatisfy(p => p.Matches(request, users, termTransformer));
 		}
 	}
 
@@ -83,15 +83,13 @@ public static class UserMatchAssertions
 		{
 			user.ShouldSatisfy(p => p.Matches(request));
 		}
+	}
 
-		public void ShouldSatisfy(VerifyEmailConfirmationTokenCommandRequest request)
+	extension(ICollection<EmailConfirmationToken> emailConfirmationTokens)
+	{
+		public void ShouldSatisfy(UpdateCurrentUserCommandRequest request)
 		{
-			user.ShouldSatisfy(p => p.Matches(request));
-		}
-
-		public void ShouldSatisfy(VerifyForgotPasswordTokenCommandRequest request, IPasswordHasher passwordHasher)
-		{
-			user.ShouldSatisfy(p => p.Matches(request, passwordHasher));
+			emailConfirmationTokens.ShouldSatisfy(p => p.Matches(request));
 		}
 	}
 }

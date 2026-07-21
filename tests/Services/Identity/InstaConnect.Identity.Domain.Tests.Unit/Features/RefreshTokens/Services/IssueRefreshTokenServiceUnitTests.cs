@@ -26,7 +26,7 @@ public class IssueRefreshTokenServiceUnitTests : BaseRefreshTokenDomainCommandUn
 
 		_include = IncludeBuilderFactory.Create().WithUserClaims().Build();
 
-		_service = new(PasswordHasher, Repository, DateTimeProvider, Factory, SessionTokenGenerator, RefreshTokenRepository, IncludeBuilderFactory);
+		_service = new(PasswordHasher, Repository, DateTimeProvider, Factory, SessionTokenGenerator, IncludeBuilderFactory, RefreshTokenRepository);
 
 		Repository.SetupGetByName(_command, _include, User, CancellationToken);
 		PasswordHasher.SetupIsMismatch(_command, User);
@@ -73,7 +73,7 @@ public class IssueRefreshTokenServiceUnitTests : BaseRefreshTokenDomainCommandUn
 		var response = await _service.IssueAsync(_command, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(RefreshToken, _command);
+		response.ShouldSatisfy(_command, RefreshToken);
 	}
 
 	[Fact]

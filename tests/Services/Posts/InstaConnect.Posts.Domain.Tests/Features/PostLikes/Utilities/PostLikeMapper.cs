@@ -81,13 +81,13 @@ public static class PostLikeMapper
 		public ICollection<PostLikeResponse> ToResponse(
 			GetAllPostLikesQuery query)
 		{
-			return postLikes.Filter(postLike => postLike.MatchesFilter(query.Filter), query.Pagination, postLike => postLike.ToResponseWithoutPost(query));
+			return postLikes.Filter(query.Pagination, postLike => postLike.MatchesFilter(query.Filter), postLike => postLike.ToResponseWithoutPost(query));
 		}
 
 		public ICollection<PostLikeResponse> ToResponse(
 			GetAllPostLikesForUserQuery query)
 		{
-			return postLikes.Filter(postLike => postLike.MatchesFilter(query.Filter), query.Pagination, postLike => postLike.ToResponseWithoutUser(query));
+			return postLikes.Filter(query.Pagination, postLike => postLike.MatchesFilter(query.Filter), postLike => postLike.ToResponseWithoutUser(query));
 		}
 
 		public long ToTotalCountResponse(

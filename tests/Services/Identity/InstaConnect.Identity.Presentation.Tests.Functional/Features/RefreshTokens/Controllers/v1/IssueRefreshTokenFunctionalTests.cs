@@ -18,8 +18,8 @@ public class IssueRefreshTokenFunctionalTests : BaseRefreshTokenPresentationComm
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
-		await ServiceScope.AddUserClaimRangeAsync(User.UserClaims, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
+		await ServiceScope.AddClaimRangeAsync(User.UserClaims, CancellationToken);
 	}
 
 	[Theory]
@@ -94,7 +94,7 @@ public class IssueRefreshTokenFunctionalTests : BaseRefreshTokenPresentationComm
 	public async Task IssueAsync_ShouldHaveBadRequestStatusCode_WhenUserNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Act
 		var response = await Client.IssueStatusCodeAsync(_request, CancellationToken);
@@ -107,7 +107,7 @@ public class IssueRefreshTokenFunctionalTests : BaseRefreshTokenPresentationComm
 	public async Task IssueAsync_ShouldHaveUserInvalidDetailsProblemDetails_WhenUserNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Act
 		var response = await Client.IssueProblemDetailsAsync(_request, CancellationToken);
@@ -121,7 +121,7 @@ public class IssueRefreshTokenFunctionalTests : BaseRefreshTokenPresentationComm
 	{
 		// Arrange
 		var updatedUser = UserBuilder.WithPasswordHash(PasswordHasher.Hash(NewPassword)).Build();
-		await ServiceScope.UpdateUserAsync(updatedUser, CancellationToken);
+		await ServiceScope.UpdateAsync(updatedUser, CancellationToken);
 
 		// Act
 		var response = await Client.IssueStatusCodeAsync(_request, CancellationToken);
@@ -135,7 +135,7 @@ public class IssueRefreshTokenFunctionalTests : BaseRefreshTokenPresentationComm
 	{
 		// Arrange
 		var updatedUser = UserBuilder.WithPasswordHash(PasswordHasher.Hash(NewPassword)).Build();
-		await ServiceScope.UpdateUserAsync(updatedUser, CancellationToken);
+		await ServiceScope.UpdateAsync(updatedUser, CancellationToken);
 
 		// Act
 		var response = await Client.IssueProblemDetailsAsync(_request, CancellationToken);
@@ -149,7 +149,7 @@ public class IssueRefreshTokenFunctionalTests : BaseRefreshTokenPresentationComm
 	{
 		// Arrange
 		var updatedUser = UserBuilder.WithUnconfirmedEmail().Build();
-		await ServiceScope.UpdateUserAsync(updatedUser, CancellationToken);
+		await ServiceScope.UpdateAsync(updatedUser, CancellationToken);
 
 		// Act
 		var response = await Client.IssueStatusCodeAsync(_request, CancellationToken);
@@ -163,7 +163,7 @@ public class IssueRefreshTokenFunctionalTests : BaseRefreshTokenPresentationComm
 	{
 		// Arrange
 		var updatedUser = UserBuilder.WithUnconfirmedEmail().Build();
-		await ServiceScope.UpdateUserAsync(updatedUser, CancellationToken);
+		await ServiceScope.UpdateAsync(updatedUser, CancellationToken);
 
 		// Act
 		var response = await Client.IssueProblemDetailsAsync(_request, CancellationToken);
@@ -225,7 +225,7 @@ public class IssueRefreshTokenFunctionalTests : BaseRefreshTokenPresentationComm
 	{
 		// Act
 		await Client.IssueAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.RefreshTokens.ShouldNotBeEmpty();
@@ -240,7 +240,7 @@ public class IssueRefreshTokenFunctionalTests : BaseRefreshTokenPresentationComm
 
 		// Act
 		await Client.IssueAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.RefreshTokens.ShouldNotBeEmpty();
@@ -251,7 +251,7 @@ public class IssueRefreshTokenFunctionalTests : BaseRefreshTokenPresentationComm
 	{
 		// Act
 		var response = await Client.IssueResponseCookiesAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(_request, user);
@@ -266,7 +266,7 @@ public class IssueRefreshTokenFunctionalTests : BaseRefreshTokenPresentationComm
 
 		// Act
 		var response = await Client.IssueResponseCookiesAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(request, user);

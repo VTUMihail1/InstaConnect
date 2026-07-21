@@ -2,7 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Identity.Domain.Tests.Features.Users.Utilities;
 
-public static class UserDomainSetups
+public static class UserSetups
 {
 	extension(IServiceProvider serviceProvider)
 	{

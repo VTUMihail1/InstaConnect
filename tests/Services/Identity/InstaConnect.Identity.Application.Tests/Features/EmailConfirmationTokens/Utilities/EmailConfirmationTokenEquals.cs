@@ -1,34 +1,11 @@
-using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Identity.Application.Tests.Features.EmailConfirmationTokens.Utilities;
 using InstaConnect.Identity.Events.Features.EmailConfirmationTokens;
+using InstaConnect.Identity.Events.Features.Users;
 
 namespace InstaConnect.Identity.Application.Tests.Features.EmailConfirmationTokens.Utilities;
 
 public static class EmailConfirmationTokenEquals
 {
-	extension(EmailConfirmationTokenAddedEventRequest r)
-	{
-		public bool Matches(AddEmailConfirmationTokenCommandRequest request, EmailConfirmationToken entity)
-		{
-			return entity.Id.Matches(r.EmailConfirmationToken.Id, r.EmailConfirmationToken.Value) &&
-				   request.Name.EqualsOrdinalIgnoreCase(r.EmailConfirmationToken.User.Name) &&
-				   entity.User != null && entity.User.Matches(r.EmailConfirmationToken.User) &&
-				   entity.ExpiresAtUtc == r.EmailConfirmationToken.ExpiresAtUtc &&
-				   entity.CreatedAtUtc == r.EmailConfirmationToken.CreatedAtUtc;
-		}
-	}
-
-	extension(EmailConfirmationTokenDeletedEventRequest r)
-	{
-		public bool Matches(VerifyEmailConfirmationTokenCommandRequest request, EmailConfirmationToken entity)
-		{
-			return entity.Id.Matches(r.EmailConfirmationToken.Id, r.EmailConfirmationToken.Value) &&
-				   entity.User != null && entity.User.Matches(r.EmailConfirmationToken.User) &&
-				   entity.ExpiresAtUtc == r.EmailConfirmationToken.ExpiresAtUtc &&
-				   entity.CreatedAtUtc == r.EmailConfirmationToken.CreatedAtUtc;
-		}
-	}
-
 	extension(AddEmailConfirmationTokenCommand command)
 	{
 		public bool Matches(AddEmailConfirmationTokenCommandRequest request)
@@ -55,6 +32,87 @@ public static class EmailConfirmationTokenEquals
 		public bool Matches(VerifyEmailConfirmationTokenCommandRequest request)
 		{
 			return emailConfirmationToken.Id.Matches(request.Id, request.Value);
+		}
+	}
+
+	extension(User user)
+	{
+		public bool Matches(VerifyEmailConfirmationTokenCommandRequest request)
+		{
+			return user.IsEmailConfirmed;
+		}
+	}
+
+	extension(User? entity)
+	{
+		public bool Matches(AddEmailConfirmationTokenCommandRequest request, UserEventRequest r)
+		{
+			return entity != null &&
+				   entity.Id.Matches(r.Id) &&
+				   request.Name == r.Name &&
+				   entity.Email.Matches(r.Email) &&
+				   entity.FirstName == r.FirstName &&
+				   entity.LastName == r.LastName &&
+				   entity.ProfileImage.Matches(r.ProfileImageUrl) &&
+				   entity.CreatedAtUtc == r.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == r.UpdatedAtUtc;
+		}
+
+		public bool Matches(VerifyEmailConfirmationTokenCommandRequest request, UserEventRequest r)
+		{
+			return entity != null &&
+				   request.Id == r.Id &&
+				   entity.Name.Matches(r.Name) &&
+				   entity.Email.Matches(r.Email) &&
+				   entity.FirstName == r.FirstName &&
+				   entity.LastName == r.LastName &&
+				   entity.ProfileImage.Matches(r.ProfileImageUrl) &&
+				   entity.CreatedAtUtc == r.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == r.UpdatedAtUtc;
+		}
+	}
+
+	extension(EmailConfirmationTokenAddedEventRequest r)
+	{
+		public bool Matches(AddEmailConfirmationTokenCommandRequest request, EmailConfirmationToken entity)
+		{
+			return entity.Id.Matches(r.EmailConfirmationToken.Id, r.EmailConfirmationToken.Value) &&
+				   entity.User.Matches(request, r.EmailConfirmationToken.User) &&
+				   entity.ExpiresAtUtc == r.EmailConfirmationToken.ExpiresAtUtc &&
+				   entity.CreatedAtUtc == r.EmailConfirmationToken.CreatedAtUtc;
+		}
+	}
+
+	extension(ICollection<EmailConfirmationTokenAddedEventRequest> r)
+	{
+		public bool Matches(AddEmailConfirmationTokenCommandRequest request, ICollection<EmailConfirmationToken> emailConfirmationTokens)
+		{
+			return r.MatchesCollection(emailConfirmationTokens,
+											  r => new(new(r.EmailConfirmationToken.Id), r.EmailConfirmationToken.Value),
+											  f => f.Id,
+											  (r, entity) => r.Matches(request, entity));
+		}
+	}
+
+	extension(EmailConfirmationTokenDeletedEventRequest r)
+	{
+		public bool Matches(VerifyEmailConfirmationTokenCommandRequest request, EmailConfirmationToken entity)
+		{
+			return entity.Id.Matches(r.EmailConfirmationToken.Id, r.EmailConfirmationToken.Value) &&
+				   entity.User.Matches(request, r.EmailConfirmationToken.User) &&
+				   entity.ExpiresAtUtc == r.EmailConfirmationToken.ExpiresAtUtc &&
+				   entity.CreatedAtUtc == r.EmailConfirmationToken.CreatedAtUtc;
+		}
+	}
+
+	extension(ICollection<EmailConfirmationTokenDeletedEventRequest> r)
+	{
+		public bool Matches(VerifyEmailConfirmationTokenCommandRequest request, ICollection<EmailConfirmationToken> emailConfirmationTokens)
+		{
+			return r.MatchesCollection(emailConfirmationTokens,
+											  r => new(new(r.EmailConfirmationToken.Id), r.EmailConfirmationToken.Value),
+											  f => f.Id,
+											  (r, entity) => r.Matches(request, entity));
 		}
 	}
 }

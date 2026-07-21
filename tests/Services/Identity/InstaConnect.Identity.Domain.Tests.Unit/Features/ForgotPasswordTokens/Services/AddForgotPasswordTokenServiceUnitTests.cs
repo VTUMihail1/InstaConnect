@@ -53,7 +53,7 @@ public class AddForgotPasswordTokenServiceUnitTests : BaseForgotPasswordTokenDom
 		var response = await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(ForgotPasswordToken, _command);
+		response.ShouldSatisfy(_command, ForgotPasswordToken);
 	}
 
 	[Fact]

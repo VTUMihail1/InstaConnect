@@ -16,8 +16,8 @@ public class IssueRefreshTokenIntegrationTests : BaseRefreshTokenApplicationComm
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
-		await ServiceScope.AddUserClaimRangeAsync(User.UserClaims, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
+		await ServiceScope.AddClaimRangeAsync(User.UserClaims, CancellationToken);
 	}
 
 	[Theory]
@@ -54,7 +54,7 @@ public class IssueRefreshTokenIntegrationTests : BaseRefreshTokenApplicationComm
 	public async Task SendAsync_ShouldThrowUserInvalidDetailsException_WhenUserNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Assert
 		await Sender.ShouldThrowUserInvalidDetailsExceptionAsync(_request, CancellationToken);
@@ -65,7 +65,7 @@ public class IssueRefreshTokenIntegrationTests : BaseRefreshTokenApplicationComm
 	{
 		// Arrange
 		var updatedUser = UserBuilder.WithPasswordHash(PasswordHasher.Hash(NewPassword)).Build();
-		await ServiceScope.UpdateUserAsync(updatedUser, CancellationToken);
+		await ServiceScope.UpdateAsync(updatedUser, CancellationToken);
 
 		// Assert
 		await Sender.ShouldThrowUserInvalidDetailsExceptionAsync(_request, CancellationToken);
@@ -76,7 +76,7 @@ public class IssueRefreshTokenIntegrationTests : BaseRefreshTokenApplicationComm
 	{
 		// Arrange
 		var updatedUser = UserBuilder.WithUnconfirmedEmail().Build();
-		await ServiceScope.UpdateUserAsync(updatedUser, CancellationToken);
+		await ServiceScope.UpdateAsync(updatedUser, CancellationToken);
 
 		// Assert
 		await Sender.ShouldThrowUserNameEmailNotConfirmedExceptionAsync(_request, CancellationToken);
@@ -87,10 +87,10 @@ public class IssueRefreshTokenIntegrationTests : BaseRefreshTokenApplicationComm
 	{
 		// Act
 		var response = await Sender.SendAsync(_request, CancellationToken);
-		var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(response.Response.Id, CancellationToken);
+		var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(refreshToken, _request);
+		response.ShouldSatisfy(_request, refreshToken);
 	}
 
 	[Theory]
@@ -103,10 +103,10 @@ public class IssueRefreshTokenIntegrationTests : BaseRefreshTokenApplicationComm
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(response.Response.Id, CancellationToken);
+		var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(refreshToken, request);
+		response.ShouldSatisfy(request, refreshToken);
 	}
 
 	[Fact]
@@ -114,7 +114,7 @@ public class IssueRefreshTokenIntegrationTests : BaseRefreshTokenApplicationComm
 	{
 		// Act
 		var response = await Sender.SendAsync(_request, CancellationToken);
-		var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(response.Response.Id, CancellationToken);
+		var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(response, CancellationToken);
 
 		// Assert
 		refreshToken.ShouldSatisfy(_request, PasswordHasher);
@@ -130,7 +130,7 @@ public class IssueRefreshTokenIntegrationTests : BaseRefreshTokenApplicationComm
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(response.Response.Id, CancellationToken);
+		var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(response, CancellationToken);
 
 		// Assert
 		refreshToken.ShouldSatisfy(_request, PasswordHasher);

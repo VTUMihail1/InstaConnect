@@ -21,7 +21,7 @@ public class DeleteRefreshTokenServiceUnitTests : BaseRefreshTokenDomainCommandU
 		_commandBuilder = _commandBuilderFactory.Create(RefreshToken);
 		_command = _commandBuilder.Build();
 
-		_service = new(PasswordHasher, Repository, DateTimeProvider, Factory, SessionTokenGenerator, RefreshTokenRepository, IncludeBuilderFactory);
+		_service = new(PasswordHasher, Repository, DateTimeProvider, Factory, SessionTokenGenerator, IncludeBuilderFactory, RefreshTokenRepository);
 
 		Repository.SetupExistsById(_command, CancellationToken);
 		RefreshTokenRepository.SetupGetById(_command, RefreshToken, CancellationToken);

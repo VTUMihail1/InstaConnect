@@ -17,17 +17,29 @@ public static class UserEquals
 		{
 			return user.Matches(request.User);
 		}
+	}
 
-		public bool Matches(User u)
+	extension(UserAddedEventRequest r)
+	{
+		public bool Matches(UserAddedEventRequest request)
 		{
-			return user.Id.Matches(u.Id.Id) &&
-				   user.Email.Matches(u.Email.Value) &&
-				   user.FirstName == u.FirstName &&
-				   user.LastName == u.LastName &&
-				   user.Name.Matches(u.Name.Value) &&
-				   user.ProfileImage.Matches(u.ProfileImage?.Url) &&
-				   user.CreatedAtUtc == u.CreatedAtUtc &&
-				   user.UpdatedAtUtc == u.UpdatedAtUtc;
+			return r.User.Matches(request.User);
+		}
+	}
+
+	extension(UserUpdatedEventRequest r)
+	{
+		public bool Matches(UserUpdatedEventRequest request)
+		{
+			return r.User.Matches(request.User);
+		}
+	}
+
+	extension(UserDeletedEventRequest r)
+	{
+		public bool Matches(UserDeletedEventRequest request)
+		{
+			return r.User.Matches(request.User);
 		}
 	}
 

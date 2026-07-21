@@ -1,7 +1,6 @@
-using InstaConnect.Follows.Tests.Features.Users.Utilities;
-using InstaConnect.Identity.Events.Features.Users;
+using InstaConnect.Follows.Presentation.Tests.Features.Users.Utilities;
 
-namespace InstaConnect.Follows.Tests.Features.Users.Assertions;
+namespace InstaConnect.Follows.Presentation.Tests.Features.Users.Assertions;
 
 public static class UserEventHarnessAssertions
 {

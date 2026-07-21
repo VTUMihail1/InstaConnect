@@ -43,7 +43,7 @@ public class GetUserByIdServiceUnitTests : BaseUserDomainQueryUnitTest
 		var response = await _service.GetByIdAsync(_query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, _query);
+		response.ShouldSatisfy(_query, User);
 	}
 
 	[Fact]

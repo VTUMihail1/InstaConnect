@@ -26,7 +26,7 @@ public class IssueRefreshTokenCommandHandlerUnitTests : BaseRefreshTokenApplicat
 		var response = await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(RefreshToken, _request);
+		response.ShouldSatisfy(_request, RefreshToken);
 	}
 
 	[Fact]

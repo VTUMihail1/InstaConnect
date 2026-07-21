@@ -55,7 +55,7 @@ public static class UserMapper
 		public ICollection<UserResponse> ToResponse(
 			GetAllUsersQuery query)
 		{
-			return users.Filter(user => user.MatchesFilter(query), query.Pagination, user => user.ToFullResponse());
+			return users.Filter(query.Pagination, user => user.MatchesFilter(query), user => user.ToFullResponse());
 		}
 
 		public long ToTotalCountResponse(

@@ -8,45 +8,20 @@ namespace InstaConnect.Posts.Tests.Features.PostCommentLikes.Utilities;
 
 public static class PostCommentLikeEquals
 {
-	extension(PostCommentLikeAddedEventRequest request)
-	{
-		public bool Matches(PostCommentLike entity)
-		{
-			return entity.Matches(request.PostCommentLike);
-		}
-	}
-
-	extension(PostCommentLikeDeletedEventRequest request)
-	{
-		public bool Matches(PostCommentLike entity)
-		{
-			return entity.Matches(request.PostCommentLike);
-		}
-	}
-
-	extension(PostCommentLikeEventRequest r)
+	extension(PostCommentLike? entity)
 	{
 		public bool Matches(PostCommentLikeEventRequest request)
 		{
-			return r.Id == request.Id &&
-				   r.CommentId == request.CommentId &&
-				   r.UserId == request.UserId &&
-				   r.User.Matches(request.User) &&
-				   r.PostComment.Matches(request.PostComment) &&
-				   r.CreatedAtUtc == request.CreatedAtUtc;
+			return entity != null &&
+				   entity.Id.Matches(request.Id, request.CommentId, request.UserId) &&
+				   entity.User.Matches(request.User) &&
+				   entity.PostComment.Matches(request.PostComment) &&
+				   entity.CreatedAtUtc == request.CreatedAtUtc;
 		}
 	}
 
 	extension(PostCommentLike entity)
 	{
-		public bool Matches(PostCommentLikeEventRequest request)
-		{
-			return entity.Id.Matches(request.Id, request.CommentId, request.UserId) &&
-				   entity.User != null && entity.User.Matches(request.User) &&
-				   entity.PostComment != null && entity.PostComment.Matches(request.PostComment) &&
-				   entity.CreatedAtUtc == request.CreatedAtUtc;
-		}
-
 		public bool Matches(PostCommentLike postCommentLike)
 		{
 			return entity.Id.Matches(postCommentLike.Id) &&

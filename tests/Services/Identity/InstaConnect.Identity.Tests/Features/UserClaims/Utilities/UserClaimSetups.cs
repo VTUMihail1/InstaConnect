@@ -9,12 +9,12 @@ public static class UserClaimSetups
 {
 	extension(IServiceProvider serviceProvider)
 	{
-		public IUserClaimCommandRepository GetUserClaimCommandRepository()
+		public IUserClaimCommandRepository GetClaimCommandRepository()
 		{
 			return serviceProvider.GetRequiredService<IUserClaimCommandRepository>();
 		}
 
-		public IUserClaimIncludeBuilderFactory GetUserClaimIncludeBuilderFactory()
+		public IUserClaimIncludeBuilderFactory GetClaimIncludeBuilderFactory()
 		{
 			return serviceProvider.GetRequiredService<IUserClaimIncludeBuilderFactory>();
 		}
@@ -22,44 +22,44 @@ public static class UserClaimSetups
 
 	extension(IServiceScope serviceScope)
 	{
-		public IUserClaimCommandRepository GetUserClaimCommandRepository()
+		public IUserClaimCommandRepository GetClaimCommandRepository()
 		{
-			return serviceScope.ServiceProvider.GetUserClaimCommandRepository();
+			return serviceScope.ServiceProvider.GetClaimCommandRepository();
 		}
 
-		public IUserClaimIncludeBuilderFactory GetUserClaimIncludeBuilderFactory()
+		public IUserClaimIncludeBuilderFactory GetClaimIncludeBuilderFactory()
 		{
-			return serviceScope.ServiceProvider.GetUserClaimIncludeBuilderFactory();
+			return serviceScope.ServiceProvider.GetClaimIncludeBuilderFactory();
 		}
 
-		public async Task<UserClaim?> GetUserClaimByIdAsync(
+		public async Task<UserClaim?> GetClaimByIdAsync(
 			UserClaimId id,
 			CancellationToken cancellationToken)
 		{
-			var claimInclude = serviceScope.GetUserClaimIncludeBuilderFactory().Create().WithUser().Build();
+			var claimInclude = serviceScope.GetClaimIncludeBuilderFactory().Create().WithUser().Build();
 
-			return await serviceScope.GetUserClaimCommandRepository().GetByIdAsync(id, claimInclude, cancellationToken);
+			return await serviceScope.GetClaimCommandRepository().GetByIdAsync(id, claimInclude, cancellationToken);
 		}
 
-		public async Task AddUserClaimAsync(
+		public async Task AddClaimAsync(
 			UserClaim userClaim,
 			CancellationToken cancellationToken)
 		{
-			await serviceScope.GetUserClaimCommandRepository().AddAsync(userClaim, cancellationToken);
+			await serviceScope.GetClaimCommandRepository().AddAsync(userClaim, cancellationToken);
 		}
 
-		public async Task AddUserClaimRangeAsync(
+		public async Task AddClaimRangeAsync(
 			IEnumerable<UserClaim> userClaims,
 			CancellationToken cancellationToken)
 		{
-			await serviceScope.GetUserClaimCommandRepository().AddRangeAsync(userClaims, cancellationToken);
+			await serviceScope.GetClaimCommandRepository().AddRangeAsync(userClaims, cancellationToken);
 		}
 
-		public async Task DeleteUserClaimAsync(
+		public async Task DeleteClaimAsync(
 			UserClaim userClaim,
 			CancellationToken cancellationToken)
 		{
-			await serviceScope.GetUserClaimCommandRepository().DeleteAsync(userClaim, cancellationToken);
+			await serviceScope.GetClaimCommandRepository().DeleteAsync(userClaim, cancellationToken);
 		}
 	}
 }

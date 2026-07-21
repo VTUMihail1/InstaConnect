@@ -27,8 +27,8 @@ public class RotateRefreshTokenIntegrationTests : BaseRefreshTokenDomainCommandI
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
-		await ServiceScope.AddUserClaimRangeAsync(User.UserClaims, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
+		await ServiceScope.AddClaimRangeAsync(User.UserClaims, CancellationToken);
 		await ServiceScope.AddRefreshTokenAsync(RefreshToken, CancellationToken);
 	}
 
@@ -36,7 +36,7 @@ public class RotateRefreshTokenIntegrationTests : BaseRefreshTokenDomainCommandI
 	public async Task RotateAsync_ShouldThrowUserNotFoundException_WhenUserNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowUserNotFoundExceptionAsync(_command, CancellationToken);
@@ -114,7 +114,7 @@ public class RotateRefreshTokenIntegrationTests : BaseRefreshTokenDomainCommandI
 		var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(response.Id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(refreshToken, _command);
+		response.ShouldSatisfy(_command, refreshToken);
 	}
 
 	[Theory]
@@ -130,7 +130,7 @@ public class RotateRefreshTokenIntegrationTests : BaseRefreshTokenDomainCommandI
 		var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(response.Id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(refreshToken, command);
+		response.ShouldSatisfy(command, refreshToken);
 	}
 
 	[Theory]
@@ -146,7 +146,7 @@ public class RotateRefreshTokenIntegrationTests : BaseRefreshTokenDomainCommandI
 		var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(response.Id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(refreshToken, command);
+		response.ShouldSatisfy(command, refreshToken);
 	}
 
 	[Fact]

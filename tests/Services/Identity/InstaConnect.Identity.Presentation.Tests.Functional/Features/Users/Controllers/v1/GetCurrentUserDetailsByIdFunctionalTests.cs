@@ -16,7 +16,7 @@ public class GetCurrentUserDetailsByIdFunctionalTests : BaseUserPresentationQuer
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 	}
 
 	[Fact]
@@ -65,7 +65,7 @@ public class GetCurrentUserDetailsByIdFunctionalTests : BaseUserPresentationQuer
 	public async Task GetCurrentDetailsByIdAsync_ShouldHaveNotFoundStatusCode_WhenUserNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Act
 		var response = await Client.GetCurrentDetailsByIdStatusCodeAsync(_request, CancellationToken);
@@ -78,7 +78,7 @@ public class GetCurrentUserDetailsByIdFunctionalTests : BaseUserPresentationQuer
 	public async Task GetCurrentDetailsByIdAsync_ShouldHaveUserNotFoundProblemDetails_WhenUserNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Act
 		var response = await Client.GetCurrentDetailsByIdProblemDetailsAsync(_request, CancellationToken);
@@ -119,7 +119,7 @@ public class GetCurrentUserDetailsByIdFunctionalTests : BaseUserPresentationQuer
 		var response = await Client.GetCurrentDetailsByIdAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, _request);
+		response.ShouldSatisfy(_request, User);
 	}
 
 	[Theory]
@@ -134,7 +134,7 @@ public class GetCurrentUserDetailsByIdFunctionalTests : BaseUserPresentationQuer
 		var response = await Client.GetCurrentDetailsByIdAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, request);
+		response.ShouldSatisfy(request, User);
 	}
 
 	[Fact]
@@ -145,7 +145,7 @@ public class GetCurrentUserDetailsByIdFunctionalTests : BaseUserPresentationQuer
 		var response = await ServiceScope.GetResponseFromCache(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, _request);
+		response.ShouldSatisfy(_request, User);
 	}
 
 	[Theory]
@@ -161,6 +161,6 @@ public class GetCurrentUserDetailsByIdFunctionalTests : BaseUserPresentationQuer
 		var response = await ServiceScope.GetResponseFromCache(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, request);
+		response.ShouldSatisfy(request, User);
 	}
 }

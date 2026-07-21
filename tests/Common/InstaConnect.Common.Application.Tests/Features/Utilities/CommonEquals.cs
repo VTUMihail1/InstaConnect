@@ -33,17 +33,17 @@ public static class CommonEquals
 	extension<TExpected>(ICollection<TExpected> expected)
 	{
 		public bool MatchesCollection<TEntity, TKey, TRequest>(
+		TRequest request,
 		ICollection<TEntity> entities,
 		Func<TExpected, TKey> expectedKey,
 		Func<TEntity, TKey> entityKey,
 		Func<TExpected, TEntity, bool> matcher,
-		TRequest request,
 		Func<TEntity, bool> filter)
 		where TRequest : IPaginatableQueryRequest
 		where TEntity : IEntity
 		where TKey : notnull
 		{
-			var entitiesByKey = entities.FilterToDictionary(filter, request, entityKey);
+			var entitiesByKey = entities.FilterToDictionary(request, filter, entityKey);
 
 			return expected.Count == entitiesByKey.Count &&
 				   expected.Any() &&
@@ -53,15 +53,15 @@ public static class CommonEquals
 		}
 
 		public bool MatchesSortedCollection<TEntity, TRequest>(
+			TRequest request,
 			ICollection<TEntity> entities,
 			Func<TExpected, TEntity, bool> matcher,
 			ISortEnumTermTransformer<TEntity> termTransformer,
-			TRequest request,
 			Func<TEntity, bool> filter)
 			where TRequest : IPaginatableQueryRequest
 			where TEntity : IEntity
 		{
-			var sortedEntities = entities.Filter(termTransformer, request, filter);
+			var sortedEntities = entities.Filter(request, termTransformer, filter);
 
 			return expected.Count == sortedEntities.Count &&
 				   expected.Any() &&
@@ -73,8 +73,8 @@ public static class CommonEquals
 	extension<TResponse>(TResponse response) where TResponse : ICollectionQueryResponse
 	{
 		public bool MatchesCollectionResponse<TRequest>(
-		int totalCount,
-		TRequest request)
+		TRequest request,
+		int totalCount)
 			where TRequest : IPaginatableQueryRequest
 		{
 			var paginator = new Paginator();

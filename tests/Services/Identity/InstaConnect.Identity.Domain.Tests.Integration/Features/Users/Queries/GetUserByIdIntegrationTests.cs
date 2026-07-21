@@ -24,14 +24,14 @@ public class GetUserByIdIntegrationTests : BaseUserDomainQueryIntegrationTest
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 	}
 
 	[Fact]
 	public async Task GetByIdAsync_ShouldThrowUserNotFoundException_WhenUserNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowUserNotFoundExceptionAsync(_query, CancellationToken);
@@ -44,7 +44,7 @@ public class GetUserByIdIntegrationTests : BaseUserDomainQueryIntegrationTest
 		var response = await Service.GetByIdAsync(_query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, _query);
+		response.ShouldSatisfy(_query, User);
 	}
 
 	[Theory]
@@ -59,7 +59,7 @@ public class GetUserByIdIntegrationTests : BaseUserDomainQueryIntegrationTest
 		var response = await Service.GetByIdAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, query);
+		response.ShouldSatisfy(query, User);
 	}
 
 	[Theory]
@@ -76,6 +76,6 @@ public class GetUserByIdIntegrationTests : BaseUserDomainQueryIntegrationTest
 		var response = await Service.GetByIdAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, query);
+		response.ShouldSatisfy(query, User);
 	}
 }

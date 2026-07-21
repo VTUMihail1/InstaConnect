@@ -6,9 +6,17 @@ public static class EmailConfirmationTokenMatchAssertions
 {
 	extension(EmailConfirmationTokenId response)
 	{
-		public void ShouldSatisfy(EmailConfirmationToken emailConfirmationToken, AddEmailConfirmationTokenCommand command)
+		public void ShouldSatisfy(AddEmailConfirmationTokenCommand command, EmailConfirmationToken emailConfirmationToken)
 		{
-			response.ShouldSatisfy(p => p.Matches(emailConfirmationToken, command));
+			response.ShouldSatisfy(p => p.Matches(command, emailConfirmationToken));
+		}
+	}
+
+	extension(User user)
+	{
+		public void ShouldSatisfy(VerifyEmailConfirmationTokenCommand command)
+		{
+			user.ShouldSatisfy(p => p.Matches(command));
 		}
 	}
 }

@@ -9,30 +9,30 @@ public static class UserMatchAssertions
 	extension(AddUserApiResponse response)
 	{
 		public void ShouldSatisfy(
-		User user,
-		AddUserApiRequest request)
+		AddUserApiRequest request,
+		User user)
 		{
-			response.ShouldSatisfy(p => p.Matches(user, request));
+			response.ShouldSatisfy(p => p.Matches(request, user));
 		}
 	}
 
 	extension(UpdateCurrentUserApiResponse response)
 	{
 		public void ShouldSatisfy(
-		User user,
-		UpdateCurrentUserApiRequest request)
+		UpdateCurrentUserApiRequest request,
+		User user)
 		{
-			response.ShouldSatisfy(p => p.Matches(user, request));
+			response.ShouldSatisfy(p => p.Matches(request, user));
 		}
 	}
 
 	extension(GetUserByIdApiResponse response)
 	{
 		public void ShouldSatisfy(
-		User user,
-		GetUserByIdApiRequest request)
+		GetUserByIdApiRequest request,
+		User user)
 		{
-			response.ShouldSatisfy(p => p.Matches(user, request));
+			response.ShouldSatisfy(p => p.Matches(request, user));
 		}
 	}
 
@@ -40,20 +40,20 @@ public static class UserMatchAssertions
 	extension(GetCurrentUserByIdApiResponse response)
 	{
 		public void ShouldSatisfy(
-		User user,
-		GetCurrentUserByIdApiRequest request)
+		GetCurrentUserByIdApiRequest request,
+		User user)
 		{
-			response.ShouldSatisfy(p => p.Matches(user, request));
+			response.ShouldSatisfy(p => p.Matches(request, user));
 		}
 	}
 
 	extension(GetUserDetailsByIdApiResponse response)
 	{
 		public void ShouldSatisfy(
-		User user,
-		GetUserDetailsByIdApiRequest request)
+		GetUserDetailsByIdApiRequest request,
+		User user)
 		{
-			response.ShouldSatisfy(p => p.Matches(user, request));
+			response.ShouldSatisfy(p => p.Matches(request, user));
 		}
 	}
 
@@ -61,98 +61,98 @@ public static class UserMatchAssertions
 	extension(GetCurrentUserDetailsByIdApiResponse response)
 	{
 		public void ShouldSatisfy(
-		User user,
-		GetCurrentUserDetailsByIdApiRequest request)
+		GetCurrentUserDetailsByIdApiRequest request,
+		User user)
 		{
-			response.ShouldSatisfy(p => p.Matches(user, request));
+			response.ShouldSatisfy(p => p.Matches(request, user));
 		}
 	}
 
 	extension(GetAllUsersApiResponse response)
 	{
 		public void ShouldSatisfy(
-		ICollection<User> users,
-		GetAllUsersApiRequest request)
+		GetAllUsersApiRequest request,
+		ICollection<User> users)
 		{
-			response.ShouldSatisfy(p => p.Matches(users, request));
+			response.ShouldSatisfy(p => p.Matches(request, users));
 		}
 
 		public void ShouldSatisfy(
-			ICollection<User> users,
 			GetAllUsersApiRequest request,
+			ICollection<User> users,
 			ISortEnumTermTransformer<User> termTransformer)
 		{
-			response.ShouldSatisfy(p => p.Matches(users, request, termTransformer));
+			response.ShouldSatisfy(p => p.Matches(request, users, termTransformer));
 		}
 	}
 
 	extension(ActionResult<AddUserApiResponse> response)
 	{
 		public void ShouldSatisfy(
-		User user,
-		AddUserApiRequest request)
+		AddUserApiRequest request,
+		User user)
 		{
-			response.ShouldBeActionResultAndSatisfy(p => p.Matches(user, request));
+			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, user));
 		}
 	}
 
 	extension(ActionResult<UpdateCurrentUserApiResponse> response)
 	{
 		public void ShouldSatisfy(
-		User user,
-		UpdateCurrentUserApiRequest request)
+		UpdateCurrentUserApiRequest request,
+		User user)
 		{
-			response.ShouldBeActionResultAndSatisfy(p => p.Matches(user, request));
+			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, user));
 		}
 	}
 
 	extension(ActionResult<GetUserByIdApiResponse> response)
 	{
 		public void ShouldSatisfy(
-		User user,
-		GetUserByIdApiRequest request)
+		GetUserByIdApiRequest request,
+		User user)
 		{
-			response.ShouldBeActionResultAndSatisfy(p => p.Matches(user, request));
+			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, user));
 		}
 	}
 
 	extension(ActionResult<GetCurrentUserByIdApiResponse> response)
 	{
 		public void ShouldSatisfy(
-		User user,
-		GetCurrentUserByIdApiRequest request)
+		GetCurrentUserByIdApiRequest request,
+		User user)
 		{
-			response.ShouldBeActionResultAndSatisfy(p => p.Matches(user, request));
+			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, user));
 		}
 	}
 
 	extension(ActionResult<GetUserDetailsByIdApiResponse> response)
 	{
 		public void ShouldSatisfy(
-		User user,
-		GetUserDetailsByIdApiRequest request)
+		GetUserDetailsByIdApiRequest request,
+		User user)
 		{
-			response.ShouldBeActionResultAndSatisfy(p => p.Matches(user, request));
+			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, user));
 		}
 	}
 
 	extension(ActionResult<GetCurrentUserDetailsByIdApiResponse> response)
 	{
 		public void ShouldSatisfy(
-		User user,
-		GetCurrentUserDetailsByIdApiRequest request)
+		GetCurrentUserDetailsByIdApiRequest request,
+		User user)
 		{
-			response.ShouldBeActionResultAndSatisfy(p => p.Matches(user, request));
+			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, user));
 		}
 	}
 
 	extension(ActionResult<GetAllUsersApiResponse> response)
 	{
 		public void ShouldSatisfy(
-		ICollection<User> users,
-		GetAllUsersApiRequest request)
+		GetAllUsersApiRequest request,
+		ICollection<User> users)
 		{
-			response.ShouldBeActionResultAndSatisfy(p => p.Matches(users, request));
+			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, users));
 		}
 	}
 
@@ -167,15 +167,13 @@ public static class UserMatchAssertions
 		{
 			user.ShouldSatisfy(p => p.Matches(request));
 		}
+	}
 
-		public void ShouldSatisfy(VerifyEmailConfirmationTokenApiRequest request)
+	extension(ICollection<EmailConfirmationToken> emailConfirmationTokens)
+	{
+		public void ShouldSatisfy(UpdateCurrentUserApiRequest request)
 		{
-			user.ShouldSatisfy(p => p.Matches(request));
-		}
-
-		public void ShouldSatisfy(VerifyForgotPasswordTokenApiRequest request, IPasswordHasher passwordHasher)
-		{
-			user.ShouldSatisfy(p => p.Matches(request, passwordHasher));
+			emailConfirmationTokens.ShouldSatisfy(p => p.Matches(request));
 		}
 	}
 }

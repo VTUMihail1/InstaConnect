@@ -6,6 +6,8 @@ public class RotateRefreshTokenControllerUnitTests : BaseRefreshTokenPresentatio
 	private readonly RotateRefreshTokenApiRequestBuilder _requestBuilder;
 	private readonly RotateRefreshTokenApiRequest _request;
 
+	private readonly RefreshToken _refreshToken;
+
 	private readonly RefreshTokenController _controller;
 
 	public RotateRefreshTokenControllerUnitTests()
@@ -14,9 +16,11 @@ public class RotateRefreshTokenControllerUnitTests : BaseRefreshTokenPresentatio
 		_requestBuilder = _requestBuilderFactory.Create(RefreshToken);
 		_request = _requestBuilder.Build();
 
+		_refreshToken = RefreshTokenBuilderFactory.Create(User).Build();
+
 		_controller = new(Mapper, Sender, CookieStore);
 
-		Sender.SetupRotateCommandRequest(_request, RefreshToken, CancellationToken);
+		Sender.SetupRotateCommandRequest(_request, _refreshToken, CancellationToken);
 	}
 
 	[Fact]
@@ -56,6 +60,6 @@ public class RotateRefreshTokenControllerUnitTests : BaseRefreshTokenPresentatio
 		await _controller.RotateAsync(_request, CancellationToken);
 
 		// Assert
-		CookieStore.ShouldReceiveOneSet(RefreshToken);
+		CookieStore.ShouldReceiveOneSet(_request, _refreshToken);
 	}
 }

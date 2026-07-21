@@ -50,10 +50,10 @@ public static class EmailConfirmationTokenMockAssertions
 
 		public async Task ShouldReceiveOnePublishAsync(
 			VerifyEmailConfirmationTokenCommand command,
-			User user,
+			ICollection<EmailConfirmationToken> emailConfirmationTokens,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(EmailConfirmationTokenMatcher.IsEmailConfirmationTokenDeletedEventRequestCollection(command, user), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(EmailConfirmationTokenMatcher.IsEmailConfirmationTokenDeletedEventRequestCollection(command, emailConfirmationTokens), cancellationToken);
 		}
 	}
 

@@ -36,7 +36,7 @@ public class AddUserClaimControllerUnitTests : BaseUserClaimPresentationCommandU
 		var response = await _controller.AddAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(UserClaim, _request);
+		response.ShouldSatisfy(_request, UserClaim);
 	}
 
 	[Fact]

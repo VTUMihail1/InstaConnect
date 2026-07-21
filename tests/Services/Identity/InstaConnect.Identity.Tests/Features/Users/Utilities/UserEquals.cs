@@ -7,50 +7,12 @@ namespace InstaConnect.Identity.Tests.Features.Users.Utilities;
 
 public static class UserEquals
 {
-	extension(UserAddedEventRequest request)
-	{
-		public bool Matches(User entity)
-		{
-			return entity.Matches(request.User);
-		}
-	}
-
-	extension(UserUpdatedEventRequest request)
-	{
-		public bool Matches(User entity)
-		{
-			return entity.Matches(request.User);
-		}
-	}
-
-	extension(UserDeletedEventRequest request)
-	{
-		public bool Matches(User entity)
-		{
-			return entity.Matches(request.User);
-		}
-	}
-
-	extension(UserEventRequest r)
+	extension(User? entity)
 	{
 		public bool Matches(UserEventRequest request)
 		{
-			return r.Id == request.Id &&
-				   r.Name == request.Name &&
-				   r.Email == request.Email &&
-				   r.FirstName == request.FirstName &&
-				   r.LastName == request.LastName &&
-				   r.ProfileImageUrl == request.ProfileImageUrl &&
-				   r.CreatedAtUtc == request.CreatedAtUtc &&
-				   r.UpdatedAtUtc == request.UpdatedAtUtc;
-		}
-	}
-
-	extension(User entity)
-	{
-		public bool Matches(UserEventRequest request)
-		{
-			return entity.Id.Matches(request.Id) &&
+			return entity != null &&
+				   entity.Id.Matches(request.Id) &&
 				   entity.Name.Matches(request.Name) &&
 				   entity.Email.Matches(request.Email) &&
 				   entity.FirstName == request.FirstName &&
@@ -59,7 +21,10 @@ public static class UserEquals
 				   entity.CreatedAtUtc == request.CreatedAtUtc &&
 				   entity.UpdatedAtUtc == request.UpdatedAtUtc;
 		}
+	}
 
+	extension(User entity)
+	{
 		public bool Matches(User user)
 		{
 			return entity.Id.Matches(user.Id) &&

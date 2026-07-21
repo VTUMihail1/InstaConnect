@@ -1,4 +1,5 @@
 using InstaConnect.Common.Tests.Features.DataAttributes.Strings.Base;
+using InstaConnect.Identity.Domain.Features.Users.Models.Entities;
 using InstaConnect.Identity.Domain.Features.Users.Models.Requests;
 using InstaConnect.Identity.Domain.Tests.Features.Users.Assertions;
 using InstaConnect.Identity.Domain.Tests.Features.Users.Builders;
@@ -25,14 +26,14 @@ public class DeleteUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 	}
 
 	[Fact]
 	public async Task DeleteAsync_ShouldThrowUserNotFoundException_WhenUserNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowUserNotFoundExceptionAsync(_command, CancellationToken);
@@ -43,7 +44,7 @@ public class DeleteUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 	{
 		// Act
 		await Service.DeleteAsync(_command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ShouldBeNull();
@@ -59,7 +60,7 @@ public class DeleteUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		await Service.DeleteAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ShouldBeNull();
@@ -70,9 +71,10 @@ public class DeleteUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 	{
 		// Act
 		await Service.DeleteAsync(_command, CancellationToken);
+		var eventRequest = await EventHarness.PublishedDeletedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserDeletedAsync(_command, User, CancellationToken);
+		eventRequest.ShouldSatisfy(_command, User);
 	}
 
 	[Theory]
@@ -85,8 +87,9 @@ public class DeleteUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		await Service.DeleteAsync(command, CancellationToken);
+		var eventRequest = await EventHarness.PublishedDeletedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserDeletedAsync(command, User, CancellationToken);
+		eventRequest.ShouldSatisfy(command, User);
 	}
 }

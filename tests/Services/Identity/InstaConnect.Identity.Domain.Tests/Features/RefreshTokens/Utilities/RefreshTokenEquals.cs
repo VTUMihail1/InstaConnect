@@ -7,17 +7,14 @@ public static class RefreshTokenEquals
 {
 	extension(SessionToken response)
 	{
-		public bool Matches(RefreshToken refreshToken, IssueRefreshTokenCommand command)
+		public bool Matches(IssueRefreshTokenCommand command, RefreshToken refreshToken)
 		{
-			return response.Matches(refreshToken);
+			return response.Id.Matches(refreshToken.Id) &&
+				   response.AccessToken.Matches() &&
+				   response.ExpiresAtUtc == refreshToken.ExpiresAtUtc;
 		}
 
-		public bool Matches(RefreshToken refreshToken, RotateRefreshTokenCommand command)
-		{
-			return response.Matches(refreshToken);
-		}
-
-		private bool Matches(RefreshToken refreshToken)
+		public bool Matches(RotateRefreshTokenCommand command, RefreshToken refreshToken)
 		{
 			return response.Id.Matches(refreshToken.Id) &&
 				   response.AccessToken.Matches() &&

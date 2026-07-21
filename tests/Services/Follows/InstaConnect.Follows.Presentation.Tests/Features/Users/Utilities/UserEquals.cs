@@ -19,6 +19,30 @@ public static class UserEquals
 		}
 	}
 
+	extension(UserAddedEventRequest r)
+	{
+		public bool Matches(UserAddedEventRequest request)
+		{
+			return r.User.Matches(request.User);
+		}
+	}
+
+	extension(UserUpdatedEventRequest r)
+	{
+		public bool Matches(UserUpdatedEventRequest request)
+		{
+			return r.User.Matches(request.User);
+		}
+	}
+
+	extension(UserDeletedEventRequest r)
+	{
+		public bool Matches(UserDeletedEventRequest request)
+		{
+			return r.User.Matches(request.User);
+		}
+	}
+
 	extension(AddUserCommandRequest command)
 	{
 		public bool Matches(UserAddedEventRequest request)

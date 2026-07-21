@@ -34,7 +34,7 @@ public static class RefreshTokenEquals
 
 	extension(IssueRefreshTokenCommandResponse response)
 	{
-		public bool Matches(RefreshToken refreshToken, IssueRefreshTokenCommandRequest request)
+		public bool Matches(IssueRefreshTokenCommandRequest request, RefreshToken refreshToken)
 		{
 			return response.Response.Matches(refreshToken);
 		}
@@ -42,7 +42,7 @@ public static class RefreshTokenEquals
 
 	extension(RotateRefreshTokenCommandResponse response)
 	{
-		public bool Matches(RefreshToken refreshToken, RotateRefreshTokenCommandRequest request)
+		public bool Matches(RotateRefreshTokenCommandRequest request, RefreshToken refreshToken)
 		{
 			return response.Response.Matches(refreshToken);
 		}

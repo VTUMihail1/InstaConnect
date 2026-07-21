@@ -20,7 +20,7 @@ public class GetAllUsersFunctionalTests : BaseUserPresentationQueryFunctionalTes
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserRangeAsync(Users, CancellationToken);
+		await ServiceScope.AddRangeAsync(Users, CancellationToken);
 	}
 
 	[Theory]
@@ -385,7 +385,7 @@ public class GetAllUsersFunctionalTests : BaseUserPresentationQueryFunctionalTes
 		var response = await Client.GetAllAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Users, _request);
+		response.ShouldSatisfy(_request, Users);
 	}
 
 	[Theory]
@@ -402,7 +402,7 @@ public class GetAllUsersFunctionalTests : BaseUserPresentationQueryFunctionalTes
 		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Users, request);
+		response.ShouldSatisfy(request, Users);
 	}
 
 	[Theory]
@@ -419,7 +419,7 @@ public class GetAllUsersFunctionalTests : BaseUserPresentationQueryFunctionalTes
 		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Users, request);
+		response.ShouldSatisfy(request, Users);
 	}
 
 	[Theory]
@@ -436,7 +436,7 @@ public class GetAllUsersFunctionalTests : BaseUserPresentationQueryFunctionalTes
 		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Users, request);
+		response.ShouldSatisfy(request, Users);
 	}
 
 	[Theory]
@@ -452,7 +452,7 @@ public class GetAllUsersFunctionalTests : BaseUserPresentationQueryFunctionalTes
 		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Users, request);
+		response.ShouldSatisfy(request, Users);
 	}
 
 	[Theory]
@@ -468,7 +468,7 @@ public class GetAllUsersFunctionalTests : BaseUserPresentationQueryFunctionalTes
 		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Users, request, termTransformer);
+		response.ShouldSatisfy(request, Users, termTransformer);
 	}
 
 	[Theory]
@@ -486,6 +486,6 @@ public class GetAllUsersFunctionalTests : BaseUserPresentationQueryFunctionalTes
 		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Users, request, termTransformer);
+		response.ShouldSatisfy(request, Users, termTransformer);
 	}
 }

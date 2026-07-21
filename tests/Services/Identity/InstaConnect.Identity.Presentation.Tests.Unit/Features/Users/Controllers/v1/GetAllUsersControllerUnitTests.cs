@@ -36,7 +36,7 @@ public class GetAllUsersControllerUnitTests : BaseUserPresentationQueryUnitTest
 		var response = await _controller.GetAllAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Users, _request);
+		response.ShouldSatisfy(_request, Users);
 	}
 
 	[Fact]

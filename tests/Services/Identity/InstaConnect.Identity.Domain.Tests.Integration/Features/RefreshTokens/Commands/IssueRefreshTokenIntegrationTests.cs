@@ -26,15 +26,15 @@ public class IssueRefreshTokenIntegrationTests : BaseRefreshTokenDomainCommandIn
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
-		await ServiceScope.AddUserClaimRangeAsync(User.UserClaims, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
+		await ServiceScope.AddClaimRangeAsync(User.UserClaims, CancellationToken);
 	}
 
 	[Fact]
 	public async Task IssueAsync_ShouldThrowUserInvalidDetailsException_WhenUserNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowUserInvalidDetailsExceptionAsync(_command, CancellationToken);
@@ -45,7 +45,7 @@ public class IssueRefreshTokenIntegrationTests : BaseRefreshTokenDomainCommandIn
 	{
 		// Arrange
 		var updatedUser = UserBuilder.WithPasswordHash(PasswordHasher.Hash(NewPassword)).Build();
-		await ServiceScope.UpdateUserAsync(updatedUser, CancellationToken);
+		await ServiceScope.UpdateAsync(updatedUser, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowUserInvalidDetailsExceptionAsync(_command, CancellationToken);
@@ -56,7 +56,7 @@ public class IssueRefreshTokenIntegrationTests : BaseRefreshTokenDomainCommandIn
 	{
 		// Arrange
 		var updatedUser = UserBuilder.WithUnconfirmedEmail().Build();
-		await ServiceScope.UpdateUserAsync(updatedUser, CancellationToken);
+		await ServiceScope.UpdateAsync(updatedUser, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowUserNameEmailNotConfirmedExceptionAsync(_command, CancellationToken);
@@ -70,7 +70,7 @@ public class IssueRefreshTokenIntegrationTests : BaseRefreshTokenDomainCommandIn
 		var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(response.Id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(refreshToken, _command);
+		response.ShouldSatisfy(_command, refreshToken);
 	}
 
 	[Theory]
@@ -86,7 +86,7 @@ public class IssueRefreshTokenIntegrationTests : BaseRefreshTokenDomainCommandIn
 		var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(response.Id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(refreshToken, command);
+		response.ShouldSatisfy(command, refreshToken);
 	}
 
 	[Fact]

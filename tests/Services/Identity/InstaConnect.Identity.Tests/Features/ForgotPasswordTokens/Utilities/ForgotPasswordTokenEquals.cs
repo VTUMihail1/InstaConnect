@@ -9,44 +9,20 @@ namespace InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.Utilities;
 
 public static class ForgotPasswordTokenEquals
 {
-	extension(ForgotPasswordTokenAddedEventRequest request)
-	{
-		public bool Matches(ForgotPasswordToken entity)
-		{
-			return entity.Matches(request.ForgotPasswordToken);
-		}
-	}
-
-	extension(ForgotPasswordTokenDeletedEventRequest request)
-	{
-		public bool Matches(ForgotPasswordToken entity)
-		{
-			return entity.Matches(request.ForgotPasswordToken);
-		}
-	}
-
-	extension(ForgotPasswordTokenEventRequest r)
+	extension(ForgotPasswordToken? entity)
 	{
 		public bool Matches(ForgotPasswordTokenEventRequest request)
 		{
-			return r.Id == request.Id &&
-				   r.Value == request.Value &&
-				   r.User.Matches(request.User) &&
-				   r.ExpiresAtUtc == request.ExpiresAtUtc &&
-				   r.CreatedAtUtc == request.CreatedAtUtc;
+			return entity != null &&
+				   entity.Id.Matches(request.Id, request.Value) &&
+				   entity.User.Matches(request.User) &&
+				   entity.ExpiresAtUtc == request.ExpiresAtUtc &&
+				   entity.CreatedAtUtc == request.CreatedAtUtc;
 		}
 	}
 
 	extension(ForgotPasswordToken entity)
 	{
-		public bool Matches(ForgotPasswordTokenEventRequest request)
-		{
-			return entity.Id.Matches(request.Id, request.Value) &&
-				   entity.User != null && entity.User.Matches(request.User) &&
-				   entity.ExpiresAtUtc == request.ExpiresAtUtc &&
-				   entity.CreatedAtUtc == request.CreatedAtUtc;
-		}
-
 		public bool Matches(ForgotPasswordToken e)
 		{
 			return entity.Id.Matches(e.Id) &&
@@ -66,18 +42,6 @@ public static class ForgotPasswordTokenEquals
 		{
 			return p.Id.Matches(id) &&
 				   p.Value.EqualsOrdinalIgnoreCase(value);
-		}
-	}
-
-	extension(ICollection<ForgotPasswordToken> forgotPasswordTokens)
-	{
-		public bool Matches(
-			ICollection<ForgotPasswordToken> f)
-		{
-			return forgotPasswordTokens.MatchesCollection(f,
-														  f => f.Id,
-														  f => f.Id,
-														  (forgotPasswordToken, f) => forgotPasswordToken.Matches(f));
 		}
 	}
 }

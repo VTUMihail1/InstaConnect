@@ -1,5 +1,3 @@
-using InstaConnect.Identity.Presentation.Tests.Features.Users.Utilities;
-
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.Users.Utilities;
@@ -8,12 +6,30 @@ public static class UserSetups
 {
 	extension(IServiceScope serviceScope)
 	{
-		public async Task<User?> GetUserByIdAsync(
+		internal async Task<User?> GetUserByIdAsync(
 		UserIdApiResponse id,
 		CancellationToken cancellationToken)
 		{
-			return await serviceScope.GetUserByIdAsync(
+			return await serviceScope.GetByIdAsync(
 				new UserId(id.Id),
+				cancellationToken);
+		}
+
+		public async Task<User?> GetUserByIdAsync(
+		AddUserApiResponse response,
+		CancellationToken cancellationToken)
+		{
+			return await serviceScope.GetUserByIdAsync(
+				response.Response,
+				cancellationToken);
+		}
+
+		public async Task<User?> GetUserByIdAsync(
+		UpdateCurrentUserApiResponse response,
+		CancellationToken cancellationToken)
+		{
+			return await serviceScope.GetUserByIdAsync(
+				response.Response,
 				cancellationToken);
 		}
 

@@ -26,7 +26,7 @@ public class DeleteRefreshTokenIntegrationTests : BaseRefreshTokenDomainCommandI
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 		await ServiceScope.AddRefreshTokenAsync(RefreshToken, CancellationToken);
 	}
 
@@ -34,7 +34,7 @@ public class DeleteRefreshTokenIntegrationTests : BaseRefreshTokenDomainCommandI
 	public async Task DeleteAsync_ShouldThrowUserNotFoundException_WhenUserNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowUserNotFoundExceptionAsync(_command, CancellationToken);

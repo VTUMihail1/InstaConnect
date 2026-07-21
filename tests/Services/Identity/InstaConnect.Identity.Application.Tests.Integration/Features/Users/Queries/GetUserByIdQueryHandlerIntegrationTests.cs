@@ -16,7 +16,7 @@ public class GetUserByIdQueryHandlerIntegrationTests : BaseUserApplicationQueryI
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 	}
 
 	[Theory]
@@ -52,7 +52,7 @@ public class GetUserByIdQueryHandlerIntegrationTests : BaseUserApplicationQueryI
 	public async Task SendAsync_ShouldThrowUserNotFoundException_WhenUserNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Assert
 		await Sender.ShouldThrowUserNotFoundExceptionAsync(_request, CancellationToken);
@@ -65,7 +65,7 @@ public class GetUserByIdQueryHandlerIntegrationTests : BaseUserApplicationQueryI
 		var response = await Sender.SendAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, _request);
+		response.ShouldSatisfy(_request, User);
 	}
 
 	[Theory]
@@ -80,7 +80,7 @@ public class GetUserByIdQueryHandlerIntegrationTests : BaseUserApplicationQueryI
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, request);
+		response.ShouldSatisfy(request, User);
 	}
 
 	[Theory]
@@ -97,6 +97,6 @@ public class GetUserByIdQueryHandlerIntegrationTests : BaseUserApplicationQueryI
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, request);
+		response.ShouldSatisfy(request, User);
 	}
 }

@@ -26,7 +26,7 @@ public class GetAllUserClaimsQueryHandlerUnitTests : BaseUserClaimApplicationQue
 		var response = await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, UserClaims, _request);
+		response.ShouldSatisfy(_request, User, UserClaims);
 	}
 
 	[Fact]

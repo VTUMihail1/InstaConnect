@@ -56,6 +56,6 @@ public class IssueRefreshTokenControllerUnitTests : BaseRefreshTokenPresentation
 		await _controller.IssueAsync(_request, CancellationToken);
 
 		// Assert
-		CookieStore.ShouldReceiveOneSet(RefreshToken);
+		CookieStore.ShouldReceiveOneSet(_request, RefreshToken);
 	}
 }

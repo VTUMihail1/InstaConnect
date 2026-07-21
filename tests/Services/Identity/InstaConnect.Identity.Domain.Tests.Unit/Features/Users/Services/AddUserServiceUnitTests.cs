@@ -69,7 +69,7 @@ public class AddUserServiceUnitTests : BaseUserDomainCommandUnitTest
 		var response = await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, _command);
+		response.ShouldSatisfy(_command, User);
 	}
 
 	[Theory]
@@ -84,7 +84,7 @@ public class AddUserServiceUnitTests : BaseUserDomainCommandUnitTest
 		var response = await _service.AddAsync(command, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, command);
+		response.ShouldSatisfy(command, User);
 	}
 
 	[Fact]
@@ -269,7 +269,7 @@ public class AddUserServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await EmailConfirmationTokenRepository.ShouldReceiveOneAddAsync(_command, User, CancellationToken);
+		await EmailConfirmationTokenRepository.ShouldReceiveOneAddAsync(_command, CancellationToken);
 	}
 
 	[Theory]
@@ -284,7 +284,7 @@ public class AddUserServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.AddAsync(command, CancellationToken);
 
 		// Assert
-		await EmailConfirmationTokenRepository.ShouldReceiveOneAddAsync(command, User, CancellationToken);
+		await EmailConfirmationTokenRepository.ShouldReceiveOneAddAsync(command, CancellationToken);
 	}
 
 	[Fact]
@@ -319,7 +319,7 @@ public class AddUserServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await EmailConfirmationTokenEmailSender.ShouldReceiveOneSendAsync(_command, User, CancellationToken);
+		await EmailConfirmationTokenEmailSender.ShouldReceiveOneSendAsync(_command, CancellationToken);
 	}
 
 	[Theory]
@@ -334,6 +334,6 @@ public class AddUserServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.AddAsync(command, CancellationToken);
 
 		// Assert
-		await EmailConfirmationTokenEmailSender.ShouldReceiveOneSendAsync(command, User, CancellationToken);
+		await EmailConfirmationTokenEmailSender.ShouldReceiveOneSendAsync(command, CancellationToken);
 	}
 }

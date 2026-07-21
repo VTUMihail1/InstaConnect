@@ -7,54 +7,54 @@ public static class PostLikeMatchAssertions
 {
 	extension(PostLikeId response)
 	{
-		public void ShouldSatisfy(PostLike postLike, AddPostLikeCommand command)
+		public void ShouldSatisfy(AddPostLikeCommand command, PostLike postLike)
 		{
-			response.ShouldSatisfy(p => p.Matches(postLike, command));
+			response.ShouldSatisfy(p => p.Matches(command, postLike));
 		}
 	}
 
 	extension(PostLikeResponse response)
 	{
-		public void ShouldSatisfy(PostLike postLike, GetPostLikeByIdQuery query)
+		public void ShouldSatisfy(GetPostLikeByIdQuery query, PostLike postLike)
 		{
-			response.ShouldSatisfy(p => p.Matches(postLike, query));
+			response.ShouldSatisfy(p => p.Matches(query, postLike));
 		}
 	}
 
 	extension(PostLikeCollectionResponse response)
 	{
 		public void ShouldSatisfy(
+		GetAllPostLikesQuery query,
 		Post post,
-		ICollection<PostLike> postLikes,
-		GetAllPostLikesQuery query)
+		ICollection<PostLike> postLikes)
 		{
-			response.ShouldSatisfy(p => p.Matches(post, postLikes, query));
+			response.ShouldSatisfy(p => p.Matches(query, post, postLikes));
 		}
 
 		public void ShouldSatisfy(
+			GetAllPostLikesQuery query,
 			Post post,
 			ICollection<PostLike> postLikes,
-			GetAllPostLikesQuery query,
 			ISortEnumTermTransformer<PostLike> termTransformer)
 		{
-			response.ShouldSatisfy(p => p.Matches(post, postLikes, query, termTransformer));
+			response.ShouldSatisfy(p => p.Matches(query, post, postLikes, termTransformer));
 		}
 
 		public void ShouldSatisfy(
+		GetAllPostLikesForUserQuery query,
 		User user,
-		ICollection<PostLike> postLikes,
-		GetAllPostLikesForUserQuery query)
+		ICollection<PostLike> postLikes)
 		{
-			response.ShouldSatisfy(p => p.Matches(user, postLikes, query));
+			response.ShouldSatisfy(p => p.Matches(query, user, postLikes));
 		}
 
 		public void ShouldSatisfy(
+			GetAllPostLikesForUserQuery query,
 			User user,
 			ICollection<PostLike> postLikes,
-			GetAllPostLikesForUserQuery query,
 			ISortEnumTermTransformer<PostLike> termTransformer)
 		{
-			response.ShouldSatisfy(p => p.Matches(user, postLikes, query, termTransformer));
+			response.ShouldSatisfy(p => p.Matches(query, user, postLikes, termTransformer));
 		}
 	}
 

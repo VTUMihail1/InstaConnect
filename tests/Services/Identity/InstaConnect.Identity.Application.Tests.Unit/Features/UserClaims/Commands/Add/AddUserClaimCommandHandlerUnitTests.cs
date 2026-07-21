@@ -26,7 +26,7 @@ public class AddUserClaimCommandHandlerUnitTests : BaseUserClaimApplicationComma
 		var response = await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(UserClaim, _request);
+		response.ShouldSatisfy(_request, UserClaim);
 	}
 
 	[Fact]

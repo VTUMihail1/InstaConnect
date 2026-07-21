@@ -86,7 +86,7 @@ public class UpdateUserServiceUnitTests : BaseUserDomainCommandUnitTest
 		var response = await _service.UpdateAsync(_command, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, _command);
+		response.ShouldSatisfy(_command, User);
 	}
 
 	[Theory]
@@ -102,7 +102,7 @@ public class UpdateUserServiceUnitTests : BaseUserDomainCommandUnitTest
 		var response = await _service.UpdateAsync(command, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, command);
+		response.ShouldSatisfy(command, User);
 	}
 
 	[Fact]
@@ -115,7 +115,7 @@ public class UpdateUserServiceUnitTests : BaseUserDomainCommandUnitTest
 		var response = await _service.UpdateAsync(command, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, command);
+		response.ShouldSatisfy(command, User);
 	}
 
 	[Theory]
@@ -131,7 +131,7 @@ public class UpdateUserServiceUnitTests : BaseUserDomainCommandUnitTest
 		var response = await _service.UpdateAsync(command, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, command);
+		response.ShouldSatisfy(command, User);
 	}
 
 	[Theory]
@@ -147,7 +147,7 @@ public class UpdateUserServiceUnitTests : BaseUserDomainCommandUnitTest
 		var response = await _service.UpdateAsync(command, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, command);
+		response.ShouldSatisfy(command, User);
 	}
 
 	[Fact]
@@ -160,7 +160,7 @@ public class UpdateUserServiceUnitTests : BaseUserDomainCommandUnitTest
 		var response = await _service.UpdateAsync(command, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, command);
+		response.ShouldSatisfy(command, User);
 	}
 
 	[Theory]
@@ -176,7 +176,7 @@ public class UpdateUserServiceUnitTests : BaseUserDomainCommandUnitTest
 		var response = await _service.UpdateAsync(command, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, command);
+		response.ShouldSatisfy(command, User);
 	}
 
 	[Theory]
@@ -191,7 +191,7 @@ public class UpdateUserServiceUnitTests : BaseUserDomainCommandUnitTest
 		var response = await _service.UpdateAsync(command, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, command);
+		response.ShouldSatisfy(command, User);
 	}
 
 	[Fact]

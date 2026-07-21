@@ -7,42 +7,22 @@ namespace InstaConnect.Chats.Tests.Features.ChatMessages.Utilities;
 
 public static class ChatMessageEquals
 {
-	extension(ChatMessageAddedNotificationRequest request)
+	extension(ChatMessage? entity)
 	{
-		public bool Matches(ChatMessage entity)
+		public bool Matches(ChatMessageNotificationRequest request)
 		{
-			return entity.Matches(request.ChatMessage);
-		}
-	}
-
-	extension(ChatMessageUpdatedNotificationRequest request)
-	{
-		public bool Matches(ChatMessage entity)
-		{
-			return entity.Matches(request.ChatMessage);
-		}
-	}
-
-	extension(ChatMessageDeletedNotificationRequest request)
-	{
-		public bool Matches(ChatMessage entity)
-		{
-			return entity.Matches(request.ChatMessage);
+			return entity != null &&
+				   entity.Id.Matches(request.ParticipantOneId, request.ParticipantTwoId, request.MessageId) &&
+				   entity.Sender.Matches(request.Sender) &&
+				   entity.Chat.Matches(request.Chat) &&
+				   entity.Content == request.Content &&
+				   entity.CreatedAtUtc == request.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == request.UpdatedAtUtc;
 		}
 	}
 
 	extension(ChatMessage entity)
 	{
-		public bool Matches(ChatMessageNotificationRequest request)
-		{
-			return entity.Id.Matches(request.ParticipantOneId, request.ParticipantTwoId, request.MessageId) &&
-				   entity.Sender != null && entity.Sender.Matches(request.Sender) &&
-				   entity.Chat != null && entity.Chat.Matches(request.Chat) &&
-				   entity.Content == request.Content &&
-				   entity.CreatedAtUtc == request.CreatedAtUtc &&
-				   entity.UpdatedAtUtc == request.UpdatedAtUtc;
-		}
-
 		public bool Matches(ChatMessage chatMessage)
 		{
 			return entity.Id.Matches(chatMessage.Id) &&

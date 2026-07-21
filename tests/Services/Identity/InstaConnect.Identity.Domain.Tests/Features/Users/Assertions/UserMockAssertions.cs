@@ -237,10 +237,9 @@ public static class UserMockAssertions
 	{
 		public async Task ShouldReceiveOneAddAsync(
 			AddUserCommand command,
-			User user,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().AddAsync(UserMatcher.IsEmailConfirmationToken(command, user), cancellationToken);
+			await repository.ShouldHaveReceivedOne().AddAsync(UserMatcher.IsEmailConfirmationToken(command), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneDeleteRangeAsync(
@@ -264,10 +263,9 @@ public static class UserMockAssertions
 	{
 		public async Task ShouldReceiveOneSendAsync(
 			AddUserCommand command,
-			User user,
 			CancellationToken cancellationToken)
 		{
-			await emailSender.ShouldHaveReceivedOne().SendAsync(UserMatcher.IsEmailConfirmationToken(command, user), cancellationToken);
+			await emailSender.ShouldHaveReceivedOne().SendAsync(UserMatcher.IsEmailConfirmationToken(command), cancellationToken);
 		}
 	}
 }

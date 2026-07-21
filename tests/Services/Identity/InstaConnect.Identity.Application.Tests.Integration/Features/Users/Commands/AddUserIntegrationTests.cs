@@ -108,7 +108,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 	public async Task SendAsync_ShouldThrowUserEmailAlreadyTakenException_WhenRequestIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 		var request = _requestBuilder.WithEmail(User.Email).Build();
 
 		// Assert
@@ -121,7 +121,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 		IStringTransformer transformer)
 	{
 		// Arrange
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 		var request = _requestBuilder.WithEmail(User.Email, transformer).Build();
 
 		// Assert
@@ -132,7 +132,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 	public async Task SendAsync_ShouldThrowUserNameAlreadyTakenException_WhenRequestIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 		var request = _requestBuilder.WithName(User.Name).Build();
 
 		// Assert
@@ -145,7 +145,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 		IStringTransformer transformer)
 	{
 		// Arrange
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 		var request = _requestBuilder.WithName(User.Name, transformer).Build();
 
 		// Assert
@@ -157,10 +157,10 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 	{
 		// Act
 		var response = await Sender.SendAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(user, _request);
+		response.ShouldSatisfy(_request, user);
 	}
 
 	[Theory]
@@ -173,10 +173,10 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(user, request);
+		response.ShouldSatisfy(request, user);
 	}
 
 	[Fact]
@@ -184,7 +184,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 	{
 		// Act
 		var response = await Sender.SendAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(_request, PasswordHasher);
@@ -200,7 +200,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(request, PasswordHasher);
@@ -211,7 +211,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 	{
 		// Act
 		var response = await Sender.SendAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.EmailConfirmationTokens.ShouldNotBeEmpty();
@@ -227,7 +227,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.EmailConfirmationTokens.ShouldNotBeEmpty();
@@ -238,10 +238,11 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 	{
 		// Act
 		var response = await Sender.SendAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
+		var eventRequest = await EventHarness.PublishedAddedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserAddedAsync(_request, user, CancellationToken);
+		eventRequest.ShouldSatisfy(_request, user);
 	}
 
 	[Theory]
@@ -254,10 +255,11 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
+		var eventRequest = await EventHarness.PublishedAddedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserAddedAsync(request, user, CancellationToken);
+		eventRequest.ShouldSatisfy(request, user);
 	}
 
 	[Fact]
@@ -265,10 +267,11 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 	{
 		// Act
 		var response = await Sender.SendAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
+		var eventRequests = await EventHarness.PublishedEmailConfirmationTokenAddedEventRequestRange(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedEmailConfirmationTokenAddedRangeAsync(user, CancellationToken);
+		eventRequests.ShouldSatisfy(_request, user.EmailConfirmationTokens);
 	}
 
 	[Theory]
@@ -281,9 +284,10 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
+		var eventRequests = await EventHarness.PublishedEmailConfirmationTokenAddedEventRequestRange(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedEmailConfirmationTokenAddedRangeAsync(user, CancellationToken);
+		eventRequests.ShouldSatisfy(request, user.EmailConfirmationTokens);
 	}
 }

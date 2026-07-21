@@ -3,6 +3,7 @@ using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Requests
 using InstaConnect.Identity.Domain.Tests.Features.ForgotPasswordTokens.Assertions;
 using InstaConnect.Identity.Domain.Tests.Features.ForgotPasswordTokens.Builders;
 using InstaConnect.Identity.Domain.Tests.Integration.Features.ForgotPasswordTokens.Utilities;
+using InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.Utilities;
 using InstaConnect.Identity.Tests.Features.Users.DataAttributes.Name;
 using InstaConnect.Identity.Tests.Features.Users.Utilities;
 
@@ -24,17 +25,44 @@ public class AddForgotPasswordTokenIntegrationTests : BaseForgotPasswordTokenDom
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 	}
 
 	[Fact]
 	public async Task AddAsync_ShouldThrowUserNameNotFoundException_WhenUserNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowUserNameNotFoundExceptionAsync(_command, CancellationToken);
+	}
+
+	[Fact]
+	public async Task AddAsync_ShouldReturnResponse_WhenCommandIsValid()
+	{
+		// Act
+		var response = await Service.AddAsync(_command, CancellationToken);
+		var forgotPasswordToken = await ServiceScope.GetForgotPasswordTokenByIdAsync(response, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(_command, forgotPasswordToken);
+	}
+
+	[Theory]
+	[UserNameDifferentCaseData]
+	public async Task AddAsync_ShouldReturnResponse_WhenCommandAndNameAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithName(transformer).Build();
+
+		// Act
+		var response = await Service.AddAsync(command, CancellationToken);
+		var forgotPasswordToken = await ServiceScope.GetForgotPasswordTokenByIdAsync(response, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(command, forgotPasswordToken);
 	}
 
 	[Fact]
@@ -42,7 +70,7 @@ public class AddForgotPasswordTokenIntegrationTests : BaseForgotPasswordTokenDom
 	{
 		// Act
 		await Service.AddAsync(_command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ForgotPasswordTokens.ShouldNotBeEmpty();
@@ -58,7 +86,7 @@ public class AddForgotPasswordTokenIntegrationTests : BaseForgotPasswordTokenDom
 
 		// Act
 		await Service.AddAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ForgotPasswordTokens.ShouldNotBeEmpty();
@@ -69,10 +97,11 @@ public class AddForgotPasswordTokenIntegrationTests : BaseForgotPasswordTokenDom
 	{
 		// Act
 		await Service.AddAsync(_command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
+		var eventRequests = await EventHarness.PublishedForgotPasswordTokenAddedEventRequestRange(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedForgotPasswordTokenAddedRangeAsync(_command, user, CancellationToken);
+		eventRequests.ShouldSatisfy(_command, user.ForgotPasswordTokens);
 	}
 
 	[Theory]
@@ -85,9 +114,10 @@ public class AddForgotPasswordTokenIntegrationTests : BaseForgotPasswordTokenDom
 
 		// Act
 		await Service.AddAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
+		var eventRequests = await EventHarness.PublishedForgotPasswordTokenAddedEventRequestRange(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedForgotPasswordTokenAddedRangeAsync(command, user, CancellationToken);
+		eventRequests.ShouldSatisfy(command, user.ForgotPasswordTokens);
 	}
 }

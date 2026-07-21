@@ -55,7 +55,7 @@ public class AddUserClaimServiceUnitTests : BaseUserClaimDomainCommandUnitTest
 		var response = await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(UserClaim, _command);
+		response.ShouldSatisfy(_command, UserClaim);
 	}
 
 	[Fact]

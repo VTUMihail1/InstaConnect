@@ -2,7 +2,6 @@ using InstaConnect.Common.Tests.Features.DataAttributes.Strings.Base;
 using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Requests;
 using InstaConnect.Identity.Domain.Tests.Features.ForgotPasswordTokens.Assertions;
 using InstaConnect.Identity.Domain.Tests.Features.ForgotPasswordTokens.Builders;
-using InstaConnect.Identity.Domain.Tests.Features.ForgotPasswordTokens.Utilities;
 using InstaConnect.Identity.Domain.Tests.Integration.Features.ForgotPasswordTokens.Utilities;
 using InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.Assertions;
 using InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.DataAttributes.Value;
@@ -28,7 +27,7 @@ public class VerifyForgotPasswordTokenIntegrationTests : BaseForgotPasswordToken
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 		await ServiceScope.AddForgotPasswordTokenRangeAsync(User.ForgotPasswordTokens, CancellationToken);
 	}
 
@@ -36,7 +35,7 @@ public class VerifyForgotPasswordTokenIntegrationTests : BaseForgotPasswordToken
 	public async Task VerifyAsync_ShouldThrowUserNotFoundException_WhenUserNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowUserNotFoundExceptionAsync(_command, CancellationToken);
@@ -68,7 +67,7 @@ public class VerifyForgotPasswordTokenIntegrationTests : BaseForgotPasswordToken
 	{
 		// Act
 		await Service.VerifyAsync(_command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(_command, PasswordHasher);
@@ -84,10 +83,10 @@ public class VerifyForgotPasswordTokenIntegrationTests : BaseForgotPasswordToken
 
 		// Act
 		await Service.VerifyAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
-		user.ShouldSatisfy(_command, PasswordHasher);
+		user.ShouldSatisfy(command, PasswordHasher);
 	}
 
 	[Theory]
@@ -100,10 +99,10 @@ public class VerifyForgotPasswordTokenIntegrationTests : BaseForgotPasswordToken
 
 		// Act
 		await Service.VerifyAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
-		user.ShouldSatisfy(_command, PasswordHasher);
+		user.ShouldSatisfy(command, PasswordHasher);
 	}
 
 	[Fact]
@@ -111,7 +110,7 @@ public class VerifyForgotPasswordTokenIntegrationTests : BaseForgotPasswordToken
 	{
 		// Act
 		await Service.VerifyAsync(_command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ForgotPasswordTokens.ShouldBeEmpty();
@@ -127,7 +126,7 @@ public class VerifyForgotPasswordTokenIntegrationTests : BaseForgotPasswordToken
 
 		// Act
 		await Service.VerifyAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ForgotPasswordTokens.ShouldBeEmpty();
@@ -143,7 +142,7 @@ public class VerifyForgotPasswordTokenIntegrationTests : BaseForgotPasswordToken
 
 		// Act
 		await Service.VerifyAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ForgotPasswordTokens.ShouldBeEmpty();
@@ -154,9 +153,10 @@ public class VerifyForgotPasswordTokenIntegrationTests : BaseForgotPasswordToken
 	{
 		// Act
 		await Service.VerifyAsync(_command, CancellationToken);
+		var eventRequests = await EventHarness.PublishedForgotPasswordTokenDeletedEventRequestRange(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedForgotPasswordTokenDeletedRangeAsync(_command, User, CancellationToken);
+		eventRequests.ShouldSatisfy(_command, User.ForgotPasswordTokens);
 	}
 
 	[Theory]
@@ -169,9 +169,10 @@ public class VerifyForgotPasswordTokenIntegrationTests : BaseForgotPasswordToken
 
 		// Act
 		await Service.VerifyAsync(command, CancellationToken);
+		var eventRequests = await EventHarness.PublishedForgotPasswordTokenDeletedEventRequestRange(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedForgotPasswordTokenDeletedRangeAsync(command, User, CancellationToken);
+		eventRequests.ShouldSatisfy(command, User.ForgotPasswordTokens);
 	}
 
 	[Theory]
@@ -184,8 +185,9 @@ public class VerifyForgotPasswordTokenIntegrationTests : BaseForgotPasswordToken
 
 		// Act
 		await Service.VerifyAsync(command, CancellationToken);
+		var eventRequests = await EventHarness.PublishedForgotPasswordTokenDeletedEventRequestRange(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedForgotPasswordTokenDeletedRangeAsync(command, User, CancellationToken);
+		eventRequests.ShouldSatisfy(command, User.ForgotPasswordTokens);
 	}
 }

@@ -9,7 +9,7 @@ internal class EmailConfirmationTokenCommandService : IEmailConfirmationTokenCom
 	private readonly IEventPublisher _eventPublisher;
 	private readonly IUserCommandRepository _repository;
 	private readonly IDateTimeProvider _dateTimeProvider;
-	private readonly IUserIncludeBuilderFactory _includeQueryBuilderFactory;
+	private readonly IUserIncludeBuilderFactory _includeBuilderFactory;
 	private readonly IEmailConfirmationTokenFactory _emailConfirmationTokenFactory;
 	private readonly IEmailConfirmationTokenEmailSender _emailConfirmationTokenEmailSender;
 	private readonly IEmailConfirmationTokenCommandRepository _emailConfirmationTokenRepository;
@@ -19,7 +19,7 @@ internal class EmailConfirmationTokenCommandService : IEmailConfirmationTokenCom
 		IEventPublisher eventPublisher,
 		IUserCommandRepository repository,
 		IDateTimeProvider dateTimeProvider,
-		IUserIncludeBuilderFactory includeQueryBuilderFactory,
+		IUserIncludeBuilderFactory includeBuilderFactory,
 		IEmailConfirmationTokenFactory emailConfirmationTokenFactory,
 		IEmailConfirmationTokenEmailSender emailConfirmationTokenEmailSender,
 		IEmailConfirmationTokenCommandRepository emailConfirmationTokenRepository)
@@ -28,7 +28,7 @@ internal class EmailConfirmationTokenCommandService : IEmailConfirmationTokenCom
 		_eventPublisher = eventPublisher;
 		_repository = repository;
 		_dateTimeProvider = dateTimeProvider;
-		_includeQueryBuilderFactory = includeQueryBuilderFactory;
+		_includeBuilderFactory = includeBuilderFactory;
 		_emailConfirmationTokenFactory = emailConfirmationTokenFactory;
 		_emailConfirmationTokenEmailSender = emailConfirmationTokenEmailSender;
 		_emailConfirmationTokenRepository = emailConfirmationTokenRepository;
@@ -61,7 +61,7 @@ internal class EmailConfirmationTokenCommandService : IEmailConfirmationTokenCom
 
 	public async Task VerifyAsync(VerifyEmailConfirmationTokenCommand command, CancellationToken cancellationToken)
 	{
-		var include = _includeQueryBuilderFactory.Create().WithEmailConfirmationTokens().Build();
+		var include = _includeBuilderFactory.Create().WithEmailConfirmationTokens().Build();
 		var user = await _repository.GetByIdAsync(command.Id.Id, include, cancellationToken);
 
 		if (user == null)

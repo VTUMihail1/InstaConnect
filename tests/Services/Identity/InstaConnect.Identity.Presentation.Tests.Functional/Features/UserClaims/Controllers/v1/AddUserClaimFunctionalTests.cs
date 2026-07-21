@@ -19,7 +19,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 	}
 
 	[Fact]
@@ -108,7 +108,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 	public async Task AddAsync_ShouldHaveNotFoundStatusCode_WhenUserNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Act
 		var response = await Client.AddStatusCodeAsync(_request, CancellationToken);
@@ -121,7 +121,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 	public async Task AddAsync_ShouldHaveUserNotFoundProblemDetails_WhenUserNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Act
 		var response = await Client.AddProblemDetailsAsync(_request, CancellationToken);
@@ -134,7 +134,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 	public async Task AddAsync_ShouldHaveBadRequestStatusCode_WhenUserClaimAlreadyExists()
 	{
 		// Arrange
-		await ServiceScope.AddUserClaimAsync(UserClaim, CancellationToken);
+		await ServiceScope.AddClaimAsync(UserClaim, CancellationToken);
 
 		// Act
 		var response = await Client.AddStatusCodeAsync(_request, CancellationToken);
@@ -149,7 +149,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 		IStringTransformer transformer)
 	{
 		// Arrange
-		await ServiceScope.AddUserClaimAsync(UserClaim, CancellationToken);
+		await ServiceScope.AddClaimAsync(UserClaim, CancellationToken);
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
@@ -163,7 +163,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 	public async Task AddAsync_ShouldHaveUserClaimAlreadyTakenProblemDetails_WhenUserClaimAlreadyExists()
 	{
 		// Arrange
-		await ServiceScope.AddUserClaimAsync(UserClaim, CancellationToken);
+		await ServiceScope.AddClaimAsync(UserClaim, CancellationToken);
 
 		// Act
 		var response = await Client.AddProblemDetailsAsync(_request, CancellationToken);
@@ -178,7 +178,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 		IStringTransformer transformer)
 	{
 		// Arrange
-		await ServiceScope.AddUserClaimAsync(UserClaim, CancellationToken);
+		await ServiceScope.AddClaimAsync(UserClaim, CancellationToken);
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
@@ -220,7 +220,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 		var userClaim = await ServiceScope.GetUserClaimByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(userClaim, _request);
+		response.ShouldSatisfy(_request, userClaim);
 	}
 
 	[Theory]
@@ -235,7 +235,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 		var userClaim = await ServiceScope.GetUserClaimByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(userClaim, request);
+		response.ShouldSatisfy(request, userClaim);
 	}
 
 	[Fact]
@@ -270,9 +270,10 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 		// Act
 		var response = await Client.AddAsync(_request, CancellationToken);
 		var userClaim = await ServiceScope.GetUserClaimByIdAsync(response.Response, CancellationToken);
+		var eventRequest = await EventHarness.PublishedClaimAddedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserClaimAddedAsync(_request, userClaim, CancellationToken);
+		eventRequest.ShouldSatisfy(_request, userClaim);
 	}
 
 	[Theory]
@@ -285,8 +286,9 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 		// Act
 		var response = await Client.AddAsync(request, CancellationToken);
 		var userClaim = await ServiceScope.GetUserClaimByIdAsync(response.Response, CancellationToken);
+		var eventRequest = await EventHarness.PublishedClaimAddedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserClaimAddedAsync(request, userClaim, CancellationToken);
+		eventRequest.ShouldSatisfy(request, userClaim);
 	}
 }

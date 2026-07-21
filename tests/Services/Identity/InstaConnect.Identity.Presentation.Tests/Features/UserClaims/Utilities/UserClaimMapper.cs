@@ -40,17 +40,17 @@ public static class UserClaimMapper
 	extension(ICollection<UserClaim> userClaims)
 	{
 		internal UserClaimCollectionQueryResponse ToFullQueryResponse<TRequest>(
+			 TRequest request,
 			 User user,
-			 Func<UserClaim, TRequest, bool> filter,
-			 Func<UserClaim, TRequest, UserClaimQueryResponse> transform,
-			 TRequest request)
+			 Func<TRequest, UserClaim, bool> filter,
+			 Func<TRequest, UserClaim, UserClaimQueryResponse> transform)
 		where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = userClaims.Count(userClaim => filter(userClaim, request));
+			var totalCount = userClaims.Count(userClaim => filter(request, userClaim));
 
 			return new(user.ToFullQueryResponse(),
-					   userClaims.Filter(userClaim => filter(userClaim, request), request, userClaim => transform(userClaim, request)),
+					   userClaims.Filter(request, userClaim => filter(request, userClaim), userClaim => transform(request, userClaim)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -59,16 +59,16 @@ public static class UserClaimMapper
 		}
 
 		internal UserClaimCollectionQueryResponse ToQueryResponseWithoutUser<TRequest>(
-			 Func<UserClaim, TRequest, bool> filter,
-			 Func<UserClaim, TRequest, UserClaimQueryResponse> transform,
-			 TRequest request)
+			 TRequest request,
+			 Func<TRequest, UserClaim, bool> filter,
+			 Func<TRequest, UserClaim, UserClaimQueryResponse> transform)
 		where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = userClaims.Count(userClaim => filter(userClaim, request));
+			var totalCount = userClaims.Count(userClaim => filter(request, userClaim));
 
 			return new(null,
-					   userClaims.Filter(userClaim => filter(userClaim, request), request, userClaim => transform(userClaim, request)),
+					   userClaims.Filter(request, userClaim => filter(request, userClaim), userClaim => transform(request, userClaim)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -81,10 +81,10 @@ public static class UserClaimMapper
 			GetAllUserClaimsApiRequest request)
 		{
 			return new(userClaims.ToFullQueryResponse(
+				request,
 				user,
-				(userClaim, request) => userClaim.MatchesFilter(request),
-				(userClaim, request) => userClaim.ToQueryResponseWithoutUser(),
-				request));
+				(request, userClaim) => userClaim.MatchesFilter(request),
+				(request, userClaim) => userClaim.ToQueryResponseWithoutUser()));
 		}
 	}
 }

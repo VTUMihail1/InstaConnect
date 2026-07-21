@@ -16,7 +16,7 @@ public class DeleteUserIntegrationTests : BaseUserApplicationCommandIntegrationT
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 	}
 
 	[Theory]
@@ -39,7 +39,7 @@ public class DeleteUserIntegrationTests : BaseUserApplicationCommandIntegrationT
 	public async Task SendAsync_ShouldThrowUserNotFoundException_WhenUserNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Assert
 		await Sender.ShouldThrowUserNotFoundExceptionAsync(_request, CancellationToken);
@@ -50,7 +50,7 @@ public class DeleteUserIntegrationTests : BaseUserApplicationCommandIntegrationT
 	{
 		// Act
 		await Sender.SendAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ShouldBeNull();
@@ -66,7 +66,7 @@ public class DeleteUserIntegrationTests : BaseUserApplicationCommandIntegrationT
 
 		// Act
 		await Sender.SendAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ShouldBeNull();
@@ -77,9 +77,10 @@ public class DeleteUserIntegrationTests : BaseUserApplicationCommandIntegrationT
 	{
 		// Act
 		await Sender.SendAsync(_request, CancellationToken);
+		var eventRequest = await EventHarness.PublishedDeletedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserDeletedAsync(_request, User, CancellationToken);
+		eventRequest.ShouldSatisfy(_request, User);
 	}
 
 	[Theory]
@@ -92,8 +93,9 @@ public class DeleteUserIntegrationTests : BaseUserApplicationCommandIntegrationT
 
 		// Act
 		await Sender.SendAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.PublishedDeletedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedUserDeletedAsync(request, User, CancellationToken);
+		eventRequest.ShouldSatisfy(request, User);
 	}
 }

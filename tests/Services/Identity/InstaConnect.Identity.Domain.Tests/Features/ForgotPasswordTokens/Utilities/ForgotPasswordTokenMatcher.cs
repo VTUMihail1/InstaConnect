@@ -19,8 +19,8 @@ public static class ForgotPasswordTokenMatcher
 		return Matcher.Is<ForgotPasswordTokenAddedEventRequest>(p => p.Matches(command, forgotPasswordToken));
 	}
 
-	public static ICollection<ForgotPasswordTokenDeletedEventRequest> IsForgotPasswordTokenDeletedEventRequestCollection(VerifyForgotPasswordTokenCommand command, User user)
+	public static ICollection<ForgotPasswordTokenDeletedEventRequest> IsForgotPasswordTokenDeletedEventRequestCollection(VerifyForgotPasswordTokenCommand command, ICollection<ForgotPasswordToken> forgotPasswordTokens)
 	{
-		return Matcher.Is<ICollection<ForgotPasswordTokenDeletedEventRequest>>(p => p.Matches(user));
+		return Matcher.Is<ICollection<ForgotPasswordTokenDeletedEventRequest>>(p => p.Matches(command, forgotPasswordTokens));
 	}
 }

@@ -6,6 +6,8 @@ public class RotateRefreshTokenCommandHandlerUnitTests : BaseRefreshTokenApplica
 	private readonly RotateRefreshTokenCommandRequestBuilder _requestBuilder;
 	private readonly RotateRefreshTokenCommandRequest _request;
 
+	private readonly RefreshToken _refreshToken;
+
 	private readonly RotateRefreshTokenCommandHandler _handler;
 
 	public RotateRefreshTokenCommandHandlerUnitTests()
@@ -14,9 +16,11 @@ public class RotateRefreshTokenCommandHandlerUnitTests : BaseRefreshTokenApplica
 		_requestBuilder = _requestBuilderFactory.Create(RefreshToken);
 		_request = _requestBuilder.Build();
 
+		_refreshToken = RefreshTokenBuilderFactory.Create(User).Build();
+
 		_handler = new(Mapper, Service);
 
-		Service.SetupRotateCommand(_request, RefreshToken, CancellationToken);
+		Service.SetupRotateCommand(_request, _refreshToken, CancellationToken);
 	}
 
 	[Fact]
@@ -26,7 +30,7 @@ public class RotateRefreshTokenCommandHandlerUnitTests : BaseRefreshTokenApplica
 		var response = await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(RefreshToken, _request);
+		response.ShouldSatisfy(_request, _refreshToken);
 	}
 
 	[Fact]

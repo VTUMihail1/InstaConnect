@@ -79,14 +79,14 @@ public static class PostMapper
 		public ICollection<PostResponse> ToResponse(
 			GetAllPostsQuery query)
 		{
-			return posts.Filter(post => post.MatchesFilter(query.Filter), query.Pagination, post => post.ToFullResponse(query));
+			return posts.Filter(query.Pagination, post => post.MatchesFilter(query.Filter), post => post.ToFullResponse(query));
 		}
 
 		public ICollection<PostResponse> ToResponse(
 			User user,
 			GetAllPostsForUserQuery query)
 		{
-			return posts.Filter(post => post.MatchesFilter(query.Filter), query.Pagination, post => post.ToResponseWithoutUser(query));
+			return posts.Filter(query.Pagination, post => post.MatchesFilter(query.Filter), post => post.ToResponseWithoutUser(query));
 		}
 
 		public long ToTotalCountResponse(

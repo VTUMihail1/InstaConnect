@@ -34,9 +34,7 @@ public static class ChatMessageMatcher
 
 	public static ChatMessageAddedNotificationRequest IsChatMessageAddedNotificationRequest(AddChatMessageCommand command, ChatMessage chatMessage)
 	{
-		var expected = chatMessage.To(command).AddSender(chatMessage.Sender).AddChat(chatMessage.Chat);
-
-		return Matcher.Is<ChatMessageAddedNotificationRequest>(p => p.Matches(expected));
+		return Matcher.Is<ChatMessageAddedNotificationRequest>(p => p.Matches(command, chatMessage));
 	}
 
 	public static ChatMessageUpdatedNotificationRequest IsChatMessageUpdatedNotificationRequest(UpdateChatMessageCommand command, ChatMessage chatMessage)

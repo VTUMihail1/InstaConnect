@@ -36,7 +36,7 @@ public class UpdateCurrentUserControllerUnitTests : BaseUserPresentationCommandU
 		var response = await _controller.UpdateCurrentAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, _request);
+		response.ShouldSatisfy(_request, User);
 	}
 
 	[Fact]

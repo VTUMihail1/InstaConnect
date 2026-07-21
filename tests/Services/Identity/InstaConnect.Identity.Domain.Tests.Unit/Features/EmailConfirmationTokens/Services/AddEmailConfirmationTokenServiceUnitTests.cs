@@ -63,7 +63,7 @@ public class AddEmailConfirmationTokenServiceUnitTests : BaseEmailConfirmationTo
 		var response = await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(EmailConfirmationToken, _command);
+		response.ShouldSatisfy(_command, EmailConfirmationToken);
 	}
 
 	[Fact]

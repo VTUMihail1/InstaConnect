@@ -9,8 +9,8 @@ public static class UserClaimEquals
 	extension(UserClaimId response)
 	{
 		public bool Matches(
-			UserClaim userClaim,
-			AddUserClaimCommand command)
+			AddUserClaimCommand command,
+			UserClaim userClaim)
 		{
 			return response.Matches(userClaim.Id);
 		}
@@ -30,7 +30,7 @@ public static class UserClaimEquals
 		{
 			return command.Id.Matches(request.UserClaim.Id) &&
 				   command.Claim == request.UserClaim.Claim &&
-				   entity.User != null && entity.User.Matches(request.UserClaim.User) &&
+				   entity.User.Matches(request.UserClaim.User) &&
 				   entity.CreatedAtUtc == request.UserClaim.CreatedAtUtc;
 		}
 	}
@@ -40,7 +40,7 @@ public static class UserClaimEquals
 		public bool Matches(DeleteUserClaimCommand command, UserClaim entity)
 		{
 			return entity.Id.Matches(command.Id) &&
-				   entity.User != null && entity.User.Matches(request.UserClaim.User) &&
+				   entity.User.Matches(request.UserClaim.User) &&
 				   entity.CreatedAtUtc == request.UserClaim.CreatedAtUtc;
 		}
 	}
@@ -87,32 +87,32 @@ public static class UserClaimEquals
 	extension(UserClaimCollectionResponse response)
 	{
 		public bool Matches(
+			GetAllUserClaimsQuery query,
 			User user,
-			ICollection<UserClaim> userClaims,
-			GetAllUserClaimsQuery query)
+			ICollection<UserClaim> userClaims)
 		{
-			return response.MatchesCollectionResponse(userClaims.Count(userClaim => userClaim.MatchesFilter(query.Filter)), query.Pagination) &&
+			return response.MatchesCollectionResponse(query.Pagination, userClaims.Count(userClaim => userClaim.MatchesFilter(query.Filter))) &&
 				   response.User.MatchesFull(user) &&
-				   response.UserClaims.MatchesCollection(userClaims,
+				   response.UserClaims.MatchesCollection(query.Pagination,
+				                                         userClaims,
 														 response => response.Id,
 														 userClaim => userClaim.Id,
 														 (response, userClaim) => response.MatchesWithoutUser(userClaim),
-														 query.Pagination,
 														 userClaim => userClaim.MatchesFilter(query.Filter));
 		}
 
 		public bool Matches(
+			GetAllUserClaimsQuery query,
 			User user,
 			ICollection<UserClaim> userClaims,
-			GetAllUserClaimsQuery query,
 			ISortEnumTermTransformer<UserClaim> termTransformer)
 		{
-			return response.MatchesCollectionResponse(userClaims.Count(userClaim => userClaim.MatchesFilter(query.Filter)), query.Pagination) &&
+			return response.MatchesCollectionResponse(query.Pagination, userClaims.Count(userClaim => userClaim.MatchesFilter(query.Filter))) &&
 				   response.User.MatchesFull(user) &&
-				   response.UserClaims.MatchesSortedCollection(userClaims,
+				   response.UserClaims.MatchesSortedCollection(query.Pagination,
+															   userClaims,
 															   (response, userClaim) => response.MatchesWithoutUser(userClaim),
 															   termTransformer,
-															   query.Pagination,
 															   userClaim => userClaim.MatchesFilter(query.Filter));
 		}
 	}

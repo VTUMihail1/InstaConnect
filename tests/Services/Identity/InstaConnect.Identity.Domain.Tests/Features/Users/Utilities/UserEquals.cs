@@ -10,14 +10,14 @@ public static class UserEquals
 {
 	extension(UserId response)
 	{
-		public bool Matches(User user, AddUserCommand command)
+		public bool Matches(AddUserCommand command, User user)
 		{
 			return response.Matches(user.Id);
 		}
 
-		public bool Matches(User user, UpdateUserCommand command)
+		public bool Matches(UpdateUserCommand command, User user)
 		{
-			return response.Matches(user.Id);
+			return response.Matches(command.Id);
 		}
 	}
 
@@ -32,18 +32,6 @@ public static class UserEquals
 				   user.ProfileImage.Matches(command.ProfileImage?.GetUrl());
 		}
 
-		public bool Matches(AddUserCommand command, UserEventRequest request)
-		{
-			return user.Id.Matches(request.Id) &&
-				   command.Name.Matches(request.Name) &&
-				   command.Email.Matches(request.Email) &&
-				   command.FirstName == request.FirstName &&
-				   command.LastName == request.LastName &&
-				   command.ProfileImage?.GetUrl() == request.ProfileImageUrl &&
-				   user.CreatedAtUtc == request.CreatedAtUtc &&
-				   user.UpdatedAtUtc == request.UpdatedAtUtc;
-		}
-
 		public bool Matches(UpdateUserCommand command)
 		{
 			return user.Id.Matches(command.Id) &&
@@ -53,18 +41,6 @@ public static class UserEquals
 				   user.LastName == command.LastName &&
 				   (command.ProfileImage == null ||
 				   user.ProfileImage.Matches(command.ProfileImage.GetUrl()));
-		}
-
-		public bool Matches(UpdateUserCommand command, UserEventRequest request)
-		{
-			return command.Id.Matches(request.Id) &&
-				   command.Name.Matches(request.Name) &&
-				   command.Email.Matches(request.Email) &&
-				   command.FirstName == request.FirstName &&
-				   command.LastName == request.LastName &&
-				   command.ProfileImage?.GetUrl() == request.ProfileImageUrl &&
-				   user.CreatedAtUtc == request.CreatedAtUtc &&
-				   user.UpdatedAtUtc == request.UpdatedAtUtc;
 		}
 
 		public bool Matches(DeleteUserCommand command)
@@ -104,7 +80,7 @@ public static class UserEquals
 				   user.UpdatedAtUtc == response.UpdatedAtUtc;
 		}
 
-		public bool Matches(User user, GetUserByIdQuery query)
+		public bool Matches(GetUserByIdQuery query, User user)
 		{
 			return response.MatchesFull(user);
 		}
@@ -113,44 +89,58 @@ public static class UserEquals
 	extension(UserCollectionResponse response)
 	{
 		public bool Matches(
-			ICollection<User> users,
-			GetAllUsersQuery query)
+			GetAllUsersQuery query,
+			ICollection<User> users)
 		{
-			return response.MatchesCollectionResponse(users.Count(user => user.MatchesFilter(query)), query.Pagination) &&
-				   response.Users.MatchesCollection(users,
+			return response.MatchesCollectionResponse(query.Pagination, users.Count(user => user.MatchesFilter(query))) &&
+				   response.Users.MatchesCollection(query.Pagination,
+													users,
 													response => response.Id,
 													user => user.Id,
 													(response, user) => response.MatchesFull(user),
-													query.Pagination,
 													user => user.MatchesFilter(query));
 		}
 
 		public bool Matches(
-			ICollection<User> users,
 			GetAllUsersQuery query,
+			ICollection<User> users,
 			ISortEnumTermTransformer<User> termTransformer)
 		{
-			return response.MatchesCollectionResponse(users.Count(user => user.MatchesFilter(query)), query.Pagination) &&
-				   response.Users.MatchesSortedCollection(users,
+			return response.MatchesCollectionResponse(query.Pagination, users.Count(user => user.MatchesFilter(query))) &&
+				   response.Users.MatchesSortedCollection(query.Pagination,
+														  users,
 														  (response, user) => response.MatchesFull(user),
 														  termTransformer,
-														  query.Pagination,
 														  user => user.MatchesFilter(query));
 		}
 	}
 
-	extension(UserEventRequest request)
+	extension(User? user)
 	{
-		public bool Matches(AddUserCommand command, User entity)
+		public bool Matches(AddUserCommand command, UserEventRequest request)
 		{
-			return entity.Id.Matches(request.Id) &&
+			return user != null &&
+				   user.Id.Matches(request.Id) &&
 				   command.Name.Matches(request.Name) &&
 				   command.Email.Matches(request.Email) &&
 				   command.FirstName == request.FirstName &&
 				   command.LastName == request.LastName &&
-				   entity.ProfileImage.Matches(command.ProfileImage?.GetUrl()) &&
-				   entity.CreatedAtUtc == request.CreatedAtUtc &&
-				   entity.UpdatedAtUtc == request.UpdatedAtUtc;
+				   command.ProfileImage?.GetUrl() == request.ProfileImageUrl &&
+				   user.CreatedAtUtc == request.CreatedAtUtc &&
+				   user.UpdatedAtUtc == request.UpdatedAtUtc;
+		}
+
+		public bool Matches(UpdateUserCommand command, UserEventRequest request)
+		{
+			return user != null &&
+				   command.Id.Matches(request.Id) &&
+				   command.Name.Matches(request.Name) &&
+				   command.Email.Matches(request.Email) &&
+				   command.FirstName == request.FirstName &&
+				   command.LastName == request.LastName &&
+				   command.ProfileImage?.GetUrl() == request.ProfileImageUrl &&
+				   user.CreatedAtUtc == request.CreatedAtUtc &&
+				   user.UpdatedAtUtc == request.UpdatedAtUtc;
 		}
 	}
 
@@ -202,40 +192,61 @@ public static class UserEquals
 
 	extension(EmailConfirmationToken emailConfirmationToken)
 	{
-		public bool Matches(AddUserCommand command, User user)
+		public bool Matches(AddUserCommand command)
 		{
-			return emailConfirmationToken.Id.Id.Matches(user.Id);
+			return emailConfirmationToken.User!.Name.Matches(command.Name);
 		}
 	}
 
-	extension(EmailConfirmationTokenAddedEventRequest request)
+	extension(EmailConfirmationTokenAddedEventRequest r)
 	{
 		public bool Matches(AddUserCommand command, EmailConfirmationToken entity)
 		{
-			return entity.Id.Id.Matches(request.EmailConfirmationToken.Id) &&
-				   entity.User != null && entity.User.Matches(command, request.EmailConfirmationToken.User);
+			return entity.Id.Matches(r.EmailConfirmationToken.Id, r.EmailConfirmationToken.Value) &&
+				   entity.User.Matches(command, r.EmailConfirmationToken.User) &&
+				   entity.ExpiresAtUtc == r.EmailConfirmationToken.ExpiresAtUtc &&
+				   entity.CreatedAtUtc == r.EmailConfirmationToken.CreatedAtUtc;
 		}
 	}
 
-	extension(EmailConfirmationTokenDeletedEventRequest request)
+	extension(ICollection<EmailConfirmationTokenAddedEventRequest> r)
 	{
-		public bool Matches(UpdateUserCommand command, EmailConfirmationToken entity)
+		public bool Matches(AddUserCommand command, ICollection<EmailConfirmationToken> entities)
 		{
-			return entity.Id.Matches(request.EmailConfirmationToken.Id, request.EmailConfirmationToken.Value) &&
-				   entity.User != null && entity.User.Matches(request.EmailConfirmationToken.User) &&
-				   entity.ExpiresAtUtc == request.EmailConfirmationToken.ExpiresAtUtc &&
-				   entity.CreatedAtUtc == request.EmailConfirmationToken.CreatedAtUtc;
-		}
-	}
-
-	extension(ICollection<EmailConfirmationTokenDeletedEventRequest> requests)
-	{
-		public bool Matches(UpdateUserCommand command, ICollection<EmailConfirmationToken> entities)
-		{
-			return requests.MatchesCollection(entities,
+			return r.MatchesCollection(entities,
 											  e => new(new(e.EmailConfirmationToken.Id), e.EmailConfirmationToken.Value),
 											  e => e.Id,
 											  (emailConfirmationToken, e) => emailConfirmationToken.Matches(command, e));
+		}
+	}
+
+	extension(EmailConfirmationTokenDeletedEventRequest r)
+	{
+		public bool Matches(UpdateUserCommand command, EmailConfirmationToken entity)
+		{
+			return entity.Id.Matches(command.Id.Id, r.EmailConfirmationToken.Value) &&
+				   entity.User.Matches(command, r.EmailConfirmationToken.User) &&
+				   entity.ExpiresAtUtc == r.EmailConfirmationToken.ExpiresAtUtc &&
+				   entity.CreatedAtUtc == r.EmailConfirmationToken.CreatedAtUtc;
+		}
+	}
+
+	extension(ICollection<EmailConfirmationTokenDeletedEventRequest> r)
+	{
+		public bool Matches(UpdateUserCommand command, ICollection<EmailConfirmationToken> entities)
+		{
+			return r.MatchesCollection(entities,
+											  e => new(new(e.EmailConfirmationToken.Id), e.EmailConfirmationToken.Value),
+											  e => e.Id,
+											  (emailConfirmationToken, e) => emailConfirmationToken.Matches(command, e));
+		}
+	}
+
+	extension(ICollection<EmailConfirmationToken> entities)
+	{
+		public bool Matches(UpdateUserCommand command)
+		{
+			return entities.All(entity => entity.Id.Id.Matches(command.Id));
 		}
 	}
 }

@@ -48,7 +48,7 @@ public static class UserClaimMapper
 		public ICollection<UserClaimResponse> ToResponse(
 			GetAllUserClaimsQuery query)
 		{
-			return userClaims.Filter(userClaim => userClaim.MatchesFilter(query.Filter), query.Pagination, userClaim => userClaim.ToResponseWithoutUser());
+			return userClaims.Filter(query.Pagination, userClaim => userClaim.MatchesFilter(query.Filter), userClaim => userClaim.ToResponseWithoutUser());
 		}
 
 		public long ToTotalCountResponse(

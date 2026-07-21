@@ -16,4 +16,12 @@ public static class EmailConfirmationTokenMatchAssertions
 			emailConfirmationToken.ShouldSatisfy(p => p.Matches(request));
 		}
 	}
+
+	extension(User user)
+	{
+		public void ShouldSatisfy(VerifyEmailConfirmationTokenApiRequest request)
+		{
+			user.ShouldSatisfy(p => p.Matches(request));
+		}
+	}
 }

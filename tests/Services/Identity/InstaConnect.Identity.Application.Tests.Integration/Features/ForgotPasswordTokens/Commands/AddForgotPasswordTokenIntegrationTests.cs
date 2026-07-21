@@ -16,7 +16,7 @@ public class AddForgotPasswordTokenIntegrationTests : BaseForgotPasswordTokenApp
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 	}
 
 	[Theory]
@@ -38,7 +38,7 @@ public class AddForgotPasswordTokenIntegrationTests : BaseForgotPasswordTokenApp
 	public async Task SendAsync_ShouldThrowUserNameNotFoundException_WhenUserNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Assert
 		await Sender.ShouldThrowUserNameNotFoundExceptionAsync(_request, CancellationToken);
@@ -49,7 +49,7 @@ public class AddForgotPasswordTokenIntegrationTests : BaseForgotPasswordTokenApp
 	{
 		// Act
 		await Sender.SendAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ForgotPasswordTokens.ShouldNotBeEmpty();
@@ -65,7 +65,7 @@ public class AddForgotPasswordTokenIntegrationTests : BaseForgotPasswordTokenApp
 
 		// Act
 		await Sender.SendAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ForgotPasswordTokens.ShouldNotBeEmpty();
@@ -76,10 +76,11 @@ public class AddForgotPasswordTokenIntegrationTests : BaseForgotPasswordTokenApp
 	{
 		// Act
 		await Sender.SendAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
+		var eventRequests = await EventHarness.PublishedForgotPasswordTokenAddedEventRequestRange(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedForgotPasswordTokenAddedRangeAsync(_request, user, CancellationToken);
+		eventRequests.ShouldSatisfy(_request, user.ForgotPasswordTokens);
 	}
 
 	[Theory]
@@ -92,9 +93,10 @@ public class AddForgotPasswordTokenIntegrationTests : BaseForgotPasswordTokenApp
 
 		// Act
 		await Sender.SendAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
+		var eventRequests = await EventHarness.PublishedForgotPasswordTokenAddedEventRequestRange(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedForgotPasswordTokenAddedRangeAsync(request, user, CancellationToken);
+		eventRequests.ShouldSatisfy(request, user.ForgotPasswordTokens);
 	}
 }

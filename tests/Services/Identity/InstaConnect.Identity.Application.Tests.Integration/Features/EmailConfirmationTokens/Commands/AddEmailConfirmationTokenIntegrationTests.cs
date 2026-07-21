@@ -16,7 +16,7 @@ public class AddEmailConfirmationTokenIntegrationTests : BaseEmailConfirmationTo
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 	}
 
 	[Theory]
@@ -38,7 +38,7 @@ public class AddEmailConfirmationTokenIntegrationTests : BaseEmailConfirmationTo
 	public async Task SendAsync_ShouldThrowUserNameNotFoundException_WhenUserNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Assert
 		await Sender.ShouldThrowUserNameNotFoundExceptionAsync(_request, CancellationToken);
@@ -49,7 +49,7 @@ public class AddEmailConfirmationTokenIntegrationTests : BaseEmailConfirmationTo
 	{
 		// Arrange
 		var updatedUser = UserBuilder.WithConfirmedEmail().Build();
-		await ServiceScope.UpdateUserAsync(updatedUser, CancellationToken);
+		await ServiceScope.UpdateAsync(updatedUser, CancellationToken);
 
 		// Assert
 		await Sender.ShouldThrowUserNameEmailAlreadyConfirmedExceptionAsync(_request, CancellationToken);
@@ -60,7 +60,7 @@ public class AddEmailConfirmationTokenIntegrationTests : BaseEmailConfirmationTo
 	{
 		// Act
 		await Sender.SendAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.EmailConfirmationTokens.ShouldNotBeEmpty();
@@ -76,7 +76,7 @@ public class AddEmailConfirmationTokenIntegrationTests : BaseEmailConfirmationTo
 
 		// Act
 		await Sender.SendAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.EmailConfirmationTokens.ShouldNotBeEmpty();
@@ -87,10 +87,11 @@ public class AddEmailConfirmationTokenIntegrationTests : BaseEmailConfirmationTo
 	{
 		// Act
 		await Sender.SendAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
+		var eventRequests = await EventHarness.PublishedEmailConfirmationTokenAddedEventRequestRange(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedEmailConfirmationTokenAddedRangeAsync(_request, user, CancellationToken);
+		eventRequests.ShouldSatisfy(_request, user.EmailConfirmationTokens);
 	}
 
 	[Theory]
@@ -103,9 +104,10 @@ public class AddEmailConfirmationTokenIntegrationTests : BaseEmailConfirmationTo
 
 		// Act
 		await Sender.SendAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
+		var eventRequests = await EventHarness.PublishedEmailConfirmationTokenAddedEventRequestRange(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedEmailConfirmationTokenAddedRangeAsync(request, user, CancellationToken);
+		eventRequests.ShouldSatisfy(_request, user.EmailConfirmationTokens);
 	}
 }

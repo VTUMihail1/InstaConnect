@@ -16,8 +16,8 @@ public class AddEmailConfirmationTokenFunctionalTests : BaseEmailConfirmationTok
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
-		await ServiceScope.AddUserClaimAsync(UserClaim, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
+		await ServiceScope.AddClaimAsync(UserClaim, CancellationToken);
 	}
 
 	[Theory]
@@ -56,7 +56,7 @@ public class AddEmailConfirmationTokenFunctionalTests : BaseEmailConfirmationTok
 	public async Task AddAsync_ShouldHaveNotFoundStatusCode_WhenUserNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Act
 		var response = await Client.AddStatusCodeAsync(_request, CancellationToken);
@@ -69,7 +69,7 @@ public class AddEmailConfirmationTokenFunctionalTests : BaseEmailConfirmationTok
 	public async Task AddAsync_ShouldHaveUserNameNotFoundProblemDetails_WhenUserNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Act
 		var response = await Client.AddProblemDetailsAsync(_request, CancellationToken);
@@ -83,7 +83,7 @@ public class AddEmailConfirmationTokenFunctionalTests : BaseEmailConfirmationTok
 	{
 		// Arrange
 		var updatedUser = UserBuilder.WithConfirmedEmail().Build();
-		await ServiceScope.UpdateUserAsync(updatedUser, CancellationToken);
+		await ServiceScope.UpdateAsync(updatedUser, CancellationToken);
 
 		// Act
 		var response = await Client.AddStatusCodeAsync(_request, CancellationToken);
@@ -97,7 +97,7 @@ public class AddEmailConfirmationTokenFunctionalTests : BaseEmailConfirmationTok
 	{
 		// Arrange
 		var updatedUser = UserBuilder.WithConfirmedEmail().Build();
-		await ServiceScope.UpdateUserAsync(updatedUser, CancellationToken);
+		await ServiceScope.UpdateAsync(updatedUser, CancellationToken);
 
 		// Act
 		var response = await Client.AddProblemDetailsAsync(_request, CancellationToken);
@@ -135,7 +135,7 @@ public class AddEmailConfirmationTokenFunctionalTests : BaseEmailConfirmationTok
 	{
 		// Act
 		await Client.AddAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.EmailConfirmationTokens.ShouldNotBeEmpty();
@@ -150,7 +150,7 @@ public class AddEmailConfirmationTokenFunctionalTests : BaseEmailConfirmationTok
 
 		// Act
 		await Client.AddAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.EmailConfirmationTokens.ShouldNotBeEmpty();
@@ -161,10 +161,11 @@ public class AddEmailConfirmationTokenFunctionalTests : BaseEmailConfirmationTok
 	{
 		// Act
 		await Client.AddAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
+		var eventRequests = await EventHarness.PublishedEmailConfirmationTokenAddedEventRequestRange(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedEmailConfirmationTokenAddedRangeAsync(_request, user, CancellationToken);
+		eventRequests.ShouldSatisfy(_request, user.EmailConfirmationTokens);
 	}
 
 	[Theory]
@@ -177,9 +178,10 @@ public class AddEmailConfirmationTokenFunctionalTests : BaseEmailConfirmationTok
 
 		// Act
 		await Client.AddAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
+		var eventRequests = await EventHarness.PublishedEmailConfirmationTokenAddedEventRequestRange(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedEmailConfirmationTokenAddedRangeAsync(request, user, CancellationToken);
+		eventRequests.ShouldSatisfy(request, user.EmailConfirmationTokens);
 	}
 }

@@ -7,14 +7,14 @@ public static class RefreshTokenMatchAssertions
 {
 	extension(SessionToken response)
 	{
-		public void ShouldSatisfy(RefreshToken refreshToken, IssueRefreshTokenCommand command)
+		public void ShouldSatisfy(IssueRefreshTokenCommand command, RefreshToken refreshToken)
 		{
-			response.ShouldSatisfy(p => p.Matches(refreshToken, command));
+			response.ShouldSatisfy(p => p.Matches(command, refreshToken));
 		}
 
-		public void ShouldSatisfy(RefreshToken refreshToken, RotateRefreshTokenCommand command)
+		public void ShouldSatisfy(RotateRefreshTokenCommand command, RefreshToken refreshToken)
 		{
-			response.ShouldSatisfy(p => p.Matches(refreshToken, command));
+			response.ShouldSatisfy(p => p.Matches(command, refreshToken));
 		}
 	}
 

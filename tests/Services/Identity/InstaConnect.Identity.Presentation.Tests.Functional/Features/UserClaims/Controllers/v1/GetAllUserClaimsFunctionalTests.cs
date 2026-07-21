@@ -20,8 +20,8 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserRangeAsync(Users, CancellationToken);
-		await ServiceScope.AddUserClaimRangeAsync(UserClaims, CancellationToken);
+		await ServiceScope.AddRangeAsync(Users, CancellationToken);
+		await ServiceScope.AddClaimRangeAsync(UserClaims, CancellationToken);
 	}
 
 	[Fact]
@@ -236,7 +236,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 	public async Task GetAllAsync_ShouldHaveNotFoundStatusCode_WhenUserNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Act
 		var response = await Client.GetAllStatusCodeAsync(_request, CancellationToken);
@@ -249,7 +249,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 	public async Task GetAllAsync_ShouldHaveUserNotFoundProblemDetails_WhenUserNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Act
 		var response = await Client.GetAllProblemDetailsAsync(_request, CancellationToken);
@@ -337,7 +337,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 		var response = await Client.GetAllAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, UserClaims, _request);
+		response.ShouldSatisfy(_request, User, UserClaims);
 	}
 
 	[Theory]
@@ -352,7 +352,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, UserClaims, request);
+		response.ShouldSatisfy(request, User, UserClaims);
 	}
 
 	[Theory]
@@ -368,7 +368,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, UserClaims, request);
+		response.ShouldSatisfy(request, User, UserClaims);
 	}
 
 	[Theory]
@@ -384,7 +384,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, UserClaims, request, termTransformer);
+		response.ShouldSatisfy(request, User, UserClaims, termTransformer);
 	}
 
 	[Theory]
@@ -399,6 +399,6 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, UserClaims, request, termTransformer);
+		response.ShouldSatisfy(request, User, UserClaims, termTransformer);
 	}
 }
