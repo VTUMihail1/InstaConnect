@@ -32,7 +32,7 @@ public class AddPostCommentLikeCommandRequestValidatorUnitTests : BasePostCommen
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForId(messageTransformer, request);
+		result.ShouldHaveValidationErrorForId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -50,7 +50,7 @@ public class AddPostCommentLikeCommandRequestValidatorUnitTests : BasePostCommen
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForCommentId(messageTransformer, request);
+		result.ShouldHaveValidationErrorForCommentId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -68,7 +68,7 @@ public class AddPostCommentLikeCommandRequestValidatorUnitTests : BasePostCommen
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForUserId(messageTransformer, request);
+		result.ShouldHaveValidationErrorForUserId(request, messageTransformer);
 	}
 
 	[Fact]

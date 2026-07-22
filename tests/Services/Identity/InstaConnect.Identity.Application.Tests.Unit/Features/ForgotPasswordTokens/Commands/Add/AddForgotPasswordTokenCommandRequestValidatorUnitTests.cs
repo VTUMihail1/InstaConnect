@@ -32,7 +32,7 @@ public class AddForgotPasswordTokenCommandRequestValidatorUnitTests : BaseForgot
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForName(messageTransformer, request);
+		result.ShouldHaveValidationErrorForName(request, messageTransformer);
 	}
 
 	[Fact]

@@ -27,7 +27,7 @@ public class IssueRefreshTokenIntegrationTests : BaseRefreshTokenDomainCommandIn
 	protected override async Task OnInitializeAsync()
 	{
 		await ServiceScope.AddAsync(User, CancellationToken);
-		await ServiceScope.AddClaimRangeAsync(User.UserClaims, CancellationToken);
+		await ServiceScope.AddRangeAsync(User.UserClaims, CancellationToken);
 	}
 
 	[Fact]
@@ -67,7 +67,7 @@ public class IssueRefreshTokenIntegrationTests : BaseRefreshTokenDomainCommandIn
 	{
 		// Act
 		var response = await Service.IssueAsync(_command, CancellationToken);
-		var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(response.Id, CancellationToken);
+		var refreshToken = await ServiceScope.GetByIdAsync(response.Id, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(_command, refreshToken);
@@ -83,7 +83,7 @@ public class IssueRefreshTokenIntegrationTests : BaseRefreshTokenDomainCommandIn
 
 		// Act
 		var response = await Service.IssueAsync(command, CancellationToken);
-		var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(response.Id, CancellationToken);
+		var refreshToken = await ServiceScope.GetByIdAsync(response.Id, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(command, refreshToken);
@@ -94,7 +94,7 @@ public class IssueRefreshTokenIntegrationTests : BaseRefreshTokenDomainCommandIn
 	{
 		// Act
 		var response = await Service.IssueAsync(_command, CancellationToken);
-		var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(response.Id, CancellationToken);
+		var refreshToken = await ServiceScope.GetByIdAsync(response.Id, CancellationToken);
 
 		// Assert
 		refreshToken.ShouldSatisfy(_command, PasswordHasher);
@@ -110,7 +110,7 @@ public class IssueRefreshTokenIntegrationTests : BaseRefreshTokenDomainCommandIn
 
 		// Act
 		var response = await Service.IssueAsync(command, CancellationToken);
-		var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(response.Id, CancellationToken);
+		var refreshToken = await ServiceScope.GetByIdAsync(response.Id, CancellationToken);
 
 		// Assert
 		refreshToken.ShouldSatisfy(_command, PasswordHasher);

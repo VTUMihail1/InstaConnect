@@ -26,8 +26,8 @@ public class AddFollowIntegrationTests : BaseFollowDomainCommandIntegrationTest
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(Follower, CancellationToken);
-		await ServiceScope.AddUserAsync(Following, CancellationToken);
+		await ServiceScope.AddAsync(Follower, CancellationToken);
+		await ServiceScope.AddAsync(Following, CancellationToken);
 
 		await base.OnInitializeAsync();
 	}
@@ -36,7 +36,7 @@ public class AddFollowIntegrationTests : BaseFollowDomainCommandIntegrationTest
 	public async Task AddAsync_ShouldThrowUserNotFoundException_WhenFollowerIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(Follower, CancellationToken);
+		await ServiceScope.DeleteAsync(Follower, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowFollowerNotFoundExceptionAsync(_command, CancellationToken);
@@ -46,7 +46,7 @@ public class AddFollowIntegrationTests : BaseFollowDomainCommandIntegrationTest
 	public async Task AddAsync_ShouldThrowUserNotFoundException_WhenFollowingIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(Following, CancellationToken);
+		await ServiceScope.DeleteAsync(Following, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowFollowingNotFoundExceptionAsync(_command, CancellationToken);
@@ -56,7 +56,7 @@ public class AddFollowIntegrationTests : BaseFollowDomainCommandIntegrationTest
 	public async Task AddAsync_ShouldThrowFollowAlreadyExistsException_WhenFollowAlreadyExists()
 	{
 		// Arrange
-		await ServiceScope.AddFollowAsync(Follow, CancellationToken);
+		await ServiceScope.AddAsync(Follow, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowFollowAlreadyExistsExceptionAsync(_command, CancellationToken);
@@ -68,7 +68,7 @@ public class AddFollowIntegrationTests : BaseFollowDomainCommandIntegrationTest
 		IStringTransformer transformer)
 	{
 		// Arrange
-		await ServiceScope.AddFollowAsync(Follow, CancellationToken);
+		await ServiceScope.AddAsync(Follow, CancellationToken);
 		var command = _commandBuilder.WithFollowerId(transformer).Build();
 
 		// Assert
@@ -81,7 +81,7 @@ public class AddFollowIntegrationTests : BaseFollowDomainCommandIntegrationTest
 		IStringTransformer transformer)
 	{
 		// Arrange
-		await ServiceScope.AddFollowAsync(Follow, CancellationToken);
+		await ServiceScope.AddAsync(Follow, CancellationToken);
 		var command = _commandBuilder.WithFollowingId(transformer).Build();
 
 		// Assert
@@ -93,7 +93,7 @@ public class AddFollowIntegrationTests : BaseFollowDomainCommandIntegrationTest
 	{
 		// Act
 		var response = await Service.AddAsync(_command, CancellationToken);
-		var follow = await ServiceScope.GetFollowByIdAsync(response, CancellationToken);
+		var follow = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(follow, _command);
@@ -109,7 +109,7 @@ public class AddFollowIntegrationTests : BaseFollowDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.AddAsync(command, CancellationToken);
-		var follow = await ServiceScope.GetFollowByIdAsync(response, CancellationToken);
+		var follow = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(follow, command);
@@ -125,7 +125,7 @@ public class AddFollowIntegrationTests : BaseFollowDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.AddAsync(command, CancellationToken);
-		var follow = await ServiceScope.GetFollowByIdAsync(response, CancellationToken);
+		var follow = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(follow, command);
@@ -136,7 +136,7 @@ public class AddFollowIntegrationTests : BaseFollowDomainCommandIntegrationTest
 	{
 		// Act
 		var response = await Service.AddAsync(_command, CancellationToken);
-		var follow = await ServiceScope.GetFollowByIdAsync(response, CancellationToken);
+		var follow = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		follow.ShouldSatisfy(_command);
@@ -152,7 +152,7 @@ public class AddFollowIntegrationTests : BaseFollowDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.AddAsync(command, CancellationToken);
-		var follow = await ServiceScope.GetFollowByIdAsync(response, CancellationToken);
+		var follow = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		follow.ShouldSatisfy(command);
@@ -168,7 +168,7 @@ public class AddFollowIntegrationTests : BaseFollowDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.AddAsync(command, CancellationToken);
-		var follow = await ServiceScope.GetFollowByIdAsync(response, CancellationToken);
+		var follow = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		follow.ShouldSatisfy(command);
@@ -179,10 +179,11 @@ public class AddFollowIntegrationTests : BaseFollowDomainCommandIntegrationTest
 	{
 		// Act
 		var response = await Service.AddAsync(_command, CancellationToken);
-		var follow = await ServiceScope.GetFollowByIdAsync(response, CancellationToken);
+		var follow = await ServiceScope.GetByIdAsync(response, CancellationToken);
+		var eventRequest = await EventHarness.PublishedAddedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedFollowAddedAsync(_command, follow, CancellationToken);
+		eventRequest.ShouldSatisfy(_command, follow);
 	}
 
 	[Theory]
@@ -195,10 +196,11 @@ public class AddFollowIntegrationTests : BaseFollowDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.AddAsync(command, CancellationToken);
-		var follow = await ServiceScope.GetFollowByIdAsync(response, CancellationToken);
+		var follow = await ServiceScope.GetByIdAsync(response, CancellationToken);
+		var eventRequest = await EventHarness.PublishedAddedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedFollowAddedAsync(command, follow, CancellationToken);
+		eventRequest.ShouldSatisfy(command, follow);
 	}
 
 	[Theory]
@@ -211,10 +213,11 @@ public class AddFollowIntegrationTests : BaseFollowDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.AddAsync(command, CancellationToken);
-		var follow = await ServiceScope.GetFollowByIdAsync(response, CancellationToken);
+		var follow = await ServiceScope.GetByIdAsync(response, CancellationToken);
+		var eventRequest = await EventHarness.PublishedAddedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedFollowAddedAsync(command, follow, CancellationToken);
+		eventRequest.ShouldSatisfy(command, follow);
 	}
 
 	[Fact]
@@ -222,7 +225,7 @@ public class AddFollowIntegrationTests : BaseFollowDomainCommandIntegrationTest
 	{
 		// Act
 		var response = await Service.AddAsync(_command, CancellationToken);
-		var follow = await ServiceScope.GetFollowByIdAsync(response, CancellationToken);
+		var follow = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var notification = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert
@@ -239,7 +242,7 @@ public class AddFollowIntegrationTests : BaseFollowDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.AddAsync(command, CancellationToken);
-		var follow = await ServiceScope.GetFollowByIdAsync(response, CancellationToken);
+		var follow = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var notification = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert
@@ -256,7 +259,7 @@ public class AddFollowIntegrationTests : BaseFollowDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.AddAsync(command, CancellationToken);
-		var follow = await ServiceScope.GetFollowByIdAsync(response, CancellationToken);
+		var follow = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var notification = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert

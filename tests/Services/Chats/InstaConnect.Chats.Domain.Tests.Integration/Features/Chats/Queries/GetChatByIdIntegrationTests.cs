@@ -25,16 +25,16 @@ public class GetChatByIdIntegrationTests : BaseChatDomainQueryIntegrationTest
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(ParticipantOne, CancellationToken);
-		await ServiceScope.AddUserAsync(ParticipantTwo, CancellationToken);
-		await ServiceScope.AddChatAsync(Chat, CancellationToken);
+		await ServiceScope.AddAsync(ParticipantOne, CancellationToken);
+		await ServiceScope.AddAsync(ParticipantTwo, CancellationToken);
+		await ServiceScope.AddAsync(Chat, CancellationToken);
 	}
 
 	[Fact]
 	public async Task GetByIdAsync_ShouldThrowChatNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteChatAsync(Chat, CancellationToken);
+		await ServiceScope.DeleteAsync(Chat, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowChatNotFoundExceptionAsync(_query, CancellationToken);

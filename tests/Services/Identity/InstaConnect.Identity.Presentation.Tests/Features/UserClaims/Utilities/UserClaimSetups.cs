@@ -6,20 +6,20 @@ public static class UserClaimSetups
 {
 	extension(IServiceScope serviceScope)
 	{
-		public async Task<UserClaim?> GetClaimByIdAsync(
+		public async Task<UserClaim?> GetByIdAsync(
 		UserClaimIdApiResponse id,
 		CancellationToken cancellationToken)
 		{
-			return await serviceScope.GetClaimByIdAsync(
+			return await serviceScope.GetByIdAsync(
 				new UserClaimId(new(id.Id), id.Claim),
 				cancellationToken);
 		}
 
-		public async Task<UserClaim?> GetClaimByIdAsync(
+		public async Task<UserClaim?> GetByIdAsync(
 		AddUserClaimApiResponse response,
 		CancellationToken cancellationToken)
 		{
-			return await serviceScope.GetClaimByIdAsync(
+			return await serviceScope.GetByIdAsync(
 				response.Response,
 				cancellationToken);
 		}

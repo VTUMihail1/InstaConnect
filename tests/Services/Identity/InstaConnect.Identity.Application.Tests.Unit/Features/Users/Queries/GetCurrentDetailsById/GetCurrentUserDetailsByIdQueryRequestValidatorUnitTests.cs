@@ -32,7 +32,7 @@ public class GetCurrentUserDetailsByIdQueryRequestValidatorUnitTests : BaseUserA
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForCurrentId(messageTransformer, request);
+		result.ShouldHaveValidationErrorForCurrentId(request, messageTransformer);
 	}
 
 	[Fact]

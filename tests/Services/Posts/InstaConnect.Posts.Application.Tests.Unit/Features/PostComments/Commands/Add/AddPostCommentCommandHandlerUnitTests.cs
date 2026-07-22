@@ -26,7 +26,7 @@ public class AddPostCommentCommandHandlerUnitTests : BasePostCommentApplicationC
 		var response = await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostComment, _request);
+		response.ShouldSatisfy(_request, PostComment);
 	}
 
 	[Fact]

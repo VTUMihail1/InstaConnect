@@ -267,14 +267,14 @@ public static class FollowEquals
 		TRequest request)
 		where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
-			return response.MatchesCollectionResponse(follows.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, follows.Count(matchesFilter)) &&
 				   response.Following == null &&
 				   response.Follower.MatchesFull(follower) &&
-				   response.Follows.MatchesCollection(follows,
+				   response.Follows.MatchesCollection(request,
+														follows,
 														response => new(new(response.FollowerId), new(response.FollowingId)),
 														follow => follow.Id,
 														matches,
-														request,
 														matchesFilter);
 		}
 
@@ -287,13 +287,13 @@ public static class FollowEquals
 			ISortEnumTermTransformer<Follow> termTransformer)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
-			return response.MatchesCollectionResponse(follows.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, follows.Count(matchesFilter)) &&
 				   response.Following == null &&
 				   response.Follower.MatchesFull(follower) &&
-				   response.Follows.MatchesSortedCollection(follows,
+				   response.Follows.MatchesSortedCollection(request,
+															  follows,
 															  matches,
 															  termTransformer,
-															  request,
 															  matchesFilter);
 		}
 
@@ -305,14 +305,14 @@ public static class FollowEquals
 			TRequest request)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
-			return response.MatchesCollectionResponse(follows.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, follows.Count(matchesFilter)) &&
 				   response.Following.MatchesFull(following) &&
 				   response.Follower == null &&
-				   response.Follows.MatchesCollection(follows,
+				   response.Follows.MatchesCollection(request,
+														follows,
 														response => new(new(response.FollowerId), new(response.FollowingId)),
 														follow => follow.Id,
 														matches,
-														request,
 														matchesFilter);
 		}
 
@@ -325,13 +325,13 @@ public static class FollowEquals
 			ISortEnumTermTransformer<Follow> termTransformer)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
-			return response.MatchesCollectionResponse(follows.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, follows.Count(matchesFilter)) &&
 				   response.Following.MatchesFull(following) &&
 				   response.Follower == null &&
-				   response.Follows.MatchesSortedCollection(follows,
+				   response.Follows.MatchesSortedCollection(request,
+															  follows,
 															  matches,
 															  termTransformer,
-															  request,
 															  matchesFilter);
 		}
 	}

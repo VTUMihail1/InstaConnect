@@ -55,7 +55,7 @@ public class AddEmailConfirmationTokenIntegrationTests : BaseEmailConfirmationTo
 	{
 		// Act
 		var response = await Service.AddAsync(_command, CancellationToken);
-		var emailConfirmationToken = await ServiceScope.GetEmailConfirmationTokenByIdAsync(response, CancellationToken);
+		var emailConfirmationToken = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(_command, emailConfirmationToken);
@@ -71,7 +71,7 @@ public class AddEmailConfirmationTokenIntegrationTests : BaseEmailConfirmationTo
 
 		// Act
 		var response = await Service.AddAsync(command, CancellationToken);
-		var emailConfirmationToken = await ServiceScope.GetEmailConfirmationTokenByIdAsync(response, CancellationToken);
+		var emailConfirmationToken = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(_command, emailConfirmationToken);

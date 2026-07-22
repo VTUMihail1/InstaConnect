@@ -333,15 +333,15 @@ public static class ChatMessageEquals
 		public bool MatchesWithoutSender<TRequest>(Func<ChatMessageApiResponse, ChatMessage, bool> matches, Func<ChatMessage, bool> matchesFilter, Chat chat, ICollection<ChatMessage> chatMessages, TRequest request)
 		where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
-			return response.MatchesCollectionResponse(chatMessages.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, chatMessages.Count(matchesFilter)) &&
 				   response.Sender == null &&
 				   response.Chat.MatchesFull(chat, request) &&
 				   response.ChatMessages.MatchesCollection(
+					   request,
 					   chatMessages,
 					   response => new(new(new(response.ParticipantOneId), new(response.ParticipantTwoId)), response.MessageId),
 					   chatMessage => chatMessage.Id,
 					   matches,
-					   request,
 					   matchesFilter
 				   );
 		}
@@ -349,14 +349,14 @@ public static class ChatMessageEquals
 		public bool MatchesWithoutSender<TRequest>(Func<ChatMessageApiResponse, ChatMessage, bool> matches, Func<ChatMessage, bool> matchesFilter, Chat chat, ICollection<ChatMessage> chatMessages, TRequest request, ISortEnumTermTransformer<ChatMessage> termTransformer)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
-			return response.MatchesCollectionResponse(chatMessages.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, chatMessages.Count(matchesFilter)) &&
 				   response.Sender == null &&
 				   response.Chat.MatchesFull(chat, request) &&
 				   response.ChatMessages.MatchesSortedCollection(
+					   request,
 					   chatMessages,
 					   matches,
 					   termTransformer,
-					   request,
 					   matchesFilter
 				   );
 		}
@@ -364,15 +364,15 @@ public static class ChatMessageEquals
 		public bool MatchesWithoutChat<TRequest>(Func<ChatMessageApiResponse, ChatMessage, bool> matches, Func<ChatMessage, bool> matchesFilter, User user, ICollection<ChatMessage> chatMessages, TRequest request)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
-			return response.MatchesCollectionResponse(chatMessages.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, chatMessages.Count(matchesFilter)) &&
 				   response.Sender.MatchesFull(user) &&
 				   response.Chat == null &&
 				   response.ChatMessages.MatchesCollection(
+					   request,
 					   chatMessages,
 					   response => new(new(new(response.ParticipantOneId), new(response.ParticipantTwoId)), response.MessageId),
 					   chatMessage => chatMessage.Id,
 					   matches,
-					   request,
 					   matchesFilter
 				   );
 		}
@@ -380,29 +380,29 @@ public static class ChatMessageEquals
 		public bool MatchesWithoutChat<TRequest>(Func<ChatMessageApiResponse, ChatMessage, bool> matches, Func<ChatMessage, bool> matchesFilter, User user, ICollection<ChatMessage> chatMessages, TRequest request, ISortEnumTermTransformer<ChatMessage> termTransformer)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
-			return response.MatchesCollectionResponse(chatMessages.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, chatMessages.Count(matchesFilter)) &&
 				   response.Sender.MatchesFull(user) &&
 				   response.Chat == null &&
 				   response.ChatMessages.MatchesSortedCollection(
+					   request,
 					   chatMessages,
 					   matches,
 					   termTransformer,
-					   request,
 					   matchesFilter
 				   );
 		}
 		public bool MatchesWithoutSenderInverted<TRequest>(Func<ChatMessageApiResponse, ChatMessage, bool> matches, Func<ChatMessage, bool> matchesFilter, Chat chat, ICollection<ChatMessage> chatMessages, TRequest request)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
-			return response.MatchesCollectionResponse(chatMessages.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, chatMessages.Count(matchesFilter)) &&
 				   response.Sender == null &&
 				   response.Chat.MatchesFullInverted(chat, request) &&
 				   response.ChatMessages.MatchesCollection(
+					   request,
 					   chatMessages,
 					   response => new(new(new(response.ParticipantTwoId), new(response.ParticipantOneId)), response.MessageId),
 					   chatMessage => chatMessage.Id,
 					   matches,
-					   request,
 					   matchesFilter
 				   );
 		}
@@ -410,14 +410,14 @@ public static class ChatMessageEquals
 		public bool MatchesWithoutSenderInverted<TRequest>(Func<ChatMessageApiResponse, ChatMessage, bool> matches, Func<ChatMessage, bool> matchesFilter, Chat chat, ICollection<ChatMessage> chatMessages, TRequest request, ISortEnumTermTransformer<ChatMessage> termTransformer)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
-			return response.MatchesCollectionResponse(chatMessages.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, chatMessages.Count(matchesFilter)) &&
 				   response.Sender == null &&
 				   response.Chat.MatchesFullInverted(chat, request) &&
 				   response.ChatMessages.MatchesSortedCollection(
+					   request,
 					   chatMessages,
 					   matches,
 					   termTransformer,
-					   request,
 					   matchesFilter
 				   );
 		}
@@ -425,15 +425,15 @@ public static class ChatMessageEquals
 		public bool MatchesWithoutChatInverted<TRequest>(Func<ChatMessageApiResponse, ChatMessage, bool> matches, Func<ChatMessage, bool> matchesFilter, User user, ICollection<ChatMessage> chatMessages, TRequest request)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
-			return response.MatchesCollectionResponse(chatMessages.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, chatMessages.Count(matchesFilter)) &&
 				   response.Sender.MatchesFull(user) &&
 				   response.Chat == null &&
 				   response.ChatMessages.MatchesCollection(
+					   request,
 					   chatMessages,
 					   response => new(new(new(response.ParticipantTwoId), new(response.ParticipantOneId)), response.MessageId),
 					   chatMessage => chatMessage.Id,
 					   matches,
-					   request,
 					   matchesFilter
 				   );
 		}
@@ -441,14 +441,14 @@ public static class ChatMessageEquals
 		public bool MatchesWithoutChatInverted<TRequest>(Func<ChatMessageApiResponse, ChatMessage, bool> matches, Func<ChatMessage, bool> matchesFilter, User user, ICollection<ChatMessage> chatMessages, TRequest request, ISortEnumTermTransformer<ChatMessage> termTransformer)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
-			return response.MatchesCollectionResponse(chatMessages.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, chatMessages.Count(matchesFilter)) &&
 				   response.Sender.MatchesFull(user) &&
 				   response.Chat == null &&
 				   response.ChatMessages.MatchesSortedCollection(
+					   request,
 					   chatMessages,
 					   matches,
 					   termTransformer,
-					   request,
 					   matchesFilter
 				   );
 		}

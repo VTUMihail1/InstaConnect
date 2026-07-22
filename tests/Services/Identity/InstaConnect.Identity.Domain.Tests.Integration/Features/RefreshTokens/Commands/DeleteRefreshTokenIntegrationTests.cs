@@ -27,7 +27,7 @@ public class DeleteRefreshTokenIntegrationTests : BaseRefreshTokenDomainCommandI
 	protected override async Task OnInitializeAsync()
 	{
 		await ServiceScope.AddAsync(User, CancellationToken);
-		await ServiceScope.AddRefreshTokenAsync(RefreshToken, CancellationToken);
+		await ServiceScope.AddAsync(RefreshToken, CancellationToken);
 	}
 
 	[Fact]
@@ -44,7 +44,7 @@ public class DeleteRefreshTokenIntegrationTests : BaseRefreshTokenDomainCommandI
 	public async Task DeleteAsync_ShouldThrowRefreshTokenNotFoundException_WhenRefreshTokenNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteRefreshTokenAsync(RefreshToken, CancellationToken);
+		await ServiceScope.DeleteAsync(RefreshToken, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowRefreshTokenNotFoundExceptionAsync(_command, CancellationToken);
@@ -55,7 +55,7 @@ public class DeleteRefreshTokenIntegrationTests : BaseRefreshTokenDomainCommandI
 	{
 		// Act
 		await Service.DeleteAsync(_command, CancellationToken);
-		var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(RefreshToken.Id, CancellationToken);
+		var refreshToken = await ServiceScope.GetByIdAsync(RefreshToken.Id, CancellationToken);
 
 		// Assert
 		refreshToken.ShouldBeNull();
@@ -71,7 +71,7 @@ public class DeleteRefreshTokenIntegrationTests : BaseRefreshTokenDomainCommandI
 
 		// Act
 		await Service.DeleteAsync(command, CancellationToken);
-		var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(RefreshToken.Id, CancellationToken);
+		var refreshToken = await ServiceScope.GetByIdAsync(RefreshToken.Id, CancellationToken);
 
 		// Assert
 		refreshToken.ShouldBeNull();
@@ -87,7 +87,7 @@ public class DeleteRefreshTokenIntegrationTests : BaseRefreshTokenDomainCommandI
 
 		// Act
 		await Service.DeleteAsync(command, CancellationToken);
-		var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(RefreshToken.Id, CancellationToken);
+		var refreshToken = await ServiceScope.GetByIdAsync(RefreshToken.Id, CancellationToken);
 
 		// Assert
 		refreshToken.ShouldBeNull();

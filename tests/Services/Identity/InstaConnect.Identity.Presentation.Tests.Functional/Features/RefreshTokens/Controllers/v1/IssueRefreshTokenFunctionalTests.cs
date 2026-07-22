@@ -19,7 +19,7 @@ public class IssueRefreshTokenFunctionalTests : BaseRefreshTokenPresentationComm
 	protected override async Task OnInitializeAsync()
 	{
 		await ServiceScope.AddAsync(User, CancellationToken);
-		await ServiceScope.AddClaimRangeAsync(User.UserClaims, CancellationToken);
+		await ServiceScope.AddRangeAsync(User.UserClaims, CancellationToken);
 	}
 
 	[Theory]
@@ -51,7 +51,7 @@ public class IssueRefreshTokenFunctionalTests : BaseRefreshTokenPresentationComm
 		var response = await Client.IssueProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForName(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForName(request, messageTransformer);
 	}
 
 	[Theory]
@@ -87,7 +87,7 @@ public class IssueRefreshTokenFunctionalTests : BaseRefreshTokenPresentationComm
 		var response = await Client.IssueProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForPassword(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForPassword(request, messageTransformer);
 	}
 
 	[Fact]

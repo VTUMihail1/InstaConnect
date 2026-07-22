@@ -36,7 +36,7 @@ public class GetAllPostCommentLikesControllerUnitTests : BasePostCommentLikePres
 		var response = await _controller.GetAllAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostComment, PostCommentLikes, _request);
+		response.ShouldSatisfy(_request, PostComment, PostCommentLikes);
 	}
 
 	[Fact]

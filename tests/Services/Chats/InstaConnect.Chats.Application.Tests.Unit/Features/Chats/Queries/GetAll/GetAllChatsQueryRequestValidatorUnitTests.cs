@@ -32,7 +32,7 @@ public class GetAllChatsQueryRequestValidatorUnitTests : BaseChatApplicationQuer
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForParticipantTwoName(messageTransformer, request);
+		result.ShouldHaveValidationErrorForParticipantTwoName(request, messageTransformer);
 	}
 
 	[Theory]
@@ -50,7 +50,7 @@ public class GetAllChatsQueryRequestValidatorUnitTests : BaseChatApplicationQuer
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForCurrentUserId(messageTransformer, request);
+		result.ShouldHaveValidationErrorForCurrentUserId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -65,7 +65,7 @@ public class GetAllChatsQueryRequestValidatorUnitTests : BaseChatApplicationQuer
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForSortOrder(messageTransformer, request);
+		result.ShouldHaveValidationErrorForSortOrder(request, messageTransformer);
 	}
 
 	[Theory]
@@ -80,7 +80,7 @@ public class GetAllChatsQueryRequestValidatorUnitTests : BaseChatApplicationQuer
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForSortTerm(messageTransformer, request);
+		result.ShouldHaveValidationErrorForSortTerm(request, messageTransformer);
 	}
 
 	[Theory]
@@ -96,7 +96,7 @@ public class GetAllChatsQueryRequestValidatorUnitTests : BaseChatApplicationQuer
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForPage(messageTransformer, request);
+		result.ShouldHaveValidationErrorForPage(request, messageTransformer);
 	}
 
 	[Theory]
@@ -112,7 +112,7 @@ public class GetAllChatsQueryRequestValidatorUnitTests : BaseChatApplicationQuer
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForPageSize(messageTransformer, request);
+		result.ShouldHaveValidationErrorForPageSize(request, messageTransformer);
 	}
 
 	[Theory]

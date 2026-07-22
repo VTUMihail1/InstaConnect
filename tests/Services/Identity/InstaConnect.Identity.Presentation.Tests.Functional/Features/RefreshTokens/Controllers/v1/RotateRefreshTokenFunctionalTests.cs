@@ -19,8 +19,8 @@ public class RotateRefreshTokenFunctionalTests : BaseRefreshTokenPresentationCom
 	protected override async Task OnInitializeAsync()
 	{
 		await ServiceScope.AddAsync(User, CancellationToken);
-		await ServiceScope.AddClaimRangeAsync(User.UserClaims, CancellationToken);
-		await ServiceScope.AddRefreshTokenAsync(RefreshToken, CancellationToken);
+		await ServiceScope.AddRangeAsync(User.UserClaims, CancellationToken);
+		await ServiceScope.AddAsync(RefreshToken, CancellationToken);
 	}
 
 	[Theory]
@@ -57,7 +57,7 @@ public class RotateRefreshTokenFunctionalTests : BaseRefreshTokenPresentationCom
 		var response = await Client.RotateProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -94,7 +94,7 @@ public class RotateRefreshTokenFunctionalTests : BaseRefreshTokenPresentationCom
 		var response = await Client.RotateProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForValue(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForValue(request, messageTransformer);
 	}
 
 	[Fact]
@@ -155,7 +155,7 @@ public class RotateRefreshTokenFunctionalTests : BaseRefreshTokenPresentationCom
 	public async Task RotateAsync_ShouldHaveNotFoundStatusCode_WhenRefreshTokenNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteRefreshTokenAsync(RefreshToken, CancellationToken);
+		await ServiceScope.DeleteAsync(RefreshToken, CancellationToken);
 
 		// Act
 		var response = await Client.RotateStatusCodeAsync(_request, CancellationToken);
@@ -168,7 +168,7 @@ public class RotateRefreshTokenFunctionalTests : BaseRefreshTokenPresentationCom
 	public async Task RotateAsync_ShouldHaveRefreshTokenNotFoundProblemDetails_WhenRefreshTokenNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteRefreshTokenAsync(RefreshToken, CancellationToken);
+		await ServiceScope.DeleteAsync(RefreshToken, CancellationToken);
 
 		// Act
 		var response = await Client.RotateProblemDetailsAsync(_request, CancellationToken);
@@ -182,7 +182,7 @@ public class RotateRefreshTokenFunctionalTests : BaseRefreshTokenPresentationCom
 	{
 		// Arrange
 		var updatedRefreshToken = RefreshTokenBuilder.WithAlreadyExpiresAtUtc().Build();
-		await ServiceScope.UpdateRefreshTokenAsync(updatedRefreshToken, CancellationToken);
+		await ServiceScope.UpdateAsync(updatedRefreshToken, CancellationToken);
 
 		// Act
 		var response = await Client.RotateStatusCodeAsync(_request, CancellationToken);
@@ -196,7 +196,7 @@ public class RotateRefreshTokenFunctionalTests : BaseRefreshTokenPresentationCom
 	{
 		// Arrange
 		var updatedRefreshToken = RefreshTokenBuilder.WithAlreadyExpiresAtUtc().Build();
-		await ServiceScope.UpdateRefreshTokenAsync(updatedRefreshToken, CancellationToken);
+		await ServiceScope.UpdateAsync(updatedRefreshToken, CancellationToken);
 
 		// Act
 		var response = await Client.RotateProblemDetailsAsync(_request, CancellationToken);

@@ -29,7 +29,7 @@ public class AddUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 	public async Task AddAsync_ShouldThrowUserAlreadyExistsException_WhenCommandIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 		var command = _commandBuilder.WithId(User.Id).Build();
 
 		// Assert
@@ -42,7 +42,7 @@ public class AddUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 		IStringTransformer transformer)
 	{
 		// Arrange
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 		var command = _commandBuilder.WithId(User.Id, transformer).Build();
 
 		// Assert
@@ -53,7 +53,7 @@ public class AddUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 	public async Task AddAsync_ShouldThrowUserEmailAlreadyExistsException_WhenCommandIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 		var command = _commandBuilder.WithEmail(User.Email).Build();
 
 		// Assert
@@ -66,7 +66,7 @@ public class AddUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 		IStringTransformer transformer)
 	{
 		// Arrange
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 		var command = _commandBuilder.WithEmail(User.Email, transformer).Build();
 
 		// Assert
@@ -77,7 +77,7 @@ public class AddUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 	public async Task AddAsync_ShouldThrowUserNameAlreadyExistsException_WhenCommandIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 		var command = _commandBuilder.WithName(User.Name).Build();
 
 		// Assert
@@ -90,7 +90,7 @@ public class AddUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 		IStringTransformer transformer)
 	{
 		// Arrange
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 		var command = _commandBuilder.WithName(User.Name, transformer).Build();
 
 		// Assert
@@ -102,7 +102,7 @@ public class AddUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 	{
 		// Act
 		var response = await UserService.AddAsync(_command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(user, _command);
@@ -119,7 +119,7 @@ public class AddUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await UserService.AddAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(user, command);
@@ -130,7 +130,7 @@ public class AddUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 	{
 		// Act
 		var response = await UserService.AddAsync(_command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(_command);
@@ -147,7 +147,7 @@ public class AddUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await UserService.AddAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(command);

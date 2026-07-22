@@ -16,10 +16,10 @@ public class GetChatMessageByIdQueryHandlerIntegrationTests : BaseChatMessageApp
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(ParticipantOne, CancellationToken);
-		await ServiceScope.AddUserAsync(ParticipantTwo, CancellationToken);
-		await ServiceScope.AddChatAsync(Chat, CancellationToken);
-		await ServiceScope.AddChatMessageAsync(ChatMessage, CancellationToken);
+		await ServiceScope.AddAsync(ParticipantOne, CancellationToken);
+		await ServiceScope.AddAsync(ParticipantTwo, CancellationToken);
+		await ServiceScope.AddAsync(Chat, CancellationToken);
+		await ServiceScope.AddAsync(ChatMessage, CancellationToken);
 	}
 
 	[Theory]
@@ -35,7 +35,7 @@ public class GetChatMessageByIdQueryHandlerIntegrationTests : BaseChatMessageApp
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForParticipantTwoIdAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -51,7 +51,7 @@ public class GetChatMessageByIdQueryHandlerIntegrationTests : BaseChatMessageApp
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForMessageIdAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -67,14 +67,14 @@ public class GetChatMessageByIdQueryHandlerIntegrationTests : BaseChatMessageApp
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForCurrentUserIdAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Fact]
 	public async Task SendAsync_ShouldThrowChatNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteChatAsync(Chat, CancellationToken);
+		await ServiceScope.DeleteAsync(Chat, CancellationToken);
 
 		// Assert
 		await Sender.ShouldThrowChatNotFoundExceptionAsync(_request, CancellationToken);
@@ -84,7 +84,7 @@ public class GetChatMessageByIdQueryHandlerIntegrationTests : BaseChatMessageApp
 	public async Task SendAsync_ShouldThrowChatMessageNotFoundException_WhenMessageIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteChatMessageAsync(ChatMessage, CancellationToken);
+		await ServiceScope.DeleteAsync(ChatMessage, CancellationToken);
 
 		// Assert
 		await Sender.ShouldThrowChatMessageNotFoundExceptionAsync(_request, CancellationToken);

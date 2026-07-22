@@ -32,7 +32,7 @@ public class IssueRefreshTokenCommandRequestValidatorUnitTests : BaseRefreshToke
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForName(messageTransformer, request);
+		result.ShouldHaveValidationErrorForName(request, messageTransformer);
 	}
 
 	[Theory]
@@ -50,7 +50,7 @@ public class IssueRefreshTokenCommandRequestValidatorUnitTests : BaseRefreshToke
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForPassword(messageTransformer, request);
+		result.ShouldHaveValidationErrorForPassword(request, messageTransformer);
 	}
 
 	[Fact]

@@ -27,16 +27,16 @@ public class GetPostLikeByIdIntegrationTests : BasePostLikeDomainQueryIntegratio
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
-		await ServiceScope.AddPostAsync(Post, CancellationToken);
-		await ServiceScope.AddPostLikeAsync(PostLike, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(Post, CancellationToken);
+		await ServiceScope.AddAsync(PostLike, CancellationToken);
 	}
 
 	[Fact]
 	public async Task GetByIdAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostAsync(Post, CancellationToken);
+		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowPostNotFoundExceptionAsync(_query, CancellationToken);
@@ -46,7 +46,7 @@ public class GetPostLikeByIdIntegrationTests : BasePostLikeDomainQueryIntegratio
 	public async Task GetByIdAsync_ShouldThrowPostLikeNotFoundException_WhenUserIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostLikeAsync(PostLike, CancellationToken);
+		await ServiceScope.DeleteAsync(PostLike, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowPostLikeNotFoundExceptionAsync(_query, CancellationToken);
@@ -59,7 +59,7 @@ public class GetPostLikeByIdIntegrationTests : BasePostLikeDomainQueryIntegratio
 		var response = await Service.GetByIdAsync(_query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostLike, _query);
+		response.ShouldSatisfy(_query, PostLike);
 	}
 
 	[Theory]
@@ -74,7 +74,7 @@ public class GetPostLikeByIdIntegrationTests : BasePostLikeDomainQueryIntegratio
 		var response = await Service.GetByIdAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostLike, query);
+		response.ShouldSatisfy(query, PostLike);
 	}
 
 	[Theory]
@@ -89,7 +89,7 @@ public class GetPostLikeByIdIntegrationTests : BasePostLikeDomainQueryIntegratio
 		var response = await Service.GetByIdAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostLike, query);
+		response.ShouldSatisfy(query, PostLike);
 	}
 
 	[Theory]
@@ -106,6 +106,6 @@ public class GetPostLikeByIdIntegrationTests : BasePostLikeDomainQueryIntegratio
 		var response = await Service.GetByIdAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostLike, query);
+		response.ShouldSatisfy(query, PostLike);
 	}
 }

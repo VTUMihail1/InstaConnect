@@ -5,29 +5,29 @@ public static class ForgotPasswordTokenValidationAssertions
 	extension(TestValidationResult<VerifyForgotPasswordTokenCommandRequest> result)
 	{
 		public void ShouldHaveValidationErrorForId(
-			IStringMessageTransformer messageTransformer,
-			VerifyForgotPasswordTokenCommandRequest request)
+			VerifyForgotPasswordTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.Id, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForValue(
-			IStringMessageTransformer messageTransformer,
-			VerifyForgotPasswordTokenCommandRequest request)
+			VerifyForgotPasswordTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.Value, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForPassword(
-			IStringMessageTransformer messageTransformer,
-			VerifyForgotPasswordTokenCommandRequest request)
+			VerifyForgotPasswordTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.Password, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForConfirmPassword(
-			IStringMessageTransformer messageTransformer,
-			VerifyForgotPasswordTokenCommandRequest request)
+			VerifyForgotPasswordTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.ConfirmPassword, messageTransformer);
 		}
@@ -36,8 +36,8 @@ public static class ForgotPasswordTokenValidationAssertions
 	extension(TestValidationResult<AddForgotPasswordTokenCommandRequest> result)
 	{
 		public void ShouldHaveValidationErrorForName(
-			IStringMessageTransformer messageTransformer,
-			AddForgotPasswordTokenCommandRequest request)
+			AddForgotPasswordTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.Name, messageTransformer);
 		}

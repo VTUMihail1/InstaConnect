@@ -16,7 +16,7 @@ public class AddPostIntegrationTests : BasePostApplicationCommandIntegrationTest
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 	}
 
 	[Theory]
@@ -32,7 +32,7 @@ public class AddPostIntegrationTests : BasePostApplicationCommandIntegrationTest
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForUserIdAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -48,7 +48,7 @@ public class AddPostIntegrationTests : BasePostApplicationCommandIntegrationTest
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForTitleAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -64,14 +64,14 @@ public class AddPostIntegrationTests : BasePostApplicationCommandIntegrationTest
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForContentAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Fact]
 	public async Task SendAsync_ShouldThrowUserNotFoundException_WhenUserIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Assert
 		await Sender.ShouldThrowUserNotFoundExceptionAsync(_request, CancellationToken);
@@ -82,10 +82,10 @@ public class AddPostIntegrationTests : BasePostApplicationCommandIntegrationTest
 	{
 		// Act
 		var response = await Sender.SendAsync(_request, CancellationToken);
-		var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(post, _request);
+		response.ShouldSatisfy(_request, post);
 	}
 
 	[Theory]
@@ -98,10 +98,10 @@ public class AddPostIntegrationTests : BasePostApplicationCommandIntegrationTest
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(post, request);
+		response.ShouldSatisfy(request, post);
 	}
 
 	[Fact]
@@ -109,7 +109,7 @@ public class AddPostIntegrationTests : BasePostApplicationCommandIntegrationTest
 	{
 		// Act
 		var response = await Sender.SendAsync(_request, CancellationToken);
-		var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
 		post.ShouldSatisfy(_request);
@@ -125,7 +125,7 @@ public class AddPostIntegrationTests : BasePostApplicationCommandIntegrationTest
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
 		post.ShouldSatisfy(request);
@@ -136,10 +136,12 @@ public class AddPostIntegrationTests : BasePostApplicationCommandIntegrationTest
 	{
 		// Act
 		var response = await Sender.SendAsync(_request, CancellationToken);
-		var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+
+		var eventRequest = await EventHarness.PublishedAddedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedPostAddedAsync(_request, post, CancellationToken);
+		eventRequest.ShouldSatisfy(_request, post);
 	}
 
 	[Theory]
@@ -152,9 +154,11 @@ public class AddPostIntegrationTests : BasePostApplicationCommandIntegrationTest
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+
+		var eventRequest = await EventHarness.PublishedAddedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedPostAddedAsync(request, post, CancellationToken);
+		eventRequest.ShouldSatisfy(request, post);
 	}
 }

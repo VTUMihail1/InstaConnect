@@ -32,17 +32,17 @@ public class GetAllChatMessagesIntegrationTests : BaseChatMessageDomainQueryInte
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserRangeAsync(ParticipantOnes, CancellationToken);
-		await ServiceScope.AddUserRangeAsync(ParticipantTwos, CancellationToken);
-		await ServiceScope.AddChatRangeAsync(Chats, CancellationToken);
-		await ServiceScope.AddChatMessageRangeAsync(ChatMessages, CancellationToken);
+		await ServiceScope.AddRangeAsync(ParticipantOnes, CancellationToken);
+		await ServiceScope.AddRangeAsync(ParticipantTwos, CancellationToken);
+		await ServiceScope.AddRangeAsync(Chats, CancellationToken);
+		await ServiceScope.AddRangeAsync(ChatMessages, CancellationToken);
 	}
 
 	[Fact]
 	public async Task GetAllAsync_ShouldThrowChatNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteChatAsync(Chat, CancellationToken);
+		await ServiceScope.DeleteAsync(Chat, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowChatNotFoundExceptionAsync(_query, CancellationToken);

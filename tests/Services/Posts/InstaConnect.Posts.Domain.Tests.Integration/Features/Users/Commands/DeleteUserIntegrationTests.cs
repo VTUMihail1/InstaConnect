@@ -24,14 +24,14 @@ public class DeleteUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 	}
 
 	[Fact]
 	public async Task DeleteAsync_ShouldThrowUserNotFoundException_WhenCommandIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Assert
 		await UserService.ShouldThrowUserNotFoundExceptionAsync(_command, CancellationToken);
@@ -42,7 +42,7 @@ public class DeleteUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 	{
 		// Act
 		await UserService.DeleteAsync(_command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ShouldBeNull();
@@ -58,7 +58,7 @@ public class DeleteUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		await UserService.DeleteAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ShouldBeNull();

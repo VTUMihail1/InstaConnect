@@ -32,7 +32,7 @@ public class GetUserByIdQueryRequestValidatorUnitTests : BaseUserApplicationQuer
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForId(messageTransformer, request);
+		result.ShouldHaveValidationErrorForId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -47,7 +47,7 @@ public class GetUserByIdQueryRequestValidatorUnitTests : BaseUserApplicationQuer
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForCurrentId(messageTransformer, request);
+		result.ShouldHaveValidationErrorForCurrentId(request, messageTransformer);
 	}
 
 	[Theory]

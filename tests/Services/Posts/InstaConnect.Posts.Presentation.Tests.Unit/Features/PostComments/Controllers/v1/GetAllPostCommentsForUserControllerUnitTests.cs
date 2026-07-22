@@ -36,7 +36,7 @@ public class GetAllPostCommentsForUserControllerUnitTests : BasePostCommentPrese
 		var response = await _controller.GetAllAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, PostComments, _request);
+		response.ShouldSatisfy(_request, User, PostComments);
 	}
 
 	[Fact]

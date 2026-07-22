@@ -16,9 +16,9 @@ public class GetChatByIdFunctionalTests : BaseChatPresentationQueryFunctionalTes
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(ParticipantOne, CancellationToken);
-		await ServiceScope.AddUserAsync(ParticipantTwo, CancellationToken);
-		await ServiceScope.AddChatAsync(Chat, CancellationToken);
+		await ServiceScope.AddAsync(ParticipantOne, CancellationToken);
+		await ServiceScope.AddAsync(ParticipantTwo, CancellationToken);
+		await ServiceScope.AddAsync(Chat, CancellationToken);
 	}
 
 	[Fact]
@@ -60,7 +60,7 @@ public class GetChatByIdFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var response = await Client.GetByIdProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForParticipantTwoId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForParticipantTwoId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -94,14 +94,14 @@ public class GetChatByIdFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var response = await Client.GetByIdProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForCurrentUserId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForCurrentUserId(request, messageTransformer);
 	}
 
 	[Fact]
 	public async Task GetByIdAsync_ShouldHaveNotFoundStatusCode_WhenIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteChatAsync(Chat, CancellationToken);
+		await ServiceScope.DeleteAsync(Chat, CancellationToken);
 
 		// Act
 		var response = await Client.GetByIdStatusCodeAsync(_request, CancellationToken);
@@ -114,7 +114,7 @@ public class GetChatByIdFunctionalTests : BaseChatPresentationQueryFunctionalTes
 	public async Task GetByIdAsync_ShouldHaveChatNotFoundProblemDetails_WhenIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteChatAsync(Chat, CancellationToken);
+		await ServiceScope.DeleteAsync(Chat, CancellationToken);
 
 		// Act
 		var response = await Client.GetByIdProblemDetailsAsync(_request, CancellationToken);

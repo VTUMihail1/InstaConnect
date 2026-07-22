@@ -19,7 +19,7 @@ public class DeleteCurrentRefreshTokenFunctionalTests : BaseRefreshTokenPresenta
 	protected override async Task OnInitializeAsync()
 	{
 		await ServiceScope.AddAsync(User, CancellationToken);
-		await ServiceScope.AddRefreshTokenAsync(RefreshToken, CancellationToken);
+		await ServiceScope.AddAsync(RefreshToken, CancellationToken);
 	}
 
 	[Theory]
@@ -56,7 +56,7 @@ public class DeleteCurrentRefreshTokenFunctionalTests : BaseRefreshTokenPresenta
 		var response = await Client.DeleteCurrentProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -93,7 +93,7 @@ public class DeleteCurrentRefreshTokenFunctionalTests : BaseRefreshTokenPresenta
 		var response = await Client.DeleteCurrentProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForValue(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForValue(request, messageTransformer);
 	}
 
 	[Fact]
@@ -126,7 +126,7 @@ public class DeleteCurrentRefreshTokenFunctionalTests : BaseRefreshTokenPresenta
 	public async Task DeleteCurrentAsync_ShouldHaveNotFoundStatusCode_WhenRefreshTokenNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteRefreshTokenAsync(RefreshToken, CancellationToken);
+		await ServiceScope.DeleteAsync(RefreshToken, CancellationToken);
 
 		// Act
 		var response = await Client.DeleteCurrentStatusCodeAsync(_request, CancellationToken);
@@ -139,7 +139,7 @@ public class DeleteCurrentRefreshTokenFunctionalTests : BaseRefreshTokenPresenta
 	public async Task DeleteCurrentAsync_ShouldHaveRefreshTokenNotFoundProblemDetails_WhenRefreshTokenNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteRefreshTokenAsync(RefreshToken, CancellationToken);
+		await ServiceScope.DeleteAsync(RefreshToken, CancellationToken);
 
 		// Act
 		var response = await Client.DeleteCurrentProblemDetailsAsync(_request, CancellationToken);
@@ -193,7 +193,7 @@ public class DeleteCurrentRefreshTokenFunctionalTests : BaseRefreshTokenPresenta
 	{
 		// Act
 		await Client.DeleteCurrentAsync(_request, CancellationToken);
-		var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(RefreshToken.Id, CancellationToken);
+		var refreshToken = await ServiceScope.GetByIdAsync(RefreshToken.Id, CancellationToken);
 
 		// Assert
 		refreshToken.ShouldBeNull();
@@ -209,7 +209,7 @@ public class DeleteCurrentRefreshTokenFunctionalTests : BaseRefreshTokenPresenta
 
 		// Act
 		await Client.DeleteCurrentAsync(request, CancellationToken);
-		var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(RefreshToken.Id, CancellationToken);
+		var refreshToken = await ServiceScope.GetByIdAsync(RefreshToken.Id, CancellationToken);
 
 		// Assert
 		refreshToken.ShouldBeNull();
@@ -225,7 +225,7 @@ public class DeleteCurrentRefreshTokenFunctionalTests : BaseRefreshTokenPresenta
 
 		// Act
 		await Client.DeleteCurrentAsync(request, CancellationToken);
-		var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(RefreshToken.Id, CancellationToken);
+		var refreshToken = await ServiceScope.GetByIdAsync(RefreshToken.Id, CancellationToken);
 
 		// Assert
 		refreshToken.ShouldBeNull();

@@ -19,7 +19,7 @@ public class DeleteUserClaimIntegrationTests : BaseUserClaimApplicationCommandIn
 	protected override async Task OnInitializeAsync()
 	{
 		await ServiceScope.AddAsync(User, CancellationToken);
-		await ServiceScope.AddClaimAsync(UserClaim, CancellationToken);
+		await ServiceScope.AddAsync(UserClaim, CancellationToken);
 	}
 
 	[Theory]
@@ -34,7 +34,7 @@ public class DeleteUserClaimIntegrationTests : BaseUserClaimApplicationCommandIn
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Assert
-		await Sender.ShouldThrowInvalidValidationExceptionForIdAsync(messageTransformer, request, CancellationToken);
+		await Sender.ShouldThrowInvalidValidationExceptionForIdAsync(request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -46,7 +46,7 @@ public class DeleteUserClaimIntegrationTests : BaseUserClaimApplicationCommandIn
 		var request = _requestBuilder.WithClaim(transformer).Build();
 
 		// Assert
-		await Sender.ShouldThrowInvalidValidationExceptionForClaimAsync(messageTransformer, request, CancellationToken);
+		await Sender.ShouldThrowInvalidValidationExceptionForClaimAsync(request, messageTransformer, CancellationToken);
 	}
 
 	[Fact]
@@ -63,7 +63,7 @@ public class DeleteUserClaimIntegrationTests : BaseUserClaimApplicationCommandIn
 	public async Task SendAsync_ShouldThrowUserClaimNotFoundException_WhenUserClaimNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteClaimAsync(UserClaim, CancellationToken);
+		await ServiceScope.DeleteAsync(UserClaim, CancellationToken);
 
 		// Assert
 		await Sender.ShouldThrowUserClaimNotFoundExceptionAsync(_request, CancellationToken);
@@ -74,7 +74,7 @@ public class DeleteUserClaimIntegrationTests : BaseUserClaimApplicationCommandIn
 	{
 		// Act
 		await Sender.SendAsync(_request, CancellationToken);
-		var userClaim = await ServiceScope.GetClaimByIdAsync(UserClaim.Id, CancellationToken);
+		var userClaim = await ServiceScope.GetByIdAsync(UserClaim.Id, CancellationToken);
 
 		// Assert
 		userClaim.ShouldBeNull();
@@ -90,7 +90,7 @@ public class DeleteUserClaimIntegrationTests : BaseUserClaimApplicationCommandIn
 
 		// Act
 		await Sender.SendAsync(request, CancellationToken);
-		var userClaim = await ServiceScope.GetClaimByIdAsync(UserClaim.Id, CancellationToken);
+		var userClaim = await ServiceScope.GetByIdAsync(UserClaim.Id, CancellationToken);
 
 		// Assert
 		userClaim.ShouldBeNull();

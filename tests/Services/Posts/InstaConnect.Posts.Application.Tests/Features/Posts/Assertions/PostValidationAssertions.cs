@@ -7,193 +7,193 @@ public static class PostValidationAssertions
 	extension(TestValidationResult<UpdatePostCommandRequest> result)
 	{
 		public void ShouldHaveValidationErrorForId(
-		IStringMessageTransformer messageTransformer,
-		UpdatePostCommandRequest request)
+			UpdatePostCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Id, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.Id, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForContent(
-			IStringMessageTransformer messageTransformer,
-			UpdatePostCommandRequest request)
+			UpdatePostCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Content, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.Content, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForTitle(
-			IStringMessageTransformer messageTransformer,
-			UpdatePostCommandRequest request)
+			UpdatePostCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Title, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.Title, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForUserId(
-			IStringMessageTransformer messageTransformer,
-			UpdatePostCommandRequest request)
+			UpdatePostCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.UserId, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.UserId, messageTransformer);
 		}
 	}
 
 	extension(TestValidationResult<DeletePostCommandRequest> result)
 	{
 		public void ShouldHaveValidationErrorForId(
-		IStringMessageTransformer messageTransformer,
-		DeletePostCommandRequest request)
+			DeletePostCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Id, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.Id, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForUserId(
-			IStringMessageTransformer messageTransformer,
-			DeletePostCommandRequest request)
+			DeletePostCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.UserId, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.UserId, messageTransformer);
 		}
 	}
 
 	extension(TestValidationResult<GetPostByIdQueryRequest> result)
 	{
 		public void ShouldHaveValidationErrorForId(
-		IStringMessageTransformer messageTransformer,
-		GetPostByIdQueryRequest request)
+			GetPostByIdQueryRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Id, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.Id, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForCurrentUserId(
-			IStringMessageTransformer messageTransformer,
-			GetPostByIdQueryRequest request)
+			GetPostByIdQueryRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.CurrentUserId, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.CurrentUserId, messageTransformer);
 		}
 	}
 
 	extension(TestValidationResult<AddPostCommandRequest> result)
 	{
 		public void ShouldHaveValidationErrorForContent(
-		IStringMessageTransformer messageTransformer,
-		AddPostCommandRequest request)
+			AddPostCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Content, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.Content, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForTitle(
-			IStringMessageTransformer messageTransformer,
-			AddPostCommandRequest request)
+			AddPostCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Title, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.Title, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForUserId(
-			IStringMessageTransformer messageTransformer,
-			AddPostCommandRequest request)
+			AddPostCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.UserId, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.UserId, messageTransformer);
 		}
 	}
 
 	extension(TestValidationResult<GetAllPostsForUserQueryRequest> result)
 	{
 		public void ShouldHaveValidationErrorForTitle(
-		IStringMessageTransformer messageTransformer,
-		GetAllPostsForUserQueryRequest request)
+			GetAllPostsForUserQueryRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Title, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.Title, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForUserId(
-			IStringMessageTransformer messageTransformer,
-			GetAllPostsForUserQueryRequest request)
+			GetAllPostsForUserQueryRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.UserId, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.UserId, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForCurrentUserId(
-			IStringMessageTransformer messageTransformer,
-			GetAllPostsForUserQueryRequest request)
+			GetAllPostsForUserQueryRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.CurrentUserId, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.CurrentUserId, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForPage(
-			IIntMessageTransformer messageTransformer,
-			GetAllPostsForUserQueryRequest request)
+			GetAllPostsForUserQueryRequest request,
+			IIntMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Page, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.Page, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForPageSize(
-			IIntMessageTransformer messageTransformer,
-			GetAllPostsForUserQueryRequest request)
+			GetAllPostsForUserQueryRequest request,
+			IIntMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.PageSize, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.PageSize, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForSortOrder(
-			IEnumMessageTransformer<CommonSortOrder> messageTransformer,
-			GetAllPostsForUserQueryRequest request)
+			GetAllPostsForUserQueryRequest request,
+			IEnumMessageTransformer<CommonSortOrder> messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.SortOrder, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.SortOrder, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForSortTerm(
-			IEnumMessageTransformer<PostsForUserSortTerm> messageTransformer,
-			GetAllPostsForUserQueryRequest request)
+			GetAllPostsForUserQueryRequest request,
+			IEnumMessageTransformer<PostsForUserSortTerm> messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.SortTerm, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.SortTerm, messageTransformer);
 		}
 	}
 
 	extension(TestValidationResult<GetAllPostsQueryRequest> result)
 	{
 		public void ShouldHaveValidationErrorForTitle(
-		IStringMessageTransformer messageTransformer,
-		GetAllPostsQueryRequest request)
+			GetAllPostsQueryRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Title, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.Title, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForCurrentUserId(
-			IStringMessageTransformer messageTransformer,
-			GetAllPostsQueryRequest request)
+			GetAllPostsQueryRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.CurrentUserId, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.CurrentUserId, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForUserName(
-			IStringMessageTransformer messageTransformer,
-			GetAllPostsQueryRequest request)
+			GetAllPostsQueryRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.UserName, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.UserName, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForPage(
-			IIntMessageTransformer messageTransformer,
-			GetAllPostsQueryRequest request)
+			GetAllPostsQueryRequest request,
+			IIntMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Page, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.Page, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForPageSize(
-			IIntMessageTransformer messageTransformer,
-			GetAllPostsQueryRequest request)
+			GetAllPostsQueryRequest request,
+			IIntMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.PageSize, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.PageSize, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForSortOrder(
-			IEnumMessageTransformer<CommonSortOrder> messageTransformer,
-			GetAllPostsQueryRequest request)
+			GetAllPostsQueryRequest request,
+			IEnumMessageTransformer<CommonSortOrder> messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.SortOrder, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.SortOrder, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForSortTerm(
-			IEnumMessageTransformer<PostsSortTerm> messageTransformer,
-			GetAllPostsQueryRequest request)
+			GetAllPostsQueryRequest request,
+			IEnumMessageTransformer<PostsSortTerm> messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.SortTerm, messageTransformer, request);
+			result.ShouldHaveValidationErrorForProperty(request, p => p.SortTerm, messageTransformer);
 		}
 	}
 }

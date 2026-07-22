@@ -7,54 +7,54 @@ public static class PostCommentLikeMatchAssertions
 {
 	extension(PostCommentLikeId response)
 	{
-		public void ShouldSatisfy(PostCommentLike postCommentLike, AddPostCommentLikeCommand command)
+		public void ShouldSatisfy(AddPostCommentLikeCommand command, PostCommentLike postCommentLike)
 		{
-			response.ShouldSatisfy(p => p.Matches(postCommentLike, command));
+			response.ShouldSatisfy(p => p.Matches(command, postCommentLike));
 		}
 	}
 
 	extension(PostCommentLikeResponse response)
 	{
-		public void ShouldSatisfy(PostCommentLike postCommentLike, GetPostCommentLikeByIdQuery query)
+		public void ShouldSatisfy(GetPostCommentLikeByIdQuery query, PostCommentLike postCommentLike)
 		{
-			response.ShouldSatisfy(p => p.Matches(postCommentLike, query));
+			response.ShouldSatisfy(p => p.Matches(query, postCommentLike));
 		}
 	}
 
 	extension(PostCommentLikeCollectionResponse response)
 	{
 		public void ShouldSatisfy(
+		GetAllPostCommentLikesQuery query,
 		PostComment postComment,
-		ICollection<PostCommentLike> postCommentLikes,
-		GetAllPostCommentLikesQuery query)
+		ICollection<PostCommentLike> postCommentLikes)
 		{
-			response.ShouldSatisfy(p => p.Matches(postComment, postCommentLikes, query));
+			response.ShouldSatisfy(p => p.Matches(query, postComment, postCommentLikes));
 		}
 
 		public void ShouldSatisfy(
+			GetAllPostCommentLikesQuery query,
 			PostComment postComment,
 			ICollection<PostCommentLike> postCommentLikes,
-			GetAllPostCommentLikesQuery query,
 			ISortEnumTermTransformer<PostCommentLike> termTransformer)
 		{
-			response.ShouldSatisfy(p => p.Matches(postComment, postCommentLikes, query, termTransformer));
+			response.ShouldSatisfy(p => p.Matches(query, postComment, postCommentLikes, termTransformer));
 		}
 
 		public void ShouldSatisfy(
+		GetAllPostCommentLikesForUserQuery query,
 		User user,
-		ICollection<PostCommentLike> postCommentLikes,
-		GetAllPostCommentLikesForUserQuery query)
+		ICollection<PostCommentLike> postCommentLikes)
 		{
-			response.ShouldSatisfy(p => p.Matches(user, postCommentLikes, query));
+			response.ShouldSatisfy(p => p.Matches(query, user, postCommentLikes));
 		}
 
 		public void ShouldSatisfy(
+			GetAllPostCommentLikesForUserQuery query,
 			User user,
 			ICollection<PostCommentLike> postCommentLikes,
-			GetAllPostCommentLikesForUserQuery query,
 			ISortEnumTermTransformer<PostCommentLike> termTransformer)
 		{
-			response.ShouldSatisfy(p => p.Matches(user, postCommentLikes, query, termTransformer));
+			response.ShouldSatisfy(p => p.Matches(query, user, postCommentLikes, termTransformer));
 		}
 	}
 

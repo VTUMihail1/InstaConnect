@@ -16,7 +16,7 @@ public class DeleteUserIntegrationTests : BaseUserApplicationCommandIntegrationT
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 	}
 
 	[Theory]
@@ -31,14 +31,14 @@ public class DeleteUserIntegrationTests : BaseUserApplicationCommandIntegrationT
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Assert
-		await Sender.ShouldThrowInvalidValidationExceptionForIdAsync(messageTransformer, request, CancellationToken);
+		await Sender.ShouldThrowInvalidValidationExceptionForIdAsync(request, messageTransformer, CancellationToken);
 	}
 
 	[Fact]
 	public async Task SendAsync_ShouldThrowUserNotFoundException_WhenRequestIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Assert
 		await Sender.ShouldThrowUserNotFoundExceptionAsync(_request, CancellationToken);
@@ -49,7 +49,7 @@ public class DeleteUserIntegrationTests : BaseUserApplicationCommandIntegrationT
 	{
 		// Act
 		await Sender.SendAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ShouldBeNull();
@@ -65,7 +65,7 @@ public class DeleteUserIntegrationTests : BaseUserApplicationCommandIntegrationT
 
 		// Act
 		await Sender.SendAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ShouldBeNull();

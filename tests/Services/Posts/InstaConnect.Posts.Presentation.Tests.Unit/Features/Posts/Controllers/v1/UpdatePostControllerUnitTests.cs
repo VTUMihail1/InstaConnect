@@ -36,7 +36,7 @@ public class UpdatePostControllerUnitTests : BasePostPresentationCommandUnitTest
 		var response = await _controller.UpdateAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Post, _request);
+		response.ShouldSatisfy(_request, Post);
 	}
 
 	[Fact]

@@ -45,7 +45,7 @@ public class GetAllPostCommentsServiceUnitTests : BasePostCommentDomainQueryUnit
 		var response = await _service.GetAllAsync(_query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Post, PostComments, _query);
+		response.ShouldSatisfy(_query, Post, PostComments);
 	}
 
 	[Fact]

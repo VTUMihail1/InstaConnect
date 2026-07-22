@@ -27,14 +27,14 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 	}
 
 	[Fact]
 	public async Task UpdateAsync_ShouldThrowUserNotFoundException_WhenCommandIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Assert
 		await UserService.ShouldThrowUserNotFoundExceptionAsync(_command, CancellationToken);
@@ -45,7 +45,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 	{
 		// Arrange
 		var user = UserBuilderFactory.Create().Build();
-		await ServiceScope.AddUserAsync(user, CancellationToken);
+		await ServiceScope.AddAsync(user, CancellationToken);
 
 		var command = _commandBuilder.WithEmail(user.Email).Build();
 
@@ -60,7 +60,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 	{
 		// Arrange
 		var user = UserBuilderFactory.Create().Build();
-		await ServiceScope.AddUserAsync(user, CancellationToken);
+		await ServiceScope.AddAsync(user, CancellationToken);
 
 		var command = _commandBuilder.WithEmail(user.Email, transformer).Build();
 
@@ -73,7 +73,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 	{
 		// Arrange
 		var user = UserBuilderFactory.Create().Build();
-		await ServiceScope.AddUserAsync(user, CancellationToken);
+		await ServiceScope.AddAsync(user, CancellationToken);
 
 		var command = _commandBuilder.WithName(user.Name).Build();
 
@@ -88,7 +88,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 	{
 		// Arrange
 		var user = UserBuilderFactory.Create().Build();
-		await ServiceScope.AddUserAsync(user, CancellationToken);
+		await ServiceScope.AddAsync(user, CancellationToken);
 
 		var command = _commandBuilder.WithName(user.Name, transformer).Build();
 
@@ -101,10 +101,10 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 	{
 		// Act
 		var response = await UserService.UpdateAsync(_command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(user, _command);
+		response.ShouldSatisfy(_command, user);
 	}
 
 	[Theory]
@@ -117,10 +117,10 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await UserService.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(user, command);
+		response.ShouldSatisfy(command, user);
 	}
 
 	[Theory]
@@ -133,10 +133,10 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await UserService.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(user, command);
+		response.ShouldSatisfy(command, user);
 	}
 
 	[Fact]
@@ -147,10 +147,10 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await UserService.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(user, command);
+		response.ShouldSatisfy(command, user);
 	}
 
 	[Theory]
@@ -163,10 +163,10 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await UserService.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(user, command);
+		response.ShouldSatisfy(command, user);
 	}
 
 	[Theory]
@@ -179,10 +179,10 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await UserService.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(user, command);
+		response.ShouldSatisfy(command, user);
 	}
 
 	[Fact]
@@ -193,10 +193,10 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await UserService.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(user, command);
+		response.ShouldSatisfy(command, user);
 	}
 
 	[Theory]
@@ -209,10 +209,10 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await UserService.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(user, command);
+		response.ShouldSatisfy(command, user);
 	}
 
 	[Theory]
@@ -226,10 +226,10 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await UserService.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(user, command);
+		response.ShouldSatisfy(command, user);
 	}
 
 	[Fact]
@@ -237,7 +237,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 	{
 		// Act
 		var response = await UserService.UpdateAsync(_command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(_command);
@@ -253,7 +253,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await UserService.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(command);
@@ -269,7 +269,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await UserService.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(command);
@@ -283,7 +283,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await UserService.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(command);
@@ -299,7 +299,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await UserService.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(command);
@@ -315,7 +315,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await UserService.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(command);
@@ -329,7 +329,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await UserService.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(command);
@@ -345,7 +345,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await UserService.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(command);
@@ -362,7 +362,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 
 		// Act
 		var response = await UserService.UpdateAsync(command, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(command);

@@ -32,28 +32,28 @@ public static class UserSetups
 			return serviceScope.ServiceProvider.GetUserIncludeBuilderFactory();
 		}
 
-		public async Task<User?> GetUserByIdAsync(
+		public async Task<User?> GetByIdAsync(
 			UserId id,
 			CancellationToken cancellationToken)
 		{
 			return await serviceScope.GetUserCommandRepository().GetByIdAsync(id, cancellationToken);
 		}
 
-		public async Task AddUserAsync(
+		public async Task AddAsync(
 			User user,
 			CancellationToken cancellationToken)
 		{
 			await serviceScope.GetUserCommandRepository().AddAsync(user, cancellationToken);
 		}
 
-		public async Task AddUserRangeAsync(
+		public async Task AddRangeAsync(
 			IEnumerable<User> users,
 			CancellationToken cancellationToken)
 		{
 			await serviceScope.GetUserCommandRepository().AddRangeAsync(users, cancellationToken);
 		}
 
-		public async Task DeleteUserAsync(
+		public async Task DeleteAsync(
 			User user,
 			CancellationToken cancellationToken)
 		{

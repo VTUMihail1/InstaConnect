@@ -32,7 +32,7 @@ public class DeleteUserIntegrationTests : BaseUserApplicationCommandIntegrationT
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForIdAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Fact]

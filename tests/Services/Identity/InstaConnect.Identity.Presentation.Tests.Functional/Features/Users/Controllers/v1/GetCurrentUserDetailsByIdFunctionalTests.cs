@@ -58,7 +58,7 @@ public class GetCurrentUserDetailsByIdFunctionalTests : BaseUserPresentationQuer
 		var response = await Client.GetCurrentDetailsByIdProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForCurrentId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForCurrentId(request, messageTransformer);
 	}
 
 	[Fact]

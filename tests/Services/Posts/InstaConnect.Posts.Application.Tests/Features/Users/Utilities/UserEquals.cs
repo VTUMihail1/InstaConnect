@@ -10,8 +10,8 @@ public static class UserEquals
 	extension(AddUserCommandResponse response)
 	{
 		public bool Matches(
-		User user,
-		AddUserCommandRequest request)
+		AddUserCommandRequest request,
+		User user)
 		{
 			return response.Response.Matches(request.Id);
 		}
@@ -20,8 +20,8 @@ public static class UserEquals
 	extension(UpdateUserCommandResponse response)
 	{
 		public bool Matches(
-		User user,
-		UpdateUserCommandRequest request)
+		UpdateUserCommandRequest request,
+		User user)
 		{
 			return response.Response.Matches(request.Id);
 		}

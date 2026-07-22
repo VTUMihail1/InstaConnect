@@ -20,9 +20,9 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserRangeAsync(Users, CancellationToken);
-		await ServiceScope.AddPostRangeAsync(Posts, CancellationToken);
-		await ServiceScope.AddPostLikeRangeAsync(PostLikes, CancellationToken);
+		await ServiceScope.AddRangeAsync(Users, CancellationToken);
+		await ServiceScope.AddRangeAsync(Posts, CancellationToken);
+		await ServiceScope.AddRangeAsync(PostLikes, CancellationToken);
 	}
 
 	[Theory]
@@ -52,7 +52,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForUserName(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForUserName(request, messageTransformer);
 	}
 
 	[Theory]
@@ -82,7 +82,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForCurrentUserId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForCurrentUserId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -112,7 +112,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForTitle(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForTitle(request, messageTransformer);
 	}
 
 	[Theory]
@@ -142,7 +142,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForSortOrder(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForSortOrder(request, messageTransformer);
 	}
 
 	[Theory]
@@ -172,7 +172,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForSortTerm(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForSortTerm(request, messageTransformer);
 	}
 
 	[Theory]
@@ -204,7 +204,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForPage(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForPage(request, messageTransformer);
 	}
 
 	[Theory]
@@ -236,7 +236,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForPageSize(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForPageSize(request, messageTransformer);
 	}
 
 	[Fact]
@@ -339,7 +339,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var response = await Client.GetAllAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Posts, _request);
+		response.ShouldSatisfy(_request, Posts);
 	}
 
 	[Theory]
@@ -356,7 +356,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Posts, request);
+		response.ShouldSatisfy(request, Posts);
 	}
 
 	[Theory]
@@ -372,7 +372,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Posts, request);
+		response.ShouldSatisfy(request, Posts);
 	}
 
 	[Theory]
@@ -389,7 +389,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Posts, request);
+		response.ShouldSatisfy(request, Posts);
 	}
 
 	[Theory]
@@ -405,7 +405,7 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Posts, request, termTransformer);
+		response.ShouldSatisfy(request, Posts, termTransformer);
 	}
 
 	[Theory]
@@ -422,6 +422,6 @@ public class GetAllPostsFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Posts, request, termTransformer);
+		response.ShouldSatisfy(request, Posts, termTransformer);
 	}
 }

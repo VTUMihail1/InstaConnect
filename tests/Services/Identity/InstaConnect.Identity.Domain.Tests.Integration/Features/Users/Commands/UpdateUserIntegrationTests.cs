@@ -33,7 +33,7 @@ public class UpdateUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 	protected override async Task OnInitializeAsync()
 	{
 		await ServiceScope.AddAsync(User, CancellationToken);
-		await ServiceScope.AddEmailConfirmationTokenRangeAsync(User.EmailConfirmationTokens, CancellationToken);
+		await ServiceScope.AddRangeAsync(User.EmailConfirmationTokens, CancellationToken);
 	}
 
 

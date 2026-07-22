@@ -9,60 +9,60 @@ public static class PostLikeMatchAssertions
 	extension(AddPostLikeCommandResponse response)
 	{
 		public void ShouldSatisfy(
-		PostLike postLike,
-		AddPostLikeCommandRequest request)
+		AddPostLikeCommandRequest request,
+		PostLike postLike)
 		{
-			response.ShouldSatisfy(p => p.Matches(postLike, request));
+			response.ShouldSatisfy(p => p.Matches(request, postLike));
 		}
 	}
 
 	extension(GetPostLikeByIdQueryResponse response)
 	{
 		public void ShouldSatisfy(
-		PostLike postLike,
-		GetPostLikeByIdQueryRequest request)
+		GetPostLikeByIdQueryRequest request,
+		PostLike postLike)
 		{
-			response.ShouldSatisfy(p => p.Matches(postLike, request));
+			response.ShouldSatisfy(p => p.Matches(request, postLike));
 		}
 	}
 
 	extension(GetAllPostLikesQueryResponse response)
 	{
 		public void ShouldSatisfy(
+		GetAllPostLikesQueryRequest request,
 		Post post,
-		ICollection<PostLike> postLikes,
-		GetAllPostLikesQueryRequest request)
+		ICollection<PostLike> postLikes)
 		{
-			response.ShouldSatisfy(p => p.Matches(post, postLikes, request));
+			response.ShouldSatisfy(p => p.Matches(request, post, postLikes));
 		}
 
 		public void ShouldSatisfy(
+			GetAllPostLikesQueryRequest request,
 			Post post,
 			ICollection<PostLike> postLikes,
-			GetAllPostLikesQueryRequest request,
 			ISortEnumTermTransformer<PostLike> termTransformer)
 		{
-			response.ShouldSatisfy(p => p.Matches(post, postLikes, request, termTransformer));
+			response.ShouldSatisfy(p => p.Matches(request, post, postLikes, termTransformer));
 		}
 	}
 
 	extension(GetAllPostLikesForUserQueryResponse response)
 	{
 		public void ShouldSatisfy(
+		GetAllPostLikesForUserQueryRequest request,
 		User user,
-		ICollection<PostLike> postLikes,
-		GetAllPostLikesForUserQueryRequest request)
+		ICollection<PostLike> postLikes)
 		{
-			response.ShouldSatisfy(p => p.Matches(user, postLikes, request));
+			response.ShouldSatisfy(p => p.Matches(request, user, postLikes));
 		}
 
 		public void ShouldSatisfy(
+			GetAllPostLikesForUserQueryRequest request,
 			User user,
 			ICollection<PostLike> postLikes,
-			GetAllPostLikesForUserQueryRequest request,
 			ISortEnumTermTransformer<PostLike> termTransformer)
 		{
-			response.ShouldSatisfy(p => p.Matches(user, postLikes, request, termTransformer));
+			response.ShouldSatisfy(p => p.Matches(request, user, postLikes, termTransformer));
 		}
 	}
 

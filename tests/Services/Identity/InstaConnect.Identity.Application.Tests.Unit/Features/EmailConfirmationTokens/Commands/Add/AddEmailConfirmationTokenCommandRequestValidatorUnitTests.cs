@@ -32,7 +32,7 @@ public class AddEmailConfirmationTokenCommandRequestValidatorUnitTests : BaseEma
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForName(messageTransformer, request);
+		result.ShouldHaveValidationErrorForName(request, messageTransformer);
 	}
 
 	[Fact]

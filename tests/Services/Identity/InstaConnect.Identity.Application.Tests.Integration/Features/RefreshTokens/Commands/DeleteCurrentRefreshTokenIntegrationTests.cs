@@ -17,7 +17,7 @@ public class DeleteCurrentRefreshTokenIntegrationTests : BaseRefreshTokenApplica
 	protected override async Task OnInitializeAsync()
 	{
 		await ServiceScope.AddAsync(User, CancellationToken);
-		await ServiceScope.AddRefreshTokenAsync(RefreshToken, CancellationToken);
+		await ServiceScope.AddAsync(RefreshToken, CancellationToken);
 	}
 
 	[Theory]
@@ -32,7 +32,7 @@ public class DeleteCurrentRefreshTokenIntegrationTests : BaseRefreshTokenApplica
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Assert
-		await Sender.ShouldThrowInvalidValidationExceptionForIdAsync(messageTransformer, request, CancellationToken);
+		await Sender.ShouldThrowInvalidValidationExceptionForIdAsync(request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -47,7 +47,7 @@ public class DeleteCurrentRefreshTokenIntegrationTests : BaseRefreshTokenApplica
 		var request = _requestBuilder.WithValue(transformer).Build();
 
 		// Assert
-		await Sender.ShouldThrowInvalidValidationExceptionForValueAsync(messageTransformer, request, CancellationToken);
+		await Sender.ShouldThrowInvalidValidationExceptionForValueAsync(request, messageTransformer, CancellationToken);
 	}
 
 	[Fact]
@@ -64,7 +64,7 @@ public class DeleteCurrentRefreshTokenIntegrationTests : BaseRefreshTokenApplica
 	public async Task SendAsync_ShouldThrowRefreshTokenNotFoundException_WhenRefreshTokenNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteRefreshTokenAsync(RefreshToken, CancellationToken);
+		await ServiceScope.DeleteAsync(RefreshToken, CancellationToken);
 
 		// Assert
 		await Sender.ShouldThrowRefreshTokenNotFoundExceptionAsync(_request, CancellationToken);
@@ -75,7 +75,7 @@ public class DeleteCurrentRefreshTokenIntegrationTests : BaseRefreshTokenApplica
 	{
 		// Act
 		await Sender.SendAsync(_request, CancellationToken);
-		var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(RefreshToken.Id, CancellationToken);
+		var refreshToken = await ServiceScope.GetByIdAsync(RefreshToken.Id, CancellationToken);
 
 		// Assert
 		refreshToken.ShouldBeNull();
@@ -91,7 +91,7 @@ public class DeleteCurrentRefreshTokenIntegrationTests : BaseRefreshTokenApplica
 
 		// Act
 		await Sender.SendAsync(request, CancellationToken);
-		var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(RefreshToken.Id, CancellationToken);
+		var refreshToken = await ServiceScope.GetByIdAsync(RefreshToken.Id, CancellationToken);
 
 		// Assert
 		refreshToken.ShouldBeNull();
@@ -107,7 +107,7 @@ public class DeleteCurrentRefreshTokenIntegrationTests : BaseRefreshTokenApplica
 
 		// Act
 		await Sender.SendAsync(request, CancellationToken);
-		var refreshToken = await ServiceScope.GetRefreshTokenByIdAsync(RefreshToken.Id, CancellationToken);
+		var refreshToken = await ServiceScope.GetByIdAsync(RefreshToken.Id, CancellationToken);
 
 		// Assert
 		refreshToken.ShouldBeNull();

@@ -33,16 +33,16 @@ public class GetAllPostsForUserIntegrationTests : BasePostDomainQueryIntegration
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserRangeAsync(Users, CancellationToken);
-		await ServiceScope.AddPostRangeAsync(Posts, CancellationToken);
-		await ServiceScope.AddPostLikeRangeAsync(PostLikes, CancellationToken);
+		await ServiceScope.AddRangeAsync(Users, CancellationToken);
+		await ServiceScope.AddRangeAsync(Posts, CancellationToken);
+		await ServiceScope.AddRangeAsync(PostLikes, CancellationToken);
 	}
 
 	[Fact]
 	public async Task GetAllForUserAsync_ShouldThrowUserNotFoundException_WhenUserIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowUserNotFoundExceptionAsync(_query, CancellationToken);
@@ -55,7 +55,7 @@ public class GetAllPostsForUserIntegrationTests : BasePostDomainQueryIntegration
 		var response = await Service.GetAllForUserAsync(_query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, Posts, _query);
+		response.ShouldSatisfy(_query, User, Posts);
 	}
 
 	[Theory]
@@ -70,7 +70,7 @@ public class GetAllPostsForUserIntegrationTests : BasePostDomainQueryIntegration
 		var response = await Service.GetAllForUserAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, Posts, query);
+		response.ShouldSatisfy(query, User, Posts);
 	}
 
 	[Theory]
@@ -87,7 +87,7 @@ public class GetAllPostsForUserIntegrationTests : BasePostDomainQueryIntegration
 		var response = await Service.GetAllForUserAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, Posts, query);
+		response.ShouldSatisfy(query, User, Posts);
 	}
 
 	[Theory]
@@ -104,7 +104,7 @@ public class GetAllPostsForUserIntegrationTests : BasePostDomainQueryIntegration
 		var response = await Service.GetAllForUserAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, Posts, query);
+		response.ShouldSatisfy(query, User, Posts);
 	}
 
 	[Theory]
@@ -120,7 +120,7 @@ public class GetAllPostsForUserIntegrationTests : BasePostDomainQueryIntegration
 		var response = await Service.GetAllForUserAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, Posts, query, termTransformer);
+		response.ShouldSatisfy(query, User, Posts, termTransformer);
 	}
 
 	[Theory]
@@ -137,6 +137,6 @@ public class GetAllPostsForUserIntegrationTests : BasePostDomainQueryIntegration
 		var response = await Service.GetAllForUserAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, Posts, query, termTransformer);
+		response.ShouldSatisfy(query, User, Posts, termTransformer);
 	}
 }

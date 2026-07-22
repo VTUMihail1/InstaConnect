@@ -26,7 +26,7 @@ public class GetAllPostCommentsForUserQueryHandlerUnitTests : BasePostCommentApp
 		var response = await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, PostComments, _request);
+		response.ShouldSatisfy(_request, User, PostComments);
 	}
 
 	[Fact]

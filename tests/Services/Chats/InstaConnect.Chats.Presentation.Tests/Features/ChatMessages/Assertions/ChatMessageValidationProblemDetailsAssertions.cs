@@ -9,213 +9,213 @@ public static class ChatMessageValidationProblemDetailsAssertions
 	extension(ApplicationProblemDetails problemDetails)
 	{
 		public void ShouldSatisfyInvalidValidationForParticipantOneId(
-		IStringMessageTransformer messageTransformer,
-		AddChatMessageApiRequest request)
+			AddChatMessageApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.ParticipantOneId,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForParticipantOneId(
-		IStringMessageTransformer messageTransformer,
-		UpdateChatMessageApiRequest request)
+			UpdateChatMessageApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.ParticipantOneId,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForParticipantOneId(
-		IStringMessageTransformer messageTransformer,
-		DeleteChatMessageApiRequest request)
+			DeleteChatMessageApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.ParticipantOneId,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForParticipantOneId(
-		IStringMessageTransformer messageTransformer,
-		GetChatMessageByIdApiRequest request)
+			GetChatMessageByIdApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.CurrentUserId,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForParticipantOneId(
-		IStringMessageTransformer messageTransformer,
-		GetAllChatMessagesApiRequest request)
+			GetAllChatMessagesApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.CurrentUserId,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForParticipantTwoId(
-		IStringMessageTransformer messageTransformer,
-		UpdateChatMessageApiRequest request)
+			UpdateChatMessageApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.ParticipantTwoId,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForParticipantTwoId(
-		IStringMessageTransformer messageTransformer,
-		DeleteChatMessageApiRequest request)
+			DeleteChatMessageApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.ParticipantTwoId,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForParticipantTwoId(
-		IStringMessageTransformer messageTransformer,
-		GetChatMessageByIdApiRequest request)
+			GetChatMessageByIdApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.ParticipantTwoId,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForParticipantTwoId(
-		IStringMessageTransformer messageTransformer,
-		GetAllChatMessagesApiRequest request)
+			GetAllChatMessagesApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.ParticipantTwoId,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForParticipantTwoId(
-		IStringMessageTransformer messageTransformer,
-		AddChatMessageApiRequest request)
+			AddChatMessageApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.ParticipantTwoId,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForMessageId(
-			IStringMessageTransformer messageTransformer,
-			UpdateChatMessageApiRequest request)
+			UpdateChatMessageApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.MessageId,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForMessageId(
-			IStringMessageTransformer messageTransformer,
-			DeleteChatMessageApiRequest request)
+			DeleteChatMessageApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.MessageId,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForMessageId(
-			IStringMessageTransformer messageTransformer,
-			GetChatMessageByIdApiRequest request)
+			GetChatMessageByIdApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.MessageId,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForContent(
-			IStringMessageTransformer messageTransformer,
-			AddChatMessageApiRequest request)
+			AddChatMessageApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.Body.Content,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForContent(
-			IStringMessageTransformer messageTransformer,
-			UpdateChatMessageApiRequest request)
+			UpdateChatMessageApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.Body.Content,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForCurrentUserId(
-			IStringMessageTransformer messageTransformer,
-			GetChatMessageByIdApiRequest request)
+			GetChatMessageByIdApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.CurrentUserId,
-			   messageTransformer,
-			   request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForCurrentUserId(
-			IStringMessageTransformer messageTransformer,
-			GetAllChatMessagesApiRequest request)
+			GetAllChatMessagesApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.CurrentUserId,
-			   messageTransformer,
-			   request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForPage(
-			IIntMessageTransformer messageTransformer,
-			GetAllChatMessagesApiRequest request)
+			GetAllChatMessagesApiRequest request,
+			IIntMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.Page,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForPageSize(
-			IIntMessageTransformer messageTransformer,
-			GetAllChatMessagesApiRequest request)
+			GetAllChatMessagesApiRequest request,
+			IIntMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.PageSize,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForSortOrder(
-			IEnumMessageTransformer<CommonSortOrder> messageTransformer,
-			GetAllChatMessagesApiRequest request)
+			GetAllChatMessagesApiRequest request,
+			IEnumMessageTransformer<CommonSortOrder> messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.SortOrder,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForSortTerm(
-			IEnumMessageTransformer<ChatMessagesSortTerm> messageTransformer,
-			GetAllChatMessagesApiRequest request)
+			GetAllChatMessagesApiRequest request,
+			IEnumMessageTransformer<ChatMessagesSortTerm> messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.SortTerm,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 	}
 }

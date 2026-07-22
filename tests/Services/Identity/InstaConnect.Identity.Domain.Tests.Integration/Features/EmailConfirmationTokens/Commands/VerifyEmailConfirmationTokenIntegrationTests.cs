@@ -28,7 +28,7 @@ public class VerifyEmailConfirmationTokenIntegrationTests : BaseEmailConfirmatio
 	protected override async Task OnInitializeAsync()
 	{
 		await ServiceScope.AddAsync(User, CancellationToken);
-		await ServiceScope.AddEmailConfirmationTokenRangeAsync(User.EmailConfirmationTokens, CancellationToken);
+		await ServiceScope.AddRangeAsync(User.EmailConfirmationTokens, CancellationToken);
 	}
 
 	[Fact]
@@ -45,7 +45,7 @@ public class VerifyEmailConfirmationTokenIntegrationTests : BaseEmailConfirmatio
 	public async Task VerifyAsync_ShouldThrowEmailConfirmationTokenNotFoundException_WhenEmailConfirmationTokenNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteEmailConfirmationTokenAsync(EmailConfirmationToken, CancellationToken);
+		await ServiceScope.DeleteAsync(EmailConfirmationToken, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowEmailConfirmationTokenNotFoundExceptionAsync(_command, CancellationToken);
@@ -67,7 +67,7 @@ public class VerifyEmailConfirmationTokenIntegrationTests : BaseEmailConfirmatio
 	{
 		// Arrange
 		var updatedEmailConfirmationToken = EmailConfirmationTokenBuilder.WithAlreadyExpiresAtUtc().Build();
-		await ServiceScope.UpdateEmailConfirmationTokenAsync(updatedEmailConfirmationToken, CancellationToken);
+		await ServiceScope.UpdateAsync(updatedEmailConfirmationToken, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowEmailConfirmationTokenExpiredExceptionAsync(_command, CancellationToken);

@@ -36,18 +36,18 @@ public class GetAllPostCommentsIntegrationTests : BasePostCommentDomainQueryInte
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserRangeAsync(Users, CancellationToken);
-		await ServiceScope.AddPostRangeAsync(Posts, CancellationToken);
-		await ServiceScope.AddPostLikeRangeAsync(PostLikes, CancellationToken);
-		await ServiceScope.AddPostCommentRangeAsync(PostComments, CancellationToken);
-		await ServiceScope.AddPostCommentLikeRangeAsync(PostCommentLikes, CancellationToken);
+		await ServiceScope.AddRangeAsync(Users, CancellationToken);
+		await ServiceScope.AddRangeAsync(Posts, CancellationToken);
+		await ServiceScope.AddRangeAsync(PostLikes, CancellationToken);
+		await ServiceScope.AddRangeAsync(PostComments, CancellationToken);
+		await ServiceScope.AddRangeAsync(PostCommentLikes, CancellationToken);
 	}
 
 	[Fact]
 	public async Task GetAllAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostAsync(Post, CancellationToken);
+		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowPostNotFoundExceptionAsync(_query, CancellationToken);
@@ -60,7 +60,7 @@ public class GetAllPostCommentsIntegrationTests : BasePostCommentDomainQueryInte
 		var response = await Service.GetAllAsync(_query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Post, PostComments, _query);
+		response.ShouldSatisfy(_query, Post, PostComments);
 	}
 
 	[Theory]
@@ -75,7 +75,7 @@ public class GetAllPostCommentsIntegrationTests : BasePostCommentDomainQueryInte
 		var response = await Service.GetAllAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Post, PostComments, query);
+		response.ShouldSatisfy(query, Post, PostComments);
 	}
 
 	[Theory]
@@ -92,7 +92,7 @@ public class GetAllPostCommentsIntegrationTests : BasePostCommentDomainQueryInte
 		var response = await Service.GetAllAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Post, PostComments, query);
+		response.ShouldSatisfy(query, Post, PostComments);
 	}
 
 	[Theory]
@@ -109,7 +109,7 @@ public class GetAllPostCommentsIntegrationTests : BasePostCommentDomainQueryInte
 		var response = await Service.GetAllAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Post, PostComments, query);
+		response.ShouldSatisfy(query, Post, PostComments);
 	}
 
 	[Theory]
@@ -125,7 +125,7 @@ public class GetAllPostCommentsIntegrationTests : BasePostCommentDomainQueryInte
 		var response = await Service.GetAllAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Post, PostComments, query, termTransformer);
+		response.ShouldSatisfy(query, Post, PostComments, termTransformer);
 	}
 
 	[Theory]
@@ -141,6 +141,6 @@ public class GetAllPostCommentsIntegrationTests : BasePostCommentDomainQueryInte
 		var response = await Service.GetAllAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Post, PostComments, query, termTransformer);
+		response.ShouldSatisfy(query, Post, PostComments, termTransformer);
 	}
 }

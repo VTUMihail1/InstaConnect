@@ -34,7 +34,7 @@ public class AddUserCommandRequestValidatorUnitTests : BaseUserApplicationComman
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForName(messageTransformer, request);
+		result.ShouldHaveValidationErrorForName(request, messageTransformer);
 	}
 
 	[Theory]
@@ -52,7 +52,7 @@ public class AddUserCommandRequestValidatorUnitTests : BaseUserApplicationComman
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForFirstName(messageTransformer, request);
+		result.ShouldHaveValidationErrorForFirstName(request, messageTransformer);
 	}
 
 	[Theory]
@@ -70,7 +70,7 @@ public class AddUserCommandRequestValidatorUnitTests : BaseUserApplicationComman
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForLastName(messageTransformer, request);
+		result.ShouldHaveValidationErrorForLastName(request, messageTransformer);
 	}
 
 	[Theory]
@@ -89,7 +89,7 @@ public class AddUserCommandRequestValidatorUnitTests : BaseUserApplicationComman
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForEmail(messageTransformer, request);
+		result.ShouldHaveValidationErrorForEmail(request, messageTransformer);
 	}
 
 	[Theory]
@@ -107,7 +107,7 @@ public class AddUserCommandRequestValidatorUnitTests : BaseUserApplicationComman
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForPassword(messageTransformer, request);
+		result.ShouldHaveValidationErrorForPassword(request, messageTransformer);
 	}
 
 	[Theory]
@@ -122,7 +122,7 @@ public class AddUserCommandRequestValidatorUnitTests : BaseUserApplicationComman
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForConfirmPassword(messageTransformer, request);
+		result.ShouldHaveValidationErrorForConfirmPassword(request, messageTransformer);
 	}
 
 	[Fact]

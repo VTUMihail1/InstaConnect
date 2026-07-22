@@ -32,35 +32,35 @@ public static class EmailConfirmationTokenSetups
 			return serviceScope.ServiceProvider.GetEmailConfirmationTokenIncludeBuilderFactory();
 		}
 
-		public async Task<EmailConfirmationToken?> GetEmailConfirmationTokenByIdAsync(
+		public async Task<EmailConfirmationToken?> GetByIdAsync(
 			EmailConfirmationTokenId id,
 			CancellationToken cancellationToken)
 		{
 			return await serviceScope.GetEmailConfirmationTokenCommandRepository().GetByIdAsync(id, cancellationToken);
 		}
 
-		public async Task AddEmailConfirmationTokenAsync(
+		public async Task AddAsync(
 			EmailConfirmationToken emailConfirmationToken,
 			CancellationToken cancellationToken)
 		{
 			await serviceScope.GetEmailConfirmationTokenCommandRepository().AddAsync(emailConfirmationToken, cancellationToken);
 		}
 
-		public async Task AddEmailConfirmationTokenRangeAsync(
+		public async Task AddRangeAsync(
 			IEnumerable<EmailConfirmationToken> emailConfirmationTokens,
 			CancellationToken cancellationToken)
 		{
 			await serviceScope.GetEmailConfirmationTokenCommandRepository().AddRangeAsync(emailConfirmationTokens, cancellationToken);
 		}
 
-		public async Task UpdateEmailConfirmationTokenAsync(
+		public async Task UpdateAsync(
 			EmailConfirmationToken emailConfirmationToken,
 			CancellationToken cancellationToken)
 		{
 			await serviceScope.GetEmailConfirmationTokenCommandRepository().UpdateAsync(emailConfirmationToken, cancellationToken);
 		}
 
-		public async Task DeleteEmailConfirmationTokenAsync(
+		public async Task DeleteAsync(
 			EmailConfirmationToken emailConfirmationToken,
 			CancellationToken cancellationToken)
 		{

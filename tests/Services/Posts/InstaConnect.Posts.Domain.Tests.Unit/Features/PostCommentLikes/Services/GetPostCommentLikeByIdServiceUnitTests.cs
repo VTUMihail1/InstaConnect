@@ -65,7 +65,7 @@ public class GetPostCommentLikeByIdServiceUnitTests : BasePostCommentLikeDomainQ
 		var response = await _service.GetByIdAsync(_query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostCommentLike, _query);
+		response.ShouldSatisfy(_query, PostCommentLike);
 	}
 
 	[Fact]

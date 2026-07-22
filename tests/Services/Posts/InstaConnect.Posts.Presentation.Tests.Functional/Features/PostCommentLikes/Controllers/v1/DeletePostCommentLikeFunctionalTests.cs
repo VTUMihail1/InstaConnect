@@ -16,10 +16,10 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
-		await ServiceScope.AddPostAsync(Post, CancellationToken);
-		await ServiceScope.AddPostCommentAsync(PostComment, CancellationToken);
-		await ServiceScope.AddPostCommentLikeAsync(PostCommentLike, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(Post, CancellationToken);
+		await ServiceScope.AddAsync(PostComment, CancellationToken);
+		await ServiceScope.AddAsync(PostCommentLike, CancellationToken);
 	}
 
 	[Fact]
@@ -61,7 +61,7 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
 		var response = await Client.DeleteProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -93,7 +93,7 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
 		var response = await Client.DeleteProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForCommentId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForCommentId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -127,14 +127,14 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
 		var response = await Client.DeleteProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForUserId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForUserId(request, messageTransformer);
 	}
 
 	[Fact]
 	public async Task DeleteAsync_ShouldHaveNotFoundStatusCode_WhenIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostAsync(Post, CancellationToken);
+		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Act
 		var response = await Client.DeleteStatusCodeAsync(_request, CancellationToken);
@@ -147,7 +147,7 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
 	public async Task DeleteAsync_ShouldHavePostNotFoundProblemDetails_WhenIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostAsync(Post, CancellationToken);
+		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Act
 		var response = await Client.DeleteProblemDetailsAsync(_request, CancellationToken);
@@ -160,7 +160,7 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
 	public async Task DeleteAsync_ShouldHaveNotFoundStatusCode_WhenCommentIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostCommentAsync(PostComment, CancellationToken);
+		await ServiceScope.DeleteAsync(PostComment, CancellationToken);
 
 		// Act
 		var response = await Client.DeleteStatusCodeAsync(_request, CancellationToken);
@@ -173,7 +173,7 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
 	public async Task DeleteAsync_ShouldHavePostCommentNotFoundProblemDetails_WhenCommentIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostCommentAsync(PostComment, CancellationToken);
+		await ServiceScope.DeleteAsync(PostComment, CancellationToken);
 
 		// Act
 		var response = await Client.DeleteProblemDetailsAsync(_request, CancellationToken);
@@ -186,7 +186,7 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
 	public async Task DeleteAsync_ShouldHaveNotFoundStatusCode_WhenUserIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostCommentLikeAsync(PostCommentLike, CancellationToken);
+		await ServiceScope.DeleteAsync(PostCommentLike, CancellationToken);
 
 		// Act
 		var response = await Client.DeleteStatusCodeAsync(_request, CancellationToken);
@@ -199,7 +199,7 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
 	public async Task DeleteAsync_ShouldHavePostCommentLikeNotFoundProblemDetails_WhenUserIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostCommentLikeAsync(PostCommentLike, CancellationToken);
+		await ServiceScope.DeleteAsync(PostCommentLike, CancellationToken);
 
 		// Act
 		var response = await Client.DeleteProblemDetailsAsync(_request, CancellationToken);
@@ -268,7 +268,7 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
 	{
 		// Act
 		await Client.DeleteAsync(_request, CancellationToken);
-		var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(PostCommentLike.Id, CancellationToken);
+		var postCommentLike = await ServiceScope.GetByIdAsync(PostCommentLike.Id, CancellationToken);
 
 		// Assert
 		postCommentLike.ShouldBeNull();
@@ -284,7 +284,7 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
 
 		// Act
 		await Client.DeleteAsync(request, CancellationToken);
-		var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(PostCommentLike.Id, CancellationToken);
+		var postCommentLike = await ServiceScope.GetByIdAsync(PostCommentLike.Id, CancellationToken);
 
 		// Assert
 		postCommentLike.ShouldBeNull();
@@ -300,7 +300,7 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
 
 		// Act
 		await Client.DeleteAsync(request, CancellationToken);
-		var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(PostCommentLike.Id, CancellationToken);
+		var postCommentLike = await ServiceScope.GetByIdAsync(PostCommentLike.Id, CancellationToken);
 
 		// Assert
 		postCommentLike.ShouldBeNull();
@@ -316,7 +316,7 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
 
 		// Act
 		await Client.DeleteAsync(request, CancellationToken);
-		var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(PostCommentLike.Id, CancellationToken);
+		var postCommentLike = await ServiceScope.GetByIdAsync(PostCommentLike.Id, CancellationToken);
 
 		// Assert
 		postCommentLike.ShouldBeNull();
@@ -328,8 +328,10 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
 		// Act
 		await Client.DeleteAsync(_request, CancellationToken);
 
+		var eventRequest = await EventHarness.PublishedCommentLikeDeletedEventRequest(CancellationToken);
+
 		// Assert
-		await EventHarness.ShouldHavePublishedPostCommentLikeDeletedAsync(_request, PostCommentLike, CancellationToken);
+		eventRequest.ShouldSatisfy(_request, PostCommentLike);
 	}
 
 	[Theory]
@@ -343,8 +345,10 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
 		// Act
 		await Client.DeleteAsync(request, CancellationToken);
 
+		var eventRequest = await EventHarness.PublishedCommentLikeDeletedEventRequest(CancellationToken);
+
 		// Assert
-		await EventHarness.ShouldHavePublishedPostCommentLikeDeletedAsync(request, PostCommentLike, CancellationToken);
+		eventRequest.ShouldSatisfy(request, PostCommentLike);
 	}
 
 	[Theory]
@@ -358,8 +362,10 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
 		// Act
 		await Client.DeleteAsync(request, CancellationToken);
 
+		var eventRequest = await EventHarness.PublishedCommentLikeDeletedEventRequest(CancellationToken);
+
 		// Assert
-		await EventHarness.ShouldHavePublishedPostCommentLikeDeletedAsync(request, PostCommentLike, CancellationToken);
+		eventRequest.ShouldSatisfy(request, PostCommentLike);
 	}
 
 	[Theory]
@@ -373,7 +379,9 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
 		// Act
 		await Client.DeleteAsync(request, CancellationToken);
 
+		var eventRequest = await EventHarness.PublishedCommentLikeDeletedEventRequest(CancellationToken);
+
 		// Assert
-		await EventHarness.ShouldHavePublishedPostCommentLikeDeletedAsync(request, PostCommentLike, CancellationToken);
+		eventRequest.ShouldSatisfy(request, PostCommentLike);
 	}
 }

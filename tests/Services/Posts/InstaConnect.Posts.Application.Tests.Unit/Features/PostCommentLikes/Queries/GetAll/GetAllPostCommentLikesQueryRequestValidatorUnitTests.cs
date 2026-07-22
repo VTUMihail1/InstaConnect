@@ -35,7 +35,7 @@ public class GetAllPostCommentLikesQueryRequestValidatorUnitTests : BasePostComm
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForId(messageTransformer, request);
+		result.ShouldHaveValidationErrorForId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -53,7 +53,7 @@ public class GetAllPostCommentLikesQueryRequestValidatorUnitTests : BasePostComm
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForCommentId(messageTransformer, request);
+		result.ShouldHaveValidationErrorForCommentId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -68,7 +68,7 @@ public class GetAllPostCommentLikesQueryRequestValidatorUnitTests : BasePostComm
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForUserName(messageTransformer, request);
+		result.ShouldHaveValidationErrorForUserName(request, messageTransformer);
 	}
 
 	[Theory]
@@ -83,7 +83,7 @@ public class GetAllPostCommentLikesQueryRequestValidatorUnitTests : BasePostComm
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForCurrentUserId(messageTransformer, request);
+		result.ShouldHaveValidationErrorForCurrentUserId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -99,7 +99,7 @@ public class GetAllPostCommentLikesQueryRequestValidatorUnitTests : BasePostComm
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForSortOrder(messageTransformer, request);
+		result.ShouldHaveValidationErrorForSortOrder(request, messageTransformer);
 	}
 
 	[Theory]
@@ -115,7 +115,7 @@ public class GetAllPostCommentLikesQueryRequestValidatorUnitTests : BasePostComm
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForSortTerm(messageTransformer, request);
+		result.ShouldHaveValidationErrorForSortTerm(request, messageTransformer);
 	}
 
 	[Theory]
@@ -131,7 +131,7 @@ public class GetAllPostCommentLikesQueryRequestValidatorUnitTests : BasePostComm
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForPage(messageTransformer, request);
+		result.ShouldHaveValidationErrorForPage(request, messageTransformer);
 	}
 
 	[Theory]
@@ -147,7 +147,7 @@ public class GetAllPostCommentLikesQueryRequestValidatorUnitTests : BasePostComm
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForPageSize(messageTransformer, request);
+		result.ShouldHaveValidationErrorForPageSize(request, messageTransformer);
 	}
 
 	[Theory]

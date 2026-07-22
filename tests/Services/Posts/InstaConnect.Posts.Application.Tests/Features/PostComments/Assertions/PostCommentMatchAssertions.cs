@@ -7,51 +7,51 @@ public static class PostCommentMatchAssertions
 {
 	extension(AddPostCommentCommandResponse response)
 	{
-		public void ShouldSatisfy(PostComment postComment, AddPostCommentCommandRequest request)
+		public void ShouldSatisfy(AddPostCommentCommandRequest request, PostComment postComment)
 		{
-			response.ShouldSatisfy(p => p.Matches(postComment, request));
+			response.ShouldSatisfy(p => p.Matches(request, postComment));
 		}
 	}
 
 	extension(UpdatePostCommentCommandResponse response)
 	{
-		public void ShouldSatisfy(PostComment postComment, UpdatePostCommentCommandRequest request)
+		public void ShouldSatisfy(UpdatePostCommentCommandRequest request, PostComment postComment)
 		{
-			response.ShouldSatisfy(p => p.Matches(postComment, request));
+			response.ShouldSatisfy(p => p.Matches(request, postComment));
 		}
 	}
 
 	extension(GetPostCommentByIdQueryResponse response)
 	{
-		public void ShouldSatisfy(PostComment postComment, GetPostCommentByIdQueryRequest request)
+		public void ShouldSatisfy(GetPostCommentByIdQueryRequest request, PostComment postComment)
 		{
-			response.ShouldSatisfy(p => p.Matches(postComment, request));
+			response.ShouldSatisfy(p => p.Matches(request, postComment));
 		}
 	}
 
 	extension(GetAllPostCommentsQueryResponse response)
 	{
-		public void ShouldSatisfy(Post post, ICollection<PostComment> postComments, GetAllPostCommentsQueryRequest request)
+		public void ShouldSatisfy(GetAllPostCommentsQueryRequest request, Post post, ICollection<PostComment> postComments)
 		{
-			response.ShouldSatisfy(p => p.Matches(post, postComments, request));
+			response.ShouldSatisfy(p => p.Matches(request, post, postComments));
 		}
 
-		public void ShouldSatisfy(Post post, ICollection<PostComment> postComments, GetAllPostCommentsQueryRequest request, ISortEnumTermTransformer<PostComment> termTransformer)
+		public void ShouldSatisfy(GetAllPostCommentsQueryRequest request, Post post, ICollection<PostComment> postComments, ISortEnumTermTransformer<PostComment> termTransformer)
 		{
-			response.ShouldSatisfy(p => p.Matches(post, postComments, request, termTransformer));
+			response.ShouldSatisfy(p => p.Matches(request, post, postComments, termTransformer));
 		}
 	}
 
 	extension(GetAllPostCommentsForUserQueryResponse response)
 	{
-		public void ShouldSatisfy(User user, ICollection<PostComment> postComments, GetAllPostCommentsForUserQueryRequest request)
+		public void ShouldSatisfy(GetAllPostCommentsForUserQueryRequest request, User user, ICollection<PostComment> postComments)
 		{
-			response.ShouldSatisfy(p => p.Matches(user, postComments, request));
+			response.ShouldSatisfy(p => p.Matches(request, user, postComments));
 		}
 
-		public void ShouldSatisfy(User user, ICollection<PostComment> postComments, GetAllPostCommentsForUserQueryRequest request, ISortEnumTermTransformer<PostComment> termTransformer)
+		public void ShouldSatisfy(GetAllPostCommentsForUserQueryRequest request, User user, ICollection<PostComment> postComments, ISortEnumTermTransformer<PostComment> termTransformer)
 		{
-			response.ShouldSatisfy(p => p.Matches(user, postComments, request, termTransformer));
+			response.ShouldSatisfy(p => p.Matches(request, user, postComments, termTransformer));
 		}
 	}
 

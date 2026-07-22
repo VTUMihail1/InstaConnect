@@ -35,7 +35,7 @@ public class GetAllPostsForUserQueryRequestValidatorUnitTests : BasePostApplicat
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForUserId(messageTransformer, request);
+		result.ShouldHaveValidationErrorForUserId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -50,7 +50,7 @@ public class GetAllPostsForUserQueryRequestValidatorUnitTests : BasePostApplicat
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForCurrentUserId(messageTransformer, request);
+		result.ShouldHaveValidationErrorForCurrentUserId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -65,7 +65,7 @@ public class GetAllPostsForUserQueryRequestValidatorUnitTests : BasePostApplicat
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForTitle(messageTransformer, request);
+		result.ShouldHaveValidationErrorForTitle(request, messageTransformer);
 	}
 
 	[Theory]
@@ -80,7 +80,7 @@ public class GetAllPostsForUserQueryRequestValidatorUnitTests : BasePostApplicat
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForSortOrder(messageTransformer, request);
+		result.ShouldHaveValidationErrorForSortOrder(request, messageTransformer);
 	}
 
 	[Theory]
@@ -95,7 +95,7 @@ public class GetAllPostsForUserQueryRequestValidatorUnitTests : BasePostApplicat
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForSortTerm(messageTransformer, request);
+		result.ShouldHaveValidationErrorForSortTerm(request, messageTransformer);
 	}
 
 	[Theory]
@@ -111,7 +111,7 @@ public class GetAllPostsForUserQueryRequestValidatorUnitTests : BasePostApplicat
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForPage(messageTransformer, request);
+		result.ShouldHaveValidationErrorForPage(request, messageTransformer);
 	}
 
 	[Theory]
@@ -127,7 +127,7 @@ public class GetAllPostsForUserQueryRequestValidatorUnitTests : BasePostApplicat
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForPageSize(messageTransformer, request);
+		result.ShouldHaveValidationErrorForPageSize(request, messageTransformer);
 	}
 
 	[Theory]

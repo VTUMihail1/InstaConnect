@@ -17,7 +17,7 @@ public class VerifyEmailConfirmationTokenIntegrationTests : BaseEmailConfirmatio
 	protected override async Task OnInitializeAsync()
 	{
 		await ServiceScope.AddAsync(User, CancellationToken);
-		await ServiceScope.AddEmailConfirmationTokenRangeAsync(User.EmailConfirmationTokens, CancellationToken);
+		await ServiceScope.AddRangeAsync(User.EmailConfirmationTokens, CancellationToken);
 	}
 
 	[Theory]
@@ -32,7 +32,7 @@ public class VerifyEmailConfirmationTokenIntegrationTests : BaseEmailConfirmatio
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Assert
-		await Sender.ShouldThrowInvalidValidationExceptionForIdAsync(messageTransformer, request, CancellationToken);
+		await Sender.ShouldThrowInvalidValidationExceptionForIdAsync(request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -47,7 +47,7 @@ public class VerifyEmailConfirmationTokenIntegrationTests : BaseEmailConfirmatio
 		var request = _requestBuilder.WithValue(transformer).Build();
 
 		// Assert
-		await Sender.ShouldThrowInvalidValidationExceptionForValueAsync(messageTransformer, request, CancellationToken);
+		await Sender.ShouldThrowInvalidValidationExceptionForValueAsync(request, messageTransformer, CancellationToken);
 	}
 
 	[Fact]
@@ -64,7 +64,7 @@ public class VerifyEmailConfirmationTokenIntegrationTests : BaseEmailConfirmatio
 	public async Task SendAsync_ShouldThrowEmailConfirmationTokenNotFoundException_WhenEmailConfirmationTokenNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteEmailConfirmationTokenAsync(EmailConfirmationToken, CancellationToken);
+		await ServiceScope.DeleteAsync(EmailConfirmationToken, CancellationToken);
 
 		// Assert
 		await Sender.ShouldThrowEmailConfirmationTokenNotFoundExceptionAsync(_request, CancellationToken);
@@ -86,7 +86,7 @@ public class VerifyEmailConfirmationTokenIntegrationTests : BaseEmailConfirmatio
 	{
 		// Arrange
 		var updatedEmailConfirmationToken = EmailConfirmationTokenBuilder.WithAlreadyExpiresAtUtc().Build();
-		await ServiceScope.UpdateEmailConfirmationTokenAsync(updatedEmailConfirmationToken, CancellationToken);
+		await ServiceScope.UpdateAsync(updatedEmailConfirmationToken, CancellationToken);
 
 		// Assert
 		await Sender.ShouldThrowEmailConfirmationTokenExpiredExceptionAsync(_request, CancellationToken);

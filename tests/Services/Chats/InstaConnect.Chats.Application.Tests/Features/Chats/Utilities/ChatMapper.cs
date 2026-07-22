@@ -60,7 +60,7 @@ public static class ChatMapper
 
 			return new(null,
 					   participantTwo.ToFullResponse(),
-					   chats.Filter(chat => filter(chat, request), request, chat => transform(chat, request)),
+					   chats.Filter(request, chat => filter(chat, request), chat => transform(chat, request)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -80,7 +80,7 @@ public static class ChatMapper
 
 			return new(participantOne.ToFullResponse(),
 					   null,
-					   chats.Filter(chat => filter(chat, request), request, chat => transform(chat, request)),
+					   chats.Filter(request, chat => filter(chat, request), chat => transform(chat, request)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,

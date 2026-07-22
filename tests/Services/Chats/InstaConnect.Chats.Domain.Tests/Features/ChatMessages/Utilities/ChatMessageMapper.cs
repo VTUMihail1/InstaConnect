@@ -89,7 +89,7 @@ public static class ChatMessageMapper
 		public ICollection<ChatMessageResponse> ToResponse(
 			GetAllChatMessagesQuery query)
 		{
-			return chatMessages.Filter(chatMessage => chatMessage.MatchesFilter(query), query.Pagination, chatMessage => chatMessage.ToResponseWithoutChat(query));
+			return chatMessages.Filter(query.Pagination, chatMessage => chatMessage.MatchesFilter(query), chatMessage => chatMessage.ToResponseWithoutChat(query));
 		}
 
 		public long ToTotalCountResponse(

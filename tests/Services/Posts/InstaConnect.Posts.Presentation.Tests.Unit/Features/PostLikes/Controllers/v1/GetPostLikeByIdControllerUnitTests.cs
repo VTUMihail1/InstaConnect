@@ -36,7 +36,7 @@ public class GetPostLikeByIdControllerUnitTests : BasePostLikePresentationQueryU
 		var response = await _controller.GetByIdAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostLike, _request);
+		response.ShouldSatisfy(_request, PostLike);
 	}
 
 	[Fact]

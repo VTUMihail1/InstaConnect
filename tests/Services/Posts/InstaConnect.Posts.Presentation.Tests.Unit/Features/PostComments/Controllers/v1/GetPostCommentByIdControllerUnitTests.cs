@@ -36,7 +36,7 @@ public class GetPostCommentByIdControllerUnitTests : BasePostCommentPresentation
 		var response = await _controller.GetByIdAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostComment, _request);
+		response.ShouldSatisfy(_request, PostComment);
 	}
 
 	[Fact]

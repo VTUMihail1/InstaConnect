@@ -36,7 +36,7 @@ public class AddPostCommentLikeControllerUnitTests : BasePostCommentLikePresenta
 		var response = await _controller.AddAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostCommentLike, _request);
+		response.ShouldSatisfy(_request, PostCommentLike);
 	}
 
 	[Fact]

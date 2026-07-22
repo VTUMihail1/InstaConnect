@@ -17,7 +17,7 @@ public class AddForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenPres
 	protected override async Task OnInitializeAsync()
 	{
 		await ServiceScope.AddAsync(User, CancellationToken);
-		await ServiceScope.AddClaimAsync(UserClaim, CancellationToken);
+		await ServiceScope.AddAsync(UserClaim, CancellationToken);
 	}
 
 	[Theory]
@@ -49,7 +49,7 @@ public class AddForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenPres
 		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForName(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForName(request, messageTransformer);
 	}
 
 	[Fact]

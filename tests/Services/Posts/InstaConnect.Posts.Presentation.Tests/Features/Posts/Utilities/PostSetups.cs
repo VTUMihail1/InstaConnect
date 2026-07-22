@@ -8,11 +8,11 @@ public static class PostSetups
 {
 	extension(IServiceScope serviceScope)
 	{
-		public async Task<Post?> GetPostByIdAsync(
+		public async Task<Post?> GetByIdAsync(
 		PostIdApiResponse id,
 		CancellationToken cancellationToken)
 		{
-			return await serviceScope.GetPostByIdAsync(
+			return await serviceScope.GetByIdAsync(
 				new PostId(id.Id),
 				cancellationToken);
 		}

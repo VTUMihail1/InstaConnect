@@ -26,7 +26,7 @@ public class GetAllPostLikesForUserQueryHandlerUnitTests : BasePostLikeApplicati
 		var response = await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, PostLikes, _request);
+		response.ShouldSatisfy(_request, User, PostLikes);
 	}
 
 	[Fact]

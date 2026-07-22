@@ -32,7 +32,7 @@ public static class PostSetups
 			return serviceScope.ServiceProvider.GetPostIncludeBuilderFactory();
 		}
 
-		public async Task<Post?> GetPostByIdAsync(
+		public async Task<Post?> GetByIdAsync(
 			PostId id,
 			CancellationToken cancellationToken)
 		{
@@ -41,21 +41,21 @@ public static class PostSetups
 			return await serviceScope.GetPostCommandRepository().GetByIdAsync(id, include, cancellationToken);
 		}
 
-		public async Task AddPostAsync(
+		public async Task AddAsync(
 			Post post,
 			CancellationToken cancellationToken)
 		{
 			await serviceScope.GetPostCommandRepository().AddAsync(post, cancellationToken);
 		}
 
-		public async Task AddPostRangeAsync(
+		public async Task AddRangeAsync(
 			IEnumerable<Post> posts,
 			CancellationToken cancellationToken)
 		{
 			await serviceScope.GetPostCommandRepository().AddRangeAsync(posts, cancellationToken);
 		}
 
-		public async Task DeletePostAsync(
+		public async Task DeleteAsync(
 			Post post,
 			CancellationToken cancellationToken)
 		{

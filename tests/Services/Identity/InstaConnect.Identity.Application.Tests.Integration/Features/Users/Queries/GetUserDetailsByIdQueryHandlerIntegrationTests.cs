@@ -32,7 +32,7 @@ public class GetUserDetailsByIdQueryHandlerIntegrationTests : BaseUserApplicatio
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForIdAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -45,7 +45,7 @@ public class GetUserDetailsByIdQueryHandlerIntegrationTests : BaseUserApplicatio
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForCurrentIdAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Fact]

@@ -20,10 +20,10 @@ public class GetAllChatMessagesFunctionalTests : BaseChatMessagePresentationQuer
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserRangeAsync(ParticipantOnes, CancellationToken);
-		await ServiceScope.AddUserRangeAsync(ParticipantTwos, CancellationToken);
-		await ServiceScope.AddChatRangeAsync(Chats, CancellationToken);
-		await ServiceScope.AddChatMessageRangeAsync(ChatMessages, CancellationToken);
+		await ServiceScope.AddRangeAsync(ParticipantOnes, CancellationToken);
+		await ServiceScope.AddRangeAsync(ParticipantTwos, CancellationToken);
+		await ServiceScope.AddRangeAsync(Chats, CancellationToken);
+		await ServiceScope.AddRangeAsync(ChatMessages, CancellationToken);
 	}
 
 	[Fact]
@@ -65,7 +65,7 @@ public class GetAllChatMessagesFunctionalTests : BaseChatMessagePresentationQuer
 		var response = await HttpClient.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForParticipantTwoId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForParticipantTwoId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -99,7 +99,7 @@ public class GetAllChatMessagesFunctionalTests : BaseChatMessagePresentationQuer
 		var response = await HttpClient.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForCurrentUserId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForCurrentUserId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -130,7 +130,7 @@ public class GetAllChatMessagesFunctionalTests : BaseChatMessagePresentationQuer
 		var response = await HttpClient.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForSortOrder(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForSortOrder(request, messageTransformer);
 	}
 
 	[Theory]
@@ -161,7 +161,7 @@ public class GetAllChatMessagesFunctionalTests : BaseChatMessagePresentationQuer
 		var response = await HttpClient.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForSortTerm(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForSortTerm(request, messageTransformer);
 	}
 
 	[Theory]
@@ -193,7 +193,7 @@ public class GetAllChatMessagesFunctionalTests : BaseChatMessagePresentationQuer
 		var response = await HttpClient.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForPage(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForPage(request, messageTransformer);
 	}
 
 	[Theory]
@@ -225,14 +225,14 @@ public class GetAllChatMessagesFunctionalTests : BaseChatMessagePresentationQuer
 		var response = await HttpClient.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForPageSize(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForPageSize(request, messageTransformer);
 	}
 
 	[Fact]
 	public async Task GetAllAsync_ShouldHaveNotFoundStatusCode_WhenIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteChatAsync(Chat, CancellationToken);
+		await ServiceScope.DeleteAsync(Chat, CancellationToken);
 
 		// Act
 		var response = await HttpClient.GetAllStatusCodeAsync(_request, CancellationToken);

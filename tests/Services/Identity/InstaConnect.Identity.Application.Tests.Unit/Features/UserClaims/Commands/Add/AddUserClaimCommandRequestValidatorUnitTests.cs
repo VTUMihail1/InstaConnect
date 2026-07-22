@@ -34,7 +34,7 @@ public class AddUserClaimCommandRequestValidatorUnitTests : BaseUserClaimApplica
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForId(messageTransformer, request);
+		result.ShouldHaveValidationErrorForId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -49,7 +49,7 @@ public class AddUserClaimCommandRequestValidatorUnitTests : BaseUserClaimApplica
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForClaim(messageTransformer, request);
+		result.ShouldHaveValidationErrorForClaim(request, messageTransformer);
 	}
 
 	[Fact]

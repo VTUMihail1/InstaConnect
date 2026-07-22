@@ -16,8 +16,8 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(ParticipantOne, CancellationToken);
-		await ServiceScope.AddUserAsync(ParticipantTwo, CancellationToken);
+		await ServiceScope.AddAsync(ParticipantOne, CancellationToken);
+		await ServiceScope.AddAsync(ParticipantTwo, CancellationToken);
 	}
 
 	[Fact]
@@ -61,7 +61,7 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForParticipantOneId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForParticipantOneId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -97,14 +97,14 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForParticipantTwoId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForParticipantTwoId(request, messageTransformer);
 	}
 
 	[Fact]
 	public async Task AddAsync_ShouldHaveNotFoundStatusCode_WhenParticipantOneIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(ParticipantOne, CancellationToken);
+		await ServiceScope.DeleteAsync(ParticipantOne, CancellationToken);
 
 		// Act
 		var response = await Client.AddStatusCodeAsync(_request, CancellationToken);
@@ -117,7 +117,7 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 	public async Task AddAsync_ShouldHaveParticipantOneNotFoundProblemDetails_WhenParticipantOneIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(ParticipantOne, CancellationToken);
+		await ServiceScope.DeleteAsync(ParticipantOne, CancellationToken);
 
 		// Act
 		var response = await Client.AddProblemDetailsAsync(_request, CancellationToken);
@@ -130,7 +130,7 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 	public async Task AddAsync_ShouldHaveNotFoundStatusCode_WhenParticipantTwoIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(ParticipantTwo, CancellationToken);
+		await ServiceScope.DeleteAsync(ParticipantTwo, CancellationToken);
 
 		// Act
 		var response = await Client.AddStatusCodeAsync(_request, CancellationToken);
@@ -143,7 +143,7 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 	public async Task AddAsync_ShouldHaveParticipantTwoNotFoundProblemDetails_WhenParticipantTwoIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(ParticipantTwo, CancellationToken);
+		await ServiceScope.DeleteAsync(ParticipantTwo, CancellationToken);
 
 		// Act
 		var response = await Client.AddProblemDetailsAsync(_request, CancellationToken);
@@ -156,7 +156,7 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 	public async Task AddAsync_ShouldHaveChatAlreadyExistsProblemDetails_WhenChatAlreadyExists()
 	{
 		// Arrange
-		await ServiceScope.AddChatAsync(Chat, CancellationToken);
+		await ServiceScope.AddAsync(Chat, CancellationToken);
 
 		// Act
 		var response = await Client.AddProblemDetailsAsync(_request, CancellationToken);
@@ -171,7 +171,7 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 		IStringTransformer transformer)
 	{
 		// Arrange
-		await ServiceScope.AddChatAsync(Chat, CancellationToken);
+		await ServiceScope.AddAsync(Chat, CancellationToken);
 		var request = _requestBuilder.WithParticipantOneId(transformer).Build();
 
 		// Act
@@ -187,7 +187,7 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 		IStringTransformer transformer)
 	{
 		// Arrange
-		await ServiceScope.AddChatAsync(Chat, CancellationToken);
+		await ServiceScope.AddAsync(Chat, CancellationToken);
 		var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
 
 		// Act
@@ -201,7 +201,7 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 	public async Task AddAsync_ShouldHaveChatAlreadyExistsProblemDetails_WhenInvertedChatAlreadyExists()
 	{
 		// Arrange
-		await ServiceScope.AddChatAsync(Chat, CancellationToken);
+		await ServiceScope.AddAsync(Chat, CancellationToken);
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
@@ -217,7 +217,7 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 		IStringTransformer transformer)
 	{
 		// Arrange
-		await ServiceScope.AddChatAsync(Chat, CancellationToken);
+		await ServiceScope.AddAsync(Chat, CancellationToken);
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id, transformer).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
@@ -233,7 +233,7 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 		IStringTransformer transformer)
 	{
 		// Arrange
-		await ServiceScope.AddChatAsync(Chat, CancellationToken);
+		await ServiceScope.AddAsync(Chat, CancellationToken);
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id, transformer).Build();
 
 		// Act
@@ -288,7 +288,7 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 	{
 		// Act
 		var response = await Client.AddAsync(_request, CancellationToken);
-		var chat = await ServiceScope.GetChatByIdAsync(response.Response, CancellationToken);
+		var chat = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(chat, _request);
@@ -304,7 +304,7 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 
 		// Act
 		var response = await Client.AddAsync(request, CancellationToken);
-		var chat = await ServiceScope.GetChatByIdAsync(response.Response, CancellationToken);
+		var chat = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(chat, request);
@@ -320,7 +320,7 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 
 		// Act
 		var response = await Client.AddAsync(request, CancellationToken);
-		var chat = await ServiceScope.GetChatByIdAsync(response.Response, CancellationToken);
+		var chat = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(chat, request);
@@ -331,7 +331,7 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 	{
 		// Act
 		var response = await Client.AddAsync(_request, CancellationToken);
-		var chat = await ServiceScope.GetChatByIdAsync(response.Response, CancellationToken);
+		var chat = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
 		chat.ShouldSatisfy(_request);
@@ -347,7 +347,7 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 
 		// Act
 		var response = await Client.AddAsync(request, CancellationToken);
-		var chat = await ServiceScope.GetChatByIdAsync(response.Response, CancellationToken);
+		var chat = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
 		chat.ShouldSatisfy(request);
@@ -363,7 +363,7 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 
 		// Act
 		var response = await Client.AddAsync(request, CancellationToken);
-		var chat = await ServiceScope.GetChatByIdAsync(response.Response, CancellationToken);
+		var chat = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
 		chat.ShouldSatisfy(request);
@@ -374,10 +374,11 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 	{
 		// Act
 		var response = await Client.AddAsync(_request, CancellationToken);
-		var chat = await ServiceScope.GetChatByIdAsync(response.Response, CancellationToken);
+		var chat = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var eventRequest = await EventHarness.PublishedAddedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedChatAddedAsync(_request, chat, CancellationToken);
+		eventRequest.ShouldSatisfy(_request, chat);
 	}
 
 	[Theory]
@@ -390,10 +391,11 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 
 		// Act
 		var response = await Client.AddAsync(request, CancellationToken);
-		var chat = await ServiceScope.GetChatByIdAsync(response.Response, CancellationToken);
+		var chat = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var eventRequest = await EventHarness.PublishedAddedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedChatAddedAsync(request, chat, CancellationToken);
+		eventRequest.ShouldSatisfy(request, chat);
 	}
 
 	[Theory]
@@ -406,9 +408,10 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 
 		// Act
 		var response = await Client.AddAsync(request, CancellationToken);
-		var chat = await ServiceScope.GetChatByIdAsync(response.Response, CancellationToken);
+		var chat = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var eventRequest = await EventHarness.PublishedAddedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedChatAddedAsync(request, chat, CancellationToken);
+		eventRequest.ShouldSatisfy(request, chat);
 	}
 }

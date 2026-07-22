@@ -69,7 +69,7 @@ public static class PostMapper
 			var totalCount = posts.Count(post => filter(post, request));
 
 			return new(user.ToFullResponse(),
-						posts.Filter(post => filter(post, request), request, post => transform(post, request)),
+						posts.Filter(request, post => filter(post, request), post => transform(post, request)),
 						request.Page,
 						request.PageSize,
 						totalCount,
@@ -87,7 +87,7 @@ public static class PostMapper
 			var totalCount = posts.Count(post => filter(post, request));
 
 			return new(null,
-					   posts.Filter(post => filter(post, request), request, post => transform(post, request)),
+					   posts.Filter(request, post => filter(post, request), post => transform(post, request)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,

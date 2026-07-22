@@ -19,7 +19,7 @@ public class UpdateCurrentUserFunctionalTests : BaseUserPresentationCommandFunct
 	protected override async Task OnInitializeAsync()
 	{
 		await ServiceScope.AddAsync(User, CancellationToken);
-		await ServiceScope.AddEmailConfirmationTokenRangeAsync(User.EmailConfirmationTokens, CancellationToken);
+		await ServiceScope.AddRangeAsync(User.EmailConfirmationTokens, CancellationToken);
 	}
 
 	[Fact]
@@ -64,7 +64,7 @@ public class UpdateCurrentUserFunctionalTests : BaseUserPresentationCommandFunct
 		var response = await Client.UpdateCurrentProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -101,7 +101,7 @@ public class UpdateCurrentUserFunctionalTests : BaseUserPresentationCommandFunct
 		var response = await Client.UpdateCurrentProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForName(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForName(request, messageTransformer);
 	}
 
 	[Theory]
@@ -138,7 +138,7 @@ public class UpdateCurrentUserFunctionalTests : BaseUserPresentationCommandFunct
 		var response = await Client.UpdateCurrentProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForFirstName(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForFirstName(request, messageTransformer);
 	}
 
 	[Theory]
@@ -175,7 +175,7 @@ public class UpdateCurrentUserFunctionalTests : BaseUserPresentationCommandFunct
 		var response = await Client.UpdateCurrentProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForLastName(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForLastName(request, messageTransformer);
 	}
 
 	[Theory]
@@ -214,7 +214,7 @@ public class UpdateCurrentUserFunctionalTests : BaseUserPresentationCommandFunct
 		var response = await Client.UpdateCurrentProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForEmail(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForEmail(request, messageTransformer);
 	}
 
 	[Fact]

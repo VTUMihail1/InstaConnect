@@ -36,7 +36,7 @@ public class GetAllPostLikesControllerUnitTests : BasePostLikePresentationQueryU
 		var response = await _controller.GetAllAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Post, PostLikes, _request);
+		response.ShouldSatisfy(_request, Post, PostLikes);
 	}
 
 	[Fact]

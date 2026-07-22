@@ -9,11 +9,11 @@ public static class PostCommentLikeSetups
 {
 	extension(IServiceScope serviceScope)
 	{
-		public async Task<PostCommentLike?> GetPostCommentLikeByIdAsync(
+		public async Task<PostCommentLike?> GetByIdAsync(
 			PostCommentLikeIdCommandResponse id,
 			CancellationToken cancellationToken)
 		{
-			return await serviceScope.GetPostCommentLikeByIdAsync(
+			return await serviceScope.GetByIdAsync(
 				new PostCommentLikeId(
 					new(
 						new(id.Id),

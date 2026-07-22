@@ -20,9 +20,9 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserRangeAsync(Followers, CancellationToken);
-		await ServiceScope.AddUserRangeAsync(Followings, CancellationToken);
-		await ServiceScope.AddFollowRangeAsync(Follows, CancellationToken);
+		await ServiceScope.AddRangeAsync(Followers, CancellationToken);
+		await ServiceScope.AddRangeAsync(Followings, CancellationToken);
+		await ServiceScope.AddRangeAsync(Follows, CancellationToken);
 	}
 
 	[Theory]
@@ -54,7 +54,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var response = await Client.GetAllForFollowingProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForFollowingId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForFollowingId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -84,7 +84,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var response = await Client.GetAllForFollowingProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForFollowerName(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForFollowerName(request, messageTransformer);
 	}
 
 	[Theory]
@@ -114,7 +114,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var response = await Client.GetAllForFollowingProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForCurrentUserId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForCurrentUserId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -144,7 +144,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var response = await Client.GetAllForFollowingProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForSortOrder(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForSortOrder(request, messageTransformer);
 	}
 
 	[Theory]
@@ -174,7 +174,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var response = await Client.GetAllForFollowingProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForSortTerm(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForSortTerm(request, messageTransformer);
 	}
 
 	[Theory]
@@ -206,7 +206,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var response = await Client.GetAllForFollowingProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForPage(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForPage(request, messageTransformer);
 	}
 
 	[Theory]
@@ -238,7 +238,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var response = await Client.GetAllForFollowingProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForPageSize(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForPageSize(request, messageTransformer);
 	}
 
 	[Fact]

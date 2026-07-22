@@ -32,7 +32,7 @@ public class AddFollowCommandRequestValidatorUnitTests : BaseFollowApplicationCo
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForFollowerId(messageTransformer, request);
+		result.ShouldHaveValidationErrorForFollowerId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -50,7 +50,7 @@ public class AddFollowCommandRequestValidatorUnitTests : BaseFollowApplicationCo
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForFollowingId(messageTransformer, request);
+		result.ShouldHaveValidationErrorForFollowingId(request, messageTransformer);
 	}
 
 	[Fact]

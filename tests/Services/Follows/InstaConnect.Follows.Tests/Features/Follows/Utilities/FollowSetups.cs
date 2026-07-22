@@ -9,12 +9,12 @@ public static class FollowSetups
 {
 	extension(IServiceProvider serviceProvider)
 	{
-		public IFollowCommandRepository GetFollowCommandRepository()
+		public IFollowCommandRepository GetCommandRepository()
 		{
 			return serviceProvider.GetRequiredService<IFollowCommandRepository>();
 		}
 
-		public IFollowIncludeBuilderFactory GetFollowIncludeBuilderFactory()
+		public IFollowIncludeBuilderFactory GetIncludeBuilderFactory()
 		{
 			return serviceProvider.GetRequiredService<IFollowIncludeBuilderFactory>();
 		}
@@ -22,44 +22,44 @@ public static class FollowSetups
 
 	extension(IServiceScope serviceScope)
 	{
-		public IFollowCommandRepository GetFollowCommandRepository()
+		public IFollowCommandRepository GetCommandRepository()
 		{
-			return serviceScope.ServiceProvider.GetFollowCommandRepository();
+			return serviceScope.ServiceProvider.GetCommandRepository();
 		}
 
-		public IFollowIncludeBuilderFactory GetFollowIncludeBuilderFactory()
+		public IFollowIncludeBuilderFactory GetIncludeBuilderFactory()
 		{
-			return serviceScope.ServiceProvider.GetFollowIncludeBuilderFactory();
+			return serviceScope.ServiceProvider.GetIncludeBuilderFactory();
 		}
 
-		public async Task<Follow?> GetFollowByIdAsync(
+		public async Task<Follow?> GetByIdAsync(
 			FollowId id,
 			CancellationToken cancellationToken)
 		{
-			var Include = serviceScope.GetFollowIncludeBuilderFactory().Create().WithFollower().WithFollowing().Build();
+			var include = serviceScope.GetIncludeBuilderFactory().Create().WithFollower().WithFollowing().Build();
 
-			return await serviceScope.GetFollowCommandRepository().GetByIdAsync(id, Include, cancellationToken);
+			return await serviceScope.GetCommandRepository().GetByIdAsync(id, include, cancellationToken);
 		}
 
-		public async Task AddFollowAsync(
+		public async Task AddAsync(
 			Follow follow,
 			CancellationToken cancellationToken)
 		{
-			await serviceScope.GetFollowCommandRepository().AddAsync(follow, cancellationToken);
+			await serviceScope.GetCommandRepository().AddAsync(follow, cancellationToken);
 		}
 
-		public async Task AddFollowRangeAsync(
+		public async Task AddRangeAsync(
 			IEnumerable<Follow> follows,
 			CancellationToken cancellationToken)
 		{
-			await serviceScope.GetFollowCommandRepository().AddRangeAsync(follows, cancellationToken);
+			await serviceScope.GetCommandRepository().AddRangeAsync(follows, cancellationToken);
 		}
 
-		public async Task DeleteFollowAsync(
+		public async Task DeleteAsync(
 			Follow follow,
 			CancellationToken cancellationToken)
 		{
-			await serviceScope.GetFollowCommandRepository().DeleteAsync(follow, cancellationToken);
+			await serviceScope.GetCommandRepository().DeleteAsync(follow, cancellationToken);
 		}
 	}
 }

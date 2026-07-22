@@ -27,15 +27,15 @@ public class UpdatePostIntegrationTests : BasePostDomainCommandIntegrationTest
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
-		await ServiceScope.AddPostAsync(Post, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(Post, CancellationToken);
 	}
 
 	[Fact]
 	public async Task UpdateAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostAsync(Post, CancellationToken);
+		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowPostNotFoundExceptionAsync(_command, CancellationToken);
@@ -46,7 +46,7 @@ public class UpdatePostIntegrationTests : BasePostDomainCommandIntegrationTest
 	{
 		// Arrange
 		var user = UserBuilderFactory.Create().Build();
-		await ServiceScope.AddUserAsync(user, CancellationToken);
+		await ServiceScope.AddAsync(user, CancellationToken);
 		var command = _commandBuilder.WithUserId(user.Id).Build();
 
 		// Assert
@@ -58,10 +58,10 @@ public class UpdatePostIntegrationTests : BasePostDomainCommandIntegrationTest
 	{
 		// Act
 		var response = await Service.UpdateAsync(_command, CancellationToken);
-		var post = await ServiceScope.GetPostByIdAsync(response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(post, _command);
+		response.ShouldSatisfy(_command, post);
 	}
 
 	[Theory]
@@ -74,10 +74,10 @@ public class UpdatePostIntegrationTests : BasePostDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var post = await ServiceScope.GetPostByIdAsync(response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(post, command);
+		response.ShouldSatisfy(command, post);
 	}
 
 	[Theory]
@@ -90,10 +90,10 @@ public class UpdatePostIntegrationTests : BasePostDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var post = await ServiceScope.GetPostByIdAsync(response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(post, command);
+		response.ShouldSatisfy(command, post);
 	}
 
 	[Fact]
@@ -101,7 +101,7 @@ public class UpdatePostIntegrationTests : BasePostDomainCommandIntegrationTest
 	{
 		// Act
 		var response = await Service.UpdateAsync(_command, CancellationToken);
-		var post = await ServiceScope.GetPostByIdAsync(response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		post.ShouldSatisfy(_command);
@@ -117,7 +117,7 @@ public class UpdatePostIntegrationTests : BasePostDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var post = await ServiceScope.GetPostByIdAsync(response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		post.ShouldSatisfy(command);
@@ -133,7 +133,7 @@ public class UpdatePostIntegrationTests : BasePostDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var post = await ServiceScope.GetPostByIdAsync(response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		post.ShouldSatisfy(command);
@@ -144,10 +144,12 @@ public class UpdatePostIntegrationTests : BasePostDomainCommandIntegrationTest
 	{
 		// Act
 		var response = await Service.UpdateAsync(_command, CancellationToken);
-		var post = await ServiceScope.GetPostByIdAsync(response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
+
+		var eventRequest = await EventHarness.PublishedUpdatedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedPostUpdatedAsync(_command, post, CancellationToken);
+		eventRequest.ShouldSatisfy(_command, post);
 	}
 
 	[Theory]
@@ -160,10 +162,12 @@ public class UpdatePostIntegrationTests : BasePostDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var post = await ServiceScope.GetPostByIdAsync(response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
+
+		var eventRequest = await EventHarness.PublishedUpdatedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedPostUpdatedAsync(command, post, CancellationToken);
+		eventRequest.ShouldSatisfy(command, post);
 	}
 
 	[Theory]
@@ -176,9 +180,11 @@ public class UpdatePostIntegrationTests : BasePostDomainCommandIntegrationTest
 
 		// Act
 		var response = await Service.UpdateAsync(command, CancellationToken);
-		var post = await ServiceScope.GetPostByIdAsync(response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
+
+		var eventRequest = await EventHarness.PublishedUpdatedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedPostUpdatedAsync(command, post, CancellationToken);
+		eventRequest.ShouldSatisfy(command, post);
 	}
 }

@@ -5,15 +5,15 @@ public static class RefreshTokenValidationAssertions
 	extension(TestValidationResult<DeleteCurrentRefreshTokenCommandRequest> result)
 	{
 		public void ShouldHaveValidationErrorForId(
-			IStringMessageTransformer messageTransformer,
-			DeleteCurrentRefreshTokenCommandRequest request)
+			DeleteCurrentRefreshTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.Id, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForValue(
-			IStringMessageTransformer messageTransformer,
-			DeleteCurrentRefreshTokenCommandRequest request)
+			DeleteCurrentRefreshTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.Value, messageTransformer);
 		}
@@ -22,15 +22,15 @@ public static class RefreshTokenValidationAssertions
 	extension(TestValidationResult<IssueRefreshTokenCommandRequest> result)
 	{
 		public void ShouldHaveValidationErrorForName(
-			IStringMessageTransformer messageTransformer,
-			IssueRefreshTokenCommandRequest request)
+			IssueRefreshTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.Name, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForPassword(
-			IStringMessageTransformer messageTransformer,
-			IssueRefreshTokenCommandRequest request)
+			IssueRefreshTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.Password, messageTransformer);
 		}
@@ -39,15 +39,15 @@ public static class RefreshTokenValidationAssertions
 	extension(TestValidationResult<RotateRefreshTokenCommandRequest> result)
 	{
 		public void ShouldHaveValidationErrorForId(
-			IStringMessageTransformer messageTransformer,
-			RotateRefreshTokenCommandRequest request)
+			RotateRefreshTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.Id, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForValue(
-			IStringMessageTransformer messageTransformer,
-			RotateRefreshTokenCommandRequest request)
+			RotateRefreshTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.Value, messageTransformer);
 		}

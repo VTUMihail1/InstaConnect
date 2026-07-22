@@ -16,8 +16,8 @@ public class DeletePostIntegrationTests : BasePostApplicationCommandIntegrationT
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
-		await ServiceScope.AddPostAsync(Post, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(Post, CancellationToken);
 	}
 
 	[Theory]
@@ -33,7 +33,7 @@ public class DeletePostIntegrationTests : BasePostApplicationCommandIntegrationT
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForIdAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -49,14 +49,14 @@ public class DeletePostIntegrationTests : BasePostApplicationCommandIntegrationT
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForUserIdAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Fact]
 	public async Task SendAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostAsync(Post, CancellationToken);
+		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Assert
 		await Sender.ShouldThrowPostNotFoundExceptionAsync(_request, CancellationToken);
@@ -67,7 +67,7 @@ public class DeletePostIntegrationTests : BasePostApplicationCommandIntegrationT
 	{
 		// Arrange
 		var user = UserBuilderFactory.Create().Build();
-		await ServiceScope.AddUserAsync(user, CancellationToken);
+		await ServiceScope.AddAsync(user, CancellationToken);
 		var request = _requestBuilder.WithUserId(user.Id).Build();
 
 		// Assert
@@ -79,7 +79,7 @@ public class DeletePostIntegrationTests : BasePostApplicationCommandIntegrationT
 	{
 		// Act
 		await Sender.SendAsync(_request, CancellationToken);
-		var post = await ServiceScope.GetPostByIdAsync(Post.Id, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(Post.Id, CancellationToken);
 
 		// Assert
 		post.ShouldBeNull();
@@ -95,7 +95,7 @@ public class DeletePostIntegrationTests : BasePostApplicationCommandIntegrationT
 
 		// Act
 		await Sender.SendAsync(request, CancellationToken);
-		var post = await ServiceScope.GetPostByIdAsync(Post.Id, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(Post.Id, CancellationToken);
 
 		// Assert
 		post.ShouldBeNull();
@@ -111,7 +111,7 @@ public class DeletePostIntegrationTests : BasePostApplicationCommandIntegrationT
 
 		// Act
 		await Sender.SendAsync(request, CancellationToken);
-		var post = await ServiceScope.GetPostByIdAsync(Post.Id, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(Post.Id, CancellationToken);
 
 		// Assert
 		post.ShouldBeNull();
@@ -123,8 +123,10 @@ public class DeletePostIntegrationTests : BasePostApplicationCommandIntegrationT
 		// Act
 		await Sender.SendAsync(_request, CancellationToken);
 
+		var eventRequest = await EventHarness.PublishedDeletedEventRequest(CancellationToken);
+
 		// Assert
-		await EventHarness.ShouldHavePublishedPostDeletedAsync(_request, Post, CancellationToken);
+		eventRequest.ShouldSatisfy(_request, Post);
 	}
 
 	[Theory]
@@ -138,8 +140,10 @@ public class DeletePostIntegrationTests : BasePostApplicationCommandIntegrationT
 		// Act
 		await Sender.SendAsync(request, CancellationToken);
 
+		var eventRequest = await EventHarness.PublishedDeletedEventRequest(CancellationToken);
+
 		// Assert
-		await EventHarness.ShouldHavePublishedPostDeletedAsync(request, Post, CancellationToken);
+		eventRequest.ShouldSatisfy(request, Post);
 	}
 
 	[Theory]
@@ -153,7 +157,9 @@ public class DeletePostIntegrationTests : BasePostApplicationCommandIntegrationT
 		// Act
 		await Sender.SendAsync(request, CancellationToken);
 
+		var eventRequest = await EventHarness.PublishedDeletedEventRequest(CancellationToken);
+
 		// Assert
-		await EventHarness.ShouldHavePublishedPostDeletedAsync(request, Post, CancellationToken);
+		eventRequest.ShouldSatisfy(request, Post);
 	}
 }

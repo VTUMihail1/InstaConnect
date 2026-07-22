@@ -80,13 +80,13 @@ public static class FollowMapper
 		public ICollection<FollowResponse> ToResponse(
 			GetAllFollowsQuery query)
 		{
-			return follows.Filter(follow => follow.MatchesFilter(query.Filter), query.Pagination, follow => follow.ToResponseWithoutFollower(query));
+			return follows.Filter(query.Pagination, follow => follow.MatchesFilter(query.Filter), follow => follow.ToResponseWithoutFollower(query));
 		}
 
 		public ICollection<FollowResponse> ToResponse(
 			GetAllFollowsForFollowingQuery query)
 		{
-			return follows.Filter(follow => follow.MatchesFilter(query.Filter), query.Pagination, follow => follow.ToResponseWithoutFollowing(query));
+			return follows.Filter(query.Pagination, follow => follow.MatchesFilter(query.Filter), follow => follow.ToResponseWithoutFollowing(query));
 		}
 
 		public long ToTotalCountResponse(

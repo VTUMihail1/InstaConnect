@@ -21,22 +21,22 @@ public static class UserValidationAssertions
 		}
 
 		public void ShouldHaveValidationErrorForLastName(
-			IStringMessageTransformer messageTransformer,
-			UpdateCurrentUserCommandRequest request)
+			UpdateCurrentUserCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.LastName, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForName(
-			IStringMessageTransformer messageTransformer,
-			UpdateCurrentUserCommandRequest request)
+			UpdateCurrentUserCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.Name, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForEmail(
-			IStringMessageTransformer messageTransformer,
-			UpdateCurrentUserCommandRequest request)
+			UpdateCurrentUserCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.Email, messageTransformer);
 		}
@@ -45,8 +45,8 @@ public static class UserValidationAssertions
 	extension(TestValidationResult<DeleteUserCommandRequest> result)
 	{
 		public void ShouldHaveValidationErrorForId(
-			IStringMessageTransformer messageTransformer,
-			DeleteUserCommandRequest request)
+			DeleteUserCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.Id, messageTransformer);
 		}
@@ -55,8 +55,8 @@ public static class UserValidationAssertions
 	extension(TestValidationResult<DeleteCurrentUserCommandRequest> result)
 	{
 		public void ShouldHaveValidationErrorForId(
-			IStringMessageTransformer messageTransformer,
-			DeleteCurrentUserCommandRequest request)
+			DeleteCurrentUserCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.CurrentId, messageTransformer);
 		}
@@ -65,15 +65,15 @@ public static class UserValidationAssertions
 	extension(TestValidationResult<GetUserByIdQueryRequest> result)
 	{
 		public void ShouldHaveValidationErrorForId(
-			IStringMessageTransformer messageTransformer,
-			GetUserByIdQueryRequest request)
+			GetUserByIdQueryRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.Id, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForCurrentId(
-			IStringMessageTransformer messageTransformer,
-			GetUserByIdQueryRequest request)
+			GetUserByIdQueryRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.CurrentId, messageTransformer);
 		}
@@ -82,8 +82,8 @@ public static class UserValidationAssertions
 	extension(TestValidationResult<GetCurrentUserByIdQueryRequest> result)
 	{
 		public void ShouldHaveValidationErrorForCurrentId(
-			IStringMessageTransformer messageTransformer,
-			GetCurrentUserByIdQueryRequest request)
+			GetCurrentUserByIdQueryRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.CurrentId, messageTransformer);
 		}
@@ -92,15 +92,15 @@ public static class UserValidationAssertions
 	extension(TestValidationResult<GetUserDetailsByIdQueryRequest> result)
 	{
 		public void ShouldHaveValidationErrorForId(
-			IStringMessageTransformer messageTransformer,
-			GetUserDetailsByIdQueryRequest request)
+			GetUserDetailsByIdQueryRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.Id, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForCurrentId(
-			IStringMessageTransformer messageTransformer,
-			GetUserDetailsByIdQueryRequest request)
+			GetUserDetailsByIdQueryRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.CurrentId, messageTransformer);
 		}
@@ -109,8 +109,8 @@ public static class UserValidationAssertions
 	extension(TestValidationResult<GetCurrentUserDetailsByIdQueryRequest> result)
 	{
 		public void ShouldHaveValidationErrorForCurrentId(
-			IStringMessageTransformer messageTransformer,
-			GetCurrentUserDetailsByIdQueryRequest request)
+			GetCurrentUserDetailsByIdQueryRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.CurrentId, messageTransformer);
 		}
@@ -119,43 +119,43 @@ public static class UserValidationAssertions
 	extension(TestValidationResult<AddUserCommandRequest> result)
 	{
 		public void ShouldHaveValidationErrorForFirstName(
-			IStringMessageTransformer messageTransformer,
-			AddUserCommandRequest request)
+			AddUserCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.FirstName, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForLastName(
-			IStringMessageTransformer messageTransformer,
-			AddUserCommandRequest request)
+			AddUserCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.LastName, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForName(
-			IStringMessageTransformer messageTransformer,
-			AddUserCommandRequest request)
+			AddUserCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.Name, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForEmail(
-			IStringMessageTransformer messageTransformer,
-			AddUserCommandRequest request)
+			AddUserCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.Email, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForPassword(
-			IStringMessageTransformer messageTransformer,
-			AddUserCommandRequest request)
+			AddUserCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.Password, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForConfirmPassword(
-			IStringMessageTransformer messageTransformer,
-			AddUserCommandRequest request)
+			AddUserCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.ConfirmPassword, messageTransformer);
 		}
@@ -164,57 +164,57 @@ public static class UserValidationAssertions
 	extension(TestValidationResult<GetAllUsersQueryRequest> result)
 	{
 		public void ShouldHaveValidationErrorForName(
-			IStringMessageTransformer messageTransformer,
-			GetAllUsersQueryRequest request)
+			GetAllUsersQueryRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.Name, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForFirstName(
-			IStringMessageTransformer messageTransformer,
-			GetAllUsersQueryRequest request)
+			GetAllUsersQueryRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.FirstName, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForLastName(
-			IStringMessageTransformer messageTransformer,
-			GetAllUsersQueryRequest request)
+			GetAllUsersQueryRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.LastName, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForCurrentId(
-			IStringMessageTransformer messageTransformer,
-			GetAllUsersQueryRequest request)
+			GetAllUsersQueryRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.CurrentId, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForPage(
-			IIntMessageTransformer messageTransformer,
-			GetAllUsersQueryRequest request)
+			GetAllUsersQueryRequest request,
+			IIntMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.Page, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForPageSize(
-			IIntMessageTransformer messageTransformer,
-			GetAllUsersQueryRequest request)
+			GetAllUsersQueryRequest request,
+			IIntMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.PageSize, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForSortOrder(
-			IEnumMessageTransformer<CommonSortOrder> messageTransformer,
-			GetAllUsersQueryRequest request)
+			GetAllUsersQueryRequest request,
+			IEnumMessageTransformer<CommonSortOrder> messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.SortOrder, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForSortTerm(
-			IEnumMessageTransformer<UsersSortTerm> messageTransformer,
-			GetAllUsersQueryRequest request)
+			GetAllUsersQueryRequest request,
+			IEnumMessageTransformer<UsersSortTerm> messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.SortTerm, messageTransformer);
 		}

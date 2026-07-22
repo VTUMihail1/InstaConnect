@@ -16,8 +16,8 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
-		await ServiceScope.AddPostAsync(Post, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(Post, CancellationToken);
 	}
 
 	[Fact]
@@ -59,7 +59,7 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		var response = await Client.DeleteProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -93,14 +93,14 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		var response = await Client.DeleteProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForUserId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForUserId(request, messageTransformer);
 	}
 
 	[Fact]
 	public async Task DeleteAsync_ShouldHaveNotFoundStatusCode_WhenIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostAsync(Post, CancellationToken);
+		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Act
 		var response = await Client.DeleteStatusCodeAsync(_request, CancellationToken);
@@ -113,7 +113,7 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 	public async Task DeleteAsync_ShouldHavePostNotFoundProblemDetails_WhenIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostAsync(Post, CancellationToken);
+		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Act
 		var response = await Client.DeleteProblemDetailsAsync(_request, CancellationToken);
@@ -127,7 +127,7 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 	{
 		// Arrange
 		var user = UserBuilderFactory.Create().Build();
-		await ServiceScope.AddUserAsync(user, CancellationToken);
+		await ServiceScope.AddAsync(user, CancellationToken);
 		var request = _requestBuilder.WithUserId(user.Id).Build();
 
 		// Act
@@ -142,7 +142,7 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 	{
 		// Arrange
 		var user = UserBuilderFactory.Create().Build();
-		await ServiceScope.AddUserAsync(user, CancellationToken);
+		await ServiceScope.AddAsync(user, CancellationToken);
 		var request = _requestBuilder.WithUserId(user.Id).Build();
 
 		// Act
@@ -197,7 +197,7 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 	{
 		// Act
 		await Client.DeleteAsync(_request, CancellationToken);
-		var post = await ServiceScope.GetPostByIdAsync(Post.Id, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(Post.Id, CancellationToken);
 
 		// Assert
 		post.ShouldBeNull();
@@ -213,7 +213,7 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 
 		// Act
 		await Client.DeleteAsync(request, CancellationToken);
-		var post = await ServiceScope.GetPostByIdAsync(Post.Id, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(Post.Id, CancellationToken);
 
 		// Assert
 		post.ShouldBeNull();
@@ -229,7 +229,7 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 
 		// Act
 		await Client.DeleteAsync(request, CancellationToken);
-		var post = await ServiceScope.GetPostByIdAsync(Post.Id, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(Post.Id, CancellationToken);
 
 		// Assert
 		post.ShouldBeNull();
@@ -241,8 +241,10 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		// Act
 		await Client.DeleteAsync(_request, CancellationToken);
 
+		var eventRequest = await EventHarness.PublishedDeletedEventRequest(CancellationToken);
+
 		// Assert
-		await EventHarness.ShouldHavePublishedPostDeletedAsync(_request, Post, CancellationToken);
+		eventRequest.ShouldSatisfy(_request, Post);
 	}
 
 	[Theory]
@@ -256,8 +258,10 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		// Act
 		await Client.DeleteAsync(request, CancellationToken);
 
+		var eventRequest = await EventHarness.PublishedDeletedEventRequest(CancellationToken);
+
 		// Assert
-		await EventHarness.ShouldHavePublishedPostDeletedAsync(request, Post, CancellationToken);
+		eventRequest.ShouldSatisfy(request, Post);
 	}
 
 	[Theory]
@@ -271,7 +275,9 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		// Act
 		await Client.DeleteAsync(request, CancellationToken);
 
+		var eventRequest = await EventHarness.PublishedDeletedEventRequest(CancellationToken);
+
 		// Assert
-		await EventHarness.ShouldHavePublishedPostDeletedAsync(request, Post, CancellationToken);
+		eventRequest.ShouldSatisfy(request, Post);
 	}
 }

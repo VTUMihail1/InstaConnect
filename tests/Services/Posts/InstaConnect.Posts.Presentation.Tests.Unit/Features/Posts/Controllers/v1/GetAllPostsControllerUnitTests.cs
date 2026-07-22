@@ -36,7 +36,7 @@ public class GetAllPostsControllerUnitTests : BasePostPresentationQueryUnitTest
 		var response = await _controller.GetAllAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Posts, _request);
+		response.ShouldSatisfy(_request, Posts);
 	}
 
 	[Fact]

@@ -32,7 +32,7 @@ public class AddPostCommandRequestValidatorUnitTests : BasePostApplicationComman
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForUserId(messageTransformer, request);
+		result.ShouldHaveValidationErrorForUserId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -50,7 +50,7 @@ public class AddPostCommandRequestValidatorUnitTests : BasePostApplicationComman
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForTitle(messageTransformer, request);
+		result.ShouldHaveValidationErrorForTitle(request, messageTransformer);
 	}
 
 	[Theory]
@@ -68,7 +68,7 @@ public class AddPostCommandRequestValidatorUnitTests : BasePostApplicationComman
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForContent(messageTransformer, request);
+		result.ShouldHaveValidationErrorForContent(request, messageTransformer);
 	}
 
 	[Fact]

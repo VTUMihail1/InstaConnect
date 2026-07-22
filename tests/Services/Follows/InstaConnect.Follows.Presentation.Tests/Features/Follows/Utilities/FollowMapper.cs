@@ -78,7 +78,7 @@ public static class FollowMapper
 
 			return new(follower.ToFullQueryResponse(),
 					   null,
-					   follows.Filter(follow => filter(follow, request), request, follow => transform(follow, request)),
+					   follows.Filter(request, follow => filter(follow, request), follow => transform(follow, request)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -98,7 +98,7 @@ public static class FollowMapper
 
 			return new(null,
 					   following.ToFullQueryResponse(),
-					   follows.Filter(follow => filter(follow, request), request, follow => transform(follow, request)),
+					   follows.Filter(request, follow => filter(follow, request), follow => transform(follow, request)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,

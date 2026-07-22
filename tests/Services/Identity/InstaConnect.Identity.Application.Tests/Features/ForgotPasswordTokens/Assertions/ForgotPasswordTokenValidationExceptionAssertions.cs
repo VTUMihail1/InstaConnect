@@ -7,72 +7,72 @@ public static class ForgotPasswordTokenValidationExceptionAssertions
 	extension(IApplicationSender sender)
 	{
 		public async Task ShouldThrowInvalidValidationExceptionForNameAsync(
-			IStringMessageTransformer messageTransformer,
 			AddForgotPasswordTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
-				p => p.Name,
-				messageTransformer,
 				request,
+				p =>p.Name,
+				messageTransformer,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForIdAsync(
-			IStringMessageTransformer messageTransformer,
 			VerifyForgotPasswordTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
-				p => p.Id,
-				messageTransformer,
 				request,
+				p =>p.Id,
+				messageTransformer,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForValueAsync(
-			IStringMessageTransformer messageTransformer,
 			VerifyForgotPasswordTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
-				p => p.Value,
-				messageTransformer,
 				request,
+				p =>p.Value,
+				messageTransformer,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForPasswordAsync(
-			IStringMessageTransformer messageTransformer,
 			VerifyForgotPasswordTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
-				p => p.Password,
-				messageTransformer,
 				request,
+				p =>p.Password,
+				messageTransformer,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForConfirmPasswordAsync(
-			IStringMessageTransformer messageTransformer,
 			VerifyForgotPasswordTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
-				p => p.ConfirmPassword,
-				messageTransformer,
 				request,
+				p =>p.ConfirmPassword,
+				messageTransformer,
 				cancellationToken);
 		}
 	}

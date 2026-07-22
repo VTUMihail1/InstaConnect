@@ -34,7 +34,7 @@ public class VerifyForgotPasswordTokenCommandRequestValidatorUnitTests : BaseFor
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForId(messageTransformer, request);
+		result.ShouldHaveValidationErrorForId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -52,7 +52,7 @@ public class VerifyForgotPasswordTokenCommandRequestValidatorUnitTests : BaseFor
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForValue(messageTransformer, request);
+		result.ShouldHaveValidationErrorForValue(request, messageTransformer);
 	}
 
 	[Theory]
@@ -70,7 +70,7 @@ public class VerifyForgotPasswordTokenCommandRequestValidatorUnitTests : BaseFor
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForPassword(messageTransformer, request);
+		result.ShouldHaveValidationErrorForPassword(request, messageTransformer);
 	}
 
 	[Theory]
@@ -85,7 +85,7 @@ public class VerifyForgotPasswordTokenCommandRequestValidatorUnitTests : BaseFor
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForConfirmPassword(messageTransformer, request);
+		result.ShouldHaveValidationErrorForConfirmPassword(request, messageTransformer);
 	}
 
 	[Fact]

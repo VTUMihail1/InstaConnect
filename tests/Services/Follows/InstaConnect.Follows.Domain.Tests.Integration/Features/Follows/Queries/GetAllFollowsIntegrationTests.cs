@@ -32,16 +32,16 @@ public class GetAllFollowsIntegrationTests : BaseFollowDomainQueryIntegrationTes
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserRangeAsync(Followers, CancellationToken);
-		await ServiceScope.AddUserRangeAsync(Followings, CancellationToken);
-		await ServiceScope.AddFollowRangeAsync(Follows, CancellationToken);
+		await ServiceScope.AddRangeAsync(Followers, CancellationToken);
+		await ServiceScope.AddRangeAsync(Followings, CancellationToken);
+		await ServiceScope.AddRangeAsync(Follows, CancellationToken);
 	}
 
 	[Fact]
 	public async Task GetAllAsync_ShouldThrowUserNotFoundException_WhenFollowerIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(Follower, CancellationToken);
+		await ServiceScope.DeleteAsync(Follower, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowFollowerNotFoundExceptionAsync(_query, CancellationToken);

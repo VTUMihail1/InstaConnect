@@ -36,7 +36,7 @@ public class AddPostCommentControllerUnitTests : BasePostCommentPresentationComm
 		var response = await _controller.AddAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostComment, _request);
+		response.ShouldSatisfy(_request, PostComment);
 	}
 
 	[Fact]

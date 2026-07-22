@@ -20,9 +20,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowPresentationQueryFunctiona
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserRangeAsync(Followers, CancellationToken);
-		await ServiceScope.AddUserRangeAsync(Followings, CancellationToken);
-		await ServiceScope.AddFollowRangeAsync(Follows, CancellationToken);
+		await ServiceScope.AddRangeAsync(Followers, CancellationToken);
+		await ServiceScope.AddRangeAsync(Followings, CancellationToken);
+		await ServiceScope.AddRangeAsync(Follows, CancellationToken);
 	}
 
 	[Theory]
@@ -54,7 +54,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowPresentationQueryFunctiona
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForFollowerId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForFollowerId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -84,7 +84,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowPresentationQueryFunctiona
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForFollowingName(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForFollowingName(request, messageTransformer);
 	}
 
 	[Theory]
@@ -114,7 +114,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowPresentationQueryFunctiona
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForCurrentUserId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForCurrentUserId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -145,7 +145,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowPresentationQueryFunctiona
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForSortOrder(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForSortOrder(request, messageTransformer);
 	}
 
 	[Theory]
@@ -176,7 +176,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowPresentationQueryFunctiona
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForSortTerm(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForSortTerm(request, messageTransformer);
 	}
 
 	[Theory]
@@ -208,7 +208,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowPresentationQueryFunctiona
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForPage(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForPage(request, messageTransformer);
 	}
 
 	[Theory]
@@ -240,14 +240,14 @@ public class GetAllFollowsFunctionalTests : BaseFollowPresentationQueryFunctiona
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForPageSize(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForPageSize(request, messageTransformer);
 	}
 
 	[Fact]
 	public async Task GetAllAsync_ShouldHaveNotFoundStatusCode_WhenFollowerIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(Follower, CancellationToken);
+		await ServiceScope.DeleteAsync(Follower, CancellationToken);
 
 		// Act
 		var response = await Client.GetAllStatusCodeAsync(_request, CancellationToken);
@@ -260,7 +260,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowPresentationQueryFunctiona
 	public async Task GetAllAsync_ShouldHaveFollowerNotFoundProblemDetails_WhenFollowerIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(Follower, CancellationToken);
+		await ServiceScope.DeleteAsync(Follower, CancellationToken);
 
 		// Act
 		var response = await Client.GetAllProblemDetailsAsync(_request, CancellationToken);

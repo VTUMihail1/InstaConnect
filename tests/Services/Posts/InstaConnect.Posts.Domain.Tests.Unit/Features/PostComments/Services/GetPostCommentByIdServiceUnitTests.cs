@@ -54,7 +54,7 @@ public class GetPostCommentByIdServiceUnitTests : BasePostCommentDomainQueryUnit
 		var response = await _service.GetByIdAsync(_query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostComment, _query);
+		response.ShouldSatisfy(_query, PostComment);
 	}
 
 	[Fact]

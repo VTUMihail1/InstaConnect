@@ -7,63 +7,63 @@ public static class PostMatchAssertions
 {
 	extension(AddPostCommandResponse response)
 	{
-		public void ShouldSatisfy(Post post, AddPostCommandRequest request)
+		public void ShouldSatisfy(AddPostCommandRequest request, Post post)
 		{
-			response.ShouldSatisfy(p => p.Matches(post, request));
+			response.ShouldSatisfy(p => p.Matches(request, post));
 		}
 	}
 
 	extension(UpdatePostCommandResponse response)
 	{
-		public void ShouldSatisfy(Post post, UpdatePostCommandRequest request)
+		public void ShouldSatisfy(UpdatePostCommandRequest request, Post post)
 		{
-			response.ShouldSatisfy(p => p.Matches(post, request));
+			response.ShouldSatisfy(p => p.Matches(request, post));
 		}
 	}
 
 	extension(GetPostByIdQueryResponse response)
 	{
-		public void ShouldSatisfy(Post post, GetPostByIdQueryRequest request)
+		public void ShouldSatisfy(GetPostByIdQueryRequest request, Post post)
 		{
-			response.ShouldSatisfy(p => p.Matches(post, request));
+			response.ShouldSatisfy(p => p.Matches(request, post));
 		}
 	}
 
 	extension(GetAllPostsQueryResponse response)
 	{
 		public void ShouldSatisfy(
-		ICollection<Post> posts,
-		GetAllPostsQueryRequest request)
+		GetAllPostsQueryRequest request,
+		ICollection<Post> posts)
 		{
-			response.ShouldSatisfy(p => p.Matches(posts, request));
+			response.ShouldSatisfy(p => p.Matches(request, posts));
 		}
 
 		public void ShouldSatisfy(
-			ICollection<Post> posts,
 			GetAllPostsQueryRequest request,
+			ICollection<Post> posts,
 			ISortEnumTermTransformer<Post> termTransformer)
 		{
-			response.ShouldSatisfy(p => p.Matches(posts, request, termTransformer));
+			response.ShouldSatisfy(p => p.Matches(request, posts, termTransformer));
 		}
 	}
 
 	extension(GetAllPostsForUserQueryResponse response)
 	{
 		public void ShouldSatisfy(
+		GetAllPostsForUserQueryRequest request,
 		User user,
-		ICollection<Post> posts,
-		GetAllPostsForUserQueryRequest request)
+		ICollection<Post> posts)
 		{
-			response.ShouldSatisfy(p => p.Matches(user, posts, request));
+			response.ShouldSatisfy(p => p.Matches(request, user, posts));
 		}
 
 		public void ShouldSatisfy(
+			GetAllPostsForUserQueryRequest request,
 			User user,
 			ICollection<Post> posts,
-			GetAllPostsForUserQueryRequest request,
 			ISortEnumTermTransformer<Post> termTransformer)
 		{
-			response.ShouldSatisfy(p => p.Matches(user, posts, request, termTransformer));
+			response.ShouldSatisfy(p => p.Matches(request, user, posts, termTransformer));
 		}
 	}
 

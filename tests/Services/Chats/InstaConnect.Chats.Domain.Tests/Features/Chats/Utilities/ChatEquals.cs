@@ -115,14 +115,14 @@ public static class ChatEquals
 			T request)
 			where T : ICurrentUserableQuery, IPaginatableQuery<ChatsPaginationQuery>
 		{
-			return response.MatchesCollectionResponse(chats.Count(matchesFilter), request.Pagination) &&
+			return response.MatchesCollectionResponse(request.Pagination, chats.Count(matchesFilter)) &&
 				   response.ParticipantOne.MatchesFull(participantOne) &&
 				   response.ParticipantTwo == null &&
-				   response.Chats.MatchesCollection(chats,
+				   response.Chats.MatchesCollection(request.Pagination,
+													chats,
 													response => response.Id,
 													chat => chat.Id,
 													matches,
-													request.Pagination,
 													matchesFilter);
 		}
 
@@ -135,13 +135,13 @@ public static class ChatEquals
 			ISortEnumTermTransformer<Chat> termTransformer)
 			where T : ICurrentUserableQuery, IPaginatableQuery<ChatsPaginationQuery>
 		{
-			return response.MatchesCollectionResponse(chats.Count(matchesFilter), request.Pagination) &&
+			return response.MatchesCollectionResponse(request.Pagination, chats.Count(matchesFilter)) &&
 				   response.ParticipantOne.MatchesFull(participantOne) &&
 				   response.ParticipantTwo == null &&
-				   response.Chats.MatchesSortedCollection(chats,
+				   response.Chats.MatchesSortedCollection(request.Pagination,
+														  chats,
 														  matches,
 														  termTransformer,
-														  request.Pagination,
 														  matchesFilter);
 		}
 
@@ -153,14 +153,14 @@ public static class ChatEquals
 			T request)
 			where T : ICurrentUserableQuery, IPaginatableQuery<ChatsPaginationQuery>
 		{
-			return response.MatchesCollectionResponse(chats.Count(matchesFilter), request.Pagination) &&
+			return response.MatchesCollectionResponse(request.Pagination, chats.Count(matchesFilter)) &&
 				   response.ParticipantOne.MatchesFull(participantTwo) &&
 				   response.ParticipantTwo == null &&
-				   response.Chats.MatchesCollection(chats,
+				   response.Chats.MatchesCollection(request.Pagination,
+													chats,
 													response => new(response.Id.ParticipantTwoId, response.Id.ParticipantOneId),
 													chat => chat.Id,
 													matches,
-													request.Pagination,
 													matchesFilter);
 		}
 
@@ -173,13 +173,13 @@ public static class ChatEquals
 			ISortEnumTermTransformer<Chat> termTransformer)
 			where T : ICurrentUserableQuery, IPaginatableQuery<ChatsPaginationQuery>
 		{
-			return response.MatchesCollectionResponse(chats.Count(matchesFilter), request.Pagination) &&
+			return response.MatchesCollectionResponse(request.Pagination, chats.Count(matchesFilter)) &&
 				   response.ParticipantOne.MatchesFull(participantTwo) &&
 				   response.ParticipantTwo == null &&
-				   response.Chats.MatchesSortedCollection(chats,
+				   response.Chats.MatchesSortedCollection(request.Pagination,
+														  chats,
 														  matches,
 														  termTransformer,
-														  request.Pagination,
 														  matchesFilter);
 		}
 

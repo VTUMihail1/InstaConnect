@@ -8,15 +8,15 @@ public static class UserClaimValidationAssertions
 	extension(TestValidationResult<DeleteUserClaimCommandRequest> result)
 	{
 		public void ShouldHaveValidationErrorForId(
-			IStringMessageTransformer messageTransformer,
-			DeleteUserClaimCommandRequest request)
+			DeleteUserClaimCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.Id, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForClaim(
-			IEnumMessageTransformer<ApplicationClaims> messageTransformer,
-			DeleteUserClaimCommandRequest request)
+			DeleteUserClaimCommandRequest request,
+			IEnumMessageTransformer<ApplicationClaims> messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.Claim, messageTransformer);
 		}
@@ -25,15 +25,15 @@ public static class UserClaimValidationAssertions
 	extension(TestValidationResult<AddUserClaimCommandRequest> result)
 	{
 		public void ShouldHaveValidationErrorForId(
-			IStringMessageTransformer messageTransformer,
-			AddUserClaimCommandRequest request)
+			AddUserClaimCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.Id, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForClaim(
-			IEnumMessageTransformer<ApplicationClaims> messageTransformer,
-			AddUserClaimCommandRequest request)
+			AddUserClaimCommandRequest request,
+			IEnumMessageTransformer<ApplicationClaims> messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.Claim, messageTransformer);
 		}
@@ -42,43 +42,43 @@ public static class UserClaimValidationAssertions
 	extension(TestValidationResult<GetAllUserClaimsQueryRequest> result)
 	{
 		public void ShouldHaveValidationErrorForId(
-			IStringMessageTransformer messageTransformer,
-			GetAllUserClaimsQueryRequest request)
+			GetAllUserClaimsQueryRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.Id, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForCurrentId(
-			IStringMessageTransformer messageTransformer,
-			GetAllUserClaimsQueryRequest request)
+			GetAllUserClaimsQueryRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.CurrentId, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForPage(
-			IIntMessageTransformer messageTransformer,
-			GetAllUserClaimsQueryRequest request)
+			GetAllUserClaimsQueryRequest request,
+			IIntMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.Page, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForPageSize(
-			IIntMessageTransformer messageTransformer,
-			GetAllUserClaimsQueryRequest request)
+			GetAllUserClaimsQueryRequest request,
+			IIntMessageTransformer messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.PageSize, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForSortOrder(
-			IEnumMessageTransformer<CommonSortOrder> messageTransformer,
-			GetAllUserClaimsQueryRequest request)
+			GetAllUserClaimsQueryRequest request,
+			IEnumMessageTransformer<CommonSortOrder> messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.SortOrder, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForSortTerm(
-			IEnumMessageTransformer<UserClaimsSortTerm> messageTransformer,
-			GetAllUserClaimsQueryRequest request)
+			GetAllUserClaimsQueryRequest request,
+			IEnumMessageTransformer<UserClaimsSortTerm> messageTransformer)
 		{
 			result.ShouldHaveValidationErrorForProperty(request, p => p.SortTerm, messageTransformer);
 		}

@@ -33,7 +33,7 @@ public static class PostLikeSetups
 			return serviceScope.ServiceProvider.GetPostLikeIncludeBuilderFactory();
 		}
 
-		public async Task<PostLike?> GetPostLikeByIdAsync(
+		public async Task<PostLike?> GetByIdAsync(
 			PostLikeId id,
 			CancellationToken cancellationToken)
 		{
@@ -43,21 +43,21 @@ public static class PostLikeSetups
 			return await serviceScope.GetPostLikeCommandRepository().GetByIdAsync(id, likeInclude, cancellationToken);
 		}
 
-		public async Task AddPostLikeAsync(
+		public async Task AddAsync(
 			PostLike postLike,
 			CancellationToken cancellationToken)
 		{
 			await serviceScope.GetPostLikeCommandRepository().AddAsync(postLike, cancellationToken);
 		}
 
-		public async Task AddPostLikeRangeAsync(
+		public async Task AddRangeAsync(
 			IEnumerable<PostLike> postLikes,
 			CancellationToken cancellationToken)
 		{
 			await serviceScope.GetPostLikeCommandRepository().AddRangeAsync(postLikes, cancellationToken);
 		}
 
-		public async Task DeletePostLikeAsync(
+		public async Task DeleteAsync(
 			PostLike postLike,
 			CancellationToken cancellationToken)
 		{

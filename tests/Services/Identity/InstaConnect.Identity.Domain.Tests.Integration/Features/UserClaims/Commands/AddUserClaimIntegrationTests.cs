@@ -43,7 +43,7 @@ public class AddUserClaimIntegrationTests : BaseUserClaimDomainCommandIntegratio
 	public async Task AddAsync_ShouldThrowUserClaimAlreadyExistsException_WhenUserClaimAlreadyExists()
 	{
 		// Arrange
-		await ServiceScope.AddClaimAsync(UserClaim, CancellationToken);
+		await ServiceScope.AddAsync(UserClaim, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowUserClaimAlreadyExistsExceptionAsync(_command, CancellationToken);
@@ -55,7 +55,7 @@ public class AddUserClaimIntegrationTests : BaseUserClaimDomainCommandIntegratio
 		IStringTransformer transformer)
 	{
 		// Arrange
-		await ServiceScope.AddClaimAsync(UserClaim, CancellationToken);
+		await ServiceScope.AddAsync(UserClaim, CancellationToken);
 		var command = _commandBuilder.WithId(transformer).Build();
 
 		// Assert
@@ -67,7 +67,7 @@ public class AddUserClaimIntegrationTests : BaseUserClaimDomainCommandIntegratio
 	{
 		// Act
 		var response = await Service.AddAsync(_command, CancellationToken);
-		var userClaim = await ServiceScope.GetClaimByIdAsync(response, CancellationToken);
+		var userClaim = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(_command, userClaim);
@@ -83,7 +83,7 @@ public class AddUserClaimIntegrationTests : BaseUserClaimDomainCommandIntegratio
 
 		// Act
 		var response = await Service.AddAsync(command, CancellationToken);
-		var userClaim = await ServiceScope.GetClaimByIdAsync(response, CancellationToken);
+		var userClaim = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(command, userClaim);
@@ -94,7 +94,7 @@ public class AddUserClaimIntegrationTests : BaseUserClaimDomainCommandIntegratio
 	{
 		// Act
 		var response = await Service.AddAsync(_command, CancellationToken);
-		var userClaim = await ServiceScope.GetClaimByIdAsync(response, CancellationToken);
+		var userClaim = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		userClaim.ShouldSatisfy(_command);
@@ -110,7 +110,7 @@ public class AddUserClaimIntegrationTests : BaseUserClaimDomainCommandIntegratio
 
 		// Act
 		var response = await Service.AddAsync(command, CancellationToken);
-		var userClaim = await ServiceScope.GetClaimByIdAsync(response, CancellationToken);
+		var userClaim = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		userClaim.ShouldSatisfy(command);
@@ -121,7 +121,7 @@ public class AddUserClaimIntegrationTests : BaseUserClaimDomainCommandIntegratio
 	{
 		// Act
 		var response = await Service.AddAsync(_command, CancellationToken);
-		var userClaim = await ServiceScope.GetClaimByIdAsync(response, CancellationToken);
+		var userClaim = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var eventRequest = await EventHarness.PublishedClaimAddedEventRequest(CancellationToken);
 
 		// Assert
@@ -138,7 +138,7 @@ public class AddUserClaimIntegrationTests : BaseUserClaimDomainCommandIntegratio
 
 		// Act
 		var response = await Service.AddAsync(command, CancellationToken);
-		var userClaim = await ServiceScope.GetClaimByIdAsync(response, CancellationToken);
+		var userClaim = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var eventRequest = await EventHarness.PublishedClaimAddedEventRequest(CancellationToken);
 
 		// Assert

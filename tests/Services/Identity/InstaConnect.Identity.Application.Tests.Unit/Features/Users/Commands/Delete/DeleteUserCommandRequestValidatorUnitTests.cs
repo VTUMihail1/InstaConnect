@@ -32,7 +32,7 @@ public class DeleteUserCommandRequestValidatorUnitTests : BaseUserApplicationCom
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForId(messageTransformer, request);
+		result.ShouldHaveValidationErrorForId(request, messageTransformer);
 	}
 
 	[Fact]

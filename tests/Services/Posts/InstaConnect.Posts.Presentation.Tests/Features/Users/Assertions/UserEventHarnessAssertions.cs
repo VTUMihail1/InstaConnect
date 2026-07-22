@@ -10,42 +10,54 @@ public static class UserEventHarnessAssertions
 			UserAddedEventRequest request,
 			CancellationToken cancellationToken)
 		{
-			await eventHarness.ShouldHaveConsumedAsync<UserAddedEventRequest>(p => p.Matches(request), cancellationToken);
+			var consumed = await eventHarness.ConsumedAsync<UserAddedEventRequest>(cancellationToken);
+
+			consumed.Matches(request).ShouldBeTrue();
 		}
 
 		public async Task ShouldHaveConsumedAsync(
 			UserUpdatedEventRequest request,
 			CancellationToken cancellationToken)
 		{
-			await eventHarness.ShouldHaveConsumedAsync<UserUpdatedEventRequest>(p => p.Matches(request), cancellationToken);
+			var consumed = await eventHarness.ConsumedAsync<UserUpdatedEventRequest>(cancellationToken);
+
+			consumed.Matches(request).ShouldBeTrue();
 		}
 
 		public async Task ShouldHaveConsumedAsync(
 			UserDeletedEventRequest request,
 			CancellationToken cancellationToken)
 		{
-			await eventHarness.ShouldHaveConsumedAsync<UserDeletedEventRequest>(p => p.Matches(request), cancellationToken);
+			var consumed = await eventHarness.ConsumedAsync<UserDeletedEventRequest>(cancellationToken);
+
+			consumed.Matches(request).ShouldBeTrue();
 		}
 
 		public async Task ShouldHaveFaultedAsync(
 			UserAddedEventRequest request,
 			CancellationToken cancellationToken)
 		{
-			await eventHarness.ShouldHaveFaultedAsync<UserAddedEventRequest>(p => p.Matches(request), cancellationToken);
+			var faulted = await eventHarness.FaultedAsync<UserAddedEventRequest>(cancellationToken);
+
+			faulted.Matches(request).ShouldBeTrue();
 		}
 
 		public async Task ShouldHaveFaultedAsync(
 			UserUpdatedEventRequest request,
 			CancellationToken cancellationToken)
 		{
-			await eventHarness.ShouldHaveFaultedAsync<UserUpdatedEventRequest>(p => p.Matches(request), cancellationToken);
+			var faulted = await eventHarness.FaultedAsync<UserUpdatedEventRequest>(cancellationToken);
+
+			faulted.Matches(request).ShouldBeTrue();
 		}
 
 		public async Task ShouldHaveFaultedAsync(
 			UserDeletedEventRequest request,
 			CancellationToken cancellationToken)
 		{
-			await eventHarness.ShouldHaveFaultedAsync<UserDeletedEventRequest>(p => p.Matches(request), cancellationToken);
+			var faulted = await eventHarness.FaultedAsync<UserDeletedEventRequest>(cancellationToken);
+
+			faulted.Matches(request).ShouldBeTrue();
 		}
 	}
 }

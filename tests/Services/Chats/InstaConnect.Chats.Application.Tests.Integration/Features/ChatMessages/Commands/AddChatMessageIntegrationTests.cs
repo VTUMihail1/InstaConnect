@@ -16,9 +16,9 @@ public class AddChatMessageIntegrationTests : BaseChatMessageApplicationCommandI
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(ParticipantOne, CancellationToken);
-		await ServiceScope.AddUserAsync(ParticipantTwo, CancellationToken);
-		await ServiceScope.AddChatAsync(Chat, CancellationToken);
+		await ServiceScope.AddAsync(ParticipantOne, CancellationToken);
+		await ServiceScope.AddAsync(ParticipantTwo, CancellationToken);
+		await ServiceScope.AddAsync(Chat, CancellationToken);
 
 		await base.OnInitializeAsync();
 	}
@@ -36,7 +36,7 @@ public class AddChatMessageIntegrationTests : BaseChatMessageApplicationCommandI
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForParticipantOneIdAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -52,7 +52,7 @@ public class AddChatMessageIntegrationTests : BaseChatMessageApplicationCommandI
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForParticipantTwoIdAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -68,14 +68,14 @@ public class AddChatMessageIntegrationTests : BaseChatMessageApplicationCommandI
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForContentAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Fact]
 	public async Task SendAsync_ShouldThrowChatNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteChatAsync(Chat, CancellationToken);
+		await ServiceScope.DeleteAsync(Chat, CancellationToken);
 
 		// Assert
 		await Sender.ShouldThrowChatNotFoundExceptionAsync(_request, CancellationToken);
@@ -86,7 +86,7 @@ public class AddChatMessageIntegrationTests : BaseChatMessageApplicationCommandI
 	{
 		// Act
 		var response = await Sender.SendAsync(_request, CancellationToken);
-		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(chatMessage, _request);
@@ -102,7 +102,7 @@ public class AddChatMessageIntegrationTests : BaseChatMessageApplicationCommandI
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(chatMessage, request);
@@ -118,7 +118,7 @@ public class AddChatMessageIntegrationTests : BaseChatMessageApplicationCommandI
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(chatMessage, request);
@@ -129,7 +129,7 @@ public class AddChatMessageIntegrationTests : BaseChatMessageApplicationCommandI
 	{
 		// Act
 		var response = await Sender.SendAsync(_request, CancellationToken);
-		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
 		chatMessage.ShouldSatisfy(_request);
@@ -145,7 +145,7 @@ public class AddChatMessageIntegrationTests : BaseChatMessageApplicationCommandI
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
 		chatMessage.ShouldSatisfy(request);
@@ -161,7 +161,7 @@ public class AddChatMessageIntegrationTests : BaseChatMessageApplicationCommandI
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
 		chatMessage.ShouldSatisfy(request);
@@ -172,7 +172,7 @@ public class AddChatMessageIntegrationTests : BaseChatMessageApplicationCommandI
 	{
 		// Act
 		var response = await Sender.SendAsync(_request, CancellationToken);
-		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 		var notification = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert
@@ -189,7 +189,7 @@ public class AddChatMessageIntegrationTests : BaseChatMessageApplicationCommandI
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 		var notification = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert
@@ -206,7 +206,7 @@ public class AddChatMessageIntegrationTests : BaseChatMessageApplicationCommandI
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 		var notification = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert
@@ -221,7 +221,7 @@ public class AddChatMessageIntegrationTests : BaseChatMessageApplicationCommandI
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(chatMessage, request);
@@ -237,7 +237,7 @@ public class AddChatMessageIntegrationTests : BaseChatMessageApplicationCommandI
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(chatMessage, request);
@@ -253,7 +253,7 @@ public class AddChatMessageIntegrationTests : BaseChatMessageApplicationCommandI
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(chatMessage, request);
@@ -267,7 +267,7 @@ public class AddChatMessageIntegrationTests : BaseChatMessageApplicationCommandI
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
 		chatMessage.ShouldSatisfyInverted(request);
@@ -283,7 +283,7 @@ public class AddChatMessageIntegrationTests : BaseChatMessageApplicationCommandI
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
 		chatMessage.ShouldSatisfyInverted(request);
@@ -299,7 +299,7 @@ public class AddChatMessageIntegrationTests : BaseChatMessageApplicationCommandI
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
 		chatMessage.ShouldSatisfyInverted(request);
@@ -313,7 +313,7 @@ public class AddChatMessageIntegrationTests : BaseChatMessageApplicationCommandI
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 		var notification = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert
@@ -330,7 +330,7 @@ public class AddChatMessageIntegrationTests : BaseChatMessageApplicationCommandI
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 		var notification = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert
@@ -347,7 +347,7 @@ public class AddChatMessageIntegrationTests : BaseChatMessageApplicationCommandI
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetChatMessageByIdAsync(response.Response, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 		var notification = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert

@@ -16,9 +16,9 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostApplicationQueryI
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
-		await ServiceScope.AddPostAsync(Post, CancellationToken);
-		await ServiceScope.AddPostLikeAsync(PostLike, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(Post, CancellationToken);
+		await ServiceScope.AddAsync(PostLike, CancellationToken);
 	}
 
 	[Theory]
@@ -34,7 +34,7 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostApplicationQueryI
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForIdAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -47,14 +47,14 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostApplicationQueryI
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForCurrentUserIdAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Fact]
 	public async Task SendAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostAsync(Post, CancellationToken);
+		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Assert
 		await Sender.ShouldThrowPostNotFoundExceptionAsync(_request, CancellationToken);
@@ -67,7 +67,7 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostApplicationQueryI
 		var response = await Sender.SendAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Post, _request);
+		response.ShouldSatisfy(_request, Post);
 	}
 
 	[Theory]
@@ -82,7 +82,7 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostApplicationQueryI
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Post, request);
+		response.ShouldSatisfy(request, Post);
 	}
 
 	[Theory]
@@ -99,6 +99,6 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostApplicationQueryI
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Post, request);
+		response.ShouldSatisfy(request, Post);
 	}
 }

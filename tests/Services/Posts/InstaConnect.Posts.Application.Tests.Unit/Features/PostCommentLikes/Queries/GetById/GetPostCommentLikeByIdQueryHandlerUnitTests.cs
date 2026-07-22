@@ -26,7 +26,7 @@ public class GetPostCommentLikeByIdQueryHandlerUnitTests : BasePostCommentLikeAp
 		var response = await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostCommentLike, _request);
+		response.ShouldSatisfy(_request, PostCommentLike);
 	}
 
 	[Fact]

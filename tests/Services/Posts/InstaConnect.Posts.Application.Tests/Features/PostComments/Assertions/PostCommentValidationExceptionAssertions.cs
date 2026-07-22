@@ -15,359 +15,359 @@ public static class PostCommentValidationExceptionAssertions
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.Id,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForIdAsync(
-			IStringMessageTransformer messageTransformer,
 			UpdatePostCommentCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.Id,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForIdAsync(
-			IStringMessageTransformer messageTransformer,
 			DeletePostCommentCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.Id,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForIdAsync(
-			IStringMessageTransformer messageTransformer,
 			GetPostCommentByIdQueryRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.Id,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForIdAsync(
-			IStringMessageTransformer messageTransformer,
 			GetAllPostCommentsQueryRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.Id,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForCommentIdAsync(
-			IStringMessageTransformer messageTransformer,
 			UpdatePostCommentCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.CommentId,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForCommentIdAsync(
-			IStringMessageTransformer messageTransformer,
 			DeletePostCommentCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.CommentId,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForCommentIdAsync(
-			IStringMessageTransformer messageTransformer,
 			GetPostCommentByIdQueryRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.CommentId,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForContentAsync(
-			IStringMessageTransformer messageTransformer,
 			AddPostCommentCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.Content,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForContentAsync(
-			IStringMessageTransformer messageTransformer,
 			UpdatePostCommentCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.Content,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForUserIdAsync(
-			IStringMessageTransformer messageTransformer,
 			AddPostCommentCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.UserId,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForUserIdAsync(
-			IStringMessageTransformer messageTransformer,
 			UpdatePostCommentCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.UserId,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForUserIdAsync(
-			IStringMessageTransformer messageTransformer,
 			DeletePostCommentCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.UserId,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForUserIdAsync(
-			IStringMessageTransformer messageTransformer,
 			GetAllPostCommentsForUserQueryRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.UserId,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForCurrentUserIdAsync(
-			IStringMessageTransformer messageTransformer,
 			GetPostCommentByIdQueryRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.CurrentUserId,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForCurrentUserIdAsync(
-			IStringMessageTransformer messageTransformer,
 			GetAllPostCommentsQueryRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.CurrentUserId,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForCurrentUserIdAsync(
-			IStringMessageTransformer messageTransformer,
 			GetAllPostCommentsForUserQueryRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.CurrentUserId,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForUserNameAsync(
-			IStringMessageTransformer messageTransformer,
 			GetAllPostCommentsQueryRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.UserName,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForPageAsync(
-			IIntMessageTransformer messageTransformer,
 			GetAllPostCommentsQueryRequest request,
+			IIntMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.Page,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForPageAsync(
-			IIntMessageTransformer messageTransformer,
 			GetAllPostCommentsForUserQueryRequest request,
+			IIntMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.Page,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForPageSizeAsync(
-			IIntMessageTransformer messageTransformer,
 			GetAllPostCommentsQueryRequest request,
+			IIntMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.PageSize,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForPageSizeAsync(
-			IIntMessageTransformer messageTransformer,
 			GetAllPostCommentsForUserQueryRequest request,
+			IIntMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.PageSize,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForSortOrderAsync(
-			IEnumMessageTransformer<CommonSortOrder> messageTransformer,
 			GetAllPostCommentsQueryRequest request,
+			IEnumMessageTransformer<CommonSortOrder> messageTransformer,
 			CancellationToken cancellationToken)
 		{
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.SortOrder,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForSortOrderAsync(
-			IEnumMessageTransformer<CommonSortOrder> messageTransformer,
 			GetAllPostCommentsForUserQueryRequest request,
+			IEnumMessageTransformer<CommonSortOrder> messageTransformer,
 			CancellationToken cancellationToken)
 		{
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.SortOrder,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForSortTermAsync(
+			GetAllPostCommentsQueryRequest request,
 			IEnumMessageTransformer<PostCommentsSortTerm> messageTransformer,
-			GetAllPostCommentsQueryRequest request,
 			CancellationToken cancellationToken)
 		{
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.SortTerm,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForSortTermAsync(
-			IEnumMessageTransformer<PostCommentsForUserSortTerm> messageTransformer,
 			GetAllPostCommentsForUserQueryRequest request,
+			IEnumMessageTransformer<PostCommentsForUserSortTerm> messageTransformer,
 			CancellationToken cancellationToken)
 		{
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.SortTerm,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 	}

@@ -207,14 +207,14 @@ public static class ChatMessageEquals
 			T request)
 			where T : ICurrentUserableQuery, IPaginatableQuery<ChatMessagesPaginationQuery>
 		{
-			return response.MatchesCollectionResponse(chatMessages.Count(matchesFilter), request.Pagination) &&
+			return response.MatchesCollectionResponse(request.Pagination, chatMessages.Count(matchesFilter)) &&
 				   response.Sender == null &&
 				   response.Chat.MatchesFull(chat, request) &&
-				   response.ChatMessages.MatchesCollection(chatMessages,
+				   response.ChatMessages.MatchesCollection(request.Pagination,
+														   chatMessages,
 														   response => response.Id,
 														   chatMessage => chatMessage.Id,
 														   matches,
-														   request.Pagination,
 														   matchesFilter);
 		}
 
@@ -227,13 +227,13 @@ public static class ChatMessageEquals
 			ISortEnumTermTransformer<ChatMessage> termTransformer)
 			where T : ICurrentUserableQuery, IPaginatableQuery<ChatMessagesPaginationQuery>
 		{
-			return response.MatchesCollectionResponse(chatMessages.Count(matchesFilter), request.Pagination) &&
+			return response.MatchesCollectionResponse(request.Pagination, chatMessages.Count(matchesFilter)) &&
 				   response.Sender == null &&
 				   response.Chat.MatchesFull(chat, request) &&
-				   response.ChatMessages.MatchesSortedCollection(chatMessages,
+				   response.ChatMessages.MatchesSortedCollection(request.Pagination,
+																 chatMessages,
 																 matches,
 																 termTransformer,
-																 request.Pagination,
 																 matchesFilter);
 		}
 
@@ -245,14 +245,14 @@ public static class ChatMessageEquals
 			T request)
 			where T : ICurrentUserableQuery, IPaginatableQuery<ChatMessagesPaginationQuery>
 		{
-			return response.MatchesCollectionResponse(chatMessages.Count(matchesFilter), request.Pagination) &&
+			return response.MatchesCollectionResponse(request.Pagination, chatMessages.Count(matchesFilter)) &&
 				   response.Sender == null &&
 				   response.Chat.MatchesFullInverted(chat, request) &&
-				   response.ChatMessages.MatchesCollection(chatMessages,
+				   response.ChatMessages.MatchesCollection(request.Pagination,
+														   chatMessages,
 														   response => new(new(response.Id.Id.ParticipantTwoId, response.Id.Id.ParticipantOneId), response.Id.MessageId),
 														   chatMessage => chatMessage.Id,
 														   matches,
-														   request.Pagination,
 														   matchesFilter);
 		}
 
@@ -265,13 +265,13 @@ public static class ChatMessageEquals
 			ISortEnumTermTransformer<ChatMessage> termTransformer)
 			where T : ICurrentUserableQuery, IPaginatableQuery<ChatMessagesPaginationQuery>
 		{
-			return response.MatchesCollectionResponse(chatMessages.Count(matchesFilter), request.Pagination) &&
+			return response.MatchesCollectionResponse(request.Pagination, chatMessages.Count(matchesFilter)) &&
 				   response.Sender == null &&
 				   response.Chat.MatchesFullInverted(chat, request) &&
-				   response.ChatMessages.MatchesSortedCollection(chatMessages,
+				   response.ChatMessages.MatchesSortedCollection(request.Pagination,
+																 chatMessages,
 																 matches,
 																 termTransformer,
-																 request.Pagination,
 																 matchesFilter);
 		}
 

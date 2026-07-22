@@ -7,59 +7,59 @@ public static class PostCommentMatchAssertions
 {
 	extension(PostCommentId response)
 	{
-		public void ShouldSatisfy(PostComment postComment, AddPostCommentCommand command)
+		public void ShouldSatisfy(AddPostCommentCommand command, PostComment postComment)
 		{
-			response.ShouldSatisfy(p => p.Matches(postComment, command));
+			response.ShouldSatisfy(p => p.Matches(command, postComment));
 		}
 
-		public void ShouldSatisfy(PostComment postComment, UpdatePostCommentCommand command)
+		public void ShouldSatisfy(UpdatePostCommentCommand command, PostComment postComment)
 		{
-			response.ShouldSatisfy(p => p.Matches(postComment, command));
+			response.ShouldSatisfy(p => p.Matches(command, postComment));
 		}
 	}
 
 	extension(PostCommentResponse response)
 	{
-		public void ShouldSatisfy(PostComment postComment, GetPostCommentByIdQuery query)
+		public void ShouldSatisfy(GetPostCommentByIdQuery query, PostComment postComment)
 		{
-			response.ShouldSatisfy(p => p.Matches(postComment, query));
+			response.ShouldSatisfy(p => p.Matches(query, postComment));
 		}
 	}
 
 	extension(PostCommentCollectionResponse response)
 	{
 		public void ShouldSatisfy(
+		GetAllPostCommentsQuery query,
 		Post post,
-		ICollection<PostComment> postComments,
-		GetAllPostCommentsQuery query)
+		ICollection<PostComment> postComments)
 		{
-			response.ShouldSatisfy(p => p.Matches(post, postComments, query));
+			response.ShouldSatisfy(p => p.Matches(query, post, postComments));
 		}
 
 		public void ShouldSatisfy(
+			GetAllPostCommentsQuery query,
 			Post post,
 			ICollection<PostComment> postComments,
-			GetAllPostCommentsQuery query,
 			ISortEnumTermTransformer<PostComment> termTransformer)
 		{
-			response.ShouldSatisfy(p => p.Matches(post, postComments, query, termTransformer));
+			response.ShouldSatisfy(p => p.Matches(query, post, postComments, termTransformer));
 		}
 
 		public void ShouldSatisfy(
+		GetAllPostCommentsForUserQuery query,
 		User user,
-		ICollection<PostComment> postComments,
-		GetAllPostCommentsForUserQuery query)
+		ICollection<PostComment> postComments)
 		{
-			response.ShouldSatisfy(p => p.Matches(user, postComments, query));
+			response.ShouldSatisfy(p => p.Matches(query, user, postComments));
 		}
 
 		public void ShouldSatisfy(
+			GetAllPostCommentsForUserQuery query,
 			User user,
 			ICollection<PostComment> postComments,
-			GetAllPostCommentsForUserQuery query,
 			ISortEnumTermTransformer<PostComment> termTransformer)
 		{
-			response.ShouldSatisfy(p => p.Matches(user, postComments, query, termTransformer));
+			response.ShouldSatisfy(p => p.Matches(query, user, postComments, termTransformer));
 		}
 	}
 

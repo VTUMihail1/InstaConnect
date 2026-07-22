@@ -19,7 +19,7 @@ public class VerifyEmailConfirmationTokenFunctionalTests : BaseEmailConfirmation
 	protected override async Task OnInitializeAsync()
 	{
 		await ServiceScope.AddAsync(User, CancellationToken);
-		await ServiceScope.AddEmailConfirmationTokenRangeAsync(User.EmailConfirmationTokens, CancellationToken);
+		await ServiceScope.AddRangeAsync(User.EmailConfirmationTokens, CancellationToken);
 	}
 
 	[Theory]
@@ -52,7 +52,7 @@ public class VerifyEmailConfirmationTokenFunctionalTests : BaseEmailConfirmation
 		var response = await Client.VerifyProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -85,7 +85,7 @@ public class VerifyEmailConfirmationTokenFunctionalTests : BaseEmailConfirmation
 		var response = await Client.VerifyProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForValue(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForValue(request, messageTransformer);
 	}
 
 	[Fact]
@@ -146,7 +146,7 @@ public class VerifyEmailConfirmationTokenFunctionalTests : BaseEmailConfirmation
 	public async Task VerifyAsync_ShouldHaveNotFoundStatusCode_WhenEmailConfirmationTokenNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteEmailConfirmationTokenAsync(EmailConfirmationToken, CancellationToken);
+		await ServiceScope.DeleteAsync(EmailConfirmationToken, CancellationToken);
 
 		// Act
 		var response = await Client.VerifyStatusCodeAsync(_request, CancellationToken);
@@ -159,7 +159,7 @@ public class VerifyEmailConfirmationTokenFunctionalTests : BaseEmailConfirmation
 	public async Task VerifyAsync_ShouldHaveEmailConfirmationTokenNotFoundProblemDetails_WhenEmailConfirmationTokenNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteEmailConfirmationTokenAsync(EmailConfirmationToken, CancellationToken);
+		await ServiceScope.DeleteAsync(EmailConfirmationToken, CancellationToken);
 
 		// Act
 		var response = await Client.VerifyProblemDetailsAsync(_request, CancellationToken);
@@ -173,7 +173,7 @@ public class VerifyEmailConfirmationTokenFunctionalTests : BaseEmailConfirmation
 	{
 		// Arrange
 		var updatedEmailConfirmationToken = EmailConfirmationTokenBuilder.WithAlreadyExpiresAtUtc().Build();
-		await ServiceScope.UpdateEmailConfirmationTokenAsync(updatedEmailConfirmationToken, CancellationToken);
+		await ServiceScope.UpdateAsync(updatedEmailConfirmationToken, CancellationToken);
 
 		// Act
 		var response = await Client.VerifyStatusCodeAsync(_request, CancellationToken);
@@ -187,7 +187,7 @@ public class VerifyEmailConfirmationTokenFunctionalTests : BaseEmailConfirmation
 	{
 		// Arrange
 		var updatedEmailConfirmationToken = EmailConfirmationTokenBuilder.WithAlreadyExpiresAtUtc().Build();
-		await ServiceScope.UpdateEmailConfirmationTokenAsync(updatedEmailConfirmationToken, CancellationToken);
+		await ServiceScope.UpdateAsync(updatedEmailConfirmationToken, CancellationToken);
 
 		// Act
 		var response = await Client.VerifyProblemDetailsAsync(_request, CancellationToken);

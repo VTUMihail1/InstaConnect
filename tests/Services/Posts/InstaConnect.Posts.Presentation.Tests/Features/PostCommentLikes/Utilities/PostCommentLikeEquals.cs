@@ -108,8 +108,8 @@ public static class PostCommentLikeEquals
 	extension(AddPostCommentLikeApiResponse response)
 	{
 		public bool Matches(
-		PostCommentLike postCommentLike,
-		AddPostCommentLikeApiRequest request)
+		AddPostCommentLikeApiRequest request,
+		PostCommentLike postCommentLike)
 		{
 			return response.Response.Matches(postCommentLike.Id);
 		}
@@ -117,39 +117,39 @@ public static class PostCommentLikeEquals
 
 	extension(GetPostCommentLikeByIdApiResponse response)
 	{
-		public bool Matches(PostCommentLike postCommentLike, GetPostCommentLikeByIdApiRequest request)
+		public bool Matches(GetPostCommentLikeByIdApiRequest request, PostCommentLike postCommentLike)
 		{
-			return response.Response.MatchesFull(postCommentLike, request);
+			return response.Response.MatchesFull(request, postCommentLike);
 		}
 	}
 
 	extension(GetAllPostCommentLikesApiResponse response)
 	{
 		public bool Matches(
+		GetAllPostCommentLikesApiRequest request,
 		PostComment postComment,
-		ICollection<PostCommentLike> postCommentLikes,
-		GetAllPostCommentLikesApiRequest request)
+		ICollection<PostCommentLike> postCommentLikes)
 		{
 			return response.Response.MatchesWithoutUser(
-					   (response, postCommentLike) => response.MatchesWithoutPostComment(postCommentLike, request),
+					   request,
+					   (response, postCommentLike) => response.MatchesWithoutPostComment(request, postCommentLike),
 					   postCommentLike => postCommentLike.MatchesFilter(request),
 					   postComment,
-					   postCommentLikes,
-					   request);
+					   postCommentLikes);
 		}
 
 		public bool Matches(
+			GetAllPostCommentLikesApiRequest request,
 			PostComment postComment,
 			ICollection<PostCommentLike> postCommentLikes,
-			GetAllPostCommentLikesApiRequest request,
 			ISortEnumTermTransformer<PostCommentLike> termTransformer)
 		{
 			return response.Response.MatchesWithoutUser(
-					   (response, postCommentLike) => response.MatchesWithoutPostComment(postCommentLike, request),
+					   request,
+					   (response, postCommentLike) => response.MatchesWithoutPostComment(request, postCommentLike),
 					   postCommentLike => postCommentLike.MatchesFilter(request),
 					   postComment,
 					   postCommentLikes,
-					   request,
 					   termTransformer);
 		}
 	}
@@ -157,30 +157,30 @@ public static class PostCommentLikeEquals
 	extension(GetAllPostCommentLikesForUserApiResponse response)
 	{
 		public bool Matches(
+		GetAllPostCommentLikesForUserApiRequest request,
 		User user,
-		ICollection<PostCommentLike> postCommentLikes,
-		GetAllPostCommentLikesForUserApiRequest request)
+		ICollection<PostCommentLike> postCommentLikes)
 		{
 			return response.Response.MatchesWithoutPostComment(
-					   (response, postCommentLike) => response.MatchesWithoutUser(postCommentLike, request),
+					   request,
+					   (response, postCommentLike) => response.MatchesWithoutUser(request, postCommentLike),
 					   postCommentLike => postCommentLike.MatchesFilter(request),
 					   user,
-					   postCommentLikes,
-					   request);
+					   postCommentLikes);
 		}
 
 		public bool Matches(
+			GetAllPostCommentLikesForUserApiRequest request,
 			User user,
 			ICollection<PostCommentLike> postCommentLikes,
-			GetAllPostCommentLikesForUserApiRequest request,
 			ISortEnumTermTransformer<PostCommentLike> termTransformer)
 		{
 			return response.Response.MatchesWithoutPostComment(
-					   (response, postCommentLike) => response.MatchesWithoutUser(postCommentLike, request),
+					   request,
+					   (response, postCommentLike) => response.MatchesWithoutUser(request, postCommentLike),
 					   postCommentLike => postCommentLike.MatchesFilter(request),
 					   user,
 					   postCommentLikes,
-					   request,
 					   termTransformer);
 		}
 	}
@@ -215,7 +215,7 @@ public static class PostCommentLikeEquals
 
 	extension(PostCommentLikeApiResponse? response)
 	{
-		public bool MatchesFull<TRequest>(PostCommentLike? postCommentLike, TRequest request)
+		public bool MatchesFull<TRequest>(TRequest request, PostCommentLike? postCommentLike)
 	where TRequest : ICurrentUserableApiRequest
 		{
 			return response != null &&
@@ -223,10 +223,10 @@ public static class PostCommentLikeEquals
 				   postCommentLike.Id.Matches(response.Id, response.CommentId, response.UserId) &&
 				   postCommentLike.CreatedAtUtc == response.CreatedAtUtc &&
 				   response.User.MatchesFull(postCommentLike.User) &&
-				   response.PostComment.MatchesFull(postCommentLike.PostComment, request);
+				   response.PostComment.MatchesFull(request, postCommentLike.PostComment);
 		}
 
-		public bool MatchesWithoutUser<TRequest>(PostCommentLike? postCommentLike, TRequest request)
+		public bool MatchesWithoutUser<TRequest>(TRequest request, PostCommentLike? postCommentLike)
 			where TRequest : ICurrentUserableApiRequest
 		{
 			return response != null &&
@@ -234,10 +234,10 @@ public static class PostCommentLikeEquals
 				   postCommentLike.Id.Matches(response.Id, response.CommentId, response.UserId) &&
 				   postCommentLike.CreatedAtUtc == response.CreatedAtUtc &&
 				   response.User == null &&
-				   response.PostComment.MatchesFull(postCommentLike.PostComment, request);
+				   response.PostComment.MatchesFull(request, postCommentLike.PostComment);
 		}
 
-		public bool MatchesWithoutPostComment<TRequest>(PostCommentLike? postCommentLike, TRequest request)
+		public bool MatchesWithoutPostComment<TRequest>(TRequest request, PostCommentLike? postCommentLike)
 			where TRequest : ICurrentUserableApiRequest
 		{
 			return response != null &&
@@ -252,78 +252,78 @@ public static class PostCommentLikeEquals
 	extension(PostCommentLikeCollectionApiResponse response)
 	{
 		public bool MatchesWithoutUser<TRequest>(
+		TRequest request,
 		Func<PostCommentLikeApiResponse, PostCommentLike, bool> matches,
 		Func<PostCommentLike, bool> matchesFilter,
 		PostComment postComment,
-		ICollection<PostCommentLike> postCommentLikes,
-		TRequest request)
+		ICollection<PostCommentLike> postCommentLikes)
 		where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
-			return response.MatchesCollectionResponse(postCommentLikes.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, postCommentLikes.Count(matchesFilter)) &&
 				   response.User == null &&
-				   response.PostComment.MatchesFull(postComment, request) &&
-				   response.PostCommentLikes.MatchesCollection(postCommentLikes,
+				   response.PostComment.MatchesFull(request, postComment) &&
+				   response.PostCommentLikes.MatchesCollection(request,
+														postCommentLikes,
 														response => new(new(new(response.Id), response.CommentId), new(response.UserId)),
 														postCommentLike => postCommentLike.Id,
 														matches,
-														request,
 														matchesFilter);
 		}
 
 		public bool MatchesWithoutUser<TRequest>(
+			TRequest request,
 			Func<PostCommentLikeApiResponse, PostCommentLike, bool> matches,
 			Func<PostCommentLike, bool> matchesFilter,
 			PostComment postComment,
 			ICollection<PostCommentLike> postCommentLikes,
-			TRequest request,
 			ISortEnumTermTransformer<PostCommentLike> termTransformer)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
-			return response.MatchesCollectionResponse(postCommentLikes.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, postCommentLikes.Count(matchesFilter)) &&
 				   response.User == null &&
-				   response.PostComment.MatchesFull(postComment, request) &&
-				   response.PostCommentLikes.MatchesSortedCollection(postCommentLikes,
+				   response.PostComment.MatchesFull(request, postComment) &&
+				   response.PostCommentLikes.MatchesSortedCollection(request,
+															  postCommentLikes,
 															  matches,
 															  termTransformer,
-															  request,
 															  matchesFilter);
 		}
 
 		public bool MatchesWithoutPostComment<TRequest>(
+			TRequest request,
 			Func<PostCommentLikeApiResponse, PostCommentLike, bool> matches,
 			Func<PostCommentLike, bool> matchesFilter,
 			User user,
-			ICollection<PostCommentLike> postCommentLikes,
-			TRequest request)
+			ICollection<PostCommentLike> postCommentLikes)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
-			return response.MatchesCollectionResponse(postCommentLikes.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, postCommentLikes.Count(matchesFilter)) &&
 				   response.User.MatchesFull(user) &&
 				   response.PostComment == null &&
-				   response.PostCommentLikes.MatchesCollection(postCommentLikes,
+				   response.PostCommentLikes.MatchesCollection(request,
+														postCommentLikes,
 														response => new(new(new(response.Id), response.CommentId), new(response.UserId)),
 														postCommentLike => postCommentLike.Id,
 														matches,
-														request,
 														matchesFilter);
 		}
 
 		public bool MatchesWithoutPostComment<TRequest>(
+			TRequest request,
 			Func<PostCommentLikeApiResponse, PostCommentLike, bool> matches,
 			Func<PostCommentLike, bool> matchesFilter,
 			User user,
 			ICollection<PostCommentLike> postCommentLikes,
-			TRequest request,
 			ISortEnumTermTransformer<PostCommentLike> termTransformer)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
-			return response.MatchesCollectionResponse(postCommentLikes.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, postCommentLikes.Count(matchesFilter)) &&
 				   response.User.MatchesFull(user) &&
 				   response.PostComment == null &&
-				   response.PostCommentLikes.MatchesSortedCollection(postCommentLikes,
+				   response.PostCommentLikes.MatchesSortedCollection(request,
+															  postCommentLikes,
 															  matches,
 															  termTransformer,
-															  request,
 															  matchesFilter);
 		}
 	}

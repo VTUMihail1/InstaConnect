@@ -18,7 +18,7 @@ public class DeleteUserPresentationTests : BaseUserPresentationCommandFunctional
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 	}
 
 	[Theory]
@@ -43,7 +43,7 @@ public class DeleteUserPresentationTests : BaseUserPresentationCommandFunctional
 	public async Task PublishAsync_ShouldFaultUserDeletedEvent_WhenIdNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Act
 		await EventHarness.PublishAsync(_request, CancellationToken);
@@ -65,7 +65,7 @@ public class DeleteUserPresentationTests : BaseUserPresentationCommandFunctional
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(User);
@@ -101,7 +101,7 @@ public class DeleteUserPresentationTests : BaseUserPresentationCommandFunctional
 	{
 		// Act
 		await EventHarness.PublishAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ShouldBeNull();
@@ -116,7 +116,7 @@ public class DeleteUserPresentationTests : BaseUserPresentationCommandFunctional
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ShouldBeNull();

@@ -9,11 +9,11 @@ public static class ChatMessageSetups
 {
 	extension(IServiceScope serviceScope)
 	{
-		public async Task<ChatMessage?> GetChatMessageByIdAsync(
+		public async Task<ChatMessage?> GetByIdAsync(
 		ChatMessageIdCommandResponse id,
 		CancellationToken cancellationToken)
 		{
-			return await serviceScope.GetChatMessageByIdAsync(
+			return await serviceScope.GetByIdAsync(
 				new ChatMessageId(
 							   new(
 								   new(id.ParticipantOneId),

@@ -45,7 +45,7 @@ public class GetAllPostLikesServiceUnitTests : BasePostLikeDomainQueryUnitTest
 		var response = await _service.GetAllAsync(_query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Post, PostLikes, _query);
+		response.ShouldSatisfy(_query, Post, PostLikes);
 	}
 
 	[Fact]

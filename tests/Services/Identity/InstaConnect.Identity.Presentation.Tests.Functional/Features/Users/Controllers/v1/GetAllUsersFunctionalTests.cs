@@ -50,7 +50,7 @@ public class GetAllUsersFunctionalTests : BaseUserPresentationQueryFunctionalTes
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForName(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForName(request, messageTransformer);
 	}
 
 	[Theory]
@@ -80,7 +80,7 @@ public class GetAllUsersFunctionalTests : BaseUserPresentationQueryFunctionalTes
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForFirstName(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForFirstName(request, messageTransformer);
 	}
 
 	[Theory]
@@ -110,7 +110,7 @@ public class GetAllUsersFunctionalTests : BaseUserPresentationQueryFunctionalTes
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForLastName(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForLastName(request, messageTransformer);
 	}
 
 	[Theory]
@@ -140,7 +140,7 @@ public class GetAllUsersFunctionalTests : BaseUserPresentationQueryFunctionalTes
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForCurrentId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForCurrentId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -170,7 +170,7 @@ public class GetAllUsersFunctionalTests : BaseUserPresentationQueryFunctionalTes
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForSortOrder(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForSortOrder(request, messageTransformer);
 	}
 
 	[Theory]
@@ -200,7 +200,7 @@ public class GetAllUsersFunctionalTests : BaseUserPresentationQueryFunctionalTes
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForSortTerm(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForSortTerm(request, messageTransformer);
 	}
 
 	[Theory]
@@ -232,7 +232,7 @@ public class GetAllUsersFunctionalTests : BaseUserPresentationQueryFunctionalTes
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForPage(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForPage(request, messageTransformer);
 	}
 
 	[Theory]
@@ -264,7 +264,7 @@ public class GetAllUsersFunctionalTests : BaseUserPresentationQueryFunctionalTes
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForPageSize(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForPageSize(request, messageTransformer);
 	}
 
 	[Fact]

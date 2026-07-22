@@ -32,16 +32,16 @@ public class GetAllPostLikesForUserIntegrationTests : BasePostLikeDomainQueryInt
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserRangeAsync(Users, CancellationToken);
-		await ServiceScope.AddPostRangeAsync(Posts, CancellationToken);
-		await ServiceScope.AddPostLikeRangeAsync(PostLikes, CancellationToken);
+		await ServiceScope.AddRangeAsync(Users, CancellationToken);
+		await ServiceScope.AddRangeAsync(Posts, CancellationToken);
+		await ServiceScope.AddRangeAsync(PostLikes, CancellationToken);
 	}
 
 	[Fact]
 	public async Task GetAllForUserAsync_ShouldThrowUserNotFoundException_WhenUserIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowUserNotFoundExceptionAsync(_query, CancellationToken);
@@ -54,7 +54,7 @@ public class GetAllPostLikesForUserIntegrationTests : BasePostLikeDomainQueryInt
 		var response = await Service.GetAllForUserAsync(_query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, PostLikes, _query);
+		response.ShouldSatisfy(_query, User, PostLikes);
 	}
 
 	[Theory]
@@ -69,7 +69,7 @@ public class GetAllPostLikesForUserIntegrationTests : BasePostLikeDomainQueryInt
 		var response = await Service.GetAllForUserAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, PostLikes, query);
+		response.ShouldSatisfy(query, User, PostLikes);
 	}
 
 	[Theory]
@@ -86,7 +86,7 @@ public class GetAllPostLikesForUserIntegrationTests : BasePostLikeDomainQueryInt
 		var response = await Service.GetAllForUserAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, PostLikes, query);
+		response.ShouldSatisfy(query, User, PostLikes);
 	}
 
 	[Theory]
@@ -102,7 +102,7 @@ public class GetAllPostLikesForUserIntegrationTests : BasePostLikeDomainQueryInt
 		var response = await Service.GetAllForUserAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, PostLikes, query, termTransformer);
+		response.ShouldSatisfy(query, User, PostLikes, termTransformer);
 	}
 
 	[Theory]
@@ -118,6 +118,6 @@ public class GetAllPostLikesForUserIntegrationTests : BasePostLikeDomainQueryInt
 		var response = await Service.GetAllForUserAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, PostLikes, query, termTransformer);
+		response.ShouldSatisfy(query, User, PostLikes, termTransformer);
 	}
 }

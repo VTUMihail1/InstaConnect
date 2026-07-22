@@ -61,7 +61,7 @@ public static class ChatMapper
 		public ICollection<ChatResponse> ToResponse(
 			GetAllChatsQuery query)
 		{
-			return chats.Filter(chat => chat.MatchesFilter(query.Filter), query.Pagination, chat => chat.ToResponseWithoutParticipantOne(query));
+			return chats.Filter(query.Pagination, chat => chat.MatchesFilter(query.Filter), chat => chat.ToResponseWithoutParticipantOne(query));
 		}
 
 		public long ToTotalCountResponse(

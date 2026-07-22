@@ -32,7 +32,7 @@ public class GetAllUserClaimsIntegrationTests : BaseUserClaimDomainQueryIntegrat
 	protected override async Task OnInitializeAsync()
 	{
 		await ServiceScope.AddRangeAsync(Users, CancellationToken);
-		await ServiceScope.AddClaimRangeAsync(UserClaims, CancellationToken);
+		await ServiceScope.AddRangeAsync(UserClaims, CancellationToken);
 	}
 
 	[Fact]

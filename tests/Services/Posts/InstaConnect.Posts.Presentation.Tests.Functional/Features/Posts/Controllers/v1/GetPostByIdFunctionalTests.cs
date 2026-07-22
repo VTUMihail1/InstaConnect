@@ -16,9 +16,9 @@ public class GetPostByIdFunctionalTests : BasePostPresentationQueryFunctionalTes
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
-		await ServiceScope.AddPostAsync(Post, CancellationToken);
-		await ServiceScope.AddPostLikeAsync(PostLike, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(Post, CancellationToken);
+		await ServiceScope.AddAsync(PostLike, CancellationToken);
 	}
 
 	[Theory]
@@ -50,7 +50,7 @@ public class GetPostByIdFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var response = await Client.GetByIdProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -80,14 +80,14 @@ public class GetPostByIdFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var response = await Client.GetByIdProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForCurrentUserId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForCurrentUserId(request, messageTransformer);
 	}
 
 	[Fact]
 	public async Task GetByIdAsync_ShouldHaveNotFoundStatusCode_WhenIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostAsync(Post, CancellationToken);
+		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Act
 		var response = await Client.GetByIdStatusCodeAsync(_request, CancellationToken);
@@ -100,7 +100,7 @@ public class GetPostByIdFunctionalTests : BasePostPresentationQueryFunctionalTes
 	public async Task GetByIdAsync_ShouldHavePostNotFoundProblemDetails_WhenIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostAsync(Post, CancellationToken);
+		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Act
 		var response = await Client.GetByIdProblemDetailsAsync(_request, CancellationToken);
@@ -157,7 +157,7 @@ public class GetPostByIdFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var response = await Client.GetByIdAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Post, _request);
+		response.ShouldSatisfy(_request, Post);
 	}
 
 	[Theory]
@@ -172,7 +172,7 @@ public class GetPostByIdFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var response = await Client.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Post, request);
+		response.ShouldSatisfy(request, Post);
 	}
 
 	[Theory]
@@ -188,6 +188,6 @@ public class GetPostByIdFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var response = await Client.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Post, request);
+		response.ShouldSatisfy(request, Post);
 	}
 }

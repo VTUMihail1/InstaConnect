@@ -8,11 +8,11 @@ public static class PostCommentSetups
 {
 	extension(IServiceScope serviceScope)
 	{
-		public async Task<PostComment?> GetPostCommentByIdAsync(
+		public async Task<PostComment?> GetByIdAsync(
 		PostCommentIdApiResponse id,
 		CancellationToken cancellationToken)
 		{
-			return await serviceScope.GetPostCommentByIdAsync(
+			return await serviceScope.GetByIdAsync(
 				new PostCommentId(
 							   new(id.Id),
 							   id.CommentId),

@@ -21,7 +21,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 	protected override async Task OnInitializeAsync()
 	{
 		await ServiceScope.AddRangeAsync(Users, CancellationToken);
-		await ServiceScope.AddClaimRangeAsync(UserClaims, CancellationToken);
+		await ServiceScope.AddRangeAsync(UserClaims, CancellationToken);
 	}
 
 	[Fact]
@@ -74,7 +74,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -104,7 +104,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForCurrentId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForCurrentId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -134,7 +134,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForSortOrder(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForSortOrder(request, messageTransformer);
 	}
 
 	[Theory]
@@ -164,7 +164,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForSortTerm(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForSortTerm(request, messageTransformer);
 	}
 
 	[Theory]
@@ -196,7 +196,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForPage(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForPage(request, messageTransformer);
 	}
 
 	[Theory]
@@ -228,7 +228,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForPageSize(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForPageSize(request, messageTransformer);
 	}
 
 

@@ -26,7 +26,7 @@ public class UpdatePostCommandHandlerUnitTests : BasePostApplicationCommandUnitT
 		var response = await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Post, _request);
+		response.ShouldSatisfy(_request, Post);
 	}
 
 	[Fact]

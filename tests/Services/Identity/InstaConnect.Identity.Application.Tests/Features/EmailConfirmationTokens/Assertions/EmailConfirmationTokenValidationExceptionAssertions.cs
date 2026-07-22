@@ -7,44 +7,44 @@ public static class EmailConfirmationTokenValidationExceptionAssertions
 	extension(IApplicationSender sender)
 	{
 		public async Task ShouldThrowInvalidValidationExceptionForNameAsync(
-			IStringMessageTransformer messageTransformer,
 			AddEmailConfirmationTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
-				p => p.Name,
-				messageTransformer,
 				request,
+				p =>p.Name,
+				messageTransformer,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForIdAsync(
-			IStringMessageTransformer messageTransformer,
 			VerifyEmailConfirmationTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
-				p => p.Id,
-				messageTransformer,
 				request,
+				p =>p.Id,
+				messageTransformer,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForValueAsync(
-			IStringMessageTransformer messageTransformer,
 			VerifyEmailConfirmationTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
-				p => p.Value,
-				messageTransformer,
 				request,
+				p =>p.Value,
+				messageTransformer,
 				cancellationToken);
 		}
 	}

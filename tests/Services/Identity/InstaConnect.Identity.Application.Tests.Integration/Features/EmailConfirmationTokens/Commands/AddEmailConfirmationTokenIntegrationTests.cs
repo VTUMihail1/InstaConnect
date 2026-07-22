@@ -31,7 +31,7 @@ public class AddEmailConfirmationTokenIntegrationTests : BaseEmailConfirmationTo
 		var request = _requestBuilder.WithName(transformer).Build();
 
 		// Assert
-		await Sender.ShouldThrowInvalidValidationExceptionForNameAsync(messageTransformer, request, CancellationToken);
+		await Sender.ShouldThrowInvalidValidationExceptionForNameAsync(request, messageTransformer, CancellationToken);
 	}
 
 	[Fact]

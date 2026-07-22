@@ -33,7 +33,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserApplicationQueryI
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForNameAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -46,7 +46,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserApplicationQueryI
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForFirstNameAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -59,7 +59,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserApplicationQueryI
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForLastNameAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -72,7 +72,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserApplicationQueryI
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForCurrentIdAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -85,7 +85,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserApplicationQueryI
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForSortOrderAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -98,7 +98,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserApplicationQueryI
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForSortTermAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -112,7 +112,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserApplicationQueryI
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForPageAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -126,7 +126,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserApplicationQueryI
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForPageSizeAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Fact]

@@ -80,7 +80,7 @@ public static class PostCommentLikeMapper
 
 			return new(postComment.ToFullQueryResponse(request),
 					   null,
-					   postCommentLikes.Filter(postCommentLike => filter(postCommentLike, request), request, postCommentLike => transform(postCommentLike, request)),
+					   postCommentLikes.Filter(request, postCommentLike => filter(postCommentLike, request), postCommentLike => transform(postCommentLike, request)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -100,7 +100,7 @@ public static class PostCommentLikeMapper
 
 			return new(null,
 					   user.ToFullQueryResponse(),
-					   postCommentLikes.Filter(postCommentLike => filter(postCommentLike, request), request, postCommentLike => transform(postCommentLike, request)),
+					   postCommentLikes.Filter(request, postCommentLike => filter(postCommentLike, request), postCommentLike => transform(postCommentLike, request)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,

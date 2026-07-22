@@ -28,15 +28,15 @@ public class AddPostLikeIntegrationTests : BasePostLikeDomainCommandIntegrationT
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
-		await ServiceScope.AddPostAsync(Post, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(Post, CancellationToken);
 	}
 
 	[Fact]
 	public async Task AddAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostAsync(Post, CancellationToken);
+		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowPostNotFoundExceptionAsync(_command, CancellationToken);
@@ -46,7 +46,7 @@ public class AddPostLikeIntegrationTests : BasePostLikeDomainCommandIntegrationT
 	public async Task AddAsync_ShouldThrowUserNotFoundException_WhenUserIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowUserNotFoundExceptionAsync(_command, CancellationToken);
@@ -56,7 +56,7 @@ public class AddPostLikeIntegrationTests : BasePostLikeDomainCommandIntegrationT
 	public async Task AddAsync_ShouldThrowPostLikeAlreadyExistsException_WhenPostLikeAlreadyExists()
 	{
 		// Arrange
-		await ServiceScope.AddPostLikeAsync(PostLike, CancellationToken);
+		await ServiceScope.AddAsync(PostLike, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowPostLikeAlreadyExistsExceptionAsync(_command, CancellationToken);
@@ -68,7 +68,7 @@ public class AddPostLikeIntegrationTests : BasePostLikeDomainCommandIntegrationT
 		IStringTransformer transformer)
 	{
 		// Arrange
-		await ServiceScope.AddPostLikeAsync(PostLike, CancellationToken);
+		await ServiceScope.AddAsync(PostLike, CancellationToken);
 		var command = _commandBuilder.WithId(transformer).Build();
 
 		// Assert
@@ -81,7 +81,7 @@ public class AddPostLikeIntegrationTests : BasePostLikeDomainCommandIntegrationT
 		IStringTransformer transformer)
 	{
 		// Arrange
-		await ServiceScope.AddPostLikeAsync(PostLike, CancellationToken);
+		await ServiceScope.AddAsync(PostLike, CancellationToken);
 		var command = _commandBuilder.WithUserId(transformer).Build();
 
 		// Assert
@@ -93,10 +93,10 @@ public class AddPostLikeIntegrationTests : BasePostLikeDomainCommandIntegrationT
 	{
 		// Act
 		var response = await Service.AddAsync(_command, CancellationToken);
-		var postLike = await ServiceScope.GetPostLikeByIdAsync(response, CancellationToken);
+		var postLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(postLike, _command);
+		response.ShouldSatisfy(_command, postLike);
 	}
 
 	[Theory]
@@ -109,10 +109,10 @@ public class AddPostLikeIntegrationTests : BasePostLikeDomainCommandIntegrationT
 
 		// Act
 		var response = await Service.AddAsync(command, CancellationToken);
-		var postLike = await ServiceScope.GetPostLikeByIdAsync(response, CancellationToken);
+		var postLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(postLike, command);
+		response.ShouldSatisfy(command, postLike);
 	}
 
 	[Theory]
@@ -125,10 +125,10 @@ public class AddPostLikeIntegrationTests : BasePostLikeDomainCommandIntegrationT
 
 		// Act
 		var response = await Service.AddAsync(command, CancellationToken);
-		var postLike = await ServiceScope.GetPostLikeByIdAsync(response, CancellationToken);
+		var postLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(postLike, command);
+		response.ShouldSatisfy(command, postLike);
 	}
 
 	[Fact]
@@ -136,7 +136,7 @@ public class AddPostLikeIntegrationTests : BasePostLikeDomainCommandIntegrationT
 	{
 		// Act
 		var response = await Service.AddAsync(_command, CancellationToken);
-		var postLike = await ServiceScope.GetPostLikeByIdAsync(response, CancellationToken);
+		var postLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		postLike.ShouldSatisfy(_command);
@@ -152,7 +152,7 @@ public class AddPostLikeIntegrationTests : BasePostLikeDomainCommandIntegrationT
 
 		// Act
 		var response = await Service.AddAsync(command, CancellationToken);
-		var postLike = await ServiceScope.GetPostLikeByIdAsync(response, CancellationToken);
+		var postLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		postLike.ShouldSatisfy(command);
@@ -168,7 +168,7 @@ public class AddPostLikeIntegrationTests : BasePostLikeDomainCommandIntegrationT
 
 		// Act
 		var response = await Service.AddAsync(command, CancellationToken);
-		var postLike = await ServiceScope.GetPostLikeByIdAsync(response, CancellationToken);
+		var postLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		postLike.ShouldSatisfy(command);
@@ -179,10 +179,12 @@ public class AddPostLikeIntegrationTests : BasePostLikeDomainCommandIntegrationT
 	{
 		// Act
 		var response = await Service.AddAsync(_command, CancellationToken);
-		var postLike = await ServiceScope.GetPostLikeByIdAsync(response, CancellationToken);
+		var postLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
+
+		var eventRequest = await EventHarness.PublishedLikeAddedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedPostLikeAddedAsync(_command, postLike, CancellationToken);
+		eventRequest.ShouldSatisfy(_command, postLike);
 	}
 
 	[Theory]
@@ -195,10 +197,12 @@ public class AddPostLikeIntegrationTests : BasePostLikeDomainCommandIntegrationT
 
 		// Act
 		var response = await Service.AddAsync(command, CancellationToken);
-		var postLike = await ServiceScope.GetPostLikeByIdAsync(response, CancellationToken);
+		var postLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
+
+		var eventRequest = await EventHarness.PublishedLikeAddedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedPostLikeAddedAsync(command, postLike, CancellationToken);
+		eventRequest.ShouldSatisfy(command, postLike);
 	}
 
 	[Theory]
@@ -211,9 +215,11 @@ public class AddPostLikeIntegrationTests : BasePostLikeDomainCommandIntegrationT
 
 		// Act
 		var response = await Service.AddAsync(command, CancellationToken);
-		var postLike = await ServiceScope.GetPostLikeByIdAsync(response, CancellationToken);
+		var postLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
+
+		var eventRequest = await EventHarness.PublishedLikeAddedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedPostLikeAddedAsync(command, postLike, CancellationToken);
+		eventRequest.ShouldSatisfy(command, postLike);
 	}
 }

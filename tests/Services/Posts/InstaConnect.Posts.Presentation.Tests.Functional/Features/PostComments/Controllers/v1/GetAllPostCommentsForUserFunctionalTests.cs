@@ -20,11 +20,11 @@ public class GetAllPostCommentsForUserFunctionalTests : BasePostCommentPresentat
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserRangeAsync(Users, CancellationToken);
-		await ServiceScope.AddPostRangeAsync(Posts, CancellationToken);
-		await ServiceScope.AddPostLikeRangeAsync(PostLikes, CancellationToken);
-		await ServiceScope.AddPostCommentRangeAsync(PostComments, CancellationToken);
-		await ServiceScope.AddPostCommentLikeRangeAsync(PostCommentLikes, CancellationToken);
+		await ServiceScope.AddRangeAsync(Users, CancellationToken);
+		await ServiceScope.AddRangeAsync(Posts, CancellationToken);
+		await ServiceScope.AddRangeAsync(PostLikes, CancellationToken);
+		await ServiceScope.AddRangeAsync(PostComments, CancellationToken);
+		await ServiceScope.AddRangeAsync(PostCommentLikes, CancellationToken);
 	}
 
 	[Theory]
@@ -56,7 +56,7 @@ public class GetAllPostCommentsForUserFunctionalTests : BasePostCommentPresentat
 		var response = await Client.GetAllForUserProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForUserId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForUserId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -86,7 +86,7 @@ public class GetAllPostCommentsForUserFunctionalTests : BasePostCommentPresentat
 		var response = await Client.GetAllForUserProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForCurrentUserId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForCurrentUserId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -116,7 +116,7 @@ public class GetAllPostCommentsForUserFunctionalTests : BasePostCommentPresentat
 		var response = await Client.GetAllForUserProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForSortOrder(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForSortOrder(request, messageTransformer);
 	}
 
 	[Theory]
@@ -146,7 +146,7 @@ public class GetAllPostCommentsForUserFunctionalTests : BasePostCommentPresentat
 		var response = await Client.GetAllForUserProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForSortTerm(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForSortTerm(request, messageTransformer);
 	}
 
 	[Theory]
@@ -178,7 +178,7 @@ public class GetAllPostCommentsForUserFunctionalTests : BasePostCommentPresentat
 		var response = await Client.GetAllForUserProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForPage(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForPage(request, messageTransformer);
 	}
 
 	[Theory]
@@ -210,14 +210,14 @@ public class GetAllPostCommentsForUserFunctionalTests : BasePostCommentPresentat
 		var response = await Client.GetAllForUserProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForPageSize(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForPageSize(request, messageTransformer);
 	}
 
 	[Fact]
 	public async Task GetAllAsync_ShouldHaveNotFoundStatusCode_WhenUserIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Act
 		var response = await Client.GetAllForUserStatusCodeAsync(_request, CancellationToken);
@@ -230,7 +230,7 @@ public class GetAllPostCommentsForUserFunctionalTests : BasePostCommentPresentat
 	public async Task GetAllAsync_ShouldHaveUserNotFoundProblemDetails_WhenUserIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Act
 		var response = await Client.GetAllForUserProblemDetailsAsync(_request, CancellationToken);
@@ -319,7 +319,7 @@ public class GetAllPostCommentsForUserFunctionalTests : BasePostCommentPresentat
 		var response = await Client.GetAllForUserAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, PostComments, _request);
+		response.ShouldSatisfy(_request, User, PostComments);
 	}
 
 	[Theory]
@@ -334,7 +334,7 @@ public class GetAllPostCommentsForUserFunctionalTests : BasePostCommentPresentat
 		var response = await Client.GetAllForUserAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, PostComments, request);
+		response.ShouldSatisfy(request, User, PostComments);
 	}
 
 	[Theory]
@@ -350,7 +350,7 @@ public class GetAllPostCommentsForUserFunctionalTests : BasePostCommentPresentat
 		var response = await Client.GetAllForUserAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, PostComments, request);
+		response.ShouldSatisfy(request, User, PostComments);
 	}
 
 	[Theory]
@@ -366,7 +366,7 @@ public class GetAllPostCommentsForUserFunctionalTests : BasePostCommentPresentat
 		var response = await Client.GetAllForUserAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, PostComments, request, termTransformer);
+		response.ShouldSatisfy(request, User, PostComments, termTransformer);
 	}
 
 	[Theory]
@@ -382,6 +382,6 @@ public class GetAllPostCommentsForUserFunctionalTests : BasePostCommentPresentat
 		var response = await Client.GetAllForUserAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, PostComments, request, termTransformer);
+		response.ShouldSatisfy(request, User, PostComments, termTransformer);
 	}
 }

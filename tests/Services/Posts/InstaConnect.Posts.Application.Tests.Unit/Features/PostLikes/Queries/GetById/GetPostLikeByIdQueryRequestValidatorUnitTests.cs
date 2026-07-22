@@ -32,7 +32,7 @@ public class GetPostLikeByIdQueryRequestValidatorUnitTests : BasePostLikeApplica
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForId(messageTransformer, request);
+		result.ShouldHaveValidationErrorForId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -50,7 +50,7 @@ public class GetPostLikeByIdQueryRequestValidatorUnitTests : BasePostLikeApplica
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForUserId(messageTransformer, request);
+		result.ShouldHaveValidationErrorForUserId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -65,7 +65,7 @@ public class GetPostLikeByIdQueryRequestValidatorUnitTests : BasePostLikeApplica
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForCurrentUserId(messageTransformer, request);
+		result.ShouldHaveValidationErrorForCurrentUserId(request, messageTransformer);
 	}
 
 	[Theory]

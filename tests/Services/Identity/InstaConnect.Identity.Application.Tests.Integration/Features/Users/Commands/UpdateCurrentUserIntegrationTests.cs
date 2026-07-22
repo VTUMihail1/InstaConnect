@@ -17,7 +17,7 @@ public class UpdateCurrentUserIntegrationTests : BaseUserApplicationCommandInteg
 	protected override async Task OnInitializeAsync()
 	{
 		await ServiceScope.AddAsync(User, CancellationToken);
-		await ServiceScope.AddEmailConfirmationTokenRangeAsync(User.EmailConfirmationTokens, CancellationToken);
+		await ServiceScope.AddRangeAsync(User.EmailConfirmationTokens, CancellationToken);
 	}
 
 	[Theory]
@@ -33,7 +33,7 @@ public class UpdateCurrentUserIntegrationTests : BaseUserApplicationCommandInteg
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForIdAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -49,7 +49,7 @@ public class UpdateCurrentUserIntegrationTests : BaseUserApplicationCommandInteg
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForNameAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -65,7 +65,7 @@ public class UpdateCurrentUserIntegrationTests : BaseUserApplicationCommandInteg
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForFirstNameAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -81,7 +81,7 @@ public class UpdateCurrentUserIntegrationTests : BaseUserApplicationCommandInteg
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForLastNameAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -98,7 +98,7 @@ public class UpdateCurrentUserIntegrationTests : BaseUserApplicationCommandInteg
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForEmailAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Fact]

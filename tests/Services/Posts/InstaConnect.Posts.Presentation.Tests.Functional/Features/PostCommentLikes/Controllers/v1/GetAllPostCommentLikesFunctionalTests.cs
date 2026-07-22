@@ -20,11 +20,11 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserRangeAsync(Users, CancellationToken);
-		await ServiceScope.AddPostRangeAsync(Posts, CancellationToken);
-		await ServiceScope.AddPostLikeRangeAsync(PostLikes, CancellationToken);
-		await ServiceScope.AddPostCommentRangeAsync(PostComments, CancellationToken);
-		await ServiceScope.AddPostCommentLikeRangeAsync(PostCommentLikes, CancellationToken);
+		await ServiceScope.AddRangeAsync(Users, CancellationToken);
+		await ServiceScope.AddRangeAsync(Posts, CancellationToken);
+		await ServiceScope.AddRangeAsync(PostLikes, CancellationToken);
+		await ServiceScope.AddRangeAsync(PostComments, CancellationToken);
+		await ServiceScope.AddRangeAsync(PostCommentLikes, CancellationToken);
 	}
 
 	[Theory]
@@ -56,7 +56,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -88,7 +88,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForCommentId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForCommentId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -118,7 +118,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForUserName(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForUserName(request, messageTransformer);
 	}
 
 	[Theory]
@@ -148,7 +148,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForCurrentUserId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForCurrentUserId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -179,7 +179,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForSortOrder(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForSortOrder(request, messageTransformer);
 	}
 
 	[Theory]
@@ -210,7 +210,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForSortTerm(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForSortTerm(request, messageTransformer);
 	}
 
 	[Theory]
@@ -242,7 +242,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForPage(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForPage(request, messageTransformer);
 	}
 
 	[Theory]
@@ -274,14 +274,14 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForPageSize(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForPageSize(request, messageTransformer);
 	}
 
 	[Fact]
 	public async Task GetAllAsync_ShouldHaveNotFoundStatusCode_WhenIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostAsync(Post, CancellationToken);
+		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Act
 		var response = await Client.GetAllStatusCodeAsync(_request, CancellationToken);
@@ -294,7 +294,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
 	public async Task GetAllAsync_ShouldHavePostNotFoundProblemDetails_WhenIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostAsync(Post, CancellationToken);
+		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Act
 		var response = await Client.GetAllProblemDetailsAsync(_request, CancellationToken);
@@ -307,7 +307,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
 	public async Task GetAllAsync_ShouldHaveNotFoundStatusCode_WhenCommentIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostCommentAsync(PostComment, CancellationToken);
+		await ServiceScope.DeleteAsync(PostComment, CancellationToken);
 
 		// Act
 		var response = await Client.GetAllStatusCodeAsync(_request, CancellationToken);
@@ -320,7 +320,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
 	public async Task GetAllAsync_ShouldHavePostCommentNotFoundProblemDetails_WhenCommentIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostCommentAsync(PostComment, CancellationToken);
+		await ServiceScope.DeleteAsync(PostComment, CancellationToken);
 
 		// Act
 		var response = await Client.GetAllProblemDetailsAsync(_request, CancellationToken);
@@ -441,7 +441,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
 		var response = await Client.GetAllAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostComment, PostCommentLikes, _request);
+		response.ShouldSatisfy(_request, PostComment, PostCommentLikes);
 	}
 
 	[Theory]
@@ -456,7 +456,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
 		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostComment, PostCommentLikes, request);
+		response.ShouldSatisfy(request, PostComment, PostCommentLikes);
 	}
 
 	[Theory]
@@ -471,7 +471,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
 		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostComment, PostCommentLikes, request);
+		response.ShouldSatisfy(request, PostComment, PostCommentLikes);
 	}
 
 	[Theory]
@@ -488,7 +488,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
 		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostComment, PostCommentLikes, request);
+		response.ShouldSatisfy(request, PostComment, PostCommentLikes);
 	}
 
 	[Theory]
@@ -504,7 +504,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
 		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostComment, PostCommentLikes, request);
+		response.ShouldSatisfy(request, PostComment, PostCommentLikes);
 	}
 
 	[Theory]
@@ -520,7 +520,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
 		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostComment, PostCommentLikes, request, termTransformer);
+		response.ShouldSatisfy(request, PostComment, PostCommentLikes, termTransformer);
 	}
 
 	[Theory]
@@ -536,6 +536,6 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikePresenta
 		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostComment, PostCommentLikes, request, termTransformer);
+		response.ShouldSatisfy(request, PostComment, PostCommentLikes, termTransformer);
 	}
 }

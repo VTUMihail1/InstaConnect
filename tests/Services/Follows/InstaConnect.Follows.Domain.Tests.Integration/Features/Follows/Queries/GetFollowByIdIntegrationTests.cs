@@ -25,16 +25,16 @@ public class GetFollowByIdIntegrationTests : BaseFollowDomainQueryIntegrationTes
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(Follower, CancellationToken);
-		await ServiceScope.AddUserAsync(Following, CancellationToken);
-		await ServiceScope.AddFollowAsync(Follow, CancellationToken);
+		await ServiceScope.AddAsync(Follower, CancellationToken);
+		await ServiceScope.AddAsync(Following, CancellationToken);
+		await ServiceScope.AddAsync(Follow, CancellationToken);
 	}
 
 	[Fact]
 	public async Task GetByIdAsync_ShouldThrowFollowNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteFollowAsync(Follow, CancellationToken);
+		await ServiceScope.DeleteAsync(Follow, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowFollowNotFoundExceptionAsync(_query, CancellationToken);

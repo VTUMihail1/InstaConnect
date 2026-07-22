@@ -60,7 +60,7 @@ public class AddPostCommentServiceUnitTests : BasePostCommentDomainCommandUnitTe
 		var response = await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostComment, _command);
+		response.ShouldSatisfy(_command, PostComment);
 	}
 
 	[Fact]

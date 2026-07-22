@@ -43,7 +43,7 @@ public class GetPostByIdServiceUnitTests : BasePostDomainQueryUnitTest
 		var response = await _service.GetByIdAsync(_query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Post, _query);
+		response.ShouldSatisfy(_query, Post);
 	}
 
 	[Fact]

@@ -16,9 +16,9 @@ public class GetFollowByIdFunctionalTests : BaseFollowPresentationQueryFunctiona
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(Follower, CancellationToken);
-		await ServiceScope.AddUserAsync(Following, CancellationToken);
-		await ServiceScope.AddFollowAsync(Follow, CancellationToken);
+		await ServiceScope.AddAsync(Follower, CancellationToken);
+		await ServiceScope.AddAsync(Following, CancellationToken);
+		await ServiceScope.AddAsync(Follow, CancellationToken);
 	}
 
 	[Theory]
@@ -50,7 +50,7 @@ public class GetFollowByIdFunctionalTests : BaseFollowPresentationQueryFunctiona
 		var response = await Client.GetByIdProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForFollowerId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForFollowerId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -82,7 +82,7 @@ public class GetFollowByIdFunctionalTests : BaseFollowPresentationQueryFunctiona
 		var response = await Client.GetByIdProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForFollowingId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForFollowingId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -112,14 +112,14 @@ public class GetFollowByIdFunctionalTests : BaseFollowPresentationQueryFunctiona
 		var response = await Client.GetByIdProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForCurrentUserId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForCurrentUserId(request, messageTransformer);
 	}
 
 	[Fact]
 	public async Task GetByIdAsync_ShouldHaveNotFoundStatusCode_WhenUserIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteFollowAsync(Follow, CancellationToken);
+		await ServiceScope.DeleteAsync(Follow, CancellationToken);
 
 		// Act
 		var response = await Client.GetByIdStatusCodeAsync(_request, CancellationToken);
@@ -132,7 +132,7 @@ public class GetFollowByIdFunctionalTests : BaseFollowPresentationQueryFunctiona
 	public async Task GetByIdAsync_ShouldHaveFollowNotFoundProblemDetails_WhenUserIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteFollowAsync(Follow, CancellationToken);
+		await ServiceScope.DeleteAsync(Follow, CancellationToken);
 
 		// Act
 		var response = await Client.GetByIdProblemDetailsAsync(_request, CancellationToken);

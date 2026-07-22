@@ -16,9 +16,9 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationCommandFunc
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
-		await ServiceScope.AddPostAsync(Post, CancellationToken);
-		await ServiceScope.AddPostLikeAsync(PostLike, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(Post, CancellationToken);
+		await ServiceScope.AddAsync(PostLike, CancellationToken);
 	}
 
 	[Fact]
@@ -60,7 +60,7 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationCommandFunc
 		var response = await Client.DeleteProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -94,14 +94,14 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationCommandFunc
 		var response = await Client.DeleteProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForUserId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForUserId(request, messageTransformer);
 	}
 
 	[Fact]
 	public async Task DeleteAsync_ShouldHaveNotFoundStatusCode_WhenIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostAsync(Post, CancellationToken);
+		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Act
 		var response = await Client.DeleteStatusCodeAsync(_request, CancellationToken);
@@ -114,7 +114,7 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationCommandFunc
 	public async Task DeleteAsync_ShouldHavePostNotFoundProblemDetails_WhenIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostAsync(Post, CancellationToken);
+		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Act
 		var response = await Client.DeleteProblemDetailsAsync(_request, CancellationToken);
@@ -127,7 +127,7 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationCommandFunc
 	public async Task DeleteAsync_ShouldHaveNotFoundStatusCode_WhenUserIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostLikeAsync(PostLike, CancellationToken);
+		await ServiceScope.DeleteAsync(PostLike, CancellationToken);
 
 		// Act
 		var response = await Client.DeleteStatusCodeAsync(_request, CancellationToken);
@@ -140,7 +140,7 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationCommandFunc
 	public async Task DeleteAsync_ShouldHavePostLikeNotFoundProblemDetails_WhenUserIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostLikeAsync(PostLike, CancellationToken);
+		await ServiceScope.DeleteAsync(PostLike, CancellationToken);
 
 		// Act
 		var response = await Client.DeleteProblemDetailsAsync(_request, CancellationToken);
@@ -194,7 +194,7 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationCommandFunc
 	{
 		// Act
 		await Client.DeleteAsync(_request, CancellationToken);
-		var postLike = await ServiceScope.GetPostLikeByIdAsync(PostLike.Id, CancellationToken);
+		var postLike = await ServiceScope.GetByIdAsync(PostLike.Id, CancellationToken);
 
 		// Assert
 		postLike.ShouldBeNull();
@@ -210,7 +210,7 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationCommandFunc
 
 		// Act
 		await Client.DeleteAsync(request, CancellationToken);
-		var postLike = await ServiceScope.GetPostLikeByIdAsync(PostLike.Id, CancellationToken);
+		var postLike = await ServiceScope.GetByIdAsync(PostLike.Id, CancellationToken);
 
 		// Assert
 		postLike.ShouldBeNull();
@@ -226,7 +226,7 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationCommandFunc
 
 		// Act
 		await Client.DeleteAsync(request, CancellationToken);
-		var postLike = await ServiceScope.GetPostLikeByIdAsync(PostLike.Id, CancellationToken);
+		var postLike = await ServiceScope.GetByIdAsync(PostLike.Id, CancellationToken);
 
 		// Assert
 		postLike.ShouldBeNull();
@@ -238,8 +238,10 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationCommandFunc
 		// Act
 		await Client.DeleteAsync(_request, CancellationToken);
 
+		var eventRequest = await EventHarness.PublishedLikeDeletedEventRequest(CancellationToken);
+
 		// Assert
-		await EventHarness.ShouldHavePublishedPostLikeDeletedAsync(_request, PostLike, CancellationToken);
+		eventRequest.ShouldSatisfy(_request, PostLike);
 	}
 
 	[Theory]
@@ -253,8 +255,10 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationCommandFunc
 		// Act
 		await Client.DeleteAsync(request, CancellationToken);
 
+		var eventRequest = await EventHarness.PublishedLikeDeletedEventRequest(CancellationToken);
+
 		// Assert
-		await EventHarness.ShouldHavePublishedPostLikeDeletedAsync(request, PostLike, CancellationToken);
+		eventRequest.ShouldSatisfy(request, PostLike);
 	}
 
 	[Theory]
@@ -268,7 +272,9 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationCommandFunc
 		// Act
 		await Client.DeleteAsync(request, CancellationToken);
 
+		var eventRequest = await EventHarness.PublishedLikeDeletedEventRequest(CancellationToken);
+
 		// Assert
-		await EventHarness.ShouldHavePublishedPostLikeDeletedAsync(request, PostLike, CancellationToken);
+		eventRequest.ShouldSatisfy(request, PostLike);
 	}
 }

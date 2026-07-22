@@ -16,9 +16,9 @@ public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowApplicationQu
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(Follower, CancellationToken);
-		await ServiceScope.AddUserAsync(Following, CancellationToken);
-		await ServiceScope.AddFollowAsync(Follow, CancellationToken);
+		await ServiceScope.AddAsync(Follower, CancellationToken);
+		await ServiceScope.AddAsync(Following, CancellationToken);
+		await ServiceScope.AddAsync(Follow, CancellationToken);
 	}
 
 	[Theory]
@@ -34,7 +34,7 @@ public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowApplicationQu
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForFollowerIdAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -50,7 +50,7 @@ public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowApplicationQu
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForFollowingIdAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -63,14 +63,14 @@ public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowApplicationQu
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForCurrentUserIdAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Fact]
 	public async Task SendAsync_ShouldThrowFollowNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteFollowAsync(Follow, CancellationToken);
+		await ServiceScope.DeleteAsync(Follow, CancellationToken);
 
 		// Assert
 		await Sender.ShouldThrowFollowNotFoundExceptionAsync(_request, CancellationToken);

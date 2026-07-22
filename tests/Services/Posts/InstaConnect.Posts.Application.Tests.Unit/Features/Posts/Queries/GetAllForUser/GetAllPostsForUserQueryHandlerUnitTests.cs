@@ -26,7 +26,7 @@ public class GetAllPostsForUserQueryHandlerUnitTests : BasePostApplicationQueryU
 		var response = await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, Posts, _request);
+		response.ShouldSatisfy(_request, User, Posts);
 	}
 
 	[Fact]

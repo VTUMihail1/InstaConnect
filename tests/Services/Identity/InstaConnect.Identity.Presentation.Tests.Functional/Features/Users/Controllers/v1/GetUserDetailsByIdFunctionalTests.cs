@@ -68,7 +68,7 @@ public class GetUserDetailsByIdFunctionalTests : BaseUserPresentationQueryFuncti
 		var response = await Client.GetDetailsByIdProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -98,7 +98,7 @@ public class GetUserDetailsByIdFunctionalTests : BaseUserPresentationQueryFuncti
 		var response = await Client.GetDetailsByIdProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForCurrentId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForCurrentId(request, messageTransformer);
 	}
 
 	[Fact]

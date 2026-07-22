@@ -8,11 +8,11 @@ public static class PostLikeSetups
 {
 	extension(IServiceScope serviceScope)
 	{
-		public async Task<PostLike?> GetPostLikeByIdAsync(
+		public async Task<PostLike?> GetByIdAsync(
 		PostLikeIdApiResponse id,
 		CancellationToken cancellationToken)
 		{
-			return await serviceScope.GetPostLikeByIdAsync(
+			return await serviceScope.GetByIdAsync(
 				new PostLikeId(
 							   new(id.Id),
 							   new(id.UserId)),

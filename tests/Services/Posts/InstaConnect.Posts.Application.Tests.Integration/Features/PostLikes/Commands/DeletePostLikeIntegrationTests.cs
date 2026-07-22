@@ -16,9 +16,9 @@ public class DeletePostLikeIntegrationTests : BasePostLikeApplicationCommandInte
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
-		await ServiceScope.AddPostAsync(Post, CancellationToken);
-		await ServiceScope.AddPostLikeAsync(PostLike, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(Post, CancellationToken);
+		await ServiceScope.AddAsync(PostLike, CancellationToken);
 	}
 
 	[Theory]
@@ -50,14 +50,14 @@ public class DeletePostLikeIntegrationTests : BasePostLikeApplicationCommandInte
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForUserIdAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Fact]
 	public async Task SendAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostAsync(Post, CancellationToken);
+		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Assert
 		await Sender.ShouldThrowPostNotFoundExceptionAsync(_request, CancellationToken);
@@ -67,7 +67,7 @@ public class DeletePostLikeIntegrationTests : BasePostLikeApplicationCommandInte
 	public async Task SendAsync_ShouldThrowPostLikeNotFoundException_WhenUserIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostLikeAsync(PostLike, CancellationToken);
+		await ServiceScope.DeleteAsync(PostLike, CancellationToken);
 
 		// Assert
 		await Sender.ShouldThrowPostLikeNotFoundExceptionAsync(_request, CancellationToken);
@@ -78,7 +78,7 @@ public class DeletePostLikeIntegrationTests : BasePostLikeApplicationCommandInte
 	{
 		// Act
 		await Sender.SendAsync(_request, CancellationToken);
-		var postLike = await ServiceScope.GetPostLikeByIdAsync(PostLike.Id, CancellationToken);
+		var postLike = await ServiceScope.GetByIdAsync(PostLike.Id, CancellationToken);
 
 		// Assert
 		postLike.ShouldBeNull();
@@ -94,7 +94,7 @@ public class DeletePostLikeIntegrationTests : BasePostLikeApplicationCommandInte
 
 		// Act
 		await Sender.SendAsync(request, CancellationToken);
-		var postLike = await ServiceScope.GetPostLikeByIdAsync(PostLike.Id, CancellationToken);
+		var postLike = await ServiceScope.GetByIdAsync(PostLike.Id, CancellationToken);
 
 		// Assert
 		postLike.ShouldBeNull();
@@ -110,7 +110,7 @@ public class DeletePostLikeIntegrationTests : BasePostLikeApplicationCommandInte
 
 		// Act
 		await Sender.SendAsync(request, CancellationToken);
-		var postLike = await ServiceScope.GetPostLikeByIdAsync(PostLike.Id, CancellationToken);
+		var postLike = await ServiceScope.GetByIdAsync(PostLike.Id, CancellationToken);
 
 		// Assert
 		postLike.ShouldBeNull();
@@ -122,8 +122,10 @@ public class DeletePostLikeIntegrationTests : BasePostLikeApplicationCommandInte
 		// Act
 		await Sender.SendAsync(_request, CancellationToken);
 
+		var eventRequest = await EventHarness.PublishedLikeDeletedEventRequest(CancellationToken);
+
 		// Assert
-		await EventHarness.ShouldHavePublishedPostLikeDeletedAsync(_request, PostLike, CancellationToken);
+		eventRequest.ShouldSatisfy(_request, PostLike);
 	}
 
 	[Theory]
@@ -137,8 +139,10 @@ public class DeletePostLikeIntegrationTests : BasePostLikeApplicationCommandInte
 		// Act
 		await Sender.SendAsync(request, CancellationToken);
 
+		var eventRequest = await EventHarness.PublishedLikeDeletedEventRequest(CancellationToken);
+
 		// Assert
-		await EventHarness.ShouldHavePublishedPostLikeDeletedAsync(request, PostLike, CancellationToken);
+		eventRequest.ShouldSatisfy(request, PostLike);
 	}
 
 	[Theory]
@@ -152,7 +156,9 @@ public class DeletePostLikeIntegrationTests : BasePostLikeApplicationCommandInte
 		// Act
 		await Sender.SendAsync(request, CancellationToken);
 
+		var eventRequest = await EventHarness.PublishedLikeDeletedEventRequest(CancellationToken);
+
 		// Assert
-		await EventHarness.ShouldHavePublishedPostLikeDeletedAsync(request, PostLike, CancellationToken);
+		eventRequest.ShouldSatisfy(request, PostLike);
 	}
 }

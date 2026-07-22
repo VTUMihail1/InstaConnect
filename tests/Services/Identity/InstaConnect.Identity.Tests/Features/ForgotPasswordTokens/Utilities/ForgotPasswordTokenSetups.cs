@@ -32,35 +32,35 @@ public static class ForgotPasswordTokenSetups
 			return serviceScope.ServiceProvider.GetForgotPasswordTokenIncludeBuilderFactory();
 		}
 
-		public async Task<ForgotPasswordToken?> GetForgotPasswordTokenByIdAsync(
+		public async Task<ForgotPasswordToken?> GetByIdAsync(
 			ForgotPasswordTokenId id,
 			CancellationToken cancellationToken)
 		{
 			return await serviceScope.GetForgotPasswordTokenCommandRepository().GetByIdAsync(id, cancellationToken);
 		}
 
-		public async Task AddForgotPasswordTokenAsync(
+		public async Task AddAsync(
 			ForgotPasswordToken forgotPasswordToken,
 			CancellationToken cancellationToken)
 		{
 			await serviceScope.GetForgotPasswordTokenCommandRepository().AddAsync(forgotPasswordToken, cancellationToken);
 		}
 
-		public async Task AddForgotPasswordTokenRangeAsync(
+		public async Task AddRangeAsync(
 			IEnumerable<ForgotPasswordToken> forgotPasswordTokens,
 			CancellationToken cancellationToken)
 		{
 			await serviceScope.GetForgotPasswordTokenCommandRepository().AddRangeAsync(forgotPasswordTokens, cancellationToken);
 		}
 
-		public async Task UpdateForgotPasswordTokenAsync(
+		public async Task UpdateAsync(
 			ForgotPasswordToken forgotPasswordToken,
 			CancellationToken cancellationToken)
 		{
 			await serviceScope.GetForgotPasswordTokenCommandRepository().UpdateAsync(forgotPasswordToken, cancellationToken);
 		}
 
-		public async Task DeleteForgotPasswordTokenAsync(
+		public async Task DeleteAsync(
 			ForgotPasswordToken forgotPasswordToken,
 			CancellationToken cancellationToken)
 		{

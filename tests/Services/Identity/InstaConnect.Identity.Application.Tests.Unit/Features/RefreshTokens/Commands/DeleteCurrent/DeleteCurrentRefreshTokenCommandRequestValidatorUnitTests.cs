@@ -32,7 +32,7 @@ public class DeleteCurrentRefreshTokenCommandRequestValidatorUnitTests : BaseRef
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForId(messageTransformer, request);
+		result.ShouldHaveValidationErrorForId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -50,7 +50,7 @@ public class DeleteCurrentRefreshTokenCommandRequestValidatorUnitTests : BaseRef
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForValue(messageTransformer, request);
+		result.ShouldHaveValidationErrorForValue(request, messageTransformer);
 	}
 
 	[Fact]

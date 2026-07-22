@@ -71,7 +71,7 @@ public class AddPostLikeServiceUnitTests : BasePostLikeDomainCommandUnitTest
 		var response = await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostLike, _command);
+		response.ShouldSatisfy(_command, PostLike);
 	}
 
 	[Fact]

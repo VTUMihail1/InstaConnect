@@ -32,7 +32,7 @@ public class GetCurrentUserDetailsByIdQueryHandlerIntegrationTests : BaseUserApp
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForCurrentIdAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Fact]

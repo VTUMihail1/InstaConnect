@@ -54,7 +54,7 @@ public class GetPostLikeByIdServiceUnitTests : BasePostLikeDomainQueryUnitTest
 		var response = await _service.GetByIdAsync(_query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostLike, _query);
+		response.ShouldSatisfy(_query, PostLike);
 	}
 
 	[Fact]

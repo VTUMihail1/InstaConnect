@@ -33,7 +33,7 @@ public static class PostCommentSetups
 			return serviceScope.ServiceProvider.GetPostCommentIncludeBuilderFactory();
 		}
 
-		public async Task<PostComment?> GetPostCommentByIdAsync(
+		public async Task<PostComment?> GetByIdAsync(
 			PostCommentId id,
 			CancellationToken cancellationToken)
 		{
@@ -43,21 +43,21 @@ public static class PostCommentSetups
 			return await serviceScope.GetPostCommentCommandRepository().GetByIdAsync(id, commentInclude, cancellationToken);
 		}
 
-		public async Task AddPostCommentAsync(
+		public async Task AddAsync(
 			PostComment postComment,
 			CancellationToken cancellationToken)
 		{
 			await serviceScope.GetPostCommentCommandRepository().AddAsync(postComment, cancellationToken);
 		}
 
-		public async Task AddPostCommentRangeAsync(
+		public async Task AddRangeAsync(
 			IEnumerable<PostComment> postComments,
 			CancellationToken cancellationToken)
 		{
 			await serviceScope.GetPostCommentCommandRepository().AddRangeAsync(postComments, cancellationToken);
 		}
 
-		public async Task DeletePostCommentAsync(
+		public async Task DeleteAsync(
 			PostComment postComment,
 			CancellationToken cancellationToken)
 		{

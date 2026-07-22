@@ -59,7 +59,7 @@ public class UpdatePostServiceUnitTests : BasePostDomainCommandUnitTest
 		var response = await _service.UpdateAsync(_command, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Post, _command);
+		response.ShouldSatisfy(_command, Post);
 	}
 
 	[Fact]

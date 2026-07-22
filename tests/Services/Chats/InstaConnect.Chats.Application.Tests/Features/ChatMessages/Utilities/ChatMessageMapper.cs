@@ -76,7 +76,7 @@ public static class ChatMessageMapper
 
 			return new(chat.ToFullResponse(),
 					   null,
-					   chatMessages.Filter(chatMessage => filter(chatMessage, request), request, chatMessage => transform(chatMessage, request)),
+					   chatMessages.Filter(request, chatMessage => filter(chatMessage, request), chatMessage => transform(chatMessage, request)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -96,7 +96,7 @@ public static class ChatMessageMapper
 
 			return new(null,
 					   user.ToFullResponse(),
-					   chatMessages.Filter(chatMessage => filter(chatMessage, request), request, chatMessage => transform(chatMessage, request)),
+					   chatMessages.Filter(request, chatMessage => filter(chatMessage, request), chatMessage => transform(chatMessage, request)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,

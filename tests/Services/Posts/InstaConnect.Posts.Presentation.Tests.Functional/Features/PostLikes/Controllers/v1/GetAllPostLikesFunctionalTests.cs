@@ -20,9 +20,9 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserRangeAsync(Users, CancellationToken);
-		await ServiceScope.AddPostRangeAsync(Posts, CancellationToken);
-		await ServiceScope.AddPostLikeRangeAsync(PostLikes, CancellationToken);
+		await ServiceScope.AddRangeAsync(Users, CancellationToken);
+		await ServiceScope.AddRangeAsync(Posts, CancellationToken);
+		await ServiceScope.AddRangeAsync(PostLikes, CancellationToken);
 	}
 
 	[Theory]
@@ -54,7 +54,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -84,7 +84,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForUserName(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForUserName(request, messageTransformer);
 	}
 
 	[Theory]
@@ -114,7 +114,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForCurrentUserId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForCurrentUserId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -145,7 +145,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForSortOrder(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForSortOrder(request, messageTransformer);
 	}
 
 	[Theory]
@@ -176,7 +176,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForSortTerm(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForSortTerm(request, messageTransformer);
 	}
 
 	[Theory]
@@ -208,7 +208,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForPage(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForPage(request, messageTransformer);
 	}
 
 	[Theory]
@@ -240,14 +240,14 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
 		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForPageSize(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForPageSize(request, messageTransformer);
 	}
 
 	[Fact]
 	public async Task GetAllAsync_ShouldHaveNotFoundStatusCode_WhenIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostAsync(Post, CancellationToken);
+		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Act
 		var response = await Client.GetAllStatusCodeAsync(_request, CancellationToken);
@@ -260,7 +260,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
 	public async Task GetAllAsync_ShouldHavePostNotFoundProblemDetails_WhenIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostAsync(Post, CancellationToken);
+		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Act
 		var response = await Client.GetAllProblemDetailsAsync(_request, CancellationToken);
@@ -366,7 +366,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
 		var response = await Client.GetAllAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Post, PostLikes, _request);
+		response.ShouldSatisfy(_request, Post, PostLikes);
 	}
 
 	[Theory]
@@ -381,7 +381,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
 		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Post, PostLikes, request);
+		response.ShouldSatisfy(request, Post, PostLikes);
 	}
 
 	[Theory]
@@ -398,7 +398,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
 		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Post, PostLikes, request);
+		response.ShouldSatisfy(request, Post, PostLikes);
 	}
 
 	[Theory]
@@ -414,7 +414,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
 		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Post, PostLikes, request);
+		response.ShouldSatisfy(request, Post, PostLikes);
 	}
 
 	[Theory]
@@ -430,7 +430,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
 		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Post, PostLikes, request, termTransformer);
+		response.ShouldSatisfy(request, Post, PostLikes, termTransformer);
 	}
 
 	[Theory]
@@ -446,6 +446,6 @@ public class GetAllPostLikesFunctionalTests : BasePostLikePresentationQueryFunct
 		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Post, PostLikes, request, termTransformer);
+		response.ShouldSatisfy(request, Post, PostLikes, termTransformer);
 	}
 }

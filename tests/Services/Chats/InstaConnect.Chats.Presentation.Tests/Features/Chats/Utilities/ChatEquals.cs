@@ -243,14 +243,14 @@ public static class ChatEquals
 			TRequest request)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
-			return response.MatchesCollectionResponse(chats.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, chats.Count(matchesFilter)) &&
 				   response.ParticipantOne == null &&
 				   response.ParticipantTwo.MatchesFull(participantTwo) &&
-				   response.Chats.MatchesCollection(chats,
+				   response.Chats.MatchesCollection(request,
+													chats,
 													response => new(new(response.ParticipantOneId), new(response.ParticipantTwoId)),
 													chat => chat.Id,
 													matches,
-													request,
 													matchesFilter);
 		}
 
@@ -263,13 +263,13 @@ public static class ChatEquals
 			ISortEnumTermTransformer<Chat> termTransformer)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
-			return response.MatchesCollectionResponse(chats.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, chats.Count(matchesFilter)) &&
 				   response.ParticipantOne == null &&
 				   response.ParticipantTwo.MatchesFull(participantTwo) &&
-				   response.Chats.MatchesSortedCollection(chats,
+				   response.Chats.MatchesSortedCollection(request,
+														  chats,
 														  matches,
 														  termTransformer,
-														  request,
 														  matchesFilter);
 		}
 
@@ -281,14 +281,14 @@ public static class ChatEquals
 			TRequest request)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
-			return response.MatchesCollectionResponse(chats.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, chats.Count(matchesFilter)) &&
 				   response.ParticipantOne.MatchesFull(participantOne) &&
 				   response.ParticipantTwo == null &&
-				   response.Chats.MatchesCollection(chats,
+				   response.Chats.MatchesCollection(request,
+													chats,
 													response => new(new(response.ParticipantOneId), new(response.ParticipantTwoId)),
 													chat => chat.Id,
 													matches,
-													request,
 													matchesFilter);
 		}
 
@@ -301,13 +301,13 @@ public static class ChatEquals
 			ISortEnumTermTransformer<Chat> termTransformer)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
-			return response.MatchesCollectionResponse(chats.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, chats.Count(matchesFilter)) &&
 				   response.ParticipantOne.MatchesFull(participantOne) &&
 				   response.ParticipantTwo == null &&
-				   response.Chats.MatchesSortedCollection(chats,
+				   response.Chats.MatchesSortedCollection(request,
+														  chats,
 														  matches,
 														  termTransformer,
-														  request,
 														  matchesFilter);
 		}
 
@@ -319,14 +319,14 @@ public static class ChatEquals
 			TRequest request)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
-			return response.MatchesCollectionResponse(chats.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, chats.Count(matchesFilter)) &&
 				   response.ParticipantOne == null &&
 				   response.ParticipantTwo.MatchesFull(participantTwo) &&
-				   response.Chats.MatchesCollection(chats,
+				   response.Chats.MatchesCollection(request,
+													chats,
 													response => new(new(response.ParticipantTwoId), new(response.ParticipantOneId)),
 													chat => chat.Id,
 													matches,
-													request,
 													matchesFilter);
 		}
 
@@ -339,13 +339,13 @@ public static class ChatEquals
 			ISortEnumTermTransformer<Chat> termTransformer)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
-			return response.MatchesCollectionResponse(chats.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, chats.Count(matchesFilter)) &&
 				   response.ParticipantOne == null &&
 				   response.ParticipantTwo.MatchesFull(participantTwo) &&
-				   response.Chats.MatchesSortedCollection(chats,
+				   response.Chats.MatchesSortedCollection(request,
+														  chats,
 														  matches,
 														  termTransformer,
-														  request,
 														  matchesFilter);
 		}
 
@@ -357,14 +357,14 @@ public static class ChatEquals
 			TRequest request)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
-			return response.MatchesCollectionResponse(chats.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, chats.Count(matchesFilter)) &&
 				   response.ParticipantOne.MatchesFull(participantOne) &&
 				   response.ParticipantTwo == null &&
-				   response.Chats.MatchesCollection(chats,
+				   response.Chats.MatchesCollection(request,
+													chats,
 													response => new(new(response.ParticipantTwoId), new(response.ParticipantOneId)),
 													chat => chat.Id,
 													matches,
-													request,
 													matchesFilter);
 		}
 
@@ -377,13 +377,13 @@ public static class ChatEquals
 			ISortEnumTermTransformer<Chat> termTransformer)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
-			return response.MatchesCollectionResponse(chats.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, chats.Count(matchesFilter)) &&
 				   response.ParticipantOne.MatchesFull(participantOne) &&
 				   response.ParticipantTwo == null &&
-				   response.Chats.MatchesSortedCollection(chats,
+				   response.Chats.MatchesSortedCollection(request,
+														  chats,
 														  matches,
 														  termTransformer,
-														  request,
 														  matchesFilter);
 		}
 	}

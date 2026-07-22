@@ -32,7 +32,7 @@ public class GetFollowByIdQueryRequestValidatorUnitTests : BaseFollowApplication
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForFollowerId(messageTransformer, request);
+		result.ShouldHaveValidationErrorForFollowerId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -50,7 +50,7 @@ public class GetFollowByIdQueryRequestValidatorUnitTests : BaseFollowApplication
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForFollowingId(messageTransformer, request);
+		result.ShouldHaveValidationErrorForFollowingId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -65,7 +65,7 @@ public class GetFollowByIdQueryRequestValidatorUnitTests : BaseFollowApplication
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForCurrentUserId(messageTransformer, request);
+		result.ShouldHaveValidationErrorForCurrentUserId(request, messageTransformer);
 	}
 
 	[Theory]

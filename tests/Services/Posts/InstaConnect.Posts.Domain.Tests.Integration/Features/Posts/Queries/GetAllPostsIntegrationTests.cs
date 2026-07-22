@@ -34,9 +34,9 @@ public class GetAllPostsIntegrationTests : BasePostDomainQueryIntegrationTest
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserRangeAsync(Users, CancellationToken);
-		await ServiceScope.AddPostRangeAsync(Posts, CancellationToken);
-		await ServiceScope.AddPostLikeRangeAsync(PostLikes, CancellationToken);
+		await ServiceScope.AddRangeAsync(Users, CancellationToken);
+		await ServiceScope.AddRangeAsync(Posts, CancellationToken);
+		await ServiceScope.AddRangeAsync(PostLikes, CancellationToken);
 	}
 
 	[Fact]
@@ -46,7 +46,7 @@ public class GetAllPostsIntegrationTests : BasePostDomainQueryIntegrationTest
 		var response = await Service.GetAllAsync(_query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Posts, _query);
+		response.ShouldSatisfy(_query, Posts);
 	}
 
 	[Theory]
@@ -63,7 +63,7 @@ public class GetAllPostsIntegrationTests : BasePostDomainQueryIntegrationTest
 		var response = await Service.GetAllAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Posts, query);
+		response.ShouldSatisfy(query, Posts);
 	}
 
 	[Theory]
@@ -80,7 +80,7 @@ public class GetAllPostsIntegrationTests : BasePostDomainQueryIntegrationTest
 		var response = await Service.GetAllAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Posts, query);
+		response.ShouldSatisfy(query, Posts);
 	}
 
 	[Theory]
@@ -97,7 +97,7 @@ public class GetAllPostsIntegrationTests : BasePostDomainQueryIntegrationTest
 		var response = await Service.GetAllAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Posts, query);
+		response.ShouldSatisfy(query, Posts);
 	}
 
 	[Theory]
@@ -113,7 +113,7 @@ public class GetAllPostsIntegrationTests : BasePostDomainQueryIntegrationTest
 		var response = await Service.GetAllAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Posts, query, termTransformer);
+		response.ShouldSatisfy(query, Posts, termTransformer);
 	}
 
 	[Theory]
@@ -130,6 +130,6 @@ public class GetAllPostsIntegrationTests : BasePostDomainQueryIntegrationTest
 		var response = await Service.GetAllAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Posts, query, termTransformer);
+		response.ShouldSatisfy(query, Posts, termTransformer);
 	}
 }

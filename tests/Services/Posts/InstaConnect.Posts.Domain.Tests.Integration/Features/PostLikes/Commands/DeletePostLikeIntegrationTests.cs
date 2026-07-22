@@ -28,16 +28,16 @@ public class DeletePostLikeIntegrationTests : BasePostLikeDomainCommandIntegrati
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
-		await ServiceScope.AddPostAsync(Post, CancellationToken);
-		await ServiceScope.AddPostLikeAsync(PostLike, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(Post, CancellationToken);
+		await ServiceScope.AddAsync(PostLike, CancellationToken);
 	}
 
 	[Fact]
 	public async Task DeleteAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostAsync(Post, CancellationToken);
+		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowPostNotFoundExceptionAsync(_command, CancellationToken);
@@ -47,7 +47,7 @@ public class DeletePostLikeIntegrationTests : BasePostLikeDomainCommandIntegrati
 	public async Task DeleteAsync_ShouldThrowPostLikeNotFoundException_WhenUserIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostLikeAsync(PostLike, CancellationToken);
+		await ServiceScope.DeleteAsync(PostLike, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowPostLikeNotFoundExceptionAsync(_command, CancellationToken);
@@ -58,7 +58,7 @@ public class DeletePostLikeIntegrationTests : BasePostLikeDomainCommandIntegrati
 	{
 		// Act
 		await Service.DeleteAsync(_command, CancellationToken);
-		var postLike = await ServiceScope.GetPostLikeByIdAsync(PostLike.Id, CancellationToken);
+		var postLike = await ServiceScope.GetByIdAsync(PostLike.Id, CancellationToken);
 
 		// Assert
 		postLike.ShouldBeNull();
@@ -74,7 +74,7 @@ public class DeletePostLikeIntegrationTests : BasePostLikeDomainCommandIntegrati
 
 		// Act
 		await Service.DeleteAsync(command, CancellationToken);
-		var postLike = await ServiceScope.GetPostLikeByIdAsync(PostLike.Id, CancellationToken);
+		var postLike = await ServiceScope.GetByIdAsync(PostLike.Id, CancellationToken);
 
 		// Assert
 		postLike.ShouldBeNull();
@@ -90,7 +90,7 @@ public class DeletePostLikeIntegrationTests : BasePostLikeDomainCommandIntegrati
 
 		// Act
 		await Service.DeleteAsync(command, CancellationToken);
-		var postLike = await ServiceScope.GetPostLikeByIdAsync(PostLike.Id, CancellationToken);
+		var postLike = await ServiceScope.GetByIdAsync(PostLike.Id, CancellationToken);
 
 		// Assert
 		postLike.ShouldBeNull();
@@ -102,8 +102,10 @@ public class DeletePostLikeIntegrationTests : BasePostLikeDomainCommandIntegrati
 		// Act
 		await Service.DeleteAsync(_command, CancellationToken);
 
+		var eventRequest = await EventHarness.PublishedLikeDeletedEventRequest(CancellationToken);
+
 		// Assert
-		await EventHarness.ShouldHavePublishedPostLikeDeletedAsync(_command, PostLike, CancellationToken);
+		eventRequest.ShouldSatisfy(_command, PostLike);
 	}
 
 	[Theory]
@@ -117,8 +119,10 @@ public class DeletePostLikeIntegrationTests : BasePostLikeDomainCommandIntegrati
 		// Act
 		await Service.DeleteAsync(command, CancellationToken);
 
+		var eventRequest = await EventHarness.PublishedLikeDeletedEventRequest(CancellationToken);
+
 		// Assert
-		await EventHarness.ShouldHavePublishedPostLikeDeletedAsync(command, PostLike, CancellationToken);
+		eventRequest.ShouldSatisfy(command, PostLike);
 	}
 
 	[Theory]
@@ -132,7 +136,9 @@ public class DeletePostLikeIntegrationTests : BasePostLikeDomainCommandIntegrati
 		// Act
 		await Service.DeleteAsync(command, CancellationToken);
 
+		var eventRequest = await EventHarness.PublishedLikeDeletedEventRequest(CancellationToken);
+
 		// Assert
-		await EventHarness.ShouldHavePublishedPostLikeDeletedAsync(command, PostLike, CancellationToken);
+		eventRequest.ShouldSatisfy(command, PostLike);
 	}
 }

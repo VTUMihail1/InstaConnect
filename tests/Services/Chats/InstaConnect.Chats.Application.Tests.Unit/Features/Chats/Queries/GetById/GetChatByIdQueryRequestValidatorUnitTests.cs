@@ -32,7 +32,7 @@ public class GetChatByIdQueryRequestValidatorUnitTests : BaseChatApplicationQuer
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForParticipantTwoId(messageTransformer, request);
+		result.ShouldHaveValidationErrorForParticipantTwoId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -50,7 +50,7 @@ public class GetChatByIdQueryRequestValidatorUnitTests : BaseChatApplicationQuer
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForCurrentUserId(messageTransformer, request);
+		result.ShouldHaveValidationErrorForCurrentUserId(request, messageTransformer);
 	}
 
 	[Fact]

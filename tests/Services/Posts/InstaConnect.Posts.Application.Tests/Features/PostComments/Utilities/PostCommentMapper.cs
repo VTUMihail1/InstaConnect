@@ -86,7 +86,7 @@ public static class PostCommentMapper
 
 			return new(post.ToFullResponse(request),
 					   null,
-					   postComments.Filter(postComment => filter(postComment, request), request, postComment => transform(postComment, request)),
+					   postComments.Filter(request, postComment => filter(postComment, request), postComment => transform(postComment, request)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -106,7 +106,7 @@ public static class PostCommentMapper
 
 			return new(null,
 					   user.ToFullResponse(),
-					   postComments.Filter(postComment => filter(postComment, request), request, postComment => transform(postComment, request)),
+					   postComments.Filter(request, postComment => filter(postComment, request), postComment => transform(postComment, request)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,

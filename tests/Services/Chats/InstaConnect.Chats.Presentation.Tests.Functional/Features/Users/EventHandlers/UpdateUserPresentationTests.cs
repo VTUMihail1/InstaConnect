@@ -18,7 +18,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 	}
 
 	[Theory]
@@ -146,7 +146,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
 	public async Task PublishAsync_ShouldFaultUserUpdatedEvent_WhenIdNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Act
 		await EventHarness.PublishAsync(_request, CancellationToken);
@@ -160,7 +160,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
 	{
 		// Arrange
 		var newUser = UserBuilderFactory.Create().Build();
-		await ServiceScope.AddUserAsync(newUser, CancellationToken);
+		await ServiceScope.AddAsync(newUser, CancellationToken);
 
 		var request = _requestBuilder.WithEmail(newUser.Email).Build();
 
@@ -178,7 +178,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
 	{
 		// Arrange
 		var newUser = UserBuilderFactory.Create().Build();
-		await ServiceScope.AddUserAsync(newUser, CancellationToken);
+		await ServiceScope.AddAsync(newUser, CancellationToken);
 
 		var request = _requestBuilder.WithEmail(newUser.Email, transformer).Build();
 
@@ -194,7 +194,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
 	{
 		// Arrange
 		var newUser = UserBuilderFactory.Create().Build();
-		await ServiceScope.AddUserAsync(newUser, CancellationToken);
+		await ServiceScope.AddAsync(newUser, CancellationToken);
 
 		var request = _requestBuilder.WithName(newUser.Name).Build();
 
@@ -212,7 +212,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
 	{
 		// Arrange
 		var newUser = UserBuilderFactory.Create().Build();
-		await ServiceScope.AddUserAsync(newUser, CancellationToken);
+		await ServiceScope.AddAsync(newUser, CancellationToken);
 
 		var request = _requestBuilder.WithName(newUser.Name, transformer).Build();
 
@@ -236,7 +236,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(User);
@@ -255,7 +255,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(User);
@@ -274,7 +274,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(User);
@@ -293,7 +293,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(User);
@@ -313,7 +313,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(User);
@@ -329,7 +329,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(User);
@@ -345,7 +345,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(User);
@@ -356,13 +356,13 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
 	{
 		// Arrange
 		var newUser = UserBuilderFactory.Create().Build();
-		await ServiceScope.AddUserAsync(newUser, CancellationToken);
+		await ServiceScope.AddAsync(newUser, CancellationToken);
 
 		var request = _requestBuilder.WithEmail(newUser.Email).Build();
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(User);
@@ -375,13 +375,13 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
 	{
 		// Arrange
 		var newUser = UserBuilderFactory.Create().Build();
-		await ServiceScope.AddUserAsync(newUser, CancellationToken);
+		await ServiceScope.AddAsync(newUser, CancellationToken);
 
 		var request = _requestBuilder.WithEmail(newUser.Email, transformer).Build();
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(User);
@@ -392,13 +392,13 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
 	{
 		// Arrange
 		var newUser = UserBuilderFactory.Create().Build();
-		await ServiceScope.AddUserAsync(newUser, CancellationToken);
+		await ServiceScope.AddAsync(newUser, CancellationToken);
 
 		var request = _requestBuilder.WithName(newUser.Name).Build();
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(User);
@@ -411,13 +411,13 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
 	{
 		// Arrange
 		var newUser = UserBuilderFactory.Create().Build();
-		await ServiceScope.AddUserAsync(newUser, CancellationToken);
+		await ServiceScope.AddAsync(newUser, CancellationToken);
 
 		var request = _requestBuilder.WithName(newUser.Name, transformer).Build();
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(User);
@@ -555,7 +555,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
 	{
 		// Act
 		await EventHarness.PublishAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(_request);
@@ -571,7 +571,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(request);
@@ -587,7 +587,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(request);
@@ -601,7 +601,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(request);
@@ -617,7 +617,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(request);
@@ -633,7 +633,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(request);
@@ -647,7 +647,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
@@ -664,7 +664,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(request);
@@ -681,7 +681,7 @@ public class UpdateUserPresentationTests : BaseUserPresentationCommandFunctional
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(User.Id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(request);

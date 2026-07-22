@@ -16,7 +16,7 @@ public class AddPostFunctionalTests : BasePostPresentationCommandFunctionalTest
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 	}
 
 	[Fact]
@@ -60,7 +60,7 @@ public class AddPostFunctionalTests : BasePostPresentationCommandFunctionalTest
 		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForUserId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForUserId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -96,7 +96,7 @@ public class AddPostFunctionalTests : BasePostPresentationCommandFunctionalTest
 		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForTitle(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForTitle(request, messageTransformer);
 	}
 
 	[Theory]
@@ -132,14 +132,14 @@ public class AddPostFunctionalTests : BasePostPresentationCommandFunctionalTest
 		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForContent(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForContent(request, messageTransformer);
 	}
 
 	[Fact]
 	public async Task AddAsync_ShouldHaveNotFoundStatusCode_WhenUserIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Act
 		var response = await Client.AddStatusCodeAsync(_request, CancellationToken);
@@ -152,7 +152,7 @@ public class AddPostFunctionalTests : BasePostPresentationCommandFunctionalTest
 	public async Task AddAsync_ShouldHaveUserNotFoundProblemDetails_WhenUserIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Act
 		var response = await Client.AddProblemDetailsAsync(_request, CancellationToken);
@@ -191,10 +191,10 @@ public class AddPostFunctionalTests : BasePostPresentationCommandFunctionalTest
 	{
 		// Act
 		var response = await Client.AddAsync(_request, CancellationToken);
-		var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(post, _request);
+		response.ShouldSatisfy(_request, post);
 	}
 
 	[Theory]
@@ -207,10 +207,10 @@ public class AddPostFunctionalTests : BasePostPresentationCommandFunctionalTest
 
 		// Act
 		var response = await Client.AddAsync(request, CancellationToken);
-		var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(post, request);
+		response.ShouldSatisfy(request, post);
 	}
 
 	[Fact]
@@ -218,7 +218,7 @@ public class AddPostFunctionalTests : BasePostPresentationCommandFunctionalTest
 	{
 		// Act
 		var response = await Client.AddAsync(_request, CancellationToken);
-		var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
 		post.ShouldSatisfy(_request);
@@ -234,7 +234,7 @@ public class AddPostFunctionalTests : BasePostPresentationCommandFunctionalTest
 
 		// Act
 		var response = await Client.AddAsync(request, CancellationToken);
-		var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
 		post.ShouldSatisfy(request);
@@ -245,10 +245,12 @@ public class AddPostFunctionalTests : BasePostPresentationCommandFunctionalTest
 	{
 		// Act
 		var response = await Client.AddAsync(_request, CancellationToken);
-		var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+
+		var eventRequest = await EventHarness.PublishedAddedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedPostAddedAsync(_request, post, CancellationToken);
+		eventRequest.ShouldSatisfy(_request, post);
 	}
 
 	[Theory]
@@ -261,9 +263,11 @@ public class AddPostFunctionalTests : BasePostPresentationCommandFunctionalTest
 
 		// Act
 		var response = await Client.AddAsync(request, CancellationToken);
-		var post = await ServiceScope.GetPostByIdAsync(response.Response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+
+		var eventRequest = await EventHarness.PublishedAddedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedPostAddedAsync(request, post, CancellationToken);
+		eventRequest.ShouldSatisfy(request, post);
 	}
 }

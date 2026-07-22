@@ -32,7 +32,7 @@ public static class UserClaimSetups
 			return serviceScope.ServiceProvider.GetClaimIncludeBuilderFactory();
 		}
 
-		public async Task<UserClaim?> GetClaimByIdAsync(
+		public async Task<UserClaim?> GetByIdAsync(
 			UserClaimId id,
 			CancellationToken cancellationToken)
 		{
@@ -41,21 +41,21 @@ public static class UserClaimSetups
 			return await serviceScope.GetClaimCommandRepository().GetByIdAsync(id, claimInclude, cancellationToken);
 		}
 
-		public async Task AddClaimAsync(
+		public async Task AddAsync(
 			UserClaim userClaim,
 			CancellationToken cancellationToken)
 		{
 			await serviceScope.GetClaimCommandRepository().AddAsync(userClaim, cancellationToken);
 		}
 
-		public async Task AddClaimRangeAsync(
+		public async Task AddRangeAsync(
 			IEnumerable<UserClaim> userClaims,
 			CancellationToken cancellationToken)
 		{
 			await serviceScope.GetClaimCommandRepository().AddRangeAsync(userClaims, cancellationToken);
 		}
 
-		public async Task DeleteClaimAsync(
+		public async Task DeleteAsync(
 			UserClaim userClaim,
 			CancellationToken cancellationToken)
 		{

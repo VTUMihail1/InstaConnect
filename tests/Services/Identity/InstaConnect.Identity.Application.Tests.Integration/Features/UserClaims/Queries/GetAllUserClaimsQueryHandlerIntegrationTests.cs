@@ -21,7 +21,7 @@ public class GetAllUserClaimsQueryHandlerIntegrationTests : BaseUserClaimApplica
 	protected override async Task OnInitializeAsync()
 	{
 		await ServiceScope.AddRangeAsync(Users, CancellationToken);
-		await ServiceScope.AddClaimRangeAsync(UserClaims, CancellationToken);
+		await ServiceScope.AddRangeAsync(UserClaims, CancellationToken);
 	}
 
 	[Theory]
@@ -37,7 +37,7 @@ public class GetAllUserClaimsQueryHandlerIntegrationTests : BaseUserClaimApplica
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForIdAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -50,7 +50,7 @@ public class GetAllUserClaimsQueryHandlerIntegrationTests : BaseUserClaimApplica
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForCurrentIdAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -63,7 +63,7 @@ public class GetAllUserClaimsQueryHandlerIntegrationTests : BaseUserClaimApplica
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForSortOrderAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -76,7 +76,7 @@ public class GetAllUserClaimsQueryHandlerIntegrationTests : BaseUserClaimApplica
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForSortTermAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -90,7 +90,7 @@ public class GetAllUserClaimsQueryHandlerIntegrationTests : BaseUserClaimApplica
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForPageAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -104,7 +104,7 @@ public class GetAllUserClaimsQueryHandlerIntegrationTests : BaseUserClaimApplica
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForPageSizeAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Fact]

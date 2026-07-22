@@ -16,10 +16,10 @@ public class GetChatMessageByIdFunctionalTests : BaseChatMessagePresentationQuer
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(ParticipantOne, CancellationToken);
-		await ServiceScope.AddUserAsync(ParticipantTwo, CancellationToken);
-		await ServiceScope.AddChatAsync(Chat, CancellationToken);
-		await ServiceScope.AddChatMessageAsync(ChatMessage, CancellationToken);
+		await ServiceScope.AddAsync(ParticipantOne, CancellationToken);
+		await ServiceScope.AddAsync(ParticipantTwo, CancellationToken);
+		await ServiceScope.AddAsync(Chat, CancellationToken);
+		await ServiceScope.AddAsync(ChatMessage, CancellationToken);
 	}
 
 	[Fact]
@@ -61,7 +61,7 @@ public class GetChatMessageByIdFunctionalTests : BaseChatMessagePresentationQuer
 		var response = await HttpClient.GetByIdProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForParticipantTwoId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForParticipantTwoId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -93,7 +93,7 @@ public class GetChatMessageByIdFunctionalTests : BaseChatMessagePresentationQuer
 		var response = await HttpClient.GetByIdProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForMessageId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForMessageId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -127,14 +127,14 @@ public class GetChatMessageByIdFunctionalTests : BaseChatMessagePresentationQuer
 		var response = await HttpClient.GetByIdProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForCurrentUserId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForCurrentUserId(request, messageTransformer);
 	}
 
 	[Fact]
 	public async Task GetByIdAsync_ShouldHaveNotFoundStatusCode_WhenIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteChatAsync(Chat, CancellationToken);
+		await ServiceScope.DeleteAsync(Chat, CancellationToken);
 
 		// Act
 		var response = await HttpClient.GetByIdStatusCodeAsync(_request, CancellationToken);
@@ -147,7 +147,7 @@ public class GetChatMessageByIdFunctionalTests : BaseChatMessagePresentationQuer
 	public async Task GetByIdAsync_ShouldHaveChatNotFoundProblemDetails_WhenIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteChatAsync(Chat, CancellationToken);
+		await ServiceScope.DeleteAsync(Chat, CancellationToken);
 
 		// Act
 		var response = await HttpClient.GetByIdProblemDetailsAsync(_request, CancellationToken);
@@ -160,7 +160,7 @@ public class GetChatMessageByIdFunctionalTests : BaseChatMessagePresentationQuer
 	public async Task GetByIdAsync_ShouldHaveNotFoundStatusCode_WhenMessageIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteChatMessageAsync(ChatMessage, CancellationToken);
+		await ServiceScope.DeleteAsync(ChatMessage, CancellationToken);
 
 		// Act
 		var response = await HttpClient.GetByIdStatusCodeAsync(_request, CancellationToken);
@@ -173,7 +173,7 @@ public class GetChatMessageByIdFunctionalTests : BaseChatMessagePresentationQuer
 	public async Task GetByIdAsync_ShouldHaveChatMessageNotFoundProblemDetails_WhenMessageIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteChatMessageAsync(ChatMessage, CancellationToken);
+		await ServiceScope.DeleteAsync(ChatMessage, CancellationToken);
 
 		// Act
 		var response = await HttpClient.GetByIdProblemDetailsAsync(_request, CancellationToken);

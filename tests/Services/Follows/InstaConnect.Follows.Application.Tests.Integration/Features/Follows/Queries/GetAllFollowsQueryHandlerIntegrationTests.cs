@@ -20,9 +20,9 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowApplicationQu
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserRangeAsync(Followers, CancellationToken);
-		await ServiceScope.AddUserRangeAsync(Followings, CancellationToken);
-		await ServiceScope.AddFollowRangeAsync(Follows, CancellationToken);
+		await ServiceScope.AddRangeAsync(Followers, CancellationToken);
+		await ServiceScope.AddRangeAsync(Followings, CancellationToken);
+		await ServiceScope.AddRangeAsync(Follows, CancellationToken);
 	}
 
 	[Theory]
@@ -38,7 +38,7 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowApplicationQu
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForFollowerIdAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -51,7 +51,7 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowApplicationQu
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForFollowingNameAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -64,7 +64,7 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowApplicationQu
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForCurrentUserIdAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -77,7 +77,7 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowApplicationQu
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForSortOrderAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -90,7 +90,7 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowApplicationQu
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForSortTermAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -104,7 +104,7 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowApplicationQu
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForPageAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -118,14 +118,14 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowApplicationQu
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForPageSizeAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Fact]
 	public async Task SendAsync_ShouldThrowFollowerNotFoundException_WhenFollowerIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(Follower, CancellationToken);
+		await ServiceScope.DeleteAsync(Follower, CancellationToken);
 
 		// Assert
 		await Sender.ShouldThrowFollowerNotFoundExceptionAsync(_request, CancellationToken);

@@ -32,16 +32,16 @@ public class GetAllChatsIntegrationTests : BaseChatDomainQueryIntegrationTest
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserRangeAsync(ParticipantOnes, CancellationToken);
-		await ServiceScope.AddUserRangeAsync(ParticipantTwos, CancellationToken);
-		await ServiceScope.AddChatRangeAsync(Chats, CancellationToken);
+		await ServiceScope.AddRangeAsync(ParticipantOnes, CancellationToken);
+		await ServiceScope.AddRangeAsync(ParticipantTwos, CancellationToken);
+		await ServiceScope.AddRangeAsync(Chats, CancellationToken);
 	}
 
 	[Fact]
 	public async Task GetAllAsync_ShouldThrowUserNotFoundException_WhenParticipantOneIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(ParticipantOne, CancellationToken);
+		await ServiceScope.DeleteAsync(ParticipantOne, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowParticipantOneNotFoundExceptionAsync(_query, CancellationToken);

@@ -30,18 +30,18 @@ public class GetPostCommentByIdIntegrationTests : BasePostCommentDomainQueryInte
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
-		await ServiceScope.AddPostAsync(Post, CancellationToken);
-		await ServiceScope.AddPostLikeAsync(PostLike, CancellationToken);
-		await ServiceScope.AddPostCommentAsync(PostComment, CancellationToken);
-		await ServiceScope.AddPostCommentLikeAsync(PostCommentLike, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(Post, CancellationToken);
+		await ServiceScope.AddAsync(PostLike, CancellationToken);
+		await ServiceScope.AddAsync(PostComment, CancellationToken);
+		await ServiceScope.AddAsync(PostCommentLike, CancellationToken);
 	}
 
 	[Fact]
 	public async Task GetByIdAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostAsync(Post, CancellationToken);
+		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowPostNotFoundExceptionAsync(_query, CancellationToken);
@@ -51,7 +51,7 @@ public class GetPostCommentByIdIntegrationTests : BasePostCommentDomainQueryInte
 	public async Task GetByIdAsync_ShouldThrowPostCommentNotFoundException_WhenPostCommentIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostCommentAsync(PostComment, CancellationToken);
+		await ServiceScope.DeleteAsync(PostComment, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowPostCommentNotFoundExceptionAsync(_query, CancellationToken);
@@ -64,7 +64,7 @@ public class GetPostCommentByIdIntegrationTests : BasePostCommentDomainQueryInte
 		var response = await Service.GetByIdAsync(_query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostComment, _query);
+		response.ShouldSatisfy(_query, PostComment);
 	}
 
 	[Theory]
@@ -79,7 +79,7 @@ public class GetPostCommentByIdIntegrationTests : BasePostCommentDomainQueryInte
 		var response = await Service.GetByIdAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostComment, query);
+		response.ShouldSatisfy(query, PostComment);
 	}
 
 	[Theory]
@@ -94,7 +94,7 @@ public class GetPostCommentByIdIntegrationTests : BasePostCommentDomainQueryInte
 		var response = await Service.GetByIdAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostComment, query);
+		response.ShouldSatisfy(query, PostComment);
 	}
 
 	[Theory]
@@ -111,6 +111,6 @@ public class GetPostCommentByIdIntegrationTests : BasePostCommentDomainQueryInte
 		var response = await Service.GetByIdAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostComment, query);
+		response.ShouldSatisfy(query, PostComment);
 	}
 }

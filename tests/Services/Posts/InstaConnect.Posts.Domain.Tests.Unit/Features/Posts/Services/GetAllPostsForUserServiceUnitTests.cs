@@ -45,7 +45,7 @@ public class GetAllPostsForUserServiceUnitTests : BasePostDomainQueryUnitTest
 		var response = await _service.GetAllForUserAsync(_query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, Posts, _query);
+		response.ShouldSatisfy(_query, User, Posts);
 	}
 
 	[Fact]

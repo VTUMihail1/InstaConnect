@@ -28,7 +28,7 @@ public class VerifyForgotPasswordTokenIntegrationTests : BaseForgotPasswordToken
 	protected override async Task OnInitializeAsync()
 	{
 		await ServiceScope.AddAsync(User, CancellationToken);
-		await ServiceScope.AddForgotPasswordTokenRangeAsync(User.ForgotPasswordTokens, CancellationToken);
+		await ServiceScope.AddRangeAsync(User.ForgotPasswordTokens, CancellationToken);
 	}
 
 	[Fact]
@@ -45,7 +45,7 @@ public class VerifyForgotPasswordTokenIntegrationTests : BaseForgotPasswordToken
 	public async Task VerifyAsync_ShouldThrowForgotPasswordTokenNotFoundException_WhenForgotPasswordTokenNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteForgotPasswordTokenAsync(ForgotPasswordToken, CancellationToken);
+		await ServiceScope.DeleteAsync(ForgotPasswordToken, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowForgotPasswordTokenNotFoundExceptionAsync(_command, CancellationToken);
@@ -56,7 +56,7 @@ public class VerifyForgotPasswordTokenIntegrationTests : BaseForgotPasswordToken
 	{
 		// Arrange
 		var updatedForgotPasswordToken = ForgotPasswordTokenBuilder.WithAlreadyExpiresAtUtc().Build();
-		await ServiceScope.UpdateForgotPasswordTokenAsync(updatedForgotPasswordToken, CancellationToken);
+		await ServiceScope.UpdateAsync(updatedForgotPasswordToken, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowForgotPasswordTokenExpiredExceptionAsync(_command, CancellationToken);

@@ -26,7 +26,7 @@ public class AddPostLikeCommandHandlerUnitTests : BasePostLikeApplicationCommand
 		var response = await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostLike, _request);
+		response.ShouldSatisfy(_request, PostLike);
 	}
 
 	[Fact]

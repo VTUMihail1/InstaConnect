@@ -20,9 +20,9 @@ public class GetAllChatsQueryHandlerIntegrationTests : BaseChatApplicationQueryI
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserRangeAsync(ParticipantOnes, CancellationToken);
-		await ServiceScope.AddUserRangeAsync(ParticipantTwos, CancellationToken);
-		await ServiceScope.AddChatRangeAsync(Chats, CancellationToken);
+		await ServiceScope.AddRangeAsync(ParticipantOnes, CancellationToken);
+		await ServiceScope.AddRangeAsync(ParticipantTwos, CancellationToken);
+		await ServiceScope.AddRangeAsync(Chats, CancellationToken);
 	}
 
 	[Theory]
@@ -35,7 +35,7 @@ public class GetAllChatsQueryHandlerIntegrationTests : BaseChatApplicationQueryI
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForParticipantTwoNameAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -51,7 +51,7 @@ public class GetAllChatsQueryHandlerIntegrationTests : BaseChatApplicationQueryI
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForCurrentUserIdAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -64,7 +64,7 @@ public class GetAllChatsQueryHandlerIntegrationTests : BaseChatApplicationQueryI
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForSortOrderAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -77,7 +77,7 @@ public class GetAllChatsQueryHandlerIntegrationTests : BaseChatApplicationQueryI
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForSortTermAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -91,7 +91,7 @@ public class GetAllChatsQueryHandlerIntegrationTests : BaseChatApplicationQueryI
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForPageAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -105,7 +105,7 @@ public class GetAllChatsQueryHandlerIntegrationTests : BaseChatApplicationQueryI
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForPageSizeAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Fact]

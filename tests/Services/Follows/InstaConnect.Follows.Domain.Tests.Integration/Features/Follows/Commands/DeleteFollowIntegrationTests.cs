@@ -26,16 +26,16 @@ public class DeleteFollowIntegrationTests : BaseFollowDomainCommandIntegrationTe
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(Follower, CancellationToken);
-		await ServiceScope.AddUserAsync(Following, CancellationToken);
-		await ServiceScope.AddFollowAsync(Follow, CancellationToken);
+		await ServiceScope.AddAsync(Follower, CancellationToken);
+		await ServiceScope.AddAsync(Following, CancellationToken);
+		await ServiceScope.AddAsync(Follow, CancellationToken);
 	}
 
 	[Fact]
 	public async Task DeleteAsync_ShouldThrowFollowNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteFollowAsync(Follow, CancellationToken);
+		await ServiceScope.DeleteAsync(Follow, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowFollowNotFoundExceptionAsync(_command, CancellationToken);
@@ -46,7 +46,7 @@ public class DeleteFollowIntegrationTests : BaseFollowDomainCommandIntegrationTe
 	{
 		// Act
 		await Service.DeleteAsync(_command, CancellationToken);
-		var follow = await ServiceScope.GetFollowByIdAsync(Follow.Id, CancellationToken);
+		var follow = await ServiceScope.GetByIdAsync(Follow.Id, CancellationToken);
 
 		// Assert
 		follow.ShouldBeNull();
@@ -62,7 +62,7 @@ public class DeleteFollowIntegrationTests : BaseFollowDomainCommandIntegrationTe
 
 		// Act
 		await Service.DeleteAsync(command, CancellationToken);
-		var follow = await ServiceScope.GetFollowByIdAsync(Follow.Id, CancellationToken);
+		var follow = await ServiceScope.GetByIdAsync(Follow.Id, CancellationToken);
 
 		// Assert
 		follow.ShouldBeNull();
@@ -78,7 +78,7 @@ public class DeleteFollowIntegrationTests : BaseFollowDomainCommandIntegrationTe
 
 		// Act
 		await Service.DeleteAsync(command, CancellationToken);
-		var follow = await ServiceScope.GetFollowByIdAsync(Follow.Id, CancellationToken);
+		var follow = await ServiceScope.GetByIdAsync(Follow.Id, CancellationToken);
 
 		// Assert
 		follow.ShouldBeNull();
@@ -89,9 +89,10 @@ public class DeleteFollowIntegrationTests : BaseFollowDomainCommandIntegrationTe
 	{
 		// Act
 		await Service.DeleteAsync(_command, CancellationToken);
+		var eventRequest = await EventHarness.PublishedDeletedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedFollowDeletedAsync(_command, Follow, CancellationToken);
+		eventRequest.ShouldSatisfy(_command, Follow);
 	}
 
 	[Theory]
@@ -104,9 +105,10 @@ public class DeleteFollowIntegrationTests : BaseFollowDomainCommandIntegrationTe
 
 		// Act
 		await Service.DeleteAsync(command, CancellationToken);
+		var eventRequest = await EventHarness.PublishedDeletedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedFollowDeletedAsync(command, Follow, CancellationToken);
+		eventRequest.ShouldSatisfy(command, Follow);
 	}
 
 	[Theory]
@@ -119,8 +121,9 @@ public class DeleteFollowIntegrationTests : BaseFollowDomainCommandIntegrationTe
 
 		// Act
 		await Service.DeleteAsync(command, CancellationToken);
+		var eventRequest = await EventHarness.PublishedDeletedEventRequest(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHavePublishedFollowDeletedAsync(command, Follow, CancellationToken);
+		eventRequest.ShouldSatisfy(command, Follow);
 	}
 }

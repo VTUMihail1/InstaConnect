@@ -20,9 +20,9 @@ public class GetAllPostLikesForUserQueryHandlerIntegrationTests : BasePostLikeAp
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserRangeAsync(Users, CancellationToken);
-		await ServiceScope.AddPostRangeAsync(Posts, CancellationToken);
-		await ServiceScope.AddPostLikeRangeAsync(PostLikes, CancellationToken);
+		await ServiceScope.AddRangeAsync(Users, CancellationToken);
+		await ServiceScope.AddRangeAsync(Posts, CancellationToken);
+		await ServiceScope.AddRangeAsync(PostLikes, CancellationToken);
 	}
 
 	[Theory]
@@ -38,7 +38,7 @@ public class GetAllPostLikesForUserQueryHandlerIntegrationTests : BasePostLikeAp
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForUserIdAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -51,7 +51,7 @@ public class GetAllPostLikesForUserQueryHandlerIntegrationTests : BasePostLikeAp
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForCurrentUserIdAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -64,7 +64,7 @@ public class GetAllPostLikesForUserQueryHandlerIntegrationTests : BasePostLikeAp
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForSortOrderAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -77,7 +77,7 @@ public class GetAllPostLikesForUserQueryHandlerIntegrationTests : BasePostLikeAp
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForSortTermAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -91,7 +91,7 @@ public class GetAllPostLikesForUserQueryHandlerIntegrationTests : BasePostLikeAp
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForPageAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -105,14 +105,14 @@ public class GetAllPostLikesForUserQueryHandlerIntegrationTests : BasePostLikeAp
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForPageSizeAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Fact]
 	public async Task SendAsync_ShouldThrowUserNotFoundException_WhenUserIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeleteUserAsync(User, CancellationToken);
+		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Assert
 		await Sender.ShouldThrowUserNotFoundExceptionAsync(_request, CancellationToken);
@@ -125,7 +125,7 @@ public class GetAllPostLikesForUserQueryHandlerIntegrationTests : BasePostLikeAp
 		var response = await Sender.SendAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, PostLikes, _request);
+		response.ShouldSatisfy(_request, User, PostLikes);
 	}
 
 	[Theory]
@@ -140,7 +140,7 @@ public class GetAllPostLikesForUserQueryHandlerIntegrationTests : BasePostLikeAp
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, PostLikes, request);
+		response.ShouldSatisfy(request, User, PostLikes);
 	}
 
 	[Theory]
@@ -157,7 +157,7 @@ public class GetAllPostLikesForUserQueryHandlerIntegrationTests : BasePostLikeAp
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, PostLikes, request);
+		response.ShouldSatisfy(request, User, PostLikes);
 	}
 
 	[Theory]
@@ -173,7 +173,7 @@ public class GetAllPostLikesForUserQueryHandlerIntegrationTests : BasePostLikeAp
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, PostLikes, request, termTransformer);
+		response.ShouldSatisfy(request, User, PostLikes, termTransformer);
 	}
 
 	[Theory]
@@ -189,6 +189,6 @@ public class GetAllPostLikesForUserQueryHandlerIntegrationTests : BasePostLikeAp
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, PostLikes, request, termTransformer);
+		response.ShouldSatisfy(request, User, PostLikes, termTransformer);
 	}
 }

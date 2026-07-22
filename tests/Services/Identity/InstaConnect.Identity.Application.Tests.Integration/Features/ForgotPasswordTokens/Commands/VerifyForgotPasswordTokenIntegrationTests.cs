@@ -19,7 +19,7 @@ public class VerifyForgotPasswordTokenIntegrationTests : BaseForgotPasswordToken
 	protected override async Task OnInitializeAsync()
 	{
 		await ServiceScope.AddAsync(User, CancellationToken);
-		await ServiceScope.AddForgotPasswordTokenRangeAsync(User.ForgotPasswordTokens, CancellationToken);
+		await ServiceScope.AddRangeAsync(User.ForgotPasswordTokens, CancellationToken);
 	}
 
 	[Theory]
@@ -34,7 +34,7 @@ public class VerifyForgotPasswordTokenIntegrationTests : BaseForgotPasswordToken
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Assert
-		await Sender.ShouldThrowInvalidValidationExceptionForIdAsync(messageTransformer, request, CancellationToken);
+		await Sender.ShouldThrowInvalidValidationExceptionForIdAsync(request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -49,7 +49,7 @@ public class VerifyForgotPasswordTokenIntegrationTests : BaseForgotPasswordToken
 		var request = _requestBuilder.WithValue(transformer).Build();
 
 		// Assert
-		await Sender.ShouldThrowInvalidValidationExceptionForValueAsync(messageTransformer, request, CancellationToken);
+		await Sender.ShouldThrowInvalidValidationExceptionForValueAsync(request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -64,7 +64,7 @@ public class VerifyForgotPasswordTokenIntegrationTests : BaseForgotPasswordToken
 		var request = _requestBuilder.WithPassword(transformer).Build();
 
 		// Assert
-		await Sender.ShouldThrowInvalidValidationExceptionForPasswordAsync(messageTransformer, request, CancellationToken);
+		await Sender.ShouldThrowInvalidValidationExceptionForPasswordAsync(request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -76,7 +76,7 @@ public class VerifyForgotPasswordTokenIntegrationTests : BaseForgotPasswordToken
 		var request = _requestBuilder.WithConfirmPassword(transformer).Build();
 
 		// Assert
-		await Sender.ShouldThrowInvalidValidationExceptionForConfirmPasswordAsync(messageTransformer, request, CancellationToken);
+		await Sender.ShouldThrowInvalidValidationExceptionForConfirmPasswordAsync(request, messageTransformer, CancellationToken);
 	}
 
 	[Fact]
@@ -93,7 +93,7 @@ public class VerifyForgotPasswordTokenIntegrationTests : BaseForgotPasswordToken
 	public async Task SendAsync_ShouldThrowForgotPasswordTokenNotFoundException_WhenForgotPasswordTokenNotFound()
 	{
 		// Arrange
-		await ServiceScope.DeleteForgotPasswordTokenAsync(ForgotPasswordToken, CancellationToken);
+		await ServiceScope.DeleteAsync(ForgotPasswordToken, CancellationToken);
 
 		// Assert
 		await Sender.ShouldThrowForgotPasswordTokenNotFoundExceptionAsync(_request, CancellationToken);
@@ -104,7 +104,7 @@ public class VerifyForgotPasswordTokenIntegrationTests : BaseForgotPasswordToken
 	{
 		// Arrange
 		var updatedForgotPasswordToken = ForgotPasswordTokenBuilder.WithAlreadyExpiresAtUtc().Build();
-		await ServiceScope.UpdateForgotPasswordTokenAsync(updatedForgotPasswordToken, CancellationToken);
+		await ServiceScope.UpdateAsync(updatedForgotPasswordToken, CancellationToken);
 
 		// Assert
 		await Sender.ShouldThrowForgotPasswordTokenExpiredExceptionAsync(_request, CancellationToken);

@@ -126,7 +126,7 @@ public static class PostCommentEquals
 
 	extension(PostCommentResponse? response)
 	{
-		public bool MatchesFull<T>(PostComment? postComment, T request)
+		public bool MatchesFull<T>(T request, PostComment? postComment)
 		where T : ICurrentUserableQuery
 		{
 			return response != null &&
@@ -138,10 +138,10 @@ public static class PostCommentEquals
 				   postComment.CreatedAtUtc == response.CreatedAtUtc &&
 				   postComment.UpdatedAtUtc == response.UpdatedAtUtc &&
 				   response.User.MatchesFull(postComment.User) &&
-				   response.Post.MatchesFull(postComment.Post, request);
+				   response.Post.MatchesFull(request, postComment.Post);
 		}
 
-		public bool MatchesWithoutUser<T>(PostComment? postComment, T request)
+		public bool MatchesWithoutUser<T>(T request, PostComment? postComment)
 			where T : ICurrentUserableQuery
 		{
 			return response != null &&
@@ -153,10 +153,10 @@ public static class PostCommentEquals
 				   postComment.CreatedAtUtc == response.CreatedAtUtc &&
 				   postComment.UpdatedAtUtc == response.UpdatedAtUtc &&
 				   response.User == null &&
-				   response.Post.MatchesFull(postComment.Post, request);
+				   response.Post.MatchesFull(request, postComment.Post);
 		}
 
-		public bool MatchesWithoutPost<T>(PostComment? postComment, T request)
+		public bool MatchesWithoutPost<T>(T request, PostComment? postComment)
 			where T : ICurrentUserableQuery
 		{
 			return response != null &&
@@ -171,143 +171,143 @@ public static class PostCommentEquals
 				   response.Post == null;
 		}
 
-		public bool Matches(PostComment postComment, GetPostCommentByIdQuery query)
+		public bool Matches(GetPostCommentByIdQuery query, PostComment postComment)
 		{
-			return response.MatchesFull(postComment, query);
+			return response.MatchesFull(query, postComment);
 		}
 	}
 
 	extension(PostCommentCollectionResponse response)
 	{
 		public bool MatchesWithoutUser<T>(
+		T request,
 		Func<PostCommentResponse, PostComment, bool> matches,
 		Func<PostComment, bool> matchesFilter,
 		Post post,
-		ICollection<PostComment> postComments,
-		T request)
+		ICollection<PostComment> postComments)
 		where T : ICurrentUserableQuery, IPaginatableQuery<PostCommentsPaginationQuery>
 		{
-			return response.MatchesCollectionResponse(postComments.Count(matchesFilter), request.Pagination) &&
+			return response.MatchesCollectionResponse(request.Pagination, postComments.Count(matchesFilter)) &&
 				   response.User == null &&
-				   response.Post.MatchesFull(post, request) &&
-				   response.PostComments.MatchesCollection(postComments,
+				   response.Post.MatchesFull(request, post) &&
+				   response.PostComments.MatchesCollection(request.Pagination,
+													postComments,
 													response => response.Id,
 													postComment => postComment.Id,
 													matches,
-													request.Pagination,
 													matchesFilter);
 		}
 
 		public bool MatchesWithoutUser<T>(
+			T request,
 			Func<PostCommentResponse, PostComment, bool> matches,
 			Func<PostComment, bool> matchesFilter,
 			Post post,
 			ICollection<PostComment> postComments,
-			T request,
 			ISortEnumTermTransformer<PostComment> termTransformer)
 			where T : ICurrentUserableQuery, IPaginatableQuery<PostCommentsPaginationQuery>
 		{
-			return response.MatchesCollectionResponse(postComments.Count(matchesFilter), request.Pagination) &&
+			return response.MatchesCollectionResponse(request.Pagination, postComments.Count(matchesFilter)) &&
 				   response.User == null &&
-				   response.Post.MatchesFull(post, request) &&
-				   response.PostComments.MatchesSortedCollection(postComments,
+				   response.Post.MatchesFull(request, post) &&
+				   response.PostComments.MatchesSortedCollection(request.Pagination,
+														  postComments,
 														  matches,
 														  termTransformer,
-														  request.Pagination,
 														  matchesFilter);
 		}
 
 		public bool MatchesWithoutPost<T>(
+			T request,
 			Func<PostCommentResponse, PostComment, bool> matches,
 			Func<PostComment, bool> matchesFilter,
 			User user,
-			ICollection<PostComment> postComments,
-			T request)
+			ICollection<PostComment> postComments)
 			where T : ICurrentUserableQuery, IPaginatableQuery<PostCommentsPaginationQuery>
 		{
-			return response.MatchesCollectionResponse(postComments.Count(matchesFilter), request.Pagination) &&
+			return response.MatchesCollectionResponse(request.Pagination, postComments.Count(matchesFilter)) &&
 				   response.User.MatchesFull(user) &&
 				   response.Post == null &&
-				   response.PostComments.MatchesCollection(postComments,
+				   response.PostComments.MatchesCollection(request.Pagination,
+													postComments,
 													response => response.Id,
 													postComment => postComment.Id,
 													matches,
-													request.Pagination,
 													matchesFilter);
 		}
 
 		public bool MatchesWithoutPost<T>(
+			T request,
 			Func<PostCommentResponse, PostComment, bool> matches,
 			Func<PostComment, bool> matchesFilter,
 			User user,
 			ICollection<PostComment> postComments,
-			T request,
 			ISortEnumTermTransformer<PostComment> termTransformer)
 			where T : ICurrentUserableQuery, IPaginatableQuery<PostCommentsPaginationQuery>
 		{
-			return response.MatchesCollectionResponse(postComments.Count(matchesFilter), request.Pagination) &&
+			return response.MatchesCollectionResponse(request.Pagination, postComments.Count(matchesFilter)) &&
 				   response.User.MatchesFull(user) &&
 				   response.Post == null &&
-				   response.PostComments.MatchesSortedCollection(postComments,
+				   response.PostComments.MatchesSortedCollection(request.Pagination,
+														  postComments,
 														  matches,
 														  termTransformer,
-														  request.Pagination,
 														  matchesFilter);
 		}
 
 		public bool Matches(
+		GetAllPostCommentsQuery query,
 		Post post,
-		ICollection<PostComment> postComments,
-		GetAllPostCommentsQuery query)
+		ICollection<PostComment> postComments)
 		{
 			return response.MatchesWithoutUser(
-					   (response, postComment) => response.MatchesWithoutPost(postComment, query),
+					   query,
+					   (response, postComment) => response.MatchesWithoutPost(query, postComment),
 					   postComment => postComment.MatchesFilter(query.Filter),
 					   post,
-					   postComments,
-					   query);
+					   postComments);
 		}
 
 		public bool Matches(
+			GetAllPostCommentsQuery query,
 			Post post,
 			ICollection<PostComment> postComments,
-			GetAllPostCommentsQuery query,
 			ISortEnumTermTransformer<PostComment> termTransformer)
 		{
 			return response.MatchesWithoutUser(
-					   (response, postComment) => response.MatchesWithoutPost(postComment, query),
+					   query,
+					   (response, postComment) => response.MatchesWithoutPost(query, postComment),
 					   postComment => postComment.MatchesFilter(query.Filter),
 					   post,
 					   postComments,
-					   query,
 					   termTransformer);
 		}
 
 		public bool Matches(
+		GetAllPostCommentsForUserQuery query,
 		User user,
-		ICollection<PostComment> postComments,
-		GetAllPostCommentsForUserQuery query)
+		ICollection<PostComment> postComments)
 		{
 			return response.MatchesWithoutPost(
-					   (response, postComment) => response.MatchesWithoutUser(postComment, query),
+					   query,
+					   (response, postComment) => response.MatchesWithoutUser(query, postComment),
 					   postComment => postComment.MatchesFilter(query.Filter),
 					   user,
-					   postComments,
-					   query);
+					   postComments);
 		}
 
 		public bool Matches(
+			GetAllPostCommentsForUserQuery query,
 			User user,
 			ICollection<PostComment> postComments,
-			GetAllPostCommentsForUserQuery query,
 			ISortEnumTermTransformer<PostComment> termTransformer)
 		{
 			return response.MatchesWithoutPost(
-					   (response, postComment) => response.MatchesWithoutUser(postComment, query),
+					   query,
+					   (response, postComment) => response.MatchesWithoutUser(query, postComment),
 					   postComment => postComment.MatchesFilter(query.Filter),
 					   user,
 					   postComments,
-					   query,
 					   termTransformer);
 		}
 	}

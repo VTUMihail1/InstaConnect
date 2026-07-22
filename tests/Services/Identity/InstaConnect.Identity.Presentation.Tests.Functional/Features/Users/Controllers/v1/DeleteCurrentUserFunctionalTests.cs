@@ -17,7 +17,7 @@ public class DeleteCurrentUserFunctionalTests : BaseUserPresentationCommandFunct
 	protected override async Task OnInitializeAsync()
 	{
 		await ServiceScope.AddAsync(User, CancellationToken);
-		await ServiceScope.AddEmailConfirmationTokenRangeAsync(User.EmailConfirmationTokens, CancellationToken);
+		await ServiceScope.AddRangeAsync(User.EmailConfirmationTokens, CancellationToken);
 	}
 
 	[Fact]
@@ -62,7 +62,7 @@ public class DeleteCurrentUserFunctionalTests : BaseUserPresentationCommandFunct
 		var response = await Client.DeleteCurrentProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForId(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForId(request, messageTransformer);
 	}
 
 	[Fact]

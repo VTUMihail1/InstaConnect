@@ -26,7 +26,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Assert
-		await Sender.ShouldThrowInvalidValidationExceptionForIdAsync(messageTransformer, request, CancellationToken);
+		await Sender.ShouldThrowInvalidValidationExceptionForIdAsync(request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -41,7 +41,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 		var request = _requestBuilder.WithName(transformer).Build();
 
 		// Assert
-		await Sender.ShouldThrowInvalidValidationExceptionForNameAsync(messageTransformer, request, CancellationToken);
+		await Sender.ShouldThrowInvalidValidationExceptionForNameAsync(request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -56,7 +56,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 		var request = _requestBuilder.WithFirstName(transformer).Build();
 
 		// Assert
-		await Sender.ShouldThrowInvalidValidationExceptionForFirstNameAsync(messageTransformer, request, CancellationToken);
+		await Sender.ShouldThrowInvalidValidationExceptionForFirstNameAsync(request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -71,7 +71,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 		var request = _requestBuilder.WithLastName(transformer).Build();
 
 		// Assert
-		await Sender.ShouldThrowInvalidValidationExceptionForLastNameAsync(messageTransformer, request, CancellationToken);
+		await Sender.ShouldThrowInvalidValidationExceptionForLastNameAsync(request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -87,7 +87,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 		var request = _requestBuilder.WithEmail(transformer).Build();
 
 		// Assert
-		await Sender.ShouldThrowInvalidValidationExceptionForEmailAsync(messageTransformer, request, CancellationToken);
+		await Sender.ShouldThrowInvalidValidationExceptionForEmailAsync(request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -99,7 +99,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 		var request = _requestBuilder.WithProfileImage(transformer).Build();
 
 		// Assert
-		await Sender.ShouldThrowInvalidValidationExceptionForProfileImageAsync(messageTransformer, request, CancellationToken);
+		await Sender.ShouldThrowInvalidValidationExceptionForProfileImageAsync(request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -112,7 +112,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForCreatedAtUtcAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -125,14 +125,14 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForUpdatedAtUtcAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Fact]
 	public async Task SendAsync_ShouldThrowUserAlreadyExistsException_WhenRequestIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 		var request = _requestBuilder.WithId(User.Id).Build();
 
 		// Assert
@@ -145,7 +145,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 		IStringTransformer transformer)
 	{
 		// Arrange
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 		var request = _requestBuilder.WithId(User.Id, transformer).Build();
 
 		// Assert
@@ -156,7 +156,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 	public async Task SendAsync_ShouldThrowUserEmailAlreadyExistsException_WhenRequestIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 		var request = _requestBuilder.WithEmail(User.Email).Build();
 
 		// Assert
@@ -169,7 +169,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 		IStringTransformer transformer)
 	{
 		// Arrange
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 		var request = _requestBuilder.WithEmail(User.Email, transformer).Build();
 
 		// Assert
@@ -180,7 +180,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 	public async Task SendAsync_ShouldThrowUserNameAlreadyExistsException_WhenRequestIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 		var request = _requestBuilder.WithName(User.Name).Build();
 
 		// Assert
@@ -193,7 +193,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 		IStringTransformer transformer)
 	{
 		// Arrange
-		await ServiceScope.AddUserAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
 		var request = _requestBuilder.WithName(User.Name, transformer).Build();
 
 		// Assert
@@ -205,7 +205,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 	{
 		// Act
 		var response = await Sender.SendAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(user, _request);
@@ -222,7 +222,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(user, request);
@@ -233,7 +233,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 	{
 		// Act
 		var response = await Sender.SendAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(_request);
@@ -250,7 +250,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var user = await ServiceScope.GetUserByIdAsync(response.Response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(request);

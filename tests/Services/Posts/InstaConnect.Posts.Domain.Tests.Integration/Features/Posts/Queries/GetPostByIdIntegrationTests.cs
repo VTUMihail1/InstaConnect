@@ -27,9 +27,9 @@ public class GetPostByIdIntegrationTests : BasePostDomainQueryIntegrationTest
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserAsync(User, CancellationToken);
-		await ServiceScope.AddPostAsync(Post, CancellationToken);
-		await ServiceScope.AddPostLikeAsync(PostLike, CancellationToken);
+		await ServiceScope.AddAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(Post, CancellationToken);
+		await ServiceScope.AddAsync(PostLike, CancellationToken);
 	}
 
 
@@ -37,7 +37,7 @@ public class GetPostByIdIntegrationTests : BasePostDomainQueryIntegrationTest
 	public async Task GetByIdAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostAsync(Post, CancellationToken);
+		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Assert
 		await Service.ShouldThrowPostNotFoundExceptionAsync(_query, CancellationToken);
@@ -50,7 +50,7 @@ public class GetPostByIdIntegrationTests : BasePostDomainQueryIntegrationTest
 		var response = await Service.GetByIdAsync(_query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Post, _query);
+		response.ShouldSatisfy(_query, Post);
 	}
 
 	[Theory]
@@ -65,7 +65,7 @@ public class GetPostByIdIntegrationTests : BasePostDomainQueryIntegrationTest
 		var response = await Service.GetByIdAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Post, query);
+		response.ShouldSatisfy(query, Post);
 	}
 
 	[Theory]
@@ -82,6 +82,6 @@ public class GetPostByIdIntegrationTests : BasePostDomainQueryIntegrationTest
 		var response = await Service.GetByIdAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Post, query);
+		response.ShouldSatisfy(query, Post);
 	}
 }

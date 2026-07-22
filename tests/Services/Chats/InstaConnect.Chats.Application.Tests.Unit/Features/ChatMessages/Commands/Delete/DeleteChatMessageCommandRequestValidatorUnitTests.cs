@@ -32,7 +32,7 @@ public class DeleteChatMessageCommandRequestValidatorUnitTests : BaseChatMessage
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForParticipantOneId(messageTransformer, request);
+		result.ShouldHaveValidationErrorForParticipantOneId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -50,7 +50,7 @@ public class DeleteChatMessageCommandRequestValidatorUnitTests : BaseChatMessage
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForParticipantTwoId(messageTransformer, request);
+		result.ShouldHaveValidationErrorForParticipantTwoId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -68,7 +68,7 @@ public class DeleteChatMessageCommandRequestValidatorUnitTests : BaseChatMessage
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForMessageId(messageTransformer, request);
+		result.ShouldHaveValidationErrorForMessageId(request, messageTransformer);
 	}
 
 	[Fact]

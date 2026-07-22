@@ -85,7 +85,7 @@ public class AddPostCommentLikeServiceUnitTests : BasePostCommentLikeDomainComma
 		var response = await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostCommentLike, _command);
+		response.ShouldSatisfy(_command, PostCommentLike);
 	}
 
 	[Fact]

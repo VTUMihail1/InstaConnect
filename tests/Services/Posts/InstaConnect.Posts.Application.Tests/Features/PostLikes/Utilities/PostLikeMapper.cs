@@ -67,7 +67,7 @@ public static class PostLikeMapper
 
 			return new(post?.ToFullResponse(request),
 					   null,
-					   postLikes.Filter(postLike => filter(postLike, request), request, postLike => transform(postLike, request)),
+					   postLikes.Filter(request, postLike => filter(postLike, request), postLike => transform(postLike, request)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -87,7 +87,7 @@ public static class PostLikeMapper
 
 			return new(null,
 					   user.ToFullResponse(),
-					   postLikes.Filter(postLike => filter(postLike, request), request, postLike => transform(postLike, request)),
+					   postLikes.Filter(request, postLike => filter(postLike, request), postLike => transform(postLike, request)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,

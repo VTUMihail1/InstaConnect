@@ -43,7 +43,7 @@ public class AddForgotPasswordTokenIntegrationTests : BaseForgotPasswordTokenDom
 	{
 		// Act
 		var response = await Service.AddAsync(_command, CancellationToken);
-		var forgotPasswordToken = await ServiceScope.GetForgotPasswordTokenByIdAsync(response, CancellationToken);
+		var forgotPasswordToken = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(_command, forgotPasswordToken);
@@ -59,7 +59,7 @@ public class AddForgotPasswordTokenIntegrationTests : BaseForgotPasswordTokenDom
 
 		// Act
 		var response = await Service.AddAsync(command, CancellationToken);
-		var forgotPasswordToken = await ServiceScope.GetForgotPasswordTokenByIdAsync(response, CancellationToken);
+		var forgotPasswordToken = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(command, forgotPasswordToken);

@@ -52,7 +52,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForName(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForName(request, messageTransformer);
 	}
 
 	[Theory]
@@ -88,7 +88,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForFirstName(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForFirstName(request, messageTransformer);
 	}
 
 	[Theory]
@@ -124,7 +124,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForLastName(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForLastName(request, messageTransformer);
 	}
 
 	[Theory]
@@ -162,7 +162,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForEmail(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForEmail(request, messageTransformer);
 	}
 
 	[Theory]
@@ -198,7 +198,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForPassword(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForPassword(request, messageTransformer);
 	}
 
 	[Theory]
@@ -228,7 +228,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInvalidValidationForConfirmPassword(messageTransformer, request);
+		response.ShouldSatisfyInvalidValidationForConfirmPassword(request, messageTransformer);
 	}
 
 	[Fact]

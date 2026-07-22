@@ -28,7 +28,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 		var request = _requestBuilder.WithName(transformer).Build();
 
 		// Assert
-		await Sender.ShouldThrowInvalidValidationExceptionForNameAsync(messageTransformer, request, CancellationToken);
+		await Sender.ShouldThrowInvalidValidationExceptionForNameAsync(request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -43,7 +43,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 		var request = _requestBuilder.WithFirstName(transformer).Build();
 
 		// Assert
-		await Sender.ShouldThrowInvalidValidationExceptionForFirstNameAsync(messageTransformer, request, CancellationToken);
+		await Sender.ShouldThrowInvalidValidationExceptionForFirstNameAsync(request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -58,7 +58,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 		var request = _requestBuilder.WithLastName(transformer).Build();
 
 		// Assert
-		await Sender.ShouldThrowInvalidValidationExceptionForLastNameAsync(messageTransformer, request, CancellationToken);
+		await Sender.ShouldThrowInvalidValidationExceptionForLastNameAsync(request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -74,7 +74,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 		var request = _requestBuilder.WithEmail(transformer).Build();
 
 		// Assert
-		await Sender.ShouldThrowInvalidValidationExceptionForEmailAsync(messageTransformer, request, CancellationToken);
+		await Sender.ShouldThrowInvalidValidationExceptionForEmailAsync(request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -89,7 +89,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 		var request = _requestBuilder.WithPassword(transformer).Build();
 
 		// Assert
-		await Sender.ShouldThrowInvalidValidationExceptionForPasswordAsync(messageTransformer, request, CancellationToken);
+		await Sender.ShouldThrowInvalidValidationExceptionForPasswordAsync(request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -101,7 +101,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 		var request = _requestBuilder.WithConfirmPassword(transformer).Build();
 
 		// Assert
-		await Sender.ShouldThrowInvalidValidationExceptionForConfirmPasswordAsync(messageTransformer, request, CancellationToken);
+		await Sender.ShouldThrowInvalidValidationExceptionForConfirmPasswordAsync(request, messageTransformer, CancellationToken);
 	}
 
 	[Fact]

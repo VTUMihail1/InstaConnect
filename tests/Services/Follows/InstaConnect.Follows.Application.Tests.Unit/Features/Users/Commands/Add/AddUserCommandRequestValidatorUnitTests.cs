@@ -32,7 +32,7 @@ public class AddUserCommandRequestValidatorUnitTests : BaseUserApplicationComman
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForId(messageTransformer, request);
+		result.ShouldHaveValidationErrorForId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -50,7 +50,7 @@ public class AddUserCommandRequestValidatorUnitTests : BaseUserApplicationComman
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForName(messageTransformer, request);
+		result.ShouldHaveValidationErrorForName(request, messageTransformer);
 	}
 
 	[Theory]
@@ -68,7 +68,7 @@ public class AddUserCommandRequestValidatorUnitTests : BaseUserApplicationComman
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForFirstName(messageTransformer, request);
+		result.ShouldHaveValidationErrorForFirstName(request, messageTransformer);
 	}
 
 	[Theory]
@@ -86,7 +86,7 @@ public class AddUserCommandRequestValidatorUnitTests : BaseUserApplicationComman
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForLastName(messageTransformer, request);
+		result.ShouldHaveValidationErrorForLastName(request, messageTransformer);
 	}
 
 	[Theory]
@@ -105,7 +105,7 @@ public class AddUserCommandRequestValidatorUnitTests : BaseUserApplicationComman
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForEmail(messageTransformer, request);
+		result.ShouldHaveValidationErrorForEmail(request, messageTransformer);
 	}
 
 	[Theory]
@@ -120,7 +120,7 @@ public class AddUserCommandRequestValidatorUnitTests : BaseUserApplicationComman
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForProfileImage(messageTransformer, request);
+		result.ShouldHaveValidationErrorForProfileImage(request, messageTransformer);
 	}
 
 	[Theory]
@@ -135,7 +135,7 @@ public class AddUserCommandRequestValidatorUnitTests : BaseUserApplicationComman
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForCreatedAtUtc(messageTransformer, request);
+		result.ShouldHaveValidationErrorForCreatedAtUtc(request, messageTransformer);
 	}
 
 
@@ -151,7 +151,7 @@ public class AddUserCommandRequestValidatorUnitTests : BaseUserApplicationComman
 		var result = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForUpdatedAtUtc(messageTransformer, request);
+		result.ShouldHaveValidationErrorForUpdatedAtUtc(request, messageTransformer);
 	}
 
 	[Fact]

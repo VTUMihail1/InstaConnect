@@ -20,11 +20,11 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
 
 	protected override async Task OnInitializeAsync()
 	{
-		await ServiceScope.AddUserRangeAsync(Users, CancellationToken);
-		await ServiceScope.AddPostRangeAsync(Posts, CancellationToken);
-		await ServiceScope.AddPostLikeRangeAsync(PostLikes, CancellationToken);
-		await ServiceScope.AddPostCommentRangeAsync(PostComments, CancellationToken);
-		await ServiceScope.AddPostCommentLikeRangeAsync(PostCommentLikes, CancellationToken);
+		await ServiceScope.AddRangeAsync(Users, CancellationToken);
+		await ServiceScope.AddRangeAsync(Posts, CancellationToken);
+		await ServiceScope.AddRangeAsync(PostLikes, CancellationToken);
+		await ServiceScope.AddRangeAsync(PostComments, CancellationToken);
+		await ServiceScope.AddRangeAsync(PostCommentLikes, CancellationToken);
 	}
 
 	[Theory]
@@ -40,7 +40,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForIdAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -56,7 +56,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForCommentIdAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -69,7 +69,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForUserNameAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -82,7 +82,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForCurrentUserIdAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -96,7 +96,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForSortOrderAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -110,7 +110,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForSortTermAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -124,7 +124,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForPageAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -138,14 +138,14 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
 
 		// Assert
 		await Sender.ShouldThrowInvalidValidationExceptionForPageSizeAsync(
-			messageTransformer, request, CancellationToken);
+			request, messageTransformer, CancellationToken);
 	}
 
 	[Fact]
 	public async Task SendAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostAsync(Post, CancellationToken);
+		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Assert
 		await Sender.ShouldThrowPostNotFoundExceptionAsync(_request, CancellationToken);
@@ -155,7 +155,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
 	public async Task SendAsync_ShouldThrowPostCommentNotFoundException_WhenCommentIdIsInvalid()
 	{
 		// Arrange
-		await ServiceScope.DeletePostCommentAsync(PostComment, CancellationToken);
+		await ServiceScope.DeleteAsync(PostComment, CancellationToken);
 
 		// Assert
 		await Sender.ShouldThrowPostCommentNotFoundExceptionAsync(_request, CancellationToken);
@@ -168,7 +168,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
 		var response = await Sender.SendAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostComment, PostCommentLikes, _request);
+		response.ShouldSatisfy(_request, PostComment, PostCommentLikes);
 	}
 
 	[Theory]
@@ -183,7 +183,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostComment, PostCommentLikes, request);
+		response.ShouldSatisfy(request, PostComment, PostCommentLikes);
 	}
 
 	[Theory]
@@ -198,7 +198,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostComment, PostCommentLikes, request);
+		response.ShouldSatisfy(request, PostComment, PostCommentLikes);
 	}
 
 	[Theory]
@@ -215,7 +215,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostComment, PostCommentLikes, request);
+		response.ShouldSatisfy(request, PostComment, PostCommentLikes);
 	}
 
 	[Theory]
@@ -232,7 +232,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostComment, PostCommentLikes, request);
+		response.ShouldSatisfy(request, PostComment, PostCommentLikes);
 	}
 
 	[Theory]
@@ -248,7 +248,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostComment, PostCommentLikes, request, termTransformer);
+		response.ShouldSatisfy(request, PostComment, PostCommentLikes, termTransformer);
 	}
 
 	[Theory]
@@ -264,6 +264,6 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostComment, PostCommentLikes, request, termTransformer);
+		response.ShouldSatisfy(request, PostComment, PostCommentLikes, termTransformer);
 	}
 }
