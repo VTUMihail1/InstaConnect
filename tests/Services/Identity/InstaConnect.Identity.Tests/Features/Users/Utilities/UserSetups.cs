@@ -38,7 +38,7 @@ public static class UserSetups
 		{
 			var include = serviceScope.GetIncludeBuilderFactory().Create().WithUserClaims().WithRefreshTokens().WithForgotPasswordTokens().WithEmailConfirmationTokens().Build();
 
-			return await serviceScope.GetCommandRepository().GetByIdAsync(id, include, cancellationToken);
+			return (await serviceScope.GetCommandRepository().GetByIdAsync(id, include, cancellationToken)).SetUserClaims().SetRefreshTokens().SetForgotPasswordTokens().SetEmailConfirmationTokens();
 		}
 
 		public async Task AddAsync(

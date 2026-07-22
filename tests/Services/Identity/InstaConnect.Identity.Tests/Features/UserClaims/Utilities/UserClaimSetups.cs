@@ -38,7 +38,7 @@ public static class UserClaimSetups
 		{
 			var claimInclude = serviceScope.GetClaimIncludeBuilderFactory().Create().WithUser().Build();
 
-			return await serviceScope.GetClaimCommandRepository().GetByIdAsync(id, claimInclude, cancellationToken);
+			return (await serviceScope.GetClaimCommandRepository().GetByIdAsync(id, claimInclude, cancellationToken)).SetUser();
 		}
 
 		public async Task AddAsync(

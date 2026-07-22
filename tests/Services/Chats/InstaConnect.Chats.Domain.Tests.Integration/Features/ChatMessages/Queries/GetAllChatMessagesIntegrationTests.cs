@@ -55,7 +55,7 @@ public class GetAllChatMessagesIntegrationTests : BaseChatMessageDomainQueryInte
 		var response = await Service.GetAllAsync(_query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Chat, ChatMessages, _query);
+		response.ShouldSatisfy(_query, Chat, ChatMessages);
 	}
 
 	[Theory]
@@ -70,7 +70,7 @@ public class GetAllChatMessagesIntegrationTests : BaseChatMessageDomainQueryInte
 		var response = await Service.GetAllAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Chat, ChatMessages, query);
+		response.ShouldSatisfy(query, Chat, ChatMessages);
 	}
 
 	[Theory]
@@ -86,7 +86,7 @@ public class GetAllChatMessagesIntegrationTests : BaseChatMessageDomainQueryInte
 		var response = await Service.GetAllAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Chat, ChatMessages, query, termTransformer);
+		response.ShouldSatisfy(query, Chat, ChatMessages, termTransformer);
 	}
 
 	[Theory]
@@ -101,7 +101,7 @@ public class GetAllChatMessagesIntegrationTests : BaseChatMessageDomainQueryInte
 		var response = await Service.GetAllAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Chat, ChatMessages, query, termTransformer);
+		response.ShouldSatisfy(query, Chat, ChatMessages, termTransformer);
 	}
 
 	[Theory]
@@ -116,7 +116,7 @@ public class GetAllChatMessagesIntegrationTests : BaseChatMessageDomainQueryInte
 		var response = await Service.GetAllAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Chat, ChatMessages, query);
+		response.ShouldSatisfy(query, Chat, ChatMessages);
 	}
 
 	[Fact]
@@ -129,7 +129,7 @@ public class GetAllChatMessagesIntegrationTests : BaseChatMessageDomainQueryInte
 		var response = await Service.GetAllAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInverted(Chat, ChatMessages, query);
+		response.ShouldSatisfyInverted(query, Chat, ChatMessages);
 	}
 
 	[Theory]
@@ -144,7 +144,7 @@ public class GetAllChatMessagesIntegrationTests : BaseChatMessageDomainQueryInte
 		var response = await Service.GetAllAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInverted(Chat, ChatMessages, query);
+		response.ShouldSatisfyInverted(query, Chat, ChatMessages);
 	}
 
 	[Theory]
@@ -160,7 +160,7 @@ public class GetAllChatMessagesIntegrationTests : BaseChatMessageDomainQueryInte
 		var response = await Service.GetAllAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInverted(Chat, ChatMessages, query, termTransformer);
+		response.ShouldSatisfyInverted(query, Chat, ChatMessages, termTransformer);
 	}
 
 	[Theory]
@@ -175,7 +175,7 @@ public class GetAllChatMessagesIntegrationTests : BaseChatMessageDomainQueryInte
 		var response = await Service.GetAllAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInverted(Chat, ChatMessages, query, termTransformer);
+		response.ShouldSatisfyInverted(query, Chat, ChatMessages, termTransformer);
 	}
 
 	[Theory]
@@ -190,6 +190,6 @@ public class GetAllChatMessagesIntegrationTests : BaseChatMessageDomainQueryInte
 		var response = await Service.GetAllAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInverted(Chat, ChatMessages, query);
+		response.ShouldSatisfyInverted(query, Chat, ChatMessages);
 	}
 }

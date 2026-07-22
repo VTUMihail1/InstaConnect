@@ -74,7 +74,7 @@ public class UpdateChatMessageServiceUnitTests : BaseChatMessageDomainCommandUni
 		var response = await _service.UpdateAsync(_command, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(ChatMessage, _command);
+		response.ShouldSatisfy(_command, ChatMessage);
 	}
 
 	[Fact]

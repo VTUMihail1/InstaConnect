@@ -208,7 +208,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 		var user = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(user, _request);
+		response.ShouldSatisfy(_request, user);
 	}
 
 	[Theory]
@@ -225,7 +225,7 @@ public class AddUserIntegrationTests : BaseUserApplicationCommandIntegrationTest
 		var user = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(user, request);
+		response.ShouldSatisfy(request, user);
 	}
 
 	[Fact]

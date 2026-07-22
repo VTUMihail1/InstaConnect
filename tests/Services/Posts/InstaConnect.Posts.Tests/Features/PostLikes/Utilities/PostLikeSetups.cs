@@ -40,7 +40,7 @@ public static class PostLikeSetups
 			var include = serviceScope.GetPostIncludeBuilderFactory().Create().WithUser().Build();
 			var likeInclude = serviceScope.GetPostLikeIncludeBuilderFactory().Create().WithUser().WithPost(include).Build();
 
-			return await serviceScope.GetPostLikeCommandRepository().GetByIdAsync(id, likeInclude, cancellationToken);
+			return (await serviceScope.GetPostLikeCommandRepository().GetByIdAsync(id, likeInclude, cancellationToken)).SetUser().SetPost();
 		}
 
 		public async Task AddAsync(

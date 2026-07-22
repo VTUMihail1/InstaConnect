@@ -288,7 +288,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 		var follow = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(follow, _request);
+		response.ShouldSatisfy(_request, follow);
 	}
 
 	[Theory]
@@ -304,7 +304,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 		var follow = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(follow, request);
+		response.ShouldSatisfy(request, follow);
 	}
 
 	[Theory]
@@ -320,7 +320,7 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 		var follow = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(follow, request);
+		response.ShouldSatisfy(request, follow);
 	}
 
 	[Fact]

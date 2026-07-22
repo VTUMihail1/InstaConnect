@@ -26,7 +26,7 @@ public class AddFollowCommandHandlerUnitTests : BaseFollowApplicationCommandUnit
 		var response = await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Follow, _request);
+		response.ShouldSatisfy(_request, Follow);
 	}
 
 	[Fact]

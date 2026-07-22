@@ -204,7 +204,7 @@ public class GetFollowByIdFunctionalTests : BaseFollowPresentationQueryFunctiona
 		var response = await Client.GetByIdAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Follow, _request);
+		response.ShouldSatisfy(_request, Follow);
 	}
 
 	[Theory]
@@ -219,7 +219,7 @@ public class GetFollowByIdFunctionalTests : BaseFollowPresentationQueryFunctiona
 		var response = await Client.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Follow, request);
+		response.ShouldSatisfy(request, Follow);
 	}
 
 	[Theory]
@@ -234,7 +234,7 @@ public class GetFollowByIdFunctionalTests : BaseFollowPresentationQueryFunctiona
 		var response = await Client.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Follow, request);
+		response.ShouldSatisfy(request, Follow);
 	}
 
 	[Theory]
@@ -250,6 +250,6 @@ public class GetFollowByIdFunctionalTests : BaseFollowPresentationQueryFunctiona
 		var response = await Client.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Follow, request);
+		response.ShouldSatisfy(request, Follow);
 	}
 }

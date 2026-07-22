@@ -38,7 +38,7 @@ public static class RefreshTokenSetups
 		{
 			var refreshTokenInclude = serviceScope.GetRefreshTokenIncludeBuilderFactory().Create().WithUser().Build();
 
-			return await serviceScope.GetRefreshTokenCommandRepository().GetByIdAsync(id, refreshTokenInclude, cancellationToken);
+			return (await serviceScope.GetRefreshTokenCommandRepository().GetByIdAsync(id, refreshTokenInclude, cancellationToken)).SetUser();
 		}
 
 		public async Task AddAsync(

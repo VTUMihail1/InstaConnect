@@ -40,7 +40,7 @@ public static class ChatMessageSetups
 			var include = serviceScope.GetIncludeBuilderFactory().Create().WithParticipantOne().WithParticipantTwo().Build();
 			var messageInclude = serviceScope.GetMessageIncludeBuilderFactory().Create().WithSender().WithChat(include).Build();
 
-			return await serviceScope.GetMessageCommandRepository().GetByIdAsync(id, messageInclude, cancellationToken);
+			return (await serviceScope.GetMessageCommandRepository().GetByIdAsync(id, messageInclude, cancellationToken)).SetSender().SetChat();
 		}
 
 		public async Task AddAsync(

@@ -338,7 +338,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var response = await Client.GetAllForFollowingAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Following, Follows, _request);
+		response.ShouldSatisfy(_request, Following, Follows);
 	}
 
 	[Theory]
@@ -353,7 +353,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var response = await Client.GetAllForFollowingAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Following, Follows, request);
+		response.ShouldSatisfy(request, Following, Follows);
 	}
 
 	[Theory]
@@ -370,7 +370,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var response = await Client.GetAllForFollowingAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Following, Follows, request);
+		response.ShouldSatisfy(request, Following, Follows);
 	}
 
 	[Theory]
@@ -386,7 +386,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var response = await Client.GetAllForFollowingAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Following, Follows, request);
+		response.ShouldSatisfy(request, Following, Follows);
 	}
 
 	[Theory]
@@ -402,7 +402,7 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var response = await Client.GetAllForFollowingAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Following, Follows, request, termTransformer);
+		response.ShouldSatisfy(request, Following, Follows, termTransformer);
 	}
 
 	[Theory]
@@ -418,6 +418,6 @@ public class GetAllFollowsForFollowingFunctionalTests : BaseFollowPresentationQu
 		var response = await Client.GetAllForFollowingAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Following, Follows, request, termTransformer);
+		response.ShouldSatisfy(request, Following, Follows, termTransformer);
 	}
 }

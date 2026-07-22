@@ -209,7 +209,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(chatMessage, _request);
+		response.ShouldSatisfy(_request, chatMessage);
 	}
 
 	[Theory]
@@ -225,7 +225,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(chatMessage, request);
+		response.ShouldSatisfy(request, chatMessage);
 	}
 
 	[Theory]
@@ -241,7 +241,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(chatMessage, request);
+		response.ShouldSatisfy(request, chatMessage);
 	}
 
 	[Fact]
@@ -388,7 +388,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(chatMessage, request);
+		response.ShouldSatisfy(request, chatMessage);
 	}
 
 	[Theory]
@@ -404,7 +404,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(chatMessage, request);
+		response.ShouldSatisfy(request, chatMessage);
 	}
 
 	[Theory]
@@ -420,7 +420,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(chatMessage, request);
+		response.ShouldSatisfy(request, chatMessage);
 	}
 
 	[Fact]

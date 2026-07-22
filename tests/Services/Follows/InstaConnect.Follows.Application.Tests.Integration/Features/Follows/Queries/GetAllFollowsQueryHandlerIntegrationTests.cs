@@ -138,7 +138,7 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowApplicationQu
 		var response = await Sender.SendAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Follower, Follows, _request);
+		response.ShouldSatisfy(_request, Follower, Follows);
 	}
 
 	[Theory]
@@ -153,7 +153,7 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowApplicationQu
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Follower, Follows, request);
+		response.ShouldSatisfy(request, Follower, Follows);
 	}
 
 	[Theory]
@@ -170,7 +170,7 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowApplicationQu
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Follower, Follows, request);
+		response.ShouldSatisfy(request, Follower, Follows);
 	}
 
 	[Theory]
@@ -187,7 +187,7 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowApplicationQu
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Follower, Follows, request);
+		response.ShouldSatisfy(request, Follower, Follows);
 	}
 
 	[Theory]
@@ -203,7 +203,7 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowApplicationQu
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Follower, Follows, request, termTransformer);
+		response.ShouldSatisfy(request, Follower, Follows, termTransformer);
 	}
 
 	[Theory]
@@ -219,6 +219,6 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowApplicationQu
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Follower, Follows, request, termTransformer);
+		response.ShouldSatisfy(request, Follower, Follows, termTransformer);
 	}
 }

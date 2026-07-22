@@ -36,7 +36,7 @@ public class GetAllFollowsControllerUnitTests : BaseFollowPresentationQueryUnitT
 		var response = await _controller.GetAllAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Follower, Follows, _request);
+		response.ShouldSatisfy(_request, Follower, Follows);
 	}
 
 	[Fact]

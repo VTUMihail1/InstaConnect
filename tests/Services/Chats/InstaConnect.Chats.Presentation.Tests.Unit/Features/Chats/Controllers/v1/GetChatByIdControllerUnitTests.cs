@@ -36,7 +36,7 @@ public class GetChatByIdControllerUnitTests : BaseChatPresentationQueryUnitTest
 		var response = await _controller.GetByIdAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Chat, _request);
+		response.ShouldSatisfy(_request, Chat);
 	}
 
 	[Fact]

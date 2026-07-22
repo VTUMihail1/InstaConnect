@@ -47,7 +47,7 @@ public class GetChatByIdIntegrationTests : BaseChatDomainQueryIntegrationTest
 		var response = await Service.GetByIdAsync(_query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Chat, _query);
+		response.ShouldSatisfy(_query, Chat);
 	}
 
 	[Theory]
@@ -62,7 +62,7 @@ public class GetChatByIdIntegrationTests : BaseChatDomainQueryIntegrationTest
 		var response = await Service.GetByIdAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Chat, query);
+		response.ShouldSatisfy(query, Chat);
 	}
 
 	[Theory]
@@ -77,7 +77,7 @@ public class GetChatByIdIntegrationTests : BaseChatDomainQueryIntegrationTest
 		var response = await Service.GetByIdAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Chat, query);
+		response.ShouldSatisfy(query, Chat);
 	}
 
 	[Fact]
@@ -90,7 +90,7 @@ public class GetChatByIdIntegrationTests : BaseChatDomainQueryIntegrationTest
 		var response = await Service.GetByIdAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInverted(Chat, query);
+		response.ShouldSatisfyInverted(query, Chat);
 	}
 
 	[Theory]
@@ -105,7 +105,7 @@ public class GetChatByIdIntegrationTests : BaseChatDomainQueryIntegrationTest
 		var response = await Service.GetByIdAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInverted(Chat, query);
+		response.ShouldSatisfyInverted(query, Chat);
 	}
 
 	[Theory]
@@ -120,6 +120,6 @@ public class GetChatByIdIntegrationTests : BaseChatDomainQueryIntegrationTest
 		var response = await Service.GetByIdAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInverted(Chat, query);
+		response.ShouldSatisfyInverted(query, Chat);
 	}
 }

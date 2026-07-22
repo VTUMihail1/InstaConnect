@@ -304,7 +304,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var response = await Client.GetAllAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(ParticipantOne, Chats, _request);
+		response.ShouldSatisfy(_request, ParticipantOne, Chats);
 	}
 
 	[Theory]
@@ -321,7 +321,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(ParticipantOne, Chats, request);
+		response.ShouldSatisfy(request, ParticipantOne, Chats);
 	}
 
 	[Theory]
@@ -336,7 +336,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(ParticipantOne, Chats, request);
+		response.ShouldSatisfy(request, ParticipantOne, Chats);
 	}
 
 	[Theory]
@@ -352,7 +352,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(ParticipantOne, Chats, request, termTransformer);
+		response.ShouldSatisfy(request, ParticipantOne, Chats, termTransformer);
 	}
 
 	[Theory]
@@ -368,7 +368,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(ParticipantOne, Chats, request, termTransformer);
+		response.ShouldSatisfy(request, ParticipantOne, Chats, termTransformer);
 	}
 
 	[Fact]
@@ -458,7 +458,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInverted(ParticipantTwo, Chats, request);
+		response.ShouldSatisfyInverted(request, ParticipantTwo, Chats);
 	}
 
 	[Theory]
@@ -475,7 +475,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInverted(ParticipantTwo, Chats, request);
+		response.ShouldSatisfyInverted(request, ParticipantTwo, Chats);
 	}
 
 	[Theory]
@@ -490,7 +490,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInverted(ParticipantTwo, Chats, request);
+		response.ShouldSatisfyInverted(request, ParticipantTwo, Chats);
 	}
 
 	[Theory]
@@ -506,7 +506,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInverted(ParticipantTwo, Chats, request, termTransformer);
+		response.ShouldSatisfyInverted(request, ParticipantTwo, Chats, termTransformer);
 	}
 
 	[Theory]
@@ -522,6 +522,6 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var response = await Client.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInverted(ParticipantTwo, Chats, request, termTransformer);
+		response.ShouldSatisfyInverted(request, ParticipantTwo, Chats, termTransformer);
 	}
 }

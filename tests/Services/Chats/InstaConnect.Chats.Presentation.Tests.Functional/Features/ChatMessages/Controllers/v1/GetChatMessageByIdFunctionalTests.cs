@@ -244,7 +244,7 @@ public class GetChatMessageByIdFunctionalTests : BaseChatMessagePresentationQuer
 		var response = await HttpClient.GetByIdAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(ChatMessage, _request);
+		response.ShouldSatisfy(_request, ChatMessage);
 	}
 
 	[Theory]
@@ -259,7 +259,7 @@ public class GetChatMessageByIdFunctionalTests : BaseChatMessagePresentationQuer
 		var response = await HttpClient.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(ChatMessage, request);
+		response.ShouldSatisfy(request, ChatMessage);
 	}
 
 	[Theory]
@@ -274,7 +274,7 @@ public class GetChatMessageByIdFunctionalTests : BaseChatMessagePresentationQuer
 		var response = await HttpClient.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(ChatMessage, request);
+		response.ShouldSatisfy(request, ChatMessage);
 	}
 
 	[Theory]
@@ -289,7 +289,7 @@ public class GetChatMessageByIdFunctionalTests : BaseChatMessagePresentationQuer
 		var response = await HttpClient.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(ChatMessage, request);
+		response.ShouldSatisfy(request, ChatMessage);
 	}
 
 	[Fact]
@@ -360,7 +360,7 @@ public class GetChatMessageByIdFunctionalTests : BaseChatMessagePresentationQuer
 		var response = await HttpClient.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInverted(ChatMessage, request);
+		response.ShouldSatisfyInverted(request, ChatMessage);
 	}
 
 	[Theory]
@@ -375,7 +375,7 @@ public class GetChatMessageByIdFunctionalTests : BaseChatMessagePresentationQuer
 		var response = await HttpClient.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInverted(ChatMessage, request);
+		response.ShouldSatisfyInverted(request, ChatMessage);
 	}
 
 	[Theory]
@@ -390,7 +390,7 @@ public class GetChatMessageByIdFunctionalTests : BaseChatMessagePresentationQuer
 		var response = await HttpClient.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInverted(ChatMessage, request);
+		response.ShouldSatisfyInverted(request, ChatMessage);
 	}
 
 	[Theory]
@@ -405,6 +405,6 @@ public class GetChatMessageByIdFunctionalTests : BaseChatMessagePresentationQuer
 		var response = await HttpClient.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInverted(ChatMessage, request);
+		response.ShouldSatisfyInverted(request, ChatMessage);
 	}
 }

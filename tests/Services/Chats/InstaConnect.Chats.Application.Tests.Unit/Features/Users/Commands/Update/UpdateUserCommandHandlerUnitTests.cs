@@ -26,7 +26,7 @@ public class UpdateUserCommandHandlerUnitTests : BaseUserApplicationCommandUnitT
 		var response = await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, _request);
+		response.ShouldSatisfy(_request, User);
 	}
 
 	[Fact]

@@ -291,7 +291,7 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 		var chat = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(chat, _request);
+		response.ShouldSatisfy(_request, chat);
 	}
 
 	[Theory]
@@ -307,7 +307,7 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 		var chat = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(chat, request);
+		response.ShouldSatisfy(request, chat);
 	}
 
 	[Theory]
@@ -323,7 +323,7 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 		var chat = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(chat, request);
+		response.ShouldSatisfy(request, chat);
 	}
 
 	[Fact]

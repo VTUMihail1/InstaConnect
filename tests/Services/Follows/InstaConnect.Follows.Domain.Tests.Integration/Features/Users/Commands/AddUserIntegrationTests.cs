@@ -105,7 +105,7 @@ public class AddUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(user, _command);
+		response.ShouldSatisfy(_command, user);
 	}
 
 	[Theory]
@@ -122,7 +122,7 @@ public class AddUserIntegrationTests : BaseUserDomainCommandIntegrationTest
 		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(user, command);
+		response.ShouldSatisfy(command, user);
 	}
 
 	[Fact]

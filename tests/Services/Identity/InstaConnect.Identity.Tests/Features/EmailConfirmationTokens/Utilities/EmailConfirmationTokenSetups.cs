@@ -36,7 +36,9 @@ public static class EmailConfirmationTokenSetups
 			EmailConfirmationTokenId id,
 			CancellationToken cancellationToken)
 		{
-			return await serviceScope.GetEmailConfirmationTokenCommandRepository().GetByIdAsync(id, cancellationToken);
+			var include = serviceScope.GetEmailConfirmationTokenIncludeBuilderFactory().Create().WithUser().Build();
+
+			return (await serviceScope.GetEmailConfirmationTokenCommandRepository().GetByIdAsync(id, include, cancellationToken)).SetUser();
 		}
 
 		public async Task AddAsync(

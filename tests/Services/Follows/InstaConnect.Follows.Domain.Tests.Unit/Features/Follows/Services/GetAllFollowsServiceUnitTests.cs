@@ -45,7 +45,7 @@ public class GetAllFollowsServiceUnitTests : BaseFollowDomainQueryUnitTest
 		var response = await _service.GetAllAsync(_query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Follower, Follows, _query);
+		response.ShouldSatisfy(_query, Follower, Follows);
 	}
 
 	[Fact]

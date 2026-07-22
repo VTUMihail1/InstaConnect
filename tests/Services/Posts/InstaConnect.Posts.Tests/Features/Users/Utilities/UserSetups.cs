@@ -36,7 +36,9 @@ public static class UserSetups
 			UserId id,
 			CancellationToken cancellationToken)
 		{
-			return await serviceScope.GetUserCommandRepository().GetByIdAsync(id, cancellationToken);
+			var include = serviceScope.GetUserIncludeBuilderFactory().Create().WithPosts().WithPostLikes().WithPostComments().WithPostCommentLikes().Build();
+
+			return (await serviceScope.GetUserCommandRepository().GetByIdAsync(id, include, cancellationToken)).SetPosts().SetPostLikes().SetPostComments().SetPostCommentLikes();
 		}
 
 		public async Task AddAsync(

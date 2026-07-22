@@ -38,7 +38,7 @@ public static class PostSetups
 		{
 			var include = serviceScope.GetPostIncludeBuilderFactory().Create().WithUser().Build();
 
-			return await serviceScope.GetPostCommandRepository().GetByIdAsync(id, include, cancellationToken);
+			return (await serviceScope.GetPostCommandRepository().GetByIdAsync(id, include, cancellationToken)).SetUser();
 		}
 
 		public async Task AddAsync(

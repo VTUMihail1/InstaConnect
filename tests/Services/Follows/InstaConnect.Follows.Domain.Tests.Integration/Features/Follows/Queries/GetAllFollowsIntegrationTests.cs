@@ -54,7 +54,7 @@ public class GetAllFollowsIntegrationTests : BaseFollowDomainQueryIntegrationTes
 		var response = await Service.GetAllAsync(_query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Follower, Follows, _query);
+		response.ShouldSatisfy(_query, Follower, Follows);
 	}
 
 	[Theory]
@@ -69,7 +69,7 @@ public class GetAllFollowsIntegrationTests : BaseFollowDomainQueryIntegrationTes
 		var response = await Service.GetAllAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Follower, Follows, query);
+		response.ShouldSatisfy(query, Follower, Follows);
 	}
 
 	[Theory]
@@ -86,7 +86,7 @@ public class GetAllFollowsIntegrationTests : BaseFollowDomainQueryIntegrationTes
 		var response = await Service.GetAllAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Follower, Follows, query);
+		response.ShouldSatisfy(query, Follower, Follows);
 	}
 
 	[Theory]
@@ -103,7 +103,7 @@ public class GetAllFollowsIntegrationTests : BaseFollowDomainQueryIntegrationTes
 		var response = await Service.GetAllAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Follower, Follows, query);
+		response.ShouldSatisfy(query, Follower, Follows);
 	}
 
 	[Theory]
@@ -119,7 +119,7 @@ public class GetAllFollowsIntegrationTests : BaseFollowDomainQueryIntegrationTes
 		var response = await Service.GetAllAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Follower, Follows, query, termTransformer);
+		response.ShouldSatisfy(query, Follower, Follows, termTransformer);
 	}
 
 	[Theory]
@@ -135,6 +135,6 @@ public class GetAllFollowsIntegrationTests : BaseFollowDomainQueryIntegrationTes
 		var response = await Service.GetAllAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Follower, Follows, query, termTransformer);
+		response.ShouldSatisfy(query, Follower, Follows, termTransformer);
 	}
 }

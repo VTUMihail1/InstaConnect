@@ -70,7 +70,7 @@ public class GetChatByIdQueryHandlerIntegrationTests : BaseChatApplicationQueryI
 		var response = await Sender.SendAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Chat, _request);
+		response.ShouldSatisfy(_request, Chat);
 	}
 
 	[Theory]
@@ -85,7 +85,7 @@ public class GetChatByIdQueryHandlerIntegrationTests : BaseChatApplicationQueryI
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Chat, request);
+		response.ShouldSatisfy(request, Chat);
 	}
 
 	[Theory]
@@ -100,7 +100,7 @@ public class GetChatByIdQueryHandlerIntegrationTests : BaseChatApplicationQueryI
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Chat, request);
+		response.ShouldSatisfy(request, Chat);
 	}
 
 	[Fact]
@@ -113,7 +113,7 @@ public class GetChatByIdQueryHandlerIntegrationTests : BaseChatApplicationQueryI
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInverted(Chat, request);
+		response.ShouldSatisfyInverted(request, Chat);
 	}
 
 	[Theory]
@@ -128,7 +128,7 @@ public class GetChatByIdQueryHandlerIntegrationTests : BaseChatApplicationQueryI
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInverted(Chat, request);
+		response.ShouldSatisfyInverted(request, Chat);
 	}
 
 	[Theory]
@@ -143,6 +143,6 @@ public class GetChatByIdQueryHandlerIntegrationTests : BaseChatApplicationQueryI
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInverted(Chat, request);
+		response.ShouldSatisfyInverted(request, Chat);
 	}
 }

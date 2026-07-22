@@ -36,7 +36,7 @@ public class AddChatControllerUnitTests : BaseChatPresentationCommandUnitTest
 		var response = await _controller.AddAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Chat, _request);
+		response.ShouldSatisfy(_request, Chat);
 	}
 
 	[Fact]

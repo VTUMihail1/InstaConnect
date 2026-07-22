@@ -36,7 +36,7 @@ public class AddFollowControllerUnitTests : BaseFollowPresentationCommandUnitTes
 		var response = await _controller.AddAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Follow, _request);
+		response.ShouldSatisfy(_request, Follow);
 	}
 
 	[Fact]

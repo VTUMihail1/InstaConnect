@@ -36,7 +36,9 @@ public static class ForgotPasswordTokenSetups
 			ForgotPasswordTokenId id,
 			CancellationToken cancellationToken)
 		{
-			return await serviceScope.GetForgotPasswordTokenCommandRepository().GetByIdAsync(id, cancellationToken);
+			var include = serviceScope.GetForgotPasswordTokenIncludeBuilderFactory().Create().WithUser().Build();
+
+			return (await serviceScope.GetForgotPasswordTokenCommandRepository().GetByIdAsync(id, include, cancellationToken)).SetUser();
 		}
 
 		public async Task AddAsync(

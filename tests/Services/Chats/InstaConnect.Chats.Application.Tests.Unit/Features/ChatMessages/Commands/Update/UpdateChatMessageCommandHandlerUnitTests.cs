@@ -26,7 +26,7 @@ public class UpdateChatMessageCommandHandlerUnitTests : BaseChatMessageApplicati
 		var response = await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(ChatMessage, _request);
+		response.ShouldSatisfy(_request, ChatMessage);
 	}
 
 	[Fact]

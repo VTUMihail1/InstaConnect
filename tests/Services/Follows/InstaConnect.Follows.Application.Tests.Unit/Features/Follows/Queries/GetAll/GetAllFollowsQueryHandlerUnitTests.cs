@@ -26,7 +26,7 @@ public class GetAllFollowsQueryHandlerUnitTests : BaseFollowApplicationQueryUnit
 		var response = await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Follower, Follows, _request);
+		response.ShouldSatisfy(_request, Follower, Follows);
 	}
 
 	[Fact]

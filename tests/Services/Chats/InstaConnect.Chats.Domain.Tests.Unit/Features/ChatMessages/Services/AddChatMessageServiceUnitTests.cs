@@ -49,7 +49,7 @@ public class AddChatMessageServiceUnitTests : BaseChatMessageDomainCommandUnitTe
 		var response = await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(ChatMessage, _command);
+		response.ShouldSatisfy(_command, ChatMessage);
 	}
 
 	[Fact]

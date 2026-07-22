@@ -36,7 +36,7 @@ public class GetAllChatsControllerUnitTests : BaseChatPresentationQueryUnitTest
 		var response = await _controller.GetAllAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(ParticipantOne, Chats, _request);
+		response.ShouldSatisfy(_request, ParticipantOne, Chats);
 	}
 
 	[Fact]

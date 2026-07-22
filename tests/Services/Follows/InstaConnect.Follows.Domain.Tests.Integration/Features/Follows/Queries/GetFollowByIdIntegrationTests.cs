@@ -47,7 +47,7 @@ public class GetFollowByIdIntegrationTests : BaseFollowDomainQueryIntegrationTes
 		var response = await Service.GetByIdAsync(_query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Follow, _query);
+		response.ShouldSatisfy(_query, Follow);
 	}
 
 	[Theory]
@@ -62,7 +62,7 @@ public class GetFollowByIdIntegrationTests : BaseFollowDomainQueryIntegrationTes
 		var response = await Service.GetByIdAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Follow, query);
+		response.ShouldSatisfy(query, Follow);
 	}
 
 	[Theory]
@@ -77,7 +77,7 @@ public class GetFollowByIdIntegrationTests : BaseFollowDomainQueryIntegrationTes
 		var response = await Service.GetByIdAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Follow, query);
+		response.ShouldSatisfy(query, Follow);
 	}
 
 	[Theory]
@@ -94,6 +94,6 @@ public class GetFollowByIdIntegrationTests : BaseFollowDomainQueryIntegrationTes
 		var response = await Service.GetByIdAsync(query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Follow, query);
+		response.ShouldSatisfy(query, Follow);
 	}
 }

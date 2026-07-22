@@ -45,7 +45,7 @@ public class GetAllChatMessagesServiceUnitTests : BaseChatMessageDomainQueryUnit
 		var response = await _service.GetAllAsync(_query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Chat, ChatMessages, _query);
+		response.ShouldSatisfy(_query, Chat, ChatMessages);
 	}
 
 	[Fact]

@@ -319,7 +319,7 @@ public class GetAllChatMessagesFunctionalTests : BaseChatMessagePresentationQuer
 		var response = await HttpClient.GetAllAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Chat, ChatMessages, _request);
+		response.ShouldSatisfy(_request, Chat, ChatMessages);
 	}
 
 	[Theory]
@@ -334,7 +334,7 @@ public class GetAllChatMessagesFunctionalTests : BaseChatMessagePresentationQuer
 		var response = await HttpClient.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Chat, ChatMessages, request);
+		response.ShouldSatisfy(request, Chat, ChatMessages);
 	}
 
 	[Theory]
@@ -349,7 +349,7 @@ public class GetAllChatMessagesFunctionalTests : BaseChatMessagePresentationQuer
 		var response = await HttpClient.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Chat, ChatMessages, request);
+		response.ShouldSatisfy(request, Chat, ChatMessages);
 	}
 
 	[Theory]
@@ -365,7 +365,7 @@ public class GetAllChatMessagesFunctionalTests : BaseChatMessagePresentationQuer
 		var response = await HttpClient.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Chat, ChatMessages, request, termTransformer);
+		response.ShouldSatisfy(request, Chat, ChatMessages, termTransformer);
 	}
 
 	[Theory]
@@ -380,7 +380,7 @@ public class GetAllChatMessagesFunctionalTests : BaseChatMessagePresentationQuer
 		var response = await HttpClient.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Chat, ChatMessages, request, termTransformer);
+		response.ShouldSatisfy(request, Chat, ChatMessages, termTransformer);
 	}
 
 	[Fact]
@@ -467,7 +467,7 @@ public class GetAllChatMessagesFunctionalTests : BaseChatMessagePresentationQuer
 		var response = await HttpClient.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInverted(Chat, ChatMessages, request);
+		response.ShouldSatisfyInverted(request, Chat, ChatMessages);
 	}
 
 	[Theory]
@@ -482,7 +482,7 @@ public class GetAllChatMessagesFunctionalTests : BaseChatMessagePresentationQuer
 		var response = await HttpClient.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInverted(Chat, ChatMessages, request);
+		response.ShouldSatisfyInverted(request, Chat, ChatMessages);
 	}
 
 	[Theory]
@@ -497,7 +497,7 @@ public class GetAllChatMessagesFunctionalTests : BaseChatMessagePresentationQuer
 		var response = await HttpClient.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInverted(Chat, ChatMessages, request);
+		response.ShouldSatisfyInverted(request, Chat, ChatMessages);
 	}
 
 	[Theory]
@@ -513,7 +513,7 @@ public class GetAllChatMessagesFunctionalTests : BaseChatMessagePresentationQuer
 		var response = await HttpClient.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInverted(Chat, ChatMessages, request, termTransformer);
+		response.ShouldSatisfyInverted(request, Chat, ChatMessages, termTransformer);
 	}
 
 	[Theory]
@@ -528,6 +528,6 @@ public class GetAllChatMessagesFunctionalTests : BaseChatMessagePresentationQuer
 		var response = await HttpClient.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInverted(Chat, ChatMessages, request, termTransformer);
+		response.ShouldSatisfyInverted(request, Chat, ChatMessages, termTransformer);
 	}
 }

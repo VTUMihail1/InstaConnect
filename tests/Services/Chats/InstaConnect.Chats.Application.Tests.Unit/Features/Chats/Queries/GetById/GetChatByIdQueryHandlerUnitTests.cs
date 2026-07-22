@@ -26,7 +26,7 @@ public class GetChatByIdQueryHandlerUnitTests : BaseChatApplicationQueryUnitTest
 		var response = await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Chat, _request);
+		response.ShouldSatisfy(_request, Chat);
 	}
 
 	[Fact]

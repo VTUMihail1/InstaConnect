@@ -40,7 +40,7 @@ public static class PostCommentSetups
 			var include = serviceScope.GetPostIncludeBuilderFactory().Create().WithUser().Build();
 			var commentInclude = serviceScope.GetPostCommentIncludeBuilderFactory().Create().WithUser().WithPost(include).Build();
 
-			return await serviceScope.GetPostCommentCommandRepository().GetByIdAsync(id, commentInclude, cancellationToken);
+			return (await serviceScope.GetPostCommentCommandRepository().GetByIdAsync(id, commentInclude, cancellationToken)).SetUser().SetPost();
 		}
 
 		public async Task AddAsync(

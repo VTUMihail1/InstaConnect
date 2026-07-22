@@ -36,7 +36,9 @@ public static class UserSetups
 			UserId id,
 			CancellationToken cancellationToken)
 		{
-			return await serviceScope.GetUserCommandRepository().GetByIdAsync(id, cancellationToken);
+			var include = serviceScope.GetUserIncludeBuilderFactory().Create().WithChats().WithChatMessages().Build();
+
+			return (await serviceScope.GetUserCommandRepository().GetByIdAsync(id, include, cancellationToken)).SetChats().SetChatMessages();
 		}
 
 		public async Task AddAsync(

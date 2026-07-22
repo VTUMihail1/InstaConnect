@@ -43,7 +43,7 @@ public class GetChatByIdServiceUnitTests : BaseChatDomainQueryUnitTest
 		var response = await _service.GetByIdAsync(_query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Chat, _query);
+		response.ShouldSatisfy(_query, Chat);
 	}
 
 	[Fact]

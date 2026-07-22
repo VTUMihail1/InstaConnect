@@ -38,7 +38,7 @@ public static class FollowSetups
 		{
 			var include = serviceScope.GetIncludeBuilderFactory().Create().WithFollower().WithFollowing().Build();
 
-			return await serviceScope.GetCommandRepository().GetByIdAsync(id, include, cancellationToken);
+			return (await serviceScope.GetCommandRepository().GetByIdAsync(id, include, cancellationToken)).SetFollower().SetFollowing();
 		}
 
 		public async Task AddAsync(

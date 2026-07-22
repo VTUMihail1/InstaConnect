@@ -43,7 +43,7 @@ public class GetFollowByIdServiceUnitTests : BaseFollowDomainQueryUnitTest
 		var response = await _service.GetByIdAsync(_query, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Follow, _query);
+		response.ShouldSatisfy(_query, Follow);
 	}
 
 	[Fact]

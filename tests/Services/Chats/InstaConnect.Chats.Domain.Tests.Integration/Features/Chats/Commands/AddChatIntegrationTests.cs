@@ -131,7 +131,7 @@ public class AddChatIntegrationTests : BaseChatDomainCommandIntegrationTest
 		var chat = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(chat, _command);
+		response.ShouldSatisfy(_command, chat);
 	}
 
 	[Theory]
@@ -147,7 +147,7 @@ public class AddChatIntegrationTests : BaseChatDomainCommandIntegrationTest
 		var chat = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(chat, command);
+		response.ShouldSatisfy(command, chat);
 	}
 
 	[Theory]
@@ -163,7 +163,7 @@ public class AddChatIntegrationTests : BaseChatDomainCommandIntegrationTest
 		var chat = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(chat, command);
+		response.ShouldSatisfy(command, chat);
 	}
 
 	[Fact]

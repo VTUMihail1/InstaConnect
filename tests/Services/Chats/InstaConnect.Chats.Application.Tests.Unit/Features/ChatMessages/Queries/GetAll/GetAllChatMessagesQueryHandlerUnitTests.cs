@@ -26,7 +26,7 @@ public class GetAllChatMessagesQueryHandlerUnitTests : BaseChatMessageApplicatio
 		var response = await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Chat, ChatMessages, _request);
+		response.ShouldSatisfy(_request, Chat, ChatMessages);
 	}
 
 	[Fact]

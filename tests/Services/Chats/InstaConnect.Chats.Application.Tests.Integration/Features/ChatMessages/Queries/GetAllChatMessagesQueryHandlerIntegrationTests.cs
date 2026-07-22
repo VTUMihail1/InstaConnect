@@ -129,7 +129,7 @@ public class GetAllChatMessagesQueryHandlerIntegrationTests : BaseChatMessageApp
 		var response = await Sender.SendAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Chat, ChatMessages, _request);
+		response.ShouldSatisfy(_request, Chat, ChatMessages);
 	}
 
 	[Theory]
@@ -144,7 +144,7 @@ public class GetAllChatMessagesQueryHandlerIntegrationTests : BaseChatMessageApp
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Chat, ChatMessages, request);
+		response.ShouldSatisfy(request, Chat, ChatMessages);
 	}
 
 	[Theory]
@@ -160,7 +160,7 @@ public class GetAllChatMessagesQueryHandlerIntegrationTests : BaseChatMessageApp
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Chat, ChatMessages, request, termTransformer);
+		response.ShouldSatisfy(request, Chat, ChatMessages, termTransformer);
 	}
 
 	[Theory]
@@ -175,7 +175,7 @@ public class GetAllChatMessagesQueryHandlerIntegrationTests : BaseChatMessageApp
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Chat, ChatMessages, request, termTransformer);
+		response.ShouldSatisfy(request, Chat, ChatMessages, termTransformer);
 	}
 
 	[Theory]
@@ -190,7 +190,7 @@ public class GetAllChatMessagesQueryHandlerIntegrationTests : BaseChatMessageApp
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Chat, ChatMessages, request);
+		response.ShouldSatisfy(request, Chat, ChatMessages);
 	}
 
 	[Fact]
@@ -203,7 +203,7 @@ public class GetAllChatMessagesQueryHandlerIntegrationTests : BaseChatMessageApp
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInverted(Chat, ChatMessages, request);
+		response.ShouldSatisfyInverted(request, Chat, ChatMessages);
 	}
 
 	[Theory]
@@ -218,7 +218,7 @@ public class GetAllChatMessagesQueryHandlerIntegrationTests : BaseChatMessageApp
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInverted(Chat, ChatMessages, request);
+		response.ShouldSatisfyInverted(request, Chat, ChatMessages);
 	}
 
 	[Theory]
@@ -234,7 +234,7 @@ public class GetAllChatMessagesQueryHandlerIntegrationTests : BaseChatMessageApp
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInverted(Chat, ChatMessages, request, termTransformer);
+		response.ShouldSatisfyInverted(request, Chat, ChatMessages, termTransformer);
 	}
 
 	[Theory]
@@ -249,7 +249,7 @@ public class GetAllChatMessagesQueryHandlerIntegrationTests : BaseChatMessageApp
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInverted(Chat, ChatMessages, request, termTransformer);
+		response.ShouldSatisfyInverted(request, Chat, ChatMessages, termTransformer);
 	}
 
 	[Theory]
@@ -264,6 +264,6 @@ public class GetAllChatMessagesQueryHandlerIntegrationTests : BaseChatMessageApp
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfyInverted(Chat, ChatMessages, request);
+		response.ShouldSatisfyInverted(request, Chat, ChatMessages);
 	}
 }

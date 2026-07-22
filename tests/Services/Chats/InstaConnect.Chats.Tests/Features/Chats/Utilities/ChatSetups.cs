@@ -38,7 +38,7 @@ public static class ChatSetups
 		{
 			var include = serviceScope.GetIncludeBuilderFactory().Create().WithParticipantOne().WithParticipantTwo().Build();
 
-			return await serviceScope.GetCommandRepository().GetByIdAsync(id, include, cancellationToken);
+			return (await serviceScope.GetCommandRepository().GetByIdAsync(id, include, cancellationToken)).SetParticipantOne().SetParticipantTwo();
 		}
 
 		public async Task AddAsync(

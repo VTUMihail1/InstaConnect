@@ -96,7 +96,7 @@ public class AddFollowIntegrationTests : BaseFollowDomainCommandIntegrationTest
 		var follow = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(follow, _command);
+		response.ShouldSatisfy(_command, follow);
 	}
 
 	[Theory]
@@ -112,7 +112,7 @@ public class AddFollowIntegrationTests : BaseFollowDomainCommandIntegrationTest
 		var follow = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(follow, command);
+		response.ShouldSatisfy(command, follow);
 	}
 
 	[Theory]
@@ -128,7 +128,7 @@ public class AddFollowIntegrationTests : BaseFollowDomainCommandIntegrationTest
 		var follow = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(follow, command);
+		response.ShouldSatisfy(command, follow);
 	}
 
 	[Fact]

@@ -36,7 +36,7 @@ public class UpdateChatMessageControllerUnitTests : BaseChatMessagePresentationC
 		var response = await _controller.UpdateAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(ChatMessage, _request);
+		response.ShouldSatisfy(_request, ChatMessage);
 	}
 
 	[Fact]

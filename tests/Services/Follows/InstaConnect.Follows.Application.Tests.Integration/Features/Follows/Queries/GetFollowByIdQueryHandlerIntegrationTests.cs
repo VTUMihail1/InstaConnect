@@ -83,7 +83,7 @@ public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowApplicationQu
 		var response = await Sender.SendAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Follow, _request);
+		response.ShouldSatisfy(_request, Follow);
 	}
 
 	[Theory]
@@ -98,7 +98,7 @@ public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowApplicationQu
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Follow, request);
+		response.ShouldSatisfy(request, Follow);
 	}
 
 	[Theory]
@@ -113,7 +113,7 @@ public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowApplicationQu
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Follow, request);
+		response.ShouldSatisfy(request, Follow);
 	}
 
 	[Theory]
@@ -130,6 +130,6 @@ public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowApplicationQu
 		var response = await Sender.SendAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Follow, request);
+		response.ShouldSatisfy(request, Follow);
 	}
 }

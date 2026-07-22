@@ -66,7 +66,7 @@ public class AddFollowServiceUnitTests : BaseFollowDomainCommandUnitTest
 		var response = await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Follow, _command);
+		response.ShouldSatisfy(_command, Follow);
 	}
 
 	[Fact]

@@ -308,7 +308,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var response = await HttpClient.UpdateAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(ChatMessage, _request);
+		response.ShouldSatisfy(_request, ChatMessage);
 	}
 
 	[Theory]
@@ -324,7 +324,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(chatMessage, request);
+		response.ShouldSatisfy(request, chatMessage);
 	}
 
 	[Theory]
@@ -340,7 +340,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(chatMessage, request);
+		response.ShouldSatisfy(request, chatMessage);
 	}
 
 	[Theory]
@@ -355,7 +355,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var response = await HttpClient.UpdateAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(ChatMessage, request);
+		response.ShouldSatisfy(request, ChatMessage);
 	}
 
 	[Fact]
@@ -558,7 +558,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var response = await HttpClient.UpdateAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(ChatMessage, request);
+		response.ShouldSatisfy(request, ChatMessage);
 	}
 
 	[Theory]
@@ -576,7 +576,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(chatMessage, request);
+		response.ShouldSatisfy(request, chatMessage);
 	}
 
 	[Theory]
@@ -594,7 +594,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(chatMessage, request);
+		response.ShouldSatisfy(request, chatMessage);
 	}
 
 	[Theory]
@@ -611,7 +611,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var response = await HttpClient.UpdateAsync(request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(ChatMessage, request);
+		response.ShouldSatisfy(request, ChatMessage);
 	}
 
 	[Fact]

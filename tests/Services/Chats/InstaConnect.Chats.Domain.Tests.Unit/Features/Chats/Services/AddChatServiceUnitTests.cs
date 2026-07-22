@@ -66,7 +66,7 @@ public class AddChatServiceUnitTests : BaseChatDomainCommandUnitTest
 		var response = await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Chat, _command);
+		response.ShouldSatisfy(_command, Chat);
 	}
 
 	[Fact]
