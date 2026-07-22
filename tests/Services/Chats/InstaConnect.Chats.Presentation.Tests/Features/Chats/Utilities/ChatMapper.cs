@@ -59,17 +59,17 @@ public static class ChatMapper
 	{
 		internal ChatCollectionQueryResponse ToQueryResponseWithoutParticipantTwo<TRequest>(
 			User participantOne,
-			Func<Chat, TRequest, bool> filter,
-			Func<Chat, TRequest, ChatQueryResponse> transform,
+			Func<TRequest, Chat, bool> filter,
+			Func<TRequest, Chat, ChatQueryResponse> transform,
 			TRequest request)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = chats.Count(chat => filter(chat, request));
+			var totalCount = chats.Count(chat => filter(request, chat));
 
 			return new(participantOne.ToFullQueryResponse(),
 					   null,
-					   chats.Filter(request, chat => filter(chat, request), chat => transform(chat, request)),
+					   chats.Filter(request, chat => filter(request, chat), chat => transform(request, chat)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -83,8 +83,8 @@ public static class ChatMapper
 		{
 			return new(chats.ToQueryResponseWithoutParticipantTwo(
 												   participantOne,
-												   (chat, request) => chat.MatchesFilter(request),
-												   (chat, request) => chat.ToQueryResponseWithoutParticipantOne(),
+												   (request, chat) => chat.MatchesFilter(request),
+												   (request, chat) => chat.ToQueryResponseWithoutParticipantOne(),
 												   request));
 		}
 	}

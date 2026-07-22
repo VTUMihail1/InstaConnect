@@ -65,17 +65,17 @@ public static class PostLikeMapper
 	{
 		internal PostLikeCollectionQueryResponse ToQueryResponseWithoutUser<TRequest>(
 		Post post,
-		Func<PostLike, TRequest, bool> filter,
-		Func<PostLike, TRequest, PostLikeQueryResponse> transform,
+		Func<TRequest, PostLike, bool> filter,
+		Func<TRequest, PostLike, PostLikeQueryResponse> transform,
 		TRequest request)
 		where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = postLikes.Count(postLike => filter(postLike, request));
+			var totalCount = postLikes.Count(postLike => filter(request, postLike));
 
 			return new(post.ToFullQueryResponse(request),
 					   null,
-					   postLikes.Filter(request, postLike => filter(postLike, request), postLike => transform(postLike, request)),
+					   postLikes.Filter(request, postLike => filter(request, postLike), postLike => transform(request, postLike)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -85,17 +85,17 @@ public static class PostLikeMapper
 
 		internal PostLikeCollectionQueryResponse ToQueryResponseWithoutPost<TRequest>(
 			User user,
-			Func<PostLike, TRequest, bool> filter,
-			Func<PostLike, TRequest, PostLikeQueryResponse> transform,
+			Func<TRequest, PostLike, bool> filter,
+			Func<TRequest, PostLike, PostLikeQueryResponse> transform,
 			TRequest request)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = postLikes.Count(postLike => filter(postLike, request));
+			var totalCount = postLikes.Count(postLike => filter(request, postLike));
 
 			return new(null,
 					   user.ToFullQueryResponse(),
-					   postLikes.Filter(request, postLike => filter(postLike, request), postLike => transform(postLike, request)),
+					   postLikes.Filter(request, postLike => filter(request, postLike), postLike => transform(request, postLike)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -108,8 +108,8 @@ public static class PostLikeMapper
 			GetAllPostLikesApiRequest request)
 		{
 			return new(postLikes.ToQueryResponseWithoutUser(post,
-													   (postLike, request) => postLike.MatchesFilter(request),
-													   (postLike, request) => postLike.ToQueryResponseWithoutPost(request),
+													   (request, postLike) => postLike.MatchesFilter(request),
+													   (request, postLike) => postLike.ToQueryResponseWithoutPost(request),
 													   request));
 		}
 
@@ -118,8 +118,8 @@ public static class PostLikeMapper
 			GetAllPostLikesForUserApiRequest request)
 		{
 			return new(postLikes.ToQueryResponseWithoutPost(user,
-													   (postLike, request) => postLike.MatchesFilter(request),
-													   (postLike, request) => postLike.ToQueryResponseWithoutUser(request),
+													   (request, postLike) => postLike.MatchesFilter(request),
+													   (request, postLike) => postLike.ToQueryResponseWithoutUser(request),
 													   request));
 		}
 	}

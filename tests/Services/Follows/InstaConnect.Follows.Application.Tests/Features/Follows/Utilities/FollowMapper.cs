@@ -59,17 +59,17 @@ public static class FollowMapper
 	{
 		internal FollowCollectionResponse ToResponseWithoutFollowing<TRequest>(
 		User follower,
-		Func<Follow, TRequest, bool> filter,
-		Func<Follow, TRequest, FollowResponse> transform,
+		Func<TRequest, Follow, bool> filter,
+		Func<TRequest, Follow, FollowResponse> transform,
 		TRequest request)
 		where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = follows.Count(follow => filter(follow, request));
+			var totalCount = follows.Count(follow => filter(request, follow));
 
 			return new(follower?.ToFullResponse(),
 					   null,
-					   follows.Filter(request, follow => filter(follow, request), follow => transform(follow, request)),
+					   follows.Filter(request, follow => filter(request, follow), follow => transform(request, follow)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -79,17 +79,17 @@ public static class FollowMapper
 
 		internal FollowCollectionResponse ToResponseWithoutFollower<TRequest>(
 			User following,
-			Func<Follow, TRequest, bool> filter,
-			Func<Follow, TRequest, FollowResponse> transform,
+			Func<TRequest, Follow, bool> filter,
+			Func<TRequest, Follow, FollowResponse> transform,
 			TRequest request)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = follows.Count(follow => filter(follow, request));
+			var totalCount = follows.Count(follow => filter(request, follow));
 
 			return new(null,
 					   following.ToFullResponse(),
-					   follows.Filter(request, follow => filter(follow, request), follow => transform(follow, request)),
+					   follows.Filter(request, follow => filter(request, follow), follow => transform(request, follow)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -103,8 +103,8 @@ public static class FollowMapper
 		{
 			return follows.ToResponseWithoutFollowing(
 				follower,
-				(follow, request) => follow.MatchesFilter(request),
-				(follow, request) => follow.ToResponseWithoutFollower(request),
+				(request, follow) => follow.MatchesFilter(request),
+				(request, follow) => follow.ToResponseWithoutFollower(request),
 				request);
 		}
 
@@ -114,8 +114,8 @@ public static class FollowMapper
 		{
 			return follows.ToResponseWithoutFollower(
 				following,
-				(follow, request) => follow.MatchesFilter(request),
-				(follow, request) => follow.ToResponseWithoutFollowing(request),
+				(request, follow) => follow.MatchesFilter(request),
+				(request, follow) => follow.ToResponseWithoutFollowing(request),
 				request);
 		}
 	}

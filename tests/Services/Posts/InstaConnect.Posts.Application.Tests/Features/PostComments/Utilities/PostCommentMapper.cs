@@ -76,17 +76,17 @@ public static class PostCommentMapper
 	{
 		internal PostCommentCollectionResponse ToResponseWithoutUser<TRequest>(
 		Post post,
-		Func<PostComment, TRequest, bool> filter,
-		Func<PostComment, TRequest, PostCommentResponse> transform,
+		Func<TRequest, PostComment, bool> filter,
+		Func<TRequest, PostComment, PostCommentResponse> transform,
 		TRequest request)
 		where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = postComments.Count(postComment => filter(postComment, request));
+			var totalCount = postComments.Count(postComment => filter(request, postComment));
 
 			return new(post.ToFullResponse(request),
 					   null,
-					   postComments.Filter(request, postComment => filter(postComment, request), postComment => transform(postComment, request)),
+					   postComments.Filter(request, postComment => filter(request, postComment), postComment => transform(request, postComment)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -96,17 +96,17 @@ public static class PostCommentMapper
 
 		internal PostCommentCollectionResponse ToResponseWithoutPost<TRequest>(
 			User user,
-			Func<PostComment, TRequest, bool> filter,
-			Func<PostComment, TRequest, PostCommentResponse> transform,
+			Func<TRequest, PostComment, bool> filter,
+			Func<TRequest, PostComment, PostCommentResponse> transform,
 			TRequest request)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = postComments.Count(postComment => filter(postComment, request));
+			var totalCount = postComments.Count(postComment => filter(request, postComment));
 
 			return new(null,
 					   user.ToFullResponse(),
-					   postComments.Filter(request, postComment => filter(postComment, request), postComment => transform(postComment, request)),
+					   postComments.Filter(request, postComment => filter(request, postComment), postComment => transform(request, postComment)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -119,8 +119,8 @@ public static class PostCommentMapper
 			GetAllPostCommentsQueryRequest request)
 		{
 			return postComments.ToResponseWithoutUser(post,
-													  (postComment, request) => postComment.MatchesFilter(request),
-													  (postComment, request) => postComment.ToResponseWithoutPost(request),
+													  (request, postComment) => postComment.MatchesFilter(request),
+													  (request, postComment) => postComment.ToResponseWithoutPost(request),
 													  request);
 		}
 
@@ -129,8 +129,8 @@ public static class PostCommentMapper
 			GetAllPostCommentsForUserQueryRequest request)
 		{
 			return postComments.ToResponseWithoutPost(user,
-													  (postComment, request) => postComment.MatchesFilter(request),
-													  (postComment, request) => postComment.ToResponseWithoutUser(request),
+													  (request, postComment) => postComment.MatchesFilter(request),
+													  (request, postComment) => postComment.ToResponseWithoutUser(request),
 													  request);
 		}
 	}

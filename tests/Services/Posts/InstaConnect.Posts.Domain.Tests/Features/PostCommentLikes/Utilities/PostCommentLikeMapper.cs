@@ -47,9 +47,7 @@ public static class PostCommentLikeMapper
 					   postCommentLike.CreatedAtUtc);
 		}
 
-		internal PostCommentLikeResponse ToResponseWithoutPostComment<T>(
-			T request)
-			where T : ICurrentUserableQuery
+		internal PostCommentLikeResponse ToResponseWithoutPostComment()
 		{
 			return new(postCommentLike.Id,
 					   postCommentLike.User?.ToFullResponse(),
@@ -82,7 +80,7 @@ public static class PostCommentLikeMapper
 		public ICollection<PostCommentLikeResponse> ToResponse(
 			GetAllPostCommentLikesQuery query)
 		{
-			return postCommentLikes.Filter(query.Pagination, postCommentLike => postCommentLike.MatchesFilter(query.Filter), postCommentLike => postCommentLike.ToResponseWithoutPostComment(query));
+			return postCommentLikes.Filter(query.Pagination, postCommentLike => postCommentLike.MatchesFilter(query.Filter), postCommentLike => postCommentLike.ToResponseWithoutPostComment());
 		}
 
 		public ICollection<PostCommentLikeResponse> ToResponse(

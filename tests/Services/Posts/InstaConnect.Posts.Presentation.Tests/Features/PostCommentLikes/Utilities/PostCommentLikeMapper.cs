@@ -70,17 +70,17 @@ public static class PostCommentLikeMapper
 	{
 		internal PostCommentLikeCollectionQueryResponse ToQueryResponseWithoutUser<TRequest>(
 		PostComment postComment,
-		Func<PostCommentLike, TRequest, bool> filter,
-		Func<PostCommentLike, TRequest, PostCommentLikeQueryResponse> transform,
+		Func<TRequest, PostCommentLike, bool> filter,
+		Func<TRequest, PostCommentLike, PostCommentLikeQueryResponse> transform,
 		TRequest request)
 		where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = postCommentLikes.Count(postCommentLike => filter(postCommentLike, request));
+			var totalCount = postCommentLikes.Count(postCommentLike => filter(request, postCommentLike));
 
 			return new(postComment.ToFullQueryResponse(request),
 					   null,
-					   postCommentLikes.Filter(request, postCommentLike => filter(postCommentLike, request), postCommentLike => transform(postCommentLike, request)),
+					   postCommentLikes.Filter(request, postCommentLike => filter(request, postCommentLike), postCommentLike => transform(request, postCommentLike)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -90,17 +90,17 @@ public static class PostCommentLikeMapper
 
 		internal PostCommentLikeCollectionQueryResponse ToQueryResponseWithoutPostComment<TRequest>(
 			User user,
-			Func<PostCommentLike, TRequest, bool> filter,
-			Func<PostCommentLike, TRequest, PostCommentLikeQueryResponse> transform,
+			Func<TRequest, PostCommentLike, bool> filter,
+			Func<TRequest, PostCommentLike, PostCommentLikeQueryResponse> transform,
 			TRequest request)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = postCommentLikes.Count(postCommentLike => filter(postCommentLike, request));
+			var totalCount = postCommentLikes.Count(postCommentLike => filter(request, postCommentLike));
 
 			return new(null,
 					   user.ToFullQueryResponse(),
-					   postCommentLikes.Filter(request, postCommentLike => filter(postCommentLike, request), postCommentLike => transform(postCommentLike, request)),
+					   postCommentLikes.Filter(request, postCommentLike => filter(request, postCommentLike), postCommentLike => transform(request, postCommentLike)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -113,8 +113,8 @@ public static class PostCommentLikeMapper
 			GetAllPostCommentLikesApiRequest request)
 		{
 			return new(postCommentLikes.ToQueryResponseWithoutUser(postComment,
-															  (postCommentLike, request) => postCommentLike.MatchesFilter(request),
-															  (postCommentLike, request) => postCommentLike.ToQueryResponseWithoutPostComment(request),
+															  (request, postCommentLike) => postCommentLike.MatchesFilter(request),
+															  (request, postCommentLike) => postCommentLike.ToQueryResponseWithoutPostComment(request),
 															  request));
 		}
 
@@ -123,8 +123,8 @@ public static class PostCommentLikeMapper
 			GetAllPostCommentLikesForUserApiRequest request)
 		{
 			return new(postCommentLikes.ToQueryResponseWithoutPostComment(user,
-																	 (postCommentLike, request) => postCommentLike.MatchesFilter(request),
-																	 (postCommentLike, request) => postCommentLike.ToQueryResponseWithoutUser(request),
+																	 (request, postCommentLike) => postCommentLike.MatchesFilter(request),
+																	 (request, postCommentLike) => postCommentLike.ToQueryResponseWithoutUser(request),
 																	 request));
 		}
 	}

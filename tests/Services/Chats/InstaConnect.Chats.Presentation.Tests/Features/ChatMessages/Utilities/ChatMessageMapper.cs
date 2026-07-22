@@ -79,17 +79,17 @@ public static class ChatMessageMapper
 	{
 		internal ChatMessageCollectionQueryResponse ToQueryResponseWithoutSender<TRequest>(
 		Chat chat,
-		Func<ChatMessage, TRequest, bool> filter,
-		Func<ChatMessage, TRequest, ChatMessageQueryResponse> transform,
+		Func<TRequest, ChatMessage, bool> filter,
+		Func<TRequest, ChatMessage, ChatMessageQueryResponse> transform,
 		TRequest request)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = chatMessages.Count(chatMessage => filter(chatMessage, request));
+			var totalCount = chatMessages.Count(chatMessage => filter(request, chatMessage));
 
 			return new(chat.ToFullQueryResponse(),
 					   null,
-					   chatMessages.Filter(request, chatMessage => filter(chatMessage, request), chatMessage => transform(chatMessage, request)),
+					   chatMessages.Filter(request, chatMessage => filter(request, chatMessage), chatMessage => transform(request, chatMessage)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -99,17 +99,17 @@ public static class ChatMessageMapper
 
 		internal ChatMessageCollectionQueryResponse ToQueryResponseWithoutChat<TRequest>(
 			User user,
-			Func<ChatMessage, TRequest, bool> filter,
-			Func<ChatMessage, TRequest, ChatMessageQueryResponse> transform,
+			Func<TRequest, ChatMessage, bool> filter,
+			Func<TRequest, ChatMessage, ChatMessageQueryResponse> transform,
 			TRequest request)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = chatMessages.Count(chatMessage => filter(chatMessage, request));
+			var totalCount = chatMessages.Count(chatMessage => filter(request, chatMessage));
 
 			return new(null,
 					   user.ToFullQueryResponse(),
-					   chatMessages.Filter(request, chatMessage => filter(chatMessage, request), chatMessage => transform(chatMessage, request)),
+					   chatMessages.Filter(request, chatMessage => filter(request, chatMessage), chatMessage => transform(request, chatMessage)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -122,8 +122,8 @@ public static class ChatMessageMapper
 			GetAllChatMessagesApiRequest request)
 		{
 			return new(chatMessages.ToQueryResponseWithoutSender(chat,
-					   (chatMessage, request) => chatMessage.MatchesFilter(request),
-					   (chatMessage, request) => chatMessage.ToQueryResponseWithoutChat(),
+					   (request, chatMessage) => chatMessage.MatchesFilter(request),
+					   (request, chatMessage) => chatMessage.ToQueryResponseWithoutChat(),
 					   request));
 		}
 	}

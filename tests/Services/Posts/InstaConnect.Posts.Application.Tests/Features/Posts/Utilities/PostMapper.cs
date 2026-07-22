@@ -60,16 +60,16 @@ public static class PostMapper
 	{
 		internal PostCollectionResponse ToFullResponse<TRequest>(
 		User user,
-		Func<Post, TRequest, bool> filter,
-		Func<Post, TRequest, PostResponse> transform,
+		Func<TRequest, Post, bool> filter,
+		Func<TRequest, Post, PostResponse> transform,
 		TRequest request)
 		where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = posts.Count(post => filter(post, request));
+			var totalCount = posts.Count(post => filter(request, post));
 
 			return new(user.ToFullResponse(),
-						posts.Filter(request, post => filter(post, request), post => transform(post, request)),
+						posts.Filter(request, post => filter(request, post), post => transform(request, post)),
 						request.Page,
 						request.PageSize,
 						totalCount,
@@ -78,16 +78,16 @@ public static class PostMapper
 		}
 
 		internal PostCollectionResponse ToResponseWithoutUser<TRequest>(
-			Func<Post, TRequest, bool> filter,
-			Func<Post, TRequest, PostResponse> transform,
+			Func<TRequest, Post, bool> filter,
+			Func<TRequest, Post, PostResponse> transform,
 			TRequest request)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = posts.Count(post => filter(post, request));
+			var totalCount = posts.Count(post => filter(request, post));
 
 			return new(null,
-					   posts.Filter(request, post => filter(post, request), post => transform(post, request)),
+					   posts.Filter(request, post => filter(request, post), post => transform(request, post)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -99,8 +99,8 @@ public static class PostMapper
 			GetAllPostsQueryRequest request)
 		{
 			return posts.ToResponseWithoutUser(
-				(post, request) => post.MatchesFilter(request),
-				(post, request) => post.ToFullResponse(request),
+				(request, post) => post.MatchesFilter(request),
+				(request, post) => post.ToFullResponse(request),
 				request);
 		}
 
@@ -110,8 +110,8 @@ public static class PostMapper
 		{
 			return posts.ToFullResponse(
 				user,
-				(post, request) => post.MatchesFilter(request),
-				(post, request) => post.ToResponseWithoutUser(request),
+				(request, post) => post.MatchesFilter(request),
+				(request, post) => post.ToResponseWithoutUser(request),
 				request);
 		}
 	}

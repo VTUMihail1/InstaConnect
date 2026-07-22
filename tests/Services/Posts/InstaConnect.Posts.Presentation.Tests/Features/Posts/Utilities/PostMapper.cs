@@ -66,16 +66,16 @@ public static class PostMapper
 	{
 		internal PostCollectionQueryResponse ToFullQueryResponse<TRequest>(
 		User user,
-		Func<Post, TRequest, bool> filter,
-		Func<Post, TRequest, PostQueryResponse> transform,
+		Func<TRequest, Post, bool> filter,
+		Func<TRequest, Post, PostQueryResponse> transform,
 		TRequest request)
 		where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = posts.Count(post => filter(post, request));
+			var totalCount = posts.Count(post => filter(request, post));
 
 			return new(user.ToFullQueryResponse(),
-						posts.Filter(request, post => filter(post, request), post => transform(post, request)),
+						posts.Filter(request, post => filter(request, post), post => transform(request, post)),
 						request.Page,
 						request.PageSize,
 						totalCount,
@@ -84,16 +84,16 @@ public static class PostMapper
 		}
 
 		internal PostCollectionQueryResponse ToQueryResponseWithoutUser<TRequest>(
-			Func<Post, TRequest, bool> filter,
-			Func<Post, TRequest, PostQueryResponse> transform,
+			Func<TRequest, Post, bool> filter,
+			Func<TRequest, Post, PostQueryResponse> transform,
 			TRequest request)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = posts.Count(post => filter(post, request));
+			var totalCount = posts.Count(post => filter(request, post));
 
 			return new(null,
-					   posts.Filter(request, post => filter(post, request), post => transform(post, request)),
+					   posts.Filter(request, post => filter(request, post), post => transform(request, post)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -104,8 +104,8 @@ public static class PostMapper
 		public GetAllPostsQueryResponse ToResponse(
 			GetAllPostsApiRequest request)
 		{
-			return new(posts.ToQueryResponseWithoutUser((post, request) => post.MatchesFilter(request),
-												   (post, request) => post.ToFullQueryResponse(request),
+			return new(posts.ToQueryResponseWithoutUser((request, post) => post.MatchesFilter(request),
+												   (request, post) => post.ToFullQueryResponse(request),
 												   request));
 		}
 
@@ -114,8 +114,8 @@ public static class PostMapper
 			GetAllPostsForUserApiRequest request)
 		{
 			return new(posts.ToFullQueryResponse(user,
-											(post, request) => post.MatchesFilter(request),
-											(post, request) => post.ToQueryResponseWithoutUser(request),
+											(request, post) => post.MatchesFilter(request),
+											(request, post) => post.ToQueryResponseWithoutUser(request),
 											request));
 		}
 	}

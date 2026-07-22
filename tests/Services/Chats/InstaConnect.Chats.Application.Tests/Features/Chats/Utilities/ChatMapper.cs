@@ -50,17 +50,17 @@ public static class ChatMapper
 	{
 		internal ChatCollectionResponse ToResponseWithoutParticipantOne<TRequest>(
 			User participantTwo,
-			Func<Chat, TRequest, bool> filter,
-			Func<Chat, TRequest, ChatResponse> transform,
+			Func<TRequest, Chat, bool> filter,
+			Func<TRequest, Chat, ChatResponse> transform,
 			TRequest request)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = chats.Count(chat => filter(chat, request));
+			var totalCount = chats.Count(chat => filter(request, chat));
 
 			return new(null,
 					   participantTwo.ToFullResponse(),
-					   chats.Filter(request, chat => filter(chat, request), chat => transform(chat, request)),
+					   chats.Filter(request, chat => filter(request, chat), chat => transform(request, chat)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -70,17 +70,17 @@ public static class ChatMapper
 
 		internal ChatCollectionResponse ToResponseWithoutParticipantTwo<TRequest>(
 			User participantOne,
-			Func<Chat, TRequest, bool> filter,
-			Func<Chat, TRequest, ChatResponse> transform,
+			Func<TRequest, Chat, bool> filter,
+			Func<TRequest, Chat, ChatResponse> transform,
 			TRequest request)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = chats.Count(chat => filter(chat, request));
+			var totalCount = chats.Count(chat => filter(request, chat));
 
 			return new(participantOne.ToFullResponse(),
 					   null,
-					   chats.Filter(request, chat => filter(chat, request), chat => transform(chat, request)),
+					   chats.Filter(request, chat => filter(request, chat), chat => transform(request, chat)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -94,8 +94,8 @@ public static class ChatMapper
 		{
 			return chats.ToResponseWithoutParticipantTwo(
 				participantOne,
-				(chat, request) => chat.MatchesFilter(request),
-				(chat, request) => chat.ToResponseWithoutParticipantOne(),
+				(request, chat) => chat.MatchesFilter(request),
+				(request, chat) => chat.ToResponseWithoutParticipantOne(),
 				request);
 		}
 	}
