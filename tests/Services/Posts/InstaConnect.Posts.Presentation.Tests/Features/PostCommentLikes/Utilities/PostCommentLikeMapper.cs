@@ -41,9 +41,7 @@ public static class PostCommentLikeMapper
 					   postCommentLike.CreatedAtUtc);
 		}
 
-		internal PostCommentLikeQueryResponse ToQueryResponseWithoutPostComment<TRequest>(
-			TRequest request)
-			where TRequest : ICurrentUserableApiRequest
+		internal PostCommentLikeQueryResponse ToQueryResponseWithoutPostComment()
 		{
 			return new(postCommentLike.Id.CommentId.Id.Id,
 					   postCommentLike.Id.CommentId.CommentId,
@@ -114,7 +112,7 @@ public static class PostCommentLikeMapper
 		{
 			return new(postCommentLikes.ToQueryResponseWithoutUser(postComment,
 															  (request, postCommentLike) => postCommentLike.MatchesFilter(request),
-															  (request, postCommentLike) => postCommentLike.ToQueryResponseWithoutPostComment(request),
+															  (request, postCommentLike) => postCommentLike.ToQueryResponseWithoutPostComment(),
 															  request));
 		}
 

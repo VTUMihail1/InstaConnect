@@ -26,9 +26,9 @@ public static class PostLikeMapper
 
 	extension(PostLike postLike)
 	{
-		internal PostLikeResponse ToFullResponse<T>(
-			T request)
-			where T : ICurrentUserableQuery
+		internal PostLikeResponse ToFullResponse<TQuery>(
+			TQuery request)
+			where TQuery : ICurrentUserableQuery
 		{
 			return new(postLike.Id,
 					   postLike.User?.ToFullResponse(),
@@ -36,9 +36,9 @@ public static class PostLikeMapper
 					   postLike.CreatedAtUtc);
 		}
 
-		internal PostLikeResponse ToResponseWithoutUser<T>(
-			T request)
-			where T : ICurrentUserableQuery
+		internal PostLikeResponse ToResponseWithoutUser<TQuery>(
+			TQuery request)
+			where TQuery : ICurrentUserableQuery
 		{
 			return new(postLike.Id,
 					   null,
@@ -46,9 +46,7 @@ public static class PostLikeMapper
 					   postLike.CreatedAtUtc);
 		}
 
-		internal PostLikeResponse ToResponseWithoutPost<T>(
-			T request)
-			where T : ICurrentUserableQuery
+		internal PostLikeResponse ToResponseWithoutPost()
 		{
 			return new(postLike.Id,
 					   postLike.User?.ToFullResponse(),
@@ -81,7 +79,7 @@ public static class PostLikeMapper
 		public ICollection<PostLikeResponse> ToResponse(
 			GetAllPostLikesQuery query)
 		{
-			return postLikes.Filter(query.Pagination, postLike => postLike.MatchesFilter(query.Filter), postLike => postLike.ToResponseWithoutPost(query));
+			return postLikes.Filter(query.Pagination, postLike => postLike.MatchesFilter(query.Filter), postLike => postLike.ToResponseWithoutPost());
 		}
 
 		public ICollection<PostLikeResponse> ToResponse(

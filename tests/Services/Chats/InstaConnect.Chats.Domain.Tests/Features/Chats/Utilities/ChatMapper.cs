@@ -16,9 +16,7 @@ public static class ChatMapper
 
 	extension(Chat chat)
 	{
-		internal ChatResponse ToFullResponse<T>(
-			T request)
-			where T : ICurrentUserableQuery
+		internal ChatResponse ToFullResponse()
 		{
 			return new(chat.Id,
 					   chat.ParticipantOne?.ToFullResponse(),
@@ -26,9 +24,7 @@ public static class ChatMapper
 					   chat.CreatedAtUtc);
 		}
 
-		internal ChatResponse ToResponseWithoutParticipantOne<T>(
-			T request)
-			where T : ICurrentUserableQuery
+		internal ChatResponse ToResponseWithoutParticipantOne()
 		{
 			return new(chat.Id,
 					   null,
@@ -52,7 +48,7 @@ public static class ChatMapper
 		public ChatResponse ToResponse(
 			GetChatByIdQuery query)
 		{
-			return chat.ToFullResponse(query);
+			return chat.ToFullResponse();
 		}
 	}
 
@@ -61,7 +57,7 @@ public static class ChatMapper
 		public ICollection<ChatResponse> ToResponse(
 			GetAllChatsQuery query)
 		{
-			return chats.Filter(query.Pagination, chat => chat.MatchesFilter(query.Filter), chat => chat.ToResponseWithoutParticipantOne(query));
+			return chats.Filter(query.Pagination, chat => chat.MatchesFilter(query.Filter), chat => chat.ToResponseWithoutParticipantOne());
 		}
 
 		public long ToTotalCountResponse(

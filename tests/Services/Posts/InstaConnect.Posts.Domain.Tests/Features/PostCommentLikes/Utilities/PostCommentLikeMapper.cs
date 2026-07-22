@@ -27,9 +27,9 @@ public static class PostCommentLikeMapper
 
 	extension(PostCommentLike postCommentLike)
 	{
-		internal PostCommentLikeResponse ToFullResponse<T>(
-			T request)
-			where T : ICurrentUserableQuery
+		internal PostCommentLikeResponse ToFullResponse<TQuery>(
+			TQuery request)
+			where TQuery : ICurrentUserableQuery
 		{
 			return new(postCommentLike.Id,
 					   postCommentLike.User?.ToFullResponse(),
@@ -37,9 +37,9 @@ public static class PostCommentLikeMapper
 					   postCommentLike.CreatedAtUtc);
 		}
 
-		internal PostCommentLikeResponse ToResponseWithoutUser<T>(
-			T request)
-			where T : ICurrentUserableQuery
+		internal PostCommentLikeResponse ToResponseWithoutUser<TQuery>(
+			TQuery request)
+			where TQuery : ICurrentUserableQuery
 		{
 			return new(postCommentLike.Id,
 					   null,

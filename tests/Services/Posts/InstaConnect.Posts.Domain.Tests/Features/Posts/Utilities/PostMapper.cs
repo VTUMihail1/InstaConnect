@@ -17,9 +17,9 @@ public static class PostMapper
 
 	extension(Post post)
 	{
-		internal PostResponse ToFullResponse<T>(
-			T request)
-			where T : ICurrentUserableQuery
+		internal PostResponse ToFullResponse<TQuery>(
+			TQuery request)
+			where TQuery : ICurrentUserableQuery
 		{
 			return new(post.Id,
 					   post.UserId,
@@ -31,9 +31,9 @@ public static class PostMapper
 					   post.UpdatedAtUtc);
 		}
 
-		internal PostResponse ToResponseWithoutUser<T>(
-			T request)
-			where T : ICurrentUserableQuery
+		internal PostResponse ToResponseWithoutUser<TQuery>(
+			TQuery request)
+			where TQuery : ICurrentUserableQuery
 		{
 			return new(post.Id,
 					   post.UserId,

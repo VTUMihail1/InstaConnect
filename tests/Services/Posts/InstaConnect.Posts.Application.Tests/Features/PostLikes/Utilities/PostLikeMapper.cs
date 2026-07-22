@@ -30,9 +30,7 @@ public static class PostLikeMapper
 					   postLike.CreatedAtUtc);
 		}
 
-		internal PostLikeResponse ToResponseWithoutPost<TRequest>(
-			TRequest request)
-			where TRequest : ICurrentUserableQueryRequest
+		internal PostLikeResponse ToResponseWithoutPost()
 		{
 			return new(postLike.Id,
 					   postLike.User?.ToFullResponse(),
@@ -102,7 +100,7 @@ public static class PostLikeMapper
 			return postLikes.ToResponseWithoutUser(
 				post,
 				(request, postLike) => postLike.MatchesFilter(request),
-				(request, postLike) => postLike.ToResponseWithoutPost(request),
+				(request, postLike) => postLike.ToResponseWithoutPost(),
 				request);
 		}
 

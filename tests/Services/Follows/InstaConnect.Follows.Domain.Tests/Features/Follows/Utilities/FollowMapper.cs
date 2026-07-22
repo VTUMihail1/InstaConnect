@@ -22,9 +22,9 @@ public static class FollowMapper
 
 	extension(Follow follow)
 	{
-		internal FollowResponse ToFullResponse<T>(
-			T request)
-			where T : ICurrentUserableQuery
+		internal FollowResponse ToFullResponse<TQuery>(
+			TQuery request)
+			where TQuery : ICurrentUserableQuery
 		{
 			return new(follow.Id,
 					   follow.Follower?.ToFullResponse(),
@@ -33,9 +33,9 @@ public static class FollowMapper
 					   follow.CreatedAtUtc);
 		}
 
-		internal FollowResponse ToResponseWithoutFollower<T>(
-			T request)
-			where T : ICurrentUserableQuery
+		internal FollowResponse ToResponseWithoutFollower<TQuery>(
+			TQuery request)
+			where TQuery : ICurrentUserableQuery
 		{
 			return new(follow.Id,
 					   null,
@@ -44,9 +44,9 @@ public static class FollowMapper
 					   follow.CreatedAtUtc);
 		}
 
-		internal FollowResponse ToResponseWithoutFollowing<T>(
-			T request)
-			where T : ICurrentUserableQuery
+		internal FollowResponse ToResponseWithoutFollowing<TQuery>(
+			TQuery request)
+			where TQuery : ICurrentUserableQuery
 		{
 			return new(follow.Id,
 					   follow.Follower?.ToFullResponse(),

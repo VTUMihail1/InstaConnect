@@ -37,9 +37,7 @@ public static class PostLikeMapper
 					   postLike.CreatedAtUtc);
 		}
 
-		internal PostLikeQueryResponse ToQueryResponseWithoutPost<TRequest>(
-			TRequest request)
-			where TRequest : ICurrentUserableApiRequest
+		internal PostLikeQueryResponse ToQueryResponseWithoutPost()
 		{
 			return new(postLike.Id.Id.Id,
 					   postLike.Id.UserId.Id,
@@ -109,7 +107,7 @@ public static class PostLikeMapper
 		{
 			return new(postLikes.ToQueryResponseWithoutUser(post,
 													   (request, postLike) => postLike.MatchesFilter(request),
-													   (request, postLike) => postLike.ToQueryResponseWithoutPost(request),
+													   (request, postLike) => postLike.ToQueryResponseWithoutPost(),
 													   request));
 		}
 

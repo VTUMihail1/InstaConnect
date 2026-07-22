@@ -10,41 +10,35 @@ public static class ChatMessageMapper
 		public ChatResponse ToResponse(
 			GetAllChatMessagesQuery query)
 		{
-			return chat.ToFullResponse(query);
+			return chat.ToFullResponse();
 		}
 	}
 
 	extension(ChatMessage chatMessage)
 	{
-		internal ChatMessageResponse ToFullResponse<T>(
-			T request)
-			where T : ICurrentUserableQuery
+		internal ChatMessageResponse ToFullResponse()
 		{
 			return new(chatMessage.Id,
 					   chatMessage.Content,
 					   chatMessage.SenderId,
-					   chatMessage.Chat?.ToFullResponse(request),
+					   chatMessage.Chat?.ToFullResponse(),
 					   chatMessage.Sender?.ToFullResponse(),
 					   chatMessage.CreatedAtUtc,
 					   chatMessage.UpdatedAtUtc);
 		}
 
-		internal ChatMessageResponse ToResponseWithoutSender<T>(
-			T request)
-			where T : ICurrentUserableQuery
+		internal ChatMessageResponse ToResponseWithoutSender()
 		{
 			return new(chatMessage.Id,
 					   chatMessage.Content,
 					   chatMessage.SenderId,
-					   chatMessage.Chat?.ToFullResponse(request),
+					   chatMessage.Chat?.ToFullResponse(),
 					   null,
 					   chatMessage.CreatedAtUtc,
 					   chatMessage.UpdatedAtUtc);
 		}
 
-		internal ChatMessageResponse ToResponseWithoutChat<T>(
-			T request)
-			where T : ICurrentUserableQuery
+		internal ChatMessageResponse ToResponseWithoutChat()
 		{
 			return new(chatMessage.Id,
 					   chatMessage.Content,
@@ -80,7 +74,7 @@ public static class ChatMessageMapper
 		public ChatMessageResponse ToResponse(
 			GetChatMessageByIdQuery query)
 		{
-			return chatMessage.ToFullResponse(query);
+			return chatMessage.ToFullResponse();
 		}
 	}
 
@@ -89,7 +83,7 @@ public static class ChatMessageMapper
 		public ICollection<ChatMessageResponse> ToResponse(
 			GetAllChatMessagesQuery query)
 		{
-			return chatMessages.Filter(query.Pagination, chatMessage => chatMessage.MatchesFilter(query), chatMessage => chatMessage.ToResponseWithoutChat(query));
+			return chatMessages.Filter(query.Pagination, chatMessage => chatMessage.MatchesFilter(query), chatMessage => chatMessage.ToResponseWithoutChat());
 		}
 
 		public long ToTotalCountResponse(

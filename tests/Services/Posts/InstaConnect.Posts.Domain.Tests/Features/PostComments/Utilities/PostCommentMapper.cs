@@ -26,9 +26,9 @@ public static class PostCommentMapper
 
 	extension(PostComment postComment)
 	{
-		internal PostCommentResponse ToFullResponse<T>(
-			T request)
-			where T : ICurrentUserableQuery
+		internal PostCommentResponse ToFullResponse<TQuery>(
+			TQuery request)
+			where TQuery : ICurrentUserableQuery
 		{
 			return new(postComment.Id,
 					   postComment.UserId,
@@ -40,9 +40,9 @@ public static class PostCommentMapper
 					   postComment.UpdatedAtUtc);
 		}
 
-		internal PostCommentResponse ToResponseWithoutUser<T>(
-			T request)
-			where T : ICurrentUserableQuery
+		internal PostCommentResponse ToResponseWithoutUser<TQuery>(
+			TQuery request)
+			where TQuery : ICurrentUserableQuery
 		{
 			return new(postComment.Id,
 					   postComment.UserId,
@@ -54,9 +54,9 @@ public static class PostCommentMapper
 					   postComment.UpdatedAtUtc);
 		}
 
-		internal PostCommentResponse ToResponseWithoutPost<T>(
-			T request)
-			where T : ICurrentUserableQuery
+		internal PostCommentResponse ToResponseWithoutPost<TQuery>(
+			TQuery request)
+			where TQuery : ICurrentUserableQuery
 		{
 			return new(postComment.Id,
 					   postComment.UserId,
