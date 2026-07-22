@@ -59,10 +59,10 @@ public static class PostMapper
 	extension(ICollection<Post> posts)
 	{
 		internal PostCollectionResponse ToFullResponse<TRequest>(
+		TRequest request,
 		User user,
 		Func<TRequest, Post, bool> filter,
-		Func<TRequest, Post, PostResponse> transform,
-		TRequest request)
+		Func<TRequest, Post, PostResponse> transform)
 		where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
 			var paginator = new Paginator();
@@ -78,9 +78,9 @@ public static class PostMapper
 		}
 
 		internal PostCollectionResponse ToResponseWithoutUser<TRequest>(
+			TRequest request,
 			Func<TRequest, Post, bool> filter,
-			Func<TRequest, Post, PostResponse> transform,
-			TRequest request)
+			Func<TRequest, Post, PostResponse> transform)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
 			var paginator = new Paginator();
@@ -99,20 +99,20 @@ public static class PostMapper
 			GetAllPostsQueryRequest request)
 		{
 			return posts.ToResponseWithoutUser(
+				request,
 				(request, post) => post.MatchesFilter(request),
-				(request, post) => post.ToFullResponse(request),
-				request);
+				(request, post) => post.ToFullResponse(request));
 		}
 
 		public PostCollectionResponse ToResponse(
-			User user,
-			GetAllPostsForUserQueryRequest request)
+			GetAllPostsForUserQueryRequest request,
+			User user)
 		{
 			return posts.ToFullResponse(
+				request,
 				user,
 				(request, post) => post.MatchesFilter(request),
-				(request, post) => post.ToResponseWithoutUser(request),
-				request);
+				(request, post) => post.ToResponseWithoutUser(request));
 		}
 	}
 }

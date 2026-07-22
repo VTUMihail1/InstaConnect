@@ -22,7 +22,7 @@ public static class PostMockSetups
 		{
 			service
 				.GetAllForUserAsync(PostMatcher.IsGetAllPostsForUserQuery(request), cancellationToken)
-				.ReturnsTaskResponse(posts.ToResponse(user, request));
+				.ReturnsTaskResponse(posts.ToResponse(request, user));
 		}
 
 		public void SetupGetByIdQuery(

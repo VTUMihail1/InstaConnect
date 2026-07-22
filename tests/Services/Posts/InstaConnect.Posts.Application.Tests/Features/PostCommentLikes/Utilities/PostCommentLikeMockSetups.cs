@@ -12,7 +12,7 @@ public static class PostCommentLikeMockSetups
 		{
 			commentLikeService
 				.GetAllAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesQuery(request), cancellationToken)
-				.ReturnsTaskResponse(postCommentLikes.ToResponse(postComment, request));
+				.ReturnsTaskResponse(postCommentLikes.ToResponse(request, postComment));
 		}
 
 		public void SetupGetAllForUserQuery(
@@ -23,7 +23,7 @@ public static class PostCommentLikeMockSetups
 		{
 			commentLikeService
 				.GetAllForUserAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesForUserQuery(request), cancellationToken)
-				.ReturnsTaskResponse(postCommentLikes.ToResponse(user, request));
+				.ReturnsTaskResponse(postCommentLikes.ToResponse(request, user));
 		}
 
 		public void SetupGetByIdQuery(

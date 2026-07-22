@@ -12,7 +12,7 @@ public static class FollowMockSetups
 		{
 			likeService
 				.GetAllAsync(FollowMatcher.IsGetAllFollowsQuery(request), cancellationToken)
-				.ReturnsTaskResponse(follows.ToResponse(follower, request));
+				.ReturnsTaskResponse(follows.ToResponse(request, follower));
 		}
 
 		public void SetupGetAllForFollowingQuery(
@@ -23,7 +23,7 @@ public static class FollowMockSetups
 		{
 			likeService
 				.GetAllForFollowingAsync(FollowMatcher.IsGetAllFollowsForFollowingQuery(request), cancellationToken)
-				.ReturnsTaskResponse(follows.ToResponse(following, request));
+				.ReturnsTaskResponse(follows.ToResponse(request, following));
 		}
 
 		public void SetupGetByIdQuery(

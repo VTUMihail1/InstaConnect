@@ -14,7 +14,7 @@ public static class PostCommentMockSetups
 		{
 			sender
 				.SendAsync(PostCommentMatcher.IsGetAllPostCommentsQueryRequest(request), cancellationToken)
-				.ReturnsTaskResponse(postComments.ToResponse(post, request));
+				.ReturnsTaskResponse(postComments.ToResponse(request, post));
 		}
 
 		public void SetupGetAllForUserQueryRequest(
@@ -25,7 +25,7 @@ public static class PostCommentMockSetups
 		{
 			sender
 				.SendAsync(PostCommentMatcher.IsGetAllPostCommentsForUserQueryRequest(request), cancellationToken)
-				.ReturnsTaskResponse(postComments.ToResponse(user, request));
+				.ReturnsTaskResponse(postComments.ToResponse(request, user));
 		}
 
 		public void SetupGetByIdQueryRequest(

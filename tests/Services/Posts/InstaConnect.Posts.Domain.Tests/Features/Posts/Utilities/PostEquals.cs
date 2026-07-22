@@ -123,8 +123,8 @@ public static class PostEquals
 
 	extension(PostResponse? response)
 	{
-		public bool MatchesFull<T>(T request, Post? post)
-		where T : ICurrentUserableQuery
+		public bool MatchesFull<TQuery>(TQuery request, Post? post)
+		where TQuery : ICurrentUserableQuery
 		{
 			return response != null &&
 				   post != null &&
@@ -138,8 +138,8 @@ public static class PostEquals
 				   response.User.MatchesFull(post.User);
 		}
 
-		public bool MatchesWithoutUser<T>(T request, Post? post)
-			where T : ICurrentUserableQuery
+		public bool MatchesWithoutUser<TQuery>(TQuery request, Post? post)
+			where TQuery : ICurrentUserableQuery
 		{
 			return response != null &&
 				   post != null &&
@@ -161,13 +161,13 @@ public static class PostEquals
 
 	extension(PostCollectionResponse response)
 	{
-		public bool MatchesFull<T>(
-		T request,
+		public bool MatchesFull<TQuery>(
+		TQuery request,
 		Func<PostResponse, Post, bool> matches,
 		Func<Post, bool> matchesFilter,
 		User user,
 		ICollection<Post> posts)
-		where T : ICurrentUserableQuery, IPaginatableQuery<PostsPaginationQuery>
+		where TQuery : ICurrentUserableQuery, IPaginatableQuery<PostsPaginationQuery>
 		{
 			return response.MatchesCollectionResponse(request.Pagination, posts.Count(matchesFilter)) &&
 				   response.User.MatchesFull(user) &&
@@ -179,14 +179,14 @@ public static class PostEquals
 													matchesFilter);
 		}
 
-		public bool MatchesFull<T>(
-			T request,
+		public bool MatchesFull<TQuery>(
+			TQuery request,
 			Func<PostResponse, Post, bool> matches,
 			Func<Post, bool> matchesFilter,
 			User user,
 			ICollection<Post> posts,
 			ISortEnumTermTransformer<Post> termTransformer)
-			where T : ICurrentUserableQuery, IPaginatableQuery<PostsPaginationQuery>
+			where TQuery : ICurrentUserableQuery, IPaginatableQuery<PostsPaginationQuery>
 		{
 			return response.MatchesCollectionResponse(request.Pagination, posts.Count(matchesFilter)) &&
 				   response.User.MatchesFull(user) &&
@@ -197,12 +197,12 @@ public static class PostEquals
 														  matchesFilter);
 		}
 
-		public bool MatchesWithoutUser<T>(
-			T request,
+		public bool MatchesWithoutUser<TQuery>(
+			TQuery request,
 			Func<PostResponse, Post, bool> matches,
 			Func<Post, bool> matchesFilter,
 			ICollection<Post> posts)
-			where T : ICurrentUserableQuery, IPaginatableQuery<PostsPaginationQuery>
+			where TQuery : ICurrentUserableQuery, IPaginatableQuery<PostsPaginationQuery>
 		{
 			return response.MatchesCollectionResponse(request.Pagination, posts.Count(matchesFilter)) &&
 				   response.User == null &&
@@ -214,13 +214,13 @@ public static class PostEquals
 													matchesFilter);
 		}
 
-		public bool MatchesWithoutUser<T>(
-			T request,
+		public bool MatchesWithoutUser<TQuery>(
+			TQuery request,
 			Func<PostResponse, Post, bool> matches,
 			Func<Post, bool> matchesFilter,
 			ICollection<Post> posts,
 			ISortEnumTermTransformer<Post> termTransformer)
-			where T : ICurrentUserableQuery, IPaginatableQuery<PostsPaginationQuery>
+			where TQuery : ICurrentUserableQuery, IPaginatableQuery<PostsPaginationQuery>
 		{
 			return response.MatchesCollectionResponse(request.Pagination, posts.Count(matchesFilter)) &&
 				   response.User == null &&

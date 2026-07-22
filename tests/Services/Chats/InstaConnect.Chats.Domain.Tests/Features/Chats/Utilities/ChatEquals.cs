@@ -11,8 +11,8 @@ public static class ChatEquals
 	extension(ChatId response)
 	{
 		public bool Matches(
-			Chat chat,
-			AddChatCommand command)
+			AddChatCommand command,
+			Chat chat)
 		{
 			return response.Matches(chat.Id);
 		}
@@ -50,8 +50,8 @@ public static class ChatEquals
 
 	extension(ChatResponse? response)
 	{
-		public bool MatchesFull<T>(Chat? chat, T request)
-			where T : ICurrentUserableQuery
+		public bool MatchesFull<TQuery>(TQuery request, Chat? chat)
+			where TQuery : ICurrentUserableQuery
 		{
 			return response != null &&
 				   chat != null &&
@@ -61,8 +61,8 @@ public static class ChatEquals
 				   response.ParticipantTwo.MatchesFull(chat.ParticipantTwo);
 		}
 
-		public bool MatchesFullInverted<T>(Chat? chat, T request)
-			where T : ICurrentUserableQuery
+		public bool MatchesFullInverted<TQuery>(TQuery request, Chat? chat)
+			where TQuery : ICurrentUserableQuery
 		{
 			return response != null &&
 				   chat != null &&
@@ -72,8 +72,8 @@ public static class ChatEquals
 				   response.ParticipantTwo.MatchesFull(chat.ParticipantOne);
 		}
 
-		public bool MatchesWithoutParticipantOne<T>(Chat? chat, T request)
-			where T : ICurrentUserableQuery
+		public bool MatchesWithoutParticipantOne<TQuery>(TQuery request, Chat? chat)
+			where TQuery : ICurrentUserableQuery
 		{
 			return response != null &&
 				   chat != null &&
@@ -83,8 +83,8 @@ public static class ChatEquals
 				   response.ParticipantTwo.MatchesFull(chat.ParticipantTwo);
 		}
 
-		public bool MatchesWithoutParticipantOneInverted<T>(Chat? chat, T request)
-			where T : ICurrentUserableQuery
+		public bool MatchesWithoutParticipantOneInverted<TQuery>(TQuery request, Chat? chat)
+			where TQuery : ICurrentUserableQuery
 		{
 			return response != null &&
 				   chat != null &&
@@ -94,26 +94,26 @@ public static class ChatEquals
 				   response.ParticipantTwo.MatchesFull(chat.ParticipantOne);
 		}
 
-		public bool Matches(Chat chat, GetChatByIdQuery query)
+		public bool Matches(GetChatByIdQuery query, Chat chat)
 		{
-			return response.MatchesFull(chat, query);
+			return response.MatchesFull(query, chat);
 		}
 
-		public bool MatchesInverted(Chat chat, GetChatByIdQuery query)
+		public bool MatchesInverted(GetChatByIdQuery query, Chat chat)
 		{
-			return response.MatchesFullInverted(chat, query);
+			return response.MatchesFullInverted(query, chat);
 		}
 	}
 
 	extension(ChatCollectionResponse response)
 	{
-		public bool MatchesWithoutParticipantTwo<T>(
+		public bool MatchesWithoutParticipantTwo<TQuery>(
+			TQuery request,
 			Func<ChatResponse, Chat, bool> matches,
 			Func<Chat, bool> matchesFilter,
 			User participantOne,
-			ICollection<Chat> chats,
-			T request)
-			where T : ICurrentUserableQuery, IPaginatableQuery<ChatsPaginationQuery>
+			ICollection<Chat> chats)
+			where TQuery : ICurrentUserableQuery, IPaginatableQuery<ChatsPaginationQuery>
 		{
 			return response.MatchesCollectionResponse(request.Pagination, chats.Count(matchesFilter)) &&
 				   response.ParticipantOne.MatchesFull(participantOne) &&
@@ -126,14 +126,14 @@ public static class ChatEquals
 													matchesFilter);
 		}
 
-		public bool MatchesWithoutParticipantTwo<T>(
+		public bool MatchesWithoutParticipantTwo<TQuery>(
+			TQuery request,
 			Func<ChatResponse, Chat, bool> matches,
 			Func<Chat, bool> matchesFilter,
 			User participantOne,
 			ICollection<Chat> chats,
-			T request,
 			ISortEnumTermTransformer<Chat> termTransformer)
-			where T : ICurrentUserableQuery, IPaginatableQuery<ChatsPaginationQuery>
+			where TQuery : ICurrentUserableQuery, IPaginatableQuery<ChatsPaginationQuery>
 		{
 			return response.MatchesCollectionResponse(request.Pagination, chats.Count(matchesFilter)) &&
 				   response.ParticipantOne.MatchesFull(participantOne) &&
@@ -145,13 +145,13 @@ public static class ChatEquals
 														  matchesFilter);
 		}
 
-		public bool MatchesWithoutParticipantTwoInverted<T>(
+		public bool MatchesWithoutParticipantTwoInverted<TQuery>(
+			TQuery request,
 			Func<ChatResponse, Chat, bool> matches,
 			Func<Chat, bool> matchesFilter,
 			User participantTwo,
-			ICollection<Chat> chats,
-			T request)
-			where T : ICurrentUserableQuery, IPaginatableQuery<ChatsPaginationQuery>
+			ICollection<Chat> chats)
+			where TQuery : ICurrentUserableQuery, IPaginatableQuery<ChatsPaginationQuery>
 		{
 			return response.MatchesCollectionResponse(request.Pagination, chats.Count(matchesFilter)) &&
 				   response.ParticipantOne.MatchesFull(participantTwo) &&
@@ -164,14 +164,14 @@ public static class ChatEquals
 													matchesFilter);
 		}
 
-		public bool MatchesWithoutParticipantTwoInverted<T>(
+		public bool MatchesWithoutParticipantTwoInverted<TQuery>(
+			TQuery request,
 			Func<ChatResponse, Chat, bool> matches,
 			Func<Chat, bool> matchesFilter,
 			User participantTwo,
 			ICollection<Chat> chats,
-			T request,
 			ISortEnumTermTransformer<Chat> termTransformer)
-			where T : ICurrentUserableQuery, IPaginatableQuery<ChatsPaginationQuery>
+			where TQuery : ICurrentUserableQuery, IPaginatableQuery<ChatsPaginationQuery>
 		{
 			return response.MatchesCollectionResponse(request.Pagination, chats.Count(matchesFilter)) &&
 				   response.ParticipantOne.MatchesFull(participantTwo) &&
@@ -184,58 +184,58 @@ public static class ChatEquals
 		}
 
 		public bool Matches(
+			GetAllChatsQuery query,
 			User participantOne,
-			ICollection<Chat> chats,
-			GetAllChatsQuery query)
+			ICollection<Chat> chats)
 		{
 			return response.MatchesWithoutParticipantTwo(
-					   (response, chat) => response.MatchesWithoutParticipantOne(chat, query),
+					   query,
+					   (response, chat) => response.MatchesWithoutParticipantOne(query, chat),
 					   chat => chat.MatchesFilter(query.Filter),
 					   participantOne,
-					   chats,
-					   query);
+					   chats);
 		}
 
 		public bool Matches(
+			GetAllChatsQuery query,
 			User participantOne,
 			ICollection<Chat> chats,
-			GetAllChatsQuery query,
 			ISortEnumTermTransformer<Chat> termTransformer)
 		{
 			return response.MatchesWithoutParticipantTwo(
-					   (response, chat) => response.MatchesWithoutParticipantOne(chat, query),
+					   query,
+					   (response, chat) => response.MatchesWithoutParticipantOne(query, chat),
 					   chat => chat.MatchesFilter(query.Filter),
 					   participantOne,
 					   chats,
-					   query,
 					   termTransformer);
 		}
 
 		public bool MatchesInverted(
+			GetAllChatsQuery query,
 			User participantTwo,
-			ICollection<Chat> chats,
-			GetAllChatsQuery query)
+			ICollection<Chat> chats)
 		{
 			return response.MatchesWithoutParticipantTwoInverted(
-					   (response, chat) => response.MatchesWithoutParticipantOneInverted(chat, query),
+					   query,
+					   (response, chat) => response.MatchesWithoutParticipantOneInverted(query, chat),
 					   chat => chat.MatchesFilter(query.Filter),
 					   participantTwo,
-					   chats,
-					   query);
+					   chats);
 		}
 
 		public bool MatchesInverted(
+			GetAllChatsQuery query,
 			User participantTwo,
 			ICollection<Chat> chats,
-			GetAllChatsQuery query,
 			ISortEnumTermTransformer<Chat> termTransformer)
 		{
 			return response.MatchesWithoutParticipantTwoInverted(
-					   (response, chat) => response.MatchesWithoutParticipantOneInverted(chat, query),
+					   query,
+					   (response, chat) => response.MatchesWithoutParticipantOneInverted(query, chat),
 					   chat => chat.MatchesFilter(query.Filter),
 					   participantTwo,
 					   chats,
-					   query,
 					   termTransformer);
 		}
 	}

@@ -59,8 +59,8 @@ public static class ChatEquals
 	extension(AddChatApiResponse response)
 	{
 		public bool Matches(
-		Chat chat,
-		AddChatApiRequest request)
+		AddChatApiRequest request,
+		Chat chat)
 		{
 			return response.Response.Matches(chat.Id);
 		}
@@ -68,72 +68,72 @@ public static class ChatEquals
 
 	extension(GetChatByIdApiResponse response)
 	{
-		public bool Matches(Chat chat, GetChatByIdApiRequest request)
+		public bool Matches(GetChatByIdApiRequest request, Chat chat)
 		{
-			return response.Response.MatchesFull(chat, request);
+			return response.Response.MatchesFull(request, chat);
 		}
 
-		public bool MatchesInverted(Chat chat, GetChatByIdApiRequest request)
+		public bool MatchesInverted(GetChatByIdApiRequest request, Chat chat)
 		{
-			return response.Response.MatchesFullInverted(chat, request);
+			return response.Response.MatchesFullInverted(request, chat);
 		}
 	}
 
 	extension(GetAllChatsApiResponse response)
 	{
 		public bool Matches(
+		GetAllChatsApiRequest request,
 		User participantOne,
-		ICollection<Chat> chats,
-		GetAllChatsApiRequest request)
+		ICollection<Chat> chats)
 		{
 			return response.Response.MatchesWithoutParticipantTwo(
-					   (response, chat) => response.MatchesWithoutParticipantOne(chat, request),
+					   request,
+					   (response, chat) => response.MatchesWithoutParticipantOne(request, chat),
 					   chat => chat.MatchesFilter(request),
 					   participantOne,
-					   chats,
-					   request);
+					   chats);
 		}
 
 		public bool Matches(
+			GetAllChatsApiRequest request,
 			User participantOne,
 			ICollection<Chat> chats,
-			GetAllChatsApiRequest request,
 			ISortEnumTermTransformer<Chat> termTransformer)
 		{
 			return response.Response.MatchesWithoutParticipantTwo(
-					   (response, chat) => response.MatchesWithoutParticipantOne(chat, request),
+					   request,
+					   (response, chat) => response.MatchesWithoutParticipantOne(request, chat),
 					   chat => chat.MatchesFilter(request),
 					   participantOne,
 					   chats,
-					   request,
 					   termTransformer);
 		}
 
 		public bool MatchesInverted(
+		GetAllChatsApiRequest request,
 		User participantTwo,
-		ICollection<Chat> chats,
-		GetAllChatsApiRequest request)
+		ICollection<Chat> chats)
 		{
 			return response.Response.MatchesWithoutParticipantTwoInverted(
-					   (response, chat) => response.MatchesWithoutParticipantOneInverted(chat, request),
+					   request,
+					   (response, chat) => response.MatchesWithoutParticipantOneInverted(request, chat),
 					   chat => chat.MatchesFilter(request),
 					   participantTwo,
-					   chats,
-					   request);
+					   chats);
 		}
 
 		public bool MatchesInverted(
+			GetAllChatsApiRequest request,
 			User participantTwo,
 			ICollection<Chat> chats,
-			GetAllChatsApiRequest request,
 			ISortEnumTermTransformer<Chat> termTransformer)
 		{
 			return response.Response.MatchesWithoutParticipantTwoInverted(
-					   (response, chat) => response.MatchesWithoutParticipantOneInverted(chat, request),
+					   request,
+					   (response, chat) => response.MatchesWithoutParticipantOneInverted(request, chat),
 					   chat => chat.MatchesFilter(request),
 					   participantTwo,
 					   chats,
-					   request,
 					   termTransformer);
 		}
 	}
@@ -166,7 +166,7 @@ public static class ChatEquals
 
 	extension(ChatApiResponse? response)
 	{
-		public bool MatchesFull<TRequest>(Chat? chat, TRequest request)
+		public bool MatchesFull<TRequest>(TRequest request, Chat? chat)
 			where TRequest : ICurrentUserableApiRequest
 		{
 			return response != null &&
@@ -177,7 +177,7 @@ public static class ChatEquals
 				   response.ParticipantTwo.MatchesFull(chat.ParticipantTwo);
 		}
 
-		public bool MatchesWithoutParticipantOne<TRequest>(Chat? chat, TRequest request)
+		public bool MatchesWithoutParticipantOne<TRequest>(TRequest request, Chat? chat)
 			where TRequest : ICurrentUserableApiRequest
 		{
 			return response != null &&
@@ -188,7 +188,7 @@ public static class ChatEquals
 				   response.ParticipantTwo.MatchesFull(chat.ParticipantTwo);
 		}
 
-		public bool MatchesWithoutParticipantTwo<TRequest>(Chat? chat, TRequest request)
+		public bool MatchesWithoutParticipantTwo<TRequest>(TRequest request, Chat? chat)
 			where TRequest : ICurrentUserableApiRequest
 		{
 			return response != null &&
@@ -199,7 +199,7 @@ public static class ChatEquals
 				   response.ParticipantTwo == null;
 		}
 
-		public bool MatchesFullInverted<TRequest>(Chat? chat, TRequest request)
+		public bool MatchesFullInverted<TRequest>(TRequest request, Chat? chat)
 		where TRequest : ICurrentUserableApiRequest
 		{
 			return response != null &&
@@ -210,7 +210,7 @@ public static class ChatEquals
 				   response.ParticipantTwo.MatchesFull(chat.ParticipantOne);
 		}
 
-		public bool MatchesWithoutParticipantOneInverted<TRequest>(Chat? chat, TRequest request)
+		public bool MatchesWithoutParticipantOneInverted<TRequest>(TRequest request, Chat? chat)
 			where TRequest : ICurrentUserableApiRequest
 		{
 			return response != null &&
@@ -221,7 +221,7 @@ public static class ChatEquals
 				   response.ParticipantTwo.MatchesFull(chat.ParticipantOne);
 		}
 
-		public bool MatchesWithoutParticipantTwoInverted<TRequest>(Chat? chat, TRequest request)
+		public bool MatchesWithoutParticipantTwoInverted<TRequest>(TRequest request, Chat? chat)
 			where TRequest : ICurrentUserableApiRequest
 		{
 			return response != null &&
@@ -236,11 +236,11 @@ public static class ChatEquals
 	extension(ChatCollectionApiResponse response)
 	{
 		public bool MatchesWithoutParticipantOne<TRequest>(
+			TRequest request,
 			Func<ChatApiResponse, Chat, bool> matches,
 			Func<Chat, bool> matchesFilter,
 			User participantTwo,
-			ICollection<Chat> chats,
-			TRequest request)
+			ICollection<Chat> chats)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
 			return response.MatchesCollectionResponse(request, chats.Count(matchesFilter)) &&
@@ -255,11 +255,11 @@ public static class ChatEquals
 		}
 
 		public bool MatchesWithoutParticipantOne<TRequest>(
+			TRequest request,
 			Func<ChatApiResponse, Chat, bool> matches,
 			Func<Chat, bool> matchesFilter,
 			User participantTwo,
 			ICollection<Chat> chats,
-			TRequest request,
 			ISortEnumTermTransformer<Chat> termTransformer)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
@@ -274,11 +274,11 @@ public static class ChatEquals
 		}
 
 		public bool MatchesWithoutParticipantTwo<TRequest>(
+			TRequest request,
 			Func<ChatApiResponse, Chat, bool> matches,
 			Func<Chat, bool> matchesFilter,
 			User participantOne,
-			ICollection<Chat> chats,
-			TRequest request)
+			ICollection<Chat> chats)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
 			return response.MatchesCollectionResponse(request, chats.Count(matchesFilter)) &&
@@ -293,11 +293,11 @@ public static class ChatEquals
 		}
 
 		public bool MatchesWithoutParticipantTwo<TRequest>(
+			TRequest request,
 			Func<ChatApiResponse, Chat, bool> matches,
 			Func<Chat, bool> matchesFilter,
 			User participantOne,
 			ICollection<Chat> chats,
-			TRequest request,
 			ISortEnumTermTransformer<Chat> termTransformer)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
@@ -312,11 +312,11 @@ public static class ChatEquals
 		}
 
 		public bool MatchesWithoutParticipantOneInverted<TRequest>(
+			TRequest request,
 			Func<ChatApiResponse, Chat, bool> matches,
 			Func<Chat, bool> matchesFilter,
 			User participantTwo,
-			ICollection<Chat> chats,
-			TRequest request)
+			ICollection<Chat> chats)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
 			return response.MatchesCollectionResponse(request, chats.Count(matchesFilter)) &&
@@ -331,11 +331,11 @@ public static class ChatEquals
 		}
 
 		public bool MatchesWithoutParticipantOneInverted<TRequest>(
+			TRequest request,
 			Func<ChatApiResponse, Chat, bool> matches,
 			Func<Chat, bool> matchesFilter,
 			User participantTwo,
 			ICollection<Chat> chats,
-			TRequest request,
 			ISortEnumTermTransformer<Chat> termTransformer)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
@@ -350,11 +350,11 @@ public static class ChatEquals
 		}
 
 		public bool MatchesWithoutParticipantTwoInverted<TRequest>(
+			TRequest request,
 			Func<ChatApiResponse, Chat, bool> matches,
 			Func<Chat, bool> matchesFilter,
 			User participantOne,
-			ICollection<Chat> chats,
-			TRequest request)
+			ICollection<Chat> chats)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
 			return response.MatchesCollectionResponse(request, chats.Count(matchesFilter)) &&
@@ -369,11 +369,11 @@ public static class ChatEquals
 		}
 
 		public bool MatchesWithoutParticipantTwoInverted<TRequest>(
+			TRequest request,
 			Func<ChatApiResponse, Chat, bool> matches,
 			Func<Chat, bool> matchesFilter,
 			User participantOne,
 			ICollection<Chat> chats,
-			TRequest request,
 			ISortEnumTermTransformer<Chat> termTransformer)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{

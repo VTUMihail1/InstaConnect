@@ -54,10 +54,10 @@ public static class PostLikeMapper
 	extension(ICollection<PostLike> postLikes)
 	{
 		internal PostLikeCollectionResponse ToResponseWithoutUser<TRequest>(
+		TRequest request,
 		Post post,
 		Func<TRequest, PostLike, bool> filter,
-		Func<TRequest, PostLike, PostLikeResponse> transform,
-		TRequest request)
+		Func<TRequest, PostLike, PostLikeResponse> transform)
 		where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
 			var paginator = new Paginator();
@@ -74,10 +74,10 @@ public static class PostLikeMapper
 		}
 
 		internal PostLikeCollectionResponse ToResponseWithoutPost<TRequest>(
+			TRequest request,
 			User user,
 			Func<TRequest, PostLike, bool> filter,
-			Func<TRequest, PostLike, PostLikeResponse> transform,
-			TRequest request)
+			Func<TRequest, PostLike, PostLikeResponse> transform)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
 			var paginator = new Paginator();
@@ -94,25 +94,25 @@ public static class PostLikeMapper
 		}
 
 		public PostLikeCollectionResponse ToResponse(
-			Post post,
-			GetAllPostLikesQueryRequest request)
+			GetAllPostLikesQueryRequest request,
+			Post post)
 		{
 			return postLikes.ToResponseWithoutUser(
+				request,
 				post,
 				(request, postLike) => postLike.MatchesFilter(request),
-				(request, postLike) => postLike.ToResponseWithoutPost(),
-				request);
+				(request, postLike) => postLike.ToResponseWithoutPost());
 		}
 
 		public PostLikeCollectionResponse ToResponse(
-			User user,
-			GetAllPostLikesForUserQueryRequest request)
+			GetAllPostLikesForUserQueryRequest request,
+			User user)
 		{
 			return postLikes.ToResponseWithoutPost(
+				request,
 				user,
 				(request, postLike) => postLike.MatchesFilter(request),
-				(request, postLike) => postLike.ToResponseWithoutUser(request),
-				request);
+				(request, postLike) => postLike.ToResponseWithoutUser(request));
 		}
 	}
 }

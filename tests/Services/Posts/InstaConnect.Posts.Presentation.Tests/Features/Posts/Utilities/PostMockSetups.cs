@@ -24,7 +24,7 @@ public static class PostMockSetups
 		{
 			sender
 				.SendAsync(PostMatcher.IsGetAllPostsForUserQueryRequest(request), cancellationToken)
-				.ReturnsTaskResponse(posts.ToResponse(user, request));
+				.ReturnsTaskResponse(posts.ToResponse(request, user));
 		}
 
 		public void SetupGetByIdQueryRequest(

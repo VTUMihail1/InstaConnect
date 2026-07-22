@@ -7,53 +7,53 @@ public static class ChatMessageMatchAssertions
 {
 	extension(AddChatMessageCommandResponse response)
 	{
-		public void ShouldSatisfy(ChatMessage chatMessage, AddChatMessageCommandRequest request)
+		public void ShouldSatisfy(AddChatMessageCommandRequest request, ChatMessage chatMessage)
 		{
-			response.ShouldSatisfy(p => p.Matches(chatMessage, request));
+			response.ShouldSatisfy(p => p.Matches(request, chatMessage));
 		}
 	}
 
 	extension(UpdateChatMessageCommandResponse response)
 	{
-		public void ShouldSatisfy(ChatMessage chatMessage, UpdateChatMessageCommandRequest request)
+		public void ShouldSatisfy(UpdateChatMessageCommandRequest request, ChatMessage chatMessage)
 		{
-			response.ShouldSatisfy(p => p.Matches(chatMessage, request));
+			response.ShouldSatisfy(p => p.Matches(request, chatMessage));
 		}
 	}
 
 	extension(GetChatMessageByIdQueryResponse response)
 	{
-		public void ShouldSatisfy(ChatMessage chatMessage, GetChatMessageByIdQueryRequest request)
+		public void ShouldSatisfy(GetChatMessageByIdQueryRequest request, ChatMessage chatMessage)
 		{
-			response.ShouldSatisfy(p => p.Matches(chatMessage, request));
+			response.ShouldSatisfy(p => p.Matches(request, chatMessage));
 		}
 
-		public void ShouldSatisfyInverted(ChatMessage chatMessage, GetChatMessageByIdQueryRequest request)
+		public void ShouldSatisfyInverted(GetChatMessageByIdQueryRequest request, ChatMessage chatMessage)
 		{
-			response.ShouldSatisfy(p => p.MatchesInverted(chatMessage, request));
+			response.ShouldSatisfy(p => p.MatchesInverted(request, chatMessage));
 		}
 	}
 
 	extension(GetAllChatMessagesQueryResponse response)
 	{
-		public void ShouldSatisfy(Chat chat, ICollection<ChatMessage> chatMessages, GetAllChatMessagesQueryRequest request)
+		public void ShouldSatisfy(GetAllChatMessagesQueryRequest request, Chat chat, ICollection<ChatMessage> chatMessages)
 		{
-			response.ShouldSatisfy(p => p.Matches(chat, chatMessages, request));
+			response.ShouldSatisfy(p => p.Matches(request, chat, chatMessages));
 		}
 
-		public void ShouldSatisfy(Chat chat, ICollection<ChatMessage> chatMessages, GetAllChatMessagesQueryRequest request, ISortEnumTermTransformer<ChatMessage> termTransformer)
+		public void ShouldSatisfy(GetAllChatMessagesQueryRequest request, Chat chat, ICollection<ChatMessage> chatMessages, ISortEnumTermTransformer<ChatMessage> termTransformer)
 		{
-			response.ShouldSatisfy(p => p.Matches(chat, chatMessages, request, termTransformer));
+			response.ShouldSatisfy(p => p.Matches(request, chat, chatMessages, termTransformer));
 		}
 
-		public void ShouldSatisfyInverted(Chat chat, ICollection<ChatMessage> chatMessages, GetAllChatMessagesQueryRequest request)
+		public void ShouldSatisfyInverted(GetAllChatMessagesQueryRequest request, Chat chat, ICollection<ChatMessage> chatMessages)
 		{
-			response.ShouldSatisfy(p => p.MatchesInverted(chat, chatMessages, request));
+			response.ShouldSatisfy(p => p.MatchesInverted(request, chat, chatMessages));
 		}
 
-		public void ShouldSatisfyInverted(Chat chat, ICollection<ChatMessage> chatMessages, GetAllChatMessagesQueryRequest request, ISortEnumTermTransformer<ChatMessage> termTransformer)
+		public void ShouldSatisfyInverted(GetAllChatMessagesQueryRequest request, Chat chat, ICollection<ChatMessage> chatMessages, ISortEnumTermTransformer<ChatMessage> termTransformer)
 		{
-			response.ShouldSatisfy(p => p.MatchesInverted(chat, chatMessages, request, termTransformer));
+			response.ShouldSatisfy(p => p.MatchesInverted(request, chat, chatMessages, termTransformer));
 		}
 	}
 

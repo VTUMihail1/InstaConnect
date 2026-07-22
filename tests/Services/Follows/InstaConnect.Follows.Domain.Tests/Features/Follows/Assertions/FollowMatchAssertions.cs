@@ -7,54 +7,54 @@ public static class FollowMatchAssertions
 {
 	extension(FollowId response)
 	{
-		public void ShouldSatisfy(Follow follow, AddFollowCommand command)
+		public void ShouldSatisfy(AddFollowCommand command, Follow follow)
 		{
-			response.ShouldSatisfy(p => p.Matches(follow, command));
+			response.ShouldSatisfy(p => p.Matches(command, follow));
 		}
 	}
 
 	extension(FollowResponse response)
 	{
-		public void ShouldSatisfy(Follow follow, GetFollowByIdQuery query)
+		public void ShouldSatisfy(GetFollowByIdQuery query, Follow follow)
 		{
-			response.ShouldSatisfy(p => p.Matches(follow, query));
+			response.ShouldSatisfy(p => p.Matches(query, follow));
 		}
 	}
 
 	extension(FollowCollectionResponse response)
 	{
 		public void ShouldSatisfy(
+		GetAllFollowsQuery query,
 		User follower,
-		ICollection<Follow> follows,
-		GetAllFollowsQuery query)
+		ICollection<Follow> follows)
 		{
-			response.ShouldSatisfy(p => p.Matches(follower, follows, query));
+			response.ShouldSatisfy(p => p.Matches(query, follower, follows));
 		}
 
 		public void ShouldSatisfy(
+			GetAllFollowsQuery query,
 			User follower,
 			ICollection<Follow> follows,
-			GetAllFollowsQuery query,
 			ISortEnumTermTransformer<Follow> termTransformer)
 		{
-			response.ShouldSatisfy(p => p.Matches(follower, follows, query, termTransformer));
+			response.ShouldSatisfy(p => p.Matches(query, follower, follows, termTransformer));
 		}
 
 		public void ShouldSatisfy(
+		GetAllFollowsForFollowingQuery query,
 		User following,
-		ICollection<Follow> follows,
-		GetAllFollowsForFollowingQuery query)
+		ICollection<Follow> follows)
 		{
-			response.ShouldSatisfy(p => p.Matches(following, follows, query));
+			response.ShouldSatisfy(p => p.Matches(query, following, follows));
 		}
 
 		public void ShouldSatisfy(
+			GetAllFollowsForFollowingQuery query,
 			User following,
 			ICollection<Follow> follows,
-			GetAllFollowsForFollowingQuery query,
 			ISortEnumTermTransformer<Follow> termTransformer)
 		{
-			response.ShouldSatisfy(p => p.Matches(following, follows, query, termTransformer));
+			response.ShouldSatisfy(p => p.Matches(query, following, follows, termTransformer));
 		}
 	}
 

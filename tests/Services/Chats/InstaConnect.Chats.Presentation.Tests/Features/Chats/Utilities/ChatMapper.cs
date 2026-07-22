@@ -58,10 +58,10 @@ public static class ChatMapper
 	extension(ICollection<Chat> chats)
 	{
 		internal ChatCollectionQueryResponse ToQueryResponseWithoutParticipantTwo<TRequest>(
+			TRequest request,
 			User participantOne,
 			Func<TRequest, Chat, bool> filter,
-			Func<TRequest, Chat, ChatQueryResponse> transform,
-			TRequest request)
+			Func<TRequest, Chat, ChatQueryResponse> transform)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
 			var paginator = new Paginator();
@@ -78,14 +78,14 @@ public static class ChatMapper
 		}
 
 		public GetAllChatsQueryResponse ToResponse(
-			User participantOne,
-			GetAllChatsApiRequest request)
+			GetAllChatsApiRequest request,
+			User participantOne)
 		{
 			return new(chats.ToQueryResponseWithoutParticipantTwo(
+												   request,
 												   participantOne,
 												   (request, chat) => chat.MatchesFilter(request),
-												   (request, chat) => chat.ToQueryResponseWithoutParticipantOne(),
-												   request));
+												   (request, chat) => chat.ToQueryResponseWithoutParticipantOne()));
 		}
 	}
 }

@@ -11,8 +11,8 @@ public static class FollowEquals
 	extension(FollowId response)
 	{
 		public bool Matches(
-		Follow follow,
-		AddFollowCommand command)
+		AddFollowCommand command,
+		Follow follow)
 		{
 			return response.Matches(follow.Id);
 		}
@@ -90,8 +90,8 @@ public static class FollowEquals
 
 	extension(FollowResponse? response)
 	{
-		public bool MatchesFull<T>(Follow? follow, T request)
-		where T : ICurrentUserableQuery
+		public bool MatchesFull<TQuery>(TQuery request, Follow? follow)
+		where TQuery : ICurrentUserableQuery
 		{
 			return response != null &&
 				   follow != null &&
@@ -102,8 +102,8 @@ public static class FollowEquals
 				   response.Follower.MatchesFull(follow.Follower);
 		}
 
-		public bool MatchesWithoutFollowing<T>(Follow? follow, T request)
-			where T : ICurrentUserableQuery
+		public bool MatchesWithoutFollowing<TQuery>(TQuery request, Follow? follow)
+			where TQuery : ICurrentUserableQuery
 		{
 			return response != null &&
 				   follow != null &&
@@ -114,8 +114,8 @@ public static class FollowEquals
 				   response.Follower.MatchesFull(follow.Follower);
 		}
 
-		public bool MatchesWithoutFollower<T>(Follow? follow, T request)
-			where T : ICurrentUserableQuery
+		public bool MatchesWithoutFollower<TQuery>(TQuery request, Follow? follow)
+			where TQuery : ICurrentUserableQuery
 		{
 			return response != null &&
 				   follow != null &&
@@ -126,21 +126,21 @@ public static class FollowEquals
 				   response.Follower == null;
 		}
 
-		public bool Matches(Follow follow, GetFollowByIdQuery query)
+		public bool Matches(GetFollowByIdQuery query, Follow follow)
 		{
-			return response.MatchesFull(follow, query);
+			return response.MatchesFull(query, follow);
 		}
 	}
 
 	extension(FollowCollectionResponse response)
 	{
-		public bool MatchesWithoutFollowing<T>(
+		public bool MatchesWithoutFollowing<TQuery>(
+		TQuery request,
 		Func<FollowResponse, Follow, bool> matches,
 		Func<Follow, bool> matchesFilter,
 		User follower,
-		ICollection<Follow> follows,
-		T request)
-		where T : ICurrentUserableQuery, IPaginatableQuery<FollowsPaginationQuery>
+		ICollection<Follow> follows)
+		where TQuery : ICurrentUserableQuery, IPaginatableQuery<FollowsPaginationQuery>
 		{
 			return response.MatchesCollectionResponse(request.Pagination, follows.Count(matchesFilter)) &&
 				   response.Following == null &&
@@ -153,14 +153,14 @@ public static class FollowEquals
 													matchesFilter);
 		}
 
-		public bool MatchesWithoutFollowing<T>(
+		public bool MatchesWithoutFollowing<TQuery>(
+			TQuery request,
 			Func<FollowResponse, Follow, bool> matches,
 			Func<Follow, bool> matchesFilter,
 			User follower,
 			ICollection<Follow> follows,
-			T request,
 			ISortEnumTermTransformer<Follow> termTransformer)
-			where T : ICurrentUserableQuery, IPaginatableQuery<FollowsPaginationQuery>
+			where TQuery : ICurrentUserableQuery, IPaginatableQuery<FollowsPaginationQuery>
 		{
 			return response.MatchesCollectionResponse(request.Pagination, follows.Count(matchesFilter)) &&
 				   response.Following == null &&
@@ -172,13 +172,13 @@ public static class FollowEquals
 														  matchesFilter);
 		}
 
-		public bool MatchesWithoutFollower<T>(
+		public bool MatchesWithoutFollower<TQuery>(
+			TQuery request,
 			Func<FollowResponse, Follow, bool> matches,
 			Func<Follow, bool> matchesFilter,
 			User following,
-			ICollection<Follow> follows,
-			T request)
-			where T : ICurrentUserableQuery, IPaginatableQuery<FollowsPaginationQuery>
+			ICollection<Follow> follows)
+			where TQuery : ICurrentUserableQuery, IPaginatableQuery<FollowsPaginationQuery>
 		{
 			return response.MatchesCollectionResponse(request.Pagination, follows.Count(matchesFilter)) &&
 				   response.Following.MatchesFull(following) &&
@@ -191,14 +191,14 @@ public static class FollowEquals
 													matchesFilter);
 		}
 
-		public bool MatchesWithoutFollower<T>(
+		public bool MatchesWithoutFollower<TQuery>(
+			TQuery request,
 			Func<FollowResponse, Follow, bool> matches,
 			Func<Follow, bool> matchesFilter,
 			User following,
 			ICollection<Follow> follows,
-			T request,
 			ISortEnumTermTransformer<Follow> termTransformer)
-			where T : ICurrentUserableQuery, IPaginatableQuery<FollowsPaginationQuery>
+			where TQuery : ICurrentUserableQuery, IPaginatableQuery<FollowsPaginationQuery>
 		{
 			return response.MatchesCollectionResponse(request.Pagination, follows.Count(matchesFilter)) &&
 				   response.Following.MatchesFull(following) &&
@@ -211,58 +211,58 @@ public static class FollowEquals
 		}
 
 		public bool Matches(
+		GetAllFollowsQuery query,
 		User follower,
-		ICollection<Follow> follows,
-		GetAllFollowsQuery query)
+		ICollection<Follow> follows)
 		{
 			return response.MatchesWithoutFollowing(
-					   (response, follow) => response.MatchesWithoutFollower(follow, query),
+					   query,
+					   (response, follow) => response.MatchesWithoutFollower(query, follow),
 					   follow => follow.MatchesFilter(query.Filter),
 					   follower,
-					   follows,
-					   query);
+					   follows);
 		}
 
 		public bool Matches(
+			GetAllFollowsQuery query,
 			User follower,
 			ICollection<Follow> follows,
-			GetAllFollowsQuery query,
 			ISortEnumTermTransformer<Follow> termTransformer)
 		{
 			return response.MatchesWithoutFollowing(
-					   (response, follow) => response.MatchesWithoutFollower(follow, query),
+					   query,
+					   (response, follow) => response.MatchesWithoutFollower(query, follow),
 					   follow => follow.MatchesFilter(query.Filter),
 					   follower,
 					   follows,
-					   query,
 					   termTransformer);
 		}
 
 		public bool Matches(
+		GetAllFollowsForFollowingQuery query,
 		User following,
-		ICollection<Follow> follows,
-		GetAllFollowsForFollowingQuery query)
+		ICollection<Follow> follows)
 		{
 			return response.MatchesWithoutFollower(
-					   (response, follow) => response.MatchesWithoutFollowing(follow, query),
+					   query,
+					   (response, follow) => response.MatchesWithoutFollowing(query, follow),
 					   follow => follow.MatchesFilter(query.Filter),
 					   following,
-					   follows,
-					   query);
+					   follows);
 		}
 
 		public bool Matches(
+			GetAllFollowsForFollowingQuery query,
 			User following,
 			ICollection<Follow> follows,
-			GetAllFollowsForFollowingQuery query,
 			ISortEnumTermTransformer<Follow> termTransformer)
 		{
 			return response.MatchesWithoutFollower(
-					   (response, follow) => response.MatchesWithoutFollowing(follow, query),
+					   query,
+					   (response, follow) => response.MatchesWithoutFollowing(query, follow),
 					   follow => follow.MatchesFilter(query.Filter),
 					   following,
 					   follows,
-					   query,
 					   termTransformer);
 		}
 	}

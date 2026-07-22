@@ -65,10 +65,10 @@ public static class ChatMessageMapper
 	extension(ICollection<ChatMessage> chatMessages)
 	{
 		internal ChatMessageCollectionResponse ToResponseWithoutSender<TRequest>(
+		TRequest request,
 		Chat chat,
 		Func<TRequest, ChatMessage, bool> filter,
-		Func<TRequest, ChatMessage, ChatMessageResponse> transform,
-		TRequest request)
+		Func<TRequest, ChatMessage, ChatMessageResponse> transform)
 		where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
 			var paginator = new Paginator();
@@ -85,10 +85,10 @@ public static class ChatMessageMapper
 		}
 
 		internal ChatMessageCollectionResponse ToResponseWithoutChat<TRequest>(
+			TRequest request,
 			User user,
 			Func<TRequest, ChatMessage, bool> filter,
-			Func<TRequest, ChatMessage, ChatMessageResponse> transform,
-			TRequest request)
+			Func<TRequest, ChatMessage, ChatMessageResponse> transform)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
 			var paginator = new Paginator();
@@ -105,13 +105,14 @@ public static class ChatMessageMapper
 		}
 
 		public ChatMessageCollectionResponse ToResponse(
-			Chat chat,
-			GetAllChatMessagesQueryRequest request)
+			GetAllChatMessagesQueryRequest request,
+			Chat chat)
 		{
-			return chatMessages.ToResponseWithoutSender(chat,
+			return chatMessages.ToResponseWithoutSender(
+													  request,
+													  chat,
 													  (request, chatMessage) => chatMessage.MatchesFilter(request),
-													  (request, chatMessage) => chatMessage.ToResponseWithoutChat(),
-													  request);
+													  (request, chatMessage) => chatMessage.ToResponseWithoutChat());
 		}
 	}
 }

@@ -7,59 +7,59 @@ public static class ChatMatchAssertions
 {
 	extension(ChatId response)
 	{
-		public void ShouldSatisfy(Chat chat, AddChatCommand command)
+		public void ShouldSatisfy(AddChatCommand command, Chat chat)
 		{
-			response.ShouldSatisfy(p => p.Matches(chat, command));
+			response.ShouldSatisfy(p => p.Matches(command, chat));
 		}
 	}
 
 	extension(ChatResponse response)
 	{
-		public void ShouldSatisfy(Chat chat, GetChatByIdQuery query)
+		public void ShouldSatisfy(GetChatByIdQuery query, Chat chat)
 		{
-			response.ShouldSatisfy(p => p.Matches(chat, query));
+			response.ShouldSatisfy(p => p.Matches(query, chat));
 		}
 
-		public void ShouldSatisfyInverted(Chat chat, GetChatByIdQuery query)
+		public void ShouldSatisfyInverted(GetChatByIdQuery query, Chat chat)
 		{
-			response.ShouldSatisfy(p => p.MatchesInverted(chat, query));
+			response.ShouldSatisfy(p => p.MatchesInverted(query, chat));
 		}
 	}
 
 	extension(ChatCollectionResponse response)
 	{
 		public void ShouldSatisfy(
+			GetAllChatsQuery query,
 			User participantOne,
-			ICollection<Chat> chats,
-			GetAllChatsQuery query)
+			ICollection<Chat> chats)
 		{
-			response.ShouldSatisfy(p => p.Matches(participantOne, chats, query));
+			response.ShouldSatisfy(p => p.Matches(query, participantOne, chats));
 		}
 
 		public void ShouldSatisfy(
+			GetAllChatsQuery query,
 			User participantOne,
 			ICollection<Chat> chats,
-			GetAllChatsQuery query,
 			ISortEnumTermTransformer<Chat> termTransformer)
 		{
-			response.ShouldSatisfy(p => p.Matches(participantOne, chats, query, termTransformer));
+			response.ShouldSatisfy(p => p.Matches(query, participantOne, chats, termTransformer));
 		}
 
 		public void ShouldSatisfyInverted(
+			GetAllChatsQuery query,
 			User participantTwo,
-			ICollection<Chat> chats,
-			GetAllChatsQuery query)
+			ICollection<Chat> chats)
 		{
-			response.ShouldSatisfy(p => p.MatchesInverted(participantTwo, chats, query));
+			response.ShouldSatisfy(p => p.MatchesInverted(query, participantTwo, chats));
 		}
 
 		public void ShouldSatisfyInverted(
+			GetAllChatsQuery query,
 			User participantTwo,
 			ICollection<Chat> chats,
-			GetAllChatsQuery query,
 			ISortEnumTermTransformer<Chat> termTransformer)
 		{
-			response.ShouldSatisfy(p => p.MatchesInverted(participantTwo, chats, query, termTransformer));
+			response.ShouldSatisfy(p => p.MatchesInverted(query, participantTwo, chats, termTransformer));
 		}
 	}
 

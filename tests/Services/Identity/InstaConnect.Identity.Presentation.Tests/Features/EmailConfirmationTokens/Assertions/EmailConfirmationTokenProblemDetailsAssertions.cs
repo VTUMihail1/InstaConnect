@@ -10,56 +10,56 @@ public static class EmailConfirmationTokenProblemDetailsAssertions
 			AddEmailConfirmationTokenApiRequest request)
 		{
 			problemDetails.ShouldSatisfyUserNameNotFound(
-				r => r.Name,
-				request);
+				request,
+				r => r.Name);
 		}
 
 		public void ShouldSatisfyUserNameEmailAlreadyConfirmed(
 			AddEmailConfirmationTokenApiRequest request)
 		{
 			problemDetails.ShouldSatisfyUserNameEmailAlreadyConfirmed(
-				r => r.Name,
-				request);
+				request,
+				r => r.Name);
 		}
 
 		public void ShouldSatisfyUserNotFound(
 			VerifyEmailConfirmationTokenApiRequest request)
 		{
 			problemDetails.ShouldSatisfyUserNotFound(
-				r => r.Id,
-				request);
+				request,
+				r => r.Id);
 		}
 
 		public void ShouldSatisfyUserEmailAlreadyConfirmed(
 			VerifyEmailConfirmationTokenApiRequest request)
 		{
 			problemDetails.ShouldSatisfyUserEmailAlreadyConfirmed(
-				r => r.Id,
-				request);
+				request,
+				r => r.Id);
 		}
 
 		public void ShouldSatisfyEmailConfirmationTokenNotFound(
 			VerifyEmailConfirmationTokenApiRequest request)
 		{
 			problemDetails.ShouldSatisfyEmailConfirmationTokenNotFound(
+				request,
 				r => r.Id,
-				r => r.Value,
-				request);
+				r => r.Value);
 		}
 
 		public void ShouldSatisfyEmailConfirmationTokenExpired(
 			VerifyEmailConfirmationTokenApiRequest request)
 		{
 			problemDetails.ShouldSatisfyEmailConfirmationTokenExpired(
+				request,
 				r => r.Id,
-				r => r.Value,
-				request);
+				r => r.Value);
 		}
 
 		internal void ShouldSatisfyEmailConfirmationTokenNotFound<TRequest>(
+			TRequest request,
 			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> valuePropertyExpression,
-			TRequest request)
+			Func<TRequest, string> valuePropertyExpression)
 		{
 			problemDetails.ShouldSatisfyNotFound(
 				EmailConfirmationTokenExceptionErrorMessages.GetNotFoundMessage(
@@ -69,9 +69,9 @@ public static class EmailConfirmationTokenProblemDetailsAssertions
 		}
 
 		internal void ShouldSatisfyEmailConfirmationTokenExpired<TRequest>(
+			TRequest request,
 			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> valuePropertyExpression,
-			TRequest request)
+			Func<TRequest, string> valuePropertyExpression)
 		{
 			problemDetails.ShouldSatisfyBadRequest(
 				EmailConfirmationTokenExceptionErrorMessages.GetExpiredMessage(

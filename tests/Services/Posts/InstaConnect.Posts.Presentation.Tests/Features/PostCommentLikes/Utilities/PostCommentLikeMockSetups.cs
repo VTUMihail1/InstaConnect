@@ -14,7 +14,7 @@ public static class PostCommentLikeMockSetups
 		{
 			sender
 				.SendAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesQueryRequest(request), cancellationToken)
-				.ReturnsTaskResponse(postCommentLikes.ToResponse(postComment, request));
+				.ReturnsTaskResponse(postCommentLikes.ToResponse(request, postComment));
 		}
 
 		public void SetupGetAllForUserQueryRequest(
@@ -25,7 +25,7 @@ public static class PostCommentLikeMockSetups
 		{
 			sender
 				.SendAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesForUserQueryRequest(request), cancellationToken)
-				.ReturnsTaskResponse(postCommentLikes.ToResponse(user, request));
+				.ReturnsTaskResponse(postCommentLikes.ToResponse(request, user));
 		}
 
 		public void SetupGetByIdQueryRequest(

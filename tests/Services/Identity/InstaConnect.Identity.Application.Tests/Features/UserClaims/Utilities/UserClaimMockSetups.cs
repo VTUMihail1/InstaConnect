@@ -12,7 +12,7 @@ public static class UserClaimMockSetups
 		{
 			service
 				.GetAllAsync(UserClaimMatcher.IsGetAllUserClaimsQuery(request), cancellationToken)
-				.ReturnsTaskResponse(userClaims.ToResponse(user, request));
+				.ReturnsTaskResponse(userClaims.ToResponse(request, user));
 		}
 	}
 

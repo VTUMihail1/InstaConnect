@@ -67,10 +67,10 @@ public static class FollowMapper
 	extension(ICollection<Follow> follows)
 	{
 		internal FollowCollectionQueryResponse ToQueryResponseWithoutFollowing<TRequest>(
+		TRequest request,
 		User follower,
 		Func<TRequest, Follow, bool> filter,
-		Func<TRequest, Follow, FollowQueryResponse> transform,
-		TRequest request)
+		Func<TRequest, Follow, FollowQueryResponse> transform)
 		where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
 			var paginator = new Paginator();
@@ -87,10 +87,10 @@ public static class FollowMapper
 		}
 
 		internal FollowCollectionQueryResponse ToQueryResponseWithoutFollower<TRequest>(
+			TRequest request,
 			User following,
 			Func<TRequest, Follow, bool> filter,
-			Func<TRequest, Follow, FollowQueryResponse> transform,
-			TRequest request)
+			Func<TRequest, Follow, FollowQueryResponse> transform)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
 			var paginator = new Paginator();
@@ -107,23 +107,25 @@ public static class FollowMapper
 		}
 
 		public GetAllFollowsQueryResponse ToResponse(
-			User follower,
-			GetAllFollowsApiRequest request)
+			GetAllFollowsApiRequest request,
+			User follower)
 		{
-			return new(follows.ToQueryResponseWithoutFollowing(follower,
+			return new(follows.ToQueryResponseWithoutFollowing(
+													   request,
+													   follower,
 													   (request, follow) => follow.MatchesFilter(request),
-													   (request, follow) => follow.ToQueryResponseWithoutFollower(request),
-													   request));
+													   (request, follow) => follow.ToQueryResponseWithoutFollower(request)));
 		}
 
 		public GetAllFollowsForFollowingQueryResponse ToResponse(
-			User following,
-			GetAllFollowsForFollowingApiRequest request)
+			GetAllFollowsForFollowingApiRequest request,
+			User following)
 		{
-			return new(follows.ToQueryResponseWithoutFollower(following,
+			return new(follows.ToQueryResponseWithoutFollower(
+													   request,
+													   following,
 													   (request, follow) => follow.MatchesFilter(request),
-													   (request, follow) => follow.ToQueryResponseWithoutFollowing(request),
-													   request));
+													   (request, follow) => follow.ToQueryResponseWithoutFollowing(request)));
 		}
 	}
 }

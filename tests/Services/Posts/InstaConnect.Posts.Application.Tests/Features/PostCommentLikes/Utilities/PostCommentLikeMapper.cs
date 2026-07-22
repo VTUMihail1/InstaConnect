@@ -50,10 +50,10 @@ public static class PostCommentLikeMapper
 	extension(ICollection<PostCommentLike> postCommentLikes)
 	{
 		internal PostCommentLikeCollectionResponse ToResponseWithoutUser<TRequest>(
+			TRequest request,
 			PostComment postComment,
 			Func<TRequest, PostCommentLike, bool> filter,
-			Func<TRequest, PostCommentLike, PostCommentLikeResponse> transform,
-			TRequest request)
+			Func<TRequest, PostCommentLike, PostCommentLikeResponse> transform)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
 			var paginator = new Paginator();
@@ -70,10 +70,10 @@ public static class PostCommentLikeMapper
 		}
 
 		internal PostCommentLikeCollectionResponse ToResponseWithoutPostComment<TRequest>(
+			TRequest request,
 			User user,
 			Func<TRequest, PostCommentLike, bool> filter,
-			Func<TRequest, PostCommentLike, PostCommentLikeResponse> transform,
-			TRequest request)
+			Func<TRequest, PostCommentLike, PostCommentLikeResponse> transform)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
 			var paginator = new Paginator();
@@ -90,23 +90,25 @@ public static class PostCommentLikeMapper
 		}
 
 		public PostCommentLikeCollectionResponse ToResponse(
-			PostComment postComment,
-			GetAllPostCommentLikesQueryRequest request)
+			GetAllPostCommentLikesQueryRequest request,
+			PostComment postComment)
 		{
-			return postCommentLikes.ToResponseWithoutUser(postComment,
+			return postCommentLikes.ToResponseWithoutUser(
+														  request,
+														  postComment,
 														  (request, postCommentLike) => postCommentLike.MatchesFilter(request),
-														  (request, postCommentLike) => postCommentLike.ToResponseWithoutPostComment(),
-														  request);
+														  (request, postCommentLike) => postCommentLike.ToResponseWithoutPostComment());
 		}
 
 		public PostCommentLikeCollectionResponse ToResponse(
-			User user,
-			GetAllPostCommentLikesForUserQueryRequest request)
+			GetAllPostCommentLikesForUserQueryRequest request,
+			User user)
 		{
-			return postCommentLikes.ToResponseWithoutPostComment(user,
+			return postCommentLikes.ToResponseWithoutPostComment(
+																 request,
+																 user,
 																 (request, postCommentLike) => postCommentLike.MatchesFilter(request),
-																 (request, postCommentLike) => postCommentLike.ToResponseWithoutUser(request),
-																 request);
+																 (request, postCommentLike) => postCommentLike.ToResponseWithoutUser(request));
 		}
 	}
 }

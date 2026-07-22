@@ -86,8 +86,8 @@ public static class PostCommentLikeEquals
 
 	extension(PostCommentLikeResponse? response)
 	{
-		public bool MatchesFull<T>(T request, PostCommentLike? postCommentLike)
-		where T : ICurrentUserableQuery
+		public bool MatchesFull<TQuery>(TQuery request, PostCommentLike? postCommentLike)
+		where TQuery : ICurrentUserableQuery
 		{
 			return response != null &&
 				   postCommentLike != null &&
@@ -97,8 +97,8 @@ public static class PostCommentLikeEquals
 				   response.PostComment.MatchesFull(request, postCommentLike.PostComment);
 		}
 
-		public bool MatchesWithoutUser<T>(T request, PostCommentLike? postCommentLike)
-			where T : ICurrentUserableQuery
+		public bool MatchesWithoutUser<TQuery>(TQuery request, PostCommentLike? postCommentLike)
+			where TQuery : ICurrentUserableQuery
 		{
 			return response != null &&
 				   postCommentLike != null &&
@@ -108,8 +108,8 @@ public static class PostCommentLikeEquals
 				   response.PostComment.MatchesFull(request, postCommentLike.PostComment);
 		}
 
-		public bool MatchesWithoutPostComment<T>(T request, PostCommentLike? postCommentLike)
-			where T : ICurrentUserableQuery
+		public bool MatchesWithoutPostComment<TQuery>(TQuery request, PostCommentLike? postCommentLike)
+			where TQuery : ICurrentUserableQuery
 		{
 			return response != null &&
 				   postCommentLike != null &&
@@ -127,13 +127,13 @@ public static class PostCommentLikeEquals
 
 	extension(PostCommentLikeCollectionResponse response)
 	{
-		public bool MatchesWithoutUser<T>(
-		T request,
+		public bool MatchesWithoutUser<TQuery>(
+		TQuery request,
 		Func<PostCommentLikeResponse, PostCommentLike, bool> matches,
 		Func<PostCommentLike, bool> matchesFilter,
 		PostComment postComment,
 		ICollection<PostCommentLike> postCommentLikes)
-		where T : ICurrentUserableQuery, IPaginatableQuery<PostCommentLikesPaginationQuery>
+		where TQuery : ICurrentUserableQuery, IPaginatableQuery<PostCommentLikesPaginationQuery>
 		{
 			return response.MatchesCollectionResponse(request.Pagination, postCommentLikes.Count(matchesFilter)) &&
 				   response.User == null &&
@@ -146,14 +146,14 @@ public static class PostCommentLikeEquals
 													matchesFilter);
 		}
 
-		public bool MatchesWithoutUser<T>(
-			T request,
+		public bool MatchesWithoutUser<TQuery>(
+			TQuery request,
 			Func<PostCommentLikeResponse, PostCommentLike, bool> matches,
 			Func<PostCommentLike, bool> matchesFilter,
 			PostComment postComment,
 			ICollection<PostCommentLike> postCommentLikes,
 			ISortEnumTermTransformer<PostCommentLike> termTransformer)
-			where T : ICurrentUserableQuery, IPaginatableQuery<PostCommentLikesPaginationQuery>
+			where TQuery : ICurrentUserableQuery, IPaginatableQuery<PostCommentLikesPaginationQuery>
 		{
 			return response.MatchesCollectionResponse(request.Pagination, postCommentLikes.Count(matchesFilter)) &&
 				   response.User == null &&
@@ -165,13 +165,13 @@ public static class PostCommentLikeEquals
 														  matchesFilter);
 		}
 
-		public bool MatchesWithoutPostComment<T>(
-			T request,
+		public bool MatchesWithoutPostComment<TQuery>(
+			TQuery request,
 			Func<PostCommentLikeResponse, PostCommentLike, bool> matches,
 			Func<PostCommentLike, bool> matchesFilter,
 			User user,
 			ICollection<PostCommentLike> postCommentLikes)
-			where T : ICurrentUserableQuery, IPaginatableQuery<PostCommentLikesPaginationQuery>
+			where TQuery : ICurrentUserableQuery, IPaginatableQuery<PostCommentLikesPaginationQuery>
 		{
 			return response.MatchesCollectionResponse(request.Pagination, postCommentLikes.Count(matchesFilter)) &&
 				   response.User.MatchesFull(user) &&
@@ -184,14 +184,14 @@ public static class PostCommentLikeEquals
 													matchesFilter);
 		}
 
-		public bool MatchesWithoutPostComment<T>(
-			T request,
+		public bool MatchesWithoutPostComment<TQuery>(
+			TQuery request,
 			Func<PostCommentLikeResponse, PostCommentLike, bool> matches,
 			Func<PostCommentLike, bool> matchesFilter,
 			User user,
 			ICollection<PostCommentLike> postCommentLikes,
 			ISortEnumTermTransformer<PostCommentLike> termTransformer)
-			where T : ICurrentUserableQuery, IPaginatableQuery<PostCommentLikesPaginationQuery>
+			where TQuery : ICurrentUserableQuery, IPaginatableQuery<PostCommentLikesPaginationQuery>
 		{
 			return response.MatchesCollectionResponse(request.Pagination, postCommentLikes.Count(matchesFilter)) &&
 				   response.User.MatchesFull(user) &&

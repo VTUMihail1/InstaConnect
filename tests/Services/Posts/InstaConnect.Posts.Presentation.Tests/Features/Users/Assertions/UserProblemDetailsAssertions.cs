@@ -10,85 +10,85 @@ public static class UserProblemDetailsAssertions
 		UpdateUserCommandRequest request)
 		{
 			problemDetails.ShouldSatisfyUserNotFound(
-				r => r.Id,
-				request);
+				request,
+				r => r.Id);
 		}
 
 		public void ShouldSatisfyUserNotFound(
 			DeleteUserCommandRequest request)
 		{
 			problemDetails.ShouldSatisfyUserNotFound(
-				r => r.Id,
-				request);
+				request,
+				r => r.Id);
 		}
 
 		public void ShouldSatisfyUserAlreadyExists(
 			AddUserCommandRequest request)
 		{
 			problemDetails.ShouldSatisfyUserAlreadyExists(
-				r => r.Id,
-				request);
+				request,
+				r => r.Id);
 		}
 
 		public void ShouldSatisfyUserNameAlreadyExists(
 			AddUserCommandRequest request)
 		{
 			problemDetails.ShouldSatisfyUserNameAlreadyExists(
-				r => r.Name,
-				request);
+				request,
+				r => r.Name);
 		}
 
 		public void ShouldSatisfyUserNameAlreadyExists(
 			UpdateUserCommandRequest request)
 		{
 			problemDetails.ShouldSatisfyUserNameAlreadyExists(
-				r => r.Name,
-				request);
+				request,
+				r => r.Name);
 		}
 
 		public void ShouldSatisfyUserEmailAlreadyExists(
 			AddUserCommandRequest request)
 		{
 			problemDetails.ShouldSatisfyUserEmailAlreadyExists(
-				r => r.Email,
-				request);
+				request,
+				r => r.Email);
 		}
 
 		public void ShouldSatisfyUserEmailAlreadyExists(
 			UpdateUserCommandRequest request)
 		{
 			problemDetails.ShouldSatisfyUserEmailAlreadyExists(
-				r => r.Email,
-				request);
+				request,
+				r => r.Email);
 		}
 
 		internal void ShouldSatisfyUserNotFound<TRequest>(
-			Func<TRequest, string> idPropertyExpression,
-			TRequest request)
+			TRequest request,
+			Func<TRequest, string> idPropertyExpression)
 		{
 			problemDetails.ShouldSatisfyNotFound(
 				UserExceptionErrorMessages.GetNotFoundMessage(new(idPropertyExpression(request))));
 		}
 
 		internal void ShouldSatisfyUserAlreadyExists<TRequest>(
-			Func<TRequest, string> idPropertyExpression,
-			TRequest request)
+			TRequest request,
+			Func<TRequest, string> idPropertyExpression)
 		{
 			problemDetails.ShouldSatisfyBadRequest(
 				UserExceptionErrorMessages.GetAlreadyExistsMessage(new(idPropertyExpression(request))));
 		}
 
 		internal void ShouldSatisfyUserNameAlreadyExists<TRequest>(
-			Func<TRequest, string> namePropertyExpression,
-			TRequest request)
+			TRequest request,
+			Func<TRequest, string> namePropertyExpression)
 		{
 			problemDetails.ShouldSatisfyBadRequest(
 				UserExceptionErrorMessages.GetNameAlreadyExistsMessage(new(namePropertyExpression(request))));
 		}
 
 		internal void ShouldSatisfyUserEmailAlreadyExists<TRequest>(
-			Func<TRequest, string> emailPropertyExpression,
-			TRequest request)
+			TRequest request,
+			Func<TRequest, string> emailPropertyExpression)
 		{
 			problemDetails.ShouldSatisfyBadRequest(
 				UserExceptionErrorMessages.GetEmailAlreadyExistsMessage(new(emailPropertyExpression(request))));

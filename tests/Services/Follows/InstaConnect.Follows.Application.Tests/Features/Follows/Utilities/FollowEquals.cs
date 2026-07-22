@@ -111,8 +111,8 @@ public static class FollowEquals
 	extension(AddFollowCommandResponse response)
 	{
 		public bool Matches(
-		Follow follow,
-		AddFollowCommandRequest request)
+		AddFollowCommandRequest request,
+		Follow follow)
 		{
 			return response.Response.Matches(follow.Id);
 		}
@@ -120,39 +120,39 @@ public static class FollowEquals
 
 	extension(GetFollowByIdQueryResponse response)
 	{
-		public bool Matches(Follow follow, GetFollowByIdQueryRequest request)
+		public bool Matches(GetFollowByIdQueryRequest request, Follow follow)
 		{
-			return response.Response.MatchesFull(follow, request);
+			return response.Response.MatchesFull(request, follow);
 		}
 	}
 
 	extension(GetAllFollowsQueryResponse response)
 	{
 		public bool Matches(
+		GetAllFollowsQueryRequest request,
 		User follower,
-		ICollection<Follow> follows,
-		GetAllFollowsQueryRequest request)
+		ICollection<Follow> follows)
 		{
 			return response.Response.MatchesWithoutFollowing(
-					   (response, follow) => response.MatchesWithoutFollower(follow, request),
+					   request,
+					   (response, follow) => response.MatchesWithoutFollower(request, follow),
 					   follow => follow.MatchesFilter(request),
 					   follower,
-					   follows,
-					   request);
+					   follows);
 		}
 
 		public bool Matches(
+			GetAllFollowsQueryRequest request,
 			User follower,
 			ICollection<Follow> follows,
-			GetAllFollowsQueryRequest request,
 			ISortEnumTermTransformer<Follow> termTransformer)
 		{
 			return response.Response.MatchesWithoutFollowing(
-					   (response, follow) => response.MatchesWithoutFollower(follow, request),
+					   request,
+					   (response, follow) => response.MatchesWithoutFollower(request, follow),
 					   follow => follow.MatchesFilter(request),
 					   follower,
 					   follows,
-					   request,
 					   termTransformer);
 		}
 	}
@@ -160,30 +160,30 @@ public static class FollowEquals
 	extension(GetAllFollowsForFollowingQueryResponse response)
 	{
 		public bool Matches(
+		GetAllFollowsForFollowingQueryRequest request,
 		User following,
-		ICollection<Follow> follows,
-		GetAllFollowsForFollowingQueryRequest request)
+		ICollection<Follow> follows)
 		{
 			return response.Response.MatchesWithoutFollower(
-					   (response, follow) => response.MatchesWithoutFollowing(follow, request),
+					   request,
+					   (response, follow) => response.MatchesWithoutFollowing(request, follow),
 					   follow => follow.MatchesFilter(request),
 					   following,
-					   follows,
-					   request);
+					   follows);
 		}
 
 		public bool Matches(
+			GetAllFollowsForFollowingQueryRequest request,
 			User following,
 			ICollection<Follow> follows,
-			GetAllFollowsForFollowingQueryRequest request,
 			ISortEnumTermTransformer<Follow> termTransformer)
 		{
 			return response.Response.MatchesWithoutFollower(
-					   (response, follow) => response.MatchesWithoutFollowing(follow, request),
+					   request,
+					   (response, follow) => response.MatchesWithoutFollowing(request, follow),
 					   follow => follow.MatchesFilter(request),
 					   following,
 					   follows,
-					   request,
 					   termTransformer);
 		}
 	}
@@ -220,7 +220,7 @@ public static class FollowEquals
 
 	extension(FollowQueryResponse? response)
 	{
-		public bool MatchesFull<TRequest>(Follow? follow, TRequest request)
+		public bool MatchesFull<TRequest>(TRequest request, Follow? follow)
 		where TRequest : ICurrentUserableQueryRequest
 		{
 			return response != null &&
@@ -232,7 +232,7 @@ public static class FollowEquals
 				   response.Follower.MatchesFull(follow.Follower);
 		}
 
-		public bool MatchesWithoutFollowing<TRequest>(Follow? follow, TRequest request)
+		public bool MatchesWithoutFollowing<TRequest>(TRequest request, Follow? follow)
 			where TRequest : ICurrentUserableQueryRequest
 		{
 			return response != null &&
@@ -244,7 +244,7 @@ public static class FollowEquals
 				   response.Follower.MatchesFull(follow.Follower);
 		}
 
-		public bool MatchesWithoutFollower<TRequest>(Follow? follow, TRequest request)
+		public bool MatchesWithoutFollower<TRequest>(TRequest request, Follow? follow)
 			where TRequest : ICurrentUserableQueryRequest
 		{
 			return response != null &&
@@ -260,11 +260,11 @@ public static class FollowEquals
 	extension(FollowCollectionQueryResponse response)
 	{
 		public bool MatchesWithoutFollowing<TRequest>(
+		TRequest request,
 		Func<FollowQueryResponse, Follow, bool> matches,
 		Func<Follow, bool> matchesFilter,
 		User follower,
-		ICollection<Follow> follows,
-		TRequest request)
+		ICollection<Follow> follows)
 		where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
 			return response.MatchesCollectionResponse(request, follows.Count(matchesFilter)) &&
@@ -279,11 +279,11 @@ public static class FollowEquals
 		}
 
 		public bool MatchesWithoutFollowing<TRequest>(
+			TRequest request,
 			Func<FollowQueryResponse, Follow, bool> matches,
 			Func<Follow, bool> matchesFilter,
 			User follower,
 			ICollection<Follow> follows,
-			TRequest request,
 			ISortEnumTermTransformer<Follow> termTransformer)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
@@ -298,11 +298,11 @@ public static class FollowEquals
 		}
 
 		public bool MatchesWithoutFollower<TRequest>(
+			TRequest request,
 			Func<FollowQueryResponse, Follow, bool> matches,
 			Func<Follow, bool> matchesFilter,
 			User following,
-			ICollection<Follow> follows,
-			TRequest request)
+			ICollection<Follow> follows)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
 			return response.MatchesCollectionResponse(request, follows.Count(matchesFilter)) &&
@@ -317,11 +317,11 @@ public static class FollowEquals
 		}
 
 		public bool MatchesWithoutFollower<TRequest>(
+			TRequest request,
 			Func<FollowQueryResponse, Follow, bool> matches,
 			Func<Follow, bool> matchesFilter,
 			User following,
 			ICollection<Follow> follows,
-			TRequest request,
 			ISortEnumTermTransformer<Follow> termTransformer)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{

@@ -14,7 +14,7 @@ public static class ChatMockSetups
 		{
 			sender
 				.SendAsync(ChatMatcher.IsGetAllChatsQueryRequest(request), cancellationToken)
-				.ReturnsTaskResponse(chats.ToResponse(participantOne, request));
+				.ReturnsTaskResponse(chats.ToResponse(request, participantOne));
 		}
 
 		public void SetupGetByIdQueryRequest(

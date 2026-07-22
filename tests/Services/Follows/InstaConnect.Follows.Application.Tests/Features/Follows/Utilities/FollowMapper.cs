@@ -58,10 +58,10 @@ public static class FollowMapper
 	extension(ICollection<Follow> follows)
 	{
 		internal FollowCollectionResponse ToResponseWithoutFollowing<TRequest>(
+		TRequest request,
 		User follower,
 		Func<TRequest, Follow, bool> filter,
-		Func<TRequest, Follow, FollowResponse> transform,
-		TRequest request)
+		Func<TRequest, Follow, FollowResponse> transform)
 		where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
 			var paginator = new Paginator();
@@ -78,10 +78,10 @@ public static class FollowMapper
 		}
 
 		internal FollowCollectionResponse ToResponseWithoutFollower<TRequest>(
+			TRequest request,
 			User following,
 			Func<TRequest, Follow, bool> filter,
-			Func<TRequest, Follow, FollowResponse> transform,
-			TRequest request)
+			Func<TRequest, Follow, FollowResponse> transform)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
 			var paginator = new Paginator();
@@ -98,25 +98,25 @@ public static class FollowMapper
 		}
 
 		public FollowCollectionResponse ToResponse(
-			User follower,
-			GetAllFollowsQueryRequest request)
+			GetAllFollowsQueryRequest request,
+			User follower)
 		{
 			return follows.ToResponseWithoutFollowing(
+				request,
 				follower,
 				(request, follow) => follow.MatchesFilter(request),
-				(request, follow) => follow.ToResponseWithoutFollower(request),
-				request);
+				(request, follow) => follow.ToResponseWithoutFollower(request));
 		}
 
 		public FollowCollectionResponse ToResponse(
-			User following,
-			GetAllFollowsForFollowingQueryRequest request)
+			GetAllFollowsForFollowingQueryRequest request,
+			User following)
 		{
 			return follows.ToResponseWithoutFollower(
+				request,
 				following,
 				(request, follow) => follow.MatchesFilter(request),
-				(request, follow) => follow.ToResponseWithoutFollowing(request),
-				request);
+				(request, follow) => follow.ToResponseWithoutFollowing(request));
 		}
 	}
 }

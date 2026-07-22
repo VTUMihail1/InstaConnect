@@ -49,10 +49,10 @@ public static class ChatMapper
 	extension(ICollection<Chat> chats)
 	{
 		internal ChatCollectionResponse ToResponseWithoutParticipantOne<TRequest>(
+			TRequest request,
 			User participantTwo,
 			Func<TRequest, Chat, bool> filter,
-			Func<TRequest, Chat, ChatResponse> transform,
-			TRequest request)
+			Func<TRequest, Chat, ChatResponse> transform)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
 			var paginator = new Paginator();
@@ -69,10 +69,10 @@ public static class ChatMapper
 		}
 
 		internal ChatCollectionResponse ToResponseWithoutParticipantTwo<TRequest>(
+			TRequest request,
 			User participantOne,
 			Func<TRequest, Chat, bool> filter,
-			Func<TRequest, Chat, ChatResponse> transform,
-			TRequest request)
+			Func<TRequest, Chat, ChatResponse> transform)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
 			var paginator = new Paginator();
@@ -89,14 +89,14 @@ public static class ChatMapper
 		}
 
 		public ChatCollectionResponse ToResponse(
-			User participantOne,
-			GetAllChatsQueryRequest request)
+			GetAllChatsQueryRequest request,
+			User participantOne)
 		{
 			return chats.ToResponseWithoutParticipantTwo(
+				request,
 				participantOne,
 				(request, chat) => chat.MatchesFilter(request),
-				(request, chat) => chat.ToResponseWithoutParticipantOne(),
-				request);
+				(request, chat) => chat.ToResponseWithoutParticipantOne());
 		}
 	}
 }

@@ -107,8 +107,8 @@ public static class CommonEquals
 		public bool MatchesPaginatable<TQueryRequest>(TQueryRequest request)
 		where TQueryRequest : IPaginatableQueryRequest
 		{
-			return request.Page == request.Page &&
-				   request.PageSize == request.PageSize;
+			return query.Pagination.Page == request.Page &&
+				   query.Pagination.PageSize == request.PageSize;
 		}
 	}
 }

@@ -10,11 +10,11 @@ public static class CommonCollectionFiltering
 	extension<TEntity>(ICollection<TEntity> entities)
 		where TEntity : IEntity
 	{
-		public IDictionary<TKey, TEntity> FilterToDictionary<TRequest, TKey>(
-			TRequest request,
+		public IDictionary<TKey, TEntity> FilterToDictionary<TQuery, TKey>(
+			TQuery request,
 			Func<TEntity, bool> filter,
 			Func<TEntity, TKey> entityKey)
-			where TRequest : IPaginationQuery
+			where TQuery : IPaginationQuery
 			where TKey : notnull
 		{
 			var paginator = new Paginator();
@@ -27,11 +27,11 @@ public static class CommonCollectionFiltering
 				.ToDictionary(entityKey);
 		}
 
-		public ICollection<TEntity> Filter<TRequest>(
-			TRequest request,
+		public ICollection<TEntity> Filter<TQuery>(
+			TQuery request,
 			ISortEnumTermTransformer<TEntity> termTransformer,
 			Func<TEntity, bool> filter)
-			where TRequest : IPaginationQuery
+			where TQuery : IPaginationQuery
 		{
 			var paginator = new Paginator();
 			var offset = paginator.GetOffset(request.Page, request.PageSize);
@@ -44,11 +44,11 @@ public static class CommonCollectionFiltering
 				.Take(request.PageSize)];
 		}
 
-		public ICollection<TResponse> Filter<TRequest, TResponse>(
-			TRequest request,
+		public ICollection<TResponse> Filter<TQuery, TResponse>(
+			TQuery request,
 			Func<TEntity, bool> filter,
 			Func<TEntity, TResponse> select)
-			where TRequest : IPaginationQuery
+			where TQuery : IPaginationQuery
 		{
 			var paginator = new Paginator();
 			var offset = paginator.GetOffset(request.Page, request.PageSize);

@@ -8,102 +8,102 @@ public static class FollowMatchAssertions
 	extension(AddFollowApiResponse response)
 	{
 		public void ShouldSatisfy(
-		Follow follow,
-		AddFollowApiRequest request)
+		AddFollowApiRequest request,
+		Follow follow)
 		{
-			response.ShouldSatisfy(p => p.Matches(follow, request));
+			response.ShouldSatisfy(p => p.Matches(request, follow));
 		}
 	}
 
 	extension(GetFollowByIdApiResponse response)
 	{
 		public void ShouldSatisfy(
-		Follow follow,
-		GetFollowByIdApiRequest request)
+		GetFollowByIdApiRequest request,
+		Follow follow)
 		{
-			response.ShouldSatisfy(p => p.Matches(follow, request));
+			response.ShouldSatisfy(p => p.Matches(request, follow));
 		}
 	}
 
 	extension(GetAllFollowsApiResponse response)
 	{
 		public void ShouldSatisfy(
+		GetAllFollowsApiRequest request,
 		User follower,
-		ICollection<Follow> follows,
-		GetAllFollowsApiRequest request)
+		ICollection<Follow> follows)
 		{
-			response.ShouldSatisfy(p => p.Matches(follower, follows, request));
+			response.ShouldSatisfy(p => p.Matches(request, follower, follows));
 		}
 
 		public void ShouldSatisfy(
+			GetAllFollowsApiRequest request,
 			User follower,
 			ICollection<Follow> follows,
-			GetAllFollowsApiRequest request,
 			ISortEnumTermTransformer<Follow> termTransformer)
 		{
-			response.ShouldSatisfy(p => p.Matches(follower, follows, request, termTransformer));
+			response.ShouldSatisfy(p => p.Matches(request, follower, follows, termTransformer));
 		}
 	}
 
 	extension(GetAllFollowsForFollowingApiResponse response)
 	{
 		public void ShouldSatisfy(
+		GetAllFollowsForFollowingApiRequest request,
 		User following,
-		ICollection<Follow> follows,
-		GetAllFollowsForFollowingApiRequest request)
+		ICollection<Follow> follows)
 		{
-			response.ShouldSatisfy(p => p.Matches(following, follows, request));
+			response.ShouldSatisfy(p => p.Matches(request, following, follows));
 		}
 
 		public void ShouldSatisfy(
+			GetAllFollowsForFollowingApiRequest request,
 			User following,
 			ICollection<Follow> follows,
-			GetAllFollowsForFollowingApiRequest request,
 			ISortEnumTermTransformer<Follow> termTransformer)
 		{
-			response.ShouldSatisfy(p => p.Matches(following, follows, request, termTransformer));
+			response.ShouldSatisfy(p => p.Matches(request, following, follows, termTransformer));
 		}
 	}
 
 	extension(ActionResult<AddFollowApiResponse> response)
 	{
 		public void ShouldSatisfy(
-		Follow follow,
-		AddFollowApiRequest request)
+		AddFollowApiRequest request,
+		Follow follow)
 		{
-			response.ShouldBeActionResultAndSatisfy(p => p.Matches(follow, request));
+			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, follow));
 		}
 	}
 
 	extension(ActionResult<GetFollowByIdApiResponse> response)
 	{
 		public void ShouldSatisfy(
-		Follow follow,
-		GetFollowByIdApiRequest request)
+		GetFollowByIdApiRequest request,
+		Follow follow)
 		{
-			response.ShouldBeActionResultAndSatisfy(p => p.Matches(follow, request));
+			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, follow));
 		}
 	}
 
 	extension(ActionResult<GetAllFollowsApiResponse> response)
 	{
 		public void ShouldSatisfy(
+		GetAllFollowsApiRequest request,
 		User follower,
-		ICollection<Follow> follows,
-		GetAllFollowsApiRequest request)
+		ICollection<Follow> follows)
 		{
-			response.ShouldBeActionResultAndSatisfy(p => p.Matches(follower, follows, request));
+			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, follower, follows));
 		}
 	}
 
 	extension(ActionResult<GetAllFollowsForFollowingApiResponse> response)
 	{
 		public void ShouldSatisfy(
+		GetAllFollowsForFollowingApiRequest request,
 		User following,
-		ICollection<Follow> follows,
-		GetAllFollowsForFollowingApiRequest request)
+		ICollection<Follow> follows)
 		{
-			response.ShouldBeActionResultAndSatisfy(p => p.Matches(following, follows, request));
+			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, following, follows));
 		}
 	}
 

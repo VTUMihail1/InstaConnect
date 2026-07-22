@@ -10,121 +10,121 @@ public static class PostCommentLikeProblemDetailsAssertions
 		AddPostCommentLikeApiRequest request)
 		{
 			problemDetails.ShouldSatisfyUserNotFound(
-				r => r.UserId,
-				request);
+				request,
+				r => r.UserId);
 		}
 
 		public void ShouldSatisfyUserNotFound(
 			GetAllPostCommentLikesForUserApiRequest request)
 		{
 			problemDetails.ShouldSatisfyUserNotFound(
-				r => r.UserId,
-				request);
+				request,
+				r => r.UserId);
 		}
 
 		public void ShouldSatisfyPostNotFound(
 			AddPostCommentLikeApiRequest request)
 		{
 			problemDetails.ShouldSatisfyPostNotFound(
-				r => r.Id,
-				request);
+				request,
+				r => r.Id);
 		}
 
 		public void ShouldSatisfyPostNotFound(
 			DeletePostCommentLikeApiRequest request)
 		{
 			problemDetails.ShouldSatisfyPostNotFound(
-				r => r.Id,
-				request);
+				request,
+				r => r.Id);
 		}
 
 		public void ShouldSatisfyPostNotFound(
 			GetPostCommentLikeByIdApiRequest request)
 		{
 			problemDetails.ShouldSatisfyPostNotFound(
-				r => r.Id,
-				request);
+				request,
+				r => r.Id);
 		}
 
 		public void ShouldSatisfyPostNotFound(
 			GetAllPostCommentLikesApiRequest request)
 		{
 			problemDetails.ShouldSatisfyPostNotFound(
-				r => r.Id,
-				request);
+				request,
+				r => r.Id);
 		}
 
 		public void ShouldSatisfyPostCommentNotFound(
 			AddPostCommentLikeApiRequest request)
 		{
 			problemDetails.ShouldSatisfyPostCommentNotFound(
+				request,
 				r => r.Id,
-				r => r.CommentId,
-				request);
+				r => r.CommentId);
 		}
 
 		public void ShouldSatisfyPostCommentNotFound(
 			DeletePostCommentLikeApiRequest request)
 		{
 			problemDetails.ShouldSatisfyPostCommentNotFound(
+				request,
 				r => r.Id,
-				r => r.CommentId,
-				request);
+				r => r.CommentId);
 		}
 
 		public void ShouldSatisfyPostCommentNotFound(
 			GetPostCommentLikeByIdApiRequest request)
 		{
 			problemDetails.ShouldSatisfyPostCommentNotFound(
+				request,
 				r => r.Id,
-				r => r.CommentId,
-				request);
+				r => r.CommentId);
 		}
 
 		public void ShouldSatisfyPostCommentNotFound(
 			GetAllPostCommentLikesApiRequest request)
 		{
 			problemDetails.ShouldSatisfyPostCommentNotFound(
+				request,
 				r => r.Id,
-				r => r.CommentId,
-				request);
+				r => r.CommentId);
 		}
 
 		public void ShouldSatisfyPostCommentLikeNotFound(
 			DeletePostCommentLikeApiRequest request)
 		{
 			problemDetails.ShouldSatisfyPostCommentLikeNotFound(
+				request,
 				r => r.Id,
 				r => r.CommentId,
-				r => r.UserId,
-				request);
+				r => r.UserId);
 		}
 
 		public void ShouldSatisfyPostCommentLikeNotFound(
 			GetPostCommentLikeByIdApiRequest request)
 		{
 			problemDetails.ShouldSatisfyPostCommentLikeNotFound(
+				request,
 				r => r.Id,
 				r => r.CommentId,
-				r => r.UserId,
-				request);
+				r => r.UserId);
 		}
 
 		public void ShouldSatisfyPostCommentLikeAlreadyExists(
 			AddPostCommentLikeApiRequest request)
 		{
 			problemDetails.ShouldSatisfyPostCommentLikeAlreadyExists(
+				request,
 				r => r.Id,
 				r => r.CommentId,
-				r => r.UserId,
-				request);
+				r => r.UserId);
 		}
 
 		internal void ShouldSatisfyPostCommentLikeNotFound<TRequest>(
+			TRequest request,
 			Func<TRequest, string> idPropertyExpression,
 			Func<TRequest, string> commentIdPropertyExpression,
-			Func<TRequest, string> userIdPropertyExpression,
-			TRequest request)
+			Func<TRequest, string> userIdPropertyExpression)
 		{
 			problemDetails.ShouldSatisfyNotFound(
 				PostCommentLikeExceptionErrorMessages.GetNotFoundMessage(
@@ -136,10 +136,10 @@ public static class PostCommentLikeProblemDetailsAssertions
 		}
 
 		internal void ShouldSatisfyPostCommentLikeAlreadyExists<TRequest>(
+			TRequest request,
 			Func<TRequest, string> idPropertyExpression,
 			Func<TRequest, string> commentIdPropertyExpression,
-			Func<TRequest, string> userIdPropertyExpression,
-			TRequest request)
+			Func<TRequest, string> userIdPropertyExpression)
 		{
 			problemDetails.ShouldSatisfyBadRequest(
 				PostCommentLikeExceptionErrorMessages.GetAlreadyExistsMessage(

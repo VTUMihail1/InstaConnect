@@ -65,10 +65,10 @@ public static class PostMapper
 	extension(ICollection<Post> posts)
 	{
 		internal PostCollectionQueryResponse ToFullQueryResponse<TRequest>(
+		TRequest request,
 		User user,
 		Func<TRequest, Post, bool> filter,
-		Func<TRequest, Post, PostQueryResponse> transform,
-		TRequest request)
+		Func<TRequest, Post, PostQueryResponse> transform)
 		where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
 			var paginator = new Paginator();
@@ -84,9 +84,9 @@ public static class PostMapper
 		}
 
 		internal PostCollectionQueryResponse ToQueryResponseWithoutUser<TRequest>(
+			TRequest request,
 			Func<TRequest, Post, bool> filter,
-			Func<TRequest, Post, PostQueryResponse> transform,
-			TRequest request)
+			Func<TRequest, Post, PostQueryResponse> transform)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
 			var paginator = new Paginator();
@@ -104,19 +104,21 @@ public static class PostMapper
 		public GetAllPostsQueryResponse ToResponse(
 			GetAllPostsApiRequest request)
 		{
-			return new(posts.ToQueryResponseWithoutUser((request, post) => post.MatchesFilter(request),
-												   (request, post) => post.ToFullQueryResponse(request),
-												   request));
+			return new(posts.ToQueryResponseWithoutUser(
+												   request,
+												   (request, post) => post.MatchesFilter(request),
+												   (request, post) => post.ToFullQueryResponse(request)));
 		}
 
 		public GetAllPostsForUserQueryResponse ToResponse(
-			User user,
-			GetAllPostsForUserApiRequest request)
+			GetAllPostsForUserApiRequest request,
+			User user)
 		{
-			return new(posts.ToFullQueryResponse(user,
+			return new(posts.ToFullQueryResponse(
+											request,
+											user,
 											(request, post) => post.MatchesFilter(request),
-											(request, post) => post.ToQueryResponseWithoutUser(request),
-											request));
+											(request, post) => post.ToQueryResponseWithoutUser(request)));
 		}
 	}
 }

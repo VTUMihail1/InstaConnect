@@ -77,8 +77,8 @@ public static class UserClaimMapper
 		}
 
 		public GetAllUserClaimsQueryResponse ToResponse(
-			User user,
-			GetAllUserClaimsApiRequest request)
+			GetAllUserClaimsApiRequest request,
+			User user)
 		{
 			return new(userClaims.ToFullQueryResponse(
 				request,

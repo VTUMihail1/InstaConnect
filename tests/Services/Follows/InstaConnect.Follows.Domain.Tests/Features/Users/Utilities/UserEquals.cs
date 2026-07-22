@@ -8,15 +8,15 @@ public static class UserEquals
 	extension(UserId response)
 	{
 		public bool Matches(
-		User user,
-		AddUserCommand command)
+		AddUserCommand command,
+		User user)
 		{
 			return response.Matches(command.Id);
 		}
 
 		public bool Matches(
-		User user,
-		UpdateUserCommand command)
+		UpdateUserCommand command,
+		User user)
 		{
 			return response.Matches(command.Id);
 		}

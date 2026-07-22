@@ -70,8 +70,8 @@ public static class UserClaimMapper
 		}
 
 		public UserClaimCollectionResponse ToResponse(
-			User user,
-			GetAllUserClaimsQueryRequest request)
+			GetAllUserClaimsQueryRequest request,
+			User user)
 		{
 			return userClaims.ToFullResponse(
 				request,

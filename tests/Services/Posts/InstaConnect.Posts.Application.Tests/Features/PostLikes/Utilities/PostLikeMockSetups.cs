@@ -12,7 +12,7 @@ public static class PostLikeMockSetups
 		{
 			likeService
 				.GetAllAsync(PostLikeMatcher.IsGetAllPostLikesQuery(request), cancellationToken)
-				.ReturnsTaskResponse(postLikes.ToResponse(post, request));
+				.ReturnsTaskResponse(postLikes.ToResponse(request, post));
 		}
 
 		public void SetupGetAllForUserQuery(
@@ -23,7 +23,7 @@ public static class PostLikeMockSetups
 		{
 			likeService
 				.GetAllForUserAsync(PostLikeMatcher.IsGetAllPostLikesForUserQuery(request), cancellationToken)
-				.ReturnsTaskResponse(postLikes.ToResponse(user, request));
+				.ReturnsTaskResponse(postLikes.ToResponse(request, user));
 		}
 
 		public void SetupGetByIdQuery(

@@ -113,8 +113,8 @@ public static class FollowEquals
 	extension(AddFollowApiResponse response)
 	{
 		public bool Matches(
-		Follow follow,
-		AddFollowApiRequest request)
+		AddFollowApiRequest request,
+		Follow follow)
 		{
 			return response.Response.Matches(follow.Id);
 		}
@@ -122,39 +122,39 @@ public static class FollowEquals
 
 	extension(GetFollowByIdApiResponse response)
 	{
-		public bool Matches(Follow follow, GetFollowByIdApiRequest request)
+		public bool Matches(GetFollowByIdApiRequest request, Follow follow)
 		{
-			return response.Response.MatchesFull(follow, request);
+			return response.Response.MatchesFull(request, follow);
 		}
 	}
 
 	extension(GetAllFollowsApiResponse response)
 	{
 		public bool Matches(
+		GetAllFollowsApiRequest request,
 		User follower,
-		ICollection<Follow> follows,
-		GetAllFollowsApiRequest request)
+		ICollection<Follow> follows)
 		{
 			return response.Response.MatchesWithoutFollowing(
-					   (response, follow) => response.MatchesWithoutFollower(follow, request),
+					   request,
+					   (response, follow) => response.MatchesWithoutFollower(request, follow),
 					   follow => follow.MatchesFilter(request),
 					   follower,
-					   follows,
-					   request);
+					   follows);
 		}
 
 		public bool Matches(
+			GetAllFollowsApiRequest request,
 			User follower,
 			ICollection<Follow> follows,
-			GetAllFollowsApiRequest request,
 			ISortEnumTermTransformer<Follow> termTransformer)
 		{
 			return response.Response.MatchesWithoutFollowing(
-					   (response, follow) => response.MatchesWithoutFollower(follow, request),
+					   request,
+					   (response, follow) => response.MatchesWithoutFollower(request, follow),
 					   follow => follow.MatchesFilter(request),
 					   follower,
 					   follows,
-					   request,
 					   termTransformer);
 		}
 	}
@@ -162,30 +162,30 @@ public static class FollowEquals
 	extension(GetAllFollowsForFollowingApiResponse response)
 	{
 		public bool Matches(
+		GetAllFollowsForFollowingApiRequest request,
 		User following,
-		ICollection<Follow> follows,
-		GetAllFollowsForFollowingApiRequest request)
+		ICollection<Follow> follows)
 		{
 			return response.Response.MatchesWithoutFollower(
-					   (response, follow) => response.MatchesWithoutFollowing(follow, request),
+					   request,
+					   (response, follow) => response.MatchesWithoutFollowing(request, follow),
 					   follow => follow.MatchesFilter(request),
 					   following,
-					   follows,
-					   request);
+					   follows);
 		}
 
 		public bool Matches(
+			GetAllFollowsForFollowingApiRequest request,
 			User following,
 			ICollection<Follow> follows,
-			GetAllFollowsForFollowingApiRequest request,
 			ISortEnumTermTransformer<Follow> termTransformer)
 		{
 			return response.Response.MatchesWithoutFollower(
-					   (response, follow) => response.MatchesWithoutFollowing(follow, request),
+					   request,
+					   (response, follow) => response.MatchesWithoutFollowing(request, follow),
 					   follow => follow.MatchesFilter(request),
 					   following,
 					   follows,
-					   request,
 					   termTransformer);
 		}
 	}
@@ -222,7 +222,7 @@ public static class FollowEquals
 
 	extension(FollowApiResponse? response)
 	{
-		public bool MatchesFull<TRequest>(Follow? follow, TRequest request)
+		public bool MatchesFull<TRequest>(TRequest request, Follow? follow)
 		where TRequest : ICurrentUserableApiRequest
 		{
 			return response != null &&
@@ -234,7 +234,7 @@ public static class FollowEquals
 				   response.Follower.MatchesFull(follow.Follower);
 		}
 
-		public bool MatchesWithoutFollowing<TRequest>(Follow? follow, TRequest request)
+		public bool MatchesWithoutFollowing<TRequest>(TRequest request, Follow? follow)
 			where TRequest : ICurrentUserableApiRequest
 		{
 			return response != null &&
@@ -246,7 +246,7 @@ public static class FollowEquals
 				   response.Follower.MatchesFull(follow.Follower);
 		}
 
-		public bool MatchesWithoutFollower<TRequest>(Follow? follow, TRequest request)
+		public bool MatchesWithoutFollower<TRequest>(TRequest request, Follow? follow)
 			where TRequest : ICurrentUserableApiRequest
 		{
 			return response != null &&
@@ -262,11 +262,11 @@ public static class FollowEquals
 	extension(FollowCollectionApiResponse response)
 	{
 		public bool MatchesWithoutFollowing<TRequest>(
+		TRequest request,
 		Func<FollowApiResponse, Follow, bool> matches,
 		Func<Follow, bool> matchesFilter,
 		User follower,
-		ICollection<Follow> follows,
-		TRequest request)
+		ICollection<Follow> follows)
 		where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
 			return response.MatchesCollectionResponse(request, follows.Count(matchesFilter)) &&
@@ -281,11 +281,11 @@ public static class FollowEquals
 		}
 
 		public bool MatchesWithoutFollowing<TRequest>(
+			TRequest request,
 			Func<FollowApiResponse, Follow, bool> matches,
 			Func<Follow, bool> matchesFilter,
 			User follower,
 			ICollection<Follow> follows,
-			TRequest request,
 			ISortEnumTermTransformer<Follow> termTransformer)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
@@ -300,11 +300,11 @@ public static class FollowEquals
 		}
 
 		public bool MatchesWithoutFollower<TRequest>(
+			TRequest request,
 			Func<FollowApiResponse, Follow, bool> matches,
 			Func<Follow, bool> matchesFilter,
 			User following,
-			ICollection<Follow> follows,
-			TRequest request)
+			ICollection<Follow> follows)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
 			return response.MatchesCollectionResponse(request, follows.Count(matchesFilter)) &&
@@ -319,11 +319,11 @@ public static class FollowEquals
 		}
 
 		public bool MatchesWithoutFollower<TRequest>(
+			TRequest request,
 			Func<FollowApiResponse, Follow, bool> matches,
 			Func<Follow, bool> matchesFilter,
 			User following,
 			ICollection<Follow> follows,
-			TRequest request,
 			ISortEnumTermTransformer<Follow> termTransformer)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{

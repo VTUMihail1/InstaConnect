@@ -126,8 +126,8 @@ public static class PostCommentEquals
 
 	extension(PostCommentResponse? response)
 	{
-		public bool MatchesFull<T>(T request, PostComment? postComment)
-		where T : ICurrentUserableQuery
+		public bool MatchesFull<TQuery>(TQuery request, PostComment? postComment)
+		where TQuery : ICurrentUserableQuery
 		{
 			return response != null &&
 				   postComment != null &&
@@ -141,8 +141,8 @@ public static class PostCommentEquals
 				   response.Post.MatchesFull(request, postComment.Post);
 		}
 
-		public bool MatchesWithoutUser<T>(T request, PostComment? postComment)
-			where T : ICurrentUserableQuery
+		public bool MatchesWithoutUser<TQuery>(TQuery request, PostComment? postComment)
+			where TQuery : ICurrentUserableQuery
 		{
 			return response != null &&
 				   postComment != null &&
@@ -156,8 +156,8 @@ public static class PostCommentEquals
 				   response.Post.MatchesFull(request, postComment.Post);
 		}
 
-		public bool MatchesWithoutPost<T>(T request, PostComment? postComment)
-			where T : ICurrentUserableQuery
+		public bool MatchesWithoutPost<TQuery>(TQuery request, PostComment? postComment)
+			where TQuery : ICurrentUserableQuery
 		{
 			return response != null &&
 				   postComment != null &&
@@ -179,13 +179,13 @@ public static class PostCommentEquals
 
 	extension(PostCommentCollectionResponse response)
 	{
-		public bool MatchesWithoutUser<T>(
-		T request,
+		public bool MatchesWithoutUser<TQuery>(
+		TQuery request,
 		Func<PostCommentResponse, PostComment, bool> matches,
 		Func<PostComment, bool> matchesFilter,
 		Post post,
 		ICollection<PostComment> postComments)
-		where T : ICurrentUserableQuery, IPaginatableQuery<PostCommentsPaginationQuery>
+		where TQuery : ICurrentUserableQuery, IPaginatableQuery<PostCommentsPaginationQuery>
 		{
 			return response.MatchesCollectionResponse(request.Pagination, postComments.Count(matchesFilter)) &&
 				   response.User == null &&
@@ -198,14 +198,14 @@ public static class PostCommentEquals
 													matchesFilter);
 		}
 
-		public bool MatchesWithoutUser<T>(
-			T request,
+		public bool MatchesWithoutUser<TQuery>(
+			TQuery request,
 			Func<PostCommentResponse, PostComment, bool> matches,
 			Func<PostComment, bool> matchesFilter,
 			Post post,
 			ICollection<PostComment> postComments,
 			ISortEnumTermTransformer<PostComment> termTransformer)
-			where T : ICurrentUserableQuery, IPaginatableQuery<PostCommentsPaginationQuery>
+			where TQuery : ICurrentUserableQuery, IPaginatableQuery<PostCommentsPaginationQuery>
 		{
 			return response.MatchesCollectionResponse(request.Pagination, postComments.Count(matchesFilter)) &&
 				   response.User == null &&
@@ -217,13 +217,13 @@ public static class PostCommentEquals
 														  matchesFilter);
 		}
 
-		public bool MatchesWithoutPost<T>(
-			T request,
+		public bool MatchesWithoutPost<TQuery>(
+			TQuery request,
 			Func<PostCommentResponse, PostComment, bool> matches,
 			Func<PostComment, bool> matchesFilter,
 			User user,
 			ICollection<PostComment> postComments)
-			where T : ICurrentUserableQuery, IPaginatableQuery<PostCommentsPaginationQuery>
+			where TQuery : ICurrentUserableQuery, IPaginatableQuery<PostCommentsPaginationQuery>
 		{
 			return response.MatchesCollectionResponse(request.Pagination, postComments.Count(matchesFilter)) &&
 				   response.User.MatchesFull(user) &&
@@ -236,14 +236,14 @@ public static class PostCommentEquals
 													matchesFilter);
 		}
 
-		public bool MatchesWithoutPost<T>(
-			T request,
+		public bool MatchesWithoutPost<TQuery>(
+			TQuery request,
 			Func<PostCommentResponse, PostComment, bool> matches,
 			Func<PostComment, bool> matchesFilter,
 			User user,
 			ICollection<PostComment> postComments,
 			ISortEnumTermTransformer<PostComment> termTransformer)
-			where T : ICurrentUserableQuery, IPaginatableQuery<PostCommentsPaginationQuery>
+			where TQuery : ICurrentUserableQuery, IPaginatableQuery<PostCommentsPaginationQuery>
 		{
 			return response.MatchesCollectionResponse(request.Pagination, postComments.Count(matchesFilter)) &&
 				   response.User.MatchesFull(user) &&

@@ -11,15 +11,15 @@ public static class ChatMessageEquals
 	extension(ChatMessageId response)
 	{
 		public bool Matches(
-			ChatMessage chatMessage,
-			AddChatMessageCommand command)
+			AddChatMessageCommand command,
+			ChatMessage chatMessage)
 		{
 			return response.Matches(chatMessage.Id);
 		}
 
 		public bool Matches(
-			ChatMessage chatMessage,
-			UpdateChatMessageCommand command)
+			UpdateChatMessageCommand command,
+			ChatMessage chatMessage)
 		{
 			return response.Matches(chatMessage.Id);
 		}
@@ -128,8 +128,8 @@ public static class ChatMessageEquals
 
 	extension(ChatMessageResponse? response)
 	{
-		public bool MatchesFull<T>(ChatMessage? chatMessage, T request)
-			where T : ICurrentUserableQuery
+		public bool MatchesFull<TQuery>(TQuery request, ChatMessage? chatMessage)
+			where TQuery : ICurrentUserableQuery
 		{
 			return response != null &&
 				   chatMessage != null &&
@@ -139,11 +139,11 @@ public static class ChatMessageEquals
 				   chatMessage.CreatedAtUtc == response.CreatedAtUtc &&
 				   chatMessage.UpdatedAtUtc == response.UpdatedAtUtc &&
 				   response.Sender.MatchesFull(chatMessage.Sender) &&
-				   response.Chat.MatchesFull(chatMessage.Chat, request);
+				   response.Chat.MatchesFull(request, chatMessage.Chat);
 		}
 
-		public bool MatchesFullInverted<T>(ChatMessage? chatMessage, T request)
-			where T : ICurrentUserableQuery
+		public bool MatchesFullInverted<TQuery>(TQuery request, ChatMessage? chatMessage)
+			where TQuery : ICurrentUserableQuery
 		{
 			return response != null &&
 				   chatMessage != null &&
@@ -154,11 +154,11 @@ public static class ChatMessageEquals
 				   chatMessage.CreatedAtUtc == response.CreatedAtUtc &&
 				   chatMessage.UpdatedAtUtc == response.UpdatedAtUtc &&
 				   response.Sender.MatchesFull(chatMessage.Sender) &&
-				   response.Chat.MatchesFullInverted(chatMessage.Chat, request);
+				   response.Chat.MatchesFullInverted(request, chatMessage.Chat);
 		}
 
-		public bool MatchesWithoutChat<T>(ChatMessage? chatMessage, T request)
-			where T : ICurrentUserableQuery
+		public bool MatchesWithoutChat<TQuery>(TQuery request, ChatMessage? chatMessage)
+			where TQuery : ICurrentUserableQuery
 		{
 			return response != null &&
 				   chatMessage != null &&
@@ -171,8 +171,8 @@ public static class ChatMessageEquals
 				   response.Chat == null;
 		}
 
-		public bool MatchesWithoutChatInverted<T>(ChatMessage? chatMessage, T request)
-			where T : ICurrentUserableQuery
+		public bool MatchesWithoutChatInverted<TQuery>(TQuery request, ChatMessage? chatMessage)
+			where TQuery : ICurrentUserableQuery
 		{
 			return response != null &&
 				   chatMessage != null &&
@@ -186,30 +186,30 @@ public static class ChatMessageEquals
 				   response.Chat == null;
 		}
 
-		public bool Matches(ChatMessage chatMessage, GetChatMessageByIdQuery query)
+		public bool Matches(GetChatMessageByIdQuery query, ChatMessage chatMessage)
 		{
-			return response.MatchesFull(chatMessage, query);
+			return response.MatchesFull(query, chatMessage);
 		}
 
-		public bool MatchesInverted(ChatMessage chatMessage, GetChatMessageByIdQuery query)
+		public bool MatchesInverted(GetChatMessageByIdQuery query, ChatMessage chatMessage)
 		{
-			return response.MatchesFullInverted(chatMessage, query);
+			return response.MatchesFullInverted(query, chatMessage);
 		}
 	}
 
 	extension(ChatMessageCollectionResponse response)
 	{
-		public bool MatchesWithoutSender<T>(
+		public bool MatchesWithoutSender<TQuery>(
+			TQuery request,
 			Func<ChatMessageResponse, ChatMessage, bool> matches,
 			Func<ChatMessage, bool> matchesFilter,
 			Chat chat,
-			ICollection<ChatMessage> chatMessages,
-			T request)
-			where T : ICurrentUserableQuery, IPaginatableQuery<ChatMessagesPaginationQuery>
+			ICollection<ChatMessage> chatMessages)
+			where TQuery : ICurrentUserableQuery, IPaginatableQuery<ChatMessagesPaginationQuery>
 		{
 			return response.MatchesCollectionResponse(request.Pagination, chatMessages.Count(matchesFilter)) &&
 				   response.Sender == null &&
-				   response.Chat.MatchesFull(chat, request) &&
+				   response.Chat.MatchesFull(request, chat) &&
 				   response.ChatMessages.MatchesCollection(request.Pagination,
 														   chatMessages,
 														   response => response.Id,
@@ -218,18 +218,18 @@ public static class ChatMessageEquals
 														   matchesFilter);
 		}
 
-		public bool MatchesWithoutSender<T>(
+		public bool MatchesWithoutSender<TQuery>(
+			TQuery request,
 			Func<ChatMessageResponse, ChatMessage, bool> matches,
 			Func<ChatMessage, bool> matchesFilter,
 			Chat chat,
 			ICollection<ChatMessage> chatMessages,
-			T request,
 			ISortEnumTermTransformer<ChatMessage> termTransformer)
-			where T : ICurrentUserableQuery, IPaginatableQuery<ChatMessagesPaginationQuery>
+			where TQuery : ICurrentUserableQuery, IPaginatableQuery<ChatMessagesPaginationQuery>
 		{
 			return response.MatchesCollectionResponse(request.Pagination, chatMessages.Count(matchesFilter)) &&
 				   response.Sender == null &&
-				   response.Chat.MatchesFull(chat, request) &&
+				   response.Chat.MatchesFull(request, chat) &&
 				   response.ChatMessages.MatchesSortedCollection(request.Pagination,
 																 chatMessages,
 																 matches,
@@ -237,17 +237,17 @@ public static class ChatMessageEquals
 																 matchesFilter);
 		}
 
-		public bool MatchesWithoutSenderInverted<T>(
+		public bool MatchesWithoutSenderInverted<TQuery>(
+			TQuery request,
 			Func<ChatMessageResponse, ChatMessage, bool> matches,
 			Func<ChatMessage, bool> matchesFilter,
 			Chat chat,
-			ICollection<ChatMessage> chatMessages,
-			T request)
-			where T : ICurrentUserableQuery, IPaginatableQuery<ChatMessagesPaginationQuery>
+			ICollection<ChatMessage> chatMessages)
+			where TQuery : ICurrentUserableQuery, IPaginatableQuery<ChatMessagesPaginationQuery>
 		{
 			return response.MatchesCollectionResponse(request.Pagination, chatMessages.Count(matchesFilter)) &&
 				   response.Sender == null &&
-				   response.Chat.MatchesFullInverted(chat, request) &&
+				   response.Chat.MatchesFullInverted(request, chat) &&
 				   response.ChatMessages.MatchesCollection(request.Pagination,
 														   chatMessages,
 														   response => new(new(response.Id.Id.ParticipantTwoId, response.Id.Id.ParticipantOneId), response.Id.MessageId),
@@ -256,18 +256,18 @@ public static class ChatMessageEquals
 														   matchesFilter);
 		}
 
-		public bool MatchesWithoutSenderInverted<T>(
+		public bool MatchesWithoutSenderInverted<TQuery>(
+			TQuery request,
 			Func<ChatMessageResponse, ChatMessage, bool> matches,
 			Func<ChatMessage, bool> matchesFilter,
 			Chat chat,
 			ICollection<ChatMessage> chatMessages,
-			T request,
 			ISortEnumTermTransformer<ChatMessage> termTransformer)
-			where T : ICurrentUserableQuery, IPaginatableQuery<ChatMessagesPaginationQuery>
+			where TQuery : ICurrentUserableQuery, IPaginatableQuery<ChatMessagesPaginationQuery>
 		{
 			return response.MatchesCollectionResponse(request.Pagination, chatMessages.Count(matchesFilter)) &&
 				   response.Sender == null &&
-				   response.Chat.MatchesFullInverted(chat, request) &&
+				   response.Chat.MatchesFullInverted(request, chat) &&
 				   response.ChatMessages.MatchesSortedCollection(request.Pagination,
 																 chatMessages,
 																 matches,
@@ -276,58 +276,58 @@ public static class ChatMessageEquals
 		}
 
 		public bool Matches(
+			GetAllChatMessagesQuery query,
 			Chat chat,
-			ICollection<ChatMessage> chatMessages,
-			GetAllChatMessagesQuery query)
+			ICollection<ChatMessage> chatMessages)
 		{
 			return response.MatchesWithoutSender(
-					   (response, chatMessage) => response.MatchesWithoutChat(chatMessage, query),
+					   query,
+					   (response, chatMessage) => response.MatchesWithoutChat(query, chatMessage),
 					   chatMessage => chatMessage.MatchesFilter(query),
 					   chat,
-					   chatMessages,
-					   query);
+					   chatMessages);
 		}
 
 		public bool Matches(
+			GetAllChatMessagesQuery query,
 			Chat chat,
 			ICollection<ChatMessage> chatMessages,
-			GetAllChatMessagesQuery query,
 			ISortEnumTermTransformer<ChatMessage> termTransformer)
 		{
 			return response.MatchesWithoutSender(
-					   (response, chatMessage) => response.MatchesWithoutChat(chatMessage, query),
+					   query,
+					   (response, chatMessage) => response.MatchesWithoutChat(query, chatMessage),
 					   chatMessage => chatMessage.MatchesFilter(query),
 					   chat,
 					   chatMessages,
-					   query,
 					   termTransformer);
 		}
 
 		public bool MatchesInverted(
+			GetAllChatMessagesQuery query,
 			Chat chat,
-			ICollection<ChatMessage> chatMessages,
-			GetAllChatMessagesQuery query)
+			ICollection<ChatMessage> chatMessages)
 		{
 			return response.MatchesWithoutSenderInverted(
-					   (response, chatMessage) => response.MatchesWithoutChatInverted(chatMessage, query),
+					   query,
+					   (response, chatMessage) => response.MatchesWithoutChatInverted(query, chatMessage),
 					   chatMessage => chatMessage.MatchesFilter(query),
 					   chat,
-					   chatMessages,
-					   query);
+					   chatMessages);
 		}
 
 		public bool MatchesInverted(
+			GetAllChatMessagesQuery query,
 			Chat chat,
 			ICollection<ChatMessage> chatMessages,
-			GetAllChatMessagesQuery query,
 			ISortEnumTermTransformer<ChatMessage> termTransformer)
 		{
 			return response.MatchesWithoutSenderInverted(
-					   (response, chatMessage) => response.MatchesWithoutChatInverted(chatMessage, query),
+					   query,
+					   (response, chatMessage) => response.MatchesWithoutChatInverted(query, chatMessage),
 					   chatMessage => chatMessage.MatchesFilter(query),
 					   chat,
 					   chatMessages,
-					   query,
 					   termTransformer);
 		}
 	}

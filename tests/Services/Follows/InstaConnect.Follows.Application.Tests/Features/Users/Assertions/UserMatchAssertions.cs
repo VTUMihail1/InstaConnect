@@ -7,20 +7,20 @@ public static class UserMatchAssertions
 	extension(AddUserCommandResponse response)
 	{
 		public void ShouldSatisfy(
-		User user,
-		AddUserCommandRequest request)
+		AddUserCommandRequest request,
+		User user)
 		{
-			response.ShouldSatisfy(u => u.Matches(user, request));
+			response.ShouldSatisfy(u => u.Matches(request, user));
 		}
 	}
 
 	extension(UpdateUserCommandResponse response)
 	{
 		public void ShouldSatisfy(
-		User user,
-		UpdateUserCommandRequest request)
+		UpdateUserCommandRequest request,
+		User user)
 		{
-			response.ShouldSatisfy(u => u.Matches(user, request));
+			response.ShouldSatisfy(u => u.Matches(request, user));
 		}
 	}
 

@@ -68,7 +68,7 @@ public static class PostMockSetups
 		{
 			service
 				.GetAllForUserAsync(query.Filter, query.CurrentUser, query.Sorting, query.Pagination, cancellationToken)
-				.ReturnsTaskResponse(posts.ToResponse(user, query));
+				.ReturnsTaskResponse(posts.ToResponse(query, user));
 		}
 
 		public void SetupGetTotalCountForUser(

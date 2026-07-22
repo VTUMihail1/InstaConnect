@@ -14,7 +14,7 @@ public static class FollowMockSetups
 		{
 			sender
 				.SendAsync(FollowMatcher.IsGetAllFollowsQueryRequest(request), cancellationToken)
-				.ReturnsTaskResponse(follows.ToResponse(follower, request));
+				.ReturnsTaskResponse(follows.ToResponse(request, follower));
 		}
 
 		public void SetupGetAllForFollowingQueryRequest(
@@ -25,7 +25,7 @@ public static class FollowMockSetups
 		{
 			sender
 				.SendAsync(FollowMatcher.IsGetAllFollowsForFollowingQueryRequest(request), cancellationToken)
-				.ReturnsTaskResponse(follows.ToResponse(following, request));
+				.ReturnsTaskResponse(follows.ToResponse(request, following));
 		}
 
 		public void SetupGetByIdQueryRequest(

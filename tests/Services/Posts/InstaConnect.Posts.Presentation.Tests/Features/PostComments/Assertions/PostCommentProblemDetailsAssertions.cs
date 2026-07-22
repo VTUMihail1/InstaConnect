@@ -10,109 +10,109 @@ public static class PostCommentProblemDetailsAssertions
 		AddPostCommentApiRequest request)
 		{
 			problemDetails.ShouldSatisfyUserNotFound(
-				r => r.UserId,
-				request);
+				request,
+				r => r.UserId);
 		}
 
 		public void ShouldSatisfyUserNotFound(
 			GetAllPostCommentsForUserApiRequest request)
 		{
 			problemDetails.ShouldSatisfyUserNotFound(
-				r => r.UserId,
-				request);
+				request,
+				r => r.UserId);
 		}
 
 		public void ShouldSatisfyPostNotFound(
 			AddPostCommentApiRequest request)
 		{
 			problemDetails.ShouldSatisfyPostNotFound(
-				r => r.Id,
-				request);
+				request,
+				r => r.Id);
 		}
 
 		public void ShouldSatisfyPostNotFound(
 			UpdatePostCommentApiRequest request)
 		{
 			problemDetails.ShouldSatisfyPostNotFound(
-				r => r.Id,
-				request);
+				request,
+				r => r.Id);
 		}
 
 		public void ShouldSatisfyPostNotFound(
 			DeletePostCommentApiRequest request)
 		{
 			problemDetails.ShouldSatisfyPostNotFound(
-				r => r.Id,
-				request);
+				request,
+				r => r.Id);
 		}
 
 		public void ShouldSatisfyPostNotFound(
 			GetPostCommentByIdApiRequest request)
 		{
 			problemDetails.ShouldSatisfyPostNotFound(
-				r => r.Id,
-				request);
+				request,
+				r => r.Id);
 		}
 
 		public void ShouldSatisfyPostNotFound(
 			GetAllPostCommentsApiRequest request)
 		{
 			problemDetails.ShouldSatisfyPostNotFound(
-				r => r.Id,
-				request);
+				request,
+				r => r.Id);
 		}
 
 		public void ShouldSatisfyPostCommentNotFound(
 			UpdatePostCommentApiRequest request)
 		{
 			problemDetails.ShouldSatisfyPostCommentNotFound(
+				request,
 				r => r.Id,
-				r => r.CommentId,
-				request);
+				r => r.CommentId);
 		}
 
 		public void ShouldSatisfyPostCommentNotFound(
 			DeletePostCommentApiRequest request)
 		{
 			problemDetails.ShouldSatisfyPostCommentNotFound(
+				request,
 				r => r.Id,
-				r => r.CommentId,
-				request);
+				r => r.CommentId);
 		}
 
 		public void ShouldSatisfyPostCommentNotFound(
 			GetPostCommentByIdApiRequest request)
 		{
 			problemDetails.ShouldSatisfyPostCommentNotFound(
+				request,
 				r => r.Id,
-				r => r.CommentId,
-				request);
+				r => r.CommentId);
 		}
 
 		public void ShouldSatisfyPostCommentForbidden(
 			DeletePostCommentApiRequest request)
 		{
 			problemDetails.ShouldSatisfyPostCommentForbidden(
+				request,
 				r => r.Id,
 				r => r.CommentId,
-				r => r.UserId,
-				request);
+				r => r.UserId);
 		}
 
 		public void ShouldSatisfyPostCommentForbidden(
 			UpdatePostCommentApiRequest request)
 		{
 			problemDetails.ShouldSatisfyPostCommentForbidden(
+				request,
 				r => r.Id,
 				r => r.CommentId,
-				r => r.UserId,
-				request);
+				r => r.UserId);
 		}
 
 		internal void ShouldSatisfyPostCommentNotFound<TRequest>(
+			TRequest request,
 			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> commentIdPropertyExpression,
-			TRequest request)
+			Func<TRequest, string> commentIdPropertyExpression)
 		{
 			problemDetails.ShouldSatisfyNotFound(
 				PostCommentExceptionErrorMessages.GetNotFoundMessage(
@@ -122,10 +122,10 @@ public static class PostCommentProblemDetailsAssertions
 		}
 
 		internal void ShouldSatisfyPostCommentForbidden<TRequest>(
+			TRequest request,
 			Func<TRequest, string> idPropertyExpression,
 			Func<TRequest, string> commentIdPropertyExpression,
-			Func<TRequest, string> userIdPropertyExpression,
-			TRequest request)
+			Func<TRequest, string> userIdPropertyExpression)
 		{
 			problemDetails.ShouldSatisfyForbidden(
 				PostCommentExceptionErrorMessages.GetForbiddenMessage(

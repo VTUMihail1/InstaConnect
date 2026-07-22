@@ -84,10 +84,10 @@ public static class PostCommentMapper
 	extension(ICollection<PostComment> postComments)
 	{
 		internal PostCommentCollectionQueryResponse ToQueryResponseWithoutUser<TRequest>(
+		TRequest request,
 		Post post,
 		Func<TRequest, PostComment, bool> filter,
-		Func<TRequest, PostComment, PostCommentQueryResponse> transform,
-		TRequest request)
+		Func<TRequest, PostComment, PostCommentQueryResponse> transform)
 		where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
 			var paginator = new Paginator();
@@ -104,10 +104,10 @@ public static class PostCommentMapper
 		}
 
 		internal PostCommentCollectionQueryResponse ToQueryResponseWithoutPost<TRequest>(
+			TRequest request,
 			User user,
 			Func<TRequest, PostComment, bool> filter,
-			Func<TRequest, PostComment, PostCommentQueryResponse> transform,
-			TRequest request)
+			Func<TRequest, PostComment, PostCommentQueryResponse> transform)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
 			var paginator = new Paginator();
@@ -124,23 +124,25 @@ public static class PostCommentMapper
 		}
 
 		public GetAllPostCommentsQueryResponse ToResponse(
-			Post post,
-			GetAllPostCommentsApiRequest request)
+			GetAllPostCommentsApiRequest request,
+			Post post)
 		{
-			return new(postComments.ToQueryResponseWithoutUser(post,
+			return new(postComments.ToQueryResponseWithoutUser(
+														  request,
+														  post,
 														  (request, postComment) => postComment.MatchesFilter(request),
-														  (request, postComment) => postComment.ToQueryResponseWithoutPost(request),
-														  request));
+														  (request, postComment) => postComment.ToQueryResponseWithoutPost(request)));
 		}
 
 		public GetAllPostCommentsForUserQueryResponse ToResponse(
-			User user,
-			GetAllPostCommentsForUserApiRequest request)
+			GetAllPostCommentsForUserApiRequest request,
+			User user)
 		{
-			return new(postComments.ToQueryResponseWithoutPost(user,
+			return new(postComments.ToQueryResponseWithoutPost(
+														  request,
+														  user,
 														  (request, postComment) => postComment.MatchesFilter(request),
-														  (request, postComment) => postComment.ToQueryResponseWithoutUser(request),
-														  request));
+														  (request, postComment) => postComment.ToQueryResponseWithoutUser(request)));
 		}
 	}
 }

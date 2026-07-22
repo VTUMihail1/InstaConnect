@@ -32,14 +32,14 @@ public static class CommonEquals
 
 	extension<TExpected>(ICollection<TExpected> expected)
 	{
-		public bool MatchesCollection<TEntity, TKey, TRequest>(
-		TRequest request,
+		public bool MatchesCollection<TEntity, TKey, TQuery>(
+		TQuery request,
 		ICollection<TEntity> entities,
 		Func<TExpected, TKey> expectedKey,
 		Func<TEntity, TKey> entityKey,
 		Func<TExpected, TEntity, bool> matcher,
 		Func<TEntity, bool> filter)
-		where TRequest : IPaginationQuery
+		where TQuery : IPaginationQuery
 		where TEntity : IEntity
 		where TKey : notnull
 		{
@@ -52,13 +52,13 @@ public static class CommonEquals
 				   matcher(e, a));
 		}
 
-		public bool MatchesSortedCollection<TEntity, TRequest>(
-			TRequest request,
+		public bool MatchesSortedCollection<TEntity, TQuery>(
+			TQuery request,
 			ICollection<TEntity> entities,
 			Func<TExpected, TEntity, bool> matcher,
 			ISortEnumTermTransformer<TEntity> termTransformer,
 			Func<TEntity, bool> filter)
-			where TRequest : IPaginationQuery
+			where TQuery : IPaginationQuery
 			where TEntity : IEntity
 		{
 			var sortedEntities = entities.Filter(request, termTransformer, filter);
@@ -72,10 +72,10 @@ public static class CommonEquals
 
 	extension<TResponse>(TResponse response) where TResponse : ICollectionResponse
 	{
-		public bool MatchesCollectionResponse<TRequest>(
-		TRequest request,
+		public bool MatchesCollectionResponse<TQuery>(
+		TQuery request,
 		int totalCount)
-			where TRequest : IPaginationQuery
+			where TQuery : IPaginationQuery
 		{
 			var paginator = new Paginator();
 

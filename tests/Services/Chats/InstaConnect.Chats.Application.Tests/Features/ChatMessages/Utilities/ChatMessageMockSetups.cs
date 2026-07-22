@@ -12,7 +12,7 @@ public static class ChatMessageMockSetups
 		{
 			commentService
 				.GetAllAsync(ChatMessageMatcher.IsGetAllChatMessagesQuery(request), cancellationToken)
-				.ReturnsTaskResponse(chatMessages.ToResponse(chat, request));
+				.ReturnsTaskResponse(chatMessages.ToResponse(request, chat));
 		}
 
 		public void SetupGetByIdQuery(
