@@ -1,4 +1,7 @@
 using InstaConnect.Common.Domain.Features.Common.Extensions;
+using InstaConnect.Posts.Tests.Features.PostCommentLikes.Utilities;
+using InstaConnect.Posts.Tests.Features.PostComments.Utilities;
+using InstaConnect.Posts.Tests.Features.PostLikes.Utilities;
 
 namespace InstaConnect.Posts.Tests.Features.Users.Utilities;
 
@@ -15,21 +18,21 @@ public static class UserReference
 
 		public User? SetPostLikes()
 		{
-			user?.PostLikes.ForEach(e => e.AddUser(user));
+			user?.PostLikes.ForEach(e => e.AddUser(user).SetPost());
 
 			return user;
 		}
 
 		public User? SetPostComments()
 		{
-			user?.PostComments.ForEach(e => e.AddUser(user));
+			user?.PostComments.ForEach(e => e.AddUser(user).SetPost());
 
 			return user;
 		}
 
 		public User? SetPostCommentLikes()
 		{
-			user?.PostCommentLikes.ForEach(e => e.AddUser(user));
+			user?.PostCommentLikes.ForEach(e => e.AddUser(user).SetPostComment());
 
 			return user;
 		}

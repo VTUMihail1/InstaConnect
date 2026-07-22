@@ -1,5 +1,6 @@
 using InstaConnect.Chats.Domain.Features.Users.Abstractions;
 using InstaConnect.Chats.Domain.Features.Users.Models.ValueObjects;
+using InstaConnect.Chats.Tests.Features.Chats.Utilities;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -36,7 +37,10 @@ public static class UserSetups
 			UserId id,
 			CancellationToken cancellationToken)
 		{
-			var include = serviceScope.GetUserIncludeBuilderFactory().Create().WithChats().WithChatMessages().Build();
+			var chatInclude = serviceScope.GetIncludeBuilderFactory().Create().WithParticipantOne().WithParticipantTwo().Build();
+			var messageInclude = serviceScope.GetMessageIncludeBuilderFactory().Create().WithChat(chatInclude).Build();
+
+			var include = serviceScope.GetUserIncludeBuilderFactory().Create().WithChats(chatInclude).WithChatMessages(messageInclude).Build();
 
 			return (await serviceScope.GetUserCommandRepository().GetByIdAsync(id, include, cancellationToken)).SetChats().SetChatMessages();
 		}

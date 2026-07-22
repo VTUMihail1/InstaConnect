@@ -1,5 +1,9 @@
 using InstaConnect.Posts.Domain.Features.Users.Abstractions;
 using InstaConnect.Posts.Domain.Features.Users.Models.ValueObjects;
+using InstaConnect.Posts.Tests.Features.PostCommentLikes.Utilities;
+using InstaConnect.Posts.Tests.Features.PostComments.Utilities;
+using InstaConnect.Posts.Tests.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Tests.Features.Posts.Utilities;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -36,7 +40,12 @@ public static class UserSetups
 			UserId id,
 			CancellationToken cancellationToken)
 		{
-			var include = serviceScope.GetUserIncludeBuilderFactory().Create().WithPosts().WithPostLikes().WithPostComments().WithPostCommentLikes().Build();
+			var postInclude = serviceScope.GetPostIncludeBuilderFactory().Create().WithUser().Build();
+			var postCommentInclude = serviceScope.GetPostCommentIncludeBuilderFactory().Create().WithUser().WithPost(postInclude).Build();
+			var postLikeInclude = serviceScope.GetPostLikeIncludeBuilderFactory().Create().WithUser().WithPost(postInclude).Build();
+			var postCommentLikeInclude = serviceScope.GetPostCommentLikeIncludeBuilderFactory().Create().WithPostComment(postCommentInclude).WithUser().Build();
+
+			var include = serviceScope.GetUserIncludeBuilderFactory().Create().WithPosts().WithPostLikes(postLikeInclude).WithPostComments(postCommentInclude).WithPostCommentLikes(postCommentLikeInclude).Build();
 
 			return (await serviceScope.GetUserCommandRepository().GetByIdAsync(id, include, cancellationToken)).SetPosts().SetPostLikes().SetPostComments().SetPostCommentLikes();
 		}

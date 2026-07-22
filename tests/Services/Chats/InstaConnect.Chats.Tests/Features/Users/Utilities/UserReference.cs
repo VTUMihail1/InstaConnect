@@ -1,3 +1,5 @@
+using InstaConnect.Chats.Tests.Features.ChatMessages.Utilities;
+using InstaConnect.Chats.Tests.Features.Chats.Utilities;
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 
 namespace InstaConnect.Chats.Tests.Features.Users.Utilities;
@@ -8,24 +10,14 @@ public static class UserReference
 	{
 		public User? SetChats()
 		{
-			user?.Chats.ForEach(e =>
-			{
-				if (e.Id.ParticipantOneId.Is(user!.Id))
-				{
-					e.AddParticipantOne(user);
-				}
-				else
-				{
-					e.AddParticipantTwo(user);
-				}
-			});
+			user?.Chats.ForEach(e => e.SetParticipantOne().SetParticipantTwo());
 
 			return user;
 		}
 
 		public User? SetChatMessages()
 		{
-			user?.ChatMessages.ForEach(e => e.AddSender(user));
+			user?.ChatMessages.ForEach(e => e.AddSender(user).SetChat());
 
 			return user;
 		}
