@@ -5,7 +5,6 @@ using InstaConnect.Identity.Events.Features.Users;
 using InstaConnect.Posts.Domain.Tests.Features.Posts.Utilities;
 using InstaConnect.Posts.Domain.Tests.Features.Users.Utilities;
 using InstaConnect.Posts.Events.Features.PostComments;
-using InstaConnect.Posts.Events.Features.Posts;
 
 namespace InstaConnect.Posts.Domain.Tests.Features.PostComments.Utilities;
 

@@ -1,8 +1,6 @@
 using InstaConnect.Common.Application.Features.Messaging.Abstractions;
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
-using InstaConnect.Follows.Domain.Features.Users.Models.Requests;
-using InstaConnect.Follows.Domain.Features.Follows.Models.Requests;
 using InstaConnect.Identity.Events.Features.Users;
 using InstaConnect.Follows.Application.Features.Follows.Models;
 using InstaConnect.Follows.Application.Features.Users.Abstractions;

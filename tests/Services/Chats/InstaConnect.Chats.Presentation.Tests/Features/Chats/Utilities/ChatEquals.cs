@@ -1,6 +1,5 @@
 using InstaConnect.Chats.Domain.Features.Chats.Models.Requests;
 using InstaConnect.Chats.Events.Features.Chats;
-using InstaConnect.Identity.Events.Features.Users;
 using InstaConnect.Chats.Presentation.Features.Users.Abstractions;
 using InstaConnect.Chats.Presentation.Tests.Features.Users.Utilities;
 using InstaConnect.Common.Domain.Features.Common.Extensions;

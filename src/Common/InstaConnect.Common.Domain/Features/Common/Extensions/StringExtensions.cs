@@ -41,7 +41,7 @@ public static class StringExtensions
 			const string OldCharsRegex = "([a-z])([A-Z])";
 			const string NewCharsRegex = "$1 $2";
 
-			return Regex.Replace(str, OldCharsRegex, NewCharsRegex);
+			return Regex.Replace(str, OldCharsRegex, NewCharsRegex, RegexOptions.None, TimeSpan.FromSeconds(1));
 		}
 
 		public string ToCamelCase()

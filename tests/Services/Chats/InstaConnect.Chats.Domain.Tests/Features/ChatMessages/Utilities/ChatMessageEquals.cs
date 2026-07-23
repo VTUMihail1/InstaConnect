@@ -3,9 +3,6 @@ using InstaConnect.Chats.Domain.Tests.Features.Users.Utilities;
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Domain.Features.Messaging.Abstractions;
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
-using InstaConnect.Chats.Domain.Features.Users.Models.Requests;
-using InstaConnect.Chats.Domain.Features.Chats.Models.Requests;
-using InstaConnect.Chats.Domain.Features.ChatMessages.Models.Requests;
 
 namespace InstaConnect.Chats.Domain.Tests.Features.ChatMessages.Utilities;
 
@@ -163,19 +160,6 @@ public static class ChatMessageEquals
 				   request.UpdatedAtUtc == entity.UpdatedAtUtc;
 		}
 
-		public bool MatchesParticipantTwo(AddChatMessageCommand command, User? entity)
-		{
-			return entity != null &&
-				   request.Id.EqualsOrdinalIgnoreCase(command.Id.ParticipantTwoId.Id) &&
-				   request.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
-				   request.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
-				   request.FirstName == entity.FirstName &&
-				   request.LastName == entity.LastName &&
-				   (entity.ProfileImage == null || request.ProfileImageUrl.EqualsOrdinalIgnoreCase(entity.ProfileImage.Url)) &&
-				   request.CreatedAtUtc == entity.CreatedAtUtc &&
-				   request.UpdatedAtUtc == entity.UpdatedAtUtc;
-		}
-
 		public bool MatchesParticipantOne(UpdateChatMessageCommand command, User? entity)
 		{
 			return entity != null &&
@@ -189,10 +173,10 @@ public static class ChatMessageEquals
 				   request.UpdatedAtUtc == entity.UpdatedAtUtc;
 		}
 
-		public bool MatchesParticipantTwo(UpdateChatMessageCommand command, User? entity)
+		public bool MatchesParticipantOne(DeleteChatMessageCommand command, User? entity)
 		{
 			return entity != null &&
-				   request.Id.EqualsOrdinalIgnoreCase(command.Id.Id.ParticipantTwoId.Id) &&
+				   request.Id.EqualsOrdinalIgnoreCase(command.Id.Id.ParticipantOneId.Id) &&
 				   request.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
 				   request.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
 				   request.FirstName == entity.FirstName &&
@@ -202,10 +186,23 @@ public static class ChatMessageEquals
 				   request.UpdatedAtUtc == entity.UpdatedAtUtc;
 		}
 
-		public bool MatchesParticipantOne(DeleteChatMessageCommand command, User? entity)
+		public bool MatchesParticipantTwo(AddChatMessageCommand command, User? entity)
 		{
 			return entity != null &&
-				   request.Id.EqualsOrdinalIgnoreCase(command.Id.Id.ParticipantOneId.Id) &&
+				   request.Id.EqualsOrdinalIgnoreCase(command.Id.ParticipantTwoId.Id) &&
+				   request.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   request.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   request.FirstName == entity.FirstName &&
+				   request.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || request.ProfileImageUrl.EqualsOrdinalIgnoreCase(entity.ProfileImage.Url)) &&
+				   request.CreatedAtUtc == entity.CreatedAtUtc &&
+				   request.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesParticipantTwo(UpdateChatMessageCommand command, User? entity)
+		{
+			return entity != null &&
+				   request.Id.EqualsOrdinalIgnoreCase(command.Id.Id.ParticipantTwoId.Id) &&
 				   request.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
 				   request.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
 				   request.FirstName == entity.FirstName &&
