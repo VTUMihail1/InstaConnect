@@ -16,8 +16,8 @@ public static class ChatMessageEquals
 		{
 			return request.ParticipantOneId.EqualsOrdinalIgnoreCase(r.ChatMessage.ParticipantOneId) &&
 				   request.ParticipantTwoId.EqualsOrdinalIgnoreCase(r.ChatMessage.ParticipantTwoId) &&
-				   entity.Sender != null && entity.Sender.Matches(r.ChatMessage.Sender) &&
-				   entity.Chat != null && entity.Chat.Matches(r.ChatMessage.Chat) &&
+				   entity.Sender.Matches(r.ChatMessage.Sender) &&
+				   entity.Chat.Matches(r.ChatMessage.Chat) &&
 				   request.Body.Content == r.ChatMessage.Content &&
 				   entity.CreatedAtUtc == r.ChatMessage.CreatedAtUtc &&
 				   entity.UpdatedAtUtc == r.ChatMessage.UpdatedAtUtc;
@@ -31,8 +31,8 @@ public static class ChatMessageEquals
 			return request.ParticipantOneId.EqualsOrdinalIgnoreCase(r.ChatMessage.ParticipantOneId) &&
 				   request.ParticipantTwoId.EqualsOrdinalIgnoreCase(r.ChatMessage.ParticipantTwoId) &&
 				   request.MessageId.EqualsOrdinalIgnoreCase(r.ChatMessage.MessageId) &&
-				   entity.Sender != null && entity.Sender.Matches(r.ChatMessage.Sender) &&
-				   entity.Chat != null && entity.Chat.Matches(r.ChatMessage.Chat) &&
+				   entity.Sender.Matches(r.ChatMessage.Sender) &&
+				   entity.Chat.Matches(r.ChatMessage.Chat) &&
 				   request.Body.Content == r.ChatMessage.Content &&
 				   entity.CreatedAtUtc == r.ChatMessage.CreatedAtUtc &&
 				   entity.UpdatedAtUtc == r.ChatMessage.UpdatedAtUtc;
@@ -46,8 +46,8 @@ public static class ChatMessageEquals
 			return request.ParticipantOneId.EqualsOrdinalIgnoreCase(r.ChatMessage.ParticipantOneId) &&
 				   request.ParticipantTwoId.EqualsOrdinalIgnoreCase(r.ChatMessage.ParticipantTwoId) &&
 				   request.MessageId.EqualsOrdinalIgnoreCase(r.ChatMessage.MessageId) &&
-				   entity.Sender != null && entity.Sender.Matches(r.ChatMessage.Sender) &&
-				   entity.Chat != null && entity.Chat.Matches(r.ChatMessage.Chat) &&
+				   entity.Sender.Matches(r.ChatMessage.Sender) &&
+				   entity.Chat.Matches(r.ChatMessage.Chat) &&
 				   entity.Content == r.ChatMessage.Content &&
 				   entity.CreatedAtUtc == r.ChatMessage.CreatedAtUtc &&
 				   entity.UpdatedAtUtc == r.ChatMessage.UpdatedAtUtc;

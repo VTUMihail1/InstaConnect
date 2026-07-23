@@ -17,8 +17,8 @@ public static class ChatEquals
 		{
 			return request.ParticipantOneId.EqualsOrdinalIgnoreCase(r.Chat.ParticipantOneId) &&
 				   request.ParticipantTwoId.EqualsOrdinalIgnoreCase(r.Chat.ParticipantTwoId) &&
-				   entity.ParticipantOne != null && entity.ParticipantOne.Matches(r.Chat.ParticipantOne) &&
-				   entity.ParticipantTwo != null && entity.ParticipantTwo.Matches(r.Chat.ParticipantTwo) &&
+				   entity.ParticipantOne.Matches(r.Chat.ParticipantOne) &&
+				   entity.ParticipantTwo.Matches(r.Chat.ParticipantTwo) &&
 				   entity.CreatedAtUtc == r.Chat.CreatedAtUtc;
 		}
 	}

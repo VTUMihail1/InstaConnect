@@ -18,8 +18,8 @@ public static class FollowEquals
 		{
 			return request.FollowerId.EqualsOrdinalIgnoreCase(r.Follow.FollowerId) &&
 				   request.Body.FollowingId.EqualsOrdinalIgnoreCase(r.Follow.FollowingId) &&
-				   entity.Follower != null && entity.Follower.Matches(r.Follow.Follower) &&
-				   entity.Following != null && entity.Following.Matches(r.Follow.Following) &&
+				   entity.Follower.Matches(r.Follow.Follower) &&
+				   entity.Following.Matches(r.Follow.Following) &&
 				   entity.CreatedAtUtc == r.Follow.CreatedAtUtc;
 		}
 	}
@@ -30,8 +30,8 @@ public static class FollowEquals
 		{
 			return request.FollowerId.EqualsOrdinalIgnoreCase(r.Follow.FollowerId) &&
 				   request.FollowingId.EqualsOrdinalIgnoreCase(r.Follow.FollowingId) &&
-				   entity.Follower != null && entity.Follower.Matches(r.Follow.Follower) &&
-				   entity.Following != null && entity.Following.Matches(r.Follow.Following) &&
+				   entity.Follower.Matches(r.Follow.Follower) &&
+				   entity.Following.Matches(r.Follow.Following) &&
 				   entity.CreatedAtUtc == r.Follow.CreatedAtUtc;
 		}
 	}
@@ -42,8 +42,8 @@ public static class FollowEquals
 		{
 			return request.FollowerId.EqualsOrdinalIgnoreCase(r.Follow.FollowerId) &&
 				   request.Body.FollowingId.EqualsOrdinalIgnoreCase(r.Follow.FollowingId) &&
-				   entity.Follower != null && entity.Follower.Matches(r.Follow.Follower) &&
-				   entity.Following != null && entity.Following.Matches(r.Follow.Following) &&
+				   entity.Follower.Matches(r.Follow.Follower) &&
+				   entity.Following.Matches(r.Follow.Following) &&
 				   entity.CreatedAtUtc == r.Follow.CreatedAtUtc;
 		}
 	}

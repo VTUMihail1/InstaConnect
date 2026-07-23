@@ -24,8 +24,8 @@ public static class ChatEquals
 		{
 			return command.ParticipantOneId.Matches(request.Chat.ParticipantOneId) &&
 				   command.ParticipantTwoId.Matches(request.Chat.ParticipantTwoId) &&
-				   entity.ParticipantOne != null && entity.ParticipantOne.Matches(request.Chat.ParticipantOne) &&
-				   entity.ParticipantTwo != null && entity.ParticipantTwo.Matches(request.Chat.ParticipantTwo) &&
+				   entity.ParticipantOne.Matches(request.Chat.ParticipantOne) &&
+				   entity.ParticipantTwo.Matches(request.Chat.ParticipantTwo) &&
 				   entity.CreatedAtUtc == request.Chat.CreatedAtUtc;
 		}
 	}

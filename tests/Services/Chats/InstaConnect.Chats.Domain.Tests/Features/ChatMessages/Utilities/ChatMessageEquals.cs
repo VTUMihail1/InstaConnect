@@ -51,8 +51,8 @@ public static class ChatMessageEquals
 		public bool Matches(AddChatMessageCommand command, ChatMessage entity)
 		{
 			return command.Id.Matches(request.ChatMessage.ParticipantOneId, request.ChatMessage.ParticipantTwoId) &&
-				   entity.Sender != null && entity.Sender.Matches(request.ChatMessage.Sender) &&
-				   entity.Chat != null && entity.Chat.Matches(request.ChatMessage.Chat) &&
+				   entity.Sender.Matches(request.ChatMessage.Sender) &&
+				   entity.Chat.Matches(request.ChatMessage.Chat) &&
 				   command.Content == request.ChatMessage.Content &&
 				   entity.CreatedAtUtc == request.ChatMessage.CreatedAtUtc &&
 				   entity.UpdatedAtUtc == request.ChatMessage.UpdatedAtUtc;
@@ -64,8 +64,8 @@ public static class ChatMessageEquals
 		public bool Matches(UpdateChatMessageCommand command, ChatMessage entity)
 		{
 			return command.Id.Matches(request.ChatMessage.ParticipantOneId, request.ChatMessage.ParticipantTwoId, request.ChatMessage.MessageId) &&
-				   entity.Sender != null && entity.Sender.Matches(request.ChatMessage.Sender) &&
-				   entity.Chat != null && entity.Chat.Matches(request.ChatMessage.Chat) &&
+				   entity.Sender.Matches(request.ChatMessage.Sender) &&
+				   entity.Chat.Matches(request.ChatMessage.Chat) &&
 				   command.Content == request.ChatMessage.Content &&
 				   entity.CreatedAtUtc == request.ChatMessage.CreatedAtUtc &&
 				   entity.UpdatedAtUtc == request.ChatMessage.UpdatedAtUtc;
@@ -76,9 +76,9 @@ public static class ChatMessageEquals
 	{
 		public bool Matches(DeleteChatMessageCommand command, ChatMessage entity)
 		{
-			return entity.Id.Matches(command.Id) &&
-				   entity.Sender != null && entity.Sender.Matches(request.ChatMessage.Sender) &&
-				   entity.Chat != null && entity.Chat.Matches(request.ChatMessage.Chat) &&
+			return command.Id.Matches(request.ChatMessage.ParticipantOneId, request.ChatMessage.ParticipantTwoId, request.ChatMessage.MessageId) &&
+				   entity.Sender.Matches(request.ChatMessage.Sender) &&
+				   entity.Chat.Matches(request.ChatMessage.Chat) &&
 				   entity.Content == request.ChatMessage.Content &&
 				   entity.CreatedAtUtc == request.ChatMessage.CreatedAtUtc &&
 				   entity.UpdatedAtUtc == request.ChatMessage.UpdatedAtUtc;
