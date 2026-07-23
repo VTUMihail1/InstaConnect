@@ -74,11 +74,6 @@ public static class ServiceCollectionExtensions
 
 			serviceCollection.AddCors(o =>
 			{
-				o.AddDefaultPolicy(builder =>
-					builder.AllowAnyOrigin()
-						   .AllowAnyHeader()
-						   .AllowAnyMethod());
-
 				o.AddPolicy(CorsPolicies.SpecificOrigins, builder =>
 					builder.WithOrigins(options.AllowedOrigins.Split(", "))
 						   .AllowAnyHeader()
