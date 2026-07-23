@@ -81,8 +81,8 @@ public static class ChatMessageEquals
 				   request.ParticipantOneId.EqualsOrdinalIgnoreCase(command.Id.ParticipantOneId.Id) &&
 				   request.ParticipantTwoId.EqualsOrdinalIgnoreCase(command.Id.ParticipantTwoId.Id) &&
 				   request.MessageId.EqualsOrdinalIgnoreCase(entity.Id.MessageId) &&
-				   request.Sender.Matches(command.Id.ParticipantOneId, entity.Sender) &&
-				   request.Chat.Matches(command.Id.ParticipantOneId, command.Id.ParticipantTwoId, entity.Chat) &&
+				   request.Sender.MatchesParticipantOne(command, entity.Sender) &&
+				   request.Chat.Matches(command, entity.Chat) &&
 				   request.Content == command.Content &&
 				   request.CreatedAtUtc == entity.CreatedAtUtc &&
 				   request.UpdatedAtUtc == entity.UpdatedAtUtc;
@@ -94,8 +94,8 @@ public static class ChatMessageEquals
 				   request.ParticipantOneId.EqualsOrdinalIgnoreCase(command.Id.Id.ParticipantOneId.Id) &&
 				   request.ParticipantTwoId.EqualsOrdinalIgnoreCase(command.Id.Id.ParticipantTwoId.Id) &&
 				   request.MessageId.EqualsOrdinalIgnoreCase(command.Id.MessageId) &&
-				   request.Sender.Matches(command.Id.Id.ParticipantOneId, entity.Sender) &&
-				   request.Chat.Matches(command.Id.Id.ParticipantOneId, command.Id.Id.ParticipantTwoId, entity.Chat) &&
+				   request.Sender.MatchesParticipantOne(command, entity.Sender) &&
+				   request.Chat.Matches(command, entity.Chat) &&
 				   request.Content == command.Content &&
 				   request.CreatedAtUtc == entity.CreatedAtUtc &&
 				   request.UpdatedAtUtc == entity.UpdatedAtUtc;
@@ -107,8 +107,8 @@ public static class ChatMessageEquals
 				   request.ParticipantOneId.EqualsOrdinalIgnoreCase(command.Id.Id.ParticipantOneId.Id) &&
 				   request.ParticipantTwoId.EqualsOrdinalIgnoreCase(command.Id.Id.ParticipantTwoId.Id) &&
 				   request.MessageId.EqualsOrdinalIgnoreCase(command.Id.MessageId) &&
-				   request.Sender.Matches(command.Id.Id.ParticipantOneId, entity.Sender) &&
-				   request.Chat.Matches(command.Id.Id.ParticipantOneId, command.Id.Id.ParticipantTwoId, entity.Chat) &&
+				   request.Sender.MatchesParticipantOne(command, entity.Sender) &&
+				   request.Chat.Matches(command, entity.Chat) &&
 				   request.Content == entity.Content &&
 				   request.CreatedAtUtc == entity.CreatedAtUtc &&
 				   request.UpdatedAtUtc == entity.UpdatedAtUtc;
@@ -117,23 +117,108 @@ public static class ChatMessageEquals
 
 	extension(ChatNotificationRequest request)
 	{
-		public bool Matches(UserId participantOneId, UserId participantTwoId, Chat? entity)
+		public bool Matches(AddChatMessageCommand command, Chat? entity)
 		{
 			return entity != null &&
-				   request.ParticipantOneId.EqualsOrdinalIgnoreCase(participantOneId.Id) &&
-				   request.ParticipantTwoId.EqualsOrdinalIgnoreCase(participantTwoId.Id) &&
-				   request.ParticipantOne.Matches(participantOneId, entity.ParticipantOne) &&
-				   request.ParticipantTwo.Matches(participantTwoId, entity.ParticipantTwo) &&
+				   request.ParticipantOneId.EqualsOrdinalIgnoreCase(command.Id.ParticipantOneId.Id) &&
+				   request.ParticipantTwoId.EqualsOrdinalIgnoreCase(command.Id.ParticipantTwoId.Id) &&
+				   request.ParticipantOne.MatchesParticipantOne(command, entity.ParticipantOne) &&
+				   request.ParticipantTwo.MatchesParticipantTwo(command, entity.ParticipantTwo) &&
+				   request.CreatedAtUtc == entity.CreatedAtUtc;
+		}
+
+		public bool Matches(UpdateChatMessageCommand command, Chat? entity)
+		{
+			return entity != null &&
+				   request.ParticipantOneId.EqualsOrdinalIgnoreCase(command.Id.Id.ParticipantOneId.Id) &&
+				   request.ParticipantTwoId.EqualsOrdinalIgnoreCase(command.Id.Id.ParticipantTwoId.Id) &&
+				   request.ParticipantOne.MatchesParticipantOne(command, entity.ParticipantOne) &&
+				   request.ParticipantTwo.MatchesParticipantTwo(command, entity.ParticipantTwo) &&
+				   request.CreatedAtUtc == entity.CreatedAtUtc;
+		}
+
+		public bool Matches(DeleteChatMessageCommand command, Chat? entity)
+		{
+			return entity != null &&
+				   request.ParticipantOneId.EqualsOrdinalIgnoreCase(command.Id.Id.ParticipantOneId.Id) &&
+				   request.ParticipantTwoId.EqualsOrdinalIgnoreCase(command.Id.Id.ParticipantTwoId.Id) &&
+				   request.ParticipantOne.MatchesParticipantOne(command, entity.ParticipantOne) &&
+				   request.ParticipantTwo.MatchesParticipantTwo(command, entity.ParticipantTwo) &&
 				   request.CreatedAtUtc == entity.CreatedAtUtc;
 		}
 	}
 
 	extension(UserNotificationRequest request)
 	{
-		public bool Matches(UserId id, User? entity)
+		public bool MatchesParticipantOne(AddChatMessageCommand command, User? entity)
 		{
 			return entity != null &&
-				   request.Id.EqualsOrdinalIgnoreCase(id.Id) &&
+				   request.Id.EqualsOrdinalIgnoreCase(command.Id.ParticipantOneId.Id) &&
+				   request.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   request.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   request.FirstName == entity.FirstName &&
+				   request.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || request.ProfileImageUrl.EqualsOrdinalIgnoreCase(entity.ProfileImage.Url)) &&
+				   request.CreatedAtUtc == entity.CreatedAtUtc &&
+				   request.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesParticipantTwo(AddChatMessageCommand command, User? entity)
+		{
+			return entity != null &&
+				   request.Id.EqualsOrdinalIgnoreCase(command.Id.ParticipantTwoId.Id) &&
+				   request.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   request.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   request.FirstName == entity.FirstName &&
+				   request.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || request.ProfileImageUrl.EqualsOrdinalIgnoreCase(entity.ProfileImage.Url)) &&
+				   request.CreatedAtUtc == entity.CreatedAtUtc &&
+				   request.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesParticipantOne(UpdateChatMessageCommand command, User? entity)
+		{
+			return entity != null &&
+				   request.Id.EqualsOrdinalIgnoreCase(command.Id.Id.ParticipantOneId.Id) &&
+				   request.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   request.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   request.FirstName == entity.FirstName &&
+				   request.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || request.ProfileImageUrl.EqualsOrdinalIgnoreCase(entity.ProfileImage.Url)) &&
+				   request.CreatedAtUtc == entity.CreatedAtUtc &&
+				   request.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesParticipantTwo(UpdateChatMessageCommand command, User? entity)
+		{
+			return entity != null &&
+				   request.Id.EqualsOrdinalIgnoreCase(command.Id.Id.ParticipantTwoId.Id) &&
+				   request.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   request.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   request.FirstName == entity.FirstName &&
+				   request.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || request.ProfileImageUrl.EqualsOrdinalIgnoreCase(entity.ProfileImage.Url)) &&
+				   request.CreatedAtUtc == entity.CreatedAtUtc &&
+				   request.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesParticipantOne(DeleteChatMessageCommand command, User? entity)
+		{
+			return entity != null &&
+				   request.Id.EqualsOrdinalIgnoreCase(command.Id.Id.ParticipantOneId.Id) &&
+				   request.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   request.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   request.FirstName == entity.FirstName &&
+				   request.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || request.ProfileImageUrl.EqualsOrdinalIgnoreCase(entity.ProfileImage.Url)) &&
+				   request.CreatedAtUtc == entity.CreatedAtUtc &&
+				   request.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesParticipantTwo(DeleteChatMessageCommand command, User? entity)
+		{
+			return entity != null &&
+				   request.Id.EqualsOrdinalIgnoreCase(command.Id.Id.ParticipantTwoId.Id) &&
 				   request.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
 				   request.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
 				   request.FirstName == entity.FirstName &&

@@ -27,18 +27,31 @@ public static class ChatEquals
 			return entity != null &&
 				   r.ParticipantOneId.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
 				   r.ParticipantTwoId.EqualsOrdinalIgnoreCase(request.ParticipantTwoId) &&
-				   r.ParticipantOne.Matches(request.ParticipantOneId, entity.ParticipantOne) &&
-				   r.ParticipantTwo.Matches(request.ParticipantTwoId, entity.ParticipantTwo) &&
+				   r.ParticipantOne.MatchesParticipantOne(request, entity.ParticipantOne) &&
+				   r.ParticipantTwo.MatchesParticipantTwo(request, entity.ParticipantTwo) &&
 				   r.CreatedAtUtc == entity.CreatedAtUtc;
 		}
 	}
 
 	extension(UserEventRequest r)
 	{
-		public bool Matches(string id, User? entity)
+		public bool MatchesParticipantOne(AddChatCommandRequest request, User? entity)
 		{
 			return entity != null &&
-				   r.Id.EqualsOrdinalIgnoreCase(id) &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || r.ProfileImageUrl == entity.ProfileImage.Url) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesParticipantTwo(AddChatCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.ParticipantTwoId) &&
 				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
 				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
 				   r.FirstName == entity.FirstName &&

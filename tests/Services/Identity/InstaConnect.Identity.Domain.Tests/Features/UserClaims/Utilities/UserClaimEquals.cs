@@ -49,7 +49,7 @@ public static class UserClaimEquals
 			return entity != null &&
 				   request.Id.EqualsOrdinalIgnoreCase(command.Id.Id) &&
 				   request.Claim == command.Claim &&
-				   request.User.Matches(command.Id, entity.User) &&
+				   request.User.Matches(command, entity.User) &&
 				   request.CreatedAtUtc == entity.CreatedAtUtc;
 		}
 
@@ -58,17 +58,30 @@ public static class UserClaimEquals
 			return entity != null &&
 				   request.Id.EqualsOrdinalIgnoreCase(command.Id.Id.Id) &&
 				   request.Claim == command.Id.Claim &&
-				   request.User.Matches(command.Id.Id, entity.User) &&
+				   request.User.Matches(command, entity.User) &&
 				   request.CreatedAtUtc == entity.CreatedAtUtc;
 		}
 	}
 
 	extension(UserEventRequest request)
 	{
-		public bool Matches(UserId id, User? entity)
+		public bool Matches(AddUserClaimCommand command, User? entity)
 		{
 			return entity != null &&
-				   request.Id.EqualsOrdinalIgnoreCase(id.Id) &&
+				   request.Id.EqualsOrdinalIgnoreCase(command.Id.Id) &&
+				   request.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   request.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   request.FirstName == entity.FirstName &&
+				   request.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || request.ProfileImageUrl.EqualsOrdinalIgnoreCase(entity.ProfileImage.Url)) &&
+				   request.CreatedAtUtc == entity.CreatedAtUtc &&
+				   request.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool Matches(DeleteUserClaimCommand command, User? entity)
+		{
+			return entity != null &&
+				   request.Id.EqualsOrdinalIgnoreCase(command.Id.Id.Id) &&
 				   request.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
 				   request.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
 				   request.FirstName == entity.FirstName &&

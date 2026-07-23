@@ -46,8 +46,8 @@ public static class FollowEquals
 			return entity != null &&
 				   r.FollowerId.EqualsOrdinalIgnoreCase(request.FollowerId) &&
 				   r.FollowingId.EqualsOrdinalIgnoreCase(request.FollowingId) &&
-				   r.Follower.Matches(request.FollowerId, entity.Follower) &&
-				   r.Following.Matches(request.FollowingId, entity.Following) &&
+				   r.Follower.MatchesFollower(request, entity.Follower) &&
+				   r.Following.MatchesFollowing(request, entity.Following) &&
 				   r.CreatedAtUtc == entity.CreatedAtUtc;
 		}
 
@@ -56,8 +56,8 @@ public static class FollowEquals
 			return entity != null &&
 				   r.FollowerId.EqualsOrdinalIgnoreCase(request.FollowerId) &&
 				   r.FollowingId.EqualsOrdinalIgnoreCase(request.FollowingId) &&
-				   r.Follower.Matches(request.FollowerId, entity.Follower) &&
-				   r.Following.Matches(request.FollowingId, entity.Following) &&
+				   r.Follower.MatchesFollower(request, entity.Follower) &&
+				   r.Following.MatchesFollowing(request, entity.Following) &&
 				   r.CreatedAtUtc == entity.CreatedAtUtc;
 		}
 	}
@@ -69,18 +69,57 @@ public static class FollowEquals
 			return entity != null &&
 				   r.FollowerId.EqualsOrdinalIgnoreCase(request.FollowerId) &&
 				   r.FollowingId.EqualsOrdinalIgnoreCase(request.FollowingId) &&
-				   r.Follower.Matches(request.FollowerId, entity.Follower) &&
-				   r.Following.Matches(request.FollowingId, entity.Following) &&
+				   r.Follower.MatchesFollower(request, entity.Follower) &&
+				   r.Following.MatchesFollowing(request, entity.Following) &&
 				   r.CreatedAtUtc == entity.CreatedAtUtc;
 		}
 	}
 
 	extension(UserEventRequest r)
 	{
-		public bool Matches(string id, User? entity)
+		public bool MatchesFollower(AddFollowCommandRequest request, User? entity)
 		{
 			return entity != null &&
-				   r.Id.EqualsOrdinalIgnoreCase(id) &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.FollowerId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || r.ProfileImageUrl == entity.ProfileImage.Url) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesFollower(DeleteFollowCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.FollowerId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || r.ProfileImageUrl == entity.ProfileImage.Url) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesFollowing(AddFollowCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.FollowingId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || r.ProfileImageUrl == entity.ProfileImage.Url) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesFollowing(DeleteFollowCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.FollowingId) &&
 				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
 				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
 				   r.FirstName == entity.FirstName &&
@@ -93,10 +132,23 @@ public static class FollowEquals
 
 	extension(UserNotificationRequest r)
 	{
-		public bool Matches(string id, User? entity)
+		public bool MatchesFollower(AddFollowCommandRequest request, User? entity)
 		{
 			return entity != null &&
-				   r.Id.EqualsOrdinalIgnoreCase(id) &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.FollowerId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || r.ProfileImageUrl == entity.ProfileImage.Url) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesFollowing(AddFollowCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.FollowingId) &&
 				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
 				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
 				   r.FirstName == entity.FirstName &&
