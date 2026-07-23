@@ -5,6 +5,14 @@ namespace InstaConnect.Common.Domain.Features.Common.Extensions;
 
 public static class StringExtensions
 {
+	extension(string? str)
+	{
+		public bool EqualsOrdinalIgnoreCase(string? b)
+		{
+			return string.Equals(str, b, StringComparison.OrdinalIgnoreCase);
+		}
+	}
+
 	extension(string str)
 	{
 		public string FormatCurrentCulture(params object?[] args)
@@ -54,11 +62,6 @@ public static class StringExtensions
 		public string ToUpperCurrentCulture()
 		{
 			return str.ToUpper(CultureInfo.CurrentCulture);
-		}
-
-		public bool EqualsOrdinalIgnoreCase(string? b)
-		{
-			return string.Equals(str, b, StringComparison.OrdinalIgnoreCase);
 		}
 
 		public bool StartsWithOrdinalIgnoreCase(string? b)
