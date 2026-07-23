@@ -18,6 +18,11 @@ public static class ChatMessageEquals
 		{
 			return r.ChatMessage.Matches(request, entity);
 		}
+
+		public bool MatchesInverted(AddChatMessageApiRequest request, ChatMessage entity)
+		{
+			return r.ChatMessage.MatchesInverted(request, entity);
+		}
 	}
 
 	extension(ChatMessageUpdatedNotificationRequest r)
@@ -26,6 +31,11 @@ public static class ChatMessageEquals
 		{
 			return r.ChatMessage.Matches(request, entity);
 		}
+
+		public bool MatchesInverted(UpdateChatMessageApiRequest request, ChatMessage entity)
+		{
+			return r.ChatMessage.MatchesInverted(request, entity);
+		}
 	}
 
 	extension(ChatMessageDeletedNotificationRequest r)
@@ -33,6 +43,11 @@ public static class ChatMessageEquals
 		public bool Matches(DeleteChatMessageApiRequest request, ChatMessage entity)
 		{
 			return r.ChatMessage.Matches(request, entity);
+		}
+
+		public bool MatchesInverted(DeleteChatMessageApiRequest request, ChatMessage entity)
+		{
+			return r.ChatMessage.MatchesInverted(request, entity);
 		}
 	}
 
@@ -44,7 +59,7 @@ public static class ChatMessageEquals
 				   r.ParticipantOneId.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
 				   r.ParticipantTwoId.EqualsOrdinalIgnoreCase(request.ParticipantTwoId) &&
 				   r.MessageId.EqualsOrdinalIgnoreCase(entity.Id.MessageId) &&
-				   r.Sender.MatchesParticipantOne(request, entity.Sender) &&
+				   r.Sender.MatchesSender(request, entity.Sender) &&
 				   r.Chat.Matches(request, entity.Chat) &&
 				   r.Content == request.Body.Content &&
 				   r.CreatedAtUtc == entity.CreatedAtUtc &&
@@ -57,7 +72,7 @@ public static class ChatMessageEquals
 				   r.ParticipantOneId.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
 				   r.ParticipantTwoId.EqualsOrdinalIgnoreCase(request.ParticipantTwoId) &&
 				   r.MessageId.EqualsOrdinalIgnoreCase(request.MessageId) &&
-				   r.Sender.MatchesParticipantOne(request, entity.Sender) &&
+				   r.Sender.MatchesSender(request, entity.Sender) &&
 				   r.Chat.Matches(request, entity.Chat) &&
 				   r.Content == request.Body.Content &&
 				   r.CreatedAtUtc == entity.CreatedAtUtc &&
@@ -70,8 +85,47 @@ public static class ChatMessageEquals
 				   r.ParticipantOneId.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
 				   r.ParticipantTwoId.EqualsOrdinalIgnoreCase(request.ParticipantTwoId) &&
 				   r.MessageId.EqualsOrdinalIgnoreCase(request.MessageId) &&
-				   r.Sender.MatchesParticipantOne(request, entity.Sender) &&
+				   r.Sender.MatchesSender(request, entity.Sender) &&
 				   r.Chat.Matches(request, entity.Chat) &&
+				   r.Content == entity.Content &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesInverted(AddChatMessageApiRequest request, ChatMessage? entity)
+		{
+			return entity != null &&
+				   r.ParticipantOneId.EqualsOrdinalIgnoreCase(request.ParticipantTwoId) &&
+				   r.ParticipantTwoId.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
+				   r.MessageId.EqualsOrdinalIgnoreCase(entity.Id.MessageId) &&
+				   r.Sender.MatchesSenderInverted(request, entity.Sender) &&
+				   r.Chat.MatchesInverted(request, entity.Chat) &&
+				   r.Content == request.Body.Content &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesInverted(UpdateChatMessageApiRequest request, ChatMessage? entity)
+		{
+			return entity != null &&
+				   r.ParticipantOneId.EqualsOrdinalIgnoreCase(request.ParticipantTwoId) &&
+				   r.ParticipantTwoId.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
+				   r.MessageId.EqualsOrdinalIgnoreCase(request.MessageId) &&
+				   r.Sender.MatchesSenderInverted(request, entity.Sender) &&
+				   r.Chat.MatchesInverted(request, entity.Chat) &&
+				   r.Content == request.Body.Content &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesInverted(DeleteChatMessageApiRequest request, ChatMessage? entity)
+		{
+			return entity != null &&
+				   r.ParticipantOneId.EqualsOrdinalIgnoreCase(request.ParticipantTwoId) &&
+				   r.ParticipantTwoId.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
+				   r.MessageId.EqualsOrdinalIgnoreCase(request.MessageId) &&
+				   r.Sender.MatchesSenderInverted(request, entity.Sender) &&
+				   r.Chat.MatchesInverted(request, entity.Chat) &&
 				   r.Content == entity.Content &&
 				   r.CreatedAtUtc == entity.CreatedAtUtc &&
 				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
@@ -109,10 +163,118 @@ public static class ChatMessageEquals
 				   r.ParticipantTwo.MatchesParticipantTwo(request, entity.ParticipantTwo) &&
 				   r.CreatedAtUtc == entity.CreatedAtUtc;
 		}
+
+		public bool MatchesInverted(AddChatMessageApiRequest request, Chat? entity)
+		{
+			return entity != null &&
+				   r.ParticipantOneId.EqualsOrdinalIgnoreCase(request.ParticipantTwoId) &&
+				   r.ParticipantTwoId.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
+				   r.ParticipantOne.MatchesParticipantTwo(request, entity.ParticipantOne) &&
+				   r.ParticipantTwo.MatchesParticipantOne(request, entity.ParticipantTwo) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc;
+		}
+
+		public bool MatchesInverted(UpdateChatMessageApiRequest request, Chat? entity)
+		{
+			return entity != null &&
+				   r.ParticipantOneId.EqualsOrdinalIgnoreCase(request.ParticipantTwoId) &&
+				   r.ParticipantTwoId.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
+				   r.ParticipantOne.MatchesParticipantTwo(request, entity.ParticipantOne) &&
+				   r.ParticipantTwo.MatchesParticipantOne(request, entity.ParticipantTwo) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc;
+		}
+
+		public bool MatchesInverted(DeleteChatMessageApiRequest request, Chat? entity)
+		{
+			return entity != null &&
+				   r.ParticipantOneId.EqualsOrdinalIgnoreCase(request.ParticipantTwoId) &&
+				   r.ParticipantTwoId.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
+				   r.ParticipantOne.MatchesParticipantTwo(request, entity.ParticipantOne) &&
+				   r.ParticipantTwo.MatchesParticipantOne(request, entity.ParticipantTwo) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc;
+		}
 	}
 
 	extension(UserNotificationRequest r)
 	{
+		public bool MatchesSender(AddChatMessageApiRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || r.ProfileImageUrl == entity.ProfileImage.Url) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesSender(UpdateChatMessageApiRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || r.ProfileImageUrl == entity.ProfileImage.Url) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesSender(DeleteChatMessageApiRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || r.ProfileImageUrl == entity.ProfileImage.Url) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesSenderInverted(AddChatMessageApiRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.ParticipantTwoId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || r.ProfileImageUrl == entity.ProfileImage.Url) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesSenderInverted(UpdateChatMessageApiRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || r.ProfileImageUrl == entity.ProfileImage.Url) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesSenderInverted(DeleteChatMessageApiRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || r.ProfileImageUrl == entity.ProfileImage.Url) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
 		public bool MatchesParticipantOne(AddChatMessageApiRequest request, User? entity)
 		{
 			return entity != null &&

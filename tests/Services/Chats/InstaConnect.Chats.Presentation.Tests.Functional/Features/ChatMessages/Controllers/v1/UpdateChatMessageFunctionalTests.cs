@@ -698,7 +698,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var notification = await NotificationClient.UpdatedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(request, chatMessage);
+		notification.ShouldSatisfyInverted(request, chatMessage);
 	}
 
 	[Theory]
@@ -717,7 +717,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var notification = await NotificationClient.UpdatedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(request, chatMessage);
+		notification.ShouldSatisfyInverted(request, chatMessage);
 	}
 
 	[Theory]
@@ -736,7 +736,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var notification = await NotificationClient.UpdatedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(request, chatMessage);
+		notification.ShouldSatisfyInverted(request, chatMessage);
 	}
 
 	[Theory]
@@ -755,6 +755,6 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var notification = await NotificationClient.UpdatedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(request, chatMessage);
+		notification.ShouldSatisfyInverted(request, chatMessage);
 	}
 }

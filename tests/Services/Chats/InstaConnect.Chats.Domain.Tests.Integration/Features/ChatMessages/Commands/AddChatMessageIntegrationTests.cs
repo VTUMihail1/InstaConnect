@@ -280,7 +280,7 @@ public class AddChatMessageIntegrationTests : BaseChatMessageDomainCommandIntegr
 		var notification = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(command, chatMessage);
+		notification.ShouldSatisfyInverted(command, chatMessage);
 	}
 
 	[Theory]
@@ -297,7 +297,7 @@ public class AddChatMessageIntegrationTests : BaseChatMessageDomainCommandIntegr
 		var notification = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(command, chatMessage);
+		notification.ShouldSatisfyInverted(command, chatMessage);
 	}
 
 	[Theory]
@@ -314,6 +314,6 @@ public class AddChatMessageIntegrationTests : BaseChatMessageDomainCommandIntegr
 		var notification = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(command, chatMessage);
+		notification.ShouldSatisfyInverted(command, chatMessage);
 	}
 }

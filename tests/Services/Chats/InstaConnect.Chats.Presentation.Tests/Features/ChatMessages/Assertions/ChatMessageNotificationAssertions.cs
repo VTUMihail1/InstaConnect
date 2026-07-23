@@ -13,6 +13,13 @@ public static class ChatMessageNotificationAssertions
 		{
 			r.ShouldSatisfy(f => f.Matches(request, chatMessage));
 		}
+
+		public void ShouldSatisfyInverted(
+			AddChatMessageApiRequest request,
+			ChatMessage chatMessage)
+		{
+			r.ShouldSatisfy(f => f.MatchesInverted(request, chatMessage));
+		}
 	}
 
 	extension(ChatMessageUpdatedNotificationRequest r)
@@ -23,6 +30,13 @@ public static class ChatMessageNotificationAssertions
 		{
 			r.ShouldSatisfy(f => f.Matches(request, chatMessage));
 		}
+
+		public void ShouldSatisfyInverted(
+			UpdateChatMessageApiRequest request,
+			ChatMessage chatMessage)
+		{
+			r.ShouldSatisfy(f => f.MatchesInverted(request, chatMessage));
+		}
 	}
 
 	extension(ChatMessageDeletedNotificationRequest r)
@@ -32,6 +46,13 @@ public static class ChatMessageNotificationAssertions
 			ChatMessage chatMessage)
 		{
 			r.ShouldSatisfy(f => f.Matches(request, chatMessage));
+		}
+
+		public void ShouldSatisfyInverted(
+			DeleteChatMessageApiRequest request,
+			ChatMessage chatMessage)
+		{
+			r.ShouldSatisfy(f => f.MatchesInverted(request, chatMessage));
 		}
 	}
 }
