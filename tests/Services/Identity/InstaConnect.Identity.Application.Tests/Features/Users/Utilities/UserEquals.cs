@@ -18,14 +18,7 @@ public static class UserEquals
 	{
 		public bool Matches(AddUserCommandRequest request, User entity)
 		{
-			return entity.Id.Matches(r.User.Id) &&
-				   request.Name.EqualsOrdinalIgnoreCase(r.User.Name) &&
-				   request.Email.EqualsOrdinalIgnoreCase(r.User.Email) &&
-				   request.FirstName == r.User.FirstName &&
-				   request.LastName == r.User.LastName &&
-				   request.ProfileImage?.GetUrl() == r.User.ProfileImageUrl &&
-				   entity.CreatedAtUtc == r.User.CreatedAtUtc &&
-				   entity.UpdatedAtUtc == r.User.UpdatedAtUtc;
+			return r.User.Matches(request, entity);
 		}
 	}
 
@@ -33,15 +26,7 @@ public static class UserEquals
 	{
 		public bool Matches(UpdateCurrentUserCommandRequest request, User entity)
 		{
-			return request.Id.EqualsOrdinalIgnoreCase(r.User.Id) &&
-				   request.Name.EqualsOrdinalIgnoreCase(r.User.Name) &&
-				   request.Email.EqualsOrdinalIgnoreCase(r.User.Email) &&
-				   request.FirstName == r.User.FirstName &&
-				   request.LastName == r.User.LastName &&
-				   (request.ProfileImage == null ||
-				   request.ProfileImage.GetUrl() == r.User.ProfileImageUrl) &&
-				   entity.CreatedAtUtc == r.User.CreatedAtUtc &&
-				   entity.UpdatedAtUtc == r.User.UpdatedAtUtc;
+			return r.User.Matches(request, entity);
 		}
 	}
 
@@ -49,26 +34,67 @@ public static class UserEquals
 	{
 		public bool Matches(DeleteUserCommandRequest request, User entity)
 		{
-			return request.Id.EqualsOrdinalIgnoreCase(r.User.Id) &&
-				   entity.Name.Matches(r.User.Name) &&
-				   entity.Email.Matches(r.User.Email) &&
-				   entity.FirstName == r.User.FirstName &&
-				   entity.LastName == r.User.LastName &&
-				   entity.ProfileImage.Matches(r.User.ProfileImageUrl) &&
-				   entity.CreatedAtUtc == r.User.CreatedAtUtc &&
-				   entity.UpdatedAtUtc == r.User.UpdatedAtUtc;
+			return r.User.Matches(request, entity);
 		}
 
 		public bool Matches(DeleteCurrentUserCommandRequest request, User entity)
 		{
-			return request.CurrentId.EqualsOrdinalIgnoreCase(r.User.Id) &&
-				   entity.Name.Matches(r.User.Name) &&
-				   entity.Email.Matches(r.User.Email) &&
-				   entity.FirstName == r.User.FirstName &&
-				   entity.LastName == r.User.LastName &&
-				   entity.ProfileImage.Matches(r.User.ProfileImageUrl) &&
-				   entity.CreatedAtUtc == r.User.CreatedAtUtc &&
-				   entity.UpdatedAtUtc == r.User.UpdatedAtUtc;
+			return r.User.Matches(request, entity);
+		}
+	}
+
+	extension(UserEventRequest r)
+	{
+		public bool Matches(AddUserCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(entity.Id.Id) &&
+				   r.Name.EqualsOrdinalIgnoreCase(request.Name) &&
+				   r.Email.EqualsOrdinalIgnoreCase(request.Email) &&
+				   r.FirstName == request.FirstName &&
+				   r.LastName == request.LastName &&
+				   r.ProfileImageUrl == request.ProfileImage?.GetUrl() &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool Matches(UpdateCurrentUserCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.Id) &&
+				   r.Name.EqualsOrdinalIgnoreCase(request.Name) &&
+				   r.Email.EqualsOrdinalIgnoreCase(request.Email) &&
+				   r.FirstName == request.FirstName &&
+				   r.LastName == request.LastName &&
+				   (request.ProfileImage == null || r.ProfileImageUrl == request.ProfileImage.GetUrl()) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool Matches(DeleteUserCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.Id) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || r.ProfileImageUrl == entity.ProfileImage.Url) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool Matches(DeleteCurrentUserCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.CurrentId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || r.ProfileImageUrl == entity.ProfileImage.Url) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
 		}
 	}
 
@@ -264,35 +290,6 @@ public static class UserEquals
 		}
 	}
 
-	extension(User? user)
-	{
-		public bool Matches(AddUserCommandRequest request, UserEventRequest r)
-		{
-			return user != null &&
-				   user.Id.Matches(r.Id) &&
-				   request.Name == r.Name &&
-				   request.Email == r.Email &&
-				   request.FirstName == r.FirstName &&
-				   request.LastName == r.LastName &&
-				   request.ProfileImage?.GetUrl() == r.ProfileImageUrl &&
-				   user.CreatedAtUtc == r.CreatedAtUtc &&
-				   user.UpdatedAtUtc == r.UpdatedAtUtc;
-		}
-
-		public bool Matches(UpdateCurrentUserCommandRequest request, UserEventRequest r)
-		{
-			return user != null &&
-				   request.Id == r.Id &&
-				   request.Name == r.Name &&
-				   request.Email == r.Email &&
-				   request.FirstName == r.FirstName &&
-				   request.LastName == r.LastName &&
-				   request.ProfileImage?.GetUrl() == r.ProfileImageUrl &&
-				   user.CreatedAtUtc == r.CreatedAtUtc &&
-				   user.UpdatedAtUtc == r.UpdatedAtUtc;
-		}
-	}
-
 	extension(UserIdCommandResponse response)
 	{
 		public bool Matches(UserId id)
@@ -382,10 +379,30 @@ public static class UserEquals
 	{
 		public bool Matches(AddUserCommandRequest request, EmailConfirmationToken entity)
 		{
-			return entity.Id.Matches(r.EmailConfirmationToken.Id, r.EmailConfirmationToken.Value) &&
-				   entity.User.Matches(request, r.EmailConfirmationToken.User) &&
-				   entity.ExpiresAtUtc == r.EmailConfirmationToken.ExpiresAtUtc &&
-				   entity.CreatedAtUtc == r.EmailConfirmationToken.CreatedAtUtc;
+			return r.EmailConfirmationToken.Matches(request, entity);
+		}
+	}
+
+	extension(EmailConfirmationTokenEventRequest r)
+	{
+		public bool Matches(AddUserCommandRequest request, EmailConfirmationToken? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(entity.Id.Id.Id) &&
+				   r.Value.EqualsOrdinalIgnoreCase(entity.Id.Value) &&
+				   r.User.Matches(request, entity.User) &&
+				   r.ExpiresAtUtc == entity.ExpiresAtUtc &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc;
+		}
+
+		public bool Matches(UpdateCurrentUserCommandRequest request, EmailConfirmationToken? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.Id) &&
+				   r.Value.EqualsOrdinalIgnoreCase(entity.Id.Value) &&
+				   r.User.Matches(request, entity.User) &&
+				   r.ExpiresAtUtc == entity.ExpiresAtUtc &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc;
 		}
 	}
 
@@ -404,10 +421,7 @@ public static class UserEquals
 	{
 		public bool Matches(UpdateCurrentUserCommandRequest request, EmailConfirmationToken entity)
 		{
-			return entity.Id.Matches(request.Id, r.EmailConfirmationToken.Value) &&
-				   entity.User.Matches(request, r.EmailConfirmationToken.User) &&
-				   entity.ExpiresAtUtc == r.EmailConfirmationToken.ExpiresAtUtc &&
-				   entity.CreatedAtUtc == r.EmailConfirmationToken.CreatedAtUtc;
+			return r.EmailConfirmationToken.Matches(request, entity);
 		}
 	}
 

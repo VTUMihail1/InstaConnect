@@ -1,6 +1,7 @@
 using InstaConnect.Common.Application.Features.Messaging.Abstractions;
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
+using InstaConnect.Identity.Events.Features.Users;
 using InstaConnect.Posts.Application.Features.Posts.Models;
 using InstaConnect.Posts.Application.Features.Users.Abstractions;
 using InstaConnect.Posts.Application.Tests.Features.Posts.Utilities;
@@ -15,13 +16,7 @@ public static class PostEquals
 	{
 		public bool Matches(AddPostCommandRequest request, Post entity)
 		{
-			return entity.Id.Matches(r.Post.Id) &&
-				   request.UserId.EqualsOrdinalIgnoreCase(r.Post.UserId) &&
-				   entity.User != null && entity.User.Matches(r.Post.User) &&
-				   request.Title == r.Post.Title &&
-				   request.Content == r.Post.Content &&
-				   entity.CreatedAtUtc == r.Post.CreatedAtUtc &&
-				   entity.UpdatedAtUtc == r.Post.UpdatedAtUtc;
+			return r.Post.Matches(request, entity);
 		}
 	}
 
@@ -29,13 +24,7 @@ public static class PostEquals
 	{
 		public bool Matches(UpdatePostCommandRequest request, Post entity)
 		{
-			return request.Id.EqualsOrdinalIgnoreCase(r.Post.Id) &&
-				   request.UserId.EqualsOrdinalIgnoreCase(r.Post.UserId) &&
-				   entity.User != null && entity.User.Matches(r.Post.User) &&
-				   request.Title == r.Post.Title &&
-				   request.Content == r.Post.Content &&
-				   entity.CreatedAtUtc == r.Post.CreatedAtUtc &&
-				   entity.UpdatedAtUtc == r.Post.UpdatedAtUtc;
+			return r.Post.Matches(request, entity);
 		}
 	}
 
@@ -43,13 +32,88 @@ public static class PostEquals
 	{
 		public bool Matches(DeletePostCommandRequest request, Post entity)
 		{
-			return request.Id.EqualsOrdinalIgnoreCase(r.Post.Id) &&
-				   request.UserId.EqualsOrdinalIgnoreCase(r.Post.UserId) &&
-				   entity.User != null && entity.User.Matches(r.Post.User) &&
-				   entity.Title == r.Post.Title &&
-				   entity.Content == r.Post.Content &&
-				   entity.CreatedAtUtc == r.Post.CreatedAtUtc &&
-				   entity.UpdatedAtUtc == r.Post.UpdatedAtUtc;
+			return r.Post.Matches(request, entity);
+		}
+	}
+
+	extension(PostEventRequest r)
+	{
+		public bool Matches(AddPostCommandRequest request, Post? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(entity.Id.Id) &&
+				   r.UserId.EqualsOrdinalIgnoreCase(request.UserId) &&
+				   r.User.Matches(request, entity.User) &&
+				   r.Title == request.Title &&
+				   r.Content == request.Content &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool Matches(UpdatePostCommandRequest request, Post? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.Id) &&
+				   r.UserId.EqualsOrdinalIgnoreCase(request.UserId) &&
+				   r.User.Matches(request, entity.User) &&
+				   r.Title == request.Title &&
+				   r.Content == request.Content &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool Matches(DeletePostCommandRequest request, Post? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.Id) &&
+				   r.UserId.EqualsOrdinalIgnoreCase(request.UserId) &&
+				   r.User.Matches(request, entity.User) &&
+				   r.Title == entity.Title &&
+				   r.Content == entity.Content &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+	}
+
+	extension(UserEventRequest r)
+	{
+		public bool Matches(AddPostCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.UserId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || r.ProfileImageUrl == entity.ProfileImage.Url) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool Matches(UpdatePostCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.UserId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || r.ProfileImageUrl == entity.ProfileImage.Url) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool Matches(DeletePostCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.UserId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || r.ProfileImageUrl == entity.ProfileImage.Url) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
 		}
 	}
 

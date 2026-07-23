@@ -1,9 +1,12 @@
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Domain.Features.Messaging.Abstractions;
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
+using InstaConnect.Identity.Events.Features.Users;
 using InstaConnect.Posts.Domain.Tests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Domain.Tests.Features.Users.Utilities;
 using InstaConnect.Posts.Events.Features.PostCommentLikes;
+using InstaConnect.Posts.Events.Features.PostComments;
+using InstaConnect.Posts.Events.Features.Posts;
 
 namespace InstaConnect.Posts.Domain.Tests.Features.PostCommentLikes.Utilities;
 
@@ -23,12 +26,7 @@ public static class PostCommentLikeEquals
 	{
 		public bool Matches(AddPostCommentLikeCommand command, PostCommentLike entity)
 		{
-			return command.CommentId.Id.Matches(request.PostCommentLike.Id) &&
-				   command.CommentId.CommentId == request.PostCommentLike.CommentId &&
-				   command.UserId.Matches(request.PostCommentLike.UserId) &&
-				   entity.User != null && entity.User.Matches(request.PostCommentLike.User) &&
-				   entity.PostComment != null && entity.PostComment.Matches(request.PostCommentLike.PostComment) &&
-				   entity.CreatedAtUtc == request.PostCommentLike.CreatedAtUtc;
+			return request.PostCommentLike.Matches(command, entity);
 		}
 	}
 
@@ -36,10 +34,113 @@ public static class PostCommentLikeEquals
 	{
 		public bool Matches(DeletePostCommentLikeCommand command, PostCommentLike entity)
 		{
-			return entity.Id.Matches(command.Id) &&
-				   entity.User != null && entity.User.Matches(request.PostCommentLike.User) &&
-				   entity.PostComment != null && entity.PostComment.Matches(request.PostCommentLike.PostComment) &&
-				   entity.CreatedAtUtc == request.PostCommentLike.CreatedAtUtc;
+			return request.PostCommentLike.Matches(command, entity);
+		}
+	}
+
+	extension(PostCommentLikeEventRequest request)
+	{
+		public bool Matches(AddPostCommentLikeCommand command, PostCommentLike? entity)
+		{
+			return entity != null &&
+				   request.Id.EqualsOrdinalIgnoreCase(command.CommentId.Id.Id) &&
+				   request.CommentId.EqualsOrdinalIgnoreCase(command.CommentId.CommentId) &&
+				   request.UserId.EqualsOrdinalIgnoreCase(command.UserId.Id) &&
+				   request.User.Matches(command, entity.User) &&
+				   request.PostComment.Matches(command, entity.PostComment) &&
+				   request.CreatedAtUtc == entity.CreatedAtUtc;
+		}
+		public bool Matches(DeletePostCommentLikeCommand command, PostCommentLike? entity)
+		{
+			return entity != null &&
+				   request.Id.EqualsOrdinalIgnoreCase(command.Id.CommentId.Id.Id) &&
+				   request.CommentId.EqualsOrdinalIgnoreCase(command.Id.CommentId.CommentId) &&
+				   request.UserId.EqualsOrdinalIgnoreCase(command.Id.UserId.Id) &&
+				   request.User.Matches(command, entity.User) &&
+				   request.PostComment.Matches(command, entity.PostComment) &&
+				   request.CreatedAtUtc == entity.CreatedAtUtc;
+		}
+	}
+
+	extension(PostCommentEventRequest request)
+	{
+		public bool Matches(AddPostCommentLikeCommand command, PostComment? entity)
+		{
+			return entity != null &&
+				   request.Id.EqualsOrdinalIgnoreCase(command.CommentId.Id.Id) &&
+				   request.CommentId.EqualsOrdinalIgnoreCase(command.CommentId.CommentId) &&
+				   request.UserId.EqualsOrdinalIgnoreCase(command.UserId.Id) &&
+				   request.Content == entity.Content &&
+				   request.User.Matches(command, entity.User) &&
+				   request.Post.Matches(command, entity.Post) &&
+				   request.CreatedAtUtc == entity.CreatedAtUtc &&
+				   request.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+		public bool Matches(DeletePostCommentLikeCommand command, PostComment? entity)
+		{
+			return entity != null &&
+				   request.Id.EqualsOrdinalIgnoreCase(command.Id.CommentId.Id.Id) &&
+				   request.CommentId.EqualsOrdinalIgnoreCase(command.Id.CommentId.CommentId) &&
+				   request.UserId.EqualsOrdinalIgnoreCase(command.Id.UserId.Id) &&
+				   request.Content == entity.Content &&
+				   request.User.Matches(command, entity.User) &&
+				   request.Post.Matches(command, entity.Post) &&
+				   request.CreatedAtUtc == entity.CreatedAtUtc &&
+				   request.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+	}
+
+	extension(PostEventRequest request)
+	{
+		public bool Matches(AddPostCommentLikeCommand command, Post? entity)
+		{
+			return entity != null &&
+				   request.Id.EqualsOrdinalIgnoreCase(command.CommentId.Id.Id) &&
+				   request.UserId.EqualsOrdinalIgnoreCase(command.UserId.Id) &&
+				   request.User.Matches(command, entity.User) &&
+				   request.Title == entity.Title &&
+				   request.Content == entity.Content &&
+				   request.CreatedAtUtc == entity.CreatedAtUtc &&
+				   request.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+		public bool Matches(DeletePostCommentLikeCommand command, Post? entity)
+		{
+			return entity != null &&
+				   request.Id.EqualsOrdinalIgnoreCase(command.Id.CommentId.Id.Id) &&
+				   request.UserId.EqualsOrdinalIgnoreCase(command.Id.UserId.Id) &&
+				   request.User.Matches(command, entity.User) &&
+				   request.Title == entity.Title &&
+				   request.Content == entity.Content &&
+				   request.CreatedAtUtc == entity.CreatedAtUtc &&
+				   request.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+	}
+
+	extension(UserEventRequest request)
+	{
+		public bool Matches(AddPostCommentLikeCommand command, User? entity)
+		{
+			return entity != null &&
+				   request.Id.EqualsOrdinalIgnoreCase(command.UserId.Id) &&
+				   request.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   request.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   request.FirstName == entity.FirstName &&
+				   request.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || request.ProfileImageUrl.EqualsOrdinalIgnoreCase(entity.ProfileImage.Url)) &&
+				   request.CreatedAtUtc == entity.CreatedAtUtc &&
+				   request.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+		public bool Matches(DeletePostCommentLikeCommand command, User? entity)
+		{
+			return entity != null &&
+				   request.Id.EqualsOrdinalIgnoreCase(command.Id.UserId.Id) &&
+				   request.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   request.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   request.FirstName == entity.FirstName &&
+				   request.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || request.ProfileImageUrl.EqualsOrdinalIgnoreCase(entity.ProfileImage.Url)) &&
+				   request.CreatedAtUtc == entity.CreatedAtUtc &&
+				   request.UpdatedAtUtc == entity.UpdatedAtUtc;
 		}
 	}
 

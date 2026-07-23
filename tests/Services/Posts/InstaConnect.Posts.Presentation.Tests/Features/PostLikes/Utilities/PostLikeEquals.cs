@@ -8,6 +8,7 @@ using InstaConnect.Posts.Presentation.Tests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Presentation.Tests.Features.Posts.Utilities;
 using InstaConnect.Posts.Presentation.Tests.Features.Users.Utilities;
 using InstaConnect.Posts.Events.Features.PostLikes;
+using InstaConnect.Posts.Events.Features.Posts;
 
 namespace InstaConnect.Posts.Presentation.Tests.Features.PostLikes.Utilities;
 
@@ -17,11 +18,7 @@ public static class PostLikeEquals
 	{
 		public bool Matches(AddPostLikeApiRequest request, PostLike entity)
 		{
-			return request.Id.EqualsOrdinalIgnoreCase(r.PostLike.Id) &&
-				   request.UserId.EqualsOrdinalIgnoreCase(r.PostLike.UserId) &&
-				   entity.User != null && entity.User.Matches(r.PostLike.User) &&
-				   entity.Post != null && entity.Post.Matches(r.PostLike.Post) &&
-				   entity.CreatedAtUtc == r.PostLike.CreatedAtUtc;
+			return r.PostLike.Matches(request, entity);
 		}
 	}
 
@@ -29,11 +26,86 @@ public static class PostLikeEquals
 	{
 		public bool Matches(DeletePostLikeApiRequest request, PostLike entity)
 		{
-			return request.Id.EqualsOrdinalIgnoreCase(r.PostLike.Id) &&
-				   request.UserId.EqualsOrdinalIgnoreCase(r.PostLike.UserId) &&
-				   entity.User != null && entity.User.Matches(r.PostLike.User) &&
-				   entity.Post != null && entity.Post.Matches(r.PostLike.Post) &&
-				   entity.CreatedAtUtc == r.PostLike.CreatedAtUtc;
+			return r.PostLike.Matches(request, entity);
+		}
+	}
+
+	extension(PostLikeEventRequest r)
+	{
+		public bool Matches(AddPostLikeApiRequest request, PostLike? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.Id) &&
+				   r.UserId.EqualsOrdinalIgnoreCase(request.UserId) &&
+				   r.User.Matches(request, entity.User) &&
+				   r.Post.Matches(request, entity.Post) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc;
+		}
+
+		public bool Matches(DeletePostLikeApiRequest request, PostLike? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.Id) &&
+				   r.UserId.EqualsOrdinalIgnoreCase(request.UserId) &&
+				   r.User.Matches(request, entity.User) &&
+				   r.Post.Matches(request, entity.Post) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc;
+		}
+	}
+
+	extension(PostEventRequest r)
+	{
+		public bool Matches(AddPostLikeApiRequest request, Post? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.Id) &&
+				   r.UserId.EqualsOrdinalIgnoreCase(request.UserId) &&
+				   r.User.Matches(request, entity.User) &&
+				   r.Title == entity.Title &&
+				   r.Content == entity.Content &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool Matches(DeletePostLikeApiRequest request, Post? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.Id) &&
+				   r.UserId.EqualsOrdinalIgnoreCase(request.UserId) &&
+				   r.User.Matches(request, entity.User) &&
+				   r.Title == entity.Title &&
+				   r.Content == entity.Content &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+	}
+
+	extension(UserEventRequest r)
+	{
+		public bool Matches(AddPostLikeApiRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.UserId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || r.ProfileImageUrl == entity.ProfileImage.Url) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool Matches(DeletePostLikeApiRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.UserId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || r.ProfileImageUrl == entity.ProfileImage.Url) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
 		}
 	}
 

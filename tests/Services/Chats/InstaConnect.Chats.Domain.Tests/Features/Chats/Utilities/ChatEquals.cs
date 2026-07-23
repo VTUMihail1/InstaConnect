@@ -1,6 +1,7 @@
 using InstaConnect.Chats.Domain.Tests.Features.Users.Utilities;
 using InstaConnect.Chats.Events.Features.Chats;
 using InstaConnect.Common.Domain.Features.Common.Extensions;
+using InstaConnect.Identity.Events.Features.Users;
 using InstaConnect.Common.Domain.Features.Messaging.Abstractions;
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 
@@ -22,11 +23,36 @@ public static class ChatEquals
 	{
 		public bool Matches(AddChatCommand command, Chat entity)
 		{
-			return command.ParticipantOneId.Matches(request.Chat.ParticipantOneId) &&
-				   command.ParticipantTwoId.Matches(request.Chat.ParticipantTwoId) &&
-				   entity.ParticipantOne.Matches(request.Chat.ParticipantOne) &&
-				   entity.ParticipantTwo.Matches(request.Chat.ParticipantTwo) &&
-				   entity.CreatedAtUtc == request.Chat.CreatedAtUtc;
+			return request.Chat.Matches(command, entity);
+		}
+	}
+
+	extension(ChatEventRequest request)
+	{
+		public bool Matches(AddChatCommand command, Chat? entity)
+		{
+			return entity != null &&
+				   request.ParticipantOneId.EqualsOrdinalIgnoreCase(command.ParticipantOneId.Id) &&
+				   request.ParticipantTwoId.EqualsOrdinalIgnoreCase(command.ParticipantTwoId.Id) &&
+				   request.ParticipantOne.Matches(command.ParticipantOneId, entity.ParticipantOne) &&
+				   request.ParticipantTwo.Matches(command.ParticipantTwoId, entity.ParticipantTwo) &&
+				   request.CreatedAtUtc == entity.CreatedAtUtc;
+		}
+	}
+
+	extension(UserEventRequest request)
+	{
+		public bool Matches(UserId id, User? entity)
+		{
+			return entity != null &&
+				   request.Id.EqualsOrdinalIgnoreCase(id.Id) &&
+				   request.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   request.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   request.FirstName == entity.FirstName &&
+				   request.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || request.ProfileImageUrl.EqualsOrdinalIgnoreCase(entity.ProfileImage.Url)) &&
+				   request.CreatedAtUtc == entity.CreatedAtUtc &&
+				   request.UpdatedAtUtc == entity.UpdatedAtUtc;
 		}
 	}
 

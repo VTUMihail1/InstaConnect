@@ -16,12 +16,7 @@ public static class PostCommentEquals
 	{
 		public bool Matches(AddPostCommentApiRequest request, PostComment entity)
 		{
-			return entity.Id.Matches(r.PostComment.Id, r.PostComment.CommentId) &&
-				   request.UserId.EqualsOrdinalIgnoreCase(r.PostComment.UserId) &&
-				   entity.User != null && entity.User.Matches(r.PostComment.User) &&
-				   request.Body.Content == r.PostComment.Content &&
-				   entity.CreatedAtUtc == r.PostComment.CreatedAtUtc &&
-				   entity.UpdatedAtUtc == r.PostComment.UpdatedAtUtc;
+			return r.PostComment.Matches(request, entity);
 		}
 	}
 
@@ -29,13 +24,7 @@ public static class PostCommentEquals
 	{
 		public bool Matches(UpdatePostCommentApiRequest request, PostComment entity)
 		{
-			return request.Id.EqualsOrdinalIgnoreCase(r.PostComment.Id) &&
-				   request.CommentId.EqualsOrdinalIgnoreCase(r.PostComment.CommentId) &&
-				   request.UserId.EqualsOrdinalIgnoreCase(r.PostComment.UserId) &&
-				   entity.User != null && entity.User.Matches(r.PostComment.User) &&
-				   request.Body.Content == r.PostComment.Content &&
-				   entity.CreatedAtUtc == r.PostComment.CreatedAtUtc &&
-				   entity.UpdatedAtUtc == r.PostComment.UpdatedAtUtc;
+			return r.PostComment.Matches(request, entity);
 		}
 	}
 
@@ -43,13 +32,88 @@ public static class PostCommentEquals
 	{
 		public bool Matches(DeletePostCommentApiRequest request, PostComment entity)
 		{
-			return request.Id.EqualsOrdinalIgnoreCase(r.PostComment.Id) &&
-				   request.CommentId.EqualsOrdinalIgnoreCase(r.PostComment.CommentId) &&
-				   request.UserId.EqualsOrdinalIgnoreCase(r.PostComment.UserId) &&
-				   entity.User != null && entity.User.Matches(r.PostComment.User) &&
-				   entity.Content == r.PostComment.Content &&
-				   entity.CreatedAtUtc == r.PostComment.CreatedAtUtc &&
-				   entity.UpdatedAtUtc == r.PostComment.UpdatedAtUtc;
+			return r.PostComment.Matches(request, entity);
+		}
+	}
+
+	extension(PostCommentEventRequest r)
+	{
+		public bool Matches(AddPostCommentApiRequest request, PostComment? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.Id) &&
+				   r.CommentId.EqualsOrdinalIgnoreCase(entity.Id.CommentId) &&
+				   r.UserId.EqualsOrdinalIgnoreCase(request.UserId) &&
+				   r.Content == request.Body.Content &&
+				   r.User.Matches(request, entity.User) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool Matches(UpdatePostCommentApiRequest request, PostComment? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.Id) &&
+				   r.CommentId.EqualsOrdinalIgnoreCase(request.CommentId) &&
+				   r.UserId.EqualsOrdinalIgnoreCase(request.UserId) &&
+				   r.Content == request.Body.Content &&
+				   r.User.Matches(request, entity.User) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool Matches(DeletePostCommentApiRequest request, PostComment? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.Id) &&
+				   r.CommentId.EqualsOrdinalIgnoreCase(request.CommentId) &&
+				   r.UserId.EqualsOrdinalIgnoreCase(request.UserId) &&
+				   r.Content == entity.Content &&
+				   r.User.Matches(request, entity.User) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+	}
+
+	extension(UserEventRequest r)
+	{
+		public bool Matches(AddPostCommentApiRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.UserId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || r.ProfileImageUrl == entity.ProfileImage.Url) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool Matches(UpdatePostCommentApiRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.UserId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || r.ProfileImageUrl == entity.ProfileImage.Url) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool Matches(DeletePostCommentApiRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.UserId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || r.ProfileImageUrl == entity.ProfileImage.Url) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
 		}
 	}
 

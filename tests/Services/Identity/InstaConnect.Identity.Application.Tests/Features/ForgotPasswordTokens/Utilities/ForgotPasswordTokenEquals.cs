@@ -1,3 +1,4 @@
+using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Identity.Application.Tests.Features.ForgotPasswordTokens.Utilities;
 using InstaConnect.Identity.Application.Tests.Features.Users.Utilities;
 using InstaConnect.Identity.Domain.Features.Common.Helpers;
@@ -49,32 +50,55 @@ public static class ForgotPasswordTokenEquals
 		}
 	}
 
-	extension(User? entity)
+	extension(ForgotPasswordTokenEventRequest r)
 	{
-		public bool Matches(AddForgotPasswordTokenCommandRequest request, UserEventRequest r)
+		public bool Matches(AddForgotPasswordTokenCommandRequest request, ForgotPasswordToken? entity)
 		{
 			return entity != null &&
-				   entity.Id.Matches(r.Id) &&
-				   request.Name == r.Name &&
-				   entity.Email.Matches(r.Email) &&
-				   entity.FirstName == r.FirstName &&
-				   entity.LastName == r.LastName &&
-				   entity.ProfileImage.Matches(r.ProfileImageUrl) &&
-				   entity.CreatedAtUtc == r.CreatedAtUtc &&
-				   entity.UpdatedAtUtc == r.UpdatedAtUtc;
+				   r.Id.EqualsOrdinalIgnoreCase(entity.Id.Id.Id) &&
+				   r.Value.EqualsOrdinalIgnoreCase(entity.Id.Value) &&
+				   r.User.Matches(request, entity.User) &&
+				   r.ExpiresAtUtc == entity.ExpiresAtUtc &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc;
 		}
 
-		public bool Matches(VerifyForgotPasswordTokenCommandRequest request, UserEventRequest r)
+		public bool Matches(VerifyForgotPasswordTokenCommandRequest request, ForgotPasswordToken? entity)
 		{
 			return entity != null &&
-				   request.Id == r.Id &&
-				   entity.Name.Matches(r.Name) &&
-				   entity.Email.Matches(r.Email) &&
-				   entity.FirstName == r.FirstName &&
-				   entity.LastName == r.LastName &&
-				   entity.ProfileImage.Matches(r.ProfileImageUrl) &&
-				   entity.CreatedAtUtc == r.CreatedAtUtc &&
-				   entity.UpdatedAtUtc == r.UpdatedAtUtc;
+				   r.Id.EqualsOrdinalIgnoreCase(request.Id) &&
+				   r.Value.EqualsOrdinalIgnoreCase(request.Value) &&
+				   r.User.Matches(request, entity.User) &&
+				   r.ExpiresAtUtc == entity.ExpiresAtUtc &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc;
+		}
+	}
+
+	extension(UserEventRequest r)
+	{
+		public bool Matches(AddForgotPasswordTokenCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(entity.Id.Id) &&
+				   r.Name.EqualsOrdinalIgnoreCase(request.Name) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || r.ProfileImageUrl == entity.ProfileImage.Url) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool Matches(VerifyForgotPasswordTokenCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.Id) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || r.ProfileImageUrl == entity.ProfileImage.Url) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
 		}
 	}
 
@@ -82,10 +106,7 @@ public static class ForgotPasswordTokenEquals
 	{
 		public bool Matches(AddForgotPasswordTokenCommandRequest request, ForgotPasswordToken entity)
 		{
-			return entity.Id.Matches(r.ForgotPasswordToken.Id, r.ForgotPasswordToken.Value) &&
-				   entity.User.Matches(request, r.ForgotPasswordToken.User) &&
-				   entity.ExpiresAtUtc == r.ForgotPasswordToken.ExpiresAtUtc &&
-				   entity.CreatedAtUtc == r.ForgotPasswordToken.CreatedAtUtc;
+			return r.ForgotPasswordToken.Matches(request, entity);
 		}
 	}
 
@@ -104,10 +125,7 @@ public static class ForgotPasswordTokenEquals
 	{
 		public bool Matches(VerifyForgotPasswordTokenCommandRequest request, ForgotPasswordToken entity)
 		{
-			return entity.Id.Matches(request.Id, request.Value) &&
-				   entity.User.Matches(request, r.ForgotPasswordToken.User) &&
-				   entity.ExpiresAtUtc == r.ForgotPasswordToken.ExpiresAtUtc &&
-				   entity.CreatedAtUtc == r.ForgotPasswordToken.CreatedAtUtc;
+			return r.ForgotPasswordToken.Matches(request, entity);
 		}
 	}
 

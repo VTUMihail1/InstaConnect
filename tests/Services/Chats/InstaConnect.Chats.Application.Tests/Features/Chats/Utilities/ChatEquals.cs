@@ -6,6 +6,7 @@ using InstaConnect.Chats.Events.Features.Chats;
 using InstaConnect.Common.Application.Features.Messaging.Abstractions;
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
+using InstaConnect.Identity.Events.Features.Users;
 
 namespace InstaConnect.Chats.Application.Tests.Features.Chats.Utilities;
 
@@ -15,11 +16,36 @@ public static class ChatEquals
 	{
 		public bool Matches(AddChatCommandRequest request, Chat entity)
 		{
-			return request.ParticipantOneId.EqualsOrdinalIgnoreCase(r.Chat.ParticipantOneId) &&
-				   request.ParticipantTwoId.EqualsOrdinalIgnoreCase(r.Chat.ParticipantTwoId) &&
-				   entity.ParticipantOne.Matches(r.Chat.ParticipantOne) &&
-				   entity.ParticipantTwo.Matches(r.Chat.ParticipantTwo) &&
-				   entity.CreatedAtUtc == r.Chat.CreatedAtUtc;
+			return r.Chat.Matches(request, entity);
+		}
+	}
+
+	extension(ChatEventRequest r)
+	{
+		public bool Matches(AddChatCommandRequest request, Chat? entity)
+		{
+			return entity != null &&
+				   r.ParticipantOneId.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
+				   r.ParticipantTwoId.EqualsOrdinalIgnoreCase(request.ParticipantTwoId) &&
+				   r.ParticipantOne.Matches(request.ParticipantOneId, entity.ParticipantOne) &&
+				   r.ParticipantTwo.Matches(request.ParticipantTwoId, entity.ParticipantTwo) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc;
+		}
+	}
+
+	extension(UserEventRequest r)
+	{
+		public bool Matches(string id, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(id) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || r.ProfileImageUrl == entity.ProfileImage.Url) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
 		}
 	}
 

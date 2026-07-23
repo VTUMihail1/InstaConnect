@@ -1,6 +1,8 @@
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Presentation.Features.Messaging.Abstractions;
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
+using InstaConnect.Follows.Domain.Features.Users.Models.Requests;
+using InstaConnect.Identity.Events.Features.Users;
 using InstaConnect.Follows.Domain.Features.Follows.Models.Requests;
 using InstaConnect.Follows.Events.Features.Follows;
 using InstaConnect.Follows.Presentation.Features.Users.Abstractions;
@@ -16,11 +18,7 @@ public static class FollowEquals
 	{
 		public bool Matches(AddFollowApiRequest request, Follow entity)
 		{
-			return request.FollowerId.EqualsOrdinalIgnoreCase(r.Follow.FollowerId) &&
-				   request.Body.FollowingId.EqualsOrdinalIgnoreCase(r.Follow.FollowingId) &&
-				   entity.Follower.Matches(r.Follow.Follower) &&
-				   entity.Following.Matches(r.Follow.Following) &&
-				   entity.CreatedAtUtc == r.Follow.CreatedAtUtc;
+			return r.Follow.Matches(request, entity);
 		}
 	}
 
@@ -28,11 +26,7 @@ public static class FollowEquals
 	{
 		public bool Matches(DeleteFollowApiRequest request, Follow entity)
 		{
-			return request.FollowerId.EqualsOrdinalIgnoreCase(r.Follow.FollowerId) &&
-				   request.FollowingId.EqualsOrdinalIgnoreCase(r.Follow.FollowingId) &&
-				   entity.Follower.Matches(r.Follow.Follower) &&
-				   entity.Following.Matches(r.Follow.Following) &&
-				   entity.CreatedAtUtc == r.Follow.CreatedAtUtc;
+			return r.Follow.Matches(request, entity);
 		}
 	}
 
@@ -40,11 +34,75 @@ public static class FollowEquals
 	{
 		public bool Matches(AddFollowApiRequest request, Follow entity)
 		{
-			return request.FollowerId.EqualsOrdinalIgnoreCase(r.Follow.FollowerId) &&
-				   request.Body.FollowingId.EqualsOrdinalIgnoreCase(r.Follow.FollowingId) &&
-				   entity.Follower.Matches(r.Follow.Follower) &&
-				   entity.Following.Matches(r.Follow.Following) &&
-				   entity.CreatedAtUtc == r.Follow.CreatedAtUtc;
+			return r.Follow.Matches(request, entity);
+		}
+	}
+
+	extension(FollowEventRequest r)
+	{
+		public bool Matches(AddFollowApiRequest request, Follow? entity)
+		{
+			return entity != null &&
+				   r.FollowerId.EqualsOrdinalIgnoreCase(request.FollowerId) &&
+				   r.FollowingId.EqualsOrdinalIgnoreCase(request.Body.FollowingId) &&
+				   r.Follower.Matches(request.FollowerId, entity.Follower) &&
+				   r.Following.Matches(request.Body.FollowingId, entity.Following) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc;
+		}
+
+		public bool Matches(DeleteFollowApiRequest request, Follow? entity)
+		{
+			return entity != null &&
+				   r.FollowerId.EqualsOrdinalIgnoreCase(request.FollowerId) &&
+				   r.FollowingId.EqualsOrdinalIgnoreCase(request.FollowingId) &&
+				   r.Follower.Matches(request.FollowerId, entity.Follower) &&
+				   r.Following.Matches(request.FollowingId, entity.Following) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc;
+		}
+	}
+
+	extension(FollowNotificationRequest r)
+	{
+		public bool Matches(AddFollowApiRequest request, Follow? entity)
+		{
+			return entity != null &&
+				   r.FollowerId.EqualsOrdinalIgnoreCase(request.FollowerId) &&
+				   r.FollowingId.EqualsOrdinalIgnoreCase(request.Body.FollowingId) &&
+				   r.Follower.Matches(request.FollowerId, entity.Follower) &&
+				   r.Following.Matches(request.Body.FollowingId, entity.Following) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc;
+		}
+	}
+
+	extension(UserEventRequest r)
+	{
+		public bool Matches(string id, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(id) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || r.ProfileImageUrl == entity.ProfileImage.Url) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+	}
+
+	extension(UserNotificationRequest r)
+	{
+		public bool Matches(string id, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(id) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || r.ProfileImageUrl == entity.ProfileImage.Url) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
 		}
 	}
 

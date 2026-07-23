@@ -1,3 +1,5 @@
+using InstaConnect.Identity.Events.Features.Users;
+using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 using InstaConnect.Identity.Domain.Tests.Features.Users.Utilities;
 using InstaConnect.Identity.Events.Features.UserClaims;
@@ -28,10 +30,7 @@ public static class UserClaimEquals
 	{
 		public bool Matches(AddUserClaimCommand command, UserClaim entity)
 		{
-			return command.Id.Matches(request.UserClaim.Id) &&
-				   command.Claim == request.UserClaim.Claim &&
-				   entity.User.Matches(request.UserClaim.User) &&
-				   entity.CreatedAtUtc == request.UserClaim.CreatedAtUtc;
+			return request.UserClaim.Matches(command, entity);
 		}
 	}
 
@@ -39,9 +38,44 @@ public static class UserClaimEquals
 	{
 		public bool Matches(DeleteUserClaimCommand command, UserClaim entity)
 		{
-			return entity.Id.Matches(command.Id) &&
-				   entity.User.Matches(request.UserClaim.User) &&
-				   entity.CreatedAtUtc == request.UserClaim.CreatedAtUtc;
+			return request.UserClaim.Matches(command, entity);
+		}
+	}
+
+	extension(UserClaimEventRequest request)
+	{
+		public bool Matches(AddUserClaimCommand command, UserClaim? entity)
+		{
+			return entity != null &&
+				   request.Id.EqualsOrdinalIgnoreCase(command.Id.Id) &&
+				   request.Claim == command.Claim &&
+				   request.User.Matches(command.Id, entity.User) &&
+				   request.CreatedAtUtc == entity.CreatedAtUtc;
+		}
+
+		public bool Matches(DeleteUserClaimCommand command, UserClaim? entity)
+		{
+			return entity != null &&
+				   request.Id.EqualsOrdinalIgnoreCase(command.Id.Id.Id) &&
+				   request.Claim == command.Id.Claim &&
+				   request.User.Matches(command.Id.Id, entity.User) &&
+				   request.CreatedAtUtc == entity.CreatedAtUtc;
+		}
+	}
+
+	extension(UserEventRequest request)
+	{
+		public bool Matches(UserId id, User? entity)
+		{
+			return entity != null &&
+				   request.Id.EqualsOrdinalIgnoreCase(id.Id) &&
+				   request.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   request.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   request.FirstName == entity.FirstName &&
+				   request.LastName == entity.LastName &&
+				   (entity.ProfileImage == null || request.ProfileImageUrl.EqualsOrdinalIgnoreCase(entity.ProfileImage.Url)) &&
+				   request.CreatedAtUtc == entity.CreatedAtUtc &&
+				   request.UpdatedAtUtc == entity.UpdatedAtUtc;
 		}
 	}
 
