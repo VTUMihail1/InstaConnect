@@ -38,8 +38,8 @@ public static class ForgotPasswordTokenEquals
 		public bool Matches(VerifyForgotPasswordTokenCommand command, ForgotPasswordToken? entity)
 		{
 			return entity != null &&
-				   request.Id.EqualsOrdinalIgnoreCase(command.Id.Id.Id) &&
-				   request.Value.EqualsOrdinalIgnoreCase(command.Id.Value) &&
+				   request.Id.EqualsOrdinalIgnoreCase(entity.Id.Id.Id) &&
+				   request.Value.EqualsOrdinalIgnoreCase(entity.Id.Value) &&
 				   request.User.Matches(command, entity.User) &&
 				   request.ExpiresAtUtc == entity.ExpiresAtUtc &&
 				   request.CreatedAtUtc == entity.CreatedAtUtc;

@@ -129,7 +129,7 @@ public class VerifyEmailConfirmationTokenServiceUnitTests : BaseEmailConfirmatio
 		await _service.VerifyAsync(_command, CancellationToken);
 
 		// Assert
-		await EventPublisher.ShouldReceiveOnePublishAsync(_command, EmailConfirmationTokens, CancellationToken);
+		await EventPublisher.ShouldReceiveOnePublishAsync(_command, User.EmailConfirmationTokens, CancellationToken);
 	}
 
 	[Fact]

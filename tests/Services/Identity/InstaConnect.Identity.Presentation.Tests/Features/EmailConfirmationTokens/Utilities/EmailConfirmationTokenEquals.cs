@@ -62,8 +62,8 @@ public static class EmailConfirmationTokenEquals
 		public bool Matches(VerifyEmailConfirmationTokenApiRequest request, EmailConfirmationToken? entity)
 		{
 			return entity != null &&
-				   r.Id.EqualsOrdinalIgnoreCase(request.Id) &&
-				   r.Value.EqualsOrdinalIgnoreCase(request.Value) &&
+				   r.Id.EqualsOrdinalIgnoreCase(entity.Id.Id.Id) &&
+				   r.Value.EqualsOrdinalIgnoreCase(entity.Id.Value) &&
 				   r.User.Matches(request, entity.User) &&
 				   r.ExpiresAtUtc == entity.ExpiresAtUtc &&
 				   r.CreatedAtUtc == entity.CreatedAtUtc;
