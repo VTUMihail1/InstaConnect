@@ -19,8 +19,8 @@ public static class ServiceCollectionExtensions
 		{
 			serviceCollection.AddMassTransitTestEventHarness(connectionString, currentAssemblies);
 
-			serviceCollection.AddScoped<ITestHarnessFactory>(_ => new TestHarnessFactory(connectionString, currentAssemblies));
-			serviceCollection.AddScoped<IEventHarness, EventHarness>();
+			serviceCollection.AddSingleton<ITestHarnessFactory>(_ => new TestHarnessFactory(connectionString, currentAssemblies));
+			serviceCollection.AddSingleton<IEventHarness, EventHarness>();
 
 			return serviceCollection;
 		}
