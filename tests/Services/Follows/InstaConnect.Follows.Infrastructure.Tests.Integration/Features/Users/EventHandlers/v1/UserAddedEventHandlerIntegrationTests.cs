@@ -1,6 +1,8 @@
-namespace InstaConnect.Chats.Infrastructure.Tests.Integration.Features.Users.EventHandlers.v1;
+using InstaConnect.Common.Infrastructure.Tests.Features.Utilities;
 
-public class AddUserEventHandlerIntegrationTests : BaseUserInfrastructureCommandIntegrationTest
+namespace InstaConnect.Follows.Infrastructure.Tests.Integration.Features.Users.EventHandlers.v1;
+
+public class UserAddedEventHandlerIntegrationTests : BaseUserInfrastructureCommandIntegrationTest
 {
 	private readonly UserAddedEventRequestBuilderFactory _requestBuilderFactory;
 	private readonly UserAddedEventRequestBuilder _requestBuilder;
@@ -8,14 +10,14 @@ public class AddUserEventHandlerIntegrationTests : BaseUserInfrastructureCommand
 
 	private readonly UserAddedEventHandler _handler;
 
-	public AddUserEventHandlerIntegrationTests(ChatsWebApplicationFactory webApplicationFactory)
+	public UserAddedEventHandlerIntegrationTests(FollowsWebApplicationFactory webApplicationFactory)
 		: base(webApplicationFactory)
 	{
 		_requestBuilderFactory = new();
 		_requestBuilder = _requestBuilderFactory.Create(User);
 		_request = _requestBuilder.Build();
 
-		_handler = new(Mapper, Sender);
+		_handler = ServiceScope.GetUserAddedEventHandler();
 	}
 
 	[Theory]
@@ -30,7 +32,7 @@ public class AddUserEventHandlerIntegrationTests : BaseUserInfrastructureCommand
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Assert
-		await _handler.ShouldThrowInvalidValidationExceptionForIdAsync(request, Mapper, messageTransformer, CancellationToken);
+		await _handler.ShouldThrowInvalidValidationExceptionForIdAsync(request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -45,7 +47,7 @@ public class AddUserEventHandlerIntegrationTests : BaseUserInfrastructureCommand
 		var request = _requestBuilder.WithName(transformer).Build();
 
 		// Assert
-		await _handler.ShouldThrowInvalidValidationExceptionForNameAsync(request, Mapper, messageTransformer, CancellationToken);
+		await _handler.ShouldThrowInvalidValidationExceptionForNameAsync(request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -60,7 +62,7 @@ public class AddUserEventHandlerIntegrationTests : BaseUserInfrastructureCommand
 		var request = _requestBuilder.WithFirstName(transformer).Build();
 
 		// Assert
-		await _handler.ShouldThrowInvalidValidationExceptionForFirstNameAsync(request, Mapper, messageTransformer, CancellationToken);
+		await _handler.ShouldThrowInvalidValidationExceptionForFirstNameAsync(request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -75,7 +77,7 @@ public class AddUserEventHandlerIntegrationTests : BaseUserInfrastructureCommand
 		var request = _requestBuilder.WithLastName(transformer).Build();
 
 		// Assert
-		await _handler.ShouldThrowInvalidValidationExceptionForLastNameAsync(request, Mapper, messageTransformer, CancellationToken);
+		await _handler.ShouldThrowInvalidValidationExceptionForLastNameAsync(request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -91,7 +93,7 @@ public class AddUserEventHandlerIntegrationTests : BaseUserInfrastructureCommand
 		var request = _requestBuilder.WithEmail(transformer).Build();
 
 		// Assert
-		await _handler.ShouldThrowInvalidValidationExceptionForEmailAsync(request, Mapper, messageTransformer, CancellationToken);
+		await _handler.ShouldThrowInvalidValidationExceptionForEmailAsync(request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -103,7 +105,7 @@ public class AddUserEventHandlerIntegrationTests : BaseUserInfrastructureCommand
 		var request = _requestBuilder.WithProfileImage(transformer).Build();
 
 		// Assert
-		await _handler.ShouldThrowInvalidValidationExceptionForProfileImageAsync(request, Mapper, messageTransformer, CancellationToken);
+		await _handler.ShouldThrowInvalidValidationExceptionForProfileImageAsync(request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -115,7 +117,7 @@ public class AddUserEventHandlerIntegrationTests : BaseUserInfrastructureCommand
 		var request = _requestBuilder.WithCreatedAtUtc(transformer).Build();
 
 		// Assert
-		await _handler.ShouldThrowInvalidValidationExceptionForCreatedAtUtcAsync(request, Mapper, messageTransformer, CancellationToken);
+		await _handler.ShouldThrowInvalidValidationExceptionForCreatedAtUtcAsync(request, messageTransformer, CancellationToken);
 	}
 
 	[Theory]
@@ -127,7 +129,7 @@ public class AddUserEventHandlerIntegrationTests : BaseUserInfrastructureCommand
 		var request = _requestBuilder.WithUpdatedAtUtc(transformer).Build();
 
 		// Assert
-		await _handler.ShouldThrowInvalidValidationExceptionForUpdatedAtUtcAsync(request, Mapper, messageTransformer, CancellationToken);
+		await _handler.ShouldThrowInvalidValidationExceptionForUpdatedAtUtcAsync(request, messageTransformer, CancellationToken);
 	}
 
 	[Fact]
@@ -139,7 +141,7 @@ public class AddUserEventHandlerIntegrationTests : BaseUserInfrastructureCommand
 		var request = _requestBuilder.WithId(newUser.Id).Build();
 
 		// Assert
-		await _handler.ShouldThrowUserAlreadyExistsExceptionAsync(request, Mapper, CancellationToken);
+		await _handler.ShouldThrowUserAlreadyExistsExceptionAsync(request, CancellationToken);
 	}
 
 	[Theory]
@@ -153,7 +155,7 @@ public class AddUserEventHandlerIntegrationTests : BaseUserInfrastructureCommand
 		var request = _requestBuilder.WithId(newUser.Id, transformer).Build();
 
 		// Assert
-		await _handler.ShouldThrowUserAlreadyExistsExceptionAsync(request, Mapper, CancellationToken);
+		await _handler.ShouldThrowUserAlreadyExistsExceptionAsync(request, CancellationToken);
 	}
 
 	[Fact]
@@ -165,7 +167,7 @@ public class AddUserEventHandlerIntegrationTests : BaseUserInfrastructureCommand
 		var request = _requestBuilder.WithEmail(newUser.Email).Build();
 
 		// Assert
-		await _handler.ShouldThrowUserEmailAlreadyExistsExceptionAsync(request, Mapper, CancellationToken);
+		await _handler.ShouldThrowUserEmailAlreadyExistsExceptionAsync(request, CancellationToken);
 	}
 
 	[Theory]
@@ -179,7 +181,7 @@ public class AddUserEventHandlerIntegrationTests : BaseUserInfrastructureCommand
 		var request = _requestBuilder.WithEmail(newUser.Email, transformer).Build();
 
 		// Assert
-		await _handler.ShouldThrowUserEmailAlreadyExistsExceptionAsync(request, Mapper, CancellationToken);
+		await _handler.ShouldThrowUserEmailAlreadyExistsExceptionAsync(request, CancellationToken);
 	}
 
 	[Fact]
@@ -191,7 +193,7 @@ public class AddUserEventHandlerIntegrationTests : BaseUserInfrastructureCommand
 		var request = _requestBuilder.WithName(newUser.Name).Build();
 
 		// Assert
-		await _handler.ShouldThrowUserNameAlreadyExistsExceptionAsync(request, Mapper, CancellationToken);
+		await _handler.ShouldThrowUserNameAlreadyExistsExceptionAsync(request, CancellationToken);
 	}
 
 	[Theory]
@@ -205,7 +207,7 @@ public class AddUserEventHandlerIntegrationTests : BaseUserInfrastructureCommand
 		var request = _requestBuilder.WithName(newUser.Name, transformer).Build();
 
 		// Assert
-		await _handler.ShouldThrowUserNameAlreadyExistsExceptionAsync(request, Mapper, CancellationToken);
+		await _handler.ShouldThrowUserNameAlreadyExistsExceptionAsync(request, CancellationToken);
 	}
 
 	[Fact]

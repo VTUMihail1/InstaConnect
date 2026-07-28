@@ -1,6 +1,8 @@
+using InstaConnect.Common.Infrastructure.Tests.Features.Utilities;
+
 namespace InstaConnect.Chats.Infrastructure.Tests.Integration.Features.Users.EventHandlers.v1;
 
-public class DeleteUserEventHandlerIntegrationTests : BaseUserInfrastructureCommandIntegrationTest
+public class UserDeletedEventHandlerIntegrationTests : BaseUserInfrastructureCommandIntegrationTest
 {
 	private readonly UserDeletedEventRequestBuilderFactory _requestBuilderFactory;
 	private readonly UserDeletedEventRequestBuilder _requestBuilder;
@@ -8,14 +10,14 @@ public class DeleteUserEventHandlerIntegrationTests : BaseUserInfrastructureComm
 
 	private readonly UserDeletedEventHandler _handler;
 
-	public DeleteUserEventHandlerIntegrationTests(ChatsWebApplicationFactory webApplicationFactory)
+	public UserDeletedEventHandlerIntegrationTests(ChatsWebApplicationFactory webApplicationFactory)
 		: base(webApplicationFactory)
 	{
 		_requestBuilderFactory = new();
 		_requestBuilder = _requestBuilderFactory.Create(User);
 		_request = _requestBuilder.Build();
 
-		_handler = new(Mapper, Sender);
+		_handler = ServiceScope.GetUserDeletedEventHandler();
 	}
 
 	protected override async Task OnInitializeAsync()
@@ -35,7 +37,7 @@ public class DeleteUserEventHandlerIntegrationTests : BaseUserInfrastructureComm
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Assert
-		await _handler.ShouldThrowInvalidValidationExceptionForIdAsync(request, Mapper, messageTransformer, CancellationToken);
+		await _handler.ShouldThrowInvalidValidationExceptionForIdAsync(request, messageTransformer, CancellationToken);
 	}
 
 	[Fact]
@@ -45,7 +47,7 @@ public class DeleteUserEventHandlerIntegrationTests : BaseUserInfrastructureComm
 		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Assert
-		await _handler.ShouldThrowUserNotFoundExceptionAsync(_request, Mapper, CancellationToken);
+		await _handler.ShouldThrowUserNotFoundExceptionAsync(_request, CancellationToken);
 	}
 
 	[Fact]

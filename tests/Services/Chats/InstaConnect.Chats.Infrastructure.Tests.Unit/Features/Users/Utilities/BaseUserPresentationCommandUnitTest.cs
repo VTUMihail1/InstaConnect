@@ -1,6 +1,6 @@
-using InstaConnect.Chats.Infrastructure.Features.Common.Extensions;
 using InstaConnect.Common.Application.Features.Messaging.Abstractions;
 using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
+using InstaConnect.Chats.Infrastructure.Features.Common.Extensions;
 
 namespace InstaConnect.Chats.Infrastructure.Tests.Unit.Features.Users.Utilities;
 

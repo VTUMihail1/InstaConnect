@@ -1,6 +1,8 @@
-namespace InstaConnect.Follows.Infrastructure.Tests.Unit.Features.Users.EventHandlers.v1;
+using InstaConnect.Common.Infrastructure.Tests.Features.Utilities;
 
-public class AddUserEventHandlerUnitTests : BaseUserPresentationCommandUnitTest
+namespace InstaConnect.Chats.Infrastructure.Tests.Unit.Features.Users.EventHandlers.v1;
+
+public class UserAddedEventHandlerUnitTests : BaseUserPresentationCommandUnitTest
 {
 	private readonly UserAddedEventRequestBuilderFactory _requestBuilderFactory;
 	private readonly UserAddedEventRequestBuilder _requestBuilder;
@@ -8,7 +10,7 @@ public class AddUserEventHandlerUnitTests : BaseUserPresentationCommandUnitTest
 
 	private readonly UserAddedEventHandler _handler;
 
-	public AddUserEventHandlerUnitTests()
+	public UserAddedEventHandlerUnitTests()
 	{
 		_requestBuilderFactory = new();
 		_requestBuilder = _requestBuilderFactory.Create(User);

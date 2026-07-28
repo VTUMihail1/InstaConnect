@@ -1,14 +1,14 @@
 using InstaConnect.Chats.Tests.Features.Users.Assertions;
 
-namespace InstaConnect.Chats.Infrastructure.Tests.Functional.Features.Users.EventHandlers;
+namespace InstaConnect.Chats.Infrastructure.Tests.Functional.Features.Users.Endpoints;
 
-public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFunctionalTest
+public class UpdateUserInfrastructureFunctionalTests : BaseUserInfrastructureCommandFunctionalTest
 {
 	private readonly UserUpdatedEventRequestBuilderFactory _requestBuilderFactory;
 	private readonly UserUpdatedEventRequestBuilder _requestBuilder;
 	private readonly UserUpdatedEventRequest _request;
 
-	public UpdateUserInfrastructureTests(ChatsWebApplicationFactory webApplicationFactory)
+	public UpdateUserInfrastructureFunctionalTests(ChatsWebApplicationFactory webApplicationFactory)
 		: base(webApplicationFactory)
 	{
 		_requestBuilderFactory = new();
@@ -34,9 +34,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.FaultedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Theory]
@@ -52,9 +53,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.FaultedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Theory]
@@ -70,9 +72,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.FaultedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Theory]
@@ -88,9 +91,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.FaultedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Theory]
@@ -107,9 +111,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.FaultedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Theory]
@@ -122,9 +127,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.FaultedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Theory]
@@ -137,9 +143,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.FaultedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Fact]
@@ -150,9 +157,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(_request, CancellationToken);
+		var eventRequest = await EventHarness.FaultedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveFaultedAsync(_request, CancellationToken);
+		eventRequest.ShouldSatisfy(_request);
 	}
 
 	[Fact]
@@ -166,9 +174,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.FaultedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Theory]
@@ -184,9 +193,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.FaultedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Fact]
@@ -200,9 +210,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.FaultedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Theory]
@@ -218,209 +229,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.FaultedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
-	}
-
-	[Theory]
-	[UserIdNullData]
-	[UserIdEmptyData]
-	[UserIdTooShortData]
-	[UserIdTooLongData]
-	public async Task PublishAsync_ShouldNotUpdateUser_WhenIdIsInvalid(
-		IStringTransformer transformer)
-	{
-		// Arrange
-		var request = _requestBuilder.WithId(transformer).Build();
-
-		// Act
-		await EventHarness.PublishAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
-
-		// Assert
-		user.ShouldSatisfy(User);
-	}
-
-	[Theory]
-	[UserNameNullData]
-	[UserNameEmptyData]
-	[UserNameTooShortData]
-	[UserNameTooLongData]
-	public async Task PublishAsync_ShouldNotUpdateUser_WhenNameIsInvalid(
-		IStringTransformer transformer)
-	{
-		// Arrange
-		var request = _requestBuilder.WithName(transformer).Build();
-
-		// Act
-		await EventHarness.PublishAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
-
-		// Assert
-		user.ShouldSatisfy(User);
-	}
-
-	[Theory]
-	[UserFirstNameNullData]
-	[UserFirstNameEmptyData]
-	[UserFirstNameTooShortData]
-	[UserFirstNameTooLongData]
-	public async Task PublishAsync_ShouldNotUpdateUser_WhenFirstNameIsInvalid(
-		IStringTransformer transformer)
-	{
-		// Arrange
-		var request = _requestBuilder.WithFirstName(transformer).Build();
-
-		// Act
-		await EventHarness.PublishAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
-
-		// Assert
-		user.ShouldSatisfy(User);
-	}
-
-	[Theory]
-	[UserLastNameNullData]
-	[UserLastNameEmptyData]
-	[UserLastNameTooShortData]
-	[UserLastNameTooLongData]
-	public async Task PublishAsync_ShouldNotUpdateUser_WhenLastNameIsInvalid(
-		IStringTransformer transformer)
-	{
-		// Arrange
-		var request = _requestBuilder.WithLastName(transformer).Build();
-
-		// Act
-		await EventHarness.PublishAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
-
-		// Assert
-		user.ShouldSatisfy(User);
-	}
-
-	[Theory]
-	[UserEmailNullData]
-	[UserEmailEmptyData]
-	[UserEmailTooShortData]
-	[UserEmailTooLongData]
-	[UserEmailInvalidData]
-	public async Task PublishAsync_ShouldNotUpdateUser_WhenEmailIsInvalid(
-		IStringTransformer transformer)
-	{
-		// Arrange
-		var request = _requestBuilder.WithEmail(transformer).Build();
-
-		// Act
-		await EventHarness.PublishAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
-
-		// Assert
-		user.ShouldSatisfy(User);
-	}
-
-	[Theory]
-	[UserProfileImageTooLongData]
-	public async Task PublishAsync_ShouldNotUpdateUser_WhenProfileImageIsInvalid(
-		IStringTransformer transformer)
-	{
-		// Arrange
-		var request = _requestBuilder.WithProfileImage(transformer).Build();
-
-		// Act
-		await EventHarness.PublishAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
-
-		// Assert
-		user.ShouldSatisfy(User);
-	}
-
-	[Theory]
-	[UserUpdatedAtUtcEmptyData]
-	public async Task PublishAsync_ShouldNotUpdateUser_WhenUpdatedAtUtcIsInvalid(
-		IDateTimeOffsetTransformer transformer)
-	{
-		// Arrange
-		var request = _requestBuilder.WithUpdatedAtUtc(transformer).Build();
-
-		// Act
-		await EventHarness.PublishAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
-
-		// Assert
-		user.ShouldSatisfy(User);
-	}
-
-	[Fact]
-	public async Task PublishAsync_ShouldNotUpdateUser_WhenEmailAlreadyExists()
-	{
-		// Arrange
-		var newUser = UserBuilderFactory.Create().Build();
-		await ServiceScope.AddAsync(newUser, CancellationToken);
-
-		var request = _requestBuilder.WithEmail(newUser.Email).Build();
-
-		// Act
-		await EventHarness.PublishAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
-
-		// Assert
-		user.ShouldSatisfy(User);
-	}
-
-	[Theory]
-	[UserEmailDifferentCaseData]
-	public async Task PublishAsync_ShouldNotUpdateUser_WhenEmailIsInvalidAndAlreadyExists(
-		IStringTransformer transformer)
-	{
-		// Arrange
-		var newUser = UserBuilderFactory.Create().Build();
-		await ServiceScope.AddAsync(newUser, CancellationToken);
-
-		var request = _requestBuilder.WithEmail(newUser.Email, transformer).Build();
-
-		// Act
-		await EventHarness.PublishAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
-
-		// Assert
-		user.ShouldSatisfy(User);
-	}
-
-	[Fact]
-	public async Task PublishAsync_ShouldNotUpdateUser_WhenNameAlreadyExists()
-	{
-		// Arrange
-		var newUser = UserBuilderFactory.Create().Build();
-		await ServiceScope.AddAsync(newUser, CancellationToken);
-
-		var request = _requestBuilder.WithName(newUser.Name).Build();
-
-		// Act
-		await EventHarness.PublishAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
-
-		// Assert
-		user.ShouldSatisfy(User);
-	}
-
-	[Theory]
-	[UserNameDifferentCaseData]
-	public async Task PublishAsync_ShouldNotUpdateUser_WhenNameIsInvalidAndAlreadyExists(
-		IStringTransformer transformer)
-	{
-		// Arrange
-		var newUser = UserBuilderFactory.Create().Build();
-		await ServiceScope.AddAsync(newUser, CancellationToken);
-
-		var request = _requestBuilder.WithName(newUser.Name, transformer).Build();
-
-		// Act
-		await EventHarness.PublishAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
-
-		// Assert
-		user.ShouldSatisfy(User);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Fact]
@@ -428,9 +240,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 	{
 		// Act
 		await EventHarness.PublishAsync(_request, CancellationToken);
+		var eventRequest = await EventHarness.ConsumedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveConsumedAsync(_request, CancellationToken);
+		eventRequest.ShouldSatisfy(_request);
 	}
 
 	[Theory]
@@ -443,9 +256,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.ConsumedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveConsumedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Theory]
@@ -458,9 +272,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.ConsumedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveConsumedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Fact]
@@ -471,9 +286,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.ConsumedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveConsumedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Theory]
@@ -486,9 +302,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.ConsumedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveConsumedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Theory]
@@ -501,9 +318,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.ConsumedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveConsumedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Fact]
@@ -514,9 +332,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.ConsumedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveConsumedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Theory]
@@ -529,9 +348,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.ConsumedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveConsumedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Theory]
@@ -545,9 +365,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.ConsumedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveConsumedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Fact]
@@ -650,7 +471,6 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
 		user.ShouldSatisfy(request);
 	}
 

@@ -1,14 +1,14 @@
 using InstaConnect.Follows.Tests.Features.Users.Assertions;
 
-namespace InstaConnect.Follows.Infrastructure.Tests.Functional.Features.Users.EventHandlers;
+namespace InstaConnect.Follows.Infrastructure.Tests.Functional.Features.Users.Endpoints;
 
-public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFunctionalTest
+public class UpdateUserInfrastructureFunctionalTests : BaseUserInfrastructureCommandFunctionalTest
 {
 	private readonly UserUpdatedEventRequestBuilderFactory _requestBuilderFactory;
 	private readonly UserUpdatedEventRequestBuilder _requestBuilder;
 	private readonly UserUpdatedEventRequest _request;
 
-	public UpdateUserInfrastructureTests(FollowsWebApplicationFactory webApplicationFactory)
+	public UpdateUserInfrastructureFunctionalTests(FollowsWebApplicationFactory webApplicationFactory)
 		: base(webApplicationFactory)
 	{
 		_requestBuilderFactory = new();
@@ -34,9 +34,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.FaultedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Theory]
@@ -52,9 +53,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.FaultedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Theory]
@@ -70,9 +72,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.FaultedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Theory]
@@ -88,9 +91,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.FaultedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Theory]
@@ -107,9 +111,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.FaultedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Theory]
@@ -122,9 +127,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.FaultedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Theory]
@@ -137,9 +143,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.FaultedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Fact]
@@ -150,9 +157,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(_request, CancellationToken);
+		var eventRequest = await EventHarness.FaultedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveFaultedAsync(_request, CancellationToken);
+		eventRequest.ShouldSatisfy(_request);
 	}
 
 	[Fact]
@@ -166,9 +174,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.FaultedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Theory]
@@ -184,9 +193,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.FaultedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Fact]
@@ -200,9 +210,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.FaultedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Theory]
@@ -218,9 +229,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.FaultedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Fact]
@@ -228,9 +240,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 	{
 		// Act
 		await EventHarness.PublishAsync(_request, CancellationToken);
+		var eventRequest = await EventHarness.ConsumedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveConsumedAsync(_request, CancellationToken);
+		eventRequest.ShouldSatisfy(_request);
 	}
 
 	[Theory]
@@ -243,9 +256,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.ConsumedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveConsumedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Theory]
@@ -258,9 +272,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.ConsumedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveConsumedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Fact]
@@ -271,9 +286,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.ConsumedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveConsumedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Theory]
@@ -286,9 +302,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.ConsumedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveConsumedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Theory]
@@ -301,9 +318,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.ConsumedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveConsumedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Fact]
@@ -314,9 +332,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.ConsumedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveConsumedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Theory]
@@ -329,9 +348,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.ConsumedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveConsumedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Theory]
@@ -345,9 +365,10 @@ public class UpdateUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.ConsumedUpdatedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveConsumedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Fact]

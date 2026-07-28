@@ -16,4 +16,29 @@ public static class UserMatchAssertions
 			user.ShouldSatisfy(u => u.Matches(request));
 		}
 	}
+
+	extension(UserAddedEventRequest r)
+	{
+		public void ShouldSatisfy(UserAddedEventRequest request)
+		{
+			r.ShouldSatisfy(r => r.Matches(request));
+		}
+	}
+
+	extension(UserUpdatedEventRequest r)
+	{
+		public void ShouldSatisfy(UserUpdatedEventRequest request)
+		{
+			r.ShouldSatisfy(r => r.Matches(request));
+		}
+
+	}
+
+	extension(UserDeletedEventRequest r)
+	{
+		public void ShouldSatisfy(UserDeletedEventRequest request)
+		{
+			r.ShouldSatisfy(r => r.Matches(request));
+		}
+	}
 }

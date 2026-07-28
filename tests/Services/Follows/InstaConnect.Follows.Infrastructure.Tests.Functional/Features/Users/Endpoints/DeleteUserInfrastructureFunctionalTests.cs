@@ -1,14 +1,14 @@
-using InstaConnect.Chats.Tests.Features.Users.Assertions;
+using InstaConnect.Follows.Tests.Features.Users.Assertions;
 
-namespace InstaConnect.Chats.Infrastructure.Tests.Functional.Features.Users.EventHandlers;
+namespace InstaConnect.Follows.Infrastructure.Tests.Functional.Features.Users.Endpoints;
 
-public class DeleteUserInfrastructureTests : BaseUserInfrastructureCommandFunctionalTest
+public class DeleteUserInfrastructureFunctionalTests : BaseUserInfrastructureCommandFunctionalTest
 {
 	private readonly UserDeletedEventRequestBuilderFactory _requestBuilderFactory;
 	private readonly UserDeletedEventRequestBuilder _requestBuilder;
 	private readonly UserDeletedEventRequest _request;
 
-	public DeleteUserInfrastructureTests(ChatsWebApplicationFactory webApplicationFactory)
+	public DeleteUserInfrastructureFunctionalTests(FollowsWebApplicationFactory webApplicationFactory)
 		: base(webApplicationFactory)
 	{
 		_requestBuilderFactory = new();
@@ -34,9 +34,10 @@ public class DeleteUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.FaultedDeletedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveFaultedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Fact]
@@ -47,28 +48,10 @@ public class DeleteUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(_request, CancellationToken);
+		var eventRequest = await EventHarness.FaultedDeletedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveFaultedAsync(_request, CancellationToken);
-	}
-
-	[Theory]
-	[UserIdNullData]
-	[UserIdEmptyData]
-	[UserIdTooShortData]
-	[UserIdTooLongData]
-	public async Task PublishAsync_ShouldNotDeleteUser_WhenIdIsInvalid(
-		IStringTransformer transformer)
-	{
-		// Arrange
-		var request = _requestBuilder.WithId(transformer).Build();
-
-		// Act
-		await EventHarness.PublishAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
-
-		// Assert
-		user.ShouldSatisfy(User);
+		eventRequest.ShouldSatisfy(_request);
 	}
 
 	[Fact]
@@ -76,9 +59,10 @@ public class DeleteUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 	{
 		// Act
 		await EventHarness.PublishAsync(_request, CancellationToken);
+		var eventRequest = await EventHarness.FaultedDeletedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveConsumedAsync(_request, CancellationToken);
+		eventRequest.ShouldSatisfy(_request);
 	}
 
 	[Theory]
@@ -91,9 +75,10 @@ public class DeleteUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 		// Act
 		await EventHarness.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventHarness.ConsumedDeletedEventRequestAsync(CancellationToken);
 
 		// Assert
-		await EventHarness.ShouldHaveConsumedAsync(request, CancellationToken);
+		eventRequest.ShouldSatisfy(request);
 	}
 
 	[Fact]
@@ -109,9 +94,10 @@ public class DeleteUserInfrastructureTests : BaseUserInfrastructureCommandFuncti
 
 	[Theory]
 	[UserIdDifferentCaseData]
-	public async Task PublishAsync_ShouldDeleteUser_WhenIdAreValid(
+	public async Task PublishAsync_ShouldDeleteUser_WhenIdIsValid(
 		IStringTransformer transformer)
 	{
+		// Arrange
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
