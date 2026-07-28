@@ -1,9 +1,12 @@
-using InstaConnect.Chats.Application.Features.Users.Commands.Add;
 using InstaConnect.Common.Application.Features.Messaging.Abstractions;
 using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
-using InstaConnect.Common.Presentation.Features.Events.Abstractions;
+using InstaConnect.Common.Infrastructure.Features.Events.Abstractions;
+using InstaConnect.Follows.Application.Features.Users.Commands.Add;
+using InstaConnect.Identity.Events.Features.Users;
 
-namespace InstaConnect.Chats.Presentation.Features.Users.EventHandlers;
+using MassTransit;
+
+namespace InstaConnect.Follows.Infrastructure.Features.Users.EventHandlers;
 
 public class UserAddedEventHandler : IEventHandler<UserAddedEventRequest>
 {
