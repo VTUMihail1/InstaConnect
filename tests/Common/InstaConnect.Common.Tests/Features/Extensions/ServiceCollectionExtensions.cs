@@ -1,9 +1,10 @@
 using System.Reflection;
 
 using InstaConnect.Common.Domain.Features.Emails.Abstractions;
-using InstaConnect.Common.Events.Features.Common.Abstractions;
 using InstaConnect.Common.Domain.Features.Images.Abstractions;
-using InstaConnect.Common.Tests.Features.Events;
+using InstaConnect.Common.Events.Features.Common.Abstractions;
+using InstaConnect.Common.Tests.Features.Abstractions;
+using InstaConnect.Common.Tests.Features.Helpers;
 using InstaConnect.Common.Tests.Features.Utilities;
 
 using MassTransit;

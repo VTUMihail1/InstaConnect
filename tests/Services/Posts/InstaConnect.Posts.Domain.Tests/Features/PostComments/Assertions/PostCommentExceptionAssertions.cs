@@ -15,8 +15,8 @@ public static class PostCommentExceptionAssertions
 			var func = () => service.AddAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.UserId,
 				request,
+				r => r.UserId,
 				cancellationToken);
 		}
 
@@ -27,8 +27,8 @@ public static class PostCommentExceptionAssertions
 			var func = () => service.AddAsync(request, cancellationToken);
 
 			await func.ShouldThrowPostNotFoundExceptionAsync(
-				r => r.Id,
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 
@@ -39,8 +39,8 @@ public static class PostCommentExceptionAssertions
 			var func = () => service.UpdateAsync(request, cancellationToken);
 
 			await func.ShouldThrowPostNotFoundExceptionAsync(
-				r => r.Id.Id,
 				request,
+				r => r.Id.Id,
 				cancellationToken);
 		}
 
@@ -51,8 +51,8 @@ public static class PostCommentExceptionAssertions
 			var func = () => service.DeleteAsync(request, cancellationToken);
 
 			await func.ShouldThrowPostNotFoundExceptionAsync(
+				request,
 				r => r.Id.Id,
-				request,
 				cancellationToken);
 		}
 
@@ -63,8 +63,8 @@ public static class PostCommentExceptionAssertions
 			var func = () => service.UpdateAsync(request, cancellationToken);
 
 			await func.ShouldThrowPostCommentNotFoundExceptionAsync(
-				r => r.Id,
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 
@@ -75,8 +75,8 @@ public static class PostCommentExceptionAssertions
 			var func = () => service.DeleteAsync(request, cancellationToken);
 
 			await func.ShouldThrowPostCommentNotFoundExceptionAsync(
-				r => r.Id,
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 
@@ -87,9 +87,9 @@ public static class PostCommentExceptionAssertions
 			var func = () => service.UpdateAsync(request, cancellationToken);
 
 			await func.ShouldThrowPostCommentForbiddenExceptionAsync(
+				request,
 				r => r.Id,
 				r => r.UserId,
-				request,
 				cancellationToken);
 		}
 
@@ -100,9 +100,9 @@ public static class PostCommentExceptionAssertions
 			var func = () => service.DeleteAsync(request, cancellationToken);
 
 			await func.ShouldThrowPostCommentForbiddenExceptionAsync(
+				request,
 				r => r.Id,
 				r => r.UserId,
-				request,
 				cancellationToken);
 		}
 	}
@@ -116,8 +116,8 @@ public static class PostCommentExceptionAssertions
 			var func = () => service.GetAllAsync(request, cancellationToken);
 
 			await func.ShouldThrowPostNotFoundExceptionAsync(
-				r => r.Filter.Id,
 				request,
+				r => r.Filter.Id,
 				cancellationToken);
 		}
 
@@ -128,8 +128,8 @@ public static class PostCommentExceptionAssertions
 			var func = () => service.GetByIdAsync(request, cancellationToken);
 
 			await func.ShouldThrowPostNotFoundExceptionAsync(
-				r => r.Id.Id,
 				request,
+				r => r.Id.Id,
 				cancellationToken);
 		}
 
@@ -140,8 +140,8 @@ public static class PostCommentExceptionAssertions
 			var func = () => service.GetAllForUserAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.Filter.UserId,
 				request,
+				r => r.Filter.UserId,
 				cancellationToken);
 		}
 
@@ -152,8 +152,8 @@ public static class PostCommentExceptionAssertions
 			var func = () => service.GetByIdAsync(request, cancellationToken);
 
 			await func.ShouldThrowPostCommentNotFoundExceptionAsync(
-				r => r.Id,
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 	}

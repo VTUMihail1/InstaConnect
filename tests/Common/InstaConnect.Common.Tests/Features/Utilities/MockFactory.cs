@@ -3,13 +3,10 @@ using System.Reflection;
 using InstaConnect.Common.Application.Features.Messaging.Abstractions;
 using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
 using InstaConnect.Common.Domain.Features.Mappers.Helpers;
-using InstaConnect.Common.Events.Features.Common.Abstractions;
 
 using Mapster;
 
 using MapsterMapper;
-
-using MassTransit;
 
 namespace InstaConnect.Common.Tests.Features.Utilities;
 
@@ -23,17 +20,6 @@ public static class MockFactory
 	public static IApplicationSender CreateApplicationSender()
 	{
 		return Mocker.Mock<IApplicationSender>();
-	}
-
-	public static ConsumeContext<TEvent> CreateConsumerContext<TEvent>(TEvent message, CancellationToken cancellationToken)
-		where TEvent : class, IEventRequest
-	{
-		var consumeContext = Mocker.Mock<ConsumeContext<TEvent>>();
-
-		consumeContext.Message.ReturnsResponse(message);
-		consumeContext.CancellationToken.ReturnsResponse(cancellationToken);
-
-		return consumeContext;
 	}
 
 	public static IApplicationMapper CreateMapper(params Assembly[] assemblies)

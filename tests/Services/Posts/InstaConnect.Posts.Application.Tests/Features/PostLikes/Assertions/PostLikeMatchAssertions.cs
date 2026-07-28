@@ -1,6 +1,7 @@
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 using InstaConnect.Posts.Application.Tests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Application.Tests.Features.Posts.Utilities;
+using InstaConnect.Posts.Events.Features.PostLikes;
 
 namespace InstaConnect.Posts.Application.Tests.Features.PostLikes.Assertions;
 
@@ -71,6 +72,22 @@ public static class PostLikeMatchAssertions
 		public void ShouldSatisfy(AddPostLikeCommandRequest request)
 		{
 			postLike.ShouldSatisfy(p => p.Matches(request));
+		}
+	}
+
+	extension(PostLikeAddedEventRequest r)
+	{
+		public void ShouldSatisfy(AddPostLikeCommandRequest request, PostLike entity)
+		{
+			r.ShouldSatisfy(r => r.Matches(request, entity));
+		}
+	}
+
+	extension(PostLikeDeletedEventRequest r)
+	{
+		public void ShouldSatisfy(DeletePostLikeCommandRequest request, PostLike entity)
+		{
+			r.ShouldSatisfy(r => r.Matches(request, entity));
 		}
 	}
 }

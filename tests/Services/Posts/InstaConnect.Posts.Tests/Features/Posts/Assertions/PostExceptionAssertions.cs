@@ -9,8 +9,8 @@ public static class PostExceptionAssertions
 	extension(Func<Task> func)
 	{
 		public async Task ShouldThrowPostNotFoundExceptionAsync<TRequest>(
-			Func<TRequest, string> idPropertyExpression,
 			TRequest request,
+			Func<TRequest, string> idPropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<PostNotFoundException>(
@@ -18,8 +18,8 @@ public static class PostExceptionAssertions
 				cancellationToken);
 		}
 		public async Task ShouldThrowPostNotFoundExceptionAsync<TRequest>(
-			Func<TRequest, PostId> idPropertyExpression,
 			TRequest request,
+			Func<TRequest, PostId> idPropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<PostNotFoundException>(
@@ -28,9 +28,9 @@ public static class PostExceptionAssertions
 		}
 
 		public async Task ShouldThrowPostForbiddenExceptionAsync<TRequest>(
+			TRequest request,
 			Func<TRequest, string> idPropertyExpression,
 			Func<TRequest, string> userIdPropertyExpression,
-			TRequest request,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<PostForbiddenException>(
@@ -39,9 +39,9 @@ public static class PostExceptionAssertions
 		}
 
 		public async Task ShouldThrowPostForbiddenExceptionAsync<TRequest>(
+			TRequest request,
 			Func<TRequest, PostId> idPropertyExpression,
 			Func<TRequest, UserId> userIdPropertyExpression,
-			TRequest request,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<PostForbiddenException>(

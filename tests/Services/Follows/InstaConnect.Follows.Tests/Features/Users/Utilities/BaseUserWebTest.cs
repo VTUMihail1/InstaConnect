@@ -1,3 +1,4 @@
+using InstaConnect.Common.Tests.Features.Abstractions;
 using InstaConnect.Follows.Tests.Features.Common.Utilities;
 
 using Microsoft.Extensions.DependencyInjection;

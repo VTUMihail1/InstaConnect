@@ -1,5 +1,6 @@
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 using InstaConnect.Posts.Domain.Tests.Features.PostComments.Utilities;
+using InstaConnect.Posts.Events.Features.PostComments;
 
 namespace InstaConnect.Posts.Domain.Tests.Features.PostComments.Assertions;
 
@@ -73,6 +74,30 @@ public static class PostCommentMatchAssertions
 		public void ShouldSatisfy(UpdatePostCommentCommand command)
 		{
 			postComment.ShouldSatisfy(p => p.Matches(command));
+		}
+	}
+
+	extension(PostCommentAddedEventRequest r)
+	{
+		public void ShouldSatisfy(AddPostCommentCommand command, PostComment entity)
+		{
+			r.ShouldSatisfy(r => r.Matches(command, entity));
+		}
+	}
+
+	extension(PostCommentUpdatedEventRequest r)
+	{
+		public void ShouldSatisfy(UpdatePostCommentCommand command, PostComment entity)
+		{
+			r.ShouldSatisfy(r => r.Matches(command, entity));
+		}
+	}
+
+	extension(PostCommentDeletedEventRequest r)
+	{
+		public void ShouldSatisfy(DeletePostCommentCommand command, PostComment entity)
+		{
+			r.ShouldSatisfy(r => r.Matches(command, entity));
 		}
 	}
 }

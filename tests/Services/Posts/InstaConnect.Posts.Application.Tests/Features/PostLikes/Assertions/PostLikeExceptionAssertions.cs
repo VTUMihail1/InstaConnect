@@ -13,8 +13,8 @@ public static class PostLikeExceptionAssertions
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.UserId,
 				request,
+				r => r.UserId,
 				cancellationToken);
 		}
 
@@ -25,8 +25,8 @@ public static class PostLikeExceptionAssertions
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.UserId,
 				request,
+				r => r.UserId,
 				cancellationToken);
 		}
 
@@ -37,8 +37,8 @@ public static class PostLikeExceptionAssertions
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowPostNotFoundExceptionAsync(
-				r => r.Id,
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 
@@ -49,8 +49,8 @@ public static class PostLikeExceptionAssertions
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowPostNotFoundExceptionAsync(
-				r => r.Id,
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 
@@ -61,8 +61,8 @@ public static class PostLikeExceptionAssertions
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowPostNotFoundExceptionAsync(
-				r => r.Id,
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 
@@ -73,8 +73,8 @@ public static class PostLikeExceptionAssertions
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowPostNotFoundExceptionAsync(
-				r => r.Id,
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 
@@ -85,9 +85,9 @@ public static class PostLikeExceptionAssertions
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowPostLikeNotFoundExceptionAsync(
+				request,
 				r => r.Id,
 				r => r.UserId,
-				request,
 				cancellationToken);
 		}
 
@@ -98,9 +98,9 @@ public static class PostLikeExceptionAssertions
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowPostLikeNotFoundExceptionAsync(
+				request,
 				r => r.Id,
 				r => r.UserId,
-				request,
 				cancellationToken);
 		}
 
@@ -111,9 +111,9 @@ public static class PostLikeExceptionAssertions
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowPostLikeAlreadyExistsExceptionAsync(
+				request,
 				r => r.Id,
 				r => r.UserId,
-				request,
 				cancellationToken);
 		}
 	}

@@ -6,12 +6,12 @@ public static class PostLikeEventHarness
 {
 	extension(IEventHarness eventHarness)
 	{
-		public async Task<PostLikeAddedEventRequest> PublishedLikeAddedEventRequest(CancellationToken cancellationToken)
+		public async Task<PostLikeAddedEventRequest> PublishedLikeAddedEventRequestAsync(CancellationToken cancellationToken)
 		{
 			return await eventHarness.PublishedAsync<PostLikeAddedEventRequest>(cancellationToken);
 		}
 
-		public async Task<PostLikeDeletedEventRequest> PublishedLikeDeletedEventRequest(CancellationToken cancellationToken)
+		public async Task<PostLikeDeletedEventRequest> PublishedLikeDeletedEventRequestAsync(CancellationToken cancellationToken)
 		{
 			return await eventHarness.PublishedAsync<PostLikeDeletedEventRequest>(cancellationToken);
 		}

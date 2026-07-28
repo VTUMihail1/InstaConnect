@@ -15,8 +15,8 @@ public static class PostExceptionAssertions
 			var func = () => service.GetAllForUserAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.Filter.UserId,
 				request,
+				r => r.Filter.UserId,
 				cancellationToken);
 		}
 
@@ -27,8 +27,8 @@ public static class PostExceptionAssertions
 			var func = () => service.GetByIdAsync(request, cancellationToken);
 
 			await func.ShouldThrowPostNotFoundExceptionAsync(
-				r => r.Id,
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 	}
@@ -42,8 +42,8 @@ public static class PostExceptionAssertions
 			var func = () => service.AddAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.UserId,
 				request,
+				r => r.UserId,
 				cancellationToken);
 		}
 
@@ -54,8 +54,8 @@ public static class PostExceptionAssertions
 			var func = () => service.UpdateAsync(request, cancellationToken);
 
 			await func.ShouldThrowPostNotFoundExceptionAsync(
-				r => r.Id,
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 
@@ -66,8 +66,8 @@ public static class PostExceptionAssertions
 			var func = () => service.DeleteAsync(request, cancellationToken);
 
 			await func.ShouldThrowPostNotFoundExceptionAsync(
-				r => r.Id,
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 
@@ -78,9 +78,9 @@ public static class PostExceptionAssertions
 			var func = () => service.UpdateAsync(request, cancellationToken);
 
 			await func.ShouldThrowPostForbiddenExceptionAsync(
+				request,
 				r => r.Id,
 				r => r.UserId,
-				request,
 				cancellationToken);
 		}
 
@@ -91,9 +91,9 @@ public static class PostExceptionAssertions
 			var func = () => service.DeleteAsync(request, cancellationToken);
 
 			await func.ShouldThrowPostForbiddenExceptionAsync(
+				request,
 				r => r.Id,
 				r => r.UserId,
-				request,
 				cancellationToken);
 		}
 	}

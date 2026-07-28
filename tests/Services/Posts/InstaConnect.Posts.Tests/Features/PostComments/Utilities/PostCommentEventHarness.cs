@@ -6,17 +6,17 @@ public static class PostCommentEventHarness
 {
 	extension(IEventHarness eventHarness)
 	{
-		public async Task<PostCommentAddedEventRequest> PublishedCommentAddedEventRequest(CancellationToken cancellationToken)
+		public async Task<PostCommentAddedEventRequest> PublishedCommentAddedEventRequestAsync(CancellationToken cancellationToken)
 		{
 			return await eventHarness.PublishedAsync<PostCommentAddedEventRequest>(cancellationToken);
 		}
 
-		public async Task<PostCommentUpdatedEventRequest> PublishedCommentUpdatedEventRequest(CancellationToken cancellationToken)
+		public async Task<PostCommentUpdatedEventRequest> PublishedCommentUpdatedEventRequestAsync(CancellationToken cancellationToken)
 		{
 			return await eventHarness.PublishedAsync<PostCommentUpdatedEventRequest>(cancellationToken);
 		}
 
-		public async Task<PostCommentDeletedEventRequest> PublishedCommentDeletedEventRequest(CancellationToken cancellationToken)
+		public async Task<PostCommentDeletedEventRequest> PublishedCommentDeletedEventRequestAsync(CancellationToken cancellationToken)
 		{
 			return await eventHarness.PublishedAsync<PostCommentDeletedEventRequest>(cancellationToken);
 		}

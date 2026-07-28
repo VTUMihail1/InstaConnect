@@ -16,8 +16,8 @@ public static class PostCommentLikeExceptionAssertions
 			var func = () => service.AddAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
+				request,
 				r => r.UserId,
-				request,
 				cancellationToken);
 		}
 
@@ -28,8 +28,8 @@ public static class PostCommentLikeExceptionAssertions
 			var func = () => service.AddAsync(request, cancellationToken);
 
 			await func.ShouldThrowPostNotFoundExceptionAsync(
+				request,
 				r => r.CommentId.Id,
-				request,
 				cancellationToken);
 		}
 
@@ -40,8 +40,8 @@ public static class PostCommentLikeExceptionAssertions
 			var func = () => service.DeleteAsync(request, cancellationToken);
 
 			await func.ShouldThrowPostNotFoundExceptionAsync(
-				r => r.Id.CommentId.Id,
 				request,
+				r => r.Id.CommentId.Id,
 				cancellationToken);
 		}
 
@@ -52,8 +52,8 @@ public static class PostCommentLikeExceptionAssertions
 			var func = () => service.AddAsync(request, cancellationToken);
 
 			await func.ShouldThrowPostCommentNotFoundExceptionAsync(
-				r => r.CommentId,
 				request,
+				r => r.CommentId,
 				cancellationToken);
 		}
 
@@ -64,8 +64,8 @@ public static class PostCommentLikeExceptionAssertions
 			var func = () => service.DeleteAsync(request, cancellationToken);
 
 			await func.ShouldThrowPostCommentNotFoundExceptionAsync(
-				r => r.Id.CommentId,
 				request,
+				r => r.Id.CommentId,
 				cancellationToken);
 		}
 
@@ -76,10 +76,10 @@ public static class PostCommentLikeExceptionAssertions
 			var func = () => service.AddAsync(request, cancellationToken);
 
 			await func.ShouldThrowPostCommentLikeAlreadyExistsExceptionAsync(
+				request,
 				r => r.CommentId.Id.Id,
 				r => r.CommentId.CommentId,
 				r => r.UserId.Id,
-				request,
 				cancellationToken);
 		}
 
@@ -90,8 +90,8 @@ public static class PostCommentLikeExceptionAssertions
 			var func = () => service.DeleteAsync(request, cancellationToken);
 
 			await func.ShouldThrowPostCommentLikeNotFoundExceptionAsync(
-				r => r.Id,
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 	}
@@ -105,8 +105,8 @@ public static class PostCommentLikeExceptionAssertions
 			var func = () => service.GetAllAsync(request, cancellationToken);
 
 			await func.ShouldThrowPostNotFoundExceptionAsync(
-				r => r.Filter.CommentId.Id,
 				request,
+				r => r.Filter.CommentId.Id,
 				cancellationToken);
 		}
 
@@ -117,8 +117,8 @@ public static class PostCommentLikeExceptionAssertions
 			var func = () => service.GetByIdAsync(request, cancellationToken);
 
 			await func.ShouldThrowPostNotFoundExceptionAsync(
-				r => r.Id.CommentId.Id,
 				request,
+				r => r.Id.CommentId.Id,
 				cancellationToken);
 		}
 
@@ -129,8 +129,8 @@ public static class PostCommentLikeExceptionAssertions
 			var func = () => service.GetAllAsync(request, cancellationToken);
 
 			await func.ShouldThrowPostCommentNotFoundExceptionAsync(
-				r => r.Filter.CommentId,
 				request,
+				r => r.Filter.CommentId,
 				cancellationToken);
 		}
 
@@ -141,8 +141,8 @@ public static class PostCommentLikeExceptionAssertions
 			var func = () => service.GetByIdAsync(request, cancellationToken);
 
 			await func.ShouldThrowPostCommentNotFoundExceptionAsync(
-				r => r.Id.CommentId,
 				request,
+				r => r.Id.CommentId,
 				cancellationToken);
 		}
 
@@ -153,8 +153,8 @@ public static class PostCommentLikeExceptionAssertions
 			var func = () => service.GetAllForUserAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.Filter.UserId,
 				request,
+				r => r.Filter.UserId,
 				cancellationToken);
 		}
 
@@ -165,8 +165,8 @@ public static class PostCommentLikeExceptionAssertions
 			var func = () => service.GetByIdAsync(request, cancellationToken);
 
 			await func.ShouldThrowPostCommentLikeNotFoundExceptionAsync(
-				r => r.Id,
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 	}

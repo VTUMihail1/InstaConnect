@@ -8,9 +8,9 @@ public static class PostLikeExceptionAssertions
 	extension(Func<Task> func)
 	{
 		public async Task ShouldThrowPostLikeNotFoundExceptionAsync<TRequest>(
+			TRequest request,
 			Func<TRequest, string> idPropertyExpression,
 			Func<TRequest, string> userIdPropertyExpression,
-			TRequest request,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<PostLikeNotFoundException>(
@@ -22,8 +22,8 @@ public static class PostLikeExceptionAssertions
 		}
 
 		public async Task ShouldThrowPostLikeNotFoundExceptionAsync<TRequest>(
-			Func<TRequest, PostLikeId> idPropertyExpression,
 			TRequest request,
+			Func<TRequest, PostLikeId> idPropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<PostLikeNotFoundException>(
@@ -32,9 +32,9 @@ public static class PostLikeExceptionAssertions
 		}
 
 		public async Task ShouldThrowPostLikeAlreadyExistsExceptionAsync<TRequest>(
+			TRequest request,
 			Func<TRequest, string> idPropertyExpression,
 			Func<TRequest, string> userIdPropertyExpression,
-			TRequest request,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<PostLikeAlreadyExistsException>(
@@ -46,8 +46,8 @@ public static class PostLikeExceptionAssertions
 		}
 
 		public async Task ShouldThrowPostLikeAlreadyExistsExceptionAsync<TRequest>(
-			Func<TRequest, PostLikeId> idPropertyExpression,
 			TRequest request,
+			Func<TRequest, PostLikeId> idPropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<PostLikeAlreadyExistsException>(

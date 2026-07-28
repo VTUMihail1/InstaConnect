@@ -1,0 +1,107 @@
+using InstaConnect.Posts.Domain.Features.PostComments.Helpers;
+using InstaConnect.Posts.Domain.Features.PostComments.Models.Requests;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
+using InstaConnect.Posts.Domain.Tests.Features.PostComments.Assertions;
+using InstaConnect.Posts.Domain.Tests.Features.PostComments.Builders;
+using InstaConnect.Posts.Domain.Tests.Features.PostComments.Utilities;
+using InstaConnect.Posts.Domain.Tests.Unit.Features.PostComments.Utilities;
+
+namespace InstaConnect.Posts.Domain.Tests.Unit.Features.PostComments.Services;
+
+public class DeletePostCommentCommandServiceUnitTests : BasePostCommentDomainCommandUnitTest
+{
+	private readonly DeletePostCommentCommandBuilderFactory _commandBuilderFactory;
+	private readonly DeletePostCommentCommandBuilder _commandBuilder;
+	private readonly DeletePostCommentCommand _command;
+
+	private readonly PostInclude _include;
+	private readonly PostCommentInclude _commentInclude;
+
+	private readonly PostCommentCommandService _service;
+
+	public DeletePostCommentCommandServiceUnitTests()
+	{
+		_commandBuilderFactory = new();
+		_commandBuilder = _commandBuilderFactory.Create(PostComment);
+		_command = _commandBuilder.Build();
+
+		_include = IncludeBuilderFactory.Create().WithUser().Build();
+		_commentInclude = CommentIncludeBuilderFactory.Create().WithUser().WithPost(_include).Build();
+
+		_service = new(Mapper, EventPublisher, Repository, DateTimeProvider, Factory, UserRepository, CommentRepository, IncludeBuilderFactory, CommentIncludeBuilderFactory);
+
+		Repository.SetupExistsById(_command, CancellationToken);
+		CommentRepository.SetupGetById(_command, _commentInclude, PostComment, CancellationToken);
+	}
+
+	[Fact]
+	public async Task DeleteAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
+	{
+		// Arrange
+		Repository.RemoveExistsById(_command, CancellationToken);
+
+		// Assert
+		await _service.ShouldThrowPostNotFoundExceptionAsync(_command, CancellationToken);
+	}
+
+	[Fact]
+	public async Task DeleteAsync_ShouldThrowPostCommentNotFoundException_WhenPostCommentDoesNotExist()
+	{
+		// Arrange
+		CommentRepository.RemoveGetById(_command, _commentInclude, PostComment, CancellationToken);
+
+		// Assert
+		await _service.ShouldThrowPostCommentNotFoundExceptionAsync(_command, CancellationToken);
+	}
+
+	[Fact]
+	public async Task DeleteAsync_ShouldThrowPostCommentForbiddenException_WhenUserIdIsInvalid()
+	{
+		// Arrange
+		var user = UserBuilderFactory.Create().Build();
+		var command = _commandBuilder.WithUserId(user.Id).Build();
+
+		// Assert
+		await _service.ShouldThrowPostCommentForbiddenExceptionAsync(command, CancellationToken);
+	}
+
+	[Fact]
+	public async Task DeleteAsync_ShouldCallTheRepositoryExistsByIdAsync_WhenCommandIsValid()
+	{
+		// Act
+		await _service.DeleteAsync(_command, CancellationToken);
+
+		// Assert
+		await Repository.ShouldReceiveOneExistsByIdAsync(_command, CancellationToken);
+	}
+
+	[Fact]
+	public async Task DeleteAsync_ShouldCallTheCommentRepositoryGetByIdAsync_WhenCommandIsValid()
+	{
+		// Act
+		await _service.DeleteAsync(_command, CancellationToken);
+
+		// Assert
+		await CommentRepository.ShouldReceiveOneGetByIdAsync(_command, _commentInclude, CancellationToken);
+	}
+
+	[Fact]
+	public async Task DeleteAsync_ShouldCallTheCommentRepositoryDeleteAsync_WhenCommandIsValid()
+	{
+		// Act
+		await _service.DeleteAsync(_command, CancellationToken);
+
+		// Assert
+		await CommentRepository.ShouldReceiveOneDeleteAsync(_command, CancellationToken);
+	}
+
+	[Fact]
+	public async Task DeleteAsync_ShouldCallTheEventPublisherPublishAsync_WhenCommandIsValid()
+	{
+		// Act
+		await _service.DeleteAsync(_command, CancellationToken);
+
+		// Assert
+		await EventPublisher.ShouldReceiveOnePublishAsync(_command, PostComment, CancellationToken);
+	}
+}

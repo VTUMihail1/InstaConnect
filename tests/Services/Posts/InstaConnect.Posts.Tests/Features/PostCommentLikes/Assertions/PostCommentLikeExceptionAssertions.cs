@@ -8,10 +8,10 @@ public static class PostCommentLikeExceptionAssertions
 	extension(Func<Task> func)
 	{
 		public async Task ShouldThrowPostCommentLikeNotFoundExceptionAsync<TRequest>(
+			TRequest request,
 			Func<TRequest, string> idPropertyExpression,
 			Func<TRequest, string> commentIdPropertyExpression,
 			Func<TRequest, string> userIdPropertyExpression,
-			TRequest request,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<PostCommentLikeNotFoundException>(
@@ -25,8 +25,8 @@ public static class PostCommentLikeExceptionAssertions
 		}
 
 		public async Task ShouldThrowPostCommentLikeNotFoundExceptionAsync<TRequest>(
-			Func<TRequest, PostCommentLikeId> idPropertyExpression,
 			TRequest request,
+			Func<TRequest, PostCommentLikeId> idPropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<PostCommentLikeNotFoundException>(
@@ -35,10 +35,10 @@ public static class PostCommentLikeExceptionAssertions
 		}
 
 		public async Task ShouldThrowPostCommentLikeAlreadyExistsExceptionAsync<TRequest>(
+			TRequest request,
 			Func<TRequest, string> idPropertyExpression,
 			Func<TRequest, string> commentIdPropertyExpression,
 			Func<TRequest, string> userIdPropertyExpression,
-			TRequest request,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<PostCommentLikeAlreadyExistsException>(
@@ -52,8 +52,8 @@ public static class PostCommentLikeExceptionAssertions
 		}
 
 		public async Task ShouldThrowPostCommentLikeAlreadyExistsExceptionAsync<TRequest>(
-			Func<TRequest, PostCommentLikeId> idPropertyExpression,
 			TRequest request,
+			Func<TRequest, PostCommentLikeId> idPropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<PostCommentLikeAlreadyExistsException>(

@@ -9,9 +9,9 @@ public static class PostCommentExceptionAssertions
 	extension(Func<Task> func)
 	{
 		public async Task ShouldThrowPostCommentNotFoundExceptionAsync<TRequest>(
+			TRequest request,
 			Func<TRequest, string> idPropertyExpression,
 			Func<TRequest, string> commentIdPropertyExpression,
-			TRequest request,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<PostCommentNotFoundException>(
@@ -23,8 +23,8 @@ public static class PostCommentExceptionAssertions
 		}
 
 		public async Task ShouldThrowPostCommentNotFoundExceptionAsync<TRequest>(
-			Func<TRequest, PostCommentId> idPropertyExpression,
 			TRequest request,
+			Func<TRequest, PostCommentId> idPropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<PostCommentNotFoundException>(
@@ -33,10 +33,10 @@ public static class PostCommentExceptionAssertions
 		}
 
 		public async Task ShouldThrowPostCommentForbiddenExceptionAsync<TRequest>(
+			TRequest request,
 			Func<TRequest, string> idPropertyExpression,
 			Func<TRequest, string> commentIdPropertyExpression,
 			Func<TRequest, string> userIdPropertyExpression,
-			TRequest request,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<PostCommentForbiddenException>(
@@ -49,9 +49,9 @@ public static class PostCommentExceptionAssertions
 		}
 
 		public async Task ShouldThrowPostCommentForbiddenExceptionAsync<TRequest>(
+			TRequest request,
 			Func<TRequest, PostCommentId> idPropertyExpression,
 			Func<TRequest, UserId> userIdPropertyExpression,
-			TRequest request,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<PostCommentForbiddenException>(
