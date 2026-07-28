@@ -7,7 +7,7 @@ public static class EmailConfirmationTokenEventHarness
 {
 	extension(IEventHarness eventHarness)
 	{
-		public async Task<EmailConfirmationTokenAddedEventRequest> PublishedEmailConfirmationTokenAddedEventRequest(CancellationToken cancellationToken)
+		public async Task<EmailConfirmationTokenAddedEventRequest> PublishedEmailConfirmationTokenAddedEventRequestAsync(CancellationToken cancellationToken)
 		{
 			return await eventHarness.PublishedAsync<EmailConfirmationTokenAddedEventRequest>(cancellationToken);
 		}

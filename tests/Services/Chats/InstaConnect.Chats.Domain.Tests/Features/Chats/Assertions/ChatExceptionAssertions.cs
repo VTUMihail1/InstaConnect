@@ -14,8 +14,8 @@ public static class ChatExceptionAssertions
 			var func = () => service.AddAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.ParticipantOneId,
 				request,
+				r => r.ParticipantOneId,
 				cancellationToken);
 		}
 
@@ -26,8 +26,8 @@ public static class ChatExceptionAssertions
 			var func = () => service.AddAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.ParticipantTwoId,
 				request,
+				r => r.ParticipantTwoId,
 				cancellationToken);
 		}
 
@@ -38,9 +38,9 @@ public static class ChatExceptionAssertions
 			var func = () => service.AddAsync(request, cancellationToken);
 
 			await func.ShouldThrowChatAlreadyExistsExceptionAsync(
+				request,
 				r => r.ParticipantOneId.Id,
 				r => r.ParticipantTwoId.Id,
-				request,
 				cancellationToken);
 		}
 	}
@@ -54,8 +54,8 @@ public static class ChatExceptionAssertions
 			var func = () => service.GetAllAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.Filter.ParticipantOneId,
 				request,
+				r => r.Filter.ParticipantOneId,
 				cancellationToken);
 		}
 
@@ -66,8 +66,8 @@ public static class ChatExceptionAssertions
 			var func = () => service.GetByIdAsync(request, cancellationToken);
 
 			await func.ShouldThrowChatNotFoundExceptionAsync(
-				r => r.Id,
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 	}

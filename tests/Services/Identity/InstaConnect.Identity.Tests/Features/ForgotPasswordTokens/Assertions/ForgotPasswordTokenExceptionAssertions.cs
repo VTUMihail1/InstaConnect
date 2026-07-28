@@ -8,9 +8,9 @@ public static class ForgotPasswordTokenExceptionAssertions
 	extension(Func<Task> func)
 	{
 		public async Task ShouldThrowForgotPasswordTokenNotFoundExceptionAsync<TRequest>(
+			TRequest request,
 			Func<TRequest, string> idPropertyExpression,
 			Func<TRequest, string> valueropertyExpression,
-			TRequest request,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<ForgotPasswordTokenNotFoundException>(
@@ -22,8 +22,8 @@ public static class ForgotPasswordTokenExceptionAssertions
 		}
 
 		public async Task ShouldThrowForgotPasswordTokenNotFoundExceptionAsync<TRequest>(
-			Func<TRequest, ForgotPasswordTokenId> idPropertyExpression,
 			TRequest request,
+			Func<TRequest, ForgotPasswordTokenId> idPropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<ForgotPasswordTokenNotFoundException>(
@@ -32,9 +32,9 @@ public static class ForgotPasswordTokenExceptionAssertions
 		}
 
 		public async Task ShouldThrowForgotPasswordTokenExpiredExceptionAsync<TRequest>(
+			TRequest request,
 			Func<TRequest, string> idPropertyExpression,
 			Func<TRequest, string> valuePropertyExpression,
-			TRequest request,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<ForgotPasswordTokenExpiredException>(
@@ -46,8 +46,8 @@ public static class ForgotPasswordTokenExceptionAssertions
 		}
 
 		public async Task ShouldThrowForgotPasswordTokenExpiredExceptionAsync<TRequest>(
-			Func<TRequest, ForgotPasswordTokenId> idPropertyExpression,
 			TRequest request,
+			Func<TRequest, ForgotPasswordTokenId> idPropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<ForgotPasswordTokenExpiredException>(

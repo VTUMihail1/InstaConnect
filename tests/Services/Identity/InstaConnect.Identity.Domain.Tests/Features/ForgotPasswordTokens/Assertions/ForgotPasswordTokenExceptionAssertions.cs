@@ -14,8 +14,8 @@ public static class ForgotPasswordTokenExceptionAssertions
 			var func = () => service.AddAsync(command, cancellationToken);
 
 			await func.ShouldThrowUserNameNotFoundExceptionAsync(
-				r => r.Name,
 				command,
+				r => r.Name,
 				cancellationToken);
 		}
 
@@ -26,8 +26,8 @@ public static class ForgotPasswordTokenExceptionAssertions
 			var func = () => service.VerifyAsync(command, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.Id.Id,
 				command,
+				r => r.Id.Id,
 				cancellationToken);
 		}
 
@@ -38,8 +38,8 @@ public static class ForgotPasswordTokenExceptionAssertions
 			var func = () => service.VerifyAsync(command, cancellationToken);
 
 			await func.ShouldThrowForgotPasswordTokenNotFoundExceptionAsync(
-				r => r.Id,
 				command,
+				r => r.Id,
 				cancellationToken);
 		}
 
@@ -50,8 +50,8 @@ public static class ForgotPasswordTokenExceptionAssertions
 			var func = () => service.VerifyAsync(command, cancellationToken);
 
 			await func.ShouldThrowForgotPasswordTokenExpiredExceptionAsync(
-				r => r.Id,
 				command,
+				r => r.Id,
 				cancellationToken);
 		}
 	}

@@ -14,8 +14,8 @@ public static class EmailConfirmationTokenExceptionAssertions
 			var func = () => service.AddAsync(command, cancellationToken);
 
 			await func.ShouldThrowUserNameNotFoundExceptionAsync(
-				r => r.Name,
 				command,
+				r => r.Name,
 				cancellationToken);
 		}
 
@@ -26,8 +26,8 @@ public static class EmailConfirmationTokenExceptionAssertions
 			var func = () => service.AddAsync(command, cancellationToken);
 
 			await func.ShouldThrowUserNameEmailAlreadyConfirmedExceptionAsync(
-				r => r.Name,
 				command,
+				r => r.Name,
 				cancellationToken);
 		}
 
@@ -38,8 +38,8 @@ public static class EmailConfirmationTokenExceptionAssertions
 			var func = () => service.VerifyAsync(command, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.Id.Id,
 				command,
+				r => r.Id.Id,
 				cancellationToken);
 		}
 
@@ -50,8 +50,8 @@ public static class EmailConfirmationTokenExceptionAssertions
 			var func = () => service.VerifyAsync(command, cancellationToken);
 
 			await func.ShouldThrowUserEmailAlreadyConfirmedExceptionAsync(
-				r => r.Id.Id,
 				command,
+				r => r.Id.Id,
 				cancellationToken);
 		}
 
@@ -62,8 +62,8 @@ public static class EmailConfirmationTokenExceptionAssertions
 			var func = () => service.VerifyAsync(command, cancellationToken);
 
 			await func.ShouldThrowEmailConfirmationTokenNotFoundExceptionAsync(
-				r => r.Id,
 				command,
+				r => r.Id,
 				cancellationToken);
 		}
 
@@ -74,8 +74,8 @@ public static class EmailConfirmationTokenExceptionAssertions
 			var func = () => service.VerifyAsync(command, cancellationToken);
 
 			await func.ShouldThrowEmailConfirmationTokenExpiredExceptionAsync(
-				r => r.Id,
 				command,
+				r => r.Id,
 				cancellationToken);
 		}
 	}

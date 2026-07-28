@@ -1,4 +1,5 @@
 using InstaConnect.Chats.Application.Tests.Features.Chats.Utilities;
+using InstaConnect.Chats.Events.Features.Chats;
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 
 namespace InstaConnect.Chats.Application.Tests.Features.Chats.Assertions;
@@ -68,6 +69,14 @@ public static class ChatMatchAssertions
 		public void ShouldSatisfy(AddChatCommandRequest request)
 		{
 			chat.ShouldSatisfy(p => p.Matches(request));
+		}
+	}
+
+	extension(ChatAddedEventRequest r)
+	{
+		public void ShouldSatisfy(AddChatCommandRequest request, Chat entity)
+		{
+			r.ShouldSatisfy(r => r.Matches(request, entity));
 		}
 	}
 }

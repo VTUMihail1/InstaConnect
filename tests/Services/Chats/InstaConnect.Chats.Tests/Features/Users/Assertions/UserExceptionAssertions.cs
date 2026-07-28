@@ -9,8 +9,8 @@ public static class UserExceptionAssertions
 	extension(Func<Task> func)
 	{
 		public async Task ShouldThrowUserNotFoundExceptionAsync<TRequest>(
-			Func<TRequest, string> idPropertyExpression,
 			TRequest request,
+			Func<TRequest, string> idPropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<UserNotFoundException>(
@@ -19,8 +19,8 @@ public static class UserExceptionAssertions
 		}
 
 		public async Task ShouldThrowUserNotFoundExceptionAsync<TRequest>(
-			Func<TRequest, UserId> idPropertyExpression,
 			TRequest request,
+			Func<TRequest, UserId> idPropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<UserNotFoundException>(
@@ -29,8 +29,8 @@ public static class UserExceptionAssertions
 		}
 
 		public async Task ShouldThrowUserAlreadyExistsExceptionAsync<TRequest>(
-			Func<TRequest, string> idPropertyExpression,
 			TRequest request,
+			Func<TRequest, string> idPropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<UserAlreadyExistsException>(
@@ -39,8 +39,8 @@ public static class UserExceptionAssertions
 		}
 
 		public async Task ShouldThrowUserAlreadyExistsExceptionAsync<TRequest>(
-			Func<TRequest, UserId> idPropertyExpression,
 			TRequest request,
+			Func<TRequest, UserId> idPropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<UserAlreadyExistsException>(
@@ -49,8 +49,8 @@ public static class UserExceptionAssertions
 		}
 
 		public async Task ShouldThrowUserNameAlreadyExistsExceptionAsync<TRequest>(
-			Func<TRequest, string> namePropertyExpression,
 			TRequest request,
+			Func<TRequest, string> namePropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<UserNameAlreadyExistsException>(
@@ -59,8 +59,8 @@ public static class UserExceptionAssertions
 		}
 
 		public async Task ShouldThrowUserNameAlreadyExistsExceptionAsync<TRequest>(
-			Func<TRequest, Name> namePropertyExpression,
 			TRequest request,
+			Func<TRequest, Name> namePropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<UserNameAlreadyExistsException>(
@@ -69,8 +69,8 @@ public static class UserExceptionAssertions
 		}
 
 		public async Task ShouldThrowUserEmailAlreadyExistsExceptionAsync<TRequest>(
-			Func<TRequest, string> emailPropertyExpression,
 			TRequest request,
+			Func<TRequest, string> emailPropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<UserEmailAlreadyExistsException>(
@@ -79,8 +79,8 @@ public static class UserExceptionAssertions
 		}
 
 		public async Task ShouldThrowUserEmailAlreadyExistsExceptionAsync<TRequest>(
-			Func<TRequest, Email> emailPropertyExpression,
 			TRequest request,
+			Func<TRequest, Email> emailPropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<UserEmailAlreadyExistsException>(

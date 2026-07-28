@@ -1,0 +1,164 @@
+namespace InstaConnect.Posts.Application.Tests.Integration.Features.Posts.Handlers;
+
+public class AddPostCommandHandlerIntegrationTests : BasePostApplicationCommandIntegrationTest
+{
+	private readonly AddPostCommandRequestBuilderFactory _requestBuilderFactory;
+	private readonly AddPostCommandRequestBuilder _requestBuilder;
+	private readonly AddPostCommandRequest _request;
+
+	public AddPostCommandHandlerIntegrationTests(PostsWebApplicationFactory webApplicationFactory)
+		: base(webApplicationFactory)
+	{
+		_requestBuilderFactory = new();
+		_requestBuilder = _requestBuilderFactory.Create(User);
+		_request = _requestBuilder.Build();
+	}
+
+	protected override async Task OnInitializeAsync()
+	{
+		await ServiceScope.AddAsync(User, CancellationToken);
+	}
+
+	[Theory]
+	[UserIdNullWithMessageData]
+	[UserIdEmptyWithMessageData]
+	[UserIdTooShortWithMessageData]
+	[UserIdTooLongWithMessageData]
+	public async Task SendAsync_ShouldThrowValidationException_WhenUserIdIsInvalid(
+		IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithUserId(transformer).Build();
+
+		// Assert
+		await Sender.ShouldThrowInvalidValidationExceptionForUserIdAsync(
+			request, messageTransformer, CancellationToken);
+	}
+
+	[Theory]
+	[PostTitleNullWithMessageData]
+	[PostTitleEmptyWithMessageData]
+	[PostTitleTooShortWithMessageData]
+	[PostTitleTooLongWithMessageData]
+	public async Task SendAsync_ShouldThrowValidationException_WhenTitleIsInvalid(
+		IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithTitle(transformer).Build();
+
+		// Assert
+		await Sender.ShouldThrowInvalidValidationExceptionForTitleAsync(
+			request, messageTransformer, CancellationToken);
+	}
+
+	[Theory]
+	[PostContentNullWithMessageData]
+	[PostContentEmptyWithMessageData]
+	[PostContentTooShortWithMessageData]
+	[PostContentTooLongWithMessageData]
+	public async Task SendAsync_ShouldThrowValidationException_WhenContentIsInvalid(
+		IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithContent(transformer).Build();
+
+		// Assert
+		await Sender.ShouldThrowInvalidValidationExceptionForContentAsync(
+			request, messageTransformer, CancellationToken);
+	}
+
+	[Fact]
+	public async Task SendAsync_ShouldThrowUserNotFoundException_WhenUserIdIsInvalid()
+	{
+		// Arrange
+		await ServiceScope.DeleteAsync(User, CancellationToken);
+
+		// Assert
+		await Sender.ShouldThrowUserNotFoundExceptionAsync(_request, CancellationToken);
+	}
+
+	[Fact]
+	public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValid()
+	{
+		// Act
+		var response = await Sender.SendAsync(_request, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(_request, post);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task SendAsync_ShouldReturnResponse_WhenRequestAndUserIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithUserId(transformer).Build();
+
+		// Act
+		var response = await Sender.SendAsync(request, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(request, post);
+	}
+
+	[Fact]
+	public async Task SendAsync_ShouldAddPost_WhenRequestIsValid()
+	{
+		// Act
+		var response = await Sender.SendAsync(_request, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+
+		// Assert
+		post.ShouldSatisfy(_request);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task SendAsync_ShouldAddPost_WhenRequestAndUserIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithUserId(transformer).Build();
+
+		// Act
+		var response = await Sender.SendAsync(request, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+
+		// Assert
+		post.ShouldSatisfy(request);
+	}
+
+	[Fact]
+	public async Task SendAsync_ShouldPublishPostAddedEvent_WhenRequestIsValid()
+	{
+		// Act
+		var response = await Sender.SendAsync(_request, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+
+		var eventRequest = await EventHarness.PublishedAddedEventRequestAsync(CancellationToken);
+
+		// Assert
+		eventRequest.ShouldSatisfy(_request, post);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task SendAsync_ShouldPublishPostAddedEvent_WhenRequestAndUserIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithUserId(transformer).Build();
+
+		// Act
+		var response = await Sender.SendAsync(request, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+
+		var eventRequest = await EventHarness.PublishedAddedEventRequestAsync(CancellationToken);
+
+		// Assert
+		eventRequest.ShouldSatisfy(request, post);
+	}
+}

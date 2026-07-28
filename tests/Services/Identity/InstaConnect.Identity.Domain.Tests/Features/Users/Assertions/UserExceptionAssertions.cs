@@ -13,8 +13,8 @@ public static class UserExceptionAssertions
 			var func = () => service.AddAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserEmailAlreadyTakenExceptionAsync(
-				r => r.Email,
 				request,
+				r => r.Email,
 				cancellationToken);
 		}
 
@@ -25,8 +25,8 @@ public static class UserExceptionAssertions
 			var func = () => service.UpdateAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserEmailAlreadyTakenExceptionAsync(
-				r => r.Email,
 				request,
+				r => r.Email,
 				cancellationToken);
 		}
 
@@ -37,8 +37,8 @@ public static class UserExceptionAssertions
 			var func = () => service.AddAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserNameAlreadyTakenExceptionAsync(
-				r => r.Name,
 				request,
+				r => r.Name,
 				cancellationToken);
 		}
 
@@ -49,8 +49,8 @@ public static class UserExceptionAssertions
 			var func = () => service.UpdateAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserNameAlreadyTakenExceptionAsync(
-				r => r.Name,
 				request,
+				r => r.Name,
 				cancellationToken);
 		}
 
@@ -61,8 +61,8 @@ public static class UserExceptionAssertions
 			var func = () => service.UpdateAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.Id,
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 
@@ -73,8 +73,8 @@ public static class UserExceptionAssertions
 			var func = () => service.DeleteAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.Id,
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 	}
@@ -88,8 +88,8 @@ public static class UserExceptionAssertions
 			var func = () => service.GetByIdAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.Id,
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 	}

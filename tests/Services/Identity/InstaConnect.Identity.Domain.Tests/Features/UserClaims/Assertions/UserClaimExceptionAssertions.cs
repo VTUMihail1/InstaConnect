@@ -14,8 +14,8 @@ public static class UserClaimExceptionAssertions
 			var func = () => service.AddAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.Id,
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 
@@ -26,8 +26,8 @@ public static class UserClaimExceptionAssertions
 			var func = () => service.DeleteAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.Id.Id,
 				request,
+				r => r.Id.Id,
 				cancellationToken);
 		}
 
@@ -38,9 +38,9 @@ public static class UserClaimExceptionAssertions
 			var func = () => service.AddAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserClaimAlreadyExistsExceptionAsync(
+				request,
 				r => r.Id.Id,
 				r => r.Claim,
-				request,
 				cancellationToken);
 		}
 
@@ -51,8 +51,8 @@ public static class UserClaimExceptionAssertions
 			var func = () => service.DeleteAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserClaimNotFoundExceptionAsync(
-				r => r.Id,
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 	}
@@ -66,8 +66,8 @@ public static class UserClaimExceptionAssertions
 			var func = () => service.GetAllAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.Filter.Id,
 				request,
+				r => r.Filter.Id,
 				cancellationToken);
 		}
 	}

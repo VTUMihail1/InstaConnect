@@ -1,6 +1,8 @@
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 using InstaConnect.Identity.Application.Tests.Features.Users.Utilities;
 using InstaConnect.Identity.Domain.Features.Common.Helpers;
+using InstaConnect.Identity.Events.Features.EmailConfirmationTokens;
+using InstaConnect.Identity.Events.Features.Users;
 
 namespace InstaConnect.Identity.Application.Tests.Features.Users.Assertions;
 
@@ -90,6 +92,51 @@ public static class UserMatchAssertions
 		public void ShouldSatisfy(UpdateCurrentUserCommandRequest request)
 		{
 			emailConfirmationTokens.ShouldSatisfy(p => p.Matches(request));
+		}
+	}
+
+	extension(UserAddedEventRequest r)
+	{
+		public void ShouldSatisfy(AddUserCommandRequest request, User entity)
+		{
+			r.ShouldSatisfy(r => r.Matches(request, entity));
+		}
+	}
+
+	extension(UserUpdatedEventRequest r)
+	{
+		public void ShouldSatisfy(UpdateCurrentUserCommandRequest request, User entity)
+		{
+			r.ShouldSatisfy(r => r.Matches(request, entity));
+		}
+	}
+
+	extension(UserDeletedEventRequest r)
+	{
+		public void ShouldSatisfy(DeleteUserCommandRequest request, User entity)
+		{
+			r.ShouldSatisfy(r => r.Matches(request, entity));
+		}
+
+		public void ShouldSatisfy(DeleteCurrentUserCommandRequest request, User entity)
+		{
+			r.ShouldSatisfy(r => r.Matches(request, entity));
+		}
+	}
+
+	extension(ICollection<EmailConfirmationTokenAddedEventRequest> r)
+	{
+		public void ShouldSatisfy(AddUserCommandRequest request, ICollection<EmailConfirmationToken> entities)
+		{
+			r.ShouldSatisfy(r => r.Matches(request, entities));
+		}
+	}
+
+	extension(ICollection<EmailConfirmationTokenDeletedEventRequest> r)
+	{
+		public void ShouldSatisfy(UpdateCurrentUserCommandRequest request, ICollection<EmailConfirmationToken> entities)
+		{
+			r.ShouldSatisfy(r => r.Matches(request, entities));
 		}
 	}
 }

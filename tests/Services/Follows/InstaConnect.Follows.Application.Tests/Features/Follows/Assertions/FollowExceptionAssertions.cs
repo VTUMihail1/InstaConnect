@@ -13,8 +13,8 @@ public static class FollowExceptionAssertions
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.FollowingId,
 				request,
+				r => r.FollowingId,
 				cancellationToken);
 		}
 
@@ -25,8 +25,8 @@ public static class FollowExceptionAssertions
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.FollowingId,
 				request,
+				r => r.FollowingId,
 				cancellationToken);
 		}
 
@@ -37,8 +37,8 @@ public static class FollowExceptionAssertions
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.FollowerId,
 				request,
+				r => r.FollowerId,
 				cancellationToken);
 		}
 
@@ -49,8 +49,8 @@ public static class FollowExceptionAssertions
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.FollowerId,
 				request,
+				r => r.FollowerId,
 				cancellationToken);
 		}
 
@@ -61,8 +61,8 @@ public static class FollowExceptionAssertions
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.FollowerId,
 				request,
+				r => r.FollowerId,
 				cancellationToken);
 		}
 
@@ -73,8 +73,8 @@ public static class FollowExceptionAssertions
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.FollowerId,
 				request,
+				r => r.FollowerId,
 				cancellationToken);
 		}
 
@@ -85,9 +85,9 @@ public static class FollowExceptionAssertions
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowFollowNotFoundExceptionAsync(
+				request,
 				r => r.FollowerId,
 				r => r.FollowingId,
-				request,
 				cancellationToken);
 		}
 
@@ -98,9 +98,9 @@ public static class FollowExceptionAssertions
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowFollowNotFoundExceptionAsync(
+				request,
 				r => r.FollowerId,
 				r => r.FollowingId,
-				request,
 				cancellationToken);
 		}
 
@@ -111,9 +111,9 @@ public static class FollowExceptionAssertions
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowFollowAlreadyExistsExceptionAsync(
+				request,
 				r => r.FollowerId,
 				r => r.FollowingId,
-				request,
 				cancellationToken);
 		}
 	}

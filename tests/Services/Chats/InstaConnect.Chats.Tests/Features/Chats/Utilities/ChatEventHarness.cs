@@ -7,7 +7,7 @@ public static class ChatEventHarness
 {
 	extension(IEventHarness eventHarness)
 	{
-		public async Task<ChatAddedEventRequest> PublishedAddedEventRequest(CancellationToken cancellationToken)
+		public async Task<ChatAddedEventRequest> PublishedAddedEventRequestAsync(CancellationToken cancellationToken)
 		{
 			return await eventHarness.PublishedAsync<ChatAddedEventRequest>(cancellationToken);
 		}

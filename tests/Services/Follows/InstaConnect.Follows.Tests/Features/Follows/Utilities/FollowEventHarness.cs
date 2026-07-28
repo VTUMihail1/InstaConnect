@@ -7,12 +7,12 @@ public static class FollowEventHarness
 {
 	extension(IEventHarness eventHarness)
 	{
-		public async Task<FollowAddedEventRequest> PublishedAddedEventRequest(CancellationToken cancellationToken)
+		public async Task<FollowAddedEventRequest> PublishedAddedEventRequestAsync(CancellationToken cancellationToken)
 		{
 			return await eventHarness.PublishedAsync<FollowAddedEventRequest>(cancellationToken);
 		}
 
-		public async Task<FollowDeletedEventRequest> PublishedDeletedEventRequest(CancellationToken cancellationToken)
+		public async Task<FollowDeletedEventRequest> PublishedDeletedEventRequestAsync(CancellationToken cancellationToken)
 		{
 			return await eventHarness.PublishedAsync<FollowDeletedEventRequest>(cancellationToken);
 		}

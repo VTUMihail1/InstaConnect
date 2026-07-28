@@ -8,9 +8,9 @@ public static class RefreshTokenExceptionAssertions
 	extension(Func<Task> func)
 	{
 		public async Task ShouldThrowRefreshTokenNotFoundExceptionAsync<TRequest>(
+			TRequest request,
 			Func<TRequest, string> idPropertyExpression,
 			Func<TRequest, string> valueropertyExpression,
-			TRequest request,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<RefreshTokenNotFoundException>(
@@ -22,8 +22,8 @@ public static class RefreshTokenExceptionAssertions
 		}
 
 		public async Task ShouldThrowRefreshTokenNotFoundExceptionAsync<TRequest>(
-			Func<TRequest, RefreshTokenId> idPropertyExpression,
 			TRequest request,
+			Func<TRequest, RefreshTokenId> idPropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<RefreshTokenNotFoundException>(
@@ -32,9 +32,9 @@ public static class RefreshTokenExceptionAssertions
 		}
 
 		public async Task ShouldThrowRefreshTokenExpiredExceptionAsync<TRequest>(
+			TRequest request,
 			Func<TRequest, string> idPropertyExpression,
 			Func<TRequest, string> valuePropertyExpression,
-			TRequest request,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<RefreshTokenExpiredException>(
@@ -46,8 +46,8 @@ public static class RefreshTokenExceptionAssertions
 		}
 
 		public async Task ShouldThrowRefreshTokenExpiredExceptionAsync<TRequest>(
-			Func<TRequest, RefreshTokenId> idPropertyExpression,
 			TRequest request,
+			Func<TRequest, RefreshTokenId> idPropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<RefreshTokenExpiredException>(

@@ -1,4 +1,5 @@
 using InstaConnect.Identity.Application.Tests.Features.EmailConfirmationTokens.Utilities;
+using InstaConnect.Identity.Events.Features.EmailConfirmationTokens;
 
 namespace InstaConnect.Identity.Application.Tests.Features.EmailConfirmationTokens.Assertions;
 
@@ -22,6 +23,22 @@ public static class EmailConfirmationTokenMatchAssertions
 		public void ShouldSatisfy(VerifyEmailConfirmationTokenCommandRequest request)
 		{
 			user.ShouldSatisfy(p => p.Matches(request));
+		}
+	}
+
+	extension(ICollection<EmailConfirmationTokenAddedEventRequest> r)
+	{
+		public void ShouldSatisfy(AddEmailConfirmationTokenCommandRequest request, ICollection<EmailConfirmationToken> entities)
+		{
+			r.ShouldSatisfy(r => r.Matches(request, entities));
+		}
+	}
+
+	extension(ICollection<EmailConfirmationTokenDeletedEventRequest> r)
+	{
+		public void ShouldSatisfy(VerifyEmailConfirmationTokenCommandRequest request, ICollection<EmailConfirmationToken> entities)
+		{
+			r.ShouldSatisfy(r => r.Matches(request, entities));
 		}
 	}
 }

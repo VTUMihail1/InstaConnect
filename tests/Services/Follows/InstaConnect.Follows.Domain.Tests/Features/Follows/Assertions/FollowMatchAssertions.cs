@@ -1,5 +1,6 @@
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 using InstaConnect.Follows.Domain.Tests.Features.Follows.Utilities;
+using InstaConnect.Follows.Events.Features.Follows;
 
 namespace InstaConnect.Follows.Domain.Tests.Features.Follows.Assertions;
 
@@ -63,6 +64,32 @@ public static class FollowMatchAssertions
 		public void ShouldSatisfy(AddFollowCommand command)
 		{
 			follow.ShouldSatisfy(p => p.Matches(command));
+		}
+	}
+
+	extension(FollowAddedEventRequest r)
+	{
+		public void ShouldSatisfy(AddFollowCommand command, Follow entity)
+		{
+			r.ShouldSatisfy(r => r.Matches(command, entity));
+		}
+	}
+
+	extension(FollowDeletedEventRequest r)
+	{
+		public void ShouldSatisfy(DeleteFollowCommand command, Follow entity)
+		{
+			r.ShouldSatisfy(r => r.Matches(command, entity));
+		}
+	}
+
+	extension(FollowAddedNotificationRequest r)
+	{
+		public void ShouldSatisfy(
+			AddFollowCommand command,
+			Follow follow)
+		{
+			r.ShouldSatisfy(f => f.Matches(command, follow));
 		}
 	}
 }

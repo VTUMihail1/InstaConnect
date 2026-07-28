@@ -9,9 +9,9 @@ public static class UserClaimExceptionAssertions
 	extension(Func<Task> func)
 	{
 		public async Task ShouldThrowUserClaimNotFoundExceptionAsync<TRequest>(
+			TRequest request,
 			Func<TRequest, string> idPropertyExpression,
 			Func<TRequest, ApplicationClaims> claimPropertyExpression,
-			TRequest request,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<UserClaimNotFoundException>(
@@ -23,8 +23,8 @@ public static class UserClaimExceptionAssertions
 		}
 
 		public async Task ShouldThrowUserClaimNotFoundExceptionAsync<TRequest>(
-			Func<TRequest, UserClaimId> idPropertyExpression,
 			TRequest request,
+			Func<TRequest, UserClaimId> idPropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<UserClaimNotFoundException>(
@@ -33,9 +33,9 @@ public static class UserClaimExceptionAssertions
 		}
 
 		public async Task ShouldThrowUserClaimAlreadyExistsExceptionAsync<TRequest>(
+			TRequest request,
 			Func<TRequest, string> idPropertyExpression,
 			Func<TRequest, ApplicationClaims> claimPropertyExpression,
-			TRequest request,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<UserClaimAlreadyExistsException>(
@@ -47,8 +47,8 @@ public static class UserClaimExceptionAssertions
 		}
 
 		public async Task ShouldThrowUserClaimAlreadyExistsExceptionAsync<TRequest>(
-			Func<TRequest, UserClaimId> idPropertyExpression,
 			TRequest request,
+			Func<TRequest, UserClaimId> idPropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<UserClaimAlreadyExistsException>(

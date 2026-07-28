@@ -9,8 +9,8 @@ public static class UserExceptionAssertions
 	extension(Func<Task> func)
 	{
 		public async Task ShouldThrowUserNotFoundExceptionAsync<TRequest>(
-			Func<TRequest, string> idPropertyExpression,
 			TRequest request,
+			Func<TRequest, string> idPropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<UserNotFoundException>(
@@ -19,8 +19,8 @@ public static class UserExceptionAssertions
 		}
 
 		public async Task ShouldThrowUserNotFoundExceptionAsync<TRequest>(
-			Func<TRequest, UserId> idPropertyExpression,
 			TRequest request,
+			Func<TRequest, UserId> idPropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<UserNotFoundException>(
@@ -29,8 +29,8 @@ public static class UserExceptionAssertions
 		}
 
 		public async Task ShouldThrowUserNameNotFoundExceptionAsync<TRequest>(
-			Func<TRequest, string> namePropertyExpression,
 			TRequest request,
+			Func<TRequest, string> namePropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<UserNameNotFoundException>(
@@ -39,8 +39,8 @@ public static class UserExceptionAssertions
 		}
 
 		public async Task ShouldThrowUserNameNotFoundExceptionAsync<TRequest>(
-			Func<TRequest, Name> namePropertyExpression,
 			TRequest request,
+			Func<TRequest, Name> namePropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<UserNameNotFoundException>(
@@ -49,8 +49,8 @@ public static class UserExceptionAssertions
 		}
 
 		public async Task ShouldThrowUserEmailAlreadyTakenExceptionAsync<TRequest>(
-			Func<TRequest, string> emailPropertyExpression,
 			TRequest request,
+			Func<TRequest, string> emailPropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<UserEmailAlreadyTakenException>(
@@ -59,8 +59,8 @@ public static class UserExceptionAssertions
 		}
 
 		public async Task ShouldThrowUserEmailAlreadyTakenExceptionAsync<TRequest>(
-			Func<TRequest, Email> emailPropertyExpression,
 			TRequest request,
+			Func<TRequest, Email> emailPropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<UserEmailAlreadyTakenException>(
@@ -69,8 +69,8 @@ public static class UserExceptionAssertions
 		}
 
 		public async Task ShouldThrowUserNameAlreadyTakenExceptionAsync<TRequest>(
-			Func<TRequest, string> namePropertyExpression,
 			TRequest request,
+			Func<TRequest, string> namePropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<UserNameAlreadyTakenException>(
@@ -79,8 +79,8 @@ public static class UserExceptionAssertions
 		}
 
 		public async Task ShouldThrowUserNameAlreadyTakenExceptionAsync<TRequest>(
-			Func<TRequest, Name> namePropertyExpression,
 			TRequest request,
+			Func<TRequest, Name> namePropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<UserNameAlreadyTakenException>(
@@ -89,8 +89,8 @@ public static class UserExceptionAssertions
 		}
 
 		public async Task ShouldThrowUserInvalidDetailsExceptionAsync<TRequest>(
-			Func<TRequest, string> namePropertyExpression,
 			TRequest request,
+			Func<TRequest, string> namePropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<UserInvalidDetailsException>(
@@ -99,8 +99,8 @@ public static class UserExceptionAssertions
 		}
 
 		public async Task ShouldThrowUserInvalidDetailsExceptionAsync<TRequest>(
-			Func<TRequest, Name> namePropertyExpression,
 			TRequest request,
+			Func<TRequest, Name> namePropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<UserInvalidDetailsException>(
@@ -109,8 +109,8 @@ public static class UserExceptionAssertions
 		}
 
 		public async Task ShouldThrowUserEmailAlreadyConfirmedExceptionAsync<TRequest>(
-			Func<TRequest, string> idPropertyExpression,
 			TRequest request,
+			Func<TRequest, string> idPropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<UserEmailAlreadyConfirmedException>(
@@ -119,8 +119,8 @@ public static class UserExceptionAssertions
 		}
 
 		public async Task ShouldThrowUserEmailAlreadyConfirmedExceptionAsync<TRequest>(
-			Func<TRequest, UserId> idPropertyExpression,
 			TRequest request,
+			Func<TRequest, UserId> idPropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<UserEmailAlreadyConfirmedException>(
@@ -129,8 +129,8 @@ public static class UserExceptionAssertions
 		}
 
 		public async Task ShouldThrowUserNameEmailAlreadyConfirmedExceptionAsync<TRequest>(
-			Func<TRequest, string> namePropertyExpression,
 			TRequest request,
+			Func<TRequest, string> namePropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<UserNameEmailAlreadyConfirmedException>(
@@ -139,8 +139,8 @@ public static class UserExceptionAssertions
 		}
 
 		public async Task ShouldThrowUserNameEmailAlreadyConfirmedExceptionAsync<TRequest>(
-			Func<TRequest, Name> namePropertyExpression,
 			TRequest request,
+			Func<TRequest, Name> namePropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<UserNameEmailAlreadyConfirmedException>(
@@ -149,8 +149,8 @@ public static class UserExceptionAssertions
 		}
 
 		public async Task ShouldThrowUserEmailNotConfirmedExceptionAsync<TRequest>(
-			Func<TRequest, string> idPropertyExpression,
 			TRequest request,
+			Func<TRequest, string> idPropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<UserEmailNotConfirmedException>(
@@ -159,8 +159,8 @@ public static class UserExceptionAssertions
 		}
 
 		public async Task ShouldThrowUserEmailNotConfirmedExceptionAsync<TRequest>(
-			Func<TRequest, UserId> idPropertyExpression,
 			TRequest request,
+			Func<TRequest, UserId> idPropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<UserEmailNotConfirmedException>(
@@ -169,8 +169,8 @@ public static class UserExceptionAssertions
 		}
 
 		public async Task ShouldThrowUserNameEmailNotConfirmedExceptionAsync<TRequest>(
-			Func<TRequest, string> namePropertyExpression,
 			TRequest request,
+			Func<TRequest, string> namePropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<UserNameEmailNotConfirmedException>(
@@ -179,8 +179,8 @@ public static class UserExceptionAssertions
 		}
 
 		public async Task ShouldThrowUserNameEmailNotConfirmedExceptionAsync<TRequest>(
-			Func<TRequest, Name> namePropertyExpression,
 			TRequest request,
+			Func<TRequest, Name> namePropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<UserNameEmailNotConfirmedException>(

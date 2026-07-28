@@ -13,8 +13,8 @@ public static class EmailConfirmationTokenExceptionAssertions
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserNameNotFoundExceptionAsync(
-				r => r.Name,
 				request,
+				r => r.Name,
 				cancellationToken);
 		}
 
@@ -25,8 +25,8 @@ public static class EmailConfirmationTokenExceptionAssertions
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.Id,
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 
@@ -37,8 +37,8 @@ public static class EmailConfirmationTokenExceptionAssertions
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserNameEmailAlreadyConfirmedExceptionAsync(
-				r => r.Name,
 				request,
+				r => r.Name,
 				cancellationToken);
 		}
 
@@ -49,8 +49,8 @@ public static class EmailConfirmationTokenExceptionAssertions
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserEmailAlreadyConfirmedExceptionAsync(
-				r => r.Id,
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 
@@ -61,9 +61,9 @@ public static class EmailConfirmationTokenExceptionAssertions
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowEmailConfirmationTokenNotFoundExceptionAsync(
+				request,
 				r => r.Id,
 				r => r.Value,
-				request,
 				cancellationToken);
 		}
 
@@ -74,9 +74,9 @@ public static class EmailConfirmationTokenExceptionAssertions
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowEmailConfirmationTokenExpiredExceptionAsync(
+				request,
 				r => r.Id,
 				r => r.Value,
-				request,
 				cancellationToken);
 		}
 	}

@@ -13,8 +13,8 @@ public static class UserExceptionAssertions
 			var func = () => handler.Consume(request, cancellationToken);
 
 			await func.ShouldThrowUserAlreadyExistsExceptionAsync(
-				r => r.User.Id,
 				request,
+				r => r.User.Id,
 				cancellationToken);
 		}
 
@@ -25,8 +25,8 @@ public static class UserExceptionAssertions
 			var func = () => handler.Consume(request, cancellationToken);
 
 			await func.ShouldThrowUserEmailAlreadyExistsExceptionAsync(
-				r => r.User.Email,
 				request,
+				r => r.User.Email,
 				cancellationToken);
 		}
 
@@ -37,8 +37,8 @@ public static class UserExceptionAssertions
 			var func = () => handler.Consume(request, cancellationToken);
 
 			await func.ShouldThrowUserNameAlreadyExistsExceptionAsync(
-				r => r.User.Name,
 				request,
+				r => r.User.Name,
 				cancellationToken);
 		}
 	}
@@ -52,8 +52,8 @@ public static class UserExceptionAssertions
 			var func = () => handler.Consume(request, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.User.Id,
 				request,
+				r => r.User.Id,
 				cancellationToken);
 		}
 
@@ -64,8 +64,8 @@ public static class UserExceptionAssertions
 			var func = () => handler.Consume(request, cancellationToken);
 
 			await func.ShouldThrowUserEmailAlreadyExistsExceptionAsync(
-				r => r.User.Email,
 				request,
+				r => r.User.Email,
 				cancellationToken);
 		}
 
@@ -76,8 +76,8 @@ public static class UserExceptionAssertions
 			var func = () => handler.Consume(request, cancellationToken);
 
 			await func.ShouldThrowUserNameAlreadyExistsExceptionAsync(
-				r => r.User.Name,
 				request,
+				r => r.User.Name,
 				cancellationToken);
 		}
 	}
@@ -91,8 +91,8 @@ public static class UserExceptionAssertions
 			var func = () => handler.Consume(request, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.User.Id,
 				request,
+				r => r.User.Id,
 				cancellationToken);
 		}
 	}

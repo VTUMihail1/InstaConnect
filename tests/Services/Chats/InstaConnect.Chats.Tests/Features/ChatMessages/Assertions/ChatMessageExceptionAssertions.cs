@@ -9,10 +9,10 @@ public static class ChatMessageExceptionAssertions
 	extension(Func<Task> func)
 	{
 		public async Task ShouldThrowChatMessageNotFoundExceptionAsync<TRequest>(
+			TRequest request,
 			Func<TRequest, string> participantOneIdPropertyExpression,
 			Func<TRequest, string> participantTwoIdPropertyExpression,
 			Func<TRequest, string> messageIdPropertyExpression,
-			TRequest request,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<ChatMessageNotFoundException>(
@@ -26,8 +26,8 @@ public static class ChatMessageExceptionAssertions
 		}
 
 		public async Task ShouldThrowChatMessageNotFoundExceptionAsync<TRequest>(
-			Func<TRequest, ChatMessageId> idPropertyExpression,
 			TRequest request,
+			Func<TRequest, ChatMessageId> idPropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<ChatMessageNotFoundException>(
@@ -36,11 +36,11 @@ public static class ChatMessageExceptionAssertions
 		}
 
 		public async Task ShouldThrowChatMessageForbiddenExceptionAsync<TRequest>(
+			TRequest request,
 			Func<TRequest, string> participantOneIdPropertyExpression,
 			Func<TRequest, string> participantTwoIdPropertyExpression,
 			Func<TRequest, string> messageIdPropertyExpression,
 			Func<TRequest, string> senderIdPropertyExpression,
-			TRequest request,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<ChatMessageForbiddenException>(
@@ -55,9 +55,9 @@ public static class ChatMessageExceptionAssertions
 		}
 
 		public async Task ShouldThrowChatMessageForbiddenExceptionAsync<TRequest>(
+			TRequest request,
 			Func<TRequest, ChatMessageId> idPropertyExpression,
 			Func<TRequest, UserId> senderIdPropertyExpression,
-			TRequest request,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<ChatMessageForbiddenException>(

@@ -1,5 +1,7 @@
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 using InstaConnect.Identity.Domain.Features.Common.Helpers;
+using InstaConnect.Identity.Events.Features.EmailConfirmationTokens;
+using InstaConnect.Identity.Events.Features.Users;
 using InstaConnect.Identity.Presentation.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.Users.Assertions;
@@ -174,6 +176,51 @@ public static class UserMatchAssertions
 		public void ShouldSatisfy(UpdateCurrentUserApiRequest request)
 		{
 			emailConfirmationTokens.ShouldSatisfy(p => p.Matches(request));
+		}
+	}
+
+	extension(UserAddedEventRequest r)
+	{
+		public void ShouldSatisfy(AddUserApiRequest request, User entity)
+		{
+			r.ShouldSatisfy(r => r.Matches(request, entity));
+		}
+	}
+
+	extension(UserUpdatedEventRequest r)
+	{
+		public void ShouldSatisfy(UpdateCurrentUserApiRequest request, User entity)
+		{
+			r.ShouldSatisfy(r => r.Matches(request, entity));
+		}
+	}
+
+	extension(UserDeletedEventRequest r)
+	{
+		public void ShouldSatisfy(DeleteUserApiRequest request, User entity)
+		{
+			r.ShouldSatisfy(r => r.Matches(request, entity));
+		}
+
+		public void ShouldSatisfy(DeleteCurrentUserApiRequest request, User entity)
+		{
+			r.ShouldSatisfy(r => r.Matches(request, entity));
+		}
+	}
+
+	extension(ICollection<EmailConfirmationTokenAddedEventRequest> r)
+	{
+		public void ShouldSatisfy(AddUserApiRequest request, ICollection<EmailConfirmationToken> entities)
+		{
+			r.ShouldSatisfy(r => r.Matches(request, entities));
+		}
+	}
+
+	extension(ICollection<EmailConfirmationTokenDeletedEventRequest> r)
+	{
+		public void ShouldSatisfy(UpdateCurrentUserApiRequest request, ICollection<EmailConfirmationToken> entities)
+		{
+			r.ShouldSatisfy(r => r.Matches(request, entities));
 		}
 	}
 }

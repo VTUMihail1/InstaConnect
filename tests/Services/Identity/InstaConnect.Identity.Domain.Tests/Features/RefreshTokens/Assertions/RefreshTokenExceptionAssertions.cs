@@ -14,8 +14,8 @@ public static class RefreshTokenExceptionAssertions
 			var func = () => service.IssueAsync(command, cancellationToken);
 
 			await func.ShouldThrowUserInvalidDetailsExceptionAsync(
-				r => r.Name,
 				command,
+				r => r.Name,
 				cancellationToken);
 		}
 
@@ -26,8 +26,8 @@ public static class RefreshTokenExceptionAssertions
 			var func = () => service.IssueAsync(command, cancellationToken);
 
 			await func.ShouldThrowUserNameEmailNotConfirmedExceptionAsync(
-				r => r.Name,
 				command,
+				r => r.Name,
 				cancellationToken);
 		}
 
@@ -38,8 +38,8 @@ public static class RefreshTokenExceptionAssertions
 			var func = () => service.RotateAsync(command, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.Id.Id,
 				command,
+				r => r.Id.Id,
 				cancellationToken);
 		}
 
@@ -50,8 +50,8 @@ public static class RefreshTokenExceptionAssertions
 			var func = () => service.DeleteAsync(command, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.Id.Id,
 				command,
+				r => r.Id.Id,
 				cancellationToken);
 		}
 
@@ -62,8 +62,8 @@ public static class RefreshTokenExceptionAssertions
 			var func = () => service.RotateAsync(command, cancellationToken);
 
 			await func.ShouldThrowUserEmailNotConfirmedExceptionAsync(
-				r => r.Id.Id,
 				command,
+				r => r.Id.Id,
 				cancellationToken);
 		}
 
@@ -74,8 +74,8 @@ public static class RefreshTokenExceptionAssertions
 			var func = () => service.RotateAsync(command, cancellationToken);
 
 			await func.ShouldThrowRefreshTokenNotFoundExceptionAsync(
-				r => r.Id,
 				command,
+				r => r.Id,
 				cancellationToken);
 		}
 
@@ -86,8 +86,8 @@ public static class RefreshTokenExceptionAssertions
 			var func = () => service.DeleteAsync(command, cancellationToken);
 
 			await func.ShouldThrowRefreshTokenNotFoundExceptionAsync(
-				r => r.Id,
 				command,
+				r => r.Id,
 				cancellationToken);
 		}
 
@@ -98,8 +98,8 @@ public static class RefreshTokenExceptionAssertions
 			var func = () => service.RotateAsync(command, cancellationToken);
 
 			await func.ShouldThrowRefreshTokenExpiredExceptionAsync(
-				r => r.Id,
 				command,
+				r => r.Id,
 				cancellationToken);
 		}
 	}

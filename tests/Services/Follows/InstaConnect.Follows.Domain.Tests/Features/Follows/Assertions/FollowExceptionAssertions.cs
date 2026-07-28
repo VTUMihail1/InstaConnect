@@ -14,8 +14,8 @@ public static class FollowExceptionAssertions
 			var func = () => service.AddAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.FollowerId,
 				request,
+				r => r.FollowerId,
 				cancellationToken);
 		}
 
@@ -26,8 +26,8 @@ public static class FollowExceptionAssertions
 			var func = () => service.AddAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.FollowingId,
 				request,
+				r => r.FollowingId,
 				cancellationToken);
 		}
 
@@ -38,9 +38,9 @@ public static class FollowExceptionAssertions
 			var func = () => service.AddAsync(request, cancellationToken);
 
 			await func.ShouldThrowFollowAlreadyExistsExceptionAsync(
+				request,
 				r => r.FollowerId.Id,
 				r => r.FollowingId.Id,
-				request,
 				cancellationToken);
 		}
 
@@ -51,8 +51,8 @@ public static class FollowExceptionAssertions
 			var func = () => service.DeleteAsync(request, cancellationToken);
 
 			await func.ShouldThrowFollowNotFoundExceptionAsync(
-				r => r.Id,
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 	}
@@ -66,8 +66,8 @@ public static class FollowExceptionAssertions
 			var func = () => service.GetAllAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.Filter.FollowerId,
 				request,
+				r => r.Filter.FollowerId,
 				cancellationToken);
 		}
 
@@ -78,8 +78,8 @@ public static class FollowExceptionAssertions
 			var func = () => service.GetAllForFollowingAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.Filter.FollowingId,
 				request,
+				r => r.Filter.FollowingId,
 				cancellationToken);
 		}
 
@@ -90,8 +90,8 @@ public static class FollowExceptionAssertions
 			var func = () => service.GetByIdAsync(request, cancellationToken);
 
 			await func.ShouldThrowFollowNotFoundExceptionAsync(
-				r => r.Id,
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 	}

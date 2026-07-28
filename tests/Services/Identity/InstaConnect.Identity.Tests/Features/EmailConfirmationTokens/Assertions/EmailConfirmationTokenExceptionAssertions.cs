@@ -8,9 +8,9 @@ public static class EmailConfirmationTokenExceptionAssertions
 	extension(Func<Task> func)
 	{
 		public async Task ShouldThrowEmailConfirmationTokenNotFoundExceptionAsync<TRequest>(
+			TRequest request,
 			Func<TRequest, string> idPropertyExpression,
 			Func<TRequest, string> valueropertyExpression,
-			TRequest request,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<EmailConfirmationTokenNotFoundException>(
@@ -22,8 +22,8 @@ public static class EmailConfirmationTokenExceptionAssertions
 		}
 
 		public async Task ShouldThrowEmailConfirmationTokenNotFoundExceptionAsync<TRequest>(
-			Func<TRequest, EmailConfirmationTokenId> idPropertyExpression,
 			TRequest request,
+			Func<TRequest, EmailConfirmationTokenId> idPropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<EmailConfirmationTokenNotFoundException>(
@@ -32,9 +32,9 @@ public static class EmailConfirmationTokenExceptionAssertions
 		}
 
 		public async Task ShouldThrowEmailConfirmationTokenExpiredExceptionAsync<TRequest>(
+			TRequest request,
 			Func<TRequest, string> idPropertyExpression,
 			Func<TRequest, string> valuePropertyExpression,
-			TRequest request,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<EmailConfirmationTokenExpiredException>(
@@ -46,8 +46,8 @@ public static class EmailConfirmationTokenExceptionAssertions
 		}
 
 		public async Task ShouldThrowEmailConfirmationTokenExpiredExceptionAsync<TRequest>(
-			Func<TRequest, EmailConfirmationTokenId> idPropertyExpression,
 			TRequest request,
+			Func<TRequest, EmailConfirmationTokenId> idPropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<EmailConfirmationTokenExpiredException>(

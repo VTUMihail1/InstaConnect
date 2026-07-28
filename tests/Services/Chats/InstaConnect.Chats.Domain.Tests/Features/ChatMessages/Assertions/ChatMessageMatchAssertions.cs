@@ -90,4 +90,55 @@ public static class ChatMessageMatchAssertions
 			chatMessage.ShouldSatisfy(p => p.MatchesInverted(command));
 		}
 	}
+
+	extension(ChatMessageAddedNotificationRequest r)
+	{
+		public void ShouldSatisfy(
+			AddChatMessageCommand command,
+			ChatMessage chatMessage)
+		{
+			r.ShouldSatisfy(f => f.Matches(command, chatMessage));
+		}
+
+		public void ShouldSatisfyInverted(
+			AddChatMessageCommand command,
+			ChatMessage chatMessage)
+		{
+			r.ShouldSatisfy(f => f.MatchesInverted(command, chatMessage));
+		}
+	}
+
+	extension(ChatMessageUpdatedNotificationRequest r)
+	{
+		public void ShouldSatisfy(
+			UpdateChatMessageCommand command,
+			ChatMessage chatMessage)
+		{
+			r.ShouldSatisfy(f => f.Matches(command, chatMessage));
+		}
+
+		public void ShouldSatisfyInverted(
+			UpdateChatMessageCommand command,
+			ChatMessage chatMessage)
+		{
+			r.ShouldSatisfy(f => f.MatchesInverted(command, chatMessage));
+		}
+	}
+
+	extension(ChatMessageDeletedNotificationRequest r)
+	{
+		public void ShouldSatisfy(
+			DeleteChatMessageCommand command,
+			ChatMessage chatMessage)
+		{
+			r.ShouldSatisfy(f => f.Matches(command, chatMessage));
+		}
+
+		public void ShouldSatisfyInverted(
+			DeleteChatMessageCommand command,
+			ChatMessage chatMessage)
+		{
+			r.ShouldSatisfy(f => f.MatchesInverted(command, chatMessage));
+		}
+	}
 }

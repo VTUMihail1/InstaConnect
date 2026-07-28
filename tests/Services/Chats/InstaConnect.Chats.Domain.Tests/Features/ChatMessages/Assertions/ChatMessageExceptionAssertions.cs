@@ -14,8 +14,8 @@ public static class ChatMessageExceptionAssertions
 			var func = () => service.AddAsync(request, cancellationToken);
 
 			await func.ShouldThrowChatNotFoundExceptionAsync(
-				r => r.Id,
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 
@@ -26,8 +26,8 @@ public static class ChatMessageExceptionAssertions
 			var func = () => service.UpdateAsync(request, cancellationToken);
 
 			await func.ShouldThrowChatNotFoundExceptionAsync(
-				r => r.Id.Id,
 				request,
+				r => r.Id.Id,
 				cancellationToken);
 		}
 
@@ -38,8 +38,8 @@ public static class ChatMessageExceptionAssertions
 			var func = () => service.DeleteAsync(request, cancellationToken);
 
 			await func.ShouldThrowChatNotFoundExceptionAsync(
+				request,
 				r => r.Id.Id,
-				request,
 				cancellationToken);
 		}
 
@@ -50,8 +50,8 @@ public static class ChatMessageExceptionAssertions
 			var func = () => service.UpdateAsync(request, cancellationToken);
 
 			await func.ShouldThrowChatMessageNotFoundExceptionAsync(
-				r => r.Id,
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 
@@ -62,8 +62,8 @@ public static class ChatMessageExceptionAssertions
 			var func = () => service.DeleteAsync(request, cancellationToken);
 
 			await func.ShouldThrowChatMessageNotFoundExceptionAsync(
-				r => r.Id,
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 
@@ -74,9 +74,9 @@ public static class ChatMessageExceptionAssertions
 			var func = () => service.UpdateAsync(request, cancellationToken);
 
 			await func.ShouldThrowChatMessageForbiddenExceptionAsync(
+				request,
 				r => r.Id,
 				r => r.Id.Id.ParticipantOneId,
-				request,
 				cancellationToken);
 		}
 
@@ -87,9 +87,9 @@ public static class ChatMessageExceptionAssertions
 			var func = () => service.DeleteAsync(request, cancellationToken);
 
 			await func.ShouldThrowChatMessageForbiddenExceptionAsync(
+				request,
 				r => r.Id,
 				r => r.Id.Id.ParticipantOneId,
-				request,
 				cancellationToken);
 		}
 	}
@@ -103,8 +103,8 @@ public static class ChatMessageExceptionAssertions
 			var func = () => service.GetAllAsync(request, cancellationToken);
 
 			await func.ShouldThrowChatNotFoundExceptionAsync(
-				r => r.Filter.Id,
 				request,
+				r => r.Filter.Id,
 				cancellationToken);
 		}
 
@@ -115,8 +115,8 @@ public static class ChatMessageExceptionAssertions
 			var func = () => service.GetByIdAsync(request, cancellationToken);
 
 			await func.ShouldThrowChatNotFoundExceptionAsync(
-				r => r.Id.Id,
 				request,
+				r => r.Id.Id,
 				cancellationToken);
 		}
 
@@ -127,8 +127,8 @@ public static class ChatMessageExceptionAssertions
 			var func = () => service.GetByIdAsync(request, cancellationToken);
 
 			await func.ShouldThrowChatMessageNotFoundExceptionAsync(
-				r => r.Id,
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 	}

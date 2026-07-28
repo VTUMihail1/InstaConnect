@@ -13,8 +13,8 @@ public static class RefreshTokenExceptionAssertions
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserInvalidDetailsExceptionAsync(
-				r => r.Name,
 				request,
+				r => r.Name,
 				cancellationToken);
 		}
 
@@ -25,8 +25,8 @@ public static class RefreshTokenExceptionAssertions
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserNameEmailNotConfirmedExceptionAsync(
-				r => r.Name,
 				request,
+				r => r.Name,
 				cancellationToken);
 		}
 
@@ -37,8 +37,8 @@ public static class RefreshTokenExceptionAssertions
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserEmailNotConfirmedExceptionAsync(
-				r => r.Id,
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 
@@ -49,8 +49,8 @@ public static class RefreshTokenExceptionAssertions
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.Id,
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 
@@ -61,8 +61,8 @@ public static class RefreshTokenExceptionAssertions
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.Id,
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 
@@ -73,9 +73,9 @@ public static class RefreshTokenExceptionAssertions
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowRefreshTokenNotFoundExceptionAsync(
+				request,
 				r => r.Id,
 				r => r.Value,
-				request,
 				cancellationToken);
 		}
 
@@ -86,9 +86,9 @@ public static class RefreshTokenExceptionAssertions
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowRefreshTokenNotFoundExceptionAsync(
+				request,
 				r => r.Id,
 				r => r.Value,
-				request,
 				cancellationToken);
 		}
 
@@ -99,9 +99,9 @@ public static class RefreshTokenExceptionAssertions
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowRefreshTokenExpiredExceptionAsync(
+				request,
 				r => r.Id,
 				r => r.Value,
-				request,
 				cancellationToken);
 		}
 
@@ -112,9 +112,9 @@ public static class RefreshTokenExceptionAssertions
 			var func = () => sender.SendAsync(request, cancellationToken);
 
 			await func.ShouldThrowRefreshTokenExpiredExceptionAsync(
+				request,
 				r => r.Id,
 				r => r.Value,
-				request,
 				cancellationToken);
 		}
 	}

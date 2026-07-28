@@ -8,9 +8,9 @@ public static class ChatExceptionAssertions
 	extension(Func<Task> func)
 	{
 		public async Task ShouldThrowChatNotFoundExceptionAsync<TRequest>(
+			TRequest request,
 			Func<TRequest, string> participantOneIdPropertyExpression,
 			Func<TRequest, string> participantTwoIdPropertyExpression,
-			TRequest request,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<ChatNotFoundException>(
@@ -19,8 +19,8 @@ public static class ChatExceptionAssertions
 		}
 
 		public async Task ShouldThrowChatNotFoundExceptionAsync<TRequest>(
-			Func<TRequest, ChatId> idPropertyExpression,
 			TRequest request,
+			Func<TRequest, ChatId> idPropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<ChatNotFoundException>(
@@ -29,9 +29,9 @@ public static class ChatExceptionAssertions
 		}
 
 		public async Task ShouldThrowChatAlreadyExistsExceptionAsync<TRequest>(
+			TRequest request,
 			Func<TRequest, string> participantOneIdPropertyExpression,
 			Func<TRequest, string> participantTwoIdPropertyExpression,
-			TRequest request,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<ChatAlreadyExistsException>(
@@ -40,8 +40,8 @@ public static class ChatExceptionAssertions
 		}
 
 		public async Task ShouldThrowChatAlreadyExistsExceptionAsync<TRequest>(
-			Func<TRequest, ChatId> idPropertyExpression,
 			TRequest request,
+			Func<TRequest, ChatId> idPropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<ChatAlreadyExistsException>(

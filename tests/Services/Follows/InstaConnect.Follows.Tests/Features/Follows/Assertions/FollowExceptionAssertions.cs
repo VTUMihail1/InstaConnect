@@ -8,9 +8,9 @@ public static class FollowExceptionAssertions
 	extension(Func<Task> func)
 	{
 		public async Task ShouldThrowFollowNotFoundExceptionAsync<TRequest>(
+			TRequest request,
 			Func<TRequest, string> followerIdPropertyExpression,
 			Func<TRequest, string> followingIdPropertyExpression,
-			TRequest request,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<FollowNotFoundException>(
@@ -22,8 +22,8 @@ public static class FollowExceptionAssertions
 		}
 
 		public async Task ShouldThrowFollowNotFoundExceptionAsync<TRequest>(
-			Func<TRequest, FollowId> idPropertyExpression,
 			TRequest request,
+			Func<TRequest, FollowId> idPropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<FollowNotFoundException>(
@@ -32,9 +32,9 @@ public static class FollowExceptionAssertions
 		}
 
 		public async Task ShouldThrowFollowAlreadyExistsExceptionAsync<TRequest>(
+			TRequest request,
 			Func<TRequest, string> followerIdPropertyExpression,
 			Func<TRequest, string> followingIdPropertyExpression,
-			TRequest request,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<FollowAlreadyExistsException>(
@@ -46,8 +46,8 @@ public static class FollowExceptionAssertions
 		}
 
 		public async Task ShouldThrowFollowAlreadyExistsExceptionAsync<TRequest>(
-			Func<TRequest, FollowId> idPropertyExpression,
 			TRequest request,
+			Func<TRequest, FollowId> idPropertyExpression,
 			CancellationToken cancellationToken)
 		{
 			await func.ShouldThrowAsync<FollowAlreadyExistsException>(
