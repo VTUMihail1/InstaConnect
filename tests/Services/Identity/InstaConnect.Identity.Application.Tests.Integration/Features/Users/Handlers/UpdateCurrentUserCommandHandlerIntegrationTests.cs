@@ -14,6 +14,8 @@ public class UpdateCurrentUserCommandHandlerIntegrationTests : BaseUserApplicati
 		_requestBuilderFactory = new();
 		_requestBuilder = _requestBuilderFactory.Create(User);
 		_request = _requestBuilder.Build();
+
+		ImageHandler.SetupUpload(_request, CancellationToken);
 	}
 
 	protected override async Task OnInitializeAsync()

@@ -5,6 +5,7 @@ using InstaConnect.Identity.Domain.Features.Users.Models.Requests;
 using InstaConnect.Identity.Domain.Tests.Features.EmailConfirmationTokens.Assertions;
 using InstaConnect.Identity.Domain.Tests.Features.Users.Assertions;
 using InstaConnect.Identity.Domain.Tests.Features.Users.Builders;
+using InstaConnect.Identity.Domain.Tests.Features.Users.Utilities;
 using InstaConnect.Identity.Domain.Tests.Integration.Features.Users.Utilities;
 using InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Assertions;
 using InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Utilities;
@@ -29,6 +30,8 @@ public class UpdateUserCommandServiceIntegrationTests : BaseUserDomainCommandInt
 		_commandBuilderFactory = new();
 		_commandBuilder = _commandBuilderFactory.Create(User);
 		_command = _commandBuilder.Build();
+
+		ImageHandler.SetupUpload(_command, CancellationToken);
 	}
 
 	protected override async Task OnInitializeAsync()
