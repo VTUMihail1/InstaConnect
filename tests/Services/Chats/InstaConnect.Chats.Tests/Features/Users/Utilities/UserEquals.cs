@@ -35,19 +35,6 @@ public static class UserEquals
 				   entity.CreatedAtUtc == request.CreatedAtUtc &&
 				   entity.UpdatedAtUtc == request.UpdatedAtUtc;
 		}
-
-		public bool Matches(UserNotificationRequest request)
-		{
-			return entity != null &&
-				   entity.Id.Matches(request.Id) &&
-				   entity.Name.Matches(request.Name) &&
-				   entity.Email.Matches(request.Email) &&
-				   entity.FirstName == request.FirstName &&
-				   entity.LastName == request.LastName &&
-				   entity.ProfileImage.Matches(request.ProfileImageUrl) &&
-				   entity.CreatedAtUtc == request.CreatedAtUtc &&
-				   entity.UpdatedAtUtc == request.UpdatedAtUtc;
-		}
 	}
 
 	extension(User entity)

@@ -80,7 +80,7 @@ public static class EmailConfirmationTokenEquals
 				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
 				   r.FirstName == entity.FirstName &&
 				   r.LastName == entity.LastName &&
-				   (entity.ProfileImage == null || r.ProfileImageUrl == entity.ProfileImage.Url) &&
+				   r.ProfileImageUrl == entity.ProfileImage?.Url &&
 				   r.CreatedAtUtc == entity.CreatedAtUtc &&
 				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
 		}
@@ -93,7 +93,7 @@ public static class EmailConfirmationTokenEquals
 				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
 				   r.FirstName == entity.FirstName &&
 				   r.LastName == entity.LastName &&
-				   (entity.ProfileImage == null || r.ProfileImageUrl == entity.ProfileImage.Url) &&
+				   r.ProfileImageUrl == entity.ProfileImage?.Url &&
 				   r.CreatedAtUtc == entity.CreatedAtUtc &&
 				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
 		}

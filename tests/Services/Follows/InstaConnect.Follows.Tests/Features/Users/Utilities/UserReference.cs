@@ -1,4 +1,4 @@
-using InstaConnect.Common.Domain.Features.Common.Extensions;
+using InstaConnect.Follows.Domain.Features.Follows.Extensions;
 using InstaConnect.Follows.Tests.Features.Follows.Utilities;
 
 namespace InstaConnect.Follows.Tests.Features.Users.Utilities;
@@ -9,14 +9,14 @@ public static class UserReference
 	{
 		public User? SetFollowFollowers()
 		{
-			user?.FollowFollowers.ForEach(e => e.AddFollowing(user).SetFollower());
+			user?.FollowFollowers.AddFollowing(user).SetFollower();
 
 			return user;
 		}
 
 		public User? SetFollowFollowings()
 		{
-			user?.FollowFollowings.ForEach(e => e.AddFollower(user).SetFollowing());
+			user?.FollowFollowings.AddFollower(user).SetFollowing();
 
 			return user;
 		}

@@ -39,8 +39,7 @@ public static class UserEquals
 				   user.Email.Matches(command.Email) &&
 				   user.FirstName == command.FirstName &&
 				   user.LastName == command.LastName &&
-				   (command.ProfileImage == null ||
-				   user.ProfileImage.Matches(command.ProfileImage.GetUrl()));
+				   (command.ProfileImage == null || user.ProfileImage.Matches(command.ProfileImage.GetUrl()));
 		}
 
 		public bool Matches(DeleteUserCommand command)
@@ -175,7 +174,7 @@ public static class UserEquals
 				   request.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
 				   request.FirstName == entity.FirstName &&
 				   request.LastName == entity.LastName &&
-				   (entity.ProfileImage == null || request.ProfileImageUrl.EqualsOrdinalIgnoreCase(entity.ProfileImage.Url)) &&
+				   request.ProfileImageUrl == entity.ProfileImage?.Url &&
 				   request.CreatedAtUtc == entity.CreatedAtUtc &&
 				   request.UpdatedAtUtc == entity.UpdatedAtUtc;
 		}

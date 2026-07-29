@@ -1,4 +1,7 @@
-using InstaConnect.Common.Domain.Features.Common.Extensions;
+using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Extensions;
+using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Extensions;
+using InstaConnect.Identity.Domain.Features.RefreshTokens.Extensions;
+using InstaConnect.Identity.Domain.Features.UserClaims.Extensions;
 
 namespace InstaConnect.Identity.Tests.Features.Users.Utilities;
 
@@ -8,28 +11,28 @@ public static class UserReference
 	{
 		public User? SetUserClaims()
 		{
-			user?.UserClaims.ForEach(e => e.AddUser(user));
+			user?.UserClaims.AddUser(user);
 
 			return user;
 		}
 
 		public User? SetRefreshTokens()
 		{
-			user?.RefreshTokens.ForEach(e => e.AddUser(user));
+			user?.RefreshTokens.AddUser(user);
 
 			return user;
 		}
 
 		public User? SetForgotPasswordTokens()
 		{
-			user?.ForgotPasswordTokens.ForEach(e => e.AddUser(user));
+			user?.ForgotPasswordTokens.AddUser(user);
 
 			return user;
 		}
 
 		public User? SetEmailConfirmationTokens()
 		{
-			user?.EmailConfirmationTokens.ForEach(e => e.AddUser(user));
+			user?.EmailConfirmationTokens.AddUser(user);
 
 			return user;
 		}

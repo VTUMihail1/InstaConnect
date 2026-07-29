@@ -7,20 +7,6 @@ namespace InstaConnect.Chats.Tests.Features.ChatMessages.Utilities;
 
 public static class ChatMessageEquals
 {
-	extension(ChatMessage? entity)
-	{
-		public bool Matches(ChatMessageNotificationRequest request)
-		{
-			return entity != null &&
-				   entity.Id.Matches(request.ParticipantOneId, request.ParticipantTwoId, request.MessageId) &&
-				   entity.Sender.Matches(request.Sender) &&
-				   entity.Chat.Matches(request.Chat) &&
-				   entity.Content == request.Content &&
-				   entity.CreatedAtUtc == request.CreatedAtUtc &&
-				   entity.UpdatedAtUtc == request.UpdatedAtUtc;
-		}
-	}
-
 	extension(ChatMessage entity)
 	{
 		public bool Matches(ChatMessage chatMessage)

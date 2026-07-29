@@ -79,7 +79,7 @@ public static class UserEquals
 				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
 				   r.FirstName == entity.FirstName &&
 				   r.LastName == entity.LastName &&
-				   (entity.ProfileImage == null || r.ProfileImageUrl == entity.ProfileImage.Url) &&
+				   r.ProfileImageUrl == entity.ProfileImage?.Url &&
 				   r.CreatedAtUtc == entity.CreatedAtUtc &&
 				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
 		}
@@ -92,7 +92,7 @@ public static class UserEquals
 				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
 				   r.FirstName == entity.FirstName &&
 				   r.LastName == entity.LastName &&
-				   (entity.ProfileImage == null || r.ProfileImageUrl == entity.ProfileImage.Url) &&
+				   r.ProfileImageUrl == entity.ProfileImage?.Url &&
 				   r.CreatedAtUtc == entity.CreatedAtUtc &&
 				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
 		}
@@ -278,8 +278,7 @@ public static class UserEquals
 				   user.LastName == request.LastName &&
 				   user.Name.Matches(request.Name) &&
 				   user.Email.Matches(request.Email) &&
-				   (request.ProfileImage == null ||
-				   user.ProfileImage.Matches(request.ProfileImage.GetUrl()));
+				   (request.ProfileImage == null || user.ProfileImage.Matches(request.ProfileImage.GetUrl()));
 		}
 
 		public bool MatchesFilter(GetAllUsersQueryRequest request)

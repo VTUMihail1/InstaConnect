@@ -11,13 +11,5 @@ public static class CollectionExtensions
 				collection.Add(item);
 			}
 		}
-
-		public void ForEach(Action<T> action)
-		{
-			foreach (var item in collection)
-			{
-				action(item);
-			}
-		}
 	}
 }

@@ -1,3 +1,5 @@
+using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Extensions;
+
 namespace InstaConnect.Identity.Application.Tests.Integration.Features.Users.Handlers;
 
 public class UpdateCurrentUserCommandHandlerIntegrationTests : BaseUserApplicationCommandIntegrationTest
@@ -725,7 +727,7 @@ public class UpdateCurrentUserCommandHandlerIntegrationTests : BaseUserApplicati
 		var eventRequests = await EventHarness.PublishedEmailConfirmationTokenDeletedEventRequestRange(CancellationToken);
 
 		// Assert
-		eventRequests.ShouldSatisfy(_request, user.EmailConfirmationTokens);
+		eventRequests.ShouldSatisfy(_request, User.EmailConfirmationTokens.AddUser(user));
 	}
 
 	[Theory]
@@ -742,7 +744,7 @@ public class UpdateCurrentUserCommandHandlerIntegrationTests : BaseUserApplicati
 		var eventRequests = await EventHarness.PublishedEmailConfirmationTokenDeletedEventRequestRange(CancellationToken);
 
 		// Assert
-		eventRequests.ShouldSatisfy(request, user.EmailConfirmationTokens);
+		eventRequests.ShouldSatisfy(request, User.EmailConfirmationTokens.AddUser(user));
 	}
 
 	[Theory]
@@ -759,7 +761,7 @@ public class UpdateCurrentUserCommandHandlerIntegrationTests : BaseUserApplicati
 		var eventRequests = await EventHarness.PublishedEmailConfirmationTokenDeletedEventRequestRange(CancellationToken);
 
 		// Assert
-		eventRequests.ShouldSatisfy(request, user.EmailConfirmationTokens);
+		eventRequests.ShouldSatisfy(request, User.EmailConfirmationTokens.AddUser(user));
 	}
 
 	[Fact]
@@ -774,7 +776,7 @@ public class UpdateCurrentUserCommandHandlerIntegrationTests : BaseUserApplicati
 		var eventRequests = await EventHarness.PublishedEmailConfirmationTokenDeletedEventRequestRange(CancellationToken);
 
 		// Assert
-		eventRequests.ShouldSatisfy(request, user.EmailConfirmationTokens);
+		eventRequests.ShouldSatisfy(request, User.EmailConfirmationTokens.AddUser(user));
 	}
 
 	[Theory]
@@ -791,7 +793,7 @@ public class UpdateCurrentUserCommandHandlerIntegrationTests : BaseUserApplicati
 		var eventRequests = await EventHarness.PublishedEmailConfirmationTokenDeletedEventRequestRange(CancellationToken);
 
 		// Assert
-		eventRequests.ShouldSatisfy(request, user.EmailConfirmationTokens);
+		eventRequests.ShouldSatisfy(request, User.EmailConfirmationTokens.AddUser(user));
 	}
 
 	[Fact]
@@ -838,7 +840,7 @@ public class UpdateCurrentUserCommandHandlerIntegrationTests : BaseUserApplicati
 		var eventRequests = await EventHarness.PublishedEmailConfirmationTokenDeletedEventRequestRange(CancellationToken);
 
 		// Assert
-		eventRequests.ShouldSatisfy(request, user.EmailConfirmationTokens);
+		eventRequests.ShouldSatisfy(request, User.EmailConfirmationTokens.AddUser(user));
 	}
 
 	[Theory]
@@ -855,6 +857,6 @@ public class UpdateCurrentUserCommandHandlerIntegrationTests : BaseUserApplicati
 		var eventRequests = await EventHarness.PublishedEmailConfirmationTokenDeletedEventRequestRange(CancellationToken);
 
 		// Assert
-		eventRequests.ShouldSatisfy(request, user.EmailConfirmationTokens);
+		eventRequests.ShouldSatisfy(request, User.EmailConfirmationTokens.AddUser(user));
 	}
 }

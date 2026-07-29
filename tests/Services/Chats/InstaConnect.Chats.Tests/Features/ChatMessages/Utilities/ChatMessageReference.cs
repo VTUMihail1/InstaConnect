@@ -4,6 +4,29 @@ namespace InstaConnect.Chats.Tests.Features.ChatMessages.Utilities;
 
 public static class ChatMessageReference
 {
+	extension(ICollection<ChatMessage> chatMessages)
+	{
+		public ICollection<ChatMessage> SetSender()
+		{
+			foreach (var chatMessage in chatMessages)
+			{
+				chatMessage.SetSender();
+			}
+
+			return chatMessages;
+		}
+
+		public ICollection<ChatMessage> SetChat()
+		{
+			foreach (var chatMessage in chatMessages)
+			{
+				chatMessage.SetChat();
+			}
+
+			return chatMessages;
+		}
+	}
+
 	extension(ChatMessage? chatMessage)
 	{
 		public ChatMessage? SetSender()
