@@ -15,6 +15,13 @@ public static class StringExtensions
 
 	extension(string str)
 	{
+		public string TrimStartSlash()
+		{
+			const char Slash = '/';
+
+			return str.TrimStart(Slash);
+		}
+
 		public string FormatCurrentCulture(params object?[] args)
 		{
 			return string.Format(CultureInfo.CurrentCulture, str, args);

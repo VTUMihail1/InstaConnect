@@ -1,3 +1,4 @@
+using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Tests.Features.Extensions;
 using InstaConnect.Follows.Domain.Features.Users.Models.ValueObjects;
 using InstaConnect.Follows.Presentation.Features.Follows.Utilities;
@@ -13,7 +14,7 @@ public static class FollowsWebApplicationFactoryExtensions
 	{
 		public IFollowNotificationClient CreateNotificationClient(UserId followingId)
 		{
-			var connection = webApplicationFactory.CreateHubConnection(followingId.Id, FollowRoutes.Hub.TrimStart('/'));
+			var connection = webApplicationFactory.CreateHubConnection(followingId.Id, FollowRoutes.Hub.TrimStartSlash());
 
 			return new FollowNotificationClient(connection);
 		}
