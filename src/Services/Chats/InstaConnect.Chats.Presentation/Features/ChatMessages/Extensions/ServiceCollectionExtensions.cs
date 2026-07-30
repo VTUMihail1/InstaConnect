@@ -9,7 +9,6 @@ internal static class ServiceCollectionExtensions
 	{
 		internal IServiceCollection AddChatMessageServices()
 		{
-			serviceCollection.AddSignalR();
 			serviceCollection.AddScoped<IChatMessageNotificationService, ChatMessageNotificationService>();
 
 			return serviceCollection;
