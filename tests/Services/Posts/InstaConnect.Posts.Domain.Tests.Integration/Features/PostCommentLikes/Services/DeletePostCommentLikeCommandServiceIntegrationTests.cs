@@ -30,6 +30,7 @@ public class DeletePostCommentLikeCommandServiceIntegrationTests : BasePostComme
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 		await ServiceScope.AddAsync(Post, CancellationToken);
 		await ServiceScope.AddAsync(PostComment, CancellationToken);
@@ -131,7 +132,7 @@ public class DeletePostCommentLikeCommandServiceIntegrationTests : BasePostComme
 		// Act
 		await Service.DeleteAsync(_command, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedCommentLikeDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_command, PostCommentLike);
@@ -148,7 +149,7 @@ public class DeletePostCommentLikeCommandServiceIntegrationTests : BasePostComme
 		// Act
 		await Service.DeleteAsync(command, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedCommentLikeDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(command, PostCommentLike);
@@ -165,7 +166,7 @@ public class DeletePostCommentLikeCommandServiceIntegrationTests : BasePostComme
 		// Act
 		await Service.DeleteAsync(command, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedCommentLikeDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(command, PostCommentLike);
@@ -182,7 +183,7 @@ public class DeletePostCommentLikeCommandServiceIntegrationTests : BasePostComme
 		// Act
 		await Service.DeleteAsync(command, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedCommentLikeDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(command, PostCommentLike);

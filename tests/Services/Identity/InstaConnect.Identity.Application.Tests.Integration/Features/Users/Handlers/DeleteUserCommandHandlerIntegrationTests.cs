@@ -16,6 +16,7 @@ public class DeleteUserCommandHandlerIntegrationTests : BaseUserApplicationComma
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 	}
 
@@ -77,7 +78,7 @@ public class DeleteUserCommandHandlerIntegrationTests : BaseUserApplicationComma
 	{
 		// Act
 		await Sender.SendAsync(_request, CancellationToken);
-		var eventRequest = await EventHarness.PublishedDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_request, User);
@@ -93,7 +94,7 @@ public class DeleteUserCommandHandlerIntegrationTests : BaseUserApplicationComma
 
 		// Act
 		await Sender.SendAsync(request, CancellationToken);
-		var eventRequest = await EventHarness.PublishedDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, User);

@@ -4,7 +4,7 @@ using InstaConnect.Chats.Presentation.Features.ChatMessages.Abstractions;
 
 using Microsoft.AspNetCore.SignalR.Client;
 
-namespace InstaConnect.Chats.Tests.Features.ChatMessages.Utilities;
+namespace InstaConnect.Chats.Tests.Features.ChatMessages.Helpers;
 
 public class ChatMessageNotificationClient : IChatMessageNotificationClient
 {
@@ -24,31 +24,31 @@ public class ChatMessageNotificationClient : IChatMessageNotificationClient
 			_deletedChannel.Writer.TryWrite(request));
 	}
 
-	public async Task ConnectAsync(CancellationToken cancellationToken)
+	public async Task StartAsync(CancellationToken cancellationToken)
 	{
 		await _connection.StartAsync(cancellationToken);
 	}
 
-	public async Task DisconnectAsync(CancellationToken cancellationToken)
+	public async Task StopAsync(CancellationToken cancellationToken)
 	{
 		await _connection.StopAsync(cancellationToken);
 	}
 
-	public async Task<ChatMessageAddedNotificationRequest> AddedAsync(CancellationToken cancellationToken)
+	public async Task<ChatMessageAddedNotificationRequest> PublishedAddedAsync(CancellationToken cancellationToken)
 	{
 		const int Timeout = 10;
 
 		return await _addedChannel.Reader.ReadAsync(cancellationToken).AsTask().WaitAsync(TimeSpan.FromSeconds(Timeout), cancellationToken);
 	}
 
-	public async Task<ChatMessageUpdatedNotificationRequest> UpdatedAsync(CancellationToken cancellationToken)
+	public async Task<ChatMessageUpdatedNotificationRequest> PublishedUpdatedAsync(CancellationToken cancellationToken)
 	{
 		const int Timeout = 10;
 
 		return await _updatedChannel.Reader.ReadAsync(cancellationToken).AsTask().WaitAsync(TimeSpan.FromSeconds(Timeout), cancellationToken);
 	}
 
-	public async Task<ChatMessageDeletedNotificationRequest> DeletedAsync(CancellationToken cancellationToken)
+	public async Task<ChatMessageDeletedNotificationRequest> PublishedDeletedAsync(CancellationToken cancellationToken)
 	{
 		const int Timeout = 10;
 

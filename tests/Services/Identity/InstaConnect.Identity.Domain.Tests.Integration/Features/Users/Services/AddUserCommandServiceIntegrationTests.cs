@@ -164,7 +164,7 @@ public class AddUserCommandServiceIntegrationTests : BaseUserDomainCommandIntegr
 		// Act
 		var response = await Service.AddAsync(_command, CancellationToken);
 		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
-		var eventRequest = await EventHarness.PublishedAddedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_command, user);
@@ -181,7 +181,7 @@ public class AddUserCommandServiceIntegrationTests : BaseUserDomainCommandIntegr
 		// Act
 		var response = await Service.AddAsync(command, CancellationToken);
 		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
-		var eventRequest = await EventHarness.PublishedAddedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(command, user);
@@ -193,7 +193,7 @@ public class AddUserCommandServiceIntegrationTests : BaseUserDomainCommandIntegr
 		// Act
 		var response = await Service.AddAsync(_command, CancellationToken);
 		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
-		var eventRequests = await EventHarness.PublishedEmailConfirmationTokenAddedEventRequestRange(CancellationToken);
+		var eventRequests = await EmailConfirmationTokenEventClient.PublishedAddedRangeAsync(CancellationToken);
 
 		// Assert
 		eventRequests.ShouldSatisfy(_command, user.EmailConfirmationTokens);
@@ -210,7 +210,7 @@ public class AddUserCommandServiceIntegrationTests : BaseUserDomainCommandIntegr
 		// Act
 		var response = await Service.AddAsync(command, CancellationToken);
 		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
-		var eventRequests = await EventHarness.PublishedEmailConfirmationTokenAddedEventRequestRange(CancellationToken);
+		var eventRequests = await EmailConfirmationTokenEventClient.PublishedAddedRangeAsync(CancellationToken);
 
 		// Assert
 		eventRequests.ShouldSatisfy(command, user.EmailConfirmationTokens);

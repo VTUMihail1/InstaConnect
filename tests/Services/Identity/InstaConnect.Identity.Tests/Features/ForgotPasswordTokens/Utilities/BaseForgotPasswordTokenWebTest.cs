@@ -10,25 +10,21 @@ public abstract class BaseForgotPasswordTokenWebTest : BaseForgotPasswordTokenTe
 {
 	protected IServiceScope ServiceScope { get; }
 
-	protected IEventHarness EventHarness { get; }
-
 	protected BaseForgotPasswordTokenWebTest(IdentityWebApplicationFactory webApplicationFactory) : base(webApplicationFactory.Services.GetPasswordHasher())
 	{
 		ServiceScope = webApplicationFactory.Services.CreateScope();
-		EventHarness = ServiceScope.GetEventHarness();
 	}
 
 	public async Task InitializeAsync()
 	{
-		await EventHarness.StartAsync(CancellationToken);
 		await ServiceScope.ResetIdentityDatabaseAsync(CancellationToken);
 		await OnInitializeAsync();
 	}
 
 	public async Task DisposeAsync()
 	{
+		await OnDisposeAsync();
 		await ServiceScope.ResetIdentityDatabaseAsync(CancellationToken);
-		await EventHarness.StopAsync(CancellationToken);
 	}
 
 	protected virtual Task OnInitializeAsync()

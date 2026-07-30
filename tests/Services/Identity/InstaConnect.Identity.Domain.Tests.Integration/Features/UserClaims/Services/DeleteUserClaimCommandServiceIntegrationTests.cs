@@ -26,6 +26,7 @@ public class DeleteUserClaimCommandServiceIntegrationTests : BaseUserClaimDomain
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 		await ServiceScope.AddAsync(UserClaim, CancellationToken);
 	}
@@ -82,7 +83,7 @@ public class DeleteUserClaimCommandServiceIntegrationTests : BaseUserClaimDomain
 	{
 		// Act
 		await Service.DeleteAsync(_command, CancellationToken);
-		var eventRequest = await EventHarness.PublishedClaimDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_command, UserClaim);
@@ -98,7 +99,7 @@ public class DeleteUserClaimCommandServiceIntegrationTests : BaseUserClaimDomain
 
 		// Act
 		await Service.DeleteAsync(command, CancellationToken);
-		var eventRequest = await EventHarness.PublishedClaimDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(command, UserClaim);

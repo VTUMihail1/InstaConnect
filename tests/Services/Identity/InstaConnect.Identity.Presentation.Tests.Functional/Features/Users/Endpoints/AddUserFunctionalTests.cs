@@ -459,7 +459,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		// Act
 		var response = await Client.AddAsync(_request, CancellationToken);
 		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
-		var eventRequest = await EventHarness.PublishedAddedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_request, user);
@@ -475,7 +475,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		// Act
 		var response = await Client.AddAsync(request, CancellationToken);
 		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
-		var eventRequest = await EventHarness.PublishedAddedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, user);
@@ -487,7 +487,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		// Act
 		var response = await Client.AddAsync(_request, CancellationToken);
 		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
-		var eventRequests = await EventHarness.PublishedEmailConfirmationTokenAddedEventRequestRange(CancellationToken);
+		var eventRequests = await EmailConfirmationTokenEventClient.PublishedAddedRangeAsync(CancellationToken);
 
 		// Assert
 		eventRequests.ShouldSatisfy(_request, user.EmailConfirmationTokens);
@@ -503,7 +503,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		// Act
 		var response = await Client.AddAsync(request, CancellationToken);
 		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
-		var eventRequests = await EventHarness.PublishedEmailConfirmationTokenAddedEventRequestRange(CancellationToken);
+		var eventRequests = await EmailConfirmationTokenEventClient.PublishedAddedRangeAsync(CancellationToken);
 
 		// Assert
 		eventRequests.ShouldSatisfy(request, user.EmailConfirmationTokens);

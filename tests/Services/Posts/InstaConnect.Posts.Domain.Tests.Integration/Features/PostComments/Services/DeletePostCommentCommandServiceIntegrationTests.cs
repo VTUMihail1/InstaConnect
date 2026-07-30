@@ -29,6 +29,7 @@ public class DeletePostCommentCommandServiceIntegrationTests : BasePostCommentDo
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 		await ServiceScope.AddAsync(Post, CancellationToken);
 		await ServiceScope.AddAsync(PostComment, CancellationToken);
@@ -131,7 +132,7 @@ public class DeletePostCommentCommandServiceIntegrationTests : BasePostCommentDo
 		// Act
 		await Service.DeleteAsync(_command, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedCommentDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_command, PostComment);
@@ -148,7 +149,7 @@ public class DeletePostCommentCommandServiceIntegrationTests : BasePostCommentDo
 		// Act
 		await Service.DeleteAsync(command, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedCommentDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(command, PostComment);
@@ -165,7 +166,7 @@ public class DeletePostCommentCommandServiceIntegrationTests : BasePostCommentDo
 		// Act
 		await Service.DeleteAsync(command, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedCommentDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(command, PostComment);
@@ -182,7 +183,7 @@ public class DeletePostCommentCommandServiceIntegrationTests : BasePostCommentDo
 		// Act
 		await Service.DeleteAsync(command, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedCommentDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(command, PostComment);

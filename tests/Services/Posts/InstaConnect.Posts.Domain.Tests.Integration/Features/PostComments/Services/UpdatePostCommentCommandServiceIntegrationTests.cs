@@ -29,6 +29,7 @@ public class UpdatePostCommentCommandServiceIntegrationTests : BasePostCommentDo
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 		await ServiceScope.AddAsync(Post, CancellationToken);
 		await ServiceScope.AddAsync(PostComment, CancellationToken);
@@ -191,7 +192,7 @@ public class UpdatePostCommentCommandServiceIntegrationTests : BasePostCommentDo
 		var response = await Service.UpdateAsync(_command, CancellationToken);
 		var postComment = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedCommentUpdatedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedUpdatedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_command, postComment);
@@ -209,7 +210,7 @@ public class UpdatePostCommentCommandServiceIntegrationTests : BasePostCommentDo
 		var response = await Service.UpdateAsync(command, CancellationToken);
 		var postComment = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedCommentUpdatedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedUpdatedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(command, postComment);
@@ -227,7 +228,7 @@ public class UpdatePostCommentCommandServiceIntegrationTests : BasePostCommentDo
 		var response = await Service.UpdateAsync(command, CancellationToken);
 		var postComment = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedCommentUpdatedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedUpdatedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(command, postComment);
@@ -245,7 +246,7 @@ public class UpdatePostCommentCommandServiceIntegrationTests : BasePostCommentDo
 		var response = await Service.UpdateAsync(command, CancellationToken);
 		var postComment = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedCommentUpdatedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedUpdatedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(command, postComment);

@@ -16,6 +16,7 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 		await ServiceScope.AddAsync(Post, CancellationToken);
 		await ServiceScope.AddAsync(PostComment, CancellationToken);
@@ -328,7 +329,7 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
 		// Act
 		await Client.DeleteAsync(_request, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedCommentLikeDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_request, PostCommentLike);
@@ -345,7 +346,7 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
 		// Act
 		await Client.DeleteAsync(request, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedCommentLikeDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, PostCommentLike);
@@ -362,7 +363,7 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
 		// Act
 		await Client.DeleteAsync(request, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedCommentLikeDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, PostCommentLike);
@@ -379,7 +380,7 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikePresentat
 		// Act
 		await Client.DeleteAsync(request, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedCommentLikeDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, PostCommentLike);

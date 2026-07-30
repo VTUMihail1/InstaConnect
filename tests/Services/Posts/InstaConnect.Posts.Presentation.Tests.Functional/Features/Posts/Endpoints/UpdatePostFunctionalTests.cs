@@ -16,6 +16,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 		await ServiceScope.AddAsync(Post, CancellationToken);
 	}
@@ -354,7 +355,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		var response = await Client.UpdateAsync(_request, CancellationToken);
 		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedUpdatedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedUpdatedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_request, post);
@@ -372,7 +373,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		var response = await Client.UpdateAsync(request, CancellationToken);
 		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedUpdatedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedUpdatedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, post);
@@ -390,7 +391,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		var response = await Client.UpdateAsync(request, CancellationToken);
 		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedUpdatedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedUpdatedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, post);

@@ -1,3 +1,5 @@
+using InstaConnect.Identity.Tests.Features.UserClaims.Abstractions;
+using InstaConnect.Identity.Tests.Features.UserClaims.Extensions;
 using InstaConnect.Identity.Domain.Features.UserClaims.Abstractions;
 using InstaConnect.Identity.Domain.Tests.Features.UserClaims.Utilities;
 using InstaConnect.Identity.Tests.Features.UserClaims.Utilities;
@@ -8,9 +10,23 @@ public abstract class BaseUserClaimDomainCommandIntegrationTest : BaseUserClaimW
 {
 	protected IUserClaimCommandService Service { get; }
 
+	protected IUserClaimEventClient EventClient { get; }
+
 	protected BaseUserClaimDomainCommandIntegrationTest(IdentityWebApplicationFactory webApplicationFactory)
 		: base(webApplicationFactory)
 	{
 		Service = ServiceScope.GetClaimCommandService();
+		EventClient = webApplicationFactory.CreateUserClaimEventClient();
+	}
+
+	protected override async Task OnInitializeAsync()
+	{
+		await base.OnInitializeAsync();
+		await EventClient.StartAsync(CancellationToken);
+	}
+
+	protected override async Task OnDisposeAsync()
+	{
+		await EventClient.StopAsync(CancellationToken);
 	}
 }

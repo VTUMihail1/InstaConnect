@@ -25,6 +25,7 @@ public class AddForgotPasswordTokenCommandServiceIntegrationTests : BaseForgotPa
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 	}
 
@@ -98,7 +99,7 @@ public class AddForgotPasswordTokenCommandServiceIntegrationTests : BaseForgotPa
 		// Act
 		await Service.AddAsync(_command, CancellationToken);
 		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
-		var eventRequests = await EventHarness.PublishedForgotPasswordTokenAddedEventRequestRange(CancellationToken);
+		var eventRequests = await EventClient.PublishedAddedRangeAsync(CancellationToken);
 
 		// Assert
 		eventRequests.ShouldSatisfy(_command, user.ForgotPasswordTokens);
@@ -115,7 +116,7 @@ public class AddForgotPasswordTokenCommandServiceIntegrationTests : BaseForgotPa
 		// Act
 		await Service.AddAsync(command, CancellationToken);
 		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
-		var eventRequests = await EventHarness.PublishedForgotPasswordTokenAddedEventRequestRange(CancellationToken);
+		var eventRequests = await EventClient.PublishedAddedRangeAsync(CancellationToken);
 
 		// Assert
 		eventRequests.ShouldSatisfy(command, user.ForgotPasswordTokens);

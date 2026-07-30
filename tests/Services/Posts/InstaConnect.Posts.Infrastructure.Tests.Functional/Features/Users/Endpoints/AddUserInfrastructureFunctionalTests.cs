@@ -28,8 +28,8 @@ public class AddUserInfrastructureFunctionalTests : BaseUserInfrastructureComman
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		await EventHarness.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventHarness.FaultedAddedEventRequestAsync(CancellationToken);
+		await EventPublisher.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventClient.FaultedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -47,8 +47,8 @@ public class AddUserInfrastructureFunctionalTests : BaseUserInfrastructureComman
 		var request = _requestBuilder.WithName(transformer).Build();
 
 		// Act
-		await EventHarness.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventHarness.FaultedAddedEventRequestAsync(CancellationToken);
+		await EventPublisher.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventClient.FaultedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -66,8 +66,8 @@ public class AddUserInfrastructureFunctionalTests : BaseUserInfrastructureComman
 		var request = _requestBuilder.WithFirstName(transformer).Build();
 
 		// Act
-		await EventHarness.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventHarness.FaultedAddedEventRequestAsync(CancellationToken);
+		await EventPublisher.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventClient.FaultedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -85,8 +85,8 @@ public class AddUserInfrastructureFunctionalTests : BaseUserInfrastructureComman
 		var request = _requestBuilder.WithLastName(transformer).Build();
 
 		// Act
-		await EventHarness.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventHarness.FaultedAddedEventRequestAsync(CancellationToken);
+		await EventPublisher.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventClient.FaultedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -105,8 +105,8 @@ public class AddUserInfrastructureFunctionalTests : BaseUserInfrastructureComman
 		var request = _requestBuilder.WithEmail(transformer).Build();
 
 		// Act
-		await EventHarness.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventHarness.FaultedAddedEventRequestAsync(CancellationToken);
+		await EventPublisher.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventClient.FaultedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -121,8 +121,8 @@ public class AddUserInfrastructureFunctionalTests : BaseUserInfrastructureComman
 		var request = _requestBuilder.WithProfileImage(transformer).Build();
 
 		// Act
-		await EventHarness.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventHarness.FaultedAddedEventRequestAsync(CancellationToken);
+		await EventPublisher.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventClient.FaultedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -137,8 +137,8 @@ public class AddUserInfrastructureFunctionalTests : BaseUserInfrastructureComman
 		var request = _requestBuilder.WithCreatedAtUtc(transformer).Build();
 
 		// Act
-		await EventHarness.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventHarness.FaultedAddedEventRequestAsync(CancellationToken);
+		await EventPublisher.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventClient.FaultedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -153,8 +153,8 @@ public class AddUserInfrastructureFunctionalTests : BaseUserInfrastructureComman
 		var request = _requestBuilder.WithUpdatedAtUtc(transformer).Build();
 
 		// Act
-		await EventHarness.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventHarness.FaultedAddedEventRequestAsync(CancellationToken);
+		await EventPublisher.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventClient.FaultedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -169,8 +169,8 @@ public class AddUserInfrastructureFunctionalTests : BaseUserInfrastructureComman
 		var request = _requestBuilder.WithId(newUser.Id).Build();
 
 		// Act
-		await EventHarness.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventHarness.FaultedAddedEventRequestAsync(CancellationToken);
+		await EventPublisher.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventClient.FaultedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -187,8 +187,8 @@ public class AddUserInfrastructureFunctionalTests : BaseUserInfrastructureComman
 		var request = _requestBuilder.WithId(newUser.Id, transformer).Build();
 
 		// Act
-		await EventHarness.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventHarness.FaultedAddedEventRequestAsync(CancellationToken);
+		await EventPublisher.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventClient.FaultedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -203,8 +203,8 @@ public class AddUserInfrastructureFunctionalTests : BaseUserInfrastructureComman
 		var request = _requestBuilder.WithEmail(newUser.Email).Build();
 
 		// Act
-		await EventHarness.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventHarness.FaultedAddedEventRequestAsync(CancellationToken);
+		await EventPublisher.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventClient.FaultedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -221,8 +221,8 @@ public class AddUserInfrastructureFunctionalTests : BaseUserInfrastructureComman
 		var request = _requestBuilder.WithEmail(newUser.Email, transformer).Build();
 
 		// Act
-		await EventHarness.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventHarness.FaultedAddedEventRequestAsync(CancellationToken);
+		await EventPublisher.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventClient.FaultedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -237,8 +237,8 @@ public class AddUserInfrastructureFunctionalTests : BaseUserInfrastructureComman
 		var request = _requestBuilder.WithName(newUser.Name).Build();
 
 		// Act
-		await EventHarness.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventHarness.FaultedAddedEventRequestAsync(CancellationToken);
+		await EventPublisher.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventClient.FaultedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -255,8 +255,8 @@ public class AddUserInfrastructureFunctionalTests : BaseUserInfrastructureComman
 		var request = _requestBuilder.WithName(newUser.Name, transformer).Build();
 
 		// Act
-		await EventHarness.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventHarness.FaultedAddedEventRequestAsync(CancellationToken);
+		await EventPublisher.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventClient.FaultedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -266,8 +266,8 @@ public class AddUserInfrastructureFunctionalTests : BaseUserInfrastructureComman
 	public async Task PublishAsync_ShouldConsumeUserAddedEvent_WhenRequestIsValid()
 	{
 		// Act
-		await EventHarness.PublishAsync(_request, CancellationToken);
-		var eventRequest = await EventHarness.ConsumedAddedEventRequestAsync(CancellationToken);
+		await EventPublisher.PublishAsync(_request, CancellationToken);
+		var eventRequest = await EventClient.ConsumedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_request);
@@ -283,8 +283,8 @@ public class AddUserInfrastructureFunctionalTests : BaseUserInfrastructureComman
 		var request = _requestBuilder.WithProfileImage(transformer).Build();
 
 		// Act
-		await EventHarness.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventHarness.ConsumedAddedEventRequestAsync(CancellationToken);
+		await EventPublisher.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventClient.ConsumedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -294,7 +294,7 @@ public class AddUserInfrastructureFunctionalTests : BaseUserInfrastructureComman
 	public async Task PublishAsync_ShouldAddUser_WhenRequestIsValid()
 	{
 		// Act
-		await EventHarness.PublishAsync(_request, CancellationToken);
+		await EventPublisher.PublishAsync(_request, CancellationToken);
 		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
@@ -311,7 +311,7 @@ public class AddUserInfrastructureFunctionalTests : BaseUserInfrastructureComman
 		var request = _requestBuilder.WithProfileImage(transformer).Build();
 
 		// Act
-		await EventHarness.PublishAsync(request, CancellationToken);
+		await EventPublisher.PublishAsync(request, CancellationToken);
 		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert

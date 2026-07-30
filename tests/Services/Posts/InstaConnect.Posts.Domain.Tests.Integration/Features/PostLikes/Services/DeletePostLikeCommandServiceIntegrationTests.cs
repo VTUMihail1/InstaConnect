@@ -28,6 +28,7 @@ public class DeletePostLikeCommandServiceIntegrationTests : BasePostLikeDomainCo
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 		await ServiceScope.AddAsync(Post, CancellationToken);
 		await ServiceScope.AddAsync(PostLike, CancellationToken);
@@ -102,7 +103,7 @@ public class DeletePostLikeCommandServiceIntegrationTests : BasePostLikeDomainCo
 		// Act
 		await Service.DeleteAsync(_command, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedLikeDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_command, PostLike);
@@ -119,7 +120,7 @@ public class DeletePostLikeCommandServiceIntegrationTests : BasePostLikeDomainCo
 		// Act
 		await Service.DeleteAsync(command, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedLikeDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(command, PostLike);
@@ -136,7 +137,7 @@ public class DeletePostLikeCommandServiceIntegrationTests : BasePostLikeDomainCo
 		// Act
 		await Service.DeleteAsync(command, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedLikeDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(command, PostLike);

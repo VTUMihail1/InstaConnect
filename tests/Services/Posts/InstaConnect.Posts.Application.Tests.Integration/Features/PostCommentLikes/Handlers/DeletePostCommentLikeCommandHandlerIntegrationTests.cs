@@ -16,6 +16,7 @@ public class DeletePostCommentLikeCommandHandlerIntegrationTests : BasePostComme
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 		await ServiceScope.AddAsync(Post, CancellationToken);
 		await ServiceScope.AddAsync(PostComment, CancellationToken);
@@ -165,7 +166,7 @@ public class DeletePostCommentLikeCommandHandlerIntegrationTests : BasePostComme
 		// Act
 		await Sender.SendAsync(_request, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedCommentLikeDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_request, PostCommentLike);
@@ -182,7 +183,7 @@ public class DeletePostCommentLikeCommandHandlerIntegrationTests : BasePostComme
 		// Act
 		await Sender.SendAsync(request, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedCommentLikeDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, PostCommentLike);
@@ -199,7 +200,7 @@ public class DeletePostCommentLikeCommandHandlerIntegrationTests : BasePostComme
 		// Act
 		await Sender.SendAsync(request, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedCommentLikeDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, PostCommentLike);
@@ -216,7 +217,7 @@ public class DeletePostCommentLikeCommandHandlerIntegrationTests : BasePostComme
 		// Act
 		await Sender.SendAsync(request, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedCommentLikeDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, PostCommentLike);

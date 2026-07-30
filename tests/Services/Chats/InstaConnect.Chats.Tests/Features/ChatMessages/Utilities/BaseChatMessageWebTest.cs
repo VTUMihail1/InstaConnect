@@ -10,17 +10,13 @@ public abstract class BaseChatMessageWebTest : BaseChatMessageTest, IClassFixtur
 {
 	protected IServiceScope ServiceScope { get; }
 
-	protected IEventHarness EventHarness { get; }
-
 	protected BaseChatMessageWebTest(ChatsWebApplicationFactory webApplicationFactory)
 	{
 		ServiceScope = webApplicationFactory.Services.CreateScope();
-		EventHarness = ServiceScope.GetEventHarness();
 	}
 
 	public async Task InitializeAsync()
 	{
-		await EventHarness.StartAsync(CancellationToken);
 		await ServiceScope.ResetChatsDatabaseAsync(CancellationToken);
 		await OnInitializeAsync();
 	}
@@ -29,7 +25,6 @@ public abstract class BaseChatMessageWebTest : BaseChatMessageTest, IClassFixtur
 	{
 		await OnDisposeAsync();
 		await ServiceScope.ResetChatsDatabaseAsync(CancellationToken);
-		await EventHarness.StopAsync(CancellationToken);
 	}
 
 	protected virtual Task OnInitializeAsync()

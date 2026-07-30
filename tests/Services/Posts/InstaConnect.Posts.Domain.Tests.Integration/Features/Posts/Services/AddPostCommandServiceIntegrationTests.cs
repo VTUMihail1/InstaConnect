@@ -26,6 +26,7 @@ public class AddPostCommandServiceIntegrationTests : BasePostDomainCommandIntegr
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 	}
 
@@ -100,7 +101,7 @@ public class AddPostCommandServiceIntegrationTests : BasePostDomainCommandIntegr
 		var response = await Service.AddAsync(_command, CancellationToken);
 		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedAddedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_command, post);
@@ -118,7 +119,7 @@ public class AddPostCommandServiceIntegrationTests : BasePostDomainCommandIntegr
 		var response = await Service.AddAsync(command, CancellationToken);
 		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedAddedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(command, post);

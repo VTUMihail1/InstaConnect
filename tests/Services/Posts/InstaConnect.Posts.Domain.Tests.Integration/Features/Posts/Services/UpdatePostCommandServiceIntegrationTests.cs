@@ -27,6 +27,7 @@ public class UpdatePostCommandServiceIntegrationTests : BasePostDomainCommandInt
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 		await ServiceScope.AddAsync(Post, CancellationToken);
 	}
@@ -146,7 +147,7 @@ public class UpdatePostCommandServiceIntegrationTests : BasePostDomainCommandInt
 		var response = await Service.UpdateAsync(_command, CancellationToken);
 		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedUpdatedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedUpdatedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_command, post);
@@ -164,7 +165,7 @@ public class UpdatePostCommandServiceIntegrationTests : BasePostDomainCommandInt
 		var response = await Service.UpdateAsync(command, CancellationToken);
 		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedUpdatedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedUpdatedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(command, post);
@@ -182,7 +183,7 @@ public class UpdatePostCommandServiceIntegrationTests : BasePostDomainCommandInt
 		var response = await Service.UpdateAsync(command, CancellationToken);
 		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedUpdatedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedUpdatedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(command, post);

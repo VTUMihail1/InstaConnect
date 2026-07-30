@@ -16,6 +16,7 @@ public class DeletePostCommandHandlerIntegrationTests : BasePostApplicationComma
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 		await ServiceScope.AddAsync(Post, CancellationToken);
 	}
@@ -123,7 +124,7 @@ public class DeletePostCommandHandlerIntegrationTests : BasePostApplicationComma
 		// Act
 		await Sender.SendAsync(_request, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_request, Post);
@@ -140,7 +141,7 @@ public class DeletePostCommandHandlerIntegrationTests : BasePostApplicationComma
 		// Act
 		await Sender.SendAsync(request, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, Post);
@@ -157,7 +158,7 @@ public class DeletePostCommandHandlerIntegrationTests : BasePostApplicationComma
 		// Act
 		await Sender.SendAsync(request, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, Post);

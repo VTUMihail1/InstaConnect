@@ -16,6 +16,7 @@ public class AddPostCommentLikeCommandHandlerIntegrationTests : BasePostCommentL
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 		await ServiceScope.AddAsync(Post, CancellationToken);
 		await ServiceScope.AddAsync(PostComment, CancellationToken);
@@ -273,7 +274,7 @@ public class AddPostCommentLikeCommandHandlerIntegrationTests : BasePostCommentL
 		var response = await Sender.SendAsync(_request, CancellationToken);
 		var postCommentLike = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedCommentLikeAddedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_request, postCommentLike);
@@ -291,7 +292,7 @@ public class AddPostCommentLikeCommandHandlerIntegrationTests : BasePostCommentL
 		var response = await Sender.SendAsync(request, CancellationToken);
 		var postCommentLike = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedCommentLikeAddedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, postCommentLike);
@@ -309,7 +310,7 @@ public class AddPostCommentLikeCommandHandlerIntegrationTests : BasePostCommentL
 		var response = await Sender.SendAsync(request, CancellationToken);
 		var postCommentLike = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedCommentLikeAddedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, postCommentLike);
@@ -327,7 +328,7 @@ public class AddPostCommentLikeCommandHandlerIntegrationTests : BasePostCommentL
 		var response = await Sender.SendAsync(request, CancellationToken);
 		var postCommentLike = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedCommentLikeAddedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, postCommentLike);

@@ -28,6 +28,7 @@ public class AddPostLikeCommandServiceIntegrationTests : BasePostLikeDomainComma
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 		await ServiceScope.AddAsync(Post, CancellationToken);
 	}
@@ -181,7 +182,7 @@ public class AddPostLikeCommandServiceIntegrationTests : BasePostLikeDomainComma
 		var response = await Service.AddAsync(_command, CancellationToken);
 		var postLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedLikeAddedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_command, postLike);
@@ -199,7 +200,7 @@ public class AddPostLikeCommandServiceIntegrationTests : BasePostLikeDomainComma
 		var response = await Service.AddAsync(command, CancellationToken);
 		var postLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedLikeAddedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(command, postLike);
@@ -217,7 +218,7 @@ public class AddPostLikeCommandServiceIntegrationTests : BasePostLikeDomainComma
 		var response = await Service.AddAsync(command, CancellationToken);
 		var postLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedLikeAddedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(command, postLike);

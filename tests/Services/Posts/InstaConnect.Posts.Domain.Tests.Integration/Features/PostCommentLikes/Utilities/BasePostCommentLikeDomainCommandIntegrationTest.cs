@@ -1,3 +1,5 @@
+using InstaConnect.Posts.Tests.Features.PostCommentLikes.Abstractions;
+using InstaConnect.Posts.Tests.Features.PostCommentLikes.Extensions;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstractions;
 using InstaConnect.Posts.Domain.Tests.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Tests.Features.PostCommentLikes.Utilities;
@@ -8,8 +10,22 @@ public abstract class BasePostCommentLikeDomainCommandIntegrationTest : BasePost
 {
 	protected IPostCommentLikeCommandService Service { get; }
 
+	protected IPostCommentLikeEventClient EventClient { get; }
+
 	protected BasePostCommentLikeDomainCommandIntegrationTest(PostsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
 		Service = ServiceScope.GetPostCommentLikeCommandService();
+		EventClient = webApplicationFactory.CreatePostCommentLikeEventClient();
+	}
+
+	protected override async Task OnInitializeAsync()
+	{
+		await base.OnInitializeAsync();
+		await EventClient.StartAsync(CancellationToken);
+	}
+
+	protected override async Task OnDisposeAsync()
+	{
+		await EventClient.StopAsync(CancellationToken);
 	}
 }

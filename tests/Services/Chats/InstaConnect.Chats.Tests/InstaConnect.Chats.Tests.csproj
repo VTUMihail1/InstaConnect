@@ -59,6 +59,7 @@
     <Using Include="InstaConnect.Chats.Tests.Features.ChatMessages.Builders" />
     <Using Include="InstaConnect.Chats.Tests.Features.ChatMessages.Abstractions" />
     <Using Include="InstaConnect.Chats.Tests.Features.ChatMessages.Utilities" />
+    <Using Include="InstaConnect.Chats.Tests.Features.ChatMessages.Helpers" />
     <Using Include="InstaConnect.Chats.Tests.Features.ChatMessages.Extensions" />
     <Using Include="InstaConnect.Chats.Tests.Features.ChatMessages.Assertions" />
   </ItemGroup>

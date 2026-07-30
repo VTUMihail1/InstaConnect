@@ -18,6 +18,7 @@ public class VerifyEmailConfirmationTokenFunctionalTests : BaseEmailConfirmation
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 		await ServiceScope.AddRangeAsync(User.EmailConfirmationTokens, CancellationToken);
 	}
@@ -327,7 +328,7 @@ public class VerifyEmailConfirmationTokenFunctionalTests : BaseEmailConfirmation
 	{
 		// Act
 		await Client.VerifyAsync(_request, CancellationToken);
-		var eventRequests = await EventHarness.PublishedEmailConfirmationTokenDeletedEventRequestRange(CancellationToken);
+		var eventRequests = await EventClient.PublishedDeletedRangeAsync(CancellationToken);
 
 		// Assert
 		eventRequests.ShouldSatisfy(_request, User.EmailConfirmationTokens);
@@ -343,7 +344,7 @@ public class VerifyEmailConfirmationTokenFunctionalTests : BaseEmailConfirmation
 
 		// Act
 		await Client.VerifyAsync(request, CancellationToken);
-		var eventRequests = await EventHarness.PublishedEmailConfirmationTokenDeletedEventRequestRange(CancellationToken);
+		var eventRequests = await EventClient.PublishedDeletedRangeAsync(CancellationToken);
 
 		// Assert
 		eventRequests.ShouldSatisfy(request, User.EmailConfirmationTokens);
@@ -359,7 +360,7 @@ public class VerifyEmailConfirmationTokenFunctionalTests : BaseEmailConfirmation
 
 		// Act
 		await Client.VerifyAsync(request, CancellationToken);
-		var eventRequests = await EventHarness.PublishedEmailConfirmationTokenDeletedEventRequestRange(CancellationToken);
+		var eventRequests = await EventClient.PublishedDeletedRangeAsync(CancellationToken);
 
 		// Assert
 		eventRequests.ShouldSatisfy(request, User.EmailConfirmationTokens);

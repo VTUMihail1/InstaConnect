@@ -16,6 +16,7 @@ public class GetChatByIdQueryHandlerIntegrationTests : BaseChatApplicationQueryI
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(ParticipantOne, CancellationToken);
 		await ServiceScope.AddAsync(ParticipantTwo, CancellationToken);
 		await ServiceScope.AddAsync(Chat, CancellationToken);

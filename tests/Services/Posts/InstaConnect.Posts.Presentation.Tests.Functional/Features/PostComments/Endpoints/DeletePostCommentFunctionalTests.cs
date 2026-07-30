@@ -16,6 +16,7 @@ public class DeletePostCommentFunctionalTests : BasePostCommentPresentationComma
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 		await ServiceScope.AddAsync(Post, CancellationToken);
 		await ServiceScope.AddAsync(PostComment, CancellationToken);
@@ -331,7 +332,7 @@ public class DeletePostCommentFunctionalTests : BasePostCommentPresentationComma
 		// Act
 		await Client.DeleteAsync(_request, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedCommentDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_request, PostComment);
@@ -348,7 +349,7 @@ public class DeletePostCommentFunctionalTests : BasePostCommentPresentationComma
 		// Act
 		await Client.DeleteAsync(request, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedCommentDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, PostComment);
@@ -365,7 +366,7 @@ public class DeletePostCommentFunctionalTests : BasePostCommentPresentationComma
 		// Act
 		await Client.DeleteAsync(request, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedCommentDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, PostComment);
@@ -382,7 +383,7 @@ public class DeletePostCommentFunctionalTests : BasePostCommentPresentationComma
 		// Act
 		await Client.DeleteAsync(request, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedCommentDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, PostComment);

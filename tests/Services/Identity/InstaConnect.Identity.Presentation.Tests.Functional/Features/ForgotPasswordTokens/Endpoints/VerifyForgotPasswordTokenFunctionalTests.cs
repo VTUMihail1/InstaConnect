@@ -22,6 +22,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenP
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 		await ServiceScope.AddRangeAsync(User.ForgotPasswordTokens, CancellationToken);
 	}
@@ -369,7 +370,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenP
 	{
 		// Act
 		await Client.VerifyAsync(_request, CancellationToken);
-		var eventRequests = await EventHarness.PublishedForgotPasswordTokenDeletedEventRequestRange(CancellationToken);
+		var eventRequests = await EventClient.PublishedDeletedRangeAsync(CancellationToken);
 
 		// Assert
 		eventRequests.ShouldSatisfy(_request, User.ForgotPasswordTokens);
@@ -385,7 +386,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenP
 
 		// Act
 		await Client.VerifyAsync(request, CancellationToken);
-		var eventRequests = await EventHarness.PublishedForgotPasswordTokenDeletedEventRequestRange(CancellationToken);
+		var eventRequests = await EventClient.PublishedDeletedRangeAsync(CancellationToken);
 
 		// Assert
 		eventRequests.ShouldSatisfy(request, User.ForgotPasswordTokens);
@@ -401,7 +402,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenP
 
 		// Act
 		await Client.VerifyAsync(request, CancellationToken);
-		var eventRequests = await EventHarness.PublishedForgotPasswordTokenDeletedEventRequestRange(CancellationToken);
+		var eventRequests = await EventClient.PublishedDeletedRangeAsync(CancellationToken);
 
 		// Assert
 		eventRequests.ShouldSatisfy(request, User.ForgotPasswordTokens);

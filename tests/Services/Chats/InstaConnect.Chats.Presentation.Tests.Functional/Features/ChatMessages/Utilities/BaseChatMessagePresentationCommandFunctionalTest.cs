@@ -17,11 +17,12 @@ public abstract class BaseChatMessagePresentationCommandFunctionalTest : BaseCha
 
 	protected override async Task OnInitializeAsync()
 	{
-		await NotificationClient.ConnectAsync(CancellationToken);
+		await base.OnInitializeAsync();
+		await NotificationClient.StartAsync(CancellationToken);
 	}
 
 	protected override async Task OnDisposeAsync()
 	{
-		await NotificationClient.DisconnectAsync(CancellationToken);
+		await NotificationClient.StopAsync(CancellationToken);
 	}
 }

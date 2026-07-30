@@ -11,28 +11,24 @@ public abstract class BaseUserWebTest : BaseUserTest, IClassFixture<IdentityWebA
 {
 	protected IServiceScope ServiceScope { get; }
 
-	protected IEventHarness EventHarness { get; }
-
 	protected IImageHandler ImageHandler { get; }
 
 	protected BaseUserWebTest(IdentityWebApplicationFactory webApplicationFactory) : base(webApplicationFactory.Services.GetPasswordHasher())
 	{
 		ServiceScope = webApplicationFactory.Services.CreateScope();
-		EventHarness = ServiceScope.GetEventHarness();
 		ImageHandler = ServiceScope.GetImageHandler();
 	}
 
 	public async Task InitializeAsync()
 	{
-		await EventHarness.StartAsync(CancellationToken);
 		await ServiceScope.ResetIdentityDatabaseAsync(CancellationToken);
 		await OnInitializeAsync();
 	}
 
 	public async Task DisposeAsync()
 	{
+		await OnDisposeAsync();
 		await ServiceScope.ResetIdentityDatabaseAsync(CancellationToken);
-		await EventHarness.StopAsync(CancellationToken);
 	}
 
 	protected virtual Task OnInitializeAsync()

@@ -16,6 +16,7 @@ public class DeleteCurrentUserFunctionalTests : BaseUserPresentationCommandFunct
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 		await ServiceScope.AddRangeAsync(User.EmailConfirmationTokens, CancellationToken);
 	}
@@ -148,7 +149,7 @@ public class DeleteCurrentUserFunctionalTests : BaseUserPresentationCommandFunct
 	{
 		// Act
 		await Client.DeleteCurrentAsync(_request, CancellationToken);
-		var eventRequest = await EventHarness.PublishedDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_request, User);
@@ -164,7 +165,7 @@ public class DeleteCurrentUserFunctionalTests : BaseUserPresentationCommandFunct
 
 		// Act
 		await Client.DeleteCurrentAsync(request, CancellationToken);
-		var eventRequest = await EventHarness.PublishedDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, User);

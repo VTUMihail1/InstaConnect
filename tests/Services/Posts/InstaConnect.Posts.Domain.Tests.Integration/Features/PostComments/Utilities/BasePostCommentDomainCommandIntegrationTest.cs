@@ -1,3 +1,5 @@
+using InstaConnect.Posts.Tests.Features.PostComments.Abstractions;
+using InstaConnect.Posts.Tests.Features.PostComments.Extensions;
 using InstaConnect.Posts.Domain.Features.PostComments.Abstractions;
 using InstaConnect.Posts.Domain.Tests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Tests.Features.PostComments.Utilities;
@@ -8,8 +10,22 @@ public abstract class BasePostCommentDomainCommandIntegrationTest : BasePostComm
 {
 	protected IPostCommentCommandService Service { get; }
 
+	protected IPostCommentEventClient EventClient { get; }
+
 	protected BasePostCommentDomainCommandIntegrationTest(PostsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
 		Service = ServiceScope.GetPostCommentCommandService();
+		EventClient = webApplicationFactory.CreatePostCommentEventClient();
+	}
+
+	protected override async Task OnInitializeAsync()
+	{
+		await base.OnInitializeAsync();
+		await EventClient.StartAsync(CancellationToken);
+	}
+
+	protected override async Task OnDisposeAsync()
+	{
+		await EventClient.StopAsync(CancellationToken);
 	}
 }

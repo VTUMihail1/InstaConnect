@@ -19,6 +19,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 	}
 
@@ -270,7 +271,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 		// Act
 		var response = await Client.AddAsync(_request, CancellationToken);
 		var userClaim = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
-		var eventRequest = await EventHarness.PublishedClaimAddedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_request, userClaim);
@@ -286,7 +287,7 @@ public class AddUserClaimFunctionalTests : BaseUserClaimPresentationCommandFunct
 		// Act
 		var response = await Client.AddAsync(request, CancellationToken);
 		var userClaim = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
-		var eventRequest = await EventHarness.PublishedClaimAddedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, userClaim);

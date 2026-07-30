@@ -27,11 +27,10 @@ public class AddChatMessageCommandServiceIntegrationTests : BaseChatMessageDomai
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(ParticipantOne, CancellationToken);
 		await ServiceScope.AddAsync(ParticipantTwo, CancellationToken);
 		await ServiceScope.AddAsync(Chat, CancellationToken);
-
-		await base.OnInitializeAsync();
 	}
 
 	[Fact]
@@ -136,7 +135,7 @@ public class AddChatMessageCommandServiceIntegrationTests : BaseChatMessageDomai
 		// Act
 		var response = await Service.AddAsync(_command, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response, CancellationToken);
-		var notificationRequest = await NotificationClient.AddedAsync(CancellationToken);
+		var notificationRequest = await NotificationClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		notificationRequest.ShouldSatisfy(_command, chatMessage);
@@ -153,7 +152,7 @@ public class AddChatMessageCommandServiceIntegrationTests : BaseChatMessageDomai
 		// Act
 		var response = await Service.AddAsync(command, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response, CancellationToken);
-		var notificationRequest = await NotificationClient.AddedAsync(CancellationToken);
+		var notificationRequest = await NotificationClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		notificationRequest.ShouldSatisfy(command, chatMessage);
@@ -170,7 +169,7 @@ public class AddChatMessageCommandServiceIntegrationTests : BaseChatMessageDomai
 		// Act
 		var response = await Service.AddAsync(command, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response, CancellationToken);
-		var notificationRequest = await NotificationClient.AddedAsync(CancellationToken);
+		var notificationRequest = await NotificationClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		notificationRequest.ShouldSatisfy(command, chatMessage);
@@ -277,7 +276,7 @@ public class AddChatMessageCommandServiceIntegrationTests : BaseChatMessageDomai
 		// Act
 		var response = await Service.AddAsync(command, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response, CancellationToken);
-		var notificationRequest = await NotificationClient.AddedAsync(CancellationToken);
+		var notificationRequest = await NotificationClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		notificationRequest.ShouldSatisfyInverted(command, chatMessage);
@@ -294,7 +293,7 @@ public class AddChatMessageCommandServiceIntegrationTests : BaseChatMessageDomai
 		// Act
 		var response = await Service.AddAsync(command, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response, CancellationToken);
-		var notificationRequest = await NotificationClient.AddedAsync(CancellationToken);
+		var notificationRequest = await NotificationClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		notificationRequest.ShouldSatisfyInverted(command, chatMessage);
@@ -311,7 +310,7 @@ public class AddChatMessageCommandServiceIntegrationTests : BaseChatMessageDomai
 		// Act
 		var response = await Service.AddAsync(command, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response, CancellationToken);
-		var notificationRequest = await NotificationClient.AddedAsync(CancellationToken);
+		var notificationRequest = await NotificationClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		notificationRequest.ShouldSatisfyInverted(command, chatMessage);

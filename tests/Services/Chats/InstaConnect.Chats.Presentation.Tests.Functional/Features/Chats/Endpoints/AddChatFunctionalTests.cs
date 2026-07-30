@@ -16,6 +16,7 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(ParticipantOne, CancellationToken);
 		await ServiceScope.AddAsync(ParticipantTwo, CancellationToken);
 	}
@@ -375,7 +376,7 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 		// Act
 		var response = await Client.AddAsync(_request, CancellationToken);
 		var chat = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
-		var eventRequest = await EventHarness.PublishedAddedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_request, chat);
@@ -392,7 +393,7 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 		// Act
 		var response = await Client.AddAsync(request, CancellationToken);
 		var chat = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
-		var eventRequest = await EventHarness.PublishedAddedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, chat);
@@ -409,7 +410,7 @@ public class AddChatFunctionalTests : BaseChatPresentationCommandFunctionalTest
 		// Act
 		var response = await Client.AddAsync(request, CancellationToken);
 		var chat = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
-		var eventRequest = await EventHarness.PublishedAddedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, chat);

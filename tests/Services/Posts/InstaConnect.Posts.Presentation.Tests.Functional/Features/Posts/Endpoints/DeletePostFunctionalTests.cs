@@ -16,6 +16,7 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 		await ServiceScope.AddAsync(Post, CancellationToken);
 	}
@@ -241,7 +242,7 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		// Act
 		await Client.DeleteAsync(_request, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_request, Post);
@@ -258,7 +259,7 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		// Act
 		await Client.DeleteAsync(request, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, Post);
@@ -275,7 +276,7 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		// Act
 		await Client.DeleteAsync(request, CancellationToken);
 
-		var eventRequest = await EventHarness.PublishedDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, Post);

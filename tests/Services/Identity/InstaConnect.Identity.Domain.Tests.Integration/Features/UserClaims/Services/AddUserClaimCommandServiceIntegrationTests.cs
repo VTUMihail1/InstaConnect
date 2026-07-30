@@ -26,6 +26,7 @@ public class AddUserClaimCommandServiceIntegrationTests : BaseUserClaimDomainCom
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 	}
 
@@ -122,7 +123,7 @@ public class AddUserClaimCommandServiceIntegrationTests : BaseUserClaimDomainCom
 		// Act
 		var response = await Service.AddAsync(_command, CancellationToken);
 		var userClaim = await ServiceScope.GetByIdAsync(response, CancellationToken);
-		var eventRequest = await EventHarness.PublishedClaimAddedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_command, userClaim);
@@ -139,7 +140,7 @@ public class AddUserClaimCommandServiceIntegrationTests : BaseUserClaimDomainCom
 		// Act
 		var response = await Service.AddAsync(command, CancellationToken);
 		var userClaim = await ServiceScope.GetByIdAsync(response, CancellationToken);
-		var eventRequest = await EventHarness.PublishedClaimAddedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(command, userClaim);

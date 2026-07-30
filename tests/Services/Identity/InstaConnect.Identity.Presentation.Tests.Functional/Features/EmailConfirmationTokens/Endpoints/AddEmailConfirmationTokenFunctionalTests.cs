@@ -16,6 +16,7 @@ public class AddEmailConfirmationTokenFunctionalTests : BaseEmailConfirmationTok
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 		await ServiceScope.AddAsync(UserClaim, CancellationToken);
 	}
@@ -162,7 +163,7 @@ public class AddEmailConfirmationTokenFunctionalTests : BaseEmailConfirmationTok
 		// Act
 		await Client.AddAsync(_request, CancellationToken);
 		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
-		var eventRequests = await EventHarness.PublishedEmailConfirmationTokenAddedEventRequestRange(CancellationToken);
+		var eventRequests = await EventClient.PublishedAddedRangeAsync(CancellationToken);
 
 		// Assert
 		eventRequests.ShouldSatisfy(_request, user.EmailConfirmationTokens);
@@ -179,7 +180,7 @@ public class AddEmailConfirmationTokenFunctionalTests : BaseEmailConfirmationTok
 		// Act
 		await Client.AddAsync(request, CancellationToken);
 		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
-		var eventRequests = await EventHarness.PublishedEmailConfirmationTokenAddedEventRequestRange(CancellationToken);
+		var eventRequests = await EventClient.PublishedAddedRangeAsync(CancellationToken);
 
 		// Assert
 		eventRequests.ShouldSatisfy(request, user.EmailConfirmationTokens);

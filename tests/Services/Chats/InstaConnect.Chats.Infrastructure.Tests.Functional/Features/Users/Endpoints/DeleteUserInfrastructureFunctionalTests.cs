@@ -18,6 +18,7 @@ public class DeleteUserInfrastructureFunctionalTests : BaseUserInfrastructureCom
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 	}
 
@@ -33,8 +34,8 @@ public class DeleteUserInfrastructureFunctionalTests : BaseUserInfrastructureCom
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		await EventHarness.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventHarness.FaultedDeletedEventRequestAsync(CancellationToken);
+		await EventPublisher.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventClient.FaultedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -47,8 +48,8 @@ public class DeleteUserInfrastructureFunctionalTests : BaseUserInfrastructureCom
 		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Act
-		await EventHarness.PublishAsync(_request, CancellationToken);
-		var eventRequest = await EventHarness.FaultedDeletedEventRequestAsync(CancellationToken);
+		await EventPublisher.PublishAsync(_request, CancellationToken);
+		var eventRequest = await EventClient.FaultedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_request);
@@ -58,8 +59,8 @@ public class DeleteUserInfrastructureFunctionalTests : BaseUserInfrastructureCom
 	public async Task PublishAsync_ShouldConsumeUserDeletedEvent_WhenRequestIsValid()
 	{
 		// Act
-		await EventHarness.PublishAsync(_request, CancellationToken);
-		var eventRequest = await EventHarness.FaultedDeletedEventRequestAsync(CancellationToken);
+		await EventPublisher.PublishAsync(_request, CancellationToken);
+		var eventRequest = await EventClient.FaultedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_request);
@@ -74,8 +75,8 @@ public class DeleteUserInfrastructureFunctionalTests : BaseUserInfrastructureCom
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		await EventHarness.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventHarness.ConsumedDeletedEventRequestAsync(CancellationToken);
+		await EventPublisher.PublishAsync(request, CancellationToken);
+		var eventRequest = await EventClient.ConsumedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -85,7 +86,7 @@ public class DeleteUserInfrastructureFunctionalTests : BaseUserInfrastructureCom
 	public async Task PublishAsync_ShouldDeleteUser_WhenRequestIsValid()
 	{
 		// Act
-		await EventHarness.PublishAsync(_request, CancellationToken);
+		await EventPublisher.PublishAsync(_request, CancellationToken);
 		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
@@ -101,7 +102,7 @@ public class DeleteUserInfrastructureFunctionalTests : BaseUserInfrastructureCom
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		await EventHarness.PublishAsync(request, CancellationToken);
+		await EventPublisher.PublishAsync(request, CancellationToken);
 		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
