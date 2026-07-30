@@ -1,5 +1,6 @@
 using InstaConnect.Common.Tests.Features.Extensions;
 using InstaConnect.Follows.Infrastructure.Features.Common.Extensions;
+using InstaConnect.Follows.Tests.Features.Common.Extensions;
 
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -36,6 +37,7 @@ public class FollowsWebApplicationFactory : WebApplicationFactory<Program>, IAsy
 		builder.UpdateAccessTokenConfiguration();
 		builder.UpdateOpenTelemetryConfiguration();
 		builder.UpdateCorsConfiguration();
+		builder.UpdateFollowConfiguration();
 	}
 
 	public async Task InitializeAsync()
