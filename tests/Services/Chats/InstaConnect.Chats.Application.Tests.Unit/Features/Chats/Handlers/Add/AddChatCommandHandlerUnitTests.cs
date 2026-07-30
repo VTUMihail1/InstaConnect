@@ -16,7 +16,7 @@ public class AddChatCommandHandlerUnitTests : BaseChatApplicationCommandUnitTest
 
 		_handler = new(Mapper, Service);
 
-		Service.SetupAddCommand(_request, Chat, CancellationToken);
+		Service.SetupAddAsync(_request, Chat, CancellationToken);
 	}
 
 	[Fact]

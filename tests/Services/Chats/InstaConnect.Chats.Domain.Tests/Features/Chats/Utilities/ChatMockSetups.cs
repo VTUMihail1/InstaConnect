@@ -8,7 +8,7 @@ public static class ChatMockSetups
 	{
 		public void SetupGetOffsetUtcNow(Chat chat)
 		{
-			dateTimeProvider.GetOffsetUtcNow()
+			dateTimeProvider.ClearCalls().GetOffsetUtcNow()
 				.ReturnsResponse(chat.CreatedAtUtc);
 		}
 	}
@@ -20,6 +20,7 @@ public static class ChatMockSetups
 			Chat chat)
 		{
 			factory
+				.ClearCalls()
 				.Create(
 					command.ParticipantOneId,
 					command.ParticipantTwoId)
@@ -29,42 +30,46 @@ public static class ChatMockSetups
 
 	extension(IUserCommandRepository repository)
 	{
-		public void SetupGetByParticipantOneId(
+		public void SetupGetParticipantOneByIdAsync(
 			AddChatCommand command,
 			User user,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.ParticipantOneId, cancellationToken)
 				.ReturnsTaskResponse(user);
 		}
 
-		public void SetupGetByParticipantTwoId(
+		public void SetupGetParticipantTwoByIdAsync(
 			AddChatCommand command,
 			User user,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.ParticipantTwoId, cancellationToken)
 				.ReturnsTaskResponse(user);
 		}
 
-		public void RemoveGetByParticipantOneId(
+		public void RemoveGetParticipantOneByIdAsync(
 			AddChatCommand command,
 			User user,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.ParticipantOneId, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 
-		public void RemoveGetByParticipantTwoId(
+		public void RemoveGetParticipantTwoByIdAsync(
 			AddChatCommand command,
 			User user,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.ParticipantTwoId, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -72,22 +77,24 @@ public static class ChatMockSetups
 
 	extension(IChatCommandRepository repository)
 	{
-		public void SetupGetById(
+		public void RemoveGetByIdAsync(
 			AddChatCommand command,
 			Chat chat,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(chat.Id, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 
-		public void SetupGetByIdExists(
+		public void SetupGetByIdAsync(
 			AddChatCommand command,
 			Chat chat,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(chat.Id, cancellationToken)
 				.ReturnsTaskResponse(chat);
 		}
@@ -95,22 +102,24 @@ public static class ChatMockSetups
 
 	extension(IUserQueryRepository repository)
 	{
-		public void SetupGetById(
+		public void SetupGetByIdAsync(
 			GetAllChatsQuery query,
 			User user,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(query.Filter.ParticipantOneId, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(query));
 		}
 
-		public void RemoveGetById(
+		public void RemoveGetByIdAsync(
 			GetAllChatsQuery query,
 			User user,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(query.Filter.ParticipantOneId, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -118,42 +127,46 @@ public static class ChatMockSetups
 
 	extension(IChatQueryRepository repository)
 	{
-		public void SetupGetAllQuery(
+		public void SetupGetAllAsync(
 			GetAllChatsQuery query,
 			ICollection<Chat> chats,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetAllAsync(query.Filter, query.CurrentUser, query.Sorting, query.Pagination, cancellationToken)
 				.ReturnsTaskResponse(chats.ToResponse(query));
 		}
 
-		public void SetupGetTotalCount(
+		public void SetupGetTotalCountAsync(
 			GetAllChatsQuery query,
 			ICollection<Chat> chats,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetTotalCountAsync(query.Filter, cancellationToken)
 				.ReturnsTaskResponse(chats.ToTotalCountResponse(query));
 		}
 
-		public void SetupGetById(
+		public void SetupGetByIdAsync(
 			GetChatByIdQuery query,
 			Chat chat,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(query.Id, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(chat.ToResponse(query));
 		}
 
-		public void RemoveGetById(
+		public void RemoveGetByIdAsync(
 			GetChatByIdQuery query,
 			Chat chat,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(query.Id, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}

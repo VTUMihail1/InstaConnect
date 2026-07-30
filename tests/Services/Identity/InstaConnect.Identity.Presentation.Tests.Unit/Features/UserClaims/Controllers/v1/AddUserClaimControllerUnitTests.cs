@@ -16,7 +16,7 @@ public class AddUserClaimControllerUnitTests : BaseUserClaimPresentationCommandU
 
 		_controller = new(Mapper, Sender);
 
-		Sender.SetupAddCommandRequest(_request, UserClaim, CancellationToken);
+		Sender.SetupSendAsync(_request, UserClaim, CancellationToken);
 	}
 
 	[Fact]

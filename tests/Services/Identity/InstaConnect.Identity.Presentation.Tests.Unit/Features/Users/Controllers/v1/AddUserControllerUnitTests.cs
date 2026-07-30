@@ -16,7 +16,7 @@ public class AddUserControllerUnitTests : BaseUserPresentationCommandUnitTest
 
 		_controller = new(Mapper, Sender);
 
-		Sender.SetupAddCommandRequest(_request, User, CancellationToken);
+		Sender.SetupSendAsync(_request, User, CancellationToken);
 	}
 
 	[Fact]

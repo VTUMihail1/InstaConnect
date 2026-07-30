@@ -16,7 +16,7 @@ public class AddFollowControllerUnitTests : BaseFollowPresentationCommandUnitTes
 
 		_controller = new(Mapper, Sender);
 
-		Sender.SetupAddCommandRequest(_request, Follow, CancellationToken);
+		Sender.SetupSendAsync(_request, Follow, CancellationToken);
 	}
 
 	[Fact]

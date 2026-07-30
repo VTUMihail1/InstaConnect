@@ -23,16 +23,16 @@ public class GetAllChatsQueryServiceUnitTests : BaseChatDomainQueryUnitTest
 
 		_service = new(Repository, UserRepository, CollectionResponseFactory);
 
-		UserRepository.SetupGetById(_query, ParticipantOne, CancellationToken);
-		Repository.SetupGetAllQuery(_query, Chats, CancellationToken);
-		Repository.SetupGetTotalCount(_query, Chats, CancellationToken);
+		UserRepository.SetupGetByIdAsync(_query, ParticipantOne, CancellationToken);
+		Repository.SetupGetAllAsync(_query, Chats, CancellationToken);
+		Repository.SetupGetTotalCountAsync(_query, Chats, CancellationToken);
 	}
 
 	[Fact]
 	public async Task GetAllAsync_ShouldThrowUserNotFoundException_WhenParticipantOneIdIsInvalid()
 	{
 		// Arrange
-		UserRepository.RemoveGetById(_query, ParticipantOne, CancellationToken);
+		UserRepository.RemoveGetByIdAsync(_query, ParticipantOne, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowParticipantOneNotFoundExceptionAsync(_query, CancellationToken);

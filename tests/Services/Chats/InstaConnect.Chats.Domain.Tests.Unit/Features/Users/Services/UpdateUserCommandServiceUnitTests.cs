@@ -26,16 +26,16 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 
 		_service = new(UserFactory, UserRepository);
 
-		UserRepository.SetupGetById(_command, User, CancellationToken);
-		UserRepository.SetupIsNameUnique(_command, User, CancellationToken);
-		UserRepository.SetupIsEmailUnique(_command, User, CancellationToken);
+		UserRepository.SetupGetByIdAsync(_command, User, CancellationToken);
+		UserRepository.SetupIsNameUniqueAsync(_command, User, CancellationToken);
+		UserRepository.SetupIsEmailUniqueAsync(_command, User, CancellationToken);
 	}
 
 	[Fact]
 	public async Task UpdateAsync_ShouldThrowUserNotFoundException_WhenCommandIsInvalid()
 	{
 		// Arrange
-		UserRepository.RemoveGetById(_command, User, CancellationToken);
+		UserRepository.RemoveGetByIdAsync(_command, User, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowUserNotFoundExceptionAsync(_command, CancellationToken);
@@ -47,7 +47,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 		// Arrange
 		var user = UserBuilderFactory.Create().Build();
 		var command = _commandBuilder.WithEmail(user.Email).Build();
-		UserRepository.RemoveIsEmailUnique(command, User, CancellationToken);
+		UserRepository.RemoveIsEmailUniqueAsync(command, User, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowUserEmailAlreadyExistsExceptionAsync(command, CancellationToken);
@@ -59,7 +59,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 		// Arrange
 		var user = UserBuilderFactory.Create().Build();
 		var command = _commandBuilder.WithName(user.Name).Build();
-		UserRepository.RemoveIsNameUnique(command, User, CancellationToken);
+		UserRepository.RemoveIsNameUniqueAsync(command, User, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowUserNameAlreadyExistsExceptionAsync(command, CancellationToken);

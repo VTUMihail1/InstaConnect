@@ -16,7 +16,7 @@ public class IssueRefreshTokenCommandHandlerUnitTests : BaseRefreshTokenApplicat
 
 		_handler = new(Mapper, Service);
 
-		Service.SetupIssueCommand(_request, RefreshToken, CancellationToken);
+		Service.SetupIssueAsync(_request, RefreshToken, CancellationToken);
 	}
 
 	[Fact]

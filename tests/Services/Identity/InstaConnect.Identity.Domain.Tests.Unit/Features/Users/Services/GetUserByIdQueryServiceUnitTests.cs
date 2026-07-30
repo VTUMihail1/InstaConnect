@@ -23,14 +23,14 @@ public class GetUserByIdQueryServiceUnitTests : BaseUserDomainQueryUnitTest
 
 		_service = new(Repository, CollectionResponseFactory);
 
-		Repository.SetupGetById(_query, User, CancellationToken);
+		Repository.SetupGetByIdAsync(_query, User, CancellationToken);
 	}
 
 	[Fact]
 	public async Task GetByIdAsync_ShouldThrowUserNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		Repository.RemoveGetById(_query, User, CancellationToken);
+		Repository.RemoveGetByIdAsync(_query, User, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowUserNotFoundExceptionAsync(_query, CancellationToken);

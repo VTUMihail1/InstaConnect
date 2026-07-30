@@ -23,17 +23,17 @@ public class AddFollowCommandServiceUnitTests : BaseFollowDomainCommandUnitTest
 
 		_service = new(Factory, Mapper, EventPublisher, Repository, UserRepository, NotificationService, IncludeBuilderFactory);
 
-		UserRepository.SetupGetByFollowerId(_command, Follower, CancellationToken);
-		UserRepository.SetupGetByFollowingId(_command, Following, CancellationToken);
+		UserRepository.SetupGetFollowerByIdAsync(_command, Follower, CancellationToken);
+		UserRepository.SetupGetFollowingByIdAsync(_command, Following, CancellationToken);
 		Factory.SetupCreate(_command, Follow);
-		Repository.SetupExistsById(_command, Follow, CancellationToken);
+		Repository.RemoveExistsByIdAsync(_command, Follow, CancellationToken);
 	}
 
 	[Fact]
 	public async Task AddAsync_ShouldThrowUserNotFoundException_WhenFollowerIdIsInvalid()
 	{
 		// Arrange
-		UserRepository.RemoveGetByFollowerId(_command, Follower, CancellationToken);
+		UserRepository.RemoveGetFollowerByIdAsync(_command, Follower, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowFollowerNotFoundExceptionAsync(_command, CancellationToken);
@@ -43,7 +43,7 @@ public class AddFollowCommandServiceUnitTests : BaseFollowDomainCommandUnitTest
 	public async Task AddAsync_ShouldThrowUserNotFoundException_WhenFollowingIdIsInvalid()
 	{
 		// Arrange
-		UserRepository.RemoveGetByFollowingId(_command, Following, CancellationToken);
+		UserRepository.RemoveGetFollowingByIdAsync(_command, Following, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowFollowingNotFoundExceptionAsync(_command, CancellationToken);
@@ -53,7 +53,7 @@ public class AddFollowCommandServiceUnitTests : BaseFollowDomainCommandUnitTest
 	public async Task AddAsync_ShouldThrowFollowAlreadyExistsException_WhenFollowAlreadyExists()
 	{
 		// Arrange
-		Repository.SetupExistsByIdExists(_command, Follow, CancellationToken);
+		Repository.SetupExistsByIdAsync(_command, Follow, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowFollowAlreadyExistsExceptionAsync(_command, CancellationToken);

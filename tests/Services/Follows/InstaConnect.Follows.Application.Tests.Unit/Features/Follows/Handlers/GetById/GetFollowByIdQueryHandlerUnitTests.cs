@@ -16,7 +16,7 @@ public class GetFollowByIdQueryHandlerUnitTests : BaseFollowApplicationQueryUnit
 
 		_handler = new(Mapper, Service);
 
-		Service.SetupGetByIdQuery(_request, Follow, CancellationToken);
+		Service.SetupGetByIdAsync(_request, Follow, CancellationToken);
 	}
 
 	[Fact]

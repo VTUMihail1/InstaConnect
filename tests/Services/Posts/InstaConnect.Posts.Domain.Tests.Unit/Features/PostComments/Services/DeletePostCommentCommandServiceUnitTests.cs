@@ -30,15 +30,15 @@ public class DeletePostCommentCommandServiceUnitTests : BasePostCommentDomainCom
 
 		_service = new(Mapper, EventPublisher, Repository, DateTimeProvider, Factory, UserRepository, CommentRepository, IncludeBuilderFactory, CommentIncludeBuilderFactory);
 
-		Repository.SetupExistsById(_command, CancellationToken);
-		CommentRepository.SetupGetById(_command, _commentInclude, PostComment, CancellationToken);
+		Repository.SetupExistsByIdAsync(_command, CancellationToken);
+		CommentRepository.SetupGetByIdAsync(_command, _commentInclude, PostComment, CancellationToken);
 	}
 
 	[Fact]
 	public async Task DeleteAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		Repository.RemoveExistsById(_command, CancellationToken);
+		Repository.RemoveExistsByIdAsync(_command, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowPostNotFoundExceptionAsync(_command, CancellationToken);
@@ -48,7 +48,7 @@ public class DeletePostCommentCommandServiceUnitTests : BasePostCommentDomainCom
 	public async Task DeleteAsync_ShouldThrowPostCommentNotFoundException_WhenPostCommentDoesNotExist()
 	{
 		// Arrange
-		CommentRepository.RemoveGetById(_command, _commentInclude, PostComment, CancellationToken);
+		CommentRepository.RemoveGetByIdAsync(_command, _commentInclude, PostComment, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowPostCommentNotFoundExceptionAsync(_command, CancellationToken);

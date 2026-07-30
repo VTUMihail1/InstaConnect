@@ -30,8 +30,8 @@ public class UpdateChatMessageCommandServiceUnitTests : BaseChatMessageDomainCom
 
 		_service = new(Mapper, Repository, DateTimeProvider, Factory, MessageRepository, IncludeBuilderFactory, NotificationService, MessageIncludeBuilderFactory);
 
-		Repository.SetupExistsById(_command, CancellationToken);
-		MessageRepository.SetupGetById(_command, _messageInclude, ChatMessage, CancellationToken);
+		Repository.SetupExistsByIdAsync(_command, CancellationToken);
+		MessageRepository.SetupGetByIdAsync(_command, _messageInclude, ChatMessage, CancellationToken);
 		DateTimeProvider.SetupGetOffsetUtcNow(_command, ChatMessage);
 	}
 
@@ -39,7 +39,7 @@ public class UpdateChatMessageCommandServiceUnitTests : BaseChatMessageDomainCom
 	public async Task UpdateAsync_ShouldThrowChatNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		Repository.RemoveExistsById(_command, CancellationToken);
+		Repository.RemoveExistsByIdAsync(_command, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowChatNotFoundExceptionAsync(_command, CancellationToken);
@@ -49,7 +49,7 @@ public class UpdateChatMessageCommandServiceUnitTests : BaseChatMessageDomainCom
 	public async Task UpdateAsync_ShouldThrowChatMessageNotFoundException_WhenChatMessageDoesNotExist()
 	{
 		// Arrange
-		MessageRepository.RemoveGetById(_command, _messageInclude, ChatMessage, CancellationToken);
+		MessageRepository.RemoveGetByIdAsync(_command, _messageInclude, ChatMessage, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowChatMessageNotFoundExceptionAsync(_command, CancellationToken);
@@ -60,8 +60,8 @@ public class UpdateChatMessageCommandServiceUnitTests : BaseChatMessageDomainCom
 	{
 		// Arrange
 		var command = _commandBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).Build();
-		Repository.SetupExistsById(command, CancellationToken);
-		MessageRepository.SetupGetById(command, _messageInclude, ChatMessage, CancellationToken);
+		Repository.SetupExistsByIdAsync(command, CancellationToken);
+		MessageRepository.SetupGetByIdAsync(command, _messageInclude, ChatMessage, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowChatMessageForbiddenExceptionAsync(command, CancellationToken);

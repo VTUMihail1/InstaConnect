@@ -16,7 +16,7 @@ public class GetPostLikeByIdControllerUnitTests : BasePostLikePresentationQueryU
 
 		_controller = new(Mapper, Sender);
 
-		Sender.SetupGetByIdQueryRequest(_request, PostLike, CancellationToken);
+		Sender.SetupSendAsync(_request, PostLike, CancellationToken);
 	}
 
 	[Fact]

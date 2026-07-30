@@ -23,16 +23,16 @@ public class GetAllPostLikesQueryServiceUnitTests : BasePostLikeDomainQueryUnitT
 
 		_service = new(Repository, UserRepository, LikeRepository, CollectionResponseFactory);
 
-		Repository.SetupGetById(_query, Post, CancellationToken);
-		LikeRepository.SetupGetAllQuery(_query, PostLikes, CancellationToken);
-		LikeRepository.SetupGetTotalCount(_query, PostLikes, CancellationToken);
+		Repository.SetupGetByIdAsync(_query, Post, CancellationToken);
+		LikeRepository.SetupGetAllAsync(_query, PostLikes, CancellationToken);
+		LikeRepository.SetupGetTotalCountAsync(_query, PostLikes, CancellationToken);
 	}
 
 	[Fact]
 	public async Task GetAllAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		Repository.RemoveGetById(_query, Post, CancellationToken);
+		Repository.RemoveGetByIdAsync(_query, Post, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowPostNotFoundExceptionAsync(_query, CancellationToken);

@@ -23,14 +23,14 @@ public class GetChatByIdQueryServiceUnitTests : BaseChatDomainQueryUnitTest
 
 		_service = new(Repository, UserRepository, CollectionResponseFactory);
 
-		Repository.SetupGetById(_query, Chat, CancellationToken);
+		Repository.SetupGetByIdAsync(_query, Chat, CancellationToken);
 	}
 
 	[Fact]
 	public async Task GetByIdAsync_ShouldThrowChatNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		Repository.RemoveGetById(_query, Chat, CancellationToken);
+		Repository.RemoveGetByIdAsync(_query, Chat, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowChatNotFoundExceptionAsync(_query, CancellationToken);

@@ -16,7 +16,7 @@ public class GetPostCommentByIdQueryHandlerUnitTests : BasePostCommentApplicatio
 
 		_handler = new(Mapper, CommentService);
 
-		CommentService.SetupGetByIdQuery(_request, PostComment, CancellationToken);
+		CommentService.SetupGetByIdAsync(_request, PostComment, CancellationToken);
 	}
 
 	[Fact]

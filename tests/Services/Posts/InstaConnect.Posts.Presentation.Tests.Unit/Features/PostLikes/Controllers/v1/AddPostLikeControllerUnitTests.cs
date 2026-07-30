@@ -16,7 +16,7 @@ public class AddPostLikeControllerUnitTests : BasePostLikePresentationCommandUni
 
 		_controller = new(Mapper, Sender);
 
-		Sender.SetupAddCommandRequest(_request, PostLike, CancellationToken);
+		Sender.SetupSendAsync(_request, PostLike, CancellationToken);
 	}
 
 	[Fact]

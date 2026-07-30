@@ -23,14 +23,14 @@ public class GetFollowByIdQueryServiceUnitTests : BaseFollowDomainQueryUnitTest
 
 		_service = new(Repository, UserRepository, CollectionResponseFactory);
 
-		Repository.SetupGetById(_query, Follow, CancellationToken);
+		Repository.SetupGetByIdAsync(_query, Follow, CancellationToken);
 	}
 
 	[Fact]
 	public async Task GetByIdAsync_ShouldThrowFollowNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		Repository.RemoveGetById(_query, Follow, CancellationToken);
+		Repository.RemoveGetByIdAsync(_query, Follow, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowFollowNotFoundExceptionAsync(_query, CancellationToken);

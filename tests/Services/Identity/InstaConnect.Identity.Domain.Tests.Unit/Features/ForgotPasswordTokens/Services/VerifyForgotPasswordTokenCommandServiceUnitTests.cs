@@ -37,8 +37,8 @@ public class VerifyForgotPasswordTokenCommandServiceUnitTests : BaseForgotPasswo
 			EmailSender,
 			ForgotPasswordTokenRepository);
 
-		Repository.SetupGetById(_command, _include, User, CancellationToken);
-		ForgotPasswordTokenRepository.SetupGetById(_command, ForgotPasswordToken, CancellationToken);
+		Repository.SetupGetByIdAsync(_command, _include, User, CancellationToken);
+		ForgotPasswordTokenRepository.SetupGetByIdAsync(_command, ForgotPasswordToken, CancellationToken);
 		DateTimeProvider.SetupGetOffsetUtcNow(_command, UnexpiredDate);
 		PasswordHasher.SetupHash(_command, User);
 	}
@@ -47,7 +47,7 @@ public class VerifyForgotPasswordTokenCommandServiceUnitTests : BaseForgotPasswo
 	public async Task VerifyAsync_ShouldThrowUserNotFoundException_WhenUserNotFound()
 	{
 		// Arrange
-		Repository.RemoveGetById(_command, _include, User, CancellationToken);
+		Repository.RemoveGetByIdAsync(_command, _include, User, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowUserNotFoundExceptionAsync(_command, CancellationToken);
@@ -57,7 +57,7 @@ public class VerifyForgotPasswordTokenCommandServiceUnitTests : BaseForgotPasswo
 	public async Task VerifyAsync_ShouldThrowForgotPasswordTokenNotFoundException_WhenForgotPasswordTokenNotFound()
 	{
 		// Arrange
-		ForgotPasswordTokenRepository.RemoveGetById(_command, ForgotPasswordToken, CancellationToken);
+		ForgotPasswordTokenRepository.RemoveGetByIdAsync(_command, ForgotPasswordToken, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowForgotPasswordTokenNotFoundExceptionAsync(_command, CancellationToken);

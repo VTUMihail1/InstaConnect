@@ -16,7 +16,7 @@ public class UpdateChatMessageCommandHandlerUnitTests : BaseChatMessageApplicati
 
 		_handler = new(Mapper, CommentService);
 
-		CommentService.SetupUpdateCommand(_request, ChatMessage, CancellationToken);
+		CommentService.SetupUpdateAsync(_request, ChatMessage, CancellationToken);
 	}
 
 	[Fact]

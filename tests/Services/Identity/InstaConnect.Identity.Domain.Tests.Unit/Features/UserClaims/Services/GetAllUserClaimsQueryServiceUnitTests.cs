@@ -23,16 +23,16 @@ public class GetAllUserClaimsQueryServiceUnitTests : BaseUserClaimDomainQueryUni
 
 		_service = new(Repository, ClaimRepository, CollectionResponseFactory);
 
-		Repository.SetupGetById(_query, User, CancellationToken);
-		ClaimRepository.SetupGetAllQuery(_query, UserClaims, CancellationToken);
-		ClaimRepository.SetupGetTotalCount(_query, UserClaims, CancellationToken);
+		Repository.SetupGetByIdAsync(_query, User, CancellationToken);
+		ClaimRepository.SetupGetAllAsync(_query, UserClaims, CancellationToken);
+		ClaimRepository.SetupGetTotalCountAsync(_query, UserClaims, CancellationToken);
 	}
 
 	[Fact]
 	public async Task GetAllAsync_ShouldThrowUserNotFoundException_WhenUserIdIsInvalid()
 	{
 		// Arrange
-		Repository.RemoveGetById(_query, User, CancellationToken);
+		Repository.RemoveGetByIdAsync(_query, User, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowUserNotFoundExceptionAsync(_query, CancellationToken);

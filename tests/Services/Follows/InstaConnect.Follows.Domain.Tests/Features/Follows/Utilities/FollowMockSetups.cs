@@ -8,7 +8,7 @@ public static class FollowMockSetups
 	{
 		public void SetupGetOffsetUtcNow(Follow follow)
 		{
-			dateTimeProvider.GetOffsetUtcNow()
+			dateTimeProvider.ClearCalls().GetOffsetUtcNow()
 				.ReturnsResponse(follow.CreatedAtUtc);
 		}
 	}
@@ -20,6 +20,7 @@ public static class FollowMockSetups
 			Follow follow)
 		{
 			factory
+				.ClearCalls()
 				.Create(
 					command.FollowerId,
 					command.FollowingId)
@@ -29,42 +30,46 @@ public static class FollowMockSetups
 
 	extension(IUserCommandRepository repository)
 	{
-		public void SetupGetByFollowerId(
+		public void SetupGetFollowerByIdAsync(
 			AddFollowCommand command,
 			User user,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.FollowerId, cancellationToken)
 				.ReturnsTaskResponse(user);
 		}
 
-		public void SetupGetByFollowingId(
+		public void SetupGetFollowingByIdAsync(
 			AddFollowCommand command,
 			User user,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.FollowingId, cancellationToken)
 				.ReturnsTaskResponse(user);
 		}
 
-		public void RemoveGetByFollowerId(
+		public void RemoveGetFollowerByIdAsync(
 			AddFollowCommand command,
 			User user,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.FollowerId, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 
-		public void RemoveGetByFollowingId(
+		public void RemoveGetFollowingByIdAsync(
 			AddFollowCommand command,
 			User user,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.FollowingId, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -72,44 +77,48 @@ public static class FollowMockSetups
 
 	extension(IFollowCommandRepository repository)
 	{
-		public void SetupExistsById(
+		public void RemoveExistsByIdAsync(
 			AddFollowCommand command,
 			Follow follow,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.ExistsByIdAsync(follow.Id, cancellationToken)
 				.ReturnsTaskResponse(false);
 		}
 
-		public void SetupExistsByIdExists(
+		public void SetupExistsByIdAsync(
 			AddFollowCommand command,
 			Follow follow,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.ExistsByIdAsync(follow.Id, cancellationToken)
 				.ReturnsTaskResponse(true);
 		}
 
-		public void SetupGetById(
+		public void SetupGetByIdAsync(
 			DeleteFollowCommand command,
 			FollowInclude include,
 			Follow follow,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.Id, FollowDomainMatcher.IsFollowInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(follow);
 		}
 
-		public void RemoveGetById(
+		public void RemoveGetByIdAsync(
 			DeleteFollowCommand command,
 			FollowInclude include,
 			Follow follow,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.Id, FollowDomainMatcher.IsFollowInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -117,42 +126,46 @@ public static class FollowMockSetups
 
 	extension(IUserQueryRepository repository)
 	{
-		public void SetupGetById(
+		public void SetupGetByIdAsync(
 			GetAllFollowsQuery query,
 			User user,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(query.Filter.FollowerId, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(query));
 		}
 
-		public void SetupGetById(
+		public void SetupGetByIdAsync(
 			GetAllFollowsForFollowingQuery query,
 			User user,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(query.Filter.FollowingId, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(query));
 		}
 
-		public void RemoveGetById(
+		public void RemoveGetByIdAsync(
 			GetAllFollowsQuery query,
 			User user,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(query.Filter.FollowerId, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 
-		public void RemoveGetById(
+		public void RemoveGetByIdAsync(
 			GetAllFollowsForFollowingQuery query,
 			User user,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(query.Filter.FollowingId, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -160,62 +173,68 @@ public static class FollowMockSetups
 
 	extension(IFollowQueryRepository repository)
 	{
-		public void SetupGetAllQuery(
+		public void SetupGetAllAsync(
 			GetAllFollowsQuery query,
 			ICollection<Follow> follows,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetAllAsync(query.Filter, query.CurrentUser, query.Sorting, query.Pagination, cancellationToken)
 				.ReturnsTaskResponse(follows.ToResponse(query));
 		}
 
-		public void SetupGetTotalCount(
+		public void SetupGetTotalCountAsync(
 			GetAllFollowsQuery query,
 			ICollection<Follow> follows,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetTotalCountAsync(query.Filter, cancellationToken)
 				.ReturnsTaskResponse(follows.ToTotalCountResponse(query));
 		}
 
-		public void SetupGetAllForFollowingQuery(
+		public void SetupGetAllForFollowingAsync(
 			GetAllFollowsForFollowingQuery query,
 			ICollection<Follow> follows,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetAllForFollowingAsync(query.Filter, query.CurrentUser, query.Sorting, query.Pagination, cancellationToken)
 				.ReturnsTaskResponse(follows.ToResponse(query));
 		}
 
-		public void SetupGetTotalCountForFollowing(
+		public void SetupGetTotalCountForFollowingAsync(
 			GetAllFollowsForFollowingQuery query,
 			ICollection<Follow> follows,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetTotalCountForFollowingAsync(query.Filter, cancellationToken)
 				.ReturnsTaskResponse(follows.ToTotalCountResponse(query));
 		}
 
-		public void SetupGetById(
+		public void SetupGetByIdAsync(
 			GetFollowByIdQuery query,
 			Follow follow,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(query.Id, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(follow.ToResponse(query));
 		}
 
-		public void RemoveGetById(
+		public void RemoveGetByIdAsync(
 			GetFollowByIdQuery query,
 			Follow follow,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(query.Id, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}

@@ -6,53 +6,58 @@ public static class PostMockSetups
 {
 	extension(IApplicationSender sender)
 	{
-		public void SetupGetAllQueryRequest(
+		public void SetupSendAsync(
 		GetAllPostsApiRequest request,
 		ICollection<Post> posts,
 		CancellationToken cancellationToken)
 		{
 			sender
+				.ClearCalls()
 				.SendAsync(PostPresentationMatcher.IsGetAllPostsQueryRequest(request), cancellationToken)
 				.ReturnsTaskResponse(posts.ToResponse(request));
 		}
 
-		public void SetupGetAllForUserQueryRequest(
+		public void SetupSendAsync(
 			GetAllPostsForUserApiRequest request,
 			User user,
 			ICollection<Post> posts,
 			CancellationToken cancellationToken)
 		{
 			sender
+				.ClearCalls()
 				.SendAsync(PostPresentationMatcher.IsGetAllPostsForUserQueryRequest(request), cancellationToken)
 				.ReturnsTaskResponse(posts.ToResponse(request, user));
 		}
 
-		public void SetupGetByIdQueryRequest(
+		public void SetupSendAsync(
 			GetPostByIdApiRequest request,
 			Post post,
 			CancellationToken cancellationToken)
 		{
 			sender
+				.ClearCalls()
 				.SendAsync(PostPresentationMatcher.IsGetPostByIdQueryRequest(request), cancellationToken)
 				.ReturnsTaskResponse(post.ToResponse(request));
 		}
 
-		public void SetupAddCommandRequest(
+		public void SetupSendAsync(
 			AddPostApiRequest request,
 			Post post,
 			CancellationToken cancellationToken)
 		{
 			sender
+				.ClearCalls()
 				.SendAsync(PostPresentationMatcher.IsAddPostCommandRequest(request), cancellationToken)
 				.ReturnsTaskResponse(post.ToResponse(request));
 		}
 
-		public void SetupUpdateCommandRequest(
+		public void SetupSendAsync(
 			UpdatePostApiRequest request,
 			Post post,
 			CancellationToken cancellationToken)
 		{
 			sender
+				.ClearCalls()
 				.SendAsync(PostPresentationMatcher.IsUpdatePostCommandRequest(request), cancellationToken)
 				.ReturnsTaskResponse(post.ToResponse(request));
 		}

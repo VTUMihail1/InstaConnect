@@ -28,7 +28,7 @@ public class AddChatMessageCommandServiceUnitTests : BaseChatMessageDomainComman
 
 		_service = new(Mapper, Repository, DateTimeProvider, Factory, MessageRepository, IncludeBuilderFactory, NotificationService, MessageIncludeBuilderFactory);
 
-		Repository.SetupGetById(_command, _include, Chat, CancellationToken);
+		Repository.SetupGetByIdAsync(_command, _include, Chat, CancellationToken);
 		Factory.SetupCreate(_command, ChatMessage);
 	}
 
@@ -36,7 +36,7 @@ public class AddChatMessageCommandServiceUnitTests : BaseChatMessageDomainComman
 	public async Task AddAsync_ShouldThrowChatNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		Repository.RemoveGetById(_command, _include, Chat, CancellationToken);
+		Repository.RemoveGetByIdAsync(_command, _include, Chat, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowChatNotFoundExceptionAsync(_command, CancellationToken);

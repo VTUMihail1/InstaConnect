@@ -23,14 +23,14 @@ public class GetPostByIdQueryServiceUnitTests : BasePostDomainQueryUnitTest
 
 		_service = new(Repository, UserRepository, CollectionResponseFactory);
 
-		Repository.SetupGetById(_query, Post, CancellationToken);
+		Repository.SetupGetByIdAsync(_query, Post, CancellationToken);
 	}
 
 	[Fact]
 	public async Task GetByIdAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		Repository.RemoveGetById(_query, Post, CancellationToken);
+		Repository.RemoveGetByIdAsync(_query, Post, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowPostNotFoundExceptionAsync(_query, CancellationToken);

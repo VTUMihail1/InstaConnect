@@ -16,7 +16,7 @@ public class GetAllFollowsQueryHandlerUnitTests : BaseFollowApplicationQueryUnit
 
 		_handler = new(Mapper, Service);
 
-		Service.SetupGetAllQuery(_request, Follower, Follows, CancellationToken);
+		Service.SetupGetAllAsync(_request, Follower, Follows, CancellationToken);
 	}
 
 	[Fact]

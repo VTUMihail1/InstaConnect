@@ -16,7 +16,7 @@ public class GetAllChatsControllerUnitTests : BaseChatPresentationQueryUnitTest
 
 		_controller = new(Mapper, Sender);
 
-		Sender.SetupGetAllQueryRequest(_request, ParticipantOne, Chats, CancellationToken);
+		Sender.SetupSendAsync(_request, ParticipantOne, Chats, CancellationToken);
 	}
 
 	[Fact]

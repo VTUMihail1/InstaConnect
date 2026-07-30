@@ -16,7 +16,7 @@ public class IssueRefreshTokenControllerUnitTests : BaseRefreshTokenPresentation
 
 		_controller = new(Mapper, Sender, CookieStore);
 
-		Sender.SetupIssueCommandRequest(_request, RefreshToken, CancellationToken);
+		Sender.SetupSendAsync(_request, RefreshToken, CancellationToken);
 	}
 
 	[Fact]

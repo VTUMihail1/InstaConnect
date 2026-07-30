@@ -16,7 +16,7 @@ public class UpdateCurrentUserControllerUnitTests : BaseUserPresentationCommandU
 
 		_controller = new(Mapper, Sender);
 
-		Sender.SetupUpdateCurrentCommandRequest(_request, User, CancellationToken);
+		Sender.SetupSendAsync(_request, User, CancellationToken);
 	}
 
 	[Fact]

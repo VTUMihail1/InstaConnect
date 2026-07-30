@@ -16,7 +16,7 @@ public class AddPostCommentLikeControllerUnitTests : BasePostCommentLikePresenta
 
 		_controller = new(Mapper, Sender);
 
-		Sender.SetupAddCommandRequest(_request, PostCommentLike, CancellationToken);
+		Sender.SetupSendAsync(_request, PostCommentLike, CancellationToken);
 	}
 
 	[Fact]

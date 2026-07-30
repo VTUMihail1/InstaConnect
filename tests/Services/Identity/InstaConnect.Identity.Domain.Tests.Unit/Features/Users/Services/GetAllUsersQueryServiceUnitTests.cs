@@ -23,8 +23,8 @@ public class GetAllUsersQueryServiceUnitTests : BaseUserDomainQueryUnitTest
 
 		_service = new(Repository, CollectionResponseFactory);
 
-		Repository.SetupGetAllQuery(_query, Users, CancellationToken);
-		Repository.SetupGetTotalCount(_query, Users, CancellationToken);
+		Repository.SetupGetAllAsync(_query, Users, CancellationToken);
+		Repository.SetupGetTotalCountAsync(_query, Users, CancellationToken);
 	}
 
 	[Fact]

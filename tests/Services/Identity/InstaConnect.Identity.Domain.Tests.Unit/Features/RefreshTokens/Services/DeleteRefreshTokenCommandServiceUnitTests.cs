@@ -23,15 +23,15 @@ public class DeleteRefreshTokenCommandServiceUnitTests : BaseRefreshTokenDomainC
 
 		_service = new(PasswordHasher, Repository, DateTimeProvider, Factory, SessionTokenGenerator, IncludeBuilderFactory, RefreshTokenRepository);
 
-		Repository.SetupExistsById(_command, CancellationToken);
-		RefreshTokenRepository.SetupGetById(_command, RefreshToken, CancellationToken);
+		Repository.SetupExistsByIdAsync(_command, CancellationToken);
+		RefreshTokenRepository.SetupGetByIdAsync(_command, RefreshToken, CancellationToken);
 	}
 
 	[Fact]
 	public async Task DeleteAsync_ShouldThrowUserNotFoundException_WhenUserNotFound()
 	{
 		// Arrange
-		Repository.RemoveExistsById(_command, CancellationToken);
+		Repository.RemoveExistsByIdAsync(_command, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowUserNotFoundExceptionAsync(_command, CancellationToken);
@@ -41,7 +41,7 @@ public class DeleteRefreshTokenCommandServiceUnitTests : BaseRefreshTokenDomainC
 	public async Task DeleteAsync_ShouldThrowRefreshTokenNotFoundException_WhenRefreshTokenNotFound()
 	{
 		// Arrange
-		RefreshTokenRepository.RemoveGetById(_command, RefreshToken, CancellationToken);
+		RefreshTokenRepository.RemoveGetByIdAsync(_command, RefreshToken, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowRefreshTokenNotFoundExceptionAsync(_command, CancellationToken);

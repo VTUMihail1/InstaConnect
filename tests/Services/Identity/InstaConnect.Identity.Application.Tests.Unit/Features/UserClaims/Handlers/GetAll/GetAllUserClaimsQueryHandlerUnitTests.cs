@@ -16,7 +16,7 @@ public class GetAllUserClaimsQueryHandlerUnitTests : BaseUserClaimApplicationQue
 
 		_handler = new(Mapper, Service);
 
-		Service.SetupGetAllQuery(_request, User, UserClaims, CancellationToken);
+		Service.SetupGetAllAsync(_request, User, UserClaims, CancellationToken);
 	}
 
 	[Fact]

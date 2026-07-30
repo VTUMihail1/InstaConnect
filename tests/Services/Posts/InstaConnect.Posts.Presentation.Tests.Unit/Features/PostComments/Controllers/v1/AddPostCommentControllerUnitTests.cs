@@ -16,7 +16,7 @@ public class AddPostCommentControllerUnitTests : BasePostCommentPresentationComm
 
 		_controller = new(Mapper, Sender);
 
-		Sender.SetupAddCommandRequest(_request, PostComment, CancellationToken);
+		Sender.SetupSendAsync(_request, PostComment, CancellationToken);
 	}
 
 	[Fact]

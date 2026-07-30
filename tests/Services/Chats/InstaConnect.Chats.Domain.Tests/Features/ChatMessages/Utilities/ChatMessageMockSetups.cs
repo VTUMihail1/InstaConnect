@@ -9,7 +9,7 @@ public static class ChatMessageMockSetups
 	{
 		public void SetupNewStringGuid(ChatMessage chatMessage)
 		{
-			guidProvider.NewStringGuid()
+			guidProvider.ClearCalls().NewStringGuid()
 				.ReturnsResponse(chatMessage.Id.MessageId);
 		}
 	}
@@ -18,7 +18,7 @@ public static class ChatMessageMockSetups
 	{
 		public void SetupGetOffsetUtcNow(ChatMessage chatMessage)
 		{
-			dateTimeProvider.GetOffsetUtcNow()
+			dateTimeProvider.ClearCalls().GetOffsetUtcNow()
 				.ReturnsResponse(chatMessage.CreatedAtUtc);
 		}
 
@@ -26,7 +26,7 @@ public static class ChatMessageMockSetups
 			UpdateChatMessageCommand command,
 			ChatMessage chatMessage)
 		{
-			dateTimeProvider.GetOffsetUtcNow()
+			dateTimeProvider.ClearCalls().GetOffsetUtcNow()
 				.ReturnsResponse(chatMessage.UpdatedAtUtc);
 		}
 	}
@@ -38,6 +38,7 @@ public static class ChatMessageMockSetups
 			ChatMessage chatMessage)
 		{
 			factory
+				.ClearCalls()
 				.Create(
 					command.Id,
 					command.Id.ParticipantOneId,
@@ -48,60 +49,66 @@ public static class ChatMessageMockSetups
 
 	extension(IChatCommandRepository repository)
 	{
-		public void SetupGetById(
+		public void SetupGetByIdAsync(
 			AddChatMessageCommand command,
 			ChatInclude include,
 			Chat chat,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.Id, ChatMessageDomainMatcher.IsChatInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(chat);
 		}
 
-		public void RemoveGetById(
+		public void RemoveGetByIdAsync(
 			AddChatMessageCommand command,
 			ChatInclude include,
 			Chat chat,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.Id, ChatMessageDomainMatcher.IsChatInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 
-		public void SetupExistsById(
+		public void SetupExistsByIdAsync(
 			UpdateChatMessageCommand command,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.ExistsByIdAsync(command.Id.Id, cancellationToken)
 				.ReturnsTaskResponse(true);
 		}
 
-		public void SetupExistsById(
+		public void SetupExistsByIdAsync(
 			DeleteChatMessageCommand command,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.ExistsByIdAsync(command.Id.Id, cancellationToken)
 				.ReturnsTaskResponse(true);
 		}
 
-		public void RemoveExistsById(
+		public void RemoveExistsByIdAsync(
 			UpdateChatMessageCommand command,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.ExistsByIdAsync(command.Id.Id, cancellationToken)
 				.ReturnsTaskResponse(false);
 		}
 
-		public void RemoveExistsById(
+		public void RemoveExistsByIdAsync(
 			DeleteChatMessageCommand command,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.ExistsByIdAsync(command.Id.Id, cancellationToken)
 				.ReturnsTaskResponse(false);
 		}
@@ -109,46 +116,50 @@ public static class ChatMessageMockSetups
 
 	extension(IChatMessageCommandRepository repository)
 	{
-		public void SetupGetById(
+		public void SetupGetByIdAsync(
 			UpdateChatMessageCommand command,
 			ChatMessageInclude include,
 			ChatMessage chatMessage,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.Id, ChatMessageDomainMatcher.IsChatMessageInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(chatMessage);
 		}
 
-		public void SetupGetById(
+		public void SetupGetByIdAsync(
 			DeleteChatMessageCommand command,
 			ChatMessageInclude include,
 			ChatMessage chatMessage,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.Id, ChatMessageDomainMatcher.IsChatMessageInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(chatMessage);
 		}
 
-		public void RemoveGetById(
+		public void RemoveGetByIdAsync(
 			UpdateChatMessageCommand command,
 			ChatMessageInclude include,
 			ChatMessage chatMessage,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.Id, ChatMessageDomainMatcher.IsChatMessageInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 
-		public void RemoveGetById(
+		public void RemoveGetByIdAsync(
 			DeleteChatMessageCommand command,
 			ChatMessageInclude include,
 			ChatMessage chatMessage,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.Id, ChatMessageDomainMatcher.IsChatMessageInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -156,40 +167,44 @@ public static class ChatMessageMockSetups
 
 	extension(IChatQueryRepository repository)
 	{
-		public void SetupGetById(
+		public void SetupGetByIdAsync(
 			GetAllChatMessagesQuery query,
 			Chat chat,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(query.Filter.Id, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(chat.ToResponse(query));
 		}
 
-		public void RemoveGetById(
+		public void RemoveGetByIdAsync(
 			GetAllChatMessagesQuery query,
 			Chat chat,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(query.Filter.Id, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 
-		public void SetupExistsById(
+		public void SetupExistsByIdAsync(
 			GetChatMessageByIdQuery query,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.ExistsByIdAsync(query.Id.Id, cancellationToken)
 				.ReturnsTaskResponse(true);
 		}
 
-		public void RemoveExistsById(
+		public void RemoveExistsByIdAsync(
 			GetChatMessageByIdQuery query,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.ExistsByIdAsync(query.Id.Id, cancellationToken)
 				.ReturnsTaskResponse(false);
 		}
@@ -197,42 +212,46 @@ public static class ChatMessageMockSetups
 
 	extension(IChatMessageQueryRepository repository)
 	{
-		public void SetupGetAllQuery(
+		public void SetupGetAllAsync(
 			GetAllChatMessagesQuery query,
 			ICollection<ChatMessage> chatMessages,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetAllAsync(query.Filter, query.CurrentUser, query.Sorting, query.Pagination, cancellationToken)
 				.ReturnsTaskResponse(chatMessages.ToResponse(query));
 		}
 
-		public void SetupGetTotalCount(
+		public void SetupGetTotalCountAsync(
 			GetAllChatMessagesQuery query,
 			ICollection<ChatMessage> chatMessages,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetTotalCountAsync(query.Filter, cancellationToken)
 				.ReturnsTaskResponse(chatMessages.ToTotalCountResponse(query));
 		}
 
-		public void SetupGetById(
+		public void SetupGetByIdAsync(
 			GetChatMessageByIdQuery query,
 			ChatMessage chatMessage,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(query.Id, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(chatMessage.ToResponse(query));
 		}
 
-		public void RemoveGetById(
+		public void RemoveGetByIdAsync(
 			GetChatMessageByIdQuery query,
 			ChatMessage chatMessage,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(query.Id, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}

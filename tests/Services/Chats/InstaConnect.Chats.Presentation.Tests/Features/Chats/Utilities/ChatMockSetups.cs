@@ -6,33 +6,36 @@ public static class ChatMockSetups
 {
 	extension(IApplicationSender sender)
 	{
-		public void SetupGetAllQueryRequest(
+		public void SetupSendAsync(
 		GetAllChatsApiRequest request,
 		User participantOne,
 		ICollection<Chat> chats,
 		CancellationToken cancellationToken)
 		{
 			sender
+				.ClearCalls()
 				.SendAsync(ChatPresentationMatcher.IsGetAllChatsQueryRequest(request), cancellationToken)
 				.ReturnsTaskResponse(chats.ToResponse(request, participantOne));
 		}
 
-		public void SetupGetByIdQueryRequest(
+		public void SetupSendAsync(
 			GetChatByIdApiRequest request,
 			Chat chat,
 			CancellationToken cancellationToken)
 		{
 			sender
+				.ClearCalls()
 				.SendAsync(ChatPresentationMatcher.IsGetChatByIdQueryRequest(request), cancellationToken)
 				.ReturnsTaskResponse(chat.ToResponse(request));
 		}
 
-		public void SetupAddCommandRequest(
+		public void SetupSendAsync(
 			AddChatApiRequest request,
 			Chat chat,
 			CancellationToken cancellationToken)
 		{
 			sender
+				.ClearCalls()
 				.SendAsync(ChatPresentationMatcher.IsAddChatCommandRequest(request), cancellationToken)
 				.ReturnsTaskResponse(chat.ToResponse(request));
 		}

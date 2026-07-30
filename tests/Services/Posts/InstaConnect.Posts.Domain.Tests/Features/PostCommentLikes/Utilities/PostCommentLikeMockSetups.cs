@@ -8,7 +8,7 @@ public static class PostCommentLikeMockSetups
 	{
 		public void SetupGetOffsetUtcNow(PostCommentLike postCommentLike)
 		{
-			dateTimeProvider.GetOffsetUtcNow()
+			dateTimeProvider.ClearCalls().GetOffsetUtcNow()
 				.ReturnsResponse(postCommentLike.CreatedAtUtc);
 		}
 	}
@@ -20,6 +20,7 @@ public static class PostCommentLikeMockSetups
 			PostCommentLike postCommentLike)
 		{
 			factory
+				.ClearCalls()
 				.Create(
 					command.CommentId,
 					command.UserId)
@@ -29,44 +30,48 @@ public static class PostCommentLikeMockSetups
 
 	extension(IPostCommentLikeCommandRepository repository)
 	{
-		public void SetupGetById(
-			AddPostCommentLikeCommand command,
-			PostCommentLike postCommentLike,
-			CancellationToken cancellationToken)
-		{
-			repository
-				.GetByIdAsync(postCommentLike.Id, cancellationToken)
-				.ReturnsTaskResponse(null);
-		}
-
-		public void SetupGetById(
+		public void SetupGetByIdAsync(
 			DeletePostCommentLikeCommand command,
 			PostCommentLikeInclude include,
 			PostCommentLike postCommentLike,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.Id, PostCommentLikeDomainMatcher.IsPostCommentLikeInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(postCommentLike);
 		}
 
-		public void SetupGetByIdExists(
+		public void SetupGetByIdAsync(
 			AddPostCommentLikeCommand command,
 			PostCommentLike postCommentLike,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(postCommentLike.Id, cancellationToken)
 				.ReturnsTaskResponse(postCommentLike);
 		}
 
-		public void RemoveGetById(
+		public void RemoveGetByIdAsync(
+			AddPostCommentLikeCommand command,
+			PostCommentLike postCommentLike,
+			CancellationToken cancellationToken)
+		{
+			repository
+				.ClearCalls()
+				.GetByIdAsync(postCommentLike.Id, cancellationToken)
+				.ReturnsTaskResponse(null);
+		}
+
+		public void RemoveGetByIdAsync(
 			DeletePostCommentLikeCommand command,
 			PostCommentLikeInclude include,
 			PostCommentLike postCommentLike,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.Id, PostCommentLikeDomainMatcher.IsPostCommentLikeInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -74,38 +79,42 @@ public static class PostCommentLikeMockSetups
 
 	extension(IPostCommandRepository repository)
 	{
-		public void SetupExistsById(
+		public void SetupExistsByIdAsync(
 			AddPostCommentLikeCommand command,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.ExistsByIdAsync(command.CommentId.Id, cancellationToken)
 				.ReturnsTaskResponse(true);
 		}
 
-		public void SetupExistsById(
+		public void SetupExistsByIdAsync(
 			DeletePostCommentLikeCommand command,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.ExistsByIdAsync(command.Id.CommentId.Id, cancellationToken)
 				.ReturnsTaskResponse(true);
 		}
 
-		public void RemoveExistsById(
+		public void RemoveExistsByIdAsync(
 			AddPostCommentLikeCommand command,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.ExistsByIdAsync(command.CommentId.Id, cancellationToken)
 				.ReturnsTaskResponse(false);
 		}
 
-		public void RemoveExistsById(
+		public void RemoveExistsByIdAsync(
 			DeletePostCommentLikeCommand command,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.ExistsByIdAsync(command.Id.CommentId.Id, cancellationToken)
 				.ReturnsTaskResponse(false);
 		}
@@ -113,42 +122,46 @@ public static class PostCommentLikeMockSetups
 
 	extension(IPostCommentCommandRepository repository)
 	{
-		public void SetupGetById(
+		public void SetupGetByIdAsync(
 			AddPostCommentLikeCommand command,
 			PostCommentInclude include,
 			PostComment postComment,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.CommentId, PostCommentLikeDomainMatcher.IsPostCommentInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(postComment);
 		}
 
-		public void RemoveGetById(
+		public void RemoveGetByIdAsync(
 			AddPostCommentLikeCommand command,
 			PostCommentInclude include,
 			PostComment postComment,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.CommentId, PostCommentLikeDomainMatcher.IsPostCommentInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 
-		public void SetupExistsById(
+		public void SetupExistsByIdAsync(
 			DeletePostCommentLikeCommand command,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.ExistsByIdAsync(command.Id.CommentId, cancellationToken)
 				.ReturnsTaskResponse(true);
 		}
 
-		public void RemoveExistsById(
+		public void RemoveExistsByIdAsync(
 			DeletePostCommentLikeCommand command,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.ExistsByIdAsync(command.Id.CommentId, cancellationToken)
 				.ReturnsTaskResponse(false);
 		}
@@ -156,22 +169,24 @@ public static class PostCommentLikeMockSetups
 
 	extension(IUserCommandRepository repository)
 	{
-		public void SetupGetById(
+		public void SetupGetByIdAsync(
 			AddPostCommentLikeCommand command,
 			User user,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.UserId, cancellationToken)
 				.ReturnsTaskResponse(user);
 		}
 
-		public void RemoveGetById(
+		public void RemoveGetByIdAsync(
 			AddPostCommentLikeCommand command,
 			User user,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.UserId, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -179,38 +194,42 @@ public static class PostCommentLikeMockSetups
 
 	extension(IPostQueryRepository repository)
 	{
-		public void SetupExistsById(
+		public void SetupExistsByIdAsync(
 			GetAllPostCommentLikesQuery query,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.ExistsByIdAsync(query.Filter.CommentId.Id, cancellationToken)
 				.ReturnsTaskResponse(true);
 		}
 
-		public void SetupExistsById(
+		public void SetupExistsByIdAsync(
 			GetPostCommentLikeByIdQuery query,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.ExistsByIdAsync(query.Id.CommentId.Id, cancellationToken)
 				.ReturnsTaskResponse(true);
 		}
 
-		public void RemoveExistsById(
+		public void RemoveExistsByIdAsync(
 			GetAllPostCommentLikesQuery query,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.ExistsByIdAsync(query.Filter.CommentId.Id, cancellationToken)
 				.ReturnsTaskResponse(false);
 		}
 
-		public void RemoveExistsById(
+		public void RemoveExistsByIdAsync(
 			GetPostCommentLikeByIdQuery query,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.ExistsByIdAsync(query.Id.CommentId.Id, cancellationToken)
 				.ReturnsTaskResponse(false);
 		}
@@ -218,40 +237,44 @@ public static class PostCommentLikeMockSetups
 
 	extension(IPostCommentQueryRepository repository)
 	{
-		public void SetupGetById(
+		public void SetupGetByIdAsync(
 			GetAllPostCommentLikesQuery query,
 			PostComment postComment,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(query.Filter.CommentId, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(postComment.ToResponse(query));
 		}
 
-		public void RemoveGetById(
+		public void RemoveGetByIdAsync(
 			GetAllPostCommentLikesQuery query,
 			PostComment postComment,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(query.Filter.CommentId, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 
-		public void SetupExistsById(
+		public void SetupExistsByIdAsync(
 			GetPostCommentLikeByIdQuery query,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.ExistsByIdAsync(query.Id.CommentId, cancellationToken)
 				.ReturnsTaskResponse(true);
 		}
 
-		public void RemoveExistsById(
+		public void RemoveExistsByIdAsync(
 			GetPostCommentLikeByIdQuery query,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.ExistsByIdAsync(query.Id.CommentId, cancellationToken)
 				.ReturnsTaskResponse(false);
 		}
@@ -259,22 +282,24 @@ public static class PostCommentLikeMockSetups
 
 	extension(IUserQueryRepository repository)
 	{
-		public void SetupGetById(
+		public void SetupGetByIdAsync(
 			GetAllPostCommentLikesForUserQuery query,
 			User user,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(query.Filter.UserId, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(query));
 		}
 
-		public void RemoveGetById(
+		public void RemoveGetByIdAsync(
 			GetAllPostCommentLikesForUserQuery query,
 			User user,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(query.Filter.UserId, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -282,62 +307,68 @@ public static class PostCommentLikeMockSetups
 
 	extension(IPostCommentLikeQueryRepository repository)
 	{
-		public void SetupGetAllQuery(
+		public void SetupGetAllAsync(
 			GetAllPostCommentLikesQuery query,
 			ICollection<PostCommentLike> postCommentLikes,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetAllAsync(query.Filter, query.CurrentUser, query.Sorting, query.Pagination, cancellationToken)
 				.ReturnsTaskResponse(postCommentLikes.ToResponse(query));
 		}
 
-		public void SetupGetTotalCount(
+		public void SetupGetTotalCountAsync(
 			GetAllPostCommentLikesQuery query,
 			ICollection<PostCommentLike> postCommentLikes,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetTotalCountAsync(query.Filter, cancellationToken)
 				.ReturnsTaskResponse(postCommentLikes.ToTotalCountResponse(query));
 		}
 
-		public void SetupGetAllForUserQuery(
+		public void SetupGetAllForUserAsync(
 			GetAllPostCommentLikesForUserQuery query,
 			ICollection<PostCommentLike> postCommentLikes,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetAllForUserAsync(query.Filter, query.CurrentUser, query.Sorting, query.Pagination, cancellationToken)
 				.ReturnsTaskResponse(postCommentLikes.ToResponse(query));
 		}
 
-		public void SetupGetTotalCountForUser(
+		public void SetupGetTotalCountForUserAsync(
 			GetAllPostCommentLikesForUserQuery query,
 			ICollection<PostCommentLike> postCommentLikes,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetTotalCountForUserAsync(query.Filter, cancellationToken)
 				.ReturnsTaskResponse(postCommentLikes.ToTotalCountResponse(query));
 		}
 
-		public void SetupGetById(
+		public void SetupGetByIdAsync(
 			GetPostCommentLikeByIdQuery query,
 			PostCommentLike postCommentLike,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(query.Id, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(postCommentLike.ToResponse(query));
 		}
 
-		public void RemoveGetById(
+		public void RemoveGetByIdAsync(
 			GetPostCommentLikeByIdQuery query,
 			PostCommentLike postCommentLike,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(query.Id, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}

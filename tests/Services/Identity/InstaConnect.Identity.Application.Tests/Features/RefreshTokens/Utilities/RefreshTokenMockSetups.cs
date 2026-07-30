@@ -4,22 +4,24 @@ public static class RefreshTokenMockSetups
 {
 	extension(IRefreshTokenCommandService service)
 	{
-		public void SetupIssueCommand(
+		public void SetupIssueAsync(
 			IssueRefreshTokenCommandRequest request,
 			RefreshToken refreshToken,
 			CancellationToken cancellationToken)
 		{
 			service
+				.ClearCalls()
 				.IssueAsync(RefreshTokenApplicationMatcher.IsIssueRefreshTokenCommand(request), cancellationToken)
 				.ReturnsTaskResponse(refreshToken.ToResponse(request));
 		}
 
-		public void SetupRotateCommand(
+		public void SetupRotateAsync(
 			RotateRefreshTokenCommandRequest request,
 			RefreshToken refreshToken,
 			CancellationToken cancellationToken)
 		{
 			service
+				.ClearCalls()
 				.RotateAsync(RefreshTokenApplicationMatcher.IsRotateRefreshTokenCommand(request), cancellationToken)
 				.ReturnsTaskResponse(refreshToken.ToResponse(request));
 		}

@@ -16,7 +16,7 @@ public class AddUserClaimCommandHandlerUnitTests : BaseUserClaimApplicationComma
 
 		_handler = new(Mapper, Service);
 
-		Service.SetupAddCommand(_request, UserClaim, CancellationToken);
+		Service.SetupAddAsync(_request, UserClaim, CancellationToken);
 	}
 
 	[Fact]

@@ -23,16 +23,16 @@ public class GetAllPostsForUserQueryServiceUnitTests : BasePostDomainQueryUnitTe
 
 		_service = new(Repository, UserRepository, CollectionResponseFactory);
 
-		Repository.SetupGetAllForUserQuery(_query, User, Posts, CancellationToken);
-		Repository.SetupGetTotalCountForUser(_query, Posts, CancellationToken);
-		UserRepository.SetupGetById(_query, User, CancellationToken);
+		Repository.SetupGetAllForUserAsync(_query, User, Posts, CancellationToken);
+		Repository.SetupGetTotalCountForUserAsync(_query, Posts, CancellationToken);
+		UserRepository.SetupGetByIdAsync(_query, User, CancellationToken);
 	}
 
 	[Fact]
 	public async Task GetAllForUserAsync_ShouldThrowUserNotFoundException_WhenUserIdIsInvalid()
 	{
 		// Arrange
-		UserRepository.RemoveGetById(_query, User, CancellationToken);
+		UserRepository.RemoveGetByIdAsync(_query, User, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowUserNotFoundExceptionAsync(_query, CancellationToken);

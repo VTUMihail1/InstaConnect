@@ -27,14 +27,14 @@ public class DeleteFollowCommandServiceUnitTests : BaseFollowDomainCommandUnitTe
 
 		_service = new(Factory, Mapper, EventPublisher, Repository, UserRepository, NotificationService, IncludeBuilderFactory);
 
-		Repository.SetupGetById(_command, _include, Follow, CancellationToken);
+		Repository.SetupGetByIdAsync(_command, _include, Follow, CancellationToken);
 	}
 
 	[Fact]
 	public async Task DeleteAsync_ShouldThrowFollowNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		Repository.RemoveGetById(_command, _include, Follow, CancellationToken);
+		Repository.RemoveGetByIdAsync(_command, _include, Follow, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowFollowNotFoundExceptionAsync(_command, CancellationToken);

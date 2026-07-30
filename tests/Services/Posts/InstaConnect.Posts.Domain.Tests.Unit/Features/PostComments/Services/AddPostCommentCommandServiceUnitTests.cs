@@ -28,8 +28,8 @@ public class AddPostCommentCommandServiceUnitTests : BasePostCommentDomainComman
 
 		_service = new(Mapper, EventPublisher, Repository, DateTimeProvider, Factory, UserRepository, CommentRepository, IncludeBuilderFactory, CommentIncludeBuilderFactory);
 
-		UserRepository.SetupGetById(_command, User, CancellationToken);
-		Repository.SetupGetById(_command, _include, Post, CancellationToken);
+		UserRepository.SetupGetByIdAsync(_command, User, CancellationToken);
+		Repository.SetupGetByIdAsync(_command, _include, Post, CancellationToken);
 		Factory.SetupCreate(_command, PostComment);
 	}
 
@@ -37,7 +37,7 @@ public class AddPostCommentCommandServiceUnitTests : BasePostCommentDomainComman
 	public async Task AddAsync_ShouldThrowUserNotFoundException_WhenUserIdIsInvalid()
 	{
 		// Arrange
-		UserRepository.RemoveGetById(_command, User, CancellationToken);
+		UserRepository.RemoveGetByIdAsync(_command, User, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowUserNotFoundExceptionAsync(_command, CancellationToken);
@@ -47,7 +47,7 @@ public class AddPostCommentCommandServiceUnitTests : BasePostCommentDomainComman
 	public async Task AddAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		Repository.RemoveGetById(_command, _include, Post, CancellationToken);
+		Repository.RemoveGetByIdAsync(_command, _include, Post, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowPostNotFoundExceptionAsync(_command, CancellationToken);

@@ -16,7 +16,7 @@ public class UpdatePostCommentControllerUnitTests : BasePostCommentPresentationC
 
 		_controller = new(Mapper, Sender);
 
-		Sender.SetupUpdateCommandRequest(_request, PostComment, CancellationToken);
+		Sender.SetupSendAsync(_request, PostComment, CancellationToken);
 	}
 
 	[Fact]

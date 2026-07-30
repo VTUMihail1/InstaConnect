@@ -20,7 +20,7 @@ public class RotateRefreshTokenControllerUnitTests : BaseRefreshTokenPresentatio
 
 		_controller = new(Mapper, Sender, CookieStore);
 
-		Sender.SetupRotateCommandRequest(_request, _refreshToken, CancellationToken);
+		Sender.SetupSendAsync(_request, _refreshToken, CancellationToken);
 	}
 
 	[Fact]

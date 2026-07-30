@@ -23,17 +23,17 @@ public class AddChatCommandServiceUnitTests : BaseChatDomainCommandUnitTest
 
 		_service = new(Factory, Mapper, EventPublisher, Repository, UserRepository);
 
-		UserRepository.SetupGetByParticipantOneId(_command, ParticipantOne, CancellationToken);
-		UserRepository.SetupGetByParticipantTwoId(_command, ParticipantTwo, CancellationToken);
+		UserRepository.SetupGetParticipantOneByIdAsync(_command, ParticipantOne, CancellationToken);
+		UserRepository.SetupGetParticipantTwoByIdAsync(_command, ParticipantTwo, CancellationToken);
 		Factory.SetupCreate(_command, Chat);
-		Repository.SetupGetById(_command, Chat, CancellationToken);
+		Repository.RemoveGetByIdAsync(_command, Chat, CancellationToken);
 	}
 
 	[Fact]
 	public async Task AddAsync_ShouldThrowUserNotFoundException_WhenParticipantOneIdIsInvalid()
 	{
 		// Arrange
-		UserRepository.RemoveGetByParticipantOneId(_command, ParticipantOne, CancellationToken);
+		UserRepository.RemoveGetParticipantOneByIdAsync(_command, ParticipantOne, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowParticipantOneNotFoundExceptionAsync(_command, CancellationToken);
@@ -43,7 +43,7 @@ public class AddChatCommandServiceUnitTests : BaseChatDomainCommandUnitTest
 	public async Task AddAsync_ShouldThrowUserNotFoundException_WhenParticipantTwoIdIsInvalid()
 	{
 		// Arrange
-		UserRepository.RemoveGetByParticipantTwoId(_command, ParticipantTwo, CancellationToken);
+		UserRepository.RemoveGetParticipantTwoByIdAsync(_command, ParticipantTwo, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowParticipantTwoNotFoundExceptionAsync(_command, CancellationToken);
@@ -53,7 +53,7 @@ public class AddChatCommandServiceUnitTests : BaseChatDomainCommandUnitTest
 	public async Task AddAsync_ShouldThrowChatAlreadyExistsException_WhenChatAlreadyExists()
 	{
 		// Arrange
-		Repository.SetupGetByIdExists(_command, Chat, CancellationToken);
+		Repository.SetupGetByIdAsync(_command, Chat, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowChatAlreadyExistsExceptionAsync(_command, CancellationToken);

@@ -16,7 +16,7 @@ public class GetChatByIdQueryHandlerUnitTests : BaseChatApplicationQueryUnitTest
 
 		_handler = new(Mapper, Service);
 
-		Service.SetupGetByIdQuery(_request, Chat, CancellationToken);
+		Service.SetupGetByIdAsync(_request, Chat, CancellationToken);
 	}
 
 	[Fact]

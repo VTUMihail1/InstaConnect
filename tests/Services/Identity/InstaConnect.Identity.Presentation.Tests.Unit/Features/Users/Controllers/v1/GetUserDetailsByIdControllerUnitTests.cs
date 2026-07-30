@@ -16,7 +16,7 @@ public class GetUserDetailsByIdControllerUnitTests : BaseUserPresentationQueryUn
 
 		_controller = new(Mapper, Sender);
 
-		Sender.SetupGetDetailsByIdQueryRequest(_request, User, CancellationToken);
+		Sender.SetupSendAsync(_request, User, CancellationToken);
 	}
 
 	[Fact]

@@ -16,7 +16,7 @@ public class UpdateChatMessageControllerUnitTests : BaseChatMessagePresentationC
 
 		_controller = new(Mapper, Sender);
 
-		Sender.SetupUpdateCommandRequest(_request, ChatMessage, CancellationToken);
+		Sender.SetupSendAsync(_request, ChatMessage, CancellationToken);
 	}
 
 	[Fact]

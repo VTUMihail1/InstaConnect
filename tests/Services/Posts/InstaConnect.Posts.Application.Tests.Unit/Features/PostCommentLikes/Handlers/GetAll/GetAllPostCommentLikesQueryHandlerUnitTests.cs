@@ -16,7 +16,7 @@ public class GetAllPostCommentLikesQueryHandlerUnitTests : BasePostCommentLikeAp
 
 		_handler = new(Mapper, CommentLikeService);
 
-		CommentLikeService.SetupGetAllQuery(_request, PostComment, PostCommentLikes, CancellationToken);
+		CommentLikeService.SetupGetAllAsync(_request, PostComment, PostCommentLikes, CancellationToken);
 	}
 
 	[Fact]

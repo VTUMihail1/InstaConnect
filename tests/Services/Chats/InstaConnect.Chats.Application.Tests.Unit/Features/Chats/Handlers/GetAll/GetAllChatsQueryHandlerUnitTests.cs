@@ -16,7 +16,7 @@ public class GetAllChatsQueryHandlerUnitTests : BaseChatApplicationQueryUnitTest
 
 		_handler = new(Mapper, Service);
 
-		Service.SetupGetAllQuery(_request, ParticipantOne, Chats, CancellationToken);
+		Service.SetupGetAllAsync(_request, ParticipantOne, Chats, CancellationToken);
 	}
 
 	[Fact]

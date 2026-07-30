@@ -16,7 +16,7 @@ public class GetAllUserClaimsControllerUnitTests : BaseUserClaimPresentationQuer
 
 		_controller = new(Mapper, Sender);
 
-		Sender.SetupGetAllQueryRequest(_request, User, UserClaims, CancellationToken);
+		Sender.SetupSendAsync(_request, User, UserClaims, CancellationToken);
 	}
 
 	[Fact]

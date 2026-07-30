@@ -23,15 +23,15 @@ public class GetPostCommentByIdQueryServiceUnitTests : BasePostCommentDomainQuer
 
 		_service = new(Repository, UserRepository, CommentRepository, CollectionResponseFactory);
 
-		Repository.SetupExistsById(_query, CancellationToken);
-		CommentRepository.SetupGetById(_query, PostComment, CancellationToken);
+		Repository.SetupExistsByIdAsync(_query, CancellationToken);
+		CommentRepository.SetupGetByIdAsync(_query, PostComment, CancellationToken);
 	}
 
 	[Fact]
 	public async Task GetByIdAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		Repository.RemoveExistsById(_query, CancellationToken);
+		Repository.RemoveExistsByIdAsync(_query, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowPostNotFoundExceptionAsync(_query, CancellationToken);
@@ -41,7 +41,7 @@ public class GetPostCommentByIdQueryServiceUnitTests : BasePostCommentDomainQuer
 	public async Task GetByIdAsync_ShouldThrowPostCommentNotFoundException_WhenPostCommentDoesNotExist()
 	{
 		// Arrange
-		CommentRepository.RemoveGetById(_query, PostComment, CancellationToken);
+		CommentRepository.RemoveGetByIdAsync(_query, PostComment, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowPostCommentNotFoundExceptionAsync(_query, CancellationToken);

@@ -16,7 +16,7 @@ public class GetAllFollowsForFollowingControllerUnitTests : BaseFollowPresentati
 
 		_controller = new(Mapper, Sender);
 
-		Sender.SetupGetAllForFollowingQueryRequest(_request, Following, Follows, CancellationToken);
+		Sender.SetupSendAsync(_request, Following, Follows, CancellationToken);
 	}
 
 	[Fact]

@@ -16,7 +16,7 @@ public class GetAllPostCommentsForUserControllerUnitTests : BasePostCommentPrese
 
 		_controller = new(Mapper, Sender);
 
-		Sender.SetupGetAllForUserQueryRequest(_request, User, PostComments, CancellationToken);
+		Sender.SetupSendAsync(_request, User, PostComments, CancellationToken);
 	}
 
 	[Fact]

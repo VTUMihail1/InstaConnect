@@ -16,7 +16,7 @@ public class GetUserByIdQueryHandlerUnitTests : BaseUserApplicationQueryUnitTest
 
 		_handler = new(Mapper, Service);
 
-		Service.SetupGetByIdQuery(_request, User, CancellationToken);
+		Service.SetupGetByIdAsync(_request, User, CancellationToken);
 	}
 
 	[Fact]

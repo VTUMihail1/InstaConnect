@@ -16,7 +16,7 @@ public class GetAllPostLikesForUserControllerUnitTests : BasePostLikePresentatio
 
 		_controller = new(Mapper, Sender);
 
-		Sender.SetupGetAllForUserQueryRequest(_request, User, PostLikes, CancellationToken);
+		Sender.SetupSendAsync(_request, User, PostLikes, CancellationToken);
 	}
 
 	[Fact]

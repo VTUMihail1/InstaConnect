@@ -16,7 +16,7 @@ public class UpdateUserCommandHandlerUnitTests : BaseUserApplicationCommandUnitT
 
 		_handler = new(Mapper, UserService);
 
-		UserService.SetupUpdateCommand(_request, User, CancellationToken);
+		UserService.SetupUpdateAsync(_request, User, CancellationToken);
 	}
 
 	[Fact]

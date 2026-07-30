@@ -16,7 +16,7 @@ public class GetAllPostCommentLikesControllerUnitTests : BasePostCommentLikePres
 
 		_controller = new(Mapper, Sender);
 
-		Sender.SetupGetAllQueryRequest(_request, PostComment, PostCommentLikes, CancellationToken);
+		Sender.SetupSendAsync(_request, PostComment, PostCommentLikes, CancellationToken);
 	}
 
 	[Fact]

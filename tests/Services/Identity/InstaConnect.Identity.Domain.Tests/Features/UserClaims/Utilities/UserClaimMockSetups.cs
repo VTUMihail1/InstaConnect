@@ -9,6 +9,7 @@ public static class UserClaimMockSetups
 		public void SetupGetOffsetUtcNow(UserClaim userClaim)
 		{
 			dateTimeProvider
+				.ClearCalls()
 				.GetOffsetUtcNow()
 				.ReturnsResponse(userClaim.CreatedAtUtc);
 		}
@@ -21,6 +22,7 @@ public static class UserClaimMockSetups
 			UserClaim userClaim)
 		{
 			factory
+				.ClearCalls()
 				.Create(
 					command.Id,
 					command.Claim)
@@ -30,44 +32,48 @@ public static class UserClaimMockSetups
 
 	extension(IUserClaimCommandRepository repository)
 	{
-		public void SetupGetById(
-			AddUserClaimCommand command,
-			UserClaim userClaim,
-			CancellationToken cancellationToken)
-		{
-			repository
-				.GetByIdAsync(userClaim.Id, cancellationToken)
-				.ReturnsTaskResponse(null);
-		}
-
-		public void SetupGetById(
+		public void SetupGetByIdAsync(
 			DeleteUserClaimCommand command,
 			UserClaimInclude include,
 			UserClaim userClaim,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.Id, UserClaimDomainMatcher.IsUserClaimInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(userClaim);
 		}
 
-		public void SetupGetByIdExists(
+		public void SetupGetByIdAsync(
 			AddUserClaimCommand command,
 			UserClaim userClaim,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(userClaim.Id, cancellationToken)
 				.ReturnsTaskResponse(userClaim);
 		}
 
-		public void RemoveGetById(
+		public void RemoveGetByIdAsync(
+			AddUserClaimCommand command,
+			UserClaim userClaim,
+			CancellationToken cancellationToken)
+		{
+			repository
+				.ClearCalls()
+				.GetByIdAsync(userClaim.Id, cancellationToken)
+				.ReturnsTaskResponse(null);
+		}
+
+		public void RemoveGetByIdAsync(
 			DeleteUserClaimCommand command,
 			UserClaimInclude include,
 			UserClaim userClaim,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.Id, UserClaimDomainMatcher.IsUserClaimInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -75,40 +81,44 @@ public static class UserClaimMockSetups
 
 	extension(IUserCommandRepository repository)
 	{
-		public void SetupGetById(
+		public void SetupGetByIdAsync(
 			AddUserClaimCommand command,
 			User user,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.Id, cancellationToken)
 				.ReturnsTaskResponse(user);
 		}
 
-		public void RemoveGetById(
+		public void RemoveGetByIdAsync(
 			AddUserClaimCommand command,
 			User user,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.Id, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 
-		public void SetupExistsById(
+		public void SetupExistsByIdAsync(
 			DeleteUserClaimCommand command,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.ExistsByIdAsync(command.Id.Id, cancellationToken)
 				.ReturnsTaskResponse(true);
 		}
 
-		public void RemoveExistsById(
+		public void RemoveExistsByIdAsync(
 			DeleteUserClaimCommand command,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.ExistsByIdAsync(command.Id.Id, cancellationToken)
 				.ReturnsTaskResponse(false);
 		}
@@ -116,22 +126,24 @@ public static class UserClaimMockSetups
 
 	extension(IUserQueryRepository repository)
 	{
-		public void SetupGetById(
+		public void SetupGetByIdAsync(
 			GetAllUserClaimsQuery query,
 			User user,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(query.Filter.Id, query.Current, cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(query));
 		}
 
-		public void RemoveGetById(
+		public void RemoveGetByIdAsync(
 			GetAllUserClaimsQuery query,
 			User user,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(query.Filter.Id, query.Current, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -139,22 +151,24 @@ public static class UserClaimMockSetups
 
 	extension(IUserClaimQueryRepository repository)
 	{
-		public void SetupGetAllQuery(
+		public void SetupGetAllAsync(
 			GetAllUserClaimsQuery query,
 			ICollection<UserClaim> userClaims,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetAllAsync(query.Filter, query.Current, query.Sorting, query.Pagination, cancellationToken)
 				.ReturnsTaskResponse(userClaims.ToResponse(query));
 		}
 
-		public void SetupGetTotalCount(
+		public void SetupGetTotalCountAsync(
 			GetAllUserClaimsQuery query,
 			ICollection<UserClaim> userClaims,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetTotalCountAsync(query.Filter, cancellationToken)
 				.ReturnsTaskResponse(userClaims.ToTotalCountResponse(query));
 		}

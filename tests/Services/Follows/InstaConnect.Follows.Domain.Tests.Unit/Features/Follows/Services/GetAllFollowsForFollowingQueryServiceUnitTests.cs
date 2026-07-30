@@ -23,16 +23,16 @@ public class GetAllFollowsForFollowingQueryServiceUnitTests : BaseFollowDomainQu
 
 		_service = new(Repository, UserRepository, CollectionResponseFactory);
 
-		UserRepository.SetupGetById(_query, Following, CancellationToken);
-		Repository.SetupGetAllForFollowingQuery(_query, Follows, CancellationToken);
-		Repository.SetupGetTotalCountForFollowing(_query, Follows, CancellationToken);
+		UserRepository.SetupGetByIdAsync(_query, Following, CancellationToken);
+		Repository.SetupGetAllForFollowingAsync(_query, Follows, CancellationToken);
+		Repository.SetupGetTotalCountForFollowingAsync(_query, Follows, CancellationToken);
 	}
 
 	[Fact]
 	public async Task GetAllForFollowingAsync_ShouldThrowUserNotFoundException_WhenFollowingIdIsInvalid()
 	{
 		// Arrange
-		UserRepository.RemoveGetById(_query, Following, CancellationToken);
+		UserRepository.RemoveGetByIdAsync(_query, Following, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowFollowingNotFoundExceptionAsync(_query, CancellationToken);

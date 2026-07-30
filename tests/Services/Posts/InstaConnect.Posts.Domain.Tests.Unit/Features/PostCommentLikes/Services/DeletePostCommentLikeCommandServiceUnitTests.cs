@@ -33,16 +33,16 @@ public class DeletePostCommentLikeCommandServiceUnitTests : BasePostCommentLikeD
 
 		_service = new(Mapper, EventPublisher, Repository, UserRepository, Factory, CommentRepository, IncludeBuilderFactory, CommentLikeRepository, CommentIncludeBuilderFactory, CommentLikeIncludeBuilderFactory);
 
-		Repository.SetupExistsById(_command, CancellationToken);
-		CommentRepository.SetupExistsById(_command, CancellationToken);
-		CommentLikeRepository.SetupGetById(_command, _commentLikeInclude, PostCommentLike, CancellationToken);
+		Repository.SetupExistsByIdAsync(_command, CancellationToken);
+		CommentRepository.SetupExistsByIdAsync(_command, CancellationToken);
+		CommentLikeRepository.SetupGetByIdAsync(_command, _commentLikeInclude, PostCommentLike, CancellationToken);
 	}
 
 	[Fact]
 	public async Task DeleteAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		Repository.RemoveExistsById(_command, CancellationToken);
+		Repository.RemoveExistsByIdAsync(_command, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowPostNotFoundExceptionAsync(_command, CancellationToken);
@@ -52,7 +52,7 @@ public class DeletePostCommentLikeCommandServiceUnitTests : BasePostCommentLikeD
 	public async Task DeleteAsync_ShouldThrowPostCommentNotFoundException_WhenCommentIdIsInvalid()
 	{
 		// Arrange
-		CommentRepository.RemoveExistsById(_command, CancellationToken);
+		CommentRepository.RemoveExistsByIdAsync(_command, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowPostCommentNotFoundExceptionAsync(_command, CancellationToken);
@@ -62,7 +62,7 @@ public class DeletePostCommentLikeCommandServiceUnitTests : BasePostCommentLikeD
 	public async Task DeleteAsync_ShouldThrowPostCommentLikeNotFoundException_WhenUserIdIsInvalid()
 	{
 		// Arrange
-		CommentLikeRepository.RemoveGetById(_command, _commentLikeInclude, PostCommentLike, CancellationToken);
+		CommentLikeRepository.RemoveGetByIdAsync(_command, _commentLikeInclude, PostCommentLike, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowPostCommentLikeNotFoundExceptionAsync(_command, CancellationToken);

@@ -16,7 +16,7 @@ public class AddForgotPasswordTokenCommandHandlerUnitTests : BaseForgotPasswordT
 
 		_handler = new(Mapper, Service);
 
-		Service.SetupAddCommand(_request, ForgotPasswordToken, CancellationToken);
+		Service.SetupAddAsync(_request, ForgotPasswordToken, CancellationToken);
 	}
 
 	[Fact]

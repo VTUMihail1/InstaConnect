@@ -32,7 +32,7 @@ public class AddForgotPasswordTokenCommandServiceUnitTests : BaseForgotPasswordT
 			EmailSender,
 			ForgotPasswordTokenRepository);
 
-		Repository.SetupGetByName(_command, User, CancellationToken);
+		Repository.SetupGetByNameAsync(_command, User, CancellationToken);
 		Factory.SetupCreate(_command, ForgotPasswordToken);
 	}
 
@@ -40,7 +40,7 @@ public class AddForgotPasswordTokenCommandServiceUnitTests : BaseForgotPasswordT
 	public async Task AddAsync_ShouldThrowUserNameNotFoundException_WhenUserNotFound()
 	{
 		// Arrange
-		Repository.RemoveGetByName(_command, User, CancellationToken);
+		Repository.RemoveGetByNameAsync(_command, User, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowUserNameNotFoundExceptionAsync(_command, CancellationToken);

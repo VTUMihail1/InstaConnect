@@ -16,7 +16,7 @@ public class AddPostCommentLikeCommandHandlerUnitTests : BasePostCommentLikeAppl
 
 		_handler = new(Mapper, CommentLikeService);
 
-		CommentLikeService.SetupAddCommand(_request, PostCommentLike, CancellationToken);
+		CommentLikeService.SetupAddAsync(_request, PostCommentLike, CancellationToken);
 	}
 
 	[Fact]

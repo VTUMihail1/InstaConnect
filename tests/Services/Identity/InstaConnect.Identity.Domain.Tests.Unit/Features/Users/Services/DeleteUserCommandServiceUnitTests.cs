@@ -33,14 +33,14 @@ public class DeleteUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 			EmailConfirmationTokenEmailSender,
 			EmailConfirmationTokenRepository);
 
-		Repository.SetupGetById(_command, User, CancellationToken);
+		Repository.SetupGetByIdAsync(_command, User, CancellationToken);
 	}
 
 	[Fact]
 	public async Task DeleteAsync_ShouldThrowUserNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		Repository.RemoveGetById(_command, User, CancellationToken);
+		Repository.RemoveGetByIdAsync(_command, User, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowUserNotFoundExceptionAsync(_command, CancellationToken);

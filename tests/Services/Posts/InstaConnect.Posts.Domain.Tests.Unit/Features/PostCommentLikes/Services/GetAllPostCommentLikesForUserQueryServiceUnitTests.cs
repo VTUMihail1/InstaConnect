@@ -23,16 +23,16 @@ public class GetAllPostCommentLikesForUserQueryServiceUnitTests : BasePostCommen
 
 		_service = new(Repository, UserRepository, CommentRepository, CommentLikeRepository, CollectionResponseFactory);
 
-		UserRepository.SetupGetById(_query, User, CancellationToken);
-		CommentLikeRepository.SetupGetAllForUserQuery(_query, PostCommentLikes, CancellationToken);
-		CommentLikeRepository.SetupGetTotalCountForUser(_query, PostCommentLikes, CancellationToken);
+		UserRepository.SetupGetByIdAsync(_query, User, CancellationToken);
+		CommentLikeRepository.SetupGetAllForUserAsync(_query, PostCommentLikes, CancellationToken);
+		CommentLikeRepository.SetupGetTotalCountForUserAsync(_query, PostCommentLikes, CancellationToken);
 	}
 
 	[Fact]
 	public async Task GetAllForUserAsync_ShouldThrowUserNotFoundException_WhenUserIdIsInvalid()
 	{
 		// Arrange
-		UserRepository.RemoveGetById(_query, User, CancellationToken);
+		UserRepository.RemoveGetByIdAsync(_query, User, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowUserNotFoundExceptionAsync(_query, CancellationToken);

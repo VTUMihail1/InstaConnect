@@ -23,16 +23,16 @@ public class AddUserClaimCommandServiceUnitTests : BaseUserClaimDomainCommandUni
 
 		_service = new(Mapper, EventPublisher, Factory, Repository, ClaimRepository, IncludeBuilderFactory);
 
-		Repository.SetupGetById(_command, User, CancellationToken);
+		Repository.SetupGetByIdAsync(_command, User, CancellationToken);
 		Factory.SetupCreate(_command, UserClaim);
-		ClaimRepository.SetupGetById(_command, UserClaim, CancellationToken);
+		ClaimRepository.RemoveGetByIdAsync(_command, UserClaim, CancellationToken);
 	}
 
 	[Fact]
 	public async Task AddAsync_ShouldThrowUserNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		Repository.RemoveGetById(_command, User, CancellationToken);
+		Repository.RemoveGetByIdAsync(_command, User, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowUserNotFoundExceptionAsync(_command, CancellationToken);
@@ -42,7 +42,7 @@ public class AddUserClaimCommandServiceUnitTests : BaseUserClaimDomainCommandUni
 	public async Task AddAsync_ShouldThrowUserClaimAlreadyExistsException_WhenUserClaimAlreadyExists()
 	{
 		// Arrange
-		ClaimRepository.SetupGetByIdExists(_command, UserClaim, CancellationToken);
+		ClaimRepository.SetupGetByIdAsync(_command, UserClaim, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowUserClaimAlreadyExistsExceptionAsync(_command, CancellationToken);

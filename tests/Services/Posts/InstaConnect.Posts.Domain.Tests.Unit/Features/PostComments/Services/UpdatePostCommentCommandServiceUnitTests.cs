@@ -30,8 +30,8 @@ public class UpdatePostCommentCommandServiceUnitTests : BasePostCommentDomainCom
 
 		_service = new(Mapper, EventPublisher, Repository, DateTimeProvider, Factory, UserRepository, CommentRepository, IncludeBuilderFactory, CommentIncludeBuilderFactory);
 
-		Repository.SetupExistsById(_command, CancellationToken);
-		CommentRepository.SetupGetById(_command, _commentInclude, PostComment, CancellationToken);
+		Repository.SetupExistsByIdAsync(_command, CancellationToken);
+		CommentRepository.SetupGetByIdAsync(_command, _commentInclude, PostComment, CancellationToken);
 		DateTimeProvider.SetupGetOffsetUtcNow(_command, PostComment);
 	}
 
@@ -39,7 +39,7 @@ public class UpdatePostCommentCommandServiceUnitTests : BasePostCommentDomainCom
 	public async Task UpdateAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		Repository.RemoveExistsById(_command, CancellationToken);
+		Repository.RemoveExistsByIdAsync(_command, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowPostNotFoundExceptionAsync(_command, CancellationToken);
@@ -49,7 +49,7 @@ public class UpdatePostCommentCommandServiceUnitTests : BasePostCommentDomainCom
 	public async Task UpdateAsync_ShouldThrowPostCommentNotFoundException_WhenPostCommentDoesNotExist()
 	{
 		// Arrange
-		CommentRepository.RemoveGetById(_command, _commentInclude, PostComment, CancellationToken);
+		CommentRepository.RemoveGetByIdAsync(_command, _commentInclude, PostComment, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowPostCommentNotFoundExceptionAsync(_command, CancellationToken);

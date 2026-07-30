@@ -23,16 +23,16 @@ public class GetAllPostCommentsQueryServiceUnitTests : BasePostCommentDomainQuer
 
 		_service = new(Repository, UserRepository, CommentRepository, CollectionResponseFactory);
 
-		Repository.SetupGetById(_query, Post, CancellationToken);
-		CommentRepository.SetupGetAllQuery(_query, PostComments, CancellationToken);
-		CommentRepository.SetupGetTotalCount(_query, PostComments, CancellationToken);
+		Repository.SetupGetByIdAsync(_query, Post, CancellationToken);
+		CommentRepository.SetupGetAllAsync(_query, PostComments, CancellationToken);
+		CommentRepository.SetupGetTotalCountAsync(_query, PostComments, CancellationToken);
 	}
 
 	[Fact]
 	public async Task GetAllAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		Repository.RemoveGetById(_query, Post, CancellationToken);
+		Repository.RemoveGetByIdAsync(_query, Post, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowPostNotFoundExceptionAsync(_query, CancellationToken);

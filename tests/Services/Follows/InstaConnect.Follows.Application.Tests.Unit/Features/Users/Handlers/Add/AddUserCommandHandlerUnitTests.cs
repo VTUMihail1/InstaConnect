@@ -16,7 +16,7 @@ public class AddUserCommandHandlerUnitTests : BaseUserApplicationCommandUnitTest
 
 		_handler = new(Mapper, UserService);
 
-		UserService.SetupAddCommand(_request, User, CancellationToken);
+		UserService.SetupAddAsync(_request, User, CancellationToken);
 	}
 
 	[Fact]

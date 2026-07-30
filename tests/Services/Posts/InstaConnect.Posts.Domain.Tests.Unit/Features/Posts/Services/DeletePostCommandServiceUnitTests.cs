@@ -27,14 +27,14 @@ public class DeletePostCommandServiceUnitTests : BasePostDomainCommandUnitTest
 
 		_service = new(Factory, Mapper, EventPublisher, Repository, DateTimeProvider, UserRepository, IncludeBuilderFactory);
 
-		Repository.SetupGetById(_command, _include, Post, CancellationToken);
+		Repository.SetupGetByIdAsync(_command, _include, Post, CancellationToken);
 	}
 
 	[Fact]
 	public async Task DeleteAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		Repository.RemoveGetById(_command, _include, Post, CancellationToken);
+		Repository.RemoveGetByIdAsync(_command, _include, Post, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowPostNotFoundExceptionAsync(_command, CancellationToken);

@@ -4,12 +4,13 @@ public static class ForgotPasswordTokenMockSetups
 {
 	extension(IForgotPasswordTokenCommandService service)
 	{
-		public void SetupAddCommand(
+		public void SetupAddAsync(
 			AddForgotPasswordTokenCommandRequest request,
 			ForgotPasswordToken forgotPasswordToken,
 			CancellationToken cancellationToken)
 		{
 			service
+				.ClearCalls()
 				.AddAsync(ForgotPasswordTokenApplicationMatcher.IsAddForgotPasswordTokenCommand(request), cancellationToken)
 				.ReturnsTaskResponse(forgotPasswordToken.ToResponse(request));
 		}

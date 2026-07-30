@@ -28,17 +28,17 @@ public class AddPostLikeCommandServiceUnitTests : BasePostLikeDomainCommandUnitT
 
 		_service = new(Mapper, Factory, EventPublisher, Repository, UserRepository, LikeRepository, IncludeBuilderFactory, LikeIncludeBuilderFactory);
 
-		UserRepository.SetupGetById(_command, User, CancellationToken);
-		Repository.SetupGetById(_command, _include, Post, CancellationToken);
+		UserRepository.SetupGetByIdAsync(_command, User, CancellationToken);
+		Repository.SetupGetByIdAsync(_command, _include, Post, CancellationToken);
 		Factory.SetupCreate(_command, PostLike);
-		LikeRepository.SetupGetById(_command, PostLike, CancellationToken);
+		LikeRepository.RemoveGetByIdAsync(_command, PostLike, CancellationToken);
 	}
 
 	[Fact]
 	public async Task AddAsync_ShouldThrowUserNotFoundException_WhenUserIdIsInvalid()
 	{
 		// Arrange
-		UserRepository.RemoveGetById(_command, User, CancellationToken);
+		UserRepository.RemoveGetByIdAsync(_command, User, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowUserNotFoundExceptionAsync(_command, CancellationToken);
@@ -48,7 +48,7 @@ public class AddPostLikeCommandServiceUnitTests : BasePostLikeDomainCommandUnitT
 	public async Task AddAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		Repository.RemoveGetById(_command, _include, Post, CancellationToken);
+		Repository.RemoveGetByIdAsync(_command, _include, Post, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowPostNotFoundExceptionAsync(_command, CancellationToken);
@@ -58,7 +58,7 @@ public class AddPostLikeCommandServiceUnitTests : BasePostLikeDomainCommandUnitT
 	public async Task AddAsync_ShouldThrowPostLikeAlreadyExistsException_WhenPostLikeAlreadyExists()
 	{
 		// Arrange
-		LikeRepository.SetupGetByIdExists(_command, PostLike, CancellationToken);
+		LikeRepository.SetupGetByIdAsync(_command, PostLike, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowPostLikeAlreadyExistsExceptionAsync(_command, CancellationToken);

@@ -23,16 +23,16 @@ public class GetAllChatMessagesQueryServiceUnitTests : BaseChatMessageDomainQuer
 
 		_service = new(Repository, MessageRepository, CollectionResponseFactory);
 
-		Repository.SetupGetById(_query, Chat, CancellationToken);
-		MessageRepository.SetupGetAllQuery(_query, ChatMessages, CancellationToken);
-		MessageRepository.SetupGetTotalCount(_query, ChatMessages, CancellationToken);
+		Repository.SetupGetByIdAsync(_query, Chat, CancellationToken);
+		MessageRepository.SetupGetAllAsync(_query, ChatMessages, CancellationToken);
+		MessageRepository.SetupGetTotalCountAsync(_query, ChatMessages, CancellationToken);
 	}
 
 	[Fact]
 	public async Task GetAllAsync_ShouldThrowChatNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		Repository.RemoveGetById(_query, Chat, CancellationToken);
+		Repository.RemoveGetByIdAsync(_query, Chat, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowChatNotFoundExceptionAsync(_query, CancellationToken);

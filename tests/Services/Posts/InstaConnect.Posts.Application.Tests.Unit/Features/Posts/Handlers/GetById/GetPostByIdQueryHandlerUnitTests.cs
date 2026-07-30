@@ -16,7 +16,7 @@ public class GetPostByIdQueryHandlerUnitTests : BasePostApplicationQueryUnitTest
 
 		_handler = new(Mapper, Service);
 
-		Service.SetupGetByIdQuery(_request, Post, CancellationToken);
+		Service.SetupGetByIdAsync(_request, Post, CancellationToken);
 	}
 
 	[Fact]

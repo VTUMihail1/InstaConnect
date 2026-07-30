@@ -16,7 +16,7 @@ public class AddFollowCommandHandlerUnitTests : BaseFollowApplicationCommandUnit
 
 		_handler = new(Mapper, Service);
 
-		Service.SetupAddCommand(_request, Follow, CancellationToken);
+		Service.SetupAddAsync(_request, Follow, CancellationToken);
 	}
 
 	[Fact]

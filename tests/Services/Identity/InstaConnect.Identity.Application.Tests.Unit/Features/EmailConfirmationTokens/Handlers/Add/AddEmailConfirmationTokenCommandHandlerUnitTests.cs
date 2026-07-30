@@ -16,7 +16,7 @@ public class AddEmailConfirmationTokenCommandHandlerUnitTests : BaseEmailConfirm
 
 		_handler = new(Mapper, Service);
 
-		Service.SetupAddCommand(_request, EmailConfirmationToken, CancellationToken);
+		Service.SetupAddAsync(_request, EmailConfirmationToken, CancellationToken);
 	}
 
 	[Fact]

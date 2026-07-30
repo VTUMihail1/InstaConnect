@@ -16,7 +16,7 @@ public class GetAllPostCommentsForUserQueryHandlerUnitTests : BasePostCommentApp
 
 		_handler = new(Mapper, CommentService);
 
-		CommentService.SetupGetAllForUserQuery(_request, User, PostComments, CancellationToken);
+		CommentService.SetupGetAllForUserAsync(_request, User, PostComments, CancellationToken);
 	}
 
 	[Fact]

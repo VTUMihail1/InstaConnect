@@ -23,16 +23,16 @@ public class GetPostCommentLikeByIdQueryServiceUnitTests : BasePostCommentLikeDo
 
 		_service = new(Repository, UserRepository, CommentRepository, CommentLikeRepository, CollectionResponseFactory);
 
-		Repository.SetupExistsById(_query, CancellationToken);
-		CommentRepository.SetupExistsById(_query, CancellationToken);
-		CommentLikeRepository.SetupGetById(_query, PostCommentLike, CancellationToken);
+		Repository.SetupExistsByIdAsync(_query, CancellationToken);
+		CommentRepository.SetupExistsByIdAsync(_query, CancellationToken);
+		CommentLikeRepository.SetupGetByIdAsync(_query, PostCommentLike, CancellationToken);
 	}
 
 	[Fact]
 	public async Task GetByIdAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		Repository.RemoveExistsById(_query, CancellationToken);
+		Repository.RemoveExistsByIdAsync(_query, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowPostNotFoundExceptionAsync(_query, CancellationToken);
@@ -42,7 +42,7 @@ public class GetPostCommentLikeByIdQueryServiceUnitTests : BasePostCommentLikeDo
 	public async Task GetByIdAsync_ShouldThrowPostCommentNotFoundException_WhenCommentIdIsInvalid()
 	{
 		// Arrange
-		CommentRepository.RemoveExistsById(_query, CancellationToken);
+		CommentRepository.RemoveExistsByIdAsync(_query, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowPostCommentNotFoundExceptionAsync(_query, CancellationToken);
@@ -52,7 +52,7 @@ public class GetPostCommentLikeByIdQueryServiceUnitTests : BasePostCommentLikeDo
 	public async Task GetByIdAsync_ShouldThrowPostCommentLikeNotFoundException_WhenUserIdIsInvalid()
 	{
 		// Arrange
-		CommentLikeRepository.RemoveGetById(_query, PostCommentLike, CancellationToken);
+		CommentLikeRepository.RemoveGetByIdAsync(_query, PostCommentLike, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowPostCommentLikeNotFoundExceptionAsync(_query, CancellationToken);

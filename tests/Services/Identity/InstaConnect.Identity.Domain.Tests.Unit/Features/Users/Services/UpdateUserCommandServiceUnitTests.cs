@@ -42,9 +42,9 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 			EmailConfirmationTokenEmailSender,
 			EmailConfirmationTokenRepository);
 
-		Repository.SetupGetById(_command, _include, User, CancellationToken);
-		Repository.SetupIsEmailUnique(_command, CancellationToken);
-		Repository.SetupIsNameUnique(_command, CancellationToken);
+		Repository.SetupGetByIdAsync(_command, _include, User, CancellationToken);
+		Repository.SetupIsEmailUniqueAsync(_command, CancellationToken);
+		Repository.SetupIsNameUniqueAsync(_command, CancellationToken);
 		DateTimeProvider.SetupGetOffsetUtcNow(_command, User);
 	}
 
@@ -52,7 +52,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	public async Task UpdateAsync_ShouldThrowUserNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		Repository.RemoveGetById(_command, _include, User, CancellationToken);
+		Repository.RemoveGetByIdAsync(_command, _include, User, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowUserNotFoundExceptionAsync(_command, CancellationToken);
@@ -62,7 +62,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	public async Task UpdateAsync_ShouldThrowUserEmailAlreadyTakenException_WhenEmailIsInvalid()
 	{
 		// Arrange
-		Repository.RemoveIsEmailUnique(_command, CancellationToken);
+		Repository.RemoveIsEmailUniqueAsync(_command, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowUserEmailAlreadyTakenExceptionAsync(_command, CancellationToken);
@@ -72,7 +72,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	public async Task UpdateAsync_ShouldThrowUserNameAlreadyTakenException_WhenNameIsInvalid()
 	{
 		// Arrange
-		Repository.RemoveIsNameUnique(_command, CancellationToken);
+		Repository.RemoveIsNameUniqueAsync(_command, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowUserNameAlreadyTakenExceptionAsync(_command, CancellationToken);
@@ -95,7 +95,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithName(transformer).Build();
-		Repository.SetupIsNameUnique(command, CancellationToken);
+		Repository.SetupIsNameUniqueAsync(command, CancellationToken);
 
 		// Act
 		var response = await _service.UpdateAsync(command, CancellationToken);
@@ -124,7 +124,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithName(User.Name, transformer).Build();
-		Repository.SetupIsNameUnique(command, CancellationToken);
+		Repository.SetupIsNameUniqueAsync(command, CancellationToken);
 
 		// Act
 		var response = await _service.UpdateAsync(command, CancellationToken);
@@ -140,7 +140,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithEmail(transformer).Build();
-		Repository.SetupIsEmailUnique(command, CancellationToken);
+		Repository.SetupIsEmailUniqueAsync(command, CancellationToken);
 
 		// Act
 		var response = await _service.UpdateAsync(command, CancellationToken);
@@ -169,7 +169,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithEmail(User.Email, transformer).Build();
-		Repository.SetupIsEmailUnique(command, CancellationToken);
+		Repository.SetupIsEmailUniqueAsync(command, CancellationToken);
 
 		// Act
 		var response = await _service.UpdateAsync(command, CancellationToken);
@@ -210,7 +210,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithName(transformer).Build();
-		Repository.SetupIsNameUnique(command, CancellationToken);
+		Repository.SetupIsNameUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -239,7 +239,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithName(User.Name, transformer).Build();
-		Repository.SetupIsNameUnique(command, CancellationToken);
+		Repository.SetupIsNameUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -255,7 +255,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithEmail(transformer).Build();
-		Repository.SetupIsEmailUnique(command, CancellationToken);
+		Repository.SetupIsEmailUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -284,7 +284,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithEmail(User.Email, transformer).Build();
-		Repository.SetupIsEmailUnique(command, CancellationToken);
+		Repository.SetupIsEmailUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -325,7 +325,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithName(transformer).Build();
-		Repository.SetupIsNameUnique(command, CancellationToken);
+		Repository.SetupIsNameUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -354,7 +354,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithName(User.Name, transformer).Build();
-		Repository.SetupIsNameUnique(command, CancellationToken);
+		Repository.SetupIsNameUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -370,7 +370,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithEmail(transformer).Build();
-		Repository.SetupIsEmailUnique(command, CancellationToken);
+		Repository.SetupIsEmailUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -399,7 +399,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithEmail(User.Email, transformer).Build();
-		Repository.SetupIsEmailUnique(command, CancellationToken);
+		Repository.SetupIsEmailUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -440,7 +440,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithName(transformer).Build();
-		Repository.SetupIsNameUnique(command, CancellationToken);
+		Repository.SetupIsNameUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -469,7 +469,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithName(User.Name, transformer).Build();
-		Repository.SetupIsNameUnique(command, CancellationToken);
+		Repository.SetupIsNameUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -485,7 +485,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithEmail(transformer).Build();
-		Repository.SetupIsEmailUnique(command, CancellationToken);
+		Repository.SetupIsEmailUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -514,7 +514,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithEmail(User.Email, transformer).Build();
-		Repository.SetupIsEmailUnique(command, CancellationToken);
+		Repository.SetupIsEmailUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -555,7 +555,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithName(transformer).Build();
-		Repository.SetupIsNameUnique(command, CancellationToken);
+		Repository.SetupIsNameUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -584,7 +584,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithName(User.Name, transformer).Build();
-		Repository.SetupIsNameUnique(command, CancellationToken);
+		Repository.SetupIsNameUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -600,7 +600,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithEmail(transformer).Build();
-		Repository.SetupIsEmailUnique(command, CancellationToken);
+		Repository.SetupIsEmailUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -629,7 +629,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithEmail(User.Email, transformer).Build();
-		Repository.SetupIsEmailUnique(command, CancellationToken);
+		Repository.SetupIsEmailUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -670,7 +670,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithName(transformer).Build();
-		Repository.SetupIsNameUnique(command, CancellationToken);
+		Repository.SetupIsNameUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -699,7 +699,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithName(User.Name, transformer).Build();
-		Repository.SetupIsNameUnique(command, CancellationToken);
+		Repository.SetupIsNameUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -715,7 +715,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithEmail(transformer).Build();
-		Repository.SetupIsEmailUnique(command, CancellationToken);
+		Repository.SetupIsEmailUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -744,7 +744,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithEmail(User.Email, transformer).Build();
-		Repository.SetupIsEmailUnique(command, CancellationToken);
+		Repository.SetupIsEmailUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -785,7 +785,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithName(transformer).Build();
-		Repository.SetupIsNameUnique(command, CancellationToken);
+		Repository.SetupIsNameUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -814,7 +814,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithName(User.Name, transformer).Build();
-		Repository.SetupIsNameUnique(command, CancellationToken);
+		Repository.SetupIsNameUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -830,7 +830,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithEmail(transformer).Build();
-		Repository.SetupIsEmailUnique(command, CancellationToken);
+		Repository.SetupIsEmailUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -859,7 +859,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithEmail(User.Email, transformer).Build();
-		Repository.SetupIsEmailUnique(command, CancellationToken);
+		Repository.SetupIsEmailUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -900,7 +900,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithName(transformer).Build();
-		Repository.SetupIsNameUnique(command, CancellationToken);
+		Repository.SetupIsNameUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -929,7 +929,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithName(User.Name, transformer).Build();
-		Repository.SetupIsNameUnique(command, CancellationToken);
+		Repository.SetupIsNameUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -945,7 +945,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithEmail(transformer).Build();
-		Repository.SetupIsEmailUnique(command, CancellationToken);
+		Repository.SetupIsEmailUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -974,7 +974,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithEmail(User.Email, transformer).Build();
-		Repository.SetupIsEmailUnique(command, CancellationToken);
+		Repository.SetupIsEmailUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -1015,7 +1015,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithName(transformer).Build();
-		Repository.SetupIsNameUnique(command, CancellationToken);
+		Repository.SetupIsNameUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -1044,7 +1044,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithName(User.Name, transformer).Build();
-		Repository.SetupIsNameUnique(command, CancellationToken);
+		Repository.SetupIsNameUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -1060,7 +1060,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithEmail(transformer).Build();
-		Repository.SetupIsEmailUnique(command, CancellationToken);
+		Repository.SetupIsEmailUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -1089,7 +1089,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithEmail(User.Email, transformer).Build();
-		Repository.SetupIsEmailUnique(command, CancellationToken);
+		Repository.SetupIsEmailUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -1130,7 +1130,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithName(transformer).Build();
-		Repository.SetupIsNameUnique(command, CancellationToken);
+		Repository.SetupIsNameUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -1159,7 +1159,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithName(User.Name, transformer).Build();
-		Repository.SetupIsNameUnique(command, CancellationToken);
+		Repository.SetupIsNameUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -1175,7 +1175,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithEmail(transformer).Build();
-		Repository.SetupIsEmailUnique(command, CancellationToken);
+		Repository.SetupIsEmailUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);
@@ -1204,7 +1204,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	{
 		// Arrange
 		var command = _commandBuilder.WithEmail(User.Email, transformer).Build();
-		Repository.SetupIsEmailUnique(command, CancellationToken);
+		Repository.SetupIsEmailUniqueAsync(command, CancellationToken);
 
 		// Act
 		await _service.UpdateAsync(command, CancellationToken);

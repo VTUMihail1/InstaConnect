@@ -23,8 +23,8 @@ public class GetAllPostsQueryServiceUnitTests : BasePostDomainQueryUnitTest
 
 		_service = new(Repository, UserRepository, CollectionResponseFactory);
 
-		Repository.SetupGetAllQuery(_query, Posts, CancellationToken);
-		Repository.SetupGetTotalCount(_query, Posts, CancellationToken);
+		Repository.SetupGetAllAsync(_query, Posts, CancellationToken);
+		Repository.SetupGetTotalCountAsync(_query, Posts, CancellationToken);
 	}
 
 	[Fact]

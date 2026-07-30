@@ -20,7 +20,7 @@ public class RotateRefreshTokenCommandHandlerUnitTests : BaseRefreshTokenApplica
 
 		_handler = new(Mapper, Service);
 
-		Service.SetupRotateCommand(_request, _refreshToken, CancellationToken);
+		Service.SetupRotateAsync(_request, _refreshToken, CancellationToken);
 	}
 
 	[Fact]

@@ -4,34 +4,37 @@ public static class PostCommentLikeMockSetups
 {
 	extension(IPostCommentLikeQueryService commentLikeService)
 	{
-		public void SetupGetAllQuery(
+		public void SetupGetAllAsync(
 			GetAllPostCommentLikesQueryRequest request,
 			PostComment postComment,
 			ICollection<PostCommentLike> postCommentLikes,
 			CancellationToken cancellationToken)
 		{
 			commentLikeService
+				.ClearCalls()
 				.GetAllAsync(PostCommentLikeApplicationMatcher.IsGetAllPostCommentLikesQuery(request), cancellationToken)
 				.ReturnsTaskResponse(postCommentLikes.ToResponse(request, postComment));
 		}
 
-		public void SetupGetAllForUserQuery(
+		public void SetupGetAllForUserAsync(
 			GetAllPostCommentLikesForUserQueryRequest request,
 			User user,
 			ICollection<PostCommentLike> postCommentLikes,
 			CancellationToken cancellationToken)
 		{
 			commentLikeService
+				.ClearCalls()
 				.GetAllForUserAsync(PostCommentLikeApplicationMatcher.IsGetAllPostCommentLikesForUserQuery(request), cancellationToken)
 				.ReturnsTaskResponse(postCommentLikes.ToResponse(request, user));
 		}
 
-		public void SetupGetByIdQuery(
+		public void SetupGetByIdAsync(
 			GetPostCommentLikeByIdQueryRequest request,
 			PostCommentLike postCommentLike,
 			CancellationToken cancellationToken)
 		{
 			commentLikeService
+				.ClearCalls()
 				.GetByIdAsync(PostCommentLikeApplicationMatcher.IsGetPostCommentLikeByIdQuery(request), cancellationToken)
 				.ReturnsTaskResponse(postCommentLike.ToResponse(request));
 		}
@@ -39,12 +42,13 @@ public static class PostCommentLikeMockSetups
 
 	extension(IPostCommentLikeCommandService commentLikeService)
 	{
-		public void SetupAddCommand(
+		public void SetupAddAsync(
 			AddPostCommentLikeCommandRequest request,
 			PostCommentLike postCommentLike,
 			CancellationToken cancellationToken)
 		{
 			commentLikeService
+				.ClearCalls()
 				.AddAsync(PostCommentLikeApplicationMatcher.IsAddPostCommentLikeCommand(request), cancellationToken)
 				.ReturnsTaskResponse(postCommentLike.ToResponse(request));
 		}

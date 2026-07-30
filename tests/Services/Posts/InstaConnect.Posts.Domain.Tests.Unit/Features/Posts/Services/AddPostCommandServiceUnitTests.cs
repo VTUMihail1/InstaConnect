@@ -23,7 +23,7 @@ public class AddPostCommandServiceUnitTests : BasePostDomainCommandUnitTest
 
 		_service = new(Factory, Mapper, EventPublisher, Repository, DateTimeProvider, UserRepository, IncludeBuilderFactory);
 
-		UserRepository.SetupGetById(_command, User, CancellationToken);
+		UserRepository.SetupGetByIdAsync(_command, User, CancellationToken);
 		Factory.SetupCreate(_command, Post);
 	}
 
@@ -31,7 +31,7 @@ public class AddPostCommandServiceUnitTests : BasePostDomainCommandUnitTest
 	public async Task AddAsync_ShouldThrowUserNotFoundException_WhenUserIdIsInvalid()
 	{
 		// Arrange
-		UserRepository.RemoveGetById(_command, User, CancellationToken);
+		UserRepository.RemoveGetByIdAsync(_command, User, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowUserNotFoundExceptionAsync(_command, CancellationToken);

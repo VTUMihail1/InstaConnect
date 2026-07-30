@@ -35,8 +35,8 @@ public class AddUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 			EmailConfirmationTokenEmailSender,
 			EmailConfirmationTokenRepository);
 
-		Repository.SetupIsEmailUnique(_command, CancellationToken);
-		Repository.SetupIsNameUnique(_command, CancellationToken);
+		Repository.SetupIsEmailUniqueAsync(_command, CancellationToken);
+		Repository.SetupIsNameUniqueAsync(_command, CancellationToken);
 		Factory.SetupCreate(_command, User);
 		EmailConfirmationTokenFactory.SetupCreate(_command, EmailConfirmationToken);
 	}
@@ -45,7 +45,7 @@ public class AddUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	public async Task AddAsync_ShouldThrowUserEmailAlreadyTakenException_WhenEmailIsInvalid()
 	{
 		// Arrange
-		Repository.RemoveIsEmailUnique(_command, CancellationToken);
+		Repository.RemoveIsEmailUniqueAsync(_command, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowUserEmailAlreadyTakenExceptionAsync(_command, CancellationToken);
@@ -55,7 +55,7 @@ public class AddUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 	public async Task AddAsync_ShouldThrowUserNameAlreadyTakenException_WhenNameIsInvalid()
 	{
 		// Arrange
-		Repository.RemoveIsNameUnique(_command, CancellationToken);
+		Repository.RemoveIsNameUniqueAsync(_command, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowUserNameAlreadyTakenExceptionAsync(_command, CancellationToken);

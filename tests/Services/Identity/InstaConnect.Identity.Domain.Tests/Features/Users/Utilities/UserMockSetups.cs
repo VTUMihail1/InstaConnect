@@ -13,6 +13,7 @@ public static class UserMockSetups
 			User user)
 		{
 			factory
+				.ClearCalls()
 				.Create(
 					command.Name,
 					command.FirstName,
@@ -41,6 +42,7 @@ public static class UserMockSetups
 		public void SetupNewStringGuid(User user)
 		{
 			guidProvider
+				.ClearCalls()
 				.NewStringGuid()
 				.ReturnsResponse(user.Id.Id);
 		}
@@ -51,6 +53,7 @@ public static class UserMockSetups
 		public void SetupGetOffsetUtcNow(User user)
 		{
 			dateTimeProvider
+				.ClearCalls()
 				.GetOffsetUtcNow()
 				.ReturnsResponse(user.CreatedAtUtc);
 		}
@@ -60,6 +63,7 @@ public static class UserMockSetups
 			User user)
 		{
 			dateTimeProvider
+				.ClearCalls()
 				.GetOffsetUtcNow()
 				.ReturnsResponse(user.UpdatedAtUtc);
 		}
@@ -67,116 +71,128 @@ public static class UserMockSetups
 
 	extension(IUserCommandRepository repository)
 	{
-		public void SetupIsEmailUnique(
+		public void SetupIsEmailUniqueAsync(
 			AddUserCommand command,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.IsEmailUniqueAsync(command.Email, cancellationToken)
 				.ReturnsTaskResponse(true);
 		}
 
-		public void SetupIsEmailUnique(
+		public void SetupIsEmailUniqueAsync(
 			UpdateUserCommand command,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.IsEmailUniqueAsync(command.Email, cancellationToken)
 				.ReturnsTaskResponse(true);
 		}
 
-		public void RemoveIsEmailUnique(
+		public void RemoveIsEmailUniqueAsync(
 			AddUserCommand command,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.IsEmailUniqueAsync(command.Email, cancellationToken)
 				.ReturnsTaskResponse(false);
 		}
 
-		public void RemoveIsEmailUnique(
+		public void RemoveIsEmailUniqueAsync(
 			UpdateUserCommand command,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.IsEmailUniqueAsync(command.Email, cancellationToken)
 				.ReturnsTaskResponse(false);
 		}
 
-		public void SetupIsNameUnique(
+		public void SetupIsNameUniqueAsync(
 			AddUserCommand command,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.IsNameUniqueAsync(command.Name, cancellationToken)
 				.ReturnsTaskResponse(true);
 		}
 
-		public void SetupIsNameUnique(
+		public void SetupIsNameUniqueAsync(
 			UpdateUserCommand command,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.IsNameUniqueAsync(command.Name, cancellationToken)
 				.ReturnsTaskResponse(true);
 		}
 
-		public void RemoveIsNameUnique(
+		public void RemoveIsNameUniqueAsync(
 			AddUserCommand command,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.IsNameUniqueAsync(command.Name, cancellationToken)
 				.ReturnsTaskResponse(false);
 		}
 
-		public void RemoveIsNameUnique(
+		public void RemoveIsNameUniqueAsync(
 			UpdateUserCommand command,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.IsNameUniqueAsync(command.Name, cancellationToken)
 				.ReturnsTaskResponse(false);
 		}
 
-		public void SetupGetById(
+		public void SetupGetByIdAsync(
 			UpdateUserCommand command,
 			UserInclude include,
 			User user,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.Id, UserDomainMatcher.IsUserInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(user);
 		}
 
-		public void SetupGetById(
+		public void SetupGetByIdAsync(
 			DeleteUserCommand command,
 			User user,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.Id, cancellationToken)
 				.ReturnsTaskResponse(user);
 		}
 
-		public void RemoveGetById(
+		public void RemoveGetByIdAsync(
 			UpdateUserCommand command,
 			UserInclude include,
 			User user,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.Id, UserDomainMatcher.IsUserInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 
-		public void RemoveGetById(
+		public void RemoveGetByIdAsync(
 			DeleteUserCommand command,
 			User user,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.Id, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -184,42 +200,46 @@ public static class UserMockSetups
 
 	extension(IUserQueryRepository repository)
 	{
-		public void SetupGetAllQuery(
+		public void SetupGetAllAsync(
 			GetAllUsersQuery query,
 			ICollection<User> users,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetAllAsync(query.Filter, query.Current, query.Sorting, query.Pagination, cancellationToken)
 				.ReturnsTaskResponse(users.ToResponse(query));
 		}
 
-		public void SetupGetTotalCount(
+		public void SetupGetTotalCountAsync(
 			GetAllUsersQuery query,
 			ICollection<User> users,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetTotalCountAsync(query.Filter, cancellationToken)
 				.ReturnsTaskResponse(users.ToTotalCountResponse(query));
 		}
 
-		public void SetupGetById(
+		public void SetupGetByIdAsync(
 			GetUserByIdQuery query,
 			User user,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(query.Id, query.Current, cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(query));
 		}
 
-		public void RemoveGetById(
+		public void RemoveGetByIdAsync(
 			GetUserByIdQuery query,
 			User user,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(query.Id, query.Current, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -232,6 +252,7 @@ public static class UserMockSetups
 			EmailConfirmationToken emailConfirmationToken)
 		{
 			factory
+				.ClearCalls()
 				.Create(emailConfirmationToken.Id.Id)
 				.ReturnsResponse(emailConfirmationToken.To(command));
 		}

@@ -16,7 +16,7 @@ public class GetAllPostsForUserControllerUnitTests : BasePostPresentationQueryUn
 
 		_controller = new(Mapper, Sender);
 
-		Sender.SetupGetAllForUserQueryRequest(_request, User, Posts, CancellationToken);
+		Sender.SetupSendAsync(_request, User, Posts, CancellationToken);
 	}
 
 	[Fact]

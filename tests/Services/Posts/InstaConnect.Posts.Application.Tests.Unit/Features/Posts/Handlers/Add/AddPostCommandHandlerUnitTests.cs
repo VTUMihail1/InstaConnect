@@ -16,7 +16,7 @@ public class AddPostCommandHandlerUnitTests : BasePostApplicationCommandUnitTest
 
 		_handler = new(Mapper, Service);
 
-		Service.SetupAddCommand(_request, Post, CancellationToken);
+		Service.SetupAddAsync(_request, Post, CancellationToken);
 	}
 
 	[Fact]

@@ -16,7 +16,7 @@ public class GetCurrentUserByIdControllerUnitTests : BaseUserPresentationQueryUn
 
 		_controller = new(Mapper, Sender);
 
-		Sender.SetupGetCurrentByIdQueryRequest(_request, User, CancellationToken);
+		Sender.SetupSendAsync(_request, User, CancellationToken);
 	}
 
 	[Fact]

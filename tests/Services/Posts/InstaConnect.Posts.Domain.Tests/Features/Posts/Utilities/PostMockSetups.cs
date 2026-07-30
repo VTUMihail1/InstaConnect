@@ -9,7 +9,7 @@ public static class PostMockSetups
 	{
 		public void SetupNewStringGuid(Post post)
 		{
-			guidProvider.NewStringGuid()
+			guidProvider.ClearCalls().NewStringGuid()
 				.ReturnsResponse(post.Id.Id);
 		}
 	}
@@ -18,7 +18,7 @@ public static class PostMockSetups
 	{
 		public void SetupGetOffsetUtcNow(Post post)
 		{
-			dateTimeProvider.GetOffsetUtcNow()
+			dateTimeProvider.ClearCalls().GetOffsetUtcNow()
 				.ReturnsResponse(post.CreatedAtUtc);
 		}
 	}
@@ -30,6 +30,7 @@ public static class PostMockSetups
 			Post post)
 		{
 			factory
+				.ClearCalls()
 				.Create(
 					command.UserId,
 					command.Title,
@@ -40,63 +41,69 @@ public static class PostMockSetups
 
 	extension(IPostQueryRepository service)
 	{
-		public void SetupGetAllQuery(
+		public void SetupGetAllAsync(
 		GetAllPostsQuery query,
 		ICollection<Post> posts,
 		CancellationToken cancellationToken)
 		{
 			service
+				.ClearCalls()
 				.GetAllAsync(query.Filter, query.CurrentUser, query.Sorting, query.Pagination, cancellationToken)
 				.ReturnsTaskResponse(posts.ToResponse(query));
 		}
 
-		public void SetupGetTotalCount(
+		public void SetupGetTotalCountAsync(
 		GetAllPostsQuery query,
 		ICollection<Post> posts,
 		CancellationToken cancellationToken)
 		{
 			service
+				.ClearCalls()
 				.GetTotalCountAsync(query.Filter, cancellationToken)
 				.ReturnsTaskResponse(posts.ToTotalCountResponse(query));
 		}
 
-		public void SetupGetAllForUserQuery(
+		public void SetupGetAllForUserAsync(
 			GetAllPostsForUserQuery query,
 			User user,
 			ICollection<Post> posts,
 			CancellationToken cancellationToken)
 		{
 			service
+				.ClearCalls()
 				.GetAllForUserAsync(query.Filter, query.CurrentUser, query.Sorting, query.Pagination, cancellationToken)
 				.ReturnsTaskResponse(posts.ToResponse(query, user));
 		}
 
-		public void SetupGetTotalCountForUser(
+		public void SetupGetTotalCountForUserAsync(
 		GetAllPostsForUserQuery query,
 		ICollection<Post> posts,
 		CancellationToken cancellationToken)
 		{
 			service
+				.ClearCalls()
 				.GetTotalCountForUserAsync(query.Filter, cancellationToken)
 				.ReturnsTaskResponse(posts.ToTotalCountResponse(query));
 		}
 
-		public void SetupGetById(
+		public void SetupGetByIdAsync(
 			GetPostByIdQuery query,
 			Post post,
 			CancellationToken cancellationToken)
 		{
 			service
+				.ClearCalls()
 				.GetByIdAsync(query.Id, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(post.ToResponse(query));
 		}
 
-		public void RemoveGetById(
+		public void RemoveGetByIdAsync(
 			GetPostByIdQuery query,
 			Post post,
 			CancellationToken cancellationToken)
 		{
 			service
+				.ClearCalls()
 				.GetByIdAsync(query.Id, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -104,46 +111,50 @@ public static class PostMockSetups
 
 	extension(IPostCommandRepository repository)
 	{
-		public void SetupGetById(
+		public void SetupGetByIdAsync(
 			UpdatePostCommand command,
 			PostInclude include,
 			Post post,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.Id, PostDomainMatcher.IsPostInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(post);
 		}
 
-		public void SetupGetById(
+		public void SetupGetByIdAsync(
 			DeletePostCommand command,
 			PostInclude include,
 			Post post,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.Id, PostDomainMatcher.IsPostInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(post);
 		}
 
-		public void RemoveGetById(
+		public void RemoveGetByIdAsync(
 			UpdatePostCommand command,
 			PostInclude include,
 			Post post,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.Id, PostDomainMatcher.IsPostInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 
-		public void RemoveGetById(
+		public void RemoveGetByIdAsync(
 			DeletePostCommand command,
 			PostInclude include,
 			Post post,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.Id, PostDomainMatcher.IsPostInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -151,22 +162,24 @@ public static class PostMockSetups
 
 	extension(IUserQueryRepository repository)
 	{
-		public void SetupGetById(
+		public void SetupGetByIdAsync(
 			GetAllPostsForUserQuery query,
 			User user,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(query.Filter.UserId, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(query));
 		}
 
-		public void RemoveGetById(
+		public void RemoveGetByIdAsync(
 			GetAllPostsForUserQuery query,
 			User user,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(query.Filter.UserId, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -174,22 +187,24 @@ public static class PostMockSetups
 
 	extension(IUserCommandRepository repository)
 	{
-		public void SetupGetById(
+		public void SetupGetByIdAsync(
 			AddPostCommand command,
 			User user,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.UserId, cancellationToken)
 				.ReturnsTaskResponse(user);
 		}
 
-		public void RemoveGetById(
+		public void RemoveGetByIdAsync(
 			AddPostCommand command,
 			User user,
 			CancellationToken cancellationToken)
 		{
 			repository
+				.ClearCalls()
 				.GetByIdAsync(command.UserId, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -201,7 +216,7 @@ public static class PostMockSetups
 			UpdatePostCommand command,
 			Post post)
 		{
-			dateTimeProvider.GetOffsetUtcNow().ReturnsResponse(post.UpdatedAtUtc);
+			dateTimeProvider.ClearCalls().GetOffsetUtcNow().ReturnsResponse(post.UpdatedAtUtc);
 		}
 	}
 }

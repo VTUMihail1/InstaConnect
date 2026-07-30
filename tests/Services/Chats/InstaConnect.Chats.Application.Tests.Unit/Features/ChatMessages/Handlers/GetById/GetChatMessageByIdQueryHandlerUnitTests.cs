@@ -16,7 +16,7 @@ public class GetChatMessageByIdQueryHandlerUnitTests : BaseChatMessageApplicatio
 
 		_handler = new(Mapper, CommentService);
 
-		CommentService.SetupGetByIdQuery(_request, ChatMessage, CancellationToken);
+		CommentService.SetupGetByIdAsync(_request, ChatMessage, CancellationToken);
 	}
 
 	[Fact]

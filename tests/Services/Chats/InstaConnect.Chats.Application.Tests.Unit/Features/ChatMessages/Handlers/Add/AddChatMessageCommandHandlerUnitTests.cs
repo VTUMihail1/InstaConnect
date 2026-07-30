@@ -16,7 +16,7 @@ public class AddChatMessageCommandHandlerUnitTests : BaseChatMessageApplicationC
 
 		_handler = new(Mapper, CommentService);
 
-		CommentService.SetupAddCommand(_request, ChatMessage, CancellationToken);
+		CommentService.SetupAddAsync(_request, ChatMessage, CancellationToken);
 	}
 
 	[Fact]

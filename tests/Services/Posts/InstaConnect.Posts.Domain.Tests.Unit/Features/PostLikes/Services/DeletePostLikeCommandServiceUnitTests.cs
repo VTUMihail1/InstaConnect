@@ -30,15 +30,15 @@ public class DeletePostLikeCommandServiceUnitTests : BasePostLikeDomainCommandUn
 
 		_service = new(Mapper, Factory, EventPublisher, Repository, UserRepository, LikeRepository, IncludeBuilderFactory, LikeIncludeBuilderFactory);
 
-		Repository.SetupExistsById(_command, CancellationToken);
-		LikeRepository.SetupGetById(_command, _likeInclude, PostLike, CancellationToken);
+		Repository.SetupExistsByIdAsync(_command, CancellationToken);
+		LikeRepository.SetupGetByIdAsync(_command, _likeInclude, PostLike, CancellationToken);
 	}
 
 	[Fact]
 	public async Task DeleteAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		Repository.RemoveExistsById(_command, CancellationToken);
+		Repository.RemoveExistsByIdAsync(_command, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowPostNotFoundExceptionAsync(_command, CancellationToken);
@@ -48,7 +48,7 @@ public class DeletePostLikeCommandServiceUnitTests : BasePostLikeDomainCommandUn
 	public async Task DeleteAsync_ShouldThrowPostLikeNotFoundException_WhenUserIdIsInvalid()
 	{
 		// Arrange
-		LikeRepository.RemoveGetById(_command, _likeInclude, PostLike, CancellationToken);
+		LikeRepository.RemoveGetByIdAsync(_command, _likeInclude, PostLike, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowPostLikeNotFoundExceptionAsync(_command, CancellationToken);

@@ -28,8 +28,8 @@ public class IssueRefreshTokenCommandServiceUnitTests : BaseRefreshTokenDomainCo
 
 		_service = new(PasswordHasher, Repository, DateTimeProvider, Factory, SessionTokenGenerator, IncludeBuilderFactory, RefreshTokenRepository);
 
-		Repository.SetupGetByName(_command, _include, User, CancellationToken);
-		PasswordHasher.SetupIsMismatch(_command, User);
+		Repository.SetupGetByNameAsync(_command, _include, User, CancellationToken);
+		PasswordHasher.RemoveIsMismatch(_command, User);
 		Factory.SetupCreate(_command, RefreshToken);
 		SessionTokenGenerator.SetupGenerate(_command, RefreshToken);
 	}
@@ -38,7 +38,7 @@ public class IssueRefreshTokenCommandServiceUnitTests : BaseRefreshTokenDomainCo
 	public async Task IssueAsync_ShouldThrowUserInvalidDetailsException_WhenUserNotFound()
 	{
 		// Arrange
-		Repository.RemoveGetByName(_command, _include, User, CancellationToken);
+		Repository.RemoveGetByNameAsync(_command, _include, User, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowUserInvalidDetailsExceptionAsync(_command, CancellationToken);
@@ -48,7 +48,7 @@ public class IssueRefreshTokenCommandServiceUnitTests : BaseRefreshTokenDomainCo
 	public async Task IssueAsync_ShouldThrowUserInvalidDetailsException_WhenPasswordDoesNotMatch()
 	{
 		// Arrange
-		PasswordHasher.SetupIsMismatchExists(_command, User);
+		PasswordHasher.SetupIsMismatch(_command, User);
 
 		// Assert
 		await _service.ShouldThrowUserInvalidDetailsExceptionAsync(_command, CancellationToken);
@@ -59,8 +59,8 @@ public class IssueRefreshTokenCommandServiceUnitTests : BaseRefreshTokenDomainCo
 	{
 		// Arrange
 		var unconfirmedUser = UserBuilder.WithUnconfirmedEmail().Build();
-		Repository.SetupGetByName(_command, _include, unconfirmedUser, CancellationToken);
-		PasswordHasher.SetupIsMismatch(_command, unconfirmedUser);
+		Repository.SetupGetByNameAsync(_command, _include, unconfirmedUser, CancellationToken);
+		PasswordHasher.RemoveIsMismatch(_command, unconfirmedUser);
 
 		// Assert
 		await _service.ShouldThrowUserNameEmailNotConfirmedExceptionAsync(_command, CancellationToken);

@@ -4,23 +4,25 @@ public static class ChatMockSetups
 {
 	extension(IChatQueryService service)
 	{
-		public void SetupGetAllQuery(
+		public void SetupGetAllAsync(
 		GetAllChatsQueryRequest request,
 		User participantOne,
 		ICollection<Chat> chats,
 		CancellationToken cancellationToken)
 		{
 			service
+				.ClearCalls()
 				.GetAllAsync(ChatApplicationMatcher.IsGetAllChatsQuery(request), cancellationToken)
 				.ReturnsTaskResponse(chats.ToResponse(request, participantOne));
 		}
 
-		public void SetupGetByIdQuery(
+		public void SetupGetByIdAsync(
 			GetChatByIdQueryRequest request,
 			Chat chat,
 			CancellationToken cancellationToken)
 		{
 			service
+				.ClearCalls()
 				.GetByIdAsync(ChatApplicationMatcher.IsGetChatByIdQuery(request), cancellationToken)
 				.ReturnsTaskResponse(chat.ToResponse(request));
 		}
@@ -28,12 +30,13 @@ public static class ChatMockSetups
 
 	extension(IChatCommandService service)
 	{
-		public void SetupAddCommand(
+		public void SetupAddAsync(
 		AddChatCommandRequest request,
 		Chat chat,
 		CancellationToken cancellationToken)
 		{
 			service
+				.ClearCalls()
 				.AddAsync(ChatApplicationMatcher.IsAddChatCommand(request), cancellationToken)
 				.ReturnsTaskResponse(chat.ToResponse(request));
 		}

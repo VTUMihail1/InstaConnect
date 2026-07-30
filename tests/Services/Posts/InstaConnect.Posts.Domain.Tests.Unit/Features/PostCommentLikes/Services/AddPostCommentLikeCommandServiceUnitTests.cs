@@ -31,18 +31,18 @@ public class AddPostCommentLikeCommandServiceUnitTests : BasePostCommentLikeDoma
 
 		_service = new(Mapper, EventPublisher, Repository, UserRepository, Factory, CommentRepository, IncludeBuilderFactory, CommentLikeRepository, CommentIncludeBuilderFactory, CommentLikeIncludeBuilderFactory);
 
-		UserRepository.SetupGetById(_command, User, CancellationToken);
-		Repository.SetupExistsById(_command, CancellationToken);
-		CommentRepository.SetupGetById(_command, _commentInclude, PostComment, CancellationToken);
+		UserRepository.SetupGetByIdAsync(_command, User, CancellationToken);
+		Repository.SetupExistsByIdAsync(_command, CancellationToken);
+		CommentRepository.SetupGetByIdAsync(_command, _commentInclude, PostComment, CancellationToken);
 		Factory.SetupCreate(_command, PostCommentLike);
-		CommentLikeRepository.SetupGetById(_command, PostCommentLike, CancellationToken);
+		CommentLikeRepository.RemoveGetByIdAsync(_command, PostCommentLike, CancellationToken);
 	}
 
 	[Fact]
 	public async Task AddAsync_ShouldThrowUserNotFoundException_WhenUserIdIsInvalid()
 	{
 		// Arrange
-		UserRepository.RemoveGetById(_command, User, CancellationToken);
+		UserRepository.RemoveGetByIdAsync(_command, User, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowUserNotFoundExceptionAsync(_command, CancellationToken);
@@ -52,7 +52,7 @@ public class AddPostCommentLikeCommandServiceUnitTests : BasePostCommentLikeDoma
 	public async Task AddAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
 	{
 		// Arrange
-		Repository.RemoveExistsById(_command, CancellationToken);
+		Repository.RemoveExistsByIdAsync(_command, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowPostNotFoundExceptionAsync(_command, CancellationToken);
@@ -62,7 +62,7 @@ public class AddPostCommentLikeCommandServiceUnitTests : BasePostCommentLikeDoma
 	public async Task AddAsync_ShouldThrowPostCommentNotFoundException_WhenCommentIdIsInvalid()
 	{
 		// Arrange
-		CommentRepository.RemoveGetById(_command, _commentInclude, PostComment, CancellationToken);
+		CommentRepository.RemoveGetByIdAsync(_command, _commentInclude, PostComment, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowPostCommentNotFoundExceptionAsync(_command, CancellationToken);
@@ -72,7 +72,7 @@ public class AddPostCommentLikeCommandServiceUnitTests : BasePostCommentLikeDoma
 	public async Task AddAsync_ShouldThrowPostCommentLikeAlreadyExistsException_WhenPostCommentLikeAlreadyExists()
 	{
 		// Arrange
-		CommentLikeRepository.SetupGetByIdExists(_command, PostCommentLike, CancellationToken);
+		CommentLikeRepository.SetupGetByIdAsync(_command, PostCommentLike, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowPostCommentLikeAlreadyExistsExceptionAsync(_command, CancellationToken);

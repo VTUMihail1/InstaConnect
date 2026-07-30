@@ -16,7 +16,7 @@ public class GetAllChatMessagesQueryHandlerUnitTests : BaseChatMessageApplicatio
 
 		_handler = new(Mapper, CommentService);
 
-		CommentService.SetupGetAllQuery(_request, Chat, ChatMessages, CancellationToken);
+		CommentService.SetupGetAllAsync(_request, Chat, ChatMessages, CancellationToken);
 	}
 
 	[Fact]

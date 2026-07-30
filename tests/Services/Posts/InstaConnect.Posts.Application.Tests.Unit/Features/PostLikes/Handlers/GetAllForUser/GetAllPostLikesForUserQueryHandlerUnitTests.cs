@@ -16,7 +16,7 @@ public class GetAllPostLikesForUserQueryHandlerUnitTests : BasePostLikeApplicati
 
 		_handler = new(Mapper, LikeService);
 
-		LikeService.SetupGetAllForUserQuery(_request, User, PostLikes, CancellationToken);
+		LikeService.SetupGetAllForUserAsync(_request, User, PostLikes, CancellationToken);
 	}
 
 	[Fact]

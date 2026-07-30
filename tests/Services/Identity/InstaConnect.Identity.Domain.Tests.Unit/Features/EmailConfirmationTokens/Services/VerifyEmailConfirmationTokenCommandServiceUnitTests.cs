@@ -36,8 +36,8 @@ public class VerifyEmailConfirmationTokenCommandServiceUnitTests : BaseEmailConf
 			EmailSender,
 			EmailConfirmationTokenRepository);
 
-		Repository.SetupGetById(_command, _include, User, CancellationToken);
-		EmailConfirmationTokenRepository.SetupGetById(_command, EmailConfirmationToken, CancellationToken);
+		Repository.SetupGetByIdAsync(_command, _include, User, CancellationToken);
+		EmailConfirmationTokenRepository.SetupGetByIdAsync(_command, EmailConfirmationToken, CancellationToken);
 		DateTimeProvider.SetupGetOffsetUtcNow(_command, UnexpiredDate);
 	}
 
@@ -45,7 +45,7 @@ public class VerifyEmailConfirmationTokenCommandServiceUnitTests : BaseEmailConf
 	public async Task VerifyAsync_ShouldThrowUserNotFoundException_WhenUserNotFound()
 	{
 		// Arrange
-		Repository.RemoveGetById(_command, _include, User, CancellationToken);
+		Repository.RemoveGetByIdAsync(_command, _include, User, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowUserNotFoundExceptionAsync(_command, CancellationToken);
@@ -56,7 +56,7 @@ public class VerifyEmailConfirmationTokenCommandServiceUnitTests : BaseEmailConf
 	{
 		// Arrange
 		var confirmedUser = UserBuilder.WithConfirmedEmail().Build();
-		Repository.SetupGetById(_command, _include, confirmedUser, CancellationToken);
+		Repository.SetupGetByIdAsync(_command, _include, confirmedUser, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowUserEmailAlreadyConfirmedExceptionAsync(_command, CancellationToken);
@@ -66,7 +66,7 @@ public class VerifyEmailConfirmationTokenCommandServiceUnitTests : BaseEmailConf
 	public async Task VerifyAsync_ShouldThrowEmailConfirmationTokenNotFoundException_WhenEmailConfirmationTokenNotFound()
 	{
 		// Arrange
-		EmailConfirmationTokenRepository.RemoveGetById(_command, EmailConfirmationToken, CancellationToken);
+		EmailConfirmationTokenRepository.RemoveGetByIdAsync(_command, EmailConfirmationToken, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowEmailConfirmationTokenNotFoundExceptionAsync(_command, CancellationToken);

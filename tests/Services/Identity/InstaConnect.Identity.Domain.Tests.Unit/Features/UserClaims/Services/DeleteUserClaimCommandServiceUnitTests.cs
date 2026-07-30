@@ -27,15 +27,15 @@ public class DeleteUserClaimCommandServiceUnitTests : BaseUserClaimDomainCommand
 
 		_service = new(Mapper, EventPublisher, Factory, Repository, ClaimRepository, IncludeBuilderFactory);
 
-		Repository.SetupExistsById(_command, CancellationToken);
-		ClaimRepository.SetupGetById(_command, _include, UserClaim, CancellationToken);
+		Repository.SetupExistsByIdAsync(_command, CancellationToken);
+		ClaimRepository.SetupGetByIdAsync(_command, _include, UserClaim, CancellationToken);
 	}
 
 	[Fact]
 	public async Task DeleteAsync_ShouldThrowUserNotFoundException_WhenUserIdIsInvalid()
 	{
 		// Arrange
-		Repository.RemoveExistsById(_command, CancellationToken);
+		Repository.RemoveExistsByIdAsync(_command, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowUserNotFoundExceptionAsync(_command, CancellationToken);
@@ -45,7 +45,7 @@ public class DeleteUserClaimCommandServiceUnitTests : BaseUserClaimDomainCommand
 	public async Task DeleteAsync_ShouldThrowUserClaimNotFoundException_WhenUserClaimNotFound()
 	{
 		// Arrange
-		ClaimRepository.RemoveGetById(_command, _include, UserClaim, CancellationToken);
+		ClaimRepository.RemoveGetByIdAsync(_command, _include, UserClaim, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowUserClaimNotFoundExceptionAsync(_command, CancellationToken);

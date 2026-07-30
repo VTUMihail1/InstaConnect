@@ -16,7 +16,7 @@ public class GetAllPostsQueryHandlerUnitTests : BasePostApplicationQueryUnitTest
 
 		_handler = new(Mapper, Service);
 
-		Service.SetupGetAllQuery(_request, Posts, CancellationToken);
+		Service.SetupGetAllAsync(_request, Posts, CancellationToken);
 	}
 
 	[Fact]

@@ -16,7 +16,7 @@ public class UpdatePostCommandHandlerUnitTests : BasePostApplicationCommandUnitT
 
 		_handler = new(Mapper, Service);
 
-		Service.SetupUpdateCommand(_request, Post, CancellationToken);
+		Service.SetupUpdateAsync(_request, Post, CancellationToken);
 	}
 
 	[Fact]

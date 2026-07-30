@@ -33,8 +33,8 @@ public class RotateRefreshTokenCommandServiceUnitTests : BaseRefreshTokenDomainC
 
 		_service = new(PasswordHasher, Repository, DateTimeProvider, Factory, SessionTokenGenerator, IncludeBuilderFactory, RefreshTokenRepository);
 
-		Repository.SetupGetById(_command, _include, User, CancellationToken);
-		RefreshTokenRepository.SetupGetById(_command, RefreshToken, CancellationToken);
+		Repository.SetupGetByIdAsync(_command, _include, User, CancellationToken);
+		RefreshTokenRepository.SetupGetByIdAsync(_command, RefreshToken, CancellationToken);
 		DateTimeProvider.SetupGetOffsetUtcNow(_command, UnexpiredDate);
 		Factory.SetupCreate(_command, _refreshToken);
 		SessionTokenGenerator.SetupGenerate(_command, _refreshToken);
@@ -44,7 +44,7 @@ public class RotateRefreshTokenCommandServiceUnitTests : BaseRefreshTokenDomainC
 	public async Task RotateAsync_ShouldThrowUserNotFoundException_WhenUserNotFound()
 	{
 		// Arrange
-		Repository.RemoveGetById(_command, _include, User, CancellationToken);
+		Repository.RemoveGetByIdAsync(_command, _include, User, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowUserNotFoundExceptionAsync(_command, CancellationToken);
@@ -55,7 +55,7 @@ public class RotateRefreshTokenCommandServiceUnitTests : BaseRefreshTokenDomainC
 	{
 		// Arrange
 		var unconfirmedUser = UserBuilder.WithUnconfirmedEmail().Build();
-		Repository.SetupGetById(_command, _include, unconfirmedUser, CancellationToken);
+		Repository.SetupGetByIdAsync(_command, _include, unconfirmedUser, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowUserEmailNotConfirmedExceptionAsync(_command, CancellationToken);
@@ -65,7 +65,7 @@ public class RotateRefreshTokenCommandServiceUnitTests : BaseRefreshTokenDomainC
 	public async Task RotateAsync_ShouldThrowRefreshTokenNotFoundException_WhenRefreshTokenNotFound()
 	{
 		// Arrange
-		RefreshTokenRepository.RemoveGetById(_command, RefreshToken, CancellationToken);
+		RefreshTokenRepository.RemoveGetByIdAsync(_command, RefreshToken, CancellationToken);
 
 		// Assert
 		await _service.ShouldThrowRefreshTokenNotFoundExceptionAsync(_command, CancellationToken);
