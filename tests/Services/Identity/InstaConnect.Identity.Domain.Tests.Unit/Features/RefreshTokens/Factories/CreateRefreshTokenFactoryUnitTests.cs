@@ -16,7 +16,7 @@ public class CreateRefreshTokenFactoryUnitTests : BaseRefreshTokenDomainCommandU
 		_factory = new(GuidProvider, DateTimeProvider, RefreshTokenOptions);
 
 		GuidProvider.SetupNewStringGuid(RefreshToken);
-		DateTimeProvider.SetupGetOffsetUtcNow(RefreshToken, RefreshTokenOptions.Value.LifetimeSeconds);
+		DateTimeProvider.SetupGetOffsetUtcNow(RefreshToken, RefreshTokenOptions);
 		DateTimeProvider.SetupGetOffsetUtcNow(RefreshToken);
 	}
 
@@ -47,7 +47,7 @@ public class CreateRefreshTokenFactoryUnitTests : BaseRefreshTokenDomainCommandU
 		_factory.Create(RefreshToken.Id.Id);
 
 		// Assert
-		DateTimeProvider.ShouldReceiveOneGetOffsetUtcNow(RefreshTokenOptions.Value.LifetimeSeconds);
+		DateTimeProvider.ShouldReceiveOneGetOffsetUtcNow(RefreshTokenOptions);
 	}
 
 	[Fact]

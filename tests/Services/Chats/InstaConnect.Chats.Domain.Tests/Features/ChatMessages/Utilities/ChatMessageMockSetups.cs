@@ -18,7 +18,9 @@ public static class ChatMessageMockSetups
 	{
 		public void SetupGetOffsetUtcNow(ChatMessage chatMessage)
 		{
-			dateTimeProvider.ClearCalls().GetOffsetUtcNow()
+			dateTimeProvider
+				.ClearCalls()
+				.GetOffsetUtcNow()
 				.ReturnsResponse(chatMessage.CreatedAtUtc);
 		}
 
@@ -26,7 +28,9 @@ public static class ChatMessageMockSetups
 			UpdateChatMessageCommand command,
 			ChatMessage chatMessage)
 		{
-			dateTimeProvider.ClearCalls().GetOffsetUtcNow()
+			dateTimeProvider
+				.ClearCalls()
+				.GetOffsetUtcNow()
 				.ReturnsResponse(chatMessage.UpdatedAtUtc);
 		}
 	}

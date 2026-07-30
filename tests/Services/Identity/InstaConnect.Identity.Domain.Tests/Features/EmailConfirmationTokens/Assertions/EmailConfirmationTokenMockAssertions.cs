@@ -1,6 +1,10 @@
 using InstaConnect.Common.Domain.Features.DateTimes.Abstractions;
 using InstaConnect.Common.Events.Features.Common.Abstractions;
+using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Options;
+using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Options;
 using InstaConnect.Identity.Domain.Tests.Features.EmailConfirmationTokens.Utilities;
+
+using Microsoft.Extensions.Options;
 
 namespace InstaConnect.Identity.Domain.Tests.Features.EmailConfirmationTokens.Assertions;
 
@@ -8,9 +12,9 @@ public static class EmailConfirmationTokenMockAssertions
 {
 	extension(IDateTimeProvider dateTimeProvider)
 	{
-		public void ShouldReceiveOneGetOffsetUtcNow(int lifetimeSeconds)
+		public void ShouldReceiveOneGetOffsetUtcNow(IOptions<EmailConfirmationTokenOptions> emailConfirmationTokenOptions)
 		{
-			dateTimeProvider.ShouldHaveReceivedOne().GetOffsetUtcNow(lifetimeSeconds);
+			dateTimeProvider.ShouldHaveReceivedOne().GetOffsetUtcNow(emailConfirmationTokenOptions.Value.LifetimeSeconds);
 		}
 
 		public void ShouldReceiveOneGetOffsetUtcNow(VerifyEmailConfirmationTokenCommand command)

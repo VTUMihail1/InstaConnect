@@ -1,6 +1,11 @@
 using InstaConnect.Common.Domain.Features.DateTimes.Abstractions;
 using InstaConnect.Identity.Domain.Features.Common.Helpers;
+using InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Options;
 using InstaConnect.Identity.Domain.Tests.Features.RefreshTokens.Utilities;
+
+using MassTransit.Configuration;
+
+using Microsoft.Extensions.Options;
 
 namespace InstaConnect.Identity.Domain.Tests.Features.RefreshTokens.Assertions;
 
@@ -8,9 +13,9 @@ public static class RefreshTokenMockAssertions
 {
 	extension(IDateTimeProvider dateTimeProvider)
 	{
-		public void ShouldReceiveOneGetOffsetUtcNow(int lifetimeSeconds)
+		public void ShouldReceiveOneGetOffsetUtcNow(IOptions<RefreshTokenOptions> refreshTokenOptions)
 		{
-			dateTimeProvider.ShouldHaveReceivedOne().GetOffsetUtcNow(lifetimeSeconds);
+			dateTimeProvider.ShouldHaveReceivedOne().GetOffsetUtcNow(refreshTokenOptions.Value.LifetimeSeconds);
 		}
 
 		public void ShouldReceiveOneGetOffsetUtcNow(RotateRefreshTokenCommand command)

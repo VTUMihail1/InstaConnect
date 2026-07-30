@@ -8,7 +8,9 @@ public static class FollowMockSetups
 	{
 		public void SetupGetOffsetUtcNow(Follow follow)
 		{
-			dateTimeProvider.ClearCalls().GetOffsetUtcNow()
+			dateTimeProvider
+				.ClearCalls()
+				.GetOffsetUtcNow()
 				.ReturnsResponse(follow.CreatedAtUtc);
 		}
 	}

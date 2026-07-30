@@ -8,7 +8,9 @@ public static class ChatMockSetups
 	{
 		public void SetupGetOffsetUtcNow(Chat chat)
 		{
-			dateTimeProvider.ClearCalls().GetOffsetUtcNow()
+			dateTimeProvider
+				.ClearCalls()
+				.GetOffsetUtcNow()
 				.ReturnsResponse(chat.CreatedAtUtc);
 		}
 	}

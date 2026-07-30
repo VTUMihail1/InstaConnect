@@ -1,6 +1,10 @@
 using InstaConnect.Common.Domain.Features.DateTimes.Abstractions;
 using InstaConnect.Common.Domain.Features.Guids.Abstractions;
 using InstaConnect.Identity.Domain.Features.Common.Helpers;
+using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Options;
+using InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Options;
+
+using Microsoft.Extensions.Options;
 
 namespace InstaConnect.Identity.Domain.Tests.Features.RefreshTokens.Utilities;
 
@@ -27,11 +31,13 @@ public static class RefreshTokenMockSetups
 				.ReturnsResponse(refreshToken.CreatedAtUtc);
 		}
 
-		public void SetupGetOffsetUtcNow(RefreshToken refreshToken, int lifetimeSeconds)
+		public void SetupGetOffsetUtcNow(
+			RefreshToken refreshToken,
+			IOptions<RefreshTokenOptions> refreshTokenOptions)
 		{
 			dateTimeProvider
 				.ClearCalls()
-				.GetOffsetUtcNow(lifetimeSeconds)
+				.GetOffsetUtcNow(refreshTokenOptions.Value.LifetimeSeconds)
 				.ReturnsResponse(refreshToken.ExpiresAtUtc);
 		}
 

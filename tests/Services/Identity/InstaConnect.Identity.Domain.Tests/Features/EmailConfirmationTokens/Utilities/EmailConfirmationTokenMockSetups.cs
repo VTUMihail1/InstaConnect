@@ -1,5 +1,10 @@
 using InstaConnect.Common.Domain.Features.DateTimes.Abstractions;
 using InstaConnect.Common.Domain.Features.Guids.Abstractions;
+using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Options;
+
+using MassTransit.Configuration;
+
+using Microsoft.Extensions.Options;
 
 namespace InstaConnect.Identity.Domain.Tests.Features.EmailConfirmationTokens.Utilities;
 
@@ -26,11 +31,13 @@ public static class EmailConfirmationTokenMockSetups
 				.ReturnsResponse(emailConfirmationToken.CreatedAtUtc);
 		}
 
-		public void SetupGetOffsetUtcNow(EmailConfirmationToken emailConfirmationToken, int lifetimeSeconds)
+		public void SetupGetOffsetUtcNow(
+			EmailConfirmationToken emailConfirmationToken,
+			IOptions<EmailConfirmationTokenOptions> emailConfirmationTokenOptions)
 		{
 			dateTimeProvider
 				.ClearCalls()
-				.GetOffsetUtcNow(lifetimeSeconds)
+				.GetOffsetUtcNow(emailConfirmationTokenOptions.Value.LifetimeSeconds)
 				.ReturnsResponse(emailConfirmationToken.ExpiresAtUtc);
 		}
 

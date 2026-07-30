@@ -9,7 +9,9 @@ public static class PostMockSetups
 	{
 		public void SetupNewStringGuid(Post post)
 		{
-			guidProvider.ClearCalls().NewStringGuid()
+			guidProvider
+				.ClearCalls()
+				.NewStringGuid()
 				.ReturnsResponse(post.Id.Id);
 		}
 	}
@@ -18,7 +20,9 @@ public static class PostMockSetups
 	{
 		public void SetupGetOffsetUtcNow(Post post)
 		{
-			dateTimeProvider.ClearCalls().GetOffsetUtcNow()
+			dateTimeProvider
+				.ClearCalls()
+				.GetOffsetUtcNow()
 				.ReturnsResponse(post.CreatedAtUtc);
 		}
 	}

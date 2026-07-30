@@ -16,7 +16,7 @@ public class CreateForgotPasswordTokenFactoryUnitTests : BaseForgotPasswordToken
 		_factory = new(GuidProvider, DateTimeProvider, ForgotPasswordTokenOptions);
 
 		GuidProvider.SetupNewStringGuid(ForgotPasswordToken);
-		DateTimeProvider.SetupGetOffsetUtcNow(ForgotPasswordToken, ForgotPasswordTokenOptions.Value.LifetimeSeconds);
+		DateTimeProvider.SetupGetOffsetUtcNow(ForgotPasswordToken, ForgotPasswordTokenOptions);
 		DateTimeProvider.SetupGetOffsetUtcNow(ForgotPasswordToken);
 	}
 
@@ -47,7 +47,7 @@ public class CreateForgotPasswordTokenFactoryUnitTests : BaseForgotPasswordToken
 		_factory.Create(ForgotPasswordToken.Id.Id);
 
 		// Assert
-		DateTimeProvider.ShouldReceiveOneGetOffsetUtcNow(ForgotPasswordTokenOptions.Value.LifetimeSeconds);
+		DateTimeProvider.ShouldReceiveOneGetOffsetUtcNow(ForgotPasswordTokenOptions);
 	}
 
 	[Fact]

@@ -1,7 +1,11 @@
 using InstaConnect.Common.Domain.Features.DateTimes.Abstractions;
 using InstaConnect.Common.Events.Features.Common.Abstractions;
 using InstaConnect.Identity.Domain.Features.Common.Helpers;
+using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Options;
+using InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Options;
 using InstaConnect.Identity.Domain.Tests.Features.ForgotPasswordTokens.Utilities;
+
+using Microsoft.Extensions.Options;
 
 namespace InstaConnect.Identity.Domain.Tests.Features.ForgotPasswordTokens.Assertions;
 
@@ -9,9 +13,9 @@ public static class ForgotPasswordTokenMockAssertions
 {
 	extension(IDateTimeProvider dateTimeProvider)
 	{
-		public void ShouldReceiveOneGetOffsetUtcNow(int lifetimeSeconds)
+		public void ShouldReceiveOneGetOffsetUtcNow(IOptions<ForgotPasswordTokenOptions> forgotPasswordTokenOptions)
 		{
-			dateTimeProvider.ShouldHaveReceivedOne().GetOffsetUtcNow(lifetimeSeconds);
+			dateTimeProvider.ShouldHaveReceivedOne().GetOffsetUtcNow(forgotPasswordTokenOptions.Value.LifetimeSeconds);
 		}
 
 		public void ShouldReceiveOneGetOffsetUtcNow(VerifyForgotPasswordTokenCommand command)

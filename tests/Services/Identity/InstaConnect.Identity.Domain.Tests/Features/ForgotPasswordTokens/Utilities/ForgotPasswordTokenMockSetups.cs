@@ -1,6 +1,10 @@
 using InstaConnect.Common.Domain.Features.DateTimes.Abstractions;
 using InstaConnect.Common.Domain.Features.Guids.Abstractions;
 using InstaConnect.Identity.Domain.Features.Common.Helpers;
+using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Options;
+using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Options;
+
+using Microsoft.Extensions.Options;
 
 namespace InstaConnect.Identity.Domain.Tests.Features.ForgotPasswordTokens.Utilities;
 
@@ -27,11 +31,13 @@ public static class ForgotPasswordTokenMockSetups
 				.ReturnsResponse(forgotPasswordToken.CreatedAtUtc);
 		}
 
-		public void SetupGetOffsetUtcNow(ForgotPasswordToken forgotPasswordToken, int lifetimeSeconds)
+		public void SetupGetOffsetUtcNow(
+			ForgotPasswordToken forgotPasswordToken,
+			IOptions<ForgotPasswordTokenOptions> forgotPasswordTokenOptions)
 		{
 			dateTimeProvider
 				.ClearCalls()
-				.GetOffsetUtcNow(lifetimeSeconds)
+				.GetOffsetUtcNow(forgotPasswordTokenOptions.Value.LifetimeSeconds)
 				.ReturnsResponse(forgotPasswordToken.ExpiresAtUtc);
 		}
 

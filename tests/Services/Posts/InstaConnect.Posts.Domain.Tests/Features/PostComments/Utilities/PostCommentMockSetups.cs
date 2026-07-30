@@ -9,7 +9,9 @@ public static class PostCommentMockSetups
 	{
 		public void SetupNewStringGuid(PostComment postComment)
 		{
-			guidProvider.ClearCalls().NewStringGuid()
+			guidProvider
+				.ClearCalls()
+				.NewStringGuid()
 				.ReturnsResponse(postComment.Id.CommentId);
 		}
 	}
@@ -18,7 +20,9 @@ public static class PostCommentMockSetups
 	{
 		public void SetupGetOffsetUtcNow(PostComment postComment)
 		{
-			dateTimeProvider.ClearCalls().GetOffsetUtcNow()
+			dateTimeProvider
+				.ClearCalls()
+				.GetOffsetUtcNow()
 				.ReturnsResponse(postComment.CreatedAtUtc);
 		}
 	}
@@ -327,7 +331,10 @@ public static class PostCommentMockSetups
 			UpdatePostCommentCommand command,
 			PostComment postComment)
 		{
-			dateTimeProvider.ClearCalls().GetOffsetUtcNow().ReturnsResponse(postComment.UpdatedAtUtc);
+			dateTimeProvider
+				.ClearCalls()
+				.GetOffsetUtcNow()
+				.ReturnsResponse(postComment.UpdatedAtUtc);
 		}
 	}
 }

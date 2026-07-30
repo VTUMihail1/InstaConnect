@@ -8,7 +8,9 @@ public static class PostCommentLikeMockSetups
 	{
 		public void SetupGetOffsetUtcNow(PostCommentLike postCommentLike)
 		{
-			dateTimeProvider.ClearCalls().GetOffsetUtcNow()
+			dateTimeProvider
+				.ClearCalls()
+				.GetOffsetUtcNow()
 				.ReturnsResponse(postCommentLike.CreatedAtUtc);
 		}
 	}
