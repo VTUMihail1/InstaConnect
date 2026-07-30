@@ -3,7 +3,7 @@ using InstaConnect.Follows.Domain.Features.Users.Models.ValueObjects;
 using InstaConnect.Follows.Presentation.Features.Follows.Utilities;
 using InstaConnect.Follows.Tests.Features.Common.Utilities;
 using InstaConnect.Follows.Tests.Features.Follows.Abstractions;
-using InstaConnect.Follows.Tests.Features.Follows.Utilities;
+using InstaConnect.Follows.Tests.Features.Follows.Helpers;
 
 namespace InstaConnect.Follows.Tests.Features.Follows.Extensions;
 
@@ -16,6 +16,13 @@ public static class FollowsWebApplicationFactoryExtensions
 			var connection = webApplicationFactory.CreateHubConnection(followingId.Id, FollowRoutes.Hub.TrimStart('/'));
 
 			return new FollowNotificationClient(connection);
+		}
+
+		public IFollowEventClient CreateFollowEventClient()
+		{
+			var eventHarness = webApplicationFactory.Services.GetEventHarness();
+
+			return new FollowEventClient(eventHarness);
 		}
 	}
 }

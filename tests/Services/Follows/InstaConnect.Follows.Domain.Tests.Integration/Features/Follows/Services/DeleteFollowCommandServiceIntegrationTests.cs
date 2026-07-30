@@ -89,7 +89,7 @@ public class DeleteFollowCommandServiceIntegrationTests : BaseFollowDomainComman
 	{
 		// Act
 		await Service.DeleteAsync(_command, CancellationToken);
-		var eventRequest = await EventHarness.PublishedDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_command, Follow);
@@ -105,7 +105,7 @@ public class DeleteFollowCommandServiceIntegrationTests : BaseFollowDomainComman
 
 		// Act
 		await Service.DeleteAsync(command, CancellationToken);
-		var eventRequest = await EventHarness.PublishedDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(command, Follow);
@@ -121,7 +121,7 @@ public class DeleteFollowCommandServiceIntegrationTests : BaseFollowDomainComman
 
 		// Act
 		await Service.DeleteAsync(command, CancellationToken);
-		var eventRequest = await EventHarness.PublishedDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(command, Follow);

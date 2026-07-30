@@ -10,21 +10,26 @@ public abstract class BaseFollowDomainCommandIntegrationTest : BaseFollowWebTest
 {
 	protected IFollowCommandService Service { get; }
 
+	protected IFollowEventClient EventClient { get; }
+
 	protected IFollowNotificationClient NotificationClient { get; }
 
 	protected BaseFollowDomainCommandIntegrationTest(FollowsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
 		Service = ServiceScope.GetFollowCommandService();
+		EventClient = webApplicationFactory.CreateFollowEventClient();
 		NotificationClient = webApplicationFactory.CreateFollowNotificationClient(Following.Id);
 	}
 
 	protected override async Task OnInitializeAsync()
 	{
-		await NotificationClient.ConnectAsync(CancellationToken);
+		await EventClient.StartAsync(CancellationToken);
+		await NotificationClient.StartAsync(CancellationToken);
 	}
 
 	protected override async Task OnDisposeAsync()
 	{
-		await NotificationClient.DisconnectAsync(CancellationToken);
+		await EventClient.StopAsync(CancellationToken);
+		await NotificationClient.StopAsync(CancellationToken);
 	}
 }

@@ -10,25 +10,21 @@ public abstract class BaseUserWebTest : BaseUserTest, IClassFixture<FollowsWebAp
 {
 	protected IServiceScope ServiceScope { get; }
 
-	protected IEventHarness EventHarness { get; }
-
 	protected BaseUserWebTest(FollowsWebApplicationFactory webApplicationFactory)
 	{
 		ServiceScope = webApplicationFactory.Services.CreateScope();
-		EventHarness = ServiceScope.GetEventHarness();
 	}
 
 	public async Task InitializeAsync()
 	{
-		await EventHarness.StartAsync(CancellationToken);
 		await ServiceScope.ResetFollowsDatabaseAsync(CancellationToken);
 		await OnInitializeAsync();
 	}
 
 	public async Task DisposeAsync()
 	{
+		await OnDisposeAsync();
 		await ServiceScope.ResetFollowsDatabaseAsync(CancellationToken);
-		await EventHarness.StopAsync(CancellationToken);
 	}
 
 	protected virtual Task OnInitializeAsync()

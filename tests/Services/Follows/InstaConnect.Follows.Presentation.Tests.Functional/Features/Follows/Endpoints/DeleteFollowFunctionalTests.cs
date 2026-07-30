@@ -211,7 +211,7 @@ public class DeleteFollowFunctionalTests : BaseFollowPresentationCommandFunction
 	{
 		// Act
 		await Client.DeleteAsync(_request, CancellationToken);
-		var eventRequest = await EventHarness.PublishedDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_request, Follow);
@@ -227,7 +227,7 @@ public class DeleteFollowFunctionalTests : BaseFollowPresentationCommandFunction
 
 		// Act
 		await Client.DeleteAsync(request, CancellationToken);
-		var eventRequest = await EventHarness.PublishedDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, Follow);
@@ -243,7 +243,7 @@ public class DeleteFollowFunctionalTests : BaseFollowPresentationCommandFunction
 
 		// Act
 		await Client.DeleteAsync(request, CancellationToken);
-		var eventRequest = await EventHarness.PublishedDeletedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, Follow);

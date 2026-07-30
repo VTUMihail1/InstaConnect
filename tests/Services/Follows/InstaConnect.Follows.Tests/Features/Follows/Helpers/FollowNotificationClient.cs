@@ -5,7 +5,7 @@ using InstaConnect.Follows.Tests.Features.Follows.Abstractions;
 
 using Microsoft.AspNetCore.SignalR.Client;
 
-namespace InstaConnect.Follows.Tests.Features.Follows.Utilities;
+namespace InstaConnect.Follows.Tests.Features.Follows.Helpers;
 
 public class FollowNotificationClient : IFollowNotificationClient
 {
@@ -19,17 +19,17 @@ public class FollowNotificationClient : IFollowNotificationClient
 			_addedChannel.Writer.TryWrite(request));
 	}
 
-	public async Task ConnectAsync(CancellationToken cancellationToken)
+	public async Task StartAsync(CancellationToken cancellationToken)
 	{
 		await _connection.StartAsync(cancellationToken);
 	}
 
-	public async Task DisconnectAsync(CancellationToken cancellationToken)
+	public async Task StopAsync(CancellationToken cancellationToken)
 	{
 		await _connection.StopAsync(cancellationToken);
 	}
 
-	public async Task<FollowAddedNotificationRequest> AddedAsync(CancellationToken cancellationToken)
+	public async Task<FollowAddedNotificationRequest> PublishedAddedAsync(CancellationToken cancellationToken)
 	{
 		const int Timeout = 10;
 

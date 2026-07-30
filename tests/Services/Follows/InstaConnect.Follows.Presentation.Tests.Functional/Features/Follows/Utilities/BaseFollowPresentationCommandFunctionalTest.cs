@@ -9,21 +9,26 @@ public abstract class BaseFollowPresentationCommandFunctionalTest : BaseFollowWe
 {
 	protected IFollowClient Client { get; }
 
+	protected IFollowEventClient EventClient { get; }
+
 	protected IFollowNotificationClient NotificationClient { get; }
 
 	protected BaseFollowPresentationCommandFunctionalTest(FollowsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
 		Client = webApplicationFactory.CreateFollowClient();
+		EventClient = webApplicationFactory.CreateFollowEventClient();
 		NotificationClient = webApplicationFactory.CreateFollowNotificationClient(Following.Id);
 	}
 
 	protected override async Task OnInitializeAsync()
 	{
-		await NotificationClient.ConnectAsync(CancellationToken);
+		await EventClient.StartAsync(CancellationToken);
+		await NotificationClient.StartAsync(CancellationToken);
 	}
 
 	protected override async Task OnDisposeAsync()
 	{
-		await NotificationClient.DisconnectAsync(CancellationToken);
+		await EventClient.StopAsync(CancellationToken);
+		await NotificationClient.StopAsync(CancellationToken);
 	}
 }

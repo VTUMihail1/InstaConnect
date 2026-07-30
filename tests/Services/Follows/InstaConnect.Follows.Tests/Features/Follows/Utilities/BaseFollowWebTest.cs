@@ -10,17 +10,13 @@ public abstract class BaseFollowWebTest : BaseFollowTest, IClassFixture<FollowsW
 {
 	protected IServiceScope ServiceScope { get; }
 
-	protected IEventHarness EventHarness { get; }
-
 	protected BaseFollowWebTest(FollowsWebApplicationFactory webApplicationFactory)
 	{
 		ServiceScope = webApplicationFactory.Services.CreateScope();
-		EventHarness = ServiceScope.GetEventHarness();
 	}
 
 	public async Task InitializeAsync()
 	{
-		await EventHarness.StartAsync(CancellationToken);
 		await ServiceScope.ResetFollowsDatabaseAsync(CancellationToken);
 		await OnInitializeAsync();
 	}
@@ -29,7 +25,6 @@ public abstract class BaseFollowWebTest : BaseFollowTest, IClassFixture<FollowsW
 	{
 		await OnDisposeAsync();
 		await ServiceScope.ResetFollowsDatabaseAsync(CancellationToken);
-		await EventHarness.StopAsync(CancellationToken);
 	}
 
 	protected virtual Task OnInitializeAsync()

@@ -202,7 +202,7 @@ public class AddFollowCommandHandlerIntegrationTests : BaseFollowApplicationComm
 		// Act
 		var response = await Sender.SendAsync(_request, CancellationToken);
 		var follow = await ServiceScope.GetByIdAsync(response, CancellationToken);
-		var eventRequest = await EventHarness.PublishedAddedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_request, follow);
@@ -219,7 +219,7 @@ public class AddFollowCommandHandlerIntegrationTests : BaseFollowApplicationComm
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
 		var follow = await ServiceScope.GetByIdAsync(response, CancellationToken);
-		var eventRequest = await EventHarness.PublishedAddedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, follow);
@@ -236,7 +236,7 @@ public class AddFollowCommandHandlerIntegrationTests : BaseFollowApplicationComm
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
 		var follow = await ServiceScope.GetByIdAsync(response, CancellationToken);
-		var eventRequest = await EventHarness.PublishedAddedEventRequestAsync(CancellationToken);
+		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, follow);
@@ -248,7 +248,7 @@ public class AddFollowCommandHandlerIntegrationTests : BaseFollowApplicationComm
 		// Act
 		var response = await Sender.SendAsync(_request, CancellationToken);
 		var follow = await ServiceScope.GetByIdAsync(response, CancellationToken);
-		var notificationRequest = await NotificationClient.AddedAsync(CancellationToken);
+		var notificationRequest = await NotificationClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		notificationRequest.ShouldSatisfy(_request, follow);
@@ -265,7 +265,7 @@ public class AddFollowCommandHandlerIntegrationTests : BaseFollowApplicationComm
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
 		var follow = await ServiceScope.GetByIdAsync(response, CancellationToken);
-		var notificationRequest = await NotificationClient.AddedAsync(CancellationToken);
+		var notificationRequest = await NotificationClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		notificationRequest.ShouldSatisfy(request, follow);
@@ -282,7 +282,7 @@ public class AddFollowCommandHandlerIntegrationTests : BaseFollowApplicationComm
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
 		var follow = await ServiceScope.GetByIdAsync(response, CancellationToken);
-		var notificationRequest = await NotificationClient.AddedAsync(CancellationToken);
+		var notificationRequest = await NotificationClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		notificationRequest.ShouldSatisfy(request, follow);
