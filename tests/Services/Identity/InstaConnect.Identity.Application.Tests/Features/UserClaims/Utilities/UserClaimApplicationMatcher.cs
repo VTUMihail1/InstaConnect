@@ -1,6 +1,6 @@
 namespace InstaConnect.Identity.Application.Tests.Features.UserClaims.Utilities;
 
-public static class UserClaimMatcher
+public static class UserClaimApplicationMatcher
 {
 	public static GetAllUserClaimsQuery IsGetAllUserClaimsQuery(GetAllUserClaimsQueryRequest request)
 	{

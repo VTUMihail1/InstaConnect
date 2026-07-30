@@ -99,7 +99,7 @@ public static class FollowMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, FollowMatcher.IsFollowInclude(command, include), cancellationToken)
+				.GetByIdAsync(command.Id, FollowDomainMatcher.IsFollowInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(follow);
 		}
 
@@ -110,7 +110,7 @@ public static class FollowMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, FollowMatcher.IsFollowInclude(command, include), cancellationToken)
+				.GetByIdAsync(command.Id, FollowDomainMatcher.IsFollowInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 	}

@@ -2,7 +2,7 @@ using InstaConnect.Posts.Events.Features.PostLikes;
 
 namespace InstaConnect.Posts.Domain.Tests.Features.PostLikes.Utilities;
 
-public static class PostLikeMatcher
+public static class PostLikeDomainMatcher
 {
 	public static PostInclude IsPostInclude(AddPostLikeCommand command, PostInclude include)
 	{

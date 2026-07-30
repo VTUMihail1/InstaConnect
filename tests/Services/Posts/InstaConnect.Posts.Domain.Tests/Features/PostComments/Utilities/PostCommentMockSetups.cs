@@ -47,7 +47,7 @@ public static class PostCommentMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, PostCommentMatcher.IsPostInclude(command, include), cancellationToken)
+				.GetByIdAsync(command.Id, PostCommentDomainMatcher.IsPostInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(post);
 		}
 
@@ -58,7 +58,7 @@ public static class PostCommentMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, PostCommentMatcher.IsPostInclude(command, include), cancellationToken)
+				.GetByIdAsync(command.Id, PostCommentDomainMatcher.IsPostInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 
@@ -108,7 +108,7 @@ public static class PostCommentMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, PostCommentMatcher.IsPostCommentInclude(command, include), cancellationToken)
+				.GetByIdAsync(command.Id, PostCommentDomainMatcher.IsPostCommentInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(postComment);
 		}
 
@@ -119,7 +119,7 @@ public static class PostCommentMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, PostCommentMatcher.IsPostCommentInclude(command, include), cancellationToken)
+				.GetByIdAsync(command.Id, PostCommentDomainMatcher.IsPostCommentInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(postComment);
 		}
 
@@ -130,7 +130,7 @@ public static class PostCommentMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, PostCommentMatcher.IsPostCommentInclude(command, include), cancellationToken)
+				.GetByIdAsync(command.Id, PostCommentDomainMatcher.IsPostCommentInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 
@@ -141,7 +141,7 @@ public static class PostCommentMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, PostCommentMatcher.IsPostCommentInclude(command, include), cancellationToken)
+				.GetByIdAsync(command.Id, PostCommentDomainMatcher.IsPostCommentInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 	}

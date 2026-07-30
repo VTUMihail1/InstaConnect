@@ -62,7 +62,7 @@ public static class RefreshTokenMockAssertions
 		{
 			await repository.ShouldHaveReceivedOne().GetByNameAsync(
 				command.Name,
-				RefreshTokenMatcher.IsUserInclude(command, include),
+				RefreshTokenDomainMatcher.IsUserInclude(command, include),
 				cancellationToken);
 		}
 
@@ -73,7 +73,7 @@ public static class RefreshTokenMockAssertions
 		{
 			await repository.ShouldHaveReceivedOne().GetByIdAsync(
 				command.Id.Id,
-				RefreshTokenMatcher.IsUserInclude(command, include),
+				RefreshTokenDomainMatcher.IsUserInclude(command, include),
 				cancellationToken);
 		}
 
@@ -108,7 +108,7 @@ public static class RefreshTokenMockAssertions
 			RefreshToken refreshToken,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().AddAsync(RefreshTokenMatcher.IsRefreshToken(command, refreshToken), cancellationToken);
+			await repository.ShouldHaveReceivedOne().AddAsync(RefreshTokenDomainMatcher.IsRefreshToken(command, refreshToken), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneAddAsync(
@@ -116,7 +116,7 @@ public static class RefreshTokenMockAssertions
 			RefreshToken refreshToken,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().AddAsync(RefreshTokenMatcher.IsRefreshToken(command, refreshToken), cancellationToken);
+			await repository.ShouldHaveReceivedOne().AddAsync(RefreshTokenDomainMatcher.IsRefreshToken(command, refreshToken), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneDeleteAsync(
@@ -124,7 +124,7 @@ public static class RefreshTokenMockAssertions
 			RefreshToken refreshToken,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().DeleteAsync(RefreshTokenMatcher.IsRefreshToken(command, refreshToken), cancellationToken);
+			await repository.ShouldHaveReceivedOne().DeleteAsync(RefreshTokenDomainMatcher.IsRefreshToken(command, refreshToken), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneDeleteAsync(
@@ -132,7 +132,7 @@ public static class RefreshTokenMockAssertions
 			RefreshToken refreshToken,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().DeleteAsync(RefreshTokenMatcher.IsRefreshToken(command, refreshToken), cancellationToken);
+			await repository.ShouldHaveReceivedOne().DeleteAsync(RefreshTokenDomainMatcher.IsRefreshToken(command, refreshToken), cancellationToken);
 		}
 	}
 }

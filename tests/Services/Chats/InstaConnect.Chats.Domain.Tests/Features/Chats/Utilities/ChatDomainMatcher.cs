@@ -2,7 +2,7 @@ using InstaConnect.Chats.Events.Features.Chats;
 
 namespace InstaConnect.Chats.Domain.Tests.Features.Chats.Utilities;
 
-public static class ChatMatcher
+public static class ChatDomainMatcher
 {
 	public static Chat IsChat(AddChatCommand command)
 	{

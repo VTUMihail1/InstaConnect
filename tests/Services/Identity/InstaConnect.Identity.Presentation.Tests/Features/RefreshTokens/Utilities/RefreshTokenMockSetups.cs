@@ -12,7 +12,7 @@ public static class RefreshTokenMockSetups
 			CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(RefreshTokenMatcher.IsIssueRefreshTokenCommandRequest(request), cancellationToken)
+				.SendAsync(RefreshTokenPresentationMatcher.IsIssueRefreshTokenCommandRequest(request), cancellationToken)
 				.ReturnsTaskResponse(refreshToken.ToResponse(request));
 		}
 
@@ -22,7 +22,7 @@ public static class RefreshTokenMockSetups
 			CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(RefreshTokenMatcher.IsRotateRefreshTokenCommandRequest(request), cancellationToken)
+				.SendAsync(RefreshTokenPresentationMatcher.IsRotateRefreshTokenCommandRequest(request), cancellationToken)
 				.ReturnsTaskResponse(refreshToken.ToResponse(request));
 		}
 	}

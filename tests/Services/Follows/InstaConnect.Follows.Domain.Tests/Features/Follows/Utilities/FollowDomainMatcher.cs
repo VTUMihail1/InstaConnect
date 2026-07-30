@@ -2,7 +2,7 @@ using InstaConnect.Follows.Events.Features.Follows;
 
 namespace InstaConnect.Follows.Domain.Tests.Features.Follows.Utilities;
 
-public static class FollowMatcher
+public static class FollowDomainMatcher
 {
 	public static FollowInclude IsFollowInclude(DeleteFollowCommand command, FollowInclude include)
 	{

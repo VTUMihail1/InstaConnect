@@ -3,7 +3,7 @@ using InstaConnect.Identity.Events.Features.Users;
 
 namespace InstaConnect.Identity.Domain.Tests.Features.Users.Utilities;
 
-public static class UserMatcher
+public static class UserDomainMatcher
 {
 	public static UserInclude IsUserInclude(UpdateUserCommand command, UserInclude include)
 	{

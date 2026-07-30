@@ -13,21 +13,21 @@ public static class RefreshTokenMockAssertions
 			IssueRefreshTokenApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(RefreshTokenMatcher.IsIssueRefreshTokenCommandRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(RefreshTokenPresentationMatcher.IsIssueRefreshTokenCommandRequest(request), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneSendAsync(
 			RotateRefreshTokenApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(RefreshTokenMatcher.IsRotateRefreshTokenCommandRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(RefreshTokenPresentationMatcher.IsRotateRefreshTokenCommandRequest(request), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneSendAsync(
 			DeleteCurrentRefreshTokenApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(RefreshTokenMatcher.IsDeleteCurrentRefreshTokenCommandRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(RefreshTokenPresentationMatcher.IsDeleteCurrentRefreshTokenCommandRequest(request), cancellationToken);
 		}
 	}
 
@@ -37,14 +37,14 @@ public static class RefreshTokenMockAssertions
 			IssueRefreshTokenApiRequest request,
 			RefreshToken refreshToken)
 		{
-			store.ShouldHaveReceivedOne().Set(RefreshTokenMatcher.IsRefreshTokenCookieRequest(request, refreshToken));
+			store.ShouldHaveReceivedOne().Set(RefreshTokenPresentationMatcher.IsRefreshTokenCookieRequest(request, refreshToken));
 		}
 
 		public void ShouldReceiveOneSet(
 			RotateRefreshTokenApiRequest request,
 			RefreshToken refreshToken)
 		{
-			store.ShouldHaveReceivedOne().Set(RefreshTokenMatcher.IsRefreshTokenCookieRequest(request, refreshToken));
+			store.ShouldHaveReceivedOne().Set(RefreshTokenPresentationMatcher.IsRefreshTokenCookieRequest(request, refreshToken));
 		}
 
 		public void ShouldReceiveOneDelete(DeleteCurrentRefreshTokenApiRequest request)

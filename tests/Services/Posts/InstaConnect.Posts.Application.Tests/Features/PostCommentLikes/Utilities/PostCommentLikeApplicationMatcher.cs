@@ -1,6 +1,6 @@
 namespace InstaConnect.Posts.Application.Tests.Features.PostCommentLikes.Utilities;
 
-public static class PostCommentLikeMatcher
+public static class PostCommentLikeApplicationMatcher
 {
 	public static GetAllPostCommentLikesQuery IsGetAllPostCommentLikesQuery(GetAllPostCommentLikesQueryRequest request)
 	{

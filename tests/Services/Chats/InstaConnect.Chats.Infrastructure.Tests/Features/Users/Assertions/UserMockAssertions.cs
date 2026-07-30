@@ -11,21 +11,21 @@ public static class UserMockAssertions
 		UserAddedEventRequest request,
 		CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(UserMatcher.IsAddUserCommandRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(UserInfrastructureMatcher.IsAddUserCommandRequest(request), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneSendAsync(
 			UserUpdatedEventRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(UserMatcher.IsUpdateUserCommandRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(UserInfrastructureMatcher.IsUpdateUserCommandRequest(request), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneSendAsync(
 			UserDeletedEventRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(UserMatcher.IsDeleteUserCommandRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(UserInfrastructureMatcher.IsDeleteUserCommandRequest(request), cancellationToken);
 		}
 	}
 }

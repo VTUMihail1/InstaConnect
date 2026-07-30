@@ -1,6 +1,6 @@
 namespace InstaConnect.Posts.Presentation.Tests.Features.PostLikes.Utilities;
 
-public static class PostLikeMatcher
+public static class PostLikePresentationMatcher
 {
 	public static GetAllPostLikesQueryRequest IsGetAllPostLikesQueryRequest(GetAllPostLikesApiRequest request)
 	{

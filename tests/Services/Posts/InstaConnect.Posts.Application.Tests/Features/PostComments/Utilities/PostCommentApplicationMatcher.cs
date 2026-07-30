@@ -1,6 +1,6 @@
 namespace InstaConnect.Posts.Application.Tests.Features.PostComments.Utilities;
 
-public static class PostCommentMatcher
+public static class PostCommentApplicationMatcher
 {
 	public static GetAllPostCommentsQuery IsGetAllPostCommentsQuery(GetAllPostCommentsQueryRequest request)
 	{

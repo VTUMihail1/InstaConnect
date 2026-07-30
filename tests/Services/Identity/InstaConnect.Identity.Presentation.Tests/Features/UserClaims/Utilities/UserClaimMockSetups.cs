@@ -13,7 +13,7 @@ public static class UserClaimMockSetups
 		CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(UserClaimMatcher.IsGetAllUserClaimsQueryRequest(request), cancellationToken)
+				.SendAsync(UserClaimPresentationMatcher.IsGetAllUserClaimsQueryRequest(request), cancellationToken)
 				.ReturnsTaskResponse(userClaims.ToResponse(request, user));
 		}
 
@@ -23,7 +23,7 @@ public static class UserClaimMockSetups
 			CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(UserClaimMatcher.IsAddUserClaimCommandRequest(request), cancellationToken)
+				.SendAsync(UserClaimPresentationMatcher.IsAddUserClaimCommandRequest(request), cancellationToken)
 				.ReturnsTaskResponse(userClaim.ToResponse(request));
 		}
 	}

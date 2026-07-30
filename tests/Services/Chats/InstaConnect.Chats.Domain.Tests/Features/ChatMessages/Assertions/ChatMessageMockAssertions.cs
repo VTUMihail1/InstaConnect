@@ -26,7 +26,7 @@ public static class ChatMessageMockAssertions
 		{
 			await repository.ShouldHaveReceivedOne().GetByIdAsync(
 				command.Id,
-				ChatMessageMatcher.IsChatInclude(command, include),
+				ChatMessageDomainMatcher.IsChatInclude(command, include),
 				cancellationToken);
 		}
 
@@ -58,7 +58,7 @@ public static class ChatMessageMockAssertions
 		{
 			await repository.ShouldHaveReceivedOne().GetByIdAsync(
 				command.Id,
-				ChatMessageMatcher.IsChatMessageInclude(command, include),
+				ChatMessageDomainMatcher.IsChatMessageInclude(command, include),
 				cancellationToken);
 		}
 
@@ -69,7 +69,7 @@ public static class ChatMessageMockAssertions
 		{
 			await repository.ShouldHaveReceivedOne().GetByIdAsync(
 				command.Id,
-				ChatMessageMatcher.IsChatMessageInclude(command, include),
+				ChatMessageDomainMatcher.IsChatMessageInclude(command, include),
 				cancellationToken);
 		}
 
@@ -77,21 +77,21 @@ public static class ChatMessageMockAssertions
 			AddChatMessageCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().AddAsync(ChatMessageMatcher.IsChatMessage(command), cancellationToken);
+			await repository.ShouldHaveReceivedOne().AddAsync(ChatMessageDomainMatcher.IsChatMessage(command), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneUpdateAsync(
 			UpdateChatMessageCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().UpdateAsync(ChatMessageMatcher.IsChatMessage(command), cancellationToken);
+			await repository.ShouldHaveReceivedOne().UpdateAsync(ChatMessageDomainMatcher.IsChatMessage(command), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneDeleteAsync(
 			DeleteChatMessageCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().DeleteAsync(ChatMessageMatcher.IsChatMessage(command), cancellationToken);
+			await repository.ShouldHaveReceivedOne().DeleteAsync(ChatMessageDomainMatcher.IsChatMessage(command), cancellationToken);
 		}
 	}
 
@@ -166,7 +166,7 @@ public static class ChatMessageMockAssertions
 			ChatMessage chatMessage,
 			CancellationToken cancellationToken)
 		{
-			await notificationService.ShouldHaveReceivedOne().AddedAsync(ChatMessageMatcher.IsChatMessageAddedNotificationRequest(command, chatMessage), cancellationToken);
+			await notificationService.ShouldHaveReceivedOne().AddedAsync(ChatMessageDomainMatcher.IsChatMessageAddedNotificationRequest(command, chatMessage), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneUpdatedAsync(
@@ -174,7 +174,7 @@ public static class ChatMessageMockAssertions
 			ChatMessage chatMessage,
 			CancellationToken cancellationToken)
 		{
-			await notificationService.ShouldHaveReceivedOne().UpdatedAsync(ChatMessageMatcher.IsChatMessageUpdatedNotificationRequest(command, chatMessage), cancellationToken);
+			await notificationService.ShouldHaveReceivedOne().UpdatedAsync(ChatMessageDomainMatcher.IsChatMessageUpdatedNotificationRequest(command, chatMessage), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneDeletedAsync(
@@ -182,7 +182,7 @@ public static class ChatMessageMockAssertions
 			ChatMessage chatMessage,
 			CancellationToken cancellationToken)
 		{
-			await notificationService.ShouldHaveReceivedOne().DeletedAsync(ChatMessageMatcher.IsChatMessageDeletedNotificationRequest(command, chatMessage), cancellationToken);
+			await notificationService.ShouldHaveReceivedOne().DeletedAsync(ChatMessageDomainMatcher.IsChatMessageDeletedNotificationRequest(command, chatMessage), cancellationToken);
 		}
 	}
 }

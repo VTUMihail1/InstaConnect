@@ -10,21 +10,21 @@ public static class PostMockAssertions
 		GetAllPostsQueryRequest request,
 		CancellationToken cancellationToken)
 		{
-			await postService.ShouldHaveReceivedOne().GetAllAsync(PostMatcher.IsGetAllPostsQuery(request), cancellationToken);
+			await postService.ShouldHaveReceivedOne().GetAllAsync(PostApplicationMatcher.IsGetAllPostsQuery(request), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneGetAllForUserAsync(
 			GetAllPostsForUserQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await postService.ShouldHaveReceivedOne().GetAllForUserAsync(PostMatcher.IsGetAllPostsForUserQuery(request), cancellationToken);
+			await postService.ShouldHaveReceivedOne().GetAllForUserAsync(PostApplicationMatcher.IsGetAllPostsForUserQuery(request), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneGetByIdAsync(
 			GetPostByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await postService.ShouldHaveReceivedOne().GetByIdAsync(PostMatcher.IsGetPostByIdQuery(request), cancellationToken);
+			await postService.ShouldHaveReceivedOne().GetByIdAsync(PostApplicationMatcher.IsGetPostByIdQuery(request), cancellationToken);
 		}
 	}
 
@@ -34,21 +34,21 @@ public static class PostMockAssertions
 		AddPostCommandRequest request,
 		CancellationToken cancellationToken)
 		{
-			await postService.ShouldHaveReceivedOne().AddAsync(PostMatcher.IsAddPostCommand(request), cancellationToken);
+			await postService.ShouldHaveReceivedOne().AddAsync(PostApplicationMatcher.IsAddPostCommand(request), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneUpdateAsync(
 			UpdatePostCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await postService.ShouldHaveReceivedOne().UpdateAsync(PostMatcher.IsUpdatePostCommand(request), cancellationToken);
+			await postService.ShouldHaveReceivedOne().UpdateAsync(PostApplicationMatcher.IsUpdatePostCommand(request), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneDeleteAsync(
 			DeletePostCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await postService.ShouldHaveReceivedOne().DeleteAsync(PostMatcher.IsDeletePostCommand(request), cancellationToken);
+			await postService.ShouldHaveReceivedOne().DeleteAsync(PostApplicationMatcher.IsDeletePostCommand(request), cancellationToken);
 		}
 	}
 }

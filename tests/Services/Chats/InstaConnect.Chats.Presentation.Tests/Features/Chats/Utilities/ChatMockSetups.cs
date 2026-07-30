@@ -13,7 +13,7 @@ public static class ChatMockSetups
 		CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(ChatMatcher.IsGetAllChatsQueryRequest(request), cancellationToken)
+				.SendAsync(ChatPresentationMatcher.IsGetAllChatsQueryRequest(request), cancellationToken)
 				.ReturnsTaskResponse(chats.ToResponse(request, participantOne));
 		}
 
@@ -23,7 +23,7 @@ public static class ChatMockSetups
 			CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(ChatMatcher.IsGetChatByIdQueryRequest(request), cancellationToken)
+				.SendAsync(ChatPresentationMatcher.IsGetChatByIdQueryRequest(request), cancellationToken)
 				.ReturnsTaskResponse(chat.ToResponse(request));
 		}
 
@@ -33,7 +33,7 @@ public static class ChatMockSetups
 			CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(ChatMatcher.IsAddChatCommandRequest(request), cancellationToken)
+				.SendAsync(ChatPresentationMatcher.IsAddChatCommandRequest(request), cancellationToken)
 				.ReturnsTaskResponse(chat.ToResponse(request));
 		}
 	}

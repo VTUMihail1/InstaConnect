@@ -11,21 +11,21 @@ public static class UserClaimMockAssertions
 		GetAllUserClaimsApiRequest request,
 		CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(UserClaimMatcher.IsGetAllUserClaimsQueryRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(UserClaimPresentationMatcher.IsGetAllUserClaimsQueryRequest(request), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneSendAsync(
 			AddUserClaimApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(UserClaimMatcher.IsAddUserClaimCommandRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(UserClaimPresentationMatcher.IsAddUserClaimCommandRequest(request), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneSendAsync(
 			DeleteUserClaimApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(UserClaimMatcher.IsDeleteUserClaimCommandRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(UserClaimPresentationMatcher.IsDeleteUserClaimCommandRequest(request), cancellationToken);
 		}
 	}
 }

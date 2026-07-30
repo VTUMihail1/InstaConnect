@@ -1,6 +1,6 @@
 namespace InstaConnect.Chats.Application.Tests.Features.Chats.Utilities;
 
-public static class ChatMatcher
+public static class ChatApplicationMatcher
 {
 	public static GetAllChatsQuery IsGetAllChatsQuery(GetAllChatsQueryRequest request)
 	{

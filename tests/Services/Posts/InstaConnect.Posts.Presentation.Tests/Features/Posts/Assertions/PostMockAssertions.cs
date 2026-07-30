@@ -11,42 +11,42 @@ public static class PostMockAssertions
 		GetAllPostsApiRequest request,
 		CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(PostMatcher.IsGetAllPostsQueryRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(PostPresentationMatcher.IsGetAllPostsQueryRequest(request), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneSendAsync(
 			GetAllPostsForUserApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(PostMatcher.IsGetAllPostsForUserQueryRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(PostPresentationMatcher.IsGetAllPostsForUserQueryRequest(request), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneSendAsync(
 			GetPostByIdApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(PostMatcher.IsGetPostByIdQueryRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(PostPresentationMatcher.IsGetPostByIdQueryRequest(request), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneSendAsync(
 			AddPostApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(PostMatcher.IsAddPostCommandRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(PostPresentationMatcher.IsAddPostCommandRequest(request), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneSendAsync(
 			UpdatePostApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(PostMatcher.IsUpdatePostCommandRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(PostPresentationMatcher.IsUpdatePostCommandRequest(request), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneSendAsync(
 			DeletePostApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(PostMatcher.IsDeletePostCommandRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(PostPresentationMatcher.IsDeletePostCommandRequest(request), cancellationToken);
 		}
 	}
 }

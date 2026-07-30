@@ -27,21 +27,21 @@ public static class UserMockAssertions
 			AddUserCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().AddAsync(UserMatcher.IsUser(command), cancellationToken);
+			await repository.ShouldHaveReceivedOne().AddAsync(UserDomainMatcher.IsUser(command), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneUpdateAsync(
 			UpdateUserCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().UpdateAsync(UserMatcher.IsUser(command), cancellationToken);
+			await repository.ShouldHaveReceivedOne().UpdateAsync(UserDomainMatcher.IsUser(command), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneDeleteAsync(
 			DeleteUserCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().DeleteAsync(UserMatcher.IsUser(command), cancellationToken);
+			await repository.ShouldHaveReceivedOne().DeleteAsync(UserDomainMatcher.IsUser(command), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneExistsByIdAsync(

@@ -1,6 +1,6 @@
 namespace InstaConnect.Chats.Infrastructure.Tests.Features.Users.Utilities;
 
-public static class UserMatcher
+public static class UserInfrastructureMatcher
 {
 	public static AddUserCommandRequest IsAddUserCommandRequest(UserAddedEventRequest request)
 	{

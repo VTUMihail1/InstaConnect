@@ -3,7 +3,7 @@ using InstaConnect.Identity.Events.Features.EmailConfirmationTokens;
 
 namespace InstaConnect.Identity.Domain.Tests.Features.EmailConfirmationTokens.Utilities;
 
-public static class EmailConfirmationTokenMatcher
+public static class EmailConfirmationTokenDomainMatcher
 {
 	public static UserInclude IsUserInclude(VerifyEmailConfirmationTokenCommand command, UserInclude include)
 	{

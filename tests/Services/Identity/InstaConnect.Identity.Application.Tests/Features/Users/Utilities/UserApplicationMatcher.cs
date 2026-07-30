@@ -1,6 +1,6 @@
 namespace InstaConnect.Identity.Application.Tests.Features.Users.Utilities;
 
-public static class UserMatcher
+public static class UserApplicationMatcher
 {
 	public static GetAllUsersQuery IsGetAllUsersQuery(GetAllUsersQueryRequest request)
 	{

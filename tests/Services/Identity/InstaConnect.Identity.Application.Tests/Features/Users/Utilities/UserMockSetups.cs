@@ -10,7 +10,7 @@ public static class UserMockSetups
 		CancellationToken cancellationToken)
 		{
 			service
-				.GetAllAsync(UserMatcher.IsGetAllUsersQuery(request), cancellationToken)
+				.GetAllAsync(UserApplicationMatcher.IsGetAllUsersQuery(request), cancellationToken)
 				.ReturnsTaskResponse(users.ToResponse(request));
 		}
 
@@ -20,7 +20,7 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			service
-				.GetByIdAsync(UserMatcher.IsGetUserByIdQuery(request), cancellationToken)
+				.GetByIdAsync(UserApplicationMatcher.IsGetUserByIdQuery(request), cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(request));
 		}
 
@@ -30,7 +30,7 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			service
-				.GetByIdAsync(UserMatcher.IsGetUserByIdQuery(request), cancellationToken)
+				.GetByIdAsync(UserApplicationMatcher.IsGetUserByIdQuery(request), cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(request));
 		}
 
@@ -40,7 +40,7 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			service
-				.GetByIdAsync(UserMatcher.IsGetUserByIdQuery(request), cancellationToken)
+				.GetByIdAsync(UserApplicationMatcher.IsGetUserByIdQuery(request), cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(request));
 		}
 
@@ -50,7 +50,7 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			service
-				.GetByIdAsync(UserMatcher.IsGetUserByIdQuery(request), cancellationToken)
+				.GetByIdAsync(UserApplicationMatcher.IsGetUserByIdQuery(request), cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(request));
 		}
 	}
@@ -63,7 +63,7 @@ public static class UserMockSetups
 		CancellationToken cancellationToken)
 		{
 			service
-				.AddAsync(UserMatcher.IsAddUserCommand(request), cancellationToken)
+				.AddAsync(UserApplicationMatcher.IsAddUserCommand(request), cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(request));
 		}
 
@@ -73,7 +73,7 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			service
-				.UpdateAsync(UserMatcher.IsUpdateUserCommand(request), cancellationToken)
+				.UpdateAsync(UserApplicationMatcher.IsUpdateUserCommand(request), cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(request));
 		}
 	}

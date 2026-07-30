@@ -43,7 +43,7 @@ public static class ForgotPasswordTokenMockAssertions
 			ForgotPasswordToken forgotPasswordToken,
 			CancellationToken cancellationToken)
 		{
-			await emailSender.ShouldHaveReceivedOne().SendAsync(ForgotPasswordTokenMatcher.IsForgotPasswordToken(command, forgotPasswordToken), cancellationToken);
+			await emailSender.ShouldHaveReceivedOne().SendAsync(ForgotPasswordTokenDomainMatcher.IsForgotPasswordToken(command, forgotPasswordToken), cancellationToken);
 		}
 	}
 
@@ -54,7 +54,7 @@ public static class ForgotPasswordTokenMockAssertions
 			ForgotPasswordToken forgotPasswordToken,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(ForgotPasswordTokenMatcher.IsForgotPasswordTokenAddedEventRequest(command, forgotPasswordToken), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(ForgotPasswordTokenDomainMatcher.IsForgotPasswordTokenAddedEventRequest(command, forgotPasswordToken), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOnePublishAsync(
@@ -62,7 +62,7 @@ public static class ForgotPasswordTokenMockAssertions
 			ICollection<ForgotPasswordToken> forgotPasswordTokens,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(ForgotPasswordTokenMatcher.IsForgotPasswordTokenDeletedEventRequestCollection(command, forgotPasswordTokens), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(ForgotPasswordTokenDomainMatcher.IsForgotPasswordTokenDeletedEventRequestCollection(command, forgotPasswordTokens), cancellationToken);
 		}
 	}
 
@@ -82,7 +82,7 @@ public static class ForgotPasswordTokenMockAssertions
 		{
 			await repository.ShouldHaveReceivedOne().GetByIdAsync(
 				command.Id.Id,
-				ForgotPasswordTokenMatcher.IsUserInclude(command, include),
+				ForgotPasswordTokenDomainMatcher.IsUserInclude(command, include),
 				cancellationToken);
 		}
 
@@ -102,7 +102,7 @@ public static class ForgotPasswordTokenMockAssertions
 			ForgotPasswordToken forgotPasswordToken,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().AddAsync(ForgotPasswordTokenMatcher.IsForgotPasswordToken(command, forgotPasswordToken), cancellationToken);
+			await repository.ShouldHaveReceivedOne().AddAsync(ForgotPasswordTokenDomainMatcher.IsForgotPasswordToken(command, forgotPasswordToken), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneGetByIdAsync(

@@ -1,6 +1,6 @@
 namespace InstaConnect.Chats.Domain.Tests.Features.ChatMessages.Utilities;
 
-public static class ChatMessageMatcher
+public static class ChatMessageDomainMatcher
 {
 	public static ChatInclude IsChatInclude(AddChatMessageCommand command, ChatInclude include)
 	{

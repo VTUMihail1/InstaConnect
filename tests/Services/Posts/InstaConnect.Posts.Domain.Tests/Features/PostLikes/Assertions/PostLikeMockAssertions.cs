@@ -35,7 +35,7 @@ public static class PostLikeMockAssertions
 		{
 			await repository.ShouldHaveReceivedOne().GetByIdAsync(
 				command.Id,
-				PostLikeMatcher.IsPostLikeInclude(command, include),
+				PostLikeDomainMatcher.IsPostLikeInclude(command, include),
 				cancellationToken);
 		}
 
@@ -43,14 +43,14 @@ public static class PostLikeMockAssertions
 			AddPostLikeCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().AddAsync(PostLikeMatcher.IsPostLike(command), cancellationToken);
+			await repository.ShouldHaveReceivedOne().AddAsync(PostLikeDomainMatcher.IsPostLike(command), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneDeleteAsync(
 			DeletePostLikeCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().DeleteAsync(PostLikeMatcher.IsPostLike(command), cancellationToken);
+			await repository.ShouldHaveReceivedOne().DeleteAsync(PostLikeDomainMatcher.IsPostLike(command), cancellationToken);
 		}
 	}
 
@@ -63,7 +63,7 @@ public static class PostLikeMockAssertions
 		{
 			await repository.ShouldHaveReceivedOne().GetByIdAsync(
 				command.Id,
-				PostLikeMatcher.IsPostInclude(command, include),
+				PostLikeDomainMatcher.IsPostInclude(command, include),
 				cancellationToken);
 		}
 
@@ -186,7 +186,7 @@ public static class PostLikeMockAssertions
 			PostLike postLike,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(PostLikeMatcher.IsPostLikeAddedEventRequest(command, postLike), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(PostLikeDomainMatcher.IsPostLikeAddedEventRequest(command, postLike), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOnePublishAsync(
@@ -194,7 +194,7 @@ public static class PostLikeMockAssertions
 			PostLike postLike,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(PostLikeMatcher.IsPostLikeDeletedEventRequest(command, postLike), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(PostLikeDomainMatcher.IsPostLikeDeletedEventRequest(command, postLike), cancellationToken);
 		}
 	}
 }

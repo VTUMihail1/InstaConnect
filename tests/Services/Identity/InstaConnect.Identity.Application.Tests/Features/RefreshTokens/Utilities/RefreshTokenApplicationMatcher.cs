@@ -1,6 +1,6 @@
 namespace InstaConnect.Identity.Application.Tests.Features.RefreshTokens.Utilities;
 
-public static class RefreshTokenMatcher
+public static class RefreshTokenApplicationMatcher
 {
 	public static IssueRefreshTokenCommand IsIssueRefreshTokenCommand(IssueRefreshTokenCommandRequest request)
 	{

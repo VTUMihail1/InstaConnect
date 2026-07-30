@@ -2,7 +2,7 @@ using InstaConnect.Posts.Events.Features.Posts;
 
 namespace InstaConnect.Posts.Domain.Tests.Features.Posts.Utilities;
 
-public static class PostMatcher
+public static class PostDomainMatcher
 {
 	public static PostInclude IsPostInclude(UpdatePostCommand command, PostInclude include)
 	{

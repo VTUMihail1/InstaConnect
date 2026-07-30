@@ -105,7 +105,7 @@ public static class UserMockAssertions
 		{
 			await repository.ShouldHaveReceivedOne().GetByIdAsync(
 				command.Id,
-				UserMatcher.IsUserInclude(command, include),
+				UserDomainMatcher.IsUserInclude(command, include),
 				cancellationToken);
 		}
 
@@ -120,21 +120,21 @@ public static class UserMockAssertions
 			AddUserCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().AddAsync(UserMatcher.IsUser(command), cancellationToken);
+			await repository.ShouldHaveReceivedOne().AddAsync(UserDomainMatcher.IsUser(command), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneUpdateAsync(
 			UpdateUserCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().UpdateAsync(UserMatcher.IsUser(command), cancellationToken);
+			await repository.ShouldHaveReceivedOne().UpdateAsync(UserDomainMatcher.IsUser(command), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneDeleteAsync(
 			DeleteUserCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().DeleteAsync(UserMatcher.IsUser(command), cancellationToken);
+			await repository.ShouldHaveReceivedOne().DeleteAsync(UserDomainMatcher.IsUser(command), cancellationToken);
 		}
 	}
 
@@ -179,7 +179,7 @@ public static class UserMockAssertions
 			User user,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(UserMatcher.IsUserAddedEventRequest(command, user), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(UserDomainMatcher.IsUserAddedEventRequest(command, user), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOnePublishAsync(
@@ -187,7 +187,7 @@ public static class UserMockAssertions
 			User user,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(UserMatcher.IsUserUpdatedEventRequest(command, user), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(UserDomainMatcher.IsUserUpdatedEventRequest(command, user), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOnePublishAsync(
@@ -195,7 +195,7 @@ public static class UserMockAssertions
 			User user,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(UserMatcher.IsUserDeletedEventRequest(command, user), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(UserDomainMatcher.IsUserDeletedEventRequest(command, user), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOnePublishAsync(
@@ -203,7 +203,7 @@ public static class UserMockAssertions
 			EmailConfirmationToken emailConfirmationToken,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(UserMatcher.IsEmailConfirmationTokenAddedEventRequest(command, emailConfirmationToken), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(UserDomainMatcher.IsEmailConfirmationTokenAddedEventRequest(command, emailConfirmationToken), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOnePublishEmailConfirmationTokenDeletedAsync(
@@ -211,7 +211,7 @@ public static class UserMockAssertions
 			ICollection<EmailConfirmationToken> emailConfirmationTokens,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(UserMatcher.IsEmailConfirmationTokenDeletedEventRequestCollection(command, emailConfirmationTokens), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(UserDomainMatcher.IsEmailConfirmationTokenDeletedEventRequestCollection(command, emailConfirmationTokens), cancellationToken);
 		}
 
 		public async Task ShouldReceiveZeroPublishEmailConfirmationTokenDeletedAsync(
@@ -219,7 +219,7 @@ public static class UserMockAssertions
 			ICollection<EmailConfirmationToken> emailConfirmationTokens,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedZero().PublishAsync(UserMatcher.IsEmailConfirmationTokenDeletedEventRequestCollection(command, emailConfirmationTokens), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedZero().PublishAsync(UserDomainMatcher.IsEmailConfirmationTokenDeletedEventRequestCollection(command, emailConfirmationTokens), cancellationToken);
 		}
 	}
 
@@ -239,7 +239,7 @@ public static class UserMockAssertions
 			AddUserCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().AddAsync(UserMatcher.IsEmailConfirmationToken(command), cancellationToken);
+			await repository.ShouldHaveReceivedOne().AddAsync(UserDomainMatcher.IsEmailConfirmationToken(command), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneDeleteRangeAsync(
@@ -265,7 +265,7 @@ public static class UserMockAssertions
 			AddUserCommand command,
 			CancellationToken cancellationToken)
 		{
-			await emailSender.ShouldHaveReceivedOne().SendAsync(UserMatcher.IsEmailConfirmationToken(command), cancellationToken);
+			await emailSender.ShouldHaveReceivedOne().SendAsync(UserDomainMatcher.IsEmailConfirmationToken(command), cancellationToken);
 		}
 	}
 }

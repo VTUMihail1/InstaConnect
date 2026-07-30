@@ -1,6 +1,6 @@
 namespace InstaConnect.Posts.Presentation.Tests.Features.Posts.Utilities;
 
-public static class PostMatcher
+public static class PostPresentationMatcher
 {
 	public static GetAllPostsQueryRequest IsGetAllPostsQueryRequest(GetAllPostsApiRequest request)
 	{

@@ -2,7 +2,7 @@ using InstaConnect.Posts.Events.Features.PostCommentLikes;
 
 namespace InstaConnect.Posts.Domain.Tests.Features.PostCommentLikes.Utilities;
 
-public static class PostCommentLikeMatcher
+public static class PostCommentLikeDomainMatcher
 {
 	public static PostCommentInclude IsPostCommentInclude(AddPostCommentLikeCommand command, PostCommentInclude include)
 	{

@@ -111,7 +111,7 @@ public static class PostMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, PostMatcher.IsPostInclude(command, include), cancellationToken)
+				.GetByIdAsync(command.Id, PostDomainMatcher.IsPostInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(post);
 		}
 
@@ -122,7 +122,7 @@ public static class PostMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, PostMatcher.IsPostInclude(command, include), cancellationToken)
+				.GetByIdAsync(command.Id, PostDomainMatcher.IsPostInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(post);
 		}
 
@@ -133,7 +133,7 @@ public static class PostMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, PostMatcher.IsPostInclude(command, include), cancellationToken)
+				.GetByIdAsync(command.Id, PostDomainMatcher.IsPostInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 
@@ -144,7 +144,7 @@ public static class PostMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, PostMatcher.IsPostInclude(command, include), cancellationToken)
+				.GetByIdAsync(command.Id, PostDomainMatcher.IsPostInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 	}

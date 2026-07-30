@@ -1,6 +1,6 @@
 namespace InstaConnect.Identity.Application.Tests.Features.EmailConfirmationTokens.Utilities;
 
-public static class EmailConfirmationTokenMatcher
+public static class EmailConfirmationTokenApplicationMatcher
 {
 	public static AddEmailConfirmationTokenCommand IsAddEmailConfirmationTokenCommand(AddEmailConfirmationTokenCommandRequest request)
 	{

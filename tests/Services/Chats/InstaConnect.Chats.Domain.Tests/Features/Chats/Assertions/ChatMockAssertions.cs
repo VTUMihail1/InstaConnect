@@ -53,7 +53,7 @@ public static class ChatMockAssertions
 			AddChatCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().AddAsync(ChatMatcher.IsChat(command), cancellationToken);
+			await repository.ShouldHaveReceivedOne().AddAsync(ChatDomainMatcher.IsChat(command), cancellationToken);
 		}
 	}
 
@@ -111,7 +111,7 @@ public static class ChatMockAssertions
 			Chat chat,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(ChatMatcher.IsChatAddedEventRequest(command, chat), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(ChatDomainMatcher.IsChatAddedEventRequest(command, chat), cancellationToken);
 		}
 	}
 }

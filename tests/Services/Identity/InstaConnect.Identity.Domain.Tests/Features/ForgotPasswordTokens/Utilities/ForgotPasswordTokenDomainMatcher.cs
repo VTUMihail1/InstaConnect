@@ -2,7 +2,7 @@ using InstaConnect.Identity.Events.Features.ForgotPasswordTokens;
 
 namespace InstaConnect.Identity.Domain.Tests.Features.ForgotPasswordTokens.Utilities;
 
-public static class ForgotPasswordTokenMatcher
+public static class ForgotPasswordTokenDomainMatcher
 {
 	public static UserInclude IsUserInclude(VerifyForgotPasswordTokenCommand command, UserInclude include)
 	{

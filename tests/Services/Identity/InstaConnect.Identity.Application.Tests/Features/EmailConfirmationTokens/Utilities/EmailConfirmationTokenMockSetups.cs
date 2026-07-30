@@ -10,7 +10,7 @@ public static class EmailConfirmationTokenMockSetups
 			CancellationToken cancellationToken)
 		{
 			service
-				.AddAsync(EmailConfirmationTokenMatcher.IsAddEmailConfirmationTokenCommand(request), cancellationToken)
+				.AddAsync(EmailConfirmationTokenApplicationMatcher.IsAddEmailConfirmationTokenCommand(request), cancellationToken)
 				.ReturnsTaskResponse(emailConfirmationToken.ToResponse(request));
 		}
 	}

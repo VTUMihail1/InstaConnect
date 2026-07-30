@@ -35,7 +35,7 @@ public static class PostCommentLikeMockAssertions
 		{
 			await repository.ShouldHaveReceivedOne().GetByIdAsync(
 				command.Id,
-				PostCommentLikeMatcher.IsPostCommentLikeInclude(command, include),
+				PostCommentLikeDomainMatcher.IsPostCommentLikeInclude(command, include),
 				cancellationToken);
 		}
 
@@ -43,14 +43,14 @@ public static class PostCommentLikeMockAssertions
 			AddPostCommentLikeCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().AddAsync(PostCommentLikeMatcher.IsPostCommentLike(command), cancellationToken);
+			await repository.ShouldHaveReceivedOne().AddAsync(PostCommentLikeDomainMatcher.IsPostCommentLike(command), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneDeleteAsync(
 			DeletePostCommentLikeCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().DeleteAsync(PostCommentLikeMatcher.IsPostCommentLike(command), cancellationToken);
+			await repository.ShouldHaveReceivedOne().DeleteAsync(PostCommentLikeDomainMatcher.IsPostCommentLike(command), cancellationToken);
 		}
 	}
 
@@ -84,7 +84,7 @@ public static class PostCommentLikeMockAssertions
 		{
 			await repository.ShouldHaveReceivedOne().GetByIdAsync(
 				command.CommentId,
-				PostCommentLikeMatcher.IsPostCommentInclude(command, include),
+				PostCommentLikeDomainMatcher.IsPostCommentInclude(command, include),
 				cancellationToken);
 		}
 
@@ -228,7 +228,7 @@ public static class PostCommentLikeMockAssertions
 			PostCommentLike postCommentLike,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(PostCommentLikeMatcher.IsPostCommentLikeAddedEventRequest(command, postCommentLike), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(PostCommentLikeDomainMatcher.IsPostCommentLikeAddedEventRequest(command, postCommentLike), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOnePublishAsync(
@@ -236,7 +236,7 @@ public static class PostCommentLikeMockAssertions
 			PostCommentLike postCommentLike,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(PostCommentLikeMatcher.IsPostCommentLikeDeletedEventRequest(command, postCommentLike), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(PostCommentLikeDomainMatcher.IsPostCommentLikeDeletedEventRequest(command, postCommentLike), cancellationToken);
 		}
 	}
 }

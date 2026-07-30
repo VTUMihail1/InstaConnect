@@ -1,6 +1,6 @@
 namespace InstaConnect.Follows.Application.Tests.Features.Follows.Utilities;
 
-public static class FollowMatcher
+public static class FollowApplicationMatcher
 {
 	public static GetAllFollowsQuery IsGetAllFollowsQuery(GetAllFollowsQueryRequest request)
 	{

@@ -1,6 +1,6 @@
 namespace InstaConnect.Identity.Application.Tests.Features.ForgotPasswordTokens.Utilities;
 
-public static class ForgotPasswordTokenMatcher
+public static class ForgotPasswordTokenApplicationMatcher
 {
 	public static AddForgotPasswordTokenCommand IsAddForgotPasswordTokenCommand(AddForgotPasswordTokenCommandRequest request)
 	{

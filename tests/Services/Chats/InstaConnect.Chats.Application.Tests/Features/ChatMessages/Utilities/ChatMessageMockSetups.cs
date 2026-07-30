@@ -11,7 +11,7 @@ public static class ChatMessageMockSetups
 		CancellationToken cancellationToken)
 		{
 			commentService
-				.GetAllAsync(ChatMessageMatcher.IsGetAllChatMessagesQuery(request), cancellationToken)
+				.GetAllAsync(ChatMessageApplicationMatcher.IsGetAllChatMessagesQuery(request), cancellationToken)
 				.ReturnsTaskResponse(chatMessages.ToResponse(request, chat));
 		}
 
@@ -21,7 +21,7 @@ public static class ChatMessageMockSetups
 			CancellationToken cancellationToken)
 		{
 			commentService
-				.GetByIdAsync(ChatMessageMatcher.IsGetChatMessageByIdQuery(request), cancellationToken)
+				.GetByIdAsync(ChatMessageApplicationMatcher.IsGetChatMessageByIdQuery(request), cancellationToken)
 				.ReturnsTaskResponse(chatMessage.ToResponse(request));
 		}
 	}
@@ -34,7 +34,7 @@ public static class ChatMessageMockSetups
 		CancellationToken cancellationToken)
 		{
 			commentService
-				.AddAsync(ChatMessageMatcher.IsAddChatMessageCommand(request), cancellationToken)
+				.AddAsync(ChatMessageApplicationMatcher.IsAddChatMessageCommand(request), cancellationToken)
 				.ReturnsTaskResponse(chatMessage.ToResponse(request));
 		}
 
@@ -44,7 +44,7 @@ public static class ChatMessageMockSetups
 			CancellationToken cancellationToken)
 		{
 			commentService
-				.UpdateAsync(ChatMessageMatcher.IsUpdateChatMessageCommand(request), cancellationToken)
+				.UpdateAsync(ChatMessageApplicationMatcher.IsUpdateChatMessageCommand(request), cancellationToken)
 				.ReturnsTaskResponse(chatMessage.ToResponse(request));
 		}
 	}

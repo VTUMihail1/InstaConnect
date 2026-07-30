@@ -2,7 +2,7 @@ using InstaConnect.Posts.Events.Features.PostComments;
 
 namespace InstaConnect.Posts.Domain.Tests.Features.PostComments.Utilities;
 
-public static class PostCommentMatcher
+public static class PostCommentDomainMatcher
 {
 	public static PostInclude IsPostInclude(AddPostCommentCommand command, PostInclude include)
 	{

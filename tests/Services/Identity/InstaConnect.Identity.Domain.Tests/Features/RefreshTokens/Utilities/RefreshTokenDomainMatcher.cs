@@ -1,6 +1,6 @@
 namespace InstaConnect.Identity.Domain.Tests.Features.RefreshTokens.Utilities;
 
-public static class RefreshTokenMatcher
+public static class RefreshTokenDomainMatcher
 {
 	public static UserInclude IsUserInclude(IssueRefreshTokenCommand command, UserInclude include)
 	{

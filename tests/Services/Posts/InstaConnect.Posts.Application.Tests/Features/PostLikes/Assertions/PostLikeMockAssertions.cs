@@ -10,21 +10,21 @@ public static class PostLikeMockAssertions
 		GetAllPostLikesQueryRequest request,
 		CancellationToken cancellationToken)
 		{
-			await postLikeService.ShouldHaveReceivedOne().GetAllAsync(PostLikeMatcher.IsGetAllPostLikesQuery(request), cancellationToken);
+			await postLikeService.ShouldHaveReceivedOne().GetAllAsync(PostLikeApplicationMatcher.IsGetAllPostLikesQuery(request), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneGetAllForUserAsync(
 			GetAllPostLikesForUserQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await postLikeService.ShouldHaveReceivedOne().GetAllForUserAsync(PostLikeMatcher.IsGetAllPostLikesForUserQuery(request), cancellationToken);
+			await postLikeService.ShouldHaveReceivedOne().GetAllForUserAsync(PostLikeApplicationMatcher.IsGetAllPostLikesForUserQuery(request), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneGetByIdAsync(
 			GetPostLikeByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await postLikeService.ShouldHaveReceivedOne().GetByIdAsync(PostLikeMatcher.IsGetPostLikeByIdQuery(request), cancellationToken);
+			await postLikeService.ShouldHaveReceivedOne().GetByIdAsync(PostLikeApplicationMatcher.IsGetPostLikeByIdQuery(request), cancellationToken);
 		}
 	}
 
@@ -34,14 +34,14 @@ public static class PostLikeMockAssertions
 		AddPostLikeCommandRequest request,
 		CancellationToken cancellationToken)
 		{
-			await postLikeService.ShouldHaveReceivedOne().AddAsync(PostLikeMatcher.IsAddPostLikeCommand(request), cancellationToken);
+			await postLikeService.ShouldHaveReceivedOne().AddAsync(PostLikeApplicationMatcher.IsAddPostLikeCommand(request), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneDeleteAsync(
 			DeletePostLikeCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await postLikeService.ShouldHaveReceivedOne().DeleteAsync(PostLikeMatcher.IsDeletePostLikeCommand(request), cancellationToken);
+			await postLikeService.ShouldHaveReceivedOne().DeleteAsync(PostLikeApplicationMatcher.IsDeletePostLikeCommand(request), cancellationToken);
 		}
 	}
 }

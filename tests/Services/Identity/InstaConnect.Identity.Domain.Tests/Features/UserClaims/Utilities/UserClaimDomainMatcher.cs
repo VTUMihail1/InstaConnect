@@ -2,7 +2,7 @@ using InstaConnect.Identity.Events.Features.UserClaims;
 
 namespace InstaConnect.Identity.Domain.Tests.Features.UserClaims.Utilities;
 
-public static class UserClaimMatcher
+public static class UserClaimDomainMatcher
 {
 	public static UserClaimInclude IsUserClaimInclude(DeleteUserClaimCommand command, UserClaimInclude include)
 	{

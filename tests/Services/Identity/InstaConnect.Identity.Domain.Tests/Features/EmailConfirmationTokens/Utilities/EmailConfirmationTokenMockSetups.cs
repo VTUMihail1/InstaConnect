@@ -78,7 +78,7 @@ public static class EmailConfirmationTokenMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id.Id, EmailConfirmationTokenMatcher.IsUserInclude(command, include), cancellationToken)
+				.GetByIdAsync(command.Id.Id, EmailConfirmationTokenDomainMatcher.IsUserInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(user);
 		}
 
@@ -89,7 +89,7 @@ public static class EmailConfirmationTokenMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id.Id, EmailConfirmationTokenMatcher.IsUserInclude(command, include), cancellationToken)
+				.GetByIdAsync(command.Id.Id, EmailConfirmationTokenDomainMatcher.IsUserInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 	}

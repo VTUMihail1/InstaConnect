@@ -146,7 +146,7 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, UserMatcher.IsUserInclude(command, include), cancellationToken)
+				.GetByIdAsync(command.Id, UserDomainMatcher.IsUserInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(user);
 		}
 
@@ -167,7 +167,7 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, UserMatcher.IsUserInclude(command, include), cancellationToken)
+				.GetByIdAsync(command.Id, UserDomainMatcher.IsUserInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 

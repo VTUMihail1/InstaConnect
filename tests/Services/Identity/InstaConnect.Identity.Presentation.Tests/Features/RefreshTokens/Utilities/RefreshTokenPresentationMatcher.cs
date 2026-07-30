@@ -1,6 +1,6 @@
 namespace InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Utilities;
 
-public static class RefreshTokenMatcher
+public static class RefreshTokenPresentationMatcher
 {
 	public static SetRefreshTokenCookieRequest IsRefreshTokenCookieRequest(IssueRefreshTokenApiRequest request, RefreshToken refreshToken)
 	{

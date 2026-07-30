@@ -1,6 +1,6 @@
 namespace InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Utilities;
 
-public static class UserClaimMatcher
+public static class UserClaimPresentationMatcher
 {
 	public static GetAllUserClaimsQueryRequest IsGetAllUserClaimsQueryRequest(GetAllUserClaimsApiRequest request)
 	{
