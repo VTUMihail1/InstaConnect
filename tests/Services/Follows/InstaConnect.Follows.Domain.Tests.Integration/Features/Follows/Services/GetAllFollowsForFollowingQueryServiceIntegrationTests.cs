@@ -32,6 +32,7 @@ public class GetAllFollowsForFollowingQueryServiceIntegrationTests : BaseFollowD
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await ServiceScope.AddRangeAsync(Followers, CancellationToken);
 		await ServiceScope.AddRangeAsync(Followings, CancellationToken);
 		await ServiceScope.AddRangeAsync(Follows, CancellationToken);

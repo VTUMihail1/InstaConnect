@@ -16,6 +16,7 @@ public class DeleteUserCommandHandlerIntegrationTests : BaseUserApplicationComma
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 	}
 

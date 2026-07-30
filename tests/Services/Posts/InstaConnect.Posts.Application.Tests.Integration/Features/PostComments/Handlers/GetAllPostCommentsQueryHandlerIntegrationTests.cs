@@ -20,6 +20,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentApp
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await ServiceScope.AddRangeAsync(Users, CancellationToken);
 		await ServiceScope.AddRangeAsync(Posts, CancellationToken);
 		await ServiceScope.AddRangeAsync(PostLikes, CancellationToken);

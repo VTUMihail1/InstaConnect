@@ -30,6 +30,7 @@ public class GetPostCommentLikeByIdQueryServiceIntegrationTests : BasePostCommen
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 		await ServiceScope.AddAsync(Post, CancellationToken);
 		await ServiceScope.AddAsync(PostLike, CancellationToken);

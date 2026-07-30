@@ -26,6 +26,7 @@ public class DeleteRefreshTokenCommandServiceIntegrationTests : BaseRefreshToken
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 		await ServiceScope.AddAsync(RefreshToken, CancellationToken);
 	}

@@ -22,6 +22,7 @@ public abstract class BaseFollowPresentationCommandFunctionalTest : BaseFollowWe
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await EventClient.StartAsync(CancellationToken);
 		await NotificationClient.StartAsync(CancellationToken);
 	}

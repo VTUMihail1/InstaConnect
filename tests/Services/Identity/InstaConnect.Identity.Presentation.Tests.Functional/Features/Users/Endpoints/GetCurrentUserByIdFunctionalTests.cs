@@ -16,6 +16,7 @@ public class GetCurrentUserByIdFunctionalTests : BaseUserPresentationQueryFuncti
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 	}
 

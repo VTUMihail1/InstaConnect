@@ -20,6 +20,7 @@ public class GetAllUsersFunctionalTests : BaseUserPresentationQueryFunctionalTes
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await ServiceScope.AddRangeAsync(Users, CancellationToken);
 	}
 

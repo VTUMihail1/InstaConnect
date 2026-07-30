@@ -23,6 +23,7 @@ public abstract class BaseFollowDomainCommandIntegrationTest : BaseFollowWebTest
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await EventClient.StartAsync(CancellationToken);
 		await NotificationClient.StartAsync(CancellationToken);
 	}
