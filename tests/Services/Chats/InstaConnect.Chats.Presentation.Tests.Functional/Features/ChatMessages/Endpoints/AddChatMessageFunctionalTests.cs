@@ -26,7 +26,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 	public async Task AddAsync_ShouldReturnUnauthorizedStatusCode_WhenRequestIsUnauthorized()
 	{
 		// Act
-		var response = await HttpClient.AddUnauthorizedStatusCodeAsync(_request, CancellationToken);
+		var response = await ApiClient.AddUnauthorizedStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeUnauthorized();
@@ -43,7 +43,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		var request = _requestBuilder.WithParticipantOneId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -60,7 +60,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		var request = _requestBuilder.WithParticipantOneId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForParticipantOneId(request, messageTransformer);
@@ -76,7 +76,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -92,7 +92,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForParticipantTwoId(request, messageTransformer);
@@ -110,7 +110,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		var request = _requestBuilder.WithContent(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -128,7 +128,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		var request = _requestBuilder.WithContent(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForContent(request, messageTransformer);
@@ -141,7 +141,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		await ServiceScope.DeleteAsync(Chat, CancellationToken);
 
 		// Act
-		var response = await HttpClient.AddStatusCodeAsync(_request, CancellationToken);
+		var response = await ApiClient.AddStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNotFound();
@@ -154,7 +154,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		await ServiceScope.DeleteAsync(Chat, CancellationToken);
 
 		// Act
-		var response = await HttpClient.AddProblemDetailsAsync(_request, CancellationToken);
+		var response = await ApiClient.AddProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyChatNotFound(_request);
@@ -164,7 +164,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 	public async Task AddAsync_ShouldHaveOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var response = await HttpClient.AddStatusCodeAsync(_request, CancellationToken);
+		var response = await ApiClient.AddStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -179,7 +179,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		var request = _requestBuilder.WithParticipantOneId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -194,7 +194,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -204,7 +204,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 	public async Task AddAsync_ShouldReturnResponse_WhenRequestIsValid()
 	{
 		// Act
-		var response = await HttpClient.AddAsync(_request, CancellationToken);
+		var response = await ApiClient.AddAsync(_request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -220,7 +220,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		var request = _requestBuilder.WithParticipantOneId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddAsync(request, CancellationToken);
+		var response = await ApiClient.AddAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -236,7 +236,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddAsync(request, CancellationToken);
+		var response = await ApiClient.AddAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -247,7 +247,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 	public async Task AddAsync_ShouldAddChatMessage_WhenRequestIsValid()
 	{
 		// Act
-		var response = await HttpClient.AddAsync(_request, CancellationToken);
+		var response = await ApiClient.AddAsync(_request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -263,7 +263,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		var request = _requestBuilder.WithParticipantOneId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddAsync(request, CancellationToken);
+		var response = await ApiClient.AddAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -279,7 +279,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddAsync(request, CancellationToken);
+		var response = await ApiClient.AddAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -291,7 +291,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 	public async Task AddAsync_ShouldPublishChatMessageAddedNotification_WhenRequestIsValid()
 	{
 		// Act
-		var response = await HttpClient.AddAsync(_request, CancellationToken);
+		var response = await ApiClient.AddAsync(_request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 		var notificationRequest = await MessageNotificationClient.PublishedAddedAsync(CancellationToken);
 
@@ -308,7 +308,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		var request = _requestBuilder.WithParticipantOneId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddAsync(request, CancellationToken);
+		var response = await ApiClient.AddAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 		var notificationRequest = await MessageNotificationClient.PublishedAddedAsync(CancellationToken);
 
@@ -325,7 +325,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddAsync(request, CancellationToken);
+		var response = await ApiClient.AddAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 		var notificationRequest = await MessageNotificationClient.PublishedAddedAsync(CancellationToken);
 
@@ -340,7 +340,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		var response = await HttpClient.AddStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -355,7 +355,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id, transformer).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		var response = await HttpClient.AddStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -370,7 +370,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id, transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -383,7 +383,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		var response = await HttpClient.AddAsync(request, CancellationToken);
+		var response = await ApiClient.AddAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -399,7 +399,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id, transformer).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		var response = await HttpClient.AddAsync(request, CancellationToken);
+		var response = await ApiClient.AddAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -415,7 +415,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id, transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddAsync(request, CancellationToken);
+		var response = await ApiClient.AddAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -429,7 +429,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		var response = await HttpClient.AddAsync(request, CancellationToken);
+		var response = await ApiClient.AddAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -445,7 +445,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id, transformer).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		var response = await HttpClient.AddAsync(request, CancellationToken);
+		var response = await ApiClient.AddAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -461,7 +461,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id, transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddAsync(request, CancellationToken);
+		var response = await ApiClient.AddAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -475,7 +475,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		var response = await HttpClient.AddAsync(request, CancellationToken);
+		var response = await ApiClient.AddAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 		var notificationRequest = await MessageNotificationClient.PublishedAddedAsync(CancellationToken);
 
@@ -492,7 +492,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id, transformer).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		var response = await HttpClient.AddAsync(request, CancellationToken);
+		var response = await ApiClient.AddAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 		var notificationRequest = await MessageNotificationClient.PublishedAddedAsync(CancellationToken);
 
@@ -509,7 +509,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id, transformer).Build();
 
 		// Act
-		var response = await HttpClient.AddAsync(request, CancellationToken);
+		var response = await ApiClient.AddAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 		var notificationRequest = await MessageNotificationClient.PublishedAddedAsync(CancellationToken);
 

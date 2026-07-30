@@ -5,13 +5,13 @@ namespace InstaConnect.Chats.Presentation.Tests.Functional.Features.ChatMessages
 
 public abstract class BaseChatMessagePresentationCommandFunctionalTest : BaseChatMessageWebTest
 {
-	protected IChatMessageApiClient HttpClient { get; }
+	protected IChatMessageApiClient ApiClient { get; }
 
 	protected IChatMessageNotificationClient MessageNotificationClient { get; }
 
 	protected BaseChatMessagePresentationCommandFunctionalTest(ChatsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
-		HttpClient = webApplicationFactory.CreateMessageApiClient();
+		ApiClient = webApplicationFactory.CreateMessageApiClient();
 		MessageNotificationClient = webApplicationFactory.CreateMessageNotificationClient(ParticipantTwo.Id);
 	}
 

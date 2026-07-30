@@ -27,7 +27,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 	public async Task DeleteAsync_ShouldReturnUnauthorizedStatusCode_WhenRequestIsUnauthorized()
 	{
 		// Act
-		var response = await HttpClient.DeleteUnauthorizedStatusCodeAsync(_request, CancellationToken);
+		var response = await ApiClient.DeleteUnauthorizedStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeUnauthorized();
@@ -44,7 +44,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.DeleteStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.DeleteStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -61,7 +61,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.DeleteProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.DeleteProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForParticipantOneId(request, messageTransformer);
@@ -77,7 +77,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.DeleteStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.DeleteStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -93,7 +93,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.DeleteProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.DeleteProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForParticipantTwoId(request, messageTransformer);
@@ -109,7 +109,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithMessageId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.DeleteStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.DeleteStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -125,7 +125,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithMessageId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.DeleteProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.DeleteProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForMessageId(request, messageTransformer);
@@ -138,7 +138,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		await ServiceScope.DeleteAsync(Chat, CancellationToken);
 
 		// Act
-		var response = await HttpClient.DeleteStatusCodeAsync(_request, CancellationToken);
+		var response = await ApiClient.DeleteStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNotFound();
@@ -151,7 +151,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		await ServiceScope.DeleteAsync(Chat, CancellationToken);
 
 		// Act
-		var response = await HttpClient.DeleteProblemDetailsAsync(_request, CancellationToken);
+		var response = await ApiClient.DeleteProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyChatNotFound(_request);
@@ -164,7 +164,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		await ServiceScope.DeleteAsync(ChatMessage, CancellationToken);
 
 		// Act
-		var response = await HttpClient.DeleteStatusCodeAsync(_request, CancellationToken);
+		var response = await ApiClient.DeleteStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNotFound();
@@ -177,7 +177,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		await ServiceScope.DeleteAsync(ChatMessage, CancellationToken);
 
 		// Act
-		var response = await HttpClient.DeleteProblemDetailsAsync(_request, CancellationToken);
+		var response = await ApiClient.DeleteProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyChatMessageNotFound(_request);
@@ -190,7 +190,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		var response = await HttpClient.DeleteStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.DeleteStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeForbidden();
@@ -203,7 +203,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		var response = await HttpClient.DeleteProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.DeleteProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyChatMessageForbidden(request);
@@ -213,7 +213,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 	public async Task DeleteAsync_ShouldHaveNoContentStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var response = await HttpClient.DeleteStatusCodeAsync(_request, CancellationToken);
+		var response = await ApiClient.DeleteStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNoContent();
@@ -228,7 +228,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.DeleteStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.DeleteStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNoContent();
@@ -243,7 +243,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.DeleteStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.DeleteStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNoContent();
@@ -258,7 +258,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithMessageId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.DeleteStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.DeleteStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNoContent();
@@ -268,7 +268,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 	public async Task DeleteAsync_ShouldDeleteChatMessage_WhenRequestIsValid()
 	{
 		// Act
-		await HttpClient.DeleteAsync(_request, CancellationToken);
+		await ApiClient.DeleteAsync(_request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(ChatMessage.Id, CancellationToken);
 
 		// Assert
@@ -284,7 +284,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(transformer).Build();
 
 		// Act
-		await HttpClient.DeleteAsync(request, CancellationToken);
+		await ApiClient.DeleteAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(ChatMessage.Id, CancellationToken);
 
 		// Assert
@@ -300,7 +300,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
 
 		// Act
-		await HttpClient.DeleteAsync(request, CancellationToken);
+		await ApiClient.DeleteAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(ChatMessage.Id, CancellationToken);
 
 		// Assert
@@ -316,7 +316,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithMessageId(transformer).Build();
 
 		// Act
-		await HttpClient.DeleteAsync(request, CancellationToken);
+		await ApiClient.DeleteAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(ChatMessage.Id, CancellationToken);
 
 		// Assert
@@ -327,7 +327,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 	public async Task DeleteAsync_ShouldPublishChatMessageDeletedNotification_WhenRequestIsValid()
 	{
 		// Act
-		await HttpClient.DeleteAsync(_request, CancellationToken);
+		await ApiClient.DeleteAsync(_request, CancellationToken);
 		var notificationRequest = await MessageNotificationClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
@@ -343,7 +343,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(transformer).Build();
 
 		// Act
-		await HttpClient.DeleteAsync(request, CancellationToken);
+		await ApiClient.DeleteAsync(request, CancellationToken);
 		var notificationRequest = await MessageNotificationClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
@@ -359,7 +359,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
 
 		// Act
-		await HttpClient.DeleteAsync(request, CancellationToken);
+		await ApiClient.DeleteAsync(request, CancellationToken);
 		var notificationRequest = await MessageNotificationClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
@@ -375,7 +375,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithMessageId(transformer).Build();
 
 		// Act
-		await HttpClient.DeleteAsync(request, CancellationToken);
+		await ApiClient.DeleteAsync(request, CancellationToken);
 		var notificationRequest = await MessageNotificationClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
@@ -391,7 +391,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		var response = await HttpClient.DeleteStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.DeleteStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNoContent();
@@ -408,7 +408,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id, transformer).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		var response = await HttpClient.DeleteStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.DeleteStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNoContent();
@@ -425,7 +425,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id, transformer).Build();
 
 		// Act
-		var response = await HttpClient.DeleteStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.DeleteStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNoContent();
@@ -442,7 +442,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).WithMessageId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.DeleteStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.DeleteStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNoContent();
@@ -457,7 +457,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		await HttpClient.DeleteAsync(request, CancellationToken);
+		await ApiClient.DeleteAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(ChatMessage.Id, CancellationToken);
 
 		// Assert
@@ -475,7 +475,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id, transformer).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		await HttpClient.DeleteAsync(request, CancellationToken);
+		await ApiClient.DeleteAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(ChatMessage.Id, CancellationToken);
 
 		// Assert
@@ -493,7 +493,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id, transformer).Build();
 
 		// Act
-		await HttpClient.DeleteAsync(request, CancellationToken);
+		await ApiClient.DeleteAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(ChatMessage.Id, CancellationToken);
 
 		// Assert
@@ -511,7 +511,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).WithMessageId(transformer).Build();
 
 		// Act
-		await HttpClient.DeleteAsync(request, CancellationToken);
+		await ApiClient.DeleteAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(ChatMessage.Id, CancellationToken);
 
 		// Assert
@@ -528,7 +528,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		await HttpClient.DeleteAsync(request, CancellationToken);
+		await ApiClient.DeleteAsync(request, CancellationToken);
 		var notificationRequest = await MessageNotificationClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
@@ -547,7 +547,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id, transformer).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		await HttpClient.DeleteAsync(request, CancellationToken);
+		await ApiClient.DeleteAsync(request, CancellationToken);
 		var notificationRequest = await MessageNotificationClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
@@ -566,7 +566,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id, transformer).Build();
 
 		// Act
-		await HttpClient.DeleteAsync(request, CancellationToken);
+		await ApiClient.DeleteAsync(request, CancellationToken);
 		var notificationRequest = await MessageNotificationClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
@@ -585,7 +585,7 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).WithMessageId(transformer).Build();
 
 		// Act
-		await HttpClient.DeleteAsync(request, CancellationToken);
+		await ApiClient.DeleteAsync(request, CancellationToken);
 		var notificationRequest = await MessageNotificationClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert

@@ -27,7 +27,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 	public async Task UpdateAsync_ShouldReturnUnauthorizedStatusCode_WhenRequestIsUnauthorized()
 	{
 		// Act
-		var response = await HttpClient.UpdateUnauthorizedStatusCodeAsync(_request, CancellationToken);
+		var response = await ApiClient.UpdateUnauthorizedStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeUnauthorized();
@@ -44,7 +44,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.UpdateStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -61,7 +61,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.UpdateProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForParticipantOneId(request, messageTransformer);
@@ -77,7 +77,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.UpdateStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -93,7 +93,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.UpdateProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForParticipantTwoId(request, messageTransformer);
@@ -109,7 +109,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithMessageId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.UpdateStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -125,7 +125,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithMessageId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.UpdateProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForMessageId(request, messageTransformer);
@@ -143,7 +143,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithContent(transformer).Build();
 
 		// Act
-		var response = await HttpClient.UpdateStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -161,7 +161,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithContent(transformer).Build();
 
 		// Act
-		var response = await HttpClient.UpdateProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForContent(request, messageTransformer);
@@ -174,7 +174,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		await ServiceScope.DeleteAsync(Chat, CancellationToken);
 
 		// Act
-		var response = await HttpClient.UpdateStatusCodeAsync(_request, CancellationToken);
+		var response = await ApiClient.UpdateStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNotFound();
@@ -187,7 +187,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		await ServiceScope.DeleteAsync(Chat, CancellationToken);
 
 		// Act
-		var response = await HttpClient.UpdateProblemDetailsAsync(_request, CancellationToken);
+		var response = await ApiClient.UpdateProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyChatNotFound(_request);
@@ -200,7 +200,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		await ServiceScope.DeleteAsync(ChatMessage, CancellationToken);
 
 		// Act
-		var response = await HttpClient.UpdateStatusCodeAsync(_request, CancellationToken);
+		var response = await ApiClient.UpdateStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNotFound();
@@ -213,7 +213,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		await ServiceScope.DeleteAsync(ChatMessage, CancellationToken);
 
 		// Act
-		var response = await HttpClient.UpdateProblemDetailsAsync(_request, CancellationToken);
+		var response = await ApiClient.UpdateProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyChatMessageNotFound(_request);
@@ -226,7 +226,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		var response = await HttpClient.UpdateStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeForbidden();
@@ -239,7 +239,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		var response = await HttpClient.UpdateProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyChatMessageForbidden(request);
@@ -249,7 +249,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 	public async Task UpdateAsync_ShouldHaveOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var response = await HttpClient.UpdateStatusCodeAsync(_request, CancellationToken);
+		var response = await ApiClient.UpdateStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -264,7 +264,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.UpdateStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -279,7 +279,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.UpdateStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -294,7 +294,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithMessageId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.UpdateStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -304,7 +304,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 	public async Task UpdateAsync_ShouldHaveResponse_WhenRequestIsValid()
 	{
 		// Act
-		var response = await HttpClient.UpdateAsync(_request, CancellationToken);
+		var response = await ApiClient.UpdateAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(_request, ChatMessage);
@@ -319,7 +319,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.UpdateAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -335,7 +335,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.UpdateAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -351,7 +351,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithMessageId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.UpdateAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(request, ChatMessage);
@@ -361,7 +361,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 	public async Task UpdateAsync_ShouldUpdateChatMessage_WhenRequestIsValid()
 	{
 		// Act
-		var response = await HttpClient.UpdateAsync(_request, CancellationToken);
+		var response = await ApiClient.UpdateAsync(_request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -377,7 +377,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.UpdateAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -393,7 +393,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.UpdateAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -409,7 +409,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithMessageId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.UpdateAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -420,7 +420,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 	public async Task UpdateAsync_ShouldPublishChatMessageUpdatedNotification_WhenRequestIsValid()
 	{
 		// Act
-		var response = await HttpClient.UpdateAsync(_request, CancellationToken);
+		var response = await ApiClient.UpdateAsync(_request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 		var notificationRequest = await MessageNotificationClient.PublishedUpdatedAsync(CancellationToken);
 
@@ -437,7 +437,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.UpdateAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 		var notificationRequest = await MessageNotificationClient.PublishedUpdatedAsync(CancellationToken);
 
@@ -454,7 +454,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.UpdateAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 		var notificationRequest = await MessageNotificationClient.PublishedUpdatedAsync(CancellationToken);
 
@@ -471,7 +471,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithMessageId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.UpdateAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 		var notificationRequest = await MessageNotificationClient.PublishedUpdatedAsync(CancellationToken);
 
@@ -488,7 +488,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		var response = await HttpClient.UpdateStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -505,7 +505,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id, transformer).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		var response = await HttpClient.UpdateStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -522,7 +522,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id, transformer).Build();
 
 		// Act
-		var response = await HttpClient.UpdateStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -539,7 +539,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).WithMessageId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.UpdateStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -554,7 +554,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		var response = await HttpClient.UpdateAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(request, ChatMessage);
@@ -571,7 +571,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id, transformer).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		var response = await HttpClient.UpdateAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -589,7 +589,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id, transformer).Build();
 
 		// Act
-		var response = await HttpClient.UpdateAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -607,7 +607,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).WithMessageId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.UpdateAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(request, ChatMessage);
@@ -622,7 +622,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		var response = await HttpClient.UpdateAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -640,7 +640,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id, transformer).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		var response = await HttpClient.UpdateAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -658,7 +658,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id, transformer).Build();
 
 		// Act
-		var response = await HttpClient.UpdateAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -676,7 +676,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).WithMessageId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.UpdateAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -692,7 +692,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		var response = await HttpClient.UpdateAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 		var notificationRequest = await MessageNotificationClient.PublishedUpdatedAsync(CancellationToken);
 
@@ -711,7 +711,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id, transformer).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		var response = await HttpClient.UpdateAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 		var notificationRequest = await MessageNotificationClient.PublishedUpdatedAsync(CancellationToken);
 
@@ -730,7 +730,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id, transformer).Build();
 
 		// Act
-		var response = await HttpClient.UpdateAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 		var notificationRequest = await MessageNotificationClient.PublishedUpdatedAsync(CancellationToken);
 
@@ -749,7 +749,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).WithMessageId(transformer).Build();
 
 		// Act
-		var response = await HttpClient.UpdateAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 		var notificationRequest = await MessageNotificationClient.PublishedUpdatedAsync(CancellationToken);
 
