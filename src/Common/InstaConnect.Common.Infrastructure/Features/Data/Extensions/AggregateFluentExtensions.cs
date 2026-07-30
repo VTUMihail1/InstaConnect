@@ -14,7 +14,7 @@ public static class AggregateFluentExtensions
 	extension<TEntity>(IAggregateFluent<TEntity> fluent)
 		where TEntity : IEntity
 	{
-		public async Task<long> GetCount(CancellationToken cancellationToken)
+		public async Task<long> GetCountAsync(CancellationToken cancellationToken)
 		{
 			var result = await fluent
 							   .Count()

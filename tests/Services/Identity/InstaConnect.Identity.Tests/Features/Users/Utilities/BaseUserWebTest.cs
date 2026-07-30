@@ -25,13 +25,13 @@ public abstract class BaseUserWebTest : BaseUserTest, IClassFixture<IdentityWebA
 	public async Task InitializeAsync()
 	{
 		await EventHarness.StartAsync(CancellationToken);
-		await ServiceScope.ResetIdentityDatabase(CancellationToken);
+		await ServiceScope.ResetIdentityDatabaseAsync(CancellationToken);
 		await OnInitializeAsync();
 	}
 
 	public async Task DisposeAsync()
 	{
-		await ServiceScope.ResetIdentityDatabase(CancellationToken);
+		await ServiceScope.ResetIdentityDatabaseAsync(CancellationToken);
 		await EventHarness.StopAsync(CancellationToken);
 	}
 

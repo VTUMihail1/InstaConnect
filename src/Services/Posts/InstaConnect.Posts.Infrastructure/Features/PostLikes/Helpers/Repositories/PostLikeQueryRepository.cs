@@ -90,7 +90,7 @@ internal class PostLikeQueryRepository : IPostLikeQueryRepository
 			.AggregateWithCaseInsensitiveCollation()
 			.Includes(_likeIncluderFactory, likeInclude)
 			.Match(filter)
-			.GetCount(cancellationToken);
+			.GetCountAsync(cancellationToken);
 	}
 
 	public async Task<long> GetTotalCountForUserAsync(
@@ -105,7 +105,7 @@ internal class PostLikeQueryRepository : IPostLikeQueryRepository
 			.AggregateWithCaseInsensitiveCollation()
 			.Includes(_likeIncluderFactory, likeInclude)
 			.Match(filter)
-			.GetCount(cancellationToken);
+			.GetCountAsync(cancellationToken);
 	}
 
 	public async Task<PostLikeResponse?> GetByIdAsync(

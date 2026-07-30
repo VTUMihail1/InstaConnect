@@ -21,13 +21,13 @@ public abstract class BaseChatWebTest : BaseChatTest, IClassFixture<ChatsWebAppl
 	public async Task InitializeAsync()
 	{
 		await EventHarness.StartAsync(CancellationToken);
-		await ServiceScope.ResetChatsDatabase(CancellationToken);
+		await ServiceScope.ResetChatsDatabaseAsync(CancellationToken);
 		await OnInitializeAsync();
 	}
 
 	public async Task DisposeAsync()
 	{
-		await ServiceScope.ResetChatsDatabase(CancellationToken);
+		await ServiceScope.ResetChatsDatabaseAsync(CancellationToken);
 		await EventHarness.StopAsync(CancellationToken);
 	}
 

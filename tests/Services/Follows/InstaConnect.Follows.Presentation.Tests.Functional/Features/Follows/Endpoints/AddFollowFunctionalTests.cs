@@ -418,10 +418,10 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 		// Act
 		var response = await Client.AddAsync(_request, CancellationToken);
 		var follow = await ServiceScope.GetByIdAsync(response, CancellationToken);
-		var notification = await NotificationClient.AddedAsync(CancellationToken);
+		var notificationRequest = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(_request, follow);
+		notificationRequest.ShouldSatisfy(_request, follow);
 	}
 
 	[Theory]
@@ -435,10 +435,10 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 		// Act
 		var response = await Client.AddAsync(request, CancellationToken);
 		var follow = await ServiceScope.GetByIdAsync(response, CancellationToken);
-		var notification = await NotificationClient.AddedAsync(CancellationToken);
+		var notificationRequest = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(request, follow);
+		notificationRequest.ShouldSatisfy(request, follow);
 	}
 
 	[Theory]
@@ -452,9 +452,9 @@ public class AddFollowFunctionalTests : BaseFollowPresentationCommandFunctionalT
 		// Act
 		var response = await Client.AddAsync(request, CancellationToken);
 		var follow = await ServiceScope.GetByIdAsync(response, CancellationToken);
-		var notification = await NotificationClient.AddedAsync(CancellationToken);
+		var notificationRequest = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(request, follow);
+		notificationRequest.ShouldSatisfy(request, follow);
 	}
 }

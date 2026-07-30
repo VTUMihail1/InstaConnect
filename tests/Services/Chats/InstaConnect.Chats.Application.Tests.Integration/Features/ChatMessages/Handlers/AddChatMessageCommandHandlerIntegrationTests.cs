@@ -173,10 +173,10 @@ public class AddChatMessageCommandHandlerIntegrationTests : BaseChatMessageAppli
 		// Act
 		var response = await Sender.SendAsync(_request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
-		var notification = await NotificationClient.AddedAsync(CancellationToken);
+		var notificationRequest = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(_request, chatMessage);
+		notificationRequest.ShouldSatisfy(_request, chatMessage);
 	}
 
 	[Theory]
@@ -190,10 +190,10 @@ public class AddChatMessageCommandHandlerIntegrationTests : BaseChatMessageAppli
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
-		var notification = await NotificationClient.AddedAsync(CancellationToken);
+		var notificationRequest = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(request, chatMessage);
+		notificationRequest.ShouldSatisfy(request, chatMessage);
 	}
 
 	[Theory]
@@ -207,10 +207,10 @@ public class AddChatMessageCommandHandlerIntegrationTests : BaseChatMessageAppli
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
-		var notification = await NotificationClient.AddedAsync(CancellationToken);
+		var notificationRequest = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(request, chatMessage);
+		notificationRequest.ShouldSatisfy(request, chatMessage);
 	}
 
 	[Fact]
@@ -314,10 +314,10 @@ public class AddChatMessageCommandHandlerIntegrationTests : BaseChatMessageAppli
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
-		var notification = await NotificationClient.AddedAsync(CancellationToken);
+		var notificationRequest = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfyInverted(request, chatMessage);
+		notificationRequest.ShouldSatisfyInverted(request, chatMessage);
 	}
 
 	[Theory]
@@ -331,10 +331,10 @@ public class AddChatMessageCommandHandlerIntegrationTests : BaseChatMessageAppli
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
-		var notification = await NotificationClient.AddedAsync(CancellationToken);
+		var notificationRequest = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfyInverted(request, chatMessage);
+		notificationRequest.ShouldSatisfyInverted(request, chatMessage);
 	}
 
 	[Theory]
@@ -348,9 +348,9 @@ public class AddChatMessageCommandHandlerIntegrationTests : BaseChatMessageAppli
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
-		var notification = await NotificationClient.AddedAsync(CancellationToken);
+		var notificationRequest = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfyInverted(request, chatMessage);
+		notificationRequest.ShouldSatisfyInverted(request, chatMessage);
 	}
 }

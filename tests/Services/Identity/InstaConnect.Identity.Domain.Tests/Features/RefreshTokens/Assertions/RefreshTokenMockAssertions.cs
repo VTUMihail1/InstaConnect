@@ -3,7 +3,6 @@ using InstaConnect.Identity.Domain.Features.Common.Helpers;
 using InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Options;
 using InstaConnect.Identity.Domain.Tests.Features.RefreshTokens.Utilities;
 
-using MassTransit.Configuration;
 
 using Microsoft.Extensions.Options;
 

@@ -90,7 +90,7 @@ internal class PostCommentQueryRepository : IPostCommentQueryRepository
 			.AggregateWithCaseInsensitiveCollation()
 			.Includes(_commentIncluderFactory, commentInclude)
 			.Match(filter)
-			.GetCount(cancellationToken);
+			.GetCountAsync(cancellationToken);
 	}
 
 	public async Task<long> GetTotalCountForUserAsync(
@@ -105,7 +105,7 @@ internal class PostCommentQueryRepository : IPostCommentQueryRepository
 			.AggregateWithCaseInsensitiveCollation()
 			.Includes(_commentIncluderFactory, commentInclude)
 			.Match(filter)
-			.GetCount(cancellationToken);
+			.GetCountAsync(cancellationToken);
 	}
 
 	public async Task<PostCommentResponse?> GetByIdAsync(

@@ -21,13 +21,13 @@ public abstract class BaseUserWebTest : BaseUserTest, IClassFixture<FollowsWebAp
 	public async Task InitializeAsync()
 	{
 		await EventHarness.StartAsync(CancellationToken);
-		await ServiceScope.ResetFollowsDatabase(CancellationToken);
+		await ServiceScope.ResetFollowsDatabaseAsync(CancellationToken);
 		await OnInitializeAsync();
 	}
 
 	public async Task DisposeAsync()
 	{
-		await ServiceScope.ResetFollowsDatabase(CancellationToken);
+		await ServiceScope.ResetFollowsDatabaseAsync(CancellationToken);
 		await EventHarness.StopAsync(CancellationToken);
 	}
 

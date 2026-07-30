@@ -93,7 +93,7 @@ internal class PostCommentLikeQueryRepository : IPostCommentLikeQueryRepository
 			.Aggregate()
 			.Includes(_commentLikeIncluderFactory, commentLikeInclude)
 			.Match(filter)
-			.GetCount(cancellationToken);
+			.GetCountAsync(cancellationToken);
 	}
 
 	public async Task<long> GetTotalCountForUserAsync(
@@ -109,7 +109,7 @@ internal class PostCommentLikeQueryRepository : IPostCommentLikeQueryRepository
 			.Aggregate()
 			.Includes(_commentLikeIncluderFactory, commentLikeInclude)
 			.Match(filter)
-			.GetCount(cancellationToken);
+			.GetCountAsync(cancellationToken);
 	}
 
 	public async Task<PostCommentLikeResponse?> GetByIdAsync(

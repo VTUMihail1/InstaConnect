@@ -226,10 +226,10 @@ public class AddFollowCommandServiceIntegrationTests : BaseFollowDomainCommandIn
 		// Act
 		var response = await Service.AddAsync(_command, CancellationToken);
 		var follow = await ServiceScope.GetByIdAsync(response, CancellationToken);
-		var notification = await NotificationClient.AddedAsync(CancellationToken);
+		var notificationRequest = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(_command, follow);
+		notificationRequest.ShouldSatisfy(_command, follow);
 	}
 
 	[Theory]
@@ -243,10 +243,10 @@ public class AddFollowCommandServiceIntegrationTests : BaseFollowDomainCommandIn
 		// Act
 		var response = await Service.AddAsync(command, CancellationToken);
 		var follow = await ServiceScope.GetByIdAsync(response, CancellationToken);
-		var notification = await NotificationClient.AddedAsync(CancellationToken);
+		var notificationRequest = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(command, follow);
+		notificationRequest.ShouldSatisfy(command, follow);
 	}
 
 	[Theory]
@@ -260,9 +260,9 @@ public class AddFollowCommandServiceIntegrationTests : BaseFollowDomainCommandIn
 		// Act
 		var response = await Service.AddAsync(command, CancellationToken);
 		var follow = await ServiceScope.GetByIdAsync(response, CancellationToken);
-		var notification = await NotificationClient.AddedAsync(CancellationToken);
+		var notificationRequest = await NotificationClient.AddedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(command, follow);
+		notificationRequest.ShouldSatisfy(command, follow);
 	}
 }

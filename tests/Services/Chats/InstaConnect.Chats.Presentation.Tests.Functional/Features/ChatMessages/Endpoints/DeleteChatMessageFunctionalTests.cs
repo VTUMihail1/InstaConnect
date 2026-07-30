@@ -329,10 +329,10 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 	{
 		// Act
 		await HttpClient.DeleteAsync(_request, CancellationToken);
-		var notification = await NotificationClient.DeletedAsync(CancellationToken);
+		var notificationRequest = await NotificationClient.DeletedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(_request, ChatMessage);
+		notificationRequest.ShouldSatisfy(_request, ChatMessage);
 	}
 
 	[Theory]
@@ -345,10 +345,10 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 
 		// Act
 		await HttpClient.DeleteAsync(request, CancellationToken);
-		var notification = await NotificationClient.DeletedAsync(CancellationToken);
+		var notificationRequest = await NotificationClient.DeletedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(request, ChatMessage);
+		notificationRequest.ShouldSatisfy(request, ChatMessage);
 	}
 
 	[Theory]
@@ -361,10 +361,10 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 
 		// Act
 		await HttpClient.DeleteAsync(request, CancellationToken);
-		var notification = await NotificationClient.DeletedAsync(CancellationToken);
+		var notificationRequest = await NotificationClient.DeletedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(request, ChatMessage);
+		notificationRequest.ShouldSatisfy(request, ChatMessage);
 	}
 
 	[Theory]
@@ -377,10 +377,10 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 
 		// Act
 		await HttpClient.DeleteAsync(request, CancellationToken);
-		var notification = await NotificationClient.DeletedAsync(CancellationToken);
+		var notificationRequest = await NotificationClient.DeletedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfy(request, ChatMessage);
+		notificationRequest.ShouldSatisfy(request, ChatMessage);
 	}
 
 	[Fact]
@@ -530,10 +530,10 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 
 		// Act
 		await HttpClient.DeleteAsync(request, CancellationToken);
-		var notification = await NotificationClient.DeletedAsync(CancellationToken);
+		var notificationRequest = await NotificationClient.DeletedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfyInverted(request, updatedChatMessage);
+		notificationRequest.ShouldSatisfyInverted(request, updatedChatMessage);
 	}
 
 	[Theory]
@@ -549,10 +549,10 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 
 		// Act
 		await HttpClient.DeleteAsync(request, CancellationToken);
-		var notification = await NotificationClient.DeletedAsync(CancellationToken);
+		var notificationRequest = await NotificationClient.DeletedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfyInverted(request, updatedChatMessage);
+		notificationRequest.ShouldSatisfyInverted(request, updatedChatMessage);
 	}
 
 	[Theory]
@@ -568,10 +568,10 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 
 		// Act
 		await HttpClient.DeleteAsync(request, CancellationToken);
-		var notification = await NotificationClient.DeletedAsync(CancellationToken);
+		var notificationRequest = await NotificationClient.DeletedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfyInverted(request, updatedChatMessage);
+		notificationRequest.ShouldSatisfyInverted(request, updatedChatMessage);
 	}
 
 	[Theory]
@@ -587,9 +587,9 @@ public class DeleteChatMessageFunctionalTests : BaseChatMessagePresentationComma
 
 		// Act
 		await HttpClient.DeleteAsync(request, CancellationToken);
-		var notification = await NotificationClient.DeletedAsync(CancellationToken);
+		var notificationRequest = await NotificationClient.DeletedAsync(CancellationToken);
 
 		// Assert
-		notification.ShouldSatisfyInverted(request, updatedChatMessage);
+		notificationRequest.ShouldSatisfyInverted(request, updatedChatMessage);
 	}
 }

@@ -63,7 +63,7 @@ internal class ChatQueryRepository : IChatQueryRepository
 			.AggregateWithCaseInsensitiveCollation()
 			.Includes(_includerFactory, include)
 			.Match(filter)
-			.GetCount(cancellationToken);
+			.GetCountAsync(cancellationToken);
 	}
 
 	public async Task<ChatResponse?> GetByIdAsync(

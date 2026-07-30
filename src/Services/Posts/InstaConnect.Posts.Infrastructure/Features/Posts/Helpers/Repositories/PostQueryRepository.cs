@@ -87,7 +87,7 @@ internal class PostQueryRepository : IPostQueryRepository
 			.AggregateWithCaseInsensitiveCollation()
 			.Includes(_includerFactory, include)
 			.Match(filter)
-			.GetCount(cancellationToken);
+			.GetCountAsync(cancellationToken);
 	}
 
 	public async Task<long> GetTotalCountForUserAsync(
@@ -101,7 +101,7 @@ internal class PostQueryRepository : IPostQueryRepository
 			.AggregateWithCaseInsensitiveCollation()
 			.Includes(_includerFactory, include)
 			.Match(filter)
-			.GetCount(cancellationToken);
+			.GetCountAsync(cancellationToken);
 	}
 
 	public async Task<PostResponse?> GetByIdAsync(

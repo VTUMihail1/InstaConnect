@@ -2,7 +2,6 @@ using InstaConnect.Common.Domain.Features.DateTimes.Abstractions;
 using InstaConnect.Common.Domain.Features.Guids.Abstractions;
 using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Options;
 
-using MassTransit.Configuration;
 
 using Microsoft.Extensions.Options;
 

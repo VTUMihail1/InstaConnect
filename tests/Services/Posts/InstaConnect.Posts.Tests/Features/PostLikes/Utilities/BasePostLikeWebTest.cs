@@ -21,13 +21,13 @@ public abstract class BasePostLikeWebTest : BasePostLikeTest, IClassFixture<Post
 	public async Task InitializeAsync()
 	{
 		await EventHarness.StartAsync(CancellationToken);
-		await ServiceScope.ResetPostsDatabase(CancellationToken);
+		await ServiceScope.ResetPostsDatabaseAsync(CancellationToken);
 		await OnInitializeAsync();
 	}
 
 	public async Task DisposeAsync()
 	{
-		await ServiceScope.ResetPostsDatabase(CancellationToken);
+		await ServiceScope.ResetPostsDatabaseAsync(CancellationToken);
 		await EventHarness.StopAsync(CancellationToken);
 	}
 
