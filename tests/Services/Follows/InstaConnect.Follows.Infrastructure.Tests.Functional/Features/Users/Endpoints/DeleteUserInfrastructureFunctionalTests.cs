@@ -18,6 +18,7 @@ public class DeleteUserInfrastructureFunctionalTests : BaseUserInfrastructureCom
 
 	protected override async Task OnInitializeAsync()
 	{
+		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 	}
 
@@ -59,7 +60,7 @@ public class DeleteUserInfrastructureFunctionalTests : BaseUserInfrastructureCom
 	{
 		// Act
 		await EventPublisher.PublishAsync(_request, CancellationToken);
-		var eventRequest = await EventClient.FaultedDeletedAsync(CancellationToken);
+		var eventRequest = await EventClient.ConsumedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_request);
