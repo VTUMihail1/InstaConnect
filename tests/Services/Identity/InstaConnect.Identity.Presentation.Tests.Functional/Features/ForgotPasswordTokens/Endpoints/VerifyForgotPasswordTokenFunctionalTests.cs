@@ -37,7 +37,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenP
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.VerifyStatusCodeAsync(request, CancellationToken);
+		var response = await ForgotPasswordTokenApiClient.VerifyStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -54,7 +54,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenP
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.VerifyProblemDetailsAsync(request, CancellationToken);
+		var response = await ForgotPasswordTokenApiClient.VerifyProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForId(request, messageTransformer);
@@ -70,7 +70,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenP
 		var request = _requestBuilder.WithValue(transformer).Build();
 
 		// Act
-		var response = await Client.VerifyStatusCodeAsync(request, CancellationToken);
+		var response = await ForgotPasswordTokenApiClient.VerifyStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -87,7 +87,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenP
 		var request = _requestBuilder.WithValue(transformer).Build();
 
 		// Act
-		var response = await Client.VerifyProblemDetailsAsync(request, CancellationToken);
+		var response = await ForgotPasswordTokenApiClient.VerifyProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForValue(request, messageTransformer);
@@ -104,7 +104,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenP
 		var request = _requestBuilder.WithPassword(transformer).Build();
 
 		// Act
-		var response = await Client.VerifyStatusCodeAsync(request, CancellationToken);
+		var response = await ForgotPasswordTokenApiClient.VerifyStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -123,7 +123,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenP
 		var request = _requestBuilder.WithPassword(transformer).Build();
 
 		// Act
-		var response = await Client.VerifyProblemDetailsAsync(request, CancellationToken);
+		var response = await ForgotPasswordTokenApiClient.VerifyProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForPassword(request, messageTransformer);
@@ -137,7 +137,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenP
 		var request = _requestBuilder.WithConfirmPassword(transformer).Build();
 
 		// Act
-		var response = await Client.VerifyStatusCodeAsync(request, CancellationToken);
+		var response = await ForgotPasswordTokenApiClient.VerifyStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -153,7 +153,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenP
 		var request = _requestBuilder.WithConfirmPassword(transformer).Build();
 
 		// Act
-		var response = await Client.VerifyProblemDetailsAsync(request, CancellationToken);
+		var response = await ForgotPasswordTokenApiClient.VerifyProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForConfirmPassword(request, messageTransformer);
@@ -166,7 +166,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenP
 		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Act
-		var response = await Client.VerifyStatusCodeAsync(_request, CancellationToken);
+		var response = await ForgotPasswordTokenApiClient.VerifyStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNotFound();
@@ -179,7 +179,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenP
 		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Act
-		var response = await Client.VerifyProblemDetailsAsync(_request, CancellationToken);
+		var response = await ForgotPasswordTokenApiClient.VerifyProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyUserNotFound(_request);
@@ -192,7 +192,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenP
 		await ServiceScope.DeleteAsync(ForgotPasswordToken, CancellationToken);
 
 		// Act
-		var response = await Client.VerifyStatusCodeAsync(_request, CancellationToken);
+		var response = await ForgotPasswordTokenApiClient.VerifyStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNotFound();
@@ -205,7 +205,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenP
 		await ServiceScope.DeleteAsync(ForgotPasswordToken, CancellationToken);
 
 		// Act
-		var response = await Client.VerifyProblemDetailsAsync(_request, CancellationToken);
+		var response = await ForgotPasswordTokenApiClient.VerifyProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyForgotPasswordTokenNotFound(_request);
@@ -219,7 +219,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenP
 		await ServiceScope.UpdateAsync(updatedForgotPasswordToken, CancellationToken);
 
 		// Act
-		var response = await Client.VerifyStatusCodeAsync(_request, CancellationToken);
+		var response = await ForgotPasswordTokenApiClient.VerifyStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -233,7 +233,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenP
 		await ServiceScope.UpdateAsync(updatedForgotPasswordToken, CancellationToken);
 
 		// Act
-		var response = await Client.VerifyProblemDetailsAsync(_request, CancellationToken);
+		var response = await ForgotPasswordTokenApiClient.VerifyProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyForgotPasswordTokenExpired(_request);
@@ -243,7 +243,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenP
 	public async Task VerifyAsync_ShouldHaveNoContentStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var response = await Client.VerifyStatusCodeAsync(_request, CancellationToken);
+		var response = await ForgotPasswordTokenApiClient.VerifyStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNoContent();
@@ -258,7 +258,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenP
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.VerifyStatusCodeAsync(request, CancellationToken);
+		var response = await ForgotPasswordTokenApiClient.VerifyStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNoContent();
@@ -273,7 +273,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenP
 		var request = _requestBuilder.WithValue(transformer).Build();
 
 		// Act
-		var response = await Client.VerifyStatusCodeAsync(request, CancellationToken);
+		var response = await ForgotPasswordTokenApiClient.VerifyStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNoContent();
@@ -283,7 +283,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenP
 	public async Task VerifyAsync_ShouldUpdatedUser_WhenRequestIsValid()
 	{
 		// Act
-		await Client.VerifyAsync(_request, CancellationToken);
+		await ForgotPasswordTokenApiClient.VerifyAsync(_request, CancellationToken);
 		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
@@ -299,7 +299,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenP
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		await Client.VerifyAsync(request, CancellationToken);
+		await ForgotPasswordTokenApiClient.VerifyAsync(request, CancellationToken);
 		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
@@ -315,7 +315,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenP
 		var request = _requestBuilder.WithValue(transformer).Build();
 
 		// Act
-		await Client.VerifyAsync(request, CancellationToken);
+		await ForgotPasswordTokenApiClient.VerifyAsync(request, CancellationToken);
 		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
@@ -326,7 +326,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenP
 	public async Task VerifyAsync_ShouldDeleteForgotPasswordToken_WhenRequestIsValid()
 	{
 		// Act
-		await Client.VerifyAsync(_request, CancellationToken);
+		await ForgotPasswordTokenApiClient.VerifyAsync(_request, CancellationToken);
 		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
@@ -342,7 +342,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenP
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		await Client.VerifyAsync(request, CancellationToken);
+		await ForgotPasswordTokenApiClient.VerifyAsync(request, CancellationToken);
 		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
@@ -358,7 +358,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenP
 		var request = _requestBuilder.WithValue(transformer).Build();
 
 		// Act
-		await Client.VerifyAsync(request, CancellationToken);
+		await ForgotPasswordTokenApiClient.VerifyAsync(request, CancellationToken);
 		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
@@ -369,8 +369,8 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenP
 	public async Task VerifyAsync_ShouldPublishForgotPasswordTokenDeletedEvents_WhenRequestIsValid()
 	{
 		// Act
-		await Client.VerifyAsync(_request, CancellationToken);
-		var eventRequests = await EventClient.PublishedDeletedRangeAsync(CancellationToken);
+		await ForgotPasswordTokenApiClient.VerifyAsync(_request, CancellationToken);
+		var eventRequests = await ForgotPasswordTokenEventClient.PublishedDeletedRangeAsync(CancellationToken);
 
 		// Assert
 		eventRequests.ShouldSatisfy(_request, User.ForgotPasswordTokens);
@@ -385,8 +385,8 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenP
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		await Client.VerifyAsync(request, CancellationToken);
-		var eventRequests = await EventClient.PublishedDeletedRangeAsync(CancellationToken);
+		await ForgotPasswordTokenApiClient.VerifyAsync(request, CancellationToken);
+		var eventRequests = await ForgotPasswordTokenEventClient.PublishedDeletedRangeAsync(CancellationToken);
 
 		// Assert
 		eventRequests.ShouldSatisfy(request, User.ForgotPasswordTokens);
@@ -401,8 +401,8 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenP
 		var request = _requestBuilder.WithValue(transformer).Build();
 
 		// Act
-		await Client.VerifyAsync(request, CancellationToken);
-		var eventRequests = await EventClient.PublishedDeletedRangeAsync(CancellationToken);
+		await ForgotPasswordTokenApiClient.VerifyAsync(request, CancellationToken);
+		var eventRequests = await ForgotPasswordTokenEventClient.PublishedDeletedRangeAsync(CancellationToken);
 
 		// Assert
 		eventRequests.ShouldSatisfy(request, User.ForgotPasswordTokens);

@@ -13,7 +13,7 @@ public abstract class BasePostApplicationCommandIntegrationTest : BasePostWebTes
 	protected BasePostApplicationCommandIntegrationTest(PostsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
 		Sender = ServiceScope.GetSender();
-		EventClient = webApplicationFactory.CreatePostEventClient();
+		EventClient = webApplicationFactory.CreateEventClient();
 	}
 
 	protected override async Task OnInitializeAsync()

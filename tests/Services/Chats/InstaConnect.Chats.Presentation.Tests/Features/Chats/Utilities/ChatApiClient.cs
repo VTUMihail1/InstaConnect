@@ -9,12 +9,12 @@ using InstaConnect.Common.Presentation.Tests.Features.Extensions;
 
 namespace InstaConnect.Chats.Presentation.Tests.Features.Chats.Utilities;
 
-internal class ChatClient : IChatClient
+internal class ChatApiClient : IChatApiClient
 {
 	private readonly HttpClient _httpClient;
 	private readonly IBaseAccessTokenGenerator _baseAccessTokenGenerator;
 
-	public ChatClient(
+	public ChatApiClient(
 		HttpClient httpClient,
 		IBaseAccessTokenGenerator baseAccessTokenGenerator)
 	{

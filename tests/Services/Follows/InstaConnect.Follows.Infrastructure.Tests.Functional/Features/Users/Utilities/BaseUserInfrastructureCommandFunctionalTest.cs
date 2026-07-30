@@ -7,23 +7,23 @@ namespace InstaConnect.Follows.Infrastructure.Tests.Functional.Features.Users.Ut
 
 public abstract class BaseUserInfrastructureCommandFunctionalTest : BaseUserWebTest
 {
-	protected IUserEventClient EventClient { get; }
+	protected IUserEventClient UserEventClient { get; }
 
 	protected IEventPublisher EventPublisher { get; }
 
 	protected BaseUserInfrastructureCommandFunctionalTest(FollowsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
-		EventClient = webApplicationFactory.CreateUserEventClient();
+		UserEventClient = webApplicationFactory.CreateUserEventClient();
 		EventPublisher = ServiceScope.GetEventPublisher();
 	}
 
 	protected override async Task OnInitializeAsync()
 	{
-		await EventClient.StartAsync(CancellationToken);
+		await UserEventClient.StartAsync(CancellationToken);
 	}
 
 	protected override async Task OnDisposeAsync()
 	{
-		await EventClient.StopAsync(CancellationToken);
+		await UserEventClient.StopAsync(CancellationToken);
 	}
 }

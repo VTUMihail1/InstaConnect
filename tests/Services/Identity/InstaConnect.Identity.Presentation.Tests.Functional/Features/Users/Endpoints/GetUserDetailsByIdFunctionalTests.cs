@@ -23,7 +23,7 @@ public class GetUserDetailsByIdFunctionalTests : BaseUserPresentationQueryFuncti
 	public async Task GetDetailsByIdAsync_ShouldReturnUnauthorizedStatusCode_WhenRequestIsUnauthorized()
 	{
 		// Act
-		var response = await Client.GetDetailsByIdUnauthorizedStatusCodeAsync(_request, CancellationToken);
+		var response = await ApiClient.GetDetailsByIdUnauthorizedStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeUnauthorized();
@@ -33,7 +33,7 @@ public class GetUserDetailsByIdFunctionalTests : BaseUserPresentationQueryFuncti
 	public async Task GetDetailsByIdAsync_ShouldReturnForbiddenStatusCode_WhenRequestIsForbidden()
 	{
 		// Act
-		var response = await Client.GetDetailsByIdForbiddenStatusCodeAsync(_request, CancellationToken);
+		var response = await ApiClient.GetDetailsByIdForbiddenStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeForbidden();
@@ -49,7 +49,7 @@ public class GetUserDetailsByIdFunctionalTests : BaseUserPresentationQueryFuncti
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.GetDetailsByIdStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.GetDetailsByIdStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -65,7 +65,7 @@ public class GetUserDetailsByIdFunctionalTests : BaseUserPresentationQueryFuncti
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.GetDetailsByIdProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.GetDetailsByIdProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForId(request, messageTransformer);
@@ -80,7 +80,7 @@ public class GetUserDetailsByIdFunctionalTests : BaseUserPresentationQueryFuncti
 		var request = _requestBuilder.WithCurrentId(transformer).Build();
 
 		// Act
-		var response = await Client.GetDetailsByIdStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.GetDetailsByIdStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -95,7 +95,7 @@ public class GetUserDetailsByIdFunctionalTests : BaseUserPresentationQueryFuncti
 		var request = _requestBuilder.WithCurrentId(transformer).Build();
 
 		// Act
-		var response = await Client.GetDetailsByIdProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.GetDetailsByIdProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForCurrentId(request, messageTransformer);
@@ -108,7 +108,7 @@ public class GetUserDetailsByIdFunctionalTests : BaseUserPresentationQueryFuncti
 		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Act
-		var response = await Client.GetDetailsByIdStatusCodeAsync(_request, CancellationToken);
+		var response = await ApiClient.GetDetailsByIdStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNotFound();
@@ -121,7 +121,7 @@ public class GetUserDetailsByIdFunctionalTests : BaseUserPresentationQueryFuncti
 		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Act
-		var response = await Client.GetDetailsByIdProblemDetailsAsync(_request, CancellationToken);
+		var response = await ApiClient.GetDetailsByIdProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyUserNotFound(_request);
@@ -131,7 +131,7 @@ public class GetUserDetailsByIdFunctionalTests : BaseUserPresentationQueryFuncti
 	public async Task GetDetailsByIdAsync_ShouldHaveOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var response = await Client.GetDetailsByIdStatusCodeAsync(_request, CancellationToken);
+		var response = await ApiClient.GetDetailsByIdStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -146,7 +146,7 @@ public class GetUserDetailsByIdFunctionalTests : BaseUserPresentationQueryFuncti
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.GetDetailsByIdStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.GetDetailsByIdStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -162,7 +162,7 @@ public class GetUserDetailsByIdFunctionalTests : BaseUserPresentationQueryFuncti
 		var request = _requestBuilder.WithCurrentId(transformer).Build();
 
 		// Act
-		var response = await Client.GetDetailsByIdStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.GetDetailsByIdStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -172,7 +172,7 @@ public class GetUserDetailsByIdFunctionalTests : BaseUserPresentationQueryFuncti
 	public async Task GetDetailsByIdAsync_ShouldHaveResponse_WhenRequestIsValid()
 	{
 		// Act
-		var response = await Client.GetDetailsByIdAsync(_request, CancellationToken);
+		var response = await ApiClient.GetDetailsByIdAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(_request, User);
@@ -187,7 +187,7 @@ public class GetUserDetailsByIdFunctionalTests : BaseUserPresentationQueryFuncti
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.GetDetailsByIdAsync(request, CancellationToken);
+		var response = await ApiClient.GetDetailsByIdAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(request, User);
@@ -203,7 +203,7 @@ public class GetUserDetailsByIdFunctionalTests : BaseUserPresentationQueryFuncti
 		var request = _requestBuilder.WithCurrentId(transformer).Build();
 
 		// Act
-		var response = await Client.GetDetailsByIdAsync(request, CancellationToken);
+		var response = await ApiClient.GetDetailsByIdAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(request, User);

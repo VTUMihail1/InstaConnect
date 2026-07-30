@@ -35,7 +35,7 @@ public class DeleteUserInfrastructureFunctionalTests : BaseUserInfrastructureCom
 
 		// Act
 		await EventPublisher.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventClient.FaultedDeletedAsync(CancellationToken);
+		var eventRequest = await UserEventClient.FaultedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -49,7 +49,7 @@ public class DeleteUserInfrastructureFunctionalTests : BaseUserInfrastructureCom
 
 		// Act
 		await EventPublisher.PublishAsync(_request, CancellationToken);
-		var eventRequest = await EventClient.FaultedDeletedAsync(CancellationToken);
+		var eventRequest = await UserEventClient.FaultedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_request);
@@ -60,7 +60,7 @@ public class DeleteUserInfrastructureFunctionalTests : BaseUserInfrastructureCom
 	{
 		// Act
 		await EventPublisher.PublishAsync(_request, CancellationToken);
-		var eventRequest = await EventClient.ConsumedDeletedAsync(CancellationToken);
+		var eventRequest = await UserEventClient.ConsumedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_request);
@@ -76,7 +76,7 @@ public class DeleteUserInfrastructureFunctionalTests : BaseUserInfrastructureCom
 
 		// Act
 		await EventPublisher.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventClient.ConsumedDeletedAsync(CancellationToken);
+		var eventRequest = await UserEventClient.ConsumedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);

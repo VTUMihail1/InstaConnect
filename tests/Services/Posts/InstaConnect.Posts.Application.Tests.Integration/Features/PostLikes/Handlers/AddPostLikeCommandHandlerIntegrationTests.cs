@@ -202,7 +202,7 @@ public class AddPostLikeCommandHandlerIntegrationTests : BasePostLikeApplication
 		var response = await Sender.SendAsync(_request, CancellationToken);
 		var postLike = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
-		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
+		var eventRequest = await LikeEventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_request, postLike);
@@ -220,7 +220,7 @@ public class AddPostLikeCommandHandlerIntegrationTests : BasePostLikeApplication
 		var response = await Sender.SendAsync(request, CancellationToken);
 		var postLike = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
-		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
+		var eventRequest = await LikeEventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, postLike);
@@ -238,7 +238,7 @@ public class AddPostLikeCommandHandlerIntegrationTests : BasePostLikeApplication
 		var response = await Sender.SendAsync(request, CancellationToken);
 		var postLike = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
-		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
+		var eventRequest = await LikeEventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, postLike);

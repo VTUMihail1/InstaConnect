@@ -30,7 +30,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithName(transformer).Build();
 
 		// Act
-		var response = await Client.AddStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -49,7 +49,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithName(transformer).Build();
 
 		// Act
-		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForName(request, messageTransformer);
@@ -66,7 +66,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithFirstName(transformer).Build();
 
 		// Act
-		var response = await Client.AddStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -85,7 +85,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithFirstName(transformer).Build();
 
 		// Act
-		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForFirstName(request, messageTransformer);
@@ -102,7 +102,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithLastName(transformer).Build();
 
 		// Act
-		var response = await Client.AddStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -121,7 +121,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithLastName(transformer).Build();
 
 		// Act
-		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForLastName(request, messageTransformer);
@@ -139,7 +139,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithEmail(transformer).Build();
 
 		// Act
-		var response = await Client.AddStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -159,7 +159,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithEmail(transformer).Build();
 
 		// Act
-		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForEmail(request, messageTransformer);
@@ -176,7 +176,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithPassword(transformer).Build();
 
 		// Act
-		var response = await Client.AddStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -195,7 +195,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithPassword(transformer).Build();
 
 		// Act
-		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForPassword(request, messageTransformer);
@@ -209,7 +209,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithConfirmPassword(transformer).Build();
 
 		// Act
-		var response = await Client.AddStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -225,7 +225,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithConfirmPassword(transformer).Build();
 
 		// Act
-		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForConfirmPassword(request, messageTransformer);
@@ -239,7 +239,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithEmail(User.Email).Build();
 
 		// Act
-		var response = await Client.AddStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -255,7 +255,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithEmail(User.Email, transformer).Build();
 
 		// Act
-		var response = await Client.AddStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -269,7 +269,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithEmail(User.Email).Build();
 
 		// Act
-		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyUserEmailAlreadyTaken(request);
@@ -285,7 +285,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithEmail(User.Email, transformer).Build();
 
 		// Act
-		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyUserEmailAlreadyTaken(request);
@@ -299,7 +299,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithName(User.Name).Build();
 
 		// Act
-		var response = await Client.AddStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -315,7 +315,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithName(User.Name, transformer).Build();
 
 		// Act
-		var response = await Client.AddStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -329,7 +329,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithName(User.Name).Build();
 
 		// Act
-		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyUserNameAlreadyTaken(request);
@@ -345,7 +345,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithName(User.Name, transformer).Build();
 
 		// Act
-		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyUserNameAlreadyTaken(request);
@@ -355,7 +355,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 	public async Task AddAsync_ShouldHaveOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var response = await Client.AddStatusCodeAsync(_request, CancellationToken);
+		var response = await ApiClient.AddStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -369,7 +369,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithProfileImage(transformer).Build();
 
 		// Act
-		var response = await Client.AddStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -379,7 +379,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 	public async Task AddAsync_ShouldReturnResponse_WhenRequestIsValid()
 	{
 		// Act
-		var response = await Client.AddAsync(_request, CancellationToken);
+		var response = await ApiClient.AddAsync(_request, CancellationToken);
 		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
@@ -394,7 +394,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithProfileImage(transformer).Build();
 
 		// Act
-		var response = await Client.AddAsync(request, CancellationToken);
+		var response = await ApiClient.AddAsync(request, CancellationToken);
 		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
@@ -405,7 +405,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 	public async Task AddAsync_ShouldAddUser_WhenRequestIsValid()
 	{
 		// Act
-		var response = await Client.AddAsync(_request, CancellationToken);
+		var response = await ApiClient.AddAsync(_request, CancellationToken);
 		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
@@ -420,7 +420,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithProfileImage(transformer).Build();
 
 		// Act
-		var response = await Client.AddAsync(request, CancellationToken);
+		var response = await ApiClient.AddAsync(request, CancellationToken);
 		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
@@ -431,7 +431,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 	public async Task AddAsync_ShouldAddEmailConfirmationToken_WhenRequestIsValid()
 	{
 		// Act
-		var response = await Client.AddAsync(_request, CancellationToken);
+		var response = await ApiClient.AddAsync(_request, CancellationToken);
 		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
@@ -446,7 +446,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithProfileImage(transformer).Build();
 
 		// Act
-		var response = await Client.AddAsync(request, CancellationToken);
+		var response = await ApiClient.AddAsync(request, CancellationToken);
 		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
@@ -457,7 +457,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 	public async Task AddAsync_ShouldPublishUserAddedEvent_WhenRequestIsValid()
 	{
 		// Act
-		var response = await Client.AddAsync(_request, CancellationToken);
+		var response = await ApiClient.AddAsync(_request, CancellationToken);
 		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
 
@@ -473,7 +473,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithProfileImage(transformer).Build();
 
 		// Act
-		var response = await Client.AddAsync(request, CancellationToken);
+		var response = await ApiClient.AddAsync(request, CancellationToken);
 		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
 
@@ -485,7 +485,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 	public async Task AddAsync_ShouldPublishEmailConfirmationTokenAddedEvent_WhenRequestIsValid()
 	{
 		// Act
-		var response = await Client.AddAsync(_request, CancellationToken);
+		var response = await ApiClient.AddAsync(_request, CancellationToken);
 		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var eventRequests = await EmailConfirmationTokenEventClient.PublishedAddedRangeAsync(CancellationToken);
 
@@ -501,7 +501,7 @@ public class AddUserFunctionalTests : BaseUserPresentationCommandFunctionalTest
 		var request = _requestBuilder.WithProfileImage(transformer).Build();
 
 		// Act
-		var response = await Client.AddAsync(request, CancellationToken);
+		var response = await ApiClient.AddAsync(request, CancellationToken);
 		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var eventRequests = await EmailConfirmationTokenEventClient.PublishedAddedRangeAsync(CancellationToken);
 

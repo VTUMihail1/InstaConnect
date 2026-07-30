@@ -4,7 +4,7 @@ using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
 
 namespace InstaConnect.Posts.Presentation.Tests.Features.Posts.Abstractions;
 
-public interface IPostClient
+public interface IPostApiClient
 {
 	public Task<GetAllPostsApiResponse> GetAllAsync(GetAllPostsApiRequest request, CancellationToken cancellationToken);
 	public Task<ApplicationProblemDetails> GetAllProblemDetailsAsync(GetAllPostsApiRequest request, CancellationToken cancellationToken);

@@ -10,23 +10,23 @@ public abstract class BaseUserClaimDomainCommandIntegrationTest : BaseUserClaimW
 {
 	protected IUserClaimCommandService Service { get; }
 
-	protected IUserClaimEventClient EventClient { get; }
+	protected IUserClaimEventClient ClaimEventClient { get; }
 
 	protected BaseUserClaimDomainCommandIntegrationTest(IdentityWebApplicationFactory webApplicationFactory)
 		: base(webApplicationFactory)
 	{
 		Service = ServiceScope.GetClaimCommandService();
-		EventClient = webApplicationFactory.CreateUserClaimEventClient();
+		ClaimEventClient = webApplicationFactory.CreateClaimEventClient();
 	}
 
 	protected override async Task OnInitializeAsync()
 	{
 		await base.OnInitializeAsync();
-		await EventClient.StartAsync(CancellationToken);
+		await ClaimEventClient.StartAsync(CancellationToken);
 	}
 
 	protected override async Task OnDisposeAsync()
 	{
-		await EventClient.StopAsync(CancellationToken);
+		await ClaimEventClient.StopAsync(CancellationToken);
 	}
 }

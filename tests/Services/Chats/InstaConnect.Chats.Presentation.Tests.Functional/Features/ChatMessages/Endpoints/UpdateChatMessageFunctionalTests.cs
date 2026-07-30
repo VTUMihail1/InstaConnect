@@ -422,7 +422,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		// Act
 		var response = await HttpClient.UpdateAsync(_request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
-		var notificationRequest = await NotificationClient.PublishedUpdatedAsync(CancellationToken);
+		var notificationRequest = await MessageNotificationClient.PublishedUpdatedAsync(CancellationToken);
 
 		// Assert
 		notificationRequest.ShouldSatisfy(_request, chatMessage);
@@ -439,7 +439,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		// Act
 		var response = await HttpClient.UpdateAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
-		var notificationRequest = await NotificationClient.PublishedUpdatedAsync(CancellationToken);
+		var notificationRequest = await MessageNotificationClient.PublishedUpdatedAsync(CancellationToken);
 
 		// Assert
 		notificationRequest.ShouldSatisfy(request, chatMessage);
@@ -456,7 +456,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		// Act
 		var response = await HttpClient.UpdateAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
-		var notificationRequest = await NotificationClient.PublishedUpdatedAsync(CancellationToken);
+		var notificationRequest = await MessageNotificationClient.PublishedUpdatedAsync(CancellationToken);
 
 		// Assert
 		notificationRequest.ShouldSatisfy(request, chatMessage);
@@ -473,7 +473,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		// Act
 		var response = await HttpClient.UpdateAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
-		var notificationRequest = await NotificationClient.PublishedUpdatedAsync(CancellationToken);
+		var notificationRequest = await MessageNotificationClient.PublishedUpdatedAsync(CancellationToken);
 
 		// Assert
 		notificationRequest.ShouldSatisfy(request, chatMessage);
@@ -694,7 +694,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		// Act
 		var response = await HttpClient.UpdateAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
-		var notificationRequest = await NotificationClient.PublishedUpdatedAsync(CancellationToken);
+		var notificationRequest = await MessageNotificationClient.PublishedUpdatedAsync(CancellationToken);
 
 		// Assert
 		notificationRequest.ShouldSatisfyInverted(request, chatMessage);
@@ -713,7 +713,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		// Act
 		var response = await HttpClient.UpdateAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
-		var notificationRequest = await NotificationClient.PublishedUpdatedAsync(CancellationToken);
+		var notificationRequest = await MessageNotificationClient.PublishedUpdatedAsync(CancellationToken);
 
 		// Assert
 		notificationRequest.ShouldSatisfyInverted(request, chatMessage);
@@ -732,7 +732,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		// Act
 		var response = await HttpClient.UpdateAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
-		var notificationRequest = await NotificationClient.PublishedUpdatedAsync(CancellationToken);
+		var notificationRequest = await MessageNotificationClient.PublishedUpdatedAsync(CancellationToken);
 
 		// Assert
 		notificationRequest.ShouldSatisfyInverted(request, chatMessage);
@@ -751,7 +751,7 @@ public class UpdateChatMessageFunctionalTests : BaseChatMessagePresentationComma
 		// Act
 		var response = await HttpClient.UpdateAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
-		var notificationRequest = await NotificationClient.PublishedUpdatedAsync(CancellationToken);
+		var notificationRequest = await MessageNotificationClient.PublishedUpdatedAsync(CancellationToken);
 
 		// Assert
 		notificationRequest.ShouldSatisfyInverted(request, chatMessage);

@@ -4,7 +4,7 @@ using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
 
 namespace InstaConnect.Follows.Presentation.Tests.Features.Follows.Abstractions;
 
-public interface IFollowClient
+public interface IFollowApiClient
 {
 	public Task<AddFollowApiResponse> AddAsync(AddFollowApiRequest request, CancellationToken cancellationToken);
 	public Task<ApplicationProblemDetails> AddProblemDetailsAsync(AddFollowApiRequest request, CancellationToken cancellationToken);

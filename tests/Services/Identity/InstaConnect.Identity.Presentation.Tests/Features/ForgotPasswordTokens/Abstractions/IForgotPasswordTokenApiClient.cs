@@ -4,7 +4,7 @@ using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.ForgotPasswordTokens.Abstractions;
 
-public interface IForgotPasswordTokenClient
+public interface IForgotPasswordTokenApiClient
 {
 	public Task AddAsync(AddForgotPasswordTokenApiRequest request, CancellationToken cancellationToken);
 	public Task<ApplicationProblemDetails> AddProblemDetailsAsync(AddForgotPasswordTokenApiRequest request, CancellationToken cancellationToken);

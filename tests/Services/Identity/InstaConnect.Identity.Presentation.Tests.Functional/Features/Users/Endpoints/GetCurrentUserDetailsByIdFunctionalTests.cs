@@ -23,7 +23,7 @@ public class GetCurrentUserDetailsByIdFunctionalTests : BaseUserPresentationQuer
 	public async Task GetCurrentDetailsByIdAsync_ShouldReturnUnauthorizedStatusCode_WhenRequestIsUnauthorized()
 	{
 		// Act
-		var response = await Client.GetCurrentDetailsByIdUnauthorizedStatusCodeAsync(_request, CancellationToken);
+		var response = await ApiClient.GetCurrentDetailsByIdUnauthorizedStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeUnauthorized();
@@ -39,7 +39,7 @@ public class GetCurrentUserDetailsByIdFunctionalTests : BaseUserPresentationQuer
 		var request = _requestBuilder.WithCurrentId(transformer).Build();
 
 		// Act
-		var response = await Client.GetCurrentDetailsByIdStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.GetCurrentDetailsByIdStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -55,7 +55,7 @@ public class GetCurrentUserDetailsByIdFunctionalTests : BaseUserPresentationQuer
 		var request = _requestBuilder.WithCurrentId(transformer).Build();
 
 		// Act
-		var response = await Client.GetCurrentDetailsByIdProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.GetCurrentDetailsByIdProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForCurrentId(request, messageTransformer);
@@ -68,7 +68,7 @@ public class GetCurrentUserDetailsByIdFunctionalTests : BaseUserPresentationQuer
 		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Act
-		var response = await Client.GetCurrentDetailsByIdStatusCodeAsync(_request, CancellationToken);
+		var response = await ApiClient.GetCurrentDetailsByIdStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNotFound();
@@ -81,7 +81,7 @@ public class GetCurrentUserDetailsByIdFunctionalTests : BaseUserPresentationQuer
 		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Act
-		var response = await Client.GetCurrentDetailsByIdProblemDetailsAsync(_request, CancellationToken);
+		var response = await ApiClient.GetCurrentDetailsByIdProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyUserNotFound(_request);
@@ -91,7 +91,7 @@ public class GetCurrentUserDetailsByIdFunctionalTests : BaseUserPresentationQuer
 	public async Task GetCurrentDetailsByIdAsync_ShouldHaveOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var response = await Client.GetCurrentDetailsByIdStatusCodeAsync(_request, CancellationToken);
+		var response = await ApiClient.GetCurrentDetailsByIdStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -106,7 +106,7 @@ public class GetCurrentUserDetailsByIdFunctionalTests : BaseUserPresentationQuer
 		var request = _requestBuilder.WithCurrentId(transformer).Build();
 
 		// Act
-		var response = await Client.GetCurrentDetailsByIdStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.GetCurrentDetailsByIdStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -116,7 +116,7 @@ public class GetCurrentUserDetailsByIdFunctionalTests : BaseUserPresentationQuer
 	public async Task GetCurrentDetailsByIdAsync_ShouldHaveResponse_WhenRequestIsValid()
 	{
 		// Act
-		var response = await Client.GetCurrentDetailsByIdAsync(_request, CancellationToken);
+		var response = await ApiClient.GetCurrentDetailsByIdAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(_request, User);
@@ -131,7 +131,7 @@ public class GetCurrentUserDetailsByIdFunctionalTests : BaseUserPresentationQuer
 		var request = _requestBuilder.WithCurrentId(transformer).Build();
 
 		// Act
-		var response = await Client.GetCurrentDetailsByIdAsync(request, CancellationToken);
+		var response = await ApiClient.GetCurrentDetailsByIdAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(request, User);
@@ -141,7 +141,7 @@ public class GetCurrentUserDetailsByIdFunctionalTests : BaseUserPresentationQuer
 	public async Task GetCurrentDetailsByIdAsync_ShouldCacheResponse_WhenRequestIsValid()
 	{
 		// Act
-		await Client.GetCurrentDetailsByIdAsync(_request, CancellationToken);
+		await ApiClient.GetCurrentDetailsByIdAsync(_request, CancellationToken);
 		var response = await ServiceScope.GetCachedAsync(_request, CancellationToken);
 
 		// Assert
@@ -157,7 +157,7 @@ public class GetCurrentUserDetailsByIdFunctionalTests : BaseUserPresentationQuer
 		var request = _requestBuilder.WithCurrentId(transformer).Build();
 
 		// Act
-		await Client.GetCurrentDetailsByIdAsync(request, CancellationToken);
+		await ApiClient.GetCurrentDetailsByIdAsync(request, CancellationToken);
 		var response = await ServiceScope.GetCachedAsync(request, CancellationToken);
 
 		// Assert

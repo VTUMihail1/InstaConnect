@@ -10,22 +10,22 @@ public abstract class BasePostLikeDomainCommandIntegrationTest : BasePostLikeWeb
 {
 	protected IPostLikeCommandService Service { get; }
 
-	protected IPostLikeEventClient EventClient { get; }
+	protected IPostLikeEventClient LikeEventClient { get; }
 
 	protected BasePostLikeDomainCommandIntegrationTest(PostsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
 		Service = ServiceScope.GetPostLikeCommandService();
-		EventClient = webApplicationFactory.CreatePostLikeEventClient();
+		LikeEventClient = webApplicationFactory.CreateLikeEventClient();
 	}
 
 	protected override async Task OnInitializeAsync()
 	{
 		await base.OnInitializeAsync();
-		await EventClient.StartAsync(CancellationToken);
+		await LikeEventClient.StartAsync(CancellationToken);
 	}
 
 	protected override async Task OnDisposeAsync()
 	{
-		await EventClient.StopAsync(CancellationToken);
+		await LikeEventClient.StopAsync(CancellationToken);
 	}
 }

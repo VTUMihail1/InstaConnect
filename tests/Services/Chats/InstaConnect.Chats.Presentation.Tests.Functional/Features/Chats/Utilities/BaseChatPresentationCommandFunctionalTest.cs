@@ -7,14 +7,14 @@ namespace InstaConnect.Chats.Presentation.Tests.Functional.Features.Chats.Utilit
 
 public abstract class BaseChatPresentationCommandFunctionalTest : BaseChatWebTest
 {
-	protected IChatClient Client { get; }
+	protected IChatApiClient ApiClient { get; }
 
 	protected IChatEventClient EventClient { get; }
 
 	protected BaseChatPresentationCommandFunctionalTest(ChatsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
-		Client = webApplicationFactory.CreateChatClient();
-		EventClient = webApplicationFactory.CreateChatEventClient();
+		ApiClient = webApplicationFactory.CreateApiClient();
+		EventClient = webApplicationFactory.CreateEventClient();
 	}
 
 	protected override async Task OnInitializeAsync()

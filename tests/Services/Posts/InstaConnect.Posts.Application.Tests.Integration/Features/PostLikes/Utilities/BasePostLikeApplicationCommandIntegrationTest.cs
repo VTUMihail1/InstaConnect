@@ -8,23 +8,23 @@ public abstract class BasePostLikeApplicationCommandIntegrationTest : BasePostLi
 {
 	protected IApplicationSender Sender { get; }
 
-	protected IPostLikeEventClient EventClient { get; }
+	protected IPostLikeEventClient LikeEventClient { get; }
 
 	protected BasePostLikeApplicationCommandIntegrationTest(PostsWebApplicationFactory webApplicationFactory)
 		: base(webApplicationFactory)
 	{
 		Sender = ServiceScope.GetSender();
-		EventClient = webApplicationFactory.CreatePostLikeEventClient();
+		LikeEventClient = webApplicationFactory.CreateLikeEventClient();
 	}
 
 	protected override async Task OnInitializeAsync()
 	{
 		await base.OnInitializeAsync();
-		await EventClient.StartAsync(CancellationToken);
+		await LikeEventClient.StartAsync(CancellationToken);
 	}
 
 	protected override async Task OnDisposeAsync()
 	{
-		await EventClient.StopAsync(CancellationToken);
+		await LikeEventClient.StopAsync(CancellationToken);
 	}
 }

@@ -31,7 +31,7 @@ public class GetPostByIdFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.GetByIdStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.GetByIdStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -47,7 +47,7 @@ public class GetPostByIdFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.GetByIdProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.GetByIdProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForId(request, messageTransformer);
@@ -62,7 +62,7 @@ public class GetPostByIdFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var response = await Client.GetByIdStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.GetByIdStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -77,7 +77,7 @@ public class GetPostByIdFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var response = await Client.GetByIdProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.GetByIdProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForCurrentUserId(request, messageTransformer);
@@ -90,7 +90,7 @@ public class GetPostByIdFunctionalTests : BasePostPresentationQueryFunctionalTes
 		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Act
-		var response = await Client.GetByIdStatusCodeAsync(_request, CancellationToken);
+		var response = await ApiClient.GetByIdStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNotFound();
@@ -103,7 +103,7 @@ public class GetPostByIdFunctionalTests : BasePostPresentationQueryFunctionalTes
 		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Act
-		var response = await Client.GetByIdProblemDetailsAsync(_request, CancellationToken);
+		var response = await ApiClient.GetByIdProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyPostNotFound(_request);
@@ -113,7 +113,7 @@ public class GetPostByIdFunctionalTests : BasePostPresentationQueryFunctionalTes
 	public async Task GetByIdAsync_ShouldHaveOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var response = await Client.GetByIdStatusCodeAsync(_request, CancellationToken);
+		var response = await ApiClient.GetByIdStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -128,7 +128,7 @@ public class GetPostByIdFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.GetByIdStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.GetByIdStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -144,7 +144,7 @@ public class GetPostByIdFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var response = await Client.GetByIdStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.GetByIdStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -154,7 +154,7 @@ public class GetPostByIdFunctionalTests : BasePostPresentationQueryFunctionalTes
 	public async Task GetByIdAsync_ShouldHaveResponse_WhenRequestIsValid()
 	{
 		// Act
-		var response = await Client.GetByIdAsync(_request, CancellationToken);
+		var response = await ApiClient.GetByIdAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(_request, Post);
@@ -169,7 +169,7 @@ public class GetPostByIdFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.GetByIdAsync(request, CancellationToken);
+		var response = await ApiClient.GetByIdAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(request, Post);
@@ -185,7 +185,7 @@ public class GetPostByIdFunctionalTests : BasePostPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var response = await Client.GetByIdAsync(request, CancellationToken);
+		var response = await ApiClient.GetByIdAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(request, Post);

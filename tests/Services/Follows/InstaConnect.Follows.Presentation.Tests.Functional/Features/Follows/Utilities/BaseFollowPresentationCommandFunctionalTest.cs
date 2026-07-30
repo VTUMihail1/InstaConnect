@@ -7,7 +7,7 @@ namespace InstaConnect.Follows.Presentation.Tests.Functional.Features.Follows.Ut
 
 public abstract class BaseFollowPresentationCommandFunctionalTest : BaseFollowWebTest
 {
-	protected IFollowClient Client { get; }
+	protected IFollowApiClient ApiClient { get; }
 
 	protected IFollowEventClient EventClient { get; }
 
@@ -15,9 +15,9 @@ public abstract class BaseFollowPresentationCommandFunctionalTest : BaseFollowWe
 
 	protected BaseFollowPresentationCommandFunctionalTest(FollowsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
-		Client = webApplicationFactory.CreateFollowClient();
-		EventClient = webApplicationFactory.CreateFollowEventClient();
-		NotificationClient = webApplicationFactory.CreateFollowNotificationClient(Following.Id);
+		ApiClient = webApplicationFactory.CreateApiClient();
+		EventClient = webApplicationFactory.CreateEventClient();
+		NotificationClient = webApplicationFactory.CreateNotificationClient(Following.Id);
 	}
 
 	protected override async Task OnInitializeAsync()

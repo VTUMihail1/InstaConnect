@@ -30,7 +30,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 	public async Task GetAllAsync_ShouldReturnUnauthorizedStatusCode_WhenRequestIsUnauthorized()
 	{
 		// Act
-		var response = await Client.GetAllUnauthorizedStatusCodeAsync(_request, CancellationToken);
+		var response = await ApiClient.GetAllUnauthorizedStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeUnauthorized();
@@ -45,7 +45,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithParticipantTwoName(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -60,7 +60,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithParticipantTwoName(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForParticipantTwoName(request, messageTransformer);
@@ -77,7 +77,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -94,7 +94,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForCurrentUserId(request, messageTransformer);
@@ -109,7 +109,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithSortOrder(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -124,7 +124,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithSortOrder(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForSortOrder(request, messageTransformer);
@@ -139,7 +139,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithSortTerm(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -154,7 +154,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithSortTerm(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForSortTerm(request, messageTransformer);
@@ -170,7 +170,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithPage(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -186,7 +186,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithPage(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForPage(request, messageTransformer);
@@ -202,7 +202,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithPageSize(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -218,7 +218,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithPageSize(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForPageSize(request, messageTransformer);
@@ -228,7 +228,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 	public async Task GetAllAsync_ShouldHaveOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var response = await Client.GetAllStatusCodeAsync(_request, CancellationToken);
+		var response = await ApiClient.GetAllStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -245,7 +245,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithParticipantTwoName(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -260,7 +260,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -276,7 +276,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithSortOrder(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -292,7 +292,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithSortTerm(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -302,7 +302,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 	public async Task GetAllAsync_ShouldReturnResponse_WhenRequestIsValid()
 	{
 		// Act
-		var response = await Client.GetAllAsync(_request, CancellationToken);
+		var response = await ApiClient.GetAllAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(_request, ParticipantOne, Chats);
@@ -319,7 +319,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithParticipantTwoName(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllAsync(request, CancellationToken);
+		var response = await ApiClient.GetAllAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(request, ParticipantOne, Chats);
@@ -334,7 +334,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllAsync(request, CancellationToken);
+		var response = await ApiClient.GetAllAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(request, ParticipantOne, Chats);
@@ -350,7 +350,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithSortOrder(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllAsync(request, CancellationToken);
+		var response = await ApiClient.GetAllAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(request, ParticipantOne, Chats, termTransformer);
@@ -366,7 +366,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithSortTerm(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllAsync(request, CancellationToken);
+		var response = await ApiClient.GetAllAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(request, ParticipantOne, Chats, termTransformer);
@@ -379,7 +379,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithParticipantTwoName(ParticipantOne.Name).WithCurrentUserId(ParticipantTwo.Id).Build();
 
 		// Act
-		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -396,7 +396,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithParticipantTwoName(ParticipantOne.Name, transformer).WithCurrentUserId(ParticipantTwo.Id).Build();
 
 		// Act
-		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -411,7 +411,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithParticipantTwoName(ParticipantOne.Name).WithCurrentUserId(ParticipantTwo.Id, transformer).Build();
 
 		// Act
-		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -427,7 +427,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithParticipantTwoName(ParticipantOne.Name).WithCurrentUserId(ParticipantTwo.Id).WithSortOrder(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -443,7 +443,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithParticipantTwoName(ParticipantOne.Name).WithCurrentUserId(ParticipantTwo.Id).WithSortTerm(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -456,7 +456,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithParticipantTwoName(ParticipantOne.Name).WithCurrentUserId(ParticipantTwo.Id).Build();
 
 		// Act
-		var response = await Client.GetAllAsync(request, CancellationToken);
+		var response = await ApiClient.GetAllAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInverted(request, ParticipantTwo, Chats);
@@ -473,7 +473,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithParticipantTwoName(ParticipantOne.Name, transformer).WithCurrentUserId(ParticipantTwo.Id).Build();
 
 		// Act
-		var response = await Client.GetAllAsync(request, CancellationToken);
+		var response = await ApiClient.GetAllAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInverted(request, ParticipantTwo, Chats);
@@ -488,7 +488,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithParticipantTwoName(ParticipantOne.Name).WithCurrentUserId(ParticipantTwo.Id, transformer).Build();
 
 		// Act
-		var response = await Client.GetAllAsync(request, CancellationToken);
+		var response = await ApiClient.GetAllAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInverted(request, ParticipantTwo, Chats);
@@ -504,7 +504,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithParticipantTwoName(ParticipantOne.Name).WithCurrentUserId(ParticipantTwo.Id).WithSortOrder(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllAsync(request, CancellationToken);
+		var response = await ApiClient.GetAllAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInverted(request, ParticipantTwo, Chats, termTransformer);
@@ -520,7 +520,7 @@ public class GetAllChatsFunctionalTests : BaseChatPresentationQueryFunctionalTes
 		var request = _requestBuilder.WithParticipantTwoName(ParticipantOne.Name).WithCurrentUserId(ParticipantTwo.Id).WithSortTerm(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllAsync(request, CancellationToken);
+		var response = await ApiClient.GetAllAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInverted(request, ParticipantTwo, Chats, termTransformer);

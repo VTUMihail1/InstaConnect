@@ -25,7 +25,7 @@ public class DeleteFollowFunctionalTests : BaseFollowPresentationCommandFunction
 	public async Task DeleteAsync_ShouldReturnUnauthorizedStatusCode_WhenRequestIsUnauthorized()
 	{
 		// Act
-		var response = await Client.DeleteUnauthorizedStatusCodeAsync(_request, CancellationToken);
+		var response = await ApiClient.DeleteUnauthorizedStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeUnauthorized();
@@ -42,7 +42,7 @@ public class DeleteFollowFunctionalTests : BaseFollowPresentationCommandFunction
 		var request = _requestBuilder.WithFollowerId(transformer).Build();
 
 		// Act
-		var response = await Client.DeleteStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.DeleteStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -59,7 +59,7 @@ public class DeleteFollowFunctionalTests : BaseFollowPresentationCommandFunction
 		var request = _requestBuilder.WithFollowerId(transformer).Build();
 
 		// Act
-		var response = await Client.DeleteProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.DeleteProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForFollowerId(request, messageTransformer);
@@ -75,7 +75,7 @@ public class DeleteFollowFunctionalTests : BaseFollowPresentationCommandFunction
 		var request = _requestBuilder.WithFollowingId(transformer).Build();
 
 		// Act
-		var response = await Client.DeleteStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.DeleteStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -91,7 +91,7 @@ public class DeleteFollowFunctionalTests : BaseFollowPresentationCommandFunction
 		var request = _requestBuilder.WithFollowingId(transformer).Build();
 
 		// Act
-		var response = await Client.DeleteProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.DeleteProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForFollowingId(request, messageTransformer);
@@ -104,7 +104,7 @@ public class DeleteFollowFunctionalTests : BaseFollowPresentationCommandFunction
 		await ServiceScope.DeleteAsync(Follow, CancellationToken);
 
 		// Act
-		var response = await Client.DeleteStatusCodeAsync(_request, CancellationToken);
+		var response = await ApiClient.DeleteStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNotFound();
@@ -117,7 +117,7 @@ public class DeleteFollowFunctionalTests : BaseFollowPresentationCommandFunction
 		await ServiceScope.DeleteAsync(Follow, CancellationToken);
 
 		// Act
-		var response = await Client.DeleteProblemDetailsAsync(_request, CancellationToken);
+		var response = await ApiClient.DeleteProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyFollowNotFound(_request);
@@ -127,7 +127,7 @@ public class DeleteFollowFunctionalTests : BaseFollowPresentationCommandFunction
 	public async Task DeleteAsync_ShouldHaveNoContentStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var response = await Client.DeleteStatusCodeAsync(_request, CancellationToken);
+		var response = await ApiClient.DeleteStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNoContent();
@@ -142,7 +142,7 @@ public class DeleteFollowFunctionalTests : BaseFollowPresentationCommandFunction
 		var request = _requestBuilder.WithFollowerId(transformer).Build();
 
 		// Act
-		var response = await Client.DeleteStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.DeleteStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNoContent();
@@ -157,7 +157,7 @@ public class DeleteFollowFunctionalTests : BaseFollowPresentationCommandFunction
 		var request = _requestBuilder.WithFollowingId(transformer).Build();
 
 		// Act
-		var response = await Client.DeleteStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.DeleteStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNoContent();
@@ -167,7 +167,7 @@ public class DeleteFollowFunctionalTests : BaseFollowPresentationCommandFunction
 	public async Task DeleteAsync_ShouldDeleteFollow_WhenRequestIsValid()
 	{
 		// Act
-		await Client.DeleteAsync(_request, CancellationToken);
+		await ApiClient.DeleteAsync(_request, CancellationToken);
 		var follow = await ServiceScope.GetByIdAsync(Follow.Id, CancellationToken);
 
 		// Assert
@@ -183,7 +183,7 @@ public class DeleteFollowFunctionalTests : BaseFollowPresentationCommandFunction
 		var request = _requestBuilder.WithFollowerId(transformer).Build();
 
 		// Act
-		await Client.DeleteAsync(request, CancellationToken);
+		await ApiClient.DeleteAsync(request, CancellationToken);
 		var follow = await ServiceScope.GetByIdAsync(Follow.Id, CancellationToken);
 
 		// Assert
@@ -199,7 +199,7 @@ public class DeleteFollowFunctionalTests : BaseFollowPresentationCommandFunction
 		var request = _requestBuilder.WithFollowingId(transformer).Build();
 
 		// Act
-		await Client.DeleteAsync(request, CancellationToken);
+		await ApiClient.DeleteAsync(request, CancellationToken);
 		var follow = await ServiceScope.GetByIdAsync(Follow.Id, CancellationToken);
 
 		// Assert
@@ -210,7 +210,7 @@ public class DeleteFollowFunctionalTests : BaseFollowPresentationCommandFunction
 	public async Task DeleteAsync_ShouldPublishFollowDeletedEvent_WhenRequestIsValid()
 	{
 		// Act
-		await Client.DeleteAsync(_request, CancellationToken);
+		await ApiClient.DeleteAsync(_request, CancellationToken);
 		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
@@ -226,7 +226,7 @@ public class DeleteFollowFunctionalTests : BaseFollowPresentationCommandFunction
 		var request = _requestBuilder.WithFollowerId(transformer).Build();
 
 		// Act
-		await Client.DeleteAsync(request, CancellationToken);
+		await ApiClient.DeleteAsync(request, CancellationToken);
 		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
@@ -242,7 +242,7 @@ public class DeleteFollowFunctionalTests : BaseFollowPresentationCommandFunction
 		var request = _requestBuilder.WithFollowingId(transformer).Build();
 
 		// Act
-		await Client.DeleteAsync(request, CancellationToken);
+		await ApiClient.DeleteAsync(request, CancellationToken);
 		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert

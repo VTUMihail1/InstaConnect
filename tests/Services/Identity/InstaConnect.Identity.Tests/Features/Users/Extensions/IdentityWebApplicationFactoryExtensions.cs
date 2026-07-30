@@ -8,7 +8,7 @@ public static class IdentityWebApplicationFactoryExtensions
 {
 	extension(IdentityWebApplicationFactory webApplicationFactory)
 	{
-		public IUserEventClient CreateUserEventClient()
+		public IUserEventClient CreateEventClient()
 		{
 			var eventHarness = webApplicationFactory.Services.GetEventHarness();
 

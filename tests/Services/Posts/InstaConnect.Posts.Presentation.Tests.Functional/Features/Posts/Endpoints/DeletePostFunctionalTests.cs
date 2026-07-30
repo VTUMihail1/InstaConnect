@@ -25,7 +25,7 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 	public async Task DeleteAsync_ShouldReturnUnauthorizedStatusCode_WhenRequestIsUnauthorized()
 	{
 		// Act
-		var response = await Client.DeleteUnauthorizedStatusCodeAsync(_request, CancellationToken);
+		var response = await ApiClient.DeleteUnauthorizedStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeUnauthorized();
@@ -41,7 +41,7 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.DeleteStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.DeleteStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -57,7 +57,7 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.DeleteProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.DeleteProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForId(request, messageTransformer);
@@ -74,7 +74,7 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var response = await Client.DeleteStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.DeleteStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -91,7 +91,7 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var response = await Client.DeleteProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.DeleteProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForUserId(request, messageTransformer);
@@ -104,7 +104,7 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Act
-		var response = await Client.DeleteStatusCodeAsync(_request, CancellationToken);
+		var response = await ApiClient.DeleteStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNotFound();
@@ -117,7 +117,7 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Act
-		var response = await Client.DeleteProblemDetailsAsync(_request, CancellationToken);
+		var response = await ApiClient.DeleteProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyPostNotFound(_request);
@@ -132,7 +132,7 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		var request = _requestBuilder.WithUserId(user.Id).Build();
 
 		// Act
-		var response = await Client.DeleteStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.DeleteStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeForbidden();
@@ -147,7 +147,7 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		var request = _requestBuilder.WithUserId(user.Id).Build();
 
 		// Act
-		var response = await Client.DeleteProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.DeleteProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyPostForbidden(request);
@@ -157,7 +157,7 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 	public async Task DeleteAsync_ShouldHaveNoContentStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var response = await Client.DeleteStatusCodeAsync(_request, CancellationToken);
+		var response = await ApiClient.DeleteStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNoContent();
@@ -172,7 +172,7 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.DeleteStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.DeleteStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNoContent();
@@ -187,7 +187,7 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var response = await Client.DeleteStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.DeleteStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNoContent();
@@ -197,7 +197,7 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 	public async Task DeleteAsync_ShouldDeletePost_WhenRequestIsValid()
 	{
 		// Act
-		await Client.DeleteAsync(_request, CancellationToken);
+		await ApiClient.DeleteAsync(_request, CancellationToken);
 		var post = await ServiceScope.GetByIdAsync(Post.Id, CancellationToken);
 
 		// Assert
@@ -213,7 +213,7 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		await Client.DeleteAsync(request, CancellationToken);
+		await ApiClient.DeleteAsync(request, CancellationToken);
 		var post = await ServiceScope.GetByIdAsync(Post.Id, CancellationToken);
 
 		// Assert
@@ -229,7 +229,7 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		await Client.DeleteAsync(request, CancellationToken);
+		await ApiClient.DeleteAsync(request, CancellationToken);
 		var post = await ServiceScope.GetByIdAsync(Post.Id, CancellationToken);
 
 		// Assert
@@ -240,7 +240,7 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 	public async Task DeleteAsync_ShouldPublishPostDeletedEvent_WhenRequestIsValid()
 	{
 		// Act
-		await Client.DeleteAsync(_request, CancellationToken);
+		await ApiClient.DeleteAsync(_request, CancellationToken);
 
 		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
@@ -257,7 +257,7 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		await Client.DeleteAsync(request, CancellationToken);
+		await ApiClient.DeleteAsync(request, CancellationToken);
 
 		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
@@ -274,7 +274,7 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		await Client.DeleteAsync(request, CancellationToken);
+		await ApiClient.DeleteAsync(request, CancellationToken);
 
 		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 

@@ -293,7 +293,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		// Act
 		var response = await HttpClient.AddAsync(_request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
-		var notificationRequest = await NotificationClient.PublishedAddedAsync(CancellationToken);
+		var notificationRequest = await MessageNotificationClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		notificationRequest.ShouldSatisfy(_request, chatMessage);
@@ -310,7 +310,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		// Act
 		var response = await HttpClient.AddAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
-		var notificationRequest = await NotificationClient.PublishedAddedAsync(CancellationToken);
+		var notificationRequest = await MessageNotificationClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		notificationRequest.ShouldSatisfy(request, chatMessage);
@@ -327,7 +327,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		// Act
 		var response = await HttpClient.AddAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
-		var notificationRequest = await NotificationClient.PublishedAddedAsync(CancellationToken);
+		var notificationRequest = await MessageNotificationClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		notificationRequest.ShouldSatisfy(request, chatMessage);
@@ -477,7 +477,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		// Act
 		var response = await HttpClient.AddAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
-		var notificationRequest = await NotificationClient.PublishedAddedAsync(CancellationToken);
+		var notificationRequest = await MessageNotificationClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		notificationRequest.ShouldSatisfyInverted(request, chatMessage);
@@ -494,7 +494,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		// Act
 		var response = await HttpClient.AddAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
-		var notificationRequest = await NotificationClient.PublishedAddedAsync(CancellationToken);
+		var notificationRequest = await MessageNotificationClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		notificationRequest.ShouldSatisfyInverted(request, chatMessage);
@@ -511,7 +511,7 @@ public class AddChatMessageFunctionalTests : BaseChatMessagePresentationCommandF
 		// Act
 		var response = await HttpClient.AddAsync(request, CancellationToken);
 		var chatMessage = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
-		var notificationRequest = await NotificationClient.PublishedAddedAsync(CancellationToken);
+		var notificationRequest = await MessageNotificationClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		notificationRequest.ShouldSatisfyInverted(request, chatMessage);

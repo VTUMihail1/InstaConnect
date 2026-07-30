@@ -17,7 +17,7 @@ public abstract class BaseUserApplicationCommandIntegrationTest : BaseUserWebTes
 	protected BaseUserApplicationCommandIntegrationTest(IdentityWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
 		Sender = ServiceScope.GetSender();
-		EventClient = webApplicationFactory.CreateUserEventClient();
+		EventClient = webApplicationFactory.CreateEventClient();
 		EmailConfirmationTokenEventClient = webApplicationFactory.CreateEmailConfirmationTokenEventClient();
 	}
 

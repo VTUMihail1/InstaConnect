@@ -15,7 +15,7 @@ public abstract class BaseChatDomainCommandIntegrationTest : BaseChatWebTest
 	protected BaseChatDomainCommandIntegrationTest(ChatsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
 		Service = ServiceScope.GetChatCommandService();
-		EventClient = webApplicationFactory.CreateChatEventClient();
+		EventClient = webApplicationFactory.CreateEventClient();
 	}
 
 	protected override async Task OnInitializeAsync()

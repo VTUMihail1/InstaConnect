@@ -8,9 +8,9 @@ public static class PostsWebApplicationFactoryExtensions
 {
 	extension(PostsWebApplicationFactory webApplicationFactory)
 	{
-		public IPostLikeClient CreatePostLikeClient()
+		public IPostLikeApiClient CreateLikeApiClient()
 		{
-			return new PostLikeClient(webApplicationFactory.CreateClient(), webApplicationFactory.Services.GetBaseAccessTokenGenerator());
+			return new PostLikeApiClient(webApplicationFactory.CreateClient(), webApplicationFactory.Services.GetBaseAccessTokenGenerator());
 		}
 	}
 }

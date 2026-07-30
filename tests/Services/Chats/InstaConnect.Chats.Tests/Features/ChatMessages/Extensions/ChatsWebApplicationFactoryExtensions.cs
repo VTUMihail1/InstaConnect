@@ -9,7 +9,7 @@ public static class ChatsWebApplicationFactoryExtensions
 {
 	extension(ChatsWebApplicationFactory webApplicationFactory)
 	{
-		public IChatMessageNotificationClient CreateChatMessageNotificationClient(UserId participantTwoId)
+		public IChatMessageNotificationClient CreateMessageNotificationClient(UserId participantTwoId)
 		{
 			var connection = webApplicationFactory.CreateHubConnection(participantTwoId.Id, ChatMessageRoutes.Hub.TrimStart('/'));
 

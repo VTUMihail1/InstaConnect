@@ -31,7 +31,7 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationQueryFunct
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.GetByIdStatusCodeAsync(request, CancellationToken);
+		var response = await LikeApiClient.GetByIdStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -47,7 +47,7 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationQueryFunct
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.GetByIdProblemDetailsAsync(request, CancellationToken);
+		var response = await LikeApiClient.GetByIdProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForId(request, messageTransformer);
@@ -63,7 +63,7 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationQueryFunct
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var response = await Client.GetByIdStatusCodeAsync(request, CancellationToken);
+		var response = await LikeApiClient.GetByIdStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -79,7 +79,7 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationQueryFunct
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var response = await Client.GetByIdProblemDetailsAsync(request, CancellationToken);
+		var response = await LikeApiClient.GetByIdProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForUserId(request, messageTransformer);
@@ -94,7 +94,7 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationQueryFunct
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var response = await Client.GetByIdStatusCodeAsync(request, CancellationToken);
+		var response = await LikeApiClient.GetByIdStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -109,7 +109,7 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationQueryFunct
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var response = await Client.GetByIdProblemDetailsAsync(request, CancellationToken);
+		var response = await LikeApiClient.GetByIdProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForCurrentUserId(request, messageTransformer);
@@ -122,7 +122,7 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationQueryFunct
 		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Act
-		var response = await Client.GetByIdStatusCodeAsync(_request, CancellationToken);
+		var response = await LikeApiClient.GetByIdStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNotFound();
@@ -135,7 +135,7 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationQueryFunct
 		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Act
-		var response = await Client.GetByIdProblemDetailsAsync(_request, CancellationToken);
+		var response = await LikeApiClient.GetByIdProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyPostNotFound(_request);
@@ -148,7 +148,7 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationQueryFunct
 		await ServiceScope.DeleteAsync(PostLike, CancellationToken);
 
 		// Act
-		var response = await Client.GetByIdStatusCodeAsync(_request, CancellationToken);
+		var response = await LikeApiClient.GetByIdStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNotFound();
@@ -161,7 +161,7 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationQueryFunct
 		await ServiceScope.DeleteAsync(PostLike, CancellationToken);
 
 		// Act
-		var response = await Client.GetByIdProblemDetailsAsync(_request, CancellationToken);
+		var response = await LikeApiClient.GetByIdProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyPostLikeNotFound(_request);
@@ -171,7 +171,7 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationQueryFunct
 	public async Task GetByIdAsync_ShouldHaveOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var response = await Client.GetByIdStatusCodeAsync(_request, CancellationToken);
+		var response = await LikeApiClient.GetByIdStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -186,7 +186,7 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationQueryFunct
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.GetByIdStatusCodeAsync(request, CancellationToken);
+		var response = await LikeApiClient.GetByIdStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -201,7 +201,7 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationQueryFunct
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var response = await Client.GetByIdStatusCodeAsync(request, CancellationToken);
+		var response = await LikeApiClient.GetByIdStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -217,7 +217,7 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationQueryFunct
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var response = await Client.GetByIdStatusCodeAsync(request, CancellationToken);
+		var response = await LikeApiClient.GetByIdStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -227,7 +227,7 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationQueryFunct
 	public async Task GetByIdAsync_ShouldHaveResponse_WhenRequestIsValid()
 	{
 		// Act
-		var response = await Client.GetByIdAsync(_request, CancellationToken);
+		var response = await LikeApiClient.GetByIdAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(_request, PostLike);
@@ -242,7 +242,7 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationQueryFunct
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.GetByIdAsync(request, CancellationToken);
+		var response = await LikeApiClient.GetByIdAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(request, PostLike);
@@ -257,7 +257,7 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationQueryFunct
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var response = await Client.GetByIdAsync(request, CancellationToken);
+		var response = await LikeApiClient.GetByIdAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(request, PostLike);
@@ -273,7 +273,7 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationQueryFunct
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var response = await Client.GetByIdAsync(request, CancellationToken);
+		var response = await LikeApiClient.GetByIdAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(request, PostLike);

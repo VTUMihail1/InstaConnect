@@ -6,7 +6,7 @@ using Microsoft.Net.Http.Headers;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Abstractions;
 
-public interface IRefreshTokenClient
+public interface IRefreshTokenApiClient
 {
 	public Task<IssueRefreshTokenApiResponse> IssueAsync(IssueRefreshTokenApiRequest request, CancellationToken cancellationToken);
 	public Task<ApplicationProblemDetails> IssueProblemDetailsAsync(IssueRefreshTokenApiRequest request, CancellationToken cancellationToken);

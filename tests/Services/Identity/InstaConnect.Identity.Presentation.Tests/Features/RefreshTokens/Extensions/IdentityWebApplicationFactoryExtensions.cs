@@ -8,9 +8,9 @@ public static class IdentityWebApplicationFactoryExtensions
 {
 	extension(IdentityWebApplicationFactory webApplicationFactory)
 	{
-		public IRefreshTokenClient CreateRefreshTokenClient()
+		public IRefreshTokenApiClient CreateRefreshTokenApiClient()
 		{
-			return new RefreshTokenClient(webApplicationFactory.CreateClient());
+			return new RefreshTokenApiClient(webApplicationFactory.CreateClient());
 		}
 	}
 }

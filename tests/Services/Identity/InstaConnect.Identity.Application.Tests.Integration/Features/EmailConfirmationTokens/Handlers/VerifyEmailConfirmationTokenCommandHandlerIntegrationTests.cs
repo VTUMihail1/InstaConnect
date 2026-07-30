@@ -184,7 +184,7 @@ public class VerifyEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEm
 	{
 		// Act
 		await Sender.SendAsync(_request, CancellationToken);
-		var eventRequests = await EventClient.PublishedDeletedRangeAsync(CancellationToken);
+		var eventRequests = await EmailConfirmationTokenEventClient.PublishedDeletedRangeAsync(CancellationToken);
 
 		// Assert
 		eventRequests.ShouldSatisfy(_request, User.EmailConfirmationTokens);
@@ -200,7 +200,7 @@ public class VerifyEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEm
 
 		// Act
 		await Sender.SendAsync(request, CancellationToken);
-		var eventRequests = await EventClient.PublishedDeletedRangeAsync(CancellationToken);
+		var eventRequests = await EmailConfirmationTokenEventClient.PublishedDeletedRangeAsync(CancellationToken);
 
 		// Assert
 		eventRequests.ShouldSatisfy(request, User.EmailConfirmationTokens);
@@ -216,7 +216,7 @@ public class VerifyEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEm
 
 		// Act
 		await Sender.SendAsync(request, CancellationToken);
-		var eventRequests = await EventClient.PublishedDeletedRangeAsync(CancellationToken);
+		var eventRequests = await EmailConfirmationTokenEventClient.PublishedDeletedRangeAsync(CancellationToken);
 
 		// Assert
 		eventRequests.ShouldSatisfy(request, User.EmailConfirmationTokens);

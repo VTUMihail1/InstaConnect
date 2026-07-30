@@ -4,7 +4,7 @@ using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.EmailConfirmationTokens.Abstractions;
 
-public interface IEmailConfirmationTokenClient
+public interface IEmailConfirmationTokenApiClient
 {
 	public Task AddAsync(AddEmailConfirmationTokenApiRequest request, CancellationToken cancellationToken);
 	public Task<ApplicationProblemDetails> AddProblemDetailsAsync(AddEmailConfirmationTokenApiRequest request, CancellationToken cancellationToken);

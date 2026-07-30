@@ -9,12 +9,12 @@ using InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Abstractions;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Utilities;
 
-internal class UserClaimClient : IUserClaimClient
+internal class UserClaimApiClient : IUserClaimApiClient
 {
 	private readonly HttpClient _httpClient;
 	private readonly IBaseAccessTokenGenerator _baseAccessTokenGenerator;
 
-	public UserClaimClient(HttpClient httpClient, IBaseAccessTokenGenerator baseAccessTokenGenerator)
+	public UserClaimApiClient(HttpClient httpClient, IBaseAccessTokenGenerator baseAccessTokenGenerator)
 	{
 		_httpClient = httpClient;
 		_baseAccessTokenGenerator = baseAccessTokenGenerator;

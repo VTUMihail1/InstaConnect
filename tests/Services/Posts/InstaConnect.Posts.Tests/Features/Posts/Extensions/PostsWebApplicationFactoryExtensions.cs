@@ -8,7 +8,7 @@ public static class PostsWebApplicationFactoryExtensions
 {
 	extension(PostsWebApplicationFactory webApplicationFactory)
 	{
-		public IPostEventClient CreatePostEventClient()
+		public IPostEventClient CreateEventClient()
 		{
 			var eventHarness = webApplicationFactory.Services.GetEventHarness();
 

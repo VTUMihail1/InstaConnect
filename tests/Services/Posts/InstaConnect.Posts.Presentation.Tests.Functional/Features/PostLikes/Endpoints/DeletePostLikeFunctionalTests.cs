@@ -26,7 +26,7 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationCommandFunc
 	public async Task DeleteAsync_ShouldReturnUnauthorizedStatusCode_WhenRequestIsUnauthorized()
 	{
 		// Act
-		var response = await Client.DeleteUnauthorizedStatusCodeAsync(_request, CancellationToken);
+		var response = await LikeApiClient.DeleteUnauthorizedStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeUnauthorized();
@@ -42,7 +42,7 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationCommandFunc
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.DeleteStatusCodeAsync(request, CancellationToken);
+		var response = await LikeApiClient.DeleteStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -58,7 +58,7 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationCommandFunc
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.DeleteProblemDetailsAsync(request, CancellationToken);
+		var response = await LikeApiClient.DeleteProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForId(request, messageTransformer);
@@ -75,7 +75,7 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationCommandFunc
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var response = await Client.DeleteStatusCodeAsync(request, CancellationToken);
+		var response = await LikeApiClient.DeleteStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -92,7 +92,7 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationCommandFunc
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var response = await Client.DeleteProblemDetailsAsync(request, CancellationToken);
+		var response = await LikeApiClient.DeleteProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForUserId(request, messageTransformer);
@@ -105,7 +105,7 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationCommandFunc
 		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Act
-		var response = await Client.DeleteStatusCodeAsync(_request, CancellationToken);
+		var response = await LikeApiClient.DeleteStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNotFound();
@@ -118,7 +118,7 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationCommandFunc
 		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Act
-		var response = await Client.DeleteProblemDetailsAsync(_request, CancellationToken);
+		var response = await LikeApiClient.DeleteProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyPostNotFound(_request);
@@ -131,7 +131,7 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationCommandFunc
 		await ServiceScope.DeleteAsync(PostLike, CancellationToken);
 
 		// Act
-		var response = await Client.DeleteStatusCodeAsync(_request, CancellationToken);
+		var response = await LikeApiClient.DeleteStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNotFound();
@@ -144,7 +144,7 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationCommandFunc
 		await ServiceScope.DeleteAsync(PostLike, CancellationToken);
 
 		// Act
-		var response = await Client.DeleteProblemDetailsAsync(_request, CancellationToken);
+		var response = await LikeApiClient.DeleteProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyPostLikeNotFound(_request);
@@ -154,7 +154,7 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationCommandFunc
 	public async Task DeleteAsync_ShouldHaveNoContentStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var response = await Client.DeleteStatusCodeAsync(_request, CancellationToken);
+		var response = await LikeApiClient.DeleteStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNoContent();
@@ -169,7 +169,7 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationCommandFunc
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.DeleteStatusCodeAsync(request, CancellationToken);
+		var response = await LikeApiClient.DeleteStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNoContent();
@@ -184,7 +184,7 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationCommandFunc
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var response = await Client.DeleteStatusCodeAsync(request, CancellationToken);
+		var response = await LikeApiClient.DeleteStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNoContent();
@@ -194,7 +194,7 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationCommandFunc
 	public async Task DeleteAsync_ShouldDeletePostLike_WhenRequestIsValid()
 	{
 		// Act
-		await Client.DeleteAsync(_request, CancellationToken);
+		await LikeApiClient.DeleteAsync(_request, CancellationToken);
 		var postLike = await ServiceScope.GetByIdAsync(PostLike.Id, CancellationToken);
 
 		// Assert
@@ -210,7 +210,7 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationCommandFunc
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		await Client.DeleteAsync(request, CancellationToken);
+		await LikeApiClient.DeleteAsync(request, CancellationToken);
 		var postLike = await ServiceScope.GetByIdAsync(PostLike.Id, CancellationToken);
 
 		// Assert
@@ -226,7 +226,7 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationCommandFunc
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		await Client.DeleteAsync(request, CancellationToken);
+		await LikeApiClient.DeleteAsync(request, CancellationToken);
 		var postLike = await ServiceScope.GetByIdAsync(PostLike.Id, CancellationToken);
 
 		// Assert
@@ -237,9 +237,9 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationCommandFunc
 	public async Task DeleteAsync_ShouldPublishPostLikeDeletedEvent_WhenRequestIsValid()
 	{
 		// Act
-		await Client.DeleteAsync(_request, CancellationToken);
+		await LikeApiClient.DeleteAsync(_request, CancellationToken);
 
-		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
+		var eventRequest = await LikeEventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_request, PostLike);
@@ -254,9 +254,9 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationCommandFunc
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		await Client.DeleteAsync(request, CancellationToken);
+		await LikeApiClient.DeleteAsync(request, CancellationToken);
 
-		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
+		var eventRequest = await LikeEventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, PostLike);
@@ -271,9 +271,9 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationCommandFunc
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		await Client.DeleteAsync(request, CancellationToken);
+		await LikeApiClient.DeleteAsync(request, CancellationToken);
 
-		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
+		var eventRequest = await LikeEventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, PostLike);

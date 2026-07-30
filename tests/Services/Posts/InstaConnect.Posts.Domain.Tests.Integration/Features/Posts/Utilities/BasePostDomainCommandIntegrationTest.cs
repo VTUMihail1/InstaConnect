@@ -15,7 +15,7 @@ public abstract class BasePostDomainCommandIntegrationTest : BasePostWebTest
 	protected BasePostDomainCommandIntegrationTest(PostsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
 		Service = ServiceScope.GetPostCommandService();
-		EventClient = webApplicationFactory.CreatePostEventClient();
+		EventClient = webApplicationFactory.CreateEventClient();
 	}
 
 	protected override async Task OnInitializeAsync()

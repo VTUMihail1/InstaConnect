@@ -4,7 +4,7 @@ using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
 
 namespace InstaConnect.Chats.Presentation.Tests.Features.ChatMessages.Abstractions;
 
-public interface IChatMessageClient
+public interface IChatMessageApiClient
 {
 	public Task<AddChatMessageApiResponse> AddAsync(AddChatMessageApiRequest request, CancellationToken cancellationToken);
 	public Task<ApplicationProblemDetails> AddProblemDetailsAsync(AddChatMessageApiRequest request, CancellationToken cancellationToken);

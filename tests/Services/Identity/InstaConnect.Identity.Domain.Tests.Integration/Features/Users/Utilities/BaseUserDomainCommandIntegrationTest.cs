@@ -20,7 +20,7 @@ public abstract class BaseUserDomainCommandIntegrationTest : BaseUserWebTest
 		: base(webApplicationFactory)
 	{
 		Service = ServiceScope.GetCommandService();
-		EventClient = webApplicationFactory.CreateUserEventClient();
+		EventClient = webApplicationFactory.CreateEventClient();
 		EmailConfirmationTokenEventClient = webApplicationFactory.CreateEmailConfirmationTokenEventClient();
 	}
 

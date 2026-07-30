@@ -8,9 +8,9 @@ public static class ChatsWebApplicationFactoryExtensions
 {
 	extension(ChatsWebApplicationFactory webApplicationFactory)
 	{
-		public IChatClient CreateChatClient()
+		public IChatApiClient CreateApiClient()
 		{
-			return new ChatClient(webApplicationFactory.CreateClient(), webApplicationFactory.Services.GetBaseAccessTokenGenerator());
+			return new ChatApiClient(webApplicationFactory.CreateClient(), webApplicationFactory.Services.GetBaseAccessTokenGenerator());
 		}
 	}
 }

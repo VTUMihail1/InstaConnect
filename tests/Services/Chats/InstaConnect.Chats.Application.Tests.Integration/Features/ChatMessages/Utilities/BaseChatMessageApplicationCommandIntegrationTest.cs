@@ -9,23 +9,23 @@ public abstract class BaseChatMessageApplicationCommandIntegrationTest : BaseCha
 {
 	protected IApplicationSender Sender { get; }
 
-	protected IChatMessageNotificationClient NotificationClient { get; }
+	protected IChatMessageNotificationClient MessageNotificationClient { get; }
 
 	protected BaseChatMessageApplicationCommandIntegrationTest(ChatsWebApplicationFactory webApplicationFactory)
 		: base(webApplicationFactory)
 	{
 		Sender = ServiceScope.GetSender();
-		NotificationClient = webApplicationFactory.CreateChatMessageNotificationClient(ParticipantTwo.Id);
+		MessageNotificationClient = webApplicationFactory.CreateMessageNotificationClient(ParticipantTwo.Id);
 	}
 
 	protected override async Task OnInitializeAsync()
 	{
 		await base.OnInitializeAsync();
-		await NotificationClient.StartAsync(CancellationToken);
+		await MessageNotificationClient.StartAsync(CancellationToken);
 	}
 
 	protected override async Task OnDisposeAsync()
 	{
-		await NotificationClient.StopAsync(CancellationToken);
+		await MessageNotificationClient.StopAsync(CancellationToken);
 	}
 }

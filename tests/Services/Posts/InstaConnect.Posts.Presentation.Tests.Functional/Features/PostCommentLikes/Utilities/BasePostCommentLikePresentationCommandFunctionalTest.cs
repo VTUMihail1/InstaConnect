@@ -7,24 +7,24 @@ namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.PostCommentL
 
 public abstract class BasePostCommentLikePresentationCommandFunctionalTest : BasePostCommentLikeWebTest
 {
-	protected IPostCommentLikeClient Client { get; }
+	protected IPostCommentLikeApiClient CommentLikeApiClient { get; }
 
-	protected IPostCommentLikeEventClient EventClient { get; }
+	protected IPostCommentLikeEventClient CommentLikeEventClient { get; }
 
 	protected BasePostCommentLikePresentationCommandFunctionalTest(PostsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
-		Client = webApplicationFactory.CreatePostCommentLikeClient();
-		EventClient = webApplicationFactory.CreatePostCommentLikeEventClient();
+		CommentLikeApiClient = webApplicationFactory.CreateCommentLikeApiClient();
+		CommentLikeEventClient = webApplicationFactory.CreateCommentLikeEventClient();
 	}
 
 	protected override async Task OnInitializeAsync()
 	{
 		await base.OnInitializeAsync();
-		await EventClient.StartAsync(CancellationToken);
+		await CommentLikeEventClient.StartAsync(CancellationToken);
 	}
 
 	protected override async Task OnDisposeAsync()
 	{
-		await EventClient.StopAsync(CancellationToken);
+		await CommentLikeEventClient.StopAsync(CancellationToken);
 	}
 }

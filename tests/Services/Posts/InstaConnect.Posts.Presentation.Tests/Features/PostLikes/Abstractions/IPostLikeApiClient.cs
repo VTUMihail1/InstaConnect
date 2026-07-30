@@ -4,7 +4,7 @@ using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
 
 namespace InstaConnect.Posts.Presentation.Tests.Features.PostLikes.Abstractions;
 
-public interface IPostLikeClient
+public interface IPostLikeApiClient
 {
 	public Task<GetAllPostLikesApiResponse> GetAllAsync(GetAllPostLikesApiRequest request, CancellationToken cancellationToken);
 	public Task<ApplicationProblemDetails> GetAllProblemDetailsAsync(GetAllPostLikesApiRequest request, CancellationToken cancellationToken);

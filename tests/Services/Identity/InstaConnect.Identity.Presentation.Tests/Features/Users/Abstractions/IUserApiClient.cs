@@ -4,7 +4,7 @@ using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.Users.Abstractions;
 
-public interface IUserClient
+public interface IUserApiClient
 {
 	public Task<GetAllUsersApiResponse> GetAllAsync(GetAllUsersApiRequest request, CancellationToken cancellationToken);
 	public Task<ApplicationProblemDetails> GetAllProblemDetailsAsync(GetAllUsersApiRequest request, CancellationToken cancellationToken);

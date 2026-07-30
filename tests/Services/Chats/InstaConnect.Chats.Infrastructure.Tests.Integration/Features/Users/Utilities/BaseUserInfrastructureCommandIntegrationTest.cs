@@ -7,25 +7,25 @@ namespace InstaConnect.Chats.Infrastructure.Tests.Integration.Features.Users.Uti
 
 public abstract class BaseUserInfrastructureCommandIntegrationTest : BaseUserWebTest
 {
-	protected IUserEventClient EventClient { get; }
+	protected IUserEventClient UserEventClient { get; }
 
 	protected IEventPublisher EventPublisher { get; }
 
 	protected BaseUserInfrastructureCommandIntegrationTest(ChatsWebApplicationFactory webApplicationFactory)
 		: base(webApplicationFactory)
 	{
-		EventClient = webApplicationFactory.CreateUserEventClient();
+		UserEventClient = webApplicationFactory.CreateUserEventClient();
 		EventPublisher = ServiceScope.GetEventPublisher();
 	}
 
 	protected override async Task OnInitializeAsync()
 	{
 		await base.OnInitializeAsync();
-		await EventClient.StartAsync(CancellationToken);
+		await UserEventClient.StartAsync(CancellationToken);
 	}
 
 	protected override async Task OnDisposeAsync()
 	{
-		await EventClient.StopAsync(CancellationToken);
+		await UserEventClient.StopAsync(CancellationToken);
 	}
 }

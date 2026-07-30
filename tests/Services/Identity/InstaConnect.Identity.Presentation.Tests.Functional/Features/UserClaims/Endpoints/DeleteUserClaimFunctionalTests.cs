@@ -27,7 +27,7 @@ public class DeleteUserClaimFunctionalTests : BaseUserClaimPresentationCommandFu
 	public async Task DeleteAsync_ShouldReturnUnauthorizedStatusCode_WhenRequestIsUnauthorized()
 	{
 		// Act
-		var response = await Client.DeleteUnauthorizedStatusCodeAsync(_request, CancellationToken);
+		var response = await ClaimApiClient.DeleteUnauthorizedStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeUnauthorized();
@@ -37,7 +37,7 @@ public class DeleteUserClaimFunctionalTests : BaseUserClaimPresentationCommandFu
 	public async Task DeleteAsync_ShouldReturnForbiddenStatusCode_WhenRequestIsForbidden()
 	{
 		// Act
-		var response = await Client.DeleteForbiddenStatusCodeAsync(_request, CancellationToken);
+		var response = await ClaimApiClient.DeleteForbiddenStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeForbidden();
@@ -53,7 +53,7 @@ public class DeleteUserClaimFunctionalTests : BaseUserClaimPresentationCommandFu
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.DeleteStatusCodeAsync(request, CancellationToken);
+		var response = await ClaimApiClient.DeleteStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -70,7 +70,7 @@ public class DeleteUserClaimFunctionalTests : BaseUserClaimPresentationCommandFu
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.DeleteProblemDetailsAsync(request, CancellationToken);
+		var response = await ClaimApiClient.DeleteProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForId(request, messageTransformer);
@@ -84,7 +84,7 @@ public class DeleteUserClaimFunctionalTests : BaseUserClaimPresentationCommandFu
 		var request = _requestBuilder.WithClaim(transformer).Build();
 
 		// Act
-		var response = await Client.DeleteStatusCodeAsync(request, CancellationToken);
+		var response = await ClaimApiClient.DeleteStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -100,7 +100,7 @@ public class DeleteUserClaimFunctionalTests : BaseUserClaimPresentationCommandFu
 		var request = _requestBuilder.WithClaim(transformer).Build();
 
 		// Act
-		var response = await Client.DeleteProblemDetailsAsync(request, CancellationToken);
+		var response = await ClaimApiClient.DeleteProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForClaim(request, messageTransformer);
@@ -113,7 +113,7 @@ public class DeleteUserClaimFunctionalTests : BaseUserClaimPresentationCommandFu
 		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Act
-		var response = await Client.DeleteStatusCodeAsync(_request, CancellationToken);
+		var response = await ClaimApiClient.DeleteStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNotFound();
@@ -126,7 +126,7 @@ public class DeleteUserClaimFunctionalTests : BaseUserClaimPresentationCommandFu
 		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Act
-		var response = await Client.DeleteProblemDetailsAsync(_request, CancellationToken);
+		var response = await ClaimApiClient.DeleteProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyUserNotFound(_request);
@@ -139,7 +139,7 @@ public class DeleteUserClaimFunctionalTests : BaseUserClaimPresentationCommandFu
 		await ServiceScope.DeleteAsync(UserClaim, CancellationToken);
 
 		// Act
-		var response = await Client.DeleteStatusCodeAsync(_request, CancellationToken);
+		var response = await ClaimApiClient.DeleteStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNotFound();
@@ -152,7 +152,7 @@ public class DeleteUserClaimFunctionalTests : BaseUserClaimPresentationCommandFu
 		await ServiceScope.DeleteAsync(UserClaim, CancellationToken);
 
 		// Act
-		var response = await Client.DeleteProblemDetailsAsync(_request, CancellationToken);
+		var response = await ClaimApiClient.DeleteProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyUserClaimNotFound(_request);
@@ -162,7 +162,7 @@ public class DeleteUserClaimFunctionalTests : BaseUserClaimPresentationCommandFu
 	public async Task DeleteAsync_ShouldHaveNoContentStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var response = await Client.DeleteStatusCodeAsync(_request, CancellationToken);
+		var response = await ClaimApiClient.DeleteStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNoContent();
@@ -177,7 +177,7 @@ public class DeleteUserClaimFunctionalTests : BaseUserClaimPresentationCommandFu
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.DeleteStatusCodeAsync(request, CancellationToken);
+		var response = await ClaimApiClient.DeleteStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNoContent();
@@ -187,7 +187,7 @@ public class DeleteUserClaimFunctionalTests : BaseUserClaimPresentationCommandFu
 	public async Task DeleteAsync_ShouldDeleteUserClaim_WhenRequestIsValid()
 	{
 		// Act
-		await Client.DeleteAsync(_request, CancellationToken);
+		await ClaimApiClient.DeleteAsync(_request, CancellationToken);
 		var userClaim = await ServiceScope.GetByIdAsync(UserClaim.Id, CancellationToken);
 
 		// Assert
@@ -203,7 +203,7 @@ public class DeleteUserClaimFunctionalTests : BaseUserClaimPresentationCommandFu
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		await Client.DeleteAsync(request, CancellationToken);
+		await ClaimApiClient.DeleteAsync(request, CancellationToken);
 		var userClaim = await ServiceScope.GetByIdAsync(UserClaim.Id, CancellationToken);
 
 		// Assert
@@ -214,8 +214,8 @@ public class DeleteUserClaimFunctionalTests : BaseUserClaimPresentationCommandFu
 	public async Task DeleteAsync_ShouldPublishUserClaimDeletedEvent_WhenRequestIsValid()
 	{
 		// Act
-		await Client.DeleteAsync(_request, CancellationToken);
-		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
+		await ClaimApiClient.DeleteAsync(_request, CancellationToken);
+		var eventRequest = await ClaimEventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_request, UserClaim);
@@ -230,8 +230,8 @@ public class DeleteUserClaimFunctionalTests : BaseUserClaimPresentationCommandFu
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		await Client.DeleteAsync(request, CancellationToken);
-		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
+		await ClaimApiClient.DeleteAsync(request, CancellationToken);
+		var eventRequest = await ClaimEventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, UserClaim);

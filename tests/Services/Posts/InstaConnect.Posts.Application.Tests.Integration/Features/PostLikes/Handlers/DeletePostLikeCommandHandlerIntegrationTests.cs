@@ -123,7 +123,7 @@ public class DeletePostLikeCommandHandlerIntegrationTests : BasePostLikeApplicat
 		// Act
 		await Sender.SendAsync(_request, CancellationToken);
 
-		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
+		var eventRequest = await LikeEventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_request, PostLike);
@@ -140,7 +140,7 @@ public class DeletePostLikeCommandHandlerIntegrationTests : BasePostLikeApplicat
 		// Act
 		await Sender.SendAsync(request, CancellationToken);
 
-		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
+		var eventRequest = await LikeEventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, PostLike);
@@ -157,7 +157,7 @@ public class DeletePostLikeCommandHandlerIntegrationTests : BasePostLikeApplicat
 		// Act
 		await Sender.SendAsync(request, CancellationToken);
 
-		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
+		var eventRequest = await LikeEventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, PostLike);

@@ -9,7 +9,7 @@ namespace InstaConnect.Identity.Presentation.Tests.Functional.Features.Users.Uti
 
 public abstract class BaseUserPresentationCommandFunctionalTest : BaseUserWebTest
 {
-	protected IUserClient Client { get; }
+	protected IUserApiClient ApiClient { get; }
 
 	protected IUserEventClient EventClient { get; }
 
@@ -17,8 +17,8 @@ public abstract class BaseUserPresentationCommandFunctionalTest : BaseUserWebTes
 
 	protected BaseUserPresentationCommandFunctionalTest(IdentityWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
-		Client = webApplicationFactory.CreateUserClient();
-		EventClient = webApplicationFactory.CreateUserEventClient();
+		ApiClient = webApplicationFactory.CreateApiClient();
+		EventClient = webApplicationFactory.CreateEventClient();
 		EmailConfirmationTokenEventClient = webApplicationFactory.CreateEmailConfirmationTokenEventClient();
 	}
 

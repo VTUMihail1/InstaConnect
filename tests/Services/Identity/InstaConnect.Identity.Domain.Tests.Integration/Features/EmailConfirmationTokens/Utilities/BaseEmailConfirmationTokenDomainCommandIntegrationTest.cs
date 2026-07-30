@@ -10,23 +10,23 @@ public abstract class BaseEmailConfirmationTokenDomainCommandIntegrationTest : B
 {
 	protected IEmailConfirmationTokenCommandService Service { get; }
 
-	protected IEmailConfirmationTokenEventClient EventClient { get; }
+	protected IEmailConfirmationTokenEventClient EmailConfirmationTokenEventClient { get; }
 
 	protected BaseEmailConfirmationTokenDomainCommandIntegrationTest(IdentityWebApplicationFactory webApplicationFactory)
 		: base(webApplicationFactory)
 	{
 		Service = ServiceScope.GetEmailConfirmationTokenCommandService();
-		EventClient = webApplicationFactory.CreateEmailConfirmationTokenEventClient();
+		EmailConfirmationTokenEventClient = webApplicationFactory.CreateEmailConfirmationTokenEventClient();
 	}
 
 	protected override async Task OnInitializeAsync()
 	{
 		await base.OnInitializeAsync();
-		await EventClient.StartAsync(CancellationToken);
+		await EmailConfirmationTokenEventClient.StartAsync(CancellationToken);
 	}
 
 	protected override async Task OnDisposeAsync()
 	{
-		await EventClient.StopAsync(CancellationToken);
+		await EmailConfirmationTokenEventClient.StopAsync(CancellationToken);
 	}
 }

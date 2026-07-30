@@ -8,23 +8,23 @@ public abstract class BasePostCommentLikeApplicationCommandIntegrationTest : Bas
 {
 	protected IApplicationSender Sender { get; }
 
-	protected IPostCommentLikeEventClient EventClient { get; }
+	protected IPostCommentLikeEventClient CommentLikeEventClient { get; }
 
 	protected BasePostCommentLikeApplicationCommandIntegrationTest(PostsWebApplicationFactory webApplicationFactory)
 		: base(webApplicationFactory)
 	{
 		Sender = ServiceScope.GetSender();
-		EventClient = webApplicationFactory.CreatePostCommentLikeEventClient();
+		CommentLikeEventClient = webApplicationFactory.CreateCommentLikeEventClient();
 	}
 
 	protected override async Task OnInitializeAsync()
 	{
 		await base.OnInitializeAsync();
-		await EventClient.StartAsync(CancellationToken);
+		await CommentLikeEventClient.StartAsync(CancellationToken);
 	}
 
 	protected override async Task OnDisposeAsync()
 	{
-		await EventClient.StopAsync(CancellationToken);
+		await CommentLikeEventClient.StopAsync(CancellationToken);
 	}
 }

@@ -37,7 +37,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
+		var response = await CommentApiClient.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -53,7 +53,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
+		var response = await CommentApiClient.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForId(request, messageTransformer);
@@ -68,7 +68,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
 		var request = _requestBuilder.WithUserName(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
+		var response = await CommentApiClient.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -83,7 +83,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
 		var request = _requestBuilder.WithUserName(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
+		var response = await CommentApiClient.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForUserName(request, messageTransformer);
@@ -98,7 +98,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
+		var response = await CommentApiClient.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -113,7 +113,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
+		var response = await CommentApiClient.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForCurrentUserId(request, messageTransformer);
@@ -128,7 +128,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
 		var request = _requestBuilder.WithSortOrder(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
+		var response = await CommentApiClient.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -144,7 +144,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
 		var request = _requestBuilder.WithSortOrder(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
+		var response = await CommentApiClient.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForSortOrder(request, messageTransformer);
@@ -159,7 +159,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
 		var request = _requestBuilder.WithSortTerm(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
+		var response = await CommentApiClient.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -175,7 +175,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
 		var request = _requestBuilder.WithSortTerm(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
+		var response = await CommentApiClient.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForSortTerm(request, messageTransformer);
@@ -191,7 +191,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
 		var request = _requestBuilder.WithPage(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
+		var response = await CommentApiClient.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -207,7 +207,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
 		var request = _requestBuilder.WithPage(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
+		var response = await CommentApiClient.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForPage(request, messageTransformer);
@@ -223,7 +223,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
 		var request = _requestBuilder.WithPageSize(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
+		var response = await CommentApiClient.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -239,7 +239,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
 		var request = _requestBuilder.WithPageSize(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllProblemDetailsAsync(request, CancellationToken);
+		var response = await CommentApiClient.GetAllProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForPageSize(request, messageTransformer);
@@ -252,7 +252,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
 		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Act
-		var response = await Client.GetAllStatusCodeAsync(_request, CancellationToken);
+		var response = await CommentApiClient.GetAllStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNotFound();
@@ -262,7 +262,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
 	public async Task GetAllAsync_ShouldHaveOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var response = await Client.GetAllStatusCodeAsync(_request, CancellationToken);
+		var response = await CommentApiClient.GetAllStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -277,7 +277,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
+		var response = await CommentApiClient.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -294,7 +294,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
 		var request = _requestBuilder.WithUserName(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
+		var response = await CommentApiClient.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -310,7 +310,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
+		var response = await CommentApiClient.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -326,7 +326,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
 		var request = _requestBuilder.WithSortOrder(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
+		var response = await CommentApiClient.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -342,7 +342,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
 		var request = _requestBuilder.WithSortTerm(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllStatusCodeAsync(request, CancellationToken);
+		var response = await CommentApiClient.GetAllStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -352,7 +352,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
 	public async Task GetAllAsync_ShouldReturnResponse_WhenRequestIsValid()
 	{
 		// Act
-		var response = await Client.GetAllAsync(_request, CancellationToken);
+		var response = await CommentApiClient.GetAllAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(_request, Post, PostComments);
@@ -367,7 +367,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllAsync(request, CancellationToken);
+		var response = await CommentApiClient.GetAllAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(request, Post, PostComments);
@@ -384,7 +384,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
 		var request = _requestBuilder.WithUserName(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllAsync(request, CancellationToken);
+		var response = await CommentApiClient.GetAllAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(request, Post, PostComments);
@@ -400,7 +400,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllAsync(request, CancellationToken);
+		var response = await CommentApiClient.GetAllAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(request, Post, PostComments);
@@ -416,7 +416,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
 		var request = _requestBuilder.WithSortOrder(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllAsync(request, CancellationToken);
+		var response = await CommentApiClient.GetAllAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(request, Post, PostComments, termTransformer);
@@ -432,7 +432,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationQuer
 		var request = _requestBuilder.WithSortTerm(transformer).Build();
 
 		// Act
-		var response = await Client.GetAllAsync(request, CancellationToken);
+		var response = await CommentApiClient.GetAllAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(request, Post, PostComments, termTransformer);

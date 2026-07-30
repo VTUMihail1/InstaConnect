@@ -25,7 +25,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 	public async Task UpdateAsync_ShouldReturnUnauthorizedStatusCode_WhenRequestIsUnauthorized()
 	{
 		// Act
-		var response = await Client.UpdateUnauthorizedStatusCodeAsync(_request, CancellationToken);
+		var response = await ApiClient.UpdateUnauthorizedStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeUnauthorized();
@@ -41,7 +41,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.UpdateStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -57,7 +57,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.UpdateProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForId(request, messageTransformer);
@@ -74,7 +74,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var response = await Client.UpdateStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -91,7 +91,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var response = await Client.UpdateProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForUserId(request, messageTransformer);
@@ -109,7 +109,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		var request = _requestBuilder.WithTitle(transformer).Build();
 
 		// Act
-		var response = await Client.UpdateStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -127,7 +127,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		var request = _requestBuilder.WithTitle(transformer).Build();
 
 		// Act
-		var response = await Client.UpdateProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForTitle(request, messageTransformer);
@@ -145,7 +145,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		var request = _requestBuilder.WithContent(transformer).Build();
 
 		// Act
-		var response = await Client.UpdateStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -163,7 +163,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		var request = _requestBuilder.WithContent(transformer).Build();
 
 		// Act
-		var response = await Client.UpdateProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForContent(request, messageTransformer);
@@ -176,7 +176,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Act
-		var response = await Client.UpdateStatusCodeAsync(_request, CancellationToken);
+		var response = await ApiClient.UpdateStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNotFound();
@@ -189,7 +189,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Act
-		var response = await Client.UpdateProblemDetailsAsync(_request, CancellationToken);
+		var response = await ApiClient.UpdateProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyPostNotFound(_request);
@@ -204,7 +204,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		var request = _requestBuilder.WithUserId(user.Id).Build();
 
 		// Act
-		var response = await Client.UpdateStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeForbidden();
@@ -219,7 +219,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		var request = _requestBuilder.WithUserId(user.Id).Build();
 
 		// Act
-		var response = await Client.UpdateProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyPostForbidden(request);
@@ -229,7 +229,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 	public async Task UpdateAsync_ShouldHaveOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var response = await Client.UpdateStatusCodeAsync(_request, CancellationToken);
+		var response = await ApiClient.UpdateStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -244,7 +244,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.UpdateStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -259,7 +259,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var response = await Client.UpdateStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -269,7 +269,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 	public async Task UpdateAsync_ShouldHaveResponse_WhenRequestIsValid()
 	{
 		// Act
-		var response = await Client.UpdateAsync(_request, CancellationToken);
+		var response = await ApiClient.UpdateAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(_request, Post);
@@ -284,7 +284,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.UpdateAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(request, Post);
@@ -299,7 +299,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var response = await Client.UpdateAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(request, Post);
@@ -309,7 +309,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 	public async Task UpdateAsync_ShouldUpdatePost_WhenRequestIsValid()
 	{
 		// Act
-		var response = await Client.UpdateAsync(_request, CancellationToken);
+		var response = await ApiClient.UpdateAsync(_request, CancellationToken);
 		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -325,7 +325,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.UpdateAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateAsync(request, CancellationToken);
 		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -341,7 +341,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var response = await Client.UpdateAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateAsync(request, CancellationToken);
 		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -352,7 +352,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 	public async Task UpdateAsync_ShouldPublishPostUpdatedEvent_WhenRequestIsValid()
 	{
 		// Act
-		var response = await Client.UpdateAsync(_request, CancellationToken);
+		var response = await ApiClient.UpdateAsync(_request, CancellationToken);
 		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		var eventRequest = await EventClient.PublishedUpdatedAsync(CancellationToken);
@@ -370,7 +370,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.UpdateAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateAsync(request, CancellationToken);
 		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		var eventRequest = await EventClient.PublishedUpdatedAsync(CancellationToken);
@@ -388,7 +388,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var response = await Client.UpdateAsync(request, CancellationToken);
+		var response = await ApiClient.UpdateAsync(request, CancellationToken);
 		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		var eventRequest = await EventClient.PublishedUpdatedAsync(CancellationToken);

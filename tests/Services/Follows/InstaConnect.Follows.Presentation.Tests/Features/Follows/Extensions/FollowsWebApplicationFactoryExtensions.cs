@@ -8,9 +8,9 @@ public static class FollowsWebApplicationFactoryExtensions
 {
 	extension(FollowsWebApplicationFactory webApplicationFactory)
 	{
-		public IFollowClient CreateFollowClient()
+		public IFollowApiClient CreateApiClient()
 		{
-			return new FollowClient(webApplicationFactory.CreateClient(), webApplicationFactory.Services.GetBaseAccessTokenGenerator());
+			return new FollowApiClient(webApplicationFactory.CreateClient(), webApplicationFactory.Services.GetBaseAccessTokenGenerator());
 		}
 	}
 }

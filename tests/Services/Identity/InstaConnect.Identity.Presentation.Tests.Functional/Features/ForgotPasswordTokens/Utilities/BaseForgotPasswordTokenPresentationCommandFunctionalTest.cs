@@ -7,24 +7,24 @@ namespace InstaConnect.Identity.Presentation.Tests.Functional.Features.ForgotPas
 
 public abstract class BaseForgotPasswordTokenPresentationCommandFunctionalTest : BaseForgotPasswordTokenWebTest
 {
-	protected IForgotPasswordTokenClient Client { get; }
+	protected IForgotPasswordTokenApiClient ForgotPasswordTokenApiClient { get; }
 
-	protected IForgotPasswordTokenEventClient EventClient { get; }
+	protected IForgotPasswordTokenEventClient ForgotPasswordTokenEventClient { get; }
 
 	protected BaseForgotPasswordTokenPresentationCommandFunctionalTest(IdentityWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
-		Client = webApplicationFactory.CreateForgotPasswordTokenClient();
-		EventClient = webApplicationFactory.CreateForgotPasswordTokenEventClient();
+		ForgotPasswordTokenApiClient = webApplicationFactory.CreateForgotPasswordTokenApiClient();
+		ForgotPasswordTokenEventClient = webApplicationFactory.CreateForgotPasswordTokenEventClient();
 	}
 
 	protected override async Task OnInitializeAsync()
 	{
 		await base.OnInitializeAsync();
-		await EventClient.StartAsync(CancellationToken);
+		await ForgotPasswordTokenEventClient.StartAsync(CancellationToken);
 	}
 
 	protected override async Task OnDisposeAsync()
 	{
-		await EventClient.StopAsync(CancellationToken);
+		await ForgotPasswordTokenEventClient.StopAsync(CancellationToken);
 	}
 }

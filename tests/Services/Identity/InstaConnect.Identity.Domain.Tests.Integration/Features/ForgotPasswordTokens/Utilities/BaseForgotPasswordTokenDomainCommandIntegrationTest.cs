@@ -10,23 +10,23 @@ public abstract class BaseForgotPasswordTokenDomainCommandIntegrationTest : Base
 {
 	protected IForgotPasswordTokenCommandService Service { get; }
 
-	protected IForgotPasswordTokenEventClient EventClient { get; }
+	protected IForgotPasswordTokenEventClient ForgotPasswordTokenEventClient { get; }
 
 	protected BaseForgotPasswordTokenDomainCommandIntegrationTest(IdentityWebApplicationFactory webApplicationFactory)
 		: base(webApplicationFactory)
 	{
 		Service = ServiceScope.GetForgotPasswordTokenCommandService();
-		EventClient = webApplicationFactory.CreateForgotPasswordTokenEventClient();
+		ForgotPasswordTokenEventClient = webApplicationFactory.CreateForgotPasswordTokenEventClient();
 	}
 
 	protected override async Task OnInitializeAsync()
 	{
 		await base.OnInitializeAsync();
-		await EventClient.StartAsync(CancellationToken);
+		await ForgotPasswordTokenEventClient.StartAsync(CancellationToken);
 	}
 
 	protected override async Task OnDisposeAsync()
 	{
-		await EventClient.StopAsync(CancellationToken);
+		await ForgotPasswordTokenEventClient.StopAsync(CancellationToken);
 	}
 }

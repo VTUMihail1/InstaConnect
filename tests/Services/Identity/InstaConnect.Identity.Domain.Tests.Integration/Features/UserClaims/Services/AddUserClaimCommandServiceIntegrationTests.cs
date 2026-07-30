@@ -123,7 +123,7 @@ public class AddUserClaimCommandServiceIntegrationTests : BaseUserClaimDomainCom
 		// Act
 		var response = await Service.AddAsync(_command, CancellationToken);
 		var userClaim = await ServiceScope.GetByIdAsync(response, CancellationToken);
-		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
+		var eventRequest = await ClaimEventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_command, userClaim);
@@ -140,7 +140,7 @@ public class AddUserClaimCommandServiceIntegrationTests : BaseUserClaimDomainCom
 		// Act
 		var response = await Service.AddAsync(command, CancellationToken);
 		var userClaim = await ServiceScope.GetByIdAsync(response, CancellationToken);
-		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
+		var eventRequest = await ClaimEventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(command, userClaim);

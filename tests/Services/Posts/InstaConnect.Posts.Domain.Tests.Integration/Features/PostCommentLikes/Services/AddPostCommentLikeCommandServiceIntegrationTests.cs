@@ -240,7 +240,7 @@ public class AddPostCommentLikeCommandServiceIntegrationTests : BasePostCommentL
 		var response = await Service.AddAsync(_command, CancellationToken);
 		var postCommentLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
-		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
+		var eventRequest = await CommentLikeEventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_command, postCommentLike);
@@ -258,7 +258,7 @@ public class AddPostCommentLikeCommandServiceIntegrationTests : BasePostCommentL
 		var response = await Service.AddAsync(command, CancellationToken);
 		var postCommentLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
-		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
+		var eventRequest = await CommentLikeEventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(command, postCommentLike);
@@ -276,7 +276,7 @@ public class AddPostCommentLikeCommandServiceIntegrationTests : BasePostCommentL
 		var response = await Service.AddAsync(command, CancellationToken);
 		var postCommentLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
-		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
+		var eventRequest = await CommentLikeEventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(command, postCommentLike);
@@ -294,7 +294,7 @@ public class AddPostCommentLikeCommandServiceIntegrationTests : BasePostCommentL
 		var response = await Service.AddAsync(command, CancellationToken);
 		var postCommentLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
-		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
+		var eventRequest = await CommentLikeEventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(command, postCommentLike);

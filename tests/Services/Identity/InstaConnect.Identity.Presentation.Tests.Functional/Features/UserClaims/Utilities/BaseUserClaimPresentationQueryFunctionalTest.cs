@@ -5,10 +5,10 @@ namespace InstaConnect.Identity.Presentation.Tests.Functional.Features.UserClaim
 
 public abstract class BaseUserClaimPresentationQueryFunctionalTest : BaseUserClaimWebTest
 {
-	protected IUserClaimClient Client { get; }
+	protected IUserClaimApiClient ClaimApiClient { get; }
 
 	protected BaseUserClaimPresentationQueryFunctionalTest(IdentityWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
-		Client = webApplicationFactory.CreateUserClaimClient();
+		ClaimApiClient = webApplicationFactory.CreateClaimApiClient();
 	}
 }

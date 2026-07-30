@@ -7,24 +7,24 @@ namespace InstaConnect.Identity.Presentation.Tests.Functional.Features.UserClaim
 
 public abstract class BaseUserClaimPresentationCommandFunctionalTest : BaseUserClaimWebTest
 {
-	protected IUserClaimClient Client { get; }
+	protected IUserClaimApiClient ClaimApiClient { get; }
 
-	protected IUserClaimEventClient EventClient { get; }
+	protected IUserClaimEventClient ClaimEventClient { get; }
 
 	protected BaseUserClaimPresentationCommandFunctionalTest(IdentityWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
-		Client = webApplicationFactory.CreateUserClaimClient();
-		EventClient = webApplicationFactory.CreateUserClaimEventClient();
+		ClaimApiClient = webApplicationFactory.CreateClaimApiClient();
+		ClaimEventClient = webApplicationFactory.CreateClaimEventClient();
 	}
 
 	protected override async Task OnInitializeAsync()
 	{
 		await base.OnInitializeAsync();
-		await EventClient.StartAsync(CancellationToken);
+		await ClaimEventClient.StartAsync(CancellationToken);
 	}
 
 	protected override async Task OnDisposeAsync()
 	{
-		await EventClient.StopAsync(CancellationToken);
+		await ClaimEventClient.StopAsync(CancellationToken);
 	}
 }

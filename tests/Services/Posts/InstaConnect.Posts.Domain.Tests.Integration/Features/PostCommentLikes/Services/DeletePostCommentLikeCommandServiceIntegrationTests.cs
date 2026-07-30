@@ -132,7 +132,7 @@ public class DeletePostCommentLikeCommandServiceIntegrationTests : BasePostComme
 		// Act
 		await Service.DeleteAsync(_command, CancellationToken);
 
-		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
+		var eventRequest = await CommentLikeEventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_command, PostCommentLike);
@@ -149,7 +149,7 @@ public class DeletePostCommentLikeCommandServiceIntegrationTests : BasePostComme
 		// Act
 		await Service.DeleteAsync(command, CancellationToken);
 
-		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
+		var eventRequest = await CommentLikeEventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(command, PostCommentLike);
@@ -166,7 +166,7 @@ public class DeletePostCommentLikeCommandServiceIntegrationTests : BasePostComme
 		// Act
 		await Service.DeleteAsync(command, CancellationToken);
 
-		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
+		var eventRequest = await CommentLikeEventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(command, PostCommentLike);
@@ -183,7 +183,7 @@ public class DeletePostCommentLikeCommandServiceIntegrationTests : BasePostComme
 		// Act
 		await Service.DeleteAsync(command, CancellationToken);
 
-		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
+		var eventRequest = await CommentLikeEventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(command, PostCommentLike);

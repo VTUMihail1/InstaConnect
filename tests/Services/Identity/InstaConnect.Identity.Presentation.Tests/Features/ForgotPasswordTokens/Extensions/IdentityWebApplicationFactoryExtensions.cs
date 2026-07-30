@@ -8,9 +8,9 @@ public static class IdentityWebApplicationFactoryExtensions
 {
 	extension(IdentityWebApplicationFactory webApplicationFactory)
 	{
-		public IForgotPasswordTokenClient CreateForgotPasswordTokenClient()
+		public IForgotPasswordTokenApiClient CreateForgotPasswordTokenApiClient()
 		{
-			return new ForgotPasswordTokenClient(webApplicationFactory.CreateClient());
+			return new ForgotPasswordTokenApiClient(webApplicationFactory.CreateClient());
 		}
 	}
 }

@@ -8,9 +8,9 @@ public static class IdentityWebApplicationFactoryExtensions
 {
 	extension(IdentityWebApplicationFactory webApplicationFactory)
 	{
-		public IEmailConfirmationTokenClient CreateEmailConfirmationTokenClient()
+		public IEmailConfirmationTokenApiClient CreateEmailConfirmationTokenApiClient()
 		{
-			return new EmailConfirmationTokenClient(webApplicationFactory.CreateClient());
+			return new EmailConfirmationTokenApiClient(webApplicationFactory.CreateClient());
 		}
 	}
 }

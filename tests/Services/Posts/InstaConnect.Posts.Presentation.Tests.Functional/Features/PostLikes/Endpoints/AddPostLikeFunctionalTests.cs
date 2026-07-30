@@ -25,7 +25,7 @@ public class AddPostLikeFunctionalTests : BasePostLikePresentationCommandFunctio
 	public async Task AddAsync_ShouldReturnUnauthorizedStatusCode_WhenRequestIsUnauthorized()
 	{
 		// Act
-		var response = await Client.AddUnauthorizedStatusCodeAsync(_request, CancellationToken);
+		var response = await LikeApiClient.AddUnauthorizedStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeUnauthorized();
@@ -41,7 +41,7 @@ public class AddPostLikeFunctionalTests : BasePostLikePresentationCommandFunctio
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.AddStatusCodeAsync(request, CancellationToken);
+		var response = await LikeApiClient.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -57,7 +57,7 @@ public class AddPostLikeFunctionalTests : BasePostLikePresentationCommandFunctio
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
+		var response = await LikeApiClient.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForId(request, messageTransformer);
@@ -74,7 +74,7 @@ public class AddPostLikeFunctionalTests : BasePostLikePresentationCommandFunctio
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var response = await Client.AddStatusCodeAsync(request, CancellationToken);
+		var response = await LikeApiClient.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -91,7 +91,7 @@ public class AddPostLikeFunctionalTests : BasePostLikePresentationCommandFunctio
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
+		var response = await LikeApiClient.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForUserId(request, messageTransformer);
@@ -104,7 +104,7 @@ public class AddPostLikeFunctionalTests : BasePostLikePresentationCommandFunctio
 		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Act
-		var response = await Client.AddStatusCodeAsync(_request, CancellationToken);
+		var response = await LikeApiClient.AddStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNotFound();
@@ -117,7 +117,7 @@ public class AddPostLikeFunctionalTests : BasePostLikePresentationCommandFunctio
 		await ServiceScope.DeleteAsync(Post, CancellationToken);
 
 		// Act
-		var response = await Client.AddProblemDetailsAsync(_request, CancellationToken);
+		var response = await LikeApiClient.AddProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyPostNotFound(_request);
@@ -130,7 +130,7 @@ public class AddPostLikeFunctionalTests : BasePostLikePresentationCommandFunctio
 		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Act
-		var response = await Client.AddStatusCodeAsync(_request, CancellationToken);
+		var response = await LikeApiClient.AddStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNotFound();
@@ -143,7 +143,7 @@ public class AddPostLikeFunctionalTests : BasePostLikePresentationCommandFunctio
 		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Act
-		var response = await Client.AddProblemDetailsAsync(_request, CancellationToken);
+		var response = await LikeApiClient.AddProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyUserNotFound(_request);
@@ -156,7 +156,7 @@ public class AddPostLikeFunctionalTests : BasePostLikePresentationCommandFunctio
 		await ServiceScope.AddAsync(PostLike, CancellationToken);
 
 		// Act
-		var response = await Client.AddStatusCodeAsync(_request, CancellationToken);
+		var response = await LikeApiClient.AddStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -172,7 +172,7 @@ public class AddPostLikeFunctionalTests : BasePostLikePresentationCommandFunctio
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.AddStatusCodeAsync(request, CancellationToken);
+		var response = await LikeApiClient.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -188,7 +188,7 @@ public class AddPostLikeFunctionalTests : BasePostLikePresentationCommandFunctio
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var response = await Client.AddStatusCodeAsync(request, CancellationToken);
+		var response = await LikeApiClient.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -201,7 +201,7 @@ public class AddPostLikeFunctionalTests : BasePostLikePresentationCommandFunctio
 		await ServiceScope.AddAsync(PostLike, CancellationToken);
 
 		// Act
-		var response = await Client.AddProblemDetailsAsync(_request, CancellationToken);
+		var response = await LikeApiClient.AddProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyPostLikeAlreadyExists(_request);
@@ -217,7 +217,7 @@ public class AddPostLikeFunctionalTests : BasePostLikePresentationCommandFunctio
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
+		var response = await LikeApiClient.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyPostLikeAlreadyExists(request);
@@ -233,7 +233,7 @@ public class AddPostLikeFunctionalTests : BasePostLikePresentationCommandFunctio
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var response = await Client.AddProblemDetailsAsync(request, CancellationToken);
+		var response = await LikeApiClient.AddProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyPostLikeAlreadyExists(request);
@@ -243,7 +243,7 @@ public class AddPostLikeFunctionalTests : BasePostLikePresentationCommandFunctio
 	public async Task AddAsync_ShouldHaveOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var response = await Client.AddStatusCodeAsync(_request, CancellationToken);
+		var response = await LikeApiClient.AddStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -258,7 +258,7 @@ public class AddPostLikeFunctionalTests : BasePostLikePresentationCommandFunctio
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.AddStatusCodeAsync(request, CancellationToken);
+		var response = await LikeApiClient.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -273,7 +273,7 @@ public class AddPostLikeFunctionalTests : BasePostLikePresentationCommandFunctio
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var response = await Client.AddStatusCodeAsync(request, CancellationToken);
+		var response = await LikeApiClient.AddStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeOk();
@@ -283,7 +283,7 @@ public class AddPostLikeFunctionalTests : BasePostLikePresentationCommandFunctio
 	public async Task AddAsync_ShouldReturnResponse_WhenRequestIsValid()
 	{
 		// Act
-		var response = await Client.AddAsync(_request, CancellationToken);
+		var response = await LikeApiClient.AddAsync(_request, CancellationToken);
 		var postLike = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -299,7 +299,7 @@ public class AddPostLikeFunctionalTests : BasePostLikePresentationCommandFunctio
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.AddAsync(request, CancellationToken);
+		var response = await LikeApiClient.AddAsync(request, CancellationToken);
 		var postLike = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -315,7 +315,7 @@ public class AddPostLikeFunctionalTests : BasePostLikePresentationCommandFunctio
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var response = await Client.AddAsync(request, CancellationToken);
+		var response = await LikeApiClient.AddAsync(request, CancellationToken);
 		var postLike = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -326,7 +326,7 @@ public class AddPostLikeFunctionalTests : BasePostLikePresentationCommandFunctio
 	public async Task AddAsync_ShouldAddPostLike_WhenRequestIsValid()
 	{
 		// Act
-		var response = await Client.AddAsync(_request, CancellationToken);
+		var response = await LikeApiClient.AddAsync(_request, CancellationToken);
 		var postLike = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -342,7 +342,7 @@ public class AddPostLikeFunctionalTests : BasePostLikePresentationCommandFunctio
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.AddAsync(request, CancellationToken);
+		var response = await LikeApiClient.AddAsync(request, CancellationToken);
 		var postLike = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -358,7 +358,7 @@ public class AddPostLikeFunctionalTests : BasePostLikePresentationCommandFunctio
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var response = await Client.AddAsync(request, CancellationToken);
+		var response = await LikeApiClient.AddAsync(request, CancellationToken);
 		var postLike = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
 		// Assert
@@ -369,10 +369,10 @@ public class AddPostLikeFunctionalTests : BasePostLikePresentationCommandFunctio
 	public async Task AddAsync_ShouldPublishPostLikeAddedEvent_WhenRequestIsValid()
 	{
 		// Act
-		var response = await Client.AddAsync(_request, CancellationToken);
+		var response = await LikeApiClient.AddAsync(_request, CancellationToken);
 		var postLike = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
-		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
+		var eventRequest = await LikeEventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_request, postLike);
@@ -387,10 +387,10 @@ public class AddPostLikeFunctionalTests : BasePostLikePresentationCommandFunctio
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.AddAsync(request, CancellationToken);
+		var response = await LikeApiClient.AddAsync(request, CancellationToken);
 		var postLike = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
-		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
+		var eventRequest = await LikeEventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, postLike);
@@ -405,10 +405,10 @@ public class AddPostLikeFunctionalTests : BasePostLikePresentationCommandFunctio
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var response = await Client.AddAsync(request, CancellationToken);
+		var response = await LikeApiClient.AddAsync(request, CancellationToken);
 		var postLike = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
-		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
+		var eventRequest = await LikeEventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, postLike);

@@ -5,10 +5,10 @@ namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.PostComments
 
 public abstract class BasePostCommentPresentationQueryFunctionalTest : BasePostCommentWebTest
 {
-	protected IPostCommentClient Client { get; }
+	protected IPostCommentApiClient CommentApiClient { get; }
 
 	protected BasePostCommentPresentationQueryFunctionalTest(PostsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
-		Client = webApplicationFactory.CreatePostCommentClient();
+		CommentApiClient = webApplicationFactory.CreateCommentApiClient();
 	}
 }

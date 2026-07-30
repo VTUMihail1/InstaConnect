@@ -8,7 +8,7 @@ public static class ChatsWebApplicationFactoryExtensions
 {
 	extension(ChatsWebApplicationFactory webApplicationFactory)
 	{
-		public IChatEventClient CreateChatEventClient()
+		public IChatEventClient CreateEventClient()
 		{
 			var eventHarness = webApplicationFactory.Services.GetEventHarness();
 

@@ -1,34 +1,33 @@
 using System.Net;
-using System.Net.Http.Json;
 
 using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
 using InstaConnect.Common.Presentation.Tests.Features.Extensions;
-using InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Utilities;
-using InstaConnect.Identity.Presentation.Tests.Features.ForgotPasswordTokens.Abstractions;
+using InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Utilities;
+using InstaConnect.Identity.Presentation.Tests.Features.EmailConfirmationTokens.Abstractions;
 
-namespace InstaConnect.Identity.Presentation.Tests.Features.ForgotPasswordTokens.Utilities;
+namespace InstaConnect.Identity.Presentation.Tests.Features.EmailConfirmationTokens.Utilities;
 
-internal class ForgotPasswordTokenClient : IForgotPasswordTokenClient
+internal class EmailConfirmationTokenApiClient : IEmailConfirmationTokenApiClient
 {
 	private readonly HttpClient _httpClient;
 
-	public ForgotPasswordTokenClient(HttpClient httpClient)
+	public EmailConfirmationTokenApiClient(HttpClient httpClient)
 	{
 		_httpClient = httpClient;
 	}
 
 	private async Task<HttpResponseMessage> AddResponseMessageAsync(
-		AddForgotPasswordTokenApiRequest request,
+		AddEmailConfirmationTokenApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var route = ForgotPasswordTokenRouteFactory.GetRoute(request);
+		var route = EmailConfirmationTokenRouteFactory.GetRoute(request);
 
 		return await _httpClient
 			.PostAsync(route, null, cancellationToken);
 	}
 
 	public async Task<ApplicationProblemDetails> AddProblemDetailsAsync(
-		AddForgotPasswordTokenApiRequest request,
+		AddEmailConfirmationTokenApiRequest request,
 		CancellationToken cancellationToken)
 	{
 		var response = await AddResponseMessageAsync(request, cancellationToken);
@@ -37,14 +36,14 @@ internal class ForgotPasswordTokenClient : IForgotPasswordTokenClient
 	}
 
 	public async Task AddAsync(
-		AddForgotPasswordTokenApiRequest request,
+		AddEmailConfirmationTokenApiRequest request,
 		CancellationToken cancellationToken)
 	{
 		await AddResponseMessageAsync(request, cancellationToken);
 	}
 
 	public async Task<HttpStatusCode> AddStatusCodeAsync(
-		AddForgotPasswordTokenApiRequest request,
+		AddEmailConfirmationTokenApiRequest request,
 		CancellationToken cancellationToken)
 	{
 		var response = await AddResponseMessageAsync(request, cancellationToken);
@@ -53,17 +52,17 @@ internal class ForgotPasswordTokenClient : IForgotPasswordTokenClient
 	}
 
 	private async Task<HttpResponseMessage> VerifyResponseMessageAsync(
-		VerifyForgotPasswordTokenApiRequest request,
+		VerifyEmailConfirmationTokenApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var route = ForgotPasswordTokenRouteFactory.GetRoute(request);
+		var route = EmailConfirmationTokenRouteFactory.GetRoute(request);
 
 		return await _httpClient
-			.PutAsJsonAsync(route, request.Body, cancellationToken);
+			.PutAsync(route, null, cancellationToken);
 	}
 
 	public async Task<ApplicationProblemDetails> VerifyProblemDetailsAsync(
-		VerifyForgotPasswordTokenApiRequest request,
+		VerifyEmailConfirmationTokenApiRequest request,
 		CancellationToken cancellationToken)
 	{
 		var response = await VerifyResponseMessageAsync(request, cancellationToken);
@@ -72,14 +71,14 @@ internal class ForgotPasswordTokenClient : IForgotPasswordTokenClient
 	}
 
 	public async Task VerifyAsync(
-		VerifyForgotPasswordTokenApiRequest request,
+		VerifyEmailConfirmationTokenApiRequest request,
 		CancellationToken cancellationToken)
 	{
 		await VerifyResponseMessageAsync(request, cancellationToken);
 	}
 
 	public async Task<HttpStatusCode> VerifyStatusCodeAsync(
-		VerifyForgotPasswordTokenApiRequest request,
+		VerifyEmailConfirmationTokenApiRequest request,
 		CancellationToken cancellationToken)
 	{
 		var response = await VerifyResponseMessageAsync(request, cancellationToken);

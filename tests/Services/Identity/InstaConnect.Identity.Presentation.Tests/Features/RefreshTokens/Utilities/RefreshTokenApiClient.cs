@@ -10,11 +10,11 @@ using Microsoft.Net.Http.Headers;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Utilities;
 
-internal class RefreshTokenClient : IRefreshTokenClient
+internal class RefreshTokenApiClient : IRefreshTokenApiClient
 {
 	private readonly HttpClient _httpClient;
 
-	public RefreshTokenClient(HttpClient httpClient)
+	public RefreshTokenApiClient(HttpClient httpClient)
 	{
 		_httpClient = httpClient;
 	}

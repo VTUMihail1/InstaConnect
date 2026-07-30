@@ -7,24 +7,24 @@ namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.PostLikes.Ut
 
 public abstract class BasePostLikePresentationCommandFunctionalTest : BasePostLikeWebTest
 {
-	protected IPostLikeClient Client { get; }
+	protected IPostLikeApiClient LikeApiClient { get; }
 
-	protected IPostLikeEventClient EventClient { get; }
+	protected IPostLikeEventClient LikeEventClient { get; }
 
 	protected BasePostLikePresentationCommandFunctionalTest(PostsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
-		Client = webApplicationFactory.CreatePostLikeClient();
-		EventClient = webApplicationFactory.CreatePostLikeEventClient();
+		LikeApiClient = webApplicationFactory.CreateLikeApiClient();
+		LikeEventClient = webApplicationFactory.CreateLikeEventClient();
 	}
 
 	protected override async Task OnInitializeAsync()
 	{
 		await base.OnInitializeAsync();
-		await EventClient.StartAsync(CancellationToken);
+		await LikeEventClient.StartAsync(CancellationToken);
 	}
 
 	protected override async Task OnDisposeAsync()
 	{
-		await EventClient.StopAsync(CancellationToken);
+		await LikeEventClient.StopAsync(CancellationToken);
 	}
 }

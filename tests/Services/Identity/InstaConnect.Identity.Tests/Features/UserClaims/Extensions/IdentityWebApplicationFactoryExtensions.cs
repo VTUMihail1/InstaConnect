@@ -8,7 +8,7 @@ public static class IdentityWebApplicationFactoryExtensions
 {
 	extension(IdentityWebApplicationFactory webApplicationFactory)
 	{
-		public IUserClaimEventClient CreateUserClaimEventClient()
+		public IUserClaimEventClient CreateClaimEventClient()
 		{
 			var eventHarness = webApplicationFactory.Services.GetEventHarness();
 

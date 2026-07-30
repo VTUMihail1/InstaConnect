@@ -154,7 +154,7 @@ public class VerifyForgotPasswordTokenCommandServiceIntegrationTests : BaseForgo
 	{
 		// Act
 		await Service.VerifyAsync(_command, CancellationToken);
-		var eventRequests = await EventClient.PublishedDeletedRangeAsync(CancellationToken);
+		var eventRequests = await ForgotPasswordTokenEventClient.PublishedDeletedRangeAsync(CancellationToken);
 
 		// Assert
 		eventRequests.ShouldSatisfy(_command, User.ForgotPasswordTokens);
@@ -170,7 +170,7 @@ public class VerifyForgotPasswordTokenCommandServiceIntegrationTests : BaseForgo
 
 		// Act
 		await Service.VerifyAsync(command, CancellationToken);
-		var eventRequests = await EventClient.PublishedDeletedRangeAsync(CancellationToken);
+		var eventRequests = await ForgotPasswordTokenEventClient.PublishedDeletedRangeAsync(CancellationToken);
 
 		// Assert
 		eventRequests.ShouldSatisfy(command, User.ForgotPasswordTokens);
@@ -186,7 +186,7 @@ public class VerifyForgotPasswordTokenCommandServiceIntegrationTests : BaseForgo
 
 		// Act
 		await Service.VerifyAsync(command, CancellationToken);
-		var eventRequests = await EventClient.PublishedDeletedRangeAsync(CancellationToken);
+		var eventRequests = await ForgotPasswordTokenEventClient.PublishedDeletedRangeAsync(CancellationToken);
 
 		// Assert
 		eventRequests.ShouldSatisfy(command, User.ForgotPasswordTokens);

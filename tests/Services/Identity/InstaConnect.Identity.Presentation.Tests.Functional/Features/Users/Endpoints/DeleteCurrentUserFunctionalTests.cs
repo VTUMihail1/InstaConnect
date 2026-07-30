@@ -25,7 +25,7 @@ public class DeleteCurrentUserFunctionalTests : BaseUserPresentationCommandFunct
 	public async Task DeleteCurrentAsync_ShouldReturnUnauthorizedStatusCode_WhenRequestIsUnauthorized()
 	{
 		// Act
-		var response = await Client.DeleteCurrentUnauthorizedStatusCodeAsync(_request, CancellationToken);
+		var response = await ApiClient.DeleteCurrentUnauthorizedStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeUnauthorized();
@@ -42,7 +42,7 @@ public class DeleteCurrentUserFunctionalTests : BaseUserPresentationCommandFunct
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.DeleteCurrentStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.DeleteCurrentStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeBadRequest();
@@ -60,7 +60,7 @@ public class DeleteCurrentUserFunctionalTests : BaseUserPresentationCommandFunct
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.DeleteCurrentProblemDetailsAsync(request, CancellationToken);
+		var response = await ApiClient.DeleteCurrentProblemDetailsAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyInvalidValidationForId(request, messageTransformer);
@@ -73,7 +73,7 @@ public class DeleteCurrentUserFunctionalTests : BaseUserPresentationCommandFunct
 		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Act
-		var response = await Client.DeleteCurrentStatusCodeAsync(_request, CancellationToken);
+		var response = await ApiClient.DeleteCurrentStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNotFound();
@@ -86,7 +86,7 @@ public class DeleteCurrentUserFunctionalTests : BaseUserPresentationCommandFunct
 		await ServiceScope.DeleteAsync(User, CancellationToken);
 
 		// Act
-		var response = await Client.DeleteCurrentProblemDetailsAsync(_request, CancellationToken);
+		var response = await ApiClient.DeleteCurrentProblemDetailsAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfyUserNotFound(_request);
@@ -96,7 +96,7 @@ public class DeleteCurrentUserFunctionalTests : BaseUserPresentationCommandFunct
 	public async Task DeleteCurrentAsync_ShouldHaveNoContentStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var response = await Client.DeleteCurrentStatusCodeAsync(_request, CancellationToken);
+		var response = await ApiClient.DeleteCurrentStatusCodeAsync(_request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNoContent();
@@ -111,7 +111,7 @@ public class DeleteCurrentUserFunctionalTests : BaseUserPresentationCommandFunct
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await Client.DeleteCurrentStatusCodeAsync(request, CancellationToken);
+		var response = await ApiClient.DeleteCurrentStatusCodeAsync(request, CancellationToken);
 
 		// Assert
 		response.ShouldBeNoContent();
@@ -121,7 +121,7 @@ public class DeleteCurrentUserFunctionalTests : BaseUserPresentationCommandFunct
 	public async Task DeleteCurrentAsync_ShouldDeleteUser_WhenRequestIsValid()
 	{
 		// Act
-		await Client.DeleteCurrentAsync(_request, CancellationToken);
+		await ApiClient.DeleteCurrentAsync(_request, CancellationToken);
 		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
@@ -137,7 +137,7 @@ public class DeleteCurrentUserFunctionalTests : BaseUserPresentationCommandFunct
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		await Client.DeleteCurrentAsync(request, CancellationToken);
+		await ApiClient.DeleteCurrentAsync(request, CancellationToken);
 		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
 
 		// Assert
@@ -148,7 +148,7 @@ public class DeleteCurrentUserFunctionalTests : BaseUserPresentationCommandFunct
 	public async Task DeleteCurrentAsync_ShouldPublishUserDeletedEvent_WhenRequestIsValid()
 	{
 		// Act
-		await Client.DeleteCurrentAsync(_request, CancellationToken);
+		await ApiClient.DeleteCurrentAsync(_request, CancellationToken);
 		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert
@@ -164,7 +164,7 @@ public class DeleteCurrentUserFunctionalTests : BaseUserPresentationCommandFunct
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		await Client.DeleteCurrentAsync(request, CancellationToken);
+		await ApiClient.DeleteCurrentAsync(request, CancellationToken);
 		var eventRequest = await EventClient.PublishedDeletedAsync(CancellationToken);
 
 		// Assert

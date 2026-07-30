@@ -7,24 +7,24 @@ namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.PostComments
 
 public abstract class BasePostCommentPresentationCommandFunctionalTest : BasePostCommentWebTest
 {
-	protected IPostCommentClient Client { get; }
+	protected IPostCommentApiClient CommentApiClient { get; }
 
-	protected IPostCommentEventClient EventClient { get; }
+	protected IPostCommentEventClient CommentEventClient { get; }
 
 	protected BasePostCommentPresentationCommandFunctionalTest(PostsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
-		Client = webApplicationFactory.CreatePostCommentClient();
-		EventClient = webApplicationFactory.CreatePostCommentEventClient();
+		CommentApiClient = webApplicationFactory.CreateCommentApiClient();
+		CommentEventClient = webApplicationFactory.CreateCommentEventClient();
 	}
 
 	protected override async Task OnInitializeAsync()
 	{
 		await base.OnInitializeAsync();
-		await EventClient.StartAsync(CancellationToken);
+		await CommentEventClient.StartAsync(CancellationToken);
 	}
 
 	protected override async Task OnDisposeAsync()
 	{
-		await EventClient.StopAsync(CancellationToken);
+		await CommentEventClient.StopAsync(CancellationToken);
 	}
 }

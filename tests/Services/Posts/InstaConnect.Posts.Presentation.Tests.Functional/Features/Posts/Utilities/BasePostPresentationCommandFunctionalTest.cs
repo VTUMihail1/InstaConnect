@@ -7,14 +7,14 @@ namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.Posts.Utilit
 
 public abstract class BasePostPresentationCommandFunctionalTest : BasePostWebTest
 {
-	protected IPostClient Client { get; }
+	protected IPostApiClient ApiClient { get; }
 
 	protected IPostEventClient EventClient { get; }
 
 	protected BasePostPresentationCommandFunctionalTest(PostsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
-		Client = webApplicationFactory.CreatePostClient();
-		EventClient = webApplicationFactory.CreatePostEventClient();
+		ApiClient = webApplicationFactory.CreateApiClient();
+		EventClient = webApplicationFactory.CreateEventClient();
 	}
 
 	protected override async Task OnInitializeAsync()

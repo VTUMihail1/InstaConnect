@@ -35,7 +35,7 @@ public class UpdateUserInfrastructureFunctionalTests : BaseUserInfrastructureCom
 
 		// Act
 		await EventPublisher.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventClient.FaultedUpdatedAsync(CancellationToken);
+		var eventRequest = await UserEventClient.FaultedUpdatedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -54,7 +54,7 @@ public class UpdateUserInfrastructureFunctionalTests : BaseUserInfrastructureCom
 
 		// Act
 		await EventPublisher.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventClient.FaultedUpdatedAsync(CancellationToken);
+		var eventRequest = await UserEventClient.FaultedUpdatedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -73,7 +73,7 @@ public class UpdateUserInfrastructureFunctionalTests : BaseUserInfrastructureCom
 
 		// Act
 		await EventPublisher.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventClient.FaultedUpdatedAsync(CancellationToken);
+		var eventRequest = await UserEventClient.FaultedUpdatedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -92,7 +92,7 @@ public class UpdateUserInfrastructureFunctionalTests : BaseUserInfrastructureCom
 
 		// Act
 		await EventPublisher.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventClient.FaultedUpdatedAsync(CancellationToken);
+		var eventRequest = await UserEventClient.FaultedUpdatedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -112,7 +112,7 @@ public class UpdateUserInfrastructureFunctionalTests : BaseUserInfrastructureCom
 
 		// Act
 		await EventPublisher.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventClient.FaultedUpdatedAsync(CancellationToken);
+		var eventRequest = await UserEventClient.FaultedUpdatedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -128,7 +128,7 @@ public class UpdateUserInfrastructureFunctionalTests : BaseUserInfrastructureCom
 
 		// Act
 		await EventPublisher.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventClient.FaultedUpdatedAsync(CancellationToken);
+		var eventRequest = await UserEventClient.FaultedUpdatedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -144,7 +144,7 @@ public class UpdateUserInfrastructureFunctionalTests : BaseUserInfrastructureCom
 
 		// Act
 		await EventPublisher.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventClient.FaultedUpdatedAsync(CancellationToken);
+		var eventRequest = await UserEventClient.FaultedUpdatedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -158,7 +158,7 @@ public class UpdateUserInfrastructureFunctionalTests : BaseUserInfrastructureCom
 
 		// Act
 		await EventPublisher.PublishAsync(_request, CancellationToken);
-		var eventRequest = await EventClient.FaultedUpdatedAsync(CancellationToken);
+		var eventRequest = await UserEventClient.FaultedUpdatedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_request);
@@ -175,7 +175,7 @@ public class UpdateUserInfrastructureFunctionalTests : BaseUserInfrastructureCom
 
 		// Act
 		await EventPublisher.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventClient.FaultedUpdatedAsync(CancellationToken);
+		var eventRequest = await UserEventClient.FaultedUpdatedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -194,7 +194,7 @@ public class UpdateUserInfrastructureFunctionalTests : BaseUserInfrastructureCom
 
 		// Act
 		await EventPublisher.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventClient.FaultedUpdatedAsync(CancellationToken);
+		var eventRequest = await UserEventClient.FaultedUpdatedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -211,7 +211,7 @@ public class UpdateUserInfrastructureFunctionalTests : BaseUserInfrastructureCom
 
 		// Act
 		await EventPublisher.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventClient.FaultedUpdatedAsync(CancellationToken);
+		var eventRequest = await UserEventClient.FaultedUpdatedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -230,7 +230,7 @@ public class UpdateUserInfrastructureFunctionalTests : BaseUserInfrastructureCom
 
 		// Act
 		await EventPublisher.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventClient.FaultedUpdatedAsync(CancellationToken);
+		var eventRequest = await UserEventClient.FaultedUpdatedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -241,7 +241,7 @@ public class UpdateUserInfrastructureFunctionalTests : BaseUserInfrastructureCom
 	{
 		// Act
 		await EventPublisher.PublishAsync(_request, CancellationToken);
-		var eventRequest = await EventClient.ConsumedUpdatedAsync(CancellationToken);
+		var eventRequest = await UserEventClient.ConsumedUpdatedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_request);
@@ -257,7 +257,7 @@ public class UpdateUserInfrastructureFunctionalTests : BaseUserInfrastructureCom
 
 		// Act
 		await EventPublisher.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventClient.ConsumedUpdatedAsync(CancellationToken);
+		var eventRequest = await UserEventClient.ConsumedUpdatedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -273,7 +273,7 @@ public class UpdateUserInfrastructureFunctionalTests : BaseUserInfrastructureCom
 
 		// Act
 		await EventPublisher.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventClient.ConsumedUpdatedAsync(CancellationToken);
+		var eventRequest = await UserEventClient.ConsumedUpdatedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -287,7 +287,7 @@ public class UpdateUserInfrastructureFunctionalTests : BaseUserInfrastructureCom
 
 		// Act
 		await EventPublisher.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventClient.ConsumedUpdatedAsync(CancellationToken);
+		var eventRequest = await UserEventClient.ConsumedUpdatedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -303,7 +303,7 @@ public class UpdateUserInfrastructureFunctionalTests : BaseUserInfrastructureCom
 
 		// Act
 		await EventPublisher.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventClient.ConsumedUpdatedAsync(CancellationToken);
+		var eventRequest = await UserEventClient.ConsumedUpdatedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -319,7 +319,7 @@ public class UpdateUserInfrastructureFunctionalTests : BaseUserInfrastructureCom
 
 		// Act
 		await EventPublisher.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventClient.ConsumedUpdatedAsync(CancellationToken);
+		var eventRequest = await UserEventClient.ConsumedUpdatedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -333,7 +333,7 @@ public class UpdateUserInfrastructureFunctionalTests : BaseUserInfrastructureCom
 
 		// Act
 		await EventPublisher.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventClient.ConsumedUpdatedAsync(CancellationToken);
+		var eventRequest = await UserEventClient.ConsumedUpdatedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -349,7 +349,7 @@ public class UpdateUserInfrastructureFunctionalTests : BaseUserInfrastructureCom
 
 		// Act
 		await EventPublisher.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventClient.ConsumedUpdatedAsync(CancellationToken);
+		var eventRequest = await UserEventClient.ConsumedUpdatedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);
@@ -366,7 +366,7 @@ public class UpdateUserInfrastructureFunctionalTests : BaseUserInfrastructureCom
 
 		// Act
 		await EventPublisher.PublishAsync(request, CancellationToken);
-		var eventRequest = await EventClient.ConsumedUpdatedAsync(CancellationToken);
+		var eventRequest = await UserEventClient.ConsumedUpdatedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request);

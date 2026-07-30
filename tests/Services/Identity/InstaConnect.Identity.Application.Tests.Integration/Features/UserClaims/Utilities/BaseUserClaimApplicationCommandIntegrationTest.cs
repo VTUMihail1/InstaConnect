@@ -8,22 +8,22 @@ public abstract class BaseUserClaimApplicationCommandIntegrationTest : BaseUserC
 {
 	protected IApplicationSender Sender { get; }
 
-	protected IUserClaimEventClient EventClient { get; }
+	protected IUserClaimEventClient ClaimEventClient { get; }
 
 	protected BaseUserClaimApplicationCommandIntegrationTest(IdentityWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
 		Sender = ServiceScope.GetSender();
-		EventClient = webApplicationFactory.CreateUserClaimEventClient();
+		ClaimEventClient = webApplicationFactory.CreateClaimEventClient();
 	}
 
 	protected override async Task OnInitializeAsync()
 	{
 		await base.OnInitializeAsync();
-		await EventClient.StartAsync(CancellationToken);
+		await ClaimEventClient.StartAsync(CancellationToken);
 	}
 
 	protected override async Task OnDisposeAsync()
 	{
-		await EventClient.StopAsync(CancellationToken);
+		await ClaimEventClient.StopAsync(CancellationToken);
 	}
 }

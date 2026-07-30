@@ -9,12 +9,12 @@ using InstaConnect.Identity.Presentation.Tests.Features.Users.Abstractions;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.Users.Utilities;
 
-internal class UserClient : IUserClient
+internal class UserApiClient : IUserApiClient
 {
 	private readonly HttpClient _httpClient;
 	private readonly IBaseAccessTokenGenerator _baseAccessTokenGenerator;
 
-	public UserClient(HttpClient httpClient, IBaseAccessTokenGenerator baseAccessTokenGenerator)
+	public UserApiClient(HttpClient httpClient, IBaseAccessTokenGenerator baseAccessTokenGenerator)
 	{
 		_httpClient = httpClient;
 		_baseAccessTokenGenerator = baseAccessTokenGenerator;

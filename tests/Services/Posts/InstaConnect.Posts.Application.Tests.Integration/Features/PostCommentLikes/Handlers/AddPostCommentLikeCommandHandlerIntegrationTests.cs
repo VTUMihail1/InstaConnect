@@ -274,7 +274,7 @@ public class AddPostCommentLikeCommandHandlerIntegrationTests : BasePostCommentL
 		var response = await Sender.SendAsync(_request, CancellationToken);
 		var postCommentLike = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
-		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
+		var eventRequest = await CommentLikeEventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(_request, postCommentLike);
@@ -292,7 +292,7 @@ public class AddPostCommentLikeCommandHandlerIntegrationTests : BasePostCommentL
 		var response = await Sender.SendAsync(request, CancellationToken);
 		var postCommentLike = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
-		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
+		var eventRequest = await CommentLikeEventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, postCommentLike);
@@ -310,7 +310,7 @@ public class AddPostCommentLikeCommandHandlerIntegrationTests : BasePostCommentL
 		var response = await Sender.SendAsync(request, CancellationToken);
 		var postCommentLike = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
-		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
+		var eventRequest = await CommentLikeEventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, postCommentLike);
@@ -328,7 +328,7 @@ public class AddPostCommentLikeCommandHandlerIntegrationTests : BasePostCommentL
 		var response = await Sender.SendAsync(request, CancellationToken);
 		var postCommentLike = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
 
-		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
+		var eventRequest = await CommentLikeEventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
 		eventRequest.ShouldSatisfy(request, postCommentLike);
