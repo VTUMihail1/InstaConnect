@@ -1,6 +1,5 @@
 using InstaConnect.Common.Domain.Features.DateTimes.Abstractions;
 using InstaConnect.Common.Domain.Features.Guids.Abstractions;
-using InstaConnect.Common.Domain.Features.Images.Abstractions;
 using InstaConnect.Common.Events.Features.Common.Abstractions;
 using InstaConnect.Common.Tests.Features.Utilities;
 
@@ -21,10 +20,5 @@ public static class DomainMockFactory
 	public static IDateTimeProvider CreateDateTimeProvider()
 	{
 		return Mocker.Mock<IDateTimeProvider>();
-	}
-
-	public static IImageHandler CreateImageHandler()
-	{
-		return Mocker.Mock<IImageHandler>();
 	}
 }

@@ -1,7 +1,5 @@
 using System.Reflection;
 
-using InstaConnect.Common.Domain.Features.Emails.Abstractions;
-using InstaConnect.Common.Domain.Features.Images.Abstractions;
 using InstaConnect.Common.Events.Features.Common.Abstractions;
 using InstaConnect.Common.Tests.Features.Abstractions;
 using InstaConnect.Common.Tests.Features.Helpers;
@@ -30,14 +28,14 @@ public static class ServiceCollectionExtensions
 
 		public IServiceCollection AddMockImageHandler()
 		{
-			serviceCollection.AddScoped(_ => Mocker.Mock<IImageHandler>());
+			serviceCollection.AddSingleton(_ => MockFactory.CreateImageHandler());
 
 			return serviceCollection;
 		}
 
 		public IServiceCollection AddMockEmailSender()
 		{
-			serviceCollection.AddScoped(_ => Mocker.Mock<IEmailSender>());
+			serviceCollection.AddScoped(_ => MockFactory.CreateEmailSender());
 
 			return serviceCollection;
 		}

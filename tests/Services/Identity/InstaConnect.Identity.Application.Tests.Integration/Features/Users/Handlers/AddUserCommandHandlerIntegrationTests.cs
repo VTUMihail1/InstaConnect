@@ -14,8 +14,6 @@ public class AddUserCommandHandlerIntegrationTests : BaseUserApplicationCommandI
 		_requestBuilderFactory = new();
 		_requestBuilder = _requestBuilderFactory.Create();
 		_request = _requestBuilder.Build();
-
-		ImageHandler.SetupUpload(_request, CancellationToken);
 	}
 
 	[Theory]

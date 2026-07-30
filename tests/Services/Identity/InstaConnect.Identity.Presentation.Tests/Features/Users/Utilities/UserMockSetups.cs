@@ -1,7 +1,4 @@
 using InstaConnect.Common.Application.Features.Messaging.Abstractions;
-using InstaConnect.Common.Domain.Features.Images.Abstractions;
-using InstaConnect.Common.Domain.Features.ValueObjects.Models;
-using InstaConnect.Common.Tests.Features.Extensions;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.Users.Utilities;
 
@@ -77,31 +74,6 @@ public static class UserMockSetups
 			sender
 				.SendAsync(UserMatcher.IsUpdateCurrentUserCommandRequest(request), cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(request));
-		}
-	}
-
-	extension(IImageHandler imageHandler)
-	{
-		public void SetupUpload(
-			AddUserApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var image = new Image(request.Form.ProfileImage!.GetUrl());
-
-			imageHandler
-				.UploadAsync(request.Form.ProfileImage!, cancellationToken)
-				.ReturnsTaskResponse(image);
-		}
-
-		public void SetupUpload(
-			UpdateCurrentUserApiRequest request,
-			CancellationToken cancellationToken)
-		{
-			var image = new Image(request.Form.ProfileImage!.GetUrl());
-
-			imageHandler
-				.UploadAsync(request.Form.ProfileImage!, cancellationToken)
-				.ReturnsTaskResponse(image);
 		}
 	}
 }

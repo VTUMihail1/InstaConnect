@@ -28,10 +28,7 @@ public class FollowsWebApplicationFactory : WebApplicationFactory<Program>, IAsy
 
 	protected override void ConfigureWebHost(IWebHostBuilder builder)
 	{
-		builder.ConfigureTestServices(serviceCollection =>
-		{
-			serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), FollowsInfrastructureReference.Assembly);
-		});
+		builder.ConfigureTestServices(serviceCollection => serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), FollowsInfrastructureReference.Assembly));
 
 		builder.UpdateRedisConfiguration(_redisContainer.GetConnectionString());
 		builder.UpdateMongoConfiguration(_mongoDbContainer.GetConnectionString());

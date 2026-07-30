@@ -20,6 +20,16 @@ public static class MockSetups
 		{
 			response.Returns(returnThis);
 		}
+
+		public void ReturnsResponse<TArg1>(Func<TArg1, TResponse> func)
+		{
+			response.Returns(a => func(a.Arg<TArg1>()));
+		}
+
+		public void ReturnsResponse<TArg1, TArg2>(Func<TArg1, TArg2, TResponse> func)
+		{
+			response.Returns(a => func(a.Arg<TArg1>(), a.Arg<TArg2>()));
+		}
 	}
 
 	extension<TResponse>(Task<TResponse> response)
@@ -27,6 +37,16 @@ public static class MockSetups
 		public void ReturnsTaskResponse(TResponse returnThis)
 		{
 			response.Returns(returnThis);
+		}
+
+		public void ReturnsTaskResponse<TArg1>(Func<TArg1, TResponse> func)
+		{
+			response.Returns(a => func(a.Arg<TArg1>()));
+		}
+
+		public void ReturnsTaskResponse<TArg1, TArg2>(Func<TArg1, TArg2, TResponse> func)
+		{
+			response.Returns(a => func(a.Arg<TArg1>(), a.Arg<TArg2>()));
 		}
 	}
 }

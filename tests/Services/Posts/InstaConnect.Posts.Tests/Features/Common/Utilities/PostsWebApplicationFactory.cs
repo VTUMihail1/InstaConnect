@@ -25,10 +25,7 @@ public class PostsWebApplicationFactory : WebApplicationFactory<Program>, IAsync
 
 	protected override void ConfigureWebHost(IWebHostBuilder builder)
 	{
-		builder.ConfigureTestServices(serviceCollection =>
-		{
-			serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), PostsInfrastructureReference.Assembly);
-		});
+		builder.ConfigureTestServices(serviceCollection => serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), PostsInfrastructureReference.Assembly));
 
 		builder.UpdateMongoConfiguration(_mongoDbContainer.GetConnectionString());
 		builder.UpdateRabbitMqConfiguration(_rabbitMqContainer.GetConnectionString());

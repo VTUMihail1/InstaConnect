@@ -45,7 +45,6 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 		Repository.SetupGetById(_command, _include, User, CancellationToken);
 		Repository.SetupIsEmailUnique(_command, CancellationToken);
 		Repository.SetupIsNameUnique(_command, CancellationToken);
-		ImageHandler.SetupUpload(_command, CancellationToken);
 		DateTimeProvider.SetupGetOffsetUtcNow(_command, User);
 	}
 

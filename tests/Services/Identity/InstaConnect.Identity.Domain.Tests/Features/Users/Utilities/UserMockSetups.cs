@@ -1,8 +1,5 @@
 using InstaConnect.Common.Domain.Features.DateTimes.Abstractions;
 using InstaConnect.Common.Domain.Features.Guids.Abstractions;
-using InstaConnect.Common.Domain.Features.Images.Abstractions;
-using InstaConnect.Common.Domain.Features.ValueObjects.Models;
-using InstaConnect.Common.Tests.Features.Extensions;
 using InstaConnect.Identity.Domain.Features.Common.Helpers;
 
 namespace InstaConnect.Identity.Domain.Tests.Features.Users.Utilities;
@@ -36,31 +33,6 @@ public static class UserMockSetups
 				.ClearCalls()
 				.Hash(password)
 				.ReturnsResponse(user.PasswordHash);
-		}
-	}
-
-	extension(IImageHandler imageHandler)
-	{
-		public void SetupUpload(
-			AddUserCommand command,
-			CancellationToken cancellationToken)
-		{
-			var image = new Image(command.ProfileImage!.GetUrl());
-
-			imageHandler
-				.UploadAsync(command.ProfileImage!, cancellationToken)
-				.ReturnsTaskResponse(image);
-		}
-
-		public void SetupUpload(
-			UpdateUserCommand command,
-			CancellationToken cancellationToken)
-		{
-			var image = new Image(command.ProfileImage!.GetUrl());
-
-			imageHandler
-				.UploadAsync(command.ProfileImage!, cancellationToken)
-				.ReturnsTaskResponse(image);
 		}
 	}
 

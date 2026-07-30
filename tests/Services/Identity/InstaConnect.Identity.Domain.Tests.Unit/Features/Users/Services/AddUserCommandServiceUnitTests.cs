@@ -38,7 +38,6 @@ public class AddUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 		Repository.SetupIsEmailUnique(_command, CancellationToken);
 		Repository.SetupIsNameUnique(_command, CancellationToken);
 		Factory.SetupCreate(_command, User);
-		ImageHandler.SetupUpload(_command, CancellationToken);
 		EmailConfirmationTokenFactory.SetupCreate(_command, EmailConfirmationToken);
 	}
 

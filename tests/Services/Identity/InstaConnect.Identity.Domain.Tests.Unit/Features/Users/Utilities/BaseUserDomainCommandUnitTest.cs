@@ -42,7 +42,7 @@ public abstract class BaseUserDomainCommandUnitTest : BaseUserTest
 		Factory = UserDomainMockFactory.CreateFactory();
 		Mapper = MockFactory.CreateMapper(IdentityDomainReference.Assembly);
 		GuidProvider = DomainMockFactory.CreateGuidProvider();
-		ImageHandler = DomainMockFactory.CreateImageHandler();
+		ImageHandler = MockFactory.CreateImageHandler();
 		EventPublisher = DomainMockFactory.CreateEventPublisher();
 		Repository = UserDomainMockFactory.CreateCommandRepository();
 		DateTimeProvider = DomainMockFactory.CreateDateTimeProvider();
