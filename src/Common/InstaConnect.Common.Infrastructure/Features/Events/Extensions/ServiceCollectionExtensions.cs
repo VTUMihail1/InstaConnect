@@ -37,10 +37,7 @@ public static partial class ServiceCollectionExtensions
 					o.UseBusOutbox();
 				});
 
-				busConfigurator.AddConfigureEndpointsCallback((context, name, cfg) =>
-				{
-					cfg.UseMongoDbOutbox(context);
-				});
+				busConfigurator.AddConfigureEndpointsCallback((context, name, cfg) => cfg.UseMongoDbOutbox(context));
 
 				busConfigurator.UsingRabbitMq((context, configurator) =>
 				{
