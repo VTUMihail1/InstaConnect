@@ -5,25 +5,25 @@ namespace InstaConnect.Chats.Tests.Features.Chats.Helpers;
 
 public class ChatEventClient : IChatEventClient
 {
-	private readonly IEventHarness _eventHarness;
+	private readonly IEventClient _eventClient;
 
-	public ChatEventClient(IEventHarness eventHarness)
+	public ChatEventClient(IEventClient eventClient)
 	{
-		_eventHarness = eventHarness;
+		_eventClient = eventClient;
 	}
 
 	public async Task StartAsync(CancellationToken cancellationToken)
 	{
-		await _eventHarness.StartAsync(cancellationToken);
+		await _eventClient.StartAsync(cancellationToken);
 	}
 
 	public async Task StopAsync(CancellationToken cancellationToken)
 	{
-		await _eventHarness.StopAsync(cancellationToken);
+		await _eventClient.StopAsync(cancellationToken);
 	}
 
 	public async Task<ChatAddedEventRequest> PublishedAddedAsync(CancellationToken cancellationToken)
 	{
-		return await _eventHarness.PublishedAsync<ChatAddedEventRequest>(cancellationToken);
+		return await _eventClient.PublishedAsync<ChatAddedEventRequest>(cancellationToken);
 	}
 }

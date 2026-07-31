@@ -10,9 +10,9 @@ public static class IdentityWebApplicationFactoryExtensions
 	{
 		public IEmailConfirmationTokenEventClient CreateEmailConfirmationTokenEventClient()
 		{
-			var eventHarness = webApplicationFactory.Services.GetEventHarness();
+			var eventClient = webApplicationFactory.Services.GetEventClient();
 
-			return new EmailConfirmationTokenEventClient(eventHarness);
+			return new EmailConfirmationTokenEventClient(eventClient);
 		}
 	}
 }

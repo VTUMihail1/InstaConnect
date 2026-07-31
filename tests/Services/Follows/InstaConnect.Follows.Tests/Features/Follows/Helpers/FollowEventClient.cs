@@ -5,30 +5,30 @@ namespace InstaConnect.Follows.Tests.Features.Follows.Helpers;
 
 public class FollowEventClient : IFollowEventClient
 {
-	private readonly IEventHarness _eventHarness;
+	private readonly IEventClient _eventClient;
 
-	public FollowEventClient(IEventHarness eventHarness)
+	public FollowEventClient(IEventClient eventClient)
 	{
-		_eventHarness = eventHarness;
+		_eventClient = eventClient;
 	}
 
 	public async Task StartAsync(CancellationToken cancellationToken)
 	{
-		await _eventHarness.StartAsync(cancellationToken);
+		await _eventClient.StartAsync(cancellationToken);
 	}
 
 	public async Task StopAsync(CancellationToken cancellationToken)
 	{
-		await _eventHarness.StopAsync(cancellationToken);
+		await _eventClient.StopAsync(cancellationToken);
 	}
 
 	public async Task<FollowAddedEventRequest> PublishedAddedAsync(CancellationToken cancellationToken)
 	{
-		return await _eventHarness.PublishedAsync<FollowAddedEventRequest>(cancellationToken);
+		return await _eventClient.PublishedAsync<FollowAddedEventRequest>(cancellationToken);
 	}
 
 	public async Task<FollowDeletedEventRequest> PublishedDeletedAsync(CancellationToken cancellationToken)
 	{
-		return await _eventHarness.PublishedAsync<FollowDeletedEventRequest>(cancellationToken);
+		return await _eventClient.PublishedAsync<FollowDeletedEventRequest>(cancellationToken);
 	}
 }

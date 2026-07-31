@@ -5,17 +5,17 @@ namespace InstaConnect.Common.Tests.Features.Helpers;
 
 public class TestEventPublisher : IEventPublisher
 {
-	private readonly IEventHarness _eventHarness;
+	private readonly IEventClient _eventClient;
 
-	public TestEventPublisher(IEventHarness eventHarness)
+	public TestEventPublisher(IEventClient eventClient)
 	{
-		_eventHarness = eventHarness;
+		_eventClient = eventClient;
 	}
 
 	public async Task PublishAsync<TEvent>(TEvent message, CancellationToken cancellationToken)
 		where TEvent : class, IEventRequest
 	{
-		await _eventHarness.PublishAsync(message, cancellationToken);
+		await _eventClient.PublishAsync(message, cancellationToken);
 	}
 
 	public async Task PublishAsync<TEvent>(ICollection<TEvent> messages, CancellationToken cancellationToken)
@@ -23,7 +23,7 @@ public class TestEventPublisher : IEventPublisher
 	{
 		foreach (var message in messages)
 		{
-			await _eventHarness.PublishAsync(message, cancellationToken);
+			await _eventClient.PublishAsync(message, cancellationToken);
 		}
 	}
 }

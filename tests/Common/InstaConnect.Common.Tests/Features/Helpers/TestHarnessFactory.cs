@@ -23,7 +23,7 @@ public class TestHarnessFactory : ITestHarnessFactory
 	public ITestHarness Create()
 	{
 		return new ServiceCollection()
-				.AddMassTransitTestEventHarness(_connectionString, _currentAssemblies)
+				.AddMassTransitTestEventClient(_connectionString, _currentAssemblies)
 				.BuildServiceProvider(true)
 				.GetTestHarness();
 	}

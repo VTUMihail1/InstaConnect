@@ -29,9 +29,9 @@ public static class FollowsWebApplicationFactoryExtensions
 
 		public IFollowEventClient CreateEventClient()
 		{
-			var eventHarness = webApplicationFactory.Services.GetEventHarness();
+			var eventClient = webApplicationFactory.Services.GetEventClient();
 
-			return new FollowEventClient(eventHarness);
+			return new FollowEventClient(eventClient);
 		}
 	}
 }

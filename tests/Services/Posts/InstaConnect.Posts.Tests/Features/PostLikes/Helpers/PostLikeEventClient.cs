@@ -5,30 +5,30 @@ namespace InstaConnect.Posts.Tests.Features.PostLikes.Helpers;
 
 public class PostLikeEventClient : IPostLikeEventClient
 {
-	private readonly IEventHarness _eventHarness;
+	private readonly IEventClient _eventClient;
 
-	public PostLikeEventClient(IEventHarness eventHarness)
+	public PostLikeEventClient(IEventClient eventClient)
 	{
-		_eventHarness = eventHarness;
+		_eventClient = eventClient;
 	}
 
 	public async Task StartAsync(CancellationToken cancellationToken)
 	{
-		await _eventHarness.StartAsync(cancellationToken);
+		await _eventClient.StartAsync(cancellationToken);
 	}
 
 	public async Task StopAsync(CancellationToken cancellationToken)
 	{
-		await _eventHarness.StopAsync(cancellationToken);
+		await _eventClient.StopAsync(cancellationToken);
 	}
 
 	public async Task<PostLikeAddedEventRequest> PublishedAddedAsync(CancellationToken cancellationToken)
 	{
-		return await _eventHarness.PublishedAsync<PostLikeAddedEventRequest>(cancellationToken);
+		return await _eventClient.PublishedAsync<PostLikeAddedEventRequest>(cancellationToken);
 	}
 
 	public async Task<PostLikeDeletedEventRequest> PublishedDeletedAsync(CancellationToken cancellationToken)
 	{
-		return await _eventHarness.PublishedAsync<PostLikeDeletedEventRequest>(cancellationToken);
+		return await _eventClient.PublishedAsync<PostLikeDeletedEventRequest>(cancellationToken);
 	}
 }

@@ -12,9 +12,9 @@ public static class Setups
 {
 	extension(IServiceProvider serviceProvider)
 	{
-		public IEventHarness GetEventHarness()
+		public IEventClient GetEventClient()
 		{
-			return serviceProvider.GetRequiredService<IEventHarness>();
+			return serviceProvider.GetRequiredService<IEventClient>();
 		}
 
 		public IImageHandler GetImageHandler()
@@ -40,9 +40,9 @@ public static class Setups
 
 	extension(IServiceScope serviceScope)
 	{
-		public IEventHarness GetEventHarness()
+		public IEventClient GetEventClient()
 		{
-			return serviceScope.ServiceProvider.GetEventHarness();
+			return serviceScope.ServiceProvider.GetEventClient();
 		}
 
 		public IImageHandler GetImageHandler()

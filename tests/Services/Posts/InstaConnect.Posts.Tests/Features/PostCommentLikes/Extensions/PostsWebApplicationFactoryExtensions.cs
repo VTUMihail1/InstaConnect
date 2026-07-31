@@ -10,9 +10,9 @@ public static class PostsWebApplicationFactoryExtensions
 	{
 		public IPostCommentLikeEventClient CreateCommentLikeEventClient()
 		{
-			var eventHarness = webApplicationFactory.Services.GetEventHarness();
+			var eventClient = webApplicationFactory.Services.GetEventClient();
 
-			return new PostCommentLikeEventClient(eventHarness);
+			return new PostCommentLikeEventClient(eventClient);
 		}
 	}
 }

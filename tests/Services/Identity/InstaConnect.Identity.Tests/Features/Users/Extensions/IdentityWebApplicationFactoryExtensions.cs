@@ -10,9 +10,9 @@ public static class IdentityWebApplicationFactoryExtensions
 	{
 		public IUserEventClient CreateEventClient()
 		{
-			var eventHarness = webApplicationFactory.Services.GetEventHarness();
+			var eventClient = webApplicationFactory.Services.GetEventClient();
 
-			return new UserEventClient(eventHarness);
+			return new UserEventClient(eventClient);
 		}
 	}
 }

@@ -6,13 +6,13 @@ using MassTransit.Testing;
 
 namespace InstaConnect.Common.Tests.Features.Helpers;
 
-public class EventHarness : IEventHarness
+public class EventClient : IEventClient
 {
 	private readonly ITestHarnessFactory _testHarnessFactory;
 
 	private ITestHarness _testHarness;
 
-	public EventHarness(
+	public EventClient(
 		ITestHarness testHarness,
 		ITestHarnessFactory testHarnessFactory)
 	{

@@ -10,9 +10,9 @@ public static class IdentityWebApplicationFactoryExtensions
 	{
 		public IForgotPasswordTokenEventClient CreateForgotPasswordTokenEventClient()
 		{
-			var eventHarness = webApplicationFactory.Services.GetEventHarness();
+			var eventClient = webApplicationFactory.Services.GetEventClient();
 
-			return new ForgotPasswordTokenEventClient(eventHarness);
+			return new ForgotPasswordTokenEventClient(eventClient);
 		}
 	}
 }

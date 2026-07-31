@@ -33,7 +33,7 @@ public class IdentityWebApplicationFactory : WebApplicationFactory<Program>, IAs
 		{
 			serviceCollection.AddMockImageHandler();
 			serviceCollection.AddMockEmailSender();
-			serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), IdentityInfrastructureReference.Assembly);
+			serviceCollection.AddTestEventClient(_rabbitMqContainer.GetConnectionString(), IdentityInfrastructureReference.Assembly);
 		});
 
 		builder.UpdateMongoConfiguration(_mongoDbContainer.GetConnectionString());

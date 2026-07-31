@@ -10,9 +10,9 @@ public static class FollowsWebApplicationFactoryExtensions
 	{
 		public IUserEventClient CreateUserEventClient()
 		{
-			var eventHarness = webApplicationFactory.Services.GetEventHarness();
+			var eventClient = webApplicationFactory.Services.GetEventClient();
 
-			return new UserEventClient(eventHarness);
+			return new UserEventClient(eventClient);
 		}
 	}
 }

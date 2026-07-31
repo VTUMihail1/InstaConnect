@@ -29,7 +29,7 @@ public class ChatsWebApplicationFactory : WebApplicationFactory<Program>, IAsync
 
 	protected override void ConfigureWebHost(IWebHostBuilder builder)
 	{
-		builder.ConfigureTestServices(serviceCollection => serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), ChatsInfrastructureReference.Assembly));
+		builder.ConfigureTestServices(serviceCollection => serviceCollection.AddTestEventClient(_rabbitMqContainer.GetConnectionString(), ChatsInfrastructureReference.Assembly));
 
 		builder.UpdateRedisConfiguration(_redisContainer.GetConnectionString());
 		builder.UpdateMongoConfiguration(_mongoDbContainer.GetConnectionString());

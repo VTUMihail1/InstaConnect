@@ -10,9 +10,9 @@ public static class ChatsWebApplicationFactoryExtensions
 	{
 		public IChatEventClient CreateEventClient()
 		{
-			var eventHarness = webApplicationFactory.Services.GetEventHarness();
+			var eventClient = webApplicationFactory.Services.GetEventClient();
 
-			return new ChatEventClient(eventHarness);
+			return new ChatEventClient(eventClient);
 		}
 	}
 }

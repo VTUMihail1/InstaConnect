@@ -5,30 +5,30 @@ namespace InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.Helpers;
 
 public class ForgotPasswordTokenEventClient : IForgotPasswordTokenEventClient
 {
-	private readonly IEventHarness _eventHarness;
+	private readonly IEventClient _eventClient;
 
-	public ForgotPasswordTokenEventClient(IEventHarness eventHarness)
+	public ForgotPasswordTokenEventClient(IEventClient eventClient)
 	{
-		_eventHarness = eventHarness;
+		_eventClient = eventClient;
 	}
 
 	public async Task StartAsync(CancellationToken cancellationToken)
 	{
-		await _eventHarness.StartAsync(cancellationToken);
+		await _eventClient.StartAsync(cancellationToken);
 	}
 
 	public async Task StopAsync(CancellationToken cancellationToken)
 	{
-		await _eventHarness.StopAsync(cancellationToken);
+		await _eventClient.StopAsync(cancellationToken);
 	}
 
 	public async Task<ICollection<ForgotPasswordTokenAddedEventRequest>> PublishedAddedRangeAsync(CancellationToken cancellationToken)
 	{
-		return await _eventHarness.PublishedRangeAsync<ForgotPasswordTokenAddedEventRequest>(cancellationToken);
+		return await _eventClient.PublishedRangeAsync<ForgotPasswordTokenAddedEventRequest>(cancellationToken);
 	}
 
 	public async Task<ICollection<ForgotPasswordTokenDeletedEventRequest>> PublishedDeletedRangeAsync(CancellationToken cancellationToken)
 	{
-		return await _eventHarness.PublishedRangeAsync<ForgotPasswordTokenDeletedEventRequest>(cancellationToken);
+		return await _eventClient.PublishedRangeAsync<ForgotPasswordTokenDeletedEventRequest>(cancellationToken);
 	}
 }

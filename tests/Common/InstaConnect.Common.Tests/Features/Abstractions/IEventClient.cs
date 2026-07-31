@@ -2,7 +2,7 @@ using InstaConnect.Common.Events.Features.Common.Abstractions;
 
 namespace InstaConnect.Common.Tests.Features.Abstractions;
 
-public interface IEventHarness
+public interface IEventClient
 {
 	public Task<TRequest> ConsumedAsync<TRequest>(CancellationToken cancellationToken) where TRequest : class, IEventRequest;
 

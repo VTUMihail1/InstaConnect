@@ -5,35 +5,35 @@ namespace InstaConnect.Posts.Tests.Features.Posts.Helpers;
 
 public class PostEventClient : IPostEventClient
 {
-	private readonly IEventHarness _eventHarness;
+	private readonly IEventClient _eventClient;
 
-	public PostEventClient(IEventHarness eventHarness)
+	public PostEventClient(IEventClient eventClient)
 	{
-		_eventHarness = eventHarness;
+		_eventClient = eventClient;
 	}
 
 	public async Task StartAsync(CancellationToken cancellationToken)
 	{
-		await _eventHarness.StartAsync(cancellationToken);
+		await _eventClient.StartAsync(cancellationToken);
 	}
 
 	public async Task StopAsync(CancellationToken cancellationToken)
 	{
-		await _eventHarness.StopAsync(cancellationToken);
+		await _eventClient.StopAsync(cancellationToken);
 	}
 
 	public async Task<PostAddedEventRequest> PublishedAddedAsync(CancellationToken cancellationToken)
 	{
-		return await _eventHarness.PublishedAsync<PostAddedEventRequest>(cancellationToken);
+		return await _eventClient.PublishedAsync<PostAddedEventRequest>(cancellationToken);
 	}
 
 	public async Task<PostUpdatedEventRequest> PublishedUpdatedAsync(CancellationToken cancellationToken)
 	{
-		return await _eventHarness.PublishedAsync<PostUpdatedEventRequest>(cancellationToken);
+		return await _eventClient.PublishedAsync<PostUpdatedEventRequest>(cancellationToken);
 	}
 
 	public async Task<PostDeletedEventRequest> PublishedDeletedAsync(CancellationToken cancellationToken)
 	{
-		return await _eventHarness.PublishedAsync<PostDeletedEventRequest>(cancellationToken);
+		return await _eventClient.PublishedAsync<PostDeletedEventRequest>(cancellationToken);
 	}
 }
