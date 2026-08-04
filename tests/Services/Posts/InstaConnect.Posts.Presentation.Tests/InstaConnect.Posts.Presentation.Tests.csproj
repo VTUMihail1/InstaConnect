@@ -108,6 +108,7 @@
     <Using Include="InstaConnect.Posts.Domain.Features.PostCommentLikes.Utilities" />
     <Using Include="InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Requests" />
     <Using Include="InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Responses" />
+    <Using Include="InstaConnect.Posts.Presentation.Features.PostCommentLikes.Controllers.v1" />
     <Using Include="InstaConnect.Posts.Tests.Features.PostCommentLikes.Assertions" />
     <Using Include="InstaConnect.Posts.Tests.Features.PostCommentLikes.Builders" />
     <Using Include="InstaConnect.Posts.Tests.Features.PostCommentLikes.Utilities" />

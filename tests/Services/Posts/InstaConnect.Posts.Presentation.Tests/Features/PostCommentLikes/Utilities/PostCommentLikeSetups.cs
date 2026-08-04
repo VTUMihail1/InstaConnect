@@ -1,3 +1,4 @@
+using InstaConnect.Common.Presentation.Tests.Features.Extensions;
 using InstaConnect.Posts.Presentation.Tests.Features.PostCommentLikes.Utilities;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -6,8 +7,31 @@ namespace InstaConnect.Posts.Presentation.Tests.Features.PostCommentLikes.Utilit
 
 public static class PostCommentLikeSetups
 {
+	extension(IServiceProvider serviceProvider)
+	{
+		public PostCommentLikeController GetPostCommentLikeController()
+		{
+			return serviceProvider.GetRequiredService<PostCommentLikeController>();
+		}
+
+		public UserPostCommentLikeController GetUserPostCommentLikeController()
+		{
+			return serviceProvider.GetRequiredService<UserPostCommentLikeController>();
+		}
+	}
+
 	extension(IServiceScope serviceScope)
 	{
+		public PostCommentLikeController GetPostCommentLikeController()
+		{
+			return serviceScope.ServiceProvider.GetPostCommentLikeController();
+		}
+
+		public UserPostCommentLikeController GetUserPostCommentLikeController()
+		{
+			return serviceScope.ServiceProvider.GetUserPostCommentLikeController();
+		}
+
 		internal async Task<PostCommentLike?> GetByIdAsync(
 		PostCommentLikeIdApiResponse id,
 		CancellationToken cancellationToken)
@@ -27,6 +51,15 @@ public static class PostCommentLikeSetups
 		{
 			return await serviceScope.GetByIdAsync(
 				response.Response,
+				cancellationToken);
+		}
+
+		public async Task<PostCommentLike?> GetByIdAsync(
+			ActionResult<AddPostCommentLikeApiResponse> result,
+			CancellationToken cancellationToken)
+		{
+			return await serviceScope.GetByIdAsync(
+				result.GetValue(),
 				cancellationToken);
 		}
 	}

@@ -95,6 +95,15 @@ public static class PostCommentLikeMatchAssertions
 		{
 			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, postComment, postCommentLikes));
 		}
+
+		public void ShouldSatisfy(
+		GetAllPostCommentLikesApiRequest request,
+		PostComment postComment,
+		ICollection<PostCommentLike> postCommentLikes,
+		ISortEnumTermTransformer<PostCommentLike> termTransformer)
+		{
+			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, postComment, postCommentLikes, termTransformer));
+		}
 	}
 
 	extension(ActionResult<GetAllPostCommentLikesForUserApiResponse> response)
@@ -105,6 +114,15 @@ public static class PostCommentLikeMatchAssertions
 		ICollection<PostCommentLike> postCommentLikes)
 		{
 			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, user, postCommentLikes));
+		}
+
+		public void ShouldSatisfy(
+		GetAllPostCommentLikesForUserApiRequest request,
+		User user,
+		ICollection<PostCommentLike> postCommentLikes,
+		ISortEnumTermTransformer<PostCommentLike> termTransformer)
+		{
+			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, user, postCommentLikes, termTransformer));
 		}
 	}
 
