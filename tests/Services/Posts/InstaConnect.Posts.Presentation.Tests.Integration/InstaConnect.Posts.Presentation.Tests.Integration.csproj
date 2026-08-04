@@ -119,4 +119,27 @@
     <Using Include="InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.SortTerm.ForUser" />
   </ItemGroup>
 
+  <ItemGroup Label="PostLikes">
+    <Using Include="InstaConnect.Posts.Domain.Features.PostLikes.Models.Entities" />
+    <Using Include="InstaConnect.Posts.Presentation.Features.PostLikes.Models.Requests" />
+    <Using Include="InstaConnect.Posts.Presentation.Features.PostLikes.Models.Responses" />
+    <Using Include="InstaConnect.Posts.Presentation.Features.PostLikes.Controllers.v1" />
+    <Using Include="InstaConnect.Posts.Presentation.Tests.Features.PostLikes.Builders" />
+    <Using Include="InstaConnect.Posts.Presentation.Tests.Features.PostLikes.Utilities" />
+    <Using Include="InstaConnect.Posts.Presentation.Tests.Features.PostLikes.Assertions" />
+    <Using Include="InstaConnect.Posts.Presentation.Tests.Integration.Features.PostLikes.Utilities" />
+    <Using Include="InstaConnect.Posts.Tests.Features.PostLikes.Abstractions" />
+    <Using Include="InstaConnect.Posts.Tests.Features.PostLikes.Extensions" />
+    <Using Include="InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAll" />
+    <Using Include="InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAllForUser" />
+    <Using Include="InstaConnect.Posts.Application.Features.PostLikes.Queries.GetById" />
+    <Using Include="InstaConnect.Posts.Application.Features.PostLikes.Commands.Add" />
+    <Using Include="InstaConnect.Posts.Application.Features.PostLikes.Commands.Delete" />
+    <Using Include="InstaConnect.Posts.Tests.Features.PostLikes.DataAttributes.Page" />
+    <Using Include="InstaConnect.Posts.Tests.Features.PostLikes.DataAttributes.PageSize" />
+    <Using Include="InstaConnect.Posts.Tests.Features.PostLikes.DataAttributes.SortOrder" />
+    <Using Include="InstaConnect.Posts.Tests.Features.PostLikes.DataAttributes.SortTerm" />
+    <Using Include="InstaConnect.Posts.Tests.Features.PostLikes.DataAttributes.SortTerm.ForUser" />
+  </ItemGroup>
+
 </Project>

@@ -1,3 +1,4 @@
+using InstaConnect.Common.Presentation.Tests.Features.Extensions;
 using InstaConnect.Posts.Presentation.Tests.Features.PostLikes.Utilities;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -6,8 +7,31 @@ namespace InstaConnect.Posts.Presentation.Tests.Features.PostLikes.Utilities;
 
 public static class PostLikeSetups
 {
+	extension(IServiceProvider serviceProvider)
+	{
+		public PostLikeController GetPostLikeController()
+		{
+			return serviceProvider.GetRequiredService<PostLikeController>();
+		}
+
+		public UserPostLikeController GetUserPostLikeController()
+		{
+			return serviceProvider.GetRequiredService<UserPostLikeController>();
+		}
+	}
+
 	extension(IServiceScope serviceScope)
 	{
+		public PostLikeController GetPostLikeController()
+		{
+			return serviceScope.ServiceProvider.GetPostLikeController();
+		}
+
+		public UserPostLikeController GetUserPostLikeController()
+		{
+			return serviceScope.ServiceProvider.GetUserPostLikeController();
+		}
+
 		internal async Task<PostLike?> GetByIdAsync(
 		PostLikeIdApiResponse id,
 		CancellationToken cancellationToken)
@@ -25,6 +49,15 @@ public static class PostLikeSetups
 		{
 			return await serviceScope.GetByIdAsync(
 				response.Response,
+				cancellationToken);
+		}
+
+		public async Task<PostLike?> GetByIdAsync(
+			ActionResult<AddPostLikeApiResponse> result,
+			CancellationToken cancellationToken)
+		{
+			return await serviceScope.GetByIdAsync(
+				result.GetValue(),
 				cancellationToken);
 		}
 	}
