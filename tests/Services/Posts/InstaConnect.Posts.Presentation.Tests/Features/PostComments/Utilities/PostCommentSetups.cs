@@ -1,3 +1,4 @@
+using InstaConnect.Common.Presentation.Tests.Features.Extensions;
 using InstaConnect.Posts.Presentation.Tests.Features.PostComments.Utilities;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -6,8 +7,31 @@ namespace InstaConnect.Posts.Presentation.Tests.Features.PostComments.Utilities;
 
 public static class PostCommentSetups
 {
+	extension(IServiceProvider serviceProvider)
+	{
+		public PostCommentController GetPostCommentController()
+		{
+			return serviceProvider.GetRequiredService<PostCommentController>();
+		}
+
+		public UserPostCommentController GetUserPostCommentController()
+		{
+			return serviceProvider.GetRequiredService<UserPostCommentController>();
+		}
+	}
+
 	extension(IServiceScope serviceScope)
 	{
+		public PostCommentController GetPostCommentController()
+		{
+			return serviceScope.ServiceProvider.GetPostCommentController();
+		}
+
+		public UserPostCommentController GetUserPostCommentController()
+		{
+			return serviceScope.ServiceProvider.GetUserPostCommentController();
+		}
+
 		internal async Task<PostComment?> GetByIdAsync(
 		PostCommentIdApiResponse id,
 		CancellationToken cancellationToken)
@@ -34,6 +58,24 @@ public static class PostCommentSetups
 		{
 			return await serviceScope.GetByIdAsync(
 				response.Response,
+				cancellationToken);
+		}
+
+		public async Task<PostComment?> GetByIdAsync(
+			ActionResult<AddPostCommentApiResponse> result,
+			CancellationToken cancellationToken)
+		{
+			return await serviceScope.GetByIdAsync(
+				result.GetValue(),
+				cancellationToken);
+		}
+
+		public async Task<PostComment?> GetByIdAsync(
+			ActionResult<UpdatePostCommentApiResponse> result,
+			CancellationToken cancellationToken)
+		{
+			return await serviceScope.GetByIdAsync(
+				result.GetValue(),
 				cancellationToken);
 		}
 	}

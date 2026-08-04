@@ -91,4 +91,32 @@
     <Using Include="InstaConnect.Posts.Tests.Features.Posts.DataAttributes.SortTerm.ForUser" />
   </ItemGroup>
 
+  <ItemGroup Label="PostComments">
+    <Using Include="InstaConnect.Posts.Domain.Features.PostComments.Models.Entities" />
+    <Using Include="InstaConnect.Posts.Presentation.Features.PostComments.Models.Requests" />
+    <Using Include="InstaConnect.Posts.Presentation.Features.PostComments.Models.Responses" />
+    <Using Include="InstaConnect.Posts.Presentation.Features.PostComments.Controllers.v1" />
+    <Using Include="InstaConnect.Posts.Presentation.Tests.Features.PostComments.Builders" />
+    <Using Include="InstaConnect.Posts.Presentation.Tests.Features.PostComments.Utilities" />
+    <Using Include="InstaConnect.Posts.Presentation.Tests.Features.PostComments.Assertions" />
+    <Using Include="InstaConnect.Posts.Presentation.Tests.Integration.Features.PostComments.Utilities" />
+    <Using Include="InstaConnect.Posts.Tests.Features.PostComments.Abstractions" />
+    <Using Include="InstaConnect.Posts.Tests.Features.PostComments.Extensions" />
+    <Using Include="InstaConnect.Posts.Tests.Features.PostComments.Utilities" />
+    <Using Include="InstaConnect.Posts.Tests.Features.PostCommentLikes.Utilities" />
+    <Using Include="InstaConnect.Posts.Application.Features.PostComments.Queries.GetAll" />
+    <Using Include="InstaConnect.Posts.Application.Features.PostComments.Queries.GetAllForUser" />
+    <Using Include="InstaConnect.Posts.Application.Features.PostComments.Queries.GetById" />
+    <Using Include="InstaConnect.Posts.Application.Features.PostComments.Commands.Add" />
+    <Using Include="InstaConnect.Posts.Application.Features.PostComments.Commands.Update" />
+    <Using Include="InstaConnect.Posts.Application.Features.PostComments.Commands.Delete" />
+    <Using Include="InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.Id" />
+    <Using Include="InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.Content" />
+    <Using Include="InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.Page" />
+    <Using Include="InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.PageSize" />
+    <Using Include="InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.SortOrder" />
+    <Using Include="InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.SortTerm" />
+    <Using Include="InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.SortTerm.ForUser" />
+  </ItemGroup>
+
 </Project>

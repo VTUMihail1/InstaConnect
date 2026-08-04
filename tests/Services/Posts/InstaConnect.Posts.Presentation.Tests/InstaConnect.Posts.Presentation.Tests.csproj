@@ -87,6 +87,7 @@
     <Using Include="InstaConnect.Posts.Domain.Features.PostComments.Utilities" />
     <Using Include="InstaConnect.Posts.Presentation.Features.PostComments.Models.Requests" />
     <Using Include="InstaConnect.Posts.Presentation.Features.PostComments.Models.Responses" />
+    <Using Include="InstaConnect.Posts.Presentation.Features.PostComments.Controllers.v1" />
     <Using Include="InstaConnect.Posts.Tests.Features.PostComments.Assertions" />
     <Using Include="InstaConnect.Posts.Tests.Features.PostComments.Builders" />
     <Using Include="InstaConnect.Posts.Tests.Features.PostComments.Utilities" />
