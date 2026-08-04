@@ -390,7 +390,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
 	{
 		// Act
 		var response = await CommentLikeApiClient.AddAsync(_request, CancellationToken);
-		var postCommentLike = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var postCommentLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(_request, postCommentLike);
@@ -406,7 +406,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
 
 		// Act
 		var response = await CommentLikeApiClient.AddAsync(request, CancellationToken);
-		var postCommentLike = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var postCommentLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(request, postCommentLike);
@@ -422,7 +422,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
 
 		// Act
 		var response = await CommentLikeApiClient.AddAsync(request, CancellationToken);
-		var postCommentLike = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var postCommentLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(request, postCommentLike);
@@ -438,7 +438,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
 
 		// Act
 		var response = await CommentLikeApiClient.AddAsync(request, CancellationToken);
-		var postCommentLike = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var postCommentLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(request, postCommentLike);
@@ -449,7 +449,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
 	{
 		// Act
 		var response = await CommentLikeApiClient.AddAsync(_request, CancellationToken);
-		var postCommentLike = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var postCommentLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		postCommentLike.ShouldSatisfy(_request);
@@ -465,7 +465,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
 
 		// Act
 		var response = await CommentLikeApiClient.AddAsync(request, CancellationToken);
-		var postCommentLike = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var postCommentLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		postCommentLike.ShouldSatisfy(request);
@@ -481,7 +481,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
 
 		// Act
 		var response = await CommentLikeApiClient.AddAsync(request, CancellationToken);
-		var postCommentLike = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var postCommentLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		postCommentLike.ShouldSatisfy(request);
@@ -497,7 +497,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
 
 		// Act
 		var response = await CommentLikeApiClient.AddAsync(request, CancellationToken);
-		var postCommentLike = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var postCommentLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		postCommentLike.ShouldSatisfy(request);
@@ -508,7 +508,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
 	{
 		// Act
 		var response = await CommentLikeApiClient.AddAsync(_request, CancellationToken);
-		var postCommentLike = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var postCommentLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		var eventRequest = await CommentLikeEventClient.PublishedAddedAsync(CancellationToken);
 
@@ -526,7 +526,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
 
 		// Act
 		var response = await CommentLikeApiClient.AddAsync(request, CancellationToken);
-		var postCommentLike = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var postCommentLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		var eventRequest = await CommentLikeEventClient.PublishedAddedAsync(CancellationToken);
 
@@ -544,7 +544,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
 
 		// Act
 		var response = await CommentLikeApiClient.AddAsync(request, CancellationToken);
-		var postCommentLike = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var postCommentLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		var eventRequest = await CommentLikeEventClient.PublishedAddedAsync(CancellationToken);
 
@@ -562,7 +562,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikePresentation
 
 		// Act
 		var response = await CommentLikeApiClient.AddAsync(request, CancellationToken);
-		var postCommentLike = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var postCommentLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		var eventRequest = await CommentLikeEventClient.PublishedAddedAsync(CancellationToken);
 

@@ -8,7 +8,7 @@ public static class PostCommentLikeSetups
 {
 	extension(IServiceScope serviceScope)
 	{
-		public async Task<PostCommentLike?> GetByIdAsync(
+		internal async Task<PostCommentLike?> GetByIdAsync(
 		PostCommentLikeIdApiResponse id,
 		CancellationToken cancellationToken)
 		{
@@ -18,6 +18,15 @@ public static class PostCommentLikeSetups
 										  new(id.Id),
 										  id.CommentId),
 									  new(id.UserId)),
+				cancellationToken);
+		}
+
+		public async Task<PostCommentLike?> GetByIdAsync(
+			AddPostCommentLikeApiResponse response,
+			CancellationToken cancellationToken)
+		{
+			return await serviceScope.GetByIdAsync(
+				response.Response,
 				cancellationToken);
 		}
 	}

@@ -9,7 +9,7 @@ public static class ChatMessageSetups
 {
 	extension(IServiceScope serviceScope)
 	{
-		public async Task<ChatMessage?> GetByIdAsync(
+		internal async Task<ChatMessage?> GetByIdAsync(
 		ChatMessageIdCommandResponse id,
 		CancellationToken cancellationToken)
 		{
@@ -19,6 +19,24 @@ public static class ChatMessageSetups
 								   new(id.ParticipantOneId),
 								   new(id.ParticipantTwoId)),
 							   id.MessageId),
+				cancellationToken);
+		}
+
+		public async Task<ChatMessage?> GetByIdAsync(
+			AddChatMessageCommandResponse response,
+			CancellationToken cancellationToken)
+		{
+			return await serviceScope.GetByIdAsync(
+				response.Response,
+				cancellationToken);
+		}
+
+		public async Task<ChatMessage?> GetByIdAsync(
+			UpdateChatMessageCommandResponse response,
+			CancellationToken cancellationToken)
+		{
+			return await serviceScope.GetByIdAsync(
+				response.Response,
 				cancellationToken);
 		}
 	}

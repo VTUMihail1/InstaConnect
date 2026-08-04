@@ -205,7 +205,7 @@ public class AddUserCommandHandlerIntegrationTests : BaseUserApplicationCommandI
 	{
 		// Act
 		var response = await Sender.SendAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(_request, user);
@@ -222,7 +222,7 @@ public class AddUserCommandHandlerIntegrationTests : BaseUserApplicationCommandI
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(request, user);
@@ -233,7 +233,7 @@ public class AddUserCommandHandlerIntegrationTests : BaseUserApplicationCommandI
 	{
 		// Act
 		var response = await Sender.SendAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(_request);
@@ -250,7 +250,7 @@ public class AddUserCommandHandlerIntegrationTests : BaseUserApplicationCommandI
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(request);

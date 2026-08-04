@@ -310,7 +310,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 	{
 		// Act
 		var response = await ApiClient.UpdateAsync(_request, CancellationToken);
-		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		post.ShouldSatisfy(_request);
@@ -326,7 +326,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 
 		// Act
 		var response = await ApiClient.UpdateAsync(request, CancellationToken);
-		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		post.ShouldSatisfy(request);
@@ -342,7 +342,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 
 		// Act
 		var response = await ApiClient.UpdateAsync(request, CancellationToken);
-		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		post.ShouldSatisfy(request);
@@ -353,7 +353,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 	{
 		// Act
 		var response = await ApiClient.UpdateAsync(_request, CancellationToken);
-		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		var eventRequest = await EventClient.PublishedUpdatedAsync(CancellationToken);
 
@@ -371,7 +371,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 
 		// Act
 		var response = await ApiClient.UpdateAsync(request, CancellationToken);
-		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		var eventRequest = await EventClient.PublishedUpdatedAsync(CancellationToken);
 
@@ -389,7 +389,7 @@ public class UpdatePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 
 		// Act
 		var response = await ApiClient.UpdateAsync(request, CancellationToken);
-		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		var eventRequest = await EventClient.PublishedUpdatedAsync(CancellationToken);
 

@@ -83,7 +83,7 @@ public class AddPostCommandHandlerIntegrationTests : BasePostApplicationCommandI
 	{
 		// Act
 		var response = await Sender.SendAsync(_request, CancellationToken);
-		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(_request, post);
@@ -99,7 +99,7 @@ public class AddPostCommandHandlerIntegrationTests : BasePostApplicationCommandI
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(request, post);
@@ -110,7 +110,7 @@ public class AddPostCommandHandlerIntegrationTests : BasePostApplicationCommandI
 	{
 		// Act
 		var response = await Sender.SendAsync(_request, CancellationToken);
-		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		post.ShouldSatisfy(_request);
@@ -126,7 +126,7 @@ public class AddPostCommandHandlerIntegrationTests : BasePostApplicationCommandI
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		post.ShouldSatisfy(request);
@@ -137,7 +137,7 @@ public class AddPostCommandHandlerIntegrationTests : BasePostApplicationCommandI
 	{
 		// Act
 		var response = await Sender.SendAsync(_request, CancellationToken);
-		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
 
@@ -155,7 +155,7 @@ public class AddPostCommandHandlerIntegrationTests : BasePostApplicationCommandI
 
 		// Act
 		var response = await Sender.SendAsync(request, CancellationToken);
-		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
 

@@ -6,7 +6,7 @@ public static class UserClaimSetups
 {
 	extension(IServiceScope serviceScope)
 	{
-		public async Task<UserClaim?> GetByIdAsync(
+		internal async Task<UserClaim?> GetByIdAsync(
 		UserClaimIdApiResponse id,
 		CancellationToken cancellationToken)
 		{

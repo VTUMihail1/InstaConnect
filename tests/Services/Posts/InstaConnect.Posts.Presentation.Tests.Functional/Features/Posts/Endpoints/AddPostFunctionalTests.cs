@@ -192,7 +192,7 @@ public class AddPostFunctionalTests : BasePostPresentationCommandFunctionalTest
 	{
 		// Act
 		var response = await ApiClient.AddAsync(_request, CancellationToken);
-		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(_request, post);
@@ -208,7 +208,7 @@ public class AddPostFunctionalTests : BasePostPresentationCommandFunctionalTest
 
 		// Act
 		var response = await ApiClient.AddAsync(request, CancellationToken);
-		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		response.ShouldSatisfy(request, post);
@@ -219,7 +219,7 @@ public class AddPostFunctionalTests : BasePostPresentationCommandFunctionalTest
 	{
 		// Act
 		var response = await ApiClient.AddAsync(_request, CancellationToken);
-		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		post.ShouldSatisfy(_request);
@@ -235,7 +235,7 @@ public class AddPostFunctionalTests : BasePostPresentationCommandFunctionalTest
 
 		// Act
 		var response = await ApiClient.AddAsync(request, CancellationToken);
-		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		post.ShouldSatisfy(request);
@@ -246,7 +246,7 @@ public class AddPostFunctionalTests : BasePostPresentationCommandFunctionalTest
 	{
 		// Act
 		var response = await ApiClient.AddAsync(_request, CancellationToken);
-		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
 
@@ -264,7 +264,7 @@ public class AddPostFunctionalTests : BasePostPresentationCommandFunctionalTest
 
 		// Act
 		var response = await ApiClient.AddAsync(request, CancellationToken);
-		var post = await ServiceScope.GetByIdAsync(response.Response, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
 
