@@ -13,6 +13,11 @@ public static class PostSetups
 		{
 			return serviceProvider.GetRequiredService<PostController>();
 		}
+
+		public UserPostController GetUserPostController()
+		{
+			return serviceProvider.GetRequiredService<UserPostController>();
+		}
 	}
 
 	extension(IServiceScope serviceScope)
@@ -20,6 +25,11 @@ public static class PostSetups
 		public PostController GetPostController()
 		{
 			return serviceScope.ServiceProvider.GetPostController();
+		}
+
+		public UserPostController GetUserPostController()
+		{
+			return serviceScope.ServiceProvider.GetUserPostController();
 		}
 
 		internal async Task<Post?> GetByIdAsync(

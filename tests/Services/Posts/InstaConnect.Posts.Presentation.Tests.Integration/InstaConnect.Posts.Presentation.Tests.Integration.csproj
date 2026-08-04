@@ -80,6 +80,7 @@
     <Using Include="InstaConnect.Posts.Presentation.Tests.Features.Posts.Assertions" />
     <Using Include="InstaConnect.Posts.Tests.Features.Posts.Builders" />
     <Using Include="InstaConnect.Posts.Tests.Features.Posts.Utilities" />
+    <Using Include="InstaConnect.Posts.Tests.Features.PostLikes.Utilities" />
     <Using Include="InstaConnect.Posts.Tests.Features.Posts.DataAttributes.Id" />
     <Using Include="InstaConnect.Posts.Tests.Features.Posts.DataAttributes.Title" />
     <Using Include="InstaConnect.Posts.Tests.Features.Posts.DataAttributes.Content" />

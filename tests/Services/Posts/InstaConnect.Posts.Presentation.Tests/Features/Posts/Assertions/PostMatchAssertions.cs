@@ -112,6 +112,14 @@ public static class PostMatchAssertions
 		{
 			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, posts));
 		}
+
+		public void ShouldSatisfy(
+		GetAllPostsApiRequest request,
+		ICollection<Post> posts,
+		ISortEnumTermTransformer<Post> termTransformer)
+		{
+			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, posts, termTransformer));
+		}
 	}
 
 	extension(ActionResult<GetAllPostsForUserApiResponse> response)
@@ -122,6 +130,15 @@ public static class PostMatchAssertions
 		ICollection<Post> posts)
 		{
 			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, user, posts));
+		}
+
+		public void ShouldSatisfy(
+		GetAllPostsForUserApiRequest request,
+		User user,
+		ICollection<Post> posts,
+		ISortEnumTermTransformer<Post> termTransformer)
+		{
+			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, user, posts, termTransformer));
 		}
 	}
 
