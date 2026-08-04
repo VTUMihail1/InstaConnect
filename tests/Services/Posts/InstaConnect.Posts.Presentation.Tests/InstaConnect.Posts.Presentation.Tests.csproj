@@ -49,6 +49,7 @@
     <Using Include="InstaConnect.Posts.Domain.Features.Posts.Utilities" />
     <Using Include="InstaConnect.Posts.Presentation.Features.Posts.Models.Requests" />
     <Using Include="InstaConnect.Posts.Presentation.Features.Posts.Models.Responses" />
+    <Using Include="InstaConnect.Posts.Presentation.Features.Posts.Controllers.v1" />
     <Using Include="InstaConnect.Posts.Tests.Features.Posts.Assertions" />
     <Using Include="InstaConnect.Posts.Tests.Features.Posts.Builders" />
     <Using Include="InstaConnect.Posts.Tests.Features.Posts.Utilities" />

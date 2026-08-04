@@ -53,7 +53,8 @@ public static class ServiceCollectionExtensions
 			{
 				options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 				options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-			});
+			})
+			.AddControllersAsServices();
 
 			serviceCollection.Configure<ApiBehaviorOptions>(options =>
 				options.SuppressInferBindingSourcesForParameters = true);

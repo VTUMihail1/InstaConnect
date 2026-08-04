@@ -1,3 +1,4 @@
+using InstaConnect.Common.Presentation.Tests.Features.Extensions;
 using InstaConnect.Posts.Presentation.Tests.Features.Posts.Utilities;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -6,8 +7,21 @@ namespace InstaConnect.Posts.Presentation.Tests.Features.Posts.Utilities;
 
 public static class PostSetups
 {
+	extension(IServiceProvider serviceProvider)
+	{
+		public PostController GetPostController()
+		{
+			return serviceProvider.GetRequiredService<PostController>();
+		}
+	}
+
 	extension(IServiceScope serviceScope)
 	{
+		public PostController GetPostController()
+		{
+			return serviceScope.ServiceProvider.GetPostController();
+		}
+
 		internal async Task<Post?> GetByIdAsync(
 		PostIdApiResponse id,
 		CancellationToken cancellationToken)
@@ -32,6 +46,24 @@ public static class PostSetups
 		{
 			return await serviceScope.GetByIdAsync(
 				response.Response,
+				cancellationToken);
+		}
+
+		public async Task<Post?> GetByIdAsync(
+			ActionResult<AddPostApiResponse> result,
+			CancellationToken cancellationToken)
+		{
+			return await serviceScope.GetByIdAsync(
+				result.GetValue(),
+				cancellationToken);
+		}
+
+		public async Task<Post?> GetByIdAsync(
+			ActionResult<UpdatePostApiResponse> result,
+			CancellationToken cancellationToken)
+		{
+			return await serviceScope.GetByIdAsync(
+				result.GetValue(),
 				cancellationToken);
 		}
 	}

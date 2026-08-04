@@ -210,6 +210,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Identity.Infra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Identity.Infrastructure.Tests", "tests\Services\Identity\InstaConnect.Identity.Infrastructure.Tests\InstaConnect.Identity.Infrastructure.Tests.csproj", "{83A4323D-1E49-4B09-93A9-712593B411AA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Posts.Presentation.Tests.Integration", "tests\Services\Posts\InstaConnect.Posts.Presentation.Tests.Integration\InstaConnect.Posts.Presentation.Tests.Integration.csproj", "{D58A8FDA-61C5-4B76-8635-4E63F100D58D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1248,6 +1250,18 @@ Global
 		{83A4323D-1E49-4B09-93A9-712593B411AA}.Release|x64.Build.0 = Release|Any CPU
 		{83A4323D-1E49-4B09-93A9-712593B411AA}.Release|x86.ActiveCfg = Release|Any CPU
 		{83A4323D-1E49-4B09-93A9-712593B411AA}.Release|x86.Build.0 = Release|Any CPU
+		{D58A8FDA-61C5-4B76-8635-4E63F100D58D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D58A8FDA-61C5-4B76-8635-4E63F100D58D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D58A8FDA-61C5-4B76-8635-4E63F100D58D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D58A8FDA-61C5-4B76-8635-4E63F100D58D}.Debug|x64.Build.0 = Debug|Any CPU
+		{D58A8FDA-61C5-4B76-8635-4E63F100D58D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D58A8FDA-61C5-4B76-8635-4E63F100D58D}.Debug|x86.Build.0 = Debug|Any CPU
+		{D58A8FDA-61C5-4B76-8635-4E63F100D58D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D58A8FDA-61C5-4B76-8635-4E63F100D58D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D58A8FDA-61C5-4B76-8635-4E63F100D58D}.Release|x64.ActiveCfg = Release|Any CPU
+		{D58A8FDA-61C5-4B76-8635-4E63F100D58D}.Release|x64.Build.0 = Release|Any CPU
+		{D58A8FDA-61C5-4B76-8635-4E63F100D58D}.Release|x86.ActiveCfg = Release|Any CPU
+		{D58A8FDA-61C5-4B76-8635-4E63F100D58D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1350,6 +1364,7 @@ Global
 		{F58BFFC0-A8DD-4D0B-A666-8363C8C6E1EE} = {26B903EE-D354-4E26-8785-325AEBD06FC4}
 		{F5EA913C-9CBA-4710-9DF4-C6B56F64A762} = {26B903EE-D354-4E26-8785-325AEBD06FC4}
 		{83A4323D-1E49-4B09-93A9-712593B411AA} = {26B903EE-D354-4E26-8785-325AEBD06FC4}
+		{D58A8FDA-61C5-4B76-8635-4E63F100D58D} = {9C334A35-B292-4508-84F0-6356ABB3F0BB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {74CDCE11-9171-4345-A1A8-63E51F48297C}
