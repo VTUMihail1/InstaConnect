@@ -88,6 +88,13 @@ public static class ChatMatchAssertions
 		{
 			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, chat));
 		}
+
+		public void ShouldSatisfyInverted(
+		GetChatByIdApiRequest request,
+		Chat chat)
+		{
+			response.ShouldBeActionResultAndSatisfy(p => p.MatchesInverted(request, chat));
+		}
 	}
 
 	extension(ActionResult<GetAllChatsApiResponse> response)
@@ -98,6 +105,32 @@ public static class ChatMatchAssertions
 		ICollection<Chat> chats)
 		{
 			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, participantOne, chats));
+		}
+
+		public void ShouldSatisfy(
+		GetAllChatsApiRequest request,
+		User participantOne,
+		ICollection<Chat> chats,
+		ISortEnumTermTransformer<Chat> termTransformer)
+		{
+			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, participantOne, chats, termTransformer));
+		}
+
+		public void ShouldSatisfyInverted(
+		GetAllChatsApiRequest request,
+		User participantTwo,
+		ICollection<Chat> chats)
+		{
+			response.ShouldBeActionResultAndSatisfy(p => p.MatchesInverted(request, participantTwo, chats));
+		}
+
+		public void ShouldSatisfyInverted(
+		GetAllChatsApiRequest request,
+		User participantTwo,
+		ICollection<Chat> chats,
+		ISortEnumTermTransformer<Chat> termTransformer)
+		{
+			response.ShouldBeActionResultAndSatisfy(p => p.MatchesInverted(request, participantTwo, chats, termTransformer));
 		}
 	}
 
