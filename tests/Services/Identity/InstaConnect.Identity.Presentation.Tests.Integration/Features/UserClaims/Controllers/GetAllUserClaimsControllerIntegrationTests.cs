@@ -1,0 +1,265 @@
+using InstaConnect.Common.Domain.Features.Messaging.Models;
+using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
+
+using InstaConnect.Identity.Domain.Features.UserClaims.Models.Requests;
+
+namespace InstaConnect.Identity.Presentation.Tests.Integration.Features.UserClaims.Controllers;
+
+public class GetAllUserClaimsControllerIntegrationTests : BaseUserClaimPresentationQueryIntegrationTest
+{
+	private readonly GetAllUserClaimsApiRequestBuilderFactory _requestBuilderFactory;
+	private readonly GetAllUserClaimsApiRequestBuilder _requestBuilder;
+	private readonly GetAllUserClaimsApiRequest _request;
+
+	public GetAllUserClaimsControllerIntegrationTests(IdentityWebApplicationFactory webApplicationFactory)
+		: base(webApplicationFactory)
+	{
+		_requestBuilderFactory = new();
+		_requestBuilder = _requestBuilderFactory.Create(UserClaim);
+		_request = _requestBuilder.Build();
+	}
+
+	protected override async Task OnInitializeAsync()
+	{
+		await base.OnInitializeAsync();
+		await ServiceScope.AddRangeAsync(Users, CancellationToken);
+		await ServiceScope.AddRangeAsync(UserClaims, CancellationToken);
+	}
+
+	[Theory]
+	[UserIdNullWithMessageData]
+	[UserIdEmptyWithMessageData]
+	[UserIdTooShortWithMessageData]
+	[UserIdTooLongWithMessageData]
+	public async Task GetAllAsync_ShouldThrowValidationException_WhenIdIsInvalid(
+		IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithId(transformer).Build();
+
+		// Assert
+		await Controller.ShouldThrowInvalidValidationExceptionForIdAsync(
+			request, messageTransformer, CancellationToken);
+	}
+
+	[Theory]
+	[UserIdTooLongWithMessageData]
+	public async Task GetAllAsync_ShouldThrowValidationException_WhenCurrentIdIsInvalid(
+		IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithCurrentId(transformer).Build();
+
+		// Assert
+		await Controller.ShouldThrowInvalidValidationExceptionForCurrentIdAsync(
+			request, messageTransformer, CancellationToken);
+	}
+
+	[Theory]
+	[UserClaimsSortOrderEmptyWithMessageData]
+	public async Task GetAllAsync_ShouldThrowValidationException_WhenSortOrderIsInvalid(
+		IEnumTransformer<CommonSortOrder> transformer, IEnumMessageTransformer<CommonSortOrder> messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithSortOrder(transformer).Build();
+
+		// Assert
+		await Controller.ShouldThrowInvalidValidationExceptionForSortOrderAsync(
+			request, messageTransformer, CancellationToken);
+	}
+
+	[Theory]
+	[UserClaimsSortTermEmptyWithMessageData]
+	public async Task GetAllAsync_ShouldThrowValidationException_WhenSortTermIsInvalid(
+		IEnumTransformer<UserClaimsSortTerm> transformer, IEnumMessageTransformer<UserClaimsSortTerm> messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithSortTerm(transformer).Build();
+
+		// Assert
+		await Controller.ShouldThrowInvalidValidationExceptionForSortTermAsync(
+			request, messageTransformer, CancellationToken);
+	}
+
+	[Theory]
+	[UserClaimPageTooSmallWithMessageData]
+	[UserClaimPageTooLargeWithMessageData]
+	public async Task GetAllAsync_ShouldThrowValidationException_WhenPageIsInvalid(
+		IIntTransformer transformer, IIntMessageTransformer messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithPage(transformer).Build();
+
+		// Assert
+		await Controller.ShouldThrowInvalidValidationExceptionForPageAsync(
+			request, messageTransformer, CancellationToken);
+	}
+
+	[Theory]
+	[UserClaimPageSizeTooSmallWithMessageData]
+	[UserClaimPageSizeTooLargeWithMessageData]
+	public async Task GetAllAsync_ShouldThrowValidationException_WhenPageSizeIsInvalid(
+		IIntTransformer transformer, IIntMessageTransformer messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithPageSize(transformer).Build();
+
+		// Assert
+		await Controller.ShouldThrowInvalidValidationExceptionForPageSizeAsync(
+			request, messageTransformer, CancellationToken);
+	}
+
+	[Fact]
+	public async Task GetAllAsync_ShouldThrowUserNotFoundException_WhenUserNotFound()
+	{
+		// Arrange
+		await ServiceScope.DeleteAsync(User, CancellationToken);
+
+		// Assert
+		await Controller.ShouldThrowUserNotFoundExceptionAsync(_request, CancellationToken);
+	}
+
+	[Fact]
+	public async Task GetAllAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
+	{
+		// Act
+		var result = await Controller.GetAllAsync(_request, CancellationToken);
+
+		// Assert
+		result.ShouldBeActionResultWithOkStatusCode();
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task GetAllAsync_ShouldReturnOkStatusCode_WhenRequestAndIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithId(transformer).Build();
+
+		// Act
+		var result = await Controller.GetAllAsync(request, CancellationToken);
+
+		// Assert
+		result.ShouldBeActionResultWithOkStatusCode();
+	}
+
+	[Theory]
+	[UserIdEmptyData]
+	[UserIdDifferentCaseData]
+	public async Task GetAllAsync_ShouldReturnOkStatusCode_WhenRequestAndCurrentIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithCurrentId(transformer).Build();
+
+		// Act
+		var result = await Controller.GetAllAsync(request, CancellationToken);
+
+		// Assert
+		result.ShouldBeActionResultWithOkStatusCode();
+	}
+
+	[Theory]
+	[UserClaimsSortOrderAscendingData]
+	[UserClaimsSortOrderDescendingData]
+	public async Task GetAllAsync_ShouldReturnOkStatusCode_WhenRequestAndSortOrderAreValid(
+		IEnumTransformer<CommonSortOrder> transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithSortOrder(transformer).Build();
+
+		// Act
+		var result = await Controller.GetAllAsync(request, CancellationToken);
+
+		// Assert
+		result.ShouldBeActionResultWithOkStatusCode();
+	}
+
+	[Theory]
+	[UserClaimsSortTermCreatedAtData]
+	public async Task GetAllAsync_ShouldReturnOkStatusCode_WhenRequestAndSortTermAreValid(
+		IEnumTransformer<UserClaimsSortTerm> transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithSortTerm(transformer).Build();
+
+		// Act
+		var result = await Controller.GetAllAsync(request, CancellationToken);
+
+		// Assert
+		result.ShouldBeActionResultWithOkStatusCode();
+	}
+
+	[Fact]
+	public async Task GetAllAsync_ShouldReturnResponse_WhenRequestIsValid()
+	{
+		// Act
+		var result = await Controller.GetAllAsync(_request, CancellationToken);
+
+		// Assert
+		result.ShouldSatisfy(_request, User, UserClaims);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithId(transformer).Build();
+
+		// Act
+		var result = await Controller.GetAllAsync(request, CancellationToken);
+
+		// Assert
+		result.ShouldSatisfy(request, User, UserClaims);
+	}
+
+	[Theory]
+	[UserIdEmptyData]
+	[UserIdDifferentCaseData]
+	public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndCurrentIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithCurrentId(transformer).Build();
+
+		// Act
+		var result = await Controller.GetAllAsync(request, CancellationToken);
+
+		// Assert
+		result.ShouldSatisfy(request, User, UserClaims);
+	}
+
+	[Theory]
+	[UserClaimsSortOrderWithAscendingTermData]
+	[UserClaimsSortOrderWithDescendingTermData]
+	public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndSortOrderAreValid(
+		IEnumTransformer<CommonSortOrder> transformer, ISortEnumTermTransformer<UserClaim> termTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithSortOrder(transformer).Build();
+
+		// Act
+		var result = await Controller.GetAllAsync(request, CancellationToken);
+
+		// Assert
+		result.ShouldSatisfy(request, User, UserClaims, termTransformer);
+	}
+
+	[Theory]
+	[UserClaimsSortTermWithCreatedAtTermData]
+	public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndSortTermAreValid(
+		IEnumTransformer<UserClaimsSortTerm> transformer, ISortEnumTermTransformer<UserClaim> termTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithSortTerm(transformer).Build();
+
+		// Act
+		var result = await Controller.GetAllAsync(request, CancellationToken);
+
+		// Assert
+		result.ShouldSatisfy(request, User, UserClaims, termTransformer);
+	}
+}

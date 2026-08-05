@@ -1,11 +1,26 @@
+using InstaConnect.Common.Presentation.Tests.Features.Extensions;
+
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.Users.Utilities;
 
 public static class UserSetups
 {
+	extension(IServiceProvider serviceProvider)
+	{
+		public UserController GetUserController()
+		{
+			return serviceProvider.GetRequiredService<UserController>();
+		}
+	}
+
 	extension(IServiceScope serviceScope)
 	{
+		public UserController GetUserController()
+		{
+			return serviceScope.ServiceProvider.GetUserController();
+		}
+
 		internal async Task<User?> GetByIdAsync(
 		UserIdApiResponse id,
 		CancellationToken cancellationToken)
@@ -30,6 +45,24 @@ public static class UserSetups
 		{
 			return await serviceScope.GetByIdAsync(
 				response.Response,
+				cancellationToken);
+		}
+
+		public async Task<User?> GetByIdAsync(
+		ActionResult<AddUserApiResponse> result,
+		CancellationToken cancellationToken)
+		{
+			return await serviceScope.GetByIdAsync(
+				result.GetValue(),
+				cancellationToken);
+		}
+
+		public async Task<User?> GetByIdAsync(
+		ActionResult<UpdateCurrentUserApiResponse> result,
+		CancellationToken cancellationToken)
+		{
+			return await serviceScope.GetByIdAsync(
+				result.GetValue(),
 				cancellationToken);
 		}
 

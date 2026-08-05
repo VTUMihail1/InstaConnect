@@ -55,6 +55,15 @@ public static class UserClaimMatchAssertions
 		{
 			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, user, userClaims));
 		}
+
+		public void ShouldSatisfy(
+			GetAllUserClaimsApiRequest request,
+			User user,
+			ICollection<UserClaim> userClaims,
+			ISortEnumTermTransformer<UserClaim> termTransformer)
+		{
+			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, user, userClaims, termTransformer));
+		}
 	}
 
 	extension(UserClaim userClaim)

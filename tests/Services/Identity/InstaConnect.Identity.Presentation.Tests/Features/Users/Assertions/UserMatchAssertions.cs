@@ -156,6 +156,14 @@ public static class UserMatchAssertions
 		{
 			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, users));
 		}
+
+		public void ShouldSatisfy(
+			GetAllUsersApiRequest request,
+			ICollection<User> users,
+			ISortEnumTermTransformer<User> termTransformer)
+		{
+			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, users, termTransformer));
+		}
 	}
 
 	extension(User user)
