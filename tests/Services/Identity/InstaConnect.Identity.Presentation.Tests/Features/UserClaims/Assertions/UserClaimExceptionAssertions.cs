@@ -1,6 +1,6 @@
 namespace InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Assertions;
 
-public static class UserClaimControllerExceptionAssertions
+public static class UserClaimExceptionAssertions
 {
 	extension(UserClaimController controller)
 	{

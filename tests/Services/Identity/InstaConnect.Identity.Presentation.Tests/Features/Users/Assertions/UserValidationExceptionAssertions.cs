@@ -4,7 +4,7 @@ using InstaConnect.Identity.Domain.Features.Users.Models.Requests;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.Users.Assertions;
 
-public static class UserControllerValidationExceptionAssertions
+public static class UserValidationExceptionAssertions
 {
 	extension(UserController controller)
 	{

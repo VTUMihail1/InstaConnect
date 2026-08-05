@@ -5,7 +5,7 @@ using InstaConnect.Identity.Domain.Features.UserClaims.Models.Requests;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Assertions;
 
-public static class UserClaimControllerValidationExceptionAssertions
+public static class UserClaimValidationExceptionAssertions
 {
 	extension(UserClaimController controller)
 	{
