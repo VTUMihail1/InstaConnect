@@ -1,3 +1,4 @@
+using InstaConnect.Common.Presentation.Tests.Features.Extensions;
 using InstaConnect.Follows.Presentation.Tests.Features.Follows.Utilities;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -6,8 +7,31 @@ namespace InstaConnect.Follows.Presentation.Tests.Features.Follows.Utilities;
 
 public static class FollowSetups
 {
+	extension(IServiceProvider serviceProvider)
+	{
+		public FollowController GetFollowController()
+		{
+			return serviceProvider.GetRequiredService<FollowController>();
+		}
+
+		public FollowingFollowController GetFollowingFollowController()
+		{
+			return serviceProvider.GetRequiredService<FollowingFollowController>();
+		}
+	}
+
 	extension(IServiceScope serviceScope)
 	{
+		public FollowController GetFollowController()
+		{
+			return serviceScope.ServiceProvider.GetFollowController();
+		}
+
+		public FollowingFollowController GetFollowingFollowController()
+		{
+			return serviceScope.ServiceProvider.GetFollowingFollowController();
+		}
+
 		internal async Task<Follow?> GetByIdAsync(
 		FollowIdApiResponse id,
 		CancellationToken cancellationToken)
@@ -25,6 +49,15 @@ public static class FollowSetups
 		{
 			return await serviceScope.GetByIdAsync(
 				response.Response,
+				cancellationToken);
+		}
+
+		public async Task<Follow?> GetByIdAsync(
+		ActionResult<AddFollowApiResponse> result,
+		CancellationToken cancellationToken)
+		{
+			return await serviceScope.GetByIdAsync(
+				result.GetValue(),
 				cancellationToken);
 		}
 	}

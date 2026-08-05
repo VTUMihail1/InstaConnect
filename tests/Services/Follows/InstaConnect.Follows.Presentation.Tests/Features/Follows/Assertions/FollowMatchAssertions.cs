@@ -96,6 +96,15 @@ public static class FollowMatchAssertions
 		{
 			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, follower, follows));
 		}
+
+		public void ShouldSatisfy(
+		GetAllFollowsApiRequest request,
+		User follower,
+		ICollection<Follow> follows,
+		ISortEnumTermTransformer<Follow> termTransformer)
+		{
+			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, follower, follows, termTransformer));
+		}
 	}
 
 	extension(ActionResult<GetAllFollowsForFollowingApiResponse> response)
@@ -106,6 +115,15 @@ public static class FollowMatchAssertions
 		ICollection<Follow> follows)
 		{
 			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, following, follows));
+		}
+
+		public void ShouldSatisfy(
+		GetAllFollowsForFollowingApiRequest request,
+		User following,
+		ICollection<Follow> follows,
+		ISortEnumTermTransformer<Follow> termTransformer)
+		{
+			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, following, follows, termTransformer));
 		}
 	}
 

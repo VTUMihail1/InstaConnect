@@ -48,6 +48,7 @@
     <Using Include="InstaConnect.Follows.Domain.Features.Follows.Utilities" />
     <Using Include="InstaConnect.Follows.Presentation.Features.Follows.Models.Requests" />
     <Using Include="InstaConnect.Follows.Presentation.Features.Follows.Models.Responses" />
+    <Using Include="InstaConnect.Follows.Presentation.Features.Follows.Controllers.v1" />
     <Using Include="InstaConnect.Follows.Tests.Features.Follows.Assertions" />
     <Using Include="InstaConnect.Follows.Tests.Features.Follows.Builders" />
     <Using Include="InstaConnect.Follows.Tests.Features.Follows.Utilities" />
