@@ -42,7 +42,7 @@ internal class RefreshTokenApiClient : IRefreshTokenApiClient
 	{
 		var response = await _httpClient.IssueResponseMessageAsync(request, cancellationToken);
 
-		return await response.GetRefreshTokenCookieApiResponse();
+		return response.GetRefreshTokenCookieApiResponse();
 	}
 
 	public async Task<HttpStatusCode> IssueStatusCodeAsync(
@@ -87,7 +87,7 @@ internal class RefreshTokenApiClient : IRefreshTokenApiClient
 	{
 		var response = await _httpClient.RotateResponseMessageAsync(request, cancellationToken);
 
-		return await response.GetRefreshTokenCookieApiResponse();
+		return response.GetRefreshTokenCookieApiResponse();
 	}
 
 	public async Task<HttpStatusCode> RotateWithoutCookiesStatusCodeAsync(
@@ -139,7 +139,7 @@ internal class RefreshTokenApiClient : IRefreshTokenApiClient
 	{
 		var response = await _httpClient.DeleteCurrentResponseMessageAsync(request, cancellationToken);
 
-		return await response.GetRefreshTokenCookieApiResponse();
+		return response.GetRefreshTokenCookieApiResponse();
 	}
 
 	public async Task<HttpStatusCode> DeleteCurrentWithoutCookiesStatusCodeAsync(

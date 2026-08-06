@@ -11,7 +11,7 @@ public static class RefreshTokenHttpClientExtensions
 {
 	extension(HttpClient httpClient)
 	{
-		public async Task<HttpResponseMessage> IssueResponseMessageAsync(
+		internal async Task<HttpResponseMessage> IssueResponseMessageAsync(
 			IssueRefreshTokenApiRequest request,
 			CancellationToken cancellationToken)
 		{
@@ -21,7 +21,7 @@ public static class RefreshTokenHttpClientExtensions
 				.PostAsJsonAsync(route, request.Body, cancellationToken);
 		}
 
-		public async Task<HttpResponseMessage> RotateWithoutCookiesResponseMessageAsync(
+		internal async Task<HttpResponseMessage> RotateWithoutCookiesResponseMessageAsync(
 			RotateRefreshTokenApiRequest request,
 			CancellationToken cancellationToken)
 		{
@@ -31,7 +31,7 @@ public static class RefreshTokenHttpClientExtensions
 				.PostAsync(route, null, cancellationToken);
 		}
 
-		public async Task<HttpResponseMessage> RotateResponseMessageAsync(
+		internal async Task<HttpResponseMessage> RotateResponseMessageAsync(
 			RotateRefreshTokenApiRequest request,
 			CancellationToken cancellationToken)
 		{
@@ -42,7 +42,7 @@ public static class RefreshTokenHttpClientExtensions
 				.PostAsync(route, null, cancellationToken);
 		}
 
-		public async Task<HttpResponseMessage> DeleteCurrentWithoutCookiesResponseMessageAsync(
+		internal async Task<HttpResponseMessage> DeleteCurrentWithoutCookiesResponseMessageAsync(
 			DeleteCurrentRefreshTokenApiRequest request,
 			CancellationToken cancellationToken)
 		{
@@ -52,7 +52,7 @@ public static class RefreshTokenHttpClientExtensions
 				.DeleteAsync(route, cancellationToken);
 		}
 
-		public async Task<HttpResponseMessage> DeleteCurrentResponseMessageAsync(
+		internal async Task<HttpResponseMessage> DeleteCurrentResponseMessageAsync(
 			DeleteCurrentRefreshTokenApiRequest request,
 			CancellationToken cancellationToken)
 		{
@@ -63,7 +63,7 @@ public static class RefreshTokenHttpClientExtensions
 				.DeleteAsync(route, cancellationToken);
 		}
 
-		public HttpClient WithRefreshTokenCookies(
+		internal HttpClient WithRefreshTokenCookies(
 			string id,
 			string value)
 		{
@@ -75,7 +75,7 @@ public static class RefreshTokenHttpClientExtensions
 
 	extension(HttpResponseMessage httpResponseMessage)
 	{
-		public async Task<RefreshTokenCookieApiResponse?> GetRefreshTokenCookieApiResponse()
+		internal RefreshTokenCookieApiResponse? GetRefreshTokenCookieApiResponse()
 		{
 			var id = httpResponseMessage.GetCookie(RefreshTokenCookieKeys.Id);
 			var value = httpResponseMessage.GetCookie(RefreshTokenCookieKeys.Value);
