@@ -324,43 +324,48 @@ public class RotateRefreshTokenFunctionalTests : BaseRefreshTokenPresentationCom
 	}
 
 	[Fact]
-	public async Task RotateAsync_ShouldReturnCookies_WhenRequestIsValid()
+	public async Task RotateAsync_ShouldReturnCookieResponse_WhenRequestIsValid()
 	{
 		// Act
-		var response = await RefreshTokenApiClient.RotateResponseCookiesAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
+		await RefreshTokenApiClient.RotateAsync(_request, CancellationToken);
+		var response = ServiceScope.GetRefreshTokenCookieResponse();
+		var refreshToken = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(_request, user);
+		response.ShouldSatisfy(_request, refreshToken);
 	}
 
 	[Theory]
 	[UserIdDifferentCaseData]
-	public async Task RotateAsync_ShouldReturnCookies_WhenIdIsValid(IStringTransformer transformer)
+	public async Task RotateAsync_ShouldReturnCookieResponse_WhenIdIsValid(
+		IStringTransformer transformer)
 	{
 		// Arrange
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var response = await RefreshTokenApiClient.RotateResponseCookiesAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
+		await RefreshTokenApiClient.RotateAsync(request, CancellationToken);
+		var response = ServiceScope.GetRefreshTokenCookieResponse();
+		var refreshToken = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(request, user);
+		response.ShouldSatisfy(request, refreshToken);
 	}
 
 	[Theory]
 	[RefreshTokenValueDifferentCaseData]
-	public async Task RotateAsync_ShouldReturnCookies_WhenValueIsValid(IStringTransformer transformer)
+	public async Task RotateAsync_ShouldReturnCookieResponse_WhenValueIsValid(
+		IStringTransformer transformer)
 	{
 		// Arrange
 		var request = _requestBuilder.WithValue(transformer).Build();
 
 		// Act
-		var response = await RefreshTokenApiClient.RotateResponseCookiesAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
+		await RefreshTokenApiClient.RotateAsync(request, CancellationToken);
+		var response = ServiceScope.GetRefreshTokenCookieResponse();
+		var refreshToken = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(request, user);
+		response.ShouldSatisfy(request, refreshToken);
 	}
 }

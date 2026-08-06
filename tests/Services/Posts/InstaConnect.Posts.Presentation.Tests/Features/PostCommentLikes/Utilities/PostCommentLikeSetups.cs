@@ -55,11 +55,11 @@ public static class PostCommentLikeSetups
 		}
 
 		public async Task<PostCommentLike?> GetByIdAsync(
-			ActionResult<AddPostCommentLikeApiResponse> result,
+			ActionResult<AddPostCommentLikeApiResponse> response,
 			CancellationToken cancellationToken)
 		{
 			return await serviceScope.GetByIdAsync(
-				result.GetValue(),
+				response.GetValue(),
 				cancellationToken);
 		}
 	}

@@ -119,10 +119,10 @@ public class VerifyForgotPasswordTokenControllerIntegrationTests : BaseForgotPas
 	public async Task VerifyAsync_ShouldReturnNoContentStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.VerifyAsync(_request, CancellationToken);
+		var response = await Controller.VerifyAsync(_request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithNoContentStatusCode();
+		response.ShouldBeActionResultWithNoContentStatusCode();
 	}
 
 	[Theory]
@@ -134,10 +134,10 @@ public class VerifyForgotPasswordTokenControllerIntegrationTests : BaseForgotPas
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var result = await Controller.VerifyAsync(request, CancellationToken);
+		var response = await Controller.VerifyAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithNoContentStatusCode();
+		response.ShouldBeActionResultWithNoContentStatusCode();
 	}
 
 	[Theory]
@@ -149,10 +149,10 @@ public class VerifyForgotPasswordTokenControllerIntegrationTests : BaseForgotPas
 		var request = _requestBuilder.WithValue(transformer).Build();
 
 		// Act
-		var result = await Controller.VerifyAsync(request, CancellationToken);
+		var response = await Controller.VerifyAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithNoContentStatusCode();
+		response.ShouldBeActionResultWithNoContentStatusCode();
 	}
 
 	[Fact]

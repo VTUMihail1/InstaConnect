@@ -1,16 +1,13 @@
-using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Identity.Domain.Features.Common.Helpers;
 using InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Utilities;
 using InstaConnect.Identity.Presentation.Tests.Features.Users.Utilities;
-
-using Microsoft.Net.Http.Headers;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Utilities;
 
 
 public static class RefreshTokenEquals
 {
-	extension(SetRefreshTokenCookieRequest r)
+	extension(SetRefreshTokenCookieApiRequest r)
 	{
 		public bool Matches(IssueRefreshTokenApiRequest request, RefreshToken refreshToken)
 		{
@@ -85,51 +82,18 @@ public static class RefreshTokenEquals
 		}
 	}
 
-	extension(ICollection<SetCookieHeaderValue> cookies)
+	extension(GetRefreshTokenCookieApiResponse response)
 	{
-		public bool Matches(IssueRefreshTokenApiRequest request, User user)
+		public bool Matches(IssueRefreshTokenApiRequest request, RefreshToken refreshToken, IPasswordHasher passwordHasher)
 		{
-			var idCookie = cookies.GetId();
-			var id = idCookie.GetStringValue();
-			var valueCookie = cookies.GetValue();
-			var value = valueCookie.GetStringValue();
-
-			return user.Id.Matches(id) &&
-				   idCookie.Expires != default &&
-				   idCookie.Secure &&
-				   idCookie.HttpOnly &&
-				   user.RefreshTokens.Any(a => a.Id.Matches(id, value)) &&
-				   valueCookie.Expires != default &&
-				   valueCookie.Secure &&
-				   valueCookie.HttpOnly;
+			return refreshToken.Id.Matches(response.Id, response.Value) &&
+				   refreshToken.User!.Name.Matches(request.Name) &&
+				   passwordHasher.IsMatch(request.Body.Password, refreshToken.User.PasswordHash);
 		}
 
-		public bool Matches(RotateRefreshTokenApiRequest request, User user)
+		public bool Matches(RotateRefreshTokenApiRequest request, RefreshToken refreshToken)
 		{
-			var idCookie = cookies.GetId();
-			var id = idCookie.GetStringValue();
-			var valueCookie = cookies.GetValue();
-			var value = valueCookie.GetStringValue();
-
-			return user.Id.Matches(id) &&
-				   idCookie.Expires != default &&
-				   idCookie.Secure &&
-				   idCookie.HttpOnly &&
-				   user.RefreshTokens.Any(a => a.Id.Matches(id, value)) &&
-				   valueCookie.Expires != default &&
-				   valueCookie.Secure &&
-				   valueCookie.HttpOnly;
-		}
-
-		public bool Matches(DeleteCurrentRefreshTokenApiRequest request, User user)
-		{
-			var idCookie = cookies.GetId();
-			var id = idCookie.GetStringValue();
-			var valueCookie = cookies.GetValue();
-			var value = valueCookie.GetStringValue();
-
-			return id.IsNullOrEmptyOrWhiteSpace() &&
-				   value.IsNullOrEmptyOrWhiteSpace();
+			return refreshToken.Id.Matches(response.Id, response.Value);
 		}
 	}
 }

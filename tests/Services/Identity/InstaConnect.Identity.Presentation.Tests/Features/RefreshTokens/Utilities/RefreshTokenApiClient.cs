@@ -6,8 +6,6 @@ using InstaConnect.Common.Presentation.Tests.Features.Extensions;
 using InstaConnect.Identity.Presentation.Features.RefreshTokens.Utilities;
 using InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Abstractions;
 
-using Microsoft.Net.Http.Headers;
-
 namespace InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Utilities;
 
 internal class RefreshTokenApiClient : IRefreshTokenApiClient
@@ -45,15 +43,6 @@ internal class RefreshTokenApiClient : IRefreshTokenApiClient
 		var response = await IssueResponseMessageAsync(request, cancellationToken);
 
 		return await response.GetFromJsonAsync<IssueRefreshTokenApiResponse>(cancellationToken);
-	}
-
-	public async Task<ICollection<SetCookieHeaderValue>> IssueResponseCookiesAsync(
-		IssueRefreshTokenApiRequest request,
-		CancellationToken cancellationToken)
-	{
-		var response = await IssueResponseMessageAsync(request, cancellationToken);
-
-		return response.GetCookies();
 	}
 
 	public async Task<HttpStatusCode> IssueStatusCodeAsync(
@@ -112,15 +101,6 @@ internal class RefreshTokenApiClient : IRefreshTokenApiClient
 		var response = await RotateResponseMessageAsync(request, cancellationToken);
 
 		return await response.GetFromJsonAsync<RotateRefreshTokenApiResponse>(cancellationToken);
-	}
-
-	public async Task<ICollection<SetCookieHeaderValue>> RotateResponseCookiesAsync(
-		RotateRefreshTokenApiRequest request,
-		CancellationToken cancellationToken)
-	{
-		var response = await RotateResponseMessageAsync(request, cancellationToken);
-
-		return response.GetCookies();
 	}
 
 	public async Task<HttpStatusCode> RotateWithoutCookiesStatusCodeAsync(
@@ -186,15 +166,6 @@ internal class RefreshTokenApiClient : IRefreshTokenApiClient
 		CancellationToken cancellationToken)
 	{
 		await DeleteCurrentResponseMessageAsync(request, cancellationToken);
-	}
-
-	public async Task<ICollection<SetCookieHeaderValue>> DeleteCurrentResponseCookiesAsync(
-		DeleteCurrentRefreshTokenApiRequest request,
-		CancellationToken cancellationToken)
-	{
-		var response = await DeleteCurrentResponseMessageAsync(request, cancellationToken);
-
-		return response.GetCookies();
 	}
 
 	public async Task<HttpStatusCode> DeleteCurrentWithoutCookiesStatusCodeAsync(

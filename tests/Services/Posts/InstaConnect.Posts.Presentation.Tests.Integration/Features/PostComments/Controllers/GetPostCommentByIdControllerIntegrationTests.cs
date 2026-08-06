@@ -93,10 +93,10 @@ public class GetPostCommentByIdControllerIntegrationTests : BasePostCommentPrese
 	public async Task GetByIdAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.GetByIdAsync(_request, CancellationToken);
+		var response = await Controller.GetByIdAsync(_request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -108,10 +108,10 @@ public class GetPostCommentByIdControllerIntegrationTests : BasePostCommentPrese
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -123,10 +123,10 @@ public class GetPostCommentByIdControllerIntegrationTests : BasePostCommentPrese
 		var request = _requestBuilder.WithCommentId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -139,20 +139,20 @@ public class GetPostCommentByIdControllerIntegrationTests : BasePostCommentPrese
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Fact]
 	public async Task GetByIdAsync_ShouldReturnResponse_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.GetByIdAsync(_request, CancellationToken);
+		var response = await Controller.GetByIdAsync(_request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(_request, PostComment);
+		response.ShouldSatisfy(_request, PostComment);
 	}
 
 	[Theory]
@@ -164,10 +164,10 @@ public class GetPostCommentByIdControllerIntegrationTests : BasePostCommentPrese
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, PostComment);
+		response.ShouldSatisfy(request, PostComment);
 	}
 
 	[Theory]
@@ -179,10 +179,10 @@ public class GetPostCommentByIdControllerIntegrationTests : BasePostCommentPrese
 		var request = _requestBuilder.WithCommentId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, PostComment);
+		response.ShouldSatisfy(request, PostComment);
 	}
 
 	[Theory]
@@ -195,9 +195,9 @@ public class GetPostCommentByIdControllerIntegrationTests : BasePostCommentPrese
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, PostComment);
+		response.ShouldSatisfy(request, PostComment);
 	}
 }

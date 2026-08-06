@@ -167,9 +167,9 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	[Fact]
 	public async Task UpdateCurrentAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
 	{
-		var result = await Controller.UpdateCurrentAsync(_request, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(_request, CancellationToken);
 
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -179,9 +179,9 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithId(transformer).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
 
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -191,9 +191,9 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithName(transformer).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
 
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Fact]
@@ -201,9 +201,9 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithName(User.Name).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
 
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -213,9 +213,9 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithName(User.Name, transformer).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
 
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -225,9 +225,9 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithEmail(transformer).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
 
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Fact]
@@ -235,9 +235,9 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithEmail(User.Email).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
 
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -247,9 +247,9 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithEmail(User.Email, transformer).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
 
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -259,18 +259,18 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithProfileImage(transformer).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
 
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Fact]
 	public async Task UpdateCurrentAsync_ShouldReturnResponse_WhenRequestIsValid()
 	{
-		var result = await Controller.UpdateCurrentAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(_request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
-		result.ShouldSatisfy(_request, user);
+		response.ShouldSatisfy(_request, user);
 	}
 
 	[Theory]
@@ -280,10 +280,10 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithId(transformer).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
-		result.ShouldSatisfy(request, user);
+		response.ShouldSatisfy(request, user);
 	}
 
 	[Theory]
@@ -293,10 +293,10 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithName(transformer).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
-		result.ShouldSatisfy(request, user);
+		response.ShouldSatisfy(request, user);
 	}
 
 	[Fact]
@@ -304,10 +304,10 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithName(User.Name).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
-		result.ShouldSatisfy(request, user);
+		response.ShouldSatisfy(request, user);
 	}
 
 	[Theory]
@@ -317,10 +317,10 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithName(User.Name, transformer).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
-		result.ShouldSatisfy(request, user);
+		response.ShouldSatisfy(request, user);
 	}
 
 	[Theory]
@@ -330,10 +330,10 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithEmail(transformer).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
-		result.ShouldSatisfy(request, user);
+		response.ShouldSatisfy(request, user);
 	}
 
 	[Fact]
@@ -341,10 +341,10 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithEmail(User.Email).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
-		result.ShouldSatisfy(request, user);
+		response.ShouldSatisfy(request, user);
 	}
 
 	[Theory]
@@ -354,10 +354,10 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithEmail(User.Email, transformer).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
-		result.ShouldSatisfy(request, user);
+		response.ShouldSatisfy(request, user);
 	}
 
 	[Theory]
@@ -367,17 +367,17 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithProfileImage(transformer).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
-		result.ShouldSatisfy(request, user);
+		response.ShouldSatisfy(request, user);
 	}
 
 	[Fact]
 	public async Task UpdateCurrentAsync_ShouldUpdateUser_WhenRequestIsValid()
 	{
-		var result = await Controller.UpdateCurrentAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(_request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		user.ShouldSatisfy(_request);
 	}
@@ -389,8 +389,8 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithId(transformer).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		user.ShouldSatisfy(request);
 	}
@@ -402,8 +402,8 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithName(transformer).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		user.ShouldSatisfy(request);
 	}
@@ -413,8 +413,8 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithName(User.Name).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		user.ShouldSatisfy(request);
 	}
@@ -426,8 +426,8 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithName(User.Name, transformer).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		user.ShouldSatisfy(request);
 	}
@@ -439,8 +439,8 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithEmail(transformer).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		user.ShouldSatisfy(request);
 	}
@@ -450,8 +450,8 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithEmail(User.Email).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		user.ShouldSatisfy(request);
 	}
@@ -463,8 +463,8 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithEmail(User.Email, transformer).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		user.ShouldSatisfy(request);
 	}
@@ -476,8 +476,8 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithProfileImage(transformer).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		user.ShouldSatisfy(request);
 	}
@@ -485,8 +485,8 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	[Fact]
 	public async Task UpdateCurrentAsync_ShouldPublishUserUpdatedEvent_WhenRequestIsValid()
 	{
-		var result = await Controller.UpdateCurrentAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(_request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var eventRequest = await EventClient.PublishedUpdatedAsync(CancellationToken);
 
 		eventRequest.ShouldSatisfy(_request, user);
@@ -499,8 +499,8 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithId(transformer).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var eventRequest = await EventClient.PublishedUpdatedAsync(CancellationToken);
 
 		eventRequest.ShouldSatisfy(request, user);
@@ -513,8 +513,8 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithName(transformer).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var eventRequest = await EventClient.PublishedUpdatedAsync(CancellationToken);
 
 		eventRequest.ShouldSatisfy(request, user);
@@ -525,8 +525,8 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithName(User.Name).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var eventRequest = await EventClient.PublishedUpdatedAsync(CancellationToken);
 
 		eventRequest.ShouldSatisfy(request, user);
@@ -539,8 +539,8 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithName(User.Name, transformer).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var eventRequest = await EventClient.PublishedUpdatedAsync(CancellationToken);
 
 		eventRequest.ShouldSatisfy(request, user);
@@ -553,8 +553,8 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithEmail(transformer).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var eventRequest = await EventClient.PublishedUpdatedAsync(CancellationToken);
 
 		eventRequest.ShouldSatisfy(request, user);
@@ -565,8 +565,8 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithEmail(User.Email).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var eventRequest = await EventClient.PublishedUpdatedAsync(CancellationToken);
 
 		eventRequest.ShouldSatisfy(request, user);
@@ -579,8 +579,8 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithEmail(User.Email, transformer).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var eventRequest = await EventClient.PublishedUpdatedAsync(CancellationToken);
 
 		eventRequest.ShouldSatisfy(request, user);
@@ -593,8 +593,8 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithProfileImage(transformer).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var eventRequest = await EventClient.PublishedUpdatedAsync(CancellationToken);
 
 		eventRequest.ShouldSatisfy(request, user);
@@ -603,8 +603,8 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	[Fact]
 	public async Task UpdateCurrentAsync_ShouldDeleteEmailConfirmationTokens_WhenRequestIsValid()
 	{
-		var result = await Controller.UpdateCurrentAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(_request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		user.EmailConfirmationTokens.ShouldBeEmpty();
 	}
@@ -616,8 +616,8 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithId(transformer).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		user.EmailConfirmationTokens.ShouldBeEmpty();
 	}
@@ -629,8 +629,8 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithName(transformer).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		user.EmailConfirmationTokens.ShouldBeEmpty();
 	}
@@ -640,8 +640,8 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithName(User.Name).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		user.EmailConfirmationTokens.ShouldBeEmpty();
 	}
@@ -653,8 +653,8 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithName(User.Name, transformer).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		user.EmailConfirmationTokens.ShouldBeEmpty();
 	}
@@ -666,8 +666,8 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithEmail(transformer).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		user.EmailConfirmationTokens.ShouldBeEmpty();
 	}
@@ -679,8 +679,8 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithProfileImage(transformer).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		user.EmailConfirmationTokens.ShouldBeEmpty();
 	}
@@ -690,8 +690,8 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithEmail(User.Email).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		user.EmailConfirmationTokens.ShouldSatisfy(request);
 	}
@@ -703,8 +703,8 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithEmail(User.Email, transformer).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		user.EmailConfirmationTokens.ShouldSatisfy(request);
 	}
@@ -712,8 +712,8 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	[Fact]
 	public async Task UpdateCurrentAsync_ShouldPublishEmailConfirmationTokenDeletedEvents_WhenRequestIsValid()
 	{
-		var result = await Controller.UpdateCurrentAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(_request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var eventRequests = await EmailConfirmationTokenEventClient.PublishedDeletedRangeAsync(CancellationToken);
 
 		eventRequests.ShouldSatisfy(_request, User.EmailConfirmationTokens.AddUser(user));
@@ -726,8 +726,8 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithId(transformer).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var eventRequests = await EmailConfirmationTokenEventClient.PublishedDeletedRangeAsync(CancellationToken);
 
 		eventRequests.ShouldSatisfy(request, User.EmailConfirmationTokens.AddUser(user));
@@ -740,8 +740,8 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithName(transformer).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var eventRequests = await EmailConfirmationTokenEventClient.PublishedDeletedRangeAsync(CancellationToken);
 
 		eventRequests.ShouldSatisfy(request, User.EmailConfirmationTokens.AddUser(user));
@@ -752,8 +752,8 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithName(User.Name).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var eventRequests = await EmailConfirmationTokenEventClient.PublishedDeletedRangeAsync(CancellationToken);
 
 		eventRequests.ShouldSatisfy(request, User.EmailConfirmationTokens.AddUser(user));
@@ -766,8 +766,8 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithName(User.Name, transformer).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var eventRequests = await EmailConfirmationTokenEventClient.PublishedDeletedRangeAsync(CancellationToken);
 
 		eventRequests.ShouldSatisfy(request, User.EmailConfirmationTokens.AddUser(user));
@@ -780,8 +780,8 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithEmail(transformer).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var eventRequests = await EmailConfirmationTokenEventClient.PublishedDeletedRangeAsync(CancellationToken);
 
 		eventRequests.ShouldSatisfy(request, User.EmailConfirmationTokens.AddUser(user));
@@ -794,8 +794,8 @@ public class UpdateCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	{
 		var request = _requestBuilder.WithProfileImage(transformer).Build();
 
-		var result = await Controller.UpdateCurrentAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateCurrentAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var eventRequests = await EmailConfirmationTokenEventClient.PublishedDeletedRangeAsync(CancellationToken);
 
 		eventRequests.ShouldSatisfy(request, User.EmailConfirmationTokens.AddUser(user));

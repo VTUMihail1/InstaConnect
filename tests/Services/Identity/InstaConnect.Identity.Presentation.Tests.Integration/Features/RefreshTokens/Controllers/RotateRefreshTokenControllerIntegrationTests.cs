@@ -100,10 +100,10 @@ public class RotateRefreshTokenControllerIntegrationTests : BaseRefreshTokenPres
 	public async Task RotateAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.RotateAsync(_request, CancellationToken);
+		var response = await Controller.RotateAsync(_request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -115,10 +115,10 @@ public class RotateRefreshTokenControllerIntegrationTests : BaseRefreshTokenPres
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var result = await Controller.RotateAsync(request, CancellationToken);
+		var response = await Controller.RotateAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -130,20 +130,20 @@ public class RotateRefreshTokenControllerIntegrationTests : BaseRefreshTokenPres
 		var request = _requestBuilder.WithValue(transformer).Build();
 
 		// Act
-		var result = await Controller.RotateAsync(request, CancellationToken);
+		var response = await Controller.RotateAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Fact]
 	public async Task RotateAsync_ShouldReturnResponse_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.RotateAsync(_request, CancellationToken);
+		var response = await Controller.RotateAsync(_request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(_request);
+		response.ShouldSatisfy(_request);
 	}
 
 	[Theory]
@@ -155,10 +155,10 @@ public class RotateRefreshTokenControllerIntegrationTests : BaseRefreshTokenPres
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var result = await Controller.RotateAsync(request, CancellationToken);
+		var response = await Controller.RotateAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request);
+		response.ShouldSatisfy(request);
 	}
 
 	[Theory]
@@ -170,10 +170,56 @@ public class RotateRefreshTokenControllerIntegrationTests : BaseRefreshTokenPres
 		var request = _requestBuilder.WithValue(transformer).Build();
 
 		// Act
-		var result = await Controller.RotateAsync(request, CancellationToken);
+		var response = await Controller.RotateAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request);
+		response.ShouldSatisfy(request);
+	}
+
+	[Fact]
+	public async Task RotateAsync_ShouldReturnCookieResponse_WhenRequestIsValid()
+	{
+		// Act
+		await Controller.RotateAsync(_request, CancellationToken);
+		var response = ServiceScope.GetRefreshTokenCookieResponse();
+		var refreshToken = await ServiceScope.GetByIdAsync(response, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(_request, refreshToken);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task RotateAsync_ShouldReturnCookieResponse_WhenIdIsValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithId(transformer).Build();
+
+		// Act
+		await Controller.RotateAsync(request, CancellationToken);
+		var response = ServiceScope.GetRefreshTokenCookieResponse();
+		var refreshToken = await ServiceScope.GetByIdAsync(response, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(request, refreshToken);
+	}
+
+	[Theory]
+	[RefreshTokenValueDifferentCaseData]
+	public async Task RotateAsync_ShouldReturnCookieResponse_WhenValueIsValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithValue(transformer).Build();
+
+		// Act
+		await Controller.RotateAsync(request, CancellationToken);
+		var response = ServiceScope.GetRefreshTokenCookieResponse();
+		var refreshToken = await ServiceScope.GetByIdAsync(response, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(request, refreshToken);
 	}
 
 	[Fact]

@@ -32,10 +32,10 @@ public class GetAllPostLikesForUserQueryRequestValidatorUnitTests : BasePostLike
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForUserId(request, messageTransformer);
+		response.ShouldHaveValidationErrorForUserId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -47,10 +47,10 @@ public class GetAllPostLikesForUserQueryRequestValidatorUnitTests : BasePostLike
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForCurrentUserId(request, messageTransformer);
+		response.ShouldHaveValidationErrorForCurrentUserId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -62,10 +62,10 @@ public class GetAllPostLikesForUserQueryRequestValidatorUnitTests : BasePostLike
 		var request = _requestBuilder.WithSortOrder(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForSortOrder(request, messageTransformer);
+		response.ShouldHaveValidationErrorForSortOrder(request, messageTransformer);
 	}
 
 	[Theory]
@@ -77,10 +77,10 @@ public class GetAllPostLikesForUserQueryRequestValidatorUnitTests : BasePostLike
 		var request = _requestBuilder.WithSortTerm(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForSortTerm(request, messageTransformer);
+		response.ShouldHaveValidationErrorForSortTerm(request, messageTransformer);
 	}
 
 	[Theory]
@@ -93,10 +93,10 @@ public class GetAllPostLikesForUserQueryRequestValidatorUnitTests : BasePostLike
 		var request = _requestBuilder.WithPage(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForPage(request, messageTransformer);
+		response.ShouldHaveValidationErrorForPage(request, messageTransformer);
 	}
 
 	[Theory]
@@ -109,10 +109,10 @@ public class GetAllPostLikesForUserQueryRequestValidatorUnitTests : BasePostLike
 		var request = _requestBuilder.WithPageSize(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForPageSize(request, messageTransformer);
+		response.ShouldHaveValidationErrorForPageSize(request, messageTransformer);
 	}
 
 	[Theory]
@@ -125,19 +125,19 @@ public class GetAllPostLikesForUserQueryRequestValidatorUnitTests : BasePostLike
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldNotHaveAnyValidationErrorProperties();
+		response.ShouldNotHaveAnyValidationErrorProperties();
 	}
 
 	[Fact]
 	public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenRequestIsValid()
 	{
 		// Act
-		var result = _requestValidator.TestValidate(_request);
+		var response = _requestValidator.TestValidate(_request);
 
 		// Assert
-		result.ShouldNotHaveAnyValidationErrorProperties();
+		response.ShouldNotHaveAnyValidationErrorProperties();
 	}
 }

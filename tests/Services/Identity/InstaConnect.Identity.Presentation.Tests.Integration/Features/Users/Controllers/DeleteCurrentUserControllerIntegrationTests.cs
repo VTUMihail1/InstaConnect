@@ -50,10 +50,10 @@ public class DeleteCurrentUserControllerIntegrationTests : BaseUserPresentationC
 	public async Task DeleteCurrentAsync_ShouldReturnNoContentStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.DeleteCurrentAsync(_request, CancellationToken);
+		var response = await Controller.DeleteCurrentAsync(_request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithNoContentStatusCode();
+		response.ShouldBeActionResultWithNoContentStatusCode();
 	}
 
 	[Theory]
@@ -65,10 +65,10 @@ public class DeleteCurrentUserControllerIntegrationTests : BaseUserPresentationC
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var result = await Controller.DeleteCurrentAsync(request, CancellationToken);
+		var response = await Controller.DeleteCurrentAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithNoContentStatusCode();
+		response.ShouldBeActionResultWithNoContentStatusCode();
 	}
 
 	[Fact]

@@ -68,10 +68,10 @@ public class GetChatByIdControllerIntegrationTests : BaseChatPresentationQueryIn
 	public async Task GetByIdAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.GetByIdAsync(_request, CancellationToken);
+		var response = await Controller.GetByIdAsync(_request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -83,10 +83,10 @@ public class GetChatByIdControllerIntegrationTests : BaseChatPresentationQueryIn
 		var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -98,10 +98,10 @@ public class GetChatByIdControllerIntegrationTests : BaseChatPresentationQueryIn
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Fact]
@@ -111,10 +111,10 @@ public class GetChatByIdControllerIntegrationTests : BaseChatPresentationQueryIn
 		var request = _requestBuilder.WithParticipantTwoId(ParticipantOne.Id).WithCurrentUserId(ParticipantTwo.Id).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -126,10 +126,10 @@ public class GetChatByIdControllerIntegrationTests : BaseChatPresentationQueryIn
 		var request = _requestBuilder.WithParticipantTwoId(ParticipantOne.Id, transformer).WithCurrentUserId(ParticipantTwo.Id).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -141,20 +141,20 @@ public class GetChatByIdControllerIntegrationTests : BaseChatPresentationQueryIn
 		var request = _requestBuilder.WithParticipantTwoId(ParticipantOne.Id).WithCurrentUserId(ParticipantTwo.Id, transformer).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Fact]
 	public async Task GetByIdAsync_ShouldReturnResponse_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.GetByIdAsync(_request, CancellationToken);
+		var response = await Controller.GetByIdAsync(_request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(_request, Chat);
+		response.ShouldSatisfy(_request, Chat);
 	}
 
 	[Theory]
@@ -166,10 +166,10 @@ public class GetChatByIdControllerIntegrationTests : BaseChatPresentationQueryIn
 		var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, Chat);
+		response.ShouldSatisfy(request, Chat);
 	}
 
 	[Theory]
@@ -181,10 +181,10 @@ public class GetChatByIdControllerIntegrationTests : BaseChatPresentationQueryIn
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, Chat);
+		response.ShouldSatisfy(request, Chat);
 	}
 
 	[Fact]
@@ -194,10 +194,10 @@ public class GetChatByIdControllerIntegrationTests : BaseChatPresentationQueryIn
 		var request = _requestBuilder.WithParticipantTwoId(ParticipantOne.Id).WithCurrentUserId(ParticipantTwo.Id).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfyInverted(request, Chat);
+		response.ShouldSatisfyInverted(request, Chat);
 	}
 
 	[Theory]
@@ -209,10 +209,10 @@ public class GetChatByIdControllerIntegrationTests : BaseChatPresentationQueryIn
 		var request = _requestBuilder.WithParticipantTwoId(ParticipantOne.Id, transformer).WithCurrentUserId(ParticipantTwo.Id).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfyInverted(request, Chat);
+		response.ShouldSatisfyInverted(request, Chat);
 	}
 
 	[Theory]
@@ -224,9 +224,9 @@ public class GetChatByIdControllerIntegrationTests : BaseChatPresentationQueryIn
 		var request = _requestBuilder.WithParticipantTwoId(ParticipantOne.Id).WithCurrentUserId(ParticipantTwo.Id, transformer).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfyInverted(request, Chat);
+		response.ShouldSatisfyInverted(request, Chat);
 	}
 }

@@ -124,10 +124,10 @@ public class GetAllPostLikesForUserControllerIntegrationTests : BasePostLikePres
 	public async Task GetAllAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var result = await UserController.GetAllAsync(_request, CancellationToken);
+		var response = await UserController.GetAllAsync(_request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -139,10 +139,10 @@ public class GetAllPostLikesForUserControllerIntegrationTests : BasePostLikePres
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var result = await UserController.GetAllAsync(request, CancellationToken);
+		var response = await UserController.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -156,10 +156,10 @@ public class GetAllPostLikesForUserControllerIntegrationTests : BasePostLikePres
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var result = await UserController.GetAllAsync(request, CancellationToken);
+		var response = await UserController.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -172,10 +172,10 @@ public class GetAllPostLikesForUserControllerIntegrationTests : BasePostLikePres
 		var request = _requestBuilder.WithSortOrder(transformer).Build();
 
 		// Act
-		var result = await UserController.GetAllAsync(request, CancellationToken);
+		var response = await UserController.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -188,20 +188,20 @@ public class GetAllPostLikesForUserControllerIntegrationTests : BasePostLikePres
 		var request = _requestBuilder.WithSortTerm(transformer).Build();
 
 		// Act
-		var result = await UserController.GetAllAsync(request, CancellationToken);
+		var response = await UserController.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Fact]
 	public async Task GetAllAsync_ShouldReturnResponse_WhenRequestIsValid()
 	{
 		// Act
-		var result = await UserController.GetAllAsync(_request, CancellationToken);
+		var response = await UserController.GetAllAsync(_request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(_request, User, PostLikes);
+		response.ShouldSatisfy(_request, User, PostLikes);
 	}
 
 	[Theory]
@@ -213,10 +213,10 @@ public class GetAllPostLikesForUserControllerIntegrationTests : BasePostLikePres
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var result = await UserController.GetAllAsync(request, CancellationToken);
+		var response = await UserController.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, User, PostLikes);
+		response.ShouldSatisfy(request, User, PostLikes);
 	}
 
 	[Theory]
@@ -230,10 +230,10 @@ public class GetAllPostLikesForUserControllerIntegrationTests : BasePostLikePres
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var result = await UserController.GetAllAsync(request, CancellationToken);
+		var response = await UserController.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, User, PostLikes);
+		response.ShouldSatisfy(request, User, PostLikes);
 	}
 
 	[Theory]
@@ -246,10 +246,10 @@ public class GetAllPostLikesForUserControllerIntegrationTests : BasePostLikePres
 		var request = _requestBuilder.WithSortOrder(transformer).Build();
 
 		// Act
-		var result = await UserController.GetAllAsync(request, CancellationToken);
+		var response = await UserController.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, User, PostLikes, termTransformer);
+		response.ShouldSatisfy(request, User, PostLikes, termTransformer);
 	}
 
 	[Theory]
@@ -262,9 +262,9 @@ public class GetAllPostLikesForUserControllerIntegrationTests : BasePostLikePres
 		var request = _requestBuilder.WithSortTerm(transformer).Build();
 
 		// Act
-		var result = await UserController.GetAllAsync(request, CancellationToken);
+		var response = await UserController.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, User, PostLikes, termTransformer);
+		response.ShouldSatisfy(request, User, PostLikes, termTransformer);
 	}
 }

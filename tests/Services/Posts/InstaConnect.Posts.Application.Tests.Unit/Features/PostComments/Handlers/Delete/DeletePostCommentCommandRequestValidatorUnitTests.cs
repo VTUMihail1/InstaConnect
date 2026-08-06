@@ -29,10 +29,10 @@ public class DeletePostCommentCommandRequestValidatorUnitTests : BasePostComment
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForId(request, messageTransformer);
+		response.ShouldHaveValidationErrorForId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -47,10 +47,10 @@ public class DeletePostCommentCommandRequestValidatorUnitTests : BasePostComment
 		var request = _requestBuilder.WithCommentId(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForCommentId(request, messageTransformer);
+		response.ShouldHaveValidationErrorForCommentId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -65,19 +65,19 @@ public class DeletePostCommentCommandRequestValidatorUnitTests : BasePostComment
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForUserId(request, messageTransformer);
+		response.ShouldHaveValidationErrorForUserId(request, messageTransformer);
 	}
 
 	[Fact]
 	public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenRequestIsValid()
 	{
 		// Act
-		var result = _requestValidator.TestValidate(_request);
+		var response = _requestValidator.TestValidate(_request);
 
 		// Assert
-		result.ShouldNotHaveAnyValidationErrorProperties();
+		response.ShouldNotHaveAnyValidationErrorProperties();
 	}
 }

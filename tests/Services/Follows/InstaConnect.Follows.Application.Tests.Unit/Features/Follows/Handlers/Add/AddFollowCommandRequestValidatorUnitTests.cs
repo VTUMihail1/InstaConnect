@@ -29,10 +29,10 @@ public class AddFollowCommandRequestValidatorUnitTests : BaseFollowApplicationCo
 		var request = _requestBuilder.WithFollowerId(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForFollowerId(request, messageTransformer);
+		response.ShouldHaveValidationErrorForFollowerId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -47,19 +47,19 @@ public class AddFollowCommandRequestValidatorUnitTests : BaseFollowApplicationCo
 		var request = _requestBuilder.WithFollowingId(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForFollowingId(request, messageTransformer);
+		response.ShouldHaveValidationErrorForFollowingId(request, messageTransformer);
 	}
 
 	[Fact]
 	public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenRequestIsValid()
 	{
 		// Act
-		var result = _requestValidator.TestValidate(_request);
+		var response = _requestValidator.TestValidate(_request);
 
 		// Assert
-		result.ShouldNotHaveAnyValidationErrorProperties();
+		response.ShouldNotHaveAnyValidationErrorProperties();
 	}
 }

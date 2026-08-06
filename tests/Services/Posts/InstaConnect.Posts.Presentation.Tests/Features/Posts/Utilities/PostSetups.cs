@@ -60,20 +60,20 @@ public static class PostSetups
 		}
 
 		public async Task<Post?> GetByIdAsync(
-			ActionResult<AddPostApiResponse> result,
+			ActionResult<AddPostApiResponse> response,
 			CancellationToken cancellationToken)
 		{
 			return await serviceScope.GetByIdAsync(
-				result.GetValue(),
+				response.GetValue(),
 				cancellationToken);
 		}
 
 		public async Task<Post?> GetByIdAsync(
-			ActionResult<UpdatePostApiResponse> result,
+			ActionResult<UpdatePostApiResponse> response,
 			CancellationToken cancellationToken)
 		{
 			return await serviceScope.GetByIdAsync(
-				result.GetValue(),
+				response.GetValue(),
 				cancellationToken);
 		}
 	}

@@ -137,10 +137,10 @@ public class GetAllFollowsForFollowingControllerIntegrationTests : BaseFollowPre
 	public async Task GetAllAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var result = await FollowingController.GetAllAsync(_request, CancellationToken);
+		var response = await FollowingController.GetAllAsync(_request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -152,10 +152,10 @@ public class GetAllFollowsForFollowingControllerIntegrationTests : BaseFollowPre
 		var request = _requestBuilder.WithFollowingId(transformer).Build();
 
 		// Act
-		var result = await FollowingController.GetAllAsync(request, CancellationToken);
+		var response = await FollowingController.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -169,10 +169,10 @@ public class GetAllFollowsForFollowingControllerIntegrationTests : BaseFollowPre
 		var request = _requestBuilder.WithFollowerName(transformer).Build();
 
 		// Act
-		var result = await FollowingController.GetAllAsync(request, CancellationToken);
+		var response = await FollowingController.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -186,10 +186,10 @@ public class GetAllFollowsForFollowingControllerIntegrationTests : BaseFollowPre
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var result = await FollowingController.GetAllAsync(request, CancellationToken);
+		var response = await FollowingController.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -202,10 +202,10 @@ public class GetAllFollowsForFollowingControllerIntegrationTests : BaseFollowPre
 		var request = _requestBuilder.WithSortOrder(transformer).Build();
 
 		// Act
-		var result = await FollowingController.GetAllAsync(request, CancellationToken);
+		var response = await FollowingController.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -218,20 +218,20 @@ public class GetAllFollowsForFollowingControllerIntegrationTests : BaseFollowPre
 		var request = _requestBuilder.WithSortTerm(transformer).Build();
 
 		// Act
-		var result = await FollowingController.GetAllAsync(request, CancellationToken);
+		var response = await FollowingController.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Fact]
 	public async Task GetAllAsync_ShouldReturnResponse_WhenRequestIsValid()
 	{
 		// Act
-		var result = await FollowingController.GetAllAsync(_request, CancellationToken);
+		var response = await FollowingController.GetAllAsync(_request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(_request, Following, Follows);
+		response.ShouldSatisfy(_request, Following, Follows);
 	}
 
 	[Theory]
@@ -243,10 +243,10 @@ public class GetAllFollowsForFollowingControllerIntegrationTests : BaseFollowPre
 		var request = _requestBuilder.WithFollowingId(transformer).Build();
 
 		// Act
-		var result = await FollowingController.GetAllAsync(request, CancellationToken);
+		var response = await FollowingController.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, Following, Follows);
+		response.ShouldSatisfy(request, Following, Follows);
 	}
 
 	[Theory]
@@ -260,10 +260,10 @@ public class GetAllFollowsForFollowingControllerIntegrationTests : BaseFollowPre
 		var request = _requestBuilder.WithFollowerName(transformer).Build();
 
 		// Act
-		var result = await FollowingController.GetAllAsync(request, CancellationToken);
+		var response = await FollowingController.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, Following, Follows);
+		response.ShouldSatisfy(request, Following, Follows);
 	}
 
 	[Theory]
@@ -277,10 +277,10 @@ public class GetAllFollowsForFollowingControllerIntegrationTests : BaseFollowPre
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var result = await FollowingController.GetAllAsync(request, CancellationToken);
+		var response = await FollowingController.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, Following, Follows);
+		response.ShouldSatisfy(request, Following, Follows);
 	}
 
 	[Theory]
@@ -293,10 +293,10 @@ public class GetAllFollowsForFollowingControllerIntegrationTests : BaseFollowPre
 		var request = _requestBuilder.WithSortOrder(transformer).Build();
 
 		// Act
-		var result = await FollowingController.GetAllAsync(request, CancellationToken);
+		var response = await FollowingController.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, Following, Follows, termTransformer);
+		response.ShouldSatisfy(request, Following, Follows, termTransformer);
 	}
 
 	[Theory]
@@ -309,9 +309,9 @@ public class GetAllFollowsForFollowingControllerIntegrationTests : BaseFollowPre
 		var request = _requestBuilder.WithSortTerm(transformer).Build();
 
 		// Act
-		var result = await FollowingController.GetAllAsync(request, CancellationToken);
+		var response = await FollowingController.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, Following, Follows, termTransformer);
+		response.ShouldSatisfy(request, Following, Follows, termTransformer);
 	}
 }

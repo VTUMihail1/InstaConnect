@@ -105,10 +105,10 @@ public class DeleteChatMessageControllerIntegrationTests : BaseChatMessagePresen
 	public async Task DeleteAsync_ShouldReturnNoContentStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.DeleteAsync(_request, CancellationToken);
+		var response = await Controller.DeleteAsync(_request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithNoContentStatusCode();
+		response.ShouldBeActionResultWithNoContentStatusCode();
 	}
 
 	[Theory]
@@ -120,10 +120,10 @@ public class DeleteChatMessageControllerIntegrationTests : BaseChatMessagePresen
 		var request = _requestBuilder.WithParticipantOneId(transformer).Build();
 
 		// Act
-		var result = await Controller.DeleteAsync(request, CancellationToken);
+		var response = await Controller.DeleteAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithNoContentStatusCode();
+		response.ShouldBeActionResultWithNoContentStatusCode();
 	}
 
 	[Theory]
@@ -135,10 +135,10 @@ public class DeleteChatMessageControllerIntegrationTests : BaseChatMessagePresen
 		var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
 
 		// Act
-		var result = await Controller.DeleteAsync(request, CancellationToken);
+		var response = await Controller.DeleteAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithNoContentStatusCode();
+		response.ShouldBeActionResultWithNoContentStatusCode();
 	}
 
 	[Theory]
@@ -150,10 +150,10 @@ public class DeleteChatMessageControllerIntegrationTests : BaseChatMessagePresen
 		var request = _requestBuilder.WithMessageId(transformer).Build();
 
 		// Act
-		var result = await Controller.DeleteAsync(request, CancellationToken);
+		var response = await Controller.DeleteAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithNoContentStatusCode();
+		response.ShouldBeActionResultWithNoContentStatusCode();
 	}
 
 	[Fact]
@@ -165,10 +165,10 @@ public class DeleteChatMessageControllerIntegrationTests : BaseChatMessagePresen
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		var result = await Controller.DeleteAsync(request, CancellationToken);
+		var response = await Controller.DeleteAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithNoContentStatusCode();
+		response.ShouldBeActionResultWithNoContentStatusCode();
 	}
 
 	[Theory]
@@ -182,10 +182,10 @@ public class DeleteChatMessageControllerIntegrationTests : BaseChatMessagePresen
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id, transformer).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		var result = await Controller.DeleteAsync(request, CancellationToken);
+		var response = await Controller.DeleteAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithNoContentStatusCode();
+		response.ShouldBeActionResultWithNoContentStatusCode();
 	}
 
 	[Theory]
@@ -199,10 +199,10 @@ public class DeleteChatMessageControllerIntegrationTests : BaseChatMessagePresen
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id, transformer).Build();
 
 		// Act
-		var result = await Controller.DeleteAsync(request, CancellationToken);
+		var response = await Controller.DeleteAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithNoContentStatusCode();
+		response.ShouldBeActionResultWithNoContentStatusCode();
 	}
 
 	[Theory]
@@ -216,10 +216,10 @@ public class DeleteChatMessageControllerIntegrationTests : BaseChatMessagePresen
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).WithMessageId(transformer).Build();
 
 		// Act
-		var result = await Controller.DeleteAsync(request, CancellationToken);
+		var response = await Controller.DeleteAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithNoContentStatusCode();
+		response.ShouldBeActionResultWithNoContentStatusCode();
 	}
 
 	[Fact]

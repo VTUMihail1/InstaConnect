@@ -2,8 +2,6 @@ using InstaConnect.Identity.Domain.Features.Common.Helpers;
 using InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Utilities;
 using InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Utilities;
 
-using Microsoft.Net.Http.Headers;
-
 namespace InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Assertions;
 
 public static class RefreshTokenMatchAssertions
@@ -55,20 +53,16 @@ public static class RefreshTokenMatchAssertions
 		}
 	}
 
-	extension(ICollection<SetCookieHeaderValue> cookies)
+	extension(GetRefreshTokenCookieApiResponse response)
 	{
-		public void ShouldSatisfy(IssueRefreshTokenApiRequest request, User user)
+		public void ShouldSatisfy(IssueRefreshTokenApiRequest request, RefreshToken refreshToken, IPasswordHasher passwordHasher)
 		{
-			cookies.ShouldSatisfy(p => p.Matches(request, user));
+			response.ShouldSatisfy(p => p.Matches(request, refreshToken, passwordHasher));
 		}
 
-		public void ShouldSatisfy(RotateRefreshTokenApiRequest request, User user)
+		public void ShouldSatisfy(RotateRefreshTokenApiRequest request, RefreshToken refreshToken)
 		{
-			cookies.ShouldSatisfy(p => p.Matches(request, user));
-		}
-		public void ShouldSatisfy(DeleteCurrentRefreshTokenApiRequest request, User user)
-		{
-			cookies.ShouldSatisfy(p => p.Matches(request, user));
+			response.ShouldSatisfy(p => p.Matches(request, refreshToken));
 		}
 	}
 }

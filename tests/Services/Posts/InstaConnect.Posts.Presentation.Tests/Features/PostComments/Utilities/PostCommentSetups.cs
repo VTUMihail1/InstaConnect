@@ -62,20 +62,20 @@ public static class PostCommentSetups
 		}
 
 		public async Task<PostComment?> GetByIdAsync(
-			ActionResult<AddPostCommentApiResponse> result,
+			ActionResult<AddPostCommentApiResponse> response,
 			CancellationToken cancellationToken)
 		{
 			return await serviceScope.GetByIdAsync(
-				result.GetValue(),
+				response.GetValue(),
 				cancellationToken);
 		}
 
 		public async Task<PostComment?> GetByIdAsync(
-			ActionResult<UpdatePostCommentApiResponse> result,
+			ActionResult<UpdatePostCommentApiResponse> response,
 			CancellationToken cancellationToken)
 		{
 			return await serviceScope.GetByIdAsync(
-				result.GetValue(),
+				response.GetValue(),
 				cancellationToken);
 		}
 	}

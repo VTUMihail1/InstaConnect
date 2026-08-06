@@ -78,7 +78,7 @@ public class GetPostLikeByIdControllerIntegrationTests : BasePostLikePresentatio
 	}
 
 	[Fact]
-	public async Task GetByIdAsync_ShouldThrowPostLikeNotFoundException_WhenIdIsInvalid()
+	public async Task GetByIdAsync_ShouldThrowPostLikeNotFoundException_WhenUserIdIsInvalid()
 	{
 		// Arrange
 		await ServiceScope.DeleteAsync(PostLike, CancellationToken);
@@ -91,10 +91,10 @@ public class GetPostLikeByIdControllerIntegrationTests : BasePostLikePresentatio
 	public async Task GetByIdAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.GetByIdAsync(_request, CancellationToken);
+		var response = await Controller.GetByIdAsync(_request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -106,10 +106,10 @@ public class GetPostLikeByIdControllerIntegrationTests : BasePostLikePresentatio
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -121,10 +121,10 @@ public class GetPostLikeByIdControllerIntegrationTests : BasePostLikePresentatio
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -137,20 +137,20 @@ public class GetPostLikeByIdControllerIntegrationTests : BasePostLikePresentatio
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Fact]
 	public async Task GetByIdAsync_ShouldReturnResponse_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.GetByIdAsync(_request, CancellationToken);
+		var response = await Controller.GetByIdAsync(_request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(_request, PostLike);
+		response.ShouldSatisfy(_request, PostLike);
 	}
 
 	[Theory]
@@ -162,10 +162,10 @@ public class GetPostLikeByIdControllerIntegrationTests : BasePostLikePresentatio
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, PostLike);
+		response.ShouldSatisfy(request, PostLike);
 	}
 
 	[Theory]
@@ -177,10 +177,10 @@ public class GetPostLikeByIdControllerIntegrationTests : BasePostLikePresentatio
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, PostLike);
+		response.ShouldSatisfy(request, PostLike);
 	}
 
 	[Theory]
@@ -193,9 +193,9 @@ public class GetPostLikeByIdControllerIntegrationTests : BasePostLikePresentatio
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, PostLike);
+		response.ShouldSatisfy(request, PostLike);
 	}
 }

@@ -29,10 +29,10 @@ public class GetAllUsersQueryRequestValidatorUnitTests : BaseUserApplicationQuer
 		var request = _requestBuilder.WithName(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForName(request, messageTransformer);
+		response.ShouldHaveValidationErrorForName(request, messageTransformer);
 	}
 
 	[Theory]
@@ -44,10 +44,10 @@ public class GetAllUsersQueryRequestValidatorUnitTests : BaseUserApplicationQuer
 		var request = _requestBuilder.WithFirstName(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForFirstName(request, messageTransformer);
+		response.ShouldHaveValidationErrorForFirstName(request, messageTransformer);
 	}
 
 	[Theory]
@@ -59,10 +59,10 @@ public class GetAllUsersQueryRequestValidatorUnitTests : BaseUserApplicationQuer
 		var request = _requestBuilder.WithLastName(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForLastName(request, messageTransformer);
+		response.ShouldHaveValidationErrorForLastName(request, messageTransformer);
 	}
 
 	[Theory]
@@ -74,10 +74,10 @@ public class GetAllUsersQueryRequestValidatorUnitTests : BaseUserApplicationQuer
 		var request = _requestBuilder.WithCurrentId(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForCurrentId(request, messageTransformer);
+		response.ShouldHaveValidationErrorForCurrentId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -89,10 +89,10 @@ public class GetAllUsersQueryRequestValidatorUnitTests : BaseUserApplicationQuer
 		var request = _requestBuilder.WithSortOrder(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForSortOrder(request, messageTransformer);
+		response.ShouldHaveValidationErrorForSortOrder(request, messageTransformer);
 	}
 
 	[Theory]
@@ -104,10 +104,10 @@ public class GetAllUsersQueryRequestValidatorUnitTests : BaseUserApplicationQuer
 		var request = _requestBuilder.WithSortTerm(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForSortTerm(request, messageTransformer);
+		response.ShouldHaveValidationErrorForSortTerm(request, messageTransformer);
 	}
 
 	[Theory]
@@ -120,10 +120,10 @@ public class GetAllUsersQueryRequestValidatorUnitTests : BaseUserApplicationQuer
 		var request = _requestBuilder.WithPage(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForPage(request, messageTransformer);
+		response.ShouldHaveValidationErrorForPage(request, messageTransformer);
 	}
 
 	[Theory]
@@ -136,10 +136,10 @@ public class GetAllUsersQueryRequestValidatorUnitTests : BaseUserApplicationQuer
 		var request = _requestBuilder.WithPageSize(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForPageSize(request, messageTransformer);
+		response.ShouldHaveValidationErrorForPageSize(request, messageTransformer);
 	}
 
 	[Theory]
@@ -152,10 +152,10 @@ public class GetAllUsersQueryRequestValidatorUnitTests : BaseUserApplicationQuer
 		var request = _requestBuilder.WithName(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldNotHaveAnyValidationErrorProperties();
+		response.ShouldNotHaveAnyValidationErrorProperties();
 	}
 
 	[Theory]
@@ -168,10 +168,10 @@ public class GetAllUsersQueryRequestValidatorUnitTests : BaseUserApplicationQuer
 		var request = _requestBuilder.WithFirstName(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldNotHaveAnyValidationErrorProperties();
+		response.ShouldNotHaveAnyValidationErrorProperties();
 	}
 
 	[Theory]
@@ -184,10 +184,10 @@ public class GetAllUsersQueryRequestValidatorUnitTests : BaseUserApplicationQuer
 		var request = _requestBuilder.WithLastName(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldNotHaveAnyValidationErrorProperties();
+		response.ShouldNotHaveAnyValidationErrorProperties();
 	}
 
 	[Theory]
@@ -200,19 +200,19 @@ public class GetAllUsersQueryRequestValidatorUnitTests : BaseUserApplicationQuer
 		var request = _requestBuilder.WithCurrentId(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldNotHaveAnyValidationErrorProperties();
+		response.ShouldNotHaveAnyValidationErrorProperties();
 	}
 
 	[Fact]
 	public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenRequestIsValid()
 	{
 		// Act
-		var result = _requestValidator.TestValidate(_request);
+		var response = _requestValidator.TestValidate(_request);
 
 		// Assert
-		result.ShouldNotHaveAnyValidationErrorProperties();
+		response.ShouldNotHaveAnyValidationErrorProperties();
 	}
 }

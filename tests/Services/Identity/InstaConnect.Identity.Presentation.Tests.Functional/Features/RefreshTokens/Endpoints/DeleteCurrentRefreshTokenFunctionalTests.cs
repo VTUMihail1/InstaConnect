@@ -1,5 +1,3 @@
-using InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Assertions;
-
 namespace InstaConnect.Identity.Presentation.Tests.Functional.Features.RefreshTokens.Endpoints;
 
 public class DeleteCurrentRefreshTokenFunctionalTests : BaseRefreshTokenPresentationCommandFunctionalTest
@@ -190,6 +188,49 @@ public class DeleteCurrentRefreshTokenFunctionalTests : BaseRefreshTokenPresenta
 	}
 
 	[Fact]
+	public async Task DeleteCurrentAsync_ShouldReturnCookieResponse_WhenRequestIsValid()
+	{
+		// Act
+		await RefreshTokenApiClient.DeleteCurrentAsync(_request, CancellationToken);
+		var response = ServiceScope.GetRefreshTokenCookieResponse();
+
+		// Assert
+		response.ShouldBeNull();
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task DeleteCurrentAsync_ShouldReturnCookieResponse_WhenRequestAndIdIsValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithId(transformer).Build();
+
+		// Act
+		await RefreshTokenApiClient.DeleteCurrentAsync(request, CancellationToken);
+		var response = ServiceScope.GetRefreshTokenCookieResponse();
+
+		// Assert
+		response.ShouldBeNull();
+	}
+
+	[Theory]
+	[RefreshTokenValueDifferentCaseData]
+	public async Task DeleteCurrentAsync_ShouldReturnCookieResponse_WhenRequestAndValueIsValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithValue(transformer).Build();
+
+		// Act
+		await RefreshTokenApiClient.DeleteCurrentAsync(request, CancellationToken);
+		var response = ServiceScope.GetRefreshTokenCookieResponse();
+
+		// Assert
+		response.ShouldBeNull();
+	}
+
+	[Fact]
 	public async Task DeleteCurrentAsync_ShouldDeleteCurrentRefreshToken_WhenRequestIsValid()
 	{
 		// Act
@@ -230,46 +271,5 @@ public class DeleteCurrentRefreshTokenFunctionalTests : BaseRefreshTokenPresenta
 
 		// Assert
 		refreshToken.ShouldBeNull();
-	}
-
-	[Fact]
-	public async Task DeleteAsync_ShouldReturnCookies_WhenRequestIsValid()
-	{
-		// Act
-		var response = await RefreshTokenApiClient.DeleteCurrentResponseCookiesAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
-
-		// Assert
-		response.ShouldSatisfy(_request, user);
-	}
-
-	[Theory]
-	[UserIdDifferentCaseData]
-	public async Task DeleteAsync_ShouldReturnCookies_WhenIdIsValid(IStringTransformer transformer)
-	{
-		// Arrange
-		var request = _requestBuilder.WithId(transformer).Build();
-
-		// Act
-		var response = await RefreshTokenApiClient.DeleteCurrentResponseCookiesAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
-
-		// Assert
-		response.ShouldSatisfy(request, user);
-	}
-
-	[Theory]
-	[RefreshTokenValueDifferentCaseData]
-	public async Task DeleteAsync_ShouldReturnCookies_WhenValueIsValid(IStringTransformer transformer)
-	{
-		// Arrange
-		var request = _requestBuilder.WithValue(transformer).Build();
-
-		// Act
-		var response = await RefreshTokenApiClient.DeleteCurrentResponseCookiesAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
-
-		// Assert
-		response.ShouldSatisfy(request, user);
 	}
 }

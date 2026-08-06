@@ -65,10 +65,10 @@ public class GetPostByIdControllerIntegrationTests : BasePostPresentationQueryIn
 	public async Task GetByIdAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.GetByIdAsync(_request, CancellationToken);
+		var response = await Controller.GetByIdAsync(_request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -80,10 +80,10 @@ public class GetPostByIdControllerIntegrationTests : BasePostPresentationQueryIn
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -97,20 +97,20 @@ public class GetPostByIdControllerIntegrationTests : BasePostPresentationQueryIn
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Fact]
 	public async Task GetByIdAsync_ShouldReturnResponse_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.GetByIdAsync(_request, CancellationToken);
+		var response = await Controller.GetByIdAsync(_request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(_request, Post);
+		response.ShouldSatisfy(_request, Post);
 	}
 
 	[Theory]
@@ -122,10 +122,10 @@ public class GetPostByIdControllerIntegrationTests : BasePostPresentationQueryIn
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, Post);
+		response.ShouldSatisfy(request, Post);
 	}
 
 	[Theory]
@@ -139,9 +139,9 @@ public class GetPostByIdControllerIntegrationTests : BasePostPresentationQueryIn
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, Post);
+		response.ShouldSatisfy(request, Post);
 	}
 }

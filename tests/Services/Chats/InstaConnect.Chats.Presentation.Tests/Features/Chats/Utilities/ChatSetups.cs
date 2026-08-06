@@ -41,11 +41,11 @@ public static class ChatSetups
 		}
 
 		public async Task<Chat?> GetByIdAsync(
-			ActionResult<AddChatApiResponse> result,
+			ActionResult<AddChatApiResponse> response,
 			CancellationToken cancellationToken)
 		{
 			return await serviceScope.GetByIdAsync(
-				result.GetValue(),
+				response.GetValue(),
 				cancellationToken);
 		}
 	}

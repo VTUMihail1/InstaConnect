@@ -65,7 +65,7 @@ public class DeletePostLikeControllerIntegrationTests : BasePostLikePresentation
 	}
 
 	[Fact]
-	public async Task DeleteAsync_ShouldThrowPostLikeNotFoundException_WhenIdIsInvalid()
+	public async Task DeleteAsync_ShouldThrowPostLikeNotFoundException_WhenUserIdIsInvalid()
 	{
 		// Arrange
 		await ServiceScope.DeleteAsync(PostLike, CancellationToken);
@@ -78,10 +78,10 @@ public class DeletePostLikeControllerIntegrationTests : BasePostLikePresentation
 	public async Task DeleteAsync_ShouldReturnNoContentStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.DeleteAsync(_request, CancellationToken);
+		var response = await Controller.DeleteAsync(_request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithNoContentStatusCode();
+		response.ShouldBeActionResultWithNoContentStatusCode();
 	}
 
 	[Theory]
@@ -93,10 +93,10 @@ public class DeletePostLikeControllerIntegrationTests : BasePostLikePresentation
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var result = await Controller.DeleteAsync(request, CancellationToken);
+		var response = await Controller.DeleteAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithNoContentStatusCode();
+		response.ShouldBeActionResultWithNoContentStatusCode();
 	}
 
 	[Theory]
@@ -108,10 +108,10 @@ public class DeletePostLikeControllerIntegrationTests : BasePostLikePresentation
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var result = await Controller.DeleteAsync(request, CancellationToken);
+		var response = await Controller.DeleteAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithNoContentStatusCode();
+		response.ShouldBeActionResultWithNoContentStatusCode();
 	}
 
 	[Fact]

@@ -29,10 +29,10 @@ public class UpdatePostCommandRequestValidatorUnitTests : BasePostApplicationCom
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForId(request, messageTransformer);
+		response.ShouldHaveValidationErrorForId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -47,10 +47,10 @@ public class UpdatePostCommandRequestValidatorUnitTests : BasePostApplicationCom
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForUserId(request, messageTransformer);
+		response.ShouldHaveValidationErrorForUserId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -65,10 +65,10 @@ public class UpdatePostCommandRequestValidatorUnitTests : BasePostApplicationCom
 		var request = _requestBuilder.WithTitle(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForTitle(request, messageTransformer);
+		response.ShouldHaveValidationErrorForTitle(request, messageTransformer);
 	}
 
 	[Theory]
@@ -83,19 +83,19 @@ public class UpdatePostCommandRequestValidatorUnitTests : BasePostApplicationCom
 		var request = _requestBuilder.WithContent(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForContent(request, messageTransformer);
+		response.ShouldHaveValidationErrorForContent(request, messageTransformer);
 	}
 
 	[Fact]
 	public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenRequestIsValid()
 	{
 		// Act
-		var result = _requestValidator.TestValidate(_request);
+		var response = _requestValidator.TestValidate(_request);
 
 		// Assert
-		result.ShouldNotHaveAnyValidationErrorProperties();
+		response.ShouldNotHaveAnyValidationErrorProperties();
 	}
 }

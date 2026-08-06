@@ -133,10 +133,10 @@ public class GetAllUsersControllerIntegrationTests : BaseUserPresentationQueryIn
 	public async Task GetAllAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.GetAllAsync(_request, CancellationToken);
+		var response = await Controller.GetAllAsync(_request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -150,10 +150,10 @@ public class GetAllUsersControllerIntegrationTests : BaseUserPresentationQueryIn
 		var request = _requestBuilder.WithName(transformer).Build();
 
 		// Act
-		var result = await Controller.GetAllAsync(request, CancellationToken);
+		var response = await Controller.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -167,10 +167,10 @@ public class GetAllUsersControllerIntegrationTests : BaseUserPresentationQueryIn
 		var request = _requestBuilder.WithFirstName(transformer).Build();
 
 		// Act
-		var result = await Controller.GetAllAsync(request, CancellationToken);
+		var response = await Controller.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -184,10 +184,10 @@ public class GetAllUsersControllerIntegrationTests : BaseUserPresentationQueryIn
 		var request = _requestBuilder.WithLastName(transformer).Build();
 
 		// Act
-		var result = await Controller.GetAllAsync(request, CancellationToken);
+		var response = await Controller.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -200,10 +200,10 @@ public class GetAllUsersControllerIntegrationTests : BaseUserPresentationQueryIn
 		var request = _requestBuilder.WithCurrentId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetAllAsync(request, CancellationToken);
+		var response = await Controller.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -216,10 +216,10 @@ public class GetAllUsersControllerIntegrationTests : BaseUserPresentationQueryIn
 		var request = _requestBuilder.WithSortOrder(transformer).Build();
 
 		// Act
-		var result = await Controller.GetAllAsync(request, CancellationToken);
+		var response = await Controller.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -234,20 +234,20 @@ public class GetAllUsersControllerIntegrationTests : BaseUserPresentationQueryIn
 		var request = _requestBuilder.WithSortTerm(transformer).Build();
 
 		// Act
-		var result = await Controller.GetAllAsync(request, CancellationToken);
+		var response = await Controller.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Fact]
 	public async Task GetAllAsync_ShouldReturnResponse_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.GetAllAsync(_request, CancellationToken);
+		var response = await Controller.GetAllAsync(_request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(_request, Users);
+		response.ShouldSatisfy(_request, Users);
 	}
 
 	[Theory]
@@ -261,10 +261,10 @@ public class GetAllUsersControllerIntegrationTests : BaseUserPresentationQueryIn
 		var request = _requestBuilder.WithName(transformer).Build();
 
 		// Act
-		var result = await Controller.GetAllAsync(request, CancellationToken);
+		var response = await Controller.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, Users);
+		response.ShouldSatisfy(request, Users);
 	}
 
 	[Theory]
@@ -278,10 +278,10 @@ public class GetAllUsersControllerIntegrationTests : BaseUserPresentationQueryIn
 		var request = _requestBuilder.WithFirstName(transformer).Build();
 
 		// Act
-		var result = await Controller.GetAllAsync(request, CancellationToken);
+		var response = await Controller.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, Users);
+		response.ShouldSatisfy(request, Users);
 	}
 
 	[Theory]
@@ -295,10 +295,10 @@ public class GetAllUsersControllerIntegrationTests : BaseUserPresentationQueryIn
 		var request = _requestBuilder.WithLastName(transformer).Build();
 
 		// Act
-		var result = await Controller.GetAllAsync(request, CancellationToken);
+		var response = await Controller.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, Users);
+		response.ShouldSatisfy(request, Users);
 	}
 
 	[Theory]
@@ -311,10 +311,10 @@ public class GetAllUsersControllerIntegrationTests : BaseUserPresentationQueryIn
 		var request = _requestBuilder.WithCurrentId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetAllAsync(request, CancellationToken);
+		var response = await Controller.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, Users);
+		response.ShouldSatisfy(request, Users);
 	}
 
 	[Theory]
@@ -327,10 +327,10 @@ public class GetAllUsersControllerIntegrationTests : BaseUserPresentationQueryIn
 		var request = _requestBuilder.WithSortOrder(transformer).Build();
 
 		// Act
-		var result = await Controller.GetAllAsync(request, CancellationToken);
+		var response = await Controller.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, Users, termTransformer);
+		response.ShouldSatisfy(request, Users, termTransformer);
 	}
 
 	[Theory]
@@ -345,9 +345,9 @@ public class GetAllUsersControllerIntegrationTests : BaseUserPresentationQueryIn
 		var request = _requestBuilder.WithSortTerm(transformer).Build();
 
 		// Act
-		var result = await Controller.GetAllAsync(request, CancellationToken);
+		var response = await Controller.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, Users, termTransformer);
+		response.ShouldSatisfy(request, Users, termTransformer);
 	}
 }

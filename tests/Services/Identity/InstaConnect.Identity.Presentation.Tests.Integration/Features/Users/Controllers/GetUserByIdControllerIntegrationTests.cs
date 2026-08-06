@@ -63,10 +63,10 @@ public class GetUserByIdControllerIntegrationTests : BaseUserPresentationQueryIn
 	public async Task GetByIdAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.GetByIdAsync(_request, CancellationToken);
+		var response = await Controller.GetByIdAsync(_request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -78,10 +78,10 @@ public class GetUserByIdControllerIntegrationTests : BaseUserPresentationQueryIn
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -94,20 +94,20 @@ public class GetUserByIdControllerIntegrationTests : BaseUserPresentationQueryIn
 		var request = _requestBuilder.WithCurrentId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Fact]
 	public async Task GetByIdAsync_ShouldReturnResponse_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.GetByIdAsync(_request, CancellationToken);
+		var response = await Controller.GetByIdAsync(_request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(_request, User);
+		response.ShouldSatisfy(_request, User);
 	}
 
 	[Theory]
@@ -119,10 +119,10 @@ public class GetUserByIdControllerIntegrationTests : BaseUserPresentationQueryIn
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, User);
+		response.ShouldSatisfy(request, User);
 	}
 
 	[Theory]
@@ -135,9 +135,9 @@ public class GetUserByIdControllerIntegrationTests : BaseUserPresentationQueryIn
 		var request = _requestBuilder.WithCurrentId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, User);
+		response.ShouldSatisfy(request, User);
 	}
 }

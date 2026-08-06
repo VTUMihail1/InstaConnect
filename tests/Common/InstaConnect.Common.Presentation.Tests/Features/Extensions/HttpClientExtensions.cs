@@ -11,7 +11,6 @@ using InstaConnect.Common.Infrastructure.Features.AccessTokens.Abstractions;
 using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Net.Http.Headers;
 
 namespace InstaConnect.Common.Presentation.Tests.Features.Extensions;
 
@@ -72,13 +71,6 @@ public static class HttpClientExtensions
 		public HttpStatusCode GetStatusCode()
 		{
 			return httpResponseMessage.StatusCode;
-		}
-
-		public ICollection<SetCookieHeaderValue> GetCookies()
-		{
-			const string SetCookieHeader = "Set-Cookie";
-
-			return [.. httpResponseMessage.Headers.GetValues(SetCookieHeader).Select(header => SetCookieHeaderValue.Parse(header))];
 		}
 	}
 }

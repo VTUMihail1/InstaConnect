@@ -29,10 +29,10 @@ public class IssueRefreshTokenCommandRequestValidatorUnitTests : BaseRefreshToke
 		var request = _requestBuilder.WithName(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForName(request, messageTransformer);
+		response.ShouldHaveValidationErrorForName(request, messageTransformer);
 	}
 
 	[Theory]
@@ -47,19 +47,19 @@ public class IssueRefreshTokenCommandRequestValidatorUnitTests : BaseRefreshToke
 		var request = _requestBuilder.WithPassword(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForPassword(request, messageTransformer);
+		response.ShouldHaveValidationErrorForPassword(request, messageTransformer);
 	}
 
 	[Fact]
 	public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenRequestIsValid()
 	{
 		// Act
-		var result = _requestValidator.TestValidate(_request);
+		var response = _requestValidator.TestValidate(_request);
 
 		// Assert
-		result.ShouldNotHaveAnyValidationErrorProperties();
+		response.ShouldNotHaveAnyValidationErrorProperties();
 	}
 }

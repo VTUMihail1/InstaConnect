@@ -49,20 +49,20 @@ public static class UserSetups
 		}
 
 		public async Task<User?> GetByIdAsync(
-		ActionResult<AddUserApiResponse> result,
+		ActionResult<AddUserApiResponse> response,
 		CancellationToken cancellationToken)
 		{
 			return await serviceScope.GetByIdAsync(
-				result.GetValue(),
+				response.GetValue(),
 				cancellationToken);
 		}
 
 		public async Task<User?> GetByIdAsync(
-		ActionResult<UpdateCurrentUserApiResponse> result,
+		ActionResult<UpdateCurrentUserApiResponse> response,
 		CancellationToken cancellationToken)
 		{
 			return await serviceScope.GetByIdAsync(
-				result.GetValue(),
+				response.GetValue(),
 				cancellationToken);
 		}
 

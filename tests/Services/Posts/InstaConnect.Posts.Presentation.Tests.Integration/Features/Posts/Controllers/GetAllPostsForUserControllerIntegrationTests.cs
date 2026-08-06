@@ -137,10 +137,10 @@ public class GetAllPostsForUserControllerIntegrationTests : BasePostPresentation
 	public async Task GetAllAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var result = await UserController.GetAllAsync(_request, CancellationToken);
+		var response = await UserController.GetAllAsync(_request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -152,10 +152,10 @@ public class GetAllPostsForUserControllerIntegrationTests : BasePostPresentation
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var result = await UserController.GetAllAsync(request, CancellationToken);
+		var response = await UserController.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -169,10 +169,10 @@ public class GetAllPostsForUserControllerIntegrationTests : BasePostPresentation
 		var request = _requestBuilder.WithTitle(transformer).Build();
 
 		// Act
-		var result = await UserController.GetAllAsync(request, CancellationToken);
+		var response = await UserController.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -186,10 +186,10 @@ public class GetAllPostsForUserControllerIntegrationTests : BasePostPresentation
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var result = await UserController.GetAllAsync(request, CancellationToken);
+		var response = await UserController.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -202,10 +202,10 @@ public class GetAllPostsForUserControllerIntegrationTests : BasePostPresentation
 		var request = _requestBuilder.WithSortOrder(transformer).Build();
 
 		// Act
-		var result = await UserController.GetAllAsync(request, CancellationToken);
+		var response = await UserController.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -219,20 +219,20 @@ public class GetAllPostsForUserControllerIntegrationTests : BasePostPresentation
 		var request = _requestBuilder.WithSortTerm(transformer).Build();
 
 		// Act
-		var result = await UserController.GetAllAsync(request, CancellationToken);
+		var response = await UserController.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Fact]
 	public async Task GetAllAsync_ShouldReturnResponse_WhenRequestIsValid()
 	{
 		// Act
-		var result = await UserController.GetAllAsync(_request, CancellationToken);
+		var response = await UserController.GetAllAsync(_request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(_request, User, Posts);
+		response.ShouldSatisfy(_request, User, Posts);
 	}
 
 	[Theory]
@@ -244,10 +244,10 @@ public class GetAllPostsForUserControllerIntegrationTests : BasePostPresentation
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var result = await UserController.GetAllAsync(request, CancellationToken);
+		var response = await UserController.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, User, Posts);
+		response.ShouldSatisfy(request, User, Posts);
 	}
 
 	[Theory]
@@ -261,10 +261,10 @@ public class GetAllPostsForUserControllerIntegrationTests : BasePostPresentation
 		var request = _requestBuilder.WithTitle(transformer).Build();
 
 		// Act
-		var result = await UserController.GetAllAsync(request, CancellationToken);
+		var response = await UserController.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, User, Posts);
+		response.ShouldSatisfy(request, User, Posts);
 	}
 
 	[Theory]
@@ -278,10 +278,10 @@ public class GetAllPostsForUserControllerIntegrationTests : BasePostPresentation
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var result = await UserController.GetAllAsync(request, CancellationToken);
+		var response = await UserController.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, User, Posts);
+		response.ShouldSatisfy(request, User, Posts);
 	}
 
 	[Theory]
@@ -294,10 +294,10 @@ public class GetAllPostsForUserControllerIntegrationTests : BasePostPresentation
 		var request = _requestBuilder.WithSortOrder(transformer).Build();
 
 		// Act
-		var result = await UserController.GetAllAsync(request, CancellationToken);
+		var response = await UserController.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, User, Posts, termTransformer);
+		response.ShouldSatisfy(request, User, Posts, termTransformer);
 	}
 
 	[Theory]
@@ -311,9 +311,9 @@ public class GetAllPostsForUserControllerIntegrationTests : BasePostPresentation
 		var request = _requestBuilder.WithSortTerm(transformer).Build();
 
 		// Act
-		var result = await UserController.GetAllAsync(request, CancellationToken);
+		var response = await UserController.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, User, Posts, termTransformer);
+		response.ShouldSatisfy(request, User, Posts, termTransformer);
 	}
 }

@@ -29,10 +29,10 @@ public class UpdateCurrentUserCommandRequestValidatorUnitTests : BaseUserApplica
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForId(request, messageTransformer);
+		response.ShouldHaveValidationErrorForId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -47,10 +47,10 @@ public class UpdateCurrentUserCommandRequestValidatorUnitTests : BaseUserApplica
 		var request = _requestBuilder.WithName(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForName(request, messageTransformer);
+		response.ShouldHaveValidationErrorForName(request, messageTransformer);
 	}
 
 	[Theory]
@@ -65,10 +65,10 @@ public class UpdateCurrentUserCommandRequestValidatorUnitTests : BaseUserApplica
 		var request = _requestBuilder.WithFirstName(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForFirstName(request, messageTransformer);
+		response.ShouldHaveValidationErrorForFirstName(request, messageTransformer);
 	}
 
 	[Theory]
@@ -83,10 +83,10 @@ public class UpdateCurrentUserCommandRequestValidatorUnitTests : BaseUserApplica
 		var request = _requestBuilder.WithLastName(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForLastName(request, messageTransformer);
+		response.ShouldHaveValidationErrorForLastName(request, messageTransformer);
 	}
 
 	[Theory]
@@ -102,20 +102,20 @@ public class UpdateCurrentUserCommandRequestValidatorUnitTests : BaseUserApplica
 		var request = _requestBuilder.WithEmail(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForEmail(request, messageTransformer);
+		response.ShouldHaveValidationErrorForEmail(request, messageTransformer);
 	}
 
 	[Fact]
 	public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenRequestIsValid()
 	{
 		// Act
-		var result = _requestValidator.TestValidate(_request);
+		var response = _requestValidator.TestValidate(_request);
 
 		// Assert
-		result.ShouldNotHaveAnyValidationErrorProperties();
+		response.ShouldNotHaveAnyValidationErrorProperties();
 	}
 
 	[Theory]
@@ -127,9 +127,9 @@ public class UpdateCurrentUserCommandRequestValidatorUnitTests : BaseUserApplica
 		var request = _requestBuilder.WithProfileImage(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldNotHaveAnyValidationErrorProperties();
+		response.ShouldNotHaveAnyValidationErrorProperties();
 	}
 }

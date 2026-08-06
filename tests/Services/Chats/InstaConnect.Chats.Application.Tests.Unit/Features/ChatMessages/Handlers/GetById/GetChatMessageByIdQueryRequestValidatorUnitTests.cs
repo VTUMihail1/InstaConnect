@@ -29,10 +29,10 @@ public class GetChatMessageByIdQueryRequestValidatorUnitTests : BaseChatMessageA
 		var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForParticipantTwoId(request, messageTransformer);
+		response.ShouldHaveValidationErrorForParticipantTwoId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -47,10 +47,10 @@ public class GetChatMessageByIdQueryRequestValidatorUnitTests : BaseChatMessageA
 		var request = _requestBuilder.WithMessageId(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForMessageId(request, messageTransformer);
+		response.ShouldHaveValidationErrorForMessageId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -65,19 +65,19 @@ public class GetChatMessageByIdQueryRequestValidatorUnitTests : BaseChatMessageA
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForCurrentUserId(request, messageTransformer);
+		response.ShouldHaveValidationErrorForCurrentUserId(request, messageTransformer);
 	}
 
 	[Fact]
 	public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenRequestIsValid()
 	{
 		// Act
-		var result = _requestValidator.TestValidate(_request);
+		var response = _requestValidator.TestValidate(_request);
 
 		// Assert
-		result.ShouldNotHaveAnyValidationErrorProperties();
+		response.ShouldNotHaveAnyValidationErrorProperties();
 	}
 }

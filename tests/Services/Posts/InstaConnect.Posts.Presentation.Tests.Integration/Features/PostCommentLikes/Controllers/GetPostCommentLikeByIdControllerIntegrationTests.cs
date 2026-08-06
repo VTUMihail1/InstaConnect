@@ -119,10 +119,10 @@ public class GetPostCommentLikeByIdControllerIntegrationTests : BasePostCommentL
 	public async Task GetByIdAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.GetByIdAsync(_request, CancellationToken);
+		var response = await Controller.GetByIdAsync(_request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -134,10 +134,10 @@ public class GetPostCommentLikeByIdControllerIntegrationTests : BasePostCommentL
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -149,10 +149,10 @@ public class GetPostCommentLikeByIdControllerIntegrationTests : BasePostCommentL
 		var request = _requestBuilder.WithCommentId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -164,10 +164,10 @@ public class GetPostCommentLikeByIdControllerIntegrationTests : BasePostCommentL
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -180,20 +180,20 @@ public class GetPostCommentLikeByIdControllerIntegrationTests : BasePostCommentL
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Fact]
 	public async Task GetByIdAsync_ShouldReturnResponse_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.GetByIdAsync(_request, CancellationToken);
+		var response = await Controller.GetByIdAsync(_request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(_request, PostCommentLike);
+		response.ShouldSatisfy(_request, PostCommentLike);
 	}
 
 	[Theory]
@@ -205,10 +205,10 @@ public class GetPostCommentLikeByIdControllerIntegrationTests : BasePostCommentL
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, PostCommentLike);
+		response.ShouldSatisfy(request, PostCommentLike);
 	}
 
 	[Theory]
@@ -220,10 +220,10 @@ public class GetPostCommentLikeByIdControllerIntegrationTests : BasePostCommentL
 		var request = _requestBuilder.WithCommentId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, PostCommentLike);
+		response.ShouldSatisfy(request, PostCommentLike);
 	}
 
 	[Theory]
@@ -235,10 +235,10 @@ public class GetPostCommentLikeByIdControllerIntegrationTests : BasePostCommentL
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, PostCommentLike);
+		response.ShouldSatisfy(request, PostCommentLike);
 	}
 
 	[Theory]
@@ -251,9 +251,9 @@ public class GetPostCommentLikeByIdControllerIntegrationTests : BasePostCommentL
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetByIdAsync(request, CancellationToken);
+		var response = await Controller.GetByIdAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, PostCommentLike);
+		response.ShouldSatisfy(request, PostCommentLike);
 	}
 }

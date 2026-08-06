@@ -53,11 +53,11 @@ public static class FollowSetups
 		}
 
 		public async Task<Follow?> GetByIdAsync(
-		ActionResult<AddFollowApiResponse> result,
+		ActionResult<AddFollowApiResponse> response,
 		CancellationToken cancellationToken)
 		{
 			return await serviceScope.GetByIdAsync(
-				result.GetValue(),
+				response.GetValue(),
 				cancellationToken);
 		}
 	}

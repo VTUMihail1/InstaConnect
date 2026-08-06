@@ -29,10 +29,10 @@ public class UpdateChatMessageCommandRequestValidatorUnitTests : BaseChatMessage
 		var request = _requestBuilder.WithParticipantOneId(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForParticipantOneId(request, messageTransformer);
+		response.ShouldHaveValidationErrorForParticipantOneId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -47,10 +47,10 @@ public class UpdateChatMessageCommandRequestValidatorUnitTests : BaseChatMessage
 		var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForParticipantTwoId(request, messageTransformer);
+		response.ShouldHaveValidationErrorForParticipantTwoId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -65,10 +65,10 @@ public class UpdateChatMessageCommandRequestValidatorUnitTests : BaseChatMessage
 		var request = _requestBuilder.WithMessageId(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForMessageId(request, messageTransformer);
+		response.ShouldHaveValidationErrorForMessageId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -83,19 +83,19 @@ public class UpdateChatMessageCommandRequestValidatorUnitTests : BaseChatMessage
 		var request = _requestBuilder.WithContent(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForContent(request, messageTransformer);
+		response.ShouldHaveValidationErrorForContent(request, messageTransformer);
 	}
 
 	[Fact]
 	public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenRequestIsValid()
 	{
 		// Act
-		var result = _requestValidator.TestValidate(_request);
+		var response = _requestValidator.TestValidate(_request);
 
 		// Assert
-		result.ShouldNotHaveAnyValidationErrorProperties();
+		response.ShouldNotHaveAnyValidationErrorProperties();
 	}
 }

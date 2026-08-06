@@ -105,10 +105,10 @@ public class DeletePostCommentLikeControllerIntegrationTests : BasePostCommentLi
 	public async Task DeleteAsync_ShouldReturnNoContentStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.DeleteAsync(_request, CancellationToken);
+		var response = await Controller.DeleteAsync(_request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithNoContentStatusCode();
+		response.ShouldBeActionResultWithNoContentStatusCode();
 	}
 
 	[Theory]
@@ -120,10 +120,10 @@ public class DeletePostCommentLikeControllerIntegrationTests : BasePostCommentLi
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var result = await Controller.DeleteAsync(request, CancellationToken);
+		var response = await Controller.DeleteAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithNoContentStatusCode();
+		response.ShouldBeActionResultWithNoContentStatusCode();
 	}
 
 	[Theory]
@@ -135,10 +135,10 @@ public class DeletePostCommentLikeControllerIntegrationTests : BasePostCommentLi
 		var request = _requestBuilder.WithCommentId(transformer).Build();
 
 		// Act
-		var result = await Controller.DeleteAsync(request, CancellationToken);
+		var response = await Controller.DeleteAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithNoContentStatusCode();
+		response.ShouldBeActionResultWithNoContentStatusCode();
 	}
 
 	[Theory]
@@ -150,10 +150,10 @@ public class DeletePostCommentLikeControllerIntegrationTests : BasePostCommentLi
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var result = await Controller.DeleteAsync(request, CancellationToken);
+		var response = await Controller.DeleteAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithNoContentStatusCode();
+		response.ShouldBeActionResultWithNoContentStatusCode();
 	}
 
 	[Fact]

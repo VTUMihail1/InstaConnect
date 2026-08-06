@@ -121,10 +121,10 @@ public class UpdateChatMessageControllerIntegrationTests : BaseChatMessagePresen
 	public async Task UpdateAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.UpdateAsync(_request, CancellationToken);
+		var response = await Controller.UpdateAsync(_request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -136,10 +136,10 @@ public class UpdateChatMessageControllerIntegrationTests : BaseChatMessagePresen
 		var request = _requestBuilder.WithParticipantOneId(transformer).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -151,10 +151,10 @@ public class UpdateChatMessageControllerIntegrationTests : BaseChatMessagePresen
 		var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -166,10 +166,10 @@ public class UpdateChatMessageControllerIntegrationTests : BaseChatMessagePresen
 		var request = _requestBuilder.WithMessageId(transformer).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Fact]
@@ -181,10 +181,10 @@ public class UpdateChatMessageControllerIntegrationTests : BaseChatMessagePresen
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -198,10 +198,10 @@ public class UpdateChatMessageControllerIntegrationTests : BaseChatMessagePresen
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id, transformer).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -215,10 +215,10 @@ public class UpdateChatMessageControllerIntegrationTests : BaseChatMessagePresen
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id, transformer).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -232,21 +232,21 @@ public class UpdateChatMessageControllerIntegrationTests : BaseChatMessagePresen
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).WithMessageId(transformer).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Fact]
 	public async Task UpdateAsync_ShouldReturnOkResponse_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.UpdateAsync(_request, CancellationToken);
-		var chatMessage = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateAsync(_request, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(_request, chatMessage);
+		response.ShouldSatisfy(_request, chatMessage);
 	}
 
 	[Theory]
@@ -258,11 +258,11 @@ public class UpdateChatMessageControllerIntegrationTests : BaseChatMessagePresen
 		var request = _requestBuilder.WithParticipantOneId(transformer).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, chatMessage);
+		response.ShouldSatisfy(request, chatMessage);
 	}
 
 	[Theory]
@@ -274,11 +274,11 @@ public class UpdateChatMessageControllerIntegrationTests : BaseChatMessagePresen
 		var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, chatMessage);
+		response.ShouldSatisfy(request, chatMessage);
 	}
 
 	[Theory]
@@ -290,11 +290,11 @@ public class UpdateChatMessageControllerIntegrationTests : BaseChatMessagePresen
 		var request = _requestBuilder.WithMessageId(transformer).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, chatMessage);
+		response.ShouldSatisfy(request, chatMessage);
 	}
 
 	[Fact]
@@ -306,11 +306,11 @@ public class UpdateChatMessageControllerIntegrationTests : BaseChatMessagePresen
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, chatMessage);
+		response.ShouldSatisfy(request, chatMessage);
 	}
 
 	[Theory]
@@ -324,11 +324,11 @@ public class UpdateChatMessageControllerIntegrationTests : BaseChatMessagePresen
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id, transformer).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, chatMessage);
+		response.ShouldSatisfy(request, chatMessage);
 	}
 
 	[Theory]
@@ -342,11 +342,11 @@ public class UpdateChatMessageControllerIntegrationTests : BaseChatMessagePresen
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id, transformer).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, chatMessage);
+		response.ShouldSatisfy(request, chatMessage);
 	}
 
 	[Theory]
@@ -360,19 +360,19 @@ public class UpdateChatMessageControllerIntegrationTests : BaseChatMessagePresen
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).WithMessageId(transformer).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, chatMessage);
+		response.ShouldSatisfy(request, chatMessage);
 	}
 
 	[Fact]
 	public async Task UpdateAsync_ShouldUpdateChatMessage_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.UpdateAsync(_request, CancellationToken);
-		var chatMessage = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateAsync(_request, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		chatMessage.ShouldSatisfy(_request);
@@ -387,8 +387,8 @@ public class UpdateChatMessageControllerIntegrationTests : BaseChatMessagePresen
 		var request = _requestBuilder.WithParticipantOneId(transformer).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		chatMessage.ShouldSatisfy(request);
@@ -403,8 +403,8 @@ public class UpdateChatMessageControllerIntegrationTests : BaseChatMessagePresen
 		var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		chatMessage.ShouldSatisfy(request);
@@ -419,8 +419,8 @@ public class UpdateChatMessageControllerIntegrationTests : BaseChatMessagePresen
 		var request = _requestBuilder.WithMessageId(transformer).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		chatMessage.ShouldSatisfy(request);
@@ -435,8 +435,8 @@ public class UpdateChatMessageControllerIntegrationTests : BaseChatMessagePresen
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		chatMessage.ShouldSatisfyInverted(request);
@@ -453,8 +453,8 @@ public class UpdateChatMessageControllerIntegrationTests : BaseChatMessagePresen
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id, transformer).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		chatMessage.ShouldSatisfyInverted(request);
@@ -471,8 +471,8 @@ public class UpdateChatMessageControllerIntegrationTests : BaseChatMessagePresen
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id, transformer).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		chatMessage.ShouldSatisfyInverted(request);
@@ -489,8 +489,8 @@ public class UpdateChatMessageControllerIntegrationTests : BaseChatMessagePresen
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).WithMessageId(transformer).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		chatMessage.ShouldSatisfyInverted(request);
@@ -500,8 +500,8 @@ public class UpdateChatMessageControllerIntegrationTests : BaseChatMessagePresen
 	public async Task UpdateAsync_ShouldPublishChatMessageUpdatedNotification_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.UpdateAsync(_request, CancellationToken);
-		var chatMessage = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateAsync(_request, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var notificationRequest = await MessageNotificationClient.PublishedUpdatedAsync(CancellationToken);
 
 		// Assert
@@ -517,8 +517,8 @@ public class UpdateChatMessageControllerIntegrationTests : BaseChatMessagePresen
 		var request = _requestBuilder.WithParticipantOneId(transformer).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var notificationRequest = await MessageNotificationClient.PublishedUpdatedAsync(CancellationToken);
 
 		// Assert
@@ -534,8 +534,8 @@ public class UpdateChatMessageControllerIntegrationTests : BaseChatMessagePresen
 		var request = _requestBuilder.WithParticipantTwoId(transformer).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var notificationRequest = await MessageNotificationClient.PublishedUpdatedAsync(CancellationToken);
 
 		// Assert
@@ -551,8 +551,8 @@ public class UpdateChatMessageControllerIntegrationTests : BaseChatMessagePresen
 		var request = _requestBuilder.WithMessageId(transformer).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var notificationRequest = await MessageNotificationClient.PublishedUpdatedAsync(CancellationToken);
 
 		// Assert
@@ -568,8 +568,8 @@ public class UpdateChatMessageControllerIntegrationTests : BaseChatMessagePresen
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var notificationRequest = await MessageNotificationClient.PublishedUpdatedAsync(CancellationToken);
 
 		// Assert
@@ -587,8 +587,8 @@ public class UpdateChatMessageControllerIntegrationTests : BaseChatMessagePresen
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id, transformer).WithParticipantTwoId(ParticipantOne.Id).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var notificationRequest = await MessageNotificationClient.PublishedUpdatedAsync(CancellationToken);
 
 		// Assert
@@ -606,8 +606,8 @@ public class UpdateChatMessageControllerIntegrationTests : BaseChatMessagePresen
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id, transformer).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var notificationRequest = await MessageNotificationClient.PublishedUpdatedAsync(CancellationToken);
 
 		// Assert
@@ -625,8 +625,8 @@ public class UpdateChatMessageControllerIntegrationTests : BaseChatMessagePresen
 		var request = _requestBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).WithMessageId(transformer).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
-		var chatMessage = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var notificationRequest = await MessageNotificationClient.PublishedUpdatedAsync(CancellationToken);
 
 		// Assert

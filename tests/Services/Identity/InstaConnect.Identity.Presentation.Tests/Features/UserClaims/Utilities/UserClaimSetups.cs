@@ -40,11 +40,11 @@ public static class UserClaimSetups
 		}
 
 		public async Task<UserClaim?> GetByIdAsync(
-		ActionResult<AddUserClaimApiResponse> result,
+		ActionResult<AddUserClaimApiResponse> response,
 		CancellationToken cancellationToken)
 		{
 			return await serviceScope.GetByIdAsync(
-				result.GetValue(),
+				response.GetValue(),
 				cancellationToken);
 		}
 	}

@@ -162,10 +162,10 @@ public class AddUserControllerIntegrationTests : BaseUserPresentationCommandInte
 	public async Task AddAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.AddAsync(_request, CancellationToken);
+		var response = await Controller.AddAsync(_request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -177,21 +177,21 @@ public class AddUserControllerIntegrationTests : BaseUserPresentationCommandInte
 		var request = _requestBuilder.WithProfileImage(transformer).Build();
 
 		// Act
-		var result = await Controller.AddAsync(request, CancellationToken);
+		var response = await Controller.AddAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Fact]
 	public async Task AddAsync_ShouldReturnOkResponse_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.AddAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.AddAsync(_request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(_request, user);
+		response.ShouldSatisfy(_request, user);
 	}
 
 	[Theory]
@@ -203,19 +203,19 @@ public class AddUserControllerIntegrationTests : BaseUserPresentationCommandInte
 		var request = _requestBuilder.WithProfileImage(transformer).Build();
 
 		// Act
-		var result = await Controller.AddAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.AddAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, user);
+		response.ShouldSatisfy(request, user);
 	}
 
 	[Fact]
 	public async Task AddAsync_ShouldAddUser_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.AddAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.AddAsync(_request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(_request, PasswordHasher);
@@ -230,8 +230,8 @@ public class AddUserControllerIntegrationTests : BaseUserPresentationCommandInte
 		var request = _requestBuilder.WithProfileImage(transformer).Build();
 
 		// Act
-		var result = await Controller.AddAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.AddAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.ShouldSatisfy(request, PasswordHasher);
@@ -241,8 +241,8 @@ public class AddUserControllerIntegrationTests : BaseUserPresentationCommandInte
 	public async Task AddAsync_ShouldAddEmailConfirmationToken_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.AddAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.AddAsync(_request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.EmailConfirmationTokens.ShouldNotBeEmpty();
@@ -257,8 +257,8 @@ public class AddUserControllerIntegrationTests : BaseUserPresentationCommandInte
 		var request = _requestBuilder.WithProfileImage(transformer).Build();
 
 		// Act
-		var result = await Controller.AddAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.AddAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		user.EmailConfirmationTokens.ShouldNotBeEmpty();
@@ -268,8 +268,8 @@ public class AddUserControllerIntegrationTests : BaseUserPresentationCommandInte
 	public async Task AddAsync_ShouldPublishUserAddedEvent_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.AddAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.AddAsync(_request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
@@ -285,8 +285,8 @@ public class AddUserControllerIntegrationTests : BaseUserPresentationCommandInte
 		var request = _requestBuilder.WithProfileImage(transformer).Build();
 
 		// Act
-		var result = await Controller.AddAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.AddAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var eventRequest = await EventClient.PublishedAddedAsync(CancellationToken);
 
 		// Assert
@@ -297,8 +297,8 @@ public class AddUserControllerIntegrationTests : BaseUserPresentationCommandInte
 	public async Task AddAsync_ShouldPublishEmailConfirmationTokenAddedEvent_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.AddAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.AddAsync(_request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var eventRequests = await EmailConfirmationTokenEventClient.PublishedAddedRangeAsync(CancellationToken);
 
 		// Assert
@@ -314,8 +314,8 @@ public class AddUserControllerIntegrationTests : BaseUserPresentationCommandInte
 		var request = _requestBuilder.WithProfileImage(transformer).Build();
 
 		// Act
-		var result = await Controller.AddAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.AddAsync(request, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(response, CancellationToken);
 		var eventRequests = await EmailConfirmationTokenEventClient.PublishedAddedRangeAsync(CancellationToken);
 
 		// Assert

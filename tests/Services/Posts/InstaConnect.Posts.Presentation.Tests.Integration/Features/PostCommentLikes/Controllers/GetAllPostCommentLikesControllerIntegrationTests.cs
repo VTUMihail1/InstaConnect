@@ -165,10 +165,10 @@ public class GetAllPostCommentLikesControllerIntegrationTests : BasePostCommentL
 	public async Task GetAllAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.GetAllAsync(_request, CancellationToken);
+		var response = await Controller.GetAllAsync(_request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -180,10 +180,10 @@ public class GetAllPostCommentLikesControllerIntegrationTests : BasePostCommentL
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetAllAsync(request, CancellationToken);
+		var response = await Controller.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -195,10 +195,10 @@ public class GetAllPostCommentLikesControllerIntegrationTests : BasePostCommentL
 		var request = _requestBuilder.WithCommentId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetAllAsync(request, CancellationToken);
+		var response = await Controller.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -212,10 +212,10 @@ public class GetAllPostCommentLikesControllerIntegrationTests : BasePostCommentL
 		var request = _requestBuilder.WithUserName(transformer).Build();
 
 		// Act
-		var result = await Controller.GetAllAsync(request, CancellationToken);
+		var response = await Controller.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -229,10 +229,10 @@ public class GetAllPostCommentLikesControllerIntegrationTests : BasePostCommentL
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetAllAsync(request, CancellationToken);
+		var response = await Controller.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -245,10 +245,10 @@ public class GetAllPostCommentLikesControllerIntegrationTests : BasePostCommentL
 		var request = _requestBuilder.WithSortOrder(transformer).Build();
 
 		// Act
-		var result = await Controller.GetAllAsync(request, CancellationToken);
+		var response = await Controller.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -261,20 +261,20 @@ public class GetAllPostCommentLikesControllerIntegrationTests : BasePostCommentL
 		var request = _requestBuilder.WithSortTerm(transformer).Build();
 
 		// Act
-		var result = await Controller.GetAllAsync(request, CancellationToken);
+		var response = await Controller.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Fact]
 	public async Task GetAllAsync_ShouldReturnResponse_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.GetAllAsync(_request, CancellationToken);
+		var response = await Controller.GetAllAsync(_request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(_request, PostComment, PostCommentLikes);
+		response.ShouldSatisfy(_request, PostComment, PostCommentLikes);
 	}
 
 	[Theory]
@@ -286,10 +286,10 @@ public class GetAllPostCommentLikesControllerIntegrationTests : BasePostCommentL
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetAllAsync(request, CancellationToken);
+		var response = await Controller.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, PostComment, PostCommentLikes);
+		response.ShouldSatisfy(request, PostComment, PostCommentLikes);
 	}
 
 	[Theory]
@@ -301,10 +301,10 @@ public class GetAllPostCommentLikesControllerIntegrationTests : BasePostCommentL
 		var request = _requestBuilder.WithCommentId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetAllAsync(request, CancellationToken);
+		var response = await Controller.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, PostComment, PostCommentLikes);
+		response.ShouldSatisfy(request, PostComment, PostCommentLikes);
 	}
 
 	[Theory]
@@ -318,10 +318,10 @@ public class GetAllPostCommentLikesControllerIntegrationTests : BasePostCommentL
 		var request = _requestBuilder.WithUserName(transformer).Build();
 
 		// Act
-		var result = await Controller.GetAllAsync(request, CancellationToken);
+		var response = await Controller.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, PostComment, PostCommentLikes);
+		response.ShouldSatisfy(request, PostComment, PostCommentLikes);
 	}
 
 	[Theory]
@@ -335,10 +335,10 @@ public class GetAllPostCommentLikesControllerIntegrationTests : BasePostCommentL
 		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
 
 		// Act
-		var result = await Controller.GetAllAsync(request, CancellationToken);
+		var response = await Controller.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, PostComment, PostCommentLikes);
+		response.ShouldSatisfy(request, PostComment, PostCommentLikes);
 	}
 
 	[Theory]
@@ -351,10 +351,10 @@ public class GetAllPostCommentLikesControllerIntegrationTests : BasePostCommentL
 		var request = _requestBuilder.WithSortOrder(transformer).Build();
 
 		// Act
-		var result = await Controller.GetAllAsync(request, CancellationToken);
+		var response = await Controller.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, PostComment, PostCommentLikes, termTransformer);
+		response.ShouldSatisfy(request, PostComment, PostCommentLikes, termTransformer);
 	}
 
 	[Theory]
@@ -367,9 +367,9 @@ public class GetAllPostCommentLikesControllerIntegrationTests : BasePostCommentL
 		var request = _requestBuilder.WithSortTerm(transformer).Build();
 
 		// Act
-		var result = await Controller.GetAllAsync(request, CancellationToken);
+		var response = await Controller.GetAllAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, PostComment, PostCommentLikes, termTransformer);
+		response.ShouldSatisfy(request, PostComment, PostCommentLikes, termTransformer);
 	}
 }

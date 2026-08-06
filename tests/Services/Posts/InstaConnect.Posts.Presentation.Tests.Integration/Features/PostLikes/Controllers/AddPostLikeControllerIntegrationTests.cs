@@ -113,10 +113,10 @@ public class AddPostLikeControllerIntegrationTests : BasePostLikePresentationCom
 	public async Task AddAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.AddAsync(_request, CancellationToken);
+		var response = await Controller.AddAsync(_request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -128,10 +128,10 @@ public class AddPostLikeControllerIntegrationTests : BasePostLikePresentationCom
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var result = await Controller.AddAsync(request, CancellationToken);
+		var response = await Controller.AddAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -143,21 +143,21 @@ public class AddPostLikeControllerIntegrationTests : BasePostLikePresentationCom
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var result = await Controller.AddAsync(request, CancellationToken);
+		var response = await Controller.AddAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Fact]
 	public async Task AddAsync_ShouldReturnOkResponse_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.AddAsync(_request, CancellationToken);
-		var postLike = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.AddAsync(_request, CancellationToken);
+		var postLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(_request, postLike);
+		response.ShouldSatisfy(_request, postLike);
 	}
 
 	[Theory]
@@ -169,11 +169,11 @@ public class AddPostLikeControllerIntegrationTests : BasePostLikePresentationCom
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var result = await Controller.AddAsync(request, CancellationToken);
-		var postLike = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.AddAsync(request, CancellationToken);
+		var postLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, postLike);
+		response.ShouldSatisfy(request, postLike);
 	}
 
 	[Theory]
@@ -185,19 +185,19 @@ public class AddPostLikeControllerIntegrationTests : BasePostLikePresentationCom
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var result = await Controller.AddAsync(request, CancellationToken);
-		var postLike = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.AddAsync(request, CancellationToken);
+		var postLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, postLike);
+		response.ShouldSatisfy(request, postLike);
 	}
 
 	[Fact]
 	public async Task AddAsync_ShouldAddPostLike_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.AddAsync(_request, CancellationToken);
-		var postLike = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.AddAsync(_request, CancellationToken);
+		var postLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		postLike.ShouldSatisfy(_request);
@@ -212,8 +212,8 @@ public class AddPostLikeControllerIntegrationTests : BasePostLikePresentationCom
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var result = await Controller.AddAsync(request, CancellationToken);
-		var postLike = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.AddAsync(request, CancellationToken);
+		var postLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		postLike.ShouldSatisfy(request);
@@ -228,8 +228,8 @@ public class AddPostLikeControllerIntegrationTests : BasePostLikePresentationCom
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var result = await Controller.AddAsync(request, CancellationToken);
-		var postLike = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.AddAsync(request, CancellationToken);
+		var postLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		postLike.ShouldSatisfy(request);
@@ -239,8 +239,8 @@ public class AddPostLikeControllerIntegrationTests : BasePostLikePresentationCom
 	public async Task AddAsync_ShouldPublishPostLikeAddedEvent_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.AddAsync(_request, CancellationToken);
-		var postLike = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.AddAsync(_request, CancellationToken);
+		var postLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		var eventRequest = await LikeEventClient.PublishedAddedAsync(CancellationToken);
 
@@ -257,8 +257,8 @@ public class AddPostLikeControllerIntegrationTests : BasePostLikePresentationCom
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var result = await Controller.AddAsync(request, CancellationToken);
-		var postLike = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.AddAsync(request, CancellationToken);
+		var postLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		var eventRequest = await LikeEventClient.PublishedAddedAsync(CancellationToken);
 
@@ -275,8 +275,8 @@ public class AddPostLikeControllerIntegrationTests : BasePostLikePresentationCom
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var result = await Controller.AddAsync(request, CancellationToken);
-		var postLike = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.AddAsync(request, CancellationToken);
+		var postLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		var eventRequest = await LikeEventClient.PublishedAddedAsync(CancellationToken);
 

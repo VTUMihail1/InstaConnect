@@ -111,10 +111,10 @@ public class UpdatePostControllerIntegrationTests : BasePostPresentationCommandI
 	public async Task UpdateAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.UpdateAsync(_request, CancellationToken);
+		var response = await Controller.UpdateAsync(_request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -126,10 +126,10 @@ public class UpdatePostControllerIntegrationTests : BasePostPresentationCommandI
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Theory]
@@ -141,21 +141,21 @@ public class UpdatePostControllerIntegrationTests : BasePostPresentationCommandI
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
 
 		// Assert
-		result.ShouldBeActionResultWithOkStatusCode();
+		response.ShouldBeActionResultWithOkStatusCode();
 	}
 
 	[Fact]
 	public async Task UpdateAsync_ShouldReturnOkResponse_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.UpdateAsync(_request, CancellationToken);
-		var post = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateAsync(_request, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(_request, post);
+		response.ShouldSatisfy(_request, post);
 	}
 
 	[Theory]
@@ -167,11 +167,11 @@ public class UpdatePostControllerIntegrationTests : BasePostPresentationCommandI
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
-		var post = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, post);
+		response.ShouldSatisfy(request, post);
 	}
 
 	[Theory]
@@ -183,19 +183,19 @@ public class UpdatePostControllerIntegrationTests : BasePostPresentationCommandI
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
-		var post = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		result.ShouldSatisfy(request, post);
+		response.ShouldSatisfy(request, post);
 	}
 
 	[Fact]
 	public async Task UpdateAsync_ShouldUpdatePost_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.UpdateAsync(_request, CancellationToken);
-		var post = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateAsync(_request, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		post.ShouldSatisfy(_request);
@@ -210,8 +210,8 @@ public class UpdatePostControllerIntegrationTests : BasePostPresentationCommandI
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
-		var post = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		post.ShouldSatisfy(request);
@@ -226,8 +226,8 @@ public class UpdatePostControllerIntegrationTests : BasePostPresentationCommandI
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
-		var post = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
 		post.ShouldSatisfy(request);
@@ -237,8 +237,8 @@ public class UpdatePostControllerIntegrationTests : BasePostPresentationCommandI
 	public async Task UpdateAsync_ShouldPublishPostUpdatedEvent_WhenRequestIsValid()
 	{
 		// Act
-		var result = await Controller.UpdateAsync(_request, CancellationToken);
-		var post = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateAsync(_request, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		var eventRequest = await EventClient.PublishedUpdatedAsync(CancellationToken);
 
@@ -255,8 +255,8 @@ public class UpdatePostControllerIntegrationTests : BasePostPresentationCommandI
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
-		var post = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		var eventRequest = await EventClient.PublishedUpdatedAsync(CancellationToken);
 
@@ -273,8 +273,8 @@ public class UpdatePostControllerIntegrationTests : BasePostPresentationCommandI
 		var request = _requestBuilder.WithUserId(transformer).Build();
 
 		// Act
-		var result = await Controller.UpdateAsync(request, CancellationToken);
-		var post = await ServiceScope.GetByIdAsync(result, CancellationToken);
+		var response = await Controller.UpdateAsync(request, CancellationToken);
+		var post = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		var eventRequest = await EventClient.PublishedUpdatedAsync(CancellationToken);
 

@@ -29,10 +29,10 @@ public class GetUserByIdQueryRequestValidatorUnitTests : BaseUserApplicationQuer
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForId(request, messageTransformer);
+		response.ShouldHaveValidationErrorForId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -44,10 +44,10 @@ public class GetUserByIdQueryRequestValidatorUnitTests : BaseUserApplicationQuer
 		var request = _requestBuilder.WithCurrentId(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForCurrentId(request, messageTransformer);
+		response.ShouldHaveValidationErrorForCurrentId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -60,19 +60,19 @@ public class GetUserByIdQueryRequestValidatorUnitTests : BaseUserApplicationQuer
 		var request = _requestBuilder.WithCurrentId(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldNotHaveAnyValidationErrorProperties();
+		response.ShouldNotHaveAnyValidationErrorProperties();
 	}
 
 	[Fact]
 	public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenRequestIsValid()
 	{
 		// Act
-		var result = _requestValidator.TestValidate(_request);
+		var response = _requestValidator.TestValidate(_request);
 
 		// Assert
-		result.ShouldNotHaveAnyValidationErrorProperties();
+		response.ShouldNotHaveAnyValidationErrorProperties();
 	}
 }

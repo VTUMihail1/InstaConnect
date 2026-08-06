@@ -248,28 +248,31 @@ public class IssueRefreshTokenFunctionalTests : BaseRefreshTokenPresentationComm
 	}
 
 	[Fact]
-	public async Task IssueAsync_ShouldReturnCookies_WhenRequestIsValid()
+	public async Task IssueAsync_ShouldReturnCookieResponse_WhenRequestIsValid()
 	{
 		// Act
-		var response = await RefreshTokenApiClient.IssueResponseCookiesAsync(_request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
+		await RefreshTokenApiClient.IssueAsync(_request, CancellationToken);
+		var response = ServiceScope.GetRefreshTokenCookieResponse();
+		var refreshToken = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(_request, user);
+		response.ShouldSatisfy(_request, refreshToken, PasswordHasher);
 	}
 
 	[Theory]
 	[UserNameDifferentCaseData]
-	public async Task IssueAsync_ShouldReturnCookies_WhenNameIsValid(IStringTransformer transformer)
+	public async Task IssueAsync_ShouldReturnCookieResponse_WhenNameIsValid(
+		IStringTransformer transformer)
 	{
 		// Arrange
 		var request = _requestBuilder.WithName(transformer).Build();
 
 		// Act
-		var response = await RefreshTokenApiClient.IssueResponseCookiesAsync(request, CancellationToken);
-		var user = await ServiceScope.GetByIdAsync(User.Id, CancellationToken);
+		await RefreshTokenApiClient.IssueAsync(request, CancellationToken);
+		var response = ServiceScope.GetRefreshTokenCookieResponse();
+		var refreshToken = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(request, user);
+		response.ShouldSatisfy(request, refreshToken, PasswordHasher);
 	}
 }

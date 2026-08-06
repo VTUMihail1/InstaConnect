@@ -53,11 +53,11 @@ public static class PostLikeSetups
 		}
 
 		public async Task<PostLike?> GetByIdAsync(
-			ActionResult<AddPostLikeApiResponse> result,
+			ActionResult<AddPostLikeApiResponse> response,
 			CancellationToken cancellationToken)
 		{
 			return await serviceScope.GetByIdAsync(
-				result.GetValue(),
+				response.GetValue(),
 				cancellationToken);
 		}
 	}

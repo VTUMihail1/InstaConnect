@@ -54,20 +54,20 @@ public static class ChatMessageSetups
 		}
 
 		public async Task<ChatMessage?> GetByIdAsync(
-			ActionResult<AddChatMessageApiResponse> result,
+			ActionResult<AddChatMessageApiResponse> response,
 			CancellationToken cancellationToken)
 		{
 			return await serviceScope.GetByIdAsync(
-				result.GetValue(),
+				response.GetValue(),
 				cancellationToken);
 		}
 
 		public async Task<ChatMessage?> GetByIdAsync(
-			ActionResult<UpdateChatMessageApiResponse> result,
+			ActionResult<UpdateChatMessageApiResponse> response,
 			CancellationToken cancellationToken)
 		{
 			return await serviceScope.GetByIdAsync(
-				result.GetValue(),
+				response.GetValue(),
 				cancellationToken);
 		}
 	}

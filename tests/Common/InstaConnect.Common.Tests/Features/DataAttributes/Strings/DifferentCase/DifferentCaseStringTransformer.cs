@@ -7,9 +7,7 @@ public class DifferentCaseStringTransformer : IStringTransformer
 {
 	public string Transform(string? value)
 	{
-		var result = DataFaker.GetDifferentCaseString(value);
-
-		return result;
+		return DataFaker.GetDifferentCaseString(value);
 	}
 }
 

@@ -11,6 +11,16 @@ public static class StringExtensions
 		{
 			return string.Equals(str, b, StringComparison.OrdinalIgnoreCase);
 		}
+
+		public bool IsNullOrEmptyOrWhiteSpace()
+		{
+			return string.IsNullOrEmpty(str) || string.IsNullOrWhiteSpace(str);
+		}
+
+		public bool IsNotNullOrEmptyOrWhiteSpace()
+		{
+			return !IsNullOrEmptyOrWhiteSpace(str);
+		}
 	}
 
 	extension(string str)
@@ -79,16 +89,6 @@ public static class StringExtensions
 		public bool NotEqualsOrdinalIgnoreCase(string? b)
 		{
 			return !str.EqualsOrdinalIgnoreCase(b);
-		}
-
-		public bool IsNullOrEmptyOrWhiteSpace()
-		{
-			return string.IsNullOrEmpty(str) || string.IsNullOrWhiteSpace(str);
-		}
-
-		public bool IsNotNullOrEmptyOrWhiteSpace()
-		{
-			return !IsNullOrEmptyOrWhiteSpace(str);
 		}
 	}
 }

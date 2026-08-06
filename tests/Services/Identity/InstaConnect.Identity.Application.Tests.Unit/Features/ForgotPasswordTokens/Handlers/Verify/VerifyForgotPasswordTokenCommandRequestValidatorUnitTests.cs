@@ -31,10 +31,10 @@ public class VerifyForgotPasswordTokenCommandRequestValidatorUnitTests : BaseFor
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForId(request, messageTransformer);
+		response.ShouldHaveValidationErrorForId(request, messageTransformer);
 	}
 
 	[Theory]
@@ -49,10 +49,10 @@ public class VerifyForgotPasswordTokenCommandRequestValidatorUnitTests : BaseFor
 		var request = _requestBuilder.WithValue(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForValue(request, messageTransformer);
+		response.ShouldHaveValidationErrorForValue(request, messageTransformer);
 	}
 
 	[Theory]
@@ -67,10 +67,10 @@ public class VerifyForgotPasswordTokenCommandRequestValidatorUnitTests : BaseFor
 		var request = _requestBuilder.WithPassword(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForPassword(request, messageTransformer);
+		response.ShouldHaveValidationErrorForPassword(request, messageTransformer);
 	}
 
 	[Theory]
@@ -82,19 +82,19 @@ public class VerifyForgotPasswordTokenCommandRequestValidatorUnitTests : BaseFor
 		var request = _requestBuilder.WithConfirmPassword(transformer).Build();
 
 		// Act
-		var result = _requestValidator.TestValidate(request);
+		var response = _requestValidator.TestValidate(request);
 
 		// Assert
-		result.ShouldHaveValidationErrorForConfirmPassword(request, messageTransformer);
+		response.ShouldHaveValidationErrorForConfirmPassword(request, messageTransformer);
 	}
 
 	[Fact]
 	public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenRequestIsValid()
 	{
 		// Act
-		var result = _requestValidator.TestValidate(_request);
+		var response = _requestValidator.TestValidate(_request);
 
 		// Assert
-		result.ShouldNotHaveAnyValidationErrorProperties();
+		response.ShouldNotHaveAnyValidationErrorProperties();
 	}
 }
