@@ -1,4 +1,5 @@
 using InstaConnect.Identity.Domain.Features.Common.Helpers;
+using InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Models;
 using InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Utilities;
 using InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Utilities;
 
@@ -53,11 +54,11 @@ public static class RefreshTokenMatchAssertions
 		}
 	}
 
-	extension(GetRefreshTokenCookieApiResponse response)
+	extension(RefreshTokenCookieApiResponse response)
 	{
-		public void ShouldSatisfy(IssueRefreshTokenApiRequest request, RefreshToken refreshToken, IPasswordHasher passwordHasher)
+		public void ShouldSatisfy(IssueRefreshTokenApiRequest request, RefreshToken refreshToken)
 		{
-			response.ShouldSatisfy(p => p.Matches(request, refreshToken, passwordHasher));
+			response.ShouldSatisfy(p => p.Matches(request, refreshToken));
 		}
 
 		public void ShouldSatisfy(RotateRefreshTokenApiRequest request, RefreshToken refreshToken)

@@ -1,4 +1,3 @@
-using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Presentation.Features.Controllers.Abstractions;
 using InstaConnect.Identity.Presentation.Features.RefreshTokens.Abstractions;
 
@@ -11,19 +10,6 @@ internal class RefreshTokenCookieStore : IRefreshTokenCookieStore
 	public RefreshTokenCookieStore(ICookieStore cookieStore)
 	{
 		_cookieStore = cookieStore;
-	}
-
-	public GetRefreshTokenCookieApiResponse? Get()
-	{
-		var id = _cookieStore.Get(RefreshTokenCookieKeys.Id);
-		var value = _cookieStore.Get(RefreshTokenCookieKeys.Value);
-
-		if (id.IsNullOrEmptyOrWhiteSpace() && value.IsNullOrEmptyOrWhiteSpace())
-		{
-			return null;
-		}
-
-		return new(id!, value!);
 	}
 
 	public void Set(SetRefreshTokenCookieApiRequest request)

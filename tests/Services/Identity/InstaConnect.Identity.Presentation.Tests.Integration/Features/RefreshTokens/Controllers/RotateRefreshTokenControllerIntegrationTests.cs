@@ -177,52 +177,6 @@ public class RotateRefreshTokenControllerIntegrationTests : BaseRefreshTokenPres
 	}
 
 	[Fact]
-	public async Task RotateAsync_ShouldReturnCookieResponse_WhenRequestIsValid()
-	{
-		// Act
-		await Controller.RotateAsync(_request, CancellationToken);
-		var response = ServiceScope.GetRefreshTokenCookieResponse();
-		var refreshToken = await ServiceScope.GetByIdAsync(response, CancellationToken);
-
-		// Assert
-		response.ShouldSatisfy(_request, refreshToken);
-	}
-
-	[Theory]
-	[UserIdDifferentCaseData]
-	public async Task RotateAsync_ShouldReturnCookieResponse_WhenIdIsValid(
-		IStringTransformer transformer)
-	{
-		// Arrange
-		var request = _requestBuilder.WithId(transformer).Build();
-
-		// Act
-		await Controller.RotateAsync(request, CancellationToken);
-		var response = ServiceScope.GetRefreshTokenCookieResponse();
-		var refreshToken = await ServiceScope.GetByIdAsync(response, CancellationToken);
-
-		// Assert
-		response.ShouldSatisfy(request, refreshToken);
-	}
-
-	[Theory]
-	[RefreshTokenValueDifferentCaseData]
-	public async Task RotateAsync_ShouldReturnCookieResponse_WhenValueIsValid(
-		IStringTransformer transformer)
-	{
-		// Arrange
-		var request = _requestBuilder.WithValue(transformer).Build();
-
-		// Act
-		await Controller.RotateAsync(request, CancellationToken);
-		var response = ServiceScope.GetRefreshTokenCookieResponse();
-		var refreshToken = await ServiceScope.GetByIdAsync(response, CancellationToken);
-
-		// Assert
-		response.ShouldSatisfy(request, refreshToken);
-	}
-
-	[Fact]
 	public async Task RotateAsync_ShouldAddRefreshToken_WhenRequestIsValid()
 	{
 		// Act

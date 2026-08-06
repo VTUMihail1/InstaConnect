@@ -1,4 +1,5 @@
 using InstaConnect.Identity.Domain.Features.Common.Helpers;
+using InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Models;
 using InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Utilities;
 using InstaConnect.Identity.Presentation.Tests.Features.Users.Utilities;
 
@@ -82,18 +83,28 @@ public static class RefreshTokenEquals
 		}
 	}
 
-	extension(GetRefreshTokenCookieApiResponse response)
+	extension(RefreshTokenCookieApiResponse response)
 	{
-		public bool Matches(IssueRefreshTokenApiRequest request, RefreshToken refreshToken, IPasswordHasher passwordHasher)
+		public bool Matches(RefreshTokenId id)
 		{
-			return refreshToken.Id.Matches(response.Id, response.Value) &&
-				   refreshToken.User!.Name.Matches(request.Name) &&
-				   passwordHasher.IsMatch(request.Body.Password, refreshToken.User.PasswordHash);
+			return id.Matches(response.IdCookie.GetStringValue(), response.ValueCookie.GetStringValue());
+		}
+	}
+
+	extension(RefreshTokenCookieApiResponse response)
+	{
+		public bool Matches(IssueRefreshTokenApiRequest request, RefreshToken refreshToken)
+		{
+			return response.Matches(refreshToken.Id) &&
+				   response.IdCookie.MatchesHttpOnly(refreshToken.ExpiresAtUtc) &&
+				   response.ValueCookie.MatchesHttpOnly(refreshToken.ExpiresAtUtc);
 		}
 
 		public bool Matches(RotateRefreshTokenApiRequest request, RefreshToken refreshToken)
 		{
-			return refreshToken.Id.Matches(response.Id, response.Value);
+			return response.Matches(refreshToken.Id) &&
+				   response.IdCookie.MatchesHttpOnly(refreshToken.ExpiresAtUtc) &&
+				   response.ValueCookie.MatchesHttpOnly(refreshToken.ExpiresAtUtc);
 		}
 	}
 }

@@ -327,8 +327,7 @@ public class RotateRefreshTokenFunctionalTests : BaseRefreshTokenPresentationCom
 	public async Task RotateAsync_ShouldReturnCookieResponse_WhenRequestIsValid()
 	{
 		// Act
-		await RefreshTokenApiClient.RotateAsync(_request, CancellationToken);
-		var response = ServiceScope.GetRefreshTokenCookieResponse();
+		var response = await RefreshTokenApiClient.RotateCookieResponseAsync(_request, CancellationToken);
 		var refreshToken = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
@@ -337,15 +336,13 @@ public class RotateRefreshTokenFunctionalTests : BaseRefreshTokenPresentationCom
 
 	[Theory]
 	[UserIdDifferentCaseData]
-	public async Task RotateAsync_ShouldReturnCookieResponse_WhenIdIsValid(
-		IStringTransformer transformer)
+	public async Task RotateAsync_ShouldReturnCookieResponse_WhenIdIsValid(IStringTransformer transformer)
 	{
 		// Arrange
 		var request = _requestBuilder.WithId(transformer).Build();
 
 		// Act
-		await RefreshTokenApiClient.RotateAsync(request, CancellationToken);
-		var response = ServiceScope.GetRefreshTokenCookieResponse();
+		var response = await RefreshTokenApiClient.RotateCookieResponseAsync(request, CancellationToken);
 		var refreshToken = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
@@ -354,15 +351,13 @@ public class RotateRefreshTokenFunctionalTests : BaseRefreshTokenPresentationCom
 
 	[Theory]
 	[RefreshTokenValueDifferentCaseData]
-	public async Task RotateAsync_ShouldReturnCookieResponse_WhenValueIsValid(
-		IStringTransformer transformer)
+	public async Task RotateAsync_ShouldReturnCookieResponse_WhenValueIsValid(IStringTransformer transformer)
 	{
 		// Arrange
 		var request = _requestBuilder.WithValue(transformer).Build();
 
 		// Act
-		await RefreshTokenApiClient.RotateAsync(request, CancellationToken);
-		var response = ServiceScope.GetRefreshTokenCookieResponse();
+		var response = await RefreshTokenApiClient.RotateCookieResponseAsync(request, CancellationToken);
 		var refreshToken = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert

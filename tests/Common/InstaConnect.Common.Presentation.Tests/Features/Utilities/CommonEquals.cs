@@ -8,11 +8,22 @@ using InstaConnect.Common.Presentation.Features.Messaging.Abstractions;
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 
 namespace InstaConnect.Common.Presentation.Tests.Features.Utilities;
 
 public static class CommonEquals
 {
+	extension(SetCookieHeaderValue cookie)
+	{
+		public bool MatchesHttpOnly(DateTimeOffset expires)
+		{
+			return cookie.Expires == expires &&
+		           cookie.Secure &&
+		           cookie.HttpOnly;
+		}
+	}
+
 	extension(AccessTokenApiResponse response)
 	{
 		public bool Matches()

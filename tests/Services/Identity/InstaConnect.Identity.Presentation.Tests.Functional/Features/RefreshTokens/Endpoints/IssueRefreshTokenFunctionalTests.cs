@@ -251,28 +251,25 @@ public class IssueRefreshTokenFunctionalTests : BaseRefreshTokenPresentationComm
 	public async Task IssueAsync_ShouldReturnCookieResponse_WhenRequestIsValid()
 	{
 		// Act
-		await RefreshTokenApiClient.IssueAsync(_request, CancellationToken);
-		var response = ServiceScope.GetRefreshTokenCookieResponse();
+		var response = await RefreshTokenApiClient.IssueCookieResponseAsync(_request, CancellationToken);
 		var refreshToken = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(_request, refreshToken, PasswordHasher);
+		response.ShouldSatisfy(_request, refreshToken);
 	}
 
 	[Theory]
 	[UserNameDifferentCaseData]
-	public async Task IssueAsync_ShouldReturnCookieResponse_WhenNameIsValid(
-		IStringTransformer transformer)
+	public async Task IssueAsync_ShouldReturnCookieResponse_WhenNameIsValid(IStringTransformer transformer)
 	{
 		// Arrange
 		var request = _requestBuilder.WithName(transformer).Build();
 
 		// Act
-		await RefreshTokenApiClient.IssueAsync(request, CancellationToken);
-		var response = ServiceScope.GetRefreshTokenCookieResponse();
+		var response = await RefreshTokenApiClient.IssueCookieResponseAsync(request, CancellationToken);
 		var refreshToken = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(request, refreshToken, PasswordHasher);
+		response.ShouldSatisfy(request, refreshToken);
 	}
 }
