@@ -7,7 +7,7 @@ using InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Models;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Extensions;
 
-public static class RefreshTokenHttpClientExtensions
+internal static class RefreshTokenHttpClientExtensions
 {
 	extension(HttpClient httpClient)
 	{
