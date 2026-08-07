@@ -1,13 +1,12 @@
 using System.Net;
-using System.Net.Http.Json;
 
 using InstaConnect.Common.Infrastructure.Features.AccessTokens.Abstractions;
 using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
 using InstaConnect.Common.Presentation.Tests.Features.Extensions;
-using InstaConnect.Posts.Presentation.Features.PostComments.Utilities;
 using InstaConnect.Posts.Presentation.Tests.Features.PostComments.Abstractions;
+using InstaConnect.Posts.Presentation.Tests.Features.PostComments.Extensions;
 
-namespace InstaConnect.Posts.Presentation.Tests.Features.PostComments.Utilities;
+namespace InstaConnect.Posts.Presentation.Tests.Features.PostComments.Helpers;
 
 internal class PostCommentApiClient : IPostCommentApiClient
 {
@@ -22,22 +21,11 @@ internal class PostCommentApiClient : IPostCommentApiClient
 		_baseAccessTokenGenerator = baseAccessTokenGenerator;
 	}
 
-	private async Task<HttpResponseMessage> GetAllResponseMessageAsync(
-		GetAllPostCommentsApiRequest request,
-		CancellationToken cancellationToken)
-	{
-		var route = PostCommentRouteFactory.GetRoute(request);
-
-		return await _httpClient
-			.WithAuthorization(request.CurrentUserId, _baseAccessTokenGenerator)
-			.GetAsync(route, cancellationToken);
-	}
-
 	public async Task<ApplicationProblemDetails> GetAllProblemDetailsAsync(
 		GetAllPostCommentsApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await GetAllResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.GetAllResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
 	}
@@ -46,7 +34,7 @@ internal class PostCommentApiClient : IPostCommentApiClient
 		GetAllPostCommentsApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await GetAllResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.GetAllResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return await response.GetFromJsonAsync<GetAllPostCommentsApiResponse>(cancellationToken);
 	}
@@ -55,27 +43,16 @@ internal class PostCommentApiClient : IPostCommentApiClient
 		GetAllPostCommentsApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await GetAllResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.GetAllResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return response.GetStatusCode();
-	}
-
-	private async Task<HttpResponseMessage> GetAllForUserResponseMessageAsync(
-		GetAllPostCommentsForUserApiRequest request,
-		CancellationToken cancellationToken)
-	{
-		var route = PostCommentRouteFactory.GetRoute(request);
-
-		return await _httpClient
-			.WithAuthorization(request.CurrentUserId, _baseAccessTokenGenerator)
-			.GetAsync(route, cancellationToken);
 	}
 
 	public async Task<ApplicationProblemDetails> GetAllForUserProblemDetailsAsync(
 		GetAllPostCommentsForUserApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await GetAllForUserResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.GetAllForUserResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
 	}
@@ -84,7 +61,7 @@ internal class PostCommentApiClient : IPostCommentApiClient
 		GetAllPostCommentsForUserApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await GetAllForUserResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.GetAllForUserResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return await response.GetFromJsonAsync<GetAllPostCommentsForUserApiResponse>(cancellationToken);
 	}
@@ -93,27 +70,16 @@ internal class PostCommentApiClient : IPostCommentApiClient
 		GetAllPostCommentsForUserApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await GetAllForUserResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.GetAllForUserResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return response.GetStatusCode();
-	}
-
-	private async Task<HttpResponseMessage> GetByIdResponseMessageAsync(
-		GetPostCommentByIdApiRequest request,
-		CancellationToken cancellationToken)
-	{
-		var route = PostCommentRouteFactory.GetRoute(request);
-
-		return await _httpClient
-			.WithAuthorization(request.CurrentUserId, _baseAccessTokenGenerator)
-			.GetAsync(route, cancellationToken);
 	}
 
 	public async Task<ApplicationProblemDetails> GetByIdProblemDetailsAsync(
 		GetPostCommentByIdApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await GetByIdResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.GetByIdResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
 	}
@@ -122,7 +88,7 @@ internal class PostCommentApiClient : IPostCommentApiClient
 		GetPostCommentByIdApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await GetByIdResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.GetByIdResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return await response.GetFromJsonAsync<GetPostCommentByIdApiResponse>(cancellationToken);
 	}
@@ -131,37 +97,16 @@ internal class PostCommentApiClient : IPostCommentApiClient
 		GetPostCommentByIdApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await GetByIdResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.GetByIdResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return response.GetStatusCode();
-	}
-
-	private async Task<HttpResponseMessage> AddUnauthorizedResponseMessageAsync(
-		AddPostCommentApiRequest request,
-		CancellationToken cancellationToken)
-	{
-		var route = PostCommentRouteFactory.GetRoute(request);
-
-		return await _httpClient
-			.PostAsJsonAsync(route, request.Body, cancellationToken);
-	}
-
-	private async Task<HttpResponseMessage> AddResponseMessageAsync(
-		AddPostCommentApiRequest request,
-		CancellationToken cancellationToken)
-	{
-		var route = PostCommentRouteFactory.GetRoute(request);
-
-		return await _httpClient
-			.WithAuthorization(request.UserId, _baseAccessTokenGenerator)
-			.PostAsJsonAsync(route, request.Body, cancellationToken);
 	}
 
 	public async Task<ApplicationProblemDetails> AddUnauthorizedProblemDetailsAsync(
 		AddPostCommentApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await AddUnauthorizedResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.AddUnauthorizedResponseMessageAsync(request, cancellationToken);
 
 		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
 	}
@@ -170,7 +115,7 @@ internal class PostCommentApiClient : IPostCommentApiClient
 		AddPostCommentApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await AddResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.AddResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
 	}
@@ -179,7 +124,7 @@ internal class PostCommentApiClient : IPostCommentApiClient
 		AddPostCommentApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await AddResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.AddResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return await response.GetFromJsonAsync<AddPostCommentApiResponse>(cancellationToken);
 	}
@@ -188,7 +133,7 @@ internal class PostCommentApiClient : IPostCommentApiClient
 		AddPostCommentApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await AddUnauthorizedResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.AddUnauthorizedResponseMessageAsync(request, cancellationToken);
 
 		return response.GetStatusCode();
 	}
@@ -197,37 +142,16 @@ internal class PostCommentApiClient : IPostCommentApiClient
 		AddPostCommentApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await AddResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.AddResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return response.GetStatusCode();
-	}
-
-	private async Task<HttpResponseMessage> UpdateUnauthorizedResponseMessageAsync(
-		UpdatePostCommentApiRequest request,
-		CancellationToken cancellationToken)
-	{
-		var route = PostCommentRouteFactory.GetRoute(request);
-
-		return await _httpClient
-			.PutAsJsonAsync(route, request.Body, cancellationToken);
-	}
-
-	private async Task<HttpResponseMessage> UpdateResponseMessageAsync(
-		UpdatePostCommentApiRequest request,
-		CancellationToken cancellationToken)
-	{
-		var route = PostCommentRouteFactory.GetRoute(request);
-
-		return await _httpClient
-			.WithAuthorization(request.UserId, _baseAccessTokenGenerator)
-			.PutAsJsonAsync(route, request.Body, cancellationToken);
 	}
 
 	public async Task<ApplicationProblemDetails> UpdateUnauthorizedProblemDetailsAsync(
 		UpdatePostCommentApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await UpdateUnauthorizedResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.UpdateUnauthorizedResponseMessageAsync(request, cancellationToken);
 
 		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
 	}
@@ -236,7 +160,7 @@ internal class PostCommentApiClient : IPostCommentApiClient
 		UpdatePostCommentApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await UpdateResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.UpdateResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
 	}
@@ -245,7 +169,7 @@ internal class PostCommentApiClient : IPostCommentApiClient
 		UpdatePostCommentApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await UpdateResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.UpdateResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return await response.GetFromJsonAsync<UpdatePostCommentApiResponse>(cancellationToken);
 	}
@@ -254,7 +178,7 @@ internal class PostCommentApiClient : IPostCommentApiClient
 		UpdatePostCommentApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await UpdateUnauthorizedResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.UpdateUnauthorizedResponseMessageAsync(request, cancellationToken);
 
 		return response.GetStatusCode();
 	}
@@ -263,37 +187,16 @@ internal class PostCommentApiClient : IPostCommentApiClient
 		UpdatePostCommentApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await UpdateResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.UpdateResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return response.GetStatusCode();
-	}
-
-	private async Task<HttpResponseMessage> DeleteUnauthorizedResponseMessageAsync(
-		DeletePostCommentApiRequest request,
-		CancellationToken cancellationToken)
-	{
-		var route = PostCommentRouteFactory.GetRoute(request);
-
-		return await _httpClient
-			.DeleteAsync(route, cancellationToken);
-	}
-
-	private async Task<HttpResponseMessage> DeleteResponseMessageAsync(
-		DeletePostCommentApiRequest request,
-		CancellationToken cancellationToken)
-	{
-		var route = PostCommentRouteFactory.GetRoute(request);
-
-		return await _httpClient
-			.WithAuthorization(request.UserId, _baseAccessTokenGenerator)
-			.DeleteAsync(route, cancellationToken);
 	}
 
 	public async Task<ApplicationProblemDetails> DeleteUnauthorizedProblemDetailsAsync(
 		DeletePostCommentApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await DeleteUnauthorizedResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.DeleteUnauthorizedResponseMessageAsync(request, cancellationToken);
 
 		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
 	}
@@ -302,7 +205,7 @@ internal class PostCommentApiClient : IPostCommentApiClient
 		DeletePostCommentApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await DeleteResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.DeleteResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
 	}
@@ -311,14 +214,14 @@ internal class PostCommentApiClient : IPostCommentApiClient
 		DeletePostCommentApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		await DeleteResponseMessageAsync(request, cancellationToken);
+		await _httpClient.DeleteResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 	}
 
 	public async Task<HttpStatusCode> DeleteUnauthorizedStatusCodeAsync(
 		DeletePostCommentApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await DeleteUnauthorizedResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.DeleteUnauthorizedResponseMessageAsync(request, cancellationToken);
 
 		return response.GetStatusCode();
 	}
@@ -327,7 +230,7 @@ internal class PostCommentApiClient : IPostCommentApiClient
 		DeletePostCommentApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await DeleteResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.DeleteResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return response.GetStatusCode();
 	}

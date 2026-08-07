@@ -1,5 +1,5 @@
 using InstaConnect.Chats.Presentation.Tests.Features.Chats.Abstractions;
-using InstaConnect.Chats.Presentation.Tests.Features.Chats.Utilities;
+using InstaConnect.Chats.Presentation.Tests.Features.Chats.Helpers;
 using InstaConnect.Chats.Tests.Features.Common.Utilities;
 
 namespace InstaConnect.Chats.Presentation.Tests.Features.Chats.Extensions;

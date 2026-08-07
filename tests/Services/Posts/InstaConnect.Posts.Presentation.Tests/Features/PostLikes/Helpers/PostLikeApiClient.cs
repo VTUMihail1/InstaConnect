@@ -1,13 +1,12 @@
 using System.Net;
-using System.Net.Http.Json;
 
 using InstaConnect.Common.Infrastructure.Features.AccessTokens.Abstractions;
 using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
 using InstaConnect.Common.Presentation.Tests.Features.Extensions;
-using InstaConnect.Posts.Presentation.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Presentation.Tests.Features.PostLikes.Abstractions;
+using InstaConnect.Posts.Presentation.Tests.Features.PostLikes.Extensions;
 
-namespace InstaConnect.Posts.Presentation.Tests.Features.PostLikes.Utilities;
+namespace InstaConnect.Posts.Presentation.Tests.Features.PostLikes.Helpers;
 
 internal class PostLikeApiClient : IPostLikeApiClient
 {
@@ -22,22 +21,11 @@ internal class PostLikeApiClient : IPostLikeApiClient
 		_baseAccessTokenGenerator = baseAccessTokenGenerator;
 	}
 
-	private async Task<HttpResponseMessage> GetAllResponseMessageAsync(
-		GetAllPostLikesApiRequest request,
-		CancellationToken cancellationToken)
-	{
-		var route = PostLikeRouteFactory.GetRoute(request);
-
-		return await _httpClient
-			.WithAuthorization(request.CurrentUserId, _baseAccessTokenGenerator)
-			.GetAsync(route, cancellationToken);
-	}
-
 	public async Task<ApplicationProblemDetails> GetAllProblemDetailsAsync(
 		GetAllPostLikesApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await GetAllResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.GetAllResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
 	}
@@ -46,7 +34,7 @@ internal class PostLikeApiClient : IPostLikeApiClient
 		GetAllPostLikesApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await GetAllResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.GetAllResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return await response.GetFromJsonAsync<GetAllPostLikesApiResponse>(cancellationToken);
 	}
@@ -55,27 +43,16 @@ internal class PostLikeApiClient : IPostLikeApiClient
 		GetAllPostLikesApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await GetAllResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.GetAllResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return response.GetStatusCode();
-	}
-
-	private async Task<HttpResponseMessage> GetAllForUserResponseMessageAsync(
-		GetAllPostLikesForUserApiRequest request,
-		CancellationToken cancellationToken)
-	{
-		var route = PostLikeRouteFactory.GetRoute(request);
-
-		return await _httpClient
-			.WithAuthorization(request.CurrentUserId, _baseAccessTokenGenerator)
-			.GetAsync(route, cancellationToken);
 	}
 
 	public async Task<ApplicationProblemDetails> GetAllForUserProblemDetailsAsync(
 		GetAllPostLikesForUserApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await GetAllForUserResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.GetAllForUserResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
 	}
@@ -84,7 +61,7 @@ internal class PostLikeApiClient : IPostLikeApiClient
 		GetAllPostLikesForUserApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await GetAllForUserResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.GetAllForUserResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return await response.GetFromJsonAsync<GetAllPostLikesForUserApiResponse>(cancellationToken);
 	}
@@ -93,27 +70,16 @@ internal class PostLikeApiClient : IPostLikeApiClient
 		GetAllPostLikesForUserApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await GetAllForUserResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.GetAllForUserResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return response.GetStatusCode();
-	}
-
-	private async Task<HttpResponseMessage> GetByIdResponseMessageAsync(
-		GetPostLikeByIdApiRequest request,
-		CancellationToken cancellationToken)
-	{
-		var route = PostLikeRouteFactory.GetRoute(request);
-
-		return await _httpClient
-			.WithAuthorization(request.CurrentUserId, _baseAccessTokenGenerator)
-			.GetAsync(route, cancellationToken);
 	}
 
 	public async Task<ApplicationProblemDetails> GetByIdProblemDetailsAsync(
 		GetPostLikeByIdApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await GetByIdResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.GetByIdResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
 	}
@@ -122,7 +88,7 @@ internal class PostLikeApiClient : IPostLikeApiClient
 		GetPostLikeByIdApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await GetByIdResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.GetByIdResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return await response.GetFromJsonAsync<GetPostLikeByIdApiResponse>(cancellationToken);
 	}
@@ -131,37 +97,16 @@ internal class PostLikeApiClient : IPostLikeApiClient
 		GetPostLikeByIdApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await GetByIdResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.GetByIdResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return response.GetStatusCode();
-	}
-
-	private async Task<HttpResponseMessage> AddUnauthorizedResponseMessageAsync(
-		AddPostLikeApiRequest request,
-		CancellationToken cancellationToken)
-	{
-		var route = PostLikeRouteFactory.GetRoute(request);
-
-		return await _httpClient
-			.PostAsync(route, null, cancellationToken);
-	}
-
-	private async Task<HttpResponseMessage> AddResponseMessageAsync(
-		AddPostLikeApiRequest request,
-		CancellationToken cancellationToken)
-	{
-		var route = PostLikeRouteFactory.GetRoute(request);
-
-		return await _httpClient
-			.WithAuthorization(request.UserId, _baseAccessTokenGenerator)
-			.PostAsync(route, null, cancellationToken);
 	}
 
 	public async Task<ApplicationProblemDetails> AddUnauthorizedProblemDetailsAsync(
 		AddPostLikeApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await AddUnauthorizedResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.AddUnauthorizedResponseMessageAsync(request, cancellationToken);
 
 		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
 	}
@@ -170,7 +115,7 @@ internal class PostLikeApiClient : IPostLikeApiClient
 		AddPostLikeApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await AddResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.AddResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
 	}
@@ -179,7 +124,7 @@ internal class PostLikeApiClient : IPostLikeApiClient
 		AddPostLikeApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await AddResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.AddResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return await response.GetFromJsonAsync<AddPostLikeApiResponse>(cancellationToken);
 	}
@@ -188,7 +133,7 @@ internal class PostLikeApiClient : IPostLikeApiClient
 		AddPostLikeApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await AddUnauthorizedResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.AddUnauthorizedResponseMessageAsync(request, cancellationToken);
 
 		return response.GetStatusCode();
 	}
@@ -197,37 +142,16 @@ internal class PostLikeApiClient : IPostLikeApiClient
 		AddPostLikeApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await AddResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.AddResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return response.GetStatusCode();
-	}
-
-	private async Task<HttpResponseMessage> DeleteUnauthorizedResponseMessageAsync(
-		DeletePostLikeApiRequest request,
-		CancellationToken cancellationToken)
-	{
-		var route = PostLikeRouteFactory.GetRoute(request);
-
-		return await _httpClient
-			.DeleteAsync(route, cancellationToken);
-	}
-
-	private async Task<HttpResponseMessage> DeleteResponseMessageAsync(
-		DeletePostLikeApiRequest request,
-		CancellationToken cancellationToken)
-	{
-		var route = PostLikeRouteFactory.GetRoute(request);
-
-		return await _httpClient
-			.WithAuthorization(request.UserId, _baseAccessTokenGenerator)
-			.DeleteAsync(route, cancellationToken);
 	}
 
 	public async Task<ApplicationProblemDetails> DeleteUnauthorizedProblemDetailsAsync(
 		DeletePostLikeApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await DeleteUnauthorizedResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.DeleteUnauthorizedResponseMessageAsync(request, cancellationToken);
 
 		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
 	}
@@ -236,7 +160,7 @@ internal class PostLikeApiClient : IPostLikeApiClient
 		DeletePostLikeApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await DeleteResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.DeleteResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
 	}
@@ -245,14 +169,14 @@ internal class PostLikeApiClient : IPostLikeApiClient
 		DeletePostLikeApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		await DeleteResponseMessageAsync(request, cancellationToken);
+		await _httpClient.DeleteResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 	}
 
 	public async Task<HttpStatusCode> DeleteUnauthorizedStatusCodeAsync(
 		DeletePostLikeApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await DeleteUnauthorizedResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.DeleteUnauthorizedResponseMessageAsync(request, cancellationToken);
 
 		return response.GetStatusCode();
 	}
@@ -261,7 +185,7 @@ internal class PostLikeApiClient : IPostLikeApiClient
 		DeletePostLikeApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await DeleteResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.DeleteResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return response.GetStatusCode();
 	}

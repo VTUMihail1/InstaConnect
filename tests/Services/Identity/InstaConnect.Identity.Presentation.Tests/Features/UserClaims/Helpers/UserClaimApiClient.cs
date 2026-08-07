@@ -1,13 +1,12 @@
 using System.Net;
-using System.Net.Http.Json;
 
 using InstaConnect.Common.Infrastructure.Features.AccessTokens.Abstractions;
 using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
 using InstaConnect.Common.Presentation.Tests.Features.Extensions;
-using InstaConnect.Identity.Presentation.Features.UserClaims.Utilities;
 using InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Abstractions;
+using InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Extensions;
 
-namespace InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Utilities;
+namespace InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Helpers;
 
 internal class UserClaimApiClient : IUserClaimApiClient
 {
@@ -20,43 +19,11 @@ internal class UserClaimApiClient : IUserClaimApiClient
 		_baseAccessTokenGenerator = baseAccessTokenGenerator;
 	}
 
-	private async Task<HttpResponseMessage> GetAllUnauthorizedResponseMessageAsync(
-		GetAllUserClaimsApiRequest request,
-		CancellationToken cancellationToken)
-	{
-		var route = UserClaimRouteFactory.GetRoute(request);
-
-		return await _httpClient
-			.GetAsync(route, cancellationToken);
-	}
-
-	private async Task<HttpResponseMessage> GetAllForbiddenResponseMessageAsync(
-		GetAllUserClaimsApiRequest request,
-		CancellationToken cancellationToken)
-	{
-		var route = UserClaimRouteFactory.GetRoute(request);
-
-		return await _httpClient
-			.WithAuthorization(request.CurrentId, _baseAccessTokenGenerator)
-			.GetAsync(route, cancellationToken);
-	}
-
-	private async Task<HttpResponseMessage> GetAllResponseMessageAsync(
-		GetAllUserClaimsApiRequest request,
-		CancellationToken cancellationToken)
-	{
-		var route = UserClaimRouteFactory.GetRoute(request);
-
-		return await _httpClient
-			.WithAdminAuthorization(request.CurrentId, _baseAccessTokenGenerator)
-			.GetAsync(route, cancellationToken);
-	}
-
 	public async Task<ApplicationProblemDetails> GetAllUnauthorizedProblemDetailsAsync(
 		GetAllUserClaimsApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await GetAllUnauthorizedResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.GetAllUnauthorizedResponseMessageAsync(request, cancellationToken);
 
 		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
 	}
@@ -65,7 +32,7 @@ internal class UserClaimApiClient : IUserClaimApiClient
 		GetAllUserClaimsApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await GetAllForbiddenResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.GetAllForbiddenResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
 	}
@@ -74,7 +41,7 @@ internal class UserClaimApiClient : IUserClaimApiClient
 		GetAllUserClaimsApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await GetAllResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.GetAllResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
 	}
@@ -83,7 +50,7 @@ internal class UserClaimApiClient : IUserClaimApiClient
 		GetAllUserClaimsApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await GetAllResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.GetAllResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return await response.GetFromJsonAsync<GetAllUserClaimsApiResponse>(cancellationToken);
 	}
@@ -92,7 +59,7 @@ internal class UserClaimApiClient : IUserClaimApiClient
 		GetAllUserClaimsApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await GetAllUnauthorizedResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.GetAllUnauthorizedResponseMessageAsync(request, cancellationToken);
 
 		return response.GetStatusCode();
 	}
@@ -101,7 +68,7 @@ internal class UserClaimApiClient : IUserClaimApiClient
 		GetAllUserClaimsApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await GetAllForbiddenResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.GetAllForbiddenResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return response.GetStatusCode();
 	}
@@ -110,48 +77,16 @@ internal class UserClaimApiClient : IUserClaimApiClient
 		GetAllUserClaimsApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await GetAllResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.GetAllResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return response.GetStatusCode();
-	}
-
-	private async Task<HttpResponseMessage> AddUnauthorizedResponseMessageAsync(
-		AddUserClaimApiRequest request,
-		CancellationToken cancellationToken)
-	{
-		var route = UserClaimRouteFactory.GetRoute(request);
-
-		return await _httpClient
-			.PostAsJsonAsync(route, request.Body, cancellationToken);
-	}
-
-	private async Task<HttpResponseMessage> AddForbiddenResponseMessageAsync(
-		AddUserClaimApiRequest request,
-		CancellationToken cancellationToken)
-	{
-		var route = UserClaimRouteFactory.GetRoute(request);
-
-		return await _httpClient
-			.WithAuthorization(request.Id, _baseAccessTokenGenerator)
-			.PostAsJsonAsync(route, request.Body, cancellationToken);
-	}
-
-	private async Task<HttpResponseMessage> AddResponseMessageAsync(
-		AddUserClaimApiRequest request,
-		CancellationToken cancellationToken)
-	{
-		var route = UserClaimRouteFactory.GetRoute(request);
-
-		return await _httpClient
-			.WithAdminAuthorization(request.Id, _baseAccessTokenGenerator)
-			.PostAsJsonAsync(route, request.Body, cancellationToken);
 	}
 
 	public async Task<ApplicationProblemDetails> AddUnauthorizedProblemDetailsAsync(
 		AddUserClaimApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await AddUnauthorizedResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.AddUnauthorizedResponseMessageAsync(request, cancellationToken);
 
 		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
 	}
@@ -160,7 +95,7 @@ internal class UserClaimApiClient : IUserClaimApiClient
 		AddUserClaimApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await AddForbiddenResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.AddForbiddenResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
 	}
@@ -169,7 +104,7 @@ internal class UserClaimApiClient : IUserClaimApiClient
 		AddUserClaimApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await AddResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.AddResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
 	}
@@ -178,7 +113,7 @@ internal class UserClaimApiClient : IUserClaimApiClient
 		AddUserClaimApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await AddResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.AddResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return await response.GetFromJsonAsync<AddUserClaimApiResponse>(cancellationToken);
 	}
@@ -187,7 +122,7 @@ internal class UserClaimApiClient : IUserClaimApiClient
 		AddUserClaimApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await AddUnauthorizedResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.AddUnauthorizedResponseMessageAsync(request, cancellationToken);
 
 		return response.GetStatusCode();
 	}
@@ -196,7 +131,7 @@ internal class UserClaimApiClient : IUserClaimApiClient
 		AddUserClaimApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await AddForbiddenResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.AddForbiddenResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return response.GetStatusCode();
 	}
@@ -205,48 +140,16 @@ internal class UserClaimApiClient : IUserClaimApiClient
 		AddUserClaimApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await AddResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.AddResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return response.GetStatusCode();
-	}
-
-	private async Task<HttpResponseMessage> DeleteUnauthorizedResponseMessageAsync(
-		DeleteUserClaimApiRequest request,
-		CancellationToken cancellationToken)
-	{
-		var route = UserClaimRouteFactory.GetRoute(request);
-
-		return await _httpClient
-			.DeleteAsync(route, cancellationToken);
-	}
-
-	private async Task<HttpResponseMessage> DeleteForbiddenResponseMessageAsync(
-		DeleteUserClaimApiRequest request,
-		CancellationToken cancellationToken)
-	{
-		var route = UserClaimRouteFactory.GetRoute(request);
-
-		return await _httpClient
-			.WithAuthorization(request.Id, _baseAccessTokenGenerator)
-			.DeleteAsync(route, cancellationToken);
-	}
-
-	private async Task<HttpResponseMessage> DeleteResponseMessageAsync(
-		DeleteUserClaimApiRequest request,
-		CancellationToken cancellationToken)
-	{
-		var route = UserClaimRouteFactory.GetRoute(request);
-
-		return await _httpClient
-			.WithAdminAuthorization(request.Id, _baseAccessTokenGenerator)
-			.DeleteAsync(route, cancellationToken);
 	}
 
 	public async Task<ApplicationProblemDetails> DeleteUnauthorizedProblemDetailsAsync(
 		DeleteUserClaimApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await DeleteUnauthorizedResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.DeleteUnauthorizedResponseMessageAsync(request, cancellationToken);
 
 		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
 	}
@@ -255,7 +158,7 @@ internal class UserClaimApiClient : IUserClaimApiClient
 		DeleteUserClaimApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await DeleteForbiddenResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.DeleteForbiddenResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
 	}
@@ -264,7 +167,7 @@ internal class UserClaimApiClient : IUserClaimApiClient
 		DeleteUserClaimApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await DeleteResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.DeleteResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return await response.GetProblemDetailsFromJsonAsync(cancellationToken);
 	}
@@ -273,14 +176,14 @@ internal class UserClaimApiClient : IUserClaimApiClient
 		DeleteUserClaimApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		await DeleteResponseMessageAsync(request, cancellationToken);
+		await _httpClient.DeleteResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 	}
 
 	public async Task<HttpStatusCode> DeleteUnauthorizedStatusCodeAsync(
 		DeleteUserClaimApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await DeleteUnauthorizedResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.DeleteUnauthorizedResponseMessageAsync(request, cancellationToken);
 
 		return response.GetStatusCode();
 	}
@@ -289,7 +192,7 @@ internal class UserClaimApiClient : IUserClaimApiClient
 		DeleteUserClaimApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await DeleteForbiddenResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.DeleteForbiddenResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return response.GetStatusCode();
 	}
@@ -298,7 +201,7 @@ internal class UserClaimApiClient : IUserClaimApiClient
 		DeleteUserClaimApiRequest request,
 		CancellationToken cancellationToken)
 	{
-		var response = await DeleteResponseMessageAsync(request, cancellationToken);
+		var response = await _httpClient.DeleteResponseMessageAsync(request, _baseAccessTokenGenerator, cancellationToken);
 
 		return response.GetStatusCode();
 	}
