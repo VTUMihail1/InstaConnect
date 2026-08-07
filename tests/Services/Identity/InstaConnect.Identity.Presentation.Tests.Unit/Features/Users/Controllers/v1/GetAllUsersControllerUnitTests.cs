@@ -16,7 +16,7 @@ public class GetAllUsersControllerUnitTests : BaseUserPresentationQueryUnitTest
 
 		_controller = new(Mapper, Sender);
 
-		Sender.SetupGetAllQueryRequest(_request, Users, CancellationToken);
+		Sender.SetupSendAsync(_request, Users, CancellationToken);
 	}
 
 	[Fact]
@@ -36,7 +36,7 @@ public class GetAllUsersControllerUnitTests : BaseUserPresentationQueryUnitTest
 		var response = await _controller.GetAllAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Users, _request);
+		response.ShouldSatisfy(_request, Users);
 	}
 
 	[Fact]

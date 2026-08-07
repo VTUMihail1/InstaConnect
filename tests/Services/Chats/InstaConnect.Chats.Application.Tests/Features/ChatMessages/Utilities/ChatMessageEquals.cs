@@ -11,6 +11,348 @@ namespace InstaConnect.Chats.Application.Tests.Features.ChatMessages.Utilities;
 
 public static class ChatMessageEquals
 {
+	extension(ChatMessageAddedNotificationRequest r)
+	{
+		public bool Matches(AddChatMessageCommandRequest request, ChatMessage entity)
+		{
+			return r.ChatMessage.Matches(request, entity);
+		}
+
+		public bool MatchesInverted(AddChatMessageCommandRequest request, ChatMessage entity)
+		{
+			return r.ChatMessage.MatchesInverted(request, entity);
+		}
+	}
+
+	extension(ChatMessageUpdatedNotificationRequest r)
+	{
+		public bool Matches(UpdateChatMessageCommandRequest request, ChatMessage entity)
+		{
+			return r.ChatMessage.Matches(request, entity);
+		}
+
+		public bool MatchesInverted(UpdateChatMessageCommandRequest request, ChatMessage entity)
+		{
+			return r.ChatMessage.MatchesInverted(request, entity);
+		}
+	}
+
+	extension(ChatMessageDeletedNotificationRequest r)
+	{
+		public bool Matches(DeleteChatMessageCommandRequest request, ChatMessage entity)
+		{
+			return r.ChatMessage.Matches(request, entity);
+		}
+
+		public bool MatchesInverted(DeleteChatMessageCommandRequest request, ChatMessage entity)
+		{
+			return r.ChatMessage.MatchesInverted(request, entity);
+		}
+	}
+
+	extension(ChatMessageNotificationRequest r)
+	{
+		public bool Matches(AddChatMessageCommandRequest request, ChatMessage? entity)
+		{
+			return entity != null &&
+				   r.ParticipantOneId.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
+				   r.ParticipantTwoId.EqualsOrdinalIgnoreCase(request.ParticipantTwoId) &&
+				   r.MessageId.EqualsOrdinalIgnoreCase(entity.Id.MessageId) &&
+				   r.Sender.MatchesSender(request, entity.Sender) &&
+				   r.Chat.Matches(request, entity.Chat) &&
+				   r.Content == request.Content &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool Matches(UpdateChatMessageCommandRequest request, ChatMessage? entity)
+		{
+			return entity != null &&
+				   r.ParticipantOneId.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
+				   r.ParticipantTwoId.EqualsOrdinalIgnoreCase(request.ParticipantTwoId) &&
+				   r.MessageId.EqualsOrdinalIgnoreCase(request.MessageId) &&
+				   r.Sender.MatchesSender(request, entity.Sender) &&
+				   r.Chat.Matches(request, entity.Chat) &&
+				   r.Content == request.Content &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool Matches(DeleteChatMessageCommandRequest request, ChatMessage? entity)
+		{
+			return entity != null &&
+				   r.ParticipantOneId.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
+				   r.ParticipantTwoId.EqualsOrdinalIgnoreCase(request.ParticipantTwoId) &&
+				   r.MessageId.EqualsOrdinalIgnoreCase(request.MessageId) &&
+				   r.Sender.MatchesSender(request, entity.Sender) &&
+				   r.Chat.Matches(request, entity.Chat) &&
+				   r.Content == entity.Content &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesInverted(AddChatMessageCommandRequest request, ChatMessage? entity)
+		{
+			return entity != null &&
+				   r.ParticipantOneId.EqualsOrdinalIgnoreCase(request.ParticipantTwoId) &&
+				   r.ParticipantTwoId.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
+				   r.MessageId.EqualsOrdinalIgnoreCase(entity.Id.MessageId) &&
+				   r.Sender.MatchesSenderInverted(request, entity.Sender) &&
+				   r.Chat.MatchesInverted(request, entity.Chat) &&
+				   r.Content == request.Content &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesInverted(UpdateChatMessageCommandRequest request, ChatMessage? entity)
+		{
+			return entity != null &&
+				   r.ParticipantOneId.EqualsOrdinalIgnoreCase(request.ParticipantTwoId) &&
+				   r.ParticipantTwoId.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
+				   r.MessageId.EqualsOrdinalIgnoreCase(request.MessageId) &&
+				   r.Sender.MatchesSenderInverted(request, entity.Sender) &&
+				   r.Chat.MatchesInverted(request, entity.Chat) &&
+				   r.Content == request.Content &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesInverted(DeleteChatMessageCommandRequest request, ChatMessage? entity)
+		{
+			return entity != null &&
+				   r.ParticipantOneId.EqualsOrdinalIgnoreCase(request.ParticipantTwoId) &&
+				   r.ParticipantTwoId.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
+				   r.MessageId.EqualsOrdinalIgnoreCase(request.MessageId) &&
+				   r.Sender.MatchesSenderInverted(request, entity.Sender) &&
+				   r.Chat.MatchesInverted(request, entity.Chat) &&
+				   r.Content == entity.Content &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+	}
+
+	extension(ChatNotificationRequest r)
+	{
+		public bool Matches(AddChatMessageCommandRequest request, Chat? entity)
+		{
+			return entity != null &&
+				   r.ParticipantOneId.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
+				   r.ParticipantTwoId.EqualsOrdinalIgnoreCase(request.ParticipantTwoId) &&
+				   r.ParticipantOne.MatchesParticipantOne(request, entity.ParticipantOne) &&
+				   r.ParticipantTwo.MatchesParticipantTwo(request, entity.ParticipantTwo) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc;
+		}
+
+		public bool Matches(UpdateChatMessageCommandRequest request, Chat? entity)
+		{
+			return entity != null &&
+				   r.ParticipantOneId.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
+				   r.ParticipantTwoId.EqualsOrdinalIgnoreCase(request.ParticipantTwoId) &&
+				   r.ParticipantOne.MatchesParticipantOne(request, entity.ParticipantOne) &&
+				   r.ParticipantTwo.MatchesParticipantTwo(request, entity.ParticipantTwo) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc;
+		}
+
+		public bool Matches(DeleteChatMessageCommandRequest request, Chat? entity)
+		{
+			return entity != null &&
+				   r.ParticipantOneId.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
+				   r.ParticipantTwoId.EqualsOrdinalIgnoreCase(request.ParticipantTwoId) &&
+				   r.ParticipantOne.MatchesParticipantOne(request, entity.ParticipantOne) &&
+				   r.ParticipantTwo.MatchesParticipantTwo(request, entity.ParticipantTwo) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc;
+		}
+
+		public bool MatchesInverted(AddChatMessageCommandRequest request, Chat? entity)
+		{
+			return entity != null &&
+				   r.ParticipantOneId.EqualsOrdinalIgnoreCase(request.ParticipantTwoId) &&
+				   r.ParticipantTwoId.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
+				   r.ParticipantOne.MatchesParticipantTwo(request, entity.ParticipantOne) &&
+				   r.ParticipantTwo.MatchesParticipantOne(request, entity.ParticipantTwo) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc;
+		}
+
+		public bool MatchesInverted(UpdateChatMessageCommandRequest request, Chat? entity)
+		{
+			return entity != null &&
+				   r.ParticipantOneId.EqualsOrdinalIgnoreCase(request.ParticipantTwoId) &&
+				   r.ParticipantTwoId.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
+				   r.ParticipantOne.MatchesParticipantTwo(request, entity.ParticipantOne) &&
+				   r.ParticipantTwo.MatchesParticipantOne(request, entity.ParticipantTwo) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc;
+		}
+
+		public bool MatchesInverted(DeleteChatMessageCommandRequest request, Chat? entity)
+		{
+			return entity != null &&
+				   r.ParticipantOneId.EqualsOrdinalIgnoreCase(request.ParticipantTwoId) &&
+				   r.ParticipantTwoId.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
+				   r.ParticipantOne.MatchesParticipantTwo(request, entity.ParticipantOne) &&
+				   r.ParticipantTwo.MatchesParticipantOne(request, entity.ParticipantTwo) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc;
+		}
+	}
+
+	extension(UserNotificationRequest r)
+	{
+		public bool MatchesSender(AddChatMessageCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   r.ProfileImageUrl == entity.ProfileImage?.Url &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesSender(UpdateChatMessageCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   r.ProfileImageUrl == entity.ProfileImage?.Url &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesSender(DeleteChatMessageCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   r.ProfileImageUrl == entity.ProfileImage?.Url &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesSenderInverted(AddChatMessageCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.ParticipantTwoId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   r.ProfileImageUrl == entity.ProfileImage?.Url &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesSenderInverted(UpdateChatMessageCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   r.ProfileImageUrl == entity.ProfileImage?.Url &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesSenderInverted(DeleteChatMessageCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   r.ProfileImageUrl == entity.ProfileImage?.Url &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesParticipantOne(AddChatMessageCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   r.ProfileImageUrl == entity.ProfileImage?.Url &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesParticipantOne(UpdateChatMessageCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   r.ProfileImageUrl == entity.ProfileImage?.Url &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesParticipantOne(DeleteChatMessageCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.ParticipantOneId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   r.ProfileImageUrl == entity.ProfileImage?.Url &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesParticipantTwo(AddChatMessageCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.ParticipantTwoId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   r.ProfileImageUrl == entity.ProfileImage?.Url &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesParticipantTwo(UpdateChatMessageCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.ParticipantTwoId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   r.ProfileImageUrl == entity.ProfileImage?.Url &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesParticipantTwo(DeleteChatMessageCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.ParticipantTwoId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   r.ProfileImageUrl == entity.ProfileImage?.Url &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+	}
+
 	extension(GetAllChatMessagesQuery query)
 	{
 		public bool Matches(GetAllChatMessagesQueryRequest request)
@@ -64,7 +406,7 @@ public static class ChatMessageEquals
 
 	extension(AddChatMessageCommandResponse response)
 	{
-		public bool Matches(ChatMessage chatMessage, AddChatMessageCommandRequest request)
+		public bool Matches(AddChatMessageCommandRequest request, ChatMessage chatMessage)
 		{
 			return response.Response.Matches(chatMessage.Id);
 		}
@@ -72,7 +414,7 @@ public static class ChatMessageEquals
 
 	extension(UpdateChatMessageCommandResponse response)
 	{
-		public bool Matches(ChatMessage chatMessage, UpdateChatMessageCommandRequest request)
+		public bool Matches(UpdateChatMessageCommandRequest request, ChatMessage chatMessage)
 		{
 			return response.Response.Matches(chatMessage.Id);
 		}
@@ -80,63 +422,59 @@ public static class ChatMessageEquals
 
 	extension(GetChatMessageByIdQueryResponse response)
 	{
-		public bool Matches(ChatMessage chatMessage, GetChatMessageByIdQueryRequest request)
+		public bool Matches(GetChatMessageByIdQueryRequest request, ChatMessage chatMessage)
 		{
-			return response.Response.MatchesFull(chatMessage, request);
+			return response.Response.MatchesFull(request, chatMessage);
 		}
 
-		public bool MatchesInverted(ChatMessage chatMessage, GetChatMessageByIdQueryRequest request)
+		public bool MatchesInverted(GetChatMessageByIdQueryRequest request, ChatMessage chatMessage)
 		{
-			return response.Response.MatchesFullInverted(chatMessage, request);
+			return response.Response.MatchesFullInverted(request, chatMessage);
 		}
 	}
 
 	extension(GetAllChatMessagesQueryResponse response)
 	{
-		public bool Matches(Chat chat, ICollection<ChatMessage> chatMessages, GetAllChatMessagesQueryRequest request)
+		public bool Matches(GetAllChatMessagesQueryRequest request, Chat chat, ICollection<ChatMessage> chatMessages)
 		{
 			return response.Response.MatchesWithoutSender(
-				(response, message) => response.MatchesWithoutChat(message, request),
+				request,
+				(response, message) => response.MatchesWithoutChat(request, message),
 				message => message.MatchesFilter(request),
 				chat,
-				chatMessages,
-				request
-			);
+				chatMessages);
 		}
 
-		public bool Matches(Chat chat, ICollection<ChatMessage> chatMessages, GetAllChatMessagesQueryRequest request, ISortEnumTermTransformer<ChatMessage> termTransformer)
+		public bool Matches(GetAllChatMessagesQueryRequest request, Chat chat, ICollection<ChatMessage> chatMessages, ISortEnumTermTransformer<ChatMessage> termTransformer)
 		{
 			return response.Response.MatchesWithoutSender(
-				(response, message) => response.MatchesWithoutChat(message, request),
+				request,
+				(response, message) => response.MatchesWithoutChat(request, message),
 				message => message.MatchesFilter(request),
 				chat,
 				chatMessages,
-				request,
-				termTransformer
-			);
+				termTransformer);
 		}
 
-		public bool MatchesInverted(Chat chat, ICollection<ChatMessage> chatMessages, GetAllChatMessagesQueryRequest request)
+		public bool MatchesInverted(GetAllChatMessagesQueryRequest request, Chat chat, ICollection<ChatMessage> chatMessages)
 		{
 			return response.Response.MatchesWithoutSenderInverted(
-				(response, message) => response.MatchesWithoutChatInverted(message, request),
+				request,
+				(response, message) => response.MatchesWithoutChatInverted(request, message),
 				message => message.MatchesFilter(request),
 				chat,
-				chatMessages,
-				request
-			);
+				chatMessages);
 		}
 
-		public bool MatchesInverted(Chat chat, ICollection<ChatMessage> chatMessages, GetAllChatMessagesQueryRequest request, ISortEnumTermTransformer<ChatMessage> termTransformer)
+		public bool MatchesInverted(GetAllChatMessagesQueryRequest request, Chat chat, ICollection<ChatMessage> chatMessages, ISortEnumTermTransformer<ChatMessage> termTransformer)
 		{
 			return response.Response.MatchesWithoutSenderInverted(
-				(response, message) => response.MatchesWithoutChatInverted(message, request),
+				request,
+				(response, message) => response.MatchesWithoutChatInverted(request, message),
 				message => message.MatchesFilter(request),
 				chat,
 				chatMessages,
-				request,
-				termTransformer
-			);
+				termTransformer);
 		}
 	}
 
@@ -168,10 +506,10 @@ public static class ChatMessageEquals
 
 		public bool MatchesFilter(GetAllChatMessagesQueryRequest request)
 		{
-			return (chatMessage.Id.Id.ParticipantOneId.Id.EqualsOrdinalIgnoreCase(request.CurrentUserId) &&
-				   chatMessage.Id.Id.ParticipantTwoId.Id.EqualsOrdinalIgnoreCase(request.ParticipantTwoId)) ||
-				   (chatMessage.Id.Id.ParticipantOneId.Id.EqualsOrdinalIgnoreCase(request.ParticipantTwoId) &&
-				   chatMessage.Id.Id.ParticipantTwoId.Id.EqualsOrdinalIgnoreCase(request.CurrentUserId));
+			return (chatMessage.Id.Id.ParticipantOneId.Matches(request.CurrentUserId) &&
+				   chatMessage.Id.Id.ParticipantTwoId.Matches(request.ParticipantTwoId)) ||
+				   (chatMessage.Id.Id.ParticipantOneId.Matches(request.ParticipantTwoId) &&
+				   chatMessage.Id.Id.ParticipantTwoId.Matches(request.CurrentUserId));
 		}
 	}
 
@@ -185,7 +523,7 @@ public static class ChatMessageEquals
 
 	extension(ChatMessageQueryResponse? response)
 	{
-		public bool MatchesFull<TRequest>(ChatMessage? chatMessage, TRequest request)
+		public bool MatchesFull<TRequest>(TRequest request, ChatMessage? chatMessage)
 		where TRequest : ICurrentUserableQueryRequest
 		{
 			return response != null &&
@@ -196,10 +534,10 @@ public static class ChatMessageEquals
 				   chatMessage.CreatedAtUtc == response.CreatedAtUtc &&
 				   chatMessage.UpdatedAtUtc == response.UpdatedAtUtc &&
 				   response.Sender.MatchesFull(chatMessage.Sender) &&
-				   response.Chat.MatchesFull(chatMessage.Chat, request);
+				   response.Chat.MatchesFull(request, chatMessage.Chat);
 		}
 
-		public bool MatchesWithoutSender<TRequest>(ChatMessage? chatMessage, TRequest request)
+		public bool MatchesWithoutSender<TRequest>(TRequest request, ChatMessage? chatMessage)
 			where TRequest : ICurrentUserableQueryRequest
 		{
 			return response != null &&
@@ -210,10 +548,10 @@ public static class ChatMessageEquals
 				   chatMessage.CreatedAtUtc == response.CreatedAtUtc &&
 				   chatMessage.UpdatedAtUtc == response.UpdatedAtUtc &&
 				   response.Sender == null &&
-				   response.Chat.MatchesFull(chatMessage.Chat, request);
+				   response.Chat.MatchesFull(request, chatMessage.Chat);
 		}
 
-		public bool MatchesWithoutChat<TRequest>(ChatMessage? chatMessage, TRequest request)
+		public bool MatchesWithoutChat<TRequest>(TRequest request, ChatMessage? chatMessage)
 			where TRequest : ICurrentUserableQueryRequest
 		{
 			return response != null &&
@@ -227,7 +565,7 @@ public static class ChatMessageEquals
 				   response.Chat == null;
 		}
 
-		public bool MatchesFullInverted<TRequest>(ChatMessage? chatMessage, TRequest request)
+		public bool MatchesFullInverted<TRequest>(TRequest request, ChatMessage? chatMessage)
 		where TRequest : ICurrentUserableQueryRequest
 		{
 			return response != null &&
@@ -238,10 +576,10 @@ public static class ChatMessageEquals
 				   chatMessage.CreatedAtUtc == response.CreatedAtUtc &&
 				   chatMessage.UpdatedAtUtc == response.UpdatedAtUtc &&
 				   response.Sender.MatchesFull(chatMessage.Sender) &&
-				   response.Chat.MatchesFullInverted(chatMessage.Chat, request);
+				   response.Chat.MatchesFullInverted(request, chatMessage.Chat);
 		}
 
-		public bool MatchesWithoutSenderInverted<TRequest>(ChatMessage? chatMessage, TRequest request)
+		public bool MatchesWithoutSenderInverted<TRequest>(TRequest request, ChatMessage? chatMessage)
 			where TRequest : ICurrentUserableQueryRequest
 		{
 			return response != null &&
@@ -252,10 +590,10 @@ public static class ChatMessageEquals
 				   chatMessage.CreatedAtUtc == response.CreatedAtUtc &&
 				   chatMessage.UpdatedAtUtc == response.UpdatedAtUtc &&
 				   response.Sender == null &&
-				   response.Chat.MatchesFullInverted(chatMessage.Chat, request);
+				   response.Chat.MatchesFullInverted(request, chatMessage.Chat);
 		}
 
-		public bool MatchesWithoutChatInverted<TRequest>(ChatMessage? chatMessage, TRequest request)
+		public bool MatchesWithoutChatInverted<TRequest>(TRequest request, ChatMessage? chatMessage)
 			where TRequest : ICurrentUserableQueryRequest
 		{
 			return response != null &&
@@ -272,125 +610,125 @@ public static class ChatMessageEquals
 
 	extension(ChatMessageCollectionQueryResponse response)
 	{
-		public bool MatchesWithoutSender<TRequest>(Func<ChatMessageQueryResponse, ChatMessage, bool> matches, Func<ChatMessage, bool> matchesFilter, Chat chat, ICollection<ChatMessage> chatMessages, TRequest request)
+		public bool MatchesWithoutSender<TRequest>(TRequest request, Func<ChatMessageQueryResponse, ChatMessage, bool> matches, Func<ChatMessage, bool> matchesFilter, Chat chat, ICollection<ChatMessage> chatMessages)
 		where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
-			return response.MatchesCollectionResponse(chatMessages.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, chatMessages.Count(matchesFilter)) &&
 				   response.Sender == null &&
-				   response.Chat.MatchesFull(chat, request) &&
+				   response.Chat.MatchesFull(request, chat) &&
 				   response.ChatMessages.MatchesCollection(
+					   request,
 					   chatMessages,
 					   response => new(new(new(response.ParticipantOneId), new(response.ParticipantTwoId)), response.MessageId),
 					   chatMessage => chatMessage.Id,
 					   matches,
-					   request,
 					   matchesFilter
 				   );
 		}
 
-		public bool MatchesWithoutSender<TRequest>(Func<ChatMessageQueryResponse, ChatMessage, bool> matches, Func<ChatMessage, bool> matchesFilter, Chat chat, ICollection<ChatMessage> chatMessages, TRequest request, ISortEnumTermTransformer<ChatMessage> termTransformer)
+		public bool MatchesWithoutSender<TRequest>(TRequest request, Func<ChatMessageQueryResponse, ChatMessage, bool> matches, Func<ChatMessage, bool> matchesFilter, Chat chat, ICollection<ChatMessage> chatMessages, ISortEnumTermTransformer<ChatMessage> termTransformer)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
-			return response.MatchesCollectionResponse(chatMessages.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, chatMessages.Count(matchesFilter)) &&
 				   response.Sender == null &&
-				   response.Chat.MatchesFull(chat, request) &&
+				   response.Chat.MatchesFull(request, chat) &&
 				   response.ChatMessages.MatchesSortedCollection(
+					   request,
 					   chatMessages,
 					   matches,
 					   termTransformer,
-					   request,
 					   matchesFilter
 				   );
 		}
 
-		public bool MatchesWithoutChat<TRequest>(Func<ChatMessageQueryResponse, ChatMessage, bool> matches, Func<ChatMessage, bool> matchesFilter, User user, ICollection<ChatMessage> chatMessages, TRequest request)
+		public bool MatchesWithoutChat<TRequest>(TRequest request, Func<ChatMessageQueryResponse, ChatMessage, bool> matches, Func<ChatMessage, bool> matchesFilter, User user, ICollection<ChatMessage> chatMessages)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
-			return response.MatchesCollectionResponse(chatMessages.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, chatMessages.Count(matchesFilter)) &&
 				   response.Sender.MatchesFull(user) &&
 				   response.Chat == null &&
 				   response.ChatMessages.MatchesCollection(
+					   request,
 					   chatMessages,
 					   response => new(new(new(response.ParticipantOneId), new(response.ParticipantTwoId)), response.MessageId),
 					   chatMessage => chatMessage.Id,
 					   matches,
-					   request,
 					   matchesFilter
 				   );
 		}
 
-		public bool MatchesWithoutChat<TRequest>(Func<ChatMessageQueryResponse, ChatMessage, bool> matches, Func<ChatMessage, bool> matchesFilter, User user, ICollection<ChatMessage> chatMessages, TRequest request, ISortEnumTermTransformer<ChatMessage> termTransformer)
+		public bool MatchesWithoutChat<TRequest>(TRequest request, Func<ChatMessageQueryResponse, ChatMessage, bool> matches, Func<ChatMessage, bool> matchesFilter, User user, ICollection<ChatMessage> chatMessages, ISortEnumTermTransformer<ChatMessage> termTransformer)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
-			return response.MatchesCollectionResponse(chatMessages.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, chatMessages.Count(matchesFilter)) &&
 				   response.Sender.MatchesFull(user) &&
 				   response.Chat == null &&
 				   response.ChatMessages.MatchesSortedCollection(
+					   request,
 					   chatMessages,
 					   matches,
 					   termTransformer,
-					   request,
 					   matchesFilter
 				   );
 		}
-		public bool MatchesWithoutSenderInverted<TRequest>(Func<ChatMessageQueryResponse, ChatMessage, bool> matches, Func<ChatMessage, bool> matchesFilter, Chat chat, ICollection<ChatMessage> chatMessages, TRequest request)
+		public bool MatchesWithoutSenderInverted<TRequest>(TRequest request, Func<ChatMessageQueryResponse, ChatMessage, bool> matches, Func<ChatMessage, bool> matchesFilter, Chat chat, ICollection<ChatMessage> chatMessages)
 		where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
-			return response.MatchesCollectionResponse(chatMessages.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, chatMessages.Count(matchesFilter)) &&
 				   response.Sender == null &&
-				   response.Chat.MatchesFullInverted(chat, request) &&
+				   response.Chat.MatchesFullInverted(request, chat) &&
 				   response.ChatMessages.MatchesCollection(
+					   request,
 					   chatMessages,
 					   response => new(new(new(response.ParticipantTwoId), new(response.ParticipantOneId)), response.MessageId),
 					   chatMessage => chatMessage.Id,
 					   matches,
-					   request,
 					   matchesFilter
 				   );
 		}
 
-		public bool MatchesWithoutSenderInverted<TRequest>(Func<ChatMessageQueryResponse, ChatMessage, bool> matches, Func<ChatMessage, bool> matchesFilter, Chat chat, ICollection<ChatMessage> chatMessages, TRequest request, ISortEnumTermTransformer<ChatMessage> termTransformer)
+		public bool MatchesWithoutSenderInverted<TRequest>(TRequest request, Func<ChatMessageQueryResponse, ChatMessage, bool> matches, Func<ChatMessage, bool> matchesFilter, Chat chat, ICollection<ChatMessage> chatMessages, ISortEnumTermTransformer<ChatMessage> termTransformer)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
-			return response.MatchesCollectionResponse(chatMessages.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, chatMessages.Count(matchesFilter)) &&
 				   response.Sender == null &&
-				   response.Chat.MatchesFullInverted(chat, request) &&
+				   response.Chat.MatchesFullInverted(request, chat) &&
 				   response.ChatMessages.MatchesSortedCollection(
+					   request,
 					   chatMessages,
 					   matches,
 					   termTransformer,
-					   request,
 					   matchesFilter
 				   );
 		}
 
-		public bool MatchesWithoutChatInverted<TRequest>(Func<ChatMessageQueryResponse, ChatMessage, bool> matches, Func<ChatMessage, bool> matchesFilter, User user, ICollection<ChatMessage> chatMessages, TRequest request)
+		public bool MatchesWithoutChatInverted<TRequest>(TRequest request, Func<ChatMessageQueryResponse, ChatMessage, bool> matches, Func<ChatMessage, bool> matchesFilter, User user, ICollection<ChatMessage> chatMessages)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
-			return response.MatchesCollectionResponse(chatMessages.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, chatMessages.Count(matchesFilter)) &&
 				   response.Sender.MatchesFull(user) &&
 				   response.Chat == null &&
 				   response.ChatMessages.MatchesCollection(
+					   request,
 					   chatMessages,
 					   response => new(new(new(response.ParticipantTwoId), new(response.ParticipantOneId)), response.MessageId),
 					   chatMessage => chatMessage.Id,
 					   matches,
-					   request,
 					   matchesFilter
 				   );
 		}
 
-		public bool MatchesWithoutChatInverted<TRequest>(Func<ChatMessageQueryResponse, ChatMessage, bool> matches, Func<ChatMessage, bool> matchesFilter, User user, ICollection<ChatMessage> chatMessages, TRequest request, ISortEnumTermTransformer<ChatMessage> termTransformer)
+		public bool MatchesWithoutChatInverted<TRequest>(TRequest request, Func<ChatMessageQueryResponse, ChatMessage, bool> matches, Func<ChatMessage, bool> matchesFilter, User user, ICollection<ChatMessage> chatMessages, ISortEnumTermTransformer<ChatMessage> termTransformer)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
-			return response.MatchesCollectionResponse(chatMessages.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, chatMessages.Count(matchesFilter)) &&
 				   response.Sender.MatchesFull(user) &&
 				   response.Chat == null &&
 				   response.ChatMessages.MatchesSortedCollection(
+					   request,
 					   chatMessages,
 					   matches,
 					   termTransformer,
-					   request,
 					   matchesFilter
 				   );
 		}

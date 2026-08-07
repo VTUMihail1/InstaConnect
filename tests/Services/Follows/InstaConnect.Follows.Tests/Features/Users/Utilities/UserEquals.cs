@@ -6,30 +6,6 @@ namespace InstaConnect.Follows.Tests.Features.Users.Utilities;
 
 public static class UserEquals
 {
-	extension(UserAddedEventRequest p)
-	{
-		public bool Matches(UserAddedEventRequest request)
-		{
-			return p.User.Matches(request.User);
-		}
-	}
-
-	extension(UserUpdatedEventRequest p)
-	{
-		public bool Matches(UserUpdatedEventRequest request)
-		{
-			return p.User.Matches(request.User);
-		}
-	}
-
-	extension(UserDeletedEventRequest p)
-	{
-		public bool Matches(UserDeletedEventRequest request)
-		{
-			return p.User.Matches(request.User);
-		}
-	}
-
 	extension(UserEventRequest r)
 	{
 		public bool Matches(UserEventRequest request)
@@ -45,11 +21,12 @@ public static class UserEquals
 		}
 	}
 
-	extension(User entity)
+	extension(User? entity)
 	{
 		public bool Matches(UserEventRequest request)
 		{
-			return entity.Id.Matches(request.Id) &&
+			return entity != null &&
+				   entity.Id.Matches(request.Id) &&
 				   entity.Name.Matches(request.Name) &&
 				   entity.Email.Matches(request.Email) &&
 				   entity.FirstName == request.FirstName &&
@@ -58,22 +35,30 @@ public static class UserEquals
 				   entity.CreatedAtUtc == request.CreatedAtUtc &&
 				   entity.UpdatedAtUtc == request.UpdatedAtUtc;
 		}
+	}
 
-		public bool Matches(UserNotificationRequest response)
+	extension(User entity)
+	{
+		public bool Matches(User u)
 		{
-			return entity.Id.Matches(response.Id) &&
-				   entity.Name.Matches(response.Name) &&
-				   entity.Email.Matches(response.Email) &&
-				   entity.FirstName == response.FirstName &&
-				   entity.LastName == response.LastName &&
-				   entity.ProfileImage.Matches(response.ProfileImageUrl) &&
-				   entity.CreatedAtUtc == response.CreatedAtUtc &&
-				   entity.UpdatedAtUtc == response.UpdatedAtUtc;
+			return entity.Id.Matches(u.Id.Id) &&
+				   entity.Email.Matches(u.Email.Value) &&
+				   entity.FirstName == u.FirstName &&
+				   entity.LastName == u.LastName &&
+				   entity.Name.Matches(u.Name.Value) &&
+				   entity.ProfileImage.Matches(u.ProfileImage?.Url) &&
+				   entity.CreatedAtUtc == u.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == u.UpdatedAtUtc;
 		}
 	}
 
 	extension(UserId p)
 	{
+		public bool Matches(UserId id)
+		{
+			return p.Matches(id.Id);
+		}
+
 		public bool Matches(string id)
 		{
 			return p.Id.EqualsOrdinalIgnoreCase(id);

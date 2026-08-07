@@ -1,3 +1,4 @@
+using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Posts.Application.Features.Users.Abstractions;
 using InstaConnect.Posts.Application.Features.Users.Models;
 using InstaConnect.Posts.Application.Tests.Features.Users.Utilities;
@@ -9,20 +10,20 @@ public static class UserEquals
 	extension(AddUserCommandResponse response)
 	{
 		public bool Matches(
-		User user,
-		AddUserCommandRequest request)
+		AddUserCommandRequest request,
+		User user)
 		{
-			return response.Response.Matches(user.Id);
+			return response.Response.Matches(request.Id);
 		}
 	}
 
 	extension(UpdateUserCommandResponse response)
 	{
 		public bool Matches(
-		User user,
-		UpdateUserCommandRequest request)
+		UpdateUserCommandRequest request,
+		User user)
 		{
-			return response.Response.Matches(user.Id);
+			return response.Response.Matches(request.Id);
 		}
 	}
 
@@ -94,6 +95,11 @@ public static class UserEquals
 		public bool Matches(UserId id)
 		{
 			return id.Matches(response.Id);
+		}
+
+		public bool Matches(string id)
+		{
+			return id.EqualsOrdinalIgnoreCase(response.Id);
 		}
 	}
 

@@ -7,74 +7,86 @@ public static class RefreshTokenValidationExceptionAssertions
 	extension(IApplicationSender sender)
 	{
 		public async Task ShouldThrowInvalidValidationExceptionForNameAsync(
-			IStringMessageTransformer messageTransformer,
 			IssueRefreshTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<IssueRefreshTokenCommandRequest, string, IssueRefreshTokenCommandResponse>(
-				p => p.Name,
-				messageTransformer,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
+				p =>p.Name,
+				messageTransformer,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForPasswordAsync(
-			IStringMessageTransformer messageTransformer,
 			IssueRefreshTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<IssueRefreshTokenCommandRequest, string, IssueRefreshTokenCommandResponse>(
-				p => p.Password,
-				messageTransformer,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
+				p =>p.Password,
+				messageTransformer,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForIdAsync(
-			IStringMessageTransformer messageTransformer,
 			DeleteCurrentRefreshTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync(
-				p => p.Id,
-				messageTransformer,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
+				p =>p.Id,
+				messageTransformer,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForIdAsync(
-			IStringMessageTransformer messageTransformer,
 			RotateRefreshTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<RotateRefreshTokenCommandRequest, string, RotateRefreshTokenCommandResponse>(
-				p => p.Id,
-				messageTransformer,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
+				p =>p.Id,
+				messageTransformer,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForValueAsync(
-			IStringMessageTransformer messageTransformer,
 			DeleteCurrentRefreshTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync(
-				p => p.Value,
-				messageTransformer,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
+				p =>p.Value,
+				messageTransformer,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForValueAsync(
-			IStringMessageTransformer messageTransformer,
 			RotateRefreshTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<RotateRefreshTokenCommandRequest, string, RotateRefreshTokenCommandResponse>(
-				p => p.Value,
-				messageTransformer,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
+				p =>p.Value,
+				messageTransformer,
 				cancellationToken);
 		}
 	}

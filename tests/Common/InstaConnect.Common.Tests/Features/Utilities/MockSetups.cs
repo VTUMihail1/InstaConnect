@@ -1,34 +1,52 @@
-using FluentValidation.TestHelper;
-
 using NSubstitute;
 
 namespace InstaConnect.Common.Tests.Features.Utilities;
 
 public static class MockSetups
 {
+	extension<T>(T substitute) where T : class
+	{
+		public T ClearCalls()
+		{
+			substitute.ClearReceivedCalls();
+
+			return substitute;
+		}
+	}
+
 	extension<TResponse>(TResponse response)
 	{
 		public void ReturnsResponse(TResponse returnThis)
 		{
 			response.Returns(returnThis);
 		}
-	}
 
-	extension<TResponse>(Task<TResponse> response)
-		where TResponse : class?
-	{
-		public void ReturnsResponse(TResponse returnThis)
+		public void ReturnsResponse<TArg1>(Func<TArg1, TResponse> func)
 		{
-			response.Returns(returnThis);
+			response.Returns(a => func(a.Arg<TArg1>()));
+		}
+
+		public void ReturnsResponse<TArg1, TArg2>(Func<TArg1, TArg2, TResponse> func)
+		{
+			response.Returns(a => func(a.Arg<TArg1>(), a.Arg<TArg2>()));
 		}
 	}
 
-	extension<T>(T obj)
-		where T : class
+	extension<TResponse>(Task<TResponse> response)
 	{
-		public void WhenDo(Action<T> setup, Action callback)
+		public void ReturnsTaskResponse(TResponse returnThis)
 		{
-			obj.When(setup).Do(_ => callback());
+			response.Returns(returnThis);
+		}
+
+		public void ReturnsTaskResponse<TArg1>(Func<TArg1, TResponse> func)
+		{
+			response.Returns(a => func(a.Arg<TArg1>()));
+		}
+
+		public void ReturnsTaskResponse<TArg1, TArg2>(Func<TArg1, TArg2, TResponse> func)
+		{
+			response.Returns(a => func(a.Arg<TArg1>(), a.Arg<TArg2>()));
 		}
 	}
 }

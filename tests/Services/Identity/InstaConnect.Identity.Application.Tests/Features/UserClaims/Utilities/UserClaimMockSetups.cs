@@ -4,28 +4,30 @@ public static class UserClaimMockSetups
 {
 	extension(IUserClaimQueryService service)
 	{
-		public void SetupGetAllQuery(
+		public void SetupGetAllAsync(
 		GetAllUserClaimsQueryRequest request,
 		User user,
 		ICollection<UserClaim> userClaims,
 		CancellationToken cancellationToken)
 		{
 			service
-				.GetAllAsync(UserClaimMatcher.IsGetAllUserClaimsQuery(request), cancellationToken)
-				.ReturnsResponse(userClaims.ToResponse(user, request));
+				.ClearCalls()
+				.GetAllAsync(UserClaimApplicationMatcher.IsGetAllUserClaimsQuery(request), cancellationToken)
+				.ReturnsTaskResponse(userClaims.ToResponse(request, user));
 		}
 	}
 
 	extension(IUserClaimCommandService service)
 	{
-		public void SetupAddCommand(
+		public void SetupAddAsync(
 		AddUserClaimCommandRequest request,
 		UserClaim userClaim,
 		CancellationToken cancellationToken)
 		{
 			service
-				.AddAsync(UserClaimMatcher.IsAddUserClaimCommand(request), cancellationToken)
-				.ReturnsResponse(userClaim.ToResponse(request));
+				.ClearCalls()
+				.AddAsync(UserClaimApplicationMatcher.IsAddUserClaimCommand(request), cancellationToken)
+				.ReturnsTaskResponse(userClaim.ToResponse(request));
 		}
 	}
 }

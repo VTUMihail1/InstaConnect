@@ -1,5 +1,3 @@
-using System.Reflection;
-
 using InstaConnect.Chats.Infrastructure.Features.ChatMessages.Extensions;
 using InstaConnect.Chats.Infrastructure.Features.Chats.Extensions;
 using InstaConnect.Chats.Infrastructure.Features.Common.Utilities;
@@ -16,8 +14,7 @@ public static class ServiceCollectionExtensions
 	{
 		public IServiceCollection AddInfrastructure(
 			IConfiguration configuration,
-			IWebHostEnvironment webHostEnvironment,
-			Assembly presentationAssembly)
+			IWebHostEnvironment webHostEnvironment)
 		{
 			serviceCollection
 				.AddUserServices()
@@ -29,7 +26,7 @@ public static class ServiceCollectionExtensions
 				.AddMapper(ChatsInfrastructureReference.Assembly, CommonInfrastructureReference.Assembly)
 				.AddServicesWithMatchingInterfaces(ChatsInfrastructureReference.Assembly)
 				.AddMongo<IChatsContext>(configuration)
-				.AddRabbitMQ(configuration, ChatsEventHandlerUtilities.Prefix, presentationAssembly)
+				.AddRabbitMQ(configuration, ChatsEventHandlerUtilities.Prefix, ChatsInfrastructureReference.Assembly)
 				.AddJwtBearer(configuration)
 				.AddRedis(configuration)
 				.AddSignalR(configuration)

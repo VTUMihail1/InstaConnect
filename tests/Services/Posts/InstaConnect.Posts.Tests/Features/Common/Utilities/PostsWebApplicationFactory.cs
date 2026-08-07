@@ -1,5 +1,5 @@
 using InstaConnect.Common.Tests.Features.Extensions;
-using InstaConnect.Posts.Presentation.Features.Common.Extensions;
+using InstaConnect.Posts.Infrastructure.Features.Common.Extensions;
 
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -25,10 +25,7 @@ public class PostsWebApplicationFactory : WebApplicationFactory<Program>, IAsync
 
 	protected override void ConfigureWebHost(IWebHostBuilder builder)
 	{
-		builder.ConfigureTestServices(serviceCollection =>
-		{
-			serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), PostsPresentationReference.Assembly);
-		});
+		builder.ConfigureTestServices(serviceCollection => serviceCollection.AddTestEventClient(_rabbitMqContainer.GetConnectionString(), PostsInfrastructureReference.Assembly));
 
 		builder.UpdateMongoConfiguration(_mongoDbContainer.GetConnectionString());
 		builder.UpdateRabbitMqConfiguration(_rabbitMqContainer.GetConnectionString());

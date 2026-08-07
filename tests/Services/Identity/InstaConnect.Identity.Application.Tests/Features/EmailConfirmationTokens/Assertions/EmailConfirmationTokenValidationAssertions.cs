@@ -2,30 +2,30 @@ namespace InstaConnect.Identity.Application.Tests.Features.EmailConfirmationToke
 
 public static class EmailConfirmationTokenValidationAssertions
 {
-	extension(TestValidationResult<VerifyEmailConfirmationTokenCommandRequest> result)
+	extension(TestValidationResult<VerifyEmailConfirmationTokenCommandRequest> response)
 	{
 		public void ShouldHaveValidationErrorForId(
-			IStringMessageTransformer messageTransformer,
-			VerifyEmailConfirmationTokenCommandRequest request)
+			VerifyEmailConfirmationTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Id, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.Id, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForValue(
-			IStringMessageTransformer messageTransformer,
-			VerifyEmailConfirmationTokenCommandRequest request)
+			VerifyEmailConfirmationTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Value, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.Value, messageTransformer);
 		}
 	}
 
-	extension(TestValidationResult<AddEmailConfirmationTokenCommandRequest> result)
+	extension(TestValidationResult<AddEmailConfirmationTokenCommandRequest> response)
 	{
 		public void ShouldHaveValidationErrorForName(
-			IStringMessageTransformer messageTransformer,
-			AddEmailConfirmationTokenCommandRequest request)
+			AddEmailConfirmationTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Name, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.Name, messageTransformer);
 		}
 	}
 }

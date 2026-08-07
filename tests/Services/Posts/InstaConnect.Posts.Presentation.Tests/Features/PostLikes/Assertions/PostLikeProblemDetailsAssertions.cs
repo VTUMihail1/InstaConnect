@@ -10,81 +10,81 @@ public static class PostLikeProblemDetailsAssertions
 		AddPostLikeApiRequest request)
 		{
 			problemDetails.ShouldSatisfyUserNotFound(
-				r => r.UserId,
-				request);
+				request,
+				r => r.UserId);
 		}
 
 		public void ShouldSatisfyUserNotFound(
 			GetAllPostLikesForUserApiRequest request)
 		{
 			problemDetails.ShouldSatisfyUserNotFound(
-				r => r.UserId,
-				request);
+				request,
+				r => r.UserId);
 		}
 
 		public void ShouldSatisfyPostNotFound(
 			AddPostLikeApiRequest request)
 		{
 			problemDetails.ShouldSatisfyPostNotFound(
-				r => r.Id,
-				request);
+				request,
+				r => r.Id);
 		}
 
 		public void ShouldSatisfyPostNotFound(
 			DeletePostLikeApiRequest request)
 		{
 			problemDetails.ShouldSatisfyPostNotFound(
-				r => r.Id,
-				request);
+				request,
+				r => r.Id);
 		}
 
 		public void ShouldSatisfyPostNotFound(
 			GetPostLikeByIdApiRequest request)
 		{
 			problemDetails.ShouldSatisfyPostNotFound(
-				r => r.Id,
-				request);
+				request,
+				r => r.Id);
 		}
 
 		public void ShouldSatisfyPostNotFound(
 			GetAllPostLikesApiRequest request)
 		{
 			problemDetails.ShouldSatisfyPostNotFound(
-				r => r.Id,
-				request);
+				request,
+				r => r.Id);
 		}
 
 		public void ShouldSatisfyPostLikeNotFound(
 			DeletePostLikeApiRequest request)
 		{
 			problemDetails.ShouldSatisfyPostLikeNotFound(
+				request,
 				r => r.Id,
-				r => r.UserId,
-				request);
+				r => r.UserId);
 		}
 
 		public void ShouldSatisfyPostLikeNotFound(
 			GetPostLikeByIdApiRequest request)
 		{
 			problemDetails.ShouldSatisfyPostLikeNotFound(
+				request,
 				r => r.Id,
-				r => r.UserId,
-				request);
+				r => r.UserId);
 		}
 
 		public void ShouldSatisfyPostLikeAlreadyExists(
 			AddPostLikeApiRequest request)
 		{
 			problemDetails.ShouldSatisfyPostLikeAlreadyExists(
+				request,
 				r => r.Id,
-				r => r.UserId,
-				request);
+				r => r.UserId);
 		}
 
 		internal void ShouldSatisfyPostLikeNotFound<TRequest>(
+			TRequest request,
 			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> userIdPropertyExpression,
-			TRequest request)
+			Func<TRequest, string> userIdPropertyExpression)
 		{
 			problemDetails.ShouldSatisfyNotFound(
 				PostLikeExceptionErrorMessages.GetNotFoundMessage(
@@ -94,9 +94,9 @@ public static class PostLikeProblemDetailsAssertions
 		}
 
 		internal void ShouldSatisfyPostLikeAlreadyExists<TRequest>(
+			TRequest request,
 			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> userIdPropertyExpression,
-			TRequest request)
+			Func<TRequest, string> userIdPropertyExpression)
 		{
 			problemDetails.ShouldSatisfyBadRequest(
 				PostLikeExceptionErrorMessages.GetAlreadyExistsMessage(

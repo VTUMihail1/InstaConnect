@@ -1,0 +1,83 @@
+using InstaConnect.Posts.Domain.Features.Posts.Helpers;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
+using InstaConnect.Posts.Domain.Tests.Features.Posts.Assertions;
+using InstaConnect.Posts.Domain.Tests.Features.Posts.Builders;
+using InstaConnect.Posts.Domain.Tests.Features.Posts.Utilities;
+using InstaConnect.Posts.Domain.Tests.Unit.Features.Posts.Utilities;
+
+namespace InstaConnect.Posts.Domain.Tests.Unit.Features.Posts.Services;
+
+public class DeletePostCommandServiceUnitTests : BasePostDomainCommandUnitTest
+{
+	private readonly DeletePostCommandBuilderFactory _commandBuilderFactory;
+	private readonly DeletePostCommandBuilder _commandBuilder;
+	private readonly DeletePostCommand _command;
+
+	private readonly PostInclude _include;
+
+	private readonly PostCommandService _service;
+
+	public DeletePostCommandServiceUnitTests()
+	{
+		_commandBuilderFactory = new();
+		_commandBuilder = _commandBuilderFactory.Create(Post);
+		_command = _commandBuilder.Build();
+
+		_include = IncludeBuilderFactory.Create().WithUser().Build();
+
+		_service = new(Factory, Mapper, EventPublisher, Repository, DateTimeProvider, UserRepository, IncludeBuilderFactory);
+
+		Repository.SetupGetByIdAsync(_command, _include, Post, CancellationToken);
+	}
+
+	[Fact]
+	public async Task DeleteAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
+	{
+		// Arrange
+		Repository.RemoveGetByIdAsync(_command, _include, Post, CancellationToken);
+
+		// Assert
+		await _service.ShouldThrowPostNotFoundExceptionAsync(_command, CancellationToken);
+	}
+
+	[Fact]
+	public async Task DeleteAsync_ShouldThrowPostForbiddenException_WhenUserIdIsInvalid()
+	{
+		// Arrange
+		var user = UserBuilderFactory.Create().Build();
+		var command = _commandBuilder.WithUserId(user.Id).Build();
+
+		// Assert
+		await _service.ShouldThrowPostForbiddenExceptionAsync(command, CancellationToken);
+	}
+
+	[Fact]
+	public async Task DeleteAsync_ShouldCallTheRepositoryGetByIdAsync_WhenCommandIsValid()
+	{
+		// Act
+		await _service.DeleteAsync(_command, CancellationToken);
+
+		// Assert
+		await Repository.ShouldReceiveOneGetByIdAsync(_command, _include, CancellationToken);
+	}
+
+	[Fact]
+	public async Task DeleteAsync_ShouldCallTheRepositoryDeleteAsync_WhenCommandIsValid()
+	{
+		// Act
+		await _service.DeleteAsync(_command, CancellationToken);
+
+		// Assert
+		await Repository.ShouldReceiveOneDeleteAsync(_command, CancellationToken);
+	}
+
+	[Fact]
+	public async Task DeleteAsync_ShouldCallTheEventPublisherPublishAsync_WhenCommandIsValid()
+	{
+		// Act
+		await _service.DeleteAsync(_command, CancellationToken);
+
+		// Assert
+		await EventPublisher.ShouldReceiveOnePublishAsync(_command, Post, CancellationToken);
+	}
+}

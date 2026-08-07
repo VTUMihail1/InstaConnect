@@ -5,6 +5,8 @@ using InstaConnect.Common.Tests.Features.Extensions;
 using InstaConnect.Identity.Application.Features.Users.Abstractions;
 using InstaConnect.Identity.Domain.Features.Common.Helpers;
 using InstaConnect.Identity.Domain.Features.Users.Models.Requests;
+using InstaConnect.Identity.Events.Features.EmailConfirmationTokens;
+using InstaConnect.Identity.Events.Features.Users;
 using InstaConnect.Identity.Presentation.Features.Users.Abstractions;
 using InstaConnect.Identity.Presentation.Tests.Features.Users.Utilities;
 
@@ -12,6 +14,90 @@ namespace InstaConnect.Identity.Presentation.Tests.Features.Users.Utilities;
 
 public static class UserEquals
 {
+	extension(UserAddedEventRequest r)
+	{
+		public bool Matches(AddUserApiRequest request, User entity)
+		{
+			return r.User.Matches(request, entity);
+		}
+	}
+
+	extension(UserUpdatedEventRequest r)
+	{
+		public bool Matches(UpdateCurrentUserApiRequest request, User entity)
+		{
+			return r.User.Matches(request, entity);
+		}
+	}
+
+	extension(UserDeletedEventRequest r)
+	{
+		public bool Matches(DeleteUserApiRequest request, User entity)
+		{
+			return r.User.Matches(request, entity);
+		}
+
+		public bool Matches(DeleteCurrentUserApiRequest request, User entity)
+		{
+			return r.User.Matches(request, entity);
+		}
+	}
+
+	extension(UserEventRequest r)
+	{
+		public bool Matches(AddUserApiRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(entity.Id.Id) &&
+				   r.Name.EqualsOrdinalIgnoreCase(request.Form.Name) &&
+				   r.Email.EqualsOrdinalIgnoreCase(request.Form.Email) &&
+				   r.FirstName == request.Form.FirstName &&
+				   r.LastName == request.Form.LastName &&
+				   r.ProfileImageUrl == request.Form.ProfileImage?.GetUrl() &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool Matches(UpdateCurrentUserApiRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.Id) &&
+				   r.Name.EqualsOrdinalIgnoreCase(request.Form.Name) &&
+				   r.Email.EqualsOrdinalIgnoreCase(request.Form.Email) &&
+				   r.FirstName == request.Form.FirstName &&
+				   r.LastName == request.Form.LastName &&
+				   (request.Form.ProfileImage == null || r.ProfileImageUrl == request.Form.ProfileImage.GetUrl()) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool Matches(DeleteUserApiRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.Id) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   r.ProfileImageUrl == entity.ProfileImage?.Url &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool Matches(DeleteCurrentUserApiRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.CurrentId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   r.ProfileImageUrl == entity.ProfileImage?.Url &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+	}
+
 	extension(GetAllUsersQueryRequest query)
 	{
 		public bool Matches(GetAllUsersApiRequest request)
@@ -112,8 +198,8 @@ public static class UserEquals
 	extension(AddUserApiResponse response)
 	{
 		public bool Matches(
-		User user,
-		AddUserApiRequest request)
+		AddUserApiRequest request,
+		User user)
 		{
 			return response.Response.Matches(user.Id);
 		}
@@ -122,8 +208,8 @@ public static class UserEquals
 	extension(UpdateCurrentUserApiResponse response)
 	{
 		public bool Matches(
-		User user,
-		UpdateCurrentUserApiRequest request)
+		UpdateCurrentUserApiRequest request,
+		User user)
 		{
 			return response.Response.Matches(user.Id);
 		}
@@ -131,61 +217,61 @@ public static class UserEquals
 
 	extension(GetUserByIdApiResponse response)
 	{
-		public bool Matches(User user, GetUserByIdApiRequest request)
+		public bool Matches(GetUserByIdApiRequest request, User user)
 		{
-			return response.Response.MatchesFull(user, request);
+			return response.Response.MatchesFull(user);
 		}
 	}
 
 
 	extension(GetUserDetailsByIdApiResponse response)
 	{
-		public bool Matches(User user, GetUserDetailsByIdApiRequest request)
+		public bool Matches(GetUserDetailsByIdApiRequest request, User user)
 		{
-			return response.Response.MatchesFull(user, request);
+			return response.Response.MatchesFull(user);
 		}
 	}
 
 	extension(GetCurrentUserByIdApiResponse response)
 	{
-		public bool Matches(User user, GetCurrentUserByIdApiRequest request)
+		public bool Matches(GetCurrentUserByIdApiRequest request, User user)
 		{
-			return response.Response.MatchesFull(user, request);
+			return response.Response.MatchesFull(user);
 		}
 	}
 
 
 	extension(GetCurrentUserDetailsByIdApiResponse response)
 	{
-		public bool Matches(User user, GetCurrentUserDetailsByIdApiRequest request)
+		public bool Matches(GetCurrentUserDetailsByIdApiRequest request, User user)
 		{
-			return response.Response.MatchesFull(user, request);
+			return response.Response.MatchesFull(user);
 		}
 	}
 
 	extension(GetAllUsersApiResponse response)
 	{
 		public bool Matches(
-		ICollection<User> users,
-		GetAllUsersApiRequest request)
+		GetAllUsersApiRequest request,
+		ICollection<User> users)
 		{
 			return response.Response.MatchesFull(
-					   (response, user) => response.MatchesFull(user, request),
+					   request,
+					   (response, user) => response.MatchesFull(user),
 					   user => user.MatchesFilter(request),
-					   users,
-					   request);
+					   users);
 		}
 
 		public bool Matches(
-			ICollection<User> users,
 			GetAllUsersApiRequest request,
+			ICollection<User> users,
 			ISortEnumTermTransformer<User> termTransformer)
 		{
 			return response.Response.MatchesFull(
-					   (response, user) => response.MatchesFull(user, request),
+					   request,
+					   (response, user) => response.MatchesFull(user),
 					   user => user.MatchesFilter(request),
 					   users,
-					   request,
 					   termTransformer);
 		}
 	}
@@ -212,16 +298,6 @@ public static class UserEquals
 				   (request.Form.ProfileImage == null || user.ProfileImage.Matches(request.Form.ProfileImage.GetUrl()));
 		}
 
-		public bool Matches(VerifyEmailConfirmationTokenApiRequest request)
-		{
-			return user.IsEmailConfirmed;
-		}
-
-		public bool Matches(VerifyForgotPasswordTokenApiRequest request, IPasswordHasher passwordHasher)
-		{
-			return passwordHasher.IsMatch(request.Body.Password, user.PasswordHash);
-		}
-
 		public bool MatchesFilter(GetAllUsersApiRequest request)
 		{
 
@@ -241,8 +317,7 @@ public static class UserEquals
 
 	extension(UserApiResponse? response)
 	{
-		public bool MatchesFull<TRequest>(User? user, TRequest request)
-		where TRequest : ICurrentUserableApiRequest
+		public bool MatchesFull(User? user)
 		{
 			return response != null &&
 				   user != null &&
@@ -258,8 +333,7 @@ public static class UserEquals
 
 	extension(UserDetailsApiResponse? response)
 	{
-		public bool MatchesFull<TRequest>(User? user, TRequest request)
-		where TRequest : ICurrentUserableApiRequest
+		public bool MatchesFull(User? user)
 		{
 			return response != null &&
 				   user != null &&
@@ -277,35 +351,114 @@ public static class UserEquals
 	extension(UserCollectionApiResponse response)
 	{
 		public bool MatchesFull<TRequest>(
+		TRequest request,
 		Func<UserApiResponse, User, bool> matches,
 		Func<User, bool> matchesFilter,
-		ICollection<User> users,
-		TRequest request)
+		ICollection<User> users)
 		where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
-			return response.MatchesCollectionResponse(users.Count(matchesFilter), request) &&
-				   response.Users.MatchesCollection(users,
+			return response.MatchesCollectionResponse(request, users.Count(matchesFilter)) &&
+				   response.Users.MatchesCollection(request,
+													users,
 													response => new(response.Id),
 													user => user.Id,
 													matches,
-													request,
 													matchesFilter);
 		}
 
 		public bool MatchesFull<TRequest>(
+			TRequest request,
 			Func<UserApiResponse, User, bool> matches,
 			Func<User, bool> matchesFilter,
 			ICollection<User> users,
-			TRequest request,
 			ISortEnumTermTransformer<User> termTransformer)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
-			return response.MatchesCollectionResponse(users.Count(matchesFilter), request) &&
-				   response.Users.MatchesSortedCollection(users,
+			return response.MatchesCollectionResponse(request, users.Count(matchesFilter)) &&
+				   response.Users.MatchesSortedCollection(request,
+				                                          users,
 														  matches,
 														  termTransformer,
-														  request,
 														  matchesFilter);
+		}
+	}
+
+
+
+	extension(EmailConfirmationToken emailConfirmationToken)
+	{
+		public bool Matches(AddUserApiRequest request)
+		{
+			return emailConfirmationToken.User!.Name.Matches(request.Form.Name);
+		}
+	}
+
+	extension(EmailConfirmationTokenAddedEventRequest r)
+	{
+		public bool Matches(AddUserApiRequest request, EmailConfirmationToken entity)
+		{
+			return r.EmailConfirmationToken.Matches(request, entity);
+		}
+	}
+
+	extension(EmailConfirmationTokenEventRequest r)
+	{
+		public bool Matches(AddUserApiRequest request, EmailConfirmationToken? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(entity.Id.Id.Id) &&
+				   r.Value.EqualsOrdinalIgnoreCase(entity.Id.Value) &&
+				   r.User.Matches(request, entity.User) &&
+				   r.ExpiresAtUtc == entity.ExpiresAtUtc &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc;
+		}
+
+		public bool Matches(UpdateCurrentUserApiRequest request, EmailConfirmationToken? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.Id) &&
+				   r.Value.EqualsOrdinalIgnoreCase(entity.Id.Value) &&
+				   r.User.Matches(request, entity.User) &&
+				   r.ExpiresAtUtc == entity.ExpiresAtUtc &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc;
+		}
+	}
+
+	extension(ICollection<EmailConfirmationTokenAddedEventRequest> r)
+	{
+		public bool Matches(AddUserApiRequest request, ICollection<EmailConfirmationToken> entities)
+		{
+			return r.MatchesCollection(entities,
+											  e => new(new(e.EmailConfirmationToken.Id), e.EmailConfirmationToken.Value),
+											  e => e.Id,
+											  (emailConfirmationToken, e) => emailConfirmationToken.Matches(request, e));
+		}
+	}
+
+	extension(EmailConfirmationTokenDeletedEventRequest r)
+	{
+		public bool Matches(UpdateCurrentUserApiRequest request, EmailConfirmationToken entity)
+		{
+			return r.EmailConfirmationToken.Matches(request, entity);
+		}
+	}
+
+	extension(ICollection<EmailConfirmationTokenDeletedEventRequest> r)
+	{
+		public bool Matches(UpdateCurrentUserApiRequest request, ICollection<EmailConfirmationToken> entities)
+		{
+			return r.MatchesCollection(entities,
+											  e => new(new(e.EmailConfirmationToken.Id), e.EmailConfirmationToken.Value),
+											  e => e.Id,
+											  (emailConfirmationToken, e) => emailConfirmationToken.Matches(request, e));
+		}
+	}
+
+	extension(ICollection<EmailConfirmationToken> entities)
+	{
+		public bool Matches(UpdateCurrentUserApiRequest request)
+		{
+			return entities.All(entity => entity.Id.Id.Matches(request.Id));
 		}
 	}
 

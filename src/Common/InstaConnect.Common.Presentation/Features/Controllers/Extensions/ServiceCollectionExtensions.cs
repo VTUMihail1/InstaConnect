@@ -53,7 +53,8 @@ public static class ServiceCollectionExtensions
 			{
 				options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 				options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-			});
+			})
+			.AddControllersAsServices();
 
 			serviceCollection.Configure<ApiBehaviorOptions>(options =>
 				options.SuppressInferBindingSourcesForParameters = true);
@@ -62,11 +63,6 @@ public static class ServiceCollectionExtensions
 			{
 				options.DefaultApiVersion = new ApiVersion(1);
 				options.ReportApiVersions = true;
-			})
-			.AddApiExplorer(options =>
-			{
-				options.GroupNameFormat = "'v'VVV";
-				options.SubstituteApiVersionInUrl = true;
 			});
 
 			return serviceCollection;
@@ -79,11 +75,6 @@ public static class ServiceCollectionExtensions
 
 			serviceCollection.AddCors(o =>
 			{
-				o.AddDefaultPolicy(builder =>
-					builder.AllowAnyOrigin()
-						   .AllowAnyHeader()
-						   .AllowAnyMethod());
-
 				o.AddPolicy(CorsPolicies.SpecificOrigins, builder =>
 					builder.WithOrigins(options.AllowedOrigins.Split(", "))
 						   .AllowAnyHeader()

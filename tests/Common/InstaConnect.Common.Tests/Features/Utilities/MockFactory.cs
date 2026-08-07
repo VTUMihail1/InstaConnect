@@ -1,17 +1,18 @@
 using System.Reflection;
 
 using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Domain.Features.Emails.Abstractions;
+using InstaConnect.Common.Domain.Features.Images.Abstractions;
 using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
 using InstaConnect.Common.Domain.Features.Mappers.Helpers;
-using InstaConnect.Common.Events.Features.Common.Abstractions;
+using InstaConnect.Common.Domain.Features.ValueObjects.Models;
+using InstaConnect.Common.Tests.Features.Extensions;
 
 using Mapster;
 
 using MapsterMapper;
 
-using MassTransit;
-
-using NSubstitute;
+using Microsoft.AspNetCore.Http;
 
 namespace InstaConnect.Common.Tests.Features.Utilities;
 
@@ -27,22 +28,27 @@ public static class MockFactory
 		return Mocker.Mock<IApplicationSender>();
 	}
 
-	public static ConsumeContext<TEvent> CreateConsumerContext<TEvent>(TEvent message, CancellationToken cancellationToken)
-		where TEvent : class, IEventRequest
-	{
-		var consumeContext = Mocker.Mock<ConsumeContext<TEvent>>();
-
-		consumeContext.Message.Returns(message);
-		consumeContext.CancellationToken.Returns(cancellationToken);
-
-		return consumeContext;
-	}
-
 	public static IApplicationMapper CreateMapper(params Assembly[] assemblies)
 	{
 		var config = new TypeAdapterConfig();
 		config.Scan(assemblies);
 
 		return new ApplicationMapper(new Mapper(config));
+	}
+
+	public static IImageHandler CreateImageHandler()
+	{
+		var imageHandler = Mocker.Mock<IImageHandler>();
+
+		imageHandler
+			.UploadAsync(Matcher.Any<IFormFile>(), Matcher.Any<CancellationToken>())
+			.ReturnsTaskResponse<Image, IFormFile>(formFile => new(formFile.GetUrl()));
+
+		return imageHandler;
+	}
+
+	public static IEmailSender CreateEmailSender()
+	{
+		return Mocker.Mock<IEmailSender>();
 	}
 }

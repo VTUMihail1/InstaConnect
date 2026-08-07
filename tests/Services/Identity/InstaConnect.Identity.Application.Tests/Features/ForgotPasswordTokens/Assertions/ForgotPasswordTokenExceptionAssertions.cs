@@ -1,7 +1,4 @@
 using InstaConnect.Common.Application.Features.Messaging.Abstractions;
-using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Exceptions;
-
-using MediatR;
 
 namespace InstaConnect.Identity.Application.Tests.Features.ForgotPasswordTokens.Assertions;
 
@@ -13,9 +10,11 @@ public static class ForgotPasswordTokenExceptionAssertions
 			AddForgotPasswordTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowUserNameNotFoundExceptionAsync(
-				r => r.Name,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowUserNameNotFoundExceptionAsync(
 				request,
+				r => r.Name,
 				cancellationToken);
 		}
 
@@ -23,9 +22,11 @@ public static class ForgotPasswordTokenExceptionAssertions
 			VerifyForgotPasswordTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.Id,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowUserNotFoundExceptionAsync(
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 
@@ -33,10 +34,12 @@ public static class ForgotPasswordTokenExceptionAssertions
 			VerifyForgotPasswordTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowForgotPasswordTokenNotFoundExceptionAsync(
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowForgotPasswordTokenNotFoundExceptionAsync(
+				request,
 				r => r.Id,
 				r => r.Value,
-				request,
 				cancellationToken);
 		}
 
@@ -44,62 +47,12 @@ public static class ForgotPasswordTokenExceptionAssertions
 			VerifyForgotPasswordTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowForgotPasswordTokenExpiredExceptionAsync(
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowForgotPasswordTokenExpiredExceptionAsync(
+				request,
 				r => r.Id,
 				r => r.Value,
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowForgotPasswordTokenNotFoundExceptionAsync<TRequest>(
-			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> valueropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest
-		{
-			await sender.ShouldThrowAsync<ForgotPasswordTokenNotFoundException, TRequest>(
-				ForgotPasswordTokenExceptionErrorMessages.GetNotFoundMessage(new ForgotPasswordTokenId(new UserId(idPropertyExpression(request)), valueropertyExpression(request))),
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowForgotPasswordTokenNotFoundExceptionAsync<TRequest, TResponse>(
-			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> valuePropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest<TResponse>
-		{
-			await sender.ShouldThrowAsync<ForgotPasswordTokenNotFoundException, TRequest, TResponse>(
-				ForgotPasswordTokenExceptionErrorMessages.GetNotFoundMessage(new ForgotPasswordTokenId(new UserId(idPropertyExpression(request)), valuePropertyExpression(request))),
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowForgotPasswordTokenExpiredExceptionAsync<TRequest>(
-			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> valuePropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest
-		{
-			await sender.ShouldThrowAsync<ForgotPasswordTokenExpiredException, TRequest>(
-				ForgotPasswordTokenExceptionErrorMessages.GetExpiredMessage(new ForgotPasswordTokenId(new UserId(idPropertyExpression(request)), valuePropertyExpression(request))),
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowForgotPasswordTokenExpiredExceptionAsync<TRequest, TResponse>(
-			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> valuePropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest<TResponse>
-		{
-			await sender.ShouldThrowAsync<ForgotPasswordTokenExpiredException, TRequest, TResponse>(
-				ForgotPasswordTokenExceptionErrorMessages.GetExpiredMessage(new ForgotPasswordTokenId(new UserId(idPropertyExpression(request)), valuePropertyExpression(request))),
-				request,
 				cancellationToken);
 		}
 	}

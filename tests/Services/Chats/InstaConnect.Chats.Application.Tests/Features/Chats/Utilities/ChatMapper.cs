@@ -9,12 +9,6 @@ public static class ChatMapper
 {
 	extension(Chat chat)
 	{
-		internal ChatId ToIdResponse(
-)
-		{
-			return chat.Id;
-		}
-
 		internal ChatResponse ToFullResponse()
 		{
 			return new(chat.Id,
@@ -42,7 +36,7 @@ public static class ChatMapper
 		public ChatId ToResponse(
 			AddChatCommandRequest request)
 		{
-			return chat.ToIdResponse();
+			return chat.ToId();
 		}
 
 		public ChatResponse ToResponse(
@@ -55,18 +49,18 @@ public static class ChatMapper
 	extension(ICollection<Chat> chats)
 	{
 		internal ChatCollectionResponse ToResponseWithoutParticipantOne<TRequest>(
+			TRequest request,
 			User participantTwo,
-			Func<Chat, TRequest, bool> filter,
-			Func<Chat, TRequest, ChatResponse> transform,
-			TRequest request)
+			Func<TRequest, Chat, bool> filter,
+			Func<TRequest, Chat, ChatResponse> transform)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = chats.Count(chat => filter(chat, request));
+			var totalCount = chats.Count(chat => filter(request, chat));
 
 			return new(null,
 					   participantTwo.ToFullResponse(),
-					   chats.Filter(chat => filter(chat, request), request, chat => transform(chat, request)),
+					   chats.Filter(request, chat => filter(request, chat), chat => transform(request, chat)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -75,18 +69,18 @@ public static class ChatMapper
 		}
 
 		internal ChatCollectionResponse ToResponseWithoutParticipantTwo<TRequest>(
+			TRequest request,
 			User participantOne,
-			Func<Chat, TRequest, bool> filter,
-			Func<Chat, TRequest, ChatResponse> transform,
-			TRequest request)
+			Func<TRequest, Chat, bool> filter,
+			Func<TRequest, Chat, ChatResponse> transform)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = chats.Count(chat => filter(chat, request));
+			var totalCount = chats.Count(chat => filter(request, chat));
 
 			return new(participantOne.ToFullResponse(),
 					   null,
-					   chats.Filter(chat => filter(chat, request), request, chat => transform(chat, request)),
+					   chats.Filter(request, chat => filter(request, chat), chat => transform(request, chat)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -95,14 +89,14 @@ public static class ChatMapper
 		}
 
 		public ChatCollectionResponse ToResponse(
-			User participantOne,
-			GetAllChatsQueryRequest request)
+			GetAllChatsQueryRequest request,
+			User participantOne)
 		{
 			return chats.ToResponseWithoutParticipantTwo(
+				request,
 				participantOne,
-				(chat, request) => chat.MatchesFilter(request),
-				(chat, request) => chat.ToResponseWithoutParticipantOne(),
-				request);
+				(request, chat) => chat.MatchesFilter(request),
+				(request, chat) => chat.ToResponseWithoutParticipantOne());
 		}
 	}
 }

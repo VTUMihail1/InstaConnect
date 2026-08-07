@@ -16,7 +16,7 @@ public class GetAllFollowsForFollowingControllerUnitTests : BaseFollowPresentati
 
 		_controller = new(Mapper, Sender);
 
-		Sender.SetupGetAllForFollowingQueryRequest(_request, Following, Follows, CancellationToken);
+		Sender.SetupSendAsync(_request, Following, Follows, CancellationToken);
 	}
 
 	[Fact]
@@ -36,7 +36,7 @@ public class GetAllFollowsForFollowingControllerUnitTests : BaseFollowPresentati
 		var response = await _controller.GetAllAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Following, Follows, _request);
+		response.ShouldSatisfy(_request, Following, Follows);
 	}
 
 	[Fact]

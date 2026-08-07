@@ -6,24 +6,26 @@ public static class RefreshTokenMockSetups
 {
 	extension(IApplicationSender sender)
 	{
-		public void SetupIssueCommandRequest(
+		public void SetupSendAsync(
 			IssueRefreshTokenApiRequest request,
 			RefreshToken refreshToken,
 			CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(RefreshTokenMatcher.IsIssueRefreshTokenCommandRequest(request), cancellationToken)
-				.ReturnsResponse(refreshToken.ToResponse(request));
+				.ClearCalls()
+				.SendAsync(RefreshTokenPresentationMatcher.IsIssueRefreshTokenCommandRequest(request), cancellationToken)
+				.ReturnsTaskResponse(refreshToken.ToResponse(request));
 		}
 
-		public void SetupRotateCommandRequest(
+		public void SetupSendAsync(
 			RotateRefreshTokenApiRequest request,
 			RefreshToken refreshToken,
 			CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(RefreshTokenMatcher.IsRotateRefreshTokenCommandRequest(request), cancellationToken)
-				.ReturnsResponse(refreshToken.ToResponse(request));
+				.ClearCalls()
+				.SendAsync(RefreshTokenPresentationMatcher.IsRotateRefreshTokenCommandRequest(request), cancellationToken)
+				.ReturnsTaskResponse(refreshToken.ToResponse(request));
 		}
 	}
 }

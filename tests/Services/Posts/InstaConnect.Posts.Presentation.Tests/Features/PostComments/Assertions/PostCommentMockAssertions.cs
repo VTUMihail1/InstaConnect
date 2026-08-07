@@ -11,42 +11,42 @@ public static class PostCommentMockAssertions
 		GetAllPostCommentsApiRequest request,
 		CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(PostCommentMatcher.IsGetAllPostCommentsQueryRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(PostCommentPresentationMatcher.IsGetAllPostCommentsQueryRequest(request), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneSendAsync(
 			GetAllPostCommentsForUserApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(PostCommentMatcher.IsGetAllPostCommentsForUserQueryRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(PostCommentPresentationMatcher.IsGetAllPostCommentsForUserQueryRequest(request), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneSendAsync(
 			GetPostCommentByIdApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(PostCommentMatcher.IsGetPostCommentByIdQueryRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(PostCommentPresentationMatcher.IsGetPostCommentByIdQueryRequest(request), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneSendAsync(
 			AddPostCommentApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(PostCommentMatcher.IsAddPostCommentCommandRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(PostCommentPresentationMatcher.IsAddPostCommentCommandRequest(request), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneSendAsync(
 			UpdatePostCommentApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(PostCommentMatcher.IsUpdatePostCommentCommandRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(PostCommentPresentationMatcher.IsUpdatePostCommentCommandRequest(request), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneSendAsync(
 			DeletePostCommentApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(PostCommentMatcher.IsDeletePostCommentCommandRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(PostCommentPresentationMatcher.IsDeletePostCommentCommandRequest(request), cancellationToken);
 		}
 	}
 }

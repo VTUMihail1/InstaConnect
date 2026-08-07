@@ -14,13 +14,13 @@ public static class AggregateFluentExtensions
 	extension<TEntity>(IAggregateFluent<TEntity> fluent)
 		where TEntity : IEntity
 	{
-		public async Task<long> GetCount(CancellationToken cancellationToken)
+		public async Task<long> GetCountAsync(CancellationToken cancellationToken)
 		{
-			var result = await fluent
+			var response = await fluent
 							   .Count()
 							   .FirstOrDefaultAsync(cancellationToken);
 
-			return result?.Count ?? default;
+			return response?.Count ?? default;
 		}
 
 		public IAggregateFluent<TEntity> IncludeMany<TForeignEntity, TKey>(

@@ -9,12 +9,6 @@ public static class PostMapper
 {
 	extension(Post post)
 	{
-		internal PostId ToIdResponse(
-)
-		{
-			return post.Id;
-		}
-
 		internal PostResponse ToFullResponse<TRequest>(
 			TRequest request)
 			where TRequest : ICurrentUserableQueryRequest
@@ -46,13 +40,13 @@ public static class PostMapper
 		public PostId ToResponse(
 			AddPostCommandRequest request)
 		{
-			return post.ToIdResponse();
+			return post.ToId();
 		}
 
 		public PostId ToResponse(
 			UpdatePostCommandRequest request)
 		{
-			return post.ToIdResponse();
+			return post.ToId();
 		}
 
 		public PostResponse ToResponse(
@@ -65,17 +59,17 @@ public static class PostMapper
 	extension(ICollection<Post> posts)
 	{
 		internal PostCollectionResponse ToFullResponse<TRequest>(
+		TRequest request,
 		User user,
-		Func<Post, TRequest, bool> filter,
-		Func<Post, TRequest, PostResponse> transform,
-		TRequest request)
+		Func<TRequest, Post, bool> filter,
+		Func<TRequest, Post, PostResponse> transform)
 		where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = posts.Count(post => filter(post, request));
+			var totalCount = posts.Count(post => filter(request, post));
 
 			return new(user.ToFullResponse(),
-						posts.Filter(post => filter(post, request), request, post => transform(post, request)),
+						posts.Filter(request, post => filter(request, post), post => transform(request, post)),
 						request.Page,
 						request.PageSize,
 						totalCount,
@@ -84,16 +78,16 @@ public static class PostMapper
 		}
 
 		internal PostCollectionResponse ToResponseWithoutUser<TRequest>(
-			Func<Post, TRequest, bool> filter,
-			Func<Post, TRequest, PostResponse> transform,
-			TRequest request)
+			TRequest request,
+			Func<TRequest, Post, bool> filter,
+			Func<TRequest, Post, PostResponse> transform)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = posts.Count(post => filter(post, request));
+			var totalCount = posts.Count(post => filter(request, post));
 
 			return new(null,
-					   posts.Filter(post => filter(post, request), request, post => transform(post, request)),
+					   posts.Filter(request, post => filter(request, post), post => transform(request, post)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -105,20 +99,20 @@ public static class PostMapper
 			GetAllPostsQueryRequest request)
 		{
 			return posts.ToResponseWithoutUser(
-				(post, request) => post.MatchesFilter(request),
-				(post, request) => post.ToFullResponse(request),
-				request);
+				request,
+				(request, post) => post.MatchesFilter(request),
+				(request, post) => post.ToFullResponse(request));
 		}
 
 		public PostCollectionResponse ToResponse(
-			User user,
-			GetAllPostsForUserQueryRequest request)
+			GetAllPostsForUserQueryRequest request,
+			User user)
 		{
 			return posts.ToFullResponse(
+				request,
 				user,
-				(post, request) => post.MatchesFilter(request),
-				(post, request) => post.ToResponseWithoutUser(request),
-				request);
+				(request, post) => post.MatchesFilter(request),
+				(request, post) => post.ToResponseWithoutUser(request));
 		}
 	}
 }

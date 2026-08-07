@@ -10,103 +10,103 @@ public static class UserClaimValidationProblemDetailsAssertions
 	extension(ApplicationProblemDetails problemDetails)
 	{
 		public void ShouldSatisfyInvalidValidationForId(
-			IStringMessageTransformer messageTransformer,
-			DeleteUserClaimApiRequest request)
+			DeleteUserClaimApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
-				p => p.Id,
-				messageTransformer,
-				request);
+				request,
+				p =>p.Id,
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForId(
-			IStringMessageTransformer messageTransformer,
-			AddUserClaimApiRequest request)
+			AddUserClaimApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
-				p => p.Id,
-				messageTransformer,
-				request);
+				request,
+				p =>p.Id,
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForId(
-			IStringMessageTransformer messageTransformer,
-			GetAllUserClaimsApiRequest request)
+			GetAllUserClaimsApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
-				p => p.Id,
-				messageTransformer,
-				request);
+				request,
+				p =>p.Id,
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForClaim(
-			IEnumMessageTransformer<ApplicationClaims> messageTransformer,
-			DeleteUserClaimApiRequest request)
+			DeleteUserClaimApiRequest request,
+			IEnumMessageTransformer<ApplicationClaims> messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
-				p => p.Claim,
-				messageTransformer,
-				request);
+				request,
+				p =>p.Claim,
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForClaim(
-			IEnumMessageTransformer<ApplicationClaims> messageTransformer,
-			AddUserClaimApiRequest request)
+			AddUserClaimApiRequest request,
+			IEnumMessageTransformer<ApplicationClaims> messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
-				p => p.Body.Claim,
-				messageTransformer,
-				request);
+				request,
+				p =>p.Body.Claim,
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForCurrentId(
-			IStringMessageTransformer messageTransformer,
-			GetAllUserClaimsApiRequest request)
+			GetAllUserClaimsApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
-				p => p.CurrentId,
-				messageTransformer,
-				request);
+				request,
+				p =>p.CurrentId,
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForPage(
-			IIntMessageTransformer messageTransformer,
-			GetAllUserClaimsApiRequest request)
+			GetAllUserClaimsApiRequest request,
+			IIntMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
-				p => p.Page,
-				messageTransformer,
-				request);
+				request,
+				p =>p.Page,
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForPageSize(
-			IIntMessageTransformer messageTransformer,
-			GetAllUserClaimsApiRequest request)
+			GetAllUserClaimsApiRequest request,
+			IIntMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
-				p => p.PageSize,
-				messageTransformer,
-				request);
+				request,
+				p =>p.PageSize,
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForSortOrder(
-			IEnumMessageTransformer<CommonSortOrder> messageTransformer,
-			GetAllUserClaimsApiRequest request)
+			GetAllUserClaimsApiRequest request,
+			IEnumMessageTransformer<CommonSortOrder> messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
-				p => p.SortOrder,
-				messageTransformer,
-				request);
+				request,
+				p =>p.SortOrder,
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForSortTerm(
-			IEnumMessageTransformer<UserClaimsSortTerm> messageTransformer,
-			GetAllUserClaimsApiRequest request)
+			GetAllUserClaimsApiRequest request,
+			IEnumMessageTransformer<UserClaimsSortTerm> messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
-				p => p.SortTerm,
-				messageTransformer,
-				request);
+				request,
+				p =>p.SortTerm,
+				messageTransformer);
 		}
 	}
 }

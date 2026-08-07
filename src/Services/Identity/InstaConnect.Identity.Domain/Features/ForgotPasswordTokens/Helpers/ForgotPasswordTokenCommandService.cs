@@ -11,7 +11,7 @@ internal class ForgotPasswordTokenCommandService : IForgotPasswordTokenCommandSe
 	private readonly IEventPublisher _eventPublisher;
 	private readonly IUserCommandRepository _repository;
 	private readonly IDateTimeProvider _dateTimeProvider;
-	private readonly IUserIncludeBuilderFactory _includeQueryBuilderFactory;
+	private readonly IUserIncludeBuilderFactory _includeBuilderFactory;
 	private readonly IForgotPasswordTokenFactory _forgotPasswordTokenFactory;
 	private readonly IForgotPasswordTokenEmailSender _forgotPasswordTokenEmailSender;
 	private readonly IForgotPasswordTokenCommandRepository _forgotPasswordTokenRepository;
@@ -22,7 +22,7 @@ internal class ForgotPasswordTokenCommandService : IForgotPasswordTokenCommandSe
 		IEventPublisher eventPublisher,
 		IUserCommandRepository repository,
 		IDateTimeProvider dateTimeProvider,
-		IUserIncludeBuilderFactory includeQueryBuilderFactory,
+		IUserIncludeBuilderFactory includeBuilderFactory,
 		IForgotPasswordTokenFactory forgotPasswordTokenFactory,
 		IForgotPasswordTokenEmailSender forgotPasswordTokenEmailSender,
 		IForgotPasswordTokenCommandRepository forgotPasswordTokenRepository)
@@ -32,7 +32,7 @@ internal class ForgotPasswordTokenCommandService : IForgotPasswordTokenCommandSe
 		_eventPublisher = eventPublisher;
 		_repository = repository;
 		_dateTimeProvider = dateTimeProvider;
-		_includeQueryBuilderFactory = includeQueryBuilderFactory;
+		_includeBuilderFactory = includeBuilderFactory;
 		_forgotPasswordTokenFactory = forgotPasswordTokenFactory;
 		_forgotPasswordTokenEmailSender = forgotPasswordTokenEmailSender;
 		_forgotPasswordTokenRepository = forgotPasswordTokenRepository;
@@ -60,7 +60,7 @@ internal class ForgotPasswordTokenCommandService : IForgotPasswordTokenCommandSe
 
 	public async Task VerifyAsync(VerifyForgotPasswordTokenCommand command, CancellationToken cancellationToken)
 	{
-		var include = _includeQueryBuilderFactory.Create().WithForgotPasswordTokens().Build();
+		var include = _includeBuilderFactory.Create().WithForgotPasswordTokens().Build();
 		var user = await _repository.GetByIdAsync(command.Id.Id, include, cancellationToken);
 
 		if (user == null)

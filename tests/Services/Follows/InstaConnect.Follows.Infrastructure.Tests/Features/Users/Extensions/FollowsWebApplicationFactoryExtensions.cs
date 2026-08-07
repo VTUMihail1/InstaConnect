@@ -1,0 +1,18 @@
+using InstaConnect.Follows.Infrastructure.Tests.Features.Users.Abstractions;
+using InstaConnect.Follows.Infrastructure.Tests.Features.Users.Helpers;
+using InstaConnect.Follows.Tests.Features.Common.Utilities;
+
+namespace InstaConnect.Follows.Infrastructure.Tests.Features.Users.Extensions;
+
+public static class FollowsWebApplicationFactoryExtensions
+{
+	extension(FollowsWebApplicationFactory webApplicationFactory)
+	{
+		public IUserEventClient CreateUserEventClient()
+		{
+			var eventClient = webApplicationFactory.Services.GetEventClient();
+
+			return new UserEventClient(eventClient);
+		}
+	}
+}

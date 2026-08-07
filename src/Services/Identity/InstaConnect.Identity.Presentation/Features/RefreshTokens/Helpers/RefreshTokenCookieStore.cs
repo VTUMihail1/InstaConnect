@@ -12,7 +12,7 @@ internal class RefreshTokenCookieStore : IRefreshTokenCookieStore
 		_cookieStore = cookieStore;
 	}
 
-	public void Set(SetRefreshTokenCookieRequest request)
+	public void Set(SetRefreshTokenCookieApiRequest request)
 	{
 		_cookieStore.SetHttpOnly(RefreshTokenCookieKeys.Id, request.Id, request.ExpiresAtUtc);
 		_cookieStore.SetHttpOnly(RefreshTokenCookieKeys.Value, request.Value, request.ExpiresAtUtc);

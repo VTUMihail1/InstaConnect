@@ -1,6 +1,5 @@
 using InstaConnect.Common.Presentation.Features.Messaging.Abstractions;
 using InstaConnect.Posts.Presentation.Features.Users.Abstractions;
-using InstaConnect.Posts.Presentation.Tests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Presentation.Tests.Features.Posts.Utilities;
 using InstaConnect.Posts.Presentation.Tests.Features.Users.Utilities;
 
@@ -10,41 +9,39 @@ public static class PostLikeMapper
 {
 	extension(PostLike postLike)
 	{
-		internal PostLikeIdCommandResponse ToIdResponse(
+		internal PostLikeIdCommandResponse ToIdCommandResponse(
 )
 		{
 			return new(postLike.Id.Id.Id, postLike.Id.UserId.Id);
 		}
 
-		internal PostLikeQueryResponse ToFullResponse<TRequest>(
+		internal PostLikeQueryResponse ToFullQueryResponse<TRequest>(
 			TRequest request)
 			where TRequest : ICurrentUserableApiRequest
 		{
 			return new(postLike.Id.Id.Id,
 					   postLike.Id.UserId.Id,
-					   postLike.User?.ToFullResponse(),
-					   postLike.Post?.ToFullResponse(request),
+					   postLike.User?.ToFullQueryResponse(),
+					   postLike.Post?.ToFullQueryResponse(request),
 					   postLike.CreatedAtUtc);
 		}
 
-		internal PostLikeQueryResponse ToResponseWithoutUser<TRequest>(
+		internal PostLikeQueryResponse ToQueryResponseWithoutUser<TRequest>(
 			TRequest request)
 			where TRequest : ICurrentUserableApiRequest
 		{
 			return new(postLike.Id.Id.Id,
 					   postLike.Id.UserId.Id,
 					   null,
-					   postLike.Post?.ToFullResponse(request),
+					   postLike.Post?.ToFullQueryResponse(request),
 					   postLike.CreatedAtUtc);
 		}
 
-		internal PostLikeQueryResponse ToResponseWithoutPost<TRequest>(
-			TRequest request)
-			where TRequest : ICurrentUserableApiRequest
+		internal PostLikeQueryResponse ToQueryResponseWithoutPost()
 		{
 			return new(postLike.Id.Id.Id,
 					   postLike.Id.UserId.Id,
-					   postLike.User?.ToFullResponse(),
+					   postLike.User?.ToFullQueryResponse(),
 					   null,
 					   postLike.CreatedAtUtc);
 		}
@@ -52,31 +49,31 @@ public static class PostLikeMapper
 		public AddPostLikeCommandResponse ToResponse(
 			AddPostLikeApiRequest request)
 		{
-			return new(postLike.ToIdResponse());
+			return new(postLike.ToIdCommandResponse());
 		}
 
 		public GetPostLikeByIdQueryResponse ToResponse(
 			GetPostLikeByIdApiRequest request)
 		{
-			return new(postLike.ToFullResponse(request));
+			return new(postLike.ToFullQueryResponse(request));
 		}
 	}
 
 	extension(ICollection<PostLike> postLikes)
 	{
-		internal PostLikeCollectionQueryResponse ToResponseWithoutUser<TRequest>(
+		internal PostLikeCollectionQueryResponse ToQueryResponseWithoutUser<TRequest>(
+		TRequest request,
 		Post post,
-		Func<PostLike, TRequest, bool> filter,
-		Func<PostLike, TRequest, PostLikeQueryResponse> transform,
-		TRequest request)
+		Func<TRequest, PostLike, bool> filter,
+		Func<TRequest, PostLike, PostLikeQueryResponse> transform)
 		where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = postLikes.Count(postLike => filter(postLike, request));
+			var totalCount = postLikes.Count(postLike => filter(request, postLike));
 
-			return new(post.ToFullResponse(request),
+			return new(post.ToFullQueryResponse(request),
 					   null,
-					   postLikes.Filter(postLike => filter(postLike, request), request, postLike => transform(postLike, request)),
+					   postLikes.Filter(request, postLike => filter(request, postLike), postLike => transform(request, postLike)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -84,19 +81,19 @@ public static class PostLikeMapper
 					   paginator.HasPreviousPage(request.Page));
 		}
 
-		internal PostLikeCollectionQueryResponse ToResponseWithoutPost<TRequest>(
+		internal PostLikeCollectionQueryResponse ToQueryResponseWithoutPost<TRequest>(
+			TRequest request,
 			User user,
-			Func<PostLike, TRequest, bool> filter,
-			Func<PostLike, TRequest, PostLikeQueryResponse> transform,
-			TRequest request)
+			Func<TRequest, PostLike, bool> filter,
+			Func<TRequest, PostLike, PostLikeQueryResponse> transform)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = postLikes.Count(postLike => filter(postLike, request));
+			var totalCount = postLikes.Count(postLike => filter(request, postLike));
 
 			return new(null,
-					   user.ToFullResponse(),
-					   postLikes.Filter(postLike => filter(postLike, request), request, postLike => transform(postLike, request)),
+					   user.ToFullQueryResponse(),
+					   postLikes.Filter(request, postLike => filter(request, postLike), postLike => transform(request, postLike)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -105,23 +102,25 @@ public static class PostLikeMapper
 		}
 
 		public GetAllPostLikesQueryResponse ToResponse(
-			Post post,
-			GetAllPostLikesApiRequest request)
+			GetAllPostLikesApiRequest request,
+			Post post)
 		{
-			return new(postLikes.ToResponseWithoutUser(post,
-													   (postLike, request) => postLike.MatchesFilter(request),
-													   (postLike, request) => postLike.ToResponseWithoutPost(request),
-													   request));
+			return new(postLikes.ToQueryResponseWithoutUser(
+													   request,
+													   post,
+													   (request, postLike) => postLike.MatchesFilter(request),
+													   (request, postLike) => postLike.ToQueryResponseWithoutPost()));
 		}
 
 		public GetAllPostLikesForUserQueryResponse ToResponse(
-			User user,
-			GetAllPostLikesForUserApiRequest request)
+			GetAllPostLikesForUserApiRequest request,
+			User user)
 		{
-			return new(postLikes.ToResponseWithoutPost(user,
-													   (postLike, request) => postLike.MatchesFilter(request),
-													   (postLike, request) => postLike.ToResponseWithoutUser(request),
-													   request));
+			return new(postLikes.ToQueryResponseWithoutPost(
+													   request,
+													   user,
+													   (request, postLike) => postLike.MatchesFilter(request),
+													   (request, postLike) => postLike.ToQueryResponseWithoutUser(request)));
 		}
 	}
 }

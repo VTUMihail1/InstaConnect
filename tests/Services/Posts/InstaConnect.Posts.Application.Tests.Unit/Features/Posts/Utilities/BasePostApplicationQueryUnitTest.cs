@@ -12,6 +12,6 @@ public abstract class BasePostApplicationQueryUnitTest : BasePostTest
 	protected BasePostApplicationQueryUnitTest()
 	{
 		Mapper = MockFactory.CreateMapper(PostsApplicationReference.Assembly);
-		Service = PostMockFactory.CreateQueryService();
+		Service = PostApplicationMockFactory.CreateQueryService();
 	}
 }

@@ -8,21 +8,21 @@ public static class UserClaimMapper
 {
 	extension(UserClaim userClaim)
 	{
-		internal UserClaimIdCommandResponse ToIdResponse(
+		internal UserClaimIdCommandResponse ToIdCommandResponse(
 )
 		{
 			return new(userClaim.Id.Id.Id, userClaim.Id.Claim);
 		}
 
-		internal UserClaimQueryResponse ToFullResponse()
+		internal UserClaimQueryResponse ToFullQueryResponse()
 		{
 			return new(userClaim.Id.Id.Id,
 					   userClaim.Id.Claim,
-					   userClaim.User?.ToFullResponse(),
+					   userClaim.User?.ToFullQueryResponse(),
 					   userClaim.CreatedAtUtc);
 		}
 
-		internal UserClaimQueryResponse ToResponseWithoutUser()
+		internal UserClaimQueryResponse ToQueryResponseWithoutUser()
 		{
 			return new(userClaim.Id.Id.Id,
 					   userClaim.Id.Claim,
@@ -33,24 +33,24 @@ public static class UserClaimMapper
 		public AddUserClaimCommandResponse ToResponse(
 			AddUserClaimApiRequest request)
 		{
-			return new(userClaim.ToIdResponse());
+			return new(userClaim.ToIdCommandResponse());
 		}
 	}
 
 	extension(ICollection<UserClaim> userClaims)
 	{
-		internal UserClaimCollectionQueryResponse ToFullResponse<TRequest>(
+		internal UserClaimCollectionQueryResponse ToFullQueryResponse<TRequest>(
+			 TRequest request,
 			 User user,
-			 Func<UserClaim, TRequest, bool> filter,
-			 Func<UserClaim, TRequest, UserClaimQueryResponse> transform,
-			 TRequest request)
+			 Func<TRequest, UserClaim, bool> filter,
+			 Func<TRequest, UserClaim, UserClaimQueryResponse> transform)
 		where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = userClaims.Count(userClaim => filter(userClaim, request));
+			var totalCount = userClaims.Count(userClaim => filter(request, userClaim));
 
-			return new(user.ToFullResponse(),
-					   userClaims.Filter(userClaim => filter(userClaim, request), request, userClaim => transform(userClaim, request)),
+			return new(user.ToFullQueryResponse(),
+					   userClaims.Filter(request, userClaim => filter(request, userClaim), userClaim => transform(request, userClaim)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -58,17 +58,17 @@ public static class UserClaimMapper
 					   paginator.HasPreviousPage(request.Page));
 		}
 
-		internal UserClaimCollectionQueryResponse ToResponseWithoutUser<TRequest>(
-			 Func<UserClaim, TRequest, bool> filter,
-			 Func<UserClaim, TRequest, UserClaimQueryResponse> transform,
-			 TRequest request)
+		internal UserClaimCollectionQueryResponse ToQueryResponseWithoutUser<TRequest>(
+			 TRequest request,
+			 Func<TRequest, UserClaim, bool> filter,
+			 Func<TRequest, UserClaim, UserClaimQueryResponse> transform)
 		where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = userClaims.Count(userClaim => filter(userClaim, request));
+			var totalCount = userClaims.Count(userClaim => filter(request, userClaim));
 
 			return new(null,
-					   userClaims.Filter(userClaim => filter(userClaim, request), request, userClaim => transform(userClaim, request)),
+					   userClaims.Filter(request, userClaim => filter(request, userClaim), userClaim => transform(request, userClaim)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -77,14 +77,14 @@ public static class UserClaimMapper
 		}
 
 		public GetAllUserClaimsQueryResponse ToResponse(
-			User user,
-			GetAllUserClaimsApiRequest request)
+			GetAllUserClaimsApiRequest request,
+			User user)
 		{
-			return new(userClaims.ToFullResponse(
+			return new(userClaims.ToFullQueryResponse(
+				request,
 				user,
-				(userClaim, request) => userClaim.MatchesFilter(request),
-				(userClaim, request) => userClaim.ToResponseWithoutUser(),
-				request));
+				(request, userClaim) => userClaim.MatchesFilter(request),
+				(request, userClaim) => userClaim.ToQueryResponseWithoutUser()));
 		}
 	}
 }

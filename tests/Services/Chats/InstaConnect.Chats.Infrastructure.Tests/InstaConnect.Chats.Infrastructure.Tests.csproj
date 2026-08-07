@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+  	<IsTestProject>false</IsTestProject>
+  </PropertyGroup>
+  
+  <ItemGroup>
+  	<PackageReference Include="MediatR" />
+  </ItemGroup>
+  
+  <ItemGroup>
+  	<ProjectReference Include="..\..\..\..\src\Services\Chats\InstaConnect.Chats.Infrastructure\InstaConnect.Chats.Infrastructure.csproj" />
+  	<ProjectReference Include="..\..\..\Common\InstaConnect.Common.Infrastructure.Tests\InstaConnect.Common.Infrastructure.Tests.csproj" />
+  	<ProjectReference Include="..\InstaConnect.Chats.Tests\InstaConnect.Chats.Tests.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup Label="Common">
+  	<Using Include="Microsoft.AspNetCore.Mvc" />
+  	<Using Include="InstaConnect.Common.Infrastructure.Features.Data.Helpers"/>
+  	<Using Include="InstaConnect.Common.Tests.Features.Abstractions" />
+	<Using Include="InstaConnect.Common.Tests.Features.Helpers" />
+  	<Using Include="InstaConnect.Common.Tests.Features.Assertions" />
+  	<Using Include="InstaConnect.Common.Tests.Features.Utilities" />
+  	<Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Base" />
+  	<Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Enums.Base" />
+  	<Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Strings.Base" />
+  	<Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Ints.Base" />
+  	<Using Include="InstaConnect.Common.Tests.Features.DataAttributes.DateTimeOffsets.Base" />
+  </ItemGroup>
+  
+  <ItemGroup Label="Users">
+  	<Using Include="InstaConnect.Identity.Events.Features.Users" />
+  	<Using Include="InstaConnect.Common.Domain.Features.Mappers.Abstractions" />
+  	<Using Include="InstaConnect.Chats.Infrastructure.Features.Users.EventHandlers" />
+  	<Using Include="InstaConnect.Chats.Domain.Features.Users.Models.Entities" />
+  	<Using Include="InstaConnect.Chats.Domain.Features.Users.Models.ValueObjects" />
+  	<Using Include="InstaConnect.Chats.Domain.Features.Users.Utilities" />
+  	<Using Include="InstaConnect.Chats.Tests.Features.Users.Assertions" />
+  	<Using Include="InstaConnect.Chats.Tests.Features.Users.Builders" />
+  	<Using Include="InstaConnect.Chats.Tests.Features.Users.Utilities" />
+  	<Using Include="InstaConnect.Chats.Application.Features.Users.Commands.Add" />
+  	<Using Include="InstaConnect.Chats.Application.Features.Users.Commands.Update" />
+  	<Using Include="InstaConnect.Chats.Application.Features.Users.Commands.Delete" />
+  </ItemGroup>
+
+</Project>

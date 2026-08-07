@@ -1,5 +1,5 @@
 using InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Abstractions;
-using InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Utilities;
+using InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Helpers;
 using InstaConnect.Identity.Tests.Features.Common.Utilities;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Extensions;
@@ -8,9 +8,9 @@ public static class IdentityWebApplicationFactoryExtensions
 {
 	extension(IdentityWebApplicationFactory webApplicationFactory)
 	{
-		public IRefreshTokenClient CreateRefreshTokenClient()
+		public IRefreshTokenApiClient CreateRefreshTokenApiClient()
 		{
-			return new RefreshTokenClient(webApplicationFactory.CreateClient());
+			return new RefreshTokenApiClient(webApplicationFactory.CreateClient());
 		}
 	}
 }

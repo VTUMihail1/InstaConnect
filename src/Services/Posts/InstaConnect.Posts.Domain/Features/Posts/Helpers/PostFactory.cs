@@ -15,7 +15,7 @@ internal class PostFactory : IPostFactory
 
 	public Post Create(UserId userId, string title, string content)
 	{
-		var id = _guidProvider.NewGuid().ToString();
+		var id = _guidProvider.NewStringGuid();
 		var utcNow = _dateTimeProvider.GetOffsetUtcNow();
 		var post = new Post(
 			new(id),

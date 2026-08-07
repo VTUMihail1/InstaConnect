@@ -9,12 +9,6 @@ public static class UserClaimMapper
 {
 	extension(UserClaim userClaim)
 	{
-		internal UserClaimId ToIdResponse(
-)
-		{
-			return userClaim.Id;
-		}
-
 		internal UserClaimResponse ToFullResponse()
 		{
 			return new(userClaim.Id,
@@ -32,24 +26,24 @@ public static class UserClaimMapper
 		public UserClaimId ToResponse(
 			AddUserClaimCommandRequest request)
 		{
-			return userClaim.ToIdResponse();
+			return userClaim.ToId();
 		}
 	}
 
 	extension(ICollection<UserClaim> userClaims)
 	{
 		internal UserClaimCollectionResponse ToFullResponse<TRequest>(
+			 TRequest request,
 			 User user,
-			 Func<UserClaim, TRequest, bool> filter,
-			 Func<UserClaim, TRequest, UserClaimResponse> transform,
-			 TRequest request)
+			 Func<TRequest, UserClaim, bool> filter,
+			 Func<TRequest, UserClaim, UserClaimResponse> transform)
 		where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = userClaims.Count(userClaim => filter(userClaim, request));
+			var totalCount = userClaims.Count(userClaim => filter(request, userClaim));
 
 			return new(user.ToFullResponse(),
-					   userClaims.Filter(userClaim => filter(userClaim, request), request, userClaim => transform(userClaim, request)),
+					   userClaims.Filter(request, userClaim => filter(request, userClaim), userClaim => transform(request, userClaim)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -58,16 +52,16 @@ public static class UserClaimMapper
 		}
 
 		internal UserClaimCollectionResponse ToResponseWithoutUser<TRequest>(
-			 Func<UserClaim, TRequest, bool> filter,
-			 Func<UserClaim, TRequest, UserClaimResponse> transform,
-			 TRequest request)
+			 TRequest request,
+			 Func<TRequest, UserClaim, bool> filter,
+			 Func<TRequest, UserClaim, UserClaimResponse> transform)
 		where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = userClaims.Count(userClaim => filter(userClaim, request));
+			var totalCount = userClaims.Count(userClaim => filter(request, userClaim));
 
 			return new(null,
-					   userClaims.Filter(userClaim => filter(userClaim, request), request, userClaim => transform(userClaim, request)),
+					   userClaims.Filter(request, userClaim => filter(request, userClaim), userClaim => transform(request, userClaim)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -76,14 +70,14 @@ public static class UserClaimMapper
 		}
 
 		public UserClaimCollectionResponse ToResponse(
-			User user,
-			GetAllUserClaimsQueryRequest request)
+			GetAllUserClaimsQueryRequest request,
+			User user)
 		{
 			return userClaims.ToFullResponse(
+				request,
 				user,
-				(userClaim, request) => userClaim.MatchesFilter(request),
-				(userClaim, request) => userClaim.ToResponseWithoutUser(),
-				request);
+				(request, userClaim) => userClaim.MatchesFilter(request),
+				(request, userClaim) => userClaim.ToResponseWithoutUser());
 		}
 	}
 }

@@ -1,15 +1,162 @@
 using InstaConnect.Common.Application.Features.Messaging.Abstractions;
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
+using InstaConnect.Identity.Events.Features.Users;
 using InstaConnect.Follows.Application.Features.Follows.Models;
 using InstaConnect.Follows.Application.Features.Users.Abstractions;
 using InstaConnect.Follows.Application.Tests.Features.Follows.Utilities;
 using InstaConnect.Follows.Application.Tests.Features.Users.Utilities;
+using InstaConnect.Follows.Events.Features.Follows;
 
 namespace InstaConnect.Follows.Application.Tests.Features.Follows.Utilities;
 
 public static class FollowEquals
 {
+
+	extension(FollowAddedEventRequest r)
+	{
+		public bool Matches(AddFollowCommandRequest request, Follow entity)
+		{
+			return r.Follow.Matches(request, entity);
+		}
+	}
+
+	extension(FollowDeletedEventRequest r)
+	{
+		public bool Matches(DeleteFollowCommandRequest request, Follow entity)
+		{
+			return r.Follow.Matches(request, entity);
+		}
+	}
+
+	extension(FollowAddedNotificationRequest r)
+	{
+		public bool Matches(AddFollowCommandRequest request, Follow entity)
+		{
+			return r.Follow.Matches(request, entity);
+		}
+	}
+
+	extension(FollowEventRequest r)
+	{
+		public bool Matches(AddFollowCommandRequest request, Follow? entity)
+		{
+			return entity != null &&
+				   r.FollowerId.EqualsOrdinalIgnoreCase(request.FollowerId) &&
+				   r.FollowingId.EqualsOrdinalIgnoreCase(request.FollowingId) &&
+				   r.Follower.MatchesFollower(request, entity.Follower) &&
+				   r.Following.MatchesFollowing(request, entity.Following) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc;
+		}
+
+		public bool Matches(DeleteFollowCommandRequest request, Follow? entity)
+		{
+			return entity != null &&
+				   r.FollowerId.EqualsOrdinalIgnoreCase(request.FollowerId) &&
+				   r.FollowingId.EqualsOrdinalIgnoreCase(request.FollowingId) &&
+				   r.Follower.MatchesFollower(request, entity.Follower) &&
+				   r.Following.MatchesFollowing(request, entity.Following) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc;
+		}
+	}
+
+	extension(FollowNotificationRequest r)
+	{
+		public bool Matches(AddFollowCommandRequest request, Follow? entity)
+		{
+			return entity != null &&
+				   r.FollowerId.EqualsOrdinalIgnoreCase(request.FollowerId) &&
+				   r.FollowingId.EqualsOrdinalIgnoreCase(request.FollowingId) &&
+				   r.Follower.MatchesFollower(request, entity.Follower) &&
+				   r.Following.MatchesFollowing(request, entity.Following) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc;
+		}
+	}
+
+	extension(UserEventRequest r)
+	{
+		public bool MatchesFollower(AddFollowCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.FollowerId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   r.ProfileImageUrl == entity.ProfileImage?.Url &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesFollower(DeleteFollowCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.FollowerId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   r.ProfileImageUrl == entity.ProfileImage?.Url &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesFollowing(AddFollowCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.FollowingId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   r.ProfileImageUrl == entity.ProfileImage?.Url &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesFollowing(DeleteFollowCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.FollowingId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   r.ProfileImageUrl == entity.ProfileImage?.Url &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+	}
+
+	extension(UserNotificationRequest r)
+	{
+		public bool MatchesFollower(AddFollowCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.FollowerId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   r.ProfileImageUrl == entity.ProfileImage?.Url &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool MatchesFollowing(AddFollowCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.FollowingId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   r.ProfileImageUrl == entity.ProfileImage?.Url &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+	}
+
 	extension(GetAllFollowsQuery query)
 	{
 		public bool Matches(GetAllFollowsQueryRequest request)
@@ -73,8 +220,8 @@ public static class FollowEquals
 	extension(AddFollowCommandResponse response)
 	{
 		public bool Matches(
-		Follow follow,
-		AddFollowCommandRequest request)
+		AddFollowCommandRequest request,
+		Follow follow)
 		{
 			return response.Response.Matches(follow.Id);
 		}
@@ -82,39 +229,39 @@ public static class FollowEquals
 
 	extension(GetFollowByIdQueryResponse response)
 	{
-		public bool Matches(Follow follow, GetFollowByIdQueryRequest request)
+		public bool Matches(GetFollowByIdQueryRequest request, Follow follow)
 		{
-			return response.Response.MatchesFull(follow, request);
+			return response.Response.MatchesFull(request, follow);
 		}
 	}
 
 	extension(GetAllFollowsQueryResponse response)
 	{
 		public bool Matches(
+		GetAllFollowsQueryRequest request,
 		User follower,
-		ICollection<Follow> follows,
-		GetAllFollowsQueryRequest request)
+		ICollection<Follow> follows)
 		{
 			return response.Response.MatchesWithoutFollowing(
-					   (response, follow) => response.MatchesWithoutFollower(follow, request),
+					   request,
+					   (response, follow) => response.MatchesWithoutFollower(request, follow),
 					   follow => follow.MatchesFilter(request),
 					   follower,
-					   follows,
-					   request);
+					   follows);
 		}
 
 		public bool Matches(
+			GetAllFollowsQueryRequest request,
 			User follower,
 			ICollection<Follow> follows,
-			GetAllFollowsQueryRequest request,
 			ISortEnumTermTransformer<Follow> termTransformer)
 		{
 			return response.Response.MatchesWithoutFollowing(
-					   (response, follow) => response.MatchesWithoutFollower(follow, request),
+					   request,
+					   (response, follow) => response.MatchesWithoutFollower(request, follow),
 					   follow => follow.MatchesFilter(request),
 					   follower,
 					   follows,
-					   request,
 					   termTransformer);
 		}
 	}
@@ -122,30 +269,30 @@ public static class FollowEquals
 	extension(GetAllFollowsForFollowingQueryResponse response)
 	{
 		public bool Matches(
+		GetAllFollowsForFollowingQueryRequest request,
 		User following,
-		ICollection<Follow> follows,
-		GetAllFollowsForFollowingQueryRequest request)
+		ICollection<Follow> follows)
 		{
 			return response.Response.MatchesWithoutFollower(
-					   (response, follow) => response.MatchesWithoutFollowing(follow, request),
+					   request,
+					   (response, follow) => response.MatchesWithoutFollowing(request, follow),
 					   follow => follow.MatchesFilter(request),
 					   following,
-					   follows,
-					   request);
+					   follows);
 		}
 
 		public bool Matches(
+			GetAllFollowsForFollowingQueryRequest request,
 			User following,
 			ICollection<Follow> follows,
-			GetAllFollowsForFollowingQueryRequest request,
 			ISortEnumTermTransformer<Follow> termTransformer)
 		{
 			return response.Response.MatchesWithoutFollower(
-					   (response, follow) => response.MatchesWithoutFollowing(follow, request),
+					   request,
+					   (response, follow) => response.MatchesWithoutFollowing(request, follow),
 					   follow => follow.MatchesFilter(request),
 					   following,
 					   follows,
-					   request,
 					   termTransformer);
 		}
 	}
@@ -159,14 +306,14 @@ public static class FollowEquals
 
 		public bool MatchesFilter(GetAllFollowsQueryRequest request)
 		{
-			return follow.Id.FollowerId.Id.EqualsOrdinalIgnoreCase(request.FollowerId) &&
+			return follow.Id.FollowerId.Matches(request.FollowerId) &&
 				   follow.Following != null &&
 				   follow.Following.Name.Value.StartsWithOrdinalIgnoreCase(request.FollowingName);
 		}
 
 		public bool MatchesFilter(GetAllFollowsForFollowingQueryRequest request)
 		{
-			return follow.Id.FollowingId.Id.EqualsOrdinalIgnoreCase(request.FollowingId) &&
+			return follow.Id.FollowingId.Matches(request.FollowingId) &&
 				   follow.Follower != null &&
 				   follow.Follower.Name.Value.StartsWithOrdinalIgnoreCase(request.FollowerName);
 		}
@@ -182,7 +329,7 @@ public static class FollowEquals
 
 	extension(FollowQueryResponse? response)
 	{
-		public bool MatchesFull<TRequest>(Follow? follow, TRequest request)
+		public bool MatchesFull<TRequest>(TRequest request, Follow? follow)
 		where TRequest : ICurrentUserableQueryRequest
 		{
 			return response != null &&
@@ -194,7 +341,7 @@ public static class FollowEquals
 				   response.Follower.MatchesFull(follow.Follower);
 		}
 
-		public bool MatchesWithoutFollowing<TRequest>(Follow? follow, TRequest request)
+		public bool MatchesWithoutFollowing<TRequest>(TRequest request, Follow? follow)
 			where TRequest : ICurrentUserableQueryRequest
 		{
 			return response != null &&
@@ -206,7 +353,7 @@ public static class FollowEquals
 				   response.Follower.MatchesFull(follow.Follower);
 		}
 
-		public bool MatchesWithoutFollower<TRequest>(Follow? follow, TRequest request)
+		public bool MatchesWithoutFollower<TRequest>(TRequest request, Follow? follow)
 			where TRequest : ICurrentUserableQueryRequest
 		{
 			return response != null &&
@@ -222,78 +369,78 @@ public static class FollowEquals
 	extension(FollowCollectionQueryResponse response)
 	{
 		public bool MatchesWithoutFollowing<TRequest>(
+		TRequest request,
 		Func<FollowQueryResponse, Follow, bool> matches,
 		Func<Follow, bool> matchesFilter,
 		User follower,
-		ICollection<Follow> follows,
-		TRequest request)
+		ICollection<Follow> follows)
 		where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
-			return response.MatchesCollectionResponse(follows.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, follows.Count(matchesFilter)) &&
 				   response.Following == null &&
 				   response.Follower.MatchesFull(follower) &&
-				   response.Follows.MatchesCollection(follows,
+				   response.Follows.MatchesCollection(request,
+														follows,
 														response => new(new(response.FollowerId), new(response.FollowingId)),
 														follow => follow.Id,
 														matches,
-														request,
 														matchesFilter);
 		}
 
 		public bool MatchesWithoutFollowing<TRequest>(
+			TRequest request,
 			Func<FollowQueryResponse, Follow, bool> matches,
 			Func<Follow, bool> matchesFilter,
 			User follower,
 			ICollection<Follow> follows,
-			TRequest request,
 			ISortEnumTermTransformer<Follow> termTransformer)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
-			return response.MatchesCollectionResponse(follows.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, follows.Count(matchesFilter)) &&
 				   response.Following == null &&
 				   response.Follower.MatchesFull(follower) &&
-				   response.Follows.MatchesSortedCollection(follows,
+				   response.Follows.MatchesSortedCollection(request,
+															  follows,
 															  matches,
 															  termTransformer,
-															  request,
 															  matchesFilter);
 		}
 
 		public bool MatchesWithoutFollower<TRequest>(
+			TRequest request,
 			Func<FollowQueryResponse, Follow, bool> matches,
 			Func<Follow, bool> matchesFilter,
 			User following,
-			ICollection<Follow> follows,
-			TRequest request)
+			ICollection<Follow> follows)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
-			return response.MatchesCollectionResponse(follows.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, follows.Count(matchesFilter)) &&
 				   response.Following.MatchesFull(following) &&
 				   response.Follower == null &&
-				   response.Follows.MatchesCollection(follows,
+				   response.Follows.MatchesCollection(request,
+														follows,
 														response => new(new(response.FollowerId), new(response.FollowingId)),
 														follow => follow.Id,
 														matches,
-														request,
 														matchesFilter);
 		}
 
 		public bool MatchesWithoutFollower<TRequest>(
+			TRequest request,
 			Func<FollowQueryResponse, Follow, bool> matches,
 			Func<Follow, bool> matchesFilter,
 			User following,
 			ICollection<Follow> follows,
-			TRequest request,
 			ISortEnumTermTransformer<Follow> termTransformer)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
-			return response.MatchesCollectionResponse(follows.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, follows.Count(matchesFilter)) &&
 				   response.Following.MatchesFull(following) &&
 				   response.Follower == null &&
-				   response.Follows.MatchesSortedCollection(follows,
+				   response.Follows.MatchesSortedCollection(request,
+															  follows,
 															  matches,
 															  termTransformer,
-															  request,
 															  matchesFilter);
 		}
 	}

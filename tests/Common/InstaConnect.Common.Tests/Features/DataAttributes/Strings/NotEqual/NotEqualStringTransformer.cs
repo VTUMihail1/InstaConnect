@@ -7,9 +7,7 @@ internal class NotEqualStringTransformer : IStringTransformer
 {
 	public string Transform(string? value)
 	{
-		var result = DataFaker.GetString();
-
-		return result;
+		return DataFaker.GetString();
 	}
 }
 

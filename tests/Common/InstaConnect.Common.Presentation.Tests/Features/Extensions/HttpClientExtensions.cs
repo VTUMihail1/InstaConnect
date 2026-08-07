@@ -74,11 +74,14 @@ public static class HttpClientExtensions
 			return httpResponseMessage.StatusCode;
 		}
 
-		public ICollection<SetCookieHeaderValue> GetCookies()
+		public SetCookieHeaderValue GetCookie(string key)
 		{
 			const string SetCookieHeader = "Set-Cookie";
 
-			return [.. httpResponseMessage.Headers.GetValues(SetCookieHeader).Select(header => SetCookieHeaderValue.Parse(header))];
+			return httpResponseMessage.Headers
+				.GetValues(SetCookieHeader)
+				.Select(header => SetCookieHeaderValue.Parse(header))
+				.Single(cookie => cookie.Name == key);
 		}
 	}
 }

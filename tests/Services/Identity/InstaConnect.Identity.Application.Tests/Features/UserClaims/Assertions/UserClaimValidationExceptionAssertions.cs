@@ -9,122 +9,142 @@ public static class UserClaimValidationExceptionAssertions
 	extension(IApplicationSender sender)
 	{
 		public async Task ShouldThrowInvalidValidationExceptionForIdAsync(
-			IStringMessageTransformer messageTransformer,
 			DeleteUserClaimCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync(
-				p => p.Id,
-				messageTransformer,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
+				p =>p.Id,
+				messageTransformer,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForIdAsync(
-			IStringMessageTransformer messageTransformer,
 			AddUserClaimCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<AddUserClaimCommandRequest, string, AddUserClaimCommandResponse>(
-				p => p.Id,
-				messageTransformer,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
+				p =>p.Id,
+				messageTransformer,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForIdAsync(
-			IStringMessageTransformer messageTransformer,
 			GetAllUserClaimsQueryRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllUserClaimsQueryRequest, string, GetAllUserClaimsQueryResponse>(
-				p => p.Id,
-				messageTransformer,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
+				p =>p.Id,
+				messageTransformer,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForClaimAsync(
-			IEnumMessageTransformer<ApplicationClaims> messageTransformer,
 			DeleteUserClaimCommandRequest request,
+			IEnumMessageTransformer<ApplicationClaims> messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync(
-				p => p.Claim,
-				messageTransformer,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
+				p =>p.Claim,
+				messageTransformer,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForClaimAsync(
-			IEnumMessageTransformer<ApplicationClaims> messageTransformer,
 			AddUserClaimCommandRequest request,
+			IEnumMessageTransformer<ApplicationClaims> messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<AddUserClaimCommandRequest, ApplicationClaims, AddUserClaimCommandResponse>(
-				p => p.Claim,
-				messageTransformer,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
+				p =>p.Claim,
+				messageTransformer,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForCurrentIdAsync(
-			IStringMessageTransformer messageTransformer,
 			GetAllUserClaimsQueryRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllUserClaimsQueryRequest, string, GetAllUserClaimsQueryResponse>(
-				p => p.CurrentId,
-				messageTransformer,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
+				p =>p.CurrentId,
+				messageTransformer,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForPageAsync(
-			IIntMessageTransformer messageTransformer,
 			GetAllUserClaimsQueryRequest request,
+			IIntMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllUserClaimsQueryRequest, int, GetAllUserClaimsQueryResponse>(
-				p => p.Page,
-				messageTransformer,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
+				p =>p.Page,
+				messageTransformer,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForPageSizeAsync(
-			IIntMessageTransformer messageTransformer,
 			GetAllUserClaimsQueryRequest request,
+			IIntMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllUserClaimsQueryRequest, int, GetAllUserClaimsQueryResponse>(
-				p => p.PageSize,
-				messageTransformer,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
+				p =>p.PageSize,
+				messageTransformer,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForSortOrderAsync(
-			IEnumMessageTransformer<CommonSortOrder> messageTransformer,
 			GetAllUserClaimsQueryRequest request,
+			IEnumMessageTransformer<CommonSortOrder> messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllUserClaimsQueryRequest, CommonSortOrder, GetAllUserClaimsQueryResponse>(
-				p => p.SortOrder,
-				messageTransformer,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
+				p =>p.SortOrder,
+				messageTransformer,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForSortTermAsync(
-			IEnumMessageTransformer<UserClaimsSortTerm> messageTransformer,
 			GetAllUserClaimsQueryRequest request,
+			IEnumMessageTransformer<UserClaimsSortTerm> messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllUserClaimsQueryRequest, UserClaimsSortTerm, GetAllUserClaimsQueryResponse>(
-				p => p.SortTerm,
-				messageTransformer,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
+				p =>p.SortTerm,
+				messageTransformer,
 				cancellationToken);
 		}
 	}

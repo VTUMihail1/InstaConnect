@@ -7,63 +7,63 @@ public static class RefreshTokenValidationProblemDetailsAssertions
 	extension(ApplicationProblemDetails problemDetails)
 	{
 		public void ShouldSatisfyInvalidValidationForName(
-			IStringMessageTransformer messageTransformer,
-			IssueRefreshTokenApiRequest request)
+			IssueRefreshTokenApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
-				p => p.Name,
-				messageTransformer,
-				request);
+				request,
+				p =>p.Name,
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForPassword(
-			IStringMessageTransformer messageTransformer,
-			IssueRefreshTokenApiRequest request)
+			IssueRefreshTokenApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
-				p => p.Body.Password,
-				messageTransformer,
-				request);
+				request,
+				p =>p.Body.Password,
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForId(
-			IStringMessageTransformer messageTransformer,
-			DeleteCurrentRefreshTokenApiRequest request)
+			DeleteCurrentRefreshTokenApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
-				p => p.Id,
-				messageTransformer,
-				request);
+				request,
+				p =>p.Id,
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForId(
-			IStringMessageTransformer messageTransformer,
-			RotateRefreshTokenApiRequest request)
+			RotateRefreshTokenApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
-				p => p.Id,
-				messageTransformer,
-				request);
+				request,
+				p =>p.Id,
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForValue(
-			IStringMessageTransformer messageTransformer,
-			DeleteCurrentRefreshTokenApiRequest request)
+			DeleteCurrentRefreshTokenApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
-				p => p.Value,
-				messageTransformer,
-				request);
+				request,
+				p =>p.Value,
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForValue(
-			IStringMessageTransformer messageTransformer,
-			RotateRefreshTokenApiRequest request)
+			RotateRefreshTokenApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
-				p => p.Value,
-				messageTransformer,
-				request);
+				request,
+				p =>p.Value,
+				messageTransformer);
 		}
 	}
 }

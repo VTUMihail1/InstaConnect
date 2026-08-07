@@ -9,12 +9,12 @@ public static class UserSetups
 {
 	extension(IServiceProvider serviceProvider)
 	{
-		public IUserCommandRepository GetUserCommandRepository()
+		public IUserCommandRepository GetCommandRepository()
 		{
 			return serviceProvider.GetRequiredService<IUserCommandRepository>();
 		}
 
-		public IUserIncludeBuilderFactory GetUserIncludeBuilderFactory()
+		public IUserIncludeBuilderFactory GetIncludeBuilderFactory()
 		{
 			return serviceProvider.GetRequiredService<IUserIncludeBuilderFactory>();
 		}
@@ -22,51 +22,51 @@ public static class UserSetups
 
 	extension(IServiceScope serviceScope)
 	{
-		public IUserCommandRepository GetUserCommandRepository()
+		public IUserCommandRepository GetCommandRepository()
 		{
-			return serviceScope.ServiceProvider.GetUserCommandRepository();
+			return serviceScope.ServiceProvider.GetCommandRepository();
 		}
 
-		public IUserIncludeBuilderFactory GetUserIncludeBuilderFactory()
+		public IUserIncludeBuilderFactory GetIncludeBuilderFactory()
 		{
-			return serviceScope.ServiceProvider.GetUserIncludeBuilderFactory();
+			return serviceScope.ServiceProvider.GetIncludeBuilderFactory();
 		}
 
-		public async Task<User?> GetUserByIdAsync(
+		public async Task<User?> GetByIdAsync(
 			UserId id,
 			CancellationToken cancellationToken)
 		{
-			var include = serviceScope.GetUserIncludeBuilderFactory().Create().WithEmailConfirmationTokens().WithForgotPasswordTokens().WithRefreshTokens().Build();
+			var include = serviceScope.GetIncludeBuilderFactory().Create().WithUserClaims().WithRefreshTokens().WithForgotPasswordTokens().WithEmailConfirmationTokens().Build();
 
-			return await serviceScope.GetUserCommandRepository().GetByIdAsync(id, include, cancellationToken);
+			return (await serviceScope.GetCommandRepository().GetByIdAsync(id, include, cancellationToken)).SetUserClaims().SetRefreshTokens().SetForgotPasswordTokens().SetEmailConfirmationTokens();
 		}
 
-		public async Task AddUserAsync(
+		public async Task AddAsync(
 			User user,
 			CancellationToken cancellationToken)
 		{
-			await serviceScope.GetUserCommandRepository().AddAsync(user, cancellationToken);
+			await serviceScope.GetCommandRepository().AddAsync(user, cancellationToken);
 		}
 
-		public async Task UpdateUserAsync(
+		public async Task UpdateAsync(
 			User user,
 			CancellationToken cancellationToken)
 		{
-			await serviceScope.GetUserCommandRepository().UpdateAsync(user, cancellationToken);
+			await serviceScope.GetCommandRepository().UpdateAsync(user, cancellationToken);
 		}
 
-		public async Task AddUserRangeAsync(
+		public async Task AddRangeAsync(
 			IEnumerable<User> users,
 			CancellationToken cancellationToken)
 		{
-			await serviceScope.GetUserCommandRepository().AddRangeAsync(users, cancellationToken);
+			await serviceScope.GetCommandRepository().AddRangeAsync(users, cancellationToken);
 		}
 
-		public async Task DeleteUserAsync(
+		public async Task DeleteAsync(
 			User user,
 			CancellationToken cancellationToken)
 		{
-			await serviceScope.GetUserCommandRepository().DeleteAsync(user, cancellationToken);
+			await serviceScope.GetCommandRepository().DeleteAsync(user, cancellationToken);
 		}
 	}
 }

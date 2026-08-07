@@ -4,82 +4,82 @@ namespace InstaConnect.Chats.Application.Tests.Features.Chats.Assertions;
 
 public static class ChatValidationAssertions
 {
-	extension(TestValidationResult<GetChatByIdQueryRequest> result)
+	extension(TestValidationResult<GetChatByIdQueryRequest> response)
 	{
 		public void ShouldHaveValidationErrorForParticipantTwoId(
-		IStringMessageTransformer messageTransformer,
-		GetChatByIdQueryRequest request)
+			GetChatByIdQueryRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.ParticipantTwoId, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.ParticipantTwoId, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForCurrentUserId(
-			IStringMessageTransformer messageTransformer,
-			GetChatByIdQueryRequest request)
+			GetChatByIdQueryRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.CurrentUserId, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.CurrentUserId, messageTransformer);
 		}
 	}
 
-	extension(TestValidationResult<AddChatCommandRequest> result)
+	extension(TestValidationResult<AddChatCommandRequest> response)
 	{
 		public void ShouldHaveValidationErrorForParticipantOneId(
-		IStringMessageTransformer messageTransformer,
-		AddChatCommandRequest request)
+			AddChatCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.ParticipantOneId, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.ParticipantOneId, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForParticipantTwoId(
-		IStringMessageTransformer messageTransformer,
-		AddChatCommandRequest request)
+			AddChatCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.ParticipantTwoId, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.ParticipantTwoId, messageTransformer);
 		}
 	}
 
-	extension(TestValidationResult<GetAllChatsQueryRequest> result)
+	extension(TestValidationResult<GetAllChatsQueryRequest> response)
 	{
 		public void ShouldHaveValidationErrorForParticipantTwoName(
-			IStringMessageTransformer messageTransformer,
-			GetAllChatsQueryRequest request)
+			GetAllChatsQueryRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.ParticipantTwoName, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.ParticipantTwoName, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForCurrentUserId(
-			IStringMessageTransformer messageTransformer,
-			GetAllChatsQueryRequest request)
+			GetAllChatsQueryRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.CurrentUserId, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.CurrentUserId, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForPage(
-			IIntMessageTransformer messageTransformer,
-			GetAllChatsQueryRequest request)
+			GetAllChatsQueryRequest request,
+			IIntMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Page, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.Page, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForPageSize(
-			IIntMessageTransformer messageTransformer,
-			GetAllChatsQueryRequest request)
+			GetAllChatsQueryRequest request,
+			IIntMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.PageSize, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.PageSize, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForSortOrder(
-			IEnumMessageTransformer<CommonSortOrder> messageTransformer,
-			GetAllChatsQueryRequest request)
+			GetAllChatsQueryRequest request,
+			IEnumMessageTransformer<CommonSortOrder> messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.SortOrder, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.SortOrder, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForSortTerm(
-			IEnumMessageTransformer<ChatsSortTerm> messageTransformer,
-			GetAllChatsQueryRequest request)
+			GetAllChatsQueryRequest request,
+			IEnumMessageTransformer<ChatsSortTerm> messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.SortTerm, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.SortTerm, messageTransformer);
 		}
 	}
 }

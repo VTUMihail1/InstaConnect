@@ -6,12 +6,6 @@ public static class UserMapper
 {
 	extension(User user)
 	{
-		internal UserId ToIdResponse(
-)
-		{
-			return user.Id;
-		}
-
 		public UserResponse ToFullResponse()
 		{
 			return new(user.Id,
@@ -27,13 +21,13 @@ public static class UserMapper
 		public UserId ToResponse(
 			AddUserCommandRequest request)
 		{
-			return user.ToIdResponse();
+			return user.ToId();
 		}
 
 		public UserId ToResponse(
 			UpdateUserCommandRequest request)
 		{
-			return user.ToIdResponse();
+			return user.ToId();
 		}
 	}
 }

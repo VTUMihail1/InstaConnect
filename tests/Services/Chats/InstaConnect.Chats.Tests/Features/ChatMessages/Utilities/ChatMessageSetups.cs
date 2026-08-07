@@ -10,12 +10,12 @@ public static class ChatMessageSetups
 {
 	extension(IServiceProvider serviceProvider)
 	{
-		public IChatMessageCommandRepository GetChatMessageCommandRepository()
+		public IChatMessageCommandRepository GetMessageCommandRepository()
 		{
 			return serviceProvider.GetRequiredService<IChatMessageCommandRepository>();
 		}
 
-		public IChatMessageIncludeBuilderFactory GetChatMessageIncludeBuilderFactory()
+		public IChatMessageIncludeBuilderFactory GetMessageIncludeBuilderFactory()
 		{
 			return serviceProvider.GetRequiredService<IChatMessageIncludeBuilderFactory>();
 		}
@@ -23,52 +23,52 @@ public static class ChatMessageSetups
 
 	extension(IServiceScope serviceScope)
 	{
-		public IChatMessageCommandRepository GetChatMessageCommandRepository()
+		public IChatMessageCommandRepository GetMessageCommandRepository()
 		{
-			return serviceScope.ServiceProvider.GetChatMessageCommandRepository();
+			return serviceScope.ServiceProvider.GetMessageCommandRepository();
 		}
 
-		public IChatMessageIncludeBuilderFactory GetChatMessageIncludeBuilderFactory()
+		public IChatMessageIncludeBuilderFactory GetMessageIncludeBuilderFactory()
 		{
-			return serviceScope.ServiceProvider.GetChatMessageIncludeBuilderFactory();
+			return serviceScope.ServiceProvider.GetMessageIncludeBuilderFactory();
 		}
 
-		public async Task<ChatMessage?> GetChatMessageByIdAsync(
+		public async Task<ChatMessage?> GetByIdAsync(
 			ChatMessageId id,
 			CancellationToken cancellationToken)
 		{
-			var include = serviceScope.GetChatIncludeBuilderFactory().Create().WithParticipantOne().WithParticipantTwo().Build();
-			var messageInclude = serviceScope.GetChatMessageIncludeBuilderFactory().Create().WithSender().WithChat(include).Build();
+			var include = serviceScope.GetIncludeBuilderFactory().Create().WithParticipantOne().WithParticipantTwo().Build();
+			var messageInclude = serviceScope.GetMessageIncludeBuilderFactory().Create().WithSender().WithChat(include).Build();
 
-			return await serviceScope.GetChatMessageCommandRepository().GetByIdAsync(id, messageInclude, cancellationToken);
+			return (await serviceScope.GetMessageCommandRepository().GetByIdAsync(id, messageInclude, cancellationToken)).SetSender().SetChat();
 		}
 
-		public async Task AddChatMessageAsync(
+		public async Task AddAsync(
 			ChatMessage chatMessage,
 			CancellationToken cancellationToken)
 		{
-			await serviceScope.GetChatMessageCommandRepository().AddAsync(chatMessage, cancellationToken);
+			await serviceScope.GetMessageCommandRepository().AddAsync(chatMessage, cancellationToken);
 		}
 
-		public async Task AddChatMessageRangeAsync(
+		public async Task AddRangeAsync(
 			IEnumerable<ChatMessage> chatMessages,
 			CancellationToken cancellationToken)
 		{
-			await serviceScope.GetChatMessageCommandRepository().AddRangeAsync(chatMessages, cancellationToken);
+			await serviceScope.GetMessageCommandRepository().AddRangeAsync(chatMessages, cancellationToken);
 		}
 
-		public async Task UpdateChatMessageAsync(
+		public async Task UpdateAsync(
 			ChatMessage chatMessage,
 			CancellationToken cancellationToken)
 		{
-			await serviceScope.GetChatMessageCommandRepository().UpdateAsync(chatMessage, cancellationToken);
+			await serviceScope.GetMessageCommandRepository().UpdateAsync(chatMessage, cancellationToken);
 		}
 
-		public async Task DeleteChatMessageAsync(
+		public async Task DeleteAsync(
 			ChatMessage chatMessage,
 			CancellationToken cancellationToken)
 		{
-			await serviceScope.GetChatMessageCommandRepository().DeleteAsync(chatMessage, cancellationToken);
+			await serviceScope.GetMessageCommandRepository().DeleteAsync(chatMessage, cancellationToken);
 		}
 	}
 }

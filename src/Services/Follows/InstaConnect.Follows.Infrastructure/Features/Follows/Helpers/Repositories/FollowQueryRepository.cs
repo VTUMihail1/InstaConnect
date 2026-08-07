@@ -86,7 +86,7 @@ internal class FollowQueryRepository : IFollowQueryRepository
 			.AggregateWithCaseInsensitiveCollation()
 			.Includes(_includerFactory, include)
 			.Match(filter)
-			.GetCount(cancellationToken);
+			.GetCountAsync(cancellationToken);
 	}
 
 	public async Task<long> GetTotalCountForFollowingAsync(
@@ -100,7 +100,7 @@ internal class FollowQueryRepository : IFollowQueryRepository
 			.AggregateWithCaseInsensitiveCollation()
 			.Includes(_includerFactory, include)
 			.Match(filter)
-			.GetCount(cancellationToken);
+			.GetCountAsync(cancellationToken);
 	}
 
 	public async Task<FollowResponse?> GetByIdAsync(

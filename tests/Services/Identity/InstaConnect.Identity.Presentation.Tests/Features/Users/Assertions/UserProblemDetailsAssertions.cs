@@ -10,93 +10,93 @@ public static class UserProblemDetailsAssertions
 			UpdateCurrentUserApiRequest request)
 		{
 			problemDetails.ShouldSatisfyUserNotFound(
-				r => r.Id,
-				request);
+				request,
+				r => r.Id);
 		}
 
 		public void ShouldSatisfyUserNotFound(
 			GetUserByIdApiRequest request)
 		{
 			problemDetails.ShouldSatisfyUserNotFound(
-				r => r.Id,
-				request);
+				request,
+				r => r.Id);
 		}
 
 		public void ShouldSatisfyUserNotFound(
 			GetUserDetailsByIdApiRequest request)
 		{
 			problemDetails.ShouldSatisfyUserNotFound(
-				r => r.Id,
-				request);
+				request,
+				r => r.Id);
 		}
 
 		public void ShouldSatisfyUserNotFound(
 			GetCurrentUserByIdApiRequest request)
 		{
 			problemDetails.ShouldSatisfyUserNotFound(
-				r => r.CurrentId,
-				request);
+				request,
+				r => r.CurrentId);
 		}
 
 		public void ShouldSatisfyUserNotFound(
 			GetCurrentUserDetailsByIdApiRequest request)
 		{
 			problemDetails.ShouldSatisfyUserNotFound(
-				r => r.CurrentId,
-				request);
+				request,
+				r => r.CurrentId);
 		}
 
 		public void ShouldSatisfyUserNotFound(
 			DeleteUserApiRequest request)
 		{
 			problemDetails.ShouldSatisfyUserNotFound(
-				r => r.Id,
-				request);
+				request,
+				r => r.Id);
 		}
 
 		public void ShouldSatisfyUserNotFound(
 			DeleteCurrentUserApiRequest request)
 		{
 			problemDetails.ShouldSatisfyUserNotFound(
-				r => r.CurrentId,
-				request);
+				request,
+				r => r.CurrentId);
 		}
 
 		public void ShouldSatisfyUserNameAlreadyTaken(
 			AddUserApiRequest request)
 		{
 			problemDetails.ShouldSatisfyUserNameAlreadyTaken(
-				r => r.Form.Name,
-				request);
+				request,
+				r => r.Form.Name);
 		}
 
 		public void ShouldSatisfyUserNameAlreadyTaken(
 			UpdateCurrentUserApiRequest request)
 		{
 			problemDetails.ShouldSatisfyUserNameAlreadyTaken(
-				r => r.Form.Name,
-				request);
+				request,
+				r => r.Form.Name);
 		}
 
 		public void ShouldSatisfyUserEmailAlreadyTaken(
 			AddUserApiRequest request)
 		{
 			problemDetails.ShouldSatisfyUserEmailAlreadyTaken(
-				r => r.Form.Email,
-				request);
+				request,
+				r => r.Form.Email);
 		}
 
 		public void ShouldSatisfyUserEmailAlreadyTaken(
 			UpdateCurrentUserApiRequest request)
 		{
 			problemDetails.ShouldSatisfyUserEmailAlreadyTaken(
-				r => r.Form.Email,
-				request);
+				request,
+				r => r.Form.Email);
 		}
 
 		internal void ShouldSatisfyUserNotFound<TRequest>(
-			Func<TRequest, string> idPropertyExpression,
-			TRequest request)
+			TRequest request,
+			Func<TRequest, string> idPropertyExpression)
 		{
 			problemDetails.ShouldSatisfyNotFound(
 				UserExceptionErrorMessages.GetNotFoundMessage(
@@ -104,8 +104,8 @@ public static class UserProblemDetailsAssertions
 		}
 
 		internal void ShouldSatisfyUserNameNotFound<TRequest>(
-			Func<TRequest, string> namePropertyExpression,
-			TRequest request)
+			TRequest request,
+			Func<TRequest, string> namePropertyExpression)
 		{
 			problemDetails.ShouldSatisfyNotFound(
 				UserExceptionErrorMessages.GetNameNotFoundMessage(
@@ -113,8 +113,8 @@ public static class UserProblemDetailsAssertions
 		}
 
 		internal void ShouldSatisfyUserEmailAlreadyTaken<TRequest>(
-			Func<TRequest, string> emailPropertyExpression,
-			TRequest request)
+			TRequest request,
+			Func<TRequest, string> emailPropertyExpression)
 		{
 			problemDetails.ShouldSatisfyBadRequest(
 				UserExceptionErrorMessages.GetEmailAlreadyTakenMessage(
@@ -122,8 +122,8 @@ public static class UserProblemDetailsAssertions
 		}
 
 		internal void ShouldSatisfyUserNameAlreadyTaken<TRequest>(
-			Func<TRequest, string> namePropertyExpression,
-			TRequest request)
+			TRequest request,
+			Func<TRequest, string> namePropertyExpression)
 		{
 			problemDetails.ShouldSatisfyBadRequest(
 				UserExceptionErrorMessages.GetNameAlreadyTakenMessage(
@@ -131,8 +131,8 @@ public static class UserProblemDetailsAssertions
 		}
 
 		internal void ShouldSatisfyUserInvalidDetails<TRequest>(
-			Func<TRequest, string> namePropertyExpression,
-			TRequest request)
+			TRequest request,
+			Func<TRequest, string> namePropertyExpression)
 		{
 			problemDetails.ShouldSatisfyBadRequest(
 				UserExceptionErrorMessages.GetInvalidDetailsMessage(
@@ -140,8 +140,8 @@ public static class UserProblemDetailsAssertions
 		}
 
 		internal void ShouldSatisfyUserEmailAlreadyConfirmed<TRequest>(
-			Func<TRequest, string> idPropertyExpression,
-			TRequest request)
+			TRequest request,
+			Func<TRequest, string> idPropertyExpression)
 		{
 			problemDetails.ShouldSatisfyBadRequest(
 				UserExceptionErrorMessages.GetEmailAlreadyConfirmedMessage(
@@ -149,8 +149,8 @@ public static class UserProblemDetailsAssertions
 		}
 
 		internal void ShouldSatisfyUserNameEmailAlreadyConfirmed<TRequest>(
-			Func<TRequest, string> namePropertyExpression,
-			TRequest request)
+			TRequest request,
+			Func<TRequest, string> namePropertyExpression)
 		{
 			problemDetails.ShouldSatisfyBadRequest(
 				UserExceptionErrorMessages.GetNameEmailAlreadyConfirmedMessage(
@@ -158,8 +158,8 @@ public static class UserProblemDetailsAssertions
 		}
 
 		internal void ShouldSatisfyUserEmailNotConfirmed<TRequest>(
-			Func<TRequest, string> idPropertyExpression,
-			TRequest request)
+			TRequest request,
+			Func<TRequest, string> idPropertyExpression)
 		{
 			problemDetails.ShouldSatisfyBadRequest(
 				UserExceptionErrorMessages.GetEmailNotConfirmedMessage(
@@ -167,8 +167,8 @@ public static class UserProblemDetailsAssertions
 		}
 
 		internal void ShouldSatisfyUserNameEmailNotConfirmed<TRequest>(
-			Func<TRequest, string> namePropertyExpression,
-			TRequest request)
+			TRequest request,
+			Func<TRequest, string> namePropertyExpression)
 		{
 			problemDetails.ShouldSatisfyBadRequest(
 				UserExceptionErrorMessages.GetNameEmailNotConfirmedMessage(

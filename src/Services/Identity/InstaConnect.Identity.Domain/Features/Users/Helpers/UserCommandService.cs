@@ -1,6 +1,5 @@
 using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
 using InstaConnect.Common.Events.Features.Common.Abstractions;
-using InstaConnect.Identity.Domain.Features.Common.Helpers;
 
 namespace InstaConnect.Identity.Domain.Features.Users.Helpers;
 
@@ -9,7 +8,6 @@ internal class UserCommandService : IUserCommandService
 	private readonly IUserFactory _factory;
 	private readonly IApplicationMapper _mapper;
 	private readonly IImageHandler _imageHandler;
-	private readonly IPasswordHasher _passwordHasher;
 	private readonly IEventPublisher _eventPublisher;
 	private readonly IUserCommandRepository _repository;
 	private readonly IDateTimeProvider _dateTimeProvider;
@@ -22,7 +20,6 @@ internal class UserCommandService : IUserCommandService
 		IUserFactory factory,
 		IApplicationMapper mapper,
 		IImageHandler imageHandler,
-		IPasswordHasher passwordHasher,
 		IEventPublisher eventPublisher,
 		IUserCommandRepository repository,
 		IDateTimeProvider dateTimeProvider,
@@ -34,7 +31,6 @@ internal class UserCommandService : IUserCommandService
 		_factory = factory;
 		_mapper = mapper;
 		_imageHandler = imageHandler;
-		_passwordHasher = passwordHasher;
 		_eventPublisher = eventPublisher;
 		_repository = repository;
 		_dateTimeProvider = dateTimeProvider;
@@ -60,9 +56,8 @@ internal class UserCommandService : IUserCommandService
 			throw new UserNameAlreadyTakenException(command.Name);
 		}
 
-		var passwordHash = _passwordHasher.Hash(command.Password);
 		var newUser = _factory.Create(
-			command.Name, command.FirstName, command.LastName, command.Email, passwordHash);
+			command.Name, command.FirstName, command.LastName, command.Email, command.Password);
 
 		if (command.ProfileImage != null)
 		{
@@ -74,11 +69,11 @@ internal class UserCommandService : IUserCommandService
 		await _eventPublisher.PublishAsync(
 			_mapper.Map<UserAddedEventRequest>(newUser), cancellationToken);
 
-		var newEmailConfirmationToken = _emailConfirmationTokenFactory.Create(newUser.Id);
+		var newEmailConfirmationToken = _emailConfirmationTokenFactory.Create(newUser.Id).AddUser(newUser);
 		await _emailConfirmationTokenRepository.AddAsync(newEmailConfirmationToken, cancellationToken);
 
 		await _eventPublisher.PublishAsync(
-			_mapper.Map<EmailConfirmationTokenAddedEventRequest>(newEmailConfirmationToken.AddUser(newUser)), cancellationToken);
+			_mapper.Map<EmailConfirmationTokenAddedEventRequest>(newEmailConfirmationToken), cancellationToken);
 
 		await _emailConfirmationTokenEmailSender.SendAsync(newEmailConfirmationToken, cancellationToken);
 
@@ -95,22 +90,6 @@ internal class UserCommandService : IUserCommandService
 			throw new UserNotFoundException(command.Id);
 		}
 
-		var emailIsNotUnique = !await _repository.IsEmailUniqueAsync(command.Email, cancellationToken);
-
-		if (user.Email.IsNot(command.Email) && emailIsNotUnique)
-		{
-			throw new UserEmailAlreadyTakenException(command.Email);
-		}
-
-		if (user.Email.IsNot(command.Email))
-		{
-			await _emailConfirmationTokenRepository.DeleteRangeAsync(user.EmailConfirmationTokens, cancellationToken);
-
-			await _eventPublisher.PublishAsync(
-				_mapper.Map<ICollection<EmailConfirmationTokenDeletedEventRequest>>(user), cancellationToken);
-			user.UpdateEmail(command.Email);
-		}
-
 		var nameIsNotUnique = !await _repository.IsNameUniqueAsync(command.Name, cancellationToken);
 
 		if (user.Name.IsNot(command.Name) && nameIsNotUnique)
@@ -118,12 +97,30 @@ internal class UserCommandService : IUserCommandService
 			throw new UserNameAlreadyTakenException(command.Name);
 		}
 
+		var emailIsNotUnique = !await _repository.IsEmailUniqueAsync(command.Email, cancellationToken);
+
+		if (user.Email.IsNot(command.Email) && emailIsNotUnique)
+		{
+			throw new UserEmailAlreadyTakenException(command.Email);
+		}
+
+		user.Update(command.FirstName, command.LastName, command.Name, _dateTimeProvider.GetOffsetUtcNow());
+
 		if (command.ProfileImage != null)
 		{
 			user.UpdateProfileImage(await _imageHandler.UploadAsync(command.ProfileImage, cancellationToken));
 		}
 
-		user.Update(command.FirstName, command.LastName, command.Name, _dateTimeProvider.GetOffsetUtcNow());
+		if (user.Email.IsNot(command.Email))
+		{
+			user.UpdateEmail(command.Email);
+
+			await _emailConfirmationTokenRepository.DeleteRangeAsync(user.EmailConfirmationTokens, cancellationToken);
+
+			await _eventPublisher.PublishAsync(
+				_mapper.Map<ICollection<EmailConfirmationTokenDeletedEventRequest>>(user), cancellationToken);
+		}
+
 		await _repository.UpdateAsync(user, cancellationToken);
 
 		await _eventPublisher.PublishAsync(

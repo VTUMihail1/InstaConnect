@@ -16,7 +16,7 @@ public class GetAllPostsForUserControllerUnitTests : BasePostPresentationQueryUn
 
 		_controller = new(Mapper, Sender);
 
-		Sender.SetupGetAllForUserQueryRequest(_request, User, Posts, CancellationToken);
+		Sender.SetupSendAsync(_request, User, Posts, CancellationToken);
 	}
 
 	[Fact]
@@ -36,7 +36,7 @@ public class GetAllPostsForUserControllerUnitTests : BasePostPresentationQueryUn
 		var response = await _controller.GetAllAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, Posts, _request);
+		response.ShouldSatisfy(_request, User, Posts);
 	}
 
 	[Fact]

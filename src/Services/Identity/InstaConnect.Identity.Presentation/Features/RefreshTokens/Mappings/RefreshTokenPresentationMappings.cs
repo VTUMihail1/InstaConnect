@@ -12,7 +12,7 @@ internal class RefreshTokenPresentationMappings : IRegister
 {
 	public void Register(TypeAdapterConfig config)
 	{
-		config.NewConfig<SessionTokenCommandResponse, SetRefreshTokenCookieRequest>()
+		config.NewConfig<SessionTokenCommandResponse, SetRefreshTokenCookieApiRequest>()
 			.ConstructUsing(src => new(src.Id.Id, src.Id.Value, src.ExpiresAtUtc));
 
 		config.NewConfig<IssueRefreshTokenApiRequest, IssueRefreshTokenCommandRequest>()

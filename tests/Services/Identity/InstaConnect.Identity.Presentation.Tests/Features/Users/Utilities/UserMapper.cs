@@ -7,13 +7,13 @@ public static class UserMapper
 {
 	extension(User user)
 	{
-		internal UserIdCommandResponse ToIdResponse(
+		internal UserIdCommandResponse ToIdCommandResponse(
 )
 		{
 			return new(user.Id.Id);
 		}
 
-		internal UserQueryResponse ToFullResponse()
+		internal UserQueryResponse ToFullQueryResponse()
 		{
 			return new(user.Id.Id,
 					   user.FirstName,
@@ -24,7 +24,7 @@ public static class UserMapper
 					   user.UpdatedAtUtc);
 		}
 
-		internal UserDetailsQueryResponse ToFullDetailsResponse()
+		internal UserDetailsQueryResponse ToFullQueryDetailsResponse()
 		{
 			return new(user.Id.Id,
 					   user.FirstName,
@@ -39,52 +39,52 @@ public static class UserMapper
 		public AddUserCommandResponse ToResponse(
 			AddUserApiRequest request)
 		{
-			return new(user.ToIdResponse());
+			return new(user.ToIdCommandResponse());
 		}
 
 		public UpdateCurrentUserCommandResponse ToResponse(
 			UpdateCurrentUserApiRequest request)
 		{
-			return new(user.ToIdResponse());
+			return new(user.ToIdCommandResponse());
 		}
 
 		public GetUserByIdQueryResponse ToResponse(
 			GetUserByIdApiRequest request)
 		{
-			return new(user.ToFullResponse());
+			return new(user.ToFullQueryResponse());
 		}
 
 		public GetUserDetailsByIdQueryResponse ToResponse(
 			GetUserDetailsByIdApiRequest request)
 		{
-			return new(user.ToFullDetailsResponse());
+			return new(user.ToFullQueryDetailsResponse());
 		}
 
 		public GetCurrentUserByIdQueryResponse ToResponse(
 			GetCurrentUserByIdApiRequest request)
 		{
-			return new(user.ToFullResponse());
+			return new(user.ToFullQueryResponse());
 		}
 
 		public GetCurrentUserDetailsByIdQueryResponse ToResponse(
 			GetCurrentUserDetailsByIdApiRequest request)
 		{
-			return new(user.ToFullDetailsResponse());
+			return new(user.ToFullQueryDetailsResponse());
 		}
 	}
 
 	extension(ICollection<User> users)
 	{
-		internal UserCollectionQueryResponse ToFullResponse<TRequest>(
-		Func<User, TRequest, bool> filter,
-		Func<User, TRequest, UserQueryResponse> transform,
-		TRequest request)
+		internal UserCollectionQueryResponse ToFullQueryResponse<TRequest>(
+		TRequest request,
+		Func<TRequest, User, bool> filter,
+		Func<TRequest, User, UserQueryResponse> transform)
 		where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = users.Count(user => filter(user, request));
+			var totalCount = users.Count(user => filter(request, user));
 
-			return new(users.Filter(user => filter(user, request), request, user => transform(user, request)),
+			return new(users.Filter(request, user => filter(request, user), user => transform(request, user)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -95,9 +95,9 @@ public static class UserMapper
 		public GetAllUsersQueryResponse ToResponse(
 			GetAllUsersApiRequest request)
 		{
-			return new(users.ToFullResponse((user, request) => user.MatchesFilter(request),
-												   (user, request) => user.ToFullResponse(),
-												   request));
+			return new(users.ToFullQueryResponse(request,
+												 (request, user) => user.MatchesFilter(request),
+												 (request, user) => user.ToFullQueryResponse()));
 		}
 	}
 }

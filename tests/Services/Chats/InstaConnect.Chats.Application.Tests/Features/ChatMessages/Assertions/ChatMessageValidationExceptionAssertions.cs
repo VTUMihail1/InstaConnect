@@ -8,230 +8,268 @@ public static class ChatMessageValidationExceptionAssertions
 	extension(IApplicationSender sender)
 	{
 		public async Task ShouldThrowInvalidValidationExceptionForParticipantOneIdAsync(
-		IStringMessageTransformer messageTransformer,
-		AddChatMessageCommandRequest request,
-		CancellationToken cancellationToken)
-		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<AddChatMessageCommandRequest, string, AddChatMessageCommandResponse>(
-				p => p.ParticipantOneId,
-				messageTransformer,
-				request,
-				cancellationToken);
-		}
-
-		public async Task ShouldThrowInvalidValidationExceptionForParticipantOneIdAsync(
-		IStringMessageTransformer messageTransformer,
-		UpdateChatMessageCommandRequest request,
-		CancellationToken cancellationToken)
-		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<UpdateChatMessageCommandRequest, string, UpdateChatMessageCommandResponse>(
-				p => p.ParticipantOneId,
-				messageTransformer,
-				request,
-				cancellationToken);
-		}
-
-		public async Task ShouldThrowInvalidValidationExceptionForParticipantOneIdAsync(
-			IStringMessageTransformer messageTransformer,
-			DeleteChatMessageCommandRequest request,
-			CancellationToken cancellationToken)
-		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync(
-				p => p.ParticipantOneId,
-				messageTransformer,
-				request,
-				cancellationToken);
-		}
-
-		public async Task ShouldThrowInvalidValidationExceptionForParticipantTwoIdAsync(
-		IStringMessageTransformer messageTransformer,
-		AddChatMessageCommandRequest request,
-		CancellationToken cancellationToken)
-		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<AddChatMessageCommandRequest, string, AddChatMessageCommandResponse>(
-				p => p.ParticipantTwoId,
-				messageTransformer,
-				request,
-				cancellationToken);
-		}
-
-		public async Task ShouldThrowInvalidValidationExceptionForParticipantTwoIdAsync(
-		IStringMessageTransformer messageTransformer,
-		UpdateChatMessageCommandRequest request,
-		CancellationToken cancellationToken)
-		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<UpdateChatMessageCommandRequest, string, UpdateChatMessageCommandResponse>(
-				p => p.ParticipantTwoId,
-				messageTransformer,
-				request,
-				cancellationToken);
-		}
-
-		public async Task ShouldThrowInvalidValidationExceptionForParticipantTwoIdAsync(
-			IStringMessageTransformer messageTransformer,
-			DeleteChatMessageCommandRequest request,
-			CancellationToken cancellationToken)
-		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync(
-				p => p.ParticipantTwoId,
-				messageTransformer,
-				request,
-				cancellationToken);
-		}
-
-		public async Task ShouldThrowInvalidValidationExceptionForParticipantTwoIdAsync(
-			IStringMessageTransformer messageTransformer,
-			GetChatMessageByIdQueryRequest request,
-			CancellationToken cancellationToken)
-		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetChatMessageByIdQueryRequest, string, GetChatMessageByIdQueryResponse>(
-				p => p.ParticipantTwoId,
-				messageTransformer,
-				request,
-				cancellationToken);
-		}
-
-		public async Task ShouldThrowInvalidValidationExceptionForParticipantTwoIdAsync(
-			IStringMessageTransformer messageTransformer,
-			GetAllChatMessagesQueryRequest request,
-			CancellationToken cancellationToken)
-		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllChatMessagesQueryRequest, string, GetAllChatMessagesQueryResponse>(
-				p => p.ParticipantTwoId,
-				messageTransformer,
-				request,
-				cancellationToken);
-		}
-
-		public async Task ShouldThrowInvalidValidationExceptionForMessageIdAsync(
-			IStringMessageTransformer messageTransformer,
-			UpdateChatMessageCommandRequest request,
-			CancellationToken cancellationToken)
-		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<UpdateChatMessageCommandRequest, string, UpdateChatMessageCommandResponse>(
-				p => p.MessageId,
-				messageTransformer,
-				request,
-				cancellationToken);
-		}
-
-		public async Task ShouldThrowInvalidValidationExceptionForMessageIdAsync(
-			IStringMessageTransformer messageTransformer,
-			DeleteChatMessageCommandRequest request,
-			CancellationToken cancellationToken)
-		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync(
-				p => p.MessageId,
-				messageTransformer,
-				request,
-				cancellationToken);
-		}
-
-		public async Task ShouldThrowInvalidValidationExceptionForMessageIdAsync(
-			IStringMessageTransformer messageTransformer,
-			GetChatMessageByIdQueryRequest request,
-			CancellationToken cancellationToken)
-		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetChatMessageByIdQueryRequest, string, GetChatMessageByIdQueryResponse>(
-				p => p.MessageId,
-				messageTransformer,
-				request,
-				cancellationToken);
-		}
-
-		public async Task ShouldThrowInvalidValidationExceptionForContentAsync(
-			IStringMessageTransformer messageTransformer,
 			AddChatMessageCommandRequest request,
+			IStringMessageTransformer messageTransformer,
+		CancellationToken cancellationToken)
+		{
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
+				p => p.ParticipantOneId,
+				messageTransformer,
+				cancellationToken);
+		}
+
+		public async Task ShouldThrowInvalidValidationExceptionForParticipantOneIdAsync(
+			UpdateChatMessageCommandRequest request,
+			IStringMessageTransformer messageTransformer,
+		CancellationToken cancellationToken)
+		{
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
+				p => p.ParticipantOneId,
+				messageTransformer,
+				cancellationToken);
+		}
+
+		public async Task ShouldThrowInvalidValidationExceptionForParticipantOneIdAsync(
+			DeleteChatMessageCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<AddChatMessageCommandRequest, string, AddChatMessageCommandResponse>(
-				p => p.Content,
-				messageTransformer,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
+				p => p.ParticipantOneId,
+				messageTransformer,
+				cancellationToken);
+		}
+
+		public async Task ShouldThrowInvalidValidationExceptionForParticipantTwoIdAsync(
+			AddChatMessageCommandRequest request,
+			IStringMessageTransformer messageTransformer,
+		CancellationToken cancellationToken)
+		{
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
+				p => p.ParticipantTwoId,
+				messageTransformer,
+				cancellationToken);
+		}
+
+		public async Task ShouldThrowInvalidValidationExceptionForParticipantTwoIdAsync(
+			UpdateChatMessageCommandRequest request,
+			IStringMessageTransformer messageTransformer,
+		CancellationToken cancellationToken)
+		{
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
+				p => p.ParticipantTwoId,
+				messageTransformer,
+				cancellationToken);
+		}
+
+		public async Task ShouldThrowInvalidValidationExceptionForParticipantTwoIdAsync(
+			DeleteChatMessageCommandRequest request,
+			IStringMessageTransformer messageTransformer,
+			CancellationToken cancellationToken)
+		{
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
+				p => p.ParticipantTwoId,
+				messageTransformer,
+				cancellationToken);
+		}
+
+		public async Task ShouldThrowInvalidValidationExceptionForParticipantTwoIdAsync(
+			GetChatMessageByIdQueryRequest request,
+			IStringMessageTransformer messageTransformer,
+			CancellationToken cancellationToken)
+		{
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
+				p => p.ParticipantTwoId,
+				messageTransformer,
+				cancellationToken);
+		}
+
+		public async Task ShouldThrowInvalidValidationExceptionForParticipantTwoIdAsync(
+			GetAllChatMessagesQueryRequest request,
+			IStringMessageTransformer messageTransformer,
+			CancellationToken cancellationToken)
+		{
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
+				p => p.ParticipantTwoId,
+				messageTransformer,
+				cancellationToken);
+		}
+
+		public async Task ShouldThrowInvalidValidationExceptionForMessageIdAsync(
+			UpdateChatMessageCommandRequest request,
+			IStringMessageTransformer messageTransformer,
+			CancellationToken cancellationToken)
+		{
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
+				p => p.MessageId,
+				messageTransformer,
+				cancellationToken);
+		}
+
+		public async Task ShouldThrowInvalidValidationExceptionForMessageIdAsync(
+			DeleteChatMessageCommandRequest request,
+			IStringMessageTransformer messageTransformer,
+			CancellationToken cancellationToken)
+		{
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
+				p => p.MessageId,
+				messageTransformer,
+				cancellationToken);
+		}
+
+		public async Task ShouldThrowInvalidValidationExceptionForMessageIdAsync(
+			GetChatMessageByIdQueryRequest request,
+			IStringMessageTransformer messageTransformer,
+			CancellationToken cancellationToken)
+		{
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
+				p => p.MessageId,
+				messageTransformer,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForContentAsync(
+			AddChatMessageCommandRequest request,
 			IStringMessageTransformer messageTransformer,
-			UpdateChatMessageCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<UpdateChatMessageCommandRequest, string, UpdateChatMessageCommandResponse>(
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.Content,
 				messageTransformer,
+				cancellationToken);
+		}
+
+		public async Task ShouldThrowInvalidValidationExceptionForContentAsync(
+			UpdateChatMessageCommandRequest request,
+			IStringMessageTransformer messageTransformer,
+			CancellationToken cancellationToken)
+		{
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
+				p => p.Content,
+				messageTransformer,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForCurrentUserIdAsync(
-			IStringMessageTransformer messageTransformer,
 			GetChatMessageByIdQueryRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetChatMessageByIdQueryRequest, string, GetChatMessageByIdQueryResponse>(
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.CurrentUserId,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForCurrentUserIdAsync(
-			IStringMessageTransformer messageTransformer,
 			GetAllChatMessagesQueryRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllChatMessagesQueryRequest, string, GetAllChatMessagesQueryResponse>(
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.CurrentUserId,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForPageAsync(
-			IIntMessageTransformer messageTransformer,
 			GetAllChatMessagesQueryRequest request,
+			IIntMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllChatMessagesQueryRequest, int, GetAllChatMessagesQueryResponse>(
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.Page,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForPageSizeAsync(
-			IIntMessageTransformer messageTransformer,
 			GetAllChatMessagesQueryRequest request,
+			IIntMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllChatMessagesQueryRequest, int, GetAllChatMessagesQueryResponse>(
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.PageSize,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForSortOrderAsync(
-			IEnumMessageTransformer<CommonSortOrder> messageTransformer,
 			GetAllChatMessagesQueryRequest request,
+			IEnumMessageTransformer<CommonSortOrder> messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllChatMessagesQueryRequest, CommonSortOrder, GetAllChatMessagesQueryResponse>(
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.SortOrder,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForSortTermAsync(
-			IEnumMessageTransformer<ChatMessagesSortTerm> messageTransformer,
 			GetAllChatMessagesQueryRequest request,
+			IEnumMessageTransformer<ChatMessagesSortTerm> messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<GetAllChatMessagesQueryRequest, ChatMessagesSortTerm, GetAllChatMessagesQueryResponse>(
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.SortTerm,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 	}

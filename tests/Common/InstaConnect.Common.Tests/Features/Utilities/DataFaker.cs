@@ -39,14 +39,19 @@ public abstract class DataFaker
 		return _faker.Random.Guid().ToString();
 	}
 
-	public static DateTimeOffset GetRecentDate()
+	public static DateTimeOffset GetSoonDate()
 	{
-		return _faker.Date.FutureOffset();
+		return _faker.Date.SoonOffset();
 	}
 
-	public static DateTimeOffset GetPastDate()
+	public static DateTimeOffset GetFutureDate(DateTimeOffset date)
 	{
-		return _faker.Date.PastOffset();
+		return _faker.Date.FutureOffset(refDate: date);
+	}
+
+	public static DateTimeOffset GetPastDate(DateTimeOffset date)
+	{
+		return _faker.Date.PastOffset(refDate: date);
 	}
 
 	public static string GetUrl()
@@ -72,6 +77,11 @@ public abstract class DataFaker
 	public static string GetAverageString(int maxLength, int minLength = default)
 	{
 		return _faker.Random.AlphaNumeric(GetAverageNumber(maxLength, minLength));
+	}
+
+	public static int GetRandomNumber()
+	{
+		return _faker.Random.Number();
 	}
 
 	public static int GetAverageNumber(int maxLength, int minLength)

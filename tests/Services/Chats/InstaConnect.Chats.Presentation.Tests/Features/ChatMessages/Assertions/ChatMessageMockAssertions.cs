@@ -11,35 +11,35 @@ public static class ChatMessageMockAssertions
 		GetAllChatMessagesApiRequest request,
 		CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(ChatMessageMatcher.IsGetAllChatMessagesQueryRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(ChatMessagePresentationMatcher.IsGetAllChatMessagesQueryRequest(request), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneSendAsync(
 			GetChatMessageByIdApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(ChatMessageMatcher.IsGetChatMessageByIdQueryRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(ChatMessagePresentationMatcher.IsGetChatMessageByIdQueryRequest(request), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneSendAsync(
 			AddChatMessageApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(ChatMessageMatcher.IsAddChatMessageCommandRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(ChatMessagePresentationMatcher.IsAddChatMessageCommandRequest(request), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneSendAsync(
 			UpdateChatMessageApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(ChatMessageMatcher.IsUpdateChatMessageCommandRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(ChatMessagePresentationMatcher.IsUpdateChatMessageCommandRequest(request), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneSendAsync(
 			DeleteChatMessageApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(ChatMessageMatcher.IsDeleteChatMessageCommandRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(ChatMessagePresentationMatcher.IsDeleteChatMessageCommandRequest(request), cancellationToken);
 		}
 	}
 }

@@ -29,7 +29,8 @@
   <ItemGroup Label="Common">
     <Using Include="Xunit" />
     <Using Include="FluentValidation.TestHelper" />
-    <Using Include="InstaConnect.Common.Tests.Features.Events" />
+	<Using Include="InstaConnect.Common.Tests.Features.Abstractions" />
+	<Using Include="InstaConnect.Common.Tests.Features.Helpers" />
     <Using Include="InstaConnect.Common.Tests.Features.Assertions" />
     <Using Include="InstaConnect.Common.Tests.Features.Utilities" />
     <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Enums" />

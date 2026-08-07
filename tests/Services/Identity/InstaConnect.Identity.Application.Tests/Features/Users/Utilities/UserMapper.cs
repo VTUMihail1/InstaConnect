@@ -7,13 +7,7 @@ public static class UserMapper
 {
 	extension(User user)
 	{
-		internal UserId ToIdResponse(
-)
-		{
-			return user.Id;
-		}
-
-		internal UserResponse ToFullResponse()
+		public UserResponse ToFullResponse()
 		{
 			return new(user.Id,
 					   user.FirstName,
@@ -28,13 +22,13 @@ public static class UserMapper
 		public UserId ToResponse(
 			AddUserCommandRequest request)
 		{
-			return user.ToIdResponse();
+			return user.ToId();
 		}
 
 		public UserId ToResponse(
 			UpdateCurrentUserCommandRequest request)
 		{
-			return user.ToIdResponse();
+			return user.ToId();
 		}
 
 		public UserResponse ToResponse(
@@ -65,15 +59,15 @@ public static class UserMapper
 	extension(ICollection<User> users)
 	{
 		internal UserCollectionResponse ToFullResponse<TRequest>(
-		Func<User, TRequest, bool> filter,
-		Func<User, TRequest, UserResponse> transform,
-		TRequest request)
+		TRequest request,
+		Func<TRequest, User, bool> filter,
+		Func<TRequest, User, UserResponse> transform)
 		where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = users.Count(user => filter(user, request));
+			var totalCount = users.Count(user => filter(request, user));
 
-			return new(users.Filter(user => filter(user, request), request, user => transform(user, request)),
+			return new(users.Filter(request, user => filter(request, user), user => transform(request, user)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -85,9 +79,9 @@ public static class UserMapper
 			GetAllUsersQueryRequest request)
 		{
 			return users.ToFullResponse(
-				(user, request) => user.MatchesFilter(request),
-				(user, request) => user.ToFullResponse(),
-				request);
+				request,
+				(request, user) => user.MatchesFilter(request),
+				(request, user) => user.ToFullResponse());
 		}
 	}
 }

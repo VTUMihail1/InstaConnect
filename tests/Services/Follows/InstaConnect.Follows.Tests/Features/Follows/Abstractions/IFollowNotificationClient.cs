@@ -2,9 +2,9 @@ namespace InstaConnect.Follows.Tests.Features.Follows.Abstractions;
 
 public interface IFollowNotificationClient
 {
-	public Task ConnectAsync(CancellationToken cancellationToken);
+	public Task StartAsync(CancellationToken cancellationToken);
 
-	public Task DisconnectAsync(CancellationToken cancellationToken);
+	public Task StopAsync(CancellationToken cancellationToken);
 
-	public Task<FollowAddedNotificationRequest> AddedAsync(CancellationToken cancellationToken);
+	public Task<FollowAddedNotificationRequest> PublishedAddedAsync(CancellationToken cancellationToken);
 }

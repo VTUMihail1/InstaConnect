@@ -50,7 +50,7 @@ internal class UserQueryRepository : IUserQueryRepository
 			.Users
 			.AggregateWithCaseInsensitiveCollation()
 			.Match(filter)
-			.GetCount(cancellationToken);
+			.GetCountAsync(cancellationToken);
 	}
 
 	public async Task<UserResponse?> GetByIdAsync(

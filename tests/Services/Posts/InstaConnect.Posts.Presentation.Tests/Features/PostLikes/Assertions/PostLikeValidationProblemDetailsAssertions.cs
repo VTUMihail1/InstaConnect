@@ -9,203 +9,203 @@ public static class PostLikeValidationProblemDetailsAssertions
 	extension(ApplicationProblemDetails problemDetails)
 	{
 		public void ShouldSatisfyInvalidValidationForId(
-		IStringMessageTransformer messageTransformer,
-		DeletePostLikeApiRequest request)
+		DeletePostLikeApiRequest request,
+		IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.Id,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForId(
-			IStringMessageTransformer messageTransformer,
-			GetPostLikeByIdApiRequest request)
+			GetPostLikeByIdApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.Id,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForId(
-			IStringMessageTransformer messageTransformer,
-			AddPostLikeApiRequest request)
+			AddPostLikeApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.Id,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForId(
-			IStringMessageTransformer messageTransformer,
-			GetAllPostLikesApiRequest request)
+			GetAllPostLikesApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.Id,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForCurrentUserId(
-			IStringMessageTransformer messageTransformer,
-			GetPostLikeByIdApiRequest request)
+			GetPostLikeByIdApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.CurrentUserId,
-			   messageTransformer,
-			   request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForCurrentUserId(
-			IStringMessageTransformer messageTransformer,
-			GetAllPostLikesApiRequest request)
+			GetAllPostLikesApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.CurrentUserId,
-			   messageTransformer,
-			   request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForCurrentUserId(
-			IStringMessageTransformer messageTransformer,
-			GetAllPostLikesForUserApiRequest request)
+			GetAllPostLikesForUserApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.CurrentUserId,
-			   messageTransformer,
-			   request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForUserId(
-			IStringMessageTransformer messageTransformer,
-			GetAllPostLikesForUserApiRequest request)
+			GetAllPostLikesForUserApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.UserId,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForUserId(
-			IStringMessageTransformer messageTransformer,
-			GetPostLikeByIdApiRequest request)
+			GetPostLikeByIdApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.UserId,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForUserId(
-			IStringMessageTransformer messageTransformer,
-			AddPostLikeApiRequest request)
+			AddPostLikeApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.UserId,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForUserId(
-			IStringMessageTransformer messageTransformer,
-			DeletePostLikeApiRequest request)
+			DeletePostLikeApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.UserId,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForUserName(
-			IStringMessageTransformer messageTransformer,
-			GetAllPostLikesApiRequest request)
+			GetAllPostLikesApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.UserName,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForPage(
-			IIntMessageTransformer messageTransformer,
-			GetAllPostLikesApiRequest request)
+			GetAllPostLikesApiRequest request,
+			IIntMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.Page,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForPage(
-			IIntMessageTransformer messageTransformer,
-			GetAllPostLikesForUserApiRequest request)
+			GetAllPostLikesForUserApiRequest request,
+			IIntMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.Page,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForPageSize(
-			IIntMessageTransformer messageTransformer,
-			GetAllPostLikesApiRequest request)
+			GetAllPostLikesApiRequest request,
+			IIntMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.PageSize,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForPageSize(
-			IIntMessageTransformer messageTransformer,
-			GetAllPostLikesForUserApiRequest request)
+			GetAllPostLikesForUserApiRequest request,
+			IIntMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.PageSize,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForSortOrder(
-			IEnumMessageTransformer<CommonSortOrder> messageTransformer,
-			GetAllPostLikesApiRequest request)
+			GetAllPostLikesApiRequest request,
+			IEnumMessageTransformer<CommonSortOrder> messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.SortOrder,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForSortOrder(
-			IEnumMessageTransformer<CommonSortOrder> messageTransformer,
-			GetAllPostLikesForUserApiRequest request)
+			GetAllPostLikesForUserApiRequest request,
+			IEnumMessageTransformer<CommonSortOrder> messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.SortOrder,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForSortTerm(
-			IEnumMessageTransformer<PostLikesSortTerm> messageTransformer,
-			GetAllPostLikesApiRequest request)
+			GetAllPostLikesApiRequest request,
+			IEnumMessageTransformer<PostLikesSortTerm> messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.SortTerm,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForSortTerm(
-			IEnumMessageTransformer<PostLikesForUserSortTerm> messageTransformer,
-			GetAllPostLikesForUserApiRequest request)
+			GetAllPostLikesForUserApiRequest request,
+			IEnumMessageTransformer<PostLikesForUserSortTerm> messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.SortTerm,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 	}
 }

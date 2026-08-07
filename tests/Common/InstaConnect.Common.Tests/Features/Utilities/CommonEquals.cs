@@ -11,6 +11,11 @@ public static class CommonEquals
 		{
 			return p.Value.EqualsOrdinalIgnoreCase(value);
 		}
+
+		public bool Matches(Name name)
+		{
+			return p.Matches(name.Value);
+		}
 	}
 
 	extension(Email p)
@@ -18,6 +23,11 @@ public static class CommonEquals
 		public bool Matches(string value)
 		{
 			return p.Value.EqualsOrdinalIgnoreCase(value);
+		}
+
+		public bool Matches(Email email)
+		{
+			return p.Matches(email.Value);
 		}
 	}
 
@@ -27,9 +37,14 @@ public static class CommonEquals
 		{
 			return p == null || p.Url == url;
 		}
+
+		public bool Matches(Image? image)
+		{
+			return p.Matches(image?.Url);
+		}
 	}
 
-	extension<TExpected>(ICollection<TExpected> expected)
+	extension<TExpected>(ICollection<TExpected> e)
 	{
 		public bool MatchesCollection<TEntity, TKey>(
 		ICollection<TEntity> entities,
@@ -43,11 +58,16 @@ public static class CommonEquals
 				.OrderBy(a => a.CreatedAtUtc)
 				.ToDictionary(entityKey);
 
-			return expected.Count == entitiesByKey.Count &&
-				   expected.Any() &&
-				   expected.All(e =>
+			return e.Count == entitiesByKey.Count &&
+				   e.Any() &&
+				   e.All(e =>
 				   entitiesByKey.TryGetValue(expectedKey(e), out var a) &&
 				   matcher(e, a));
+		}
+
+		public bool MatchesCollection(ICollection<TExpected> expected)
+		{
+			return e.OrderBy(x => x).SequenceEqual(expected);
 		}
 	}
 }

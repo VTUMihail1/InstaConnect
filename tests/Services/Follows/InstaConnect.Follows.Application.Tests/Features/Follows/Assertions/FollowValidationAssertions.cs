@@ -4,165 +4,165 @@ namespace InstaConnect.Follows.Application.Tests.Features.Follows.Assertions;
 
 public static class FollowValidationAssertions
 {
-	extension(TestValidationResult<DeleteFollowCommandRequest> result)
+	extension(TestValidationResult<DeleteFollowCommandRequest> response)
 	{
 		public void ShouldHaveValidationErrorForFollowerId(
-		IStringMessageTransformer messageTransformer,
-		DeleteFollowCommandRequest request)
+			DeleteFollowCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.FollowerId, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.FollowerId, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForFollowingId(
-			IStringMessageTransformer messageTransformer,
-			DeleteFollowCommandRequest request)
+			DeleteFollowCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.FollowingId, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.FollowingId, messageTransformer);
 		}
 	}
 
-	extension(TestValidationResult<GetFollowByIdQueryRequest> result)
+	extension(TestValidationResult<GetFollowByIdQueryRequest> response)
 	{
 		public void ShouldHaveValidationErrorForFollowerId(
-		IStringMessageTransformer messageTransformer,
-		GetFollowByIdQueryRequest request)
+			GetFollowByIdQueryRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.FollowerId, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.FollowerId, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForFollowingId(
-			IStringMessageTransformer messageTransformer,
-			GetFollowByIdQueryRequest request)
+			GetFollowByIdQueryRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.FollowingId, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.FollowingId, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForCurrentUserId(
-			IStringMessageTransformer messageTransformer,
-			GetFollowByIdQueryRequest request)
+			GetFollowByIdQueryRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.CurrentUserId, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.CurrentUserId, messageTransformer);
 		}
 	}
 
-	extension(TestValidationResult<AddFollowCommandRequest> result)
+	extension(TestValidationResult<AddFollowCommandRequest> response)
 	{
 		public void ShouldHaveValidationErrorForFollowerId(
-		IStringMessageTransformer messageTransformer,
-		AddFollowCommandRequest request)
+			AddFollowCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.FollowerId, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.FollowerId, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForFollowingId(
-			IStringMessageTransformer messageTransformer,
-			AddFollowCommandRequest request)
+			AddFollowCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.FollowingId, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.FollowingId, messageTransformer);
 		}
 	}
 
-	extension(TestValidationResult<GetAllFollowsQueryRequest> result)
+	extension(TestValidationResult<GetAllFollowsQueryRequest> response)
 	{
 		public void ShouldHaveValidationErrorForFollowerId(
-		IStringMessageTransformer messageTransformer,
-		GetAllFollowsQueryRequest request)
+			GetAllFollowsQueryRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.FollowerId, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.FollowerId, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForCurrentUserId(
-			IStringMessageTransformer messageTransformer,
-			GetAllFollowsQueryRequest request)
+			GetAllFollowsQueryRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.CurrentUserId, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.CurrentUserId, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForFollowingName(
-			IStringMessageTransformer messageTransformer,
-			GetAllFollowsQueryRequest request)
+			GetAllFollowsQueryRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.FollowingName, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.FollowingName, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForPage(
-			IIntMessageTransformer messageTransformer,
-			GetAllFollowsQueryRequest request)
+			GetAllFollowsQueryRequest request,
+			IIntMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Page, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.Page, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForPageSize(
-			IIntMessageTransformer messageTransformer,
-			GetAllFollowsQueryRequest request)
+			GetAllFollowsQueryRequest request,
+			IIntMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.PageSize, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.PageSize, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForSortOrder(
-			IEnumMessageTransformer<CommonSortOrder> messageTransformer,
-			GetAllFollowsQueryRequest request)
+			GetAllFollowsQueryRequest request,
+			IEnumMessageTransformer<CommonSortOrder> messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.SortOrder, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.SortOrder, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForSortTerm(
-			IEnumMessageTransformer<FollowsSortTerm> messageTransformer,
-			GetAllFollowsQueryRequest request)
+			GetAllFollowsQueryRequest request,
+			IEnumMessageTransformer<FollowsSortTerm> messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.SortTerm, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.SortTerm, messageTransformer);
 		}
 	}
 
-	extension(TestValidationResult<GetAllFollowsForFollowingQueryRequest> result)
+	extension(TestValidationResult<GetAllFollowsForFollowingQueryRequest> response)
 	{
 		public void ShouldHaveValidationErrorForFollowingId(
-		IStringMessageTransformer messageTransformer,
-		GetAllFollowsForFollowingQueryRequest request)
+			GetAllFollowsForFollowingQueryRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.FollowingId, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.FollowingId, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForFollowerName(
-			IStringMessageTransformer messageTransformer,
-			GetAllFollowsForFollowingQueryRequest request)
+			GetAllFollowsForFollowingQueryRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.FollowerName, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.FollowerName, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForCurrentUserId(
-			IStringMessageTransformer messageTransformer,
-			GetAllFollowsForFollowingQueryRequest request)
+			GetAllFollowsForFollowingQueryRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.CurrentUserId, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.CurrentUserId, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForPage(
-			IIntMessageTransformer messageTransformer,
-			GetAllFollowsForFollowingQueryRequest request)
+			GetAllFollowsForFollowingQueryRequest request,
+			IIntMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Page, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.Page, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForPageSize(
-			IIntMessageTransformer messageTransformer,
-			GetAllFollowsForFollowingQueryRequest request)
+			GetAllFollowsForFollowingQueryRequest request,
+			IIntMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.PageSize, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.PageSize, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForSortOrder(
-			IEnumMessageTransformer<CommonSortOrder> messageTransformer,
-			GetAllFollowsForFollowingQueryRequest request)
+			GetAllFollowsForFollowingQueryRequest request,
+			IEnumMessageTransformer<CommonSortOrder> messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.SortOrder, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.SortOrder, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForSortTerm(
-			IEnumMessageTransformer<FollowsForFollowingSortTerm> messageTransformer,
-			GetAllFollowsForFollowingQueryRequest request)
+			GetAllFollowsForFollowingQueryRequest request,
+			IEnumMessageTransformer<FollowsForFollowingSortTerm> messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.SortTerm, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.SortTerm, messageTransformer);
 		}
 	}
 }

@@ -21,7 +21,7 @@ public class ForgotPasswordTokenBuilder
 
 	public ForgotPasswordTokenBuilder WithAlreadyExpiresAtUtc()
 	{
-		_expiresAtUtc = ForgotPasswordTokenDataFaker.GetAlreadyExpiresAtUtc();
+		_expiresAtUtc = DataFaker.GetPastDate(_expiresAtUtc);
 
 		return this;
 	}

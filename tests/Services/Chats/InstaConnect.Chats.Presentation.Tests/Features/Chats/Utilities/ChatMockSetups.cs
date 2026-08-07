@@ -6,35 +6,38 @@ public static class ChatMockSetups
 {
 	extension(IApplicationSender sender)
 	{
-		public void SetupGetAllQueryRequest(
+		public void SetupSendAsync(
 		GetAllChatsApiRequest request,
 		User participantOne,
 		ICollection<Chat> chats,
 		CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(ChatMatcher.IsGetAllChatsQueryRequest(request), cancellationToken)
-				.ReturnsResponse(chats.ToResponse(participantOne, request));
+				.ClearCalls()
+				.SendAsync(ChatPresentationMatcher.IsGetAllChatsQueryRequest(request), cancellationToken)
+				.ReturnsTaskResponse(chats.ToResponse(request, participantOne));
 		}
 
-		public void SetupGetByIdQueryRequest(
+		public void SetupSendAsync(
 			GetChatByIdApiRequest request,
 			Chat chat,
 			CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(ChatMatcher.IsGetChatByIdQueryRequest(request), cancellationToken)
-				.ReturnsResponse(chat.ToResponse(request));
+				.ClearCalls()
+				.SendAsync(ChatPresentationMatcher.IsGetChatByIdQueryRequest(request), cancellationToken)
+				.ReturnsTaskResponse(chat.ToResponse(request));
 		}
 
-		public void SetupAddCommandRequest(
+		public void SetupSendAsync(
 			AddChatApiRequest request,
 			Chat chat,
 			CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(ChatMatcher.IsAddChatCommandRequest(request), cancellationToken)
-				.ReturnsResponse(chat.ToResponse(request));
+				.ClearCalls()
+				.SendAsync(ChatPresentationMatcher.IsAddChatCommandRequest(request), cancellationToken)
+				.ReturnsTaskResponse(chat.ToResponse(request));
 		}
 	}
 }

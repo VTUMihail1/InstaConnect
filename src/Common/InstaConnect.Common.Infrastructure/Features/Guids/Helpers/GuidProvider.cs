@@ -4,10 +4,8 @@ namespace InstaConnect.Common.Infrastructure.Features.Guids.Helpers;
 
 public class GuidProvider : IGuidProvider
 {
-	public Guid NewGuid()
+	public string NewStringGuid()
 	{
-		var guid = Guid.NewGuid();
-
-		return guid;
+		return Guid.NewGuid().ToString();
 	}
 }

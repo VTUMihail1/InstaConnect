@@ -11,12 +11,6 @@ public static class PostCommentMapper
 {
 	extension(PostComment postComment)
 	{
-		internal PostCommentId ToIdResponse(
-)
-		{
-			return postComment.Id;
-		}
-
 		internal PostCommentResponse ToFullResponse<TRequest>(
 			TRequest request)
 			where TRequest : ICurrentUserableQueryRequest
@@ -62,13 +56,13 @@ public static class PostCommentMapper
 		public PostCommentId ToResponse(
 			AddPostCommentCommandRequest request)
 		{
-			return postComment.ToIdResponse();
+			return postComment.ToId();
 		}
 
 		public PostCommentId ToResponse(
 			UpdatePostCommentCommandRequest request)
 		{
-			return postComment.ToIdResponse();
+			return postComment.ToId();
 		}
 
 		public PostCommentResponse ToResponse(
@@ -81,18 +75,18 @@ public static class PostCommentMapper
 	extension(ICollection<PostComment> postComments)
 	{
 		internal PostCommentCollectionResponse ToResponseWithoutUser<TRequest>(
+		TRequest request,
 		Post post,
-		Func<PostComment, TRequest, bool> filter,
-		Func<PostComment, TRequest, PostCommentResponse> transform,
-		TRequest request)
+		Func<TRequest, PostComment, bool> filter,
+		Func<TRequest, PostComment, PostCommentResponse> transform)
 		where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = postComments.Count(postComment => filter(postComment, request));
+			var totalCount = postComments.Count(postComment => filter(request, postComment));
 
 			return new(post.ToFullResponse(request),
 					   null,
-					   postComments.Filter(postComment => filter(postComment, request), request, postComment => transform(postComment, request)),
+					   postComments.Filter(request, postComment => filter(request, postComment), postComment => transform(request, postComment)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -101,18 +95,18 @@ public static class PostCommentMapper
 		}
 
 		internal PostCommentCollectionResponse ToResponseWithoutPost<TRequest>(
+			TRequest request,
 			User user,
-			Func<PostComment, TRequest, bool> filter,
-			Func<PostComment, TRequest, PostCommentResponse> transform,
-			TRequest request)
+			Func<TRequest, PostComment, bool> filter,
+			Func<TRequest, PostComment, PostCommentResponse> transform)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = postComments.Count(postComment => filter(postComment, request));
+			var totalCount = postComments.Count(postComment => filter(request, postComment));
 
 			return new(null,
 					   user.ToFullResponse(),
-					   postComments.Filter(postComment => filter(postComment, request), request, postComment => transform(postComment, request)),
+					   postComments.Filter(request, postComment => filter(request, postComment), postComment => transform(request, postComment)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -121,23 +115,25 @@ public static class PostCommentMapper
 		}
 
 		public PostCommentCollectionResponse ToResponse(
-			Post post,
-			GetAllPostCommentsQueryRequest request)
+			GetAllPostCommentsQueryRequest request,
+			Post post)
 		{
-			return postComments.ToResponseWithoutUser(post,
-													  (postComment, request) => postComment.MatchesFilter(request),
-													  (postComment, request) => postComment.ToResponseWithoutPost(request),
-													  request);
+			return postComments.ToResponseWithoutUser(
+													  request,
+													  post,
+													  (request, postComment) => postComment.MatchesFilter(request),
+													  (request, postComment) => postComment.ToResponseWithoutPost(request));
 		}
 
 		public PostCommentCollectionResponse ToResponse(
-			User user,
-			GetAllPostCommentsForUserQueryRequest request)
+			GetAllPostCommentsForUserQueryRequest request,
+			User user)
 		{
-			return postComments.ToResponseWithoutPost(user,
-													  (postComment, request) => postComment.MatchesFilter(request),
-													  (postComment, request) => postComment.ToResponseWithoutUser(request),
-													  request);
+			return postComments.ToResponseWithoutPost(
+													  request,
+													  user,
+													  (request, postComment) => postComment.MatchesFilter(request),
+													  (request, postComment) => postComment.ToResponseWithoutUser(request));
 		}
 	}
 }

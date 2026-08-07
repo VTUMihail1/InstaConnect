@@ -16,7 +16,7 @@ public class AddChatControllerUnitTests : BaseChatPresentationCommandUnitTest
 
 		_controller = new(Mapper, Sender);
 
-		Sender.SetupAddCommandRequest(_request, Chat, CancellationToken);
+		Sender.SetupSendAsync(_request, Chat, CancellationToken);
 	}
 
 	[Fact]
@@ -36,7 +36,7 @@ public class AddChatControllerUnitTests : BaseChatPresentationCommandUnitTest
 		var response = await _controller.AddAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Chat, _request);
+		response.ShouldSatisfy(_request, Chat);
 	}
 
 	[Fact]

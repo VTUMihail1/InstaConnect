@@ -12,6 +12,6 @@ public abstract class BaseFollowApplicationQueryUnitTest : BaseFollowTest
 	protected BaseFollowApplicationQueryUnitTest()
 	{
 		Mapper = MockFactory.CreateMapper(FollowsApplicationReference.Assembly);
-		Service = FollowMockFactory.CreateQueryService();
+		Service = FollowApplicationMockFactory.CreateQueryService();
 	}
 }

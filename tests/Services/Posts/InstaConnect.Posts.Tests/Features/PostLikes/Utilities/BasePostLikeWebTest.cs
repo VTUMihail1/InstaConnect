@@ -10,25 +10,21 @@ public abstract class BasePostLikeWebTest : BasePostLikeTest, IClassFixture<Post
 {
 	protected IServiceScope ServiceScope { get; }
 
-	protected IEventHarness EventHarness { get; }
-
 	protected BasePostLikeWebTest(PostsWebApplicationFactory webApplicationFactory)
 	{
 		ServiceScope = webApplicationFactory.Services.CreateScope();
-		EventHarness = ServiceScope.GetEventHarness();
 	}
 
 	public async Task InitializeAsync()
 	{
-		await EventHarness.StartAsync(CancellationToken);
-		await ServiceScope.ResetPostsDatabase(CancellationToken);
+		await ServiceScope.ResetPostsDatabaseAsync(CancellationToken);
 		await OnInitializeAsync();
 	}
 
 	public async Task DisposeAsync()
 	{
-		await ServiceScope.ResetPostsDatabase(CancellationToken);
-		await EventHarness.StopAsync(CancellationToken);
+		await OnDisposeAsync();
+		await ServiceScope.ResetPostsDatabaseAsync(CancellationToken);
 	}
 
 	protected virtual Task OnInitializeAsync()

@@ -1,15 +1,122 @@
 using InstaConnect.Common.Application.Features.Messaging.Abstractions;
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
+using InstaConnect.Identity.Events.Features.Users;
 using InstaConnect.Posts.Application.Features.Posts.Models;
 using InstaConnect.Posts.Application.Features.Users.Abstractions;
 using InstaConnect.Posts.Application.Tests.Features.Posts.Utilities;
 using InstaConnect.Posts.Application.Tests.Features.Users.Utilities;
+using InstaConnect.Posts.Events.Features.Posts;
 
 namespace InstaConnect.Posts.Application.Tests.Features.Posts.Utilities;
 
 public static class PostEquals
 {
+	extension(PostAddedEventRequest r)
+	{
+		public bool Matches(AddPostCommandRequest request, Post entity)
+		{
+			return r.Post.Matches(request, entity);
+		}
+	}
+
+	extension(PostUpdatedEventRequest r)
+	{
+		public bool Matches(UpdatePostCommandRequest request, Post entity)
+		{
+			return r.Post.Matches(request, entity);
+		}
+	}
+
+	extension(PostDeletedEventRequest r)
+	{
+		public bool Matches(DeletePostCommandRequest request, Post entity)
+		{
+			return r.Post.Matches(request, entity);
+		}
+	}
+
+	extension(PostEventRequest r)
+	{
+		public bool Matches(AddPostCommandRequest request, Post? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(entity.Id.Id) &&
+				   r.UserId.EqualsOrdinalIgnoreCase(request.UserId) &&
+				   r.User.Matches(request, entity.User) &&
+				   r.Title == request.Title &&
+				   r.Content == request.Content &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool Matches(UpdatePostCommandRequest request, Post? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.Id) &&
+				   r.UserId.EqualsOrdinalIgnoreCase(request.UserId) &&
+				   r.User.Matches(request, entity.User) &&
+				   r.Title == request.Title &&
+				   r.Content == request.Content &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool Matches(DeletePostCommandRequest request, Post? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.Id) &&
+				   r.UserId.EqualsOrdinalIgnoreCase(request.UserId) &&
+				   r.User.Matches(request, entity.User) &&
+				   r.Title == entity.Title &&
+				   r.Content == entity.Content &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+	}
+
+	extension(UserEventRequest r)
+	{
+		public bool Matches(AddPostCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.UserId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   r.ProfileImageUrl == entity.ProfileImage?.Url &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool Matches(UpdatePostCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.UserId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   r.ProfileImageUrl == entity.ProfileImage?.Url &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool Matches(DeletePostCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.UserId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   r.ProfileImageUrl == entity.ProfileImage?.Url &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+	}
+
 	extension(GetAllPostsQuery query)
 	{
 		public bool Matches(GetAllPostsQueryRequest request)
@@ -85,7 +192,7 @@ public static class PostEquals
 
 	extension(AddPostCommandResponse response)
 	{
-		public bool Matches(Post post, AddPostCommandRequest request)
+		public bool Matches(AddPostCommandRequest request, Post post)
 		{
 			return response.Response.Matches(post.Id);
 		}
@@ -93,7 +200,7 @@ public static class PostEquals
 
 	extension(UpdatePostCommandResponse response)
 	{
-		public bool Matches(Post post, UpdatePostCommandRequest request)
+		public bool Matches(UpdatePostCommandRequest request, Post post)
 		{
 			return response.Response.Matches(post.Id);
 		}
@@ -101,35 +208,35 @@ public static class PostEquals
 
 	extension(GetPostByIdQueryResponse response)
 	{
-		public bool Matches(Post post, GetPostByIdQueryRequest request)
+		public bool Matches(GetPostByIdQueryRequest request, Post post)
 		{
-			return response.Response.MatchesFull(post, request);
+			return response.Response.MatchesFull(request, post);
 		}
 	}
 
 	extension(GetAllPostsQueryResponse response)
 	{
 		public bool Matches(
-		ICollection<Post> posts,
-		GetAllPostsQueryRequest request)
+		GetAllPostsQueryRequest request,
+		ICollection<Post> posts)
 		{
 			return response.Response.MatchesWithoutUser(
-					   (response, post) => response.MatchesFull(post, request),
+					   request,
+					   (response, post) => response.MatchesFull(request, post),
 					   post => post.MatchesFilter(request),
-					   posts,
-					   request);
+					   posts);
 		}
 
 		public bool Matches(
-			ICollection<Post> posts,
 			GetAllPostsQueryRequest request,
+			ICollection<Post> posts,
 			ISortEnumTermTransformer<Post> termTransformer)
 		{
 			return response.Response.MatchesWithoutUser(
-					   (response, post) => response.MatchesFull(post, request),
+					   request,
+					   (response, post) => response.MatchesFull(request, post),
 					   post => post.MatchesFilter(request),
 					   posts,
-					   request,
 					   termTransformer);
 		}
 	}
@@ -137,30 +244,30 @@ public static class PostEquals
 	extension(GetAllPostsForUserQueryResponse response)
 	{
 		public bool Matches(
+		GetAllPostsForUserQueryRequest request,
 		User user,
-		ICollection<Post> posts,
-		GetAllPostsForUserQueryRequest request)
+		ICollection<Post> posts)
 		{
 			return response.Response.MatchesFull(
-					   (response, post) => response.MatchesWithoutUser(post, request),
+					   request,
+					   (response, post) => response.MatchesWithoutUser(request, post),
 					   post => post.MatchesFilter(request),
 					   user,
-					   posts,
-					   request);
+					   posts);
 		}
 
 		public bool Matches(
+			GetAllPostsForUserQueryRequest request,
 			User user,
 			ICollection<Post> posts,
-			GetAllPostsForUserQueryRequest request,
 			ISortEnumTermTransformer<Post> termTransformer)
 		{
 			return response.Response.MatchesFull(
-					   (response, post) => response.MatchesWithoutUser(post, request),
+					   request,
+					   (response, post) => response.MatchesWithoutUser(request, post),
 					   post => post.MatchesFilter(request),
 					   user,
 					   posts,
-					   request,
 					   termTransformer);
 		}
 	}
@@ -191,7 +298,7 @@ public static class PostEquals
 
 		public bool MatchesFilter(GetAllPostsForUserQueryRequest request)
 		{
-			return post.UserId.Id.StartsWithOrdinalIgnoreCase(request.UserId) &&
+			return post.UserId.Matches(request.UserId) &&
 				   post.Title.StartsWithOrdinalIgnoreCase(request.Title);
 		}
 	}
@@ -206,7 +313,7 @@ public static class PostEquals
 
 	extension(PostQueryResponse? response)
 	{
-		public bool MatchesFull<TRequest>(Post? post, TRequest request)
+		public bool MatchesFull<TRequest>(TRequest request, Post? post)
 		where TRequest : ICurrentUserableQueryRequest
 		{
 			return response != null &&
@@ -221,7 +328,7 @@ public static class PostEquals
 				   response.User.MatchesFull(post.User);
 		}
 
-		public bool MatchesWithoutUser<TRequest>(Post? post, TRequest request)
+		public bool MatchesWithoutUser<TRequest>(TRequest request, Post? post)
 			where TRequest : ICurrentUserableQueryRequest
 		{
 			return response != null &&
@@ -240,72 +347,72 @@ public static class PostEquals
 	extension(PostCollectionQueryResponse response)
 	{
 		public bool MatchesFull<TRequest>(
+		TRequest request,
 		Func<PostQueryResponse, Post, bool> matches,
 		Func<Post, bool> matchesFilter,
 		User user,
-		ICollection<Post> posts,
-		TRequest request)
+		ICollection<Post> posts)
 		where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
-			return response.MatchesCollectionResponse(posts.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, posts.Count(matchesFilter)) &&
 				   response.User.MatchesFull(user) &&
-				   response.Posts.MatchesCollection(posts,
+				   response.Posts.MatchesCollection(request,
+													posts,
 													response => new(response.Id),
 													post => post.Id,
 													matches,
-													request,
 													matchesFilter);
 		}
 
 		public bool MatchesFull<TRequest>(
+			TRequest request,
 			Func<PostQueryResponse, Post, bool> matches,
 			Func<Post, bool> matchesFilter,
 			User user,
 			ICollection<Post> posts,
-			TRequest request,
 			ISortEnumTermTransformer<Post> termTransformer)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
-			return response.MatchesCollectionResponse(posts.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, posts.Count(matchesFilter)) &&
 				   response.User.MatchesFull(user) &&
-				   response.Posts.MatchesSortedCollection(posts,
+				   response.Posts.MatchesSortedCollection(request,
+														  posts,
 														  matches,
 														  termTransformer,
-														  request,
 														  matchesFilter);
 		}
 
 		public bool MatchesWithoutUser<TRequest>(
+			TRequest request,
 			Func<PostQueryResponse, Post, bool> matches,
 			Func<Post, bool> matchesFilter,
-			ICollection<Post> posts,
-			TRequest request)
+			ICollection<Post> posts)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
-			return response.MatchesCollectionResponse(posts.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, posts.Count(matchesFilter)) &&
 				   response.User == null &&
-				   response.Posts.MatchesCollection(posts,
+				   response.Posts.MatchesCollection(request,
+													posts,
 													response => new(response.Id),
 													post => post.Id,
 													matches,
-													request,
 													matchesFilter);
 		}
 
 		public bool MatchesWithoutUser<TRequest>(
+			TRequest request,
 			Func<PostQueryResponse, Post, bool> matches,
 			Func<Post, bool> matchesFilter,
 			ICollection<Post> posts,
-			TRequest request,
 			ISortEnumTermTransformer<Post> termTransformer)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
-			return response.MatchesCollectionResponse(posts.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, posts.Count(matchesFilter)) &&
 				   response.User == null &&
-				   response.Posts.MatchesSortedCollection(posts,
+				   response.Posts.MatchesSortedCollection(request,
+														  posts,
 														  matches,
 														  termTransformer,
-														  request,
 														  matchesFilter);
 		}
 	}

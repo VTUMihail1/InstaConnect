@@ -1,5 +1,6 @@
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 using InstaConnect.Identity.Application.Tests.Features.UserClaims.Utilities;
+using InstaConnect.Identity.Events.Features.UserClaims;
 
 namespace InstaConnect.Identity.Application.Tests.Features.UserClaims.Assertions;
 
@@ -7,29 +8,29 @@ public static class UserClaimMatchAssertions
 {
 	extension(AddUserClaimCommandResponse response)
 	{
-		public void ShouldSatisfy(UserClaim userClaim, AddUserClaimCommandRequest request)
+		public void ShouldSatisfy(AddUserClaimCommandRequest request, UserClaim userClaim)
 		{
-			response.ShouldSatisfy(p => p.Matches(userClaim, request));
+			response.ShouldSatisfy(p => p.Matches(request, userClaim));
 		}
 	}
 
 	extension(GetAllUserClaimsQueryResponse response)
 	{
 		public void ShouldSatisfy(
+			GetAllUserClaimsQueryRequest request,
 			User user,
-			ICollection<UserClaim> userClaims,
-			GetAllUserClaimsQueryRequest request)
+			ICollection<UserClaim> userClaims)
 		{
-			response.ShouldSatisfy(p => p.Matches(user, userClaims, request));
+			response.ShouldSatisfy(p => p.Matches(request, user, userClaims));
 		}
 
 		public void ShouldSatisfy(
+			GetAllUserClaimsQueryRequest request,
 			User user,
 			ICollection<UserClaim> userClaims,
-			GetAllUserClaimsQueryRequest request,
 			ISortEnumTermTransformer<UserClaim> termTransformer)
 		{
-			response.ShouldSatisfy(p => p.Matches(user, userClaims, request, termTransformer));
+			response.ShouldSatisfy(p => p.Matches(request, user, userClaims, termTransformer));
 		}
 	}
 
@@ -38,6 +39,22 @@ public static class UserClaimMatchAssertions
 		public void ShouldSatisfy(AddUserClaimCommandRequest request)
 		{
 			userClaim.ShouldSatisfy(p => p.Matches(request));
+		}
+	}
+
+	extension(UserClaimAddedEventRequest r)
+	{
+		public void ShouldSatisfy(AddUserClaimCommandRequest request, UserClaim entity)
+		{
+			r.ShouldSatisfy(r => r.Matches(request, entity));
+		}
+	}
+
+	extension(UserClaimDeletedEventRequest r)
+	{
+		public void ShouldSatisfy(DeleteUserClaimCommandRequest request, UserClaim entity)
+		{
+			r.ShouldSatisfy(r => r.Matches(request, entity));
 		}
 	}
 }

@@ -4,13 +4,100 @@ using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 using InstaConnect.Common.Tests.Features.Extensions;
 using InstaConnect.Identity.Application.Features.Users.Abstractions;
 using InstaConnect.Identity.Application.Features.Users.Models;
+using InstaConnect.Identity.Application.Tests.Features.EmailConfirmationTokens.Utilities;
 using InstaConnect.Identity.Application.Tests.Features.Users.Utilities;
 using InstaConnect.Identity.Domain.Features.Common.Helpers;
+using InstaConnect.Identity.Events.Features.EmailConfirmationTokens;
+using InstaConnect.Identity.Events.Features.Users;
 
 namespace InstaConnect.Identity.Application.Tests.Features.Users.Utilities;
 
 public static class UserEquals
 {
+	extension(UserAddedEventRequest r)
+	{
+		public bool Matches(AddUserCommandRequest request, User entity)
+		{
+			return r.User.Matches(request, entity);
+		}
+	}
+
+	extension(UserUpdatedEventRequest r)
+	{
+		public bool Matches(UpdateCurrentUserCommandRequest request, User entity)
+		{
+			return r.User.Matches(request, entity);
+		}
+	}
+
+	extension(UserDeletedEventRequest r)
+	{
+		public bool Matches(DeleteUserCommandRequest request, User entity)
+		{
+			return r.User.Matches(request, entity);
+		}
+
+		public bool Matches(DeleteCurrentUserCommandRequest request, User entity)
+		{
+			return r.User.Matches(request, entity);
+		}
+	}
+
+	extension(UserEventRequest r)
+	{
+		public bool Matches(AddUserCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(entity.Id.Id) &&
+				   r.Name.EqualsOrdinalIgnoreCase(request.Name) &&
+				   r.Email.EqualsOrdinalIgnoreCase(request.Email) &&
+				   r.FirstName == request.FirstName &&
+				   r.LastName == request.LastName &&
+				   r.ProfileImageUrl == request.ProfileImage?.GetUrl() &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool Matches(UpdateCurrentUserCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.Id) &&
+				   r.Name.EqualsOrdinalIgnoreCase(request.Name) &&
+				   r.Email.EqualsOrdinalIgnoreCase(request.Email) &&
+				   r.FirstName == request.FirstName &&
+				   r.LastName == request.LastName &&
+				   (request.ProfileImage == null || r.ProfileImageUrl == request.ProfileImage.GetUrl()) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool Matches(DeleteUserCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.Id) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   r.ProfileImageUrl == entity.ProfileImage?.Url &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+
+		public bool Matches(DeleteCurrentUserCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.CurrentId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   r.ProfileImageUrl == entity.ProfileImage?.Url &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+	}
+
 	extension(GetAllUsersQuery query)
 	{
 		public bool Matches(GetAllUsersQueryRequest request)
@@ -98,7 +185,7 @@ public static class UserEquals
 
 	extension(AddUserCommandResponse response)
 	{
-		public bool Matches(User user, AddUserCommandRequest request)
+		public bool Matches(AddUserCommandRequest request, User user)
 		{
 			return response.Response.Matches(user.Id);
 		}
@@ -106,7 +193,7 @@ public static class UserEquals
 
 	extension(UpdateCurrentUserCommandResponse response)
 	{
-		public bool Matches(User user, UpdateCurrentUserCommandRequest request)
+		public bool Matches(UpdateCurrentUserCommandRequest request, User user)
 		{
 			return response.Response.Matches(user.Id);
 		}
@@ -114,59 +201,59 @@ public static class UserEquals
 
 	extension(GetUserByIdQueryResponse response)
 	{
-		public bool Matches(User user, GetUserByIdQueryRequest request)
+		public bool Matches(GetUserByIdQueryRequest request, User user)
 		{
-			return response.Response.MatchesFull(user, request);
+			return response.Response.MatchesFull(user);
 		}
 	}
 
 	extension(GetCurrentUserByIdQueryResponse response)
 	{
-		public bool Matches(User user, GetCurrentUserByIdQueryRequest request)
+		public bool Matches(GetCurrentUserByIdQueryRequest request, User user)
 		{
-			return response.Response.MatchesFull(user, request);
+			return response.Response.MatchesFull(user);
 		}
 	}
 
 	extension(GetUserDetailsByIdQueryResponse response)
 	{
-		public bool Matches(User user, GetUserDetailsByIdQueryRequest request)
+		public bool Matches(GetUserDetailsByIdQueryRequest request, User user)
 		{
-			return response.Response.MatchesFull(user, request);
+			return response.Response.MatchesFull(request, user);
 		}
 	}
 
 	extension(GetCurrentUserDetailsByIdQueryResponse response)
 	{
-		public bool Matches(User user, GetCurrentUserDetailsByIdQueryRequest request)
+		public bool Matches(GetCurrentUserDetailsByIdQueryRequest request, User user)
 		{
-			return response.Response.MatchesFull(user, request);
+			return response.Response.MatchesFull(request, user);
 		}
 	}
 
 	extension(GetAllUsersQueryResponse response)
 	{
 		public bool Matches(
-		ICollection<User> users,
-		GetAllUsersQueryRequest request)
+		GetAllUsersQueryRequest request,
+		ICollection<User> users)
 		{
 			return response.Response.MatchesFull(
-					   (response, user) => response.MatchesFull(user, request),
+					   request,
+					   (response, user) => response.MatchesFull(user),
 					   user => user.MatchesFilter(request),
-					   users,
-					   request);
+					   users);
 		}
 
 		public bool Matches(
-			ICollection<User> users,
 			GetAllUsersQueryRequest request,
+			ICollection<User> users,
 			ISortEnumTermTransformer<User> termTransformer)
 		{
 			return response.Response.MatchesFull(
-					   (response, user) => response.MatchesFull(user, request),
+					   request,
+					   (response, user) => response.MatchesFull(user),
 					   user => user.MatchesFilter(request),
 					   users,
-					   request,
 					   termTransformer);
 		}
 	}
@@ -191,18 +278,7 @@ public static class UserEquals
 				   user.LastName == request.LastName &&
 				   user.Name.Matches(request.Name) &&
 				   user.Email.Matches(request.Email) &&
-				   (request.ProfileImage == null ||
-				   user.ProfileImage.Matches(request.ProfileImage.GetUrl()));
-		}
-
-		public bool Matches(VerifyEmailConfirmationTokenCommandRequest request)
-		{
-			return user.IsEmailConfirmed;
-		}
-
-		public bool Matches(VerifyForgotPasswordTokenCommandRequest request, IPasswordHasher passwordHasher)
-		{
-			return passwordHasher.IsMatch(request.Password, user.PasswordHash);
+				   (request.ProfileImage == null || user.ProfileImage.Matches(request.ProfileImage.GetUrl()));
 		}
 
 		public bool MatchesFilter(GetAllUsersQueryRequest request)
@@ -223,8 +299,7 @@ public static class UserEquals
 
 	extension(UserQueryResponse? response)
 	{
-		public bool MatchesFull<TRequest>(User? user, TRequest request)
-		where TRequest : ICurrentUserableQueryRequest
+		public bool MatchesFull(User? user)
 		{
 			return response != null &&
 				   user != null &&
@@ -240,7 +315,7 @@ public static class UserEquals
 
 	extension(UserDetailsQueryResponse? response)
 	{
-		public bool MatchesFull<TRequest>(User? user, TRequest request)
+		public bool MatchesFull<TRequest>(TRequest request, User? user)
 		where TRequest : ICurrentUserableQueryRequest
 		{
 			return response != null &&
@@ -259,35 +334,112 @@ public static class UserEquals
 	extension(UserCollectionQueryResponse response)
 	{
 		public bool MatchesFull<TRequest>(
+		TRequest request,
 		Func<UserQueryResponse, User, bool> matches,
 		Func<User, bool> matchesFilter,
-		ICollection<User> users,
-		TRequest request)
+		ICollection<User> users)
 		where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
-			return response.MatchesCollectionResponse(users.Count(matchesFilter), request) &&
-				   response.Users.MatchesCollection(users,
+			return response.MatchesCollectionResponse(request, users.Count(matchesFilter)) &&
+				   response.Users.MatchesCollection(request,
+													users,
 													response => new(response.Id),
 													user => user.Id,
 													matches,
-													request,
 													matchesFilter);
 		}
 
 		public bool MatchesFull<TRequest>(
+			TRequest request,
 			Func<UserQueryResponse, User, bool> matches,
 			Func<User, bool> matchesFilter,
 			ICollection<User> users,
-			TRequest request,
 			ISortEnumTermTransformer<User> termTransformer)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
-			return response.MatchesCollectionResponse(users.Count(matchesFilter), request) &&
-				   response.Users.MatchesSortedCollection(users,
+			return response.MatchesCollectionResponse(request, users.Count(matchesFilter)) &&
+				   response.Users.MatchesSortedCollection(request,
+														  users,
 														  matches,
 														  termTransformer,
-														  request,
 														  matchesFilter);
+		}
+	}
+
+	extension(EmailConfirmationToken emailConfirmationToken)
+	{
+		public bool Matches(AddUserCommandRequest request)
+		{
+			return emailConfirmationToken.User!.Name.Matches(request.Name);
+		}
+	}
+
+	extension(EmailConfirmationTokenAddedEventRequest r)
+	{
+		public bool Matches(AddUserCommandRequest request, EmailConfirmationToken entity)
+		{
+			return r.EmailConfirmationToken.Matches(request, entity);
+		}
+	}
+
+	extension(EmailConfirmationTokenEventRequest r)
+	{
+		public bool Matches(AddUserCommandRequest request, EmailConfirmationToken? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(entity.Id.Id.Id) &&
+				   r.Value.EqualsOrdinalIgnoreCase(entity.Id.Value) &&
+				   r.User.Matches(request, entity.User) &&
+				   r.ExpiresAtUtc == entity.ExpiresAtUtc &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc;
+		}
+
+		public bool Matches(UpdateCurrentUserCommandRequest request, EmailConfirmationToken? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.Id) &&
+				   r.Value.EqualsOrdinalIgnoreCase(entity.Id.Value) &&
+				   r.User.Matches(request, entity.User) &&
+				   r.ExpiresAtUtc == entity.ExpiresAtUtc &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc;
+		}
+	}
+
+	extension(ICollection<EmailConfirmationTokenAddedEventRequest> r)
+	{
+		public bool Matches(AddUserCommandRequest request, ICollection<EmailConfirmationToken> entities)
+		{
+			return r.MatchesCollection(entities,
+											  e => new(new(e.EmailConfirmationToken.Id), e.EmailConfirmationToken.Value),
+											  e => e.Id,
+											  (emailConfirmationToken, e) => emailConfirmationToken.Matches(request, e));
+		}
+	}
+
+	extension(EmailConfirmationTokenDeletedEventRequest r)
+	{
+		public bool Matches(UpdateCurrentUserCommandRequest request, EmailConfirmationToken entity)
+		{
+			return r.EmailConfirmationToken.Matches(request, entity);
+		}
+	}
+
+	extension(ICollection<EmailConfirmationTokenDeletedEventRequest> r)
+	{
+		public bool Matches(UpdateCurrentUserCommandRequest request, ICollection<EmailConfirmationToken> entities)
+		{
+			return r.MatchesCollection(entities,
+											  e => new(new(e.EmailConfirmationToken.Id), e.EmailConfirmationToken.Value),
+											  e => e.Id,
+											  (emailConfirmationToken, e) => emailConfirmationToken.Matches(request, e));
+		}
+	}
+
+	extension(ICollection<EmailConfirmationToken> entities)
+	{
+		public bool Matches(UpdateCurrentUserCommandRequest request)
+		{
+			return entities.All(entity => entity.Id.Id.Matches(request.Id));
 		}
 	}
 

@@ -10,82 +10,82 @@ public static class RefreshTokenProblemDetailsAssertions
 			IssueRefreshTokenApiRequest request)
 		{
 			problemDetails.ShouldSatisfyUserInvalidDetails(
-				r => r.Name,
-				request);
+				request,
+				r => r.Name);
 		}
 
 		public void ShouldSatisfyUserNameEmailNotConfirmed(
 			IssueRefreshTokenApiRequest request)
 		{
 			problemDetails.ShouldSatisfyUserNameEmailNotConfirmed(
-				r => r.Name,
-				request);
+				request,
+				r => r.Name);
 		}
 
 		public void ShouldSatisfyUserEmailNotConfirmed(
 			RotateRefreshTokenApiRequest request)
 		{
 			problemDetails.ShouldSatisfyUserEmailNotConfirmed(
-				r => r.Id,
-				request);
+				request,
+				r => r.Id);
 		}
 
 		public void ShouldSatisfyUserNotFound(
 			RotateRefreshTokenApiRequest request)
 		{
 			problemDetails.ShouldSatisfyUserNotFound(
-				r => r.Id,
-				request);
+				request,
+				r => r.Id);
 		}
 
 		public void ShouldSatisfyUserNotFound(
 			DeleteCurrentRefreshTokenApiRequest request)
 		{
 			problemDetails.ShouldSatisfyUserNotFound(
-				r => r.Id,
-				request);
+				request,
+				r => r.Id);
 		}
 
 		public void ShouldSatisfyRefreshTokenNotFound(
 			RotateRefreshTokenApiRequest request)
 		{
 			problemDetails.ShouldSatisfyRefreshTokenNotFound(
+				request,
 				r => r.Id,
-				r => r.Value,
-				request);
+				r => r.Value);
 		}
 
 		public void ShouldSatisfyRefreshTokenNotFound(
 			DeleteCurrentRefreshTokenApiRequest request)
 		{
 			problemDetails.ShouldSatisfyRefreshTokenNotFound(
+				request,
 				r => r.Id,
-				r => r.Value,
-				request);
+				r => r.Value);
 		}
 
 		public void ShouldSatisfyRefreshTokenExpired(
 			RotateRefreshTokenApiRequest request)
 		{
 			problemDetails.ShouldSatisfyRefreshTokenExpired(
+				request,
 				r => r.Id,
-				r => r.Value,
-				request);
+				r => r.Value);
 		}
 
 		public void ShouldSatisfyRefreshTokenExpired(
 			DeleteCurrentRefreshTokenApiRequest request)
 		{
 			problemDetails.ShouldSatisfyRefreshTokenExpired(
+				request,
 				r => r.Id,
-				r => r.Value,
-				request);
+				r => r.Value);
 		}
 
 		internal void ShouldSatisfyRefreshTokenNotFound<TRequest>(
+			TRequest request,
 			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> valuePropertyExpression,
-			TRequest request)
+			Func<TRequest, string> valuePropertyExpression)
 		{
 			problemDetails.ShouldSatisfyNotFound(
 				RefreshTokenExceptionErrorMessages.GetNotFoundMessage(
@@ -95,9 +95,9 @@ public static class RefreshTokenProblemDetailsAssertions
 		}
 
 		internal void ShouldSatisfyRefreshTokenExpired<TRequest>(
+			TRequest request,
 			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> valuePropertyExpression,
-			TRequest request)
+			Func<TRequest, string> valuePropertyExpression)
 		{
 			problemDetails.ShouldSatisfyBadRequest(
 				RefreshTokenExceptionErrorMessages.GetExpiredMessage(

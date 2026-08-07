@@ -10,12 +10,6 @@ public static class PostLikeMapper
 {
 	extension(PostLike postLike)
 	{
-		internal PostLikeId ToIdResponse(
-)
-		{
-			return postLike.Id;
-		}
-
 		internal PostLikeResponse ToFullResponse<TRequest>(
 			TRequest request)
 			where TRequest : ICurrentUserableQueryRequest
@@ -36,9 +30,7 @@ public static class PostLikeMapper
 					   postLike.CreatedAtUtc);
 		}
 
-		internal PostLikeResponse ToResponseWithoutPost<TRequest>(
-			TRequest request)
-			where TRequest : ICurrentUserableQueryRequest
+		internal PostLikeResponse ToResponseWithoutPost()
 		{
 			return new(postLike.Id,
 					   postLike.User?.ToFullResponse(),
@@ -49,7 +41,7 @@ public static class PostLikeMapper
 		public PostLikeId ToResponse(
 			AddPostLikeCommandRequest request)
 		{
-			return postLike.ToIdResponse();
+			return postLike.ToId();
 		}
 
 		public PostLikeResponse ToResponse(
@@ -62,18 +54,18 @@ public static class PostLikeMapper
 	extension(ICollection<PostLike> postLikes)
 	{
 		internal PostLikeCollectionResponse ToResponseWithoutUser<TRequest>(
+		TRequest request,
 		Post post,
-		Func<PostLike, TRequest, bool> filter,
-		Func<PostLike, TRequest, PostLikeResponse> transform,
-		TRequest request)
+		Func<TRequest, PostLike, bool> filter,
+		Func<TRequest, PostLike, PostLikeResponse> transform)
 		where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = postLikes.Count(postLike => filter(postLike, request));
+			var totalCount = postLikes.Count(postLike => filter(request, postLike));
 
 			return new(post?.ToFullResponse(request),
 					   null,
-					   postLikes.Filter(postLike => filter(postLike, request), request, postLike => transform(postLike, request)),
+					   postLikes.Filter(request, postLike => filter(request, postLike), postLike => transform(request, postLike)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -82,18 +74,18 @@ public static class PostLikeMapper
 		}
 
 		internal PostLikeCollectionResponse ToResponseWithoutPost<TRequest>(
+			TRequest request,
 			User user,
-			Func<PostLike, TRequest, bool> filter,
-			Func<PostLike, TRequest, PostLikeResponse> transform,
-			TRequest request)
+			Func<TRequest, PostLike, bool> filter,
+			Func<TRequest, PostLike, PostLikeResponse> transform)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = postLikes.Count(postLike => filter(postLike, request));
+			var totalCount = postLikes.Count(postLike => filter(request, postLike));
 
 			return new(null,
 					   user.ToFullResponse(),
-					   postLikes.Filter(postLike => filter(postLike, request), request, postLike => transform(postLike, request)),
+					   postLikes.Filter(request, postLike => filter(request, postLike), postLike => transform(request, postLike)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -102,25 +94,25 @@ public static class PostLikeMapper
 		}
 
 		public PostLikeCollectionResponse ToResponse(
-			Post post,
-			GetAllPostLikesQueryRequest request)
+			GetAllPostLikesQueryRequest request,
+			Post post)
 		{
 			return postLikes.ToResponseWithoutUser(
+				request,
 				post,
-				(postLike, request) => postLike.MatchesFilter(request),
-				(postLike, request) => postLike.ToResponseWithoutPost(request),
-				request);
+				(request, postLike) => postLike.MatchesFilter(request),
+				(request, postLike) => postLike.ToResponseWithoutPost());
 		}
 
 		public PostLikeCollectionResponse ToResponse(
-			User user,
-			GetAllPostLikesForUserQueryRequest request)
+			GetAllPostLikesForUserQueryRequest request,
+			User user)
 		{
 			return postLikes.ToResponseWithoutPost(
+				request,
 				user,
-				(postLike, request) => postLike.MatchesFilter(request),
-				(postLike, request) => postLike.ToResponseWithoutUser(request),
-				request);
+				(request, postLike) => postLike.MatchesFilter(request),
+				(request, postLike) => postLike.ToResponseWithoutUser(request));
 		}
 	}
 }

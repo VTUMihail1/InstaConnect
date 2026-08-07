@@ -12,6 +12,6 @@ public abstract class BaseChatMessageApplicationQueryUnitTest : BaseChatMessageT
 	protected BaseChatMessageApplicationQueryUnitTest()
 	{
 		Mapper = MockFactory.CreateMapper(ChatsApplicationReference.Assembly);
-		CommentService = ChatMessageMockFactory.CreateQueryService();
+		CommentService = ChatMessageApplicationMockFactory.CreateQueryService();
 	}
 }

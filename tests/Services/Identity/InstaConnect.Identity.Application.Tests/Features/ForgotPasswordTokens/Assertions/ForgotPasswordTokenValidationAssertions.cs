@@ -2,44 +2,44 @@ namespace InstaConnect.Identity.Application.Tests.Features.ForgotPasswordTokens.
 
 public static class ForgotPasswordTokenValidationAssertions
 {
-	extension(TestValidationResult<VerifyForgotPasswordTokenCommandRequest> result)
+	extension(TestValidationResult<VerifyForgotPasswordTokenCommandRequest> response)
 	{
 		public void ShouldHaveValidationErrorForId(
-			IStringMessageTransformer messageTransformer,
-			VerifyForgotPasswordTokenCommandRequest request)
+			VerifyForgotPasswordTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Id, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.Id, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForValue(
-			IStringMessageTransformer messageTransformer,
-			VerifyForgotPasswordTokenCommandRequest request)
+			VerifyForgotPasswordTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Value, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.Value, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForPassword(
-			IStringMessageTransformer messageTransformer,
-			VerifyForgotPasswordTokenCommandRequest request)
+			VerifyForgotPasswordTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Password, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.Password, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForConfirmPassword(
-			IStringMessageTransformer messageTransformer,
-			VerifyForgotPasswordTokenCommandRequest request)
+			VerifyForgotPasswordTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.ConfirmPassword, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.ConfirmPassword, messageTransformer);
 		}
 	}
 
-	extension(TestValidationResult<AddForgotPasswordTokenCommandRequest> result)
+	extension(TestValidationResult<AddForgotPasswordTokenCommandRequest> response)
 	{
 		public void ShouldHaveValidationErrorForName(
-			IStringMessageTransformer messageTransformer,
-			AddForgotPasswordTokenCommandRequest request)
+			AddForgotPasswordTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Name, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.Name, messageTransformer);
 		}
 	}
 }

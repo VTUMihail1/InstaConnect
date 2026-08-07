@@ -1,7 +1,4 @@
-using InstaConnect.Chats.Domain.Features.Chats.Exceptions;
 using InstaConnect.Common.Application.Features.Messaging.Abstractions;
-
-using MediatR;
 
 namespace InstaConnect.Chats.Application.Tests.Features.Chats.Assertions;
 
@@ -13,9 +10,11 @@ public static class ChatExceptionAssertions
 		GetAllChatsQueryRequest request,
 		CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowUserNotFoundExceptionAsync<GetAllChatsQueryRequest, GetAllChatsQueryResponse>(
-				r => r.CurrentUserId,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowUserNotFoundExceptionAsync(
 				request,
+				r => r.CurrentUserId,
 				cancellationToken);
 		}
 
@@ -23,9 +22,11 @@ public static class ChatExceptionAssertions
 		AddChatCommandRequest request,
 		CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowUserNotFoundExceptionAsync<AddChatCommandRequest, AddChatCommandResponse>(
-				r => r.ParticipantOneId,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowUserNotFoundExceptionAsync(
 				request,
+				r => r.ParticipantOneId,
 				cancellationToken);
 		}
 
@@ -33,9 +34,11 @@ public static class ChatExceptionAssertions
 		AddChatCommandRequest request,
 		CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowUserNotFoundExceptionAsync<AddChatCommandRequest, AddChatCommandResponse>(
-				r => r.ParticipantTwoId,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowUserNotFoundExceptionAsync(
 				request,
+				r => r.ParticipantTwoId,
 				cancellationToken);
 		}
 
@@ -43,10 +46,12 @@ public static class ChatExceptionAssertions
 			GetChatByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowChatNotFoundExceptionAsync<GetChatByIdQueryRequest, GetChatByIdQueryResponse>(
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowChatNotFoundExceptionAsync(
+				request,
 				r => r.CurrentUserId,
 				r => r.ParticipantTwoId,
-				request,
 				cancellationToken);
 		}
 
@@ -54,62 +59,12 @@ public static class ChatExceptionAssertions
 			AddChatCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowChatAlreadyExistsExceptionAsync<AddChatCommandRequest, AddChatCommandResponse>(
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowChatAlreadyExistsExceptionAsync(
+				request,
 				r => r.ParticipantOneId,
 				r => r.ParticipantTwoId,
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowChatNotFoundExceptionAsync<TRequest>(
-			Func<TRequest, string> participantOneIdPropertyExpression,
-			Func<TRequest, string> participantTwoIdPropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest
-		{
-			await sender.ShouldThrowAsync<ChatNotFoundException, TRequest>(
-				ChatExceptionErrorMessages.GetNotFoundMessage(new(new(participantOneIdPropertyExpression(request)), new(participantTwoIdPropertyExpression(request)))),
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowChatNotFoundExceptionAsync<TRequest, TResponse>(
-			Func<TRequest, string> participantOneIdPropertyExpression,
-			Func<TRequest, string> participantTwoIdPropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest<TResponse>
-		{
-			await sender.ShouldThrowAsync<ChatNotFoundException, TRequest, TResponse>(
-				ChatExceptionErrorMessages.GetNotFoundMessage(new(new(participantOneIdPropertyExpression(request)), new(participantTwoIdPropertyExpression(request)))),
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowChatAlreadyExistsExceptionAsync<TRequest>(
-			Func<TRequest, string> participantOneIdPropertyExpression,
-			Func<TRequest, string> participantTwoIdPropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest
-		{
-			await sender.ShouldThrowAsync<ChatAlreadyExistsException, TRequest>(
-				ChatExceptionErrorMessages.GetAlreadyExistsMessage(new(new(participantOneIdPropertyExpression(request)), new(participantTwoIdPropertyExpression(request)))),
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowChatAlreadyExistsExceptionAsync<TRequest, TResponse>(
-			Func<TRequest, string> participantOneIdPropertyExpression,
-			Func<TRequest, string> participantTwoIdPropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest<TResponse>
-		{
-			await sender.ShouldThrowAsync<ChatAlreadyExistsException, TRequest, TResponse>(
-				ChatExceptionErrorMessages.GetAlreadyExistsMessage(new(new(participantOneIdPropertyExpression(request)), new(participantTwoIdPropertyExpression(request)))),
-				request,
 				cancellationToken);
 		}
 	}

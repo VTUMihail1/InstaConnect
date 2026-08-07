@@ -9,213 +9,213 @@ public static class FollowValidationProblemDetailsAssertions
 	extension(ApplicationProblemDetails problemDetails)
 	{
 		public void ShouldSatisfyInvalidValidationForFollowerId(
-		IStringMessageTransformer messageTransformer,
-		DeleteFollowApiRequest request)
+			DeleteFollowApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.FollowerId,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForFollowerId(
-			IStringMessageTransformer messageTransformer,
-			GetFollowByIdApiRequest request)
+			GetFollowByIdApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.FollowerId,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForFollowerId(
-			IStringMessageTransformer messageTransformer,
-			AddFollowApiRequest request)
+			AddFollowApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.FollowerId,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForFollowerId(
-			IStringMessageTransformer messageTransformer,
-			GetAllFollowsApiRequest request)
+			GetAllFollowsApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.FollowerId,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForCurrentUserId(
-			IStringMessageTransformer messageTransformer,
-			GetFollowByIdApiRequest request)
+			GetFollowByIdApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.CurrentUserId,
-			   messageTransformer,
-			   request);
+			   messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForCurrentUserId(
-			IStringMessageTransformer messageTransformer,
-			GetAllFollowsApiRequest request)
+			GetAllFollowsApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.CurrentUserId,
-			   messageTransformer,
-			   request);
+			   messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForCurrentUserId(
-			IStringMessageTransformer messageTransformer,
-			GetAllFollowsForFollowingApiRequest request)
+			GetAllFollowsForFollowingApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.CurrentUserId,
-			   messageTransformer,
-			   request);
+			   messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForFollowingId(
-			IStringMessageTransformer messageTransformer,
-			GetAllFollowsForFollowingApiRequest request)
+			GetAllFollowsForFollowingApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.FollowingId,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForFollowingId(
-			IStringMessageTransformer messageTransformer,
-			GetFollowByIdApiRequest request)
+			GetFollowByIdApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.FollowingId,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForFollowingId(
-			IStringMessageTransformer messageTransformer,
-			AddFollowApiRequest request)
+			AddFollowApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.Body.FollowingId,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForFollowingId(
-			IStringMessageTransformer messageTransformer,
-			DeleteFollowApiRequest request)
+			DeleteFollowApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.FollowingId,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForFollowingName(
-			IStringMessageTransformer messageTransformer,
-			GetAllFollowsApiRequest request)
+			GetAllFollowsApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.FollowingName,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForFollowerName(
-			IStringMessageTransformer messageTransformer,
-			GetAllFollowsForFollowingApiRequest request)
+			GetAllFollowsForFollowingApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.FollowerName,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForPage(
-			IIntMessageTransformer messageTransformer,
-			GetAllFollowsApiRequest request)
+			GetAllFollowsApiRequest request,
+			IIntMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.Page,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForPage(
-			IIntMessageTransformer messageTransformer,
-			GetAllFollowsForFollowingApiRequest request)
+			GetAllFollowsForFollowingApiRequest request,
+			IIntMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.Page,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForPageSize(
-			IIntMessageTransformer messageTransformer,
-			GetAllFollowsApiRequest request)
+			GetAllFollowsApiRequest request,
+			IIntMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.PageSize,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForPageSize(
-			IIntMessageTransformer messageTransformer,
-			GetAllFollowsForFollowingApiRequest request)
+			GetAllFollowsForFollowingApiRequest request,
+			IIntMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.PageSize,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForSortOrder(
-			IEnumMessageTransformer<CommonSortOrder> messageTransformer,
-			GetAllFollowsApiRequest request)
+			GetAllFollowsApiRequest request,
+			IEnumMessageTransformer<CommonSortOrder> messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.SortOrder,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForSortOrder(
-			IEnumMessageTransformer<CommonSortOrder> messageTransformer,
-			GetAllFollowsForFollowingApiRequest request)
+			GetAllFollowsForFollowingApiRequest request,
+			IEnumMessageTransformer<CommonSortOrder> messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.SortOrder,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForSortTerm(
-			IEnumMessageTransformer<FollowsSortTerm> messageTransformer,
-			GetAllFollowsApiRequest request)
+			GetAllFollowsApiRequest request,
+			IEnumMessageTransformer<FollowsSortTerm> messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.SortTerm,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForSortTerm(
-			IEnumMessageTransformer<FollowsForFollowingSortTerm> messageTransformer,
-			GetAllFollowsForFollowingApiRequest request)
+			GetAllFollowsForFollowingApiRequest request,
+			IEnumMessageTransformer<FollowsForFollowingSortTerm> messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.SortTerm,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 	}
 }

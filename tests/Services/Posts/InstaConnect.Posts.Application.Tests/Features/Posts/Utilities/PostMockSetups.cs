@@ -4,58 +4,63 @@ public static class PostMockSetups
 {
 	extension(IPostQueryService service)
 	{
-		public void SetupGetAllQuery(
+		public void SetupGetAllAsync(
 		GetAllPostsQueryRequest request,
 		ICollection<Post> posts,
 		CancellationToken cancellationToken)
 		{
 			service
-				.GetAllAsync(PostMatcher.IsGetAllPostsQuery(request), cancellationToken)
-				.ReturnsResponse(posts.ToResponse(request));
+				.ClearCalls()
+				.GetAllAsync(PostApplicationMatcher.IsGetAllPostsQuery(request), cancellationToken)
+				.ReturnsTaskResponse(posts.ToResponse(request));
 		}
 
-		public void SetupGetAllForUserQuery(
+		public void SetupGetAllForUserAsync(
 			GetAllPostsForUserQueryRequest request,
 			User user,
 			ICollection<Post> posts,
 			CancellationToken cancellationToken)
 		{
 			service
-				.GetAllForUserAsync(PostMatcher.IsGetAllPostsForUserQuery(request), cancellationToken)
-				.ReturnsResponse(posts.ToResponse(user, request));
+				.ClearCalls()
+				.GetAllForUserAsync(PostApplicationMatcher.IsGetAllPostsForUserQuery(request), cancellationToken)
+				.ReturnsTaskResponse(posts.ToResponse(request, user));
 		}
 
-		public void SetupGetByIdQuery(
+		public void SetupGetByIdAsync(
 			GetPostByIdQueryRequest request,
 			Post post,
 			CancellationToken cancellationToken)
 		{
 			service
-				.GetByIdAsync(PostMatcher.IsGetPostByIdQuery(request), cancellationToken)
-				.ReturnsResponse(post.ToResponse(request));
+				.ClearCalls()
+				.GetByIdAsync(PostApplicationMatcher.IsGetPostByIdQuery(request), cancellationToken)
+				.ReturnsTaskResponse(post.ToResponse(request));
 		}
 	}
 
 	extension(IPostCommandService service)
 	{
-		public void SetupAddCommand(
+		public void SetupAddAsync(
 		AddPostCommandRequest request,
 		Post post,
 		CancellationToken cancellationToken)
 		{
 			service
-				.AddAsync(PostMatcher.IsAddPostCommand(request), cancellationToken)
-				.ReturnsResponse(post.ToResponse(request));
+				.ClearCalls()
+				.AddAsync(PostApplicationMatcher.IsAddPostCommand(request), cancellationToken)
+				.ReturnsTaskResponse(post.ToResponse(request));
 		}
 
-		public void SetupUpdateCommand(
+		public void SetupUpdateAsync(
 			UpdatePostCommandRequest request,
 			Post post,
 			CancellationToken cancellationToken)
 		{
 			service
-				.UpdateAsync(PostMatcher.IsUpdatePostCommand(request), cancellationToken)
-				.ReturnsResponse(post.ToResponse(request));
+				.ClearCalls()
+				.UpdateAsync(PostApplicationMatcher.IsUpdatePostCommand(request), cancellationToken)
+				.ReturnsTaskResponse(post.ToResponse(request));
 		}
 	}
 }

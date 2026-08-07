@@ -1,4 +1,5 @@
-using InstaConnect.Chats.Presentation.Features.Common.Extensions;
+using InstaConnect.Chats.Infrastructure.Features.Common.Extensions;
+using InstaConnect.Chats.Tests.Features.Common.Extensions;
 using InstaConnect.Common.Tests.Features.Extensions;
 
 using Microsoft.AspNetCore.Hosting;
@@ -28,10 +29,7 @@ public class ChatsWebApplicationFactory : WebApplicationFactory<Program>, IAsync
 
 	protected override void ConfigureWebHost(IWebHostBuilder builder)
 	{
-		builder.ConfigureTestServices(serviceCollection =>
-		{
-			serviceCollection.AddTestEventHarness(_rabbitMqContainer.GetConnectionString(), ChatsPresentationReference.Assembly);
-		});
+		builder.ConfigureTestServices(serviceCollection => serviceCollection.AddTestEventClient(_rabbitMqContainer.GetConnectionString(), ChatsInfrastructureReference.Assembly));
 
 		builder.UpdateRedisConfiguration(_redisContainer.GetConnectionString());
 		builder.UpdateMongoConfiguration(_mongoDbContainer.GetConnectionString());
@@ -39,6 +37,7 @@ public class ChatsWebApplicationFactory : WebApplicationFactory<Program>, IAsync
 		builder.UpdateAccessTokenConfiguration();
 		builder.UpdateOpenTelemetryConfiguration();
 		builder.UpdateCorsConfiguration();
+		builder.UpdateChatMessageConfiguration();
 	}
 
 	public async Task InitializeAsync()

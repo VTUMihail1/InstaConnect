@@ -7,11 +7,11 @@ namespace InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.Assertions;
 
 public static class ForgotPasswordTokenMatchAssertions
 {
-	extension(ICollection<ForgotPasswordToken> forgotPasswordTokens)
+	extension(ForgotPasswordToken u)
 	{
-		public void ShouldSatisfy(ICollection<ForgotPasswordToken> f)
+		public void ShouldSatisfy(ForgotPasswordToken forgotPasswordToken)
 		{
-			forgotPasswordTokens.ShouldSatisfy(p => p.Matches(f));
+			u.ShouldSatisfy(u => u.Matches(forgotPasswordToken));
 		}
 	}
 }

@@ -1,0 +1,317 @@
+using InstaConnect.Common.Domain.Features.Messaging.Models;
+using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
+
+using InstaConnect.Follows.Domain.Features.Follows.Models.Requests;
+
+namespace InstaConnect.Follows.Presentation.Tests.Integration.Features.Follows.Controllers;
+
+public class GetAllFollowsControllerIntegrationTests : BaseFollowPresentationQueryIntegrationTest
+{
+	private readonly GetAllFollowsApiRequestBuilderFactory _requestBuilderFactory;
+	private readonly GetAllFollowsApiRequestBuilder _requestBuilder;
+	private readonly GetAllFollowsApiRequest _request;
+
+	public GetAllFollowsControllerIntegrationTests(FollowsWebApplicationFactory webApplicationFactory)
+		: base(webApplicationFactory)
+	{
+		_requestBuilderFactory = new();
+		_requestBuilder = _requestBuilderFactory.Create(Follow);
+		_request = _requestBuilder.Build();
+	}
+
+	protected override async Task OnInitializeAsync()
+	{
+		await base.OnInitializeAsync();
+		await ServiceScope.AddRangeAsync(Followers, CancellationToken);
+		await ServiceScope.AddRangeAsync(Followings, CancellationToken);
+		await ServiceScope.AddRangeAsync(Follows, CancellationToken);
+	}
+
+	[Theory]
+	[UserIdNullWithMessageData]
+	[UserIdEmptyWithMessageData]
+	[UserIdTooShortWithMessageData]
+	[UserIdTooLongWithMessageData]
+	public async Task GetAllAsync_ShouldThrowValidationException_WhenFollowerIdIsInvalid(
+		IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithFollowerId(transformer).Build();
+
+		// Assert
+		await Controller.ShouldThrowInvalidValidationExceptionForFollowerIdAsync(
+			request, messageTransformer, CancellationToken);
+	}
+
+	[Theory]
+	[UserNameTooLongWithMessageData]
+	public async Task GetAllAsync_ShouldThrowValidationException_WhenFollowingNameIsInvalid(
+		IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithFollowingName(transformer).Build();
+
+		// Assert
+		await Controller.ShouldThrowInvalidValidationExceptionForFollowingNameAsync(
+			request, messageTransformer, CancellationToken);
+	}
+
+	[Theory]
+	[UserIdTooLongWithMessageData]
+	public async Task GetAllAsync_ShouldThrowValidationException_WhenCurrentUserIdIsInvalid(
+		IStringTransformer transformer, IStringMessageTransformer messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+
+		// Assert
+		await Controller.ShouldThrowInvalidValidationExceptionForCurrentUserIdAsync(
+			request, messageTransformer, CancellationToken);
+	}
+
+	[Theory]
+	[FollowsSortOrderEmptyWithMessageData]
+	public async Task GetAllAsync_ShouldThrowValidationException_WhenSortOrderIsInvalid(
+		IEnumTransformer<CommonSortOrder> transformer, IEnumMessageTransformer<CommonSortOrder> messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithSortOrder(transformer).Build();
+
+		// Assert
+		await Controller.ShouldThrowInvalidValidationExceptionForSortOrderAsync(
+			request, messageTransformer, CancellationToken);
+	}
+
+	[Theory]
+	[FollowsSortTermEmptyWithMessageData]
+	public async Task GetAllAsync_ShouldThrowValidationException_WhenSortTermIsInvalid(
+		IEnumTransformer<FollowsSortTerm> transformer, IEnumMessageTransformer<FollowsSortTerm> messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithSortTerm(transformer).Build();
+
+		// Assert
+		await Controller.ShouldThrowInvalidValidationExceptionForSortTermAsync(
+			request, messageTransformer, CancellationToken);
+	}
+
+	[Theory]
+	[FollowPageTooSmallWithMessageData]
+	[FollowPageTooLargeWithMessageData]
+	public async Task GetAllAsync_ShouldThrowValidationException_WhenPageIsInvalid(
+		IIntTransformer transformer, IIntMessageTransformer messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithPage(transformer).Build();
+
+		// Assert
+		await Controller.ShouldThrowInvalidValidationExceptionForPageAsync(
+			request, messageTransformer, CancellationToken);
+	}
+
+	[Theory]
+	[FollowPageSizeTooSmallWithMessageData]
+	[FollowPageSizeTooLargeWithMessageData]
+	public async Task GetAllAsync_ShouldThrowValidationException_WhenPageSizeIsInvalid(
+		IIntTransformer transformer, IIntMessageTransformer messageTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithPageSize(transformer).Build();
+
+		// Assert
+		await Controller.ShouldThrowInvalidValidationExceptionForPageSizeAsync(
+			request, messageTransformer, CancellationToken);
+	}
+
+	[Fact]
+	public async Task GetAllAsync_ShouldThrowFollowerNotFoundException_WhenIdIsInvalid()
+	{
+		// Arrange
+		await ServiceScope.DeleteAsync(Follower, CancellationToken);
+
+		// Assert
+		await Controller.ShouldThrowFollowerNotFoundExceptionAsync(_request, CancellationToken);
+	}
+
+	[Fact]
+	public async Task GetAllAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
+	{
+		// Act
+		var response = await Controller.GetAllAsync(_request, CancellationToken);
+
+		// Assert
+		response.ShouldBeActionResultWithOkStatusCode();
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task GetAllAsync_ShouldReturnOkStatusCode_WhenRequestAndFollowerIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithFollowerId(transformer).Build();
+
+		// Act
+		var response = await Controller.GetAllAsync(request, CancellationToken);
+
+		// Assert
+		response.ShouldBeActionResultWithOkStatusCode();
+	}
+
+	[Theory]
+	[UserNameNullData]
+	[UserNameEmptyData]
+	[UserNameDifferentCaseData]
+	public async Task GetAllAsync_ShouldReturnOkStatusCode_WhenRequestAndFollowingNameAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithFollowingName(transformer).Build();
+
+		// Act
+		var response = await Controller.GetAllAsync(request, CancellationToken);
+
+		// Assert
+		response.ShouldBeActionResultWithOkStatusCode();
+	}
+
+	[Theory]
+	[UserIdNullData]
+	[UserIdEmptyData]
+	[UserIdDifferentCaseData]
+	public async Task GetAllAsync_ShouldReturnOkStatusCode_WhenRequestAndCurrentUserIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+
+		// Act
+		var response = await Controller.GetAllAsync(request, CancellationToken);
+
+		// Assert
+		response.ShouldBeActionResultWithOkStatusCode();
+	}
+
+	[Theory]
+	[FollowsSortOrderAscendingData]
+	[FollowsSortOrderDescendingData]
+	public async Task GetAllAsync_ShouldReturnOkStatusCode_WhenRequestAndSortOrderAreValid(
+		IEnumTransformer<CommonSortOrder> transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithSortOrder(transformer).Build();
+
+		// Act
+		var response = await Controller.GetAllAsync(request, CancellationToken);
+
+		// Assert
+		response.ShouldBeActionResultWithOkStatusCode();
+	}
+
+	[Theory]
+	[FollowsSortTermCreatedAtData]
+	[FollowsSortTermFollowingNameData]
+	public async Task GetAllAsync_ShouldReturnOkStatusCode_WhenRequestAndSortTermAreValid(
+		IEnumTransformer<FollowsSortTerm> transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithSortTerm(transformer).Build();
+
+		// Act
+		var response = await Controller.GetAllAsync(request, CancellationToken);
+
+		// Assert
+		response.ShouldBeActionResultWithOkStatusCode();
+	}
+
+	[Fact]
+	public async Task GetAllAsync_ShouldReturnResponse_WhenRequestIsValid()
+	{
+		// Act
+		var response = await Controller.GetAllAsync(_request, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(_request, Follower, Follows);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndFollowerIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithFollowerId(transformer).Build();
+
+		// Act
+		var response = await Controller.GetAllAsync(request, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(request, Follower, Follows);
+	}
+
+	[Theory]
+	[UserNameNullData]
+	[UserNameEmptyData]
+	[UserNameDifferentCaseData]
+	public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndFollowingNameAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithFollowingName(transformer).Build();
+
+		// Act
+		var response = await Controller.GetAllAsync(request, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(request, Follower, Follows);
+	}
+
+	[Theory]
+	[UserIdNullData]
+	[UserIdEmptyData]
+	[UserIdDifferentCaseData]
+	public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndCurrentUserIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithCurrentUserId(transformer).Build();
+
+		// Act
+		var response = await Controller.GetAllAsync(request, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(request, Follower, Follows);
+	}
+
+	[Theory]
+	[FollowsSortOrderWithAscendingTermData]
+	[FollowsSortOrderWithDescendingTermData]
+	public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndSortOrderAreValid(
+		IEnumTransformer<CommonSortOrder> transformer, ISortEnumTermTransformer<Follow> termTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithSortOrder(transformer).Build();
+
+		// Act
+		var response = await Controller.GetAllAsync(request, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(request, Follower, Follows, termTransformer);
+	}
+
+	[Theory]
+	[FollowsSortTermWithCreatedAtTermData]
+	[FollowsSortTermWithFollowingNameTermData]
+	public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndSortTermAreValid(
+		IEnumTransformer<FollowsSortTerm> transformer, ISortEnumTermTransformer<Follow> termTransformer)
+	{
+		// Arrange
+		var request = _requestBuilder.WithSortTerm(transformer).Build();
+
+		// Act
+		var response = await Controller.GetAllAsync(request, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(request, Follower, Follows, termTransformer);
+	}
+}

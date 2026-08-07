@@ -65,7 +65,7 @@ internal class ChatMessageQueryRepository : IChatMessageQueryRepository
 			.AggregateWithCaseInsensitiveCollation()
 			.Includes(_messageIncluderFactory, messageInclude)
 			.Match(filter)
-			.GetCount(cancellationToken);
+			.GetCountAsync(cancellationToken);
 	}
 
 	public async Task<ChatMessageResponse?> GetByIdAsync(

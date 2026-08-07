@@ -1,5 +1,5 @@
 using InstaConnect.Posts.Presentation.Tests.Features.Posts.Abstractions;
-using InstaConnect.Posts.Presentation.Tests.Features.Posts.Utilities;
+using InstaConnect.Posts.Presentation.Tests.Features.Posts.Helpers;
 using InstaConnect.Posts.Tests.Features.Common.Utilities;
 
 namespace InstaConnect.Posts.Presentation.Tests.Features.Posts.Extensions;
@@ -8,9 +8,9 @@ public static class PostsWebApplicationFactoryExtensions
 {
 	extension(PostsWebApplicationFactory webApplicationFactory)
 	{
-		public IPostClient CreatePostClient()
+		public IPostApiClient CreateApiClient()
 		{
-			return new PostClient(webApplicationFactory.CreateClient(), webApplicationFactory.Services.GetBaseAccessTokenGenerator());
+			return new PostApiClient(webApplicationFactory.CreateClient(), webApplicationFactory.Services.GetBaseAccessTokenGenerator());
 		}
 	}
 }

@@ -20,9 +20,9 @@ public static class ProblemDetailsAssertions
 		}
 
 		public void ShouldSatisfyInvalidValidation<TRequest, TProperty>(
+			TRequest request,
 			Expression<Func<TRequest, TProperty>> propertyExpression,
-			IMessageTransformer<TProperty> messageTransformer,
-			TRequest request)
+			IMessageTransformer<TProperty> messageTransformer)
 		{
 			problemDetails.ShouldSatisfy(d => d.Matches(
 				StatusCodes.Status400BadRequest,

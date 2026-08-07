@@ -1,0 +1,39 @@
+using InstaConnect.Posts.Events.Features.Posts;
+using InstaConnect.Posts.Tests.Features.Posts.Abstractions;
+
+namespace InstaConnect.Posts.Tests.Features.Posts.Helpers;
+
+public class PostEventClient : IPostEventClient
+{
+	private readonly IEventClient _eventClient;
+
+	public PostEventClient(IEventClient eventClient)
+	{
+		_eventClient = eventClient;
+	}
+
+	public async Task StartAsync(CancellationToken cancellationToken)
+	{
+		await _eventClient.StartAsync(cancellationToken);
+	}
+
+	public async Task StopAsync(CancellationToken cancellationToken)
+	{
+		await _eventClient.StopAsync(cancellationToken);
+	}
+
+	public async Task<PostAddedEventRequest> PublishedAddedAsync(CancellationToken cancellationToken)
+	{
+		return await _eventClient.PublishedAsync<PostAddedEventRequest>(cancellationToken);
+	}
+
+	public async Task<PostUpdatedEventRequest> PublishedUpdatedAsync(CancellationToken cancellationToken)
+	{
+		return await _eventClient.PublishedAsync<PostUpdatedEventRequest>(cancellationToken);
+	}
+
+	public async Task<PostDeletedEventRequest> PublishedDeletedAsync(CancellationToken cancellationToken)
+	{
+		return await _eventClient.PublishedAsync<PostDeletedEventRequest>(cancellationToken);
+	}
+}

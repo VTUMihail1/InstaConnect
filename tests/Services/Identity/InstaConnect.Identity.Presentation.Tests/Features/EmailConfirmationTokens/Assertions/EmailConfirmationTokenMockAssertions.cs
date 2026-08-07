@@ -12,13 +12,13 @@ public static class EmailConfirmationTokenMockAssertions
 			AddEmailConfirmationTokenApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(EmailConfirmationTokenMatcher.IsAddEmailConfirmationTokenCommandRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(EmailConfirmationTokenPresentationMatcher.IsAddEmailConfirmationTokenCommandRequest(request), cancellationToken);
 		}
 		public async Task ShouldReceiveOneSendAsync(
 			VerifyEmailConfirmationTokenApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(EmailConfirmationTokenMatcher.IsVerifyEmailConfirmationTokenCommandRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(EmailConfirmationTokenPresentationMatcher.IsVerifyEmailConfirmationTokenCommandRequest(request), cancellationToken);
 		}
 	}
 }

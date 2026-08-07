@@ -10,40 +10,40 @@ public static class ForgotPasswordTokenProblemDetailsAssertions
 			AddForgotPasswordTokenApiRequest request)
 		{
 			problemDetails.ShouldSatisfyUserNameNotFound(
-				r => r.Name,
-				request);
+				request,
+				r => r.Name);
 		}
 
 		public void ShouldSatisfyUserNotFound(
 			VerifyForgotPasswordTokenApiRequest request)
 		{
 			problemDetails.ShouldSatisfyUserNotFound(
-				r => r.Id,
-				request);
+				request,
+				r => r.Id);
 		}
 
 		public void ShouldSatisfyForgotPasswordTokenNotFound(
 			VerifyForgotPasswordTokenApiRequest request)
 		{
 			problemDetails.ShouldSatisfyForgotPasswordTokenNotFound(
+				request,
 				r => r.Id,
-				r => r.Value,
-				request);
+				r => r.Value);
 		}
 
 		public void ShouldSatisfyForgotPasswordTokenExpired(
 			VerifyForgotPasswordTokenApiRequest request)
 		{
 			problemDetails.ShouldSatisfyForgotPasswordTokenExpired(
+				request,
 				r => r.Id,
-				r => r.Value,
-				request);
+				r => r.Value);
 		}
 
 		internal void ShouldSatisfyForgotPasswordTokenNotFound<TRequest>(
+			TRequest request,
 			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> valuePropertyExpression,
-			TRequest request)
+			Func<TRequest, string> valuePropertyExpression)
 		{
 			problemDetails.ShouldSatisfyNotFound(
 				ForgotPasswordTokenExceptionErrorMessages.GetNotFoundMessage(
@@ -53,9 +53,9 @@ public static class ForgotPasswordTokenProblemDetailsAssertions
 		}
 
 		internal void ShouldSatisfyForgotPasswordTokenExpired<TRequest>(
+			TRequest request,
 			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> valuePropertyExpression,
-			TRequest request)
+			Func<TRequest, string> valuePropertyExpression)
 		{
 			problemDetails.ShouldSatisfyBadRequest(
 				ForgotPasswordTokenExceptionErrorMessages.GetExpiredMessage(

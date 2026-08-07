@@ -38,7 +38,7 @@ public class RefreshTokenController : ControllerBase
 		var commandRequest = _mapper.Map<IssueRefreshTokenCommandRequest>(request);
 		var commandResponse = await _sender.SendAsync(commandRequest, cancellationToken);
 
-		var cookie = _mapper.Map<SetRefreshTokenCookieRequest>(commandResponse.Response);
+		var cookie = _mapper.Map<SetRefreshTokenCookieApiRequest>(commandResponse.Response);
 		_refreshTokenCookieStore.Set(cookie);
 
 		var response = _mapper.Map<IssueRefreshTokenApiResponse>(commandResponse);
@@ -57,7 +57,7 @@ public class RefreshTokenController : ControllerBase
 		var commandRequest = _mapper.Map<RotateRefreshTokenCommandRequest>(request);
 		var commandResponse = await _sender.SendAsync(commandRequest, cancellationToken);
 
-		var cookie = _mapper.Map<SetRefreshTokenCookieRequest>(commandResponse.Response);
+		var cookie = _mapper.Map<SetRefreshTokenCookieApiRequest>(commandResponse.Response);
 		_refreshTokenCookieStore.Set(cookie);
 
 		var response = _mapper.Map<RotateRefreshTokenApiResponse>(commandResponse);

@@ -13,6 +13,8 @@ public abstract class BaseForgotPasswordTokenTest : BaseTest
 	protected IPasswordHasher PasswordHasher { get; }
 	protected string Password { get; }
 	protected IFormFile ProfileImage { get; }
+	protected DateTimeOffset ExpiredDate { get; }
+	protected DateTimeOffset UnexpiredDate { get; }
 
 	protected UserBuilderFactory UserBuilderFactory { get; }
 	protected UserBuilder UserBuilder { get; }
@@ -51,6 +53,9 @@ public abstract class BaseForgotPasswordTokenTest : BaseTest
 		ForgotPasswordTokenBuilder = ForgotPasswordTokenBuilderFactory.Create(User);
 		ForgotPasswordToken = ForgotPasswordTokenBuilder.Build();
 		ForgotPasswordTokens = ForgotPasswordToken.Generate(Users);
+
+		ExpiredDate = ForgotPasswordTokenDataFaker.GetExpired(ForgotPasswordToken.ExpiresAtUtc);
+		UnexpiredDate = ForgotPasswordTokenDataFaker.GetUnexpired(ForgotPasswordToken.ExpiresAtUtc);
 
 		CancellationToken = MockFactory.CreateCancellationToken();
 	}

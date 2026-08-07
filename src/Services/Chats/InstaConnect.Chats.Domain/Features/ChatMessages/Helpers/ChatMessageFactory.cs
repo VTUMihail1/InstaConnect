@@ -15,7 +15,7 @@ internal class ChatMessageFactory : IChatMessageFactory
 
 	public ChatMessage Create(ChatId id, UserId senderId, string content)
 	{
-		var messageId = _guidProvider.NewGuid().ToString();
+		var messageId = _guidProvider.NewStringGuid();
 		var utcNow = _dateTimeProvider.GetOffsetUtcNow();
 		var chatMessage = new ChatMessage(
 			new(id, messageId),

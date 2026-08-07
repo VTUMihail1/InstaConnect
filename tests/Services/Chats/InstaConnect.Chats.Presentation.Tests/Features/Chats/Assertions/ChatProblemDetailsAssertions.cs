@@ -10,57 +10,57 @@ public static class ChatProblemDetailsAssertions
 		AddChatApiRequest request)
 		{
 			problemDetails.ShouldSatisfyUserNotFound(
-				r => r.ParticipantOneId,
-				request);
+				request,
+				r => r.ParticipantOneId);
 		}
 
 		public void ShouldSatisfyParticipantOneNotFound(
 		GetAllChatsApiRequest request)
 		{
 			problemDetails.ShouldSatisfyUserNotFound(
-				r => r.CurrentUserId,
-				request);
+				request,
+				r => r.CurrentUserId);
 		}
 
 		public void ShouldSatisfyParticipantTwoNotFound(
 		AddChatApiRequest request)
 		{
 			problemDetails.ShouldSatisfyUserNotFound(
-				r => r.Body.ParticipantTwoId,
-				request);
+				request,
+				r => r.Body.ParticipantTwoId);
 		}
 
 		public void ShouldSatisfyChatNotFound(
 			GetChatByIdApiRequest request)
 		{
 			problemDetails.ShouldSatisfyChatNotFound(
+				request,
 				r => r.CurrentUserId,
-				r => r.ParticipantTwoId,
-				request);
+				r => r.ParticipantTwoId);
 		}
 
 		public void ShouldSatisfyChatAlreadyExists(
 			AddChatApiRequest request)
 		{
 			problemDetails.ShouldSatisfyChatAlreadyExists(
+				request,
 				r => r.ParticipantOneId,
-				r => r.Body.ParticipantTwoId,
-				request);
+				r => r.Body.ParticipantTwoId);
 		}
 
 		internal void ShouldSatisfyChatNotFound<TRequest>(
+			TRequest request,
 			Func<TRequest, string> participantOneIdPropertyExpression,
-			Func<TRequest, string> participantTwoIdPropertyExpression,
-			TRequest request)
+			Func<TRequest, string> participantTwoIdPropertyExpression)
 		{
 			problemDetails.ShouldSatisfyNotFound(
 				ChatExceptionErrorMessages.GetNotFoundMessage(new(new(participantOneIdPropertyExpression(request)), new(participantTwoIdPropertyExpression(request)))));
 		}
 
 		internal void ShouldSatisfyChatAlreadyExists<TRequest>(
+			TRequest request,
 			Func<TRequest, string> participantOneIdPropertyExpression,
-			Func<TRequest, string> participantTwoIdPropertyExpression,
-			TRequest request)
+			Func<TRequest, string> participantTwoIdPropertyExpression)
 		{
 			problemDetails.ShouldSatisfyNotFound(
 				ChatExceptionErrorMessages.GetAlreadyExistsMessage(new(new(participantOneIdPropertyExpression(request)), new(participantTwoIdPropertyExpression(request)))));

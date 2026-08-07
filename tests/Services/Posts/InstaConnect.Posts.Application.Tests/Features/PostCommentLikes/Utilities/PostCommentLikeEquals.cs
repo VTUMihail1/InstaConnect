@@ -1,17 +1,143 @@
 using InstaConnect.Common.Application.Features.Messaging.Abstractions;
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
+using InstaConnect.Identity.Events.Features.Users;
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Models;
 using InstaConnect.Posts.Application.Features.Users.Abstractions;
 using InstaConnect.Posts.Application.Tests.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Application.Tests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Application.Tests.Features.Posts.Utilities;
 using InstaConnect.Posts.Application.Tests.Features.Users.Utilities;
+using InstaConnect.Posts.Events.Features.PostCommentLikes;
+using InstaConnect.Posts.Events.Features.PostComments;
+using InstaConnect.Posts.Events.Features.Posts;
 
 namespace InstaConnect.Posts.Application.Tests.Features.PostCommentLikes.Utilities;
 
 public static class PostCommentLikeEquals
 {
+	extension(PostCommentLikeAddedEventRequest r)
+	{
+		public bool Matches(AddPostCommentLikeCommandRequest command, PostCommentLike entity)
+		{
+			return r.PostCommentLike.Matches(command, entity);
+		}
+	}
+
+	extension(PostCommentLikeDeletedEventRequest r)
+	{
+		public bool Matches(DeletePostCommentLikeCommandRequest command, PostCommentLike entity)
+		{
+			return r.PostCommentLike.Matches(command, entity);
+		}
+	}
+
+	extension(PostCommentLikeEventRequest r)
+	{
+		public bool Matches(AddPostCommentLikeCommandRequest request, PostCommentLike? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.Id) &&
+				   r.CommentId.EqualsOrdinalIgnoreCase(request.CommentId) &&
+				   r.UserId.EqualsOrdinalIgnoreCase(request.UserId) &&
+				   r.User.Matches(request, entity.User) &&
+				   r.PostComment.Matches(request, entity.PostComment) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc;
+		}
+		public bool Matches(DeletePostCommentLikeCommandRequest request, PostCommentLike? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.Id) &&
+				   r.CommentId.EqualsOrdinalIgnoreCase(request.CommentId) &&
+				   r.UserId.EqualsOrdinalIgnoreCase(request.UserId) &&
+				   r.User.Matches(request, entity.User) &&
+				   r.PostComment.Matches(request, entity.PostComment) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc;
+		}
+	}
+
+	extension(PostCommentEventRequest r)
+	{
+		public bool Matches(AddPostCommentLikeCommandRequest request, PostComment? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.Id) &&
+				   r.CommentId.EqualsOrdinalIgnoreCase(request.CommentId) &&
+				   r.UserId.EqualsOrdinalIgnoreCase(request.UserId) &&
+				   r.Content == entity.Content &&
+				   r.User.Matches(request, entity.User) &&
+				   r.Post.Matches(request, entity.Post) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+		public bool Matches(DeletePostCommentLikeCommandRequest request, PostComment? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.Id) &&
+				   r.CommentId.EqualsOrdinalIgnoreCase(request.CommentId) &&
+				   r.UserId.EqualsOrdinalIgnoreCase(request.UserId) &&
+				   r.Content == entity.Content &&
+				   r.User.Matches(request, entity.User) &&
+				   r.Post.Matches(request, entity.Post) &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+	}
+
+	extension(PostEventRequest r)
+	{
+		public bool Matches(AddPostCommentLikeCommandRequest request, Post? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.Id) &&
+				   r.UserId.EqualsOrdinalIgnoreCase(request.UserId) &&
+				   r.User.Matches(request, entity.User) &&
+				   r.Title == entity.Title &&
+				   r.Content == entity.Content &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+		public bool Matches(DeletePostCommentLikeCommandRequest request, Post? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.Id) &&
+				   r.UserId.EqualsOrdinalIgnoreCase(request.UserId) &&
+				   r.User.Matches(request, entity.User) &&
+				   r.Title == entity.Title &&
+				   r.Content == entity.Content &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+	}
+
+	extension(UserEventRequest r)
+	{
+		public bool Matches(AddPostCommentLikeCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.UserId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   r.ProfileImageUrl == entity.ProfileImage?.Url &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+		public bool Matches(DeletePostCommentLikeCommandRequest request, User? entity)
+		{
+			return entity != null &&
+				   r.Id.EqualsOrdinalIgnoreCase(request.UserId) &&
+				   r.Name.EqualsOrdinalIgnoreCase(entity.Name.Value) &&
+				   r.Email.EqualsOrdinalIgnoreCase(entity.Email.Value) &&
+				   r.FirstName == entity.FirstName &&
+				   r.LastName == entity.LastName &&
+				   r.ProfileImageUrl == entity.ProfileImage?.Url &&
+				   r.CreatedAtUtc == entity.CreatedAtUtc &&
+				   r.UpdatedAtUtc == entity.UpdatedAtUtc;
+		}
+	}
+
 	extension(GetAllPostCommentLikesQuery query)
 	{
 		public bool Matches(GetAllPostCommentLikesQueryRequest request)
@@ -73,7 +199,7 @@ public static class PostCommentLikeEquals
 
 	extension(AddPostCommentLikeCommandResponse response)
 	{
-		public bool Matches(PostCommentLike postCommentLike, AddPostCommentLikeCommandRequest request)
+		public bool Matches(AddPostCommentLikeCommandRequest request, PostCommentLike postCommentLike)
 		{
 			return response.Response.Matches(postCommentLike.Id);
 		}
@@ -81,56 +207,56 @@ public static class PostCommentLikeEquals
 
 	extension(GetPostCommentLikeByIdQueryResponse response)
 	{
-		public bool Matches(PostCommentLike postCommentLike, GetPostCommentLikeByIdQueryRequest request)
+		public bool Matches(GetPostCommentLikeByIdQueryRequest request, PostCommentLike postCommentLike)
 		{
-			return response.Response.MatchesFull(postCommentLike, request);
+			return response.Response.MatchesFull(request, postCommentLike);
 		}
 	}
 
 	extension(GetAllPostCommentLikesQueryResponse response)
 	{
-		public bool Matches(PostComment postComment, ICollection<PostCommentLike> postCommentLikes, GetAllPostCommentLikesQueryRequest request)
+		public bool Matches(GetAllPostCommentLikesQueryRequest request, PostComment postComment, ICollection<PostCommentLike> postCommentLikes)
 		{
 			return response.Response.MatchesWithoutUser(
-					   (response, postCommentLike) => response.MatchesWithoutPostComment(postCommentLike, request),
+					   request,
+					   (response, postCommentLike) => response.MatchesWithoutPostComment(request, postCommentLike),
 					   postCommentLike => postCommentLike.MatchesFilter(request),
 					   postComment,
-					   postCommentLikes,
-					   request);
+					   postCommentLikes);
 		}
 
-		public bool Matches(PostComment postComment, ICollection<PostCommentLike> postCommentLikes, GetAllPostCommentLikesQueryRequest request, ISortEnumTermTransformer<PostCommentLike> termTransformer)
+		public bool Matches(GetAllPostCommentLikesQueryRequest request, PostComment postComment, ICollection<PostCommentLike> postCommentLikes, ISortEnumTermTransformer<PostCommentLike> termTransformer)
 		{
 			return response.Response.MatchesWithoutUser(
-					   (response, postCommentLike) => response.MatchesWithoutPostComment(postCommentLike, request),
+					   request,
+					   (response, postCommentLike) => response.MatchesWithoutPostComment(request, postCommentLike),
 					   postCommentLike => postCommentLike.MatchesFilter(request),
 					   postComment,
 					   postCommentLikes,
-					   request,
 					   termTransformer);
 		}
 	}
 
 	extension(GetAllPostCommentLikesForUserQueryResponse response)
 	{
-		public bool Matches(User user, ICollection<PostCommentLike> postCommentLikes, GetAllPostCommentLikesForUserQueryRequest request)
+		public bool Matches(GetAllPostCommentLikesForUserQueryRequest request, User user, ICollection<PostCommentLike> postCommentLikes)
 		{
 			return response.Response.MatchesWithoutPostComment(
-					   (response, postCommentLike) => response.MatchesWithoutUser(postCommentLike, request),
+					   request,
+					   (response, postCommentLike) => response.MatchesWithoutUser(request, postCommentLike),
 					   postCommentLike => postCommentLike.MatchesFilter(request),
 					   user,
-					   postCommentLikes,
-					   request);
+					   postCommentLikes);
 		}
 
-		public bool Matches(User user, ICollection<PostCommentLike> postCommentLikes, GetAllPostCommentLikesForUserQueryRequest request, ISortEnumTermTransformer<PostCommentLike> termTransformer)
+		public bool Matches(GetAllPostCommentLikesForUserQueryRequest request, User user, ICollection<PostCommentLike> postCommentLikes, ISortEnumTermTransformer<PostCommentLike> termTransformer)
 		{
 			return response.Response.MatchesWithoutPostComment(
-					   (response, postCommentLike) => response.MatchesWithoutUser(postCommentLike, request),
+					   request,
+					   (response, postCommentLike) => response.MatchesWithoutUser(request, postCommentLike),
 					   postCommentLike => postCommentLike.MatchesFilter(request),
 					   user,
 					   postCommentLikes,
-					   request,
 					   termTransformer);
 		}
 	}
@@ -144,15 +270,14 @@ public static class PostCommentLikeEquals
 
 		public bool MatchesFilter(GetAllPostCommentLikesQueryRequest request)
 		{
-			return postCommentLike.Id.CommentId.Id.Id.EqualsOrdinalIgnoreCase(request.Id) &&
-				   postCommentLike.Id.CommentId.CommentId.EqualsOrdinalIgnoreCase(request.CommentId) &&
+			return postCommentLike.Id.CommentId.Matches(request.Id, request.CommentId) &&
 				   postCommentLike.User != null &&
 				   postCommentLike.User.Name.Value.StartsWithOrdinalIgnoreCase(request.UserName);
 		}
 
 		public bool MatchesFilter(GetAllPostCommentLikesForUserQueryRequest request)
 		{
-			return postCommentLike.Id.UserId.Id.EqualsOrdinalIgnoreCase(request.UserId);
+			return postCommentLike.Id.UserId.Matches(request.UserId);
 		}
 	}
 
@@ -166,7 +291,7 @@ public static class PostCommentLikeEquals
 
 	extension(PostCommentLikeQueryResponse? response)
 	{
-		public bool MatchesFull<TRequest>(PostCommentLike? postCommentLike, TRequest request)
+		public bool MatchesFull<TRequest>(TRequest request, PostCommentLike? postCommentLike)
 			where TRequest : ICurrentUserableQueryRequest
 		{
 			return response != null &&
@@ -174,10 +299,10 @@ public static class PostCommentLikeEquals
 				   postCommentLike.Id.Matches(response.Id, response.CommentId, response.UserId) &&
 				   postCommentLike.CreatedAtUtc == response.CreatedAtUtc &&
 				   response.User.MatchesFull(postCommentLike.User) &&
-				   response.PostComment.MatchesFull(postCommentLike.PostComment, request);
+				   response.PostComment.MatchesFull(request, postCommentLike.PostComment);
 		}
 
-		public bool MatchesWithoutPostComment<TRequest>(PostCommentLike? postCommentLike, TRequest request)
+		public bool MatchesWithoutPostComment<TRequest>(TRequest request, PostCommentLike? postCommentLike)
 			where TRequest : ICurrentUserableQueryRequest
 		{
 			return response != null &&
@@ -188,7 +313,7 @@ public static class PostCommentLikeEquals
 				   response.PostComment == null;
 		}
 
-		public bool MatchesWithoutUser<TRequest>(PostCommentLike? postCommentLike, TRequest request)
+		public bool MatchesWithoutUser<TRequest>(TRequest request, PostCommentLike? postCommentLike)
 			where TRequest : ICurrentUserableQueryRequest
 		{
 			return response != null &&
@@ -196,85 +321,85 @@ public static class PostCommentLikeEquals
 				   postCommentLike.Id.Matches(response.Id, response.CommentId, response.UserId) &&
 				   postCommentLike.CreatedAtUtc == response.CreatedAtUtc &&
 				   response.User == null &&
-				   response.PostComment.MatchesFull(postCommentLike.PostComment, request);
+				   response.PostComment.MatchesFull(request, postCommentLike.PostComment);
 		}
 	}
 
 	extension(PostCommentLikeCollectionQueryResponse response)
 	{
 		public bool MatchesWithoutUser<TRequest>(
+			TRequest request,
 			Func<PostCommentLikeQueryResponse, PostCommentLike, bool> matches,
 			Func<PostCommentLike, bool> matchesFilter,
 			PostComment postComment,
-			ICollection<PostCommentLike> postCommentLikes,
-			TRequest request)
+			ICollection<PostCommentLike> postCommentLikes)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
-			return response.MatchesCollectionResponse(postCommentLikes.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, postCommentLikes.Count(matchesFilter)) &&
 				   response.User == null &&
-				   response.PostComment.MatchesFull(postComment, request) &&
-				   response.PostCommentLikes.MatchesCollection(postCommentLikes,
+				   response.PostComment.MatchesFull(request, postComment) &&
+				   response.PostCommentLikes.MatchesCollection(request,
+														postCommentLikes,
 														response => new(new(new(response.Id), response.CommentId), new(response.UserId)),
 														postCommentLike => postCommentLike.Id,
 														matches,
-														request,
 														matchesFilter);
 		}
 
 		public bool MatchesWithoutUser<TRequest>(
+			TRequest request,
 			Func<PostCommentLikeQueryResponse, PostCommentLike, bool> matches,
 			Func<PostCommentLike, bool> matchesFilter,
 			PostComment postComment,
 			ICollection<PostCommentLike> postCommentLikes,
-			TRequest request,
 			ISortEnumTermTransformer<PostCommentLike> termTransformer)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
-			return response.MatchesCollectionResponse(postCommentLikes.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, postCommentLikes.Count(matchesFilter)) &&
 				   response.User == null &&
-				   response.PostComment.MatchesFull(postComment, request) &&
-				   response.PostCommentLikes.MatchesSortedCollection(postCommentLikes,
+				   response.PostComment.MatchesFull(request, postComment) &&
+				   response.PostCommentLikes.MatchesSortedCollection(request,
+															  postCommentLikes,
 															  matches,
 															  termTransformer,
-															  request,
 															  matchesFilter);
 		}
 
 		public bool MatchesWithoutPostComment<TRequest>(
+			TRequest request,
 			Func<PostCommentLikeQueryResponse, PostCommentLike, bool> matches,
 			Func<PostCommentLike, bool> matchesFilter,
 			User user,
-			ICollection<PostCommentLike> postCommentLikes,
-			TRequest request)
+			ICollection<PostCommentLike> postCommentLikes)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
-			return response.MatchesCollectionResponse(postCommentLikes.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, postCommentLikes.Count(matchesFilter)) &&
 				   response.User.MatchesFull(user) &&
 				   response.PostComment == null &&
-				   response.PostCommentLikes.MatchesCollection(postCommentLikes,
+				   response.PostCommentLikes.MatchesCollection(request,
+														postCommentLikes,
 														response => new(new(new(response.Id), response.CommentId), new(response.UserId)),
 														postCommentLike => postCommentLike.Id,
 														matches,
-														request,
 														matchesFilter);
 		}
 
 		public bool MatchesWithoutPostComment<TRequest>(
+			TRequest request,
 			Func<PostCommentLikeQueryResponse, PostCommentLike, bool> matches,
 			Func<PostCommentLike, bool> matchesFilter,
 			User user,
 			ICollection<PostCommentLike> postCommentLikes,
-			TRequest request,
 			ISortEnumTermTransformer<PostCommentLike> termTransformer)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
-			return response.MatchesCollectionResponse(postCommentLikes.Count(matchesFilter), request) &&
+			return response.MatchesCollectionResponse(request, postCommentLikes.Count(matchesFilter)) &&
 				   response.User.MatchesFull(user) &&
 				   response.PostComment == null &&
-				   response.PostCommentLikes.MatchesSortedCollection(postCommentLikes,
+				   response.PostCommentLikes.MatchesSortedCollection(request,
+															  postCommentLikes,
 															  matches,
 															  termTransformer,
-															  request,
 															  matchesFilter);
 		}
 	}

@@ -9,263 +9,263 @@ public static class PostCommentValidationProblemDetailsAssertions
 	extension(ApplicationProblemDetails problemDetails)
 	{
 		public void ShouldSatisfyInvalidValidationForId(
-		IStringMessageTransformer messageTransformer,
-		AddPostCommentApiRequest request)
+		AddPostCommentApiRequest request,
+		IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.Id,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForId(
-			IStringMessageTransformer messageTransformer,
-			UpdatePostCommentApiRequest request)
+			UpdatePostCommentApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.Id,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForId(
-			IStringMessageTransformer messageTransformer,
-			DeletePostCommentApiRequest request)
+			DeletePostCommentApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.Id,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForId(
-			IStringMessageTransformer messageTransformer,
-			GetPostCommentByIdApiRequest request)
+			GetPostCommentByIdApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.Id,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForId(
-			IStringMessageTransformer messageTransformer,
-			GetAllPostCommentsApiRequest request)
+			GetAllPostCommentsApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.Id,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForCommentId(
-			IStringMessageTransformer messageTransformer,
-			UpdatePostCommentApiRequest request)
+			UpdatePostCommentApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.CommentId,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForCommentId(
-			IStringMessageTransformer messageTransformer,
-			DeletePostCommentApiRequest request)
+			DeletePostCommentApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.CommentId,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForCommentId(
-			IStringMessageTransformer messageTransformer,
-			GetPostCommentByIdApiRequest request)
+			GetPostCommentByIdApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.CommentId,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForContent(
-			IStringMessageTransformer messageTransformer,
-			AddPostCommentApiRequest request)
+			AddPostCommentApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.Body.Content,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForContent(
-			IStringMessageTransformer messageTransformer,
-			UpdatePostCommentApiRequest request)
+			UpdatePostCommentApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.Body.Content,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForCurrentUserId(
-			IStringMessageTransformer messageTransformer,
-			GetPostCommentByIdApiRequest request)
+			GetPostCommentByIdApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.CurrentUserId,
-			   messageTransformer,
-			   request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForCurrentUserId(
-			IStringMessageTransformer messageTransformer,
-			GetAllPostCommentsApiRequest request)
+			GetAllPostCommentsApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.CurrentUserId,
-			   messageTransformer,
-			   request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForCurrentUserId(
-			IStringMessageTransformer messageTransformer,
-			GetAllPostCommentsForUserApiRequest request)
+			GetAllPostCommentsForUserApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.CurrentUserId,
-			   messageTransformer,
-			   request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForUserId(
-			IStringMessageTransformer messageTransformer,
-			GetAllPostCommentsForUserApiRequest request)
+			GetAllPostCommentsForUserApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.UserId,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForUserId(
-			IStringMessageTransformer messageTransformer,
-			AddPostCommentApiRequest request)
+			AddPostCommentApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.UserId,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForUserId(
-			IStringMessageTransformer messageTransformer,
-			UpdatePostCommentApiRequest request)
+			UpdatePostCommentApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.UserId,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForUserId(
-			IStringMessageTransformer messageTransformer,
-			DeletePostCommentApiRequest request)
+			DeletePostCommentApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.UserId,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForUserName(
-			IStringMessageTransformer messageTransformer,
-			GetAllPostCommentsApiRequest request)
+			GetAllPostCommentsApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.UserName,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForPage(
-			IIntMessageTransformer messageTransformer,
-			GetAllPostCommentsApiRequest request)
+			GetAllPostCommentsApiRequest request,
+			IIntMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.Page,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForPage(
-			IIntMessageTransformer messageTransformer,
-			GetAllPostCommentsForUserApiRequest request)
+			GetAllPostCommentsForUserApiRequest request,
+			IIntMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.Page,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForPageSize(
-			IIntMessageTransformer messageTransformer,
-			GetAllPostCommentsApiRequest request)
+			GetAllPostCommentsApiRequest request,
+			IIntMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.PageSize,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForPageSize(
-			IIntMessageTransformer messageTransformer,
-			GetAllPostCommentsForUserApiRequest request)
+			GetAllPostCommentsForUserApiRequest request,
+			IIntMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.PageSize,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForSortOrder(
-			IEnumMessageTransformer<CommonSortOrder> messageTransformer,
-			GetAllPostCommentsApiRequest request)
+			GetAllPostCommentsApiRequest request,
+			IEnumMessageTransformer<CommonSortOrder> messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.SortOrder,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForSortOrder(
-			IEnumMessageTransformer<CommonSortOrder> messageTransformer,
-			GetAllPostCommentsForUserApiRequest request)
+			GetAllPostCommentsForUserApiRequest request,
+			IEnumMessageTransformer<CommonSortOrder> messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.SortOrder,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForSortTerm(
-			IEnumMessageTransformer<PostCommentsSortTerm> messageTransformer,
-			GetAllPostCommentsApiRequest request)
+			GetAllPostCommentsApiRequest request,
+			IEnumMessageTransformer<PostCommentsSortTerm> messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.SortTerm,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForSortTerm(
-			IEnumMessageTransformer<PostCommentsForUserSortTerm> messageTransformer,
-			GetAllPostCommentsForUserApiRequest request)
+			GetAllPostCommentsForUserApiRequest request,
+			IEnumMessageTransformer<PostCommentsForUserSortTerm> messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.SortTerm,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 	}
 }

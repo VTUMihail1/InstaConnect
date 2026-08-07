@@ -51,7 +51,7 @@ internal class UserClaimQueryRepository : IUserClaimQueryRepository
 			.UserClaims
 			.AggregateWithCaseInsensitiveCollation()
 			.Match(filter)
-			.GetCount(cancellationToken);
+			.GetCountAsync(cancellationToken);
 	}
 
 	public async Task<UserClaimResponse?> GetByIdAsync(

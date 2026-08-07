@@ -1,8 +1,8 @@
 using System.Reflection;
 
-using InstaConnect.Common.Domain.Features.Emails.Abstractions;
-using InstaConnect.Common.Domain.Features.Images.Abstractions;
-using InstaConnect.Common.Tests.Features.Events;
+using InstaConnect.Common.Events.Features.Common.Abstractions;
+using InstaConnect.Common.Tests.Features.Abstractions;
+using InstaConnect.Common.Tests.Features.Helpers;
 using InstaConnect.Common.Tests.Features.Utilities;
 
 using MassTransit;
@@ -15,31 +15,32 @@ public static class ServiceCollectionExtensions
 {
 	extension(IServiceCollection serviceCollection)
 	{
-		public IServiceCollection AddTestEventHarness(string connectionString, params Assembly[] currentAssemblies)
+		public IServiceCollection AddTestEventClient(string connectionString, params Assembly[] currentAssemblies)
 		{
-			serviceCollection.AddMassTransitTestEventHarness(connectionString, currentAssemblies);
+			serviceCollection.AddMassTransitTestEventClient(connectionString, currentAssemblies);
 
-			serviceCollection.AddScoped<ITestHarnessFactory>(_ => new TestHarnessFactory(connectionString, currentAssemblies));
-			serviceCollection.AddScoped<IEventHarness, EventHarness>();
+			serviceCollection.AddSingleton<ITestHarnessFactory>(_ => new TestHarnessFactory(connectionString, currentAssemblies));
+			serviceCollection.AddSingleton<IEventClient, EventClient>();
+			serviceCollection.AddScoped<IEventPublisher, TestEventPublisher>();
 
 			return serviceCollection;
 		}
 
 		public IServiceCollection AddMockImageHandler()
 		{
-			serviceCollection.AddScoped(_ => Mocker.Mock<IImageHandler>());
+			serviceCollection.AddSingleton(_ => MockFactory.CreateImageHandler());
 
 			return serviceCollection;
 		}
 
 		public IServiceCollection AddMockEmailSender()
 		{
-			serviceCollection.AddScoped(_ => Mocker.Mock<IEmailSender>());
+			serviceCollection.AddScoped(_ => MockFactory.CreateEmailSender());
 
 			return serviceCollection;
 		}
 
-		internal IServiceCollection AddMassTransitTestEventHarness(string connectionString, params Assembly[] currentAssemblies)
+		internal IServiceCollection AddMassTransitTestEventClient(string connectionString, params Assembly[] currentAssemblies)
 		{
 			serviceCollection.AddMassTransitTestHarness(busConfigurator =>
 			{

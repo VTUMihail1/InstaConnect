@@ -10,39 +10,39 @@ public static class ChatMessageMapper
 {
 	extension(ChatMessage chatMessage)
 	{
-		internal ChatMessageIdCommandResponse ToIdResponse(
+		internal ChatMessageIdCommandResponse ToIdCommandResponse(
 )
 		{
 			return new(chatMessage.Id.Id.ParticipantOneId.Id, chatMessage.Id.Id.ParticipantTwoId.Id, chatMessage.Id.MessageId);
 		}
 
-		internal ChatMessageQueryResponse ToFullResponse()
+		internal ChatMessageQueryResponse ToFullQueryResponse()
 		{
 			return new(chatMessage.Id.Id.ParticipantOneId.Id,
 					   chatMessage.Id.Id.ParticipantTwoId.Id,
 					   chatMessage.Id.MessageId,
 					   chatMessage.SenderId.Id,
 					   chatMessage.Content,
-					   chatMessage.Chat?.ToFullResponse(),
-					   chatMessage.Sender?.ToFullResponse(),
+					   chatMessage.Chat?.ToFullQueryResponse(),
+					   chatMessage.Sender?.ToFullQueryResponse(),
 					   chatMessage.CreatedAtUtc,
 					   chatMessage.UpdatedAtUtc);
 		}
 
-		internal ChatMessageQueryResponse ToResponseWithoutSender()
+		internal ChatMessageQueryResponse ToQueryResponseWithoutSender()
 		{
 			return new(chatMessage.Id.Id.ParticipantOneId.Id,
 					   chatMessage.Id.Id.ParticipantTwoId.Id,
 					   chatMessage.Id.MessageId,
 					   chatMessage.SenderId.Id,
 					   chatMessage.Content,
-					   chatMessage.Chat?.ToFullResponse(),
+					   chatMessage.Chat?.ToFullQueryResponse(),
 					   null,
 					   chatMessage.CreatedAtUtc,
 					   chatMessage.UpdatedAtUtc);
 		}
 
-		internal ChatMessageQueryResponse ToResponseWithoutChat()
+		internal ChatMessageQueryResponse ToQueryResponseWithoutChat()
 		{
 			return new(chatMessage.Id.Id.ParticipantOneId.Id,
 					   chatMessage.Id.Id.ParticipantTwoId.Id,
@@ -50,7 +50,7 @@ public static class ChatMessageMapper
 					   chatMessage.SenderId.Id,
 					   chatMessage.Content,
 					   null,
-					   chatMessage.Sender?.ToFullResponse(),
+					   chatMessage.Sender?.ToFullQueryResponse(),
 					   chatMessage.CreatedAtUtc,
 					   chatMessage.UpdatedAtUtc);
 		}
@@ -58,38 +58,38 @@ public static class ChatMessageMapper
 		public AddChatMessageCommandResponse ToResponse(
 			AddChatMessageApiRequest request)
 		{
-			return new(chatMessage.ToIdResponse());
+			return new(chatMessage.ToIdCommandResponse());
 		}
 
 		public UpdateChatMessageCommandResponse ToResponse(
 			UpdateChatMessageApiRequest request)
 		{
-			return new(chatMessage.ToIdResponse());
+			return new(chatMessage.ToIdCommandResponse());
 		}
 
 		public GetChatMessageByIdQueryResponse ToResponse(
 			GetChatMessageByIdApiRequest request)
 		{
-			return new(chatMessage.ToFullResponse());
+			return new(chatMessage.ToFullQueryResponse());
 		}
 	}
 
 
 	extension(ICollection<ChatMessage> chatMessages)
 	{
-		internal ChatMessageCollectionQueryResponse ToResponseWithoutSender<TRequest>(
+		internal ChatMessageCollectionQueryResponse ToQueryResponseWithoutSender<TRequest>(
+		TRequest request,
 		Chat chat,
-		Func<ChatMessage, TRequest, bool> filter,
-		Func<ChatMessage, TRequest, ChatMessageQueryResponse> transform,
-		TRequest request)
+		Func<TRequest, ChatMessage, bool> filter,
+		Func<TRequest, ChatMessage, ChatMessageQueryResponse> transform)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = chatMessages.Count(chatMessage => filter(chatMessage, request));
+			var totalCount = chatMessages.Count(chatMessage => filter(request, chatMessage));
 
-			return new(chat.ToFullResponse(),
+			return new(chat.ToFullQueryResponse(),
 					   null,
-					   chatMessages.Filter(chatMessage => filter(chatMessage, request), request, chatMessage => transform(chatMessage, request)),
+					   chatMessages.Filter(request, chatMessage => filter(request, chatMessage), chatMessage => transform(request, chatMessage)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -97,19 +97,19 @@ public static class ChatMessageMapper
 					   paginator.HasPreviousPage(request.Page));
 		}
 
-		internal ChatMessageCollectionQueryResponse ToResponseWithoutChat<TRequest>(
+		internal ChatMessageCollectionQueryResponse ToQueryResponseWithoutChat<TRequest>(
+			TRequest request,
 			User user,
-			Func<ChatMessage, TRequest, bool> filter,
-			Func<ChatMessage, TRequest, ChatMessageQueryResponse> transform,
-			TRequest request)
+			Func<TRequest, ChatMessage, bool> filter,
+			Func<TRequest, ChatMessage, ChatMessageQueryResponse> transform)
 			where TRequest : ICurrentUserableApiRequest, IPaginatableApiRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = chatMessages.Count(chatMessage => filter(chatMessage, request));
+			var totalCount = chatMessages.Count(chatMessage => filter(request, chatMessage));
 
 			return new(null,
-					   user.ToFullResponse(),
-					   chatMessages.Filter(chatMessage => filter(chatMessage, request), request, chatMessage => transform(chatMessage, request)),
+					   user.ToFullQueryResponse(),
+					   chatMessages.Filter(request, chatMessage => filter(request, chatMessage), chatMessage => transform(request, chatMessage)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -118,13 +118,14 @@ public static class ChatMessageMapper
 		}
 
 		public GetAllChatMessagesQueryResponse ToResponse(
-			Chat chat,
-			GetAllChatMessagesApiRequest request)
+			GetAllChatMessagesApiRequest request,
+			Chat chat)
 		{
-			return new(chatMessages.ToResponseWithoutSender(chat,
-					   (chatMessage, request) => chatMessage.MatchesFilter(request),
-					   (chatMessage, request) => chatMessage.ToResponseWithoutChat(),
-					   request));
+			return new(chatMessages.ToQueryResponseWithoutSender(
+					   request,
+					   chat,
+					   (request, chatMessage) => chatMessage.MatchesFilter(request),
+					   (request, chatMessage) => chatMessage.ToQueryResponseWithoutChat()));
 		}
 	}
 }

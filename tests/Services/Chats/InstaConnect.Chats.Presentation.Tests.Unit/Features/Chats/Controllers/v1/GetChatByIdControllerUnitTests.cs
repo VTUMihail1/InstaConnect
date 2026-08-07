@@ -16,7 +16,7 @@ public class GetChatByIdControllerUnitTests : BaseChatPresentationQueryUnitTest
 
 		_controller = new(Mapper, Sender);
 
-		Sender.SetupGetByIdQueryRequest(_request, Chat, CancellationToken);
+		Sender.SetupSendAsync(_request, Chat, CancellationToken);
 	}
 
 	[Fact]
@@ -36,7 +36,7 @@ public class GetChatByIdControllerUnitTests : BaseChatPresentationQueryUnitTest
 		var response = await _controller.GetByIdAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Chat, _request);
+		response.ShouldSatisfy(_request, Chat);
 	}
 
 	[Fact]

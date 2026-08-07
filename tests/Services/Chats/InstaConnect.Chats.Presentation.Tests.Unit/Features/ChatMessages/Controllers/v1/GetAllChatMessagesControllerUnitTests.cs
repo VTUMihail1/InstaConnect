@@ -16,7 +16,7 @@ public class GetAllChatMessagesControllerUnitTests : BaseChatMessagePresentation
 
 		_controller = new(Mapper, Sender);
 
-		Sender.SetupGetAllQueryRequest(_request, Chat, ChatMessages, CancellationToken);
+		Sender.SetupSendAsync(_request, Chat, ChatMessages, CancellationToken);
 	}
 
 	[Fact]
@@ -36,7 +36,7 @@ public class GetAllChatMessagesControllerUnitTests : BaseChatMessagePresentation
 		var response = await _controller.GetAllAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Chat, ChatMessages, _request);
+		response.ShouldSatisfy(_request, Chat, ChatMessages);
 	}
 
 	[Fact]

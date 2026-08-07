@@ -1,5 +1,6 @@
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 using InstaConnect.Follows.Application.Tests.Features.Follows.Utilities;
+using InstaConnect.Follows.Events.Features.Follows;
 
 namespace InstaConnect.Follows.Application.Tests.Features.Follows.Assertions;
 
@@ -8,60 +9,60 @@ public static class FollowMatchAssertions
 	extension(AddFollowCommandResponse response)
 	{
 		public void ShouldSatisfy(
-		Follow follow,
-		AddFollowCommandRequest request)
+		AddFollowCommandRequest request,
+		Follow follow)
 		{
-			response.ShouldSatisfy(p => p.Matches(follow, request));
+			response.ShouldSatisfy(p => p.Matches(request, follow));
 		}
 	}
 
 	extension(GetFollowByIdQueryResponse response)
 	{
 		public void ShouldSatisfy(
-		Follow follow,
-		GetFollowByIdQueryRequest request)
+		GetFollowByIdQueryRequest request,
+		Follow follow)
 		{
-			response.ShouldSatisfy(p => p.Matches(follow, request));
+			response.ShouldSatisfy(p => p.Matches(request, follow));
 		}
 	}
 
 	extension(GetAllFollowsQueryResponse response)
 	{
 		public void ShouldSatisfy(
+		GetAllFollowsQueryRequest request,
 		User follower,
-		ICollection<Follow> follows,
-		GetAllFollowsQueryRequest request)
+		ICollection<Follow> follows)
 		{
-			response.ShouldSatisfy(p => p.Matches(follower, follows, request));
+			response.ShouldSatisfy(p => p.Matches(request, follower, follows));
 		}
 
 		public void ShouldSatisfy(
+			GetAllFollowsQueryRequest request,
 			User follower,
 			ICollection<Follow> follows,
-			GetAllFollowsQueryRequest request,
 			ISortEnumTermTransformer<Follow> termTransformer)
 		{
-			response.ShouldSatisfy(p => p.Matches(follower, follows, request, termTransformer));
+			response.ShouldSatisfy(p => p.Matches(request, follower, follows, termTransformer));
 		}
 	}
 
 	extension(GetAllFollowsForFollowingQueryResponse response)
 	{
 		public void ShouldSatisfy(
+		GetAllFollowsForFollowingQueryRequest request,
 		User following,
-		ICollection<Follow> follows,
-		GetAllFollowsForFollowingQueryRequest request)
+		ICollection<Follow> follows)
 		{
-			response.ShouldSatisfy(p => p.Matches(following, follows, request));
+			response.ShouldSatisfy(p => p.Matches(request, following, follows));
 		}
 
 		public void ShouldSatisfy(
+			GetAllFollowsForFollowingQueryRequest request,
 			User following,
 			ICollection<Follow> follows,
-			GetAllFollowsForFollowingQueryRequest request,
 			ISortEnumTermTransformer<Follow> termTransformer)
 		{
-			response.ShouldSatisfy(p => p.Matches(following, follows, request, termTransformer));
+			response.ShouldSatisfy(p => p.Matches(request, following, follows, termTransformer));
 		}
 	}
 
@@ -70,6 +71,32 @@ public static class FollowMatchAssertions
 		public void ShouldSatisfy(AddFollowCommandRequest request)
 		{
 			follow.ShouldSatisfy(p => p.Matches(request));
+		}
+	}
+
+	extension(FollowAddedEventRequest r)
+	{
+		public void ShouldSatisfy(AddFollowCommandRequest request, Follow entity)
+		{
+			r.ShouldSatisfy(r => r.Matches(request, entity));
+		}
+	}
+
+	extension(FollowDeletedEventRequest r)
+	{
+		public void ShouldSatisfy(DeleteFollowCommandRequest request, Follow entity)
+		{
+			r.ShouldSatisfy(r => r.Matches(request, entity));
+		}
+	}
+
+	extension(FollowAddedNotificationRequest r)
+	{
+		public void ShouldSatisfy(
+			AddFollowCommandRequest request,
+			Follow follow)
+		{
+			r.ShouldSatisfy(f => f.Matches(request, follow));
 		}
 	}
 }

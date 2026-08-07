@@ -16,7 +16,7 @@
   <ItemGroup Label="Common">
     <Using Include="FluentValidation.TestHelper" />
     <Using Include="InstaConnect.Common.Infrastructure.Features.Data.Helpers"/>
-    <Using Include="InstaConnect.Common.Tests.Features.Events" />
+    <Using Include="InstaConnect.Common.Tests.Features.Abstractions" />
     <Using Include="InstaConnect.Common.Tests.Features.Assertions" />
     <Using Include="InstaConnect.Common.Tests.Features.Utilities" />
     <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Base" />
@@ -35,6 +35,7 @@
     <Using Include="InstaConnect.Follows.Domain.Features.Users.Models.Requests" />
     <Using Include="InstaConnect.Follows.Domain.Features.Users.Utilities" />
     <Using Include="InstaConnect.Follows.Application.Tests.Features.Users.Assertions" />
+    <Using Include="InstaConnect.Follows.Tests.Features.Users.Assertions"/>
     <Using Include="InstaConnect.Follows.Tests.Features.Users.Builders" />
     <Using Include="InstaConnect.Follows.Tests.Features.Users.Utilities" />
     <Using Include="InstaConnect.Follows.Domain.Features.Users.Utilities" />
@@ -51,6 +52,7 @@
     <Using Include="InstaConnect.Follows.Domain.Features.Follows.Models.Responses" />
     <Using Include="InstaConnect.Follows.Domain.Features.Follows.Utilities" />
     <Using Include="InstaConnect.Follows.Application.Tests.Features.Follows.Assertions" />
+	<Using Include="InstaConnect.Follows.Tests.Features.Follows.Assertions"/>
     <Using Include="InstaConnect.Follows.Tests.Features.Follows.Builders" />
     <Using Include="InstaConnect.Follows.Tests.Features.Follows.Utilities" />
     <Using Include="InstaConnect.Follows.Application.Features.Follows.Queries.GetAll" />

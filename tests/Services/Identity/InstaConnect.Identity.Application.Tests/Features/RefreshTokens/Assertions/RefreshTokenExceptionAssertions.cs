@@ -1,7 +1,4 @@
 using InstaConnect.Common.Application.Features.Messaging.Abstractions;
-using InstaConnect.Identity.Domain.Features.RefreshTokens.Exceptions;
-
-using MediatR;
 
 namespace InstaConnect.Identity.Application.Tests.Features.RefreshTokens.Assertions;
 
@@ -13,9 +10,11 @@ public static class RefreshTokenExceptionAssertions
 			IssueRefreshTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowUserInvalidDetailsExceptionAsync<IssueRefreshTokenCommandRequest, IssueRefreshTokenCommandResponse>(
-				r => r.Name,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowUserInvalidDetailsExceptionAsync(
 				request,
+				r => r.Name,
 				cancellationToken);
 		}
 
@@ -23,9 +22,11 @@ public static class RefreshTokenExceptionAssertions
 			IssueRefreshTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowUserNameEmailNotConfirmedExceptionAsync<IssueRefreshTokenCommandRequest, IssueRefreshTokenCommandResponse>(
-				r => r.Name,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowUserNameEmailNotConfirmedExceptionAsync(
 				request,
+				r => r.Name,
 				cancellationToken);
 		}
 
@@ -33,9 +34,11 @@ public static class RefreshTokenExceptionAssertions
 			RotateRefreshTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowUserEmailNotConfirmedExceptionAsync<RotateRefreshTokenCommandRequest, RotateRefreshTokenCommandResponse>(
-				r => r.Id,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowUserEmailNotConfirmedExceptionAsync(
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 
@@ -43,9 +46,11 @@ public static class RefreshTokenExceptionAssertions
 			RotateRefreshTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowUserNotFoundExceptionAsync<RotateRefreshTokenCommandRequest, RotateRefreshTokenCommandResponse>(
-				r => r.Id,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowUserNotFoundExceptionAsync(
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 
@@ -53,9 +58,11 @@ public static class RefreshTokenExceptionAssertions
 			DeleteCurrentRefreshTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowUserNotFoundExceptionAsync(
-				r => r.Id,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowUserNotFoundExceptionAsync(
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 
@@ -63,10 +70,12 @@ public static class RefreshTokenExceptionAssertions
 			RotateRefreshTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowRefreshTokenNotFoundExceptionAsync<RotateRefreshTokenCommandRequest, RotateRefreshTokenCommandResponse>(
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowRefreshTokenNotFoundExceptionAsync(
+				request,
 				r => r.Id,
 				r => r.Value,
-				request,
 				cancellationToken);
 		}
 
@@ -74,10 +83,12 @@ public static class RefreshTokenExceptionAssertions
 			DeleteCurrentRefreshTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowRefreshTokenNotFoundExceptionAsync(
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowRefreshTokenNotFoundExceptionAsync(
+				request,
 				r => r.Id,
 				r => r.Value,
-				request,
 				cancellationToken);
 		}
 
@@ -85,10 +96,12 @@ public static class RefreshTokenExceptionAssertions
 			RotateRefreshTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowRefreshTokenExpiredExceptionAsync<RotateRefreshTokenCommandRequest, RotateRefreshTokenCommandResponse>(
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowRefreshTokenExpiredExceptionAsync(
+				request,
 				r => r.Id,
 				r => r.Value,
-				request,
 				cancellationToken);
 		}
 
@@ -96,62 +109,12 @@ public static class RefreshTokenExceptionAssertions
 			DeleteCurrentRefreshTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowRefreshTokenExpiredExceptionAsync(
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowRefreshTokenExpiredExceptionAsync(
+				request,
 				r => r.Id,
 				r => r.Value,
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowRefreshTokenNotFoundExceptionAsync<TRequest>(
-			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> valueropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest
-		{
-			await sender.ShouldThrowAsync<RefreshTokenNotFoundException, TRequest>(
-				RefreshTokenExceptionErrorMessages.GetNotFoundMessage(new RefreshTokenId(new UserId(idPropertyExpression(request)), valueropertyExpression(request))),
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowRefreshTokenNotFoundExceptionAsync<TRequest, TResponse>(
-			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> valuePropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest<TResponse>
-		{
-			await sender.ShouldThrowAsync<RefreshTokenNotFoundException, TRequest, TResponse>(
-				RefreshTokenExceptionErrorMessages.GetNotFoundMessage(new RefreshTokenId(new UserId(idPropertyExpression(request)), valuePropertyExpression(request))),
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowRefreshTokenExpiredExceptionAsync<TRequest>(
-			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> valuePropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest
-		{
-			await sender.ShouldThrowAsync<RefreshTokenExpiredException, TRequest>(
-				RefreshTokenExceptionErrorMessages.GetExpiredMessage(new RefreshTokenId(new UserId(idPropertyExpression(request)), valuePropertyExpression(request))),
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowRefreshTokenExpiredExceptionAsync<TRequest, TResponse>(
-			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> valuePropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest<TResponse>
-		{
-			await sender.ShouldThrowAsync<RefreshTokenExpiredException, TRequest, TResponse>(
-				RefreshTokenExceptionErrorMessages.GetExpiredMessage(new RefreshTokenId(new UserId(idPropertyExpression(request)), valuePropertyExpression(request))),
-				request,
 				cancellationToken);
 		}
 	}

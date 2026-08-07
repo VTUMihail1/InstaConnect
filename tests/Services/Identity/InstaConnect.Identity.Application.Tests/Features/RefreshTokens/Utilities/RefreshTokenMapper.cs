@@ -10,10 +10,6 @@ public static class RefreshTokenMapper
 		{
 			return new(refreshToken.Id.Value, refreshToken.ExpiresAtUtc);
 		}
-		internal RefreshTokenId ToIdResponse()
-		{
-			return refreshToken.Id;
-		}
 
 		internal SessionToken ToSessionTokenResponse()
 		{

@@ -16,7 +16,7 @@ public class GetAllPostCommentLikesForUserControllerUnitTests : BasePostCommentL
 
 		_controller = new(Mapper, Sender);
 
-		Sender.SetupGetAllForUserQueryRequest(_request, User, PostCommentLikes, CancellationToken);
+		Sender.SetupSendAsync(_request, User, PostCommentLikes, CancellationToken);
 	}
 
 	[Fact]
@@ -36,7 +36,7 @@ public class GetAllPostCommentLikesForUserControllerUnitTests : BasePostCommentL
 		var response = await _controller.GetAllAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, PostCommentLikes, _request);
+		response.ShouldSatisfy(_request, User, PostCommentLikes);
 	}
 
 	[Fact]

@@ -6,46 +6,50 @@ public static class FollowMockSetups
 {
 	extension(IApplicationSender sender)
 	{
-		public void SetupGetAllQueryRequest(
+		public void SetupSendAsync(
 		GetAllFollowsApiRequest request,
 		User follower,
 		ICollection<Follow> follows,
 		CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(FollowMatcher.IsGetAllFollowsQueryRequest(request), cancellationToken)
-				.ReturnsResponse(follows.ToResponse(follower, request));
+				.ClearCalls()
+				.SendAsync(FollowPresentationMatcher.IsGetAllFollowsQueryRequest(request), cancellationToken)
+				.ReturnsTaskResponse(follows.ToResponse(request, follower));
 		}
 
-		public void SetupGetAllForFollowingQueryRequest(
+		public void SetupSendAsync(
 			GetAllFollowsForFollowingApiRequest request,
 			User following,
 			ICollection<Follow> follows,
 			CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(FollowMatcher.IsGetAllFollowsForFollowingQueryRequest(request), cancellationToken)
-				.ReturnsResponse(follows.ToResponse(following, request));
+				.ClearCalls()
+				.SendAsync(FollowPresentationMatcher.IsGetAllFollowsForFollowingQueryRequest(request), cancellationToken)
+				.ReturnsTaskResponse(follows.ToResponse(request, following));
 		}
 
-		public void SetupGetByIdQueryRequest(
+		public void SetupSendAsync(
 			GetFollowByIdApiRequest request,
 			Follow follow,
 			CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(FollowMatcher.IsGetFollowByIdQueryRequest(request), cancellationToken)
-				.ReturnsResponse(follow.ToResponse(request));
+				.ClearCalls()
+				.SendAsync(FollowPresentationMatcher.IsGetFollowByIdQueryRequest(request), cancellationToken)
+				.ReturnsTaskResponse(follow.ToResponse(request));
 		}
 
-		public void SetupAddCommandRequest(
+		public void SetupSendAsync(
 			AddFollowApiRequest request,
 			Follow follow,
 			CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(FollowMatcher.IsAddFollowCommandRequest(request), cancellationToken)
-				.ReturnsResponse(follow.ToResponse(request));
+				.ClearCalls()
+				.SendAsync(FollowPresentationMatcher.IsAddFollowCommandRequest(request), cancellationToken)
+				.ReturnsTaskResponse(follow.ToResponse(request));
 		}
 	}
 }

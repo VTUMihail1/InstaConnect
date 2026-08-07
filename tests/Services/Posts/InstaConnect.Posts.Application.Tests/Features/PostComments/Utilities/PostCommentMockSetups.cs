@@ -4,59 +4,64 @@ public static class PostCommentMockSetups
 {
 	extension(IPostCommentQueryService commentService)
 	{
-		public void SetupGetAllQuery(
+		public void SetupGetAllAsync(
 		GetAllPostCommentsQueryRequest request,
 		Post post,
 		ICollection<PostComment> postComments,
 		CancellationToken cancellationToken)
 		{
 			commentService
-				.GetAllAsync(PostCommentMatcher.IsGetAllPostCommentsQuery(request), cancellationToken)
-				.ReturnsResponse(postComments.ToResponse(post, request));
+				.ClearCalls()
+				.GetAllAsync(PostCommentApplicationMatcher.IsGetAllPostCommentsQuery(request), cancellationToken)
+				.ReturnsTaskResponse(postComments.ToResponse(request, post));
 		}
 
-		public void SetupGetAllForUserQuery(
+		public void SetupGetAllForUserAsync(
 			GetAllPostCommentsForUserQueryRequest request,
 			User user,
 			ICollection<PostComment> postComments,
 			CancellationToken cancellationToken)
 		{
 			commentService
-				.GetAllForUserAsync(PostCommentMatcher.IsGetAllPostCommentsForUserQuery(request), cancellationToken)
-				.ReturnsResponse(postComments.ToResponse(user, request));
+				.ClearCalls()
+				.GetAllForUserAsync(PostCommentApplicationMatcher.IsGetAllPostCommentsForUserQuery(request), cancellationToken)
+				.ReturnsTaskResponse(postComments.ToResponse(request, user));
 		}
 
-		public void SetupGetByIdQuery(
+		public void SetupGetByIdAsync(
 			GetPostCommentByIdQueryRequest request,
 			PostComment postComment,
 			CancellationToken cancellationToken)
 		{
 			commentService
-				.GetByIdAsync(PostCommentMatcher.IsGetPostCommentByIdQuery(request), cancellationToken)
-				.ReturnsResponse(postComment.ToResponse(request));
+				.ClearCalls()
+				.GetByIdAsync(PostCommentApplicationMatcher.IsGetPostCommentByIdQuery(request), cancellationToken)
+				.ReturnsTaskResponse(postComment.ToResponse(request));
 		}
 	}
 
 	extension(IPostCommentCommandService commentService)
 	{
-		public void SetupAddCommand(
+		public void SetupAddAsync(
 		AddPostCommentCommandRequest request,
 		PostComment postComment,
 		CancellationToken cancellationToken)
 		{
 			commentService
-				.AddAsync(PostCommentMatcher.IsAddPostCommentCommand(request), cancellationToken)
-				.ReturnsResponse(postComment.ToResponse(request));
+				.ClearCalls()
+				.AddAsync(PostCommentApplicationMatcher.IsAddPostCommentCommand(request), cancellationToken)
+				.ReturnsTaskResponse(postComment.ToResponse(request));
 		}
 
-		public void SetupUpdateCommand(
+		public void SetupUpdateAsync(
 			UpdatePostCommentCommandRequest request,
 			PostComment postComment,
 			CancellationToken cancellationToken)
 		{
 			commentService
-				.UpdateAsync(PostCommentMatcher.IsUpdatePostCommentCommand(request), cancellationToken)
-				.ReturnsResponse(postComment.ToResponse(request));
+				.ClearCalls()
+				.UpdateAsync(PostCommentApplicationMatcher.IsUpdatePostCommentCommand(request), cancellationToken)
+				.ReturnsTaskResponse(postComment.ToResponse(request));
 		}
 	}
 }

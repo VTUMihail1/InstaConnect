@@ -11,8 +11,8 @@ public static class CommonCollectionFiltering
 		where TEntity : IEntity
 	{
 		public IDictionary<TKey, TEntity> FilterToDictionary<TRequest, TKey>(
-			Func<TEntity, bool> filter,
 			TRequest request,
+			Func<TEntity, bool> filter,
 			Func<TEntity, TKey> entityKey)
 			where TRequest : IPaginatableApiRequest
 			where TKey : notnull
@@ -28,8 +28,8 @@ public static class CommonCollectionFiltering
 		}
 
 		public ICollection<TEntity> Filter<TRequest>(
-			ISortEnumTermTransformer<TEntity> termTransformer,
 			TRequest request,
+			ISortEnumTermTransformer<TEntity> termTransformer,
 			Func<TEntity, bool> filter)
 			where TRequest : IPaginatableApiRequest
 		{
@@ -45,8 +45,8 @@ public static class CommonCollectionFiltering
 		}
 
 		public ICollection<TResponse> Filter<TRequest, TResponse>(
-			Func<TEntity, bool> filter,
 			TRequest request,
+			Func<TEntity, bool> filter,
 			Func<TEntity, TResponse> select)
 			where TRequest : IPaginatableApiRequest
 		{

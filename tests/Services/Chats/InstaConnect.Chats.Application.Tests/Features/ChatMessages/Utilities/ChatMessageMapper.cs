@@ -10,12 +10,6 @@ public static class ChatMessageMapper
 {
 	extension(ChatMessage chatMessage)
 	{
-		internal ChatMessageId ToIdResponse(
-)
-		{
-			return chatMessage.Id;
-		}
-
 		internal ChatMessageResponse ToFullResponse()
 		{
 			return new(chatMessage.Id,
@@ -52,13 +46,13 @@ public static class ChatMessageMapper
 		public ChatMessageId ToResponse(
 			AddChatMessageCommandRequest request)
 		{
-			return chatMessage.ToIdResponse();
+			return chatMessage.ToId();
 		}
 
 		public ChatMessageId ToResponse(
 			UpdateChatMessageCommandRequest request)
 		{
-			return chatMessage.ToIdResponse();
+			return chatMessage.ToId();
 		}
 
 		public ChatMessageResponse ToResponse(
@@ -71,18 +65,18 @@ public static class ChatMessageMapper
 	extension(ICollection<ChatMessage> chatMessages)
 	{
 		internal ChatMessageCollectionResponse ToResponseWithoutSender<TRequest>(
+		TRequest request,
 		Chat chat,
-		Func<ChatMessage, TRequest, bool> filter,
-		Func<ChatMessage, TRequest, ChatMessageResponse> transform,
-		TRequest request)
+		Func<TRequest, ChatMessage, bool> filter,
+		Func<TRequest, ChatMessage, ChatMessageResponse> transform)
 		where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = chatMessages.Count(chatMessage => filter(chatMessage, request));
+			var totalCount = chatMessages.Count(chatMessage => filter(request, chatMessage));
 
 			return new(chat.ToFullResponse(),
 					   null,
-					   chatMessages.Filter(chatMessage => filter(chatMessage, request), request, chatMessage => transform(chatMessage, request)),
+					   chatMessages.Filter(request, chatMessage => filter(request, chatMessage), chatMessage => transform(request, chatMessage)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -91,18 +85,18 @@ public static class ChatMessageMapper
 		}
 
 		internal ChatMessageCollectionResponse ToResponseWithoutChat<TRequest>(
+			TRequest request,
 			User user,
-			Func<ChatMessage, TRequest, bool> filter,
-			Func<ChatMessage, TRequest, ChatMessageResponse> transform,
-			TRequest request)
+			Func<TRequest, ChatMessage, bool> filter,
+			Func<TRequest, ChatMessage, ChatMessageResponse> transform)
 			where TRequest : ICurrentUserableQueryRequest, IPaginatableQueryRequest
 		{
 			var paginator = new Paginator();
-			var totalCount = chatMessages.Count(chatMessage => filter(chatMessage, request));
+			var totalCount = chatMessages.Count(chatMessage => filter(request, chatMessage));
 
 			return new(null,
 					   user.ToFullResponse(),
-					   chatMessages.Filter(chatMessage => filter(chatMessage, request), request, chatMessage => transform(chatMessage, request)),
+					   chatMessages.Filter(request, chatMessage => filter(request, chatMessage), chatMessage => transform(request, chatMessage)),
 					   request.Page,
 					   request.PageSize,
 					   totalCount,
@@ -111,13 +105,14 @@ public static class ChatMessageMapper
 		}
 
 		public ChatMessageCollectionResponse ToResponse(
-			Chat chat,
-			GetAllChatMessagesQueryRequest request)
+			GetAllChatMessagesQueryRequest request,
+			Chat chat)
 		{
-			return chatMessages.ToResponseWithoutSender(chat,
-													  (chatMessage, request) => chatMessage.MatchesFilter(request),
-													  (chatMessage, request) => chatMessage.ToResponseWithoutChat(),
-													  request);
+			return chatMessages.ToResponseWithoutSender(
+													  request,
+													  chat,
+													  (request, chatMessage) => chatMessage.MatchesFilter(request),
+													  (request, chatMessage) => chatMessage.ToResponseWithoutChat());
 		}
 	}
 }

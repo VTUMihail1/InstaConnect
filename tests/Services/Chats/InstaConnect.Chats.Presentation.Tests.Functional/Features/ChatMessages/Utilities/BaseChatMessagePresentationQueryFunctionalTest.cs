@@ -5,10 +5,10 @@ namespace InstaConnect.Chats.Presentation.Tests.Functional.Features.ChatMessages
 
 public abstract class BaseChatMessagePresentationQueryFunctionalTest : BaseChatMessageWebTest
 {
-	protected IChatMessageClient HttpClient { get; }
+	protected IChatMessageApiClient ApiClient { get; }
 
 	protected BaseChatMessagePresentationQueryFunctionalTest(ChatsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
-		HttpClient = webApplicationFactory.CreateChatMessageClient();
+		ApiClient = webApplicationFactory.CreateMessageApiClient();
 	}
 }

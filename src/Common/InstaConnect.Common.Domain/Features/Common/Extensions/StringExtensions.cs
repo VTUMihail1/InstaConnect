@@ -5,8 +5,33 @@ namespace InstaConnect.Common.Domain.Features.Common.Extensions;
 
 public static class StringExtensions
 {
+	extension(string? str)
+	{
+		public bool EqualsOrdinalIgnoreCase(string? b)
+		{
+			return string.Equals(str, b, StringComparison.OrdinalIgnoreCase);
+		}
+
+		public bool IsNullOrEmptyOrWhiteSpace()
+		{
+			return string.IsNullOrEmpty(str) || string.IsNullOrWhiteSpace(str);
+		}
+
+		public bool IsNotNullOrEmptyOrWhiteSpace()
+		{
+			return !IsNullOrEmptyOrWhiteSpace(str);
+		}
+	}
+
 	extension(string str)
 	{
+		public string TrimStartSlash()
+		{
+			const char Slash = '/';
+
+			return str.TrimStart(Slash);
+		}
+
 		public string FormatCurrentCulture(params object?[] args)
 		{
 			return string.Format(CultureInfo.CurrentCulture, str, args);
@@ -33,7 +58,7 @@ public static class StringExtensions
 			const string OldCharsRegex = "([a-z])([A-Z])";
 			const string NewCharsRegex = "$1 $2";
 
-			return Regex.Replace(str, OldCharsRegex, NewCharsRegex);
+			return Regex.Replace(str, OldCharsRegex, NewCharsRegex, RegexOptions.None, TimeSpan.FromSeconds(1));
 		}
 
 		public string ToCamelCase()
@@ -56,11 +81,6 @@ public static class StringExtensions
 			return str.ToUpper(CultureInfo.CurrentCulture);
 		}
 
-		public bool EqualsOrdinalIgnoreCase(string? b)
-		{
-			return string.Equals(str, b, StringComparison.OrdinalIgnoreCase);
-		}
-
 		public bool StartsWithOrdinalIgnoreCase(string? b)
 		{
 			return str.StartsWith(b ?? string.Empty, StringComparison.OrdinalIgnoreCase);
@@ -69,16 +89,6 @@ public static class StringExtensions
 		public bool NotEqualsOrdinalIgnoreCase(string? b)
 		{
 			return !str.EqualsOrdinalIgnoreCase(b);
-		}
-
-		public bool IsNullOrEmptyOrWhiteSpace()
-		{
-			return string.IsNullOrEmpty(str) || string.IsNullOrWhiteSpace(str);
-		}
-
-		public bool IsNotNullOrEmptyOrWhiteSpace()
-		{
-			return !IsNullOrEmptyOrWhiteSpace(str);
 		}
 	}
 }

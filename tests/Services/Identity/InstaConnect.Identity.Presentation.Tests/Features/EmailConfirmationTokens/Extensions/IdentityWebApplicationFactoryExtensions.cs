@@ -1,5 +1,5 @@
 using InstaConnect.Identity.Presentation.Tests.Features.EmailConfirmationTokens.Abstractions;
-using InstaConnect.Identity.Presentation.Tests.Features.EmailConfirmationTokens.Utilities;
+using InstaConnect.Identity.Presentation.Tests.Features.EmailConfirmationTokens.Helpers;
 using InstaConnect.Identity.Tests.Features.Common.Utilities;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.EmailConfirmationTokens.Extensions;
@@ -8,9 +8,9 @@ public static class IdentityWebApplicationFactoryExtensions
 {
 	extension(IdentityWebApplicationFactory webApplicationFactory)
 	{
-		public IEmailConfirmationTokenClient CreateEmailConfirmationTokenClient()
+		public IEmailConfirmationTokenApiClient CreateEmailConfirmationTokenApiClient()
 		{
-			return new EmailConfirmationTokenClient(webApplicationFactory.CreateClient());
+			return new EmailConfirmationTokenApiClient(webApplicationFactory.CreateClient());
 		}
 	}
 }

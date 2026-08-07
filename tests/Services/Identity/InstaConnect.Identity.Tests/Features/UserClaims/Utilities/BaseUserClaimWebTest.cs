@@ -10,25 +10,21 @@ public abstract class BaseUserClaimWebTest : BaseUserClaimTest, IClassFixture<Id
 {
 	protected IServiceScope ServiceScope { get; }
 
-	protected IEventHarness EventHarness { get; }
-
 	protected BaseUserClaimWebTest(IdentityWebApplicationFactory webApplicationFactory) : base(webApplicationFactory.Services.GetPasswordHasher())
 	{
 		ServiceScope = webApplicationFactory.Services.CreateScope();
-		EventHarness = ServiceScope.GetEventHarness();
 	}
 
 	public async Task InitializeAsync()
 	{
-		await EventHarness.StartAsync(CancellationToken);
-		await ServiceScope.ResetIdentityDatabase(CancellationToken);
+		await ServiceScope.ResetIdentityDatabaseAsync(CancellationToken);
 		await OnInitializeAsync();
 	}
 
 	public async Task DisposeAsync()
 	{
-		await ServiceScope.ResetIdentityDatabase(CancellationToken);
-		await EventHarness.StopAsync(CancellationToken);
+		await OnDisposeAsync();
+		await ServiceScope.ResetIdentityDatabaseAsync(CancellationToken);
 	}
 
 	protected virtual Task OnInitializeAsync()

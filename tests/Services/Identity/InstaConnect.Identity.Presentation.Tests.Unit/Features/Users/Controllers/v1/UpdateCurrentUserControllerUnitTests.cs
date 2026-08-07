@@ -16,7 +16,7 @@ public class UpdateCurrentUserControllerUnitTests : BaseUserPresentationCommandU
 
 		_controller = new(Mapper, Sender);
 
-		Sender.SetupUpdateCurrentCommandRequest(_request, User, CancellationToken);
+		Sender.SetupSendAsync(_request, User, CancellationToken);
 	}
 
 	[Fact]
@@ -36,7 +36,7 @@ public class UpdateCurrentUserControllerUnitTests : BaseUserPresentationCommandU
 		var response = await _controller.UpdateCurrentAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, _request);
+		response.ShouldSatisfy(_request, User);
 	}
 
 	[Fact]

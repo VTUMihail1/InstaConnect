@@ -4,14 +4,15 @@ public static class EmailConfirmationTokenMockSetups
 {
 	extension(IEmailConfirmationTokenCommandService service)
 	{
-		public void SetupAddCommand(
+		public void SetupAddAsync(
 			AddEmailConfirmationTokenCommandRequest request,
 			EmailConfirmationToken emailConfirmationToken,
 			CancellationToken cancellationToken)
 		{
 			service
-				.AddAsync(EmailConfirmationTokenMatcher.IsAddEmailConfirmationTokenCommand(request), cancellationToken)
-				.ReturnsResponse(emailConfirmationToken.ToResponse(request));
+				.ClearCalls()
+				.AddAsync(EmailConfirmationTokenApplicationMatcher.IsAddEmailConfirmationTokenCommand(request), cancellationToken)
+				.ReturnsTaskResponse(emailConfirmationToken.ToResponse(request));
 		}
 	}
 }

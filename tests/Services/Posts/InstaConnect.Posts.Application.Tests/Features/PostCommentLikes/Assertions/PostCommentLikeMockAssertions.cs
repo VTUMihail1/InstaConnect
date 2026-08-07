@@ -10,21 +10,21 @@ public static class PostCommentLikeMockAssertions
 		{
 			await postCommentLikeService.ShouldHaveReceivedOne()
 
-				.GetAllAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesQuery(request), cancellationToken);
+				.GetAllAsync(PostCommentLikeApplicationMatcher.IsGetAllPostCommentLikesQuery(request), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneGetAllForUserAsync(GetAllPostCommentLikesForUserQueryRequest request, CancellationToken cancellationToken)
 		{
 			await postCommentLikeService.ShouldHaveReceivedOne()
 
-				.GetAllForUserAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesForUserQuery(request), cancellationToken);
+				.GetAllForUserAsync(PostCommentLikeApplicationMatcher.IsGetAllPostCommentLikesForUserQuery(request), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneGetByIdAsync(GetPostCommentLikeByIdQueryRequest request, CancellationToken cancellationToken)
 		{
 			await postCommentLikeService.ShouldHaveReceivedOne()
 
-				.GetByIdAsync(PostCommentLikeMatcher.IsGetPostCommentLikeByIdQuery(request), cancellationToken);
+				.GetByIdAsync(PostCommentLikeApplicationMatcher.IsGetPostCommentLikeByIdQuery(request), cancellationToken);
 		}
 	}
 
@@ -34,14 +34,14 @@ public static class PostCommentLikeMockAssertions
 		{
 			await postCommentLikeService.ShouldHaveReceivedOne()
 
-				.AddAsync(PostCommentLikeMatcher.IsAddPostCommentLikeCommand(request), cancellationToken);
+				.AddAsync(PostCommentLikeApplicationMatcher.IsAddPostCommentLikeCommand(request), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneDeleteAsync(DeletePostCommentLikeCommandRequest request, CancellationToken cancellationToken)
 		{
 			await postCommentLikeService.ShouldHaveReceivedOne()
 
-				.DeleteAsync(PostCommentLikeMatcher.IsDeletePostCommentLikeCommand(request), cancellationToken);
+				.DeleteAsync(PostCommentLikeApplicationMatcher.IsDeletePostCommentLikeCommand(request), cancellationToken);
 		}
 	}
 }

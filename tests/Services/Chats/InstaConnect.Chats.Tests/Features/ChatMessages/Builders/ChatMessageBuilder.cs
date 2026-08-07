@@ -24,7 +24,7 @@ public class ChatMessageBuilder
 		_sender = chat.ParticipantOne!;
 		_content = ChatMessageDataFaker.GetContent();
 		_createdAtUtc = ChatMessageDataFaker.GetCreatedAtUtc();
-		_updatedAtUtc = ChatMessageDataFaker.GetUpdatedAtUtc();
+		_updatedAtUtc = _createdAtUtc;
 	}
 
 	public ChatMessageBuilder WithSenderId(UserId senderId)

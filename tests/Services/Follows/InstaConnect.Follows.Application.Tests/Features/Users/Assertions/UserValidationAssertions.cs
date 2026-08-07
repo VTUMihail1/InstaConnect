@@ -2,124 +2,124 @@ namespace InstaConnect.Follows.Application.Tests.Features.Users.Assertions;
 
 public static class UserValidationAssertions
 {
-	extension(TestValidationResult<UpdateUserCommandRequest> result)
+	extension(TestValidationResult<UpdateUserCommandRequest> response)
 	{
 		public void ShouldHaveValidationErrorForId(
-			IStringMessageTransformer messageTransformer,
-			UpdateUserCommandRequest value)
+			UpdateUserCommandRequest value,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Id, messageTransformer, value);
+			response.ShouldHaveValidationErrorForProperty(value, p => p.Id, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForName(
-			IStringMessageTransformer messageTransformer,
-			UpdateUserCommandRequest value)
+			UpdateUserCommandRequest value,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Name, messageTransformer, value);
+			response.ShouldHaveValidationErrorForProperty(value, p => p.Name, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForFirstName(
-			IStringMessageTransformer messageTransformer,
-			UpdateUserCommandRequest value)
+			UpdateUserCommandRequest value,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.FirstName, messageTransformer, value);
+			response.ShouldHaveValidationErrorForProperty(value, p => p.FirstName, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForLastName(
-			IStringMessageTransformer messageTransformer,
-			UpdateUserCommandRequest value)
+			UpdateUserCommandRequest value,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.LastName, messageTransformer, value);
+			response.ShouldHaveValidationErrorForProperty(value, p => p.LastName, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForEmail(
-			IStringMessageTransformer messageTransformer,
-			UpdateUserCommandRequest value)
+			UpdateUserCommandRequest value,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Email, messageTransformer, value);
+			response.ShouldHaveValidationErrorForProperty(value, p => p.Email, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForProfileImage(
-			IStringMessageTransformer messageTransformer,
-			UpdateUserCommandRequest value)
+			UpdateUserCommandRequest value,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.ProfileImageUrl, messageTransformer!, value);
+			response.ShouldHaveValidationErrorForProperty(value, p => p.ProfileImageUrl, messageTransformer!);
 		}
 
 		public void ShouldHaveValidationErrorForUpdatedAtUtc(
-			IDateTimeOffsetMessageTransformer messageTransformer,
-			UpdateUserCommandRequest value)
+			UpdateUserCommandRequest value,
+			IDateTimeOffsetMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.UpdatedAtUtc, messageTransformer, value);
+			response.ShouldHaveValidationErrorForProperty(value, p => p.UpdatedAtUtc, messageTransformer);
 		}
 	}
 
-	extension(TestValidationResult<DeleteUserCommandRequest> result)
+	extension(TestValidationResult<DeleteUserCommandRequest> response)
 	{
 		public void ShouldHaveValidationErrorForId(
-			IStringMessageTransformer messageTransformer,
-			DeleteUserCommandRequest value)
+			DeleteUserCommandRequest value,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Id, messageTransformer, value);
+			response.ShouldHaveValidationErrorForProperty(value, p => p.Id, messageTransformer);
 		}
 	}
 
-	extension(TestValidationResult<AddUserCommandRequest> result)
+	extension(TestValidationResult<AddUserCommandRequest> response)
 	{
 		public void ShouldHaveValidationErrorForId(
-			IStringMessageTransformer messageTransformer,
-			AddUserCommandRequest value)
+			AddUserCommandRequest value,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Id, messageTransformer, value);
+			response.ShouldHaveValidationErrorForProperty(value, p => p.Id, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForName(
-			IStringMessageTransformer messageTransformer,
-			AddUserCommandRequest value)
+			AddUserCommandRequest value,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Name, messageTransformer, value);
+			response.ShouldHaveValidationErrorForProperty(value, p => p.Name, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForFirstName(
-			IStringMessageTransformer messageTransformer,
-			AddUserCommandRequest value)
+			AddUserCommandRequest value,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.FirstName, messageTransformer, value);
+			response.ShouldHaveValidationErrorForProperty(value, p => p.FirstName, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForLastName(
-			IStringMessageTransformer messageTransformer,
-			AddUserCommandRequest value)
+			AddUserCommandRequest value,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.LastName, messageTransformer, value);
+			response.ShouldHaveValidationErrorForProperty(value, p => p.LastName, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForEmail(
-			IStringMessageTransformer messageTransformer,
-			AddUserCommandRequest value)
+			AddUserCommandRequest value,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Email, messageTransformer, value);
+			response.ShouldHaveValidationErrorForProperty(value, p => p.Email, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForProfileImage(
-			IStringMessageTransformer messageTransformer,
-			AddUserCommandRequest value)
+			AddUserCommandRequest value,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.ProfileImageUrl, messageTransformer!, value);
+			response.ShouldHaveValidationErrorForProperty(value, p => p.ProfileImageUrl, messageTransformer!);
 		}
 
 		public void ShouldHaveValidationErrorForCreatedAtUtc(
-			IDateTimeOffsetMessageTransformer messageTransformer,
-			AddUserCommandRequest value)
+			AddUserCommandRequest value,
+			IDateTimeOffsetMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.CreatedAtUtc, messageTransformer, value);
+			response.ShouldHaveValidationErrorForProperty(value, p => p.CreatedAtUtc, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForUpdatedAtUtc(
-			IDateTimeOffsetMessageTransformer messageTransformer,
-			AddUserCommandRequest value)
+			AddUserCommandRequest value,
+			IDateTimeOffsetMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.UpdatedAtUtc, messageTransformer, value);
+			response.ShouldHaveValidationErrorForProperty(value, p => p.UpdatedAtUtc, messageTransformer);
 		}
 	}
 }

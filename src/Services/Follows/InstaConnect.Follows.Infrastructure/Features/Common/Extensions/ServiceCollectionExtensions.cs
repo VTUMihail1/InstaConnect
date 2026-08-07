@@ -1,5 +1,3 @@
-using System.Reflection;
-
 using InstaConnect.Common.Domain.Features.Mappers.Extensions;
 using InstaConnect.Common.Infrastructure.Extensions;
 using InstaConnect.Follows.Infrastructure.Features.Common.Utilities;
@@ -14,8 +12,7 @@ public static class ServiceCollectionExtensions
 	{
 		public IServiceCollection AddInfrastructure(
 			IConfiguration configuration,
-			IWebHostEnvironment webHostEnvironment,
-			Assembly presentationAssembly)
+			IWebHostEnvironment webHostEnvironment)
 		{
 			serviceCollection
 				.AddUserServices()
@@ -26,7 +23,7 @@ public static class ServiceCollectionExtensions
 				.AddMapper(FollowsInfrastructureReference.Assembly)
 				.AddServicesWithMatchingInterfaces(FollowsInfrastructureReference.Assembly)
 				.AddMongo<IFollowsContext>(configuration)
-				.AddRabbitMQ(configuration, FollowsEventHandlerUtilities.Prefix, presentationAssembly)
+				.AddRabbitMQ(configuration, FollowsEventHandlerUtilities.Prefix, FollowsInfrastructureReference.Assembly)
 				.AddJwtBearer(configuration)
 				.AddRedis(configuration)
 				.AddSignalR(configuration)

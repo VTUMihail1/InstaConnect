@@ -16,7 +16,7 @@ public class GetCurrentUserDetailsByIdControllerUnitTests : BaseUserPresentation
 
 		_controller = new(Mapper, Sender);
 
-		Sender.SetupGetCurrentDetailsByIdQueryRequest(_request, User, CancellationToken);
+		Sender.SetupSendAsync(_request, User, CancellationToken);
 	}
 
 	[Fact]
@@ -36,7 +36,7 @@ public class GetCurrentUserDetailsByIdControllerUnitTests : BaseUserPresentation
 		var response = await _controller.GetCurrentDetailsByIdAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, _request);
+		response.ShouldSatisfy(_request, User);
 	}
 
 	[Fact]

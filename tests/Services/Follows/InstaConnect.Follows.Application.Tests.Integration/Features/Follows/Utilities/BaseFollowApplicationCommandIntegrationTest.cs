@@ -8,22 +8,28 @@ public abstract class BaseFollowApplicationCommandIntegrationTest : BaseFollowWe
 {
 	protected IApplicationSender Sender { get; }
 
+	protected IFollowEventClient EventClient { get; }
+
 	protected IFollowNotificationClient NotificationClient { get; }
 
 	protected BaseFollowApplicationCommandIntegrationTest(FollowsWebApplicationFactory webApplicationFactory)
 		: base(webApplicationFactory)
 	{
 		Sender = ServiceScope.GetSender();
-		NotificationClient = webApplicationFactory.CreateFollowNotificationClient(Following.Id);
+		EventClient = webApplicationFactory.CreateEventClient();
+		NotificationClient = webApplicationFactory.CreateNotificationClient(Following.Id);
 	}
 
 	protected override async Task OnInitializeAsync()
 	{
-		await NotificationClient.ConnectAsync(CancellationToken);
+		await base.OnInitializeAsync();
+		await EventClient.StartAsync(CancellationToken);
+		await NotificationClient.StartAsync(CancellationToken);
 	}
 
 	protected override async Task OnDisposeAsync()
 	{
-		await NotificationClient.DisconnectAsync(CancellationToken);
+		await EventClient.StopAsync(CancellationToken);
+		await NotificationClient.StopAsync(CancellationToken);
 	}
 }

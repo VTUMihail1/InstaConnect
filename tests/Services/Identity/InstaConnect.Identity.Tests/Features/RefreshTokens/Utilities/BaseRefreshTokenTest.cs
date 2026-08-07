@@ -14,6 +14,8 @@ public abstract class BaseRefreshTokenTest : BaseTest
 	protected string Password { get; }
 	protected string NewPassword { get; }
 	protected IFormFile ProfileImage { get; }
+	protected DateTimeOffset ExpiredDate { get; }
+	protected DateTimeOffset UnexpiredDate { get; }
 
 	protected UserBuilderFactory UserBuilderFactory { get; }
 	protected UserBuilder UserBuilder { get; }
@@ -53,6 +55,9 @@ public abstract class BaseRefreshTokenTest : BaseTest
 		RefreshTokenBuilder = RefreshTokenBuilderFactory.Create(User);
 		RefreshToken = RefreshTokenBuilder.Build();
 		RefreshTokens = RefreshToken.Generate(Users);
+
+		ExpiredDate = RefreshTokenDataFaker.GetExpired(RefreshToken.ExpiresAtUtc);
+		UnexpiredDate = RefreshTokenDataFaker.GetUnexpired(RefreshToken.ExpiresAtUtc);
 
 		CancellationToken = MockFactory.CreateCancellationToken();
 	}

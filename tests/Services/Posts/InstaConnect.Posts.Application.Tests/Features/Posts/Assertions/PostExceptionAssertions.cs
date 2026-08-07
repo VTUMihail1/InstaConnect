@@ -1,7 +1,4 @@
 using InstaConnect.Common.Application.Features.Messaging.Abstractions;
-using InstaConnect.Posts.Domain.Features.Posts.Exceptions;
-
-using MediatR;
 
 namespace InstaConnect.Posts.Application.Tests.Features.Posts.Assertions;
 
@@ -13,9 +10,11 @@ public static class PostExceptionAssertions
 		GetAllPostsForUserQueryRequest request,
 		CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowUserNotFoundExceptionAsync<GetAllPostsForUserQueryRequest, GetAllPostsForUserQueryResponse>(
-				r => r.UserId,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowUserNotFoundExceptionAsync(
 				request,
+				r => r.UserId,
 				cancellationToken);
 		}
 
@@ -23,9 +22,11 @@ public static class PostExceptionAssertions
 			AddPostCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowUserNotFoundExceptionAsync<AddPostCommandRequest, AddPostCommandResponse>(
-				r => r.UserId,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowUserNotFoundExceptionAsync(
 				request,
+				r => r.UserId,
 				cancellationToken);
 		}
 
@@ -33,9 +34,11 @@ public static class PostExceptionAssertions
 			UpdatePostCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowPostNotFoundExceptionAsync<UpdatePostCommandRequest, UpdatePostCommandResponse>(
-				r => r.Id,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowPostNotFoundExceptionAsync(
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 
@@ -43,9 +46,11 @@ public static class PostExceptionAssertions
 			GetPostByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowPostNotFoundExceptionAsync<GetPostByIdQueryRequest, GetPostByIdQueryResponse>(
-				r => r.Id,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowPostNotFoundExceptionAsync(
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 
@@ -53,9 +58,11 @@ public static class PostExceptionAssertions
 			DeletePostCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowPostNotFoundExceptionAsync(
-				r => r.Id,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowPostNotFoundExceptionAsync(
 				request,
+				r => r.Id,
 				cancellationToken);
 		}
 
@@ -63,10 +70,12 @@ public static class PostExceptionAssertions
 			UpdatePostCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowPostForbiddenExceptionAsync<UpdatePostCommandRequest, UpdatePostCommandResponse>(
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowPostForbiddenExceptionAsync(
+				request,
 				r => r.Id,
 				r => r.UserId,
-				request,
 				cancellationToken);
 		}
 
@@ -74,60 +83,12 @@ public static class PostExceptionAssertions
 			DeletePostCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowPostForbiddenExceptionAsync(
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowPostForbiddenExceptionAsync(
+				request,
 				r => r.Id,
 				r => r.UserId,
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowPostNotFoundExceptionAsync<TRequest>(
-			Func<TRequest, string> idPropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest
-		{
-			await sender.ShouldThrowAsync<PostNotFoundException, TRequest>(
-				PostExceptionErrorMessages.GetNotFoundMessage(new(idPropertyExpression(request))),
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowPostNotFoundExceptionAsync<TRequest, TResponse>(
-			Func<TRequest, string> idPropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest<TResponse>
-		{
-			await sender.ShouldThrowAsync<PostNotFoundException, TRequest, TResponse>(
-				PostExceptionErrorMessages.GetNotFoundMessage(new(idPropertyExpression(request))),
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowPostForbiddenExceptionAsync<TRequest>(
-			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> userIdPropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest
-		{
-			await sender.ShouldThrowAsync<PostForbiddenException, TRequest>(
-				PostExceptionErrorMessages.GetForbiddenMessage(new(idPropertyExpression(request)), new(userIdPropertyExpression(request))),
-				request,
-				cancellationToken);
-		}
-
-		internal async Task ShouldThrowPostForbiddenExceptionAsync<TRequest, TResponse>(
-			Func<TRequest, string> idPropertyExpression,
-			Func<TRequest, string> userIdPropertyExpression,
-			TRequest request,
-			CancellationToken cancellationToken)
-			where TRequest : IRequest<TResponse>
-		{
-			await sender.ShouldThrowAsync<PostForbiddenException, TRequest, TResponse>(
-				PostExceptionErrorMessages.GetForbiddenMessage(new(idPropertyExpression(request)), new(userIdPropertyExpression(request))),
-				request,
 				cancellationToken);
 		}
 	}

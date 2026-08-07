@@ -14,9 +14,7 @@ internal class TooShortStringTransformer : IStringTransformer
 
 	public string Transform(string? value)
 	{
-		var result = DataFaker.GetString(_minLength.Decrement());
-
-		return result;
+		return DataFaker.GetString(_minLength.Decrement());
 	}
 }
 
