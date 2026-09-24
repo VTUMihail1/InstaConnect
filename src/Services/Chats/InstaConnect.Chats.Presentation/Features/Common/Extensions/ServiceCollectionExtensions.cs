@@ -25,11 +25,11 @@ public static class ServiceCollectionExtensions
 				.AddValidatedOptions<MainOptions>(MainOptions.SectionName)
 				.AddServicesWithMatchingInterfaces(ChatsPresentationReference.Assembly)
 				.AddApiControllers()
-				.AddMapper(ChatsPresentationReference.Assembly, CommonPresentationReference.Assembly)
+				.AddMappers(ChatsPresentationReference.Assembly, CommonPresentationReference.Assembly)
 				.AddAuthorizationPolicies()
 				.AddCorsPolicies(configuration)
 				.AddRateLimiterPolicies()
-				.AddExceptionHandler();
+				.AddExceptions();
 
 			return serviceCollection;
 		}

@@ -38,7 +38,7 @@ public abstract class MongoDbContext : IMongoDbContext
 
 	public async Task CommitAsync(CancellationToken cancellationToken)
 	{
-		if (_clientSessionHandle.IsNotInTransaction())
+		if (_clientSessionHandle.HasNoActiveTransaction())
 		{
 			return;
 		}
@@ -48,7 +48,7 @@ public abstract class MongoDbContext : IMongoDbContext
 
 	public async Task AbortAsync(CancellationToken cancellationToken)
 	{
-		if (_clientSessionHandle.IsNotInTransaction())
+		if (_clientSessionHandle.HasNoActiveTransaction())
 		{
 			return;
 		}

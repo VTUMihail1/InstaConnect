@@ -29,11 +29,11 @@ public static class ServiceCollectionExtensions
 				.AddValidatedOptions<MainOptions>(MainOptions.SectionName)
 				.AddServicesWithMatchingInterfaces(PostsPresentationReference.Assembly)
 				.AddApiControllers()
-				.AddMapper(PostsPresentationReference.Assembly, CommonPresentationReference.Assembly)
+				.AddMappers(PostsPresentationReference.Assembly, CommonPresentationReference.Assembly)
 				.AddAuthorizationPolicies()
 				.AddCorsPolicies(configuration)
 				.AddRateLimiterPolicies()
-				.AddExceptionHandler();
+				.AddExceptions();
 
 			return serviceCollection;
 		}

@@ -21,7 +21,7 @@ public static class ServiceCollectionExtensions
 				.AddEmailConfirmationTokenServices();
 
 			serviceCollection
-				.AddMapper(IdentityDomainReference.Assembly, CommonDomainReference.Assembly)
+				.AddMappers(IdentityDomainReference.Assembly, CommonDomainReference.Assembly)
 				.AddServicesWithMatchingInterfaces(IdentityDomainReference.Assembly);
 
 			return serviceCollection;

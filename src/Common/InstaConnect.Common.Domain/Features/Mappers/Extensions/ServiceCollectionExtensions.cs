@@ -13,7 +13,7 @@ public static class ServiceCollectionExtensions
 {
 	extension(IServiceCollection serviceCollection)
 	{
-		public IServiceCollection AddMapper(params Assembly[] assemblies)
+		public IServiceCollection AddMappers(params Assembly[] assemblies)
 		{
 			serviceCollection.AddMapster();
 

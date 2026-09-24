@@ -37,8 +37,8 @@ internal class UserQueryRepository : IUserQueryRepository
 			.AggregateWithCaseInsensitiveCollation()
 			.Match(filter)
 			.ProjectToFullResponse(current)
-			.Sort(_sortOrdererFactory, _sortTermerFactory, sorting)
-			.Paginate(_paginator, pagination)
+			.ApplySorting(_sortOrdererFactory, _sortTermerFactory, sorting)
+			.ApplyPagination(_paginator, pagination)
 			.ToListAsync(cancellationToken);
 	}
 

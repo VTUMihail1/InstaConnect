@@ -35,7 +35,7 @@ internal class UserCommandRepository : IUserCommandRepository
 		return await _context
 			.Users
 			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_includePropertyFactory, include)
+			.ApplyIncludes(_includePropertyFactory, include)
 			.Match(id)
 			.FirstOrDefaultAsync(cancellationToken);
 	}
@@ -66,7 +66,7 @@ internal class UserCommandRepository : IUserCommandRepository
 		return await _context
 			.Users
 			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_includePropertyFactory, include)
+			.ApplyIncludes(_includePropertyFactory, include)
 			.Match(name)
 			.FirstOrDefaultAsync(cancellationToken);
 	}
@@ -97,7 +97,7 @@ internal class UserCommandRepository : IUserCommandRepository
 		return await _context
 			.Users
 			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_includePropertyFactory, include)
+			.ApplyIncludes(_includePropertyFactory, include)
 			.Match(email)
 			.FirstOrDefaultAsync(cancellationToken);
 	}

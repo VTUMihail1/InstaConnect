@@ -26,7 +26,7 @@ internal class RefreshTokenCommandRepository : IRefreshTokenCommandRepository
 		return await _context
 			.RefreshTokens
 			.Aggregate()
-			.Includes(_refreshTokenIncluderFactory, include)
+			.ApplyIncludes(_refreshTokenIncluderFactory, include)
 			.Match(id)
 			.FirstOrDefaultAsync(cancellationToken);
 	}

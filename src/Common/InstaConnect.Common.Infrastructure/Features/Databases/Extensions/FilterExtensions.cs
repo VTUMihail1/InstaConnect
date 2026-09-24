@@ -10,44 +10,44 @@ public static class FilterExtensions
 {
 	extension<T>(FilterDefinitionBuilder<T> builder)
 	{
-		public FilterDefinition<T> EqualsCaseInsensitive(Expression<Func<T, object>> field, object value, bool isEmpty = false)
+		public FilterDefinition<T> EqualsIgnoreCase(Expression<Func<T, object>> field, string value, bool isEmpty = false)
 		{
 			if (isEmpty)
 			{
 				return builder.Empty;
 			}
 
-			return builder.Regex(field, value.GetEqualsCaseInsensitiveRegex());
+			return builder.Regex(field, value.ToEqualsIgnoreCaseRegex());
 		}
 
-		public FilterDefinition<T> StartsWithCaseInsensitive(Expression<Func<T, object>> field, object value, bool isEmpty = false)
+		public FilterDefinition<T> StartsWithIgnoreCase(Expression<Func<T, object>> field, string value, bool isEmpty = false)
 		{
 			if (isEmpty)
 			{
 				return builder.Empty;
 			}
 
-			return builder.Regex(field, value.GetStartsWithCaseInsensitiveRegex());
+			return builder.Regex(field, value.ToStartsWithIgnoreCaseRegex());
 		}
 
-		public FilterDefinition<T> EndsWithCaseInsensitive(Expression<Func<T, object>> field, object value, bool isEmpty = false)
+		public FilterDefinition<T> EndsWithIgnoreCase(Expression<Func<T, object>> field, string value, bool isEmpty = false)
 		{
 			if (isEmpty)
 			{
 				return builder.Empty;
 			}
 
-			return builder.Regex(field, value.GetEndsWithCaseInsensitiveRegex());
+			return builder.Regex(field, value.ToEndsWithIgnoreCaseRegex());
 		}
 
-		public FilterDefinition<T> ContainsCaseInsensitive(Expression<Func<T, object>> field, object value, bool isEmpty = false)
+		public FilterDefinition<T> ContainsIgnoreCase(Expression<Func<T, object>> field, string value, bool isEmpty = false)
 		{
 			if (isEmpty)
 			{
 				return builder.Empty;
 			}
 
-			return builder.Regex(field, value.GetContainsCaseInsensitiveRegex());
+			return builder.Regex(field, value.ToContainsIgnoreCaseRegex());
 		}
 	}
 
@@ -56,13 +56,13 @@ public static class FilterExtensions
 		public FilterDefinition<T> GetFilterForNameEquals(Expression<Func<T, object>> nameField)
 		{
 			return Builders<T>.Filter
-				.EqualsCaseInsensitive(nameField, filter.Value, filter.IsEmpty());
+				.EqualsIgnoreCase(nameField, filter.Value, filter.IsEmpty());
 		}
 
 		public FilterDefinition<T> GetFilterForNameStartsWith(Expression<Func<T, object>> nameField)
 		{
 			return Builders<T>.Filter
-				.StartsWithCaseInsensitive(nameField, filter.Value, filter.IsEmpty());
+				.StartsWithIgnoreCase(nameField, filter.Value, filter.IsEmpty());
 		}
 	}
 
@@ -71,7 +71,7 @@ public static class FilterExtensions
 		public FilterDefinition<T> GetFilterForEmailEquals(Expression<Func<T, object>> emailField)
 		{
 			return Builders<T>.Filter
-				.EqualsCaseInsensitive(emailField, filter.Value, filter.IsEmpty());
+				.EqualsIgnoreCase(emailField, filter.Value, filter.IsEmpty());
 		}
 	}
 }

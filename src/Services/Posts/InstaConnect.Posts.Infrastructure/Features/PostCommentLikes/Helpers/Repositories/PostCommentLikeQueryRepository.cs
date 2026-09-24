@@ -52,11 +52,11 @@ internal class PostCommentLikeQueryRepository : IPostCommentLikeQueryRepository
 		return await _context
 			.PostCommentLikes
 			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_commentLikeIncluderFactory, commentLikeInclude)
+			.ApplyIncludes(_commentLikeIncluderFactory, commentLikeInclude)
 			.Match(filter)
 			.ProjectToResponseWithoutPostComment(currentUser)
-			.Sort(_sortOrdererFactory, _commentLikeSortTermerFactory, sorting)
-			.Paginate(_paginator, pagination)
+			.ApplySorting(_sortOrdererFactory, _commentLikeSortTermerFactory, sorting)
+			.ApplyPagination(_paginator, pagination)
 			.ToListAsync(cancellationToken);
 	}
 
@@ -74,11 +74,11 @@ internal class PostCommentLikeQueryRepository : IPostCommentLikeQueryRepository
 		return await _context
 			.PostCommentLikes
 			.Aggregate()
-			.Includes(_commentLikeIncluderFactory, commentLikeInclude)
+			.ApplyIncludes(_commentLikeIncluderFactory, commentLikeInclude)
 			.Match(filter)
 			.ProjectToResponseWithoutUser(currentUser)
-			.Sort(_sortOrdererFactory, _commentLikeForUserSortTermerFactory, sorting)
-			.Paginate(_paginator, pagination)
+			.ApplySorting(_sortOrdererFactory, _commentLikeForUserSortTermerFactory, sorting)
+			.ApplyPagination(_paginator, pagination)
 			.ToListAsync(cancellationToken);
 	}
 
@@ -91,7 +91,7 @@ internal class PostCommentLikeQueryRepository : IPostCommentLikeQueryRepository
 		return await _context
 			.PostCommentLikes
 			.Aggregate()
-			.Includes(_commentLikeIncluderFactory, commentLikeInclude)
+			.ApplyIncludes(_commentLikeIncluderFactory, commentLikeInclude)
 			.Match(filter)
 			.GetCountAsync(cancellationToken);
 	}
@@ -107,7 +107,7 @@ internal class PostCommentLikeQueryRepository : IPostCommentLikeQueryRepository
 		return await _context
 			.PostCommentLikes
 			.Aggregate()
-			.Includes(_commentLikeIncluderFactory, commentLikeInclude)
+			.ApplyIncludes(_commentLikeIncluderFactory, commentLikeInclude)
 			.Match(filter)
 			.GetCountAsync(cancellationToken);
 	}
@@ -124,7 +124,7 @@ internal class PostCommentLikeQueryRepository : IPostCommentLikeQueryRepository
 		return await _context
 			.PostCommentLikes
 			.Aggregate()
-			.Includes(_commentLikeIncluderFactory, commentLikeInclude)
+			.ApplyIncludes(_commentLikeIncluderFactory, commentLikeInclude)
 			.Match(id)
 			.ProjectToFullResponse(currentUser)
 			.FirstOrDefaultAsync(cancellationToken);

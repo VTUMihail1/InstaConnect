@@ -27,7 +27,7 @@ internal class EmailConfirmationTokenCommandRepository : IEmailConfirmationToken
 		return await _context
 			.EmailConfirmationTokens
 			.Aggregate()
-			.Includes(_emailConfirmationTokenIncluderFactory, include)
+			.ApplyIncludes(_emailConfirmationTokenIncluderFactory, include)
 			.Match(id)
 			.FirstOrDefaultAsync(cancellationToken);
 	}

@@ -18,9 +18,9 @@ public static class ServiceCollectionExtensions
 				.AddEmailConfirmationTokenServices();
 
 			serviceCollection
-				.AddValidators(IdentityApplicationReference.Assembly)
-				.AddCQRS(IdentityApplicationReference.Assembly)
-				.AddMapper(IdentityApplicationReference.Assembly, CommonApplicationReference.Assembly);
+				.AddValidations(IdentityApplicationReference.Assembly)
+				.AddRequests(IdentityApplicationReference.Assembly)
+				.AddMappers(IdentityApplicationReference.Assembly, CommonApplicationReference.Assembly);
 
 			return serviceCollection;
 		}

@@ -2,13 +2,13 @@ using InstaConnect.Common.Infrastructure.Features.Seeders.Abstractions;
 
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Common.Infrastructure.Extensions;
+namespace InstaConnect.Common.Infrastructure.Features.Seeders.Extensions;
 
-public static partial class ServiceCollectionExtensions
+public static class ServiceCollectionExtensions
 {
 	extension(IServiceCollection serviceCollection)
 	{
-		public IServiceCollection AddDatabaseSeeder<TDatabaseSeeder>()
+		public IServiceCollection AddSeeders<TDatabaseSeeder>()
 			where TDatabaseSeeder : class, IDatabaseSeeder
 		{
 			serviceCollection.AddScoped<IDatabaseSeeder>(sp => sp.GetRequiredService<TDatabaseSeeder>());

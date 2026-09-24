@@ -32,12 +32,12 @@ internal static class ServiceCollectionExtensions
 				.AddValidatedOptions<MainOptions>(MainOptions.SectionName)
 				.AddServicesWithMatchingInterfaces(IdentityPresentationReference.Assembly)
 				.AddApiControllers()
-				.AddMapper(IdentityPresentationReference.Assembly, CommonPresentationReference.Assembly)
+				.AddMappers(IdentityPresentationReference.Assembly, CommonPresentationReference.Assembly)
 				.AddAuthorizationPolicies()
 				.AddCorsPolicies(configuration)
 				.AddRateLimiterPolicies()
-				.AddRazorEmailRenderer(IdentityPresentationReference.Assembly, RootNamespace)
-				.AddExceptionHandler();
+				.AddEmailRenderers(IdentityPresentationReference.Assembly, RootNamespace)
+				.AddExceptions();
 
 			serviceCollection.AddEndpointsApiExplorer();
 

@@ -20,7 +20,7 @@ public static class ChatsWebApplicationFactoryExtensions
 				.Value
 				.HubRoute;
 
-			var connection = webApplicationFactory.CreateHubConnection(participantTwoId.Id, hubRoute.TrimStartSlash());
+			var connection = webApplicationFactory.CreateHubConnection(participantTwoId.Id, hubRoute.TrimLeadingSlash());
 
 			return new ChatMessageNotificationClient(connection);
 		}

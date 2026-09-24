@@ -14,7 +14,7 @@ public static class WebHostBuilderExtensions
 		public void UpdateChatMessageConfiguration()
 		{
 			webHostBuilder.UseSetting(
-				ChatMessageOptions.SectionName.FormatCurrentCultureSectionKey(nameof(ChatMessageOptions.HubRoute)),
+				ChatMessageOptions.SectionName.ToSectionKey(nameof(ChatMessageOptions.HubRoute)),
 				ChatsMockValues.ChatMessageHubRoute);
 		}
 	}

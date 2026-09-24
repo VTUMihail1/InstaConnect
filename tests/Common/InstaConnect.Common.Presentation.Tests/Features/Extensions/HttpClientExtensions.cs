@@ -42,7 +42,7 @@ public static class HttpClientExtensions
 			const string CookieHeader = "Cookie";
 			const string Format = "{0}={1}";
 
-			var cookieHeader = cookies.Select(cookie => Format.FormatCurrentCulture(cookie.Name, cookie.Value)).JoinAsStringWithSemicolon();
+			var cookieHeader = cookies.Select(cookie => Format.FormatCurrentCulture(cookie.Name, cookie.Value)).JoinWithSemicolon();
 
 			httpClient.DefaultRequestHeaders.Remove(CookieHeader);
 			httpClient.DefaultRequestHeaders.TryAddWithoutValidation(CookieHeader, cookieHeader);

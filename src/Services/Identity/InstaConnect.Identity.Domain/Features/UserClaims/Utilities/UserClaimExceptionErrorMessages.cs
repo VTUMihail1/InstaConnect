@@ -30,6 +30,6 @@ public static class UserClaimExceptionErrorMessages
 		const string Format = "UserClaimDescriptors({0}) is not supported";
 
 		return Format.FormatCurrentCulture(descriptors
-			.JoinIncludeDescriptorsAsStringWithComa<IdentityDestinationType, IdentityIncludeType, IdentityIncludeDescriptor>());
+			.JoinDescriptorsWithComma<IdentityDestinationType, IdentityIncludeType, IdentityIncludeDescriptor>());
 	}
 }

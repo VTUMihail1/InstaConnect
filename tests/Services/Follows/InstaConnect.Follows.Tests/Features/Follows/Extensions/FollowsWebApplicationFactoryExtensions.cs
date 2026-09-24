@@ -22,7 +22,7 @@ public static class FollowsWebApplicationFactoryExtensions
 				.Value
 				.HubRoute;
 
-			var connection = webApplicationFactory.CreateHubConnection(followingId.Id, hubRoute.TrimStartSlash());
+			var connection = webApplicationFactory.CreateHubConnection(followingId.Id, hubRoute.TrimLeadingSlash());
 
 			return new FollowNotificationClient(connection);
 		}

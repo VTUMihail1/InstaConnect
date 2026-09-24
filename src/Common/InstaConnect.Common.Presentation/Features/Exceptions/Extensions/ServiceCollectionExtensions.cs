@@ -11,7 +11,7 @@ public static class ServiceCollectionExtensions
 {
 	extension(IServiceCollection serviceCollection)
 	{
-		public IServiceCollection AddExceptionHandler()
+		public IServiceCollection AddExceptions()
 		{
 			serviceCollection.AddSingleton<IApplicationProblemDetailsFactory, ApplicationProblemDetailsFactory>()
 							 .AddSingleton<IApplicationProblemDetailsService, ApplicationProblemDetailsService>()

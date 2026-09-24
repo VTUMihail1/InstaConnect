@@ -47,11 +47,11 @@ internal class FollowQueryRepository : IFollowQueryRepository
 		return await _context
 			.Follows
 			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_includerFactory, include)
+			.ApplyIncludes(_includerFactory, include)
 			.Match(filter)
 			.ProjectToResponseWithoutFollower(currentUser)
-			.Sort(_sortOrdererFactory, _sortTermerFactory, sorting)
-			.Paginate(_paginator, pagination)
+			.ApplySorting(_sortOrdererFactory, _sortTermerFactory, sorting)
+			.ApplyPagination(_paginator, pagination)
 			.ToListAsync(cancellationToken);
 	}
 
@@ -67,11 +67,11 @@ internal class FollowQueryRepository : IFollowQueryRepository
 		return await _context
 			.Follows
 			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_includerFactory, include)
+			.ApplyIncludes(_includerFactory, include)
 			.Match(filter)
 			.ProjectToResponseWithoutFollowing(currentUser)
-			.Sort(_sortOrdererFactory, _forFollowingSortTermerFactory, sorting)
-			.Paginate(_paginator, pagination)
+			.ApplySorting(_sortOrdererFactory, _forFollowingSortTermerFactory, sorting)
+			.ApplyPagination(_paginator, pagination)
 			.ToListAsync(cancellationToken);
 	}
 
@@ -84,7 +84,7 @@ internal class FollowQueryRepository : IFollowQueryRepository
 		return await _context
 			.Follows
 			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_includerFactory, include)
+			.ApplyIncludes(_includerFactory, include)
 			.Match(filter)
 			.GetCountAsync(cancellationToken);
 	}
@@ -98,7 +98,7 @@ internal class FollowQueryRepository : IFollowQueryRepository
 		return await _context
 			.Follows
 			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_includerFactory, include)
+			.ApplyIncludes(_includerFactory, include)
 			.Match(filter)
 			.GetCountAsync(cancellationToken);
 	}
@@ -113,7 +113,7 @@ internal class FollowQueryRepository : IFollowQueryRepository
 		return await _context
 			.Follows
 			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_includerFactory, include)
+			.ApplyIncludes(_includerFactory, include)
 			.Match(id)
 			.ProjectToFullResponse(currentUser)
 			.FirstOrDefaultAsync(cancellationToken);

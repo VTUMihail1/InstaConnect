@@ -26,7 +26,7 @@ internal class ForgotPasswordTokenCommandRepository : IForgotPasswordTokenComman
 		return await _context
 			.ForgotPasswordTokens
 			.Aggregate()
-			.Includes(_forgotPasswordTokenIncluderFactory, include)
+			.ApplyIncludes(_forgotPasswordTokenIncluderFactory, include)
 			.Match(id)
 			.FirstOrDefaultAsync(cancellationToken);
 	}

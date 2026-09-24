@@ -37,6 +37,6 @@ public static class PostCommentExceptionErrorMessages
 		const string Format = "PostCommentIncludeDescriptors({0}) is not supported";
 
 		return Format.FormatCurrentCulture(descriptors
-			.JoinIncludeDescriptorsAsStringWithComa<PostsDestinationType, PostsIncludeType, PostsIncludeDescriptor>());
+			.JoinDescriptorsWithComma<PostsDestinationType, PostsIncludeType, PostsIncludeDescriptor>());
 	}
 }

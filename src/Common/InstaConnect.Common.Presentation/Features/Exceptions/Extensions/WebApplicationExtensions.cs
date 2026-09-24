@@ -6,7 +6,7 @@ public static class WebApplicationExtensions
 {
 	extension(WebApplication webApplication)
 	{
-		public WebApplication UseGlobalExceptionHandling()
+		public WebApplication UseExceptions()
 		{
 			webApplication.UseExceptionHandler();
 

@@ -14,7 +14,7 @@ public static class WebHostBuilderExtensions
 		public void UpdateFollowConfiguration()
 		{
 			webHostBuilder.UseSetting(
-				FollowOptions.SectionName.FormatCurrentCultureSectionKey(nameof(FollowOptions.HubRoute)),
+				FollowOptions.SectionName.ToSectionKey(nameof(FollowOptions.HubRoute)),
 				FollowsMockValues.FollowHubRoute);
 		}
 	}

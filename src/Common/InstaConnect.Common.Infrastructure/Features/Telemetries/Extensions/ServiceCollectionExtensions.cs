@@ -1,5 +1,3 @@
-using InstaConnect.Common.Infrastructure.Extensions;
-using InstaConnect.Common.Infrastructure.Features.Telemetries.Extensions;
 using InstaConnect.Common.Infrastructure.Features.Telemetries.Models;
 
 using Microsoft.AspNetCore.Hosting;
@@ -10,13 +8,13 @@ using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
-namespace InstaConnect.Common.Infrastructure.Extensions;
+namespace InstaConnect.Common.Infrastructure.Features.Telemetries.Extensions;
 
-public static partial class ServiceCollectionExtensions
+public static class ServiceCollectionExtensions
 {
 	extension(IServiceCollection serviceCollection)
 	{
-		public IServiceCollection AddOpenTelemetry(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
+		public IServiceCollection AddTelemetries(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
 		{
 			serviceCollection.AddValidatedOptions<OpenTelemetryOptions>(OpenTelemetryOptions.SectionName);
 			var options = configuration.GetOptions<OpenTelemetryOptions>(OpenTelemetryOptions.SectionName);

@@ -50,11 +50,11 @@ internal class PostLikeQueryRepository : IPostLikeQueryRepository
 		return await _context
 			.PostLikes
 			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_likeIncluderFactory, likeInclude)
+			.ApplyIncludes(_likeIncluderFactory, likeInclude)
 			.Match(filter)
 			.ProjectToResponseWithoutPost(currentUser)
-			.Sort(_sortOrdererFactory, _likeSortTermerFactory, sorting)
-			.Paginate(_paginator, pagination)
+			.ApplySorting(_sortOrdererFactory, _likeSortTermerFactory, sorting)
+			.ApplyPagination(_paginator, pagination)
 			.ToListAsync(cancellationToken);
 	}
 
@@ -71,11 +71,11 @@ internal class PostLikeQueryRepository : IPostLikeQueryRepository
 		return await _context
 			.PostLikes
 			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_likeIncluderFactory, likeInclude)
+			.ApplyIncludes(_likeIncluderFactory, likeInclude)
 			.Match(filter)
 			.ProjectToResponseWithoutUser(currentUser)
-			.Sort(_sortOrdererFactory, _likeForUserSortTermerFactory, sorting)
-			.Paginate(_paginator, pagination)
+			.ApplySorting(_sortOrdererFactory, _likeForUserSortTermerFactory, sorting)
+			.ApplyPagination(_paginator, pagination)
 			.ToListAsync(cancellationToken);
 	}
 
@@ -88,7 +88,7 @@ internal class PostLikeQueryRepository : IPostLikeQueryRepository
 		return await _context
 			.PostLikes
 			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_likeIncluderFactory, likeInclude)
+			.ApplyIncludes(_likeIncluderFactory, likeInclude)
 			.Match(filter)
 			.GetCountAsync(cancellationToken);
 	}
@@ -103,7 +103,7 @@ internal class PostLikeQueryRepository : IPostLikeQueryRepository
 		return await _context
 			.PostLikes
 			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_likeIncluderFactory, likeInclude)
+			.ApplyIncludes(_likeIncluderFactory, likeInclude)
 			.Match(filter)
 			.GetCountAsync(cancellationToken);
 	}
@@ -119,7 +119,7 @@ internal class PostLikeQueryRepository : IPostLikeQueryRepository
 		return await _context
 			.PostLikes
 			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_likeIncluderFactory, likeInclude)
+			.ApplyIncludes(_likeIncluderFactory, likeInclude)
 			.Match(id)
 			.ProjectToFullResponse(currentUser)
 			.FirstOrDefaultAsync(cancellationToken);

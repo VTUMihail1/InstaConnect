@@ -22,7 +22,7 @@ public static class ForgotPasswordTokenFilterExtensions
 			Expression<Func<T, object>> valueField)
 		{
 			var id = filter.Id.GetFilterForIdEquals(idField);
-			var value = Builders<T>.Filter.EqualsCaseInsensitive(valueField, filter.Value, filter.Value.IsNullOrEmptyOrWhiteSpace());
+			var value = Builders<T>.Filter.EqualsIgnoreCase(valueField, filter.Value, filter.Value.IsNullOrEmptyOrWhiteSpace());
 
 			return Builders<T>.Filter.And(id, value);
 		}

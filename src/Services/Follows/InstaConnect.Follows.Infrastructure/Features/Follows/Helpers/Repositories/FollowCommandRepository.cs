@@ -26,7 +26,7 @@ internal class FollowCommandRepository : IFollowCommandRepository
 		return await _context
 			.Follows
 			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_includerFactory, include)
+			.ApplyIncludes(_includerFactory, include)
 			.Match(id)
 			.FirstOrDefaultAsync(cancellationToken);
 	}

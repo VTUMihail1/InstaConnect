@@ -48,11 +48,11 @@ internal class PostQueryRepository : IPostQueryRepository
 		return await _context
 			.Posts
 			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_includerFactory, include)
+			.ApplyIncludes(_includerFactory, include)
 			.Match(filter)
 			.ProjectToFullResponse(currentUser)
-			.Sort(_sortOrdererFactory, _sortTermerFactory, sorting)
-			.Paginate(_paginator, pagination)
+			.ApplySorting(_sortOrdererFactory, _sortTermerFactory, sorting)
+			.ApplyPagination(_paginator, pagination)
 			.ToListAsync(cancellationToken);
 	}
 
@@ -68,11 +68,11 @@ internal class PostQueryRepository : IPostQueryRepository
 		return await _context
 			.Posts
 			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_includerFactory, include)
+			.ApplyIncludes(_includerFactory, include)
 			.Match(filter)
 			.ProjectToResponseWithoutUser(currentUser)
-			.Sort(_sortOrdererFactory, _forUserSortTermerFactory, sorting)
-			.Paginate(_paginator, pagination)
+			.ApplySorting(_sortOrdererFactory, _forUserSortTermerFactory, sorting)
+			.ApplyPagination(_paginator, pagination)
 			.ToListAsync(cancellationToken);
 	}
 
@@ -85,7 +85,7 @@ internal class PostQueryRepository : IPostQueryRepository
 		return await _context
 			.Posts
 			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_includerFactory, include)
+			.ApplyIncludes(_includerFactory, include)
 			.Match(filter)
 			.GetCountAsync(cancellationToken);
 	}
@@ -99,7 +99,7 @@ internal class PostQueryRepository : IPostQueryRepository
 		return await _context
 			.Posts
 			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_includerFactory, include)
+			.ApplyIncludes(_includerFactory, include)
 			.Match(filter)
 			.GetCountAsync(cancellationToken);
 	}
@@ -114,7 +114,7 @@ internal class PostQueryRepository : IPostQueryRepository
 		return await _context
 			.Posts
 			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_includerFactory, include)
+			.ApplyIncludes(_includerFactory, include)
 			.Match(id)
 			.ProjectToFullResponse(currentUser)
 			.FirstOrDefaultAsync(cancellationToken);

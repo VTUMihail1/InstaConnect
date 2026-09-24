@@ -15,9 +15,9 @@ public static class ServiceCollectionExtensions
 				.AddFollowServices();
 
 			serviceCollection
-				.AddCQRS(FollowsApplicationReference.Assembly)
-				.AddMapper(FollowsApplicationReference.Assembly, CommonApplicationReference.Assembly)
-				.AddValidators(FollowsApplicationReference.Assembly);
+				.AddRequests(FollowsApplicationReference.Assembly)
+				.AddMappers(FollowsApplicationReference.Assembly, CommonApplicationReference.Assembly)
+				.AddValidations(FollowsApplicationReference.Assembly);
 
 			return serviceCollection;
 		}

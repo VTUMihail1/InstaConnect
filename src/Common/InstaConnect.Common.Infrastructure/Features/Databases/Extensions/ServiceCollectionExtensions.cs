@@ -13,13 +13,13 @@ using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 
-namespace InstaConnect.Common.Infrastructure.Extensions;
+namespace InstaConnect.Common.Infrastructure.Features.Databases.Extensions;
 
-public static partial class ServiceCollectionExtensions
+public static class ServiceCollectionExtensions
 {
 	extension(IServiceCollection serviceCollection)
 	{
-		public IServiceCollection AddMongo<TContext>(IConfiguration configuration)
+		public IServiceCollection AddDatabases<TContext>(IConfiguration configuration)
 			where TContext : class, IMongoDbContext
 		{
 			const string ConventionName = "ApplicationConventionPack";
@@ -55,7 +55,7 @@ public static partial class ServiceCollectionExtensions
 			return serviceCollection;
 		}
 
-		public IServiceCollection AddSortOrders()
+		public IServiceCollection AddDatabaseSortOrders()
 		{
 			serviceCollection.AddScoped<ISortOrdererFactory, SortOrdererFactory>()
 							 .AddImplementationsOf<ISortOrderer>(CommonInfrastructureReference.Assembly);

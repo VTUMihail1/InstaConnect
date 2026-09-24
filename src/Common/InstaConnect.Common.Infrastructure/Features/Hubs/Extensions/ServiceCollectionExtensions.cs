@@ -1,16 +1,15 @@
-using InstaConnect.Common.Infrastructure.Extensions;
 using InstaConnect.Common.Infrastructure.Features.Caches.Models;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Common.Infrastructure.Extensions;
+namespace InstaConnect.Common.Infrastructure.Features.Hubs.Extensions;
 
-public static partial class ServiceCollectionExtensions
+public static class ServiceCollectionExtensions
 {
 	extension(IServiceCollection serviceCollection)
 	{
-		public IServiceCollection AddSignalR(IConfiguration configuration)
+		public IServiceCollection AddHubs(IConfiguration configuration)
 		{
 			serviceCollection.AddValidatedOptions<RedisOptions>(RedisOptions.SectionName);
 			var options = configuration.GetOptions<RedisOptions>(RedisOptions.SectionName);

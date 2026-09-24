@@ -38,8 +38,8 @@ internal class UserClaimQueryRepository : IUserClaimQueryRepository
 			.AggregateWithCaseInsensitiveCollation()
 			.Match(filter)
 			.ProjectToResponseWithoutUser(current)
-			.Sort(_sortOrdererFactory, _claimSortTermerFactory, sorting)
-			.Paginate(_paginator, pagination)
+			.ApplySorting(_sortOrdererFactory, _claimSortTermerFactory, sorting)
+			.ApplyPagination(_paginator, pagination)
 			.ToListAsync(cancellationToken);
 	}
 

@@ -11,11 +11,11 @@ public static class WebApplicationExtensions
 		public WebApplication UsePresentation()
 		{
 			application
-				.UseConfiguredCors()
-				.UseRequestRateLimiting()
-				.UseSecurity()
-				.MapApiEndpoints()
-				.UseGlobalExceptionHandling()
+				.UseCorsPolicies()
+				.UseRateLimiterPolicies()
+				.UseAccessTokens()
+				.MapApiControllers()
+				.UseExceptions()
 				.MapHealthCheckEndpoints()
 				.MapFollowHub();
 

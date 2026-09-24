@@ -6,14 +6,14 @@ public static class ClientSessionHandleExtensions
 {
 	extension(IClientSessionHandle? session)
 	{
-		public bool IsInTransaction()
+		public bool HasActiveTransaction()
 		{
 			return session != null && session.IsInTransaction;
 		}
 
-		public bool IsNotInTransaction()
+		public bool HasNoActiveTransaction()
 		{
-			return !session.IsInTransaction();
+			return !session.HasActiveTransaction();
 		}
 	}
 }

@@ -37,6 +37,6 @@ public static class UserExceptionErrorMessages
 		const string Format = "UserIncludeDescriptors({0}) is not supported";
 
 		return Format.FormatCurrentCulture(descriptors
-			.JoinIncludeDescriptorsAsStringWithComa<FollowsDestinationType, FollowsIncludeType, FollowsIncludeDescriptor>());
+			.JoinDescriptorsWithComma<FollowsDestinationType, FollowsIncludeType, FollowsIncludeDescriptor>());
 	}
 }

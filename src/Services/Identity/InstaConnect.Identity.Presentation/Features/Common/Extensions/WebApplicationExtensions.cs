@@ -11,13 +11,13 @@ internal static class WebApplicationExtensions
 		public async Task<WebApplication> UsePresentationAsync(CancellationToken cancellationToken = default)
 		{
 			return await application
-				.UseConfiguredCors()
-				.UseRequestRateLimiting()
-				.UseSecurity()
-				.MapApiEndpoints()
-				.UseGlobalExceptionHandling()
+				.UseCorsPolicies()
+				.UseRateLimiterPolicies()
+				.UseAccessTokens()
+				.MapApiControllers()
+				.UseExceptions()
 				.MapHealthCheckEndpoints()
-				.UseDatabaseSeedingAsync(cancellationToken);
+				.UseSeedersAsync(cancellationToken);
 		}
 	}
 }

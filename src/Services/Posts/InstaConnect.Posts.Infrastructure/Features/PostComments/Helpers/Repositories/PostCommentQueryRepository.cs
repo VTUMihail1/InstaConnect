@@ -50,11 +50,11 @@ internal class PostCommentQueryRepository : IPostCommentQueryRepository
 		return await _context
 			.PostComments
 			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_commentIncluderFactory, commentInclude)
+			.ApplyIncludes(_commentIncluderFactory, commentInclude)
 			.Match(filter)
 			.ProjectToResponseWithoutPost(currentUser)
-			.Sort(_sortOrdererFactory, _commentSortTermerFactory, sorting)
-			.Paginate(_paginator, pagination)
+			.ApplySorting(_sortOrdererFactory, _commentSortTermerFactory, sorting)
+			.ApplyPagination(_paginator, pagination)
 			.ToListAsync(cancellationToken);
 	}
 
@@ -71,11 +71,11 @@ internal class PostCommentQueryRepository : IPostCommentQueryRepository
 		return await _context
 			.PostComments
 			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_commentIncluderFactory, commentInclude)
+			.ApplyIncludes(_commentIncluderFactory, commentInclude)
 			.Match(filter)
 			.ProjectToResponseWithoutUser(currentUser)
-			.Sort(_sortOrdererFactory, _commentForUserSortTermerFactory, sorting)
-			.Paginate(_paginator, pagination)
+			.ApplySorting(_sortOrdererFactory, _commentForUserSortTermerFactory, sorting)
+			.ApplyPagination(_paginator, pagination)
 			.ToListAsync(cancellationToken);
 	}
 
@@ -88,7 +88,7 @@ internal class PostCommentQueryRepository : IPostCommentQueryRepository
 		return await _context
 			.PostComments
 			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_commentIncluderFactory, commentInclude)
+			.ApplyIncludes(_commentIncluderFactory, commentInclude)
 			.Match(filter)
 			.GetCountAsync(cancellationToken);
 	}
@@ -103,7 +103,7 @@ internal class PostCommentQueryRepository : IPostCommentQueryRepository
 		return await _context
 			.PostComments
 			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_commentIncluderFactory, commentInclude)
+			.ApplyIncludes(_commentIncluderFactory, commentInclude)
 			.Match(filter)
 			.GetCountAsync(cancellationToken);
 	}
@@ -119,7 +119,7 @@ internal class PostCommentQueryRepository : IPostCommentQueryRepository
 		return await _context
 			.PostComments
 			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_commentIncluderFactory, commentInclude)
+			.ApplyIncludes(_commentIncluderFactory, commentInclude)
 			.Match(id)
 			.ProjectToFullResponse(currentUser)
 			.FirstOrDefaultAsync(cancellationToken);

@@ -37,6 +37,6 @@ public static class PostCommentLikeExceptionErrorMessages
 		const string Format = "PostCommentLikeDescriptors({0}) is not supported";
 
 		return Format.FormatCurrentCulture(descriptors
-			.JoinIncludeDescriptorsAsStringWithComa<PostsDestinationType, PostsIncludeType, PostsIncludeDescriptor>());
+			.JoinDescriptorsWithComma<PostsDestinationType, PostsIncludeType, PostsIncludeDescriptor>());
 	}
 }

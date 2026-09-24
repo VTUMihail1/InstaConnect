@@ -10,7 +10,7 @@ public static class ServiceCollectionExtensions
 {
 	extension(IServiceCollection serviceCollection)
 	{
-		public IServiceCollection AddValidators(params Assembly[] assemblies)
+		public IServiceCollection AddValidations(params Assembly[] assemblies)
 		{
 			ValidatorOptions.Global.DefaultRuleLevelCascadeMode = CascadeMode.Stop;
 

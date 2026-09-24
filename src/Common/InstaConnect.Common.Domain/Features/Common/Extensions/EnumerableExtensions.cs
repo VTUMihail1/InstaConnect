@@ -11,29 +11,29 @@ public static class EnumerableExtensions
 			return !enumerable.Any();
 		}
 
-		public string JoinAsString(string separator)
+		public string JoinWith(string separator)
 		{
 			return string.Join(separator, enumerable);
 		}
 
-		public string JoinAsStringWithComa()
+		public string JoinWithComma()
 		{
-			return enumerable.JoinAsString(", ");
+			return enumerable.JoinWith(", ");
 		}
 
-		public string JoinAsStringWithSemicolon()
+		public string JoinWithSemicolon()
 		{
-			return enumerable.JoinAsString("; ");
+			return enumerable.JoinWith("; ");
 		}
 
-		public string JoinAsStringWithNewLine()
+		public string JoinWithNewLine()
 		{
-			return enumerable.JoinAsString("\n");
+			return enumerable.JoinWith("\n");
 		}
 
-		public string JoinAsStringWithDot()
+		public string JoinWithDot()
 		{
-			return enumerable.JoinAsString(".");
+			return enumerable.JoinWith(".");
 		}
 	}
 
@@ -42,13 +42,13 @@ public static class EnumerableExtensions
 		where TIncludeType : Enum
 		where TIncludeDescriptor : IIncludeDescriptor<TDestinationType, TIncludeType>
 	{
-		public string JoinIncludeDescriptorsAsStringWithComa()
+		public string JoinDescriptorsWithComma()
 		{
 			const string PropertyFormat = "descriptor(destinationType: {0}, includeType: {1})";
 
 			return descriptors
 				.Select(ip => PropertyFormat.FormatCurrentCulture(ip.DestinationType, ip.IncludeType))
-				.JoinAsStringWithComa();
+				.JoinWithComma();
 		}
 	}
 }

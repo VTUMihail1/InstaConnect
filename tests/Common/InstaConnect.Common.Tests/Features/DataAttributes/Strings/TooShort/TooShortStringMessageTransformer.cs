@@ -16,6 +16,6 @@ internal class TooShortStringMessageTransformer : IStringMessageTransformer
 
 	public string Transform<T>(Expression<Func<T, string>> propertyExpression, string value)
 	{
-		return CommonErrorMessages.GetMinLength(propertyExpression.GetProperty(), value.Length, _minLength);
+		return CommonErrorMessages.GetMinLength(propertyExpression.GetPropertyDisplayName(), value.Length, _minLength);
 	}
 }

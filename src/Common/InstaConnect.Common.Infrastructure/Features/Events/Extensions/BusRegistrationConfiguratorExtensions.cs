@@ -2,7 +2,7 @@ using MassTransit;
 
 namespace InstaConnect.Common.Infrastructure.Features.Events.Extensions;
 
-public static class BusRegistrationConfiguratorExtension
+public static class BusRegistrationConfiguratorExtensions
 {
 	extension(IBusRegistrationConfigurator busConfigurator)
 	{

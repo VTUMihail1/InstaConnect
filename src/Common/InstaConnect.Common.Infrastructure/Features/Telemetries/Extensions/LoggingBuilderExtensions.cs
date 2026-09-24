@@ -1,4 +1,3 @@
-using InstaConnect.Common.Infrastructure.Extensions;
 using InstaConnect.Common.Infrastructure.Features.Telemetries.Models;
 
 using Microsoft.AspNetCore.Hosting;
@@ -15,7 +14,7 @@ public static class LoggingBuilderExtensions
 {
 	extension(ILoggingBuilder loggingBuilder)
 	{
-		public ILoggingBuilder AddLogging(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
+		public ILoggingBuilder AddTelemetries(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
 		{
 			var openTelemetryOptions = configuration.GetOptions<OpenTelemetryOptions>(OpenTelemetryOptions.SectionName);
 

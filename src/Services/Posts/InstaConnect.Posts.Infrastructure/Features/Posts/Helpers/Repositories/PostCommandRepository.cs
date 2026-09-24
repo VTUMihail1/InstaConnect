@@ -28,7 +28,7 @@ internal class PostCommandRepository : IPostCommandRepository
 		return await _context
 			.Posts
 			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_includerFactory, include)
+			.ApplyIncludes(_includerFactory, include)
 			.Match(id)
 			.FirstOrDefaultAsync(cancellationToken);
 	}

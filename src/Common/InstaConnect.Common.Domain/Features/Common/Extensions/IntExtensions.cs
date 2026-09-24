@@ -1,6 +1,6 @@
 namespace InstaConnect.Common.Domain.Features.Common.Extensions;
 
-public static class IntOperations
+public static class IntExtensions
 {
 	extension(int value)
 	{

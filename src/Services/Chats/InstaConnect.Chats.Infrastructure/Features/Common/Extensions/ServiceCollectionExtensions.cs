@@ -3,7 +3,13 @@ using InstaConnect.Chats.Infrastructure.Features.Chats.Extensions;
 using InstaConnect.Chats.Infrastructure.Features.Common.Utilities;
 using InstaConnect.Chats.Infrastructure.Features.Users.Extensions;
 using InstaConnect.Common.Domain.Features.Mappers.Extensions;
-using InstaConnect.Common.Infrastructure.Extensions;
+using InstaConnect.Common.Infrastructure.Features.AccessTokens.Extensions;
+using InstaConnect.Common.Infrastructure.Features.Caches.Extensions;
+using InstaConnect.Common.Infrastructure.Features.DateTimes.Extensions;
+using InstaConnect.Common.Infrastructure.Features.Events.Extensions;
+using InstaConnect.Common.Infrastructure.Features.Guids.Extensions;
+using InstaConnect.Common.Infrastructure.Features.Hubs.Extensions;
+using InstaConnect.Common.Infrastructure.Features.Telemetries.Extensions;
 using InstaConnect.Common.Infrastructure.Features.Common.Extensions;
 
 namespace InstaConnect.Chats.Infrastructure.Features.Common.Extensions;
@@ -22,17 +28,17 @@ public static class ServiceCollectionExtensions
 				.AddChatMessageServices();
 
 			serviceCollection
-				.AddOpenTelemetry(configuration, webHostEnvironment)
-				.AddMapper(ChatsInfrastructureReference.Assembly, CommonInfrastructureReference.Assembly)
+				.AddTelemetries(configuration, webHostEnvironment)
+				.AddMappers(ChatsInfrastructureReference.Assembly, CommonInfrastructureReference.Assembly)
 				.AddServicesWithMatchingInterfaces(ChatsInfrastructureReference.Assembly)
-				.AddMongo<IChatsContext>(configuration)
-				.AddRabbitMQ(configuration, ChatsEventHandlerUtilities.Prefix, ChatsInfrastructureReference.Assembly)
-				.AddJwtBearer(configuration)
-				.AddRedis(configuration)
-				.AddSignalR(configuration)
-				.AddGuidProvider()
-				.AddDateTimeProvider()
-				.AddSortOrders();
+				.AddDatabases<IChatsContext>(configuration)
+				.AddEvents(configuration, ChatsEventHandlerUtilities.Prefix, ChatsInfrastructureReference.Assembly)
+				.AddAccessTokens(configuration)
+				.AddCaches(configuration)
+				.AddHubs(configuration)
+				.AddGuids()
+				.AddDateTimes()
+				.AddDatabaseSortOrders();
 
 			return serviceCollection;
 		}

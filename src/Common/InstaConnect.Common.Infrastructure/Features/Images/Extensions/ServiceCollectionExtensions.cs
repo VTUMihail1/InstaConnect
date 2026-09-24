@@ -7,13 +7,13 @@ using InstaConnect.Common.Infrastructure.Features.Images.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Common.Infrastructure.Extensions;
+namespace InstaConnect.Common.Infrastructure.Features.Images.Extensions;
 
-public static partial class ServiceCollectionExtensions
+public static class ServiceCollectionExtensions
 {
 	extension(IServiceCollection serviceCollection)
 	{
-		public IServiceCollection AddCloudinary(IConfiguration configuration)
+		public IServiceCollection AddImages(IConfiguration configuration)
 		{
 			serviceCollection.AddValidatedOptions<CloudinaryOptions>(CloudinaryOptions.SectionName);
 			var options = configuration.GetOptions<CloudinaryOptions>(CloudinaryOptions.SectionName);

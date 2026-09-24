@@ -1,6 +1,5 @@
 using InstaConnect.Common.Application.Features.Caches.Abstractions;
 using InstaConnect.Common.Application.Features.Caches.Helpers;
-using InstaConnect.Common.Infrastructure.Extensions;
 using InstaConnect.Common.Infrastructure.Features.Caches.Abstractions;
 using InstaConnect.Common.Infrastructure.Features.Caches.Helpers;
 using InstaConnect.Common.Infrastructure.Features.Caches.Models;
@@ -8,13 +7,13 @@ using InstaConnect.Common.Infrastructure.Features.Caches.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Common.Infrastructure.Extensions;
+namespace InstaConnect.Common.Infrastructure.Features.Caches.Extensions;
 
-public static partial class ServiceCollectionExtensions
+public static class ServiceCollectionExtensions
 {
 	extension(IServiceCollection serviceCollection)
 	{
-		public IServiceCollection AddRedis(IConfiguration configuration)
+		public IServiceCollection AddCaches(IConfiguration configuration)
 		{
 			serviceCollection.AddValidatedOptions<RedisOptions>(RedisOptions.SectionName);
 			var options = configuration.GetOptions<RedisOptions>(RedisOptions.SectionName);

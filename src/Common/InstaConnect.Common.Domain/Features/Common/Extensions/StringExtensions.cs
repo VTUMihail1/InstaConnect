@@ -25,7 +25,7 @@ public static class StringExtensions
 
 	extension(string str)
 	{
-		public string TrimStartSlash()
+		public string TrimLeadingSlash()
 		{
 			const char Slash = '/';
 
@@ -37,7 +37,7 @@ public static class StringExtensions
 			return string.Format(CultureInfo.CurrentCulture, str, args);
 		}
 
-		public string FormatCurrentCultureSectionKey(string key)
+		public string ToSectionKey(string key)
 		{
 			const string Format = "{0}:{1}";
 
@@ -53,7 +53,7 @@ public static class StringExtensions
 						 .ToLowerCurrentCulture();
 		}
 
-		public string ToSpaceBetweenWordsCase()
+		public string ToSpaceSeparatedWords()
 		{
 			const string OldCharsRegex = "([a-z])([A-Z])";
 			const string NewCharsRegex = "$1 $2";

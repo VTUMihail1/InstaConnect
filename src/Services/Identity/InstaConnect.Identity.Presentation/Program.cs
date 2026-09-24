@@ -13,9 +13,9 @@ builder.Services
 	.AddInfrastructure(builder.Configuration, builder.Environment, IdentityPresentationReference.Assembly)
 	.AddPresentation(builder.Configuration);
 
-builder.Host.AddSerilog();
+builder.Host.UseTelemetries();
 
-builder.Logging.AddLogging(builder.Configuration, builder.Environment);
+builder.Logging.AddTelemetries(builder.Configuration, builder.Environment);
 
 var app = builder.Build();
 

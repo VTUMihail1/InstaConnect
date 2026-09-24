@@ -21,7 +21,7 @@ public static class MongoCollectionExtensions
 
 		public async Task AddAsync(IClientSessionHandle? session, T entity, CancellationToken cancellationToken)
 		{
-			if (session.IsNotInTransaction())
+			if (session.HasNoActiveTransaction())
 			{
 				await collection.InsertOneAsync(entity, null, cancellationToken);
 				return;
@@ -32,7 +32,7 @@ public static class MongoCollectionExtensions
 
 		public async Task AddRangeAsync(IClientSessionHandle? session, IEnumerable<T> entities, CancellationToken cancellationToken)
 		{
-			if (session.IsNotInTransaction())
+			if (session.HasNoActiveTransaction())
 			{
 				await collection.InsertManyAsync(entities, null, cancellationToken);
 				return;
@@ -45,7 +45,7 @@ public static class MongoCollectionExtensions
 		{
 			var options = new ReplaceOptions { IsUpsert = false };
 
-			if (session.IsNotInTransaction())
+			if (session.HasNoActiveTransaction())
 			{
 				await collection.ReplaceOneAsync(filter, entity, options, cancellationToken);
 				return;
@@ -56,7 +56,7 @@ public static class MongoCollectionExtensions
 
 		public async Task DeleteAsync(IClientSessionHandle? session, FilterDefinition<T> filter, CancellationToken cancellationToken)
 		{
-			if (session.IsNotInTransaction())
+			if (session.HasNoActiveTransaction())
 			{
 				await collection.DeleteOneAsync(filter, null, cancellationToken);
 				return;
@@ -67,7 +67,7 @@ public static class MongoCollectionExtensions
 
 		public async Task DeleteRangeAsync(IClientSessionHandle? session, FilterDefinition<T> filter, CancellationToken cancellationToken)
 		{
-			if (session.IsNotInTransaction())
+			if (session.HasNoActiveTransaction())
 			{
 				await collection.DeleteManyAsync(filter, null, cancellationToken);
 				return;

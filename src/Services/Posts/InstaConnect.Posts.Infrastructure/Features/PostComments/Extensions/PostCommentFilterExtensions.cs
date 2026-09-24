@@ -40,7 +40,7 @@ internal static class PostCommentFilterExtensions
 			Expression<Func<T, object>> commentIdField)
 		{
 			var id = filter.Id.GetFilterForIdEquals(idField);
-			var commentId = Builders<T>.Filter.EqualsCaseInsensitive(
+			var commentId = Builders<T>.Filter.EqualsIgnoreCase(
 				commentIdField, filter.CommentId, filter.CommentId.IsNullOrEmptyOrWhiteSpace());
 
 			return Builders<T>.Filter.And(id, commentId);

@@ -9,6 +9,6 @@ internal class TrueBooleanMessageTransformer : IBooleanMessageTransformer
 {
 	public string Transform<T>(Expression<Func<T, bool>> propertyExpression, bool value)
 	{
-		return CommonErrorMessages.GetEmpty(propertyExpression.GetProperty());
+		return CommonErrorMessages.GetEmpty(propertyExpression.GetPropertyDisplayName());
 	}
 }

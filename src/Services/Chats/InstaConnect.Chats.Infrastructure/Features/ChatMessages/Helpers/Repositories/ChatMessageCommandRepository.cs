@@ -25,7 +25,7 @@ internal class ChatMessageCommandRepository : IChatMessageCommandRepository
 		return await _context
 			.ChatMessages
 			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_messageIncluderFactory, include)
+			.ApplyIncludes(_messageIncluderFactory, include)
 			.Match(id)
 			.FirstOrDefaultAsync(cancellationToken);
 	}

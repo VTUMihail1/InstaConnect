@@ -14,7 +14,7 @@ public static class ServiceCollectionExtensions
 {
 	extension(IServiceCollection serviceCollection)
 	{
-		public IServiceCollection AddCQRS(params Assembly[] assemblies)
+		public IServiceCollection AddRequests(params Assembly[] assemblies)
 		{
 			serviceCollection.AddMediatR(
 				cf =>

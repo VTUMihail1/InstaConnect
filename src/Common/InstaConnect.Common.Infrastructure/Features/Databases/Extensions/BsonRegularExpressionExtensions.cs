@@ -6,31 +6,31 @@ namespace InstaConnect.Common.Infrastructure.Features.Databases.Extensions;
 
 public static class BsonRegularExpressionExtensions
 {
-	extension(object value)
+	extension(string value)
 	{
-		public BsonRegularExpression GetEqualsCaseInsensitiveRegex()
+		public BsonRegularExpression ToEqualsIgnoreCaseRegex()
 		{
-			return value.GetCaseInsensitiveRegex("^{0}$");
+			return value.ToIgnoreCaseRegex("^{0}$");
 		}
 
-		public BsonRegularExpression GetStartsWithCaseInsensitiveRegex()
+		public BsonRegularExpression ToStartsWithIgnoreCaseRegex()
 		{
-			return value.GetCaseInsensitiveRegex("^{0}");
+			return value.ToIgnoreCaseRegex("^{0}");
 		}
 
-		public BsonRegularExpression GetEndsWithCaseInsensitiveRegex()
+		public BsonRegularExpression ToEndsWithIgnoreCaseRegex()
 		{
-			return value.GetCaseInsensitiveRegex("{0}$");
+			return value.ToIgnoreCaseRegex("{0}$");
 		}
 
-		public BsonRegularExpression GetContainsCaseInsensitiveRegex()
+		public BsonRegularExpression ToContainsIgnoreCaseRegex()
 		{
-			return value.GetCaseInsensitiveRegex("{0}");
+			return value.ToIgnoreCaseRegex("{0}");
 		}
 
-		public BsonRegularExpression GetCaseInsensitiveRegex(string regexTemplate)
+		public BsonRegularExpression ToIgnoreCaseRegex(string regexTemplate)
 		{
-			return new BsonRegularExpression(regexTemplate.FormatCurrentCulture(Regex.Escape(value.ToString()!)), "i");
+			return new BsonRegularExpression(regexTemplate.FormatCurrentCulture(Regex.Escape(value)), "i");
 		}
 	}
 }

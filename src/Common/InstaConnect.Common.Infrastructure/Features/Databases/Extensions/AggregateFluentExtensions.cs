@@ -52,7 +52,7 @@ public static class AggregateFluentExtensions
 						 .Unwind(destination.Box(), new AggregateUnwindOptions<TEntity>() { PreserveNullAndEmptyArrays = true });
 		}
 
-		public IAggregateFluent<TEntity> Includes<TDestinationType, TIncludeType, TIncludeDescriptor, TInclude, TIncluder>(
+		public IAggregateFluent<TEntity> ApplyIncludes<TDestinationType, TIncludeType, TIncludeDescriptor, TInclude, TIncluder>(
 			IIncluderFactory<TIncludeType, TDestinationType, TIncludeDescriptor, TIncluder, TEntity> includerFactory,
 			TInclude? include)
 			where TDestinationType : Enum
@@ -76,7 +76,7 @@ public static class AggregateFluentExtensions
 	extension<TEntityResponse>(IAggregateFluent<TEntityResponse> fluent)
 		where TEntityResponse : IEntityResponse
 	{
-		public IAggregateFluent<TEntityResponse> Sort<TSortTerm, TSortTermer, TSortingQuery>(
+		public IAggregateFluent<TEntityResponse> ApplySorting<TSortTerm, TSortTermer, TSortingQuery>(
 			ISortOrdererFactory sortOrdererFactory,
 			ISortTermerFactory<TSortTerm, TSortTermer, TEntityResponse> sortTermerFactory,
 			TSortingQuery sorting)
@@ -90,7 +90,7 @@ public static class AggregateFluentExtensions
 			return fluent.Sort(Builders<TEntityResponse>.Sort.Combine(order.Sort(term.Term), order.Sort<TEntityResponse>(a => a.CreatedAtUtc)));
 		}
 
-		public IAggregateFluent<TEntityResponse> Paginate<TPaginationQuery>(IPaginator paginator, TPaginationQuery pagination)
+		public IAggregateFluent<TEntityResponse> ApplyPagination<TPaginationQuery>(IPaginator paginator, TPaginationQuery pagination)
 			where TPaginationQuery : IPaginationQuery
 		{
 			var offset = paginator.GetOffset(pagination.Page, pagination.PageSize);

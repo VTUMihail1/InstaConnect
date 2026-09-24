@@ -9,7 +9,7 @@ public static class WebApplicationExtensions
 {
 	extension(WebApplication webApplication)
 	{
-		public async Task<WebApplication> UseDatabaseSeedingAsync(CancellationToken cancellationToken)
+		public async Task<WebApplication> UseSeedersAsync(CancellationToken cancellationToken)
 		{
 			await webApplication
 				.Services

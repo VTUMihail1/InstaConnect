@@ -27,7 +27,7 @@ internal class UserClaimCommandRepository : IUserClaimCommandRepository
 		return await _context
 			.UserClaims
 			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_includePropertyFactory, include)
+			.ApplyIncludes(_includePropertyFactory, include)
 			.Match(id)
 			.FirstOrDefaultAsync(cancellationToken);
 	}

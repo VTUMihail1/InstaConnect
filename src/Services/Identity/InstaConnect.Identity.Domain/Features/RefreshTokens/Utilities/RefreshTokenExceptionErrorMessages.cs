@@ -23,6 +23,6 @@ public static class RefreshTokenExceptionErrorMessages
 		const string Format = "RefreshTokenDescriptors({0}) is not supported";
 
 		return Format.FormatCurrentCulture(descriptors
-			.JoinIncludeDescriptorsAsStringWithComa<IdentityDestinationType, IdentityIncludeType, IdentityIncludeDescriptor>());
+			.JoinDescriptorsWithComma<IdentityDestinationType, IdentityIncludeType, IdentityIncludeDescriptor>());
 	}
 }
