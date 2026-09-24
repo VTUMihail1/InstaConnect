@@ -10,17 +10,23 @@ public static class BsonRegularExpressionExtensions
 	{
 		public BsonRegularExpression ToEqualsIgnoreCaseRegex()
 		{
-			return value.ToIgnoreCaseRegex("^{0}$");
+			const string Pattern = "^{0}$";
+
+			return value.ToIgnoreCaseRegex(Pattern);
 		}
 
 		public BsonRegularExpression ToStartsWithIgnoreCaseRegex()
 		{
-			return value.ToIgnoreCaseRegex("^{0}");
+			const string Pattern = "^{0}";
+
+			return value.ToIgnoreCaseRegex(Pattern);
 		}
 
 		public BsonRegularExpression ToIgnoreCaseRegex(string regexTemplate)
 		{
-			return new BsonRegularExpression(regexTemplate.FormatCurrentCulture(Regex.Escape(value)), "i");
+			const string IgnoreCase = "i";
+
+			return new BsonRegularExpression(regexTemplate.FormatCurrentCulture(Regex.Escape(value)), IgnoreCase);
 		}
 	}
 }

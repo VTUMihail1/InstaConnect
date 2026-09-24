@@ -27,7 +27,7 @@ internal class PostCommandRepository : IPostCommandRepository
 	{
 		return await _context
 			.Posts
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.ApplyIncludes(_includerFactory, include)
 			.Match(id)
 			.FirstOrDefaultAsync(cancellationToken);
@@ -46,7 +46,7 @@ internal class PostCommandRepository : IPostCommandRepository
 	{
 		return await _context
 			.Posts
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.Match(id)
 			.AnyAsync(cancellationToken);
 	}

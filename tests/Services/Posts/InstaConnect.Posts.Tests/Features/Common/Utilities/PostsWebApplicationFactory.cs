@@ -32,6 +32,7 @@ public class PostsWebApplicationFactory : WebApplicationFactory<Program>, IAsync
 		builder.UpdateAccessTokenConfiguration();
 		builder.UpdateOpenTelemetryConfiguration();
 		builder.UpdateCorsConfiguration();
+		builder.UpdateMainConfiguration();
 	}
 
 	public async Task InitializeAsync()

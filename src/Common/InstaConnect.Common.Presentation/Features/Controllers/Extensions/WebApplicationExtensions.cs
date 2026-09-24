@@ -24,14 +24,6 @@ public static class WebApplicationExtensions
 			return webApplication;
 		}
 
-		public WebApplication UseAccessTokens()
-		{
-			webApplication.UseAuthentication();
-			webApplication.UseAuthorization();
-
-			return webApplication;
-		}
-
 		public WebApplication MapApiControllers()
 		{
 			webApplication.MapControllers();

@@ -25,7 +25,7 @@ internal class UserCommandRepository : IUserCommandRepository
 	{
 		return await _context
 			.Users
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.ApplyIncludes(_includePropertyFactory, include)
 			.Match(id)
 			.FirstOrDefaultAsync(cancellationToken);
@@ -44,7 +44,7 @@ internal class UserCommandRepository : IUserCommandRepository
 	{
 		return await _context
 			.Users
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.Match(id)
 			.AnyAsync(cancellationToken);
 	}
@@ -56,7 +56,7 @@ internal class UserCommandRepository : IUserCommandRepository
 	{
 		return await _context
 			.Users
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.ApplyIncludes(_includePropertyFactory, include)
 			.Match(name)
 			.FirstOrDefaultAsync(cancellationToken);
@@ -75,7 +75,7 @@ internal class UserCommandRepository : IUserCommandRepository
 	{
 		return !await _context
 			.Users
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.Match(name)
 			.AnyAsync(cancellationToken);
 	}
@@ -87,7 +87,7 @@ internal class UserCommandRepository : IUserCommandRepository
 	{
 		return await _context
 			.Users
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.ApplyIncludes(_includePropertyFactory, include)
 			.Match(email)
 			.FirstOrDefaultAsync(cancellationToken);
@@ -106,7 +106,7 @@ internal class UserCommandRepository : IUserCommandRepository
 	{
 		return !await _context
 			.Users
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.Match(email)
 			.AnyAsync(cancellationToken);
 	}

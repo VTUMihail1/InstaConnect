@@ -44,7 +44,7 @@ internal class ForgotPasswordTokenCommandRepository : IForgotPasswordTokenComman
 	{
 		return await _context
 			.ForgotPasswordTokens
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.Match(id)
 			.AnyAsync(cancellationToken);
 	}

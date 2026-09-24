@@ -46,7 +46,7 @@ internal class FollowQueryRepository : IFollowQueryRepository
 
 		return await _context
 			.Follows
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.ApplyIncludes(_includerFactory, include)
 			.Match(filter)
 			.ProjectToResponseWithoutFollower(currentUser)
@@ -66,7 +66,7 @@ internal class FollowQueryRepository : IFollowQueryRepository
 
 		return await _context
 			.Follows
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.ApplyIncludes(_includerFactory, include)
 			.Match(filter)
 			.ProjectToResponseWithoutFollowing(currentUser)
@@ -83,7 +83,7 @@ internal class FollowQueryRepository : IFollowQueryRepository
 
 		return await _context
 			.Follows
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.ApplyIncludes(_includerFactory, include)
 			.Match(filter)
 			.GetCountAsync(cancellationToken);
@@ -97,7 +97,7 @@ internal class FollowQueryRepository : IFollowQueryRepository
 
 		return await _context
 			.Follows
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.ApplyIncludes(_includerFactory, include)
 			.Match(filter)
 			.GetCountAsync(cancellationToken);
@@ -112,7 +112,7 @@ internal class FollowQueryRepository : IFollowQueryRepository
 
 		return await _context
 			.Follows
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.ApplyIncludes(_includerFactory, include)
 			.Match(id)
 			.ProjectToFullResponse(currentUser)
@@ -125,7 +125,7 @@ internal class FollowQueryRepository : IFollowQueryRepository
 	{
 		return await _context
 			.Follows
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.Match(id)
 			.AnyAsync(cancellationToken);
 	}

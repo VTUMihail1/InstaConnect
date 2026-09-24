@@ -37,6 +37,7 @@ public class FollowsWebApplicationFactory : WebApplicationFactory<Program>, IAsy
 		builder.UpdateAccessTokenConfiguration();
 		builder.UpdateOpenTelemetryConfiguration();
 		builder.UpdateCorsConfiguration();
+		builder.UpdateMainConfiguration();
 		builder.UpdateFollowConfiguration();
 	}
 

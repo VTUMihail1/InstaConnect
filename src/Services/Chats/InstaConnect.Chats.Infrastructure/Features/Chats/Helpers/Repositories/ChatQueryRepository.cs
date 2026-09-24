@@ -43,7 +43,7 @@ internal class ChatQueryRepository : IChatQueryRepository
 
 		return await _context
 			.Chats
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.ApplyIncludes(_includerFactory, include)
 			.Match(filter)
 			.ProjectToResponseWithoutParticipantOne(currentUser)
@@ -60,7 +60,7 @@ internal class ChatQueryRepository : IChatQueryRepository
 
 		return await _context
 			.Chats
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.ApplyIncludes(_includerFactory, include)
 			.Match(filter)
 			.GetCountAsync(cancellationToken);
@@ -75,7 +75,7 @@ internal class ChatQueryRepository : IChatQueryRepository
 
 		return await _context
 			.Chats
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.ApplyIncludes(_includerFactory, include)
 			.Match(id)
 			.ProjectToFullResponse(currentUser)
@@ -88,7 +88,7 @@ internal class ChatQueryRepository : IChatQueryRepository
 	{
 		return await _context
 			.Chats
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.Match(id)
 			.AnyAsync(cancellationToken);
 	}

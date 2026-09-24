@@ -43,6 +43,7 @@ public class IdentityWebApplicationFactory : WebApplicationFactory<Program>, IAs
 		builder.UpdateOpenTelemetryConfiguration();
 		builder.UpdateCloudinaryConfiguration();
 		builder.UpdateCorsConfiguration();
+		builder.UpdateMainConfiguration();
 		builder.UpdateSendGridConfiguration();
 		builder.UpdateAdminConfiguration();
 	}

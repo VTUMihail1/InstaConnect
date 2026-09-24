@@ -1,4 +1,5 @@
 using InstaConnect.Chats.Presentation.Features.ChatMessages.Extensions;
+using InstaConnect.Common.Presentation.Features.AccessTokens.Extensions;
 using InstaConnect.Common.Presentation.Features.Controllers.Extensions;
 using InstaConnect.Common.Presentation.Features.Exceptions.Extensions;
 

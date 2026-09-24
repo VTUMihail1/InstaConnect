@@ -45,7 +45,7 @@ internal class EmailConfirmationTokenCommandRepository : IEmailConfirmationToken
 	{
 		return await _context
 			.EmailConfirmationTokens
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.Match(id)
 			.AnyAsync(cancellationToken);
 	}

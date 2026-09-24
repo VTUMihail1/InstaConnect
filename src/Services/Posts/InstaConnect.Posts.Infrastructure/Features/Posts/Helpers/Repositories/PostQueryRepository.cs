@@ -47,7 +47,7 @@ internal class PostQueryRepository : IPostQueryRepository
 
 		return await _context
 			.Posts
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.ApplyIncludes(_includerFactory, include)
 			.Match(filter)
 			.ProjectToFullResponse(currentUser)
@@ -67,7 +67,7 @@ internal class PostQueryRepository : IPostQueryRepository
 
 		return await _context
 			.Posts
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.ApplyIncludes(_includerFactory, include)
 			.Match(filter)
 			.ProjectToResponseWithoutUser(currentUser)
@@ -84,7 +84,7 @@ internal class PostQueryRepository : IPostQueryRepository
 
 		return await _context
 			.Posts
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.ApplyIncludes(_includerFactory, include)
 			.Match(filter)
 			.GetCountAsync(cancellationToken);
@@ -98,7 +98,7 @@ internal class PostQueryRepository : IPostQueryRepository
 
 		return await _context
 			.Posts
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.ApplyIncludes(_includerFactory, include)
 			.Match(filter)
 			.GetCountAsync(cancellationToken);
@@ -113,7 +113,7 @@ internal class PostQueryRepository : IPostQueryRepository
 
 		return await _context
 			.Posts
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.ApplyIncludes(_includerFactory, include)
 			.Match(id)
 			.ProjectToFullResponse(currentUser)
@@ -126,7 +126,7 @@ internal class PostQueryRepository : IPostQueryRepository
 	{
 		return await _context
 			.Posts
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.Match(id)
 			.AnyAsync(cancellationToken);
 	}

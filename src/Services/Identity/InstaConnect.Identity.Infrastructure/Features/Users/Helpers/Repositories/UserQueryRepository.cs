@@ -34,7 +34,7 @@ internal class UserQueryRepository : IUserQueryRepository
 	{
 		return await _context
 			.Users
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.Match(filter)
 			.ProjectToFullResponse(current)
 			.ApplySorting(_sortOrdererFactory, _sortTermerFactory, sorting)
@@ -48,7 +48,7 @@ internal class UserQueryRepository : IUserQueryRepository
 	{
 		return await _context
 			.Users
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.Match(filter)
 			.GetCountAsync(cancellationToken);
 	}
@@ -60,7 +60,7 @@ internal class UserQueryRepository : IUserQueryRepository
 	{
 		return await _context
 			.Users
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.Match(id)
 			.ProjectToFullResponse(current)
 			.FirstOrDefaultAsync(cancellationToken);
@@ -72,7 +72,7 @@ internal class UserQueryRepository : IUserQueryRepository
 	{
 		return await _context
 			.Users
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.Match(id)
 			.AnyAsync(cancellationToken);
 	}

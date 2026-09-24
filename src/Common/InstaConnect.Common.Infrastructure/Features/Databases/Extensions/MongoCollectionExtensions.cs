@@ -9,7 +9,7 @@ public static class MongoCollectionExtensions
 	extension<T>(IMongoCollection<T> collection)
 		where T : IEntity
 	{
-		public IAggregateFluent<T> AggregateWithCaseInsensitiveCollation()
+		public IAggregateFluent<T> AggregateWithIgnoreCaseCollation()
 		{
 			var options = new AggregateOptions
 			{

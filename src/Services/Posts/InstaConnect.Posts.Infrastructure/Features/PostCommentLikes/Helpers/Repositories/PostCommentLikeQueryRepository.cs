@@ -51,7 +51,7 @@ internal class PostCommentLikeQueryRepository : IPostCommentLikeQueryRepository
 
 		return await _context
 			.PostCommentLikes
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.ApplyIncludes(_commentLikeIncluderFactory, commentLikeInclude)
 			.Match(filter)
 			.ProjectToResponseWithoutPostComment(currentUser)

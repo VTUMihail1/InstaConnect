@@ -49,7 +49,7 @@ internal class PostCommentQueryRepository : IPostCommentQueryRepository
 
 		return await _context
 			.PostComments
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.ApplyIncludes(_commentIncluderFactory, commentInclude)
 			.Match(filter)
 			.ProjectToResponseWithoutPost(currentUser)
@@ -70,7 +70,7 @@ internal class PostCommentQueryRepository : IPostCommentQueryRepository
 
 		return await _context
 			.PostComments
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.ApplyIncludes(_commentIncluderFactory, commentInclude)
 			.Match(filter)
 			.ProjectToResponseWithoutUser(currentUser)
@@ -87,7 +87,7 @@ internal class PostCommentQueryRepository : IPostCommentQueryRepository
 
 		return await _context
 			.PostComments
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.ApplyIncludes(_commentIncluderFactory, commentInclude)
 			.Match(filter)
 			.GetCountAsync(cancellationToken);
@@ -102,7 +102,7 @@ internal class PostCommentQueryRepository : IPostCommentQueryRepository
 
 		return await _context
 			.PostComments
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.ApplyIncludes(_commentIncluderFactory, commentInclude)
 			.Match(filter)
 			.GetCountAsync(cancellationToken);
@@ -118,7 +118,7 @@ internal class PostCommentQueryRepository : IPostCommentQueryRepository
 
 		return await _context
 			.PostComments
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.ApplyIncludes(_commentIncluderFactory, commentInclude)
 			.Match(id)
 			.ProjectToFullResponse(currentUser)
@@ -131,7 +131,7 @@ internal class PostCommentQueryRepository : IPostCommentQueryRepository
 	{
 		return await _context
 			.PostComments
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.Match(id)
 			.AnyAsync(cancellationToken);
 	}

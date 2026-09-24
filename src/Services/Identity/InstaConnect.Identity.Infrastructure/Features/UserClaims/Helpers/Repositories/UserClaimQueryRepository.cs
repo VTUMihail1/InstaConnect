@@ -35,7 +35,7 @@ internal class UserClaimQueryRepository : IUserClaimQueryRepository
 	{
 		return await _context
 			.UserClaims
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.Match(filter)
 			.ProjectToResponseWithoutUser(current)
 			.ApplySorting(_sortOrdererFactory, _claimSortTermerFactory, sorting)
@@ -49,7 +49,7 @@ internal class UserClaimQueryRepository : IUserClaimQueryRepository
 	{
 		return await _context
 			.UserClaims
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.Match(filter)
 			.GetCountAsync(cancellationToken);
 	}
@@ -61,7 +61,7 @@ internal class UserClaimQueryRepository : IUserClaimQueryRepository
 	{
 		return await _context
 			.UserClaims
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.Match(id)
 			.ProjectToFullResponse(current)
 			.FirstOrDefaultAsync(cancellationToken);
@@ -73,7 +73,7 @@ internal class UserClaimQueryRepository : IUserClaimQueryRepository
 	{
 		return await _context
 			.UserClaims
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.Match(id)
 			.AnyAsync(cancellationToken);
 	}

@@ -49,7 +49,7 @@ internal class PostLikeQueryRepository : IPostLikeQueryRepository
 
 		return await _context
 			.PostLikes
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.ApplyIncludes(_likeIncluderFactory, likeInclude)
 			.Match(filter)
 			.ProjectToResponseWithoutPost(currentUser)
@@ -70,7 +70,7 @@ internal class PostLikeQueryRepository : IPostLikeQueryRepository
 
 		return await _context
 			.PostLikes
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.ApplyIncludes(_likeIncluderFactory, likeInclude)
 			.Match(filter)
 			.ProjectToResponseWithoutUser(currentUser)
@@ -87,7 +87,7 @@ internal class PostLikeQueryRepository : IPostLikeQueryRepository
 
 		return await _context
 			.PostLikes
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.ApplyIncludes(_likeIncluderFactory, likeInclude)
 			.Match(filter)
 			.GetCountAsync(cancellationToken);
@@ -102,7 +102,7 @@ internal class PostLikeQueryRepository : IPostLikeQueryRepository
 
 		return await _context
 			.PostLikes
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.ApplyIncludes(_likeIncluderFactory, likeInclude)
 			.Match(filter)
 			.GetCountAsync(cancellationToken);
@@ -118,7 +118,7 @@ internal class PostLikeQueryRepository : IPostLikeQueryRepository
 
 		return await _context
 			.PostLikes
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.ApplyIncludes(_likeIncluderFactory, likeInclude)
 			.Match(id)
 			.ProjectToFullResponse(currentUser)
@@ -131,7 +131,7 @@ internal class PostLikeQueryRepository : IPostLikeQueryRepository
 	{
 		return await _context
 			.PostLikes
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.Match(id)
 			.AnyAsync(cancellationToken);
 	}

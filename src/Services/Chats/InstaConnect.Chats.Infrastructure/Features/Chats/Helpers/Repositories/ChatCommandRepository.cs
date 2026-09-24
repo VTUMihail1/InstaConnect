@@ -25,7 +25,7 @@ internal class ChatCommandRepository : IChatCommandRepository
 	{
 		return await _context
 			.Chats
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.ApplyIncludes(_includerFactory, include)
 			.Match(id)
 			.FirstOrDefaultAsync(cancellationToken);
@@ -44,7 +44,7 @@ internal class ChatCommandRepository : IChatCommandRepository
 	{
 		return await _context
 			.Chats
-			.AggregateWithCaseInsensitiveCollation()
+			.AggregateWithIgnoreCaseCollation()
 			.Match(id)
 			.AnyAsync(cancellationToken);
 	}

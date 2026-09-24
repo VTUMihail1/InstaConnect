@@ -37,6 +37,7 @@ public class ChatsWebApplicationFactory : WebApplicationFactory<Program>, IAsync
 		builder.UpdateAccessTokenConfiguration();
 		builder.UpdateOpenTelemetryConfiguration();
 		builder.UpdateCorsConfiguration();
+		builder.UpdateMainConfiguration();
 		builder.UpdateChatMessageConfiguration();
 	}
 

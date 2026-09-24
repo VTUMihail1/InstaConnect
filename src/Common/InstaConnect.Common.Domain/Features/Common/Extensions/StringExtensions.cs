@@ -85,10 +85,5 @@ public static class StringExtensions
 		{
 			return str.StartsWith(b ?? string.Empty, StringComparison.OrdinalIgnoreCase);
 		}
-
-		public bool NotEqualsOrdinalIgnoreCase(string? b)
-		{
-			return !str.EqualsOrdinalIgnoreCase(b);
-		}
 	}
 }

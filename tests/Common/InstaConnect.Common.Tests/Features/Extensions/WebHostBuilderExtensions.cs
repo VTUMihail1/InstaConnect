@@ -5,6 +5,7 @@ using InstaConnect.Common.Infrastructure.Features.Emails.Models;
 using InstaConnect.Common.Infrastructure.Features.Events.Models;
 using InstaConnect.Common.Infrastructure.Features.Images.Models;
 using InstaConnect.Common.Infrastructure.Features.Telemetries.Models;
+using InstaConnect.Common.Presentation.Features.Common.Models;
 using InstaConnect.Common.Presentation.Features.Controllers.Models;
 using InstaConnect.Common.Tests.Features.Utilities;
 
@@ -93,6 +94,13 @@ public static class WebHostBuilderExtensions
 			webHostBuilder.UseSetting(
 				CorsOptions.SectionName.ToSectionKey(nameof(CorsOptions.AllowedOrigins)),
 				MockValues.CorsAllowedOrigins);
+		}
+
+		public void UpdateMainConfiguration()
+		{
+			webHostBuilder.UseSetting(
+				MainOptions.SectionName.ToSectionKey(nameof(MainOptions.BaseUrl)),
+				MockValues.MainBaseUrl);
 		}
 	}
 }
