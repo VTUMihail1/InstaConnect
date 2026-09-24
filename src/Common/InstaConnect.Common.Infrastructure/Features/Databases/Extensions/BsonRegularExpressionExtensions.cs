@@ -18,16 +18,6 @@ public static class BsonRegularExpressionExtensions
 			return value.ToIgnoreCaseRegex("^{0}");
 		}
 
-		public BsonRegularExpression ToEndsWithIgnoreCaseRegex()
-		{
-			return value.ToIgnoreCaseRegex("{0}$");
-		}
-
-		public BsonRegularExpression ToContainsIgnoreCaseRegex()
-		{
-			return value.ToIgnoreCaseRegex("{0}");
-		}
-
 		public BsonRegularExpression ToIgnoreCaseRegex(string regexTemplate)
 		{
 			return new BsonRegularExpression(regexTemplate.FormatCurrentCulture(Regex.Escape(value)), "i");

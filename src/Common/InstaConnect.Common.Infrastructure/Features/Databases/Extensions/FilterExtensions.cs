@@ -29,26 +29,6 @@ public static class FilterExtensions
 
 			return builder.Regex(field, value.ToStartsWithIgnoreCaseRegex());
 		}
-
-		public FilterDefinition<T> EndsWithIgnoreCase(Expression<Func<T, object>> field, string value, bool isEmpty = false)
-		{
-			if (isEmpty)
-			{
-				return builder.Empty;
-			}
-
-			return builder.Regex(field, value.ToEndsWithIgnoreCaseRegex());
-		}
-
-		public FilterDefinition<T> ContainsIgnoreCase(Expression<Func<T, object>> field, string value, bool isEmpty = false)
-		{
-			if (isEmpty)
-			{
-				return builder.Empty;
-			}
-
-			return builder.Regex(field, value.ToContainsIgnoreCaseRegex());
-		}
 	}
 
 	extension<T>(Name filter)

@@ -22,7 +22,7 @@ public static class ServiceCollectionExtensions
 					cf.RegisterServicesFromAssemblies(assemblies);
 
 					cf.AddOpenBehavior(typeof(ValidationPipelineBehavior<,>));
-					cf.AddOpenBehavior(typeof(CachingPipelineBehavior<,>));
+					cf.AddOpenBehavior(typeof(CachePipelineBehavior<,>));
 					cf.AddOpenBehavior(typeof(UnitOfWorkPipelineBehavior<,>));
 				});
 

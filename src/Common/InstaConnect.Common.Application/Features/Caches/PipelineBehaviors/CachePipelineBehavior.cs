@@ -7,19 +7,19 @@ using Microsoft.Extensions.Logging;
 
 namespace InstaConnect.Common.Application.Features.Caches.PipelineBehaviors;
 
-internal class CachingPipelineBehavior<TRequest, TResponse>
+internal class CachePipelineBehavior<TRequest, TResponse>
 	: IPipelineBehavior<TRequest, TResponse>
 	where TRequest : IQueryRequest<TResponse>, ICachable
 	where TResponse : class
 {
 	private readonly ICacheHandler _cacheHandler;
 	private readonly ICacheRequestFactory _cacheRequestFactory;
-	private readonly ILogger<CachingPipelineBehavior<TRequest, TResponse>> _logger;
+	private readonly ILogger<CachePipelineBehavior<TRequest, TResponse>> _logger;
 
-	public CachingPipelineBehavior(
+	public CachePipelineBehavior(
 		ICacheHandler cacheHandler,
 		ICacheRequestFactory cacheRequestFactory,
-		ILogger<CachingPipelineBehavior<TRequest, TResponse>> logger)
+		ILogger<CachePipelineBehavior<TRequest, TResponse>> logger)
 	{
 		_cacheHandler = cacheHandler;
 		_cacheRequestFactory = cacheRequestFactory;

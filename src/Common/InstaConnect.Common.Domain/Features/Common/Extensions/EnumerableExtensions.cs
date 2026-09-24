@@ -25,16 +25,6 @@ public static class EnumerableExtensions
 		{
 			return enumerable.JoinWith("; ");
 		}
-
-		public string JoinWithNewLine()
-		{
-			return enumerable.JoinWith("\n");
-		}
-
-		public string JoinWithDot()
-		{
-			return enumerable.JoinWith(".");
-		}
 	}
 
 	extension<TDestinationType, TIncludeType, TIncludeDescriptor>(IEnumerable<TIncludeDescriptor> descriptors)

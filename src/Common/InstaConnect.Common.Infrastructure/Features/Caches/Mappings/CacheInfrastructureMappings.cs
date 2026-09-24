@@ -1,7 +1,4 @@
-using CloudinaryDotNet.Actions;
-
 using InstaConnect.Common.Application.Features.Caches.Models;
-using InstaConnect.Common.Domain.Features.ValueObjects.Models;
 
 using Mapster;
 
@@ -9,7 +6,7 @@ using Microsoft.Extensions.Caching.Distributed;
 
 namespace InstaConnect.Common.Infrastructure.Features.Caches.Mappings;
 
-public class CachingInfrastructureMappings : IRegister
+public class CacheInfrastructureMappings : IRegister
 {
 	public void Register(TypeAdapterConfig config)
 	{
@@ -18,8 +15,5 @@ public class CachingInfrastructureMappings : IRegister
 			{
 				AbsoluteExpiration = src.Expiration,
 			});
-
-		config.NewConfig<ImageUploadResult, Image>()
-			.ConstructUsing(src => new(src.Url.AbsoluteUri));
 	}
 }
