@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
 
-using Asp.Versioning;
-
 using InstaConnect.Common.Domain.Features.AccessTokens.Utilities;
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Events.Features.AccessTokens.Models;
@@ -57,13 +55,14 @@ public static class ServiceCollectionExtensions
 			.AddControllersAsServices();
 
 			serviceCollection.Configure<ApiBehaviorOptions>(options =>
-				options.SuppressInferBindingSourcesForParameters = true);
-
-			serviceCollection.AddApiVersioning(options =>
 			{
-				options.DefaultApiVersion = new ApiVersion(1);
-				options.ReportApiVersions = true;
+				options.SuppressInferBindingSourcesForParameters = true;
+				options.SuppressModelStateInvalidFilter = true;
+				options.SuppressMapClientErrors = true;
 			});
+
+			serviceCollection.AddApiVersioning(options => options.ReportApiVersions = true)
+							 .AddMvc();
 
 			return serviceCollection;
 		}

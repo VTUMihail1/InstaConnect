@@ -8,7 +8,7 @@ public static class ClientSessionHandleExtensions
 	{
 		public bool IsInTransaction()
 		{
-			return session != null && session!.IsInTransaction;
+			return session != null && session.IsInTransaction;
 		}
 
 		public bool IsNotInTransaction()

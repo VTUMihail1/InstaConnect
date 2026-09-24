@@ -25,7 +25,7 @@ internal sealed class ValidationPipelineBehavior<TRequest, TResponse>
 		var validationContext = new ValidationContext<TRequest>(request);
 
 		var validationResults = await Task.WhenAll(
-			_validators.Select(v => v.ValidateAsync(validationContext)));
+			_validators.Select(v => v.ValidateAsync(validationContext, cancellationToken)));
 
 		var validationFailures = validationResults
 			.Where(vr => !vr.IsValid)

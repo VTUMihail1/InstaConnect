@@ -9,6 +9,7 @@ using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
 
 namespace InstaConnect.Posts.Presentation.Features.Posts.Controllers.v1;
 
+[ApiController]
 [ApiVersion(PostRoutes.Version1)]
 [Route(PostRoutes.Resource)]
 [EnableRateLimiting(RateLimiterPolicies.Default)]

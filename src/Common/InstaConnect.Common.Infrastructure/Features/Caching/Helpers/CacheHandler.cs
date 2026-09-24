@@ -1,5 +1,6 @@
 using InstaConnect.Common.Application.Features.Caching.Abstractions;
 using InstaConnect.Common.Application.Features.Caching.Models;
+using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
 using InstaConnect.Common.Infrastructure.Features.Caching.Abstractions;
 
 using Microsoft.Extensions.Caching.Distributed;
@@ -9,27 +10,28 @@ namespace InstaConnect.Common.Infrastructure.Features.Caching.Helpers;
 
 internal class CacheHandler : ICacheHandler
 {
+	private readonly IApplicationMapper _mapper;
 	private readonly IJsonConverter _jsonConverter;
 	private readonly IDistributedCache _distributedCache;
 
 	public CacheHandler(
+		IApplicationMapper mapper,
 		IJsonConverter jsonConverter,
 		IDistributedCache distributedCache)
 	{
+		_mapper = mapper;
 		_jsonConverter = jsonConverter;
 		_distributedCache = distributedCache;
 	}
 
-	public async Task SetAsync(CacheRequest cacheRequest, CancellationToken cancellationToken)
+	public async Task SetAsync(CacheRequest request, CancellationToken cancellationToken)
 	{
-		var value = _jsonConverter.Serialize(cacheRequest.Data) ?? string.Empty;
+		var value = _jsonConverter.Serialize(request.Data);
+		var options = _mapper.Map<DistributedCacheEntryOptions>(request);
 		await _distributedCache.SetStringAsync(
-			cacheRequest.Key,
+			request.Key,
 			value,
-			new DistributedCacheEntryOptions
-			{
-				AbsoluteExpiration = cacheRequest.Expiration,
-			},
+			options,
 			cancellationToken);
 	}
 

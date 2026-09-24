@@ -10,6 +10,7 @@ using InstaConnect.Common.Presentation.Features.Controllers.Utilities;
 namespace InstaConnect.Chats.Presentation.Features.ChatMessages.Controllers.v1;
 
 [Authorize]
+[ApiController]
 [ApiVersion(ChatMessageRoutes.Version1)]
 [Route(ChatMessageRoutes.Resource)]
 [EnableRateLimiting(RateLimiterPolicies.Default)]

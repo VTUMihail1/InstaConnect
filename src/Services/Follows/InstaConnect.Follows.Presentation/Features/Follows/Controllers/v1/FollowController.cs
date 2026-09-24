@@ -8,6 +8,7 @@ using InstaConnect.Follows.Application.Features.Follows.Queries.GetById;
 
 namespace InstaConnect.Follows.Presentation.Features.Follows.Controllers.v1;
 
+[ApiController]
 [ApiVersion(FollowRoutes.Version1)]
 [Route(FollowRoutes.Resource)]
 [EnableRateLimiting(RateLimiterPolicies.Default)]

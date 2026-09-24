@@ -8,6 +8,6 @@ internal class InvalidEmailStringTransformer : IStringTransformer
 	{
 		const string DomainSeperator = "@";
 
-		return value!.Split(DomainSeperator)!.FirstOrDefault()!;
+		return value!.Split(DomainSeperator).FirstOrDefault()!;
 	}
 }

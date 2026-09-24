@@ -5,6 +5,7 @@ using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAllForUser
 
 namespace InstaConnect.Posts.Presentation.Features.PostComments.Controllers.v1;
 
+[ApiController]
 [ApiVersion(PostCommentRoutes.Version1)]
 [Route(PostCommentRoutes.UserResource)]
 [EnableRateLimiting(RateLimiterPolicies.Default)]

@@ -8,6 +8,7 @@ using InstaConnect.Common.Presentation.Features.Controllers.Utilities;
 namespace InstaConnect.Chats.Presentation.Features.Chats.Controllers.v1;
 
 [Authorize]
+[ApiController]
 [ApiVersion(ChatRoutes.Version1)]
 [Route(ChatRoutes.Resource)]
 [EnableRateLimiting(RateLimiterPolicies.Default)]

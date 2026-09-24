@@ -7,6 +7,7 @@ using InstaConnect.Identity.Application.Features.UserClaims.Queries.GetAll;
 
 namespace InstaConnect.Identity.Presentation.Features.UserClaims.Controllers.v1;
 
+[ApiController]
 [ApiVersion(UserClaimRoutes.Version1)]
 [Route(UserClaimRoutes.Resource)]
 [Authorize(AuthorizationPolicies.Admin)]

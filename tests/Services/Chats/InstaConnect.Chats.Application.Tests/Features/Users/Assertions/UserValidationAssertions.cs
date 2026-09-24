@@ -43,7 +43,7 @@ public static class UserValidationAssertions
 			UpdateUserCommandRequest request,
 			IStringMessageTransformer messageTransformer)
 		{
-			response.ShouldHaveValidationErrorForProperty(request, p => p.ProfileImageUrl, messageTransformer!);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.ProfileImageUrl!, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForUpdatedAtUtc(
@@ -105,7 +105,7 @@ public static class UserValidationAssertions
 			AddUserCommandRequest request,
 			IStringMessageTransformer messageTransformer)
 		{
-			response.ShouldHaveValidationErrorForProperty(request, p => p.ProfileImageUrl, messageTransformer!);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.ProfileImageUrl!, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForCreatedAtUtc(

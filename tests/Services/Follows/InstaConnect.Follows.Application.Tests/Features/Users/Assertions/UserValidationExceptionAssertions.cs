@@ -170,7 +170,7 @@ public static class UserValidationExceptionAssertions
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
 				p => p.ProfileImageUrl!,
-				messageTransformer!,
+				messageTransformer,
 				cancellationToken);
 		}
 
@@ -184,7 +184,7 @@ public static class UserValidationExceptionAssertions
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
 				p => p.ProfileImageUrl!,
-				messageTransformer!,
+				messageTransformer,
 				cancellationToken);
 		}
 
@@ -198,7 +198,7 @@ public static class UserValidationExceptionAssertions
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
 				p => p.CreatedAtUtc,
-				messageTransformer!,
+				messageTransformer,
 				cancellationToken);
 		}
 
@@ -212,7 +212,7 @@ public static class UserValidationExceptionAssertions
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
 				p => p.UpdatedAtUtc,
-				messageTransformer!,
+				messageTransformer,
 				cancellationToken);
 		}
 
@@ -226,7 +226,7 @@ public static class UserValidationExceptionAssertions
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
 				p => p.UpdatedAtUtc,
-				messageTransformer!,
+				messageTransformer,
 				cancellationToken);
 		}
 	}

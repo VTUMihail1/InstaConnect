@@ -8,6 +8,7 @@ using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetById;
 
 namespace InstaConnect.Posts.Presentation.Features.PostLikes.Controllers.v1;
 
+[ApiController]
 [ApiVersion(PostLikeRoutes.Version1)]
 [Route(PostLikeRoutes.Resource)]
 [EnableRateLimiting(RateLimiterPolicies.Default)]

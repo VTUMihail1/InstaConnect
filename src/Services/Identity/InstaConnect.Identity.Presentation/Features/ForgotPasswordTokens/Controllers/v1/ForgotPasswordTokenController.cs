@@ -6,6 +6,7 @@ using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.V
 
 namespace InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Controllers.v1;
 
+[ApiController]
 [ApiVersion(ForgotPasswordTokenRoutes.Version1)]
 [Route(ForgotPasswordTokenRoutes.Resource)]
 [EnableRateLimiting(RateLimiterPolicies.Default)]

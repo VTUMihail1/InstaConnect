@@ -8,6 +8,7 @@ using InstaConnect.Identity.Presentation.Features.RefreshTokens.Abstractions;
 
 namespace InstaConnect.Identity.Presentation.Features.RefreshTokens.Controllers.v1;
 
+[ApiController]
 [ApiVersion(RefreshTokenRoutes.Version1)]
 [Route(RefreshTokenRoutes.Resource)]
 [EnableRateLimiting(RateLimiterPolicies.Default)]

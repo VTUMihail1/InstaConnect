@@ -5,6 +5,7 @@ using InstaConnect.Follows.Application.Features.Follows.Queries.GetAllForFollowi
 
 namespace InstaConnect.Follows.Presentation.Features.Follows.Controllers.v1;
 
+[ApiController]
 [ApiVersion(FollowRoutes.Version1)]
 [Route(FollowRoutes.FollowingResource)]
 [EnableRateLimiting(RateLimiterPolicies.Default)]

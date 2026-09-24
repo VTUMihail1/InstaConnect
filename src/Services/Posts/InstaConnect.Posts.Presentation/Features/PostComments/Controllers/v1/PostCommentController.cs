@@ -9,6 +9,7 @@ using InstaConnect.Posts.Application.Features.PostComments.Queries.GetById;
 
 namespace InstaConnect.Posts.Presentation.Features.PostComments.Controllers.v1;
 
+[ApiController]
 [ApiVersion(PostCommentRoutes.Version1)]
 [Route(PostCommentRoutes.Resource)]
 [EnableRateLimiting(RateLimiterPolicies.Default)]

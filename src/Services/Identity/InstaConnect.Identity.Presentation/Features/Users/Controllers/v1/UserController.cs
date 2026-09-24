@@ -13,6 +13,7 @@ using InstaConnect.Identity.Application.Features.Users.Queries.GetDetailsById;
 
 namespace InstaConnect.Identity.Presentation.Features.Users.Controllers.v1;
 
+[ApiController]
 [ApiVersion(UserRoutes.Version1)]
 [Route(UserRoutes.Resource)]
 [EnableRateLimiting(RateLimiterPolicies.Default)]
