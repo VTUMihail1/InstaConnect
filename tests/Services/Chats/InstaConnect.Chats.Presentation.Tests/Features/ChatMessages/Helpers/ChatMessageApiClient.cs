@@ -3,7 +3,7 @@ using System.Net;
 using InstaConnect.Chats.Presentation.Tests.Features.ChatMessages.Abstractions;
 using InstaConnect.Chats.Presentation.Tests.Features.ChatMessages.Extensions;
 using InstaConnect.Common.Infrastructure.Features.AccessTokens.Abstractions;
-using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
+using InstaConnect.Common.Presentation.Features.Exceptions.Models;
 using InstaConnect.Common.Presentation.Tests.Features.Extensions;
 
 namespace InstaConnect.Chats.Presentation.Tests.Features.ChatMessages.Helpers;

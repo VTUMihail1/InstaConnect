@@ -2,7 +2,7 @@ using System.Text;
 
 using Bogus;
 
-using InstaConnect.Common.Domain.Features.Messaging.Models;
+using InstaConnect.Common.Domain.Features.Requests.Models;
 
 using Microsoft.AspNetCore.Http;
 

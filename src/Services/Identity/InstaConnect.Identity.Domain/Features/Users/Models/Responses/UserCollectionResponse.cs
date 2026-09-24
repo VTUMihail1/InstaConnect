@@ -1,3 +1,5 @@
+using InstaConnect.Common.Domain.Features.Requests.Abstractions;
+
 namespace InstaConnect.Identity.Domain.Features.Users.Models.Responses;
 
 public record UserCollectionResponse(

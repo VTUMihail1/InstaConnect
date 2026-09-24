@@ -1,6 +1,6 @@
 using InstaConnect.Common.Domain.Features.Entities.Abstractions;
-using InstaConnect.Common.Domain.Features.Messaging.Abstractions;
-using InstaConnect.Common.Infrastructure.Features.Data.Helpers;
+using InstaConnect.Common.Domain.Features.Requests.Abstractions;
+using InstaConnect.Common.Infrastructure.Features.Databases.Helpers;
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 
 namespace InstaConnect.Common.Domain.Tests.Features.Utilities;

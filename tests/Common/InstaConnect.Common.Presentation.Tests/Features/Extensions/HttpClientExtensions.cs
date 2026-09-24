@@ -8,7 +8,7 @@ using InstaConnect.Common.Domain.Features.AccessTokens.Utilities;
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Events.Features.AccessTokens.Models;
 using InstaConnect.Common.Infrastructure.Features.AccessTokens.Abstractions;
-using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
+using InstaConnect.Common.Presentation.Features.Exceptions.Models;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Net.Http.Headers;

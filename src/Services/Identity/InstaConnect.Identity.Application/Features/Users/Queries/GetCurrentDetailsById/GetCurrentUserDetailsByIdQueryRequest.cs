@@ -1,4 +1,4 @@
-using InstaConnect.Common.Application.Features.Caching.Abstractions;
+using InstaConnect.Common.Application.Features.Caches.Abstractions;
 using InstaConnect.Identity.Application.Features.Users.Abstractions;
 using InstaConnect.Identity.Application.Features.Users.Utilities;
 

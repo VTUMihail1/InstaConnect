@@ -1,5 +1,5 @@
 using InstaConnect.Chats.Application.Features.Users.Commands.Delete;
-using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Requests.Abstractions;
 using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
 using InstaConnect.Common.Infrastructure.Features.Events.Abstractions;
 using InstaConnect.Identity.Events.Features.Users;

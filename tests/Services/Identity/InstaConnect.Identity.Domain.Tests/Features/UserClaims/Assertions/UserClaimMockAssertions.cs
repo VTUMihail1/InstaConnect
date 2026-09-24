@@ -1,4 +1,4 @@
-using InstaConnect.Common.Events.Features.Common.Abstractions;
+using InstaConnect.Common.Events.Features.Events.Abstractions;
 using InstaConnect.Identity.Domain.Tests.Features.UserClaims.Utilities;
 
 namespace InstaConnect.Identity.Domain.Tests.Features.UserClaims.Assertions;

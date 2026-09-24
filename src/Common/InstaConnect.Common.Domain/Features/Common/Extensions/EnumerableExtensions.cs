@@ -1,4 +1,4 @@
-using InstaConnect.Common.Domain.Features.Data.Abstractions;
+using InstaConnect.Common.Domain.Features.Databases.Abstractions;
 
 namespace InstaConnect.Common.Domain.Features.Common.Extensions;
 

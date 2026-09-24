@@ -9,7 +9,7 @@ using InstaConnect.Chats.Tests.Features.ChatMessages.Utilities;
 using InstaConnect.Chats.Tests.Features.Chats.Utilities;
 using InstaConnect.Chats.Tests.Features.Users.DataAttributes.Id;
 using InstaConnect.Chats.Tests.Features.Users.Utilities;
-using InstaConnect.Common.Domain.Features.Messaging.Models;
+using InstaConnect.Common.Domain.Features.Requests.Models;
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Base;
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 using InstaConnect.Common.Tests.Features.DataAttributes.Strings.Base;

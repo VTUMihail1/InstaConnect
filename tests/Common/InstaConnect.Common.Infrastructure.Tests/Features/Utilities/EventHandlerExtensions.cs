@@ -1,4 +1,4 @@
-using InstaConnect.Common.Events.Features.Common.Abstractions;
+using InstaConnect.Common.Events.Features.Events.Abstractions;
 using InstaConnect.Common.Infrastructure.Features.Events.Abstractions;
 
 namespace InstaConnect.Common.Infrastructure.Tests.Features.Utilities;

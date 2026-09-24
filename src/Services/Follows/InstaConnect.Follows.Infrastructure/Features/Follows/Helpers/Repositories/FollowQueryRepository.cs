@@ -1,5 +1,5 @@
-using InstaConnect.Common.Domain.Features.Data.Abstractions;
-using InstaConnect.Common.Infrastructure.Features.Data.Abstractions;
+using InstaConnect.Common.Domain.Features.Databases.Abstractions;
+using InstaConnect.Common.Infrastructure.Features.Databases.Abstractions;
 using InstaConnect.Follows.Infrastructure.Features.Follows.Extensions;
 using InstaConnect.Follows.Infrastructure.Features.Users.Extensions;
 

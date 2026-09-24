@@ -1,6 +1,6 @@
 using System.Net;
 
-using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
+using InstaConnect.Common.Presentation.Features.Exceptions.Models;
 using InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Models;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Abstractions;

@@ -1,4 +1,4 @@
-using InstaConnect.Common.Domain.Features.Data.Abstractions;
+using InstaConnect.Common.Domain.Features.Databases.Abstractions;
 using InstaConnect.Follows.Domain.Features.Common.Models.Requests;
 
 namespace InstaConnect.Follows.Domain.Features.Follows.Models.Requests;

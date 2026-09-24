@@ -1,5 +1,5 @@
 using InstaConnect.Chats.Domain.Features.Common.Models.Requests;
-using InstaConnect.Common.Infrastructure.Features.Data.Abstractions;
+using InstaConnect.Common.Infrastructure.Features.Databases.Abstractions;
 
 namespace InstaConnect.Chats.Infrastructure.Features.Chats.Abstractions;
 

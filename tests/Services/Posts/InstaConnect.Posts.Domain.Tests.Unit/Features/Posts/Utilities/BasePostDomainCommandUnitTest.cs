@@ -2,7 +2,7 @@ using InstaConnect.Common.Domain.Features.DateTimes.Abstractions;
 using InstaConnect.Common.Domain.Features.Guids.Abstractions;
 using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
 using InstaConnect.Common.Domain.Tests.Features.Utilities;
-using InstaConnect.Common.Events.Features.Common.Abstractions;
+using InstaConnect.Common.Events.Features.Events.Abstractions;
 using InstaConnect.Posts.Domain.Features.Common.Extensions;
 using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
 using InstaConnect.Posts.Domain.Features.Users.Abstractions;

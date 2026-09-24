@@ -1,6 +1,6 @@
 using System.Reflection;
 
-using InstaConnect.Common.Events.Features.Common.Abstractions;
+using InstaConnect.Common.Events.Features.Events.Abstractions;
 using InstaConnect.Common.Infrastructure.Features.Events.Extensions;
 using InstaConnect.Common.Infrastructure.Features.Events.Helpers;
 using InstaConnect.Common.Infrastructure.Features.Events.Models;

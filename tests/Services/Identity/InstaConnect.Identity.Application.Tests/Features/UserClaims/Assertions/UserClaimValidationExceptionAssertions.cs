@@ -1,5 +1,5 @@
-using InstaConnect.Common.Application.Features.Messaging.Abstractions;
-using InstaConnect.Common.Domain.Features.Messaging.Models;
+using InstaConnect.Common.Application.Features.Requests.Abstractions;
+using InstaConnect.Common.Domain.Features.Requests.Models;
 using InstaConnect.Common.Events.Features.AccessTokens.Models;
 
 namespace InstaConnect.Identity.Application.Tests.Features.UserClaims.Assertions;

@@ -1,4 +1,4 @@
-using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
+using InstaConnect.Common.Presentation.Features.Exceptions.Models;
 
 namespace InstaConnect.Posts.Presentation.Tests.Features.PostCommentLikes.Assertions;
 

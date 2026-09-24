@@ -1,6 +1,6 @@
 using System.Net;
 
-using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
+using InstaConnect.Common.Presentation.Features.Exceptions.Models;
 
 namespace InstaConnect.Chats.Presentation.Tests.Features.Chats.Abstractions;
 

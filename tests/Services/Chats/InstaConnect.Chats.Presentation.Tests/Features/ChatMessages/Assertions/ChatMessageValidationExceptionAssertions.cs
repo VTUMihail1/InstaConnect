@@ -1,4 +1,4 @@
-using InstaConnect.Common.Domain.Features.Messaging.Models;
+using InstaConnect.Common.Domain.Features.Requests.Models;
 
 using InstaConnect.Chats.Domain.Features.ChatMessages.Models.Requests;
 

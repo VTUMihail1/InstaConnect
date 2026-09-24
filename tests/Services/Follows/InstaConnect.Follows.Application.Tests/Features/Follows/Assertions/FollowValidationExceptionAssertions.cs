@@ -1,5 +1,5 @@
-using InstaConnect.Common.Application.Features.Messaging.Abstractions;
-using InstaConnect.Common.Domain.Features.Messaging.Models;
+using InstaConnect.Common.Application.Features.Requests.Abstractions;
+using InstaConnect.Common.Domain.Features.Requests.Models;
 
 namespace InstaConnect.Follows.Application.Tests.Features.Follows.Assertions;
 

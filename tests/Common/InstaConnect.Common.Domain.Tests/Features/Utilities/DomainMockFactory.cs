@@ -1,6 +1,6 @@
 using InstaConnect.Common.Domain.Features.DateTimes.Abstractions;
 using InstaConnect.Common.Domain.Features.Guids.Abstractions;
-using InstaConnect.Common.Events.Features.Common.Abstractions;
+using InstaConnect.Common.Events.Features.Events.Abstractions;
 using InstaConnect.Common.Tests.Features.Utilities;
 
 namespace InstaConnect.Common.Domain.Tests.Features.Utilities;

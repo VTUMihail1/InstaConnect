@@ -1,4 +1,4 @@
-using InstaConnect.Common.Presentation.Features.Messaging.Abstractions;
+using InstaConnect.Common.Presentation.Features.Requests.Abstractions;
 using InstaConnect.Follows.Presentation.Features.Users.Abstractions;
 using InstaConnect.Follows.Presentation.Tests.Features.Follows.Utilities;
 using InstaConnect.Follows.Presentation.Tests.Features.Users.Utilities;

@@ -22,7 +22,7 @@
   <ItemGroup Label="Common">
     <Using Include="FluentValidation" />
     <Using Include="Microsoft.Extensions.DependencyInjection" />
-    <Using Include="InstaConnect.Common.Application.Features.Messaging.Abstractions"/>
+    <Using Include="InstaConnect.Common.Application.Features.Requests.Abstractions"/>
     <Using Include="InstaConnect.Common.Application.Features.Validations.Extensions" />
   </ItemGroup>
 

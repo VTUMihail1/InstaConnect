@@ -1,4 +1,4 @@
-using InstaConnect.Common.Presentation.Features.Messaging.Abstractions;
+using InstaConnect.Common.Presentation.Features.Requests.Abstractions;
 using InstaConnect.Identity.Presentation.Features.Users.Abstractions;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.Users.Utilities;

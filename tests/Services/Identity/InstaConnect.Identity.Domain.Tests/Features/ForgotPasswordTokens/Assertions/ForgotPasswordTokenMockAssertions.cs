@@ -1,5 +1,5 @@
 using InstaConnect.Common.Domain.Features.DateTimes.Abstractions;
-using InstaConnect.Common.Events.Features.Common.Abstractions;
+using InstaConnect.Common.Events.Features.Events.Abstractions;
 using InstaConnect.Identity.Domain.Features.Common.Helpers;
 using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Options;
 using InstaConnect.Identity.Domain.Tests.Features.ForgotPasswordTokens.Utilities;

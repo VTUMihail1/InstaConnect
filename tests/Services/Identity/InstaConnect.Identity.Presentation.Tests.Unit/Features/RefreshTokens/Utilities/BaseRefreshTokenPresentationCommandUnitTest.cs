@@ -1,4 +1,4 @@
-using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Requests.Abstractions;
 using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
 using InstaConnect.Identity.Presentation.Features.Common.Extensions;
 using InstaConnect.Identity.Presentation.Features.RefreshTokens.Abstractions;

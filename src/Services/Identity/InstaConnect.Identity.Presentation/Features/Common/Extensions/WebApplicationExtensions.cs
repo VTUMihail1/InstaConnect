@@ -1,6 +1,6 @@
 using InstaConnect.Common.Presentation.Features.Controllers.Extensions;
-using InstaConnect.Common.Presentation.Features.ExceptionHandling.Extensions;
-using InstaConnect.Common.Presentation.Features.Seedings.Extensions;
+using InstaConnect.Common.Presentation.Features.Exceptions.Extensions;
+using InstaConnect.Common.Presentation.Features.Seeders.Extensions;
 
 namespace InstaConnect.Identity.Presentation.Features.Common.Extensions;
 

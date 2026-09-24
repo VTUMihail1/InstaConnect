@@ -1,5 +1,5 @@
-using InstaConnect.Common.Infrastructure.Features.Observability.Extensions;
-using InstaConnect.Common.Presentation.Features.Observability.Extensions;
+using InstaConnect.Common.Infrastructure.Features.Telemetries.Extensions;
+using InstaConnect.Common.Presentation.Features.Telemetries.Extensions;
 using InstaConnect.Follows.Application.Features.Common.Extensions;
 using InstaConnect.Follows.Domain.Features.Common.Extensions;
 using InstaConnect.Follows.Infrastructure.Features.Common.Extensions;

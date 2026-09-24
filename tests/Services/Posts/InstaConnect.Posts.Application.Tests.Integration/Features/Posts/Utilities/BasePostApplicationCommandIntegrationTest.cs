@@ -1,6 +1,6 @@
 using InstaConnect.Posts.Tests.Features.Posts.Abstractions;
 using InstaConnect.Posts.Tests.Features.Posts.Extensions;
-using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Requests.Abstractions;
 
 namespace InstaConnect.Posts.Application.Tests.Integration.Features.Posts.Utilities;
 

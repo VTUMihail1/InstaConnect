@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 
-using InstaConnect.Common.Domain.Features.ExceptionHandling.Utilities;
-using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
+using InstaConnect.Common.Domain.Features.Exceptions.Utilities;
+using InstaConnect.Common.Presentation.Features.Exceptions.Models;
 using InstaConnect.Common.Presentation.Tests.Features.Assertions;
 using InstaConnect.Common.Presentation.Tests.Features.Utilities;
 using InstaConnect.Common.Tests.Features.DataAttributes.Base;

@@ -1,4 +1,4 @@
-using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Requests.Abstractions;
 using InstaConnect.Identity.Presentation.Tests.Features.ForgotPasswordTokens.Utilities;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.ForgotPasswordTokens.Assertions;

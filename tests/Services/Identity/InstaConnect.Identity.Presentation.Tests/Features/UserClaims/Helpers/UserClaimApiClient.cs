@@ -1,7 +1,7 @@
 using System.Net;
 
 using InstaConnect.Common.Infrastructure.Features.AccessTokens.Abstractions;
-using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
+using InstaConnect.Common.Presentation.Features.Exceptions.Models;
 using InstaConnect.Common.Presentation.Tests.Features.Extensions;
 using InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Abstractions;
 using InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Extensions;

@@ -6,7 +6,7 @@ using InstaConnect.Common.Domain.Features.Mappers.Extensions;
 using InstaConnect.Common.Presentation.Features.Common.Extensions;
 using InstaConnect.Common.Presentation.Features.Common.Models;
 using InstaConnect.Common.Presentation.Features.Controllers.Extensions;
-using InstaConnect.Common.Presentation.Features.ExceptionHandling.Extensions;
+using InstaConnect.Common.Presentation.Features.Exceptions.Extensions;
 
 namespace InstaConnect.Chats.Presentation.Features.Common.Extensions;
 

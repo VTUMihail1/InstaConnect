@@ -1,4 +1,4 @@
-using InstaConnect.Common.Events.Features.Common.Abstractions;
+using InstaConnect.Common.Events.Features.Events.Abstractions;
 using InstaConnect.Common.Infrastructure.Tests.Features.Utilities;
 using InstaConnect.Follows.Infrastructure.Tests.Features.Users.Abstractions;
 using InstaConnect.Follows.Infrastructure.Tests.Features.Users.Extensions;

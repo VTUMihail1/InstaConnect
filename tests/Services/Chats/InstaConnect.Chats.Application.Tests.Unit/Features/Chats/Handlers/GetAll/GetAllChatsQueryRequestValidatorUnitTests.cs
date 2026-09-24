@@ -1,5 +1,5 @@
 using InstaConnect.Chats.Domain.Features.Chats.Models.Requests;
-using InstaConnect.Common.Domain.Features.Messaging.Models;
+using InstaConnect.Common.Domain.Features.Requests.Models;
 
 namespace InstaConnect.Chats.Application.Tests.Unit.Features.Chats.Handlers.GetAll;
 

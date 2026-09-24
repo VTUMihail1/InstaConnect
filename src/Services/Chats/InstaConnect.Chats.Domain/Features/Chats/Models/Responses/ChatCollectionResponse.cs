@@ -1,3 +1,5 @@
+using InstaConnect.Common.Domain.Features.Requests.Abstractions;
+
 namespace InstaConnect.Chats.Domain.Features.Chats.Models.Responses;
 
 public record ChatCollectionResponse(

@@ -1,4 +1,4 @@
-using InstaConnect.Common.Domain.Features.Messaging.Models;
+using InstaConnect.Common.Domain.Features.Requests.Models;
 using InstaConnect.Common.Events.Features.AccessTokens.Models;
 
 using InstaConnect.Identity.Domain.Features.UserClaims.Models.Requests;

@@ -2,7 +2,7 @@ using InstaConnect.Identity.Tests.Features.Users.Abstractions;
 using InstaConnect.Identity.Tests.Features.Users.Extensions;
 using InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Abstractions;
 using InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Extensions;
-using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Requests.Abstractions;
 
 namespace InstaConnect.Identity.Application.Tests.Integration.Features.Users.Utilities;
 
