@@ -1,10 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <PackageReference Include="MediatR" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Infrastructure\InstaConnect.Common.Infrastructure.csproj" />
     <ProjectReference Include="..\InstaConnect.Chats.Application\InstaConnect.Chats.Application.csproj" />
   </ItemGroup>
@@ -17,7 +13,7 @@
     <Using Include="InstaConnect.Common.Infrastructure.Features.Databases.Extensions" />
     <Using Include="InstaConnect.Chats.Infrastructure.Features.Common.Abstractions" />
   </ItemGroup>
-  
+
   <ItemGroup Label="Users">
     <Using Include="InstaConnect.Chats.Domain.Features.Users.Exceptions" />
     <Using Include="InstaConnect.Chats.Domain.Features.Users.Abstractions" />

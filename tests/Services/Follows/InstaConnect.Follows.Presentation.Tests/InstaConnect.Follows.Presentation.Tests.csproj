@@ -1,13 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <IsTestProject>false</IsTestProject>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="MediatR" />
-  </ItemGroup>
-    
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Presentation.Tests\InstaConnect.Common.Presentation.Tests.csproj" />
     <ProjectReference Include="..\InstaConnect.Follows.Tests\InstaConnect.Follows.Tests.csproj" />
@@ -60,5 +52,5 @@
     <Using Include="InstaConnect.Follows.Application.Features.Follows.Commands.Add" />
     <Using Include="InstaConnect.Follows.Application.Features.Follows.Commands.Delete" />
   </ItemGroup>
-  
+
 </Project>

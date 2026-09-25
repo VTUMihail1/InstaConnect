@@ -1,13 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <IsTestProject>false</IsTestProject>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="MediatR" />
-  </ItemGroup>
-    
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Presentation.Tests\InstaConnect.Common.Presentation.Tests.csproj" />
     <ProjectReference Include="..\InstaConnect.Posts.Tests\InstaConnect.Posts.Tests.csproj" />
@@ -16,8 +8,8 @@
   <ItemGroup Label="Common">
     <Using Include="Microsoft.AspNetCore.Mvc" />
     <Using Include="InstaConnect.Common.Infrastructure.Features.Databases.Helpers"/>
-	<Using Include="InstaConnect.Common.Tests.Features.Abstractions" />
-	<Using Include="InstaConnect.Common.Tests.Features.Helpers" />
+    <Using Include="InstaConnect.Common.Tests.Features.Abstractions" />
+    <Using Include="InstaConnect.Common.Tests.Features.Helpers" />
     <Using Include="InstaConnect.Common.Tests.Features.Assertions" />
     <Using Include="InstaConnect.Common.Tests.Features.Utilities" />
     <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Base" />
@@ -120,5 +112,5 @@
     <Using Include="InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Add" />
     <Using Include="InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Delete" />
   </ItemGroup>
-  
+
 </Project>

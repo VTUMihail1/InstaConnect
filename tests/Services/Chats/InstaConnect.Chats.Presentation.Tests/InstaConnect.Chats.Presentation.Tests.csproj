@@ -1,13 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <IsTestProject>false</IsTestProject>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="MediatR" />
-  </ItemGroup>
-    
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Presentation.Tests\InstaConnect.Common.Presentation.Tests.csproj" />
     <ProjectReference Include="..\InstaConnect.Chats.Tests\InstaConnect.Chats.Tests.csproj" />
@@ -77,5 +69,5 @@
     <Using Include="InstaConnect.Chats.Application.Features.ChatMessages.Commands.Update" />
     <Using Include="InstaConnect.Chats.Application.Features.ChatMessages.Commands.Delete" />
   </ItemGroup>
-  
+
 </Project>

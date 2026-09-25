@@ -1,13 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <IsTestProject>false</IsTestProject>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="MediatR" />
-  </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\src\Services\Chats\InstaConnect.Chats.Domain\InstaConnect.Chats.Domain.csproj" />
     <ProjectReference Include="..\..\..\..\src\Services\Chats\InstaConnect.Chats.Infrastructure\InstaConnect.Chats.Infrastructure.csproj" />
@@ -43,7 +35,7 @@
     <Using Include="InstaConnect.Chats.Domain.Features.Users.Models.Requests" />
     <Using Include="InstaConnect.Chats.Tests.Features.Users.Builders" />
   </ItemGroup>
-  
+
   <ItemGroup Label="Chats">
     <Using Include="InstaConnect.Chats.Domain.Features.Chats.Utilities" />
     <Using Include="InstaConnect.Chats.Domain.Features.Chats.Models.Entities" />

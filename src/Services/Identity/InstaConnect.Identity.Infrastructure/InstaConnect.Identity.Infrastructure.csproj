@@ -1,10 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-	<PackageReference Include="BCrypt.Net-Next" />
-	<PackageReference Include="MediatR" />
+    <PackageReference Include="BCrypt.Net-Next" />
   </ItemGroup>
-	
+
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Infrastructure\InstaConnect.Common.Infrastructure.csproj" />
     <ProjectReference Include="..\InstaConnect.Identity.Application\InstaConnect.Identity.Application.csproj" />
@@ -30,7 +29,7 @@
     <Using Include="InstaConnect.Identity.Application.Features.Users.Models" />
     <Using Include="InstaConnect.Identity.Infrastructure.Features.Users.Abstractions" />
   </ItemGroup>
-  
+
   <ItemGroup Label="UserClaims">
     <Using Include="InstaConnect.Identity.Domain.Features.UserClaims.Exceptions" />
     <Using Include="InstaConnect.Identity.Domain.Features.UserClaims.Abstractions" />
