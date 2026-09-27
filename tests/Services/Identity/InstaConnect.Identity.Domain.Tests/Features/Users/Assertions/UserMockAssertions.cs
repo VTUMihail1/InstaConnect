@@ -244,18 +244,16 @@ public static class UserMockAssertions
 
 		public async Task ShouldReceiveOneDeleteRangeAsync(
 			UpdateUserCommand command,
-			User user,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().DeleteRangeAsync(user.EmailConfirmationTokens, cancellationToken);
+			await repository.ShouldHaveReceivedOne().DeleteRangeAsync(UserDomainMatcher.IsEmailConfirmationTokenCollection(command), cancellationToken);
 		}
 
 		public async Task ShouldReceiveZeroDeleteRangeAsync(
 			UpdateUserCommand command,
-			User user,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedZero().DeleteRangeAsync(user.EmailConfirmationTokens, cancellationToken);
+			await repository.ShouldHaveReceivedZero().DeleteRangeAsync(UserDomainMatcher.IsEmailConfirmationTokenCollection(command), cancellationToken);
 		}
 	}
 

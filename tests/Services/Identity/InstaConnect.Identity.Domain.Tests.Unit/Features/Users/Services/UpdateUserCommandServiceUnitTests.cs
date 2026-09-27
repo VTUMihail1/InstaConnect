@@ -545,7 +545,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.UpdateAsync(_command, CancellationToken);
 
 		// Assert
-		await EmailConfirmationTokenRepository.ShouldReceiveOneDeleteRangeAsync(_command, User, CancellationToken);
+		await EmailConfirmationTokenRepository.ShouldReceiveOneDeleteRangeAsync(_command, CancellationToken);
 	}
 
 	[Theory]
@@ -561,7 +561,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.UpdateAsync(command, CancellationToken);
 
 		// Assert
-		await EmailConfirmationTokenRepository.ShouldReceiveOneDeleteRangeAsync(command, User, CancellationToken);
+		await EmailConfirmationTokenRepository.ShouldReceiveOneDeleteRangeAsync(command, CancellationToken);
 	}
 
 	[Fact]
@@ -574,7 +574,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.UpdateAsync(command, CancellationToken);
 
 		// Assert
-		await EmailConfirmationTokenRepository.ShouldReceiveOneDeleteRangeAsync(command, User, CancellationToken);
+		await EmailConfirmationTokenRepository.ShouldReceiveOneDeleteRangeAsync(command, CancellationToken);
 	}
 
 	[Theory]
@@ -590,7 +590,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.UpdateAsync(command, CancellationToken);
 
 		// Assert
-		await EmailConfirmationTokenRepository.ShouldReceiveOneDeleteRangeAsync(command, User, CancellationToken);
+		await EmailConfirmationTokenRepository.ShouldReceiveOneDeleteRangeAsync(command, CancellationToken);
 	}
 
 	[Theory]
@@ -606,7 +606,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.UpdateAsync(command, CancellationToken);
 
 		// Assert
-		await EmailConfirmationTokenRepository.ShouldReceiveOneDeleteRangeAsync(command, User, CancellationToken);
+		await EmailConfirmationTokenRepository.ShouldReceiveOneDeleteRangeAsync(command, CancellationToken);
 	}
 
 	[Fact]
@@ -619,7 +619,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.UpdateAsync(command, CancellationToken);
 
 		// Assert
-		await EmailConfirmationTokenRepository.ShouldReceiveZeroDeleteRangeAsync(command, User, CancellationToken);
+		await EmailConfirmationTokenRepository.ShouldReceiveZeroDeleteRangeAsync(command, CancellationToken);
 	}
 
 	[Theory]
@@ -635,7 +635,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.UpdateAsync(command, CancellationToken);
 
 		// Assert
-		await EmailConfirmationTokenRepository.ShouldReceiveZeroDeleteRangeAsync(command, User, CancellationToken);
+		await EmailConfirmationTokenRepository.ShouldReceiveZeroDeleteRangeAsync(command, CancellationToken);
 	}
 
 	[Theory]
@@ -650,7 +650,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.UpdateAsync(command, CancellationToken);
 
 		// Assert
-		await EmailConfirmationTokenRepository.ShouldReceiveOneDeleteRangeAsync(command, User, CancellationToken);
+		await EmailConfirmationTokenRepository.ShouldReceiveOneDeleteRangeAsync(command, CancellationToken);
 	}
 
 	[Fact]

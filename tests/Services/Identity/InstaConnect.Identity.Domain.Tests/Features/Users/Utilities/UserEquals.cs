@@ -1,6 +1,7 @@
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 using InstaConnect.Common.Tests.Features.Extensions;
+using InstaConnect.Identity.Domain.Tests.Features.EmailConfirmationTokens.Utilities;
 using InstaConnect.Identity.Events.Features.EmailConfirmationTokens;
 using InstaConnect.Identity.Events.Features.Users;
 
@@ -206,6 +207,22 @@ public static class UserEquals
 				   emailConfirmationToken.CreatedAtUtc != default &&
 				   emailConfirmationToken.ExpiresAtUtc != default;
 		}
+
+		public bool Matches(UpdateUserCommand command)
+		{
+			return emailConfirmationToken.Id.Id.Matches(command.Id) &&
+				   emailConfirmationToken.Id.Value.IsNotNullOrEmptyOrWhiteSpace() &&
+				   emailConfirmationToken.CreatedAtUtc != default &&
+				   emailConfirmationToken.ExpiresAtUtc != default;
+		}
+	}
+
+	extension(ICollection<EmailConfirmationToken> emailConfirmationTokens)
+	{
+		public bool Matches(UpdateUserCommand command)
+		{
+			return emailConfirmationTokens.All(emailConfirmationToken => emailConfirmationToken.Matches(command));
+		}
 	}
 
 	extension(EmailConfirmationTokenAddedEventRequest r)
@@ -266,14 +283,6 @@ public static class UserEquals
 											  e => new(new(e.EmailConfirmationToken.Id), e.EmailConfirmationToken.Value),
 											  e => e.Id,
 											  (emailConfirmationToken, e) => emailConfirmationToken.Matches(command, e));
-		}
-	}
-
-	extension(ICollection<EmailConfirmationToken> entities)
-	{
-		public bool Matches(UpdateUserCommand command)
-		{
-			return entities.All(entity => entity.Id.Id.Matches(command.Id));
 		}
 	}
 }
