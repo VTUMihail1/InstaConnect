@@ -134,6 +134,6 @@ public class IssueRefreshTokenCommandHandlerIntegrationTests : BaseRefreshTokenA
 		var refreshToken = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		refreshToken.ShouldSatisfy(_request);
+		refreshToken.ShouldSatisfy(request);
 	}
 }
