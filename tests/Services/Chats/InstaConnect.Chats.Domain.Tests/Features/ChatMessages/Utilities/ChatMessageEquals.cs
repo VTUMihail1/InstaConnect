@@ -430,8 +430,7 @@ public static class ChatMessageEquals
 
 		public bool MatchesInverted(UpdateChatMessageCommand command)
 		{
-			return chatMessage.Id.Id.Matches(command.Id.Id.ParticipantTwoId, command.Id.Id.ParticipantOneId) &&
-				   chatMessage.Id.MessageId.EqualsOrdinalIgnoreCase(command.Id.MessageId) &&
+			return chatMessage.Id.Matches(new(command.Id.Id.ParticipantTwoId, command.Id.Id.ParticipantOneId), command.Id.MessageId) &&
 				   chatMessage.SenderId.Matches(command.Id.Id.ParticipantOneId) &&
 				   chatMessage.Content == command.Content &&
 				   chatMessage.CreatedAtUtc != default &&
@@ -468,8 +467,7 @@ public static class ChatMessageEquals
 		{
 			return response != null &&
 				   chatMessage != null &&
-				   chatMessage.Id.Id.Matches(response.Id.Id.ParticipantTwoId, response.Id.Id.ParticipantOneId) &&
-				   chatMessage.Id.MessageId.EqualsOrdinalIgnoreCase(response.Id.MessageId) &&
+				   chatMessage.Id.Matches(new(response.Id.Id.ParticipantTwoId, response.Id.Id.ParticipantOneId), response.Id.MessageId) &&
 				   chatMessage.SenderId.Matches(response.SenderId) &&
 				   chatMessage.Content == response.Content &&
 				   chatMessage.CreatedAtUtc == response.CreatedAtUtc &&
@@ -497,8 +495,7 @@ public static class ChatMessageEquals
 		{
 			return response != null &&
 				   chatMessage != null &&
-				   chatMessage.Id.Id.Matches(response.Id.Id.ParticipantTwoId, response.Id.Id.ParticipantOneId) &&
-				   chatMessage.Id.MessageId.EqualsOrdinalIgnoreCase(response.Id.MessageId) &&
+				   chatMessage.Id.Matches(new(response.Id.Id.ParticipantTwoId, response.Id.Id.ParticipantOneId), response.Id.MessageId) &&
 				   chatMessage.SenderId.Matches(response.SenderId) &&
 				   chatMessage.Content == response.Content &&
 				   chatMessage.CreatedAtUtc == response.CreatedAtUtc &&

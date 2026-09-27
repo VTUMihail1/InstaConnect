@@ -72,6 +72,7 @@ public static class UserEquals
 				   user.FirstName == response.FirstName &&
 				   user.LastName == response.LastName &&
 				   user.Name.Matches(response.Name) &&
+				   user.Email.Matches(response.Email) &&
 				   user.ProfileImage.Matches(response.ProfileImage) &&
 				   user.CreatedAtUtc == response.CreatedAtUtc &&
 				   user.UpdatedAtUtc == response.UpdatedAtUtc;

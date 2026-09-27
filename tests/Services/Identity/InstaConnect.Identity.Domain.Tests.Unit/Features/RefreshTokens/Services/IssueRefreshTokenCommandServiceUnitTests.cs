@@ -29,7 +29,6 @@ public class IssueRefreshTokenCommandServiceUnitTests : BaseRefreshTokenDomainCo
 		_service = new(PasswordHasher, Repository, DateTimeProvider, Factory, SessionTokenGenerator, IncludeBuilderFactory, RefreshTokenRepository);
 
 		Repository.SetupGetByNameAsync(_command, _include, User, CancellationToken);
-		PasswordHasher.RemoveIsMismatch(_command, User);
 		Factory.SetupCreate(_command, RefreshToken);
 		SessionTokenGenerator.SetupGenerate(_command, RefreshToken);
 	}
@@ -60,7 +59,6 @@ public class IssueRefreshTokenCommandServiceUnitTests : BaseRefreshTokenDomainCo
 		// Arrange
 		var unconfirmedUser = UserBuilder.WithUnconfirmedEmail().Build();
 		Repository.SetupGetByNameAsync(_command, _include, unconfirmedUser, CancellationToken);
-		PasswordHasher.RemoveIsMismatch(_command, unconfirmedUser);
 
 		// Assert
 		await _service.ShouldThrowUserNameEmailNotConfirmedExceptionAsync(_command, CancellationToken);

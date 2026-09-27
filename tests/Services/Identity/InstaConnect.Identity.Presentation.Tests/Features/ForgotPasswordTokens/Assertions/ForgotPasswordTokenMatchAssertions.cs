@@ -6,19 +6,6 @@ namespace InstaConnect.Identity.Presentation.Tests.Features.ForgotPasswordTokens
 
 public static class ForgotPasswordTokenMatchAssertions
 {
-	extension(ForgotPasswordToken forgotPasswordToken)
-	{
-		public void ShouldSatisfy(AddForgotPasswordTokenApiRequest request)
-		{
-			forgotPasswordToken.ShouldSatisfy(p => p.Matches(request));
-		}
-
-		public void ShouldSatisfy(VerifyForgotPasswordTokenApiRequest request)
-		{
-			forgotPasswordToken.ShouldSatisfy(p => p.Matches(request));
-		}
-	}
-
 	extension(User user)
 	{
 		public void ShouldSatisfy(VerifyForgotPasswordTokenApiRequest request, IPasswordHasher passwordHasher)

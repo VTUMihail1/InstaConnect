@@ -13,6 +13,7 @@ public static class PostCommentEquals
 		public bool Matches(PostComment postComment)
 		{
 			return entity.Id.Matches(postComment.Id) &&
+				   entity.UserId.Matches(postComment.UserId) &&
 				   entity.Content == postComment.Content &&
 				   entity.CreatedAtUtc == postComment.CreatedAtUtc &&
 				   entity.UpdatedAtUtc == postComment.UpdatedAtUtc;

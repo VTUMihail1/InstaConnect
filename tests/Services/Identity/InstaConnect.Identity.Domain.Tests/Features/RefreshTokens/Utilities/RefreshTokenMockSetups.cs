@@ -47,13 +47,6 @@ public static class RefreshTokenMockSetups
 
 	extension(IPasswordHasher passwordHasher)
 	{
-		public void RemoveIsMismatch(IssueRefreshTokenCommand command, User user)
-		{
-			passwordHasher
-				.IsMismatch(command.Password, user.PasswordHash)
-				.ReturnsResponse(false);
-		}
-
 		public void SetupIsMismatch(IssueRefreshTokenCommand command, User user)
 		{
 			passwordHasher

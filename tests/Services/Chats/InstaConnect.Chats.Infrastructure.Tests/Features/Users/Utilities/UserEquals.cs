@@ -48,7 +48,9 @@ public static class UserEquals
 				   command.Name == request.User.Name &&
 				   command.FirstName == request.User.FirstName &&
 				   command.LastName == request.User.LastName &&
-				   command.ProfileImageUrl == request.User.ProfileImageUrl;
+				   command.ProfileImageUrl == request.User.ProfileImageUrl &&
+				   command.CreatedAtUtc == request.User.CreatedAtUtc &&
+				   command.UpdatedAtUtc == request.User.UpdatedAtUtc;
 		}
 	}
 
@@ -61,7 +63,8 @@ public static class UserEquals
 				   command.Name == request.User.Name &&
 				   command.FirstName == request.User.FirstName &&
 				   command.LastName == request.User.LastName &&
-				   command.ProfileImageUrl == request.User.ProfileImageUrl;
+				   command.ProfileImageUrl == request.User.ProfileImageUrl &&
+				   command.UpdatedAtUtc == request.User.UpdatedAtUtc;
 		}
 	}
 

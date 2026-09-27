@@ -29,24 +29,6 @@ public static class ForgotPasswordTokenEquals
 		}
 	}
 
-	extension(ForgotPasswordToken forgotPasswordToken)
-	{
-		public bool Matches(AddForgotPasswordTokenApiRequest request)
-		{
-			return forgotPasswordToken.Id.Id.Id.IsNotNullOrEmptyOrWhiteSpace() &&
-				   forgotPasswordToken.Id.Value.IsNotNullOrEmptyOrWhiteSpace() &&
-				   forgotPasswordToken.CreatedAtUtc != default &&
-				   forgotPasswordToken.ExpiresAtUtc != default;
-		}
-
-		public bool Matches(VerifyForgotPasswordTokenApiRequest request)
-		{
-			return forgotPasswordToken.Id.Matches(request.Id, request.Value) &&
-				   forgotPasswordToken.CreatedAtUtc != default &&
-				   forgotPasswordToken.ExpiresAtUtc != default;
-		}
-	}
-
 	extension(User user)
 	{
 		public bool Matches(VerifyForgotPasswordTokenApiRequest request, IPasswordHasher passwordHasher)

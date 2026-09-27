@@ -81,7 +81,8 @@ public static class RefreshTokenEquals
 
 		public bool Matches(RotateRefreshTokenApiRequest request)
 		{
-			return refreshToken.Id.Matches(request.Id, request.Value) &&
+			return refreshToken.Id.Id.Matches(request.Id) &&
+				   refreshToken.Id.Value.IsNotNullOrEmptyOrWhiteSpace() &&
 				   refreshToken.CreatedAtUtc != default &&
 				   refreshToken.ExpiresAtUtc != default;
 		}

@@ -16,6 +16,7 @@ public static class UserEquals
 				   entity.FirstName == user.FirstName &&
 				   entity.LastName == user.LastName &&
 				   entity.ProfileImage.Matches(user.ProfileImage) &&
+				   entity.PasswordHash == user.PasswordHash &&
 				   entity.CreatedAtUtc == user.CreatedAtUtc &&
 				   entity.UpdatedAtUtc == user.UpdatedAtUtc;
 		}

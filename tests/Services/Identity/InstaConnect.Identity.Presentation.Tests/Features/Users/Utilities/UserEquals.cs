@@ -392,17 +392,6 @@ public static class UserEquals
 
 
 
-	extension(EmailConfirmationToken emailConfirmationToken)
-	{
-		public bool Matches(AddUserApiRequest request)
-		{
-			return emailConfirmationToken.Id.Id.Id.IsNotNullOrEmptyOrWhiteSpace() &&
-				   emailConfirmationToken.Id.Value.IsNotNullOrEmptyOrWhiteSpace() &&
-				   emailConfirmationToken.CreatedAtUtc != default &&
-				   emailConfirmationToken.ExpiresAtUtc != default;
-		}
-	}
-
 	extension(EmailConfirmationTokenAddedEventRequest r)
 	{
 		public bool Matches(AddUserApiRequest request, EmailConfirmationToken entity)

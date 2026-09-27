@@ -1,7 +1,5 @@
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Identity.Domain.Features.Common.Helpers;
-using InstaConnect.Identity.Domain.Tests.Features.EmailConfirmationTokens.Utilities;
-using InstaConnect.Identity.Domain.Tests.Features.Users.Utilities;
 using InstaConnect.Identity.Events.Features.ForgotPasswordTokens;
 using InstaConnect.Identity.Events.Features.Users;
 

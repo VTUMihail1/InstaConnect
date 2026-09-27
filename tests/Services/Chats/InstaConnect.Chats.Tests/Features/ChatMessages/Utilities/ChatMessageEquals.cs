@@ -13,6 +13,7 @@ public static class ChatMessageEquals
 		public bool Matches(ChatMessage chatMessage)
 		{
 			return entity.Id.Matches(chatMessage.Id) &&
+				   entity.SenderId.Matches(chatMessage.SenderId) &&
 				   entity.Content == chatMessage.Content &&
 				   entity.CreatedAtUtc == chatMessage.CreatedAtUtc &&
 				   entity.UpdatedAtUtc == chatMessage.UpdatedAtUtc;

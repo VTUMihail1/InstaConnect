@@ -203,7 +203,9 @@ public static class PostMockSetups
 			UpdatePostCommand command,
 			Post post)
 		{
-			dateTimeProvider.GetOffsetUtcNow().ReturnsResponse(post.UpdatedAtUtc);
+			dateTimeProvider
+				.GetOffsetUtcNow()
+				.ReturnsResponse(post.UpdatedAtUtc);
 		}
 	}
 }

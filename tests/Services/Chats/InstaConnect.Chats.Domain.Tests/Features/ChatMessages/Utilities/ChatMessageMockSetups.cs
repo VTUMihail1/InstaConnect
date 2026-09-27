@@ -9,7 +9,8 @@ public static class ChatMessageMockSetups
 	{
 		public void SetupNewStringGuid(ChatMessage chatMessage)
 		{
-			guidProvider.NewStringGuid()
+			guidProvider
+				.NewStringGuid()
 				.ReturnsResponse(chatMessage.Id.MessageId);
 		}
 	}

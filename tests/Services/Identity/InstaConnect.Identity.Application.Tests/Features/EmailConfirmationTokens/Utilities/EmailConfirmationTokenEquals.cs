@@ -23,24 +23,6 @@ public static class EmailConfirmationTokenEquals
 		}
 	}
 
-	extension(EmailConfirmationToken emailConfirmationToken)
-	{
-		public bool Matches(AddEmailConfirmationTokenCommandRequest request)
-		{
-			return emailConfirmationToken.Id.Id.Id.IsNotNullOrEmptyOrWhiteSpace() &&
-				   emailConfirmationToken.Id.Value.IsNotNullOrEmptyOrWhiteSpace() &&
-				   emailConfirmationToken.CreatedAtUtc != default &&
-				   emailConfirmationToken.ExpiresAtUtc != default;
-		}
-
-		public bool Matches(VerifyEmailConfirmationTokenCommandRequest request)
-		{
-			return emailConfirmationToken.Id.Matches(request.Id, request.Value) &&
-				   emailConfirmationToken.CreatedAtUtc != default &&
-				   emailConfirmationToken.ExpiresAtUtc != default;
-		}
-	}
-
 	extension(User user)
 	{
 		public bool Matches(VerifyEmailConfirmationTokenCommandRequest request)
