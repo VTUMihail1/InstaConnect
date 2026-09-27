@@ -1,4 +1,5 @@
 using InstaConnect.Follows.Domain.Features.Follows.Models.ValueObjects;
+using InstaConnect.Follows.Domain.Features.Users.Models.ValueObjects;
 using InstaConnect.Follows.Tests.Features.Follows.Utilities;
 using InstaConnect.Follows.Tests.Features.Users.Utilities;
 
@@ -19,7 +20,12 @@ public static class FollowEquals
 	{
 		public bool Matches(FollowId id)
 		{
-			return p.Matches(id.FollowerId.Id, id.FollowingId.Id);
+			return p.Matches(id.FollowerId, id.FollowingId);
+		}
+
+		public bool Matches(UserId followerId, UserId followingId)
+		{
+			return p.Matches(followerId.Id, followingId.Id);
 		}
 
 		public bool Matches(string followerId, string followingId)

@@ -12,18 +12,18 @@ public static class RefreshTokenDomainMatcher
 		return Matcher.Is<UserInclude>(p => p.Matches(command, include));
 	}
 
-	public static RefreshToken IsRefreshToken(IssueRefreshTokenCommand command, RefreshToken refreshToken)
+	public static RefreshToken IsRefreshToken(IssueRefreshTokenCommand command)
 	{
-		return Matcher.Is<RefreshToken>(p => p.Matches(refreshToken));
+		return Matcher.Is<RefreshToken>(p => p.Matches(command));
 	}
 
-	public static RefreshToken IsRefreshToken(RotateRefreshTokenCommand command, RefreshToken refreshToken)
+	public static RefreshToken IsRefreshToken(RotateRefreshTokenCommand command)
 	{
-		return Matcher.Is<RefreshToken>(p => p.Matches(refreshToken));
+		return Matcher.Is<RefreshToken>(p => p.Matches(command));
 	}
 
-	public static RefreshToken IsRefreshToken(DeleteRefreshTokenCommand command, RefreshToken refreshToken)
+	public static RefreshToken IsRefreshToken(DeleteRefreshTokenCommand command)
 	{
-		return Matcher.Is<RefreshToken>(p => p.Matches(refreshToken));
+		return Matcher.Is<RefreshToken>(p => p.Matches(command));
 	}
 }

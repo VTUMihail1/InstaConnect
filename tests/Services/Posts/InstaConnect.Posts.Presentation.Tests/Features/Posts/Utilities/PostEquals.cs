@@ -278,9 +278,12 @@ public static class PostEquals
 	{
 		public bool Matches(AddPostApiRequest request)
 		{
-			return post.UserId.Matches(request.UserId) &&
+			return post.Id.Id.IsNotNullOrEmptyOrWhiteSpace() &&
+				   post.UserId.Matches(request.UserId) &&
 				   post.Title == request.Body.Title &&
-				   post.Content == request.Body.Content;
+				   post.Content == request.Body.Content &&
+				   post.CreatedAtUtc != default &&
+				   post.UpdatedAtUtc != default;
 		}
 
 		public bool Matches(UpdatePostApiRequest request)
@@ -288,13 +291,14 @@ public static class PostEquals
 			return post.Id.Matches(request.Id) &&
 				   post.UserId.Matches(request.UserId) &&
 				   post.Title == request.Body.Title &&
-				   post.Content == request.Body.Content;
+				   post.Content == request.Body.Content &&
+				   post.CreatedAtUtc != default &&
+				   post.UpdatedAtUtc != default;
 		}
 
 		public bool MatchesFilter(GetAllPostsApiRequest request)
 		{
-			return post.User != null &&
-				   post.User.Name.Value.StartsWithOrdinalIgnoreCase(request.UserName) &&
+			return post.User.MatchesFilter(request) &&
 				   post.Title.StartsWithOrdinalIgnoreCase(request.Title);
 		}
 
@@ -302,6 +306,15 @@ public static class PostEquals
 		{
 			return post.UserId.Matches(request.UserId) &&
 				   post.Title.StartsWithOrdinalIgnoreCase(request.Title);
+		}
+	}
+
+	extension(User? u)
+	{
+		public bool MatchesFilter(GetAllPostsApiRequest request)
+		{
+			return u != null &&
+				   u.Name.Value.StartsWithOrdinalIgnoreCase(request.UserName);
 		}
 	}
 

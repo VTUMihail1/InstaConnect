@@ -109,34 +109,30 @@ public static class RefreshTokenMockAssertions
 
 		public async Task ShouldReceiveOneAddAsync(
 			IssueRefreshTokenCommand command,
-			RefreshToken refreshToken,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().AddAsync(RefreshTokenDomainMatcher.IsRefreshToken(command, refreshToken), cancellationToken);
+			await repository.ShouldHaveReceivedOne().AddAsync(RefreshTokenDomainMatcher.IsRefreshToken(command), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneAddAsync(
 			RotateRefreshTokenCommand command,
-			RefreshToken refreshToken,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().AddAsync(RefreshTokenDomainMatcher.IsRefreshToken(command, refreshToken), cancellationToken);
+			await repository.ShouldHaveReceivedOne().AddAsync(RefreshTokenDomainMatcher.IsRefreshToken(command), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneDeleteAsync(
 			RotateRefreshTokenCommand command,
-			RefreshToken refreshToken,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().DeleteAsync(RefreshTokenDomainMatcher.IsRefreshToken(command, refreshToken), cancellationToken);
+			await repository.ShouldHaveReceivedOne().DeleteAsync(RefreshTokenDomainMatcher.IsRefreshToken(command), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneDeleteAsync(
 			DeleteRefreshTokenCommand command,
-			RefreshToken refreshToken,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().DeleteAsync(RefreshTokenDomainMatcher.IsRefreshToken(command, refreshToken), cancellationToken);
+			await repository.ShouldHaveReceivedOne().DeleteAsync(RefreshTokenDomainMatcher.IsRefreshToken(command), cancellationToken);
 		}
 	}
 }

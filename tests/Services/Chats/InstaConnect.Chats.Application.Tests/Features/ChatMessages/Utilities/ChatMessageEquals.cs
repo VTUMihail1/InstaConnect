@@ -483,25 +483,39 @@ public static class ChatMessageEquals
 		public bool Matches(AddChatMessageCommandRequest request)
 		{
 			return chatMessage.Id.Id.Matches(request.ParticipantOneId, request.ParticipantTwoId) &&
-				   chatMessage.Content == request.Content;
+				   chatMessage.Id.MessageId.IsNotNullOrEmptyOrWhiteSpace() &&
+				   chatMessage.SenderId.Matches(request.ParticipantOneId) &&
+				   chatMessage.Content == request.Content &&
+				   chatMessage.CreatedAtUtc != default &&
+				   chatMessage.UpdatedAtUtc != default;
 		}
 
 		public bool Matches(UpdateChatMessageCommandRequest request)
 		{
 			return chatMessage.Id.Matches(request.ParticipantOneId, request.ParticipantTwoId, request.MessageId) &&
-				   chatMessage.Content == request.Content;
+				   chatMessage.SenderId.Matches(request.ParticipantOneId) &&
+				   chatMessage.Content == request.Content &&
+				   chatMessage.CreatedAtUtc != default &&
+				   chatMessage.UpdatedAtUtc != default;
 		}
 
 		public bool MatchesInverted(AddChatMessageCommandRequest request)
 		{
 			return chatMessage.Id.Id.Matches(request.ParticipantTwoId, request.ParticipantOneId) &&
-				   chatMessage.Content == request.Content;
+				   chatMessage.Id.MessageId.IsNotNullOrEmptyOrWhiteSpace() &&
+				   chatMessage.SenderId.Matches(request.ParticipantTwoId) &&
+				   chatMessage.Content == request.Content &&
+				   chatMessage.CreatedAtUtc != default &&
+				   chatMessage.UpdatedAtUtc != default;
 		}
 
 		public bool MatchesInverted(UpdateChatMessageCommandRequest request)
 		{
 			return chatMessage.Id.Matches(request.ParticipantTwoId, request.ParticipantOneId, request.MessageId) &&
-				   chatMessage.Content == request.Content;
+				   chatMessage.SenderId.Matches(request.ParticipantOneId) &&
+				   chatMessage.Content == request.Content &&
+				   chatMessage.CreatedAtUtc != default &&
+				   chatMessage.UpdatedAtUtc != default;
 		}
 
 		public bool MatchesFilter(GetAllChatMessagesQueryRequest request)

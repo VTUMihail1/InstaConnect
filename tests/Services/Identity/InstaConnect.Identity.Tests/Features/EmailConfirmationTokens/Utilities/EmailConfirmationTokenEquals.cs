@@ -1,5 +1,6 @@
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.ValueObjects;
+using InstaConnect.Identity.Domain.Features.Users.Models.ValueObjects;
 using InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Utilities;
 using InstaConnect.Identity.Tests.Features.Users.Utilities;
 
@@ -21,7 +22,12 @@ public static class EmailConfirmationTokenEquals
 	{
 		public bool Matches(EmailConfirmationTokenId id)
 		{
-			return p.Matches(id.Id.Id, id.Value);
+			return p.Matches(id.Id, id.Value);
+		}
+
+		public bool Matches(UserId id, string value)
+		{
+			return p.Matches(id.Id, value);
 		}
 
 		public bool Matches(string id, string value)

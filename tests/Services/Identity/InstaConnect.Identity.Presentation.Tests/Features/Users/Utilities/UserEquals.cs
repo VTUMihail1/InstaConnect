@@ -280,12 +280,16 @@ public static class UserEquals
 	{
 		public bool Matches(AddUserApiRequest request, IPasswordHasher passwordHasher)
 		{
-			return user.FirstName == request.Form.FirstName &&
+			return user.Id.Id.IsNotNullOrEmptyOrWhiteSpace() &&
+				   user.FirstName == request.Form.FirstName &&
 				   user.LastName == request.Form.LastName &&
 				   user.Name.Matches(request.Form.Name) &&
 				   user.Email.Matches(request.Form.Email) &&
+				   user.ProfileImage.Matches(request.Form.ProfileImage?.GetUrl()) &&
 				   passwordHasher.IsMatch(request.Form.Password, user.PasswordHash) &&
-				   user.ProfileImage.Matches(request.Form.ProfileImage?.GetUrl());
+				   user.IsEmailNotConfirmed &&
+				   user.CreatedAtUtc != default &&
+				   user.UpdatedAtUtc != default;
 		}
 
 		public bool Matches(UpdateCurrentUserApiRequest request)
@@ -295,7 +299,10 @@ public static class UserEquals
 				   user.LastName == request.Form.LastName &&
 				   user.Name.Matches(request.Form.Name) &&
 				   user.Email.Matches(request.Form.Email) &&
-				   (request.Form.ProfileImage == null || user.ProfileImage.Matches(request.Form.ProfileImage.GetUrl()));
+				   (request.Form.ProfileImage == null || user.ProfileImage.Matches(request.Form.ProfileImage.GetUrl())) &&
+				   user.PasswordHash.IsNotNullOrEmptyOrWhiteSpace() &&
+				   user.CreatedAtUtc != default &&
+				   user.UpdatedAtUtc != default;
 		}
 
 		public bool MatchesFilter(GetAllUsersApiRequest request)
@@ -389,7 +396,10 @@ public static class UserEquals
 	{
 		public bool Matches(AddUserApiRequest request)
 		{
-			return emailConfirmationToken.User!.Name.Matches(request.Form.Name);
+			return emailConfirmationToken.Id.Id.Id.IsNotNullOrEmptyOrWhiteSpace() &&
+				   emailConfirmationToken.Id.Value.IsNotNullOrEmptyOrWhiteSpace() &&
+				   emailConfirmationToken.CreatedAtUtc != default &&
+				   emailConfirmationToken.ExpiresAtUtc != default;
 		}
 	}
 

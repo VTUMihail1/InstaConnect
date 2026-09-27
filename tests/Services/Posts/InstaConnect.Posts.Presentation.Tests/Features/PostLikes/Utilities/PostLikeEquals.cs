@@ -254,19 +254,28 @@ public static class PostLikeEquals
 	{
 		public bool Matches(AddPostLikeApiRequest request)
 		{
-			return postLike.Id.Matches(request.Id, request.UserId);
+			return postLike.Id.Matches(request.Id, request.UserId) &&
+				   postLike.CreatedAtUtc != default;
 		}
 
 		public bool MatchesFilter(GetAllPostLikesApiRequest request)
 		{
 			return postLike.Id.Id.Matches(request.Id) &&
-				   postLike.User != null &&
-				   postLike.User.Name.Value.StartsWithOrdinalIgnoreCase(request.UserName);
+				   postLike.User.MatchesFilter(request);
 		}
 
 		public bool MatchesFilter(GetAllPostLikesForUserApiRequest request)
 		{
 			return postLike.Id.UserId.Matches(request.UserId);
+		}
+	}
+
+	extension(User? u)
+	{
+		public bool MatchesFilter(GetAllPostLikesApiRequest request)
+		{
+			return u != null &&
+				   u.Name.Value.StartsWithOrdinalIgnoreCase(request.UserName);
 		}
 	}
 

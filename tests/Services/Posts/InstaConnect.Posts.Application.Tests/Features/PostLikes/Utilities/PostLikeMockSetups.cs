@@ -11,7 +11,6 @@ public static class PostLikeMockSetups
 		CancellationToken cancellationToken)
 		{
 			likeService
-				.ClearCalls()
 				.GetAllAsync(PostLikeApplicationMatcher.IsGetAllPostLikesQuery(request), cancellationToken)
 				.ReturnsTaskResponse(postLikes.ToResponse(request, post));
 		}
@@ -23,7 +22,6 @@ public static class PostLikeMockSetups
 			CancellationToken cancellationToken)
 		{
 			likeService
-				.ClearCalls()
 				.GetAllForUserAsync(PostLikeApplicationMatcher.IsGetAllPostLikesForUserQuery(request), cancellationToken)
 				.ReturnsTaskResponse(postLikes.ToResponse(request, user));
 		}
@@ -34,7 +32,6 @@ public static class PostLikeMockSetups
 			CancellationToken cancellationToken)
 		{
 			likeService
-				.ClearCalls()
 				.GetByIdAsync(PostLikeApplicationMatcher.IsGetPostLikeByIdQuery(request), cancellationToken)
 				.ReturnsTaskResponse(postLike.ToResponse(request));
 		}
@@ -48,7 +45,6 @@ public static class PostLikeMockSetups
 		CancellationToken cancellationToken)
 		{
 			likeService
-				.ClearCalls()
 				.AddAsync(PostLikeApplicationMatcher.IsAddPostLikeCommand(request), cancellationToken)
 				.ReturnsTaskResponse(postLike.ToResponse(request));
 		}

@@ -83,7 +83,7 @@ public class AddForgotPasswordTokenCommandServiceUnitTests : BaseForgotPasswordT
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await ForgotPasswordTokenRepository.ShouldReceiveOneAddAsync(_command, ForgotPasswordToken, CancellationToken);
+		await ForgotPasswordTokenRepository.ShouldReceiveOneAddAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -103,6 +103,6 @@ public class AddForgotPasswordTokenCommandServiceUnitTests : BaseForgotPasswordT
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await EmailSender.ShouldReceiveOneSendAsync(_command, ForgotPasswordToken, CancellationToken);
+		await EmailSender.ShouldReceiveOneSendAsync(_command, CancellationToken);
 	}
 }

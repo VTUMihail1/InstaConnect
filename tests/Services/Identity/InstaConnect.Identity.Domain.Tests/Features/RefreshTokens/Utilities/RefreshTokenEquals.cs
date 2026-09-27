@@ -1,5 +1,4 @@
 using InstaConnect.Common.Domain.Features.Common.Extensions;
-using InstaConnect.Identity.Domain.Features.Common.Helpers;
 
 namespace InstaConnect.Identity.Domain.Tests.Features.RefreshTokens.Utilities;
 
@@ -24,16 +23,27 @@ public static class RefreshTokenEquals
 
 	extension(RefreshToken refreshToken)
 	{
-		public bool Matches(IssueRefreshTokenCommand command, IPasswordHasher passwordHasher)
+		public bool Matches(IssueRefreshTokenCommand command)
 		{
-			return refreshToken.User!.Name.Matches(command.Name) &&
-				   passwordHasher.IsMatch(command.Password, refreshToken.User.PasswordHash);
+			return refreshToken.Id.Id.Id.IsNotNullOrEmptyOrWhiteSpace() &&
+				   refreshToken.Id.Value.IsNotNullOrEmptyOrWhiteSpace() &&
+				   refreshToken.CreatedAtUtc != default &&
+				   refreshToken.ExpiresAtUtc != default;
 		}
 
 		public bool Matches(RotateRefreshTokenCommand command)
 		{
 			return refreshToken.Id.Id.Matches(command.Id.Id) &&
-				   refreshToken.Id.Value.IsNotNullOrEmptyOrWhiteSpace();
+				   refreshToken.Id.Value.IsNotNullOrEmptyOrWhiteSpace() &&
+				   refreshToken.CreatedAtUtc != default &&
+				   refreshToken.ExpiresAtUtc != default;
+		}
+
+		public bool Matches(DeleteRefreshTokenCommand command)
+		{
+			return refreshToken.Id.Matches(command.Id) &&
+				   refreshToken.CreatedAtUtc != default &&
+				   refreshToken.ExpiresAtUtc != default;
 		}
 	}
 

@@ -148,24 +148,34 @@ public static class PostCommentLikeEquals
 	{
 		public bool Matches(AddPostCommentLikeCommand command)
 		{
-			return postCommentLike.Id.Matches(command.CommentId.Id.Id, command.CommentId.CommentId, command.UserId.Id);
+			return postCommentLike.Id.Matches(command.CommentId, command.UserId) &&
+				   postCommentLike.CreatedAtUtc != default;
 		}
 
 		public bool Matches(DeletePostCommentLikeCommand command)
 		{
-			return postCommentLike.Id.Matches(command.Id);
+			return postCommentLike.Id.Matches(command.Id) &&
+				   postCommentLike.CreatedAtUtc != default;
 		}
 
 		public bool MatchesFilter(PostCommentLikesFilterQuery query)
 		{
 			return postCommentLike.Id.CommentId.Matches(query.CommentId) &&
-				   postCommentLike.User != null &&
-				   postCommentLike.User.Name.Value.StartsWithOrdinalIgnoreCase(query.UserName.Value);
+				   postCommentLike.User.MatchesFilter(query);
 		}
 
 		public bool MatchesFilter(PostCommentLikesForUserFilterQuery query)
 		{
 			return postCommentLike.Id.UserId.Matches(query.UserId);
+		}
+	}
+
+	extension(User? u)
+	{
+		public bool MatchesFilter(PostCommentLikesFilterQuery query)
+		{
+			return u != null &&
+				   u.Name.Value.StartsWithOrdinalIgnoreCase(query.UserName.Value);
 		}
 	}
 

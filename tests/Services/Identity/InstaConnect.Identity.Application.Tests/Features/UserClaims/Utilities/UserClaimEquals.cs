@@ -154,7 +154,8 @@ public static class UserClaimEquals
 	{
 		public bool Matches(AddUserClaimCommandRequest request)
 		{
-			return userClaim.Id.Matches(request.Id, request.Claim);
+			return userClaim.Id.Matches(request.Id, request.Claim) &&
+				   userClaim.CreatedAtUtc != default;
 		}
 
 		public bool MatchesFilter(GetAllUserClaimsQueryRequest request)

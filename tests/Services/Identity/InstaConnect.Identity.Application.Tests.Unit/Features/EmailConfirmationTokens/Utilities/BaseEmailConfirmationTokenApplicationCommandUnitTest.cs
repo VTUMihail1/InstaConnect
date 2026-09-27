@@ -13,5 +13,7 @@ public abstract class BaseEmailConfirmationTokenApplicationCommandUnitTest : Bas
 	{
 		Mapper = MockFactory.CreateMapper(IdentityApplicationReference.Assembly);
 		Service = EmailConfirmationTokenApplicationMockFactory.CreateCommandService();
+
+		PasswordHasher.ClearCalls();
 	}
 }

@@ -22,11 +22,47 @@ public static class EmailConfirmationTokenEquals
 		}
 	}
 
+	extension(EmailConfirmationToken emailConfirmationToken)
+	{
+		public bool Matches(AddEmailConfirmationTokenCommand command)
+		{
+			return emailConfirmationToken.Id.Id.Id.IsNotNullOrEmptyOrWhiteSpace() &&
+				   emailConfirmationToken.Id.Value.IsNotNullOrEmptyOrWhiteSpace() &&
+				   emailConfirmationToken.CreatedAtUtc != default &&
+				   emailConfirmationToken.ExpiresAtUtc != default;
+		}
+
+		public bool Matches(VerifyEmailConfirmationTokenCommand command)
+		{
+			return emailConfirmationToken.Id.Id.Matches(command.Id.Id) &&
+				   emailConfirmationToken.Id.Value.IsNotNullOrEmptyOrWhiteSpace() &&
+				   emailConfirmationToken.CreatedAtUtc != default &&
+				   emailConfirmationToken.ExpiresAtUtc != default;
+		}
+	}
+
+	extension(ICollection<EmailConfirmationToken> emailConfirmationTokens)
+	{
+		public bool Matches(VerifyEmailConfirmationTokenCommand command)
+		{
+			return emailConfirmationTokens.All(emailConfirmationToken => emailConfirmationToken.Matches(command));
+		}
+	}
+
 	extension(User user)
 	{
 		public bool Matches(VerifyEmailConfirmationTokenCommand command)
 		{
-			return user.IsEmailConfirmed;
+			return user.Id.Matches(command.Id.Id) &&
+				   user.Name.Value.IsNotNullOrEmptyOrWhiteSpace() &&
+				   user.Email.Value.IsNotNullOrEmptyOrWhiteSpace() &&
+				   user.FirstName.IsNotNullOrEmptyOrWhiteSpace() &&
+				   user.LastName.IsNotNullOrEmptyOrWhiteSpace() &&
+				   (user.ProfileImage == null || user.ProfileImage.Url.IsNotNullOrEmptyOrWhiteSpace()) &&
+				   user.PasswordHash.IsNotNullOrEmptyOrWhiteSpace() &&
+				   user.IsEmailConfirmed &&
+				   user.CreatedAtUtc != default &&
+				   user.UpdatedAtUtc != default;
 		}
 	}
 

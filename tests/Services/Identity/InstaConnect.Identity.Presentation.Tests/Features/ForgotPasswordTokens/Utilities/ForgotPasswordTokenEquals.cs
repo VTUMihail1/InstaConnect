@@ -33,19 +33,17 @@ public static class ForgotPasswordTokenEquals
 	{
 		public bool Matches(AddForgotPasswordTokenApiRequest request)
 		{
-			return forgotPasswordToken.User!.Name.Matches(request.Name);
+			return forgotPasswordToken.Id.Id.Id.IsNotNullOrEmptyOrWhiteSpace() &&
+				   forgotPasswordToken.Id.Value.IsNotNullOrEmptyOrWhiteSpace() &&
+				   forgotPasswordToken.CreatedAtUtc != default &&
+				   forgotPasswordToken.ExpiresAtUtc != default;
 		}
 
-		public bool Matches(VerifyForgotPasswordTokenApiRequest request, IPasswordHasher passwordHasher)
+		public bool Matches(VerifyForgotPasswordTokenApiRequest request)
 		{
 			return forgotPasswordToken.Id.Matches(request.Id, request.Value) &&
-				   passwordHasher.IsMatch(request.Body.Password, forgotPasswordToken.User!.PasswordHash) &&
-				   request.Body.Password == request.Body.ConfirmPassword;
-		}
-
-		public bool MatchesFilter(UpdateCurrentUserApiRequest request)
-		{
-			return forgotPasswordToken.Id.Id.Matches(request.Id);
+				   forgotPasswordToken.CreatedAtUtc != default &&
+				   forgotPasswordToken.ExpiresAtUtc != default;
 		}
 	}
 
@@ -53,7 +51,16 @@ public static class ForgotPasswordTokenEquals
 	{
 		public bool Matches(VerifyForgotPasswordTokenApiRequest request, IPasswordHasher passwordHasher)
 		{
-			return passwordHasher.IsMatch(request.Body.Password, user.PasswordHash);
+			return user.Id.Matches(request.Id) &&
+				   user.Name.Value.IsNotNullOrEmptyOrWhiteSpace() &&
+				   user.Email.Value.IsNotNullOrEmptyOrWhiteSpace() &&
+				   user.FirstName.IsNotNullOrEmptyOrWhiteSpace() &&
+				   user.LastName.IsNotNullOrEmptyOrWhiteSpace() &&
+				   (user.ProfileImage == null || user.ProfileImage.Url.IsNotNullOrEmptyOrWhiteSpace()) &&
+				   passwordHasher.IsMatch(request.Body.Password, user.PasswordHash) &&
+				   user.IsEmailConfirmed &&
+				   user.CreatedAtUtc != default &&
+				   user.UpdatedAtUtc != default;
 		}
 	}
 

@@ -1,5 +1,7 @@
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Identity.Domain.Features.Common.Helpers;
+using InstaConnect.Identity.Domain.Tests.Features.EmailConfirmationTokens.Utilities;
+using InstaConnect.Identity.Domain.Tests.Features.Users.Utilities;
 using InstaConnect.Identity.Events.Features.ForgotPasswordTokens;
 using InstaConnect.Identity.Events.Features.Users;
 
@@ -19,7 +21,16 @@ public static class ForgotPasswordTokenEquals
 	{
 		public bool Matches(VerifyForgotPasswordTokenCommand command, IPasswordHasher passwordHasher)
 		{
-			return passwordHasher.IsMatch(command.Password, user.PasswordHash);
+			return user.Id.Matches(command.Id.Id) &&
+				   user.Name.Value.IsNotNullOrEmptyOrWhiteSpace() &&
+				   user.Email.Value.IsNotNullOrEmptyOrWhiteSpace() &&
+				   user.FirstName.IsNotNullOrEmptyOrWhiteSpace() &&
+				   user.LastName.IsNotNullOrEmptyOrWhiteSpace() &&
+				   (user.ProfileImage == null || user.ProfileImage.Url.IsNotNullOrEmptyOrWhiteSpace()) &&
+				   passwordHasher.IsMatch(command.Password, user.PasswordHash) &&
+				   user.IsEmailConfirmed &&
+				   user.CreatedAtUtc != default &&
+				   user.UpdatedAtUtc != default;
 		}
 	}
 
@@ -80,6 +91,33 @@ public static class ForgotPasswordTokenEquals
 		public bool Matches(VerifyForgotPasswordTokenCommand command, UserInclude include)
 		{
 			return p.Matches(include);
+		}
+	}
+
+	extension(ForgotPasswordToken forgotPasswordToken)
+	{
+		public bool Matches(AddForgotPasswordTokenCommand command)
+		{
+			return forgotPasswordToken.Id.Id.Id.IsNotNullOrEmptyOrWhiteSpace() &&
+				   forgotPasswordToken.Id.Value.IsNotNullOrEmptyOrWhiteSpace() &&
+				   forgotPasswordToken.CreatedAtUtc != default &&
+				   forgotPasswordToken.ExpiresAtUtc != default;
+		}
+
+		public bool Matches(VerifyForgotPasswordTokenCommand command)
+		{
+			return forgotPasswordToken.Id.Id.Matches(command.Id.Id) &&
+				   forgotPasswordToken.Id.Value.IsNotNullOrEmptyOrWhiteSpace() &&
+				   forgotPasswordToken.CreatedAtUtc != default &&
+				   forgotPasswordToken.ExpiresAtUtc != default;
+		}
+	}
+
+	extension(ICollection<ForgotPasswordToken> forgotPasswordTokens)
+	{
+		public bool Matches(VerifyForgotPasswordTokenCommand command)
+		{
+			return forgotPasswordTokens.All(forgotPasswordToken => forgotPasswordToken.Matches(command));
 		}
 	}
 

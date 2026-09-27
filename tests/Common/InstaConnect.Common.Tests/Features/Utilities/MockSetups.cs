@@ -28,7 +28,7 @@ public static class MockSetups
 
 		public void ReturnsResponse<TArg1, TArg2>(Func<TArg1, TArg2, TResponse> func)
 		{
-			response.Returns(a => func(a.Arg<TArg1>(), a.Arg<TArg2>()));
+			response.Returns(a => func(a.ArgAt<TArg1>(0), a.ArgAt<TArg2>(1)));
 		}
 	}
 
@@ -46,7 +46,7 @@ public static class MockSetups
 
 		public void ReturnsTaskResponse<TArg1, TArg2>(Func<TArg1, TArg2, TResponse> func)
 		{
-			response.Returns(a => func(a.Arg<TArg1>(), a.Arg<TArg2>()));
+			response.Returns(a => func(a.ArgAt<TArg1>(0), a.ArgAt<TArg2>(1)));
 		}
 	}
 }

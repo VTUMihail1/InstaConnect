@@ -180,17 +180,25 @@ public static class ChatEquals
 	{
 		public bool Matches(AddChatApiRequest request)
 		{
-			return chat.Id.Matches(request.ParticipantOneId, request.Body.ParticipantTwoId);
+			return chat.Id.Matches(request.ParticipantOneId, request.Body.ParticipantTwoId) &&
+				   chat.CreatedAtUtc != default;
 		}
 
 		public bool MatchesFilter(GetAllChatsApiRequest request)
 		{
 			return (chat.Id.ParticipantOneId.Matches(request.CurrentUserId) &&
-				   chat.ParticipantTwo != null &&
-				   chat.ParticipantTwo.Name.Value.StartsWithOrdinalIgnoreCase(request.ParticipantTwoName)) ||
+				   chat.ParticipantTwo.MatchesFilter(request)) ||
 				   (chat.Id.ParticipantTwoId.Matches(request.CurrentUserId) &&
-				   chat.ParticipantOne != null &&
-				   chat.ParticipantOne.Name.Value.StartsWithOrdinalIgnoreCase(request.ParticipantTwoName));
+				   chat.ParticipantOne.MatchesFilter(request));
+		}
+	}
+
+	extension(User? u)
+	{
+		public bool MatchesFilter(GetAllChatsApiRequest request)
+		{
+			return u != null &&
+				   u.Name.Value.StartsWithOrdinalIgnoreCase(request.ParticipantTwoName);
 		}
 	}
 

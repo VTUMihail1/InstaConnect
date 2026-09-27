@@ -41,12 +41,12 @@ public static class UserEquals
 	{
 		public bool Matches(User u)
 		{
-			return entity.Id.Matches(u.Id.Id) &&
-				   entity.Email.Matches(u.Email.Value) &&
+			return entity.Id.Matches(u.Id) &&
+				   entity.Email.Matches(u.Email) &&
 				   entity.FirstName == u.FirstName &&
 				   entity.LastName == u.LastName &&
-				   entity.Name.Matches(u.Name.Value) &&
-				   entity.ProfileImage.Matches(u.ProfileImage?.Url) &&
+				   entity.Name.Matches(u.Name) &&
+				   entity.ProfileImage.Matches(u.ProfileImage) &&
 				   entity.CreatedAtUtc == u.CreatedAtUtc &&
 				   entity.UpdatedAtUtc == u.UpdatedAtUtc;
 		}

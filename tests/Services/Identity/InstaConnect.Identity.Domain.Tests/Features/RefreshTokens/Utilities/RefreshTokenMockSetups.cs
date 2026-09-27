@@ -14,7 +14,6 @@ public static class RefreshTokenMockSetups
 		public void SetupNewStringGuid(RefreshToken refreshToken)
 		{
 			guidProvider
-				.ClearCalls()
 				.NewStringGuid()
 				.ReturnsResponse(refreshToken.Id.Value);
 		}
@@ -25,7 +24,6 @@ public static class RefreshTokenMockSetups
 		public void SetupGetOffsetUtcNow(RefreshToken refreshToken)
 		{
 			dateTimeProvider
-				.ClearCalls()
 				.GetOffsetUtcNow()
 				.ReturnsResponse(refreshToken.CreatedAtUtc);
 		}
@@ -35,7 +33,6 @@ public static class RefreshTokenMockSetups
 			IOptions<RefreshTokenOptions> refreshTokenOptions)
 		{
 			dateTimeProvider
-				.ClearCalls()
 				.GetOffsetUtcNow(refreshTokenOptions.Value.LifetimeSeconds)
 				.ReturnsResponse(refreshToken.ExpiresAtUtc);
 		}
@@ -43,7 +40,6 @@ public static class RefreshTokenMockSetups
 		public void SetupGetOffsetUtcNow(RotateRefreshTokenCommand command, DateTimeOffset utcNow)
 		{
 			dateTimeProvider
-				.ClearCalls()
 				.GetOffsetUtcNow()
 				.ReturnsResponse(utcNow);
 		}
@@ -54,7 +50,6 @@ public static class RefreshTokenMockSetups
 		public void RemoveIsMismatch(IssueRefreshTokenCommand command, User user)
 		{
 			passwordHasher
-				.ClearCalls()
 				.IsMismatch(command.Password, user.PasswordHash)
 				.ReturnsResponse(false);
 		}
@@ -62,7 +57,6 @@ public static class RefreshTokenMockSetups
 		public void SetupIsMismatch(IssueRefreshTokenCommand command, User user)
 		{
 			passwordHasher
-				.ClearCalls()
 				.IsMismatch(command.Password, user.PasswordHash)
 				.ReturnsResponse(true);
 		}
@@ -73,7 +67,6 @@ public static class RefreshTokenMockSetups
 		public void SetupCreate(IssueRefreshTokenCommand command, RefreshToken refreshToken)
 		{
 			factory
-				.ClearCalls()
 				.Create(refreshToken.Id.Id)
 				.ReturnsResponse(refreshToken);
 		}
@@ -81,7 +74,6 @@ public static class RefreshTokenMockSetups
 		public void SetupCreate(RotateRefreshTokenCommand command, RefreshToken refreshToken)
 		{
 			factory
-				.ClearCalls()
 				.Create(command.Id.Id)
 				.ReturnsResponse(refreshToken);
 		}
@@ -92,7 +84,6 @@ public static class RefreshTokenMockSetups
 		public void SetupGenerate(IssueRefreshTokenCommand command, RefreshToken refreshToken)
 		{
 			generator
-				.ClearCalls()
 				.Generate(refreshToken)
 				.ReturnsResponse(refreshToken.ToResponse(command));
 		}
@@ -100,7 +91,6 @@ public static class RefreshTokenMockSetups
 		public void SetupGenerate(RotateRefreshTokenCommand command, RefreshToken refreshToken)
 		{
 			generator
-				.ClearCalls()
 				.Generate(refreshToken)
 				.ReturnsResponse(refreshToken.ToResponse(command));
 		}
@@ -115,7 +105,6 @@ public static class RefreshTokenMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByNameAsync(command.Name, RefreshTokenDomainMatcher.IsUserInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(user);
 		}
@@ -127,7 +116,6 @@ public static class RefreshTokenMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByNameAsync(command.Name, RefreshTokenDomainMatcher.IsUserInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -139,7 +127,6 @@ public static class RefreshTokenMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.Id.Id, RefreshTokenDomainMatcher.IsUserInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(user);
 		}
@@ -151,7 +138,6 @@ public static class RefreshTokenMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.Id.Id, RefreshTokenDomainMatcher.IsUserInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -161,7 +147,6 @@ public static class RefreshTokenMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.ExistsByIdAsync(command.Id.Id, cancellationToken)
 				.ReturnsTaskResponse(true);
 		}
@@ -171,7 +156,6 @@ public static class RefreshTokenMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.ExistsByIdAsync(command.Id.Id, cancellationToken)
 				.ReturnsTaskResponse(false);
 		}
@@ -185,7 +169,6 @@ public static class RefreshTokenMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.Id, cancellationToken)
 				.ReturnsTaskResponse(refreshToken);
 		}
@@ -196,7 +179,6 @@ public static class RefreshTokenMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.Id, cancellationToken)
 				.ReturnsTaskResponse(refreshToken);
 		}
@@ -207,7 +189,6 @@ public static class RefreshTokenMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.Id, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -218,7 +199,6 @@ public static class RefreshTokenMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.Id, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}

@@ -13,9 +13,9 @@ public static class ForgotPasswordTokenMatchAssertions
 			forgotPasswordToken.ShouldSatisfy(p => p.Matches(request));
 		}
 
-		public void ShouldSatisfy(VerifyForgotPasswordTokenCommandRequest request, IPasswordHasher passwordHasher)
+		public void ShouldSatisfy(VerifyForgotPasswordTokenCommandRequest request)
 		{
-			forgotPasswordToken.ShouldSatisfy(p => p.Matches(request, passwordHasher));
+			forgotPasswordToken.ShouldSatisfy(p => p.Matches(request));
 		}
 	}
 

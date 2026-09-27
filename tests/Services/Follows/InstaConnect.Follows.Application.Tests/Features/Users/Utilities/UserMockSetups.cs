@@ -10,7 +10,6 @@ public static class UserMockSetups
 		CancellationToken cancellationToken)
 		{
 			userService
-				.ClearCalls()
 				.AddAsync(UserApplicationMatcher.IsAddUserCommand(request), cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(request));
 		}
@@ -21,7 +20,6 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			userService
-				.ClearCalls()
 				.UpdateAsync(UserApplicationMatcher.IsUpdateUserCommand(request), cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(request));
 		}

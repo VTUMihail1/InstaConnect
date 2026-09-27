@@ -93,7 +93,7 @@ public class AddEmailConfirmationTokenCommandServiceUnitTests : BaseEmailConfirm
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await EmailConfirmationTokenRepository.ShouldReceiveOneAddAsync(_command, EmailConfirmationToken, CancellationToken);
+		await EmailConfirmationTokenRepository.ShouldReceiveOneAddAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -113,6 +113,6 @@ public class AddEmailConfirmationTokenCommandServiceUnitTests : BaseEmailConfirm
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await EmailSender.ShouldReceiveOneSendAsync(_command, EmailConfirmationToken, CancellationToken);
+		await EmailSender.ShouldReceiveOneSendAsync(_command, CancellationToken);
 	}
 }

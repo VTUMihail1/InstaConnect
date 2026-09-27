@@ -118,7 +118,7 @@ public class IssueRefreshTokenCommandHandlerIntegrationTests : BaseRefreshTokenA
 		var refreshToken = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		refreshToken.ShouldSatisfy(_request, PasswordHasher);
+		refreshToken.ShouldSatisfy(_request);
 	}
 
 	[Theory]
@@ -134,6 +134,6 @@ public class IssueRefreshTokenCommandHandlerIntegrationTests : BaseRefreshTokenA
 		var refreshToken = await ServiceScope.GetByIdAsync(response, CancellationToken);
 
 		// Assert
-		refreshToken.ShouldSatisfy(_request, PasswordHasher);
+		refreshToken.ShouldSatisfy(_request);
 	}
 }

@@ -9,7 +9,6 @@ public static class FollowMockSetups
 		public void SetupGetOffsetUtcNow(Follow follow)
 		{
 			dateTimeProvider
-				.ClearCalls()
 				.GetOffsetUtcNow()
 				.ReturnsResponse(follow.CreatedAtUtc);
 		}
@@ -22,7 +21,6 @@ public static class FollowMockSetups
 			Follow follow)
 		{
 			factory
-				.ClearCalls()
 				.Create(
 					command.FollowerId,
 					command.FollowingId)
@@ -38,7 +36,6 @@ public static class FollowMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.FollowerId, cancellationToken)
 				.ReturnsTaskResponse(user);
 		}
@@ -49,7 +46,6 @@ public static class FollowMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.FollowingId, cancellationToken)
 				.ReturnsTaskResponse(user);
 		}
@@ -60,7 +56,6 @@ public static class FollowMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.FollowerId, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -71,7 +66,6 @@ public static class FollowMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.FollowingId, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -85,7 +79,6 @@ public static class FollowMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.ExistsByIdAsync(follow.Id, cancellationToken)
 				.ReturnsTaskResponse(false);
 		}
@@ -96,7 +89,6 @@ public static class FollowMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.ExistsByIdAsync(follow.Id, cancellationToken)
 				.ReturnsTaskResponse(true);
 		}
@@ -108,7 +100,6 @@ public static class FollowMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.Id, FollowDomainMatcher.IsFollowInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(follow);
 		}
@@ -120,7 +111,6 @@ public static class FollowMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.Id, FollowDomainMatcher.IsFollowInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -134,7 +124,6 @@ public static class FollowMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(query.Filter.FollowerId, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(query));
 		}
@@ -145,7 +134,6 @@ public static class FollowMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(query.Filter.FollowingId, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(query));
 		}
@@ -156,7 +144,6 @@ public static class FollowMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(query.Filter.FollowerId, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -167,7 +154,6 @@ public static class FollowMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(query.Filter.FollowingId, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -181,7 +167,6 @@ public static class FollowMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetAllAsync(query.Filter, query.CurrentUser, query.Sorting, query.Pagination, cancellationToken)
 				.ReturnsTaskResponse(follows.ToResponse(query));
 		}
@@ -192,7 +177,6 @@ public static class FollowMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetTotalCountAsync(query.Filter, cancellationToken)
 				.ReturnsTaskResponse(follows.ToTotalCountResponse(query));
 		}
@@ -203,7 +187,6 @@ public static class FollowMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetAllForFollowingAsync(query.Filter, query.CurrentUser, query.Sorting, query.Pagination, cancellationToken)
 				.ReturnsTaskResponse(follows.ToResponse(query));
 		}
@@ -214,7 +197,6 @@ public static class FollowMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetTotalCountForFollowingAsync(query.Filter, cancellationToken)
 				.ReturnsTaskResponse(follows.ToTotalCountResponse(query));
 		}
@@ -225,7 +207,6 @@ public static class FollowMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(query.Id, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(follow.ToResponse(query));
 		}
@@ -236,7 +217,6 @@ public static class FollowMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(query.Id, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}

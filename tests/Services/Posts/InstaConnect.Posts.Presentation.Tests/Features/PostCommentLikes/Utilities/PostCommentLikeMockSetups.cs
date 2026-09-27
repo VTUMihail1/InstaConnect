@@ -13,7 +13,6 @@ public static class PostCommentLikeMockSetups
 		CancellationToken cancellationToken)
 		{
 			sender
-				.ClearCalls()
 				.SendAsync(PostCommentLikePresentationMatcher.IsGetAllPostCommentLikesQueryRequest(request), cancellationToken)
 				.ReturnsTaskResponse(postCommentLikes.ToResponse(request, postComment));
 		}
@@ -25,7 +24,6 @@ public static class PostCommentLikeMockSetups
 			CancellationToken cancellationToken)
 		{
 			sender
-				.ClearCalls()
 				.SendAsync(PostCommentLikePresentationMatcher.IsGetAllPostCommentLikesForUserQueryRequest(request), cancellationToken)
 				.ReturnsTaskResponse(postCommentLikes.ToResponse(request, user));
 		}
@@ -36,7 +34,6 @@ public static class PostCommentLikeMockSetups
 			CancellationToken cancellationToken)
 		{
 			sender
-				.ClearCalls()
 				.SendAsync(PostCommentLikePresentationMatcher.IsGetPostCommentLikeByIdQueryRequest(request), cancellationToken)
 				.ReturnsTaskResponse(postCommentLike.ToResponse(request));
 		}
@@ -47,7 +44,6 @@ public static class PostCommentLikeMockSetups
 			CancellationToken cancellationToken)
 		{
 			sender
-				.ClearCalls()
 				.SendAsync(PostCommentLikePresentationMatcher.IsAddPostCommentLikeCommandRequest(request), cancellationToken)
 				.ReturnsTaskResponse(postCommentLike.ToResponse(request));
 		}

@@ -16,7 +16,6 @@ public class CreateUserFactoryUnitTests : BaseUserDomainCommandUnitTest
 		_factory = new(GuidProvider, PasswordHasher, DateTimeProvider);
 
 		GuidProvider.SetupNewStringGuid(User);
-		PasswordHasher.SetupHash(User, Password);
 		DateTimeProvider.SetupGetOffsetUtcNow(User);
 	}
 

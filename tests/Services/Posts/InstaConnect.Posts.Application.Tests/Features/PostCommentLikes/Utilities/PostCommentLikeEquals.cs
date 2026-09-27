@@ -265,19 +265,28 @@ public static class PostCommentLikeEquals
 	{
 		public bool Matches(AddPostCommentLikeCommandRequest request)
 		{
-			return postCommentLike.Id.Matches(request.Id, request.CommentId, request.UserId);
+			return postCommentLike.Id.Matches(request.Id, request.CommentId, request.UserId) &&
+				   postCommentLike.CreatedAtUtc != default;
 		}
 
 		public bool MatchesFilter(GetAllPostCommentLikesQueryRequest request)
 		{
 			return postCommentLike.Id.CommentId.Matches(request.Id, request.CommentId) &&
-				   postCommentLike.User != null &&
-				   postCommentLike.User.Name.Value.StartsWithOrdinalIgnoreCase(request.UserName);
+				   postCommentLike.User.MatchesFilter(request);
 		}
 
 		public bool MatchesFilter(GetAllPostCommentLikesForUserQueryRequest request)
 		{
 			return postCommentLike.Id.UserId.Matches(request.UserId);
+		}
+	}
+
+	extension(User? u)
+	{
+		public bool MatchesFilter(GetAllPostCommentLikesQueryRequest request)
+		{
+			return u != null &&
+				   u.Name.Value.StartsWithOrdinalIgnoreCase(request.UserName);
 		}
 	}
 

@@ -96,17 +96,19 @@ public static class UserClaimEquals
 	{
 		public bool Matches(AddUserClaimCommand command)
 		{
-			return userClaim.Id.Matches(command.Id.Id, command.Claim);
+			return userClaim.Id.Matches(command.Id, command.Claim) &&
+				   userClaim.CreatedAtUtc != default;
 		}
 
 		public bool Matches(DeleteUserClaimCommand command)
 		{
-			return userClaim.Id.Matches(command.Id);
+			return userClaim.Id.Matches(command.Id) &&
+				   userClaim.CreatedAtUtc != default;
 		}
 
-		public bool MatchesFilter(UserClaimsFilterQuery filter)
+		public bool MatchesFilter(UserClaimsFilterQuery query)
 		{
-			return userClaim.Id.Id.Matches(filter.Id);
+			return userClaim.Id.Id.Matches(query.Id);
 		}
 	}
 

@@ -393,31 +393,49 @@ public static class ChatMessageEquals
 		public bool Matches(AddChatMessageCommand command)
 		{
 			return chatMessage.Id.Id.Matches(command.Id) &&
-				   chatMessage.Content == command.Content;
+				   chatMessage.Id.MessageId.IsNotNullOrEmptyOrWhiteSpace() &&
+				   chatMessage.SenderId.Matches(command.Id.ParticipantOneId) &&
+				   chatMessage.Content == command.Content &&
+				   chatMessage.CreatedAtUtc != default &&
+				   chatMessage.UpdatedAtUtc != default;
 		}
 
 		public bool Matches(UpdateChatMessageCommand command)
 		{
 			return chatMessage.Id.Matches(command.Id) &&
-				   chatMessage.Content == command.Content;
+				   chatMessage.SenderId.Matches(command.Id.Id.ParticipantOneId) &&
+				   chatMessage.Content == command.Content &&
+				   chatMessage.CreatedAtUtc != default &&
+				   chatMessage.UpdatedAtUtc != default;
 		}
 
 		public bool Matches(DeleteChatMessageCommand command)
 		{
-			return chatMessage.Id.Matches(command.Id);
+			return chatMessage.Id.Matches(command.Id) &&
+				   chatMessage.SenderId.Matches(command.Id.Id.ParticipantOneId) &&
+				   chatMessage.Content.IsNotNullOrEmptyOrWhiteSpace() &&
+				   chatMessage.CreatedAtUtc != default &&
+				   chatMessage.UpdatedAtUtc != default;
 		}
 
 		public bool MatchesInverted(AddChatMessageCommand command)
 		{
-			return chatMessage.Id.Id.Matches(command.Id.ParticipantTwoId.Id, command.Id.ParticipantOneId.Id) &&
-				   chatMessage.Content == command.Content;
+			return chatMessage.Id.Id.Matches(command.Id.ParticipantTwoId, command.Id.ParticipantOneId) &&
+				   chatMessage.Id.MessageId.IsNotNullOrEmptyOrWhiteSpace() &&
+				   chatMessage.SenderId.Matches(command.Id.ParticipantTwoId) &&
+				   chatMessage.Content == command.Content &&
+				   chatMessage.CreatedAtUtc != default &&
+				   chatMessage.UpdatedAtUtc != default;
 		}
 
 		public bool MatchesInverted(UpdateChatMessageCommand command)
 		{
-			return chatMessage.Id.Id.Matches(command.Id.Id.ParticipantTwoId.Id, command.Id.Id.ParticipantOneId.Id) &&
+			return chatMessage.Id.Id.Matches(command.Id.Id.ParticipantTwoId, command.Id.Id.ParticipantOneId) &&
 				   chatMessage.Id.MessageId.EqualsOrdinalIgnoreCase(command.Id.MessageId) &&
-				   chatMessage.Content == command.Content;
+				   chatMessage.SenderId.Matches(command.Id.Id.ParticipantOneId) &&
+				   chatMessage.Content == command.Content &&
+				   chatMessage.CreatedAtUtc != default &&
+				   chatMessage.UpdatedAtUtc != default;
 		}
 
 		public bool MatchesFilter(GetAllChatMessagesQuery query)
@@ -450,7 +468,7 @@ public static class ChatMessageEquals
 		{
 			return response != null &&
 				   chatMessage != null &&
-				   chatMessage.Id.Id.Matches(response.Id.Id.ParticipantTwoId.Id, response.Id.Id.ParticipantOneId.Id) &&
+				   chatMessage.Id.Id.Matches(response.Id.Id.ParticipantTwoId, response.Id.Id.ParticipantOneId) &&
 				   chatMessage.Id.MessageId.EqualsOrdinalIgnoreCase(response.Id.MessageId) &&
 				   chatMessage.SenderId.Matches(response.SenderId) &&
 				   chatMessage.Content == response.Content &&
@@ -479,7 +497,7 @@ public static class ChatMessageEquals
 		{
 			return response != null &&
 				   chatMessage != null &&
-				   chatMessage.Id.Id.Matches(response.Id.Id.ParticipantTwoId.Id, response.Id.Id.ParticipantOneId.Id) &&
+				   chatMessage.Id.Id.Matches(response.Id.Id.ParticipantTwoId, response.Id.Id.ParticipantOneId) &&
 				   chatMessage.Id.MessageId.EqualsOrdinalIgnoreCase(response.Id.MessageId) &&
 				   chatMessage.SenderId.Matches(response.SenderId) &&
 				   chatMessage.Content == response.Content &&

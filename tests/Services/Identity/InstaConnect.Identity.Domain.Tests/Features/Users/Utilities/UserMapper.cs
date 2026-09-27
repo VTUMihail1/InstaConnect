@@ -55,13 +55,13 @@ public static class UserMapper
 		public ICollection<UserResponse> ToResponse(
 			GetAllUsersQuery query)
 		{
-			return users.Filter(query.Pagination, user => user.MatchesFilter(query), user => user.ToFullResponse());
+			return users.Filter(query.Pagination, user => user.MatchesFilter(query.Filter), user => user.ToFullResponse());
 		}
 
 		public long ToTotalCountResponse(
 			GetAllUsersQuery query)
 		{
-			return users.Count(user => user.MatchesFilter(query));
+			return users.Count(user => user.MatchesFilter(query.Filter));
 		}
 	}
 

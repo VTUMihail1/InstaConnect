@@ -10,7 +10,6 @@ public static class PostCommentMockSetups
 		public void SetupNewStringGuid(PostComment postComment)
 		{
 			guidProvider
-				.ClearCalls()
 				.NewStringGuid()
 				.ReturnsResponse(postComment.Id.CommentId);
 		}
@@ -21,7 +20,6 @@ public static class PostCommentMockSetups
 		public void SetupGetOffsetUtcNow(PostComment postComment)
 		{
 			dateTimeProvider
-				.ClearCalls()
 				.GetOffsetUtcNow()
 				.ReturnsResponse(postComment.CreatedAtUtc);
 		}
@@ -34,7 +32,6 @@ public static class PostCommentMockSetups
 			PostComment postComment)
 		{
 			factory
-				.ClearCalls()
 				.Create(
 					command.Id,
 					command.UserId,
@@ -52,7 +49,6 @@ public static class PostCommentMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.Id, PostCommentDomainMatcher.IsPostInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(post);
 		}
@@ -64,7 +60,6 @@ public static class PostCommentMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.Id, PostCommentDomainMatcher.IsPostInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -74,7 +69,6 @@ public static class PostCommentMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.ExistsByIdAsync(command.Id.Id, cancellationToken)
 				.ReturnsTaskResponse(true);
 		}
@@ -84,7 +78,6 @@ public static class PostCommentMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.ExistsByIdAsync(command.Id.Id, cancellationToken)
 				.ReturnsTaskResponse(true);
 		}
@@ -94,7 +87,6 @@ public static class PostCommentMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.ExistsByIdAsync(command.Id.Id, cancellationToken)
 				.ReturnsTaskResponse(false);
 		}
@@ -104,7 +96,6 @@ public static class PostCommentMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.ExistsByIdAsync(command.Id.Id, cancellationToken)
 				.ReturnsTaskResponse(false);
 		}
@@ -119,7 +110,6 @@ public static class PostCommentMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.Id, PostCommentDomainMatcher.IsPostCommentInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(postComment);
 		}
@@ -131,7 +121,6 @@ public static class PostCommentMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.Id, PostCommentDomainMatcher.IsPostCommentInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(postComment);
 		}
@@ -143,7 +132,6 @@ public static class PostCommentMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.Id, PostCommentDomainMatcher.IsPostCommentInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -155,7 +143,6 @@ public static class PostCommentMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.Id, PostCommentDomainMatcher.IsPostCommentInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -169,7 +156,6 @@ public static class PostCommentMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.UserId, cancellationToken)
 				.ReturnsTaskResponse(user);
 		}
@@ -180,7 +166,6 @@ public static class PostCommentMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.UserId, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -194,7 +179,6 @@ public static class PostCommentMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(query.Filter.Id, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(post.ToResponse(query));
 		}
@@ -205,7 +189,6 @@ public static class PostCommentMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(query.Filter.Id, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -215,7 +198,6 @@ public static class PostCommentMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.ExistsByIdAsync(query.Id.Id, cancellationToken)
 				.ReturnsTaskResponse(true);
 		}
@@ -225,7 +207,6 @@ public static class PostCommentMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.ExistsByIdAsync(query.Id.Id, cancellationToken)
 				.ReturnsTaskResponse(false);
 		}
@@ -239,7 +220,6 @@ public static class PostCommentMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(query.Filter.UserId, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(query));
 		}
@@ -250,7 +230,6 @@ public static class PostCommentMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(query.Filter.UserId, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -264,7 +243,6 @@ public static class PostCommentMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetAllAsync(query.Filter, query.CurrentUser, query.Sorting, query.Pagination, cancellationToken)
 				.ReturnsTaskResponse(postComments.ToResponse(query));
 		}
@@ -275,7 +253,6 @@ public static class PostCommentMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetTotalCountAsync(query.Filter, cancellationToken)
 				.ReturnsTaskResponse(postComments.ToTotalCountResponse(query));
 		}
@@ -286,7 +263,6 @@ public static class PostCommentMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetAllForUserAsync(query.Filter, query.CurrentUser, query.Sorting, query.Pagination, cancellationToken)
 				.ReturnsTaskResponse(postComments.ToResponse(query));
 		}
@@ -297,7 +273,6 @@ public static class PostCommentMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetTotalCountForUserAsync(query.Filter, cancellationToken)
 				.ReturnsTaskResponse(postComments.ToTotalCountResponse(query));
 		}
@@ -308,7 +283,6 @@ public static class PostCommentMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(query.Id, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(postComment.ToResponse(query));
 		}
@@ -319,7 +293,6 @@ public static class PostCommentMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(query.Id, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -332,7 +305,6 @@ public static class PostCommentMockSetups
 			PostComment postComment)
 		{
 			dateTimeProvider
-				.ClearCalls()
 				.GetOffsetUtcNow()
 				.ReturnsResponse(postComment.UpdatedAtUtc);
 		}

@@ -43,10 +43,9 @@ public static class ForgotPasswordTokenMockAssertions
 	{
 		public async Task ShouldReceiveOneSendAsync(
 			AddForgotPasswordTokenCommand command,
-			ForgotPasswordToken forgotPasswordToken,
 			CancellationToken cancellationToken)
 		{
-			await emailSender.ShouldHaveReceivedOne().SendAsync(ForgotPasswordTokenDomainMatcher.IsForgotPasswordToken(command, forgotPasswordToken), cancellationToken);
+			await emailSender.ShouldHaveReceivedOne().SendAsync(ForgotPasswordTokenDomainMatcher.IsForgotPasswordToken(command), cancellationToken);
 		}
 	}
 
@@ -91,10 +90,10 @@ public static class ForgotPasswordTokenMockAssertions
 
 		public async Task ShouldReceiveOneUpdateAsync(
 			VerifyForgotPasswordTokenCommand command,
-			User user,
+			IPasswordHasher passwordHasher,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().UpdateAsync(user, cancellationToken);
+			await repository.ShouldHaveReceivedOne().UpdateAsync(ForgotPasswordTokenDomainMatcher.IsUser(command, passwordHasher), cancellationToken);
 		}
 	}
 
@@ -102,10 +101,9 @@ public static class ForgotPasswordTokenMockAssertions
 	{
 		public async Task ShouldReceiveOneAddAsync(
 			AddForgotPasswordTokenCommand command,
-			ForgotPasswordToken forgotPasswordToken,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().AddAsync(ForgotPasswordTokenDomainMatcher.IsForgotPasswordToken(command, forgotPasswordToken), cancellationToken);
+			await repository.ShouldHaveReceivedOne().AddAsync(ForgotPasswordTokenDomainMatcher.IsForgotPasswordToken(command), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneGetByIdAsync(
@@ -117,10 +115,9 @@ public static class ForgotPasswordTokenMockAssertions
 
 		public async Task ShouldReceiveOneDeleteRangeAsync(
 			VerifyForgotPasswordTokenCommand command,
-			User user,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().DeleteRangeAsync(user.ForgotPasswordTokens, cancellationToken);
+			await repository.ShouldHaveReceivedOne().DeleteRangeAsync(ForgotPasswordTokenDomainMatcher.IsForgotPasswordTokenCollection(command), cancellationToken);
 		}
 	}
 }

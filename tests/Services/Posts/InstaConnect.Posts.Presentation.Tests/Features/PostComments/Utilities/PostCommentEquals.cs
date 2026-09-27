@@ -286,27 +286,40 @@ public static class PostCommentEquals
 		public bool Matches(AddPostCommentApiRequest request)
 		{
 			return postComment.Id.Id.Matches(request.Id) &&
+				   postComment.Id.CommentId.IsNotNullOrEmptyOrWhiteSpace() &&
 				   postComment.UserId.Matches(request.UserId) &&
-				   postComment.Content == request.Body.Content;
+				   postComment.Content == request.Body.Content &&
+				   postComment.CreatedAtUtc != default &&
+				   postComment.UpdatedAtUtc != default;
 		}
 
 		public bool Matches(UpdatePostCommentApiRequest request)
 		{
 			return postComment.Id.Matches(request.Id, request.CommentId) &&
 				   postComment.UserId.Matches(request.UserId) &&
-				   postComment.Content == request.Body.Content;
+				   postComment.Content == request.Body.Content &&
+				   postComment.CreatedAtUtc != default &&
+				   postComment.UpdatedAtUtc != default;
 		}
 
 		public bool MatchesFilter(GetAllPostCommentsApiRequest request)
 		{
 			return postComment.Id.Id.Matches(request.Id) &&
-				   postComment.User != null &&
-				   postComment.User.Name.Value.StartsWithOrdinalIgnoreCase(request.UserName);
+				   postComment.User.MatchesFilter(request);
 		}
 
 		public bool MatchesFilter(GetAllPostCommentsForUserApiRequest request)
 		{
 			return postComment.UserId.Matches(request.UserId);
+		}
+	}
+
+	extension(User? u)
+	{
+		public bool MatchesFilter(GetAllPostCommentsApiRequest request)
+		{
+			return u != null &&
+				   u.Name.Value.StartsWithOrdinalIgnoreCase(request.UserName);
 		}
 	}
 

@@ -31,9 +31,12 @@ public static class PostEquals
 	{
 		public bool Matches(AddPostCommand command)
 		{
-			return p.UserId.Matches(command.UserId) &&
+			return p.Id.Id.IsNotNullOrEmptyOrWhiteSpace() &&
+				   p.UserId.Matches(command.UserId) &&
 				   p.Title == command.Title &&
-				   p.Content == command.Content;
+				   p.Content == command.Content &&
+				   p.CreatedAtUtc != default &&
+				   p.UpdatedAtUtc != default;
 		}
 
 		public bool Matches(UpdatePostCommand command)
@@ -41,19 +44,24 @@ public static class PostEquals
 			return p.Id.Matches(command.Id) &&
 				   p.UserId.Matches(command.UserId) &&
 				   p.Title == command.Title &&
-				   p.Content == command.Content;
+				   p.Content == command.Content &&
+				   p.CreatedAtUtc != default &&
+				   p.UpdatedAtUtc != default;
 		}
 
 		public bool Matches(DeletePostCommand command)
 		{
 			return p.Id.Matches(command.Id) &&
-				   p.UserId.Matches(command.UserId);
+				   p.UserId.Matches(command.UserId) &&
+				   p.Title.IsNotNullOrEmptyOrWhiteSpace() &&
+				   p.Content.IsNotNullOrEmptyOrWhiteSpace() &&
+				   p.CreatedAtUtc != default &&
+				   p.UpdatedAtUtc != default;
 		}
 
 		public bool MatchesFilter(PostsFilterQuery query)
 		{
-			return p.User != null &&
-				   p.User.Name.Value.StartsWithOrdinalIgnoreCase(query.UserName.Value) &&
+			return p.User.MatchesFilter(query) &&
 				   p.Title.StartsWithOrdinalIgnoreCase(query.Title);
 		}
 
@@ -61,6 +69,15 @@ public static class PostEquals
 		{
 			return p.UserId.Matches(query.UserId) &&
 				   p.Title.StartsWithOrdinalIgnoreCase(query.Title);
+		}
+	}
+
+	extension(User? u)
+	{
+		public bool MatchesFilter(PostsFilterQuery query)
+		{
+			return u != null &&
+				   u.Name.Value.StartsWithOrdinalIgnoreCase(query.UserName.Value);
 		}
 	}
 

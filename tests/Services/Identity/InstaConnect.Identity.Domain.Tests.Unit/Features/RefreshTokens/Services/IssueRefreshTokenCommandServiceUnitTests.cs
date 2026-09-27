@@ -113,7 +113,7 @@ public class IssueRefreshTokenCommandServiceUnitTests : BaseRefreshTokenDomainCo
 		await _service.IssueAsync(_command, CancellationToken);
 
 		// Assert
-		await RefreshTokenRepository.ShouldReceiveOneAddAsync(_command, RefreshToken, CancellationToken);
+		await RefreshTokenRepository.ShouldReceiveOneAddAsync(_command, CancellationToken);
 	}
 
 	[Fact]

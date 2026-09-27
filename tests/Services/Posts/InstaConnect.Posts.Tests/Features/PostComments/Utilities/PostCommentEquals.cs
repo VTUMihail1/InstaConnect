@@ -1,5 +1,6 @@
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Posts.Domain.Features.PostComments.Models.ValueObjects;
+using InstaConnect.Posts.Domain.Features.Posts.Models.ValueObjects;
 using InstaConnect.Posts.Tests.Features.Posts.Utilities;
 using InstaConnect.Posts.Tests.Features.Users.Utilities;
 
@@ -22,7 +23,12 @@ public static class PostCommentEquals
 	{
 		public bool Matches(PostCommentId id)
 		{
-			return p.Matches(id.Id.Id, id.CommentId);
+			return p.Matches(id.Id, id.CommentId);
+		}
+
+		public bool Matches(PostId id, string commentId)
+		{
+			return p.Matches(id.Id, commentId);
 		}
 
 		public bool Matches(string id, string commentId)

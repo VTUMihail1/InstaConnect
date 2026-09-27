@@ -157,7 +157,8 @@ public static class UserClaimEquals
 	{
 		public bool Matches(AddUserClaimApiRequest request)
 		{
-			return userClaim.Id.Matches(request.Id, request.Body.Claim);
+			return userClaim.Id.Matches(request.Id, request.Body.Claim) &&
+				   userClaim.CreatedAtUtc != default;
 		}
 
 		public bool MatchesFilter(GetAllUserClaimsApiRequest request)

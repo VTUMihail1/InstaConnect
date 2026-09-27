@@ -14,7 +14,6 @@ public static class EmailConfirmationTokenMockSetups
 		public void SetupNewStringGuid(EmailConfirmationToken emailConfirmationToken)
 		{
 			guidProvider
-				.ClearCalls()
 				.NewStringGuid()
 				.ReturnsResponse(emailConfirmationToken.Id.Value);
 		}
@@ -25,7 +24,6 @@ public static class EmailConfirmationTokenMockSetups
 		public void SetupGetOffsetUtcNow(EmailConfirmationToken emailConfirmationToken)
 		{
 			dateTimeProvider
-				.ClearCalls()
 				.GetOffsetUtcNow()
 				.ReturnsResponse(emailConfirmationToken.CreatedAtUtc);
 		}
@@ -35,7 +33,6 @@ public static class EmailConfirmationTokenMockSetups
 			IOptions<EmailConfirmationTokenOptions> emailConfirmationTokenOptions)
 		{
 			dateTimeProvider
-				.ClearCalls()
 				.GetOffsetUtcNow(emailConfirmationTokenOptions.Value.LifetimeSeconds)
 				.ReturnsResponse(emailConfirmationToken.ExpiresAtUtc);
 		}
@@ -43,7 +40,6 @@ public static class EmailConfirmationTokenMockSetups
 		public void SetupGetOffsetUtcNow(VerifyEmailConfirmationTokenCommand command, DateTimeOffset utcNow)
 		{
 			dateTimeProvider
-				.ClearCalls()
 				.GetOffsetUtcNow()
 				.ReturnsResponse(utcNow);
 		}
@@ -54,7 +50,6 @@ public static class EmailConfirmationTokenMockSetups
 		public void SetupCreate(AddEmailConfirmationTokenCommand command, EmailConfirmationToken emailConfirmationToken)
 		{
 			factory
-				.ClearCalls()
 				.Create(emailConfirmationToken.Id.Id)
 				.ReturnsResponse(emailConfirmationToken);
 		}
@@ -68,7 +63,6 @@ public static class EmailConfirmationTokenMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByNameAsync(command.Name, cancellationToken)
 				.ReturnsTaskResponse(user);
 		}
@@ -79,7 +73,6 @@ public static class EmailConfirmationTokenMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByNameAsync(command.Name, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -91,7 +84,6 @@ public static class EmailConfirmationTokenMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.Id.Id, EmailConfirmationTokenDomainMatcher.IsUserInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(user);
 		}
@@ -103,7 +95,6 @@ public static class EmailConfirmationTokenMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.Id.Id, EmailConfirmationTokenDomainMatcher.IsUserInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -117,7 +108,6 @@ public static class EmailConfirmationTokenMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.Id, cancellationToken)
 				.ReturnsTaskResponse(emailConfirmationToken);
 		}
@@ -128,7 +118,6 @@ public static class EmailConfirmationTokenMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.Id, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}

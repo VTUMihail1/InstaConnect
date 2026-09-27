@@ -14,5 +14,7 @@ public abstract class BaseForgotPasswordTokenPresentationCommandUnitTest : BaseF
 	{
 		Sender = MockFactory.CreateApplicationSender();
 		Mapper = MockFactory.CreateMapper(IdentityPresentationReference.Assembly);
+
+		PasswordHasher.ClearCalls();
 	}
 }

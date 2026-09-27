@@ -271,27 +271,40 @@ public static class PostCommentEquals
 		public bool Matches(AddPostCommentCommandRequest request)
 		{
 			return postComment.Id.Id.Matches(request.Id) &&
+				   postComment.Id.CommentId.IsNotNullOrEmptyOrWhiteSpace() &&
 				   postComment.UserId.Matches(request.UserId) &&
-				   postComment.Content == request.Content;
+				   postComment.Content == request.Content &&
+				   postComment.CreatedAtUtc != default &&
+				   postComment.UpdatedAtUtc != default;
 		}
 
 		public bool Matches(UpdatePostCommentCommandRequest request)
 		{
 			return postComment.Id.Matches(request.Id, request.CommentId) &&
 				   postComment.UserId.Matches(request.UserId) &&
-				   postComment.Content == request.Content;
+				   postComment.Content == request.Content &&
+				   postComment.CreatedAtUtc != default &&
+				   postComment.UpdatedAtUtc != default;
 		}
 
 		public bool MatchesFilter(GetAllPostCommentsQueryRequest request)
 		{
 			return postComment.Id.Id.Matches(request.Id) &&
-				   postComment.User != null &&
-				   postComment.User.Name.Value.StartsWithOrdinalIgnoreCase(request.UserName);
+				   postComment.User.MatchesFilter(request);
 		}
 
 		public bool MatchesFilter(GetAllPostCommentsForUserQueryRequest request)
 		{
 			return postComment.UserId.Matches(request.UserId);
+		}
+	}
+
+	extension(User? u)
+	{
+		public bool MatchesFilter(GetAllPostCommentsQueryRequest request)
+		{
+			return u != null &&
+				   u.Name.Value.StartsWithOrdinalIgnoreCase(request.UserName);
 		}
 	}
 

@@ -74,6 +74,6 @@ public class DeleteRefreshTokenCommandServiceUnitTests : BaseRefreshTokenDomainC
 		await _service.DeleteAsync(_command, CancellationToken);
 
 		// Assert
-		await RefreshTokenRepository.ShouldReceiveOneDeleteAsync(_command, RefreshToken, CancellationToken);
+		await RefreshTokenRepository.ShouldReceiveOneDeleteAsync(_command, CancellationToken);
 	}
 }

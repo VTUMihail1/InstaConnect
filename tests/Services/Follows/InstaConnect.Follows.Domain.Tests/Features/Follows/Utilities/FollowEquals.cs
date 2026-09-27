@@ -175,26 +175,41 @@ public static class FollowEquals
 	{
 		public bool Matches(AddFollowCommand command)
 		{
-			return follow.Id.Matches(command.FollowerId.Id, command.FollowingId.Id);
+			return follow.Id.Matches(command.FollowerId, command.FollowingId) &&
+				   follow.CreatedAtUtc != default;
 		}
 
 		public bool Matches(DeleteFollowCommand command)
 		{
-			return follow.Id.Matches(command.Id);
+			return follow.Id.Matches(command.Id) &&
+				   follow.CreatedAtUtc != default;
 		}
 
 		public bool MatchesFilter(FollowsFilterQuery query)
 		{
 			return follow.Id.FollowerId.Matches(query.FollowerId) &&
-				   follow.Following != null &&
-				   follow.Following.Name.Value.StartsWithOrdinalIgnoreCase(query.FollowingName.Value);
+				   follow.Following.MatchesFilter(query);
 		}
 
 		public bool MatchesFilter(FollowsForFollowingFilterQuery query)
 		{
 			return follow.Id.FollowingId.Matches(query.FollowingId) &&
-				   follow.Follower != null &&
-				   follow.Follower.Name.Value.StartsWithOrdinalIgnoreCase(query.FollowerName.Value);
+				   follow.Follower.MatchesFilter(query);
+		}
+	}
+
+	extension(User? u)
+	{
+		public bool MatchesFilter(FollowsFilterQuery query)
+		{
+			return u != null &&
+				   u.Name.Value.StartsWithOrdinalIgnoreCase(query.FollowingName.Value);
+		}
+
+		public bool MatchesFilter(FollowsForFollowingFilterQuery query)
+		{
+			return u != null &&
+				   u.Name.Value.StartsWithOrdinalIgnoreCase(query.FollowerName.Value);
 		}
 	}
 

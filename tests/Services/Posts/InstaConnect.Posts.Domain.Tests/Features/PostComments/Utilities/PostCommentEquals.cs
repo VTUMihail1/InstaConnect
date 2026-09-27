@@ -32,33 +32,49 @@ public static class PostCommentEquals
 		public bool Matches(AddPostCommentCommand command)
 		{
 			return postComment.Id.Id.Matches(command.Id) &&
+				   postComment.Id.CommentId.IsNotNullOrEmptyOrWhiteSpace() &&
 				   postComment.UserId.Matches(command.UserId) &&
-				   postComment.Content == command.Content;
+				   postComment.Content == command.Content &&
+				   postComment.CreatedAtUtc != default &&
+				   postComment.UpdatedAtUtc != default;
 		}
 
 		public bool Matches(UpdatePostCommentCommand command)
 		{
 			return postComment.Id.Matches(command.Id) &&
 				   postComment.UserId.Matches(command.UserId) &&
-				   postComment.Content == command.Content;
+				   postComment.Content == command.Content &&
+				   postComment.CreatedAtUtc != default &&
+				   postComment.UpdatedAtUtc != default;
 		}
 
 		public bool Matches(DeletePostCommentCommand command)
 		{
 			return postComment.Id.Matches(command.Id) &&
-				   postComment.UserId.Matches(command.UserId);
+				   postComment.UserId.Matches(command.UserId) &&
+				   postComment.Content.IsNotNullOrEmptyOrWhiteSpace() &&
+				   postComment.CreatedAtUtc != default &&
+				   postComment.UpdatedAtUtc != default;
 		}
 
 		public bool MatchesFilter(PostCommentsFilterQuery query)
 		{
 			return postComment.Id.Id.Matches(query.Id) &&
-				   postComment.User != null &&
-				   postComment.User.Name.Value.StartsWithOrdinalIgnoreCase(query.UserName.Value);
+				   postComment.User.MatchesFilter(query);
 		}
 
 		public bool MatchesFilter(PostCommentsForUserFilterQuery query)
 		{
 			return postComment.UserId.Matches(query.UserId);
+		}
+	}
+
+	extension(User? u)
+	{
+		public bool MatchesFilter(PostCommentsFilterQuery query)
+		{
+			return u != null &&
+				   u.Name.Value.StartsWithOrdinalIgnoreCase(query.UserName.Value);
 		}
 	}
 

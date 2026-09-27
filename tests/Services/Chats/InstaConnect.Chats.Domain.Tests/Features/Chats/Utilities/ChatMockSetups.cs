@@ -9,7 +9,6 @@ public static class ChatMockSetups
 		public void SetupGetOffsetUtcNow(Chat chat)
 		{
 			dateTimeProvider
-				.ClearCalls()
 				.GetOffsetUtcNow()
 				.ReturnsResponse(chat.CreatedAtUtc);
 		}
@@ -22,7 +21,6 @@ public static class ChatMockSetups
 			Chat chat)
 		{
 			factory
-				.ClearCalls()
 				.Create(
 					command.ParticipantOneId,
 					command.ParticipantTwoId)
@@ -38,7 +36,6 @@ public static class ChatMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.ParticipantOneId, cancellationToken)
 				.ReturnsTaskResponse(user);
 		}
@@ -49,7 +46,6 @@ public static class ChatMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.ParticipantTwoId, cancellationToken)
 				.ReturnsTaskResponse(user);
 		}
@@ -60,7 +56,6 @@ public static class ChatMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.ParticipantOneId, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -71,7 +66,6 @@ public static class ChatMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.ParticipantTwoId, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -85,7 +79,6 @@ public static class ChatMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(chat.Id, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -96,7 +89,6 @@ public static class ChatMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(chat.Id, cancellationToken)
 				.ReturnsTaskResponse(chat);
 		}
@@ -110,7 +102,6 @@ public static class ChatMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(query.Filter.ParticipantOneId, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(query));
 		}
@@ -121,7 +112,6 @@ public static class ChatMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(query.Filter.ParticipantOneId, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -135,7 +125,6 @@ public static class ChatMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetAllAsync(query.Filter, query.CurrentUser, query.Sorting, query.Pagination, cancellationToken)
 				.ReturnsTaskResponse(chats.ToResponse(query));
 		}
@@ -146,7 +135,6 @@ public static class ChatMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetTotalCountAsync(query.Filter, cancellationToken)
 				.ReturnsTaskResponse(chats.ToTotalCountResponse(query));
 		}
@@ -157,7 +145,6 @@ public static class ChatMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(query.Id, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(chat.ToResponse(query));
 		}
@@ -168,7 +155,6 @@ public static class ChatMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(query.Id, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}

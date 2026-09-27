@@ -31,14 +31,17 @@ public static class ForgotPasswordTokenEquals
 	{
 		public bool Matches(AddForgotPasswordTokenCommandRequest request)
 		{
-			return forgotPasswordToken.User!.Name.Matches(request.Name);
+			return forgotPasswordToken.Id.Id.Id.IsNotNullOrEmptyOrWhiteSpace() &&
+				   forgotPasswordToken.Id.Value.IsNotNullOrEmptyOrWhiteSpace() &&
+				   forgotPasswordToken.CreatedAtUtc != default &&
+				   forgotPasswordToken.ExpiresAtUtc != default;
 		}
 
-		public bool Matches(VerifyForgotPasswordTokenCommandRequest request, IPasswordHasher passwordHasher)
+		public bool Matches(VerifyForgotPasswordTokenCommandRequest request)
 		{
 			return forgotPasswordToken.Id.Matches(request.Id, request.Value) &&
-				   passwordHasher.IsMatch(request.Password, forgotPasswordToken.User!.PasswordHash) &&
-				   request.Password == request.ConfirmPassword;
+				   forgotPasswordToken.CreatedAtUtc != default &&
+				   forgotPasswordToken.ExpiresAtUtc != default;
 		}
 	}
 
@@ -46,7 +49,16 @@ public static class ForgotPasswordTokenEquals
 	{
 		public bool Matches(VerifyForgotPasswordTokenCommandRequest request, IPasswordHasher passwordHasher)
 		{
-			return passwordHasher.IsMatch(request.Password, user.PasswordHash);
+			return user.Id.Matches(request.Id) &&
+				   user.Name.Value.IsNotNullOrEmptyOrWhiteSpace() &&
+				   user.Email.Value.IsNotNullOrEmptyOrWhiteSpace() &&
+				   user.FirstName.IsNotNullOrEmptyOrWhiteSpace() &&
+				   user.LastName.IsNotNullOrEmptyOrWhiteSpace() &&
+				   (user.ProfileImage == null || user.ProfileImage.Url.IsNotNullOrEmptyOrWhiteSpace()) &&
+				   passwordHasher.IsMatch(request.Password, user.PasswordHash) &&
+				   user.IsEmailConfirmed &&
+				   user.CreatedAtUtc != default &&
+				   user.UpdatedAtUtc != default;
 		}
 	}
 

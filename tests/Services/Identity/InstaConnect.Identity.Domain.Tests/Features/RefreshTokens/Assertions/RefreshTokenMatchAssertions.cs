@@ -1,4 +1,3 @@
-using InstaConnect.Identity.Domain.Features.Common.Helpers;
 using InstaConnect.Identity.Domain.Tests.Features.RefreshTokens.Utilities;
 
 namespace InstaConnect.Identity.Domain.Tests.Features.RefreshTokens.Assertions;
@@ -20,9 +19,9 @@ public static class RefreshTokenMatchAssertions
 
 	extension(RefreshToken refreshToken)
 	{
-		public void ShouldSatisfy(IssueRefreshTokenCommand command, IPasswordHasher passwordHasher)
+		public void ShouldSatisfy(IssueRefreshTokenCommand command)
 		{
-			refreshToken.ShouldSatisfy(p => p.Matches(command, passwordHasher));
+			refreshToken.ShouldSatisfy(p => p.Matches(command));
 		}
 
 		public void ShouldSatisfy(RotateRefreshTokenCommand command)

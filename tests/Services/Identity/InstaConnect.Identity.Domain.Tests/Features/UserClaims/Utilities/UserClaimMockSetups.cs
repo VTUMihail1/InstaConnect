@@ -9,7 +9,6 @@ public static class UserClaimMockSetups
 		public void SetupGetOffsetUtcNow(UserClaim userClaim)
 		{
 			dateTimeProvider
-				.ClearCalls()
 				.GetOffsetUtcNow()
 				.ReturnsResponse(userClaim.CreatedAtUtc);
 		}
@@ -22,7 +21,6 @@ public static class UserClaimMockSetups
 			UserClaim userClaim)
 		{
 			factory
-				.ClearCalls()
 				.Create(
 					command.Id,
 					command.Claim)
@@ -39,7 +37,6 @@ public static class UserClaimMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.Id, UserClaimDomainMatcher.IsUserClaimInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(userClaim);
 		}
@@ -50,7 +47,6 @@ public static class UserClaimMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(userClaim.Id, cancellationToken)
 				.ReturnsTaskResponse(userClaim);
 		}
@@ -61,7 +57,6 @@ public static class UserClaimMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(userClaim.Id, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -73,7 +68,6 @@ public static class UserClaimMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.Id, UserClaimDomainMatcher.IsUserClaimInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -87,7 +81,6 @@ public static class UserClaimMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.Id, cancellationToken)
 				.ReturnsTaskResponse(user);
 		}
@@ -98,7 +91,6 @@ public static class UserClaimMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.Id, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -108,7 +100,6 @@ public static class UserClaimMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.ExistsByIdAsync(command.Id.Id, cancellationToken)
 				.ReturnsTaskResponse(true);
 		}
@@ -118,7 +109,6 @@ public static class UserClaimMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.ExistsByIdAsync(command.Id.Id, cancellationToken)
 				.ReturnsTaskResponse(false);
 		}
@@ -132,7 +122,6 @@ public static class UserClaimMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(query.Filter.Id, query.Current, cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(query));
 		}
@@ -143,7 +132,6 @@ public static class UserClaimMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(query.Filter.Id, query.Current, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -157,7 +145,6 @@ public static class UserClaimMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetAllAsync(query.Filter, query.Current, query.Sorting, query.Pagination, cancellationToken)
 				.ReturnsTaskResponse(userClaims.ToResponse(query));
 		}
@@ -168,7 +155,6 @@ public static class UserClaimMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetTotalCountAsync(query.Filter, cancellationToken)
 				.ReturnsTaskResponse(userClaims.ToTotalCountResponse(query));
 		}

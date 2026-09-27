@@ -1,6 +1,5 @@
 using InstaConnect.Common.Domain.Features.DateTimes.Abstractions;
 using InstaConnect.Common.Domain.Features.Guids.Abstractions;
-using InstaConnect.Identity.Domain.Features.Common.Helpers;
 
 namespace InstaConnect.Identity.Domain.Tests.Features.Users.Utilities;
 
@@ -13,7 +12,6 @@ public static class UserMockSetups
 			User user)
 		{
 			factory
-				.ClearCalls()
 				.Create(
 					command.Name,
 					command.FirstName,
@@ -24,25 +22,11 @@ public static class UserMockSetups
 		}
 	}
 
-	extension(IPasswordHasher passwordHasher)
-	{
-		public void SetupHash(
-			User user,
-			string password)
-		{
-			passwordHasher
-				.ClearCalls()
-				.Hash(password)
-				.ReturnsResponse(user.PasswordHash);
-		}
-	}
-
 	extension(IGuidProvider guidProvider)
 	{
 		public void SetupNewStringGuid(User user)
 		{
 			guidProvider
-				.ClearCalls()
 				.NewStringGuid()
 				.ReturnsResponse(user.Id.Id);
 		}
@@ -53,7 +37,6 @@ public static class UserMockSetups
 		public void SetupGetOffsetUtcNow(User user)
 		{
 			dateTimeProvider
-				.ClearCalls()
 				.GetOffsetUtcNow()
 				.ReturnsResponse(user.CreatedAtUtc);
 		}
@@ -63,7 +46,6 @@ public static class UserMockSetups
 			User user)
 		{
 			dateTimeProvider
-				.ClearCalls()
 				.GetOffsetUtcNow()
 				.ReturnsResponse(user.UpdatedAtUtc);
 		}
@@ -76,7 +58,6 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.IsEmailUniqueAsync(command.Email, cancellationToken)
 				.ReturnsTaskResponse(true);
 		}
@@ -86,7 +67,6 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.IsEmailUniqueAsync(command.Email, cancellationToken)
 				.ReturnsTaskResponse(true);
 		}
@@ -96,7 +76,6 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.IsEmailUniqueAsync(command.Email, cancellationToken)
 				.ReturnsTaskResponse(false);
 		}
@@ -106,7 +85,6 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.IsEmailUniqueAsync(command.Email, cancellationToken)
 				.ReturnsTaskResponse(false);
 		}
@@ -116,7 +94,6 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.IsNameUniqueAsync(command.Name, cancellationToken)
 				.ReturnsTaskResponse(true);
 		}
@@ -126,7 +103,6 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.IsNameUniqueAsync(command.Name, cancellationToken)
 				.ReturnsTaskResponse(true);
 		}
@@ -136,7 +112,6 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.IsNameUniqueAsync(command.Name, cancellationToken)
 				.ReturnsTaskResponse(false);
 		}
@@ -146,7 +121,6 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.IsNameUniqueAsync(command.Name, cancellationToken)
 				.ReturnsTaskResponse(false);
 		}
@@ -158,7 +132,6 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.Id, UserDomainMatcher.IsUserInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(user);
 		}
@@ -169,7 +142,6 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.Id, cancellationToken)
 				.ReturnsTaskResponse(user);
 		}
@@ -181,7 +153,6 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.Id, UserDomainMatcher.IsUserInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -192,7 +163,6 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.Id, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -206,7 +176,6 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetAllAsync(query.Filter, query.Current, query.Sorting, query.Pagination, cancellationToken)
 				.ReturnsTaskResponse(users.ToResponse(query));
 		}
@@ -217,7 +186,6 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetTotalCountAsync(query.Filter, cancellationToken)
 				.ReturnsTaskResponse(users.ToTotalCountResponse(query));
 		}
@@ -228,7 +196,6 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(query.Id, query.Current, cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(query));
 		}
@@ -239,7 +206,6 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(query.Id, query.Current, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -252,7 +218,6 @@ public static class UserMockSetups
 			EmailConfirmationToken emailConfirmationToken)
 		{
 			factory
-				.ClearCalls()
 				.Create(emailConfirmationToken.Id.Id)
 				.ReturnsResponse(emailConfirmationToken.To(command));
 		}

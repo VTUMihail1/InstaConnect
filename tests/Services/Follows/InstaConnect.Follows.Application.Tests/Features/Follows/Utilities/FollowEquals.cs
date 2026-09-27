@@ -301,21 +301,35 @@ public static class FollowEquals
 	{
 		public bool Matches(AddFollowCommandRequest request)
 		{
-			return follow.Id.Matches(request.FollowerId, request.FollowingId);
+			return follow.Id.Matches(request.FollowerId, request.FollowingId) &&
+				   follow.CreatedAtUtc != default;
 		}
 
 		public bool MatchesFilter(GetAllFollowsQueryRequest request)
 		{
 			return follow.Id.FollowerId.Matches(request.FollowerId) &&
-				   follow.Following != null &&
-				   follow.Following.Name.Value.StartsWithOrdinalIgnoreCase(request.FollowingName);
+				   follow.Following.MatchesFilter(request);
 		}
 
 		public bool MatchesFilter(GetAllFollowsForFollowingQueryRequest request)
 		{
 			return follow.Id.FollowingId.Matches(request.FollowingId) &&
-				   follow.Follower != null &&
-				   follow.Follower.Name.Value.StartsWithOrdinalIgnoreCase(request.FollowerName);
+				   follow.Follower.MatchesFilter(request);
+		}
+	}
+
+	extension(User? u)
+	{
+		public bool MatchesFilter(GetAllFollowsQueryRequest request)
+		{
+			return u != null &&
+				   u.Name.Value.StartsWithOrdinalIgnoreCase(request.FollowingName);
+		}
+
+		public bool MatchesFilter(GetAllFollowsForFollowingQueryRequest request)
+		{
+			return u != null &&
+				   u.Name.Value.StartsWithOrdinalIgnoreCase(request.FollowerName);
 		}
 	}
 

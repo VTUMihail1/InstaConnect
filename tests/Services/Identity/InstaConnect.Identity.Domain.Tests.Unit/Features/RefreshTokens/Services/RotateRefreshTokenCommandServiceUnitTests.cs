@@ -128,7 +128,7 @@ public class RotateRefreshTokenCommandServiceUnitTests : BaseRefreshTokenDomainC
 		await _service.RotateAsync(_command, CancellationToken);
 
 		// Assert
-		await RefreshTokenRepository.ShouldReceiveOneDeleteAsync(_command, RefreshToken, CancellationToken);
+		await RefreshTokenRepository.ShouldReceiveOneDeleteAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -148,7 +148,7 @@ public class RotateRefreshTokenCommandServiceUnitTests : BaseRefreshTokenDomainC
 		await _service.RotateAsync(_command, CancellationToken);
 
 		// Assert
-		await RefreshTokenRepository.ShouldReceiveOneAddAsync(_command, _refreshToken, CancellationToken);
+		await RefreshTokenRepository.ShouldReceiveOneAddAsync(_command, CancellationToken);
 	}
 
 	[Fact]

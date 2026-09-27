@@ -13,5 +13,7 @@ public abstract class BaseUserApplicationQueryUnitTest : BaseUserTest
 	{
 		Mapper = MockFactory.CreateMapper(IdentityApplicationReference.Assembly);
 		Service = UserApplicationMockFactory.CreateQueryService();
+
+		PasswordHasher.ClearCalls();
 	}
 }

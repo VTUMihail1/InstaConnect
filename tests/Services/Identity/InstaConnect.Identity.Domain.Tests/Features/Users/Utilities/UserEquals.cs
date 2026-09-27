@@ -25,11 +25,16 @@ public static class UserEquals
 	{
 		public bool Matches(AddUserCommand command)
 		{
-			return user.Name.Matches(command.Name) &&
+			return user.Id.Id.IsNotNullOrEmptyOrWhiteSpace() &&
+				   user.Name.Matches(command.Name) &&
 				   user.Email.Matches(command.Email) &&
 				   user.FirstName == command.FirstName &&
 				   user.LastName == command.LastName &&
-				   user.ProfileImage.Matches(command.ProfileImage?.GetUrl());
+				   user.ProfileImage.Matches(command.ProfileImage?.GetUrl()) &&
+				   user.PasswordHash.IsNotNullOrEmptyOrWhiteSpace() &&
+				   user.IsEmailNotConfirmed &&
+				   user.CreatedAtUtc != default &&
+				   user.UpdatedAtUtc != default;
 		}
 
 		public bool Matches(UpdateUserCommand command)
@@ -39,19 +44,31 @@ public static class UserEquals
 				   user.Email.Matches(command.Email) &&
 				   user.FirstName == command.FirstName &&
 				   user.LastName == command.LastName &&
-				   (command.ProfileImage == null || user.ProfileImage.Matches(command.ProfileImage.GetUrl()));
+				   (command.ProfileImage == null || user.ProfileImage.Matches(command.ProfileImage.GetUrl())) &&
+				   user.PasswordHash.IsNotNullOrEmptyOrWhiteSpace() &&
+				   user.CreatedAtUtc != default &&
+				   user.UpdatedAtUtc != default;
 		}
 
 		public bool Matches(DeleteUserCommand command)
 		{
-			return user.Id.Matches(command.Id);
+			return user.Id.Matches(command.Id) &&
+				   user.Name.Value.IsNotNullOrEmptyOrWhiteSpace() &&
+				   user.Email.Value.IsNotNullOrEmptyOrWhiteSpace() &&
+				   user.FirstName.IsNotNullOrEmptyOrWhiteSpace() &&
+				   user.LastName.IsNotNullOrEmptyOrWhiteSpace() &&
+				   (user.ProfileImage == null || user.ProfileImage.Url.IsNotNullOrEmptyOrWhiteSpace()) &&
+				   user.PasswordHash.IsNotNullOrEmptyOrWhiteSpace() &&
+				   user.IsEmailConfirmed &&
+				   user.CreatedAtUtc != default &&
+				   user.UpdatedAtUtc != default;
 		}
 
-		public bool MatchesFilter(GetAllUsersQuery query)
+		public bool MatchesFilter(UsersFilterQuery query)
 		{
-			return user.Name.Value.StartsWithOrdinalIgnoreCase(query.Filter.Name.Value) &&
-				   user.FirstName.StartsWithOrdinalIgnoreCase(query.Filter.FirstName) &&
-				   user.LastName.StartsWithOrdinalIgnoreCase(query.Filter.LastName);
+			return user.Name.Value.StartsWithOrdinalIgnoreCase(query.Name.Value) &&
+				   user.FirstName.StartsWithOrdinalIgnoreCase(query.FirstName) &&
+				   user.LastName.StartsWithOrdinalIgnoreCase(query.LastName);
 		}
 	}
 
@@ -91,13 +108,13 @@ public static class UserEquals
 			GetAllUsersQuery query,
 			ICollection<User> users)
 		{
-			return response.MatchesCollectionResponse(query.Pagination, users.Count(user => user.MatchesFilter(query))) &&
+			return response.MatchesCollectionResponse(query.Pagination, users.Count(user => user.MatchesFilter(query.Filter))) &&
 				   response.Users.MatchesCollection(query.Pagination,
 													users,
 													response => response.Id,
 													user => user.Id,
 													(response, user) => response.MatchesFull(user),
-													user => user.MatchesFilter(query));
+													user => user.MatchesFilter(query.Filter));
 		}
 
 		public bool Matches(
@@ -105,12 +122,12 @@ public static class UserEquals
 			ICollection<User> users,
 			ISortEnumTermTransformer<User> termTransformer)
 		{
-			return response.MatchesCollectionResponse(query.Pagination, users.Count(user => user.MatchesFilter(query))) &&
+			return response.MatchesCollectionResponse(query.Pagination, users.Count(user => user.MatchesFilter(query.Filter))) &&
 				   response.Users.MatchesSortedCollection(query.Pagination,
 														  users,
 														  (response, user) => response.MatchesFull(user),
 														  termTransformer,
-														  user => user.MatchesFilter(query));
+														  user => user.MatchesFilter(query.Filter));
 		}
 	}
 
@@ -184,7 +201,10 @@ public static class UserEquals
 	{
 		public bool Matches(AddUserCommand command)
 		{
-			return emailConfirmationToken.User!.Name.Matches(command.Name);
+			return emailConfirmationToken.Id.Id.Id.IsNotNullOrEmptyOrWhiteSpace() &&
+				   emailConfirmationToken.Id.Value.IsNotNullOrEmptyOrWhiteSpace() &&
+				   emailConfirmationToken.CreatedAtUtc != default &&
+				   emailConfirmationToken.ExpiresAtUtc != default;
 		}
 	}
 

@@ -37,7 +37,7 @@ public abstract class BaseForgotPasswordTokenDomainCommandUnitTest : BaseForgotP
 
 	protected IForgotPasswordTokenCommandRepository ForgotPasswordTokenRepository { get; }
 
-	protected BaseForgotPasswordTokenDomainCommandUnitTest() : base(UserDomainMockFactory.CreatePasswordHasher())
+	protected BaseForgotPasswordTokenDomainCommandUnitTest() : base(IdentityMockFactory.CreatePasswordHasher())
 	{
 		Mapper = MockFactory.CreateMapper(IdentityDomainReference.Assembly);
 		GuidProvider = DomainMockFactory.CreateGuidProvider();
@@ -49,5 +49,7 @@ public abstract class BaseForgotPasswordTokenDomainCommandUnitTest : BaseForgotP
 		EmailSender = ForgotPasswordTokenDomainMockFactory.CreateEmailSender();
 		ForgotPasswordTokenOptions = ForgotPasswordTokenDomainMockFactory.CreateOptions();
 		ForgotPasswordTokenRepository = ForgotPasswordTokenDomainMockFactory.CreateCommandRepository();
+
+		PasswordHasher.ClearCalls();
 	}
 }

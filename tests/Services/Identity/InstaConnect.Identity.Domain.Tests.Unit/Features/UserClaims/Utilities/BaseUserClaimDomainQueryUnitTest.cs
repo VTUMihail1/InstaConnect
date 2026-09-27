@@ -14,10 +14,12 @@ public abstract class BaseUserClaimDomainQueryUnitTest : BaseUserClaimTest
 
 	protected IUserClaimCollectionResponseFactory CollectionResponseFactory { get; }
 
-	protected BaseUserClaimDomainQueryUnitTest() : base(UserDomainMockFactory.CreatePasswordHasher())
+	protected BaseUserClaimDomainQueryUnitTest() : base(IdentityMockFactory.CreatePasswordHasher())
 	{
 		Repository = UserDomainMockFactory.CreateQueryRepository();
 		ClaimRepository = UserClaimDomainMockFactory.CreateQueryRepository();
 		CollectionResponseFactory = UserClaimDomainMockFactory.CreateCollectionResponseFactory();
+
+		PasswordHasher.ClearCalls();
 	}
 }

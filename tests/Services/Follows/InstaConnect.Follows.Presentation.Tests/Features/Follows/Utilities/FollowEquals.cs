@@ -303,21 +303,35 @@ public static class FollowEquals
 	{
 		public bool Matches(AddFollowApiRequest request)
 		{
-			return follow.Id.Matches(request.FollowerId, request.Body.FollowingId);
+			return follow.Id.Matches(request.FollowerId, request.Body.FollowingId) &&
+				   follow.CreatedAtUtc != default;
 		}
 
 		public bool MatchesFilter(GetAllFollowsApiRequest request)
 		{
 			return follow.Id.FollowerId.Matches(request.FollowerId) &&
-				   follow.Following != null &&
-				   follow.Following.Name.Value.StartsWithOrdinalIgnoreCase(request.FollowingName);
+				   follow.Following.MatchesFilter(request);
 		}
 
 		public bool MatchesFilter(GetAllFollowsForFollowingApiRequest request)
 		{
 			return follow.Id.FollowingId.Matches(request.FollowingId) &&
-				   follow.Follower != null &&
-				   follow.Follower.Name.Value.StartsWithOrdinalIgnoreCase(request.FollowerName);
+				   follow.Follower.MatchesFilter(request);
+		}
+	}
+
+	extension(User? u)
+	{
+		public bool MatchesFilter(GetAllFollowsApiRequest request)
+		{
+			return u != null &&
+				   u.Name.Value.StartsWithOrdinalIgnoreCase(request.FollowingName);
+		}
+
+		public bool MatchesFilter(GetAllFollowsForFollowingApiRequest request)
+		{
+			return u != null &&
+				   u.Name.Value.StartsWithOrdinalIgnoreCase(request.FollowerName);
 		}
 	}
 

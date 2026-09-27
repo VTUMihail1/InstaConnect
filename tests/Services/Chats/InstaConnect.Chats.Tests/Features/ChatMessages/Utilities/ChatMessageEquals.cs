@@ -1,4 +1,5 @@
 using InstaConnect.Chats.Domain.Features.ChatMessages.Models.ValueObjects;
+using InstaConnect.Chats.Domain.Features.Chats.Models.ValueObjects;
 using InstaConnect.Chats.Tests.Features.Chats.Utilities;
 using InstaConnect.Chats.Tests.Features.Users.Utilities;
 using InstaConnect.Common.Domain.Features.Common.Extensions;
@@ -22,7 +23,12 @@ public static class ChatMessageEquals
 	{
 		public bool Matches(ChatMessageId id)
 		{
-			return p.Matches(id.Id.ParticipantOneId.Id, id.Id.ParticipantTwoId.Id, id.MessageId);
+			return p.Matches(id.Id, id.MessageId);
+		}
+
+		public bool Matches(ChatId id, string messageId)
+		{
+			return p.Matches(id.ParticipantOneId.Id, id.ParticipantTwoId.Id, messageId);
 		}
 
 		public bool Matches(string participantOneId, string participantTwoId, string messageId)

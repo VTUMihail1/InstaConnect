@@ -37,7 +37,7 @@ public abstract class BaseUserDomainCommandUnitTest : BaseUserTest
 
 	protected IEmailConfirmationTokenCommandRepository EmailConfirmationTokenRepository { get; }
 
-	protected BaseUserDomainCommandUnitTest() : base(UserDomainMockFactory.CreatePasswordHasher())
+	protected BaseUserDomainCommandUnitTest() : base(IdentityMockFactory.CreatePasswordHasher())
 	{
 		Factory = UserDomainMockFactory.CreateFactory();
 		Mapper = MockFactory.CreateMapper(IdentityDomainReference.Assembly);
@@ -50,5 +50,7 @@ public abstract class BaseUserDomainCommandUnitTest : BaseUserTest
 		EmailConfirmationTokenFactory = EmailConfirmationTokenDomainMockFactory.CreateFactory();
 		EmailConfirmationTokenEmailSender = EmailConfirmationTokenDomainMockFactory.CreateEmailSender();
 		EmailConfirmationTokenRepository = EmailConfirmationTokenDomainMockFactory.CreateCommandRepository();
+
+		PasswordHasher.ClearCalls();
 	}
 }

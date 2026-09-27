@@ -27,7 +27,7 @@ public abstract class BaseUserClaimDomainCommandUnitTest : BaseUserClaimTest
 
 	protected IUserClaimIncludeBuilderFactory IncludeBuilderFactory { get; }
 
-	protected BaseUserClaimDomainCommandUnitTest() : base(UserDomainMockFactory.CreatePasswordHasher())
+	protected BaseUserClaimDomainCommandUnitTest() : base(IdentityMockFactory.CreatePasswordHasher())
 	{
 		Factory = UserClaimDomainMockFactory.CreateFactory();
 		Mapper = MockFactory.CreateMapper(IdentityDomainReference.Assembly);
@@ -36,5 +36,7 @@ public abstract class BaseUserClaimDomainCommandUnitTest : BaseUserClaimTest
 		DateTimeProvider = DomainMockFactory.CreateDateTimeProvider();
 		ClaimRepository = UserClaimDomainMockFactory.CreateCommandRepository();
 		IncludeBuilderFactory = UserClaimDomainMockFactory.CreateIncludeBuilderFactory();
+
+		PasswordHasher.ClearCalls();
 	}
 }

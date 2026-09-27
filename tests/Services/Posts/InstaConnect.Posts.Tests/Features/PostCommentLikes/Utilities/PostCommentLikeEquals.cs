@@ -1,4 +1,6 @@
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.ValueObjects;
+using InstaConnect.Posts.Domain.Features.PostComments.Models.ValueObjects;
+using InstaConnect.Posts.Domain.Features.Users.Models.ValueObjects;
 using InstaConnect.Posts.Tests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Tests.Features.Posts.Utilities;
 using InstaConnect.Posts.Tests.Features.Users.Utilities;
@@ -20,8 +22,14 @@ public static class PostCommentLikeEquals
 	{
 		public bool Matches(PostCommentLikeId id)
 		{
-			return p.Matches(id.CommentId.Id.Id, id.CommentId.CommentId, id.UserId.Id);
+			return p.Matches(id.CommentId, id.UserId);
 		}
+
+		public bool Matches(PostCommentId id, UserId userId)
+		{
+			return p.Matches(id.Id.Id, id.CommentId, userId.Id);
+		}
+
 		public bool Matches(string id, string commentId, string userId)
 		{
 			return p.CommentId.Matches(id, commentId) &&

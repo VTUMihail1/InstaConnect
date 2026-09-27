@@ -18,5 +18,7 @@ public abstract class BaseRefreshTokenPresentationCommandUnitTest : BaseRefreshT
 		Sender = MockFactory.CreateApplicationSender();
 		Mapper = MockFactory.CreateMapper(IdentityPresentationReference.Assembly);
 		CookieStore = RefreshTokenPresentationMockFactory.CreateCookieStore();
+
+		PasswordHasher.ClearCalls();
 	}
 }

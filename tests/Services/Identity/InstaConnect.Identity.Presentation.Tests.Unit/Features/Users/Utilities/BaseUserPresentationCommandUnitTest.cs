@@ -14,5 +14,7 @@ public abstract class BaseUserPresentationCommandUnitTest : BaseUserTest
 	{
 		Sender = MockFactory.CreateApplicationSender();
 		Mapper = MockFactory.CreateMapper(IdentityPresentationReference.Assembly);
+
+		PasswordHasher.ClearCalls();
 	}
 }

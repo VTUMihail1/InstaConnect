@@ -12,7 +12,6 @@ public static class UserMockSetups
 		CancellationToken cancellationToken)
 		{
 			sender
-				.ClearCalls()
 				.SendAsync(UserPresentationMatcher.IsGetAllUsersQueryRequest(request), cancellationToken)
 				.ReturnsTaskResponse(users.ToResponse(request));
 		}
@@ -23,7 +22,6 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			sender
-				.ClearCalls()
 				.SendAsync(UserPresentationMatcher.IsGetUserByIdQueryRequest(request), cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(request));
 		}
@@ -34,7 +32,6 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			sender
-				.ClearCalls()
 				.SendAsync(UserPresentationMatcher.IsGetUserDetailsByIdQueryRequest(request), cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(request));
 		}
@@ -45,7 +42,6 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			sender
-				.ClearCalls()
 				.SendAsync(UserPresentationMatcher.IsGetCurrentUserByIdQueryRequest(request), cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(request));
 		}
@@ -56,7 +52,6 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			sender
-				.ClearCalls()
 				.SendAsync(UserPresentationMatcher.IsGetCurrentUserDetailsByIdQueryRequest(request), cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(request));
 		}
@@ -67,7 +62,6 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			sender
-				.ClearCalls()
 				.SendAsync(UserPresentationMatcher.IsAddUserCommandRequest(request), cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(request));
 		}
@@ -78,7 +72,6 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			sender
-				.ClearCalls()
 				.SendAsync(UserPresentationMatcher.IsUpdateCurrentUserCommandRequest(request), cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(request));
 		}

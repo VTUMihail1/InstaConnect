@@ -262,13 +262,16 @@ public static class UserEquals
 	{
 		public bool Matches(AddUserCommandRequest request, IPasswordHasher passwordHasher)
 		{
-			return user.FirstName == request.FirstName &&
+			return user.Id.Id.IsNotNullOrEmptyOrWhiteSpace() &&
+				   user.FirstName == request.FirstName &&
 				   user.LastName == request.LastName &&
 				   user.Name.Matches(request.Name) &&
 				   user.Email.Matches(request.Email) &&
+				   user.ProfileImage.Matches(request.ProfileImage?.GetUrl()) &&
 				   passwordHasher.IsMatch(request.Password, user.PasswordHash) &&
 				   user.IsEmailNotConfirmed &&
-				   user.ProfileImage.Matches(request.ProfileImage?.GetUrl());
+				   user.CreatedAtUtc != default &&
+				   user.UpdatedAtUtc != default;
 		}
 
 		public bool Matches(UpdateCurrentUserCommandRequest request)
@@ -278,7 +281,10 @@ public static class UserEquals
 				   user.LastName == request.LastName &&
 				   user.Name.Matches(request.Name) &&
 				   user.Email.Matches(request.Email) &&
-				   (request.ProfileImage == null || user.ProfileImage.Matches(request.ProfileImage.GetUrl()));
+				   (request.ProfileImage == null || user.ProfileImage.Matches(request.ProfileImage.GetUrl())) &&
+				   user.PasswordHash.IsNotNullOrEmptyOrWhiteSpace() &&
+				   user.CreatedAtUtc != default &&
+				   user.UpdatedAtUtc != default;
 		}
 
 		public bool MatchesFilter(GetAllUsersQueryRequest request)
@@ -370,7 +376,10 @@ public static class UserEquals
 	{
 		public bool Matches(AddUserCommandRequest request)
 		{
-			return emailConfirmationToken.User!.Name.Matches(request.Name);
+			return emailConfirmationToken.Id.Id.Id.IsNotNullOrEmptyOrWhiteSpace() &&
+				   emailConfirmationToken.Id.Value.IsNotNullOrEmptyOrWhiteSpace() &&
+				   emailConfirmationToken.CreatedAtUtc != default &&
+				   emailConfirmationToken.ExpiresAtUtc != default;
 		}
 	}
 

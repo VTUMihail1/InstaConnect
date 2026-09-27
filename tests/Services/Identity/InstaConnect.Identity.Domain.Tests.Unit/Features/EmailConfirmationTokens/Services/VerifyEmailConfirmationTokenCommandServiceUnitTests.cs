@@ -119,7 +119,7 @@ public class VerifyEmailConfirmationTokenCommandServiceUnitTests : BaseEmailConf
 		await _service.VerifyAsync(_command, CancellationToken);
 
 		// Assert
-		await EmailConfirmationTokenRepository.ShouldReceiveOneDeleteRangeAsync(_command, User, CancellationToken);
+		await EmailConfirmationTokenRepository.ShouldReceiveOneDeleteRangeAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -139,6 +139,6 @@ public class VerifyEmailConfirmationTokenCommandServiceUnitTests : BaseEmailConf
 		await _service.VerifyAsync(_command, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneUpdateAsync(_command, User, CancellationToken);
+		await Repository.ShouldReceiveOneUpdateAsync(_command, CancellationToken);
 	}
 }

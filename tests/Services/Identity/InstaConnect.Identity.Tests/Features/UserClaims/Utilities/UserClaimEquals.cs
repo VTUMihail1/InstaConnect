@@ -1,5 +1,6 @@
 using InstaConnect.Common.Events.Features.AccessTokens.Models;
 using InstaConnect.Identity.Domain.Features.UserClaims.Models.ValueObjects;
+using InstaConnect.Identity.Domain.Features.Users.Models.ValueObjects;
 using InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.Utilities;
 using InstaConnect.Identity.Tests.Features.UserClaims.Utilities;
 using InstaConnect.Identity.Tests.Features.Users.Utilities;
@@ -21,7 +22,12 @@ public static class UserClaimEquals
 	{
 		public bool Matches(UserClaimId id)
 		{
-			return p.Matches(id.Id.Id, id.Claim);
+			return p.Matches(id.Id, id.Claim);
+		}
+
+		public bool Matches(UserId id, ApplicationClaims claim)
+		{
+			return p.Matches(id.Id, claim);
 		}
 
 		public bool Matches(string id, ApplicationClaims claim)

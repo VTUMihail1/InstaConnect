@@ -14,5 +14,7 @@ public abstract class BaseEmailConfirmationTokenPresentationCommandUnitTest : Ba
 	{
 		Sender = MockFactory.CreateApplicationSender();
 		Mapper = MockFactory.CreateMapper(IdentityPresentationReference.Assembly);
+
+		PasswordHasher.ClearCalls();
 	}
 }

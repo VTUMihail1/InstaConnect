@@ -1,3 +1,4 @@
+using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Follows.Domain.Features.Users.Models.Responses;
 using InstaConnect.Follows.Domain.Tests.Features.Users.Utilities;
 
@@ -44,12 +45,20 @@ public static class UserEquals
 				   u.Name.Matches(command.Name) &&
 				   u.Email.Matches(command.Email) &&
 				   u.ProfileImage.Matches(command.ProfileImage) &&
+				   u.CreatedAtUtc != default &&
 				   u.UpdatedAtUtc == command.UpdatedAtUtc;
 		}
 
 		public bool Matches(DeleteUserCommand command)
 		{
-			return u.Id.Matches(command.Id);
+			return u.Id.Matches(command.Id) &&
+				   u.Name.Value.IsNotNullOrEmptyOrWhiteSpace() &&
+				   u.Email.Value.IsNotNullOrEmptyOrWhiteSpace() &&
+				   u.FirstName.IsNotNullOrEmptyOrWhiteSpace() &&
+				   u.LastName.IsNotNullOrEmptyOrWhiteSpace() &&
+				   (u.ProfileImage == null || u.ProfileImage.Url.IsNotNullOrEmptyOrWhiteSpace()) &&
+				   u.CreatedAtUtc != default &&
+				   u.UpdatedAtUtc != default;
 		}
 	}
 

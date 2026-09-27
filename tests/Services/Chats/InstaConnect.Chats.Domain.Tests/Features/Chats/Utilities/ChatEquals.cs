@@ -73,17 +73,25 @@ public static class ChatEquals
 	{
 		public bool Matches(AddChatCommand command)
 		{
-			return chat.Id.Matches(command.ParticipantOneId.Id, command.ParticipantTwoId.Id);
+			return chat.Id.Matches(command.ParticipantOneId, command.ParticipantTwoId) &&
+				   chat.CreatedAtUtc != default;
 		}
 
-		public bool MatchesFilter(ChatsFilterQuery filter)
+		public bool MatchesFilter(ChatsFilterQuery query)
 		{
-			return (chat.Id.ParticipantOneId.Matches(filter.ParticipantOneId) &&
-				   chat.ParticipantTwo != null &&
-				   chat.ParticipantTwo.Name.Value.StartsWithOrdinalIgnoreCase(filter.ParticipantTwoName.Value)) ||
-				   (chat.Id.ParticipantTwoId.Matches(filter.ParticipantOneId) &&
-				   chat.ParticipantOne != null &&
-				   chat.ParticipantOne.Name.Value.StartsWithOrdinalIgnoreCase(filter.ParticipantTwoName.Value));
+			return (chat.Id.ParticipantOneId.Matches(query.ParticipantOneId) &&
+				   chat.ParticipantTwo.MatchesFilter(query)) ||
+				   (chat.Id.ParticipantTwoId.Matches(query.ParticipantOneId) &&
+				   chat.ParticipantOne.MatchesFilter(query));
+		}
+	}
+
+	extension(User? u)
+	{
+		public bool MatchesFilter(ChatsFilterQuery query)
+		{
+			return u != null &&
+				   u.Name.Value.StartsWithOrdinalIgnoreCase(query.ParticipantTwoName.Value);
 		}
 	}
 
@@ -94,7 +102,7 @@ public static class ChatEquals
 		{
 			return response != null &&
 				   chat != null &&
-				   chat.Id.Matches(response.Id.ParticipantOneId.Id, response.Id.ParticipantTwoId.Id) &&
+				   chat.Id.Matches(response.Id) &&
 				   chat.CreatedAtUtc == response.CreatedAtUtc &&
 				   response.ParticipantOne.MatchesFull(chat.ParticipantOne) &&
 				   response.ParticipantTwo.MatchesFull(chat.ParticipantTwo);
@@ -105,7 +113,7 @@ public static class ChatEquals
 		{
 			return response != null &&
 				   chat != null &&
-				   chat.Id.Matches(response.Id.ParticipantTwoId.Id, response.Id.ParticipantOneId.Id) &&
+				   chat.Id.Matches(response.Id.ParticipantTwoId, response.Id.ParticipantOneId) &&
 				   chat.CreatedAtUtc == response.CreatedAtUtc &&
 				   response.ParticipantOne.MatchesFull(chat.ParticipantTwo) &&
 				   response.ParticipantTwo.MatchesFull(chat.ParticipantOne);
@@ -116,7 +124,7 @@ public static class ChatEquals
 		{
 			return response != null &&
 				   chat != null &&
-				   chat.Id.Matches(response.Id.ParticipantOneId.Id, response.Id.ParticipantTwoId.Id) &&
+				   chat.Id.Matches(response.Id) &&
 				   chat.CreatedAtUtc == response.CreatedAtUtc &&
 				   response.ParticipantOne == null &&
 				   response.ParticipantTwo.MatchesFull(chat.ParticipantTwo);
@@ -127,7 +135,7 @@ public static class ChatEquals
 		{
 			return response != null &&
 				   chat != null &&
-				   chat.Id.Matches(response.Id.ParticipantTwoId.Id, response.Id.ParticipantOneId.Id) &&
+				   chat.Id.Matches(response.Id.ParticipantTwoId, response.Id.ParticipantOneId) &&
 				   chat.CreatedAtUtc == response.CreatedAtUtc &&
 				   response.ParticipantOne == null &&
 				   response.ParticipantTwo.MatchesFull(chat.ParticipantOne);

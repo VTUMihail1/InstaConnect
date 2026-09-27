@@ -14,5 +14,7 @@ public abstract class BaseUserDomainQueryUnitTest : BaseUserTest
 	{
 		Repository = UserDomainMockFactory.CreateQueryRepository();
 		CollectionResponseFactory = UserDomainMockFactory.CreateCollectionResponseFactory();
+
+		PasswordHasher.ClearCalls();
 	}
 }

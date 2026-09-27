@@ -40,7 +40,6 @@ public class VerifyForgotPasswordTokenCommandServiceUnitTests : BaseForgotPasswo
 		Repository.SetupGetByIdAsync(_command, _include, User, CancellationToken);
 		ForgotPasswordTokenRepository.SetupGetByIdAsync(_command, ForgotPasswordToken, CancellationToken);
 		DateTimeProvider.SetupGetOffsetUtcNow(_command, UnexpiredDate);
-		PasswordHasher.SetupHash(_command, User);
 	}
 
 	[Fact]
@@ -110,7 +109,7 @@ public class VerifyForgotPasswordTokenCommandServiceUnitTests : BaseForgotPasswo
 		await _service.VerifyAsync(_command, CancellationToken);
 
 		// Assert
-		await ForgotPasswordTokenRepository.ShouldReceiveOneDeleteRangeAsync(_command, User, CancellationToken);
+		await ForgotPasswordTokenRepository.ShouldReceiveOneDeleteRangeAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -140,6 +139,6 @@ public class VerifyForgotPasswordTokenCommandServiceUnitTests : BaseForgotPasswo
 		await _service.VerifyAsync(_command, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneUpdateAsync(_command, User, CancellationToken);
+		await Repository.ShouldReceiveOneUpdateAsync(_command, PasswordHasher, CancellationToken);
 	}
 }

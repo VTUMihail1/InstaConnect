@@ -1,6 +1,5 @@
 using InstaConnect.Common.Domain.Features.DateTimes.Abstractions;
 using InstaConnect.Common.Domain.Features.Guids.Abstractions;
-using InstaConnect.Identity.Domain.Features.Common.Helpers;
 using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Options;
 
 using Microsoft.Extensions.Options;
@@ -14,7 +13,6 @@ public static class ForgotPasswordTokenMockSetups
 		public void SetupNewStringGuid(ForgotPasswordToken forgotPasswordToken)
 		{
 			guidProvider
-				.ClearCalls()
 				.NewStringGuid()
 				.ReturnsResponse(forgotPasswordToken.Id.Value);
 		}
@@ -25,7 +23,6 @@ public static class ForgotPasswordTokenMockSetups
 		public void SetupGetOffsetUtcNow(ForgotPasswordToken forgotPasswordToken)
 		{
 			dateTimeProvider
-				.ClearCalls()
 				.GetOffsetUtcNow()
 				.ReturnsResponse(forgotPasswordToken.CreatedAtUtc);
 		}
@@ -35,7 +32,6 @@ public static class ForgotPasswordTokenMockSetups
 			IOptions<ForgotPasswordTokenOptions> forgotPasswordTokenOptions)
 		{
 			dateTimeProvider
-				.ClearCalls()
 				.GetOffsetUtcNow(forgotPasswordTokenOptions.Value.LifetimeSeconds)
 				.ReturnsResponse(forgotPasswordToken.ExpiresAtUtc);
 		}
@@ -43,20 +39,8 @@ public static class ForgotPasswordTokenMockSetups
 		public void SetupGetOffsetUtcNow(VerifyForgotPasswordTokenCommand command, DateTimeOffset utcNow)
 		{
 			dateTimeProvider
-				.ClearCalls()
 				.GetOffsetUtcNow()
 				.ReturnsResponse(utcNow);
-		}
-	}
-
-	extension(IPasswordHasher passwordHasher)
-	{
-		public void SetupHash(VerifyForgotPasswordTokenCommand command, User user)
-		{
-			passwordHasher
-				.ClearCalls()
-				.Hash(command.Password)
-				.ReturnsResponse(user.PasswordHash);
 		}
 	}
 
@@ -65,7 +49,6 @@ public static class ForgotPasswordTokenMockSetups
 		public void SetupCreate(AddForgotPasswordTokenCommand command, ForgotPasswordToken forgotPasswordToken)
 		{
 			factory
-				.ClearCalls()
 				.Create(forgotPasswordToken.Id.Id)
 				.ReturnsResponse(forgotPasswordToken);
 		}
@@ -79,7 +62,6 @@ public static class ForgotPasswordTokenMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByNameAsync(command.Name, cancellationToken)
 				.ReturnsTaskResponse(user);
 		}
@@ -90,7 +72,6 @@ public static class ForgotPasswordTokenMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByNameAsync(command.Name, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -102,7 +83,6 @@ public static class ForgotPasswordTokenMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.Id.Id, ForgotPasswordTokenDomainMatcher.IsUserInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(user);
 		}
@@ -114,7 +94,6 @@ public static class ForgotPasswordTokenMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.Id.Id, ForgotPasswordTokenDomainMatcher.IsUserInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -128,7 +107,6 @@ public static class ForgotPasswordTokenMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.Id, cancellationToken)
 				.ReturnsTaskResponse(forgotPasswordToken);
 		}
@@ -139,7 +117,6 @@ public static class ForgotPasswordTokenMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.Id, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}

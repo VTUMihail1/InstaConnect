@@ -30,7 +30,7 @@ public abstract class BaseRefreshTokenDomainCommandUnitTest : BaseRefreshTokenTe
 
 	protected IRefreshTokenCommandRepository RefreshTokenRepository { get; }
 
-	protected BaseRefreshTokenDomainCommandUnitTest() : base(UserDomainMockFactory.CreatePasswordHasher())
+	protected BaseRefreshTokenDomainCommandUnitTest() : base(IdentityMockFactory.CreatePasswordHasher())
 	{
 		GuidProvider = DomainMockFactory.CreateGuidProvider();
 		Factory = RefreshTokenDomainMockFactory.CreateFactory();
@@ -40,5 +40,7 @@ public abstract class BaseRefreshTokenDomainCommandUnitTest : BaseRefreshTokenTe
 		IncludeBuilderFactory = UserDomainMockFactory.CreateIncludeBuilderFactory();
 		RefreshTokenOptions = RefreshTokenDomainMockFactory.CreateOptions();
 		RefreshTokenRepository = RefreshTokenDomainMockFactory.CreateCommandRepository();
+
+		PasswordHasher.ClearCalls();
 	}
 }

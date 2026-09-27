@@ -1,4 +1,4 @@
-using InstaConnect.Identity.Domain.Features.Common.Helpers;
+using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Models;
 using InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Utilities;
 using InstaConnect.Identity.Presentation.Tests.Features.Users.Utilities;
@@ -71,15 +71,19 @@ public static class RefreshTokenEquals
 
 	extension(RefreshToken refreshToken)
 	{
-		public bool Matches(IssueRefreshTokenApiRequest request, IPasswordHasher passwordHasher)
+		public bool Matches(IssueRefreshTokenApiRequest request)
 		{
-			return refreshToken.User!.Name.Matches(request.Name) &&
-				   passwordHasher.IsMatch(request.Body.Password, refreshToken.User.PasswordHash);
+			return refreshToken.Id.Id.Id.IsNotNullOrEmptyOrWhiteSpace() &&
+				   refreshToken.Id.Value.IsNotNullOrEmptyOrWhiteSpace() &&
+				   refreshToken.CreatedAtUtc != default &&
+				   refreshToken.ExpiresAtUtc != default;
 		}
 
 		public bool Matches(RotateRefreshTokenApiRequest request)
 		{
-			return refreshToken.Id.Matches(request.Id, request.Value);
+			return refreshToken.Id.Matches(request.Id, request.Value) &&
+				   refreshToken.CreatedAtUtc != default &&
+				   refreshToken.ExpiresAtUtc != default;
 		}
 	}
 

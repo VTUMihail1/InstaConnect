@@ -10,7 +10,6 @@ public static class PostMockSetups
 		public void SetupNewStringGuid(Post post)
 		{
 			guidProvider
-				.ClearCalls()
 				.NewStringGuid()
 				.ReturnsResponse(post.Id.Id);
 		}
@@ -21,7 +20,6 @@ public static class PostMockSetups
 		public void SetupGetOffsetUtcNow(Post post)
 		{
 			dateTimeProvider
-				.ClearCalls()
 				.GetOffsetUtcNow()
 				.ReturnsResponse(post.CreatedAtUtc);
 		}
@@ -34,7 +32,6 @@ public static class PostMockSetups
 			Post post)
 		{
 			factory
-				.ClearCalls()
 				.Create(
 					command.UserId,
 					command.Title,
@@ -51,7 +48,6 @@ public static class PostMockSetups
 		CancellationToken cancellationToken)
 		{
 			service
-				.ClearCalls()
 				.GetAllAsync(query.Filter, query.CurrentUser, query.Sorting, query.Pagination, cancellationToken)
 				.ReturnsTaskResponse(posts.ToResponse(query));
 		}
@@ -62,7 +58,6 @@ public static class PostMockSetups
 		CancellationToken cancellationToken)
 		{
 			service
-				.ClearCalls()
 				.GetTotalCountAsync(query.Filter, cancellationToken)
 				.ReturnsTaskResponse(posts.ToTotalCountResponse(query));
 		}
@@ -74,7 +69,6 @@ public static class PostMockSetups
 			CancellationToken cancellationToken)
 		{
 			service
-				.ClearCalls()
 				.GetAllForUserAsync(query.Filter, query.CurrentUser, query.Sorting, query.Pagination, cancellationToken)
 				.ReturnsTaskResponse(posts.ToResponse(query, user));
 		}
@@ -85,7 +79,6 @@ public static class PostMockSetups
 		CancellationToken cancellationToken)
 		{
 			service
-				.ClearCalls()
 				.GetTotalCountForUserAsync(query.Filter, cancellationToken)
 				.ReturnsTaskResponse(posts.ToTotalCountResponse(query));
 		}
@@ -96,7 +89,6 @@ public static class PostMockSetups
 			CancellationToken cancellationToken)
 		{
 			service
-				.ClearCalls()
 				.GetByIdAsync(query.Id, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(post.ToResponse(query));
 		}
@@ -107,7 +99,6 @@ public static class PostMockSetups
 			CancellationToken cancellationToken)
 		{
 			service
-				.ClearCalls()
 				.GetByIdAsync(query.Id, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -122,7 +113,6 @@ public static class PostMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.Id, PostDomainMatcher.IsPostInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(post);
 		}
@@ -134,7 +124,6 @@ public static class PostMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.Id, PostDomainMatcher.IsPostInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(post);
 		}
@@ -146,7 +135,6 @@ public static class PostMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.Id, PostDomainMatcher.IsPostInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -158,7 +146,6 @@ public static class PostMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.Id, PostDomainMatcher.IsPostInclude(command, include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -172,7 +159,6 @@ public static class PostMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(query.Filter.UserId, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(query));
 		}
@@ -183,7 +169,6 @@ public static class PostMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(query.Filter.UserId, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -197,7 +182,6 @@ public static class PostMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.UserId, cancellationToken)
 				.ReturnsTaskResponse(user);
 		}
@@ -208,7 +192,6 @@ public static class PostMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.ClearCalls()
 				.GetByIdAsync(command.UserId, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
@@ -220,7 +203,7 @@ public static class PostMockSetups
 			UpdatePostCommand command,
 			Post post)
 		{
-			dateTimeProvider.ClearCalls().GetOffsetUtcNow().ReturnsResponse(post.UpdatedAtUtc);
+			dateTimeProvider.GetOffsetUtcNow().ReturnsResponse(post.UpdatedAtUtc);
 		}
 	}
 }

@@ -120,24 +120,34 @@ public static class PostLikeEquals
 	{
 		public bool Matches(AddPostLikeCommand command)
 		{
-			return postLike.Id.Matches(command.Id.Id, command.UserId.Id);
+			return postLike.Id.Matches(command.Id, command.UserId) &&
+				   postLike.CreatedAtUtc != default;
 		}
 
 		public bool Matches(DeletePostLikeCommand command)
 		{
-			return postLike.Id.Matches(command.Id);
+			return postLike.Id.Matches(command.Id) &&
+				   postLike.CreatedAtUtc != default;
 		}
 
 		public bool MatchesFilter(PostLikesFilterQuery query)
 		{
 			return postLike.Id.Id.Matches(query.Id) &&
-				   postLike.User != null &&
-				   postLike.User.Name.Value.StartsWithOrdinalIgnoreCase(query.UserName.Value);
+				   postLike.User.MatchesFilter(query);
 		}
 
 		public bool MatchesFilter(PostLikesForUserFilterQuery query)
 		{
 			return postLike.Id.UserId.Matches(query.UserId);
+		}
+	}
+
+	extension(User? u)
+	{
+		public bool MatchesFilter(PostLikesFilterQuery query)
+		{
+			return u != null &&
+				   u.Name.Value.StartsWithOrdinalIgnoreCase(query.UserName.Value);
 		}
 	}
 
