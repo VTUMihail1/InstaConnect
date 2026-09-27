@@ -4,33 +4,39 @@ namespace InstaConnect.Posts.Domain.Tests.Features.PostCommentLikes.Utilities;
 
 public static class PostCommentLikeDomainMatcher
 {
-	public static PostCommentInclude IsPostCommentInclude(AddPostCommentLikeCommand command, PostCommentInclude include)
+	extension(AddPostCommentLikeCommand command)
 	{
-		return Matcher.Is<PostCommentInclude>(p => p.Matches(command, include));
+		public PostCommentInclude IsPostCommentInclude(PostCommentInclude include)
+		{
+			return Matcher.Is<PostCommentInclude>(p => p.Matches(command, include));
+		}
+
+		public PostCommentLike IsPostCommentLike()
+		{
+			return Matcher.Is<PostCommentLike>(p => p.Matches(command));
+		}
+
+		public PostCommentLikeAddedEventRequest IsPostCommentLikeAddedEventRequest(PostCommentLike postCommentLike)
+		{
+			return Matcher.Is<PostCommentLikeAddedEventRequest>(p => p.Matches(command, postCommentLike));
+		}
 	}
 
-	public static PostCommentLikeInclude IsPostCommentLikeInclude(DeletePostCommentLikeCommand command, PostCommentLikeInclude include)
+	extension(DeletePostCommentLikeCommand command)
 	{
-		return Matcher.Is<PostCommentLikeInclude>(p => p.Matches(command, include));
-	}
+		public PostCommentLikeInclude IsPostCommentLikeInclude(PostCommentLikeInclude include)
+		{
+			return Matcher.Is<PostCommentLikeInclude>(p => p.Matches(command, include));
+		}
 
-	public static PostCommentLike IsPostCommentLike(AddPostCommentLikeCommand command)
-	{
-		return Matcher.Is<PostCommentLike>(p => p.Matches(command));
-	}
+		public PostCommentLike IsPostCommentLike()
+		{
+			return Matcher.Is<PostCommentLike>(p => p.Matches(command));
+		}
 
-	public static PostCommentLike IsPostCommentLike(DeletePostCommentLikeCommand command)
-	{
-		return Matcher.Is<PostCommentLike>(p => p.Matches(command));
-	}
-
-	public static PostCommentLikeAddedEventRequest IsPostCommentLikeAddedEventRequest(AddPostCommentLikeCommand command, PostCommentLike postCommentLike)
-	{
-		return Matcher.Is<PostCommentLikeAddedEventRequest>(p => p.Matches(command, postCommentLike));
-	}
-
-	public static PostCommentLikeDeletedEventRequest IsPostCommentLikeDeletedEventRequest(DeletePostCommentLikeCommand command, PostCommentLike postCommentLike)
-	{
-		return Matcher.Is<PostCommentLikeDeletedEventRequest>(p => p.Matches(command, postCommentLike));
+		public PostCommentLikeDeletedEventRequest IsPostCommentLikeDeletedEventRequest(PostCommentLike postCommentLike)
+		{
+			return Matcher.Is<PostCommentLikeDeletedEventRequest>(p => p.Matches(command, postCommentLike));
+		}
 	}
 }

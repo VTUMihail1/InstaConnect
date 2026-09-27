@@ -10,7 +10,7 @@ public static class UserMockSetups
 		CancellationToken cancellationToken)
 		{
 			userService
-				.AddAsync(UserApplicationMatcher.IsAddUserCommand(request), cancellationToken)
+				.AddAsync(request.IsAddUserCommand(), cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(request));
 		}
 
@@ -20,7 +20,7 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			userService
-				.UpdateAsync(UserApplicationMatcher.IsUpdateUserCommand(request), cancellationToken)
+				.UpdateAsync(request.IsUpdateUserCommand(), cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(request));
 		}
 	}

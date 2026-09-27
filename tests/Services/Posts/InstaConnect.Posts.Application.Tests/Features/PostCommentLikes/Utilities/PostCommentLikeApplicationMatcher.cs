@@ -2,28 +2,43 @@ namespace InstaConnect.Posts.Application.Tests.Features.PostCommentLikes.Utiliti
 
 public static class PostCommentLikeApplicationMatcher
 {
-	public static GetAllPostCommentLikesQuery IsGetAllPostCommentLikesQuery(GetAllPostCommentLikesQueryRequest request)
+	extension(GetAllPostCommentLikesQueryRequest request)
 	{
-		return Matcher.Is<GetAllPostCommentLikesQuery>(p => p.Matches(request));
+		public GetAllPostCommentLikesQuery IsGetAllPostCommentLikesQuery()
+		{
+			return Matcher.Is<GetAllPostCommentLikesQuery>(p => p.Matches(request));
+		}
 	}
 
-	public static GetAllPostCommentLikesForUserQuery IsGetAllPostCommentLikesForUserQuery(GetAllPostCommentLikesForUserQueryRequest request)
+	extension(GetAllPostCommentLikesForUserQueryRequest request)
 	{
-		return Matcher.Is<GetAllPostCommentLikesForUserQuery>(p => p.Matches(request));
+		public GetAllPostCommentLikesForUserQuery IsGetAllPostCommentLikesForUserQuery()
+		{
+			return Matcher.Is<GetAllPostCommentLikesForUserQuery>(p => p.Matches(request));
+		}
 	}
 
-	public static GetPostCommentLikeByIdQuery IsGetPostCommentLikeByIdQuery(GetPostCommentLikeByIdQueryRequest request)
+	extension(GetPostCommentLikeByIdQueryRequest request)
 	{
-		return Matcher.Is<GetPostCommentLikeByIdQuery>(p => p.Matches(request));
+		public GetPostCommentLikeByIdQuery IsGetPostCommentLikeByIdQuery()
+		{
+			return Matcher.Is<GetPostCommentLikeByIdQuery>(p => p.Matches(request));
+		}
 	}
 
-	public static AddPostCommentLikeCommand IsAddPostCommentLikeCommand(AddPostCommentLikeCommandRequest request)
+	extension(AddPostCommentLikeCommandRequest request)
 	{
-		return Matcher.Is<AddPostCommentLikeCommand>(p => p.Matches(request));
+		public AddPostCommentLikeCommand IsAddPostCommentLikeCommand()
+		{
+			return Matcher.Is<AddPostCommentLikeCommand>(p => p.Matches(request));
+		}
 	}
 
-	public static DeletePostCommentLikeCommand IsDeletePostCommentLikeCommand(DeletePostCommentLikeCommandRequest request)
+	extension(DeletePostCommentLikeCommandRequest request)
 	{
-		return Matcher.Is<DeletePostCommentLikeCommand>(p => p.Matches(request));
+		public DeletePostCommentLikeCommand IsDeletePostCommentLikeCommand()
+		{
+			return Matcher.Is<DeletePostCommentLikeCommand>(p => p.Matches(request));
+		}
 	}
 }

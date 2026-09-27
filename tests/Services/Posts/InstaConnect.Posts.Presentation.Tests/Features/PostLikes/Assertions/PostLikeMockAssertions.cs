@@ -11,35 +11,35 @@ public static class PostLikeMockAssertions
 		GetAllPostLikesApiRequest request,
 		CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(PostLikePresentationMatcher.IsGetAllPostLikesQueryRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(request.IsGetAllPostLikesQueryRequest(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneSendAsync(
 			GetAllPostLikesForUserApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(PostLikePresentationMatcher.IsGetAllPostLikesForUserQueryRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(request.IsGetAllPostLikesForUserQueryRequest(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneSendAsync(
 			GetPostLikeByIdApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(PostLikePresentationMatcher.IsGetPostLikeByIdQueryRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(request.IsGetPostLikeByIdQueryRequest(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneSendAsync(
 			AddPostLikeApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(PostLikePresentationMatcher.IsAddPostLikeCommandRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(request.IsAddPostLikeCommandRequest(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneSendAsync(
 			DeletePostLikeApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(PostLikePresentationMatcher.IsDeletePostLikeCommandRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(request.IsDeletePostLikeCommandRequest(), cancellationToken);
 		}
 	}
 }

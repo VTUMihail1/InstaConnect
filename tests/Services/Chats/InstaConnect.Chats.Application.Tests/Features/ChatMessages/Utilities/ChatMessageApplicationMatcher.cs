@@ -2,28 +2,43 @@ namespace InstaConnect.Chats.Application.Tests.Features.ChatMessages.Utilities;
 
 public static class ChatMessageApplicationMatcher
 {
-	public static GetAllChatMessagesQuery IsGetAllChatMessagesQuery(GetAllChatMessagesQueryRequest request)
+	extension(GetAllChatMessagesQueryRequest request)
 	{
-		return Matcher.Is<GetAllChatMessagesQuery>(p => p.Matches(request));
+		public GetAllChatMessagesQuery IsGetAllChatMessagesQuery()
+		{
+			return Matcher.Is<GetAllChatMessagesQuery>(p => p.Matches(request));
+		}
 	}
 
-	public static GetChatMessageByIdQuery IsGetChatMessageByIdQuery(GetChatMessageByIdQueryRequest request)
+	extension(GetChatMessageByIdQueryRequest request)
 	{
-		return Matcher.Is<GetChatMessageByIdQuery>(p => p.Matches(request));
+		public GetChatMessageByIdQuery IsGetChatMessageByIdQuery()
+		{
+			return Matcher.Is<GetChatMessageByIdQuery>(p => p.Matches(request));
+		}
 	}
 
-	public static AddChatMessageCommand IsAddChatMessageCommand(AddChatMessageCommandRequest request)
+	extension(AddChatMessageCommandRequest request)
 	{
-		return Matcher.Is<AddChatMessageCommand>(p => p.Matches(request));
+		public AddChatMessageCommand IsAddChatMessageCommand()
+		{
+			return Matcher.Is<AddChatMessageCommand>(p => p.Matches(request));
+		}
 	}
 
-	public static UpdateChatMessageCommand IsUpdateChatMessageCommand(UpdateChatMessageCommandRequest request)
+	extension(UpdateChatMessageCommandRequest request)
 	{
-		return Matcher.Is<UpdateChatMessageCommand>(p => p.Matches(request));
+		public UpdateChatMessageCommand IsUpdateChatMessageCommand()
+		{
+			return Matcher.Is<UpdateChatMessageCommand>(p => p.Matches(request));
+		}
 	}
 
-	public static DeleteChatMessageCommand IsDeleteChatMessageCommand(DeleteChatMessageCommandRequest request)
+	extension(DeleteChatMessageCommandRequest request)
 	{
-		return Matcher.Is<DeleteChatMessageCommand>(p => p.Matches(request));
+		public DeleteChatMessageCommand IsDeleteChatMessageCommand()
+		{
+			return Matcher.Is<DeleteChatMessageCommand>(p => p.Matches(request));
+		}
 	}
 }

@@ -35,7 +35,7 @@ public static class UserClaimMockAssertions
 		{
 			await repository.ShouldHaveReceivedOne().GetByIdAsync(
 				command.Id,
-				UserClaimDomainMatcher.IsUserClaimInclude(command, include),
+				command.IsUserClaimInclude(include),
 				cancellationToken);
 		}
 
@@ -43,14 +43,14 @@ public static class UserClaimMockAssertions
 			AddUserClaimCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().AddAsync(UserClaimDomainMatcher.IsUserClaim(command), cancellationToken);
+			await repository.ShouldHaveReceivedOne().AddAsync(command.IsUserClaim(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneDeleteAsync(
 			DeleteUserClaimCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().DeleteAsync(UserClaimDomainMatcher.IsUserClaim(command), cancellationToken);
+			await repository.ShouldHaveReceivedOne().DeleteAsync(command.IsUserClaim(), cancellationToken);
 		}
 	}
 
@@ -119,7 +119,7 @@ public static class UserClaimMockAssertions
 			UserClaim userClaim,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(UserClaimDomainMatcher.IsUserClaimAddedEventRequest(command, userClaim), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(command.IsUserClaimAddedEventRequest(userClaim), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOnePublishAsync(
@@ -127,7 +127,7 @@ public static class UserClaimMockAssertions
 			UserClaim userClaim,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(UserClaimDomainMatcher.IsUserClaimDeletedEventRequest(command, userClaim), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(command.IsUserClaimDeletedEventRequest(userClaim), cancellationToken);
 		}
 	}
 }

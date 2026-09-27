@@ -2,28 +2,37 @@ namespace InstaConnect.Identity.Domain.Tests.Features.RefreshTokens.Utilities;
 
 public static class RefreshTokenDomainMatcher
 {
-	public static UserInclude IsUserInclude(IssueRefreshTokenCommand command, UserInclude include)
+	extension(IssueRefreshTokenCommand command)
 	{
-		return Matcher.Is<UserInclude>(p => p.Matches(command, include));
+		public UserInclude IsUserInclude(UserInclude include)
+		{
+			return Matcher.Is<UserInclude>(p => p.Matches(command, include));
+		}
+
+		public RefreshToken IsRefreshToken()
+		{
+			return Matcher.Is<RefreshToken>(p => p.Matches(command));
+		}
 	}
 
-	public static UserInclude IsUserInclude(RotateRefreshTokenCommand command, UserInclude include)
+	extension(RotateRefreshTokenCommand command)
 	{
-		return Matcher.Is<UserInclude>(p => p.Matches(command, include));
+		public UserInclude IsUserInclude(UserInclude include)
+		{
+			return Matcher.Is<UserInclude>(p => p.Matches(command, include));
+		}
+
+		public RefreshToken IsRefreshToken()
+		{
+			return Matcher.Is<RefreshToken>(p => p.Matches(command));
+		}
 	}
 
-	public static RefreshToken IsRefreshToken(IssueRefreshTokenCommand command)
+	extension(DeleteRefreshTokenCommand command)
 	{
-		return Matcher.Is<RefreshToken>(p => p.Matches(command));
-	}
-
-	public static RefreshToken IsRefreshToken(RotateRefreshTokenCommand command)
-	{
-		return Matcher.Is<RefreshToken>(p => p.Matches(command));
-	}
-
-	public static RefreshToken IsRefreshToken(DeleteRefreshTokenCommand command)
-	{
-		return Matcher.Is<RefreshToken>(p => p.Matches(command));
+		public RefreshToken IsRefreshToken()
+		{
+			return Matcher.Is<RefreshToken>(p => p.Matches(command));
+		}
 	}
 }

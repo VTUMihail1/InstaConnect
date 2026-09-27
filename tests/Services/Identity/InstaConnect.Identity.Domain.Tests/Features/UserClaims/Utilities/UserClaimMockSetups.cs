@@ -37,7 +37,7 @@ public static class UserClaimMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, UserClaimDomainMatcher.IsUserClaimInclude(command, include), cancellationToken)
+				.GetByIdAsync(command.Id, command.IsUserClaimInclude(include), cancellationToken)
 				.ReturnsTaskResponse(userClaim);
 		}
 
@@ -68,7 +68,7 @@ public static class UserClaimMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, UserClaimDomainMatcher.IsUserClaimInclude(command, include), cancellationToken)
+				.GetByIdAsync(command.Id, command.IsUserClaimInclude(include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 	}

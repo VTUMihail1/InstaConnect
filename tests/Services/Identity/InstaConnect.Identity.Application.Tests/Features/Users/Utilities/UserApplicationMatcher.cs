@@ -2,48 +2,75 @@ namespace InstaConnect.Identity.Application.Tests.Features.Users.Utilities;
 
 public static class UserApplicationMatcher
 {
-	public static GetAllUsersQuery IsGetAllUsersQuery(GetAllUsersQueryRequest request)
+	extension(GetAllUsersQueryRequest request)
 	{
-		return Matcher.Is<GetAllUsersQuery>(p => p.Matches(request));
+		public GetAllUsersQuery IsGetAllUsersQuery()
+		{
+			return Matcher.Is<GetAllUsersQuery>(p => p.Matches(request));
+		}
 	}
 
-	public static GetUserByIdQuery IsGetUserByIdQuery(GetUserByIdQueryRequest request)
+	extension(GetUserByIdQueryRequest request)
 	{
-		return Matcher.Is<GetUserByIdQuery>(p => p.Matches(request));
+		public GetUserByIdQuery IsGetUserByIdQuery()
+		{
+			return Matcher.Is<GetUserByIdQuery>(p => p.Matches(request));
+		}
 	}
 
-	public static GetUserByIdQuery IsGetUserByIdQuery(GetCurrentUserByIdQueryRequest request)
+	extension(GetCurrentUserByIdQueryRequest request)
 	{
-		return Matcher.Is<GetUserByIdQuery>(p => p.Matches(request));
+		public GetUserByIdQuery IsGetUserByIdQuery()
+		{
+			return Matcher.Is<GetUserByIdQuery>(p => p.Matches(request));
+		}
 	}
 
-	public static GetUserByIdQuery IsGetUserByIdQuery(GetUserDetailsByIdQueryRequest request)
+	extension(GetUserDetailsByIdQueryRequest request)
 	{
-		return Matcher.Is<GetUserByIdQuery>(p => p.Matches(request));
+		public GetUserByIdQuery IsGetUserByIdQuery()
+		{
+			return Matcher.Is<GetUserByIdQuery>(p => p.Matches(request));
+		}
 	}
 
-	public static GetUserByIdQuery IsGetUserByIdQuery(GetCurrentUserDetailsByIdQueryRequest request)
+	extension(GetCurrentUserDetailsByIdQueryRequest request)
 	{
-		return Matcher.Is<GetUserByIdQuery>(p => p.Matches(request));
+		public GetUserByIdQuery IsGetUserByIdQuery()
+		{
+			return Matcher.Is<GetUserByIdQuery>(p => p.Matches(request));
+		}
 	}
 
-	public static AddUserCommand IsAddUserCommand(AddUserCommandRequest request)
+	extension(AddUserCommandRequest request)
 	{
-		return Matcher.Is<AddUserCommand>(p => p.Matches(request));
+		public AddUserCommand IsAddUserCommand()
+		{
+			return Matcher.Is<AddUserCommand>(p => p.Matches(request));
+		}
 	}
 
-	public static UpdateUserCommand IsUpdateUserCommand(UpdateCurrentUserCommandRequest request)
+	extension(UpdateCurrentUserCommandRequest request)
 	{
-		return Matcher.Is<UpdateUserCommand>(p => p.Matches(request));
+		public UpdateUserCommand IsUpdateUserCommand()
+		{
+			return Matcher.Is<UpdateUserCommand>(p => p.Matches(request));
+		}
 	}
 
-	public static DeleteUserCommand IsDeleteUserCommand(DeleteUserCommandRequest request)
+	extension(DeleteUserCommandRequest request)
 	{
-		return Matcher.Is<DeleteUserCommand>(p => p.Matches(request));
+		public DeleteUserCommand IsDeleteUserCommand()
+		{
+			return Matcher.Is<DeleteUserCommand>(p => p.Matches(request));
+		}
 	}
 
-	public static DeleteUserCommand IsDeleteUserCommand(DeleteCurrentUserCommandRequest request)
+	extension(DeleteCurrentUserCommandRequest request)
 	{
-		return Matcher.Is<DeleteUserCommand>(p => p.Matches(request));
+		public DeleteUserCommand IsDeleteUserCommand()
+		{
+			return Matcher.Is<DeleteUserCommand>(p => p.Matches(request));
+		}
 	}
 }

@@ -37,7 +37,7 @@ public static class PostCommentLikeMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, PostCommentLikeDomainMatcher.IsPostCommentLikeInclude(command, include), cancellationToken)
+				.GetByIdAsync(command.Id, command.IsPostCommentLikeInclude(include), cancellationToken)
 				.ReturnsTaskResponse(postCommentLike);
 		}
 
@@ -68,7 +68,7 @@ public static class PostCommentLikeMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, PostCommentLikeDomainMatcher.IsPostCommentLikeInclude(command, include), cancellationToken)
+				.GetByIdAsync(command.Id, command.IsPostCommentLikeInclude(include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 	}
@@ -121,7 +121,7 @@ public static class PostCommentLikeMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.CommentId, PostCommentLikeDomainMatcher.IsPostCommentInclude(command, include), cancellationToken)
+				.GetByIdAsync(command.CommentId, command.IsPostCommentInclude(include), cancellationToken)
 				.ReturnsTaskResponse(postComment);
 		}
 
@@ -132,7 +132,7 @@ public static class PostCommentLikeMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.CommentId, PostCommentLikeDomainMatcher.IsPostCommentInclude(command, include), cancellationToken)
+				.GetByIdAsync(command.CommentId, command.IsPostCommentInclude(include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 

@@ -12,13 +12,13 @@ public static class ForgotPasswordTokenMockAssertions
 			AddForgotPasswordTokenApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(ForgotPasswordTokenPresentationMatcher.IsAddForgotPasswordTokenCommandRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(request.IsAddForgotPasswordTokenCommandRequest(), cancellationToken);
 		}
 		public async Task ShouldReceiveOneSendAsync(
 			VerifyForgotPasswordTokenApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(ForgotPasswordTokenPresentationMatcher.IsVerifyForgotPasswordTokenCommandRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(request.IsVerifyForgotPasswordTokenCommandRequest(), cancellationToken);
 		}
 	}
 }

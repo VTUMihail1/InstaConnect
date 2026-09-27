@@ -56,7 +56,7 @@ public static class FollowMockAssertions
 		{
 			await repository.ShouldHaveReceivedOne().GetByIdAsync(
 				command.Id,
-				FollowDomainMatcher.IsFollowInclude(command, include),
+				command.IsFollowInclude(include),
 				cancellationToken);
 		}
 
@@ -64,14 +64,14 @@ public static class FollowMockAssertions
 			AddFollowCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().AddAsync(FollowDomainMatcher.IsFollow(command), cancellationToken);
+			await repository.ShouldHaveReceivedOne().AddAsync(command.IsFollow(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneDeleteAsync(
 			DeleteFollowCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().DeleteAsync(FollowDomainMatcher.IsFollow(command), cancellationToken);
+			await repository.ShouldHaveReceivedOne().DeleteAsync(command.IsFollow(), cancellationToken);
 		}
 	}
 
@@ -160,7 +160,7 @@ public static class FollowMockAssertions
 			Follow follow,
 			CancellationToken cancellationToken)
 		{
-			await notificationService.ShouldHaveReceivedOne().AddedAsync(FollowDomainMatcher.IsFollowAddedNotificationRequest(command, follow), cancellationToken);
+			await notificationService.ShouldHaveReceivedOne().AddedAsync(command.IsFollowAddedNotificationRequest(follow), cancellationToken);
 		}
 	}
 
@@ -171,7 +171,7 @@ public static class FollowMockAssertions
 			Follow follow,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(FollowDomainMatcher.IsFollowAddedEventRequest(command, follow), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(command.IsFollowAddedEventRequest(follow), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOnePublishAsync(
@@ -179,7 +179,7 @@ public static class FollowMockAssertions
 			Follow follow,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(FollowDomainMatcher.IsFollowDeletedEventRequest(command, follow), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(command.IsFollowDeletedEventRequest(follow), cancellationToken);
 		}
 	}
 }

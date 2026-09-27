@@ -2,18 +2,27 @@ namespace InstaConnect.Chats.Domain.Tests.Features.Users.Utilities;
 
 public static class UserDomainMatcher
 {
-	public static User IsUser(AddUserCommand command)
+	extension(AddUserCommand command)
 	{
-		return Matcher.Is<User>(u => u.Matches(command));
+		public User IsUser()
+		{
+			return Matcher.Is<User>(u => u.Matches(command));
+		}
 	}
 
-	public static User IsUser(UpdateUserCommand command)
+	extension(UpdateUserCommand command)
 	{
-		return Matcher.Is<User>(u => u.Matches(command));
+		public User IsUser()
+		{
+			return Matcher.Is<User>(u => u.Matches(command));
+		}
 	}
 
-	public static User IsUser(DeleteUserCommand command)
+	extension(DeleteUserCommand command)
 	{
-		return Matcher.Is<User>(u => u.Matches(command));
+		public User IsUser()
+		{
+			return Matcher.Is<User>(u => u.Matches(command));
+		}
 	}
 }

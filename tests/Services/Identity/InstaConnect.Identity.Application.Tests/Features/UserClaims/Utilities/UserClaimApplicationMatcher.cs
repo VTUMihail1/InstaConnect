@@ -2,18 +2,27 @@ namespace InstaConnect.Identity.Application.Tests.Features.UserClaims.Utilities;
 
 public static class UserClaimApplicationMatcher
 {
-	public static GetAllUserClaimsQuery IsGetAllUserClaimsQuery(GetAllUserClaimsQueryRequest request)
+	extension(GetAllUserClaimsQueryRequest request)
 	{
-		return Matcher.Is<GetAllUserClaimsQuery>(p => p.Matches(request));
+		public GetAllUserClaimsQuery IsGetAllUserClaimsQuery()
+		{
+			return Matcher.Is<GetAllUserClaimsQuery>(p => p.Matches(request));
+		}
 	}
 
-	public static AddUserClaimCommand IsAddUserClaimCommand(AddUserClaimCommandRequest request)
+	extension(AddUserClaimCommandRequest request)
 	{
-		return Matcher.Is<AddUserClaimCommand>(p => p.Matches(request));
+		public AddUserClaimCommand IsAddUserClaimCommand()
+		{
+			return Matcher.Is<AddUserClaimCommand>(p => p.Matches(request));
+		}
 	}
 
-	public static DeleteUserClaimCommand IsDeleteUserClaimCommand(DeleteUserClaimCommandRequest request)
+	extension(DeleteUserClaimCommandRequest request)
 	{
-		return Matcher.Is<DeleteUserClaimCommand>(p => p.Matches(request));
+		public DeleteUserClaimCommand IsDeleteUserClaimCommand()
+		{
+			return Matcher.Is<DeleteUserClaimCommand>(p => p.Matches(request));
+		}
 	}
 }

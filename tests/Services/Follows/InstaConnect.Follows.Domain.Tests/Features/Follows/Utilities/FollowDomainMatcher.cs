@@ -4,33 +4,39 @@ namespace InstaConnect.Follows.Domain.Tests.Features.Follows.Utilities;
 
 public static class FollowDomainMatcher
 {
-	public static FollowInclude IsFollowInclude(DeleteFollowCommand command, FollowInclude include)
+	extension(DeleteFollowCommand command)
 	{
-		return Matcher.Is<FollowInclude>(p => p.Matches(command, include));
+		public FollowInclude IsFollowInclude(FollowInclude include)
+		{
+			return Matcher.Is<FollowInclude>(p => p.Matches(command, include));
+		}
+
+		public Follow IsFollow()
+		{
+			return Matcher.Is<Follow>(p => p.Matches(command));
+		}
+
+		public FollowDeletedEventRequest IsFollowDeletedEventRequest(Follow follow)
+		{
+			return Matcher.Is<FollowDeletedEventRequest>(p => p.Matches(command, follow));
+		}
 	}
 
-	public static Follow IsFollow(AddFollowCommand command)
+	extension(AddFollowCommand command)
 	{
-		return Matcher.Is<Follow>(p => p.Matches(command));
-	}
+		public Follow IsFollow()
+		{
+			return Matcher.Is<Follow>(p => p.Matches(command));
+		}
 
-	public static Follow IsFollow(DeleteFollowCommand command)
-	{
-		return Matcher.Is<Follow>(p => p.Matches(command));
-	}
+		public FollowAddedEventRequest IsFollowAddedEventRequest(Follow follow)
+		{
+			return Matcher.Is<FollowAddedEventRequest>(p => p.Matches(command, follow));
+		}
 
-	public static FollowAddedEventRequest IsFollowAddedEventRequest(AddFollowCommand command, Follow follow)
-	{
-		return Matcher.Is<FollowAddedEventRequest>(p => p.Matches(command, follow));
-	}
-
-	public static FollowDeletedEventRequest IsFollowDeletedEventRequest(DeleteFollowCommand command, Follow follow)
-	{
-		return Matcher.Is<FollowDeletedEventRequest>(p => p.Matches(command, follow));
-	}
-
-	public static FollowAddedNotificationRequest IsFollowAddedNotificationRequest(AddFollowCommand command, Follow follow)
-	{
-		return Matcher.Is<FollowAddedNotificationRequest>(p => p.Matches(command, follow));
+		public FollowAddedNotificationRequest IsFollowAddedNotificationRequest(Follow follow)
+		{
+			return Matcher.Is<FollowAddedNotificationRequest>(p => p.Matches(command, follow));
+		}
 	}
 }

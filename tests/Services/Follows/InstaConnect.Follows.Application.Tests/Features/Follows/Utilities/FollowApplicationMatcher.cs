@@ -2,28 +2,43 @@ namespace InstaConnect.Follows.Application.Tests.Features.Follows.Utilities;
 
 public static class FollowApplicationMatcher
 {
-	public static GetAllFollowsQuery IsGetAllFollowsQuery(GetAllFollowsQueryRequest request)
+	extension(GetAllFollowsQueryRequest request)
 	{
-		return Matcher.Is<GetAllFollowsQuery>(p => p.Matches(request));
+		public GetAllFollowsQuery IsGetAllFollowsQuery()
+		{
+			return Matcher.Is<GetAllFollowsQuery>(p => p.Matches(request));
+		}
 	}
 
-	public static GetAllFollowsForFollowingQuery IsGetAllFollowsForFollowingQuery(GetAllFollowsForFollowingQueryRequest request)
+	extension(GetAllFollowsForFollowingQueryRequest request)
 	{
-		return Matcher.Is<GetAllFollowsForFollowingQuery>(p => p.Matches(request));
+		public GetAllFollowsForFollowingQuery IsGetAllFollowsForFollowingQuery()
+		{
+			return Matcher.Is<GetAllFollowsForFollowingQuery>(p => p.Matches(request));
+		}
 	}
 
-	public static GetFollowByIdQuery IsGetFollowByIdQuery(GetFollowByIdQueryRequest request)
+	extension(GetFollowByIdQueryRequest request)
 	{
-		return Matcher.Is<GetFollowByIdQuery>(p => p.Matches(request));
+		public GetFollowByIdQuery IsGetFollowByIdQuery()
+		{
+			return Matcher.Is<GetFollowByIdQuery>(p => p.Matches(request));
+		}
 	}
 
-	public static AddFollowCommand IsAddFollowCommand(AddFollowCommandRequest request)
+	extension(AddFollowCommandRequest request)
 	{
-		return Matcher.Is<AddFollowCommand>(p => p.Matches(request));
+		public AddFollowCommand IsAddFollowCommand()
+		{
+			return Matcher.Is<AddFollowCommand>(p => p.Matches(request));
+		}
 	}
 
-	public static DeleteFollowCommand IsDeleteFollowCommand(DeleteFollowCommandRequest request)
+	extension(DeleteFollowCommandRequest request)
 	{
-		return Matcher.Is<DeleteFollowCommand>(p => p.Matches(request));
+		public DeleteFollowCommand IsDeleteFollowCommand()
+		{
+			return Matcher.Is<DeleteFollowCommand>(p => p.Matches(request));
+		}
 	}
 }

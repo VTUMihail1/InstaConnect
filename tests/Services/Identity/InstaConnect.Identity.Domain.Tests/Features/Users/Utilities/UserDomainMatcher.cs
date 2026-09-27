@@ -5,58 +5,67 @@ namespace InstaConnect.Identity.Domain.Tests.Features.Users.Utilities;
 
 public static class UserDomainMatcher
 {
-	public static UserInclude IsUserInclude(UpdateUserCommand command, UserInclude include)
+	extension(UpdateUserCommand command)
 	{
-		return Matcher.Is<UserInclude>(p => p.Matches(command, include));
+		public UserInclude IsUserInclude(UserInclude include)
+		{
+			return Matcher.Is<UserInclude>(p => p.Matches(command, include));
+		}
+
+		public User IsUser()
+		{
+			return Matcher.Is<User>(p => p.Matches(command));
+		}
+
+		public UserUpdatedEventRequest IsUserUpdatedEventRequest(User user)
+		{
+			return Matcher.Is<UserUpdatedEventRequest>(p => p.Matches(command, user));
+		}
+
+		public ICollection<EmailConfirmationToken> IsEmailConfirmationTokenCollection()
+		{
+			return Matcher.Is<ICollection<EmailConfirmationToken>>(p => p.Matches(command));
+		}
+
+		public ICollection<EmailConfirmationTokenDeletedEventRequest> IsEmailConfirmationTokenDeletedEventRequestCollection(ICollection<EmailConfirmationToken> emailConfirmationTokens)
+		{
+			return Matcher.Is<ICollection<EmailConfirmationTokenDeletedEventRequest>>(p => p.Matches(command, emailConfirmationTokens));
+		}
 	}
 
-	public static User IsUser(AddUserCommand command)
+	extension(AddUserCommand command)
 	{
-		return Matcher.Is<User>(p => p.Matches(command));
+		public User IsUser()
+		{
+			return Matcher.Is<User>(p => p.Matches(command));
+		}
+
+		public UserAddedEventRequest IsUserAddedEventRequest(User user)
+		{
+			return Matcher.Is<UserAddedEventRequest>(p => p.Matches(command, user));
+		}
+
+		public EmailConfirmationToken IsEmailConfirmationToken()
+		{
+			return Matcher.Is<EmailConfirmationToken>(p => p.Matches(command));
+		}
+
+		public EmailConfirmationTokenAddedEventRequest IsEmailConfirmationTokenAddedEventRequest(EmailConfirmationToken emailConfirmationToken)
+		{
+			return Matcher.Is<EmailConfirmationTokenAddedEventRequest>(p => p.Matches(command, emailConfirmationToken));
+		}
 	}
 
-	public static User IsUser(UpdateUserCommand command)
+	extension(DeleteUserCommand command)
 	{
-		return Matcher.Is<User>(p => p.Matches(command));
-	}
+		public User IsUser()
+		{
+			return Matcher.Is<User>(p => p.Matches(command));
+		}
 
-	public static User IsUser(DeleteUserCommand command)
-	{
-		return Matcher.Is<User>(p => p.Matches(command));
-	}
-
-	public static UserAddedEventRequest IsUserAddedEventRequest(AddUserCommand command, User user)
-	{
-		return Matcher.Is<UserAddedEventRequest>(p => p.Matches(command, user));
-	}
-
-	public static UserUpdatedEventRequest IsUserUpdatedEventRequest(UpdateUserCommand command, User user)
-	{
-		return Matcher.Is<UserUpdatedEventRequest>(p => p.Matches(command, user));
-	}
-
-	public static UserDeletedEventRequest IsUserDeletedEventRequest(DeleteUserCommand command, User user)
-	{
-		return Matcher.Is<UserDeletedEventRequest>(p => p.Matches(command, user));
-	}
-
-	public static EmailConfirmationToken IsEmailConfirmationToken(AddUserCommand command)
-	{
-		return Matcher.Is<EmailConfirmationToken>(p => p.Matches(command));
-	}
-
-	public static ICollection<EmailConfirmationToken> IsEmailConfirmationTokenCollection(UpdateUserCommand command)
-	{
-		return Matcher.Is<ICollection<EmailConfirmationToken>>(p => p.Matches(command));
-	}
-
-	public static EmailConfirmationTokenAddedEventRequest IsEmailConfirmationTokenAddedEventRequest(AddUserCommand command, EmailConfirmationToken emailConfirmationToken)
-	{
-		return Matcher.Is<EmailConfirmationTokenAddedEventRequest>(p => p.Matches(command, emailConfirmationToken));
-	}
-
-	public static ICollection<EmailConfirmationTokenDeletedEventRequest> IsEmailConfirmationTokenDeletedEventRequestCollection(UpdateUserCommand command, ICollection<EmailConfirmationToken> emailConfirmationTokens)
-	{
-		return Matcher.Is<ICollection<EmailConfirmationTokenDeletedEventRequest>>(p => p.Matches(command, emailConfirmationTokens));
+		public UserDeletedEventRequest IsUserDeletedEventRequest(User user)
+		{
+			return Matcher.Is<UserDeletedEventRequest>(p => p.Matches(command, user));
+		}
 	}
 }

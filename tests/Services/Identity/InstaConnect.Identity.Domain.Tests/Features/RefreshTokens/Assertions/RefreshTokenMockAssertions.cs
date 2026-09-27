@@ -66,7 +66,7 @@ public static class RefreshTokenMockAssertions
 		{
 			await repository.ShouldHaveReceivedOne().GetByNameAsync(
 				command.Name,
-				RefreshTokenDomainMatcher.IsUserInclude(command, include),
+				command.IsUserInclude(include),
 				cancellationToken);
 		}
 
@@ -77,7 +77,7 @@ public static class RefreshTokenMockAssertions
 		{
 			await repository.ShouldHaveReceivedOne().GetByIdAsync(
 				command.Id.Id,
-				RefreshTokenDomainMatcher.IsUserInclude(command, include),
+				command.IsUserInclude(include),
 				cancellationToken);
 		}
 
@@ -111,28 +111,28 @@ public static class RefreshTokenMockAssertions
 			IssueRefreshTokenCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().AddAsync(RefreshTokenDomainMatcher.IsRefreshToken(command), cancellationToken);
+			await repository.ShouldHaveReceivedOne().AddAsync(command.IsRefreshToken(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneAddAsync(
 			RotateRefreshTokenCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().AddAsync(RefreshTokenDomainMatcher.IsRefreshToken(command), cancellationToken);
+			await repository.ShouldHaveReceivedOne().AddAsync(command.IsRefreshToken(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneDeleteAsync(
 			RotateRefreshTokenCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().DeleteAsync(RefreshTokenDomainMatcher.IsRefreshToken(command), cancellationToken);
+			await repository.ShouldHaveReceivedOne().DeleteAsync(command.IsRefreshToken(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneDeleteAsync(
 			DeleteRefreshTokenCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().DeleteAsync(RefreshTokenDomainMatcher.IsRefreshToken(command), cancellationToken);
+			await repository.ShouldHaveReceivedOne().DeleteAsync(command.IsRefreshToken(), cancellationToken);
 		}
 	}
 }

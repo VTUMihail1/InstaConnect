@@ -36,7 +36,7 @@ public static class EmailConfirmationTokenMockAssertions
 			AddEmailConfirmationTokenCommand command,
 			CancellationToken cancellationToken)
 		{
-			await emailSender.ShouldHaveReceivedOne().SendAsync(EmailConfirmationTokenDomainMatcher.IsEmailConfirmationToken(command), cancellationToken);
+			await emailSender.ShouldHaveReceivedOne().SendAsync(command.IsEmailConfirmationToken(), cancellationToken);
 		}
 	}
 
@@ -47,7 +47,7 @@ public static class EmailConfirmationTokenMockAssertions
 			EmailConfirmationToken emailConfirmationToken,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(EmailConfirmationTokenDomainMatcher.IsEmailConfirmationTokenAddedEventRequest(command, emailConfirmationToken), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(command.IsEmailConfirmationTokenAddedEventRequest(emailConfirmationToken), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOnePublishAsync(
@@ -55,7 +55,7 @@ public static class EmailConfirmationTokenMockAssertions
 			ICollection<EmailConfirmationToken> emailConfirmationTokens,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(EmailConfirmationTokenDomainMatcher.IsEmailConfirmationTokenDeletedEventRequestCollection(command, emailConfirmationTokens), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(command.IsEmailConfirmationTokenDeletedEventRequestCollection(emailConfirmationTokens), cancellationToken);
 		}
 	}
 
@@ -75,7 +75,7 @@ public static class EmailConfirmationTokenMockAssertions
 		{
 			await repository.ShouldHaveReceivedOne().GetByIdAsync(
 				command.Id.Id,
-				EmailConfirmationTokenDomainMatcher.IsUserInclude(command, include),
+				command.IsUserInclude(include),
 				cancellationToken);
 		}
 
@@ -83,7 +83,7 @@ public static class EmailConfirmationTokenMockAssertions
 			VerifyEmailConfirmationTokenCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().UpdateAsync(EmailConfirmationTokenDomainMatcher.IsUser(command), cancellationToken);
+			await repository.ShouldHaveReceivedOne().UpdateAsync(command.IsUser(), cancellationToken);
 		}
 	}
 
@@ -93,7 +93,7 @@ public static class EmailConfirmationTokenMockAssertions
 			AddEmailConfirmationTokenCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().AddAsync(EmailConfirmationTokenDomainMatcher.IsEmailConfirmationToken(command), cancellationToken);
+			await repository.ShouldHaveReceivedOne().AddAsync(command.IsEmailConfirmationToken(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneGetByIdAsync(
@@ -107,7 +107,7 @@ public static class EmailConfirmationTokenMockAssertions
 			VerifyEmailConfirmationTokenCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().DeleteRangeAsync(EmailConfirmationTokenDomainMatcher.IsEmailConfirmationTokenCollection(command), cancellationToken);
+			await repository.ShouldHaveReceivedOne().DeleteRangeAsync(command.IsEmailConfirmationTokenCollection(), cancellationToken);
 		}
 	}
 }

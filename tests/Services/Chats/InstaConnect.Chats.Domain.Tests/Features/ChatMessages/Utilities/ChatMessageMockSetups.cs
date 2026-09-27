@@ -58,7 +58,7 @@ public static class ChatMessageMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, ChatMessageDomainMatcher.IsChatInclude(command, include), cancellationToken)
+				.GetByIdAsync(command.Id, command.IsChatInclude(include), cancellationToken)
 				.ReturnsTaskResponse(chat);
 		}
 
@@ -69,7 +69,7 @@ public static class ChatMessageMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, ChatMessageDomainMatcher.IsChatInclude(command, include), cancellationToken)
+				.GetByIdAsync(command.Id, command.IsChatInclude(include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 
@@ -119,7 +119,7 @@ public static class ChatMessageMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, ChatMessageDomainMatcher.IsChatMessageInclude(command, include), cancellationToken)
+				.GetByIdAsync(command.Id, command.IsChatMessageInclude(include), cancellationToken)
 				.ReturnsTaskResponse(chatMessage);
 		}
 
@@ -130,7 +130,7 @@ public static class ChatMessageMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, ChatMessageDomainMatcher.IsChatMessageInclude(command, include), cancellationToken)
+				.GetByIdAsync(command.Id, command.IsChatMessageInclude(include), cancellationToken)
 				.ReturnsTaskResponse(chatMessage);
 		}
 
@@ -141,7 +141,7 @@ public static class ChatMessageMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, ChatMessageDomainMatcher.IsChatMessageInclude(command, include), cancellationToken)
+				.GetByIdAsync(command.Id, command.IsChatMessageInclude(include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 
@@ -152,7 +152,7 @@ public static class ChatMessageMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, ChatMessageDomainMatcher.IsChatMessageInclude(command, include), cancellationToken)
+				.GetByIdAsync(command.Id, command.IsChatMessageInclude(include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 	}

@@ -4,13 +4,16 @@ namespace InstaConnect.Chats.Domain.Tests.Features.Chats.Utilities;
 
 public static class ChatDomainMatcher
 {
-	public static Chat IsChat(AddChatCommand command)
+	extension(AddChatCommand command)
 	{
-		return Matcher.Is<Chat>(p => p.Matches(command));
-	}
+		public Chat IsChat()
+		{
+			return Matcher.Is<Chat>(p => p.Matches(command));
+		}
 
-	public static ChatAddedEventRequest IsChatAddedEventRequest(AddChatCommand command, Chat chat)
-	{
-		return Matcher.Is<ChatAddedEventRequest>(p => p.Matches(command, chat));
+		public ChatAddedEventRequest IsChatAddedEventRequest(Chat chat)
+		{
+			return Matcher.Is<ChatAddedEventRequest>(p => p.Matches(command, chat));
+		}
 	}
 }

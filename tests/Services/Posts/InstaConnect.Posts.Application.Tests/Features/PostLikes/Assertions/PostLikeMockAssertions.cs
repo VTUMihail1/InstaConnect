@@ -10,21 +10,21 @@ public static class PostLikeMockAssertions
 		GetAllPostLikesQueryRequest request,
 		CancellationToken cancellationToken)
 		{
-			await postLikeService.ShouldHaveReceivedOne().GetAllAsync(PostLikeApplicationMatcher.IsGetAllPostLikesQuery(request), cancellationToken);
+			await postLikeService.ShouldHaveReceivedOne().GetAllAsync(request.IsGetAllPostLikesQuery(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneGetAllForUserAsync(
 			GetAllPostLikesForUserQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await postLikeService.ShouldHaveReceivedOne().GetAllForUserAsync(PostLikeApplicationMatcher.IsGetAllPostLikesForUserQuery(request), cancellationToken);
+			await postLikeService.ShouldHaveReceivedOne().GetAllForUserAsync(request.IsGetAllPostLikesForUserQuery(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneGetByIdAsync(
 			GetPostLikeByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await postLikeService.ShouldHaveReceivedOne().GetByIdAsync(PostLikeApplicationMatcher.IsGetPostLikeByIdQuery(request), cancellationToken);
+			await postLikeService.ShouldHaveReceivedOne().GetByIdAsync(request.IsGetPostLikeByIdQuery(), cancellationToken);
 		}
 	}
 
@@ -34,14 +34,14 @@ public static class PostLikeMockAssertions
 		AddPostLikeCommandRequest request,
 		CancellationToken cancellationToken)
 		{
-			await postLikeService.ShouldHaveReceivedOne().AddAsync(PostLikeApplicationMatcher.IsAddPostLikeCommand(request), cancellationToken);
+			await postLikeService.ShouldHaveReceivedOne().AddAsync(request.IsAddPostLikeCommand(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneDeleteAsync(
 			DeletePostLikeCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await postLikeService.ShouldHaveReceivedOne().DeleteAsync(PostLikeApplicationMatcher.IsDeletePostLikeCommand(request), cancellationToken);
+			await postLikeService.ShouldHaveReceivedOne().DeleteAsync(request.IsDeletePostLikeCommand(), cancellationToken);
 		}
 	}
 }

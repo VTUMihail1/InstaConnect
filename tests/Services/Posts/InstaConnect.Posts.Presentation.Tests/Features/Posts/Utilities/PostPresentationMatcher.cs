@@ -2,33 +2,51 @@ namespace InstaConnect.Posts.Presentation.Tests.Features.Posts.Utilities;
 
 public static class PostPresentationMatcher
 {
-	public static GetAllPostsQueryRequest IsGetAllPostsQueryRequest(GetAllPostsApiRequest request)
+	extension(GetAllPostsApiRequest request)
 	{
-		return Matcher.Is<GetAllPostsQueryRequest>(p => p.Matches(request));
+		public GetAllPostsQueryRequest IsGetAllPostsQueryRequest()
+		{
+			return Matcher.Is<GetAllPostsQueryRequest>(p => p.Matches(request));
+		}
 	}
 
-	public static GetAllPostsForUserQueryRequest IsGetAllPostsForUserQueryRequest(GetAllPostsForUserApiRequest request)
+	extension(GetAllPostsForUserApiRequest request)
 	{
-		return Matcher.Is<GetAllPostsForUserQueryRequest>(p => p.Matches(request));
+		public GetAllPostsForUserQueryRequest IsGetAllPostsForUserQueryRequest()
+		{
+			return Matcher.Is<GetAllPostsForUserQueryRequest>(p => p.Matches(request));
+		}
 	}
 
-	public static GetPostByIdQueryRequest IsGetPostByIdQueryRequest(GetPostByIdApiRequest request)
+	extension(GetPostByIdApiRequest request)
 	{
-		return Matcher.Is<GetPostByIdQueryRequest>(p => p.Matches(request));
+		public GetPostByIdQueryRequest IsGetPostByIdQueryRequest()
+		{
+			return Matcher.Is<GetPostByIdQueryRequest>(p => p.Matches(request));
+		}
 	}
 
-	public static AddPostCommandRequest IsAddPostCommandRequest(AddPostApiRequest request)
+	extension(AddPostApiRequest request)
 	{
-		return Matcher.Is<AddPostCommandRequest>(p => p.Matches(request));
+		public AddPostCommandRequest IsAddPostCommandRequest()
+		{
+			return Matcher.Is<AddPostCommandRequest>(p => p.Matches(request));
+		}
 	}
 
-	public static UpdatePostCommandRequest IsUpdatePostCommandRequest(UpdatePostApiRequest request)
+	extension(UpdatePostApiRequest request)
 	{
-		return Matcher.Is<UpdatePostCommandRequest>(p => p.Matches(request));
+		public UpdatePostCommandRequest IsUpdatePostCommandRequest()
+		{
+			return Matcher.Is<UpdatePostCommandRequest>(p => p.Matches(request));
+		}
 	}
 
-	public static DeletePostCommandRequest IsDeletePostCommandRequest(DeletePostApiRequest request)
+	extension(DeletePostApiRequest request)
 	{
-		return Matcher.Is<DeletePostCommandRequest>(p => p.Matches(request));
+		public DeletePostCommandRequest IsDeletePostCommandRequest()
+		{
+			return Matcher.Is<DeletePostCommandRequest>(p => p.Matches(request));
+		}
 	}
 }

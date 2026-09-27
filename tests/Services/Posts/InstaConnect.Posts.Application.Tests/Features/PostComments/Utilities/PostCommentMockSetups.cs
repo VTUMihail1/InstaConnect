@@ -11,7 +11,7 @@ public static class PostCommentMockSetups
 		CancellationToken cancellationToken)
 		{
 			commentService
-				.GetAllAsync(PostCommentApplicationMatcher.IsGetAllPostCommentsQuery(request), cancellationToken)
+				.GetAllAsync(request.IsGetAllPostCommentsQuery(), cancellationToken)
 				.ReturnsTaskResponse(postComments.ToResponse(request, post));
 		}
 
@@ -22,7 +22,7 @@ public static class PostCommentMockSetups
 			CancellationToken cancellationToken)
 		{
 			commentService
-				.GetAllForUserAsync(PostCommentApplicationMatcher.IsGetAllPostCommentsForUserQuery(request), cancellationToken)
+				.GetAllForUserAsync(request.IsGetAllPostCommentsForUserQuery(), cancellationToken)
 				.ReturnsTaskResponse(postComments.ToResponse(request, user));
 		}
 
@@ -32,7 +32,7 @@ public static class PostCommentMockSetups
 			CancellationToken cancellationToken)
 		{
 			commentService
-				.GetByIdAsync(PostCommentApplicationMatcher.IsGetPostCommentByIdQuery(request), cancellationToken)
+				.GetByIdAsync(request.IsGetPostCommentByIdQuery(), cancellationToken)
 				.ReturnsTaskResponse(postComment.ToResponse(request));
 		}
 	}
@@ -45,7 +45,7 @@ public static class PostCommentMockSetups
 		CancellationToken cancellationToken)
 		{
 			commentService
-				.AddAsync(PostCommentApplicationMatcher.IsAddPostCommentCommand(request), cancellationToken)
+				.AddAsync(request.IsAddPostCommentCommand(), cancellationToken)
 				.ReturnsTaskResponse(postComment.ToResponse(request));
 		}
 
@@ -55,7 +55,7 @@ public static class PostCommentMockSetups
 			CancellationToken cancellationToken)
 		{
 			commentService
-				.UpdateAsync(PostCommentApplicationMatcher.IsUpdatePostCommentCommand(request), cancellationToken)
+				.UpdateAsync(request.IsUpdatePostCommentCommand(), cancellationToken)
 				.ReturnsTaskResponse(postComment.ToResponse(request));
 		}
 	}

@@ -2,28 +2,37 @@ namespace InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Utilit
 
 public static class RefreshTokenPresentationMatcher
 {
-	public static SetRefreshTokenCookieApiRequest IsRefreshTokenCookieRequest(IssueRefreshTokenApiRequest request, RefreshToken refreshToken)
+	extension(IssueRefreshTokenApiRequest request)
 	{
-		return Matcher.Is<SetRefreshTokenCookieApiRequest>(p => p.Matches(request, refreshToken));
+		public SetRefreshTokenCookieApiRequest IsRefreshTokenCookieRequest(RefreshToken refreshToken)
+		{
+			return Matcher.Is<SetRefreshTokenCookieApiRequest>(p => p.Matches(request, refreshToken));
+		}
+
+		public IssueRefreshTokenCommandRequest IsIssueRefreshTokenCommandRequest()
+		{
+			return Matcher.Is<IssueRefreshTokenCommandRequest>(p => p.Matches(request));
+		}
 	}
 
-	public static SetRefreshTokenCookieApiRequest IsRefreshTokenCookieRequest(RotateRefreshTokenApiRequest request, RefreshToken refreshToken)
+	extension(RotateRefreshTokenApiRequest request)
 	{
-		return Matcher.Is<SetRefreshTokenCookieApiRequest>(p => p.Matches(request, refreshToken));
+		public SetRefreshTokenCookieApiRequest IsRefreshTokenCookieRequest(RefreshToken refreshToken)
+		{
+			return Matcher.Is<SetRefreshTokenCookieApiRequest>(p => p.Matches(request, refreshToken));
+		}
+
+		public RotateRefreshTokenCommandRequest IsRotateRefreshTokenCommandRequest()
+		{
+			return Matcher.Is<RotateRefreshTokenCommandRequest>(p => p.Matches(request));
+		}
 	}
 
-	public static IssueRefreshTokenCommandRequest IsIssueRefreshTokenCommandRequest(IssueRefreshTokenApiRequest request)
+	extension(DeleteCurrentRefreshTokenApiRequest request)
 	{
-		return Matcher.Is<IssueRefreshTokenCommandRequest>(p => p.Matches(request));
-	}
-
-	public static RotateRefreshTokenCommandRequest IsRotateRefreshTokenCommandRequest(RotateRefreshTokenApiRequest request)
-	{
-		return Matcher.Is<RotateRefreshTokenCommandRequest>(p => p.Matches(request));
-	}
-
-	public static DeleteCurrentRefreshTokenCommandRequest IsDeleteCurrentRefreshTokenCommandRequest(DeleteCurrentRefreshTokenApiRequest request)
-	{
-		return Matcher.Is<DeleteCurrentRefreshTokenCommandRequest>(p => p.Matches(request));
+		public DeleteCurrentRefreshTokenCommandRequest IsDeleteCurrentRefreshTokenCommandRequest()
+		{
+			return Matcher.Is<DeleteCurrentRefreshTokenCommandRequest>(p => p.Matches(request));
+		}
 	}
 }

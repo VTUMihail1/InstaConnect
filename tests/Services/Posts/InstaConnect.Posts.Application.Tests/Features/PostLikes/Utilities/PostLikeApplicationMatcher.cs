@@ -2,28 +2,43 @@ namespace InstaConnect.Posts.Application.Tests.Features.PostLikes.Utilities;
 
 public static class PostLikeApplicationMatcher
 {
-	public static GetAllPostLikesQuery IsGetAllPostLikesQuery(GetAllPostLikesQueryRequest request)
+	extension(GetAllPostLikesQueryRequest request)
 	{
-		return Matcher.Is<GetAllPostLikesQuery>(p => p.Matches(request));
+		public GetAllPostLikesQuery IsGetAllPostLikesQuery()
+		{
+			return Matcher.Is<GetAllPostLikesQuery>(p => p.Matches(request));
+		}
 	}
 
-	public static GetAllPostLikesForUserQuery IsGetAllPostLikesForUserQuery(GetAllPostLikesForUserQueryRequest request)
+	extension(GetAllPostLikesForUserQueryRequest request)
 	{
-		return Matcher.Is<GetAllPostLikesForUserQuery>(p => p.Matches(request));
+		public GetAllPostLikesForUserQuery IsGetAllPostLikesForUserQuery()
+		{
+			return Matcher.Is<GetAllPostLikesForUserQuery>(p => p.Matches(request));
+		}
 	}
 
-	public static GetPostLikeByIdQuery IsGetPostLikeByIdQuery(GetPostLikeByIdQueryRequest request)
+	extension(GetPostLikeByIdQueryRequest request)
 	{
-		return Matcher.Is<GetPostLikeByIdQuery>(p => p.Matches(request));
+		public GetPostLikeByIdQuery IsGetPostLikeByIdQuery()
+		{
+			return Matcher.Is<GetPostLikeByIdQuery>(p => p.Matches(request));
+		}
 	}
 
-	public static AddPostLikeCommand IsAddPostLikeCommand(AddPostLikeCommandRequest request)
+	extension(AddPostLikeCommandRequest request)
 	{
-		return Matcher.Is<AddPostLikeCommand>(p => p.Matches(request));
+		public AddPostLikeCommand IsAddPostLikeCommand()
+		{
+			return Matcher.Is<AddPostLikeCommand>(p => p.Matches(request));
+		}
 	}
 
-	public static DeletePostLikeCommand IsDeletePostLikeCommand(DeletePostLikeCommandRequest request)
+	extension(DeletePostLikeCommandRequest request)
 	{
-		return Matcher.Is<DeletePostLikeCommand>(p => p.Matches(request));
+		public DeletePostLikeCommand IsDeletePostLikeCommand()
+		{
+			return Matcher.Is<DeletePostLikeCommand>(p => p.Matches(request));
+		}
 	}
 }

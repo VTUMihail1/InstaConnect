@@ -79,21 +79,21 @@ public static class PostMockAssertions
 		    AddPostCommand command,
 		    CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().AddAsync(PostDomainMatcher.IsPost(command), cancellationToken);
+			await repository.ShouldHaveReceivedOne().AddAsync(command.IsPost(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneUpdateAsync(
 			UpdatePostCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().UpdateAsync(PostDomainMatcher.IsPost(command), cancellationToken);
+			await repository.ShouldHaveReceivedOne().UpdateAsync(command.IsPost(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneDeleteAsync(
 			DeletePostCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().DeleteAsync(PostDomainMatcher.IsPost(command), cancellationToken);
+			await repository.ShouldHaveReceivedOne().DeleteAsync(command.IsPost(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneGetByIdAsync(
@@ -103,7 +103,7 @@ public static class PostMockAssertions
 		{
 			await repository.ShouldHaveReceivedOne().GetByIdAsync(
 				command.Id,
-				PostDomainMatcher.IsPostInclude(command, include),
+				command.IsPostInclude(include),
 				cancellationToken);
 		}
 
@@ -114,7 +114,7 @@ public static class PostMockAssertions
 		{
 			await repository.ShouldHaveReceivedOne().GetByIdAsync(
 				command.Id,
-				PostDomainMatcher.IsPostInclude(command, include),
+				command.IsPostInclude(include),
 				cancellationToken);
 		}
 	}
@@ -159,7 +159,7 @@ public static class PostMockAssertions
 			Post post,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(PostDomainMatcher.IsPostAddedEventRequest(command, post), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(command.IsPostAddedEventRequest(post), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOnePublishAsync(
@@ -167,7 +167,7 @@ public static class PostMockAssertions
 			Post post,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(PostDomainMatcher.IsPostUpdatedEventRequest(command, post), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(command.IsPostUpdatedEventRequest(post), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOnePublishAsync(
@@ -175,7 +175,7 @@ public static class PostMockAssertions
 			Post post,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(PostDomainMatcher.IsPostDeletedEventRequest(command, post), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(command.IsPostDeletedEventRequest(post), cancellationToken);
 		}
 	}
 }

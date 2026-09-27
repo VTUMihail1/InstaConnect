@@ -11,7 +11,7 @@ public static class PostCommentLikeMockSetups
 			CancellationToken cancellationToken)
 		{
 			commentLikeService
-				.GetAllAsync(PostCommentLikeApplicationMatcher.IsGetAllPostCommentLikesQuery(request), cancellationToken)
+				.GetAllAsync(request.IsGetAllPostCommentLikesQuery(), cancellationToken)
 				.ReturnsTaskResponse(postCommentLikes.ToResponse(request, postComment));
 		}
 
@@ -22,7 +22,7 @@ public static class PostCommentLikeMockSetups
 			CancellationToken cancellationToken)
 		{
 			commentLikeService
-				.GetAllForUserAsync(PostCommentLikeApplicationMatcher.IsGetAllPostCommentLikesForUserQuery(request), cancellationToken)
+				.GetAllForUserAsync(request.IsGetAllPostCommentLikesForUserQuery(), cancellationToken)
 				.ReturnsTaskResponse(postCommentLikes.ToResponse(request, user));
 		}
 
@@ -32,7 +32,7 @@ public static class PostCommentLikeMockSetups
 			CancellationToken cancellationToken)
 		{
 			commentLikeService
-				.GetByIdAsync(PostCommentLikeApplicationMatcher.IsGetPostCommentLikeByIdQuery(request), cancellationToken)
+				.GetByIdAsync(request.IsGetPostCommentLikeByIdQuery(), cancellationToken)
 				.ReturnsTaskResponse(postCommentLike.ToResponse(request));
 		}
 	}
@@ -45,7 +45,7 @@ public static class PostCommentLikeMockSetups
 			CancellationToken cancellationToken)
 		{
 			commentLikeService
-				.AddAsync(PostCommentLikeApplicationMatcher.IsAddPostCommentLikeCommand(request), cancellationToken)
+				.AddAsync(request.IsAddPostCommentLikeCommand(), cancellationToken)
 				.ReturnsTaskResponse(postCommentLike.ToResponse(request));
 		}
 	}

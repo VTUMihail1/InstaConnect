@@ -5,33 +5,39 @@ namespace InstaConnect.Identity.Domain.Tests.Features.ForgotPasswordTokens.Utili
 
 public static class ForgotPasswordTokenDomainMatcher
 {
-	public static UserInclude IsUserInclude(VerifyForgotPasswordTokenCommand command, UserInclude include)
+	extension(VerifyForgotPasswordTokenCommand command)
 	{
-		return Matcher.Is<UserInclude>(p => p.Matches(command, include));
+		public UserInclude IsUserInclude(UserInclude include)
+		{
+			return Matcher.Is<UserInclude>(p => p.Matches(command, include));
+		}
+
+		public User IsUser(IPasswordHasher passwordHasher)
+		{
+			return Matcher.Is<User>(p => p.Matches(command, passwordHasher));
+		}
+
+		public ICollection<ForgotPasswordToken> IsForgotPasswordTokenCollection()
+		{
+			return Matcher.Is<ICollection<ForgotPasswordToken>>(p => p.Matches(command));
+		}
+
+		public ICollection<ForgotPasswordTokenDeletedEventRequest> IsForgotPasswordTokenDeletedEventRequestCollection(ICollection<ForgotPasswordToken> forgotPasswordTokens)
+		{
+			return Matcher.Is<ICollection<ForgotPasswordTokenDeletedEventRequest>>(p => p.Matches(command, forgotPasswordTokens));
+		}
 	}
 
-	public static User IsUser(VerifyForgotPasswordTokenCommand command, IPasswordHasher passwordHasher)
+	extension(AddForgotPasswordTokenCommand command)
 	{
-		return Matcher.Is<User>(p => p.Matches(command, passwordHasher));
-	}
+		public ForgotPasswordToken IsForgotPasswordToken()
+		{
+			return Matcher.Is<ForgotPasswordToken>(p => p.Matches(command));
+		}
 
-	public static ForgotPasswordToken IsForgotPasswordToken(AddForgotPasswordTokenCommand command)
-	{
-		return Matcher.Is<ForgotPasswordToken>(p => p.Matches(command));
-	}
-
-	public static ICollection<ForgotPasswordToken> IsForgotPasswordTokenCollection(VerifyForgotPasswordTokenCommand command)
-	{
-		return Matcher.Is<ICollection<ForgotPasswordToken>>(p => p.Matches(command));
-	}
-
-	public static ForgotPasswordTokenAddedEventRequest IsForgotPasswordTokenAddedEventRequest(AddForgotPasswordTokenCommand command, ForgotPasswordToken forgotPasswordToken)
-	{
-		return Matcher.Is<ForgotPasswordTokenAddedEventRequest>(p => p.Matches(command, forgotPasswordToken));
-	}
-
-	public static ICollection<ForgotPasswordTokenDeletedEventRequest> IsForgotPasswordTokenDeletedEventRequestCollection(VerifyForgotPasswordTokenCommand command, ICollection<ForgotPasswordToken> forgotPasswordTokens)
-	{
-		return Matcher.Is<ICollection<ForgotPasswordTokenDeletedEventRequest>>(p => p.Matches(command, forgotPasswordTokens));
+		public ForgotPasswordTokenAddedEventRequest IsForgotPasswordTokenAddedEventRequest(ForgotPasswordToken forgotPasswordToken)
+		{
+			return Matcher.Is<ForgotPasswordTokenAddedEventRequest>(p => p.Matches(command, forgotPasswordToken));
+		}
 	}
 }

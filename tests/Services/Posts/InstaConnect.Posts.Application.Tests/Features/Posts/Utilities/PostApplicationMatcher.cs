@@ -2,33 +2,51 @@ namespace InstaConnect.Posts.Application.Tests.Features.Posts.Utilities;
 
 public static class PostApplicationMatcher
 {
-	public static GetAllPostsQuery IsGetAllPostsQuery(GetAllPostsQueryRequest request)
+	extension(GetAllPostsQueryRequest request)
 	{
-		return Matcher.Is<GetAllPostsQuery>(p => p.Matches(request));
+		public GetAllPostsQuery IsGetAllPostsQuery()
+		{
+			return Matcher.Is<GetAllPostsQuery>(p => p.Matches(request));
+		}
 	}
 
-	public static GetAllPostsForUserQuery IsGetAllPostsForUserQuery(GetAllPostsForUserQueryRequest request)
+	extension(GetAllPostsForUserQueryRequest request)
 	{
-		return Matcher.Is<GetAllPostsForUserQuery>(p => p.Matches(request));
+		public GetAllPostsForUserQuery IsGetAllPostsForUserQuery()
+		{
+			return Matcher.Is<GetAllPostsForUserQuery>(p => p.Matches(request));
+		}
 	}
 
-	public static GetPostByIdQuery IsGetPostByIdQuery(GetPostByIdQueryRequest request)
+	extension(GetPostByIdQueryRequest request)
 	{
-		return Matcher.Is<GetPostByIdQuery>(p => p.Matches(request));
+		public GetPostByIdQuery IsGetPostByIdQuery()
+		{
+			return Matcher.Is<GetPostByIdQuery>(p => p.Matches(request));
+		}
 	}
 
-	public static AddPostCommand IsAddPostCommand(AddPostCommandRequest request)
+	extension(AddPostCommandRequest request)
 	{
-		return Matcher.Is<AddPostCommand>(p => p.Matches(request));
+		public AddPostCommand IsAddPostCommand()
+		{
+			return Matcher.Is<AddPostCommand>(p => p.Matches(request));
+		}
 	}
 
-	public static UpdatePostCommand IsUpdatePostCommand(UpdatePostCommandRequest request)
+	extension(UpdatePostCommandRequest request)
 	{
-		return Matcher.Is<UpdatePostCommand>(p => p.Matches(request));
+		public UpdatePostCommand IsUpdatePostCommand()
+		{
+			return Matcher.Is<UpdatePostCommand>(p => p.Matches(request));
+		}
 	}
 
-	public static DeletePostCommand IsDeletePostCommand(DeletePostCommandRequest request)
+	extension(DeletePostCommandRequest request)
 	{
-		return Matcher.Is<DeletePostCommand>(p => p.Matches(request));
+		public DeletePostCommand IsDeletePostCommand()
+		{
+			return Matcher.Is<DeletePostCommand>(p => p.Matches(request));
+		}
 	}
 }

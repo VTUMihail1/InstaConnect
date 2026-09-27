@@ -2,18 +2,27 @@ namespace InstaConnect.Identity.Application.Tests.Features.RefreshTokens.Utiliti
 
 public static class RefreshTokenApplicationMatcher
 {
-	public static IssueRefreshTokenCommand IsIssueRefreshTokenCommand(IssueRefreshTokenCommandRequest request)
+	extension(IssueRefreshTokenCommandRequest request)
 	{
-		return Matcher.Is<IssueRefreshTokenCommand>(p => p.Matches(request));
+		public IssueRefreshTokenCommand IsIssueRefreshTokenCommand()
+		{
+			return Matcher.Is<IssueRefreshTokenCommand>(p => p.Matches(request));
+		}
 	}
 
-	public static RotateRefreshTokenCommand IsRotateRefreshTokenCommand(RotateRefreshTokenCommandRequest request)
+	extension(RotateRefreshTokenCommandRequest request)
 	{
-		return Matcher.Is<RotateRefreshTokenCommand>(p => p.Matches(request));
+		public RotateRefreshTokenCommand IsRotateRefreshTokenCommand()
+		{
+			return Matcher.Is<RotateRefreshTokenCommand>(p => p.Matches(request));
+		}
 	}
 
-	public static DeleteRefreshTokenCommand IsDeleteRefreshTokenCommand(DeleteCurrentRefreshTokenCommandRequest request)
+	extension(DeleteCurrentRefreshTokenCommandRequest request)
 	{
-		return Matcher.Is<DeleteRefreshTokenCommand>(p => p.Matches(request));
+		public DeleteRefreshTokenCommand IsDeleteRefreshTokenCommand()
+		{
+			return Matcher.Is<DeleteRefreshTokenCommand>(p => p.Matches(request));
+		}
 	}
 }

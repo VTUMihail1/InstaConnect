@@ -2,18 +2,27 @@ namespace InstaConnect.Follows.Application.Tests.Features.Users.Utilities;
 
 public static class UserApplicationMatcher
 {
-	public static AddUserCommand IsAddUserCommand(AddUserCommandRequest request)
+	extension(AddUserCommandRequest request)
 	{
-		return Matcher.Is<AddUserCommand>(u => u.Matches(request));
+		public AddUserCommand IsAddUserCommand()
+		{
+			return Matcher.Is<AddUserCommand>(u => u.Matches(request));
+		}
 	}
 
-	public static UpdateUserCommand IsUpdateUserCommand(UpdateUserCommandRequest request)
+	extension(UpdateUserCommandRequest request)
 	{
-		return Matcher.Is<UpdateUserCommand>(u => u.Matches(request));
+		public UpdateUserCommand IsUpdateUserCommand()
+		{
+			return Matcher.Is<UpdateUserCommand>(u => u.Matches(request));
+		}
 	}
 
-	public static DeleteUserCommand IsDeleteUserCommand(DeleteUserCommandRequest request)
+	extension(DeleteUserCommandRequest request)
 	{
-		return Matcher.Is<DeleteUserCommand>(u => u.Matches(request));
+		public DeleteUserCommand IsDeleteUserCommand()
+		{
+			return Matcher.Is<DeleteUserCommand>(u => u.Matches(request));
+		}
 	}
 }

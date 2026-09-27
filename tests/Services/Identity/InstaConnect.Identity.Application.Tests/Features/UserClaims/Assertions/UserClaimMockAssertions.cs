@@ -10,7 +10,7 @@ public static class UserClaimMockAssertions
 		GetAllUserClaimsQueryRequest request,
 		CancellationToken cancellationToken)
 		{
-			await userClaimService.ShouldHaveReceivedOne().GetAllAsync(UserClaimApplicationMatcher.IsGetAllUserClaimsQuery(request), cancellationToken);
+			await userClaimService.ShouldHaveReceivedOne().GetAllAsync(request.IsGetAllUserClaimsQuery(), cancellationToken);
 		}
 	}
 
@@ -20,14 +20,14 @@ public static class UserClaimMockAssertions
 		AddUserClaimCommandRequest request,
 		CancellationToken cancellationToken)
 		{
-			await userClaimService.ShouldHaveReceivedOne().AddAsync(UserClaimApplicationMatcher.IsAddUserClaimCommand(request), cancellationToken);
+			await userClaimService.ShouldHaveReceivedOne().AddAsync(request.IsAddUserClaimCommand(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneDeleteAsync(
 			DeleteUserClaimCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await userClaimService.ShouldHaveReceivedOne().DeleteAsync(UserClaimApplicationMatcher.IsDeleteUserClaimCommand(request), cancellationToken);
+			await userClaimService.ShouldHaveReceivedOne().DeleteAsync(request.IsDeleteUserClaimCommand(), cancellationToken);
 		}
 	}
 }

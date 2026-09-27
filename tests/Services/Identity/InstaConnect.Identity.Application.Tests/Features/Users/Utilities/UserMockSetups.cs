@@ -10,7 +10,7 @@ public static class UserMockSetups
 		CancellationToken cancellationToken)
 		{
 			service
-				.GetAllAsync(UserApplicationMatcher.IsGetAllUsersQuery(request), cancellationToken)
+				.GetAllAsync(request.IsGetAllUsersQuery(), cancellationToken)
 				.ReturnsTaskResponse(users.ToResponse(request));
 		}
 
@@ -20,7 +20,7 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			service
-				.GetByIdAsync(UserApplicationMatcher.IsGetUserByIdQuery(request), cancellationToken)
+				.GetByIdAsync(request.IsGetUserByIdQuery(), cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(request));
 		}
 
@@ -30,7 +30,7 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			service
-				.GetByIdAsync(UserApplicationMatcher.IsGetUserByIdQuery(request), cancellationToken)
+				.GetByIdAsync(request.IsGetUserByIdQuery(), cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(request));
 		}
 
@@ -40,7 +40,7 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			service
-				.GetByIdAsync(UserApplicationMatcher.IsGetUserByIdQuery(request), cancellationToken)
+				.GetByIdAsync(request.IsGetUserByIdQuery(), cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(request));
 		}
 
@@ -50,7 +50,7 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			service
-				.GetByIdAsync(UserApplicationMatcher.IsGetUserByIdQuery(request), cancellationToken)
+				.GetByIdAsync(request.IsGetUserByIdQuery(), cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(request));
 		}
 	}
@@ -63,7 +63,7 @@ public static class UserMockSetups
 		CancellationToken cancellationToken)
 		{
 			service
-				.AddAsync(UserApplicationMatcher.IsAddUserCommand(request), cancellationToken)
+				.AddAsync(request.IsAddUserCommand(), cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(request));
 		}
 
@@ -73,7 +73,7 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			service
-				.UpdateAsync(UserApplicationMatcher.IsUpdateUserCommand(request), cancellationToken)
+				.UpdateAsync(request.IsUpdateUserCommand(), cancellationToken)
 				.ReturnsTaskResponse(user.ToResponse(request));
 		}
 	}

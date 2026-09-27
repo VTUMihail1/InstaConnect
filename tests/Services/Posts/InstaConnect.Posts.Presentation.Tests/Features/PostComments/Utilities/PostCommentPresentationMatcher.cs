@@ -2,33 +2,51 @@ namespace InstaConnect.Posts.Presentation.Tests.Features.PostComments.Utilities;
 
 public static class PostCommentPresentationMatcher
 {
-	public static GetAllPostCommentsQueryRequest IsGetAllPostCommentsQueryRequest(GetAllPostCommentsApiRequest request)
+	extension(GetAllPostCommentsApiRequest request)
 	{
-		return Matcher.Is<GetAllPostCommentsQueryRequest>(p => p.Matches(request));
+		public GetAllPostCommentsQueryRequest IsGetAllPostCommentsQueryRequest()
+		{
+			return Matcher.Is<GetAllPostCommentsQueryRequest>(p => p.Matches(request));
+		}
 	}
 
-	public static GetAllPostCommentsForUserQueryRequest IsGetAllPostCommentsForUserQueryRequest(GetAllPostCommentsForUserApiRequest request)
+	extension(GetAllPostCommentsForUserApiRequest request)
 	{
-		return Matcher.Is<GetAllPostCommentsForUserQueryRequest>(p => p.Matches(request));
+		public GetAllPostCommentsForUserQueryRequest IsGetAllPostCommentsForUserQueryRequest()
+		{
+			return Matcher.Is<GetAllPostCommentsForUserQueryRequest>(p => p.Matches(request));
+		}
 	}
 
-	public static GetPostCommentByIdQueryRequest IsGetPostCommentByIdQueryRequest(GetPostCommentByIdApiRequest request)
+	extension(GetPostCommentByIdApiRequest request)
 	{
-		return Matcher.Is<GetPostCommentByIdQueryRequest>(p => p.Matches(request));
+		public GetPostCommentByIdQueryRequest IsGetPostCommentByIdQueryRequest()
+		{
+			return Matcher.Is<GetPostCommentByIdQueryRequest>(p => p.Matches(request));
+		}
 	}
 
-	public static AddPostCommentCommandRequest IsAddPostCommentCommandRequest(AddPostCommentApiRequest request)
+	extension(AddPostCommentApiRequest request)
 	{
-		return Matcher.Is<AddPostCommentCommandRequest>(p => p.Matches(request));
+		public AddPostCommentCommandRequest IsAddPostCommentCommandRequest()
+		{
+			return Matcher.Is<AddPostCommentCommandRequest>(p => p.Matches(request));
+		}
 	}
 
-	public static UpdatePostCommentCommandRequest IsUpdatePostCommentCommandRequest(UpdatePostCommentApiRequest request)
+	extension(UpdatePostCommentApiRequest request)
 	{
-		return Matcher.Is<UpdatePostCommentCommandRequest>(p => p.Matches(request));
+		public UpdatePostCommentCommandRequest IsUpdatePostCommentCommandRequest()
+		{
+			return Matcher.Is<UpdatePostCommentCommandRequest>(p => p.Matches(request));
+		}
 	}
 
-	public static DeletePostCommentCommandRequest IsDeletePostCommentCommandRequest(DeletePostCommentApiRequest request)
+	extension(DeletePostCommentApiRequest request)
 	{
-		return Matcher.Is<DeletePostCommentCommandRequest>(p => p.Matches(request));
+		public DeletePostCommentCommandRequest IsDeletePostCommentCommandRequest()
+		{
+			return Matcher.Is<DeletePostCommentCommandRequest>(p => p.Matches(request));
+		}
 	}
 }

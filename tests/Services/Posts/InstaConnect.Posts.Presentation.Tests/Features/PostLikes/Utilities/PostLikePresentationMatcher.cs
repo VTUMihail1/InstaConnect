@@ -2,28 +2,43 @@ namespace InstaConnect.Posts.Presentation.Tests.Features.PostLikes.Utilities;
 
 public static class PostLikePresentationMatcher
 {
-	public static GetAllPostLikesQueryRequest IsGetAllPostLikesQueryRequest(GetAllPostLikesApiRequest request)
+	extension(GetAllPostLikesApiRequest request)
 	{
-		return Matcher.Is<GetAllPostLikesQueryRequest>(p => p.Matches(request));
+		public GetAllPostLikesQueryRequest IsGetAllPostLikesQueryRequest()
+		{
+			return Matcher.Is<GetAllPostLikesQueryRequest>(p => p.Matches(request));
+		}
 	}
 
-	public static GetAllPostLikesForUserQueryRequest IsGetAllPostLikesForUserQueryRequest(GetAllPostLikesForUserApiRequest request)
+	extension(GetAllPostLikesForUserApiRequest request)
 	{
-		return Matcher.Is<GetAllPostLikesForUserQueryRequest>(p => p.Matches(request));
+		public GetAllPostLikesForUserQueryRequest IsGetAllPostLikesForUserQueryRequest()
+		{
+			return Matcher.Is<GetAllPostLikesForUserQueryRequest>(p => p.Matches(request));
+		}
 	}
 
-	public static GetPostLikeByIdQueryRequest IsGetPostLikeByIdQueryRequest(GetPostLikeByIdApiRequest request)
+	extension(GetPostLikeByIdApiRequest request)
 	{
-		return Matcher.Is<GetPostLikeByIdQueryRequest>(p => p.Matches(request));
+		public GetPostLikeByIdQueryRequest IsGetPostLikeByIdQueryRequest()
+		{
+			return Matcher.Is<GetPostLikeByIdQueryRequest>(p => p.Matches(request));
+		}
 	}
 
-	public static AddPostLikeCommandRequest IsAddPostLikeCommandRequest(AddPostLikeApiRequest request)
+	extension(AddPostLikeApiRequest request)
 	{
-		return Matcher.Is<AddPostLikeCommandRequest>(p => p.Matches(request));
+		public AddPostLikeCommandRequest IsAddPostLikeCommandRequest()
+		{
+			return Matcher.Is<AddPostLikeCommandRequest>(p => p.Matches(request));
+		}
 	}
 
-	public static DeletePostLikeCommandRequest IsDeletePostLikeCommandRequest(DeletePostLikeApiRequest request)
+	extension(DeletePostLikeApiRequest request)
 	{
-		return Matcher.Is<DeletePostLikeCommandRequest>(p => p.Matches(request));
+		public DeletePostLikeCommandRequest IsDeletePostLikeCommandRequest()
+		{
+			return Matcher.Is<DeletePostLikeCommandRequest>(p => p.Matches(request));
+		}
 	}
 }

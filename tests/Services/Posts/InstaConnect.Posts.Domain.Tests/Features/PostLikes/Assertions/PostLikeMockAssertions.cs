@@ -35,7 +35,7 @@ public static class PostLikeMockAssertions
 		{
 			await repository.ShouldHaveReceivedOne().GetByIdAsync(
 				command.Id,
-				PostLikeDomainMatcher.IsPostLikeInclude(command, include),
+				command.IsPostLikeInclude(include),
 				cancellationToken);
 		}
 
@@ -43,14 +43,14 @@ public static class PostLikeMockAssertions
 			AddPostLikeCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().AddAsync(PostLikeDomainMatcher.IsPostLike(command), cancellationToken);
+			await repository.ShouldHaveReceivedOne().AddAsync(command.IsPostLike(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneDeleteAsync(
 			DeletePostLikeCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().DeleteAsync(PostLikeDomainMatcher.IsPostLike(command), cancellationToken);
+			await repository.ShouldHaveReceivedOne().DeleteAsync(command.IsPostLike(), cancellationToken);
 		}
 	}
 
@@ -63,7 +63,7 @@ public static class PostLikeMockAssertions
 		{
 			await repository.ShouldHaveReceivedOne().GetByIdAsync(
 				command.Id,
-				PostLikeDomainMatcher.IsPostInclude(command, include),
+				command.IsPostInclude(include),
 				cancellationToken);
 		}
 
@@ -186,7 +186,7 @@ public static class PostLikeMockAssertions
 			PostLike postLike,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(PostLikeDomainMatcher.IsPostLikeAddedEventRequest(command, postLike), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(command.IsPostLikeAddedEventRequest(postLike), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOnePublishAsync(
@@ -194,7 +194,7 @@ public static class PostLikeMockAssertions
 			PostLike postLike,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(PostLikeDomainMatcher.IsPostLikeDeletedEventRequest(command, postLike), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(command.IsPostLikeDeletedEventRequest(postLike), cancellationToken);
 		}
 	}
 }

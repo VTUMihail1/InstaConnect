@@ -2,13 +2,19 @@ namespace InstaConnect.Identity.Presentation.Tests.Features.ForgotPasswordTokens
 
 public static class ForgotPasswordTokenPresentationMatcher
 {
-	public static AddForgotPasswordTokenCommandRequest IsAddForgotPasswordTokenCommandRequest(AddForgotPasswordTokenApiRequest request)
+	extension(AddForgotPasswordTokenApiRequest request)
 	{
-		return Matcher.Is<AddForgotPasswordTokenCommandRequest>(p => p.Matches(request));
+		public AddForgotPasswordTokenCommandRequest IsAddForgotPasswordTokenCommandRequest()
+		{
+			return Matcher.Is<AddForgotPasswordTokenCommandRequest>(p => p.Matches(request));
+		}
 	}
 
-	public static VerifyForgotPasswordTokenCommandRequest IsVerifyForgotPasswordTokenCommandRequest(VerifyForgotPasswordTokenApiRequest request)
+	extension(VerifyForgotPasswordTokenApiRequest request)
 	{
-		return Matcher.Is<VerifyForgotPasswordTokenCommandRequest>(p => p.Matches(request));
+		public VerifyForgotPasswordTokenCommandRequest IsVerifyForgotPasswordTokenCommandRequest()
+		{
+			return Matcher.Is<VerifyForgotPasswordTokenCommandRequest>(p => p.Matches(request));
+		}
 	}
 }

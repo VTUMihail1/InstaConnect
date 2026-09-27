@@ -10,21 +10,21 @@ public static class RefreshTokenMockAssertions
 		IssueRefreshTokenCommandRequest request,
 		CancellationToken cancellationToken)
 		{
-			await refreshTokenService.ShouldHaveReceivedOne().IssueAsync(RefreshTokenApplicationMatcher.IsIssueRefreshTokenCommand(request), cancellationToken);
+			await refreshTokenService.ShouldHaveReceivedOne().IssueAsync(request.IsIssueRefreshTokenCommand(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneRotateAsync(
 			RotateRefreshTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await refreshTokenService.ShouldHaveReceivedOne().RotateAsync(RefreshTokenApplicationMatcher.IsRotateRefreshTokenCommand(request), cancellationToken);
+			await refreshTokenService.ShouldHaveReceivedOne().RotateAsync(request.IsRotateRefreshTokenCommand(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneDeleteAsync(
 			DeleteCurrentRefreshTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await refreshTokenService.ShouldHaveReceivedOne().DeleteAsync(RefreshTokenApplicationMatcher.IsDeleteRefreshTokenCommand(request), cancellationToken);
+			await refreshTokenService.ShouldHaveReceivedOne().DeleteAsync(request.IsDeleteRefreshTokenCommand(), cancellationToken);
 		}
 	}
 }

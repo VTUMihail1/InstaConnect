@@ -100,7 +100,7 @@ public static class FollowMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, FollowDomainMatcher.IsFollowInclude(command, include), cancellationToken)
+				.GetByIdAsync(command.Id, command.IsFollowInclude(include), cancellationToken)
 				.ReturnsTaskResponse(follow);
 		}
 
@@ -111,7 +111,7 @@ public static class FollowMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, FollowDomainMatcher.IsFollowInclude(command, include), cancellationToken)
+				.GetByIdAsync(command.Id, command.IsFollowInclude(include), cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 	}

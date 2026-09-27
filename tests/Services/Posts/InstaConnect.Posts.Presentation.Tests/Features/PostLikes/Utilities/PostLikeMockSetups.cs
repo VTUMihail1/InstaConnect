@@ -13,7 +13,7 @@ public static class PostLikeMockSetups
 		CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(PostLikePresentationMatcher.IsGetAllPostLikesQueryRequest(request), cancellationToken)
+				.SendAsync(request.IsGetAllPostLikesQueryRequest(), cancellationToken)
 				.ReturnsTaskResponse(postLikes.ToResponse(request, post));
 		}
 
@@ -24,7 +24,7 @@ public static class PostLikeMockSetups
 			CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(PostLikePresentationMatcher.IsGetAllPostLikesForUserQueryRequest(request), cancellationToken)
+				.SendAsync(request.IsGetAllPostLikesForUserQueryRequest(), cancellationToken)
 				.ReturnsTaskResponse(postLikes.ToResponse(request, user));
 		}
 
@@ -34,7 +34,7 @@ public static class PostLikeMockSetups
 			CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(PostLikePresentationMatcher.IsGetPostLikeByIdQueryRequest(request), cancellationToken)
+				.SendAsync(request.IsGetPostLikeByIdQueryRequest(), cancellationToken)
 				.ReturnsTaskResponse(postLike.ToResponse(request));
 		}
 
@@ -44,7 +44,7 @@ public static class PostLikeMockSetups
 			CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(PostLikePresentationMatcher.IsAddPostLikeCommandRequest(request), cancellationToken)
+				.SendAsync(request.IsAddPostLikeCommandRequest(), cancellationToken)
 				.ReturnsTaskResponse(postLike.ToResponse(request));
 		}
 	}

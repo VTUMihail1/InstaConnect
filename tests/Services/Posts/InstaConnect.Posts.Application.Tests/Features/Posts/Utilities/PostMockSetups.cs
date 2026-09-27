@@ -10,7 +10,7 @@ public static class PostMockSetups
 		CancellationToken cancellationToken)
 		{
 			service
-				.GetAllAsync(PostApplicationMatcher.IsGetAllPostsQuery(request), cancellationToken)
+				.GetAllAsync(request.IsGetAllPostsQuery(), cancellationToken)
 				.ReturnsTaskResponse(posts.ToResponse(request));
 		}
 
@@ -21,7 +21,7 @@ public static class PostMockSetups
 			CancellationToken cancellationToken)
 		{
 			service
-				.GetAllForUserAsync(PostApplicationMatcher.IsGetAllPostsForUserQuery(request), cancellationToken)
+				.GetAllForUserAsync(request.IsGetAllPostsForUserQuery(), cancellationToken)
 				.ReturnsTaskResponse(posts.ToResponse(request, user));
 		}
 
@@ -31,7 +31,7 @@ public static class PostMockSetups
 			CancellationToken cancellationToken)
 		{
 			service
-				.GetByIdAsync(PostApplicationMatcher.IsGetPostByIdQuery(request), cancellationToken)
+				.GetByIdAsync(request.IsGetPostByIdQuery(), cancellationToken)
 				.ReturnsTaskResponse(post.ToResponse(request));
 		}
 	}
@@ -44,7 +44,7 @@ public static class PostMockSetups
 		CancellationToken cancellationToken)
 		{
 			service
-				.AddAsync(PostApplicationMatcher.IsAddPostCommand(request), cancellationToken)
+				.AddAsync(request.IsAddPostCommand(), cancellationToken)
 				.ReturnsTaskResponse(post.ToResponse(request));
 		}
 
@@ -54,7 +54,7 @@ public static class PostMockSetups
 			CancellationToken cancellationToken)
 		{
 			service
-				.UpdateAsync(PostApplicationMatcher.IsUpdatePostCommand(request), cancellationToken)
+				.UpdateAsync(request.IsUpdatePostCommand(), cancellationToken)
 				.ReturnsTaskResponse(post.ToResponse(request));
 		}
 	}

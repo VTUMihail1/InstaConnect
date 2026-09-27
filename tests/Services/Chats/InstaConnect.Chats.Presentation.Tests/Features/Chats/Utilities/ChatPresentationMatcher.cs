@@ -2,18 +2,27 @@ namespace InstaConnect.Chats.Presentation.Tests.Features.Chats.Utilities;
 
 public static class ChatPresentationMatcher
 {
-	public static GetAllChatsQueryRequest IsGetAllChatsQueryRequest(GetAllChatsApiRequest request)
+	extension(GetAllChatsApiRequest request)
 	{
-		return Matcher.Is<GetAllChatsQueryRequest>(p => p.Matches(request));
+		public GetAllChatsQueryRequest IsGetAllChatsQueryRequest()
+		{
+			return Matcher.Is<GetAllChatsQueryRequest>(p => p.Matches(request));
+		}
 	}
 
-	public static GetChatByIdQueryRequest IsGetChatByIdQueryRequest(GetChatByIdApiRequest request)
+	extension(GetChatByIdApiRequest request)
 	{
-		return Matcher.Is<GetChatByIdQueryRequest>(p => p.Matches(request));
+		public GetChatByIdQueryRequest IsGetChatByIdQueryRequest()
+		{
+			return Matcher.Is<GetChatByIdQueryRequest>(p => p.Matches(request));
+		}
 	}
 
-	public static AddChatCommandRequest IsAddChatCommandRequest(AddChatApiRequest request)
+	extension(AddChatApiRequest request)
 	{
-		return Matcher.Is<AddChatCommandRequest>(p => p.Matches(request));
+		public AddChatCommandRequest IsAddChatCommandRequest()
+		{
+			return Matcher.Is<AddChatCommandRequest>(p => p.Matches(request));
+		}
 	}
 }

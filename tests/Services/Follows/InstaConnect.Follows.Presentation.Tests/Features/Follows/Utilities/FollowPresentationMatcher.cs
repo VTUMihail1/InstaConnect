@@ -2,28 +2,43 @@ namespace InstaConnect.Follows.Presentation.Tests.Features.Follows.Utilities;
 
 public static class FollowPresentationMatcher
 {
-	public static GetAllFollowsQueryRequest IsGetAllFollowsQueryRequest(GetAllFollowsApiRequest request)
+	extension(GetAllFollowsApiRequest request)
 	{
-		return Matcher.Is<GetAllFollowsQueryRequest>(p => p.Matches(request));
+		public GetAllFollowsQueryRequest IsGetAllFollowsQueryRequest()
+		{
+			return Matcher.Is<GetAllFollowsQueryRequest>(p => p.Matches(request));
+		}
 	}
 
-	public static GetAllFollowsForFollowingQueryRequest IsGetAllFollowsForFollowingQueryRequest(GetAllFollowsForFollowingApiRequest request)
+	extension(GetAllFollowsForFollowingApiRequest request)
 	{
-		return Matcher.Is<GetAllFollowsForFollowingQueryRequest>(p => p.Matches(request));
+		public GetAllFollowsForFollowingQueryRequest IsGetAllFollowsForFollowingQueryRequest()
+		{
+			return Matcher.Is<GetAllFollowsForFollowingQueryRequest>(p => p.Matches(request));
+		}
 	}
 
-	public static GetFollowByIdQueryRequest IsGetFollowByIdQueryRequest(GetFollowByIdApiRequest request)
+	extension(GetFollowByIdApiRequest request)
 	{
-		return Matcher.Is<GetFollowByIdQueryRequest>(p => p.Matches(request));
+		public GetFollowByIdQueryRequest IsGetFollowByIdQueryRequest()
+		{
+			return Matcher.Is<GetFollowByIdQueryRequest>(p => p.Matches(request));
+		}
 	}
 
-	public static AddFollowCommandRequest IsAddFollowCommandRequest(AddFollowApiRequest request)
+	extension(AddFollowApiRequest request)
 	{
-		return Matcher.Is<AddFollowCommandRequest>(p => p.Matches(request));
+		public AddFollowCommandRequest IsAddFollowCommandRequest()
+		{
+			return Matcher.Is<AddFollowCommandRequest>(p => p.Matches(request));
+		}
 	}
 
-	public static DeleteFollowCommandRequest IsDeleteFollowCommandRequest(DeleteFollowApiRequest request)
+	extension(DeleteFollowApiRequest request)
 	{
-		return Matcher.Is<DeleteFollowCommandRequest>(p => p.Matches(request));
+		public DeleteFollowCommandRequest IsDeleteFollowCommandRequest()
+		{
+			return Matcher.Is<DeleteFollowCommandRequest>(p => p.Matches(request));
+		}
 	}
 }

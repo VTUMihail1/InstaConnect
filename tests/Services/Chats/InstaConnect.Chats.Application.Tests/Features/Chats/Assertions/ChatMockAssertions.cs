@@ -10,14 +10,14 @@ public static class ChatMockAssertions
 		GetAllChatsQueryRequest request,
 		CancellationToken cancellationToken)
 		{
-			await chatService.ShouldHaveReceivedOne().GetAllAsync(ChatApplicationMatcher.IsGetAllChatsQuery(request), cancellationToken);
+			await chatService.ShouldHaveReceivedOne().GetAllAsync(request.IsGetAllChatsQuery(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneGetByIdAsync(
 			GetChatByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await chatService.ShouldHaveReceivedOne().GetByIdAsync(ChatApplicationMatcher.IsGetChatByIdQuery(request), cancellationToken);
+			await chatService.ShouldHaveReceivedOne().GetByIdAsync(request.IsGetChatByIdQuery(), cancellationToken);
 		}
 	}
 
@@ -27,7 +27,7 @@ public static class ChatMockAssertions
 		AddChatCommandRequest request,
 		CancellationToken cancellationToken)
 		{
-			await chatService.ShouldHaveReceivedOne().AddAsync(ChatApplicationMatcher.IsAddChatCommand(request), cancellationToken);
+			await chatService.ShouldHaveReceivedOne().AddAsync(request.IsAddChatCommand(), cancellationToken);
 		}
 	}
 }

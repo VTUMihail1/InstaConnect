@@ -4,33 +4,39 @@ namespace InstaConnect.Identity.Domain.Tests.Features.EmailConfirmationTokens.Ut
 
 public static class EmailConfirmationTokenDomainMatcher
 {
-	public static UserInclude IsUserInclude(VerifyEmailConfirmationTokenCommand command, UserInclude include)
+	extension(VerifyEmailConfirmationTokenCommand command)
 	{
-		return Matcher.Is<UserInclude>(p => p.Matches(command, include));
+		public UserInclude IsUserInclude(UserInclude include)
+		{
+			return Matcher.Is<UserInclude>(p => p.Matches(command, include));
+		}
+
+		public User IsUser()
+		{
+			return Matcher.Is<User>(p => p.Matches(command));
+		}
+
+		public ICollection<EmailConfirmationToken> IsEmailConfirmationTokenCollection()
+		{
+			return Matcher.Is<ICollection<EmailConfirmationToken>>(p => p.Matches(command));
+		}
+
+		public ICollection<EmailConfirmationTokenDeletedEventRequest> IsEmailConfirmationTokenDeletedEventRequestCollection(ICollection<EmailConfirmationToken> emailConfirmationTokens)
+		{
+			return Matcher.Is<ICollection<EmailConfirmationTokenDeletedEventRequest>>(p => p.Matches(command, emailConfirmationTokens));
+		}
 	}
 
-	public static User IsUser(VerifyEmailConfirmationTokenCommand command)
+	extension(AddEmailConfirmationTokenCommand command)
 	{
-		return Matcher.Is<User>(p => p.Matches(command));
-	}
+		public EmailConfirmationToken IsEmailConfirmationToken()
+		{
+			return Matcher.Is<EmailConfirmationToken>(p => p.Matches(command));
+		}
 
-	public static EmailConfirmationToken IsEmailConfirmationToken(AddEmailConfirmationTokenCommand command)
-	{
-		return Matcher.Is<EmailConfirmationToken>(p => p.Matches(command));
-	}
-
-	public static ICollection<EmailConfirmationToken> IsEmailConfirmationTokenCollection(VerifyEmailConfirmationTokenCommand command)
-	{
-		return Matcher.Is<ICollection<EmailConfirmationToken>>(p => p.Matches(command));
-	}
-
-	public static EmailConfirmationTokenAddedEventRequest IsEmailConfirmationTokenAddedEventRequest(AddEmailConfirmationTokenCommand command, EmailConfirmationToken emailConfirmationToken)
-	{
-		return Matcher.Is<EmailConfirmationTokenAddedEventRequest>(p => p.Matches(command, emailConfirmationToken));
-	}
-
-	public static ICollection<EmailConfirmationTokenDeletedEventRequest> IsEmailConfirmationTokenDeletedEventRequestCollection(VerifyEmailConfirmationTokenCommand command, ICollection<EmailConfirmationToken> emailConfirmationTokens)
-	{
-		return Matcher.Is<ICollection<EmailConfirmationTokenDeletedEventRequest>>(p => p.Matches(command, emailConfirmationTokens));
+		public EmailConfirmationTokenAddedEventRequest IsEmailConfirmationTokenAddedEventRequest(EmailConfirmationToken emailConfirmationToken)
+		{
+			return Matcher.Is<EmailConfirmationTokenAddedEventRequest>(p => p.Matches(command, emailConfirmationToken));
+		}
 	}
 }

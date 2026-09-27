@@ -2,13 +2,19 @@ namespace InstaConnect.Identity.Application.Tests.Features.EmailConfirmationToke
 
 public static class EmailConfirmationTokenApplicationMatcher
 {
-	public static AddEmailConfirmationTokenCommand IsAddEmailConfirmationTokenCommand(AddEmailConfirmationTokenCommandRequest request)
+	extension(AddEmailConfirmationTokenCommandRequest request)
 	{
-		return Matcher.Is<AddEmailConfirmationTokenCommand>(p => p.Matches(request));
+		public AddEmailConfirmationTokenCommand IsAddEmailConfirmationTokenCommand()
+		{
+			return Matcher.Is<AddEmailConfirmationTokenCommand>(p => p.Matches(request));
+		}
 	}
 
-	public static VerifyEmailConfirmationTokenCommand IsVerifyEmailConfirmationTokenCommand(VerifyEmailConfirmationTokenCommandRequest request)
+	extension(VerifyEmailConfirmationTokenCommandRequest request)
 	{
-		return Matcher.Is<VerifyEmailConfirmationTokenCommand>(p => p.Matches(request));
+		public VerifyEmailConfirmationTokenCommand IsVerifyEmailConfirmationTokenCommand()
+		{
+			return Matcher.Is<VerifyEmailConfirmationTokenCommand>(p => p.Matches(request));
+		}
 	}
 }

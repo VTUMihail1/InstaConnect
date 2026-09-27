@@ -11,7 +11,7 @@ public static class UserClaimMockSetups
 		CancellationToken cancellationToken)
 		{
 			service
-				.GetAllAsync(UserClaimApplicationMatcher.IsGetAllUserClaimsQuery(request), cancellationToken)
+				.GetAllAsync(request.IsGetAllUserClaimsQuery(), cancellationToken)
 				.ReturnsTaskResponse(userClaims.ToResponse(request, user));
 		}
 	}
@@ -24,7 +24,7 @@ public static class UserClaimMockSetups
 		CancellationToken cancellationToken)
 		{
 			service
-				.AddAsync(UserClaimApplicationMatcher.IsAddUserClaimCommand(request), cancellationToken)
+				.AddAsync(request.IsAddUserClaimCommand(), cancellationToken)
 				.ReturnsTaskResponse(userClaim.ToResponse(request));
 		}
 	}
