@@ -27,8 +27,8 @@ public static class ServiceCollectionExtensions
 			serviceCollection
 				.AddTelemetries(configuration, webHostEnvironment)
 				.AddMappers(FollowsInfrastructureReference.Assembly)
-				.AddServicesWithMatchingInterfaces(FollowsInfrastructureReference.Assembly)
-				.AddDatabases<IFollowsContext>(configuration)
+				.AddServicesWithMatchingInterfacesExceptFluents(FollowsInfrastructureReference.Assembly)
+				.AddDatabases(configuration)
 				.AddEvents(configuration, FollowsEventHandlerUtilities.Prefix, FollowsInfrastructureReference.Assembly)
 				.AddAccessTokens(configuration)
 				.AddCaches(configuration)

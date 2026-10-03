@@ -6,11 +6,11 @@ namespace InstaConnect.Posts.Infrastructure.Features.PostComments.Helpers.Includ
 
 internal class PostIncluder : IPostCommentIncluder
 {
-	private readonly IPostsContext _context;
+	private readonly IMongoCollection<Post> _collection;
 
-	public PostIncluder(IPostsContext context)
+	public PostIncluder(IMongoCollection<Post> collection)
 	{
-		_context = context;
+		_collection = collection;
 	}
 
 	public PostsDestinationType DestinationType => PostsDestinationType.PostComment;
@@ -21,7 +21,7 @@ internal class PostIncluder : IPostCommentIncluder
 	{
 		return aggregate
 			.IncludeOne(
-				_context.Posts,
+				_collection,
 				pc => pc.Id.Id,
 				p => p.Id,
 				pc => pc.Post!

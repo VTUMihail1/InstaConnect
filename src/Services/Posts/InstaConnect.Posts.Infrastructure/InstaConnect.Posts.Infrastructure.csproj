@@ -9,9 +9,8 @@
     <Using Include="Microsoft.Extensions.DependencyInjection" />
     <Using Include="Microsoft.AspNetCore.Hosting" />
     <Using Include="Microsoft.Extensions.Configuration" />
-    <Using Include="InstaConnect.Common.Domain.Features.Common.Extensions"/>
+    <Using Include="InstaConnect.Common.Domain.Features.Common.Extensions" />
     <Using Include="InstaConnect.Common.Infrastructure.Features.Databases.Extensions" />
-    <Using Include="InstaConnect.Posts.Infrastructure.Features.Common.Abstractions" />
   </ItemGroup>
 
   <ItemGroup Label="Users">

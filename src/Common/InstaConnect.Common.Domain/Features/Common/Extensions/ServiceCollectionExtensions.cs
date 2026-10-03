@@ -15,10 +15,15 @@ public static class ServiceCollectionExtensions
 	{
 		public IServiceCollection AddServicesWithMatchingInterfaces(params Assembly[] assemblies)
 		{
+			return serviceCollection.AddServicesWithMatchingInterfaces(_ => true, assemblies);
+		}
+
+		public IServiceCollection AddServicesWithMatchingInterfaces(Func<Type, bool> predicate, params Assembly[] assemblies)
+		{
 			serviceCollection
 				.Scan(selector => selector
 					.FromAssemblies(assemblies)
-					.AddClasses(false)
+					.AddClasses(classes => classes.Where(predicate), false)
 					.UsingRegistrationStrategy(RegistrationStrategy.Skip)
 					.AsMatchingInterface()
 					.WithScopedLifetime());

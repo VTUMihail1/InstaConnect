@@ -1,0 +1,13 @@
+using InstaConnect.Common.Domain.Features.ValueObjects.Models;
+using InstaConnect.Common.Infrastructure.Features.Databases.Abstractions;
+
+namespace InstaConnect.Posts.Infrastructure.Features.Users.Abstractions;
+
+public interface IUserFluent : IMongoDbFluent<User>
+{
+	public IUserFluent Match(UserId filter);
+	public IUserFluent Match(Name filter);
+	public IUserFluent Match(Email filter);
+	public IUserResponseFluent ProjectToFullResponse(CurrentUserQuery currentUser);
+	public IUserFluent ApplyIncludes(UserInclude? include);
+}

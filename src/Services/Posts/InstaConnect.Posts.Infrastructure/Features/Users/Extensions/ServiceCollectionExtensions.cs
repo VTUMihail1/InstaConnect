@@ -10,7 +10,11 @@ internal static class ServiceCollectionExtensions
 	{
 		internal IServiceCollection AddUserServices()
 		{
+			const string CollectionName = "users";
+
 			serviceCollection.AddImplementationsOf<IUserIncluder>(PostsInfrastructureReference.Assembly);
+
+			serviceCollection.AddCollection<User>(CollectionName);
 
 			BsonClassMap.TryRegisterClassMap<User>(cm =>
 			{

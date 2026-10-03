@@ -10,8 +10,12 @@ internal static class ServiceCollectionExtensions
 	{
 		internal IServiceCollection AddUserClaimServices()
 		{
+			const string CollectionName = "user_claims";
+
 			serviceCollection.AddImplementationsOf<IUserClaimsSortTermer>(IdentityInfrastructureReference.Assembly);
 			serviceCollection.AddImplementationsOf<IUserClaimIncluder>(IdentityInfrastructureReference.Assembly);
+
+			serviceCollection.AddCollection<UserClaim>(CollectionName);
 
 			BsonClassMap.TryRegisterClassMap<UserClaim>(cm =>
 			{

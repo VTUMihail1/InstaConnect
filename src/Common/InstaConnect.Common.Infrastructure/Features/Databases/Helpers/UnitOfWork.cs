@@ -1,35 +1,37 @@
 using InstaConnect.Common.Application.Features.Databases.Abstractions;
 using InstaConnect.Common.Infrastructure.Features.Databases.Abstractions;
 
+using MassTransit.MongoDbIntegration;
+
 namespace InstaConnect.Common.Infrastructure.Features.Databases.Helpers;
 
 internal class UnitOfWork : IUnitOfWork
 {
-	private readonly IMongoDbContext _mongoDbContext;
-	private readonly MassTransit.MongoDbIntegration.MongoDbContext _massTransitMongoDbContext;
+	private readonly ISessionHandler _sessionHandler;
+	private readonly MongoDbContext _mongoDbContext;
 
-	public UnitOfWork(IMongoDbContext mongoDbContext, MassTransit.MongoDbIntegration.MongoDbContext massTransitMongoDbContext)
+	public UnitOfWork(ISessionHandler sessionHandler, MongoDbContext mongoDbContext)
 	{
+		_sessionHandler = sessionHandler;
 		_mongoDbContext = mongoDbContext;
-		_massTransitMongoDbContext = massTransitMongoDbContext;
 	}
 
 	public async Task BeginAsync(CancellationToken cancellationToken)
 	{
-		await _mongoDbContext.BeginAsync(cancellationToken);
-		await _massTransitMongoDbContext.BeginTransaction(cancellationToken);
+		await _sessionHandler.BeginAsync(cancellationToken);
+		await _mongoDbContext.BeginTransaction(cancellationToken);
 	}
 
 	public async Task CommitAsync(CancellationToken cancellationToken)
 	{
-		await _mongoDbContext.CommitAsync(cancellationToken);
-		await _massTransitMongoDbContext.CommitTransaction(cancellationToken);
+		await _sessionHandler.CommitAsync(cancellationToken);
+		await _mongoDbContext.CommitTransaction(cancellationToken);
 	}
 
 	public async Task AbortAsync(CancellationToken cancellationToken)
 	{
-		await _mongoDbContext.AbortAsync(cancellationToken);
-		await _massTransitMongoDbContext.AbortTransaction(cancellationToken);
+		await _sessionHandler.AbortAsync(cancellationToken);
+		await _mongoDbContext.AbortTransaction(cancellationToken);
 	}
 
 }

@@ -2,4 +2,4 @@ using InstaConnect.Common.Infrastructure.Features.Databases.Abstractions;
 
 namespace InstaConnect.Posts.Infrastructure.Features.PostLikes.Abstractions;
 
-internal interface IPostLikesSortTermerFactory : ISortTermerFactory<PostLikesSortTerm, IPostLikesSortTermer, PostLikeResponse>;
+public interface IPostLikesSortTermerFactory : ISortTermerFactory<PostLikesSortTerm, IPostLikesSortTermer, PostLikeResponse>;

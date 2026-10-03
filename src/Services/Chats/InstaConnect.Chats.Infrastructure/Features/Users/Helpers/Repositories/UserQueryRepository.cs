@@ -1,26 +1,23 @@
 using InstaConnect.Chats.Domain.Features.Users.Models.Responses;
-using InstaConnect.Chats.Infrastructure.Features.Users.Extensions;
-
-using MongoDB.Driver;
 
 namespace InstaConnect.Chats.Infrastructure.Features.Users.Helpers.Repositories;
 
 internal class UserQueryRepository : IUserQueryRepository
 {
-	private readonly IChatsContext _context;
+	private readonly IUserCollection _collection;
 
-	public UserQueryRepository(IChatsContext context)
+	public UserQueryRepository(IUserCollection collection)
 	{
-		_context = context;
+		_collection = collection;
 	}
+
 	public async Task<UserResponse?> GetByIdAsync(
 		UserId id,
 		CurrentUserQuery currentUser,
 		CancellationToken cancellationToken)
 	{
-		return await _context
-			.Users
-			.AggregateWithIgnoreCaseCollation()
+		return await _collection
+			.AggregateFluent()
 			.Match(id)
 			.ProjectToFullResponse(currentUser)
 			.FirstOrDefaultAsync(cancellationToken);
@@ -30,9 +27,8 @@ internal class UserQueryRepository : IUserQueryRepository
 		UserId id,
 		CancellationToken cancellationToken)
 	{
-		return await _context
-			.Users
-			.AggregateWithIgnoreCaseCollation()
+		return await _collection
+			.AggregateFluent()
 			.Match(id)
 			.AnyAsync(cancellationToken);
 	}

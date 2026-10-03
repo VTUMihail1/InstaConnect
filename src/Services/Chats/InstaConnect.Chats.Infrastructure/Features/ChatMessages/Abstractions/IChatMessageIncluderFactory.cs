@@ -3,5 +3,5 @@ using InstaConnect.Common.Infrastructure.Features.Databases.Abstractions;
 
 namespace InstaConnect.Chats.Infrastructure.Features.ChatMessages.Abstractions;
 
-internal interface IChatMessageIncluderFactory
+public interface IChatMessageIncluderFactory
 	: IIncluderFactory<ChatsIncludeType, ChatsDestinationType, ChatsIncludeDescriptor, IChatMessageIncluder, ChatMessage>;

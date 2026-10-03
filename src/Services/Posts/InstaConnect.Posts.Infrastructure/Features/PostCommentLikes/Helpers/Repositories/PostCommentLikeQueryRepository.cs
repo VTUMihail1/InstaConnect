@@ -1,43 +1,22 @@
-using InstaConnect.Common.Domain.Features.Databases.Abstractions;
-using InstaConnect.Common.Infrastructure.Features.Databases.Abstractions;
-using InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Extensions;
-
-using MongoDB.Driver;
-
 namespace InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Helpers.Repositories;
 
 internal class PostCommentLikeQueryRepository : IPostCommentLikeQueryRepository
 {
-	private readonly IPaginator _paginator;
-	private readonly IPostsContext _context;
-	private readonly ISortOrdererFactory _sortOrdererFactory;
+	private readonly IPostCommentLikeCollection _collection;
 	private readonly IPostIncludeBuilderFactory _includeBuilderFactory;
-	private readonly IPostCommentLikeIncluderFactory _commentLikeIncluderFactory;
 	private readonly IPostCommentIncludeBuilderFactory _commentIncludeBuilderFactory;
-	private readonly IPostCommentLikesSortTermerFactory _commentLikeSortTermerFactory;
 	private readonly IPostCommentLikeIncludeBuilderFactory _commentLikeIncludeBuilderFactory;
-	private readonly IPostCommentLikesForUserSortTermerFactory _commentLikeForUserSortTermerFactory;
 
 	public PostCommentLikeQueryRepository(
-		IPaginator paginator,
-		IPostsContext context,
-		ISortOrdererFactory sortOrdererFactory,
+		IPostCommentLikeCollection collection,
 		IPostIncludeBuilderFactory includeBuilderFactory,
-		IPostCommentLikeIncluderFactory commentLikeIncluderFactory,
 		IPostCommentIncludeBuilderFactory commentIncludeBuilderFactory,
-		IPostCommentLikesSortTermerFactory commentLikeSortTermerFactory,
-		IPostCommentLikeIncludeBuilderFactory commentLikeIncludeBuilderFactory,
-		IPostCommentLikesForUserSortTermerFactory commentLikeForUserSortTermerFactory)
+		IPostCommentLikeIncludeBuilderFactory commentLikeIncludeBuilderFactory)
 	{
-		_paginator = paginator;
-		_context = context;
-		_sortOrdererFactory = sortOrdererFactory;
+		_collection = collection;
 		_includeBuilderFactory = includeBuilderFactory;
 		_commentIncludeBuilderFactory = commentIncludeBuilderFactory;
-		_commentLikeIncluderFactory = commentLikeIncluderFactory;
-		_commentLikeSortTermerFactory = commentLikeSortTermerFactory;
 		_commentLikeIncludeBuilderFactory = commentLikeIncludeBuilderFactory;
-		_commentLikeForUserSortTermerFactory = commentLikeForUserSortTermerFactory;
 	}
 
 	public async Task<ICollection<PostCommentLikeResponse>> GetAllAsync(
@@ -49,14 +28,13 @@ internal class PostCommentLikeQueryRepository : IPostCommentLikeQueryRepository
 	{
 		var commentLikeInclude = _commentLikeIncludeBuilderFactory.Create().WithUser().Build();
 
-		return await _context
-			.PostCommentLikes
-			.AggregateWithIgnoreCaseCollation()
-			.ApplyIncludes(_commentLikeIncluderFactory, commentLikeInclude)
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(commentLikeInclude)
 			.Match(filter)
 			.ProjectToResponseWithoutPostComment(currentUser)
-			.ApplySorting(_sortOrdererFactory, _commentLikeSortTermerFactory, sorting)
-			.ApplyPagination(_paginator, pagination)
+			.ApplySorting(sorting)
+			.ApplyPagination(pagination)
 			.ToListAsync(cancellationToken);
 	}
 
@@ -71,14 +49,13 @@ internal class PostCommentLikeQueryRepository : IPostCommentLikeQueryRepository
 		var commentInclude = _commentIncludeBuilderFactory.Create().WithUser().WithPost(include).WithPostCommentLikes().Build();
 		var commentLikeInclude = _commentLikeIncludeBuilderFactory.Create().WithPostComment(commentInclude).Build();
 
-		return await _context
-			.PostCommentLikes
-			.Aggregate()
-			.ApplyIncludes(_commentLikeIncluderFactory, commentLikeInclude)
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(commentLikeInclude)
 			.Match(filter)
 			.ProjectToResponseWithoutUser(currentUser)
-			.ApplySorting(_sortOrdererFactory, _commentLikeForUserSortTermerFactory, sorting)
-			.ApplyPagination(_paginator, pagination)
+			.ApplySorting(sorting)
+			.ApplyPagination(pagination)
 			.ToListAsync(cancellationToken);
 	}
 
@@ -88,10 +65,9 @@ internal class PostCommentLikeQueryRepository : IPostCommentLikeQueryRepository
 	{
 		var commentLikeInclude = _commentLikeIncludeBuilderFactory.Create().WithUser().Build();
 
-		return await _context
-			.PostCommentLikes
-			.Aggregate()
-			.ApplyIncludes(_commentLikeIncluderFactory, commentLikeInclude)
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(commentLikeInclude)
 			.Match(filter)
 			.GetCountAsync(cancellationToken);
 	}
@@ -104,10 +80,9 @@ internal class PostCommentLikeQueryRepository : IPostCommentLikeQueryRepository
 		var commentInclude = _commentIncludeBuilderFactory.Create().WithUser().WithPost(include).WithPostCommentLikes().Build();
 		var commentLikeInclude = _commentLikeIncludeBuilderFactory.Create().WithPostComment(commentInclude).Build();
 
-		return await _context
-			.PostCommentLikes
-			.Aggregate()
-			.ApplyIncludes(_commentLikeIncluderFactory, commentLikeInclude)
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(commentLikeInclude)
 			.Match(filter)
 			.GetCountAsync(cancellationToken);
 	}
@@ -121,10 +96,9 @@ internal class PostCommentLikeQueryRepository : IPostCommentLikeQueryRepository
 		var commentInclude = _commentIncludeBuilderFactory.Create().WithUser().WithPost(include).WithPostCommentLikes().Build();
 		var commentLikeInclude = _commentLikeIncludeBuilderFactory.Create().WithUser().WithPostComment(commentInclude).Build();
 
-		return await _context
-			.PostCommentLikes
-			.Aggregate()
-			.ApplyIncludes(_commentLikeIncluderFactory, commentLikeInclude)
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(commentLikeInclude)
 			.Match(id)
 			.ProjectToFullResponse(currentUser)
 			.FirstOrDefaultAsync(cancellationToken);
@@ -134,9 +108,8 @@ internal class PostCommentLikeQueryRepository : IPostCommentLikeQueryRepository
 		PostCommentLikeId id,
 		CancellationToken cancellationToken)
 	{
-		return await _context
-			.PostCommentLikes
-			.Aggregate()
+		return await _collection
+			.AggregateFluent()
 			.Match(id)
 			.AnyAsync(cancellationToken);
 	}

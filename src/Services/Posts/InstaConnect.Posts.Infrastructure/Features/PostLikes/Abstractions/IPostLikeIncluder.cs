@@ -3,4 +3,4 @@ using InstaConnect.Posts.Domain.Features.Common.Models.Requests;
 
 namespace InstaConnect.Posts.Infrastructure.Features.PostLikes.Abstractions;
 
-internal interface IPostLikeIncluder : IIncluder<PostLike, PostsIncludeType, PostsDestinationType>;
+public interface IPostLikeIncluder : IIncluder<PostLike, PostsIncludeType, PostsDestinationType>;

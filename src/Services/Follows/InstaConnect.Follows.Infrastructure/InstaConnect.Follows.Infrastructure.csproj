@@ -11,7 +11,6 @@
     <Using Include="Microsoft.Extensions.Configuration" />
     <Using Include="InstaConnect.Common.Domain.Features.Common.Extensions"/>
     <Using Include="InstaConnect.Common.Infrastructure.Features.Databases.Extensions" />
-    <Using Include="InstaConnect.Follows.Infrastructure.Features.Common.Abstractions" />
   </ItemGroup>
 
   <ItemGroup Label="Users">

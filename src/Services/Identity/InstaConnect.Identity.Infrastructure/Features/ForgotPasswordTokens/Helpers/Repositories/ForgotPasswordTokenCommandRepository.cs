@@ -1,21 +1,12 @@
-using InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Extensions;
-using InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Extensions;
-
-using MongoDB.Driver;
-
 namespace InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Helpers.Repositories;
 
 internal class ForgotPasswordTokenCommandRepository : IForgotPasswordTokenCommandRepository
 {
-	private readonly IIdentityContext _context;
-	private readonly IForgotPasswordTokenIncluderFactory _forgotPasswordTokenIncluderFactory;
+	private readonly IForgotPasswordTokenCollection _collection;
 
-	public ForgotPasswordTokenCommandRepository(
-		IIdentityContext context,
-		IForgotPasswordTokenIncluderFactory forgotPasswordTokenIncluderFactory)
+	public ForgotPasswordTokenCommandRepository(IForgotPasswordTokenCollection collection)
 	{
-		_context = context;
-		_forgotPasswordTokenIncluderFactory = forgotPasswordTokenIncluderFactory;
+		_collection = collection;
 	}
 
 	public async Task<ForgotPasswordToken?> GetByIdAsync(
@@ -23,10 +14,9 @@ internal class ForgotPasswordTokenCommandRepository : IForgotPasswordTokenComman
 		ForgotPasswordTokenInclude? include,
 		CancellationToken cancellationToken)
 	{
-		return await _context
-			.ForgotPasswordTokens
-			.Aggregate()
-			.ApplyIncludes(_forgotPasswordTokenIncluderFactory, include)
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(include)
 			.Match(id)
 			.FirstOrDefaultAsync(cancellationToken);
 	}
@@ -42,47 +32,34 @@ internal class ForgotPasswordTokenCommandRepository : IForgotPasswordTokenComman
 		ForgotPasswordTokenId id,
 		CancellationToken cancellationToken)
 	{
-		return await _context
-			.ForgotPasswordTokens
-			.AggregateWithIgnoreCaseCollation()
+		return await _collection
+			.AggregateFluent()
 			.Match(id)
 			.AnyAsync(cancellationToken);
 	}
 
 	public async Task AddAsync(ForgotPasswordToken entity, CancellationToken cancellationToken)
 	{
-		await _context
-			.ForgotPasswordTokens
-			.AddAsync(_context.ClientSessionHandle, entity, cancellationToken);
+		await _collection.AddAsync(entity, cancellationToken);
 	}
 
 	public async Task AddRangeAsync(IEnumerable<ForgotPasswordToken> entities, CancellationToken cancellationToken)
 	{
-		await _context
-			.ForgotPasswordTokens
-			.AddRangeAsync(_context.ClientSessionHandle, entities, cancellationToken);
+		await _collection.AddRangeAsync(entities, cancellationToken);
 	}
 
 	public async Task UpdateAsync(ForgotPasswordToken entity, CancellationToken cancellationToken)
 	{
-		await _context
-			.ForgotPasswordTokens
-			.UpdateAsync(_context.ClientSessionHandle, entity, cancellationToken);
+		await _collection.UpdateAsync(entity, cancellationToken);
 	}
 
 	public async Task DeleteAsync(ForgotPasswordToken entity, CancellationToken cancellationToken)
 	{
-		await _context
-			.ForgotPasswordTokens
-			.DeleteAsync(_context.ClientSessionHandle, entity, cancellationToken);
+		await _collection.DeleteAsync(entity, cancellationToken);
 	}
 
 	public async Task DeleteRangeAsync(IEnumerable<ForgotPasswordToken> entities, CancellationToken cancellationToken)
 	{
-		await _context.ForgotPasswordTokens
-			.DeleteRangeAsync(
-			_context.ClientSessionHandle,
-			entities,
-			cancellationToken);
+		await _collection.DeleteRangeAsync(entities, cancellationToken);
 	}
 }

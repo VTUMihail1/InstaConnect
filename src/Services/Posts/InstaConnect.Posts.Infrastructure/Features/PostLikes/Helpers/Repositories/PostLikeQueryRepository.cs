@@ -1,41 +1,19 @@
-using InstaConnect.Common.Domain.Features.Databases.Abstractions;
-using InstaConnect.Common.Infrastructure.Features.Databases.Abstractions;
-using InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Extensions;
-using InstaConnect.Posts.Infrastructure.Features.PostLikes.Extensions;
-
-using MongoDB.Driver;
-
 namespace InstaConnect.Posts.Infrastructure.Features.PostLikes.Helpers.Repositories;
 
 internal class PostLikeQueryRepository : IPostLikeQueryRepository
 {
-	private readonly IPaginator _paginator;
-	private readonly IPostsContext _context;
-	private readonly ISortOrdererFactory _sortOrdererFactory;
-	private readonly IPostLikeIncluderFactory _likeIncluderFactory;
+	private readonly IPostLikeCollection _collection;
 	private readonly IPostIncludeBuilderFactory _includeBuilderFactory;
-	private readonly IPostLikesSortTermerFactory _likeSortTermerFactory;
 	private readonly IPostLikeIncludeBuilderFactory _likeIncludeBuilderFactory;
-	private readonly IPostLikesForUserSortTermerFactory _likeForUserSortTermerFactory;
 
 	public PostLikeQueryRepository(
-		IPaginator paginator,
-		IPostsContext context,
-		ISortOrdererFactory sortOrdererFactory,
-		IPostLikeIncluderFactory likeIncluderFactory,
+		IPostLikeCollection collection,
 		IPostIncludeBuilderFactory includeBuilderFactory,
-		IPostLikesSortTermerFactory likeSortTermerFactory,
-		IPostLikeIncludeBuilderFactory likeIncludeBuilderFactory,
-		IPostLikesForUserSortTermerFactory likeForUserSortTermerFactory)
+		IPostLikeIncludeBuilderFactory likeIncludeBuilderFactory)
 	{
-		_paginator = paginator;
-		_context = context;
-		_sortOrdererFactory = sortOrdererFactory;
-		_likeIncluderFactory = likeIncluderFactory;
+		_collection = collection;
 		_includeBuilderFactory = includeBuilderFactory;
-		_likeSortTermerFactory = likeSortTermerFactory;
 		_likeIncludeBuilderFactory = likeIncludeBuilderFactory;
-		_likeForUserSortTermerFactory = likeForUserSortTermerFactory;
 	}
 
 	public async Task<ICollection<PostLikeResponse>> GetAllAsync(
@@ -47,14 +25,13 @@ internal class PostLikeQueryRepository : IPostLikeQueryRepository
 	{
 		var likeInclude = _likeIncludeBuilderFactory.Create().WithUser().Build();
 
-		return await _context
-			.PostLikes
-			.AggregateWithIgnoreCaseCollation()
-			.ApplyIncludes(_likeIncluderFactory, likeInclude)
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(likeInclude)
 			.Match(filter)
 			.ProjectToResponseWithoutPost(currentUser)
-			.ApplySorting(_sortOrdererFactory, _likeSortTermerFactory, sorting)
-			.ApplyPagination(_paginator, pagination)
+			.ApplySorting(sorting)
+			.ApplyPagination(pagination)
 			.ToListAsync(cancellationToken);
 	}
 
@@ -68,14 +45,13 @@ internal class PostLikeQueryRepository : IPostLikeQueryRepository
 		var include = _includeBuilderFactory.Create().WithUser().WithPostLikes().Build();
 		var likeInclude = _likeIncludeBuilderFactory.Create().WithPost(include).Build();
 
-		return await _context
-			.PostLikes
-			.AggregateWithIgnoreCaseCollation()
-			.ApplyIncludes(_likeIncluderFactory, likeInclude)
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(likeInclude)
 			.Match(filter)
 			.ProjectToResponseWithoutUser(currentUser)
-			.ApplySorting(_sortOrdererFactory, _likeForUserSortTermerFactory, sorting)
-			.ApplyPagination(_paginator, pagination)
+			.ApplySorting(sorting)
+			.ApplyPagination(pagination)
 			.ToListAsync(cancellationToken);
 	}
 
@@ -85,10 +61,9 @@ internal class PostLikeQueryRepository : IPostLikeQueryRepository
 	{
 		var likeInclude = _likeIncludeBuilderFactory.Create().WithUser().Build();
 
-		return await _context
-			.PostLikes
-			.AggregateWithIgnoreCaseCollation()
-			.ApplyIncludes(_likeIncluderFactory, likeInclude)
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(likeInclude)
 			.Match(filter)
 			.GetCountAsync(cancellationToken);
 	}
@@ -100,10 +75,9 @@ internal class PostLikeQueryRepository : IPostLikeQueryRepository
 		var include = _includeBuilderFactory.Create().WithUser().WithPostLikes().Build();
 		var likeInclude = _likeIncludeBuilderFactory.Create().WithPost(include).Build();
 
-		return await _context
-			.PostLikes
-			.AggregateWithIgnoreCaseCollation()
-			.ApplyIncludes(_likeIncluderFactory, likeInclude)
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(likeInclude)
 			.Match(filter)
 			.GetCountAsync(cancellationToken);
 	}
@@ -116,10 +90,9 @@ internal class PostLikeQueryRepository : IPostLikeQueryRepository
 		var include = _includeBuilderFactory.Create().WithUser().WithPostLikes().Build();
 		var likeInclude = _likeIncludeBuilderFactory.Create().WithUser().WithPost(include).Build();
 
-		return await _context
-			.PostLikes
-			.AggregateWithIgnoreCaseCollation()
-			.ApplyIncludes(_likeIncluderFactory, likeInclude)
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(likeInclude)
 			.Match(id)
 			.ProjectToFullResponse(currentUser)
 			.FirstOrDefaultAsync(cancellationToken);
@@ -129,9 +102,8 @@ internal class PostLikeQueryRepository : IPostLikeQueryRepository
 		PostLikeId id,
 		CancellationToken cancellationToken)
 	{
-		return await _context
-			.PostLikes
-			.AggregateWithIgnoreCaseCollation()
+		return await _collection
+			.AggregateFluent()
 			.Match(id)
 			.AnyAsync(cancellationToken);
 	}

@@ -1,41 +1,19 @@
-using InstaConnect.Common.Domain.Features.Databases.Abstractions;
-using InstaConnect.Common.Infrastructure.Features.Databases.Abstractions;
-using InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Extensions;
-using InstaConnect.Posts.Infrastructure.Features.PostComments.Extensions;
-
-using MongoDB.Driver;
-
 namespace InstaConnect.Posts.Infrastructure.Features.PostComments.Helpers.Repositories;
 
 internal class PostCommentQueryRepository : IPostCommentQueryRepository
 {
-	private readonly IPaginator _paginator;
-	private readonly IPostsContext _context;
-	private readonly ISortOrdererFactory _sortOrdererFactory;
+	private readonly IPostCommentCollection _collection;
 	private readonly IPostIncludeBuilderFactory _includeBuilderFactory;
-	private readonly IPostCommentIncluderFactory _commentIncluderFactory;
-	private readonly IPostCommentsSortTermerFactory _commentSortTermerFactory;
 	private readonly IPostCommentIncludeBuilderFactory _commentIncludeBuilderFactory;
-	private readonly IPostCommentsForUserSortTermerFactory _commentForUserSortTermerFactory;
 
 	public PostCommentQueryRepository(
-		IPaginator paginator,
-		IPostsContext context,
-		ISortOrdererFactory sortOrdererFactory,
+		IPostCommentCollection collection,
 		IPostIncludeBuilderFactory includeBuilderFactory,
-		IPostCommentIncluderFactory commentIncluderFactory,
-		IPostCommentsSortTermerFactory commentSortTermerFactory,
-		IPostCommentIncludeBuilderFactory commentIncludeBuilderFactory,
-		IPostCommentsForUserSortTermerFactory commentForUserSortTermerFactory)
+		IPostCommentIncludeBuilderFactory commentIncludeBuilderFactory)
 	{
-		_paginator = paginator;
-		_context = context;
-		_sortOrdererFactory = sortOrdererFactory;
+		_collection = collection;
 		_includeBuilderFactory = includeBuilderFactory;
-		_commentIncluderFactory = commentIncluderFactory;
-		_commentSortTermerFactory = commentSortTermerFactory;
 		_commentIncludeBuilderFactory = commentIncludeBuilderFactory;
-		_commentForUserSortTermerFactory = commentForUserSortTermerFactory;
 	}
 
 	public async Task<ICollection<PostCommentResponse>> GetAllAsync(
@@ -47,14 +25,13 @@ internal class PostCommentQueryRepository : IPostCommentQueryRepository
 	{
 		var commentInclude = _commentIncludeBuilderFactory.Create().WithUser().WithPostCommentLikes().Build();
 
-		return await _context
-			.PostComments
-			.AggregateWithIgnoreCaseCollation()
-			.ApplyIncludes(_commentIncluderFactory, commentInclude)
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(commentInclude)
 			.Match(filter)
 			.ProjectToResponseWithoutPost(currentUser)
-			.ApplySorting(_sortOrdererFactory, _commentSortTermerFactory, sorting)
-			.ApplyPagination(_paginator, pagination)
+			.ApplySorting(sorting)
+			.ApplyPagination(pagination)
 			.ToListAsync(cancellationToken);
 	}
 
@@ -68,14 +45,13 @@ internal class PostCommentQueryRepository : IPostCommentQueryRepository
 		var include = _includeBuilderFactory.Create().WithUser().WithPostLikes().Build();
 		var commentInclude = _commentIncludeBuilderFactory.Create().WithPost(include).WithPostCommentLikes().Build();
 
-		return await _context
-			.PostComments
-			.AggregateWithIgnoreCaseCollation()
-			.ApplyIncludes(_commentIncluderFactory, commentInclude)
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(commentInclude)
 			.Match(filter)
 			.ProjectToResponseWithoutUser(currentUser)
-			.ApplySorting(_sortOrdererFactory, _commentForUserSortTermerFactory, sorting)
-			.ApplyPagination(_paginator, pagination)
+			.ApplySorting(sorting)
+			.ApplyPagination(pagination)
 			.ToListAsync(cancellationToken);
 	}
 
@@ -85,10 +61,9 @@ internal class PostCommentQueryRepository : IPostCommentQueryRepository
 	{
 		var commentInclude = _commentIncludeBuilderFactory.Create().WithUser().WithPostCommentLikes().Build();
 
-		return await _context
-			.PostComments
-			.AggregateWithIgnoreCaseCollation()
-			.ApplyIncludes(_commentIncluderFactory, commentInclude)
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(commentInclude)
 			.Match(filter)
 			.GetCountAsync(cancellationToken);
 	}
@@ -100,10 +75,9 @@ internal class PostCommentQueryRepository : IPostCommentQueryRepository
 		var include = _includeBuilderFactory.Create().WithUser().WithPostLikes().Build();
 		var commentInclude = _commentIncludeBuilderFactory.Create().WithPost(include).WithPostCommentLikes().Build();
 
-		return await _context
-			.PostComments
-			.AggregateWithIgnoreCaseCollation()
-			.ApplyIncludes(_commentIncluderFactory, commentInclude)
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(commentInclude)
 			.Match(filter)
 			.GetCountAsync(cancellationToken);
 	}
@@ -116,10 +90,9 @@ internal class PostCommentQueryRepository : IPostCommentQueryRepository
 		var include = _includeBuilderFactory.Create().WithUser().WithPostLikes().Build();
 		var commentInclude = _commentIncludeBuilderFactory.Create().WithUser().WithPostCommentLikes().WithPost(include).Build();
 
-		return await _context
-			.PostComments
-			.AggregateWithIgnoreCaseCollation()
-			.ApplyIncludes(_commentIncluderFactory, commentInclude)
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(commentInclude)
 			.Match(id)
 			.ProjectToFullResponse(currentUser)
 			.FirstOrDefaultAsync(cancellationToken);
@@ -129,9 +102,8 @@ internal class PostCommentQueryRepository : IPostCommentQueryRepository
 		PostCommentId id,
 		CancellationToken cancellationToken)
 	{
-		return await _context
-			.PostComments
-			.AggregateWithIgnoreCaseCollation()
+		return await _collection
+			.AggregateFluent()
 			.Match(id)
 			.AnyAsync(cancellationToken);
 	}

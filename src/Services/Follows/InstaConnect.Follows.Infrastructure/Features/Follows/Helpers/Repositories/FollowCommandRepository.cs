@@ -1,21 +1,12 @@
-using InstaConnect.Follows.Infrastructure.Features.Follows.Extensions;
-using InstaConnect.Follows.Infrastructure.Features.Users.Extensions;
-
-using MongoDB.Driver;
-
 namespace InstaConnect.Follows.Infrastructure.Features.Follows.Helpers.Repositories;
 
 internal class FollowCommandRepository : IFollowCommandRepository
 {
-	private readonly IFollowsContext _context;
-	private readonly IFollowIncluderFactory _includerFactory;
+	private readonly IFollowCollection _collection;
 
-	public FollowCommandRepository(
-		IFollowsContext context,
-		IFollowIncluderFactory includerFactory)
+	public FollowCommandRepository(IFollowCollection collection)
 	{
-		_context = context;
-		_includerFactory = includerFactory;
+		_collection = collection;
 	}
 
 	public async Task<Follow?> GetByIdAsync(
@@ -23,10 +14,9 @@ internal class FollowCommandRepository : IFollowCommandRepository
 		FollowInclude? include,
 		CancellationToken cancellationToken)
 	{
-		return await _context
-			.Follows
-			.AggregateWithIgnoreCaseCollation()
-			.ApplyIncludes(_includerFactory, include)
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(include)
 			.Match(id)
 			.FirstOrDefaultAsync(cancellationToken);
 	}
@@ -42,38 +32,29 @@ internal class FollowCommandRepository : IFollowCommandRepository
 		FollowId id,
 		CancellationToken cancellationToken)
 	{
-		return await _context
-			.Follows
-			.AggregateWithIgnoreCaseCollation()
+		return await _collection
+			.AggregateFluent()
 			.Match(id)
 			.AnyAsync(cancellationToken);
 	}
 
 	public async Task AddAsync(Follow entity, CancellationToken cancellationToken)
 	{
-		await _context
-			.Follows
-			.AddAsync(_context.ClientSessionHandle, entity, cancellationToken);
+		await _collection.AddAsync(entity, cancellationToken);
 	}
 
 	public async Task AddRangeAsync(IEnumerable<Follow> entities, CancellationToken cancellationToken)
 	{
-		await _context
-			.Follows
-			.AddRangeAsync(_context.ClientSessionHandle, entities, cancellationToken);
+		await _collection.AddRangeAsync(entities, cancellationToken);
 	}
 
 	public async Task UpdateAsync(Follow entity, CancellationToken cancellationToken)
 	{
-		await _context
-			.Follows
-			.UpdateAsync(_context.ClientSessionHandle, entity, cancellationToken);
+		await _collection.UpdateAsync(entity, cancellationToken);
 	}
 
 	public async Task DeleteAsync(Follow entity, CancellationToken cancellationToken)
 	{
-		await _context
-			.Follows
-			.DeleteAsync(_context.ClientSessionHandle, entity, cancellationToken);
+		await _collection.DeleteAsync(entity, cancellationToken);
 	}
 }

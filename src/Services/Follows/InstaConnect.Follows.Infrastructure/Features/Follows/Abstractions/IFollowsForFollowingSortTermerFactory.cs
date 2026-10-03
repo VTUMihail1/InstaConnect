@@ -2,4 +2,4 @@ using InstaConnect.Common.Infrastructure.Features.Databases.Abstractions;
 
 namespace InstaConnect.Follows.Infrastructure.Features.Follows.Abstractions;
 
-internal interface IFollowsForFollowingSortTermerFactory : ISortTermerFactory<FollowsForFollowingSortTerm, IFollowsForFollowingSortTermer, FollowResponse>;
+public interface IFollowsForFollowingSortTermerFactory : ISortTermerFactory<FollowsForFollowingSortTerm, IFollowsForFollowingSortTermer, FollowResponse>;

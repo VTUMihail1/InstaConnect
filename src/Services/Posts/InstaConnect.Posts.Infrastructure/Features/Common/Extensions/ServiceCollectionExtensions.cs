@@ -31,8 +31,8 @@ public static class ServiceCollectionExtensions
 			serviceCollection
 				.AddTelemetries(configuration, webHostEnvironment)
 				.AddMappers(PostsInfrastructureReference.Assembly)
-				.AddServicesWithMatchingInterfaces(PostsInfrastructureReference.Assembly)
-				.AddDatabases<IPostsContext>(configuration)
+				.AddServicesWithMatchingInterfacesExceptFluents(PostsInfrastructureReference.Assembly)
+				.AddDatabases(configuration)
 				.AddEvents(configuration, PostsEventHandlerUtilities.Prefix, PostsInfrastructureReference.Assembly)
 				.AddAccessTokens(configuration)
 				.AddGuids()

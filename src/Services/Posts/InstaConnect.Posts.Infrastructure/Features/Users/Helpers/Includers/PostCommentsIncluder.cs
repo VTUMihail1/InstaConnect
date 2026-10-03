@@ -6,11 +6,11 @@ namespace InstaConnect.Posts.Infrastructure.Features.Users.Helpers.Includers;
 
 internal class PostCommentsIncluder : IUserIncluder
 {
-	private readonly IPostsContext _context;
+	private readonly IMongoCollection<PostComment> _collection;
 
-	public PostCommentsIncluder(IPostsContext context)
+	public PostCommentsIncluder(IMongoCollection<PostComment> collection)
 	{
-		_context = context;
+		_collection = collection;
 	}
 
 	public PostsDestinationType DestinationType => PostsDestinationType.User;
@@ -21,7 +21,7 @@ internal class PostCommentsIncluder : IUserIncluder
 	{
 		return aggregate
 			.IncludeMany(
-				_context.PostComments,
+				_collection,
 				p => p.Id,
 				l => l.UserId,
 				p => p.PostComments

@@ -30,8 +30,8 @@ public static class ServiceCollectionExtensions
 			serviceCollection
 				.AddTelemetries(configuration, webHostEnvironment)
 				.AddMappers(ChatsInfrastructureReference.Assembly, CommonInfrastructureReference.Assembly)
-				.AddServicesWithMatchingInterfaces(ChatsInfrastructureReference.Assembly)
-				.AddDatabases<IChatsContext>(configuration)
+				.AddServicesWithMatchingInterfacesExceptFluents(ChatsInfrastructureReference.Assembly)
+				.AddDatabases(configuration)
 				.AddEvents(configuration, ChatsEventHandlerUtilities.Prefix, ChatsInfrastructureReference.Assembly)
 				.AddAccessTokens(configuration)
 				.AddCaches(configuration)

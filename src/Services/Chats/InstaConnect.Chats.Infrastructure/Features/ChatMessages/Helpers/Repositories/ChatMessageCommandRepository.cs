@@ -1,20 +1,12 @@
-using InstaConnect.Chats.Infrastructure.Features.ChatMessages.Extensions;
-
-using MongoDB.Driver;
-
 namespace InstaConnect.Chats.Infrastructure.Features.ChatMessages.Helpers.Repositories;
 
 internal class ChatMessageCommandRepository : IChatMessageCommandRepository
 {
-	private readonly IChatsContext _context;
-	private readonly IChatMessageIncluderFactory _messageIncluderFactory;
+	private readonly IChatMessageCollection _collection;
 
-	public ChatMessageCommandRepository(
-		IChatsContext context,
-		IChatMessageIncluderFactory messageIncluderFactory)
+	public ChatMessageCommandRepository(IChatMessageCollection collection)
 	{
-		_context = context;
-		_messageIncluderFactory = messageIncluderFactory;
+		_collection = collection;
 	}
 
 	public async Task<ChatMessage?> GetByIdAsync(
@@ -22,10 +14,9 @@ internal class ChatMessageCommandRepository : IChatMessageCommandRepository
 		ChatMessageInclude? include,
 		CancellationToken cancellationToken)
 	{
-		return await _context
-			.ChatMessages
-			.AggregateWithIgnoreCaseCollation()
-			.ApplyIncludes(_messageIncluderFactory, include)
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(include)
 			.Match(id)
 			.FirstOrDefaultAsync(cancellationToken);
 	}
@@ -41,38 +32,29 @@ internal class ChatMessageCommandRepository : IChatMessageCommandRepository
 		ChatMessageId id,
 		CancellationToken cancellationToken)
 	{
-		return await _context
-			.ChatMessages
-			.AggregateWithIgnoreCaseCollation()
+		return await _collection
+			.AggregateFluent()
 			.Match(id)
 			.AnyAsync(cancellationToken);
 	}
 
 	public async Task AddAsync(ChatMessage entity, CancellationToken cancellationToken)
 	{
-		await _context
-			.ChatMessages
-			.AddAsync(_context.ClientSessionHandle, entity, cancellationToken);
+		await _collection.AddAsync(entity, cancellationToken);
 	}
 
 	public async Task AddRangeAsync(IEnumerable<ChatMessage> entities, CancellationToken cancellationToken)
 	{
-		await _context
-			.ChatMessages
-			.AddRangeAsync(_context.ClientSessionHandle, entities, cancellationToken);
+		await _collection.AddRangeAsync(entities, cancellationToken);
 	}
 
 	public async Task UpdateAsync(ChatMessage entity, CancellationToken cancellationToken)
 	{
-		await _context
-			.ChatMessages
-			.UpdateAsync(_context.ClientSessionHandle, entity, cancellationToken);
+		await _collection.UpdateAsync(entity, cancellationToken);
 	}
 
 	public async Task DeleteAsync(ChatMessage entity, CancellationToken cancellationToken)
 	{
-		await _context
-			.ChatMessages
-			.DeleteAsync(_context.ClientSessionHandle, entity, cancellationToken);
+		await _collection.DeleteAsync(entity, cancellationToken);
 	}
 }

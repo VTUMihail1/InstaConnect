@@ -10,9 +10,13 @@ internal static class ServiceCollectionExtensions
 	{
 		internal IServiceCollection AddPostCommentServices()
 		{
+			const string CollectionName = "post_comments";
+
 			serviceCollection.AddImplementationsOf<IPostCommentsSortTermer>(PostsInfrastructureReference.Assembly);
 			serviceCollection.AddImplementationsOf<IPostCommentsForUserSortTermer>(PostsInfrastructureReference.Assembly);
 			serviceCollection.AddImplementationsOf<IPostCommentIncluder>(PostsInfrastructureReference.Assembly);
+
+			serviceCollection.AddCollection<PostComment>(CollectionName);
 
 			BsonClassMap.TryRegisterClassMap<PostComment>(cm =>
 			{

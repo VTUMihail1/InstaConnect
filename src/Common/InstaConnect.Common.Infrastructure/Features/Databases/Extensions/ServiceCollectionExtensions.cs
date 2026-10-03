@@ -1,5 +1,8 @@
+using System.Reflection;
+
 using InstaConnect.Common.Application.Features.Databases.Abstractions;
 using InstaConnect.Common.Domain.Features.Databases.Abstractions;
+using InstaConnect.Common.Domain.Features.Entities.Abstractions;
 using InstaConnect.Common.Infrastructure.Features.Common.Extensions;
 using InstaConnect.Common.Infrastructure.Features.Databases.Abstractions;
 using InstaConnect.Common.Infrastructure.Features.Databases.Helpers;
@@ -19,8 +22,15 @@ public static class ServiceCollectionExtensions
 {
 	extension(IServiceCollection serviceCollection)
 	{
-		public IServiceCollection AddDatabases<TContext>(IConfiguration configuration)
-			where TContext : class, IMongoDbContext
+		public IServiceCollection AddCollection<TEntity>(string name)
+			where TEntity : IEntity
+		{
+			serviceCollection.AddScoped(sp => sp.GetRequiredService<IMongoDatabase>().GetCollection<TEntity>(name));
+
+			return serviceCollection;
+		}
+
+		public IServiceCollection AddDatabases(IConfiguration configuration)
 		{
 			const string ConventionName = "ApplicationConventionPack";
 
@@ -36,9 +46,8 @@ public static class ServiceCollectionExtensions
 
 			serviceCollection
 				.AddScoped<IPaginator, Paginator>()
-				.AddScoped<IUnitOfWork, UnitOfWork>();
-
-			serviceCollection.AddScoped<IMongoDbContext>(sp => sp.GetRequiredService<TContext>());
+				.AddScoped<IUnitOfWork, UnitOfWork>()
+				.AddScoped<ISessionHandler, SessionHandler>();
 
 			var conventionPack = new ConventionPack
 			{
@@ -61,6 +70,16 @@ public static class ServiceCollectionExtensions
 							 .AddImplementationsOf<ISortOrderer>(CommonInfrastructureReference.Assembly);
 
 			return serviceCollection;
+		}
+
+		public IServiceCollection AddServicesWithMatchingInterfacesExceptFluents(params Assembly[] assemblies)
+		{
+			Type[] fluentTypes = [typeof(MongoDbFluent<>), typeof(MongoDbResponseFluent<>)];
+
+			return serviceCollection.AddServicesWithMatchingInterfaces(
+				type => type.BaseType is not { IsGenericType: true } baseType ||
+						!fluentTypes.Contains(baseType.GetGenericTypeDefinition()),
+				assemblies);
 		}
 	}
 }
