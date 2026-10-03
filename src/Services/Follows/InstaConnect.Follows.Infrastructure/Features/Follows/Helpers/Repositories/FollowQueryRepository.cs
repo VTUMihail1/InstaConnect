@@ -1,38 +1,16 @@
-using InstaConnect.Common.Domain.Features.Data.Abstractions;
-using InstaConnect.Common.Infrastructure.Features.Data.Abstractions;
-using InstaConnect.Follows.Infrastructure.Features.Follows.Extensions;
-using InstaConnect.Follows.Infrastructure.Features.Users.Extensions;
-
-using MongoDB.Driver;
-
 namespace InstaConnect.Follows.Infrastructure.Features.Follows.Helpers.Repositories;
 
 internal class FollowQueryRepository : IFollowQueryRepository
 {
-	private readonly IPaginator _paginator;
-	private readonly IFollowsContext _context;
-	private readonly IFollowIncluderFactory _includerFactory;
-	private readonly ISortOrdererFactory _sortOrdererFactory;
-	private readonly IFollowsSortTermerFactory _sortTermerFactory;
+	private readonly IFollowCollection _collection;
 	private readonly IFollowIncludeBuilderFactory _includeBuilderFactory;
-	private readonly IFollowsForFollowingSortTermerFactory _forFollowingSortTermerFactory;
 
 	public FollowQueryRepository(
-		IPaginator paginator,
-		IFollowsContext context,
-		IFollowIncluderFactory includerFactory,
-		ISortOrdererFactory sortOrdererFactory,
-		IFollowsSortTermerFactory sortTermerFactory,
-		IFollowIncludeBuilderFactory includeBuilderFactory,
-		IFollowsForFollowingSortTermerFactory forFollowingSortTermerFactory)
+		IFollowCollection collection,
+		IFollowIncludeBuilderFactory includeBuilderFactory)
 	{
-		_paginator = paginator;
-		_context = context;
-		_includerFactory = includerFactory;
-		_sortOrdererFactory = sortOrdererFactory;
-		_sortTermerFactory = sortTermerFactory;
+		_collection = collection;
 		_includeBuilderFactory = includeBuilderFactory;
-		_forFollowingSortTermerFactory = forFollowingSortTermerFactory;
 	}
 
 	public async Task<ICollection<FollowResponse>> GetAllAsync(
@@ -44,14 +22,13 @@ internal class FollowQueryRepository : IFollowQueryRepository
 	{
 		var include = _includeBuilderFactory.Create().WithFollowing().Build();
 
-		return await _context
-			.Follows
-			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_includerFactory, include)
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(include)
 			.Match(filter)
 			.ProjectToResponseWithoutFollower(currentUser)
-			.Sort(_sortOrdererFactory, _sortTermerFactory, sorting)
-			.Paginate(_paginator, pagination)
+			.ApplySorting(sorting)
+			.ApplyPagination(pagination)
 			.ToListAsync(cancellationToken);
 	}
 
@@ -64,14 +41,13 @@ internal class FollowQueryRepository : IFollowQueryRepository
 	{
 		var include = _includeBuilderFactory.Create().WithFollower().Build();
 
-		return await _context
-			.Follows
-			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_includerFactory, include)
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(include)
 			.Match(filter)
 			.ProjectToResponseWithoutFollowing(currentUser)
-			.Sort(_sortOrdererFactory, _forFollowingSortTermerFactory, sorting)
-			.Paginate(_paginator, pagination)
+			.ApplySorting(sorting)
+			.ApplyPagination(pagination)
 			.ToListAsync(cancellationToken);
 	}
 
@@ -81,12 +57,11 @@ internal class FollowQueryRepository : IFollowQueryRepository
 	{
 		var include = _includeBuilderFactory.Create().WithFollowing().Build();
 
-		return await _context
-			.Follows
-			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_includerFactory, include)
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(include)
 			.Match(filter)
-			.GetCount(cancellationToken);
+			.GetCountAsync(cancellationToken);
 	}
 
 	public async Task<long> GetTotalCountForFollowingAsync(
@@ -95,12 +70,11 @@ internal class FollowQueryRepository : IFollowQueryRepository
 	{
 		var include = _includeBuilderFactory.Create().WithFollower().Build();
 
-		return await _context
-			.Follows
-			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_includerFactory, include)
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(include)
 			.Match(filter)
-			.GetCount(cancellationToken);
+			.GetCountAsync(cancellationToken);
 	}
 
 	public async Task<FollowResponse?> GetByIdAsync(
@@ -110,10 +84,9 @@ internal class FollowQueryRepository : IFollowQueryRepository
 	{
 		var include = _includeBuilderFactory.Create().WithFollower().WithFollowing().Build();
 
-		return await _context
-			.Follows
-			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_includerFactory, include)
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(include)
 			.Match(id)
 			.ProjectToFullResponse(currentUser)
 			.FirstOrDefaultAsync(cancellationToken);
@@ -123,9 +96,8 @@ internal class FollowQueryRepository : IFollowQueryRepository
 		FollowId id,
 		CancellationToken cancellationToken)
 	{
-		return await _context
-			.Follows
-			.AggregateWithCaseInsensitiveCollation()
+		return await _collection
+			.AggregateFluent()
 			.Match(id)
 			.AnyAsync(cancellationToken);
 	}

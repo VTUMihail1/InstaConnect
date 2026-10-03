@@ -2,29 +2,12 @@
 
   <PropertyGroup>
     <UserSecretsId>b534b6e1-bffe-440d-8f41-823bc991ccc3</UserSecretsId>
-    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <DockerfileContext>..\..\..\..</DockerfileContext>
-    <DockerComposeProjectPath>..\..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Presentation\InstaConnect.Common.Presentation.csproj" />
     <ProjectReference Include="..\InstaConnect.Follows.Application\InstaConnect.Follows.Application.csproj" />
     <ProjectReference Include="..\InstaConnect.Follows.Infrastructure\InstaConnect.Follows.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-      <_Parameter1>InstaConnect.Follows.Presentation.Tests.Unit</_Parameter1>
-    </AssemblyAttribute>
-    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-      <_Parameter1>InstaConnect.Follows.Presentation.Tests.Functional</_Parameter1>
-    </AssemblyAttribute>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="MediatR" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" />
   </ItemGroup>
 
   <ItemGroup Label="Common">

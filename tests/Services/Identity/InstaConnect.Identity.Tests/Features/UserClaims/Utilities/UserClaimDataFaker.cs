@@ -13,7 +13,7 @@ public static class UserClaimDataFaker
 
 	public static DateTimeOffset GetCreatedAtUtc()
 	{
-		return DataFaker.GetRecentDate();
+		return DataFaker.GetSoonDate();
 	}
 
 	public static int GetPage()

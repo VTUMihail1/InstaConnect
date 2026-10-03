@@ -4,49 +4,49 @@ public static class PostCommentLikeMockSetups
 {
 	extension(IPostCommentLikeQueryService commentLikeService)
 	{
-		public void SetupGetAllQuery(
+		public void SetupGetAllAsync(
 			GetAllPostCommentLikesQueryRequest request,
 			PostComment postComment,
 			ICollection<PostCommentLike> postCommentLikes,
 			CancellationToken cancellationToken)
 		{
 			commentLikeService
-				.GetAllAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesQuery(request), cancellationToken)
-				.ReturnsResponse(postCommentLikes.ToResponse(postComment, request));
+				.GetAllAsync(request.IsGetAllPostCommentLikesQuery(), cancellationToken)
+				.ReturnsTaskResponse(postCommentLikes.ToResponse(request, postComment));
 		}
 
-		public void SetupGetAllForUserQuery(
+		public void SetupGetAllForUserAsync(
 			GetAllPostCommentLikesForUserQueryRequest request,
 			User user,
 			ICollection<PostCommentLike> postCommentLikes,
 			CancellationToken cancellationToken)
 		{
 			commentLikeService
-				.GetAllForUserAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesForUserQuery(request), cancellationToken)
-				.ReturnsResponse(postCommentLikes.ToResponse(user, request));
+				.GetAllForUserAsync(request.IsGetAllPostCommentLikesForUserQuery(), cancellationToken)
+				.ReturnsTaskResponse(postCommentLikes.ToResponse(request, user));
 		}
 
-		public void SetupGetByIdQuery(
+		public void SetupGetByIdAsync(
 			GetPostCommentLikeByIdQueryRequest request,
 			PostCommentLike postCommentLike,
 			CancellationToken cancellationToken)
 		{
 			commentLikeService
-				.GetByIdAsync(PostCommentLikeMatcher.IsGetPostCommentLikeByIdQuery(request), cancellationToken)
-				.ReturnsResponse(postCommentLike.ToResponse(request));
+				.GetByIdAsync(request.IsGetPostCommentLikeByIdQuery(), cancellationToken)
+				.ReturnsTaskResponse(postCommentLike.ToResponse(request));
 		}
 	}
 
 	extension(IPostCommentLikeCommandService commentLikeService)
 	{
-		public void SetupAddCommand(
+		public void SetupAddAsync(
 			AddPostCommentLikeCommandRequest request,
 			PostCommentLike postCommentLike,
 			CancellationToken cancellationToken)
 		{
 			commentLikeService
-				.AddAsync(PostCommentLikeMatcher.IsAddPostCommentLikeCommand(request), cancellationToken)
-				.ReturnsResponse(postCommentLike.ToResponse(request));
+				.AddAsync(request.IsAddPostCommentLikeCommand(), cancellationToken)
+				.ReturnsTaskResponse(postCommentLike.ToResponse(request));
 		}
 	}
 }

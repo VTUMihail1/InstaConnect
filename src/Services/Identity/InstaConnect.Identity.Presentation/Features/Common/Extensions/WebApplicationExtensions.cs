@@ -1,6 +1,7 @@
+using InstaConnect.Common.Presentation.Features.AccessTokens.Extensions;
 using InstaConnect.Common.Presentation.Features.Controllers.Extensions;
-using InstaConnect.Common.Presentation.Features.ExceptionHandling.Extensions;
-using InstaConnect.Common.Presentation.Features.Seedings.Extensions;
+using InstaConnect.Common.Presentation.Features.Exceptions.Extensions;
+using InstaConnect.Common.Presentation.Features.Seeders.Extensions;
 
 namespace InstaConnect.Identity.Presentation.Features.Common.Extensions;
 
@@ -11,13 +12,13 @@ internal static class WebApplicationExtensions
 		public async Task<WebApplication> UsePresentationAsync(CancellationToken cancellationToken = default)
 		{
 			return await application
-				.UseConfiguredCors()
-				.UseRequestRateLimiting()
-				.UseSecurity()
-				.MapApiEndpoints()
-				.UseGlobalExceptionHandling()
+				.UseCorsPolicies()
+				.UseRateLimiterPolicies()
+				.UseAccessTokens()
+				.MapApiControllers()
+				.UseExceptions()
 				.MapHealthCheckEndpoints()
-				.UseDatabaseSeedingAsync(cancellationToken);
+				.UseSeedersAsync(cancellationToken);
 		}
 	}
 }

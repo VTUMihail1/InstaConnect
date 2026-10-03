@@ -13,7 +13,7 @@ public static class ServiceCollectionExtensions
 {
 	extension(IServiceCollection serviceCollection)
 	{
-		public IServiceCollection AddSendGrid(IConfiguration configuration)
+		public IServiceCollection AddEmailSenders(IConfiguration configuration)
 		{
 			serviceCollection.AddValidatedOptions<SendGridOptions>(SendGridOptions.SectionName);
 

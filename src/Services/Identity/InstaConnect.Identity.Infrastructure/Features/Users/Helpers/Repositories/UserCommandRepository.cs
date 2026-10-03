@@ -1,29 +1,20 @@
 using InstaConnect.Common.Domain.Features.ValueObjects.Models;
-using InstaConnect.Identity.Infrastructure.Features.RefreshTokens.Extensions;
-using InstaConnect.Identity.Infrastructure.Features.Users.Extensions;
-
-using MongoDB.Driver;
 
 namespace InstaConnect.Identity.Infrastructure.Features.Users.Helpers.Repositories;
 
 internal class UserCommandRepository : IUserCommandRepository
 {
-	private readonly IIdentityContext _context;
-	private readonly IUserIncluderFactory _includePropertyFactory;
+	private readonly IUserCollection _collection;
 
-	public UserCommandRepository(
-		IIdentityContext context,
-		IUserIncluderFactory includePropertyFactory)
+	public UserCommandRepository(IUserCollection collection)
 	{
-		_context = context;
-		_includePropertyFactory = includePropertyFactory;
+		_collection = collection;
 	}
 
 	public async Task<bool> AnyAsync(CancellationToken cancellationToken)
 	{
-		return await _context
-			.Users
-			.AggregateWithCaseInsensitiveCollation()
+		return await _collection
+			.AggregateFluent()
 			.AnyAsync(cancellationToken);
 	}
 
@@ -32,10 +23,9 @@ internal class UserCommandRepository : IUserCommandRepository
 		UserInclude? include,
 		CancellationToken cancellationToken)
 	{
-		return await _context
-			.Users
-			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_includePropertyFactory, include)
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(include)
 			.Match(id)
 			.FirstOrDefaultAsync(cancellationToken);
 	}
@@ -51,9 +41,8 @@ internal class UserCommandRepository : IUserCommandRepository
 		UserId id,
 		CancellationToken cancellationToken)
 	{
-		return await _context
-			.Users
-			.AggregateWithCaseInsensitiveCollation()
+		return await _collection
+			.AggregateFluent()
 			.Match(id)
 			.AnyAsync(cancellationToken);
 	}
@@ -63,10 +52,9 @@ internal class UserCommandRepository : IUserCommandRepository
 		UserInclude? include,
 		CancellationToken cancellationToken)
 	{
-		return await _context
-			.Users
-			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_includePropertyFactory, include)
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(include)
 			.Match(name)
 			.FirstOrDefaultAsync(cancellationToken);
 	}
@@ -82,9 +70,8 @@ internal class UserCommandRepository : IUserCommandRepository
 		Name name,
 		CancellationToken cancellationToken)
 	{
-		return !await _context
-			.Users
-			.AggregateWithCaseInsensitiveCollation()
+		return !await _collection
+			.AggregateFluent()
 			.Match(name)
 			.AnyAsync(cancellationToken);
 	}
@@ -94,10 +81,9 @@ internal class UserCommandRepository : IUserCommandRepository
 		UserInclude? include,
 		CancellationToken cancellationToken)
 	{
-		return await _context
-			.Users
-			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_includePropertyFactory, include)
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(include)
 			.Match(email)
 			.FirstOrDefaultAsync(cancellationToken);
 	}
@@ -113,38 +99,29 @@ internal class UserCommandRepository : IUserCommandRepository
 		Email email,
 		CancellationToken cancellationToken)
 	{
-		return !await _context
-			.Users
-			.AggregateWithCaseInsensitiveCollation()
+		return !await _collection
+			.AggregateFluent()
 			.Match(email)
 			.AnyAsync(cancellationToken);
 	}
 
 	public async Task AddAsync(User entity, CancellationToken cancellationToken)
 	{
-		await _context
-			.Users
-			.AddAsync(_context.ClientSessionHandle, entity, cancellationToken);
+		await _collection.AddAsync(entity, cancellationToken);
 	}
 
 	public async Task AddRangeAsync(IEnumerable<User> entities, CancellationToken cancellationToken)
 	{
-		await _context
-			.Users
-			.AddRangeAsync(_context.ClientSessionHandle, entities, cancellationToken);
+		await _collection.AddRangeAsync(entities, cancellationToken);
 	}
 
 	public async Task UpdateAsync(User entity, CancellationToken cancellationToken)
 	{
-		await _context
-			.Users
-			.UpdateAsync(_context.ClientSessionHandle, entity, cancellationToken);
+		await _collection.UpdateAsync(entity, cancellationToken);
 	}
 
 	public async Task DeleteAsync(User entity, CancellationToken cancellationToken)
 	{
-		await _context
-			.Users
-			.DeleteAsync(_context.ClientSessionHandle, entity, cancellationToken);
+		await _collection.DeleteAsync(entity, cancellationToken);
 	}
 }

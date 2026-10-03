@@ -10,21 +10,21 @@ public static class FollowMockAssertions
 		GetAllFollowsQueryRequest request,
 		CancellationToken cancellationToken)
 		{
-			await followService.ShouldHaveReceivedOne().GetAllAsync(FollowMatcher.IsGetAllFollowsQuery(request), cancellationToken);
+			await followService.ShouldHaveReceivedOne().GetAllAsync(request.IsGetAllFollowsQuery(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneGetAllForFollowingAsync(
 			GetAllFollowsForFollowingQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await followService.ShouldHaveReceivedOne().GetAllForFollowingAsync(FollowMatcher.IsGetAllFollowsForFollowingQuery(request), cancellationToken);
+			await followService.ShouldHaveReceivedOne().GetAllForFollowingAsync(request.IsGetAllFollowsForFollowingQuery(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneGetByIdAsync(
 			GetFollowByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await followService.ShouldHaveReceivedOne().GetByIdAsync(FollowMatcher.IsGetFollowByIdQuery(request), cancellationToken);
+			await followService.ShouldHaveReceivedOne().GetByIdAsync(request.IsGetFollowByIdQuery(), cancellationToken);
 		}
 	}
 
@@ -34,14 +34,14 @@ public static class FollowMockAssertions
 		AddFollowCommandRequest request,
 		CancellationToken cancellationToken)
 		{
-			await followService.ShouldHaveReceivedOne().AddAsync(FollowMatcher.IsAddFollowCommand(request), cancellationToken);
+			await followService.ShouldHaveReceivedOne().AddAsync(request.IsAddFollowCommand(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneDeleteAsync(
 			DeleteFollowCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await followService.ShouldHaveReceivedOne().DeleteAsync(FollowMatcher.IsDeleteFollowCommand(request), cancellationToken);
+			await followService.ShouldHaveReceivedOne().DeleteAsync(request.IsDeleteFollowCommand(), cancellationToken);
 		}
 	}
 }

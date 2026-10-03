@@ -1,4 +1,4 @@
-using InstaConnect.Common.Domain.Features.Data.Abstractions;
+using InstaConnect.Common.Domain.Features.Databases.Abstractions;
 
 namespace InstaConnect.Common.Domain.Features.Common.Extensions;
 
@@ -11,29 +11,19 @@ public static class EnumerableExtensions
 			return !enumerable.Any();
 		}
 
-		public string JoinAsString(string separator)
+		public string JoinWith(string separator)
 		{
 			return string.Join(separator, enumerable);
 		}
 
-		public string JoinAsStringWithComa()
+		public string JoinWithComma()
 		{
-			return enumerable.JoinAsString(", ");
+			return enumerable.JoinWith(", ");
 		}
 
-		public string JoinAsStringWithSemicolon()
+		public string JoinWithSemicolon()
 		{
-			return enumerable.JoinAsString("; ");
-		}
-
-		public string JoinAsStringWithNewLine()
-		{
-			return enumerable.JoinAsString("\n");
-		}
-
-		public string JoinAsStringWithDot()
-		{
-			return enumerable.JoinAsString(".");
+			return enumerable.JoinWith("; ");
 		}
 	}
 
@@ -42,13 +32,13 @@ public static class EnumerableExtensions
 		where TIncludeType : Enum
 		where TIncludeDescriptor : IIncludeDescriptor<TDestinationType, TIncludeType>
 	{
-		public string JoinIncludeDescriptorsAsStringWithComa()
+		public string JoinDescriptorsWithComma()
 		{
 			const string PropertyFormat = "descriptor(destinationType: {0}, includeType: {1})";
 
 			return descriptors
 				.Select(ip => PropertyFormat.FormatCurrentCulture(ip.DestinationType, ip.IncludeType))
-				.JoinAsStringWithComa();
+				.JoinWithComma();
 		}
 	}
 }

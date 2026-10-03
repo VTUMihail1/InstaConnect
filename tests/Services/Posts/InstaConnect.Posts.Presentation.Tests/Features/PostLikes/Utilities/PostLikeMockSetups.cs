@@ -1,4 +1,4 @@
-using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Requests.Abstractions;
 
 namespace InstaConnect.Posts.Presentation.Tests.Features.PostLikes.Utilities;
 
@@ -6,46 +6,46 @@ public static class PostLikeMockSetups
 {
 	extension(IApplicationSender sender)
 	{
-		public void SetupGetAllQueryRequest(
+		public void SetupSendAsync(
 		GetAllPostLikesApiRequest request,
 		Post post,
 		ICollection<PostLike> postLikes,
 		CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(PostLikeMatcher.IsGetAllPostLikesQueryRequest(request), cancellationToken)
-				.ReturnsResponse(postLikes.ToResponse(post, request));
+				.SendAsync(request.IsGetAllPostLikesQueryRequest(), cancellationToken)
+				.ReturnsTaskResponse(postLikes.ToResponse(request, post));
 		}
 
-		public void SetupGetAllForUserQueryRequest(
+		public void SetupSendAsync(
 			GetAllPostLikesForUserApiRequest request,
 			User user,
 			ICollection<PostLike> postLikes,
 			CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(PostLikeMatcher.IsGetAllPostLikesForUserQueryRequest(request), cancellationToken)
-				.ReturnsResponse(postLikes.ToResponse(user, request));
+				.SendAsync(request.IsGetAllPostLikesForUserQueryRequest(), cancellationToken)
+				.ReturnsTaskResponse(postLikes.ToResponse(request, user));
 		}
 
-		public void SetupGetByIdQueryRequest(
+		public void SetupSendAsync(
 			GetPostLikeByIdApiRequest request,
 			PostLike postLike,
 			CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(PostLikeMatcher.IsGetPostLikeByIdQueryRequest(request), cancellationToken)
-				.ReturnsResponse(postLike.ToResponse(request));
+				.SendAsync(request.IsGetPostLikeByIdQueryRequest(), cancellationToken)
+				.ReturnsTaskResponse(postLike.ToResponse(request));
 		}
 
-		public void SetupAddCommandRequest(
+		public void SetupSendAsync(
 			AddPostLikeApiRequest request,
 			PostLike postLike,
 			CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(PostLikeMatcher.IsAddPostLikeCommandRequest(request), cancellationToken)
-				.ReturnsResponse(postLike.ToResponse(request));
+				.SendAsync(request.IsAddPostLikeCommandRequest(), cancellationToken)
+				.ReturnsTaskResponse(postLike.ToResponse(request));
 		}
 	}
 }

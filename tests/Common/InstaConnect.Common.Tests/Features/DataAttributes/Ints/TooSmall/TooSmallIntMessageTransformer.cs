@@ -16,6 +16,6 @@ internal class TooSmallIntMessageTransformer : IIntMessageTransformer
 
 	public string Transform<T>(Expression<Func<T, int>> propertyExpression, int value)
 	{
-		return CommonErrorMessages.GetMinValue(propertyExpression.GetProperty(), value, _minValue);
+		return CommonErrorMessages.GetMinValue(propertyExpression.GetPropertyDisplayName(), value, _minValue);
 	}
 }

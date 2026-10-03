@@ -23,7 +23,7 @@ public static class FollowsSetups
 			return serviceScope.ServiceProvider.GetFollowsContext();
 		}
 
-		public async Task ResetFollowsDatabase(
+		public async Task ResetFollowsDatabaseAsync(
 			CancellationToken cancellationToken)
 		{
 			var context = serviceScope.GetFollowsContext();

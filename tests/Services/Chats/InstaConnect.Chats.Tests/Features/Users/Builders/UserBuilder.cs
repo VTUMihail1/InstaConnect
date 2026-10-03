@@ -22,7 +22,7 @@ public class UserBuilder
 		_email = UserDataFaker.GetEmail();
 		_profileImage = UserDataFaker.GetProfileImage();
 		_createdAtUtc = UserDataFaker.GetCreatedAtUtc();
-		_updatedAtUtc = UserDataFaker.GetUpdatedAtUtc();
+		_updatedAtUtc = _createdAtUtc;
 	}
 
 	public User Build()

@@ -1,34 +1,15 @@
-using InstaConnect.Chats.Infrastructure.Features.Chats.Extensions;
-using InstaConnect.Chats.Infrastructure.Features.Users.Extensions;
-using InstaConnect.Common.Domain.Features.Data.Abstractions;
-using InstaConnect.Common.Infrastructure.Features.Data.Abstractions;
-
-using MongoDB.Driver;
-
 namespace InstaConnect.Chats.Infrastructure.Features.Chats.Helpers.Repositories;
 
 internal class ChatQueryRepository : IChatQueryRepository
 {
-	private readonly IPaginator _paginator;
-	private readonly IChatsContext _context;
-	private readonly IChatIncluderFactory _includerFactory;
-	private readonly ISortOrdererFactory _sortOrdererFactory;
-	private readonly IChatsSortTermerFactory _sortTermerFactory;
+	private readonly IChatCollection _collection;
 	private readonly IChatIncludeBuilderFactory _includeBuilderFactory;
 
 	public ChatQueryRepository(
-		IPaginator paginator,
-		IChatsContext context,
-		IChatIncluderFactory includerFactory,
-		ISortOrdererFactory sortOrdererFactory,
-		IChatsSortTermerFactory sortTermerFactory,
+		IChatCollection collection,
 		IChatIncludeBuilderFactory includeBuilderFactory)
 	{
-		_paginator = paginator;
-		_context = context;
-		_includerFactory = includerFactory;
-		_sortOrdererFactory = sortOrdererFactory;
-		_sortTermerFactory = sortTermerFactory;
+		_collection = collection;
 		_includeBuilderFactory = includeBuilderFactory;
 	}
 
@@ -41,14 +22,13 @@ internal class ChatQueryRepository : IChatQueryRepository
 	{
 		var include = _includeBuilderFactory.Create().WithParticipantOne().WithParticipantTwo().Build();
 
-		return await _context
-			.Chats
-			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_includerFactory, include)
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(include)
 			.Match(filter)
 			.ProjectToResponseWithoutParticipantOne(currentUser)
-			.Sort(_sortOrdererFactory, _sortTermerFactory, sorting)
-			.Paginate(_paginator, pagination)
+			.ApplySorting(sorting)
+			.ApplyPagination(pagination)
 			.ToListAsync(cancellationToken);
 	}
 
@@ -58,12 +38,11 @@ internal class ChatQueryRepository : IChatQueryRepository
 	{
 		var include = _includeBuilderFactory.Create().WithParticipantOne().WithParticipantTwo().Build();
 
-		return await _context
-			.Chats
-			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_includerFactory, include)
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(include)
 			.Match(filter)
-			.GetCount(cancellationToken);
+			.GetCountAsync(cancellationToken);
 	}
 
 	public async Task<ChatResponse?> GetByIdAsync(
@@ -73,10 +52,9 @@ internal class ChatQueryRepository : IChatQueryRepository
 	{
 		var include = _includeBuilderFactory.Create().WithParticipantOne().WithParticipantTwo().Build();
 
-		return await _context
-			.Chats
-			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_includerFactory, include)
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(include)
 			.Match(id)
 			.ProjectToFullResponse(currentUser)
 			.FirstOrDefaultAsync(cancellationToken);
@@ -86,9 +64,8 @@ internal class ChatQueryRepository : IChatQueryRepository
 		ChatId id,
 		CancellationToken cancellationToken)
 	{
-		return await _context
-			.Chats
-			.AggregateWithCaseInsensitiveCollation()
+		return await _collection
+			.AggregateFluent()
 			.Match(id)
 			.AnyAsync(cancellationToken);
 	}

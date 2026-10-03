@@ -1,34 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <Nullable>disable</Nullable>
-
-    <IsPackable>false</IsPackable>
-    <IsTestProject>true</IsTestProject>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="coverlet.collector">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="MediatR" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="xunit" />
-    <PackageReference Include="xunit.runner.visualstudio">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\src\Services\Follows\InstaConnect.Follows.Presentation\InstaConnect.Follows.Presentation.csproj" />
     <ProjectReference Include="..\InstaConnect.Follows.Presentation.Tests\InstaConnect.Follows.Presentation.Tests.csproj" />
   </ItemGroup>
 
   <ItemGroup Label="Common">
-    <Using Include="Xunit" />
-    <Using Include="InstaConnect.Common.Tests.Features.Events" />
+    <Using Include="InstaConnect.Common.Tests.Features.Abstractions" />
     <Using Include="InstaConnect.Common.Tests.Features.Assertions" />
     <Using Include="InstaConnect.Common.Tests.Features.Utilities" />
     <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Enums" />
@@ -43,12 +21,10 @@
   <ItemGroup Label="Users">
     <Using Include="InstaConnect.Identity.Events.Features.Users" />
     <Using Include="InstaConnect.Follows.Domain.Features.Users.Abstractions" />
-    <Using Include="InstaConnect.Follows.Presentation.Tests.Features.Users.Builders" />
     <Using Include="InstaConnect.Follows.Presentation.Tests.Features.Users.Utilities" />
     <Using Include="InstaConnect.Follows.Application.Features.Users.Commands.Add" />
     <Using Include="InstaConnect.Follows.Application.Features.Users.Commands.Update" />
     <Using Include="InstaConnect.Follows.Application.Features.Users.Commands.Delete" />
-    <Using Include="InstaConnect.Follows.Presentation.Tests.Functional.Features.Users.Utilities" />
     <Using Include="InstaConnect.Follows.Presentation.Tests.Features.Users.Assertions" />
     <Using Include="InstaConnect.Follows.Tests.Features.Users.Builders" />
     <Using Include="InstaConnect.Follows.Tests.Features.Users.Utilities" />

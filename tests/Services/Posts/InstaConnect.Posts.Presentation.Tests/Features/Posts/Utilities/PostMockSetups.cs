@@ -1,4 +1,4 @@
-using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Requests.Abstractions;
 
 namespace InstaConnect.Posts.Presentation.Tests.Features.Posts.Utilities;
 
@@ -6,55 +6,55 @@ public static class PostMockSetups
 {
 	extension(IApplicationSender sender)
 	{
-		public void SetupGetAllQueryRequest(
+		public void SetupSendAsync(
 		GetAllPostsApiRequest request,
 		ICollection<Post> posts,
 		CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(PostMatcher.IsGetAllPostsQueryRequest(request), cancellationToken)
-				.ReturnsResponse(posts.ToResponse(request));
+				.SendAsync(request.IsGetAllPostsQueryRequest(), cancellationToken)
+				.ReturnsTaskResponse(posts.ToResponse(request));
 		}
 
-		public void SetupGetAllForUserQueryRequest(
+		public void SetupSendAsync(
 			GetAllPostsForUserApiRequest request,
 			User user,
 			ICollection<Post> posts,
 			CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(PostMatcher.IsGetAllPostsForUserQueryRequest(request), cancellationToken)
-				.ReturnsResponse(posts.ToResponse(user, request));
+				.SendAsync(request.IsGetAllPostsForUserQueryRequest(), cancellationToken)
+				.ReturnsTaskResponse(posts.ToResponse(request, user));
 		}
 
-		public void SetupGetByIdQueryRequest(
+		public void SetupSendAsync(
 			GetPostByIdApiRequest request,
 			Post post,
 			CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(PostMatcher.IsGetPostByIdQueryRequest(request), cancellationToken)
-				.ReturnsResponse(post.ToResponse(request));
+				.SendAsync(request.IsGetPostByIdQueryRequest(), cancellationToken)
+				.ReturnsTaskResponse(post.ToResponse(request));
 		}
 
-		public void SetupAddCommandRequest(
+		public void SetupSendAsync(
 			AddPostApiRequest request,
 			Post post,
 			CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(PostMatcher.IsAddPostCommandRequest(request), cancellationToken)
-				.ReturnsResponse(post.ToResponse(request));
+				.SendAsync(request.IsAddPostCommandRequest(), cancellationToken)
+				.ReturnsTaskResponse(post.ToResponse(request));
 		}
 
-		public void SetupUpdateCommandRequest(
+		public void SetupSendAsync(
 			UpdatePostApiRequest request,
 			Post post,
 			CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(PostMatcher.IsUpdatePostCommandRequest(request), cancellationToken)
-				.ReturnsResponse(post.ToResponse(request));
+				.SendAsync(request.IsUpdatePostCommandRequest(), cancellationToken)
+				.ReturnsTaskResponse(post.ToResponse(request));
 		}
 	}
 }

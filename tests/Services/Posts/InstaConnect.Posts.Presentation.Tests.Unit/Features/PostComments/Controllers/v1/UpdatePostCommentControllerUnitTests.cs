@@ -16,7 +16,7 @@ public class UpdatePostCommentControllerUnitTests : BasePostCommentPresentationC
 
 		_controller = new(Mapper, Sender);
 
-		Sender.SetupUpdateCommandRequest(_request, PostComment, CancellationToken);
+		Sender.SetupSendAsync(_request, PostComment, CancellationToken);
 	}
 
 	[Fact]
@@ -36,7 +36,7 @@ public class UpdatePostCommentControllerUnitTests : BasePostCommentPresentationC
 		var response = await _controller.UpdateAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostComment, _request);
+		response.ShouldSatisfy(_request, PostComment);
 	}
 
 	[Fact]

@@ -1,5 +1,5 @@
 using InstaConnect.Common.Application.Features.Common.Extensions;
-using InstaConnect.Common.Application.Features.Messaging.Extensions;
+using InstaConnect.Common.Application.Features.Requests.Extensions;
 using InstaConnect.Common.Domain.Features.Mappers.Extensions;
 
 namespace InstaConnect.Follows.Application.Features.Common.Extensions;
@@ -15,9 +15,9 @@ public static class ServiceCollectionExtensions
 				.AddFollowServices();
 
 			serviceCollection
-				.AddCQRS(FollowsApplicationReference.Assembly)
-				.AddMapper(FollowsApplicationReference.Assembly, CommonApplicationReference.Assembly)
-				.AddValidators(FollowsApplicationReference.Assembly);
+				.AddRequests(FollowsApplicationReference.Assembly)
+				.AddMappers(FollowsApplicationReference.Assembly, CommonApplicationReference.Assembly)
+				.AddValidations(FollowsApplicationReference.Assembly);
 
 			return serviceCollection;
 		}

@@ -4,24 +4,24 @@ public static class UserMockSetups
 {
 	extension(IUserCommandService userService)
 	{
-		public void SetupAddCommand(
+		public void SetupAddAsync(
 		AddUserCommandRequest request,
 		User user,
 		CancellationToken cancellationToken)
 		{
 			userService
-				.AddAsync(UserMatcher.IsAddUserCommand(request), cancellationToken)
-				.ReturnsResponse(user.ToResponse(request));
+				.AddAsync(request.IsAddUserCommand(), cancellationToken)
+				.ReturnsTaskResponse(user.ToResponse(request));
 		}
 
-		public void SetupUpdateCommand(
+		public void SetupUpdateAsync(
 			UpdateUserCommandRequest request,
 			User user,
 			CancellationToken cancellationToken)
 		{
 			userService
-				.UpdateAsync(UserMatcher.IsUpdateUserCommand(request), cancellationToken)
-				.ReturnsResponse(user.ToResponse(request));
+				.UpdateAsync(request.IsUpdateUserCommand(), cancellationToken)
+				.ReturnsTaskResponse(user.ToResponse(request));
 		}
 	}
 }

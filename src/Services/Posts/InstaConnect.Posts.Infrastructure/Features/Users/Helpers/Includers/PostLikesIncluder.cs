@@ -6,11 +6,11 @@ namespace InstaConnect.Posts.Infrastructure.Features.Users.Helpers.Includers;
 
 internal class PostLikesIncluder : IUserIncluder
 {
-	private readonly IPostsContext _context;
+	private readonly IMongoCollection<PostLike> _collection;
 
-	public PostLikesIncluder(IPostsContext context)
+	public PostLikesIncluder(IMongoCollection<PostLike> collection)
 	{
-		_context = context;
+		_collection = collection;
 	}
 
 	public PostsDestinationType DestinationType => PostsDestinationType.User;
@@ -21,7 +21,7 @@ internal class PostLikesIncluder : IUserIncluder
 	{
 		return aggregate
 			.IncludeMany(
-				_context.PostLikes,
+				_collection,
 				p => p.Id,
 				l => l.Id.UserId,
 				p => p.PostLikes

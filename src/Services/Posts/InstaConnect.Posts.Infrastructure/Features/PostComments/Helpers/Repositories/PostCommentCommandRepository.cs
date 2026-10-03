@@ -1,21 +1,12 @@
-using InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Extensions;
-using InstaConnect.Posts.Infrastructure.Features.PostComments.Extensions;
-
-using MongoDB.Driver;
-
 namespace InstaConnect.Posts.Infrastructure.Features.PostComments.Helpers.Repositories;
 
 internal class PostCommentCommandRepository : IPostCommentCommandRepository
 {
-	private readonly IPostsContext _context;
-	private readonly IPostCommentIncluderFactory _commentIncluderFactory;
+	private readonly IPostCommentCollection _collection;
 
-	public PostCommentCommandRepository(
-		IPostsContext context,
-		IPostCommentIncluderFactory commentIncluderFactory)
+	public PostCommentCommandRepository(IPostCommentCollection collection)
 	{
-		_context = context;
-		_commentIncluderFactory = commentIncluderFactory;
+		_collection = collection;
 	}
 
 	public async Task<PostComment?> GetByIdAsync(
@@ -23,10 +14,9 @@ internal class PostCommentCommandRepository : IPostCommentCommandRepository
 		PostCommentInclude? include,
 		CancellationToken cancellationToken)
 	{
-		return await _context
-			.PostComments
-			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_commentIncluderFactory, include)
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(include)
 			.Match(id)
 			.FirstOrDefaultAsync(cancellationToken);
 	}
@@ -42,38 +32,29 @@ internal class PostCommentCommandRepository : IPostCommentCommandRepository
 		PostCommentId id,
 		CancellationToken cancellationToken)
 	{
-		return await _context
-			.PostComments
-			.AggregateWithCaseInsensitiveCollation()
+		return await _collection
+			.AggregateFluent()
 			.Match(id)
 			.AnyAsync(cancellationToken);
 	}
 
 	public async Task AddAsync(PostComment entity, CancellationToken cancellationToken)
 	{
-		await _context
-			.PostComments
-			.AddAsync(_context.ClientSessionHandle, entity, cancellationToken);
+		await _collection.AddAsync(entity, cancellationToken);
 	}
 
 	public async Task AddRangeAsync(IEnumerable<PostComment> entities, CancellationToken cancellationToken)
 	{
-		await _context
-			.PostComments
-			.AddRangeAsync(_context.ClientSessionHandle, entities, cancellationToken);
+		await _collection.AddRangeAsync(entities, cancellationToken);
 	}
 
 	public async Task UpdateAsync(PostComment entity, CancellationToken cancellationToken)
 	{
-		await _context
-			.PostComments
-			.UpdateAsync(_context.ClientSessionHandle, entity, cancellationToken);
+		await _collection.UpdateAsync(entity, cancellationToken);
 	}
 
 	public async Task DeleteAsync(PostComment entity, CancellationToken cancellationToken)
 	{
-		await _context
-			.PostComments
-			.DeleteAsync(_context.ClientSessionHandle, entity, cancellationToken);
+		await _collection.DeleteAsync(entity, cancellationToken);
 	}
 }

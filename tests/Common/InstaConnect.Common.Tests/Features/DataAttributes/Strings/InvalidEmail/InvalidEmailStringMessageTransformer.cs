@@ -9,6 +9,6 @@ internal class InvalidEmailStringMessageTransformer : IStringMessageTransformer
 {
 	public string Transform<T>(Expression<Func<T, string>> propertyExpression, string value)
 	{
-		return CommonErrorMessages.GetInvalidEmail(propertyExpression.GetProperty());
+		return CommonErrorMessages.GetInvalidEmail(propertyExpression.GetPropertyDisplayName());
 	}
 }

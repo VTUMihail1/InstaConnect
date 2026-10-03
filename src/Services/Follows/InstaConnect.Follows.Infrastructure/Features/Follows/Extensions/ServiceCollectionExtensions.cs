@@ -10,9 +10,13 @@ internal static class ServiceCollectionExtensions
 	{
 		internal IServiceCollection AddFollowServices()
 		{
+			const string CollectionName = "follows";
+
 			serviceCollection.AddImplementationsOf<IFollowsSortTermer>(FollowsInfrastructureReference.Assembly);
 			serviceCollection.AddImplementationsOf<IFollowsForFollowingSortTermer>(FollowsInfrastructureReference.Assembly);
 			serviceCollection.AddImplementationsOf<IFollowIncluder>(FollowsInfrastructureReference.Assembly);
+
+			serviceCollection.AddCollection<Follow>(CollectionName);
 
 			BsonClassMap.TryRegisterClassMap<Follow>(cm =>
 			{

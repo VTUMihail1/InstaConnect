@@ -7,17 +7,17 @@ internal class EmailConfirmationTokenDomainMappings : IRegister
 	public void Register(TypeAdapterConfig config)
 	{
 		config.NewConfig<EmailConfirmationToken, EmailConfirmationTokenAddedEventRequest>()
-			.ConstructUsing(src => new(src.Adapt<EmailConfirmationTokenEventRequest>(config)!));
+			.ConstructUsing(src => new(src.Adapt<EmailConfirmationTokenEventRequest>(config)));
 
 		config.NewConfig<EmailConfirmationToken, EmailConfirmationTokenDeletedEventRequest>()
-			.ConstructUsing(src => new(src.Adapt<EmailConfirmationTokenEventRequest>(config)!));
+			.ConstructUsing(src => new(src.Adapt<EmailConfirmationTokenEventRequest>(config)));
 
 		config.NewConfig<User, ICollection<EmailConfirmationTokenDeletedEventRequest>>()
 			.ConstructUsing(src =>
 				src.EmailConfirmationTokens
 					.Select(emt => emt
 						.AddUser(src)
-						.Adapt<EmailConfirmationTokenDeletedEventRequest>(config)!)
+						.Adapt<EmailConfirmationTokenDeletedEventRequest>(config))
 					.ToList());
 
 		config.NewConfig<EmailConfirmationToken, EmailConfirmationTokenEventRequest>()

@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\InstaConnect.Follows.Domain.Tests\InstaConnect.Follows.Domain.Tests.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Label="Common">
+    <Using Include="InstaConnect.Common.Tests.Features.Abstractions" />
+    <Using Include="InstaConnect.Common.Tests.Features.Assertions" />
+    <Using Include="InstaConnect.Common.Tests.Features.Utilities" />
+    <Using Include="InstaConnect.Follows.Tests.Features.Common.Utilities" />
+  </ItemGroup>
+
+</Project>

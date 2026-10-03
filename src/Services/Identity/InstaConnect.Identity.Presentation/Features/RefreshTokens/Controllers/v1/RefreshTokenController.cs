@@ -1,4 +1,4 @@
-using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Requests.Abstractions;
 using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
 using InstaConnect.Common.Presentation.Features.Controllers.Utilities;
 using InstaConnect.Identity.Application.Features.RefreshTokens.Commands.DeleteCurrent;
@@ -8,6 +8,7 @@ using InstaConnect.Identity.Presentation.Features.RefreshTokens.Abstractions;
 
 namespace InstaConnect.Identity.Presentation.Features.RefreshTokens.Controllers.v1;
 
+[ApiController]
 [ApiVersion(RefreshTokenRoutes.Version1)]
 [Route(RefreshTokenRoutes.Resource)]
 [EnableRateLimiting(RateLimiterPolicies.Default)]
@@ -38,7 +39,7 @@ public class RefreshTokenController : ControllerBase
 		var commandRequest = _mapper.Map<IssueRefreshTokenCommandRequest>(request);
 		var commandResponse = await _sender.SendAsync(commandRequest, cancellationToken);
 
-		var cookie = _mapper.Map<SetRefreshTokenCookieRequest>(commandResponse.Response);
+		var cookie = _mapper.Map<SetRefreshTokenCookieApiRequest>(commandResponse.Response);
 		_refreshTokenCookieStore.Set(cookie);
 
 		var response = _mapper.Map<IssueRefreshTokenApiResponse>(commandResponse);
@@ -57,7 +58,7 @@ public class RefreshTokenController : ControllerBase
 		var commandRequest = _mapper.Map<RotateRefreshTokenCommandRequest>(request);
 		var commandResponse = await _sender.SendAsync(commandRequest, cancellationToken);
 
-		var cookie = _mapper.Map<SetRefreshTokenCookieRequest>(commandResponse.Response);
+		var cookie = _mapper.Map<SetRefreshTokenCookieApiRequest>(commandResponse.Response);
 		_refreshTokenCookieStore.Set(cookie);
 
 		var response = _mapper.Map<RotateRefreshTokenApiResponse>(commandResponse);

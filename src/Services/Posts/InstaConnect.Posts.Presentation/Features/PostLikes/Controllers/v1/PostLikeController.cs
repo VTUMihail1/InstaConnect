@@ -1,4 +1,4 @@
-using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Requests.Abstractions;
 using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
 using InstaConnect.Common.Presentation.Features.Controllers.Utilities;
 using InstaConnect.Posts.Application.Features.PostLikes.Commands.Add;
@@ -8,6 +8,7 @@ using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetById;
 
 namespace InstaConnect.Posts.Presentation.Features.PostLikes.Controllers.v1;
 
+[ApiController]
 [ApiVersion(PostLikeRoutes.Version1)]
 [Route(PostLikeRoutes.Resource)]
 [EnableRateLimiting(RateLimiterPolicies.Default)]

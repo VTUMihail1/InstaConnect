@@ -23,7 +23,7 @@ public static class PostsSetups
 			return serviceScope.ServiceProvider.GetPostsContext();
 		}
 
-		public async Task ResetPostsDatabase(
+		public async Task ResetPostsDatabaseAsync(
 			CancellationToken cancellationToken)
 		{
 			var context = serviceScope.GetPostsContext();

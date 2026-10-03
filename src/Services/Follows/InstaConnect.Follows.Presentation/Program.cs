@@ -1,5 +1,5 @@
-using InstaConnect.Common.Infrastructure.Features.Observability.Extensions;
-using InstaConnect.Common.Presentation.Features.Observability.Extensions;
+using InstaConnect.Common.Infrastructure.Features.Telemetries.Extensions;
+using InstaConnect.Common.Presentation.Features.Telemetries.Extensions;
 using InstaConnect.Follows.Application.Features.Common.Extensions;
 using InstaConnect.Follows.Domain.Features.Common.Extensions;
 using InstaConnect.Follows.Infrastructure.Features.Common.Extensions;
@@ -10,12 +10,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
 	.AddDomain()
 	.AddApplication()
-	.AddInfrastructure(builder.Configuration, builder.Environment, FollowsPresentationReference.Assembly)
+	.AddInfrastructure(builder.Configuration, builder.Environment)
 	.AddPresentation(builder.Configuration);
 
-builder.Host.AddSerilog();
+builder.Host.UseTelemetries();
 
-builder.Logging.AddLogging(builder.Configuration, builder.Environment);
+builder.Logging.AddTelemetries(builder.Configuration, builder.Environment);
 
 var app = builder.Build();
 

@@ -1,0 +1,14 @@
+namespace InstaConnect.Posts.Presentation.Tests.Integration.Features.PostComments.Utilities;
+
+public abstract class BasePostCommentPresentationQueryIntegrationTest : BasePostCommentWebTest
+{
+	protected PostCommentController Controller { get; }
+
+	protected UserPostCommentController UserController { get; }
+
+	protected BasePostCommentPresentationQueryIntegrationTest(PostsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
+	{
+		Controller = ServiceScope.GetPostCommentController();
+		UserController = ServiceScope.GetUserPostCommentController();
+	}
+}

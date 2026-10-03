@@ -9,19 +9,19 @@ public static class PostCommentMockAssertions
 		public async Task ShouldReceiveOneGetAllAsync(GetAllPostCommentsQueryRequest request, CancellationToken cancellationToken)
 		{
 			await postCommentService.ShouldHaveReceivedOne()
-				.GetAllAsync(PostCommentMatcher.IsGetAllPostCommentsQuery(request), cancellationToken);
+				.GetAllAsync(request.IsGetAllPostCommentsQuery(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneGetAllForUserAsync(GetAllPostCommentsForUserQueryRequest request, CancellationToken cancellationToken)
 		{
 			await postCommentService.ShouldHaveReceivedOne()
-				.GetAllForUserAsync(PostCommentMatcher.IsGetAllPostCommentsForUserQuery(request), cancellationToken);
+				.GetAllForUserAsync(request.IsGetAllPostCommentsForUserQuery(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneGetByIdAsync(GetPostCommentByIdQueryRequest request, CancellationToken cancellationToken)
 		{
 			await postCommentService.ShouldHaveReceivedOne()
-				.GetByIdAsync(PostCommentMatcher.IsGetPostCommentByIdQuery(request), cancellationToken);
+				.GetByIdAsync(request.IsGetPostCommentByIdQuery(), cancellationToken);
 		}
 	}
 
@@ -30,19 +30,19 @@ public static class PostCommentMockAssertions
 		public async Task ShouldReceiveOneAddAsync(AddPostCommentCommandRequest request, CancellationToken cancellationToken)
 		{
 			await postCommentService.ShouldHaveReceivedOne()
-				.AddAsync(PostCommentMatcher.IsAddPostCommentCommand(request), cancellationToken);
+				.AddAsync(request.IsAddPostCommentCommand(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneUpdateAsync(UpdatePostCommentCommandRequest request, CancellationToken cancellationToken)
 		{
 			await postCommentService.ShouldHaveReceivedOne()
-				.UpdateAsync(PostCommentMatcher.IsUpdatePostCommentCommand(request), cancellationToken);
+				.UpdateAsync(request.IsUpdatePostCommentCommand(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneDeleteAsync(DeletePostCommentCommandRequest request, CancellationToken cancellationToken)
 		{
 			await postCommentService.ShouldHaveReceivedOne()
-				.DeleteAsync(PostCommentMatcher.IsDeletePostCommentCommand(request), cancellationToken);
+				.DeleteAsync(request.IsDeletePostCommentCommand(), cancellationToken);
 		}
 	}
 }

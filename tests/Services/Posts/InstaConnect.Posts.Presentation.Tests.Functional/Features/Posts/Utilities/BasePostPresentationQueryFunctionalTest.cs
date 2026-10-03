@@ -5,10 +5,10 @@ namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.Posts.Utilit
 
 public abstract class BasePostPresentationQueryFunctionalTest : BasePostWebTest
 {
-	protected IPostClient Client { get; }
+	protected IPostApiClient ApiClient { get; }
 
 	protected BasePostPresentationQueryFunctionalTest(PostsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
-		Client = webApplicationFactory.CreatePostClient();
+		ApiClient = webApplicationFactory.CreateApiClient();
 	}
 }

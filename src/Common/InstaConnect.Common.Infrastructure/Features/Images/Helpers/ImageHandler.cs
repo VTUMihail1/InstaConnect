@@ -1,8 +1,9 @@
 using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 
 using InstaConnect.Common.Domain.Features.Images.Abstractions;
+using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
 using InstaConnect.Common.Domain.Features.ValueObjects.Models;
-using InstaConnect.Common.Infrastructure.Features.Images.Abstractions;
 
 using Microsoft.AspNetCore.Http;
 
@@ -11,21 +12,23 @@ namespace InstaConnect.Common.Infrastructure.Features.Images.Helpers;
 internal class ImageHandler : IImageHandler
 {
 	private readonly Cloudinary _cloudinary;
-	private readonly IImageUploadFactory _imageUploadFactory;
+	private readonly IApplicationMapper _mapper;
 
 	public ImageHandler(
 		Cloudinary cloudinary,
-		IImageUploadFactory imageUploadFactory)
+		IApplicationMapper mapper)
 	{
 		_cloudinary = cloudinary;
-		_imageUploadFactory = imageUploadFactory;
+		_mapper = mapper;
 	}
 
 	public async Task<Image> UploadAsync(IFormFile formFile, CancellationToken cancellationToken)
 	{
-		var imageUploadParams = _imageUploadFactory.GetImageUploadParams(formFile);
-		var imageUploadResult = await _cloudinary.UploadAsync(imageUploadParams, cancellationToken);
+		var serviceRequest = _mapper.Map<ImageUploadParams>(formFile);
+		var serviceResponse = await _cloudinary.UploadAsync(serviceRequest, cancellationToken);
 
-		return new(imageUploadResult.Url.AbsoluteUri);
+		var response = _mapper.Map<Image>(serviceResponse);
+
+		return response;
 	}
 }

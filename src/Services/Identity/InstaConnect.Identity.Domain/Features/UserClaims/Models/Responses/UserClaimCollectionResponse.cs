@@ -1,3 +1,5 @@
+using InstaConnect.Common.Domain.Features.Requests.Abstractions;
+
 namespace InstaConnect.Identity.Domain.Features.UserClaims.Models.Responses;
 
 public record UserClaimCollectionResponse(
@@ -7,4 +9,4 @@ public record UserClaimCollectionResponse(
 	int PageSize,
 	long TotalCount,
 	bool HasNextPage,
-	bool HasPreviousPage) : IEntityCollectionResponse;
+	bool HasPreviousPage) : ICollectionResponse;

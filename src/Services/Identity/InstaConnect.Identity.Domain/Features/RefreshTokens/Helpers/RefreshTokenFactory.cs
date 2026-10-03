@@ -22,7 +22,7 @@ internal class RefreshTokenFactory : IRefreshTokenFactory
 
 	public RefreshToken Create(UserId id)
 	{
-		var value = _guidProvider.NewGuid().ToString();
+		var value = _guidProvider.NewStringGuid();
 		var expiresAt = _dateTimeProvider.GetOffsetUtcNow(_refreshTokenOptions.LifetimeSeconds);
 		var utcNow = _dateTimeProvider.GetOffsetUtcNow();
 		var refreshToken = new RefreshToken(

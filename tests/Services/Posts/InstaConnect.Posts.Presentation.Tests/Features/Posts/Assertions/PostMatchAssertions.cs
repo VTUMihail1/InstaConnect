@@ -1,4 +1,5 @@
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
+using InstaConnect.Posts.Events.Features.Posts;
 using InstaConnect.Posts.Presentation.Tests.Features.Posts.Utilities;
 
 namespace InstaConnect.Posts.Presentation.Tests.Features.Posts.Assertions;
@@ -8,119 +9,136 @@ public static class PostMatchAssertions
 	extension(AddPostApiResponse response)
 	{
 		public void ShouldSatisfy(
-		Post post,
-		AddPostApiRequest request)
+		AddPostApiRequest request,
+		Post post)
 		{
-			response.ShouldSatisfy(p => p.Matches(post, request));
+			response.ShouldSatisfy(p => p.Matches(request, post));
 		}
 	}
 
 	extension(UpdatePostApiResponse response)
 	{
 		public void ShouldSatisfy(
-		Post post,
-		UpdatePostApiRequest request)
+		UpdatePostApiRequest request,
+		Post post)
 		{
-			response.ShouldSatisfy(p => p.Matches(post, request));
+			response.ShouldSatisfy(p => p.Matches(request, post));
 		}
 	}
 
 	extension(GetPostByIdApiResponse response)
 	{
 		public void ShouldSatisfy(
-		Post post,
-		GetPostByIdApiRequest request)
+		GetPostByIdApiRequest request,
+		Post post)
 		{
-			response.ShouldSatisfy(p => p.Matches(post, request));
+			response.ShouldSatisfy(p => p.Matches(request, post));
 		}
 	}
 
 	extension(GetAllPostsApiResponse response)
 	{
 		public void ShouldSatisfy(
-		ICollection<Post> posts,
-		GetAllPostsApiRequest request)
+		GetAllPostsApiRequest request,
+		ICollection<Post> posts)
 		{
-			response.ShouldSatisfy(p => p.Matches(posts, request));
+			response.ShouldSatisfy(p => p.Matches(request, posts));
 		}
 
 		public void ShouldSatisfy(
-			ICollection<Post> posts,
 			GetAllPostsApiRequest request,
+			ICollection<Post> posts,
 			ISortEnumTermTransformer<Post> termTransformer)
 		{
-			response.ShouldSatisfy(p => p.Matches(posts, request, termTransformer));
+			response.ShouldSatisfy(p => p.Matches(request, posts, termTransformer));
 		}
 	}
 
 	extension(GetAllPostsForUserApiResponse response)
 	{
 		public void ShouldSatisfy(
+		GetAllPostsForUserApiRequest request,
 		User user,
-		ICollection<Post> posts,
-		GetAllPostsForUserApiRequest request)
+		ICollection<Post> posts)
 		{
-			response.ShouldSatisfy(p => p.Matches(user, posts, request));
+			response.ShouldSatisfy(p => p.Matches(request, user, posts));
 		}
 
 		public void ShouldSatisfy(
+			GetAllPostsForUserApiRequest request,
 			User user,
 			ICollection<Post> posts,
-			GetAllPostsForUserApiRequest request,
 			ISortEnumTermTransformer<Post> termTransformer)
 		{
-			response.ShouldSatisfy(p => p.Matches(user, posts, request, termTransformer));
+			response.ShouldSatisfy(p => p.Matches(request, user, posts, termTransformer));
 		}
 	}
 
 	extension(ActionResult<AddPostApiResponse> response)
 	{
 		public void ShouldSatisfy(
-		Post post,
-		AddPostApiRequest request)
+		AddPostApiRequest request,
+		Post post)
 		{
-			response.ShouldBeActionResultAndSatisfy(p => p.Matches(post, request));
+			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, post));
 		}
 	}
 
 	extension(ActionResult<UpdatePostApiResponse> response)
 	{
 		public void ShouldSatisfy(
-		Post post,
-		UpdatePostApiRequest request)
+		UpdatePostApiRequest request,
+		Post post)
 		{
-			response.ShouldBeActionResultAndSatisfy(p => p.Matches(post, request));
+			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, post));
 		}
 	}
 
 	extension(ActionResult<GetPostByIdApiResponse> response)
 	{
 		public void ShouldSatisfy(
-		Post post,
-		GetPostByIdApiRequest request)
+		GetPostByIdApiRequest request,
+		Post post)
 		{
-			response.ShouldBeActionResultAndSatisfy(p => p.Matches(post, request));
+			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, post));
 		}
 	}
 
 	extension(ActionResult<GetAllPostsApiResponse> response)
 	{
 		public void ShouldSatisfy(
-		ICollection<Post> posts,
-		GetAllPostsApiRequest request)
+		GetAllPostsApiRequest request,
+		ICollection<Post> posts)
 		{
-			response.ShouldBeActionResultAndSatisfy(p => p.Matches(posts, request));
+			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, posts));
+		}
+
+		public void ShouldSatisfy(
+		GetAllPostsApiRequest request,
+		ICollection<Post> posts,
+		ISortEnumTermTransformer<Post> termTransformer)
+		{
+			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, posts, termTransformer));
 		}
 	}
 
 	extension(ActionResult<GetAllPostsForUserApiResponse> response)
 	{
 		public void ShouldSatisfy(
+		GetAllPostsForUserApiRequest request,
+		User user,
+		ICollection<Post> posts)
+		{
+			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, user, posts));
+		}
+
+		public void ShouldSatisfy(
+		GetAllPostsForUserApiRequest request,
 		User user,
 		ICollection<Post> posts,
-		GetAllPostsForUserApiRequest request)
+		ISortEnumTermTransformer<Post> termTransformer)
 		{
-			response.ShouldBeActionResultAndSatisfy(p => p.Matches(user, posts, request));
+			response.ShouldBeActionResultAndSatisfy(p => p.Matches(request, user, posts, termTransformer));
 		}
 	}
 
@@ -134,6 +152,30 @@ public static class PostMatchAssertions
 		public void ShouldSatisfy(UpdatePostApiRequest request)
 		{
 			post.ShouldSatisfy(p => p.Matches(request));
+		}
+	}
+
+	extension(PostAddedEventRequest r)
+	{
+		public void ShouldSatisfy(AddPostApiRequest request, Post entity)
+		{
+			r.ShouldSatisfy(r => r.Matches(request, entity));
+		}
+	}
+
+	extension(PostUpdatedEventRequest r)
+	{
+		public void ShouldSatisfy(UpdatePostApiRequest request, Post entity)
+		{
+			r.ShouldSatisfy(r => r.Matches(request, entity));
+		}
+	}
+
+	extension(PostDeletedEventRequest r)
+	{
+		public void ShouldSatisfy(DeletePostApiRequest request, Post entity)
+		{
+			r.ShouldSatisfy(r => r.Matches(request, entity));
 		}
 	}
 }

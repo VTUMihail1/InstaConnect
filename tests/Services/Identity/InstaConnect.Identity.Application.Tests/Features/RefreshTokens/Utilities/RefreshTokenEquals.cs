@@ -1,7 +1,6 @@
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Identity.Application.Features.RefreshTokens.Models;
 using InstaConnect.Identity.Application.Tests.Features.RefreshTokens.Utilities;
-using InstaConnect.Identity.Domain.Features.Common.Helpers;
 
 namespace InstaConnect.Identity.Application.Tests.Features.RefreshTokens.Utilities;
 
@@ -34,7 +33,7 @@ public static class RefreshTokenEquals
 
 	extension(IssueRefreshTokenCommandResponse response)
 	{
-		public bool Matches(RefreshToken refreshToken, IssueRefreshTokenCommandRequest request)
+		public bool Matches(IssueRefreshTokenCommandRequest request, RefreshToken refreshToken)
 		{
 			return response.Response.Matches(refreshToken);
 		}
@@ -42,7 +41,7 @@ public static class RefreshTokenEquals
 
 	extension(RotateRefreshTokenCommandResponse response)
 	{
-		public bool Matches(RefreshToken refreshToken, RotateRefreshTokenCommandRequest request)
+		public bool Matches(RotateRefreshTokenCommandRequest request, RefreshToken refreshToken)
 		{
 			return response.Response.Matches(refreshToken);
 		}
@@ -50,15 +49,20 @@ public static class RefreshTokenEquals
 
 	extension(RefreshToken refreshToken)
 	{
-		public bool Matches(IssueRefreshTokenCommandRequest request, IPasswordHasher passwordHasher)
+		public bool Matches(IssueRefreshTokenCommandRequest request)
 		{
-			return refreshToken.User!.Name.Matches(request.Name) &&
-				   passwordHasher.IsMatch(request.Password, refreshToken.User.PasswordHash);
+			return refreshToken.Id.Id.Id.IsNotNullOrEmptyOrWhiteSpace() &&
+				   refreshToken.Id.Value.IsNotNullOrEmptyOrWhiteSpace() &&
+				   refreshToken.CreatedAtUtc != default &&
+				   refreshToken.ExpiresAtUtc != default;
 		}
 
 		public bool Matches(RotateRefreshTokenCommandRequest request)
 		{
-			return refreshToken.Id.Id.Matches(request.Id) && refreshToken.Id.Value.IsNotNullOrEmptyOrWhiteSpace();
+			return refreshToken.Id.Id.Matches(request.Id) &&
+				   refreshToken.Id.Value.IsNotNullOrEmptyOrWhiteSpace() &&
+				   refreshToken.CreatedAtUtc != default &&
+				   refreshToken.ExpiresAtUtc != default;
 		}
 	}
 

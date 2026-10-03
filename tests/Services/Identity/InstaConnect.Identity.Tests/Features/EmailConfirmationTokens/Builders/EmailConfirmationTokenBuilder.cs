@@ -21,7 +21,7 @@ public class EmailConfirmationTokenBuilder
 
 	public EmailConfirmationTokenBuilder WithAlreadyExpiresAtUtc()
 	{
-		_expiresAtUtc = EmailConfirmationTokenDataFaker.GetAlreadyExpiresAtUtc();
+		_expiresAtUtc = DataFaker.GetPastDate(_expiresAtUtc);
 
 		return this;
 	}

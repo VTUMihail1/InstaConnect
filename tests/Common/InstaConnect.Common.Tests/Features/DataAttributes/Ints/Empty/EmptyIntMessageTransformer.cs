@@ -9,6 +9,6 @@ internal class EmptyIntMessageTransformer : IIntMessageTransformer
 {
 	public string Transform<T>(Expression<Func<T, int>> propertyExpression, int value)
 	{
-		return CommonErrorMessages.GetEmpty(propertyExpression.GetProperty());
+		return CommonErrorMessages.GetEmpty(propertyExpression.GetPropertyDisplayName());
 	}
 }

@@ -4,11 +4,11 @@ namespace InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Assertion
 
 public static class EmailConfirmationTokenMatchAssertions
 {
-	extension(ICollection<EmailConfirmationToken> emailConfirmationTokens)
+	extension(EmailConfirmationToken u)
 	{
-		public void ShouldSatisfy(ICollection<EmailConfirmationToken> e)
+		public void ShouldSatisfy(EmailConfirmationToken emailConfirmationToken)
 		{
-			emailConfirmationTokens.ShouldSatisfy(p => p.Matches(e));
+			u.ShouldSatisfy(u => u.Matches(emailConfirmationToken));
 		}
 	}
 }

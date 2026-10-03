@@ -1,13 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <IsTestProject>false</IsTestProject>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="MediatR" />
-  </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\src\Services\Chats\InstaConnect.Chats.Domain\InstaConnect.Chats.Domain.csproj" />
     <ProjectReference Include="..\..\..\..\src\Services\Chats\InstaConnect.Chats.Infrastructure\InstaConnect.Chats.Infrastructure.csproj" />
@@ -16,7 +8,7 @@
   </ItemGroup>
 
   <ItemGroup Label="Common">
-    <Using Include="InstaConnect.Common.Tests.Features.Events" />
+    <Using Include="InstaConnect.Common.Tests.Features.Abstractions" />
     <Using Include="InstaConnect.Common.Tests.Features.Assertions" />
     <Using Include="InstaConnect.Common.Tests.Features.Utilities" />
     <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.DateTimeOffsets.Base" />
@@ -43,7 +35,7 @@
     <Using Include="InstaConnect.Chats.Domain.Features.Users.Models.Requests" />
     <Using Include="InstaConnect.Chats.Tests.Features.Users.Builders" />
   </ItemGroup>
-  
+
   <ItemGroup Label="Chats">
     <Using Include="InstaConnect.Chats.Domain.Features.Chats.Utilities" />
     <Using Include="InstaConnect.Chats.Domain.Features.Chats.Models.Entities" />
@@ -59,6 +51,7 @@
     <Using Include="InstaConnect.Chats.Tests.Features.ChatMessages.Builders" />
     <Using Include="InstaConnect.Chats.Tests.Features.ChatMessages.Abstractions" />
     <Using Include="InstaConnect.Chats.Tests.Features.ChatMessages.Utilities" />
+    <Using Include="InstaConnect.Chats.Tests.Features.ChatMessages.Helpers" />
     <Using Include="InstaConnect.Chats.Tests.Features.ChatMessages.Extensions" />
     <Using Include="InstaConnect.Chats.Tests.Features.ChatMessages.Assertions" />
   </ItemGroup>

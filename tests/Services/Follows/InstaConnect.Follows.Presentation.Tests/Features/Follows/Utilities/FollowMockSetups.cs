@@ -1,4 +1,4 @@
-using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Requests.Abstractions;
 
 namespace InstaConnect.Follows.Presentation.Tests.Features.Follows.Utilities;
 
@@ -6,46 +6,46 @@ public static class FollowMockSetups
 {
 	extension(IApplicationSender sender)
 	{
-		public void SetupGetAllQueryRequest(
+		public void SetupSendAsync(
 		GetAllFollowsApiRequest request,
 		User follower,
 		ICollection<Follow> follows,
 		CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(FollowMatcher.IsGetAllFollowsQueryRequest(request), cancellationToken)
-				.ReturnsResponse(follows.ToResponse(follower, request));
+				.SendAsync(request.IsGetAllFollowsQueryRequest(), cancellationToken)
+				.ReturnsTaskResponse(follows.ToResponse(request, follower));
 		}
 
-		public void SetupGetAllForFollowingQueryRequest(
+		public void SetupSendAsync(
 			GetAllFollowsForFollowingApiRequest request,
 			User following,
 			ICollection<Follow> follows,
 			CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(FollowMatcher.IsGetAllFollowsForFollowingQueryRequest(request), cancellationToken)
-				.ReturnsResponse(follows.ToResponse(following, request));
+				.SendAsync(request.IsGetAllFollowsForFollowingQueryRequest(), cancellationToken)
+				.ReturnsTaskResponse(follows.ToResponse(request, following));
 		}
 
-		public void SetupGetByIdQueryRequest(
+		public void SetupSendAsync(
 			GetFollowByIdApiRequest request,
 			Follow follow,
 			CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(FollowMatcher.IsGetFollowByIdQueryRequest(request), cancellationToken)
-				.ReturnsResponse(follow.ToResponse(request));
+				.SendAsync(request.IsGetFollowByIdQueryRequest(), cancellationToken)
+				.ReturnsTaskResponse(follow.ToResponse(request));
 		}
 
-		public void SetupAddCommandRequest(
+		public void SetupSendAsync(
 			AddFollowApiRequest request,
 			Follow follow,
 			CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(FollowMatcher.IsAddFollowCommandRequest(request), cancellationToken)
-				.ReturnsResponse(follow.ToResponse(request));
+				.SendAsync(request.IsAddFollowCommandRequest(), cancellationToken)
+				.ReturnsTaskResponse(follow.ToResponse(request));
 		}
 	}
 }

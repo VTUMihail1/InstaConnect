@@ -1,7 +1,9 @@
-using System.Reflection;
-
 using InstaConnect.Common.Domain.Features.Mappers.Extensions;
-using InstaConnect.Common.Infrastructure.Extensions;
+using InstaConnect.Common.Infrastructure.Features.AccessTokens.Extensions;
+using InstaConnect.Common.Infrastructure.Features.DateTimes.Extensions;
+using InstaConnect.Common.Infrastructure.Features.Events.Extensions;
+using InstaConnect.Common.Infrastructure.Features.Guids.Extensions;
+using InstaConnect.Common.Infrastructure.Features.Telemetries.Extensions;
 using InstaConnect.Posts.Infrastructure.Features.Common.Utilities;
 using InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Extensions;
 using InstaConnect.Posts.Infrastructure.Features.PostComments.Extensions;
@@ -17,8 +19,7 @@ public static class ServiceCollectionExtensions
 	{
 		public IServiceCollection AddInfrastructure(
 			IConfiguration configuration,
-			IWebHostEnvironment webHostEnvironment,
-			Assembly presentationAssembly)
+			IWebHostEnvironment webHostEnvironment)
 		{
 			serviceCollection
 				.AddUserServices()
@@ -28,15 +29,15 @@ public static class ServiceCollectionExtensions
 				.AddPostCommentLikeServices();
 
 			serviceCollection
-				.AddOpenTelemetry(configuration, webHostEnvironment)
-				.AddMapper(PostsInfrastructureReference.Assembly)
-				.AddServicesWithMatchingInterfaces(PostsInfrastructureReference.Assembly)
-				.AddMongo<IPostsContext>(configuration)
-				.AddRabbitMQ(configuration, PostsEventHandlerUtilities.Prefix, presentationAssembly)
-				.AddJwtBearer(configuration)
-				.AddGuidProvider()
-				.AddDateTimeProvider()
-				.AddSortOrders();
+				.AddTelemetries(configuration, webHostEnvironment)
+				.AddMappers(PostsInfrastructureReference.Assembly)
+				.AddServicesWithMatchingInterfacesExceptFluents(PostsInfrastructureReference.Assembly)
+				.AddDatabases(configuration)
+				.AddEvents(configuration, PostsEventHandlerUtilities.Prefix, PostsInfrastructureReference.Assembly)
+				.AddAccessTokens(configuration)
+				.AddGuids()
+				.AddDateTimes()
+				.AddDatabaseSortOrders();
 
 			return serviceCollection;
 		}

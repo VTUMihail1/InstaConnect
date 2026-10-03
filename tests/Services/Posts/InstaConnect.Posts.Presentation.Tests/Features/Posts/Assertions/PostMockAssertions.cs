@@ -1,4 +1,4 @@
-using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Requests.Abstractions;
 using InstaConnect.Posts.Presentation.Tests.Features.Posts.Utilities;
 
 namespace InstaConnect.Posts.Presentation.Tests.Features.Posts.Assertions;
@@ -11,42 +11,42 @@ public static class PostMockAssertions
 		GetAllPostsApiRequest request,
 		CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(PostMatcher.IsGetAllPostsQueryRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(request.IsGetAllPostsQueryRequest(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneSendAsync(
 			GetAllPostsForUserApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(PostMatcher.IsGetAllPostsForUserQueryRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(request.IsGetAllPostsForUserQueryRequest(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneSendAsync(
 			GetPostByIdApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(PostMatcher.IsGetPostByIdQueryRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(request.IsGetPostByIdQueryRequest(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneSendAsync(
 			AddPostApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(PostMatcher.IsAddPostCommandRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(request.IsAddPostCommandRequest(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneSendAsync(
 			UpdatePostApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(PostMatcher.IsUpdatePostCommandRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(request.IsUpdatePostCommandRequest(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneSendAsync(
 			DeletePostApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(PostMatcher.IsDeletePostCommandRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(request.IsDeletePostCommandRequest(), cancellationToken);
 		}
 	}
 }

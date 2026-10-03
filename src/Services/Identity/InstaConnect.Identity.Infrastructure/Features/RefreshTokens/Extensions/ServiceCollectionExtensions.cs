@@ -11,9 +11,13 @@ internal static class ServiceCollectionExtensions
 	{
 		internal IServiceCollection AddRefreshTokenServices()
 		{
+			const string CollectionName = "refresh_tokens";
+
 			serviceCollection.AddOptions<RefreshTokenOptions>(RefreshTokenOptions.SectionName);
 
 			serviceCollection.AddImplementationsOf<IRefreshTokenIncluder>(IdentityInfrastructureReference.Assembly);
+
+			serviceCollection.AddCollection<RefreshToken>(CollectionName);
 
 			BsonClassMap.TryRegisterClassMap<RefreshToken>(cm =>
 			{

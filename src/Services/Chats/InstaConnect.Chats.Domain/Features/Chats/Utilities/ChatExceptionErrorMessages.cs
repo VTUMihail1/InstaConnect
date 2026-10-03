@@ -30,6 +30,6 @@ public static class ChatExceptionErrorMessages
 		const string Format = "ChatIncludeDescriptors({0}) is not supported";
 
 		return Format.FormatCurrentCulture(descriptors
-			.JoinIncludeDescriptorsAsStringWithComa<ChatsDestinationType, ChatsIncludeType, ChatsIncludeDescriptor>());
+			.JoinDescriptorsWithComma<ChatsDestinationType, ChatsIncludeType, ChatsIncludeDescriptor>());
 	}
 }

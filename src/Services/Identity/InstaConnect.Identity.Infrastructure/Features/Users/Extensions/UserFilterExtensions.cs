@@ -13,9 +13,9 @@ public static class UserFilterExtensions
 		public FilterDefinition<User> GetFilter()
 		{
 			var name = filter.Name.GetFilterForNameStartsWith<User>(p => p.Name.Value);
-			var firstName = Builders<User>.Filter.StartsWithCaseInsensitive(
+			var firstName = Builders<User>.Filter.StartsWithIgnoreCase(
 				p => p.FirstName, filter.FirstName, filter.FirstName.IsNullOrEmptyOrWhiteSpace());
-			var lastName = Builders<User>.Filter.StartsWithCaseInsensitive(
+			var lastName = Builders<User>.Filter.StartsWithIgnoreCase(
 				p => p.LastName, filter.LastName, filter.LastName.IsNullOrEmptyOrWhiteSpace());
 
 			return Builders<User>.Filter.And(name, firstName, lastName);
@@ -31,7 +31,7 @@ public static class UserFilterExtensions
 
 		public FilterDefinition<T> GetFilterForIdEquals<T>(Expression<Func<T, object>> idField)
 		{
-			return Builders<T>.Filter.EqualsCaseInsensitive(idField, filter.Id, filter.Id.IsEmpty());
+			return Builders<T>.Filter.EqualsIgnoreCase(idField, filter.Id, filter.Id.IsEmpty());
 		}
 	}
 

@@ -11,9 +11,13 @@ internal static class ServiceCollectionExtensions
 	{
 		internal IServiceCollection AddEmailConfirmationTokenServices()
 		{
+			const string CollectionName = "email_confirmation_tokens";
+
 			serviceCollection.AddValidatedOptions<EmailConfirmationTokenOptions>(EmailConfirmationTokenOptions.SectionName);
 
 			serviceCollection.AddImplementationsOf<IEmailConfirmationTokenIncluder>(IdentityInfrastructureReference.Assembly);
+
+			serviceCollection.AddCollection<EmailConfirmationToken>(CollectionName);
 
 			BsonClassMap.TryRegisterClassMap<EmailConfirmationToken>(cm =>
 			{

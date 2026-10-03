@@ -3,7 +3,7 @@ using InstaConnect.Common.Domain.Features.Mappers.Extensions;
 using InstaConnect.Common.Presentation.Features.Common.Extensions;
 using InstaConnect.Common.Presentation.Features.Common.Models;
 using InstaConnect.Common.Presentation.Features.Controllers.Extensions;
-using InstaConnect.Common.Presentation.Features.ExceptionHandling.Extensions;
+using InstaConnect.Common.Presentation.Features.Exceptions.Extensions;
 using InstaConnect.Follows.Presentation.Features.Follows.Extensions;
 using InstaConnect.Follows.Presentation.Features.Users.Extensions;
 
@@ -23,11 +23,11 @@ public static class ServiceCollectionExtensions
 				.AddValidatedOptions<MainOptions>(MainOptions.SectionName)
 				.AddServicesWithMatchingInterfaces(FollowsPresentationReference.Assembly)
 				.AddApiControllers()
-				.AddMapper(FollowsPresentationReference.Assembly, CommonPresentationReference.Assembly)
+				.AddMappers(FollowsPresentationReference.Assembly, CommonPresentationReference.Assembly)
 				.AddAuthorizationPolicies()
 				.AddCorsPolicies(configuration)
 				.AddRateLimiterPolicies()
-				.AddExceptionHandler();
+				.AddExceptions();
 
 			return serviceCollection;
 		}

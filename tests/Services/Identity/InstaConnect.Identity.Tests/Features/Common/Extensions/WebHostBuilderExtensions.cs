@@ -13,11 +13,11 @@ public static class WebHostBuilderExtensions
 		public void UpdateAdminConfiguration()
 		{
 			webHostBuilder.UseSetting(
-				AdminOptions.SectionName.FormatCurrentCultureSectionKey(nameof(AdminOptions.Email)),
+				AdminOptions.SectionName.ToSectionKey(nameof(AdminOptions.Email)),
 				IdentityMockValues.AdminEmail);
 
 			webHostBuilder.UseSetting(
-				AdminOptions.SectionName.FormatCurrentCultureSectionKey(nameof(AdminOptions.Password)),
+				AdminOptions.SectionName.ToSectionKey(nameof(AdminOptions.Password)),
 				IdentityMockValues.AdminPassword);
 		}
 	}

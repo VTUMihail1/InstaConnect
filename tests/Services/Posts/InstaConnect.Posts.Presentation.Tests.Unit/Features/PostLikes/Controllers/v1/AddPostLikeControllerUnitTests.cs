@@ -16,7 +16,7 @@ public class AddPostLikeControllerUnitTests : BasePostLikePresentationCommandUni
 
 		_controller = new(Mapper, Sender);
 
-		Sender.SetupAddCommandRequest(_request, PostLike, CancellationToken);
+		Sender.SetupSendAsync(_request, PostLike, CancellationToken);
 	}
 
 	[Fact]
@@ -36,7 +36,7 @@ public class AddPostLikeControllerUnitTests : BasePostLikePresentationCommandUni
 		var response = await _controller.AddAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(PostLike, _request);
+		response.ShouldSatisfy(_request, PostLike);
 	}
 
 	[Fact]

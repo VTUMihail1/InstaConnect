@@ -1,4 +1,4 @@
-using InstaConnect.Common.Domain.Features.Messaging.Abstractions;
+using InstaConnect.Common.Domain.Features.Requests.Abstractions;
 
 namespace InstaConnect.Identity.Domain.Features.Users.Models.Requests;
 

@@ -6,11 +6,11 @@ namespace InstaConnect.Identity.Infrastructure.Features.Users.Helpers.Includers;
 
 internal class UserClaimsIncluder : IUserIncluder
 {
-	private readonly IIdentityContext _context;
+	private readonly IMongoCollection<UserClaim> _collection;
 
-	public UserClaimsIncluder(IIdentityContext context)
+	public UserClaimsIncluder(IMongoCollection<UserClaim> collection)
 	{
-		_context = context;
+		_collection = collection;
 	}
 
 	public IdentityDestinationType DestinationType => IdentityDestinationType.User;
@@ -21,7 +21,7 @@ internal class UserClaimsIncluder : IUserIncluder
 	{
 		return aggregate
 			.IncludeMany(
-				_context.UserClaims,
+				_collection,
 				p => p.Id,
 				l => l.Id.Id,
 				p => p.UserClaims

@@ -9,12 +9,30 @@ public static class RefreshTokenSetups
 {
 	extension(IServiceScope serviceScope)
 	{
-		public async Task<RefreshToken?> GetRefreshTokenByIdAsync(
+		internal async Task<RefreshToken?> GetByIdAsync(
 		RefreshTokenIdCommandResponse id,
 		CancellationToken cancellationToken)
 		{
-			return await serviceScope.GetRefreshTokenByIdAsync(
+			return await serviceScope.GetByIdAsync(
 				new RefreshTokenId(new(id.Id), id.Value),
+				cancellationToken);
+		}
+
+		public async Task<RefreshToken?> GetByIdAsync(
+		IssueRefreshTokenCommandResponse response,
+		CancellationToken cancellationToken)
+		{
+			return await serviceScope.GetByIdAsync(
+				response.Response.Id,
+				cancellationToken);
+		}
+
+		public async Task<RefreshToken?> GetByIdAsync(
+		RotateRefreshTokenCommandResponse response,
+		CancellationToken cancellationToken)
+		{
+			return await serviceScope.GetByIdAsync(
+				response.Response.Id,
 				cancellationToken);
 		}
 	}

@@ -16,7 +16,7 @@ public class GetPostByIdControllerUnitTests : BasePostPresentationQueryUnitTest
 
 		_controller = new(Mapper, Sender);
 
-		Sender.SetupGetByIdQueryRequest(_request, Post, CancellationToken);
+		Sender.SetupSendAsync(_request, Post, CancellationToken);
 	}
 
 	[Fact]
@@ -36,7 +36,7 @@ public class GetPostByIdControllerUnitTests : BasePostPresentationQueryUnitTest
 		var response = await _controller.GetByIdAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Post, _request);
+		response.ShouldSatisfy(_request, Post);
 	}
 
 	[Fact]

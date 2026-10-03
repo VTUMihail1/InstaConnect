@@ -1,3 +1,5 @@
+using InstaConnect.Identity.Tests.Features.UserClaims.Abstractions;
+using InstaConnect.Identity.Tests.Features.UserClaims.Extensions;
 using InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Abstractions;
 using InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Extensions;
 
@@ -5,10 +7,24 @@ namespace InstaConnect.Identity.Presentation.Tests.Functional.Features.UserClaim
 
 public abstract class BaseUserClaimPresentationCommandFunctionalTest : BaseUserClaimWebTest
 {
-	protected IUserClaimClient Client { get; }
+	protected IUserClaimApiClient ClaimApiClient { get; }
+
+	protected IUserClaimEventClient ClaimEventClient { get; }
 
 	protected BaseUserClaimPresentationCommandFunctionalTest(IdentityWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
-		Client = webApplicationFactory.CreateUserClaimClient();
+		ClaimApiClient = webApplicationFactory.CreateClaimApiClient();
+		ClaimEventClient = webApplicationFactory.CreateClaimEventClient();
+	}
+
+	protected override async Task OnInitializeAsync()
+	{
+		await base.OnInitializeAsync();
+		await ClaimEventClient.StartAsync(CancellationToken);
+	}
+
+	protected override async Task OnDisposeAsync()
+	{
+		await ClaimEventClient.StopAsync(CancellationToken);
 	}
 }

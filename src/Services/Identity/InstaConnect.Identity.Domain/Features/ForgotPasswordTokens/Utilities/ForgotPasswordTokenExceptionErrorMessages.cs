@@ -23,6 +23,6 @@ public static class ForgotPasswordTokenExceptionErrorMessages
 		const string Format = "ForgotPasswordTokenDescriptors({0}) is not supported";
 
 		return Format.FormatCurrentCulture(descriptors
-			.JoinIncludeDescriptorsAsStringWithComa<IdentityDestinationType, IdentityIncludeType, IdentityIncludeDescriptor>());
+			.JoinDescriptorsWithComma<IdentityDestinationType, IdentityIncludeType, IdentityIncludeDescriptor>());
 	}
 }

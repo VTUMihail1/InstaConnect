@@ -22,7 +22,7 @@ public class PostCommentBuilder
 		_user = user;
 		_content = PostCommentDataFaker.GetContent();
 		_createdAtUtc = PostCommentDataFaker.GetCreatedAtUtc();
-		_updatedAtUtc = PostCommentDataFaker.GetUpdatedAtUtc();
+		_updatedAtUtc = _createdAtUtc;
 	}
 
 	public PostComment Build()

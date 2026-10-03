@@ -6,10 +6,10 @@ public static class ExpressionExtensions
 {
 	extension<T, TProperty>(Expression<Func<T, TProperty>> expr)
 	{
-		public string GetProperty()
+		public string GetPropertyDisplayName()
 		{
 			return (expr.Body as MemberExpression)?.Member.Name
-				   .ToSpaceBetweenWordsCase() ?? string.Empty;
+				   .ToSpaceSeparatedWords() ?? string.Empty;
 		}
 
 		public Expression<Func<T, object>> Box()

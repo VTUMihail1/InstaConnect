@@ -1,4 +1,4 @@
-using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Requests.Abstractions;
 using InstaConnect.Follows.Presentation.Tests.Features.Follows.Utilities;
 
 namespace InstaConnect.Follows.Presentation.Tests.Features.Follows.Assertions;
@@ -11,35 +11,35 @@ public static class FollowMockAssertions
 		GetAllFollowsApiRequest request,
 		CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(FollowMatcher.IsGetAllFollowsQueryRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(request.IsGetAllFollowsQueryRequest(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneSendAsync(
 			GetAllFollowsForFollowingApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(FollowMatcher.IsGetAllFollowsForFollowingQueryRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(request.IsGetAllFollowsForFollowingQueryRequest(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneSendAsync(
 			GetFollowByIdApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(FollowMatcher.IsGetFollowByIdQueryRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(request.IsGetFollowByIdQueryRequest(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneSendAsync(
 			AddFollowApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(FollowMatcher.IsAddFollowCommandRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(request.IsAddFollowCommandRequest(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneSendAsync(
 			DeleteFollowApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(FollowMatcher.IsDeleteFollowCommandRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(request.IsDeleteFollowCommandRequest(), cancellationToken);
 		}
 	}
 }

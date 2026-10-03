@@ -5,23 +5,24 @@ namespace InstaConnect.Chats.Presentation.Tests.Functional.Features.ChatMessages
 
 public abstract class BaseChatMessagePresentationCommandFunctionalTest : BaseChatMessageWebTest
 {
-	protected IChatMessageClient HttpClient { get; }
+	protected IChatMessageApiClient ApiClient { get; }
 
-	protected IChatMessageNotificationClient NotificationClient { get; }
+	protected IChatMessageNotificationClient MessageNotificationClient { get; }
 
 	protected BaseChatMessagePresentationCommandFunctionalTest(ChatsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
-		HttpClient = webApplicationFactory.CreateChatMessageClient();
-		NotificationClient = webApplicationFactory.CreateChatMessageNotificationClient(ParticipantTwo.Id);
+		ApiClient = webApplicationFactory.CreateMessageApiClient();
+		MessageNotificationClient = webApplicationFactory.CreateMessageNotificationClient(ParticipantTwo.Id);
 	}
 
 	protected override async Task OnInitializeAsync()
 	{
-		await NotificationClient.ConnectAsync(CancellationToken);
+		await base.OnInitializeAsync();
+		await MessageNotificationClient.StartAsync(CancellationToken);
 	}
 
 	protected override async Task OnDisposeAsync()
 	{
-		await NotificationClient.DisconnectAsync(CancellationToken);
+		await MessageNotificationClient.StopAsync(CancellationToken);
 	}
 }

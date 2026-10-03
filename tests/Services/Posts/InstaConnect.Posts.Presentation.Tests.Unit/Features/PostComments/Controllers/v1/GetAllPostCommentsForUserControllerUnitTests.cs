@@ -16,7 +16,7 @@ public class GetAllPostCommentsForUserControllerUnitTests : BasePostCommentPrese
 
 		_controller = new(Mapper, Sender);
 
-		Sender.SetupGetAllForUserQueryRequest(_request, User, PostComments, CancellationToken);
+		Sender.SetupSendAsync(_request, User, PostComments, CancellationToken);
 	}
 
 	[Fact]
@@ -36,7 +36,7 @@ public class GetAllPostCommentsForUserControllerUnitTests : BasePostCommentPrese
 		var response = await _controller.GetAllAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(User, PostComments, _request);
+		response.ShouldSatisfy(_request, User, PostComments);
 	}
 
 	[Fact]

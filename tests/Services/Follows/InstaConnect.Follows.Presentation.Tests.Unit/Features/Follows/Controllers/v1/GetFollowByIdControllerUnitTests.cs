@@ -16,7 +16,7 @@ public class GetFollowByIdControllerUnitTests : BaseFollowPresentationQueryUnitT
 
 		_controller = new(Mapper, Sender);
 
-		Sender.SetupGetByIdQueryRequest(_request, Follow, CancellationToken);
+		Sender.SetupSendAsync(_request, Follow, CancellationToken);
 	}
 
 	[Fact]
@@ -36,7 +36,7 @@ public class GetFollowByIdControllerUnitTests : BaseFollowPresentationQueryUnitT
 		var response = await _controller.GetByIdAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Follow, _request);
+		response.ShouldSatisfy(_request, Follow);
 	}
 
 	[Fact]

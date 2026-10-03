@@ -21,7 +21,7 @@ public class RefreshTokenBuilder
 
 	public RefreshTokenBuilder WithAlreadyExpiresAtUtc()
 	{
-		_expiresAtUtc = RefreshTokenDataFaker.GetAlreadyExpiresAtUtc();
+		_expiresAtUtc = DataFaker.GetPastDate(_expiresAtUtc);
 
 		return this;
 	}

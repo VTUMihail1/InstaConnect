@@ -1,4 +1,4 @@
-using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Requests.Abstractions;
 using InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Utilities;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Assertions;
@@ -11,21 +11,21 @@ public static class UserClaimMockAssertions
 		GetAllUserClaimsApiRequest request,
 		CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(UserClaimMatcher.IsGetAllUserClaimsQueryRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(request.IsGetAllUserClaimsQueryRequest(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneSendAsync(
 			AddUserClaimApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(UserClaimMatcher.IsAddUserClaimCommandRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(request.IsAddUserClaimCommandRequest(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneSendAsync(
 			DeleteUserClaimApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(UserClaimMatcher.IsDeleteUserClaimCommandRequest(request), cancellationToken);
+			await sender.ShouldHaveReceivedOne().SendAsync(request.IsDeleteUserClaimCommandRequest(), cancellationToken);
 		}
 	}
 }

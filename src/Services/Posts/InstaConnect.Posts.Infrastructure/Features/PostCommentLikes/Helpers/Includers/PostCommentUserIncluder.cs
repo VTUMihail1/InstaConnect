@@ -6,11 +6,11 @@ namespace InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Helpers.In
 
 internal class PostCommentUserIncluder : IPostCommentLikeIncluder
 {
-	private readonly IPostsContext _context;
+	private readonly IMongoCollection<User> _collection;
 
-	public PostCommentUserIncluder(IPostsContext context)
+	public PostCommentUserIncluder(IMongoCollection<User> collection)
 	{
-		_context = context;
+		_collection = collection;
 	}
 
 	public PostsDestinationType DestinationType => PostsDestinationType.PostComment;
@@ -21,7 +21,7 @@ internal class PostCommentUserIncluder : IPostCommentLikeIncluder
 	{
 		return aggregate
 			.IncludeOne(
-				_context.Users,
+				_collection,
 				pcl => pcl.PostComment!.UserId,
 				p => p.Id,
 				pcl => pcl.PostComment!.User!

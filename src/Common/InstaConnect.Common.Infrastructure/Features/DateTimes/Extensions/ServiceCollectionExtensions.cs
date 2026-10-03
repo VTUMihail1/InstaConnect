@@ -3,13 +3,13 @@ using InstaConnect.Common.Infrastructure.Features.DateTimes.Helpers;
 
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Common.Infrastructure.Extensions;
+namespace InstaConnect.Common.Infrastructure.Features.DateTimes.Extensions;
 
-public static partial class ServiceCollectionExtensions
+public static class ServiceCollectionExtensions
 {
 	extension(IServiceCollection serviceCollection)
 	{
-		public IServiceCollection AddDateTimeProvider()
+		public IServiceCollection AddDateTimes()
 		{
 			serviceCollection.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 

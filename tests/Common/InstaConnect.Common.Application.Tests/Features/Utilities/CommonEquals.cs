@@ -1,11 +1,11 @@
 using FluentValidation.Results;
 
 using InstaConnect.Common.Application.Features.AccessTokens.Models;
-using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Requests.Abstractions;
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Domain.Features.Entities.Abstractions;
-using InstaConnect.Common.Domain.Features.Messaging.Abstractions;
-using InstaConnect.Common.Infrastructure.Features.Data.Helpers;
+using InstaConnect.Common.Domain.Features.Requests.Abstractions;
+using InstaConnect.Common.Infrastructure.Features.Databases.Helpers;
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 
 namespace InstaConnect.Common.Application.Tests.Features.Utilities;
@@ -33,17 +33,17 @@ public static class CommonEquals
 	extension<TExpected>(ICollection<TExpected> expected)
 	{
 		public bool MatchesCollection<TEntity, TKey, TRequest>(
+		TRequest request,
 		ICollection<TEntity> entities,
 		Func<TExpected, TKey> expectedKey,
 		Func<TEntity, TKey> entityKey,
 		Func<TExpected, TEntity, bool> matcher,
-		TRequest request,
 		Func<TEntity, bool> filter)
 		where TRequest : IPaginatableQueryRequest
 		where TEntity : IEntity
 		where TKey : notnull
 		{
-			var entitiesByKey = entities.FilterToDictionary(filter, request, entityKey);
+			var entitiesByKey = entities.FilterToDictionary(request, filter, entityKey);
 
 			return expected.Count == entitiesByKey.Count &&
 				   expected.Any() &&
@@ -53,15 +53,15 @@ public static class CommonEquals
 		}
 
 		public bool MatchesSortedCollection<TEntity, TRequest>(
+			TRequest request,
 			ICollection<TEntity> entities,
 			Func<TExpected, TEntity, bool> matcher,
 			ISortEnumTermTransformer<TEntity> termTransformer,
-			TRequest request,
 			Func<TEntity, bool> filter)
 			where TRequest : IPaginatableQueryRequest
 			where TEntity : IEntity
 		{
-			var sortedEntities = entities.Filter(termTransformer, request, filter);
+			var sortedEntities = entities.Filter(request, termTransformer, filter);
 
 			return expected.Count == sortedEntities.Count &&
 				   expected.Any() &&
@@ -73,8 +73,8 @@ public static class CommonEquals
 	extension<TResponse>(TResponse response) where TResponse : ICollectionQueryResponse
 	{
 		public bool MatchesCollectionResponse<TRequest>(
-		int totalCount,
-		TRequest request)
+		TRequest request,
+		int totalCount)
 			where TRequest : IPaginatableQueryRequest
 		{
 			var paginator = new Paginator();
@@ -107,8 +107,8 @@ public static class CommonEquals
 		public bool MatchesPaginatable<TQueryRequest>(TQueryRequest request)
 		where TQueryRequest : IPaginatableQueryRequest
 		{
-			return request.Page == request.Page &&
-				   request.PageSize == request.PageSize;
+			return query.Pagination.Page == request.Page &&
+				   query.Pagination.PageSize == request.PageSize;
 		}
 	}
 }

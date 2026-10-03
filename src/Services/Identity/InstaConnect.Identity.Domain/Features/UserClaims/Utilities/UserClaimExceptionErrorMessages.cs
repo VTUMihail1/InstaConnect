@@ -7,9 +7,8 @@ public static class UserClaimExceptionErrorMessages
 	public static string GetNotFoundMessage(UserClaimId id)
 	{
 		const string Format = "UserClaim(id: {0}, claim: {1}) does not exist";
-		var result = Format.FormatCurrentCulture(id.Id.Id, id.Claim);
 
-		return result;
+		return Format.FormatCurrentCulture(id.Id.Id, id.Claim);
 	}
 
 	public static string GetAlreadyExistsMessage(UserClaimId id)
@@ -31,6 +30,6 @@ public static class UserClaimExceptionErrorMessages
 		const string Format = "UserClaimDescriptors({0}) is not supported";
 
 		return Format.FormatCurrentCulture(descriptors
-			.JoinIncludeDescriptorsAsStringWithComa<IdentityDestinationType, IdentityIncludeType, IdentityIncludeDescriptor>());
+			.JoinDescriptorsWithComma<IdentityDestinationType, IdentityIncludeType, IdentityIncludeDescriptor>());
 	}
 }

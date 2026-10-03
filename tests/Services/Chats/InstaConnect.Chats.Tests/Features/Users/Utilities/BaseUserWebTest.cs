@@ -10,25 +10,21 @@ public abstract class BaseUserWebTest : BaseUserTest, IClassFixture<ChatsWebAppl
 {
 	protected IServiceScope ServiceScope { get; }
 
-	protected IEventHarness EventHarness { get; }
-
 	protected BaseUserWebTest(ChatsWebApplicationFactory webApplicationFactory)
 	{
 		ServiceScope = webApplicationFactory.Services.CreateScope();
-		EventHarness = ServiceScope.GetEventHarness();
 	}
 
 	public async Task InitializeAsync()
 	{
-		await EventHarness.StartAsync(CancellationToken);
-		await ServiceScope.ResetChatsDatabase(CancellationToken);
+		await ServiceScope.ResetChatsDatabaseAsync(CancellationToken);
 		await OnInitializeAsync();
 	}
 
 	public async Task DisposeAsync()
 	{
-		await ServiceScope.ResetChatsDatabase(CancellationToken);
-		await EventHarness.StopAsync(CancellationToken);
+		await OnDisposeAsync();
+		await ServiceScope.ResetChatsDatabaseAsync(CancellationToken);
 	}
 
 	protected virtual Task OnInitializeAsync()

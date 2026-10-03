@@ -1,10 +1,11 @@
 using InstaConnect.Common.Infrastructure.Features.AccessTokens.Models;
-using InstaConnect.Common.Infrastructure.Features.Caching.Models;
-using InstaConnect.Common.Infrastructure.Features.Data.Models;
+using InstaConnect.Common.Infrastructure.Features.Caches.Models;
+using InstaConnect.Common.Infrastructure.Features.Databases.Models;
 using InstaConnect.Common.Infrastructure.Features.Emails.Models;
 using InstaConnect.Common.Infrastructure.Features.Events.Models;
 using InstaConnect.Common.Infrastructure.Features.Images.Models;
-using InstaConnect.Common.Infrastructure.Features.Observability.Models;
+using InstaConnect.Common.Infrastructure.Features.Telemetries.Models;
+using InstaConnect.Common.Presentation.Features.Common.Models;
 using InstaConnect.Common.Presentation.Features.Controllers.Models;
 using InstaConnect.Common.Tests.Features.Utilities;
 
@@ -19,80 +20,87 @@ public static class WebHostBuilderExtensions
 		public void UpdateMongoConfiguration(string connectionString)
 		{
 			webHostBuilder.UseSetting(
-				MongoOptions.SectionName.FormatCurrentCultureSectionKey(nameof(MongoOptions.ConnectionString)),
+				MongoOptions.SectionName.ToSectionKey(nameof(MongoOptions.ConnectionString)),
 				connectionString);
 
-			webHostBuilder.UseSetting(MongoOptions.SectionName.FormatCurrentCultureSectionKey(nameof(MongoOptions.Name)),
+			webHostBuilder.UseSetting(MongoOptions.SectionName.ToSectionKey(nameof(MongoOptions.Name)),
 				MockValues.MongoName);
 		}
 
 		public void UpdateRedisConfiguration(string connectionString)
 		{
 			webHostBuilder.UseSetting(
-				RedisOptions.SectionName.FormatCurrentCultureSectionKey(nameof(RedisOptions.ConnectionString)),
+				RedisOptions.SectionName.ToSectionKey(nameof(RedisOptions.ConnectionString)),
 				connectionString);
 		}
 
 		public void UpdateRabbitMqConfiguration(string connectionString)
 		{
 			webHostBuilder.UseSetting(
-				RabbitMqOptions.SectionName.FormatCurrentCultureSectionKey(nameof(RabbitMqOptions.ConnectionString)),
+				RabbitMqOptions.SectionName.ToSectionKey(nameof(RabbitMqOptions.ConnectionString)),
 				connectionString);
 		}
 
 		public void UpdateCloudinaryConfiguration()
 		{
 			webHostBuilder.UseSetting(
-				CloudinaryOptions.SectionName.FormatCurrentCultureSectionKey(nameof(CloudinaryOptions.CloudName)),
+				CloudinaryOptions.SectionName.ToSectionKey(nameof(CloudinaryOptions.CloudName)),
 				MockValues.CloudinaryCloudName);
 
 			webHostBuilder.UseSetting(
-				CloudinaryOptions.SectionName.FormatCurrentCultureSectionKey(nameof(CloudinaryOptions.ApiKey)),
+				CloudinaryOptions.SectionName.ToSectionKey(nameof(CloudinaryOptions.ApiKey)),
 				MockValues.CloudinaryApiKey);
 
 			webHostBuilder.UseSetting(
-				CloudinaryOptions.SectionName.FormatCurrentCultureSectionKey(nameof(CloudinaryOptions.ApiSecret)),
+				CloudinaryOptions.SectionName.ToSectionKey(nameof(CloudinaryOptions.ApiSecret)),
 				MockValues.CloudinaryApiSecret);
 		}
 
 		public void UpdateSendGridConfiguration()
 		{
 			webHostBuilder.UseSetting(
-				SendGridOptions.SectionName.FormatCurrentCultureSectionKey(nameof(SendGridOptions.Sender)),
+				SendGridOptions.SectionName.ToSectionKey(nameof(SendGridOptions.Sender)),
 				MockValues.SendGridSender);
 
 			webHostBuilder.UseSetting(
-				SendGridOptions.SectionName.FormatCurrentCultureSectionKey(nameof(SendGridOptions.ApiKey)),
+				SendGridOptions.SectionName.ToSectionKey(nameof(SendGridOptions.ApiKey)),
 				MockValues.SendGridApiKey);
 		}
 
 		public void UpdateAccessTokenConfiguration()
 		{
 			webHostBuilder.UseSetting(
-				AccessTokenOptions.SectionName.FormatCurrentCultureSectionKey(nameof(AccessTokenOptions.SecurityKey)),
+				AccessTokenOptions.SectionName.ToSectionKey(nameof(AccessTokenOptions.SecurityKey)),
 				MockValues.AccessTokenSecurityKey);
 
 			webHostBuilder.UseSetting(
-				AccessTokenOptions.SectionName.FormatCurrentCultureSectionKey(nameof(AccessTokenOptions.Issuer)),
+				AccessTokenOptions.SectionName.ToSectionKey(nameof(AccessTokenOptions.Issuer)),
 				MockValues.AccessTokenIssuer);
 
 			webHostBuilder.UseSetting(
-				AccessTokenOptions.SectionName.FormatCurrentCultureSectionKey(nameof(AccessTokenOptions.Audience)),
+				AccessTokenOptions.SectionName.ToSectionKey(nameof(AccessTokenOptions.Audience)),
 				MockValues.AccessTokenAudience);
 		}
 
 		public void UpdateOpenTelemetryConfiguration()
 		{
 			webHostBuilder.UseSetting(
-				OpenTelemetryOptions.SectionName.FormatCurrentCultureSectionKey(nameof(OpenTelemetryOptions.Endpoint)),
+				OpenTelemetryOptions.SectionName.ToSectionKey(nameof(OpenTelemetryOptions.Endpoint)),
 				MockValues.OpenTelemetryEndpoint);
 		}
 
 		public void UpdateCorsConfiguration()
 		{
 			webHostBuilder.UseSetting(
-				CorsOptions.SectionName.FormatCurrentCultureSectionKey(nameof(CorsOptions.AllowedOrigins)),
+				CorsOptions.SectionName.ToSectionKey(nameof(CorsOptions.AllowedOrigins)),
 				MockValues.CorsAllowedOrigins);
+		}
+
+		public void UpdateMainConfiguration()
+		{
+			webHostBuilder.UseSetting(
+				MainOptions.SectionName.ToSectionKey(nameof(MainOptions.BaseUrl)),
+				MockValues.MainBaseUrl);
 		}
 	}
 }

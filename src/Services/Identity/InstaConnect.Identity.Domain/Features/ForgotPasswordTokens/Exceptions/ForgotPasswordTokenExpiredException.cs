@@ -1,4 +1,4 @@
-using InstaConnect.Common.Domain.Features.ExceptionHandling.Exceptions;
+using InstaConnect.Common.Domain.Features.Exceptions.Exceptions;
 
 namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Exceptions;
 

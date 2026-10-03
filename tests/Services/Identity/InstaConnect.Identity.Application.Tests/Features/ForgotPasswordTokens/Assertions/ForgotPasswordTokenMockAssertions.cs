@@ -10,14 +10,14 @@ public static class ForgotPasswordTokenMockAssertions
 		AddForgotPasswordTokenCommandRequest request,
 		CancellationToken cancellationToken)
 		{
-			await forgotPasswordTokenService.ShouldHaveReceivedOne().AddAsync(ForgotPasswordTokenMatcher.IsAddForgotPasswordTokenCommand(request), cancellationToken);
+			await forgotPasswordTokenService.ShouldHaveReceivedOne().AddAsync(request.IsAddForgotPasswordTokenCommand(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneVerifyAsync(
 			VerifyForgotPasswordTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await forgotPasswordTokenService.ShouldHaveReceivedOne().VerifyAsync(ForgotPasswordTokenMatcher.IsVerifyForgotPasswordTokenCommand(request), cancellationToken);
+			await forgotPasswordTokenService.ShouldHaveReceivedOne().VerifyAsync(request.IsVerifyForgotPasswordTokenCommand(), cancellationToken);
 		}
 	}
 }

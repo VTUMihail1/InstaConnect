@@ -26,7 +26,7 @@ public class UserBuilder
 		_passwordHash = passwordHash;
 		_profileImage = profileImage;
 		_createdAtUtc = UserDataFaker.GetCreatedAtUtc();
-		_updatedAtUtc = UserDataFaker.GetUpdatedAtUtc();
+		_updatedAtUtc = _createdAtUtc;
 	}
 
 	public UserBuilder WithPasswordHash(string passwordHash)

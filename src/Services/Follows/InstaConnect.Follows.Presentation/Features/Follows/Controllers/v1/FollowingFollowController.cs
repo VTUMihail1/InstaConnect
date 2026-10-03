@@ -1,10 +1,11 @@
-using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Requests.Abstractions;
 using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
 using InstaConnect.Common.Presentation.Features.Controllers.Utilities;
 using InstaConnect.Follows.Application.Features.Follows.Queries.GetAllForFollowing;
 
 namespace InstaConnect.Follows.Presentation.Features.Follows.Controllers.v1;
 
+[ApiController]
 [ApiVersion(FollowRoutes.Version1)]
 [Route(FollowRoutes.FollowingResource)]
 [EnableRateLimiting(RateLimiterPolicies.Default)]

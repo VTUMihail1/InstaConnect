@@ -4,48 +4,48 @@ public static class ChatMessageMockSetups
 {
 	extension(IChatMessageQueryService commentService)
 	{
-		public void SetupGetAllQuery(
+		public void SetupGetAllAsync(
 		GetAllChatMessagesQueryRequest request,
 		Chat chat,
 		ICollection<ChatMessage> chatMessages,
 		CancellationToken cancellationToken)
 		{
 			commentService
-				.GetAllAsync(ChatMessageMatcher.IsGetAllChatMessagesQuery(request), cancellationToken)
-				.ReturnsResponse(chatMessages.ToResponse(chat, request));
+				.GetAllAsync(request.IsGetAllChatMessagesQuery(), cancellationToken)
+				.ReturnsTaskResponse(chatMessages.ToResponse(request, chat));
 		}
 
-		public void SetupGetByIdQuery(
+		public void SetupGetByIdAsync(
 			GetChatMessageByIdQueryRequest request,
 			ChatMessage chatMessage,
 			CancellationToken cancellationToken)
 		{
 			commentService
-				.GetByIdAsync(ChatMessageMatcher.IsGetChatMessageByIdQuery(request), cancellationToken)
-				.ReturnsResponse(chatMessage.ToResponse(request));
+				.GetByIdAsync(request.IsGetChatMessageByIdQuery(), cancellationToken)
+				.ReturnsTaskResponse(chatMessage.ToResponse(request));
 		}
 	}
 
 	extension(IChatMessageCommandService commentService)
 	{
-		public void SetupAddCommand(
+		public void SetupAddAsync(
 		AddChatMessageCommandRequest request,
 		ChatMessage chatMessage,
 		CancellationToken cancellationToken)
 		{
 			commentService
-				.AddAsync(ChatMessageMatcher.IsAddChatMessageCommand(request), cancellationToken)
-				.ReturnsResponse(chatMessage.ToResponse(request));
+				.AddAsync(request.IsAddChatMessageCommand(), cancellationToken)
+				.ReturnsTaskResponse(chatMessage.ToResponse(request));
 		}
 
-		public void SetupUpdateCommand(
+		public void SetupUpdateAsync(
 			UpdateChatMessageCommandRequest request,
 			ChatMessage chatMessage,
 			CancellationToken cancellationToken)
 		{
 			commentService
-				.UpdateAsync(ChatMessageMatcher.IsUpdateChatMessageCommand(request), cancellationToken)
-				.ReturnsResponse(chatMessage.ToResponse(request));
+				.UpdateAsync(request.IsUpdateChatMessageCommand(), cancellationToken)
+				.ReturnsTaskResponse(chatMessage.ToResponse(request));
 		}
 	}
 }

@@ -1,4 +1,4 @@
-using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Requests.Abstractions;
 
 namespace InstaConnect.Posts.Presentation.Tests.Features.PostComments.Utilities;
 
@@ -6,56 +6,56 @@ public static class PostCommentMockSetups
 {
 	extension(IApplicationSender sender)
 	{
-		public void SetupGetAllQueryRequest(
+		public void SetupSendAsync(
 		GetAllPostCommentsApiRequest request,
 		Post post,
 		ICollection<PostComment> postComments,
 		CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(PostCommentMatcher.IsGetAllPostCommentsQueryRequest(request), cancellationToken)
-				.ReturnsResponse(postComments.ToResponse(post, request));
+				.SendAsync(request.IsGetAllPostCommentsQueryRequest(), cancellationToken)
+				.ReturnsTaskResponse(postComments.ToResponse(request, post));
 		}
 
-		public void SetupGetAllForUserQueryRequest(
+		public void SetupSendAsync(
 			GetAllPostCommentsForUserApiRequest request,
 			User user,
 			ICollection<PostComment> postComments,
 			CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(PostCommentMatcher.IsGetAllPostCommentsForUserQueryRequest(request), cancellationToken)
-				.ReturnsResponse(postComments.ToResponse(user, request));
+				.SendAsync(request.IsGetAllPostCommentsForUserQueryRequest(), cancellationToken)
+				.ReturnsTaskResponse(postComments.ToResponse(request, user));
 		}
 
-		public void SetupGetByIdQueryRequest(
+		public void SetupSendAsync(
 			GetPostCommentByIdApiRequest request,
 			PostComment postComment,
 			CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(PostCommentMatcher.IsGetPostCommentByIdQueryRequest(request), cancellationToken)
-				.ReturnsResponse(postComment.ToResponse(request));
+				.SendAsync(request.IsGetPostCommentByIdQueryRequest(), cancellationToken)
+				.ReturnsTaskResponse(postComment.ToResponse(request));
 		}
 
-		public void SetupAddCommandRequest(
+		public void SetupSendAsync(
 			AddPostCommentApiRequest request,
 			PostComment postComment,
 			CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(PostCommentMatcher.IsAddPostCommentCommandRequest(request), cancellationToken)
-				.ReturnsResponse(postComment.ToResponse(request));
+				.SendAsync(request.IsAddPostCommentCommandRequest(), cancellationToken)
+				.ReturnsTaskResponse(postComment.ToResponse(request));
 		}
 
-		public void SetupUpdateCommandRequest(
+		public void SetupSendAsync(
 			UpdatePostCommentApiRequest request,
 			PostComment postComment,
 			CancellationToken cancellationToken)
 		{
 			sender
-				.SendAsync(PostCommentMatcher.IsUpdatePostCommentCommandRequest(request), cancellationToken)
-				.ReturnsResponse(postComment.ToResponse(request));
+				.SendAsync(request.IsUpdatePostCommentCommandRequest(), cancellationToken)
+				.ReturnsTaskResponse(postComment.ToResponse(request));
 		}
 	}
 }

@@ -10,29 +10,21 @@ public static class WebApplicationExtensions
 {
 	extension(WebApplication webApplication)
 	{
-		public WebApplication UseConfiguredCors()
+		public WebApplication UseCorsPolicies()
 		{
 			webApplication.UseCors(CorsPolicies.SpecificOrigins);
 
 			return webApplication;
 		}
 
-		public WebApplication UseRequestRateLimiting()
+		public WebApplication UseRateLimiterPolicies()
 		{
 			webApplication.UseRateLimiter();
 
 			return webApplication;
 		}
 
-		public WebApplication UseSecurity()
-		{
-			webApplication.UseAuthentication();
-			webApplication.UseAuthorization();
-
-			return webApplication;
-		}
-
-		public WebApplication MapApiEndpoints()
+		public WebApplication MapApiControllers()
 		{
 			webApplication.MapControllers();
 

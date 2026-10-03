@@ -23,7 +23,7 @@ public static class ChatsSetups
 			return serviceScope.ServiceProvider.GetChatsContext();
 		}
 
-		public async Task ResetChatsDatabase(
+		public async Task ResetChatsDatabaseAsync(
 			CancellationToken cancellationToken)
 		{
 			var context = serviceScope.GetChatsContext();

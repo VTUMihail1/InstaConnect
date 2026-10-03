@@ -1,5 +1,6 @@
 using InstaConnect.Chats.Domain.Features.Users.Abstractions;
 using InstaConnect.Chats.Domain.Features.Users.Models.ValueObjects;
+using InstaConnect.Chats.Tests.Features.Chats.Utilities;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -32,28 +33,33 @@ public static class UserSetups
 			return serviceScope.ServiceProvider.GetUserIncludeBuilderFactory();
 		}
 
-		public async Task<User?> GetUserByIdAsync(
+		public async Task<User?> GetByIdAsync(
 			UserId id,
 			CancellationToken cancellationToken)
 		{
-			return await serviceScope.GetUserCommandRepository().GetByIdAsync(id, cancellationToken);
+			var chatInclude = serviceScope.GetIncludeBuilderFactory().Create().WithParticipantOne().WithParticipantTwo().Build();
+			var messageInclude = serviceScope.GetMessageIncludeBuilderFactory().Create().WithChat(chatInclude).Build();
+
+			var include = serviceScope.GetUserIncludeBuilderFactory().Create().WithChats(chatInclude).WithChatMessages(messageInclude).Build();
+
+			return (await serviceScope.GetUserCommandRepository().GetByIdAsync(id, include, cancellationToken)).SetChats().SetChatMessages();
 		}
 
-		public async Task AddUserAsync(
+		public async Task AddAsync(
 			User user,
 			CancellationToken cancellationToken)
 		{
 			await serviceScope.GetUserCommandRepository().AddAsync(user, cancellationToken);
 		}
 
-		public async Task AddUserRangeAsync(
+		public async Task AddRangeAsync(
 			IEnumerable<User> users,
 			CancellationToken cancellationToken)
 		{
 			await serviceScope.GetUserCommandRepository().AddRangeAsync(users, cancellationToken);
 		}
 
-		public async Task DeleteUserAsync(
+		public async Task DeleteAsync(
 			User user,
 			CancellationToken cancellationToken)
 		{

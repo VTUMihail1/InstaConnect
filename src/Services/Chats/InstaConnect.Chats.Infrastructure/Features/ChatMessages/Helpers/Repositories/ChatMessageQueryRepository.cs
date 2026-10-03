@@ -1,36 +1,18 @@
-using InstaConnect.Chats.Infrastructure.Features.ChatMessages.Extensions;
-using InstaConnect.Common.Domain.Features.Data.Abstractions;
-using InstaConnect.Common.Infrastructure.Features.Data.Abstractions;
-
-using MongoDB.Driver;
-
 namespace InstaConnect.Chats.Infrastructure.Features.ChatMessages.Helpers.Repositories;
 
 internal class ChatMessageQueryRepository : IChatMessageQueryRepository
 {
-	private readonly IPaginator _paginator;
-	private readonly IChatsContext _context;
-	private readonly ISortOrdererFactory _sortOrdererFactory;
-	private readonly IChatMessagesSortTermerFactory _sortTermerFactory;
+	private readonly IChatMessageCollection _collection;
 	private readonly IChatIncludeBuilderFactory _includeBuilderFactory;
-	private readonly IChatMessageIncluderFactory _messageIncluderFactory;
 	private readonly IChatMessageIncludeBuilderFactory _messageIncludeBuilderFactory;
 
 	public ChatMessageQueryRepository(
-		IPaginator paginator,
-		IChatsContext context,
-		ISortOrdererFactory sortOrdererFactory,
+		IChatMessageCollection collection,
 		IChatIncludeBuilderFactory includeBuilderFactory,
-		IChatMessagesSortTermerFactory sortTermerFactory,
-		IChatMessageIncluderFactory messageIncluderFactory,
 		IChatMessageIncludeBuilderFactory messageIncludeBuilderFactory)
 	{
-		_paginator = paginator;
-		_context = context;
-		_sortOrdererFactory = sortOrdererFactory;
+		_collection = collection;
 		_includeBuilderFactory = includeBuilderFactory;
-		_sortTermerFactory = sortTermerFactory;
-		_messageIncluderFactory = messageIncluderFactory;
 		_messageIncludeBuilderFactory = messageIncludeBuilderFactory;
 	}
 
@@ -43,14 +25,13 @@ internal class ChatMessageQueryRepository : IChatMessageQueryRepository
 	{
 		var messageInclude = _messageIncludeBuilderFactory.Create().WithSender().Build();
 
-		return await _context
-			.ChatMessages
-			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_messageIncluderFactory, messageInclude)
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(messageInclude)
 			.Match(filter)
 			.ProjectToResponseWithoutChat(currentUser)
-			.Sort(_sortOrdererFactory, _sortTermerFactory, sorting)
-			.Paginate(_paginator, pagination)
+			.ApplySorting(sorting)
+			.ApplyPagination(pagination)
 			.ToListAsync(cancellationToken);
 	}
 
@@ -60,12 +41,11 @@ internal class ChatMessageQueryRepository : IChatMessageQueryRepository
 	{
 		var messageInclude = _messageIncludeBuilderFactory.Create().WithSender().Build();
 
-		return await _context
-			.ChatMessages
-			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_messageIncluderFactory, messageInclude)
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(messageInclude)
 			.Match(filter)
-			.GetCount(cancellationToken);
+			.GetCountAsync(cancellationToken);
 	}
 
 	public async Task<ChatMessageResponse?> GetByIdAsync(
@@ -76,10 +56,9 @@ internal class ChatMessageQueryRepository : IChatMessageQueryRepository
 		var include = _includeBuilderFactory.Create().WithParticipantOne().WithParticipantTwo().Build();
 		var messageInclude = _messageIncludeBuilderFactory.Create().WithSender().WithChat(include).Build();
 
-		return await _context
-			.ChatMessages
-			.AggregateWithCaseInsensitiveCollation()
-			.Includes(_messageIncluderFactory, messageInclude)
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(messageInclude)
 			.Match(id)
 			.ProjectToFullResponse(currentUser)
 			.FirstOrDefaultAsync(cancellationToken);
@@ -89,9 +68,8 @@ internal class ChatMessageQueryRepository : IChatMessageQueryRepository
 		ChatMessageId id,
 		CancellationToken cancellationToken)
 	{
-		return await _context
-			.ChatMessages
-			.AggregateWithCaseInsensitiveCollation()
+		return await _collection
+			.AggregateFluent()
 			.Match(id)
 			.AnyAsync(cancellationToken);
 	}

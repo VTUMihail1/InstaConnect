@@ -1,7 +1,7 @@
 using InstaConnect.Chats.Tests.Features.ChatMessages.Abstractions;
 using InstaConnect.Chats.Tests.Features.ChatMessages.Extensions;
 
-using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Requests.Abstractions;
 
 namespace InstaConnect.Chats.Application.Tests.Integration.Features.ChatMessages.Utilities;
 
@@ -9,22 +9,23 @@ public abstract class BaseChatMessageApplicationCommandIntegrationTest : BaseCha
 {
 	protected IApplicationSender Sender { get; }
 
-	protected IChatMessageNotificationClient NotificationClient { get; }
+	protected IChatMessageNotificationClient MessageNotificationClient { get; }
 
 	protected BaseChatMessageApplicationCommandIntegrationTest(ChatsWebApplicationFactory webApplicationFactory)
 		: base(webApplicationFactory)
 	{
 		Sender = ServiceScope.GetSender();
-		NotificationClient = webApplicationFactory.CreateChatMessageNotificationClient(ParticipantTwo.Id);
+		MessageNotificationClient = webApplicationFactory.CreateMessageNotificationClient(ParticipantTwo.Id);
 	}
 
 	protected override async Task OnInitializeAsync()
 	{
-		await NotificationClient.ConnectAsync(CancellationToken);
+		await base.OnInitializeAsync();
+		await MessageNotificationClient.StartAsync(CancellationToken);
 	}
 
 	protected override async Task OnDisposeAsync()
 	{
-		await NotificationClient.DisconnectAsync(CancellationToken);
+		await MessageNotificationClient.StopAsync(CancellationToken);
 	}
 }

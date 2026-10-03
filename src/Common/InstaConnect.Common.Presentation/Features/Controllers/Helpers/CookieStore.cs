@@ -51,7 +51,7 @@ public class CookieStore : ICookieStore
 
 		var options = new CookieOptions
 		{
-			HttpOnly = false,
+			HttpOnly = true,
 			Secure = true,
 			SameSite = SameSiteMode.Strict,
 			Expires = _dateTimeProvider.GetOffsetUtcNow(expireSeconds)

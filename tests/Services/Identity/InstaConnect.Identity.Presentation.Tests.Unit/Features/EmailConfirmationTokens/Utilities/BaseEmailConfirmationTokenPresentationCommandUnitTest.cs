@@ -1,4 +1,4 @@
-using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Requests.Abstractions;
 using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
 using InstaConnect.Identity.Presentation.Features.Common.Extensions;
 
@@ -14,5 +14,7 @@ public abstract class BaseEmailConfirmationTokenPresentationCommandUnitTest : Ba
 	{
 		Sender = MockFactory.CreateApplicationSender();
 		Mapper = MockFactory.CreateMapper(IdentityPresentationReference.Assembly);
+
+		PasswordHasher.ClearCalls();
 	}
 }

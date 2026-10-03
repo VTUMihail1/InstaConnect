@@ -35,7 +35,7 @@ public static class ChatMessageFilterExtensions
 			Expression<Func<T, object>> messageIdField)
 		{
 			var chatId = filter.Id.GetFilterForIdEquals(participantOneIdField, participantTwoIdField);
-			var messageId = Builders<T>.Filter.EqualsCaseInsensitive(
+			var messageId = Builders<T>.Filter.EqualsIgnoreCase(
 				messageIdField, filter.MessageId, filter.MessageId.IsNullOrEmptyOrWhiteSpace());
 
 			return Builders<T>.Filter.And(chatId, messageId);

@@ -5,10 +5,10 @@ namespace InstaConnect.Follows.Presentation.Tests.Functional.Features.Follows.Ut
 
 public abstract class BaseFollowPresentationQueryFunctionalTest : BaseFollowWebTest
 {
-	protected IFollowClient Client { get; }
+	protected IFollowApiClient ApiClient { get; }
 
 	protected BaseFollowPresentationQueryFunctionalTest(FollowsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
-		Client = webApplicationFactory.CreateFollowClient();
+		ApiClient = webApplicationFactory.CreateApiClient();
 	}
 }

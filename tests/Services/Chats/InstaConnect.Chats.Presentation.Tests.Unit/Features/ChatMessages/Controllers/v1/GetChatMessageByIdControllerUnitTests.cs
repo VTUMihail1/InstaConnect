@@ -16,7 +16,7 @@ public class GetChatMessageByIdControllerUnitTests : BaseChatMessagePresentation
 
 		_controller = new(Mapper, Sender);
 
-		Sender.SetupGetByIdQueryRequest(_request, ChatMessage, CancellationToken);
+		Sender.SetupSendAsync(_request, ChatMessage, CancellationToken);
 	}
 
 	[Fact]
@@ -36,7 +36,7 @@ public class GetChatMessageByIdControllerUnitTests : BaseChatMessagePresentation
 		var response = await _controller.GetByIdAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(ChatMessage, _request);
+		response.ShouldSatisfy(_request, ChatMessage);
 	}
 
 	[Fact]

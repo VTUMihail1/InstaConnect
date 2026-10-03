@@ -1,0 +1,302 @@
+using InstaConnect.Common.Tests.Features.DataAttributes.Strings.Base;
+using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Requests;
+using InstaConnect.Posts.Domain.Tests.Features.PostCommentLikes.Assertions;
+using InstaConnect.Posts.Domain.Tests.Features.PostCommentLikes.Builders;
+using InstaConnect.Posts.Domain.Tests.Integration.Features.PostCommentLikes.Utilities;
+using InstaConnect.Posts.Tests.Features.PostCommentLikes.Assertions;
+using InstaConnect.Posts.Tests.Features.PostCommentLikes.Utilities;
+using InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.Id;
+using InstaConnect.Posts.Tests.Features.PostComments.Utilities;
+using InstaConnect.Posts.Tests.Features.Posts.DataAttributes.Id;
+using InstaConnect.Posts.Tests.Features.Posts.Utilities;
+using InstaConnect.Posts.Tests.Features.Users.DataAttributes.Id;
+using InstaConnect.Posts.Tests.Features.Users.Utilities;
+
+namespace InstaConnect.Posts.Domain.Tests.Integration.Features.PostCommentLikes.Services;
+
+public class AddPostCommentLikeCommandServiceIntegrationTests : BasePostCommentLikeDomainCommandIntegrationTest
+{
+	private readonly AddPostCommentLikeCommandBuilderFactory _commandBuilderFactory;
+	private readonly AddPostCommentLikeCommandBuilder _commandBuilder;
+	private readonly AddPostCommentLikeCommand _command;
+
+	public AddPostCommentLikeCommandServiceIntegrationTests(PostsWebApplicationFactory webApplicationFactory)
+		: base(webApplicationFactory)
+	{
+		_commandBuilderFactory = new();
+		_commandBuilder = _commandBuilderFactory.Create(PostComment, User);
+		_command = _commandBuilder.Build();
+	}
+
+	protected override async Task OnInitializeAsync()
+	{
+		await base.OnInitializeAsync();
+		await ServiceScope.AddAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(Post, CancellationToken);
+		await ServiceScope.AddAsync(PostComment, CancellationToken);
+	}
+
+	[Fact]
+	public async Task AddAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
+	{
+		// Arrange
+		await ServiceScope.DeleteAsync(Post, CancellationToken);
+
+		// Assert
+		await Service.ShouldThrowPostNotFoundExceptionAsync(_command, CancellationToken);
+	}
+
+	[Fact]
+	public async Task AddAsync_ShouldThrowPostCommentNotFoundException_WhenCommentIdIsInvalid()
+	{
+		// Arrange
+		await ServiceScope.DeleteAsync(PostComment, CancellationToken);
+
+		// Assert
+		await Service.ShouldThrowPostCommentNotFoundExceptionAsync(_command, CancellationToken);
+	}
+
+	[Fact]
+	public async Task AddAsync_ShouldThrowUserNotFoundException_WhenUserIdIsInvalid()
+	{
+		// Arrange
+		await ServiceScope.DeleteAsync(User, CancellationToken);
+
+		// Assert
+		await Service.ShouldThrowUserNotFoundExceptionAsync(_command, CancellationToken);
+	}
+
+	[Fact]
+	public async Task AddAsync_ShouldThrowPostCommentLikeAlreadyExistsException_WhenPostCommentLikeAlreadyExists()
+	{
+		// Arrange
+		await ServiceScope.AddAsync(PostCommentLike, CancellationToken);
+
+		// Assert
+		await Service.ShouldThrowPostCommentLikeAlreadyExistsExceptionAsync(_command, CancellationToken);
+	}
+
+	[Theory]
+	[PostIdDifferentCaseData]
+	public async Task AddAsync_ShouldThrowPostCommentLikeAlreadyExistsException_WhenPostCommentLikeAlreadyExistsAndIdIsValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		await ServiceScope.AddAsync(PostCommentLike, CancellationToken);
+		var command = _commandBuilder.WithId(transformer).Build();
+
+		// Assert
+		await Service.ShouldThrowPostCommentLikeAlreadyExistsExceptionAsync(command, CancellationToken);
+	}
+
+	[Theory]
+	[PostCommentIdDifferentCaseData]
+	public async Task AddAsync_ShouldThrowPostCommentLikeAlreadyExistsException_WhenPostCommentLikeAlreadyExistsAndCommentIdIsValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		await ServiceScope.AddAsync(PostCommentLike, CancellationToken);
+		var command = _commandBuilder.WithCommentId(transformer).Build();
+
+		// Assert
+		await Service.ShouldThrowPostCommentLikeAlreadyExistsExceptionAsync(command, CancellationToken);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task AddAsync_ShouldThrowPostCommentLikeAlreadyExistsException_WhenPostCommentLikeAlreadyExistsAndUserIdIsValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		await ServiceScope.AddAsync(PostCommentLike, CancellationToken);
+		var command = _commandBuilder.WithUserId(transformer).Build();
+
+		// Assert
+		await Service.ShouldThrowPostCommentLikeAlreadyExistsExceptionAsync(command, CancellationToken);
+	}
+
+	[Fact]
+	public async Task AddAsync_ShouldReturnResponse_WhenCommandIsValid()
+	{
+		// Act
+		var response = await Service.AddAsync(_command, CancellationToken);
+		var postCommentLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(_command, postCommentLike);
+	}
+
+	[Theory]
+	[PostIdDifferentCaseData]
+	public async Task AddAsync_ShouldReturnResponse_WhenCommandAndIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithId(transformer).Build();
+
+		// Act
+		var response = await Service.AddAsync(command, CancellationToken);
+		var postCommentLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(command, postCommentLike);
+	}
+
+	[Theory]
+	[PostCommentIdDifferentCaseData]
+	public async Task AddAsync_ShouldReturnResponse_WhenCommandAndCommentIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithCommentId(transformer).Build();
+
+		// Act
+		var response = await Service.AddAsync(command, CancellationToken);
+		var postCommentLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(command, postCommentLike);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task AddAsync_ShouldReturnResponse_WhenCommandAndUserIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithUserId(transformer).Build();
+
+		// Act
+		var response = await Service.AddAsync(command, CancellationToken);
+		var postCommentLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(command, postCommentLike);
+	}
+
+	[Fact]
+	public async Task AddAsync_ShouldAddPostCommentLike_WhenCommandIsValid()
+	{
+		// Act
+		var response = await Service.AddAsync(_command, CancellationToken);
+		var postCommentLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
+
+		// Assert
+		postCommentLike.ShouldSatisfy(_command);
+	}
+
+	[Theory]
+	[PostIdDifferentCaseData]
+	public async Task AddAsync_ShouldAddPostCommentLike_WhenCommandAndIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithId(transformer).Build();
+
+		// Act
+		var response = await Service.AddAsync(command, CancellationToken);
+		var postCommentLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
+
+		// Assert
+		postCommentLike.ShouldSatisfy(command);
+	}
+
+	[Theory]
+	[PostCommentIdDifferentCaseData]
+	public async Task AddAsync_ShouldAddPostCommentLike_WhenCommandAndCommentIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithCommentId(transformer).Build();
+
+		// Act
+		var response = await Service.AddAsync(command, CancellationToken);
+		var postCommentLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
+
+		// Assert
+		postCommentLike.ShouldSatisfy(command);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task AddAsync_ShouldAddPostCommentLike_WhenCommandAndUserIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithUserId(transformer).Build();
+
+		// Act
+		var response = await Service.AddAsync(command, CancellationToken);
+		var postCommentLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
+
+		// Assert
+		postCommentLike.ShouldSatisfy(command);
+	}
+
+	[Fact]
+	public async Task AddAsync_ShouldPublishPostCommentLikeAddedEvent_WhenCommandIsValid()
+	{
+		// Act
+		var response = await Service.AddAsync(_command, CancellationToken);
+		var postCommentLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
+
+		var eventRequest = await CommentLikeEventClient.PublishedAddedAsync(CancellationToken);
+
+		// Assert
+		eventRequest.ShouldSatisfy(_command, postCommentLike);
+	}
+
+	[Theory]
+	[PostIdDifferentCaseData]
+	public async Task AddAsync_ShouldPublishPostCommentLikeAddedEvent_WhenCommandAndIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithId(transformer).Build();
+
+		// Act
+		var response = await Service.AddAsync(command, CancellationToken);
+		var postCommentLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
+
+		var eventRequest = await CommentLikeEventClient.PublishedAddedAsync(CancellationToken);
+
+		// Assert
+		eventRequest.ShouldSatisfy(command, postCommentLike);
+	}
+
+	[Theory]
+	[PostCommentIdDifferentCaseData]
+	public async Task AddAsync_ShouldPublishPostCommentLikeAddedEvent_WhenCommandAndCommentIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithCommentId(transformer).Build();
+
+		// Act
+		var response = await Service.AddAsync(command, CancellationToken);
+		var postCommentLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
+
+		var eventRequest = await CommentLikeEventClient.PublishedAddedAsync(CancellationToken);
+
+		// Assert
+		eventRequest.ShouldSatisfy(command, postCommentLike);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task AddAsync_ShouldPublishPostCommentLikeAddedEvent_WhenCommandAndUserIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var command = _commandBuilder.WithUserId(transformer).Build();
+
+		// Act
+		var response = await Service.AddAsync(command, CancellationToken);
+		var postCommentLike = await ServiceScope.GetByIdAsync(response, CancellationToken);
+
+		var eventRequest = await CommentLikeEventClient.PublishedAddedAsync(CancellationToken);
+
+		// Assert
+		eventRequest.ShouldSatisfy(command, postCommentLike);
+	}
+}

@@ -1,5 +1,5 @@
 using InstaConnect.Identity.Presentation.Tests.Features.Users.Abstractions;
-using InstaConnect.Identity.Presentation.Tests.Features.Users.Utilities;
+using InstaConnect.Identity.Presentation.Tests.Features.Users.Helpers;
 using InstaConnect.Identity.Tests.Features.Common.Utilities;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.Users.Extensions;
@@ -8,9 +8,9 @@ public static class IdentityWebApplicationFactoryExtensions
 {
 	extension(IdentityWebApplicationFactory webApplicationFactory)
 	{
-		public IUserClient CreateUserClient()
+		public IUserApiClient CreateApiClient()
 		{
-			return new UserClient(webApplicationFactory.CreateClient(), webApplicationFactory.Services.GetBaseAccessTokenGenerator());
+			return new UserApiClient(webApplicationFactory.CreateClient(), webApplicationFactory.Services.GetBaseAccessTokenGenerator());
 		}
 	}
 }

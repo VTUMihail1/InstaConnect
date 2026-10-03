@@ -44,7 +44,7 @@ public static class IdentitySetups
 			return serviceScope.ServiceProvider.GetIdentityContext();
 		}
 
-		public async Task ResetIdentityDatabase(
+		public async Task ResetIdentityDatabaseAsync(
 			CancellationToken cancellationToken)
 		{
 			var context = serviceScope.GetIdentityContext();

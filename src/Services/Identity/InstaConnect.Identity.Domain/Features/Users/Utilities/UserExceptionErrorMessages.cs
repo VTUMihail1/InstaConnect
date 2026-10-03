@@ -79,6 +79,6 @@ public static class UserExceptionErrorMessages
 		const string Format = "UserDescriptors({0}) is not supported";
 
 		return Format.FormatCurrentCulture(descriptors
-			.JoinIncludeDescriptorsAsStringWithComa<IdentityDestinationType, IdentityIncludeType, IdentityIncludeDescriptor>());
+			.JoinDescriptorsWithComma<IdentityDestinationType, IdentityIncludeType, IdentityIncludeDescriptor>());
 	}
 }

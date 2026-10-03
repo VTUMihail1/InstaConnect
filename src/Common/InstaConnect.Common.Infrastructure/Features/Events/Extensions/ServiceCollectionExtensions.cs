@@ -1,7 +1,6 @@
 using System.Reflection;
 
-using InstaConnect.Common.Events.Features.Common.Abstractions;
-using InstaConnect.Common.Infrastructure.Features.Events.Extensions;
+using InstaConnect.Common.Events.Features.Events.Abstractions;
 using InstaConnect.Common.Infrastructure.Features.Events.Helpers;
 using InstaConnect.Common.Infrastructure.Features.Events.Models;
 
@@ -12,13 +11,13 @@ using Microsoft.Extensions.DependencyInjection;
 
 using MongoDB.Driver;
 
-namespace InstaConnect.Common.Infrastructure.Extensions;
+namespace InstaConnect.Common.Infrastructure.Features.Events.Extensions;
 
-public static partial class ServiceCollectionExtensions
+public static class ServiceCollectionExtensions
 {
 	extension(IServiceCollection serviceCollection)
 	{
-		public IServiceCollection AddRabbitMQ(IConfiguration configuration, string prefix, params Assembly[] currentAssemblies)
+		public IServiceCollection AddEvents(IConfiguration configuration, string prefix, params Assembly[] currentAssemblies)
 		{
 			serviceCollection.AddValidatedOptions<RabbitMqOptions>(RabbitMqOptions.SectionName);
 			var options = configuration.GetOptions<RabbitMqOptions>(RabbitMqOptions.SectionName);
@@ -37,10 +36,7 @@ public static partial class ServiceCollectionExtensions
 					o.UseBusOutbox();
 				});
 
-				busConfigurator.AddConfigureEndpointsCallback((context, name, cfg) =>
-				{
-					cfg.UseMongoDbOutbox(context);
-				});
+				busConfigurator.AddConfigureEndpointsCallback((context, name, cfg) => cfg.UseMongoDbOutbox(context));
 
 				busConfigurator.UsingRabbitMq((context, configurator) =>
 				{

@@ -1,22 +1,12 @@
-using InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Extensions;
-using InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Extensions;
-using InstaConnect.Identity.Infrastructure.Features.Users.Extensions;
-
-using MongoDB.Driver;
-
 namespace InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Helpers.Repositories;
 
 internal class EmailConfirmationTokenCommandRepository : IEmailConfirmationTokenCommandRepository
 {
-	private readonly IIdentityContext _context;
-	private readonly IEmailConfirmationTokenIncluderFactory _emailConfirmationTokenIncluderFactory;
+	private readonly IEmailConfirmationTokenCollection _collection;
 
-	public EmailConfirmationTokenCommandRepository(
-		IIdentityContext context,
-		IEmailConfirmationTokenIncluderFactory emailConfirmationTokenIncluderFactory)
+	public EmailConfirmationTokenCommandRepository(IEmailConfirmationTokenCollection collection)
 	{
-		_context = context;
-		_emailConfirmationTokenIncluderFactory = emailConfirmationTokenIncluderFactory;
+		_collection = collection;
 	}
 
 	public async Task<EmailConfirmationToken?> GetByIdAsync(
@@ -24,10 +14,9 @@ internal class EmailConfirmationTokenCommandRepository : IEmailConfirmationToken
 		EmailConfirmationTokenInclude? include,
 		CancellationToken cancellationToken)
 	{
-		return await _context
-			.EmailConfirmationTokens
-			.Aggregate()
-			.Includes(_emailConfirmationTokenIncluderFactory, include)
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(include)
 			.Match(id)
 			.FirstOrDefaultAsync(cancellationToken);
 	}
@@ -43,47 +32,34 @@ internal class EmailConfirmationTokenCommandRepository : IEmailConfirmationToken
 		EmailConfirmationTokenId id,
 		CancellationToken cancellationToken)
 	{
-		return await _context
-			.EmailConfirmationTokens
-			.AggregateWithCaseInsensitiveCollation()
+		return await _collection
+			.AggregateFluent()
 			.Match(id)
 			.AnyAsync(cancellationToken);
 	}
 
 	public async Task AddAsync(EmailConfirmationToken entity, CancellationToken cancellationToken)
 	{
-		await _context
-			.EmailConfirmationTokens
-			.AddAsync(_context.ClientSessionHandle, entity, cancellationToken);
+		await _collection.AddAsync(entity, cancellationToken);
 	}
 
 	public async Task AddRangeAsync(IEnumerable<EmailConfirmationToken> entities, CancellationToken cancellationToken)
 	{
-		await _context
-			.EmailConfirmationTokens
-			.AddRangeAsync(_context.ClientSessionHandle, entities, cancellationToken);
+		await _collection.AddRangeAsync(entities, cancellationToken);
 	}
 
 	public async Task UpdateAsync(EmailConfirmationToken entity, CancellationToken cancellationToken)
 	{
-		await _context
-			.EmailConfirmationTokens
-			.UpdateAsync(_context.ClientSessionHandle, entity, cancellationToken);
+		await _collection.UpdateAsync(entity, cancellationToken);
 	}
 
 	public async Task DeleteAsync(EmailConfirmationToken entity, CancellationToken cancellationToken)
 	{
-		await _context
-			.EmailConfirmationTokens
-			.DeleteAsync(_context.ClientSessionHandle, entity, cancellationToken);
+		await _collection.DeleteAsync(entity, cancellationToken);
 	}
 
 	public async Task DeleteRangeAsync(IEnumerable<EmailConfirmationToken> entities, CancellationToken cancellationToken)
 	{
-		await _context.EmailConfirmationTokens
-			.DeleteRangeAsync(
-			_context.ClientSessionHandle,
-			entities,
-			cancellationToken);
+		await _collection.DeleteRangeAsync(entities, cancellationToken);
 	}
 }

@@ -10,35 +10,35 @@ public static class UserMockAssertions
 		GetAllUsersQueryRequest request,
 		CancellationToken cancellationToken)
 		{
-			await userService.ShouldHaveReceivedOne().GetAllAsync(UserMatcher.IsGetAllUsersQuery(request), cancellationToken);
+			await userService.ShouldHaveReceivedOne().GetAllAsync(request.IsGetAllUsersQuery(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneGetByIdAsync(
 			GetUserByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await userService.ShouldHaveReceivedOne().GetByIdAsync(UserMatcher.IsGetUserByIdQuery(request), cancellationToken);
+			await userService.ShouldHaveReceivedOne().GetByIdAsync(request.IsGetUserByIdQuery(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneGetByIdAsync(
 			GetCurrentUserByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await userService.ShouldHaveReceivedOne().GetByIdAsync(UserMatcher.IsGetUserByIdQuery(request), cancellationToken);
+			await userService.ShouldHaveReceivedOne().GetByIdAsync(request.IsGetUserByIdQuery(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneGetByIdAsync(
 			GetUserDetailsByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await userService.ShouldHaveReceivedOne().GetByIdAsync(UserMatcher.IsGetUserByIdQuery(request), cancellationToken);
+			await userService.ShouldHaveReceivedOne().GetByIdAsync(request.IsGetUserByIdQuery(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneGetByIdAsync(
 			GetCurrentUserDetailsByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await userService.ShouldHaveReceivedOne().GetByIdAsync(UserMatcher.IsGetUserByIdQuery(request), cancellationToken);
+			await userService.ShouldHaveReceivedOne().GetByIdAsync(request.IsGetUserByIdQuery(), cancellationToken);
 		}
 	}
 
@@ -48,28 +48,28 @@ public static class UserMockAssertions
 		AddUserCommandRequest request,
 		CancellationToken cancellationToken)
 		{
-			await userService.ShouldHaveReceivedOne().AddAsync(UserMatcher.IsAddUserCommand(request), cancellationToken);
+			await userService.ShouldHaveReceivedOne().AddAsync(request.IsAddUserCommand(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneUpdateAsync(
 			UpdateCurrentUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await userService.ShouldHaveReceivedOne().UpdateAsync(UserMatcher.IsUpdateUserCommand(request), cancellationToken);
+			await userService.ShouldHaveReceivedOne().UpdateAsync(request.IsUpdateUserCommand(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneDeleteAsync(
 			DeleteUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await userService.ShouldHaveReceivedOne().DeleteAsync(UserMatcher.IsDeleteUserCommand(request), cancellationToken);
+			await userService.ShouldHaveReceivedOne().DeleteAsync(request.IsDeleteUserCommand(), cancellationToken);
 		}
 
 		public async Task ShouldReceiveOneDeleteAsync(
 			DeleteCurrentUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await userService.ShouldHaveReceivedOne().DeleteAsync(UserMatcher.IsDeleteUserCommand(request), cancellationToken);
+			await userService.ShouldHaveReceivedOne().DeleteAsync(request.IsDeleteUserCommand(), cancellationToken);
 		}
 	}
 }

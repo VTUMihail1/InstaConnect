@@ -6,7 +6,7 @@ using InstaConnect.Common.Domain.Features.Mappers.Extensions;
 using InstaConnect.Common.Presentation.Features.Common.Extensions;
 using InstaConnect.Common.Presentation.Features.Common.Models;
 using InstaConnect.Common.Presentation.Features.Controllers.Extensions;
-using InstaConnect.Common.Presentation.Features.ExceptionHandling.Extensions;
+using InstaConnect.Common.Presentation.Features.Exceptions.Extensions;
 
 namespace InstaConnect.Chats.Presentation.Features.Common.Extensions;
 
@@ -25,11 +25,11 @@ public static class ServiceCollectionExtensions
 				.AddValidatedOptions<MainOptions>(MainOptions.SectionName)
 				.AddServicesWithMatchingInterfaces(ChatsPresentationReference.Assembly)
 				.AddApiControllers()
-				.AddMapper(ChatsPresentationReference.Assembly, CommonPresentationReference.Assembly)
+				.AddMappers(ChatsPresentationReference.Assembly, CommonPresentationReference.Assembly)
 				.AddAuthorizationPolicies()
 				.AddCorsPolicies(configuration)
 				.AddRateLimiterPolicies()
-				.AddExceptionHandler();
+				.AddExceptions();
 
 			return serviceCollection;
 		}
