@@ -15,9 +15,9 @@ internal class FollowQueryRepository : IFollowQueryRepository
 
 	public async Task<ICollection<FollowResponse>> GetAllAsync(
 		FollowsFilterQuery filter,
-		CurrentUserQuery currentUser,
 		FollowsSortingQuery sorting,
 		FollowsPaginationQuery pagination,
+		CurrentUserQuery currentUser,
 		CancellationToken cancellationToken)
 	{
 		var include = _includeBuilderFactory.Create().WithFollowing().Build();
@@ -34,9 +34,9 @@ internal class FollowQueryRepository : IFollowQueryRepository
 
 	public async Task<ICollection<FollowResponse>> GetAllForFollowingAsync(
 		FollowsForFollowingFilterQuery filter,
-		CurrentUserQuery currentUser,
 		FollowsForFollowingSortingQuery sorting,
 		FollowsPaginationQuery pagination,
+		CurrentUserQuery currentUser,
 		CancellationToken cancellationToken)
 	{
 		var include = _includeBuilderFactory.Create().WithFollower().Build();

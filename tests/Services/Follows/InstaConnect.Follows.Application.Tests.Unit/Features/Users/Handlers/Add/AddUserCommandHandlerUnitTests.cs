@@ -36,6 +36,6 @@ public class AddUserCommandHandlerUnitTests : BaseUserApplicationCommandUnitTest
 		await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		await UserService.ShouldReceiveOneAddAsync(_request, CancellationToken);
+		await UserService.ShouldHaveReceivedOneAddAsync(_request, CancellationToken);
 	}
 }

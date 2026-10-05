@@ -55,7 +55,7 @@ public class GetAllPostLikesForUserQueryServiceUnitTests : BasePostLikeDomainQue
 		await _service.GetAllForUserAsync(_query, CancellationToken);
 
 		// Assert
-		await UserRepository.ShouldReceiveOneGetByIdAsync(_query, CancellationToken);
+		await UserRepository.ShouldHaveReceivedOneGetByIdAsync(_query, CancellationToken);
 	}
 
 	[Fact]
@@ -65,7 +65,7 @@ public class GetAllPostLikesForUserQueryServiceUnitTests : BasePostLikeDomainQue
 		await _service.GetAllForUserAsync(_query, CancellationToken);
 
 		// Assert
-		await LikeRepository.ShouldReceiveOneGetAllForUserAsync(_query, CancellationToken);
+		await LikeRepository.ShouldHaveReceivedOneGetAllForUserAsync(_query, CancellationToken);
 	}
 
 	[Fact]
@@ -75,6 +75,6 @@ public class GetAllPostLikesForUserQueryServiceUnitTests : BasePostLikeDomainQue
 		await _service.GetAllForUserAsync(_query, CancellationToken);
 
 		// Assert
-		await LikeRepository.ShouldReceiveOneGetTotalCountForUserAsync(_query, CancellationToken);
+		await LikeRepository.ShouldHaveReceivedOneGetTotalCountForUserAsync(_query, CancellationToken);
 	}
 }

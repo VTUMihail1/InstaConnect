@@ -39,6 +39,6 @@ public abstract class BasePostDomainCommandUnitTest : BasePostTest
 		Repository = PostDomainMockFactory.CreateCommandRepository();
 		DateTimeProvider = DomainMockFactory.CreateDateTimeProvider();
 		UserRepository = UserDomainMockFactory.CreateCommandRepository();
-		IncludeBuilderFactory = PostDomainMockFactory.CreateIncludeBuilderFactory();
+		IncludeBuilderFactory = PostMockFactory.CreateIncludeBuilderFactory();
 	}
 }

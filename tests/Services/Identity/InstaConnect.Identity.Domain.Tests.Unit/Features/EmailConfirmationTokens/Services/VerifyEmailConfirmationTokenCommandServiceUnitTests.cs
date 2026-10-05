@@ -89,7 +89,7 @@ public class VerifyEmailConfirmationTokenCommandServiceUnitTests : BaseEmailConf
 		await _service.VerifyAsync(_command, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneGetByIdAsync(_command, _include, CancellationToken);
+		await Repository.ShouldHaveReceivedOneGetByIdAsync(_command, _include, CancellationToken);
 	}
 
 	[Fact]
@@ -99,7 +99,7 @@ public class VerifyEmailConfirmationTokenCommandServiceUnitTests : BaseEmailConf
 		await _service.VerifyAsync(_command, CancellationToken);
 
 		// Assert
-		await EmailConfirmationTokenRepository.ShouldReceiveOneGetByIdAsync(_command, CancellationToken);
+		await EmailConfirmationTokenRepository.ShouldHaveReceivedOneGetByIdAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -109,7 +109,7 @@ public class VerifyEmailConfirmationTokenCommandServiceUnitTests : BaseEmailConf
 		await _service.VerifyAsync(_command, CancellationToken);
 
 		// Assert
-		DateTimeProvider.ShouldReceiveOneGetOffsetUtcNow(_command);
+		DateTimeProvider.ShouldHaveReceivedOneGetOffsetUtcNow(_command);
 	}
 
 	[Fact]
@@ -119,7 +119,7 @@ public class VerifyEmailConfirmationTokenCommandServiceUnitTests : BaseEmailConf
 		await _service.VerifyAsync(_command, CancellationToken);
 
 		// Assert
-		await EmailConfirmationTokenRepository.ShouldReceiveOneDeleteRangeAsync(_command, CancellationToken);
+		await EmailConfirmationTokenRepository.ShouldHaveReceivedOneDeleteRangeAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -129,7 +129,7 @@ public class VerifyEmailConfirmationTokenCommandServiceUnitTests : BaseEmailConf
 		await _service.VerifyAsync(_command, CancellationToken);
 
 		// Assert
-		await EventPublisher.ShouldReceiveOnePublishAsync(_command, User.EmailConfirmationTokens, CancellationToken);
+		await EventPublisher.ShouldHaveReceivedOnePublishAsync(_command, User.EmailConfirmationTokens, CancellationToken);
 	}
 
 	[Fact]
@@ -139,6 +139,6 @@ public class VerifyEmailConfirmationTokenCommandServiceUnitTests : BaseEmailConf
 		await _service.VerifyAsync(_command, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneUpdateAsync(_command, CancellationToken);
+		await Repository.ShouldHaveReceivedOneUpdateAsync(_command, CancellationToken);
 	}
 }

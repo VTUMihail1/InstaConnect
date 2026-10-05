@@ -20,7 +20,7 @@ public class FollowFluent : MongoDbFluent<Follow>, IFollowFluent
 		_responseFluentFactory = responseFluentFactory;
 	}
 
-	public IFollowFluent ApplyIncludes(FollowInclude? include)
+	public IFollowFluent ApplyIncludes(FollowInclude include)
 	{
 		ApplyIncludes(_includerFactory, include);
 

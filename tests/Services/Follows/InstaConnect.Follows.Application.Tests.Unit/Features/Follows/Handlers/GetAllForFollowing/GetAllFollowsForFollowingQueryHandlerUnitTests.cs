@@ -36,6 +36,6 @@ public class GetAllFollowsForFollowingQueryHandlerUnitTests : BaseFollowApplicat
 		await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		await Service.ShouldReceiveOneGetAllForFollowingAsync(_request, CancellationToken);
+		await Service.ShouldHaveReceivedOneGetAllForFollowingAsync(_request, CancellationToken);
 	}
 }

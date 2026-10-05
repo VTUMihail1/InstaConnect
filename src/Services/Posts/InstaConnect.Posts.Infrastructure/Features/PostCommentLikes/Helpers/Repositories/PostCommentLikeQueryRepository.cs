@@ -21,9 +21,9 @@ internal class PostCommentLikeQueryRepository : IPostCommentLikeQueryRepository
 
 	public async Task<ICollection<PostCommentLikeResponse>> GetAllAsync(
 		PostCommentLikesFilterQuery filter,
-		CurrentUserQuery currentUser,
 		PostCommentLikesSortingQuery sorting,
 		PostCommentLikesPaginationQuery pagination,
+		CurrentUserQuery currentUser,
 		CancellationToken cancellationToken)
 	{
 		var commentLikeInclude = _commentLikeIncludeBuilderFactory.Create().WithUser().Build();
@@ -40,9 +40,9 @@ internal class PostCommentLikeQueryRepository : IPostCommentLikeQueryRepository
 
 	public async Task<ICollection<PostCommentLikeResponse>> GetAllForUserAsync(
 		PostCommentLikesForUserFilterQuery filter,
-		CurrentUserQuery currentUser,
 		PostCommentLikesForUserSortingQuery sorting,
 		PostCommentLikesPaginationQuery pagination,
+		CurrentUserQuery currentUser,
 		CancellationToken cancellationToken)
 	{
 		var include = _includeBuilderFactory.Create().WithUser().WithPostLikes().Build();

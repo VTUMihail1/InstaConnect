@@ -7,8 +7,15 @@
 
   <ItemGroup Label="Common">
     <Using Include="InstaConnect.Common.Tests.Features.Abstractions" />
+    <Using Include="InstaConnect.Common.Tests.Features.Helpers" />
     <Using Include="InstaConnect.Common.Tests.Features.Assertions" />
     <Using Include="InstaConnect.Common.Tests.Features.Utilities" />
+    <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Enums" />
+    <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Enums.Base" />
+    <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Strings.Base" />
+    <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Ints.Base" />
+    <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.DateTimeOffsets.Base" />
+    <Using Include="InstaConnect.Identity.Tests.Features.Common.Utilities" />
   </ItemGroup>
 
 </Project>

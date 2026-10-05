@@ -55,7 +55,7 @@ public class GetAllFollowsForFollowingQueryServiceUnitTests : BaseFollowDomainQu
 		await _service.GetAllForFollowingAsync(_query, CancellationToken);
 
 		// Assert
-		await UserRepository.ShouldReceiveOneGetByIdAsync(_query, CancellationToken);
+		await UserRepository.ShouldHaveReceivedOneGetByIdAsync(_query, CancellationToken);
 	}
 
 	[Fact]
@@ -65,7 +65,7 @@ public class GetAllFollowsForFollowingQueryServiceUnitTests : BaseFollowDomainQu
 		await _service.GetAllForFollowingAsync(_query, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneGetAllForFollowingAsync(_query, CancellationToken);
+		await Repository.ShouldHaveReceivedOneGetAllForFollowingAsync(_query, CancellationToken);
 	}
 
 	[Fact]
@@ -75,6 +75,6 @@ public class GetAllFollowsForFollowingQueryServiceUnitTests : BaseFollowDomainQu
 		await _service.GetAllForFollowingAsync(_query, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneGetTotalCountForFollowingAsync(_query, CancellationToken);
+		await Repository.ShouldHaveReceivedOneGetTotalCountForFollowingAsync(_query, CancellationToken);
 	}
 }

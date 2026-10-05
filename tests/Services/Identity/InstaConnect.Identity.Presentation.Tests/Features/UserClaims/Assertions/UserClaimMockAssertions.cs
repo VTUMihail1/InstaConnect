@@ -7,21 +7,21 @@ public static class UserClaimMockAssertions
 {
 	extension(IApplicationSender sender)
 	{
-		public async Task ShouldReceiveOneSendAsync(
+		public async Task ShouldHaveReceivedOneSendAsync(
 		GetAllUserClaimsApiRequest request,
 		CancellationToken cancellationToken)
 		{
 			await sender.ShouldHaveReceivedOne().SendAsync(request.IsGetAllUserClaimsQueryRequest(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneSendAsync(
+		public async Task ShouldHaveReceivedOneSendAsync(
 			AddUserClaimApiRequest request,
 			CancellationToken cancellationToken)
 		{
 			await sender.ShouldHaveReceivedOne().SendAsync(request.IsAddUserClaimCommandRequest(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneSendAsync(
+		public async Task ShouldHaveReceivedOneSendAsync(
 			DeleteUserClaimApiRequest request,
 			CancellationToken cancellationToken)
 		{

@@ -37,7 +37,7 @@ public static class PostLikeMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, command.IsPostLikeInclude(include), cancellationToken)
+				.GetByIdAsync(command.Id, include, cancellationToken)
 				.ReturnsTaskResponse(postLike);
 		}
 
@@ -68,7 +68,7 @@ public static class PostLikeMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, command.IsPostLikeInclude(include), cancellationToken)
+				.GetByIdAsync(command.Id, include, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 	}
@@ -82,7 +82,7 @@ public static class PostLikeMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, command.IsPostInclude(include), cancellationToken)
+				.GetByIdAsync(command.Id, include, cancellationToken)
 				.ReturnsTaskResponse(post);
 		}
 
@@ -93,7 +93,7 @@ public static class PostLikeMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, command.IsPostInclude(include), cancellationToken)
+				.GetByIdAsync(command.Id, include, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 
@@ -211,7 +211,7 @@ public static class PostLikeMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetAllAsync(query.Filter, query.CurrentUser, query.Sorting, query.Pagination, cancellationToken)
+				.GetAllAsync(query.Filter, query.Sorting, query.Pagination, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(postLikes.ToResponse(query));
 		}
 
@@ -231,7 +231,7 @@ public static class PostLikeMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetAllForUserAsync(query.Filter, query.CurrentUser, query.Sorting, query.Pagination, cancellationToken)
+				.GetAllForUserAsync(query.Filter, query.Sorting, query.Pagination, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(postLikes.ToResponse(query));
 		}
 

@@ -76,7 +76,7 @@ public class AddChatCommandServiceUnitTests : BaseChatDomainCommandUnitTest
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await UserRepository.ShouldReceiveOneGetByParticipantOneIdAsync(_command, CancellationToken);
+		await UserRepository.ShouldHaveReceivedOneGetByParticipantOneIdAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -86,7 +86,7 @@ public class AddChatCommandServiceUnitTests : BaseChatDomainCommandUnitTest
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await UserRepository.ShouldReceiveOneGetByParticipantTwoIdAsync(_command, CancellationToken);
+		await UserRepository.ShouldHaveReceivedOneGetByParticipantTwoIdAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -96,7 +96,7 @@ public class AddChatCommandServiceUnitTests : BaseChatDomainCommandUnitTest
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		Factory.ShouldReceiveOneCreate(_command);
+		Factory.ShouldHaveReceivedOneCreate(_command);
 	}
 
 	[Fact]
@@ -106,7 +106,7 @@ public class AddChatCommandServiceUnitTests : BaseChatDomainCommandUnitTest
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneGetByIdAsync(_command, Chat, CancellationToken);
+		await Repository.ShouldHaveReceivedOneGetByIdAsync(_command, Chat, CancellationToken);
 	}
 
 	[Fact]
@@ -116,7 +116,7 @@ public class AddChatCommandServiceUnitTests : BaseChatDomainCommandUnitTest
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneAddAsync(_command, CancellationToken);
+		await Repository.ShouldHaveReceivedOneAddAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -126,6 +126,6 @@ public class AddChatCommandServiceUnitTests : BaseChatDomainCommandUnitTest
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await EventPublisher.ShouldReceiveOnePublishAsync(_command, Chat, CancellationToken);
+		await EventPublisher.ShouldHaveReceivedOnePublishAsync(_command, Chat, CancellationToken);
 	}
 }

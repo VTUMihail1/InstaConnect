@@ -7,7 +7,7 @@ public static class PostCommentLikeMockAssertions
 {
 	extension(IPostCommentLikeFactory factory)
 	{
-		public void ShouldReceiveOneCreate(
+		public void ShouldHaveReceivedOneCreate(
 			AddPostCommentLikeCommand command)
 		{
 			factory.ShouldHaveReceivedOne().Create(
@@ -18,7 +18,7 @@ public static class PostCommentLikeMockAssertions
 
 	extension(IPostCommentLikeCommandRepository repository)
 	{
-		public async Task ShouldReceiveOneGetByIdAsync(
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
 			AddPostCommentLikeCommand command,
 			PostCommentLike postCommentLike,
 			CancellationToken cancellationToken)
@@ -28,25 +28,25 @@ public static class PostCommentLikeMockAssertions
 				cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneGetByIdAsync(
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
 			DeletePostCommentLikeCommand command,
 			PostCommentLikeInclude include,
 			CancellationToken cancellationToken)
 		{
 			await repository.ShouldHaveReceivedOne().GetByIdAsync(
 				command.Id,
-				command.IsPostCommentLikeInclude(include),
+				include,
 				cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneAddAsync(
+		public async Task ShouldHaveReceivedOneAddAsync(
 			AddPostCommentLikeCommand command,
 			CancellationToken cancellationToken)
 		{
 			await repository.ShouldHaveReceivedOne().AddAsync(command.IsPostCommentLike(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneDeleteAsync(
+		public async Task ShouldHaveReceivedOneDeleteAsync(
 			DeletePostCommentLikeCommand command,
 			CancellationToken cancellationToken)
 		{
@@ -56,7 +56,7 @@ public static class PostCommentLikeMockAssertions
 
 	extension(IPostCommandRepository repository)
 	{
-		public async Task ShouldReceiveOneExistsByIdAsync(
+		public async Task ShouldHaveReceivedOneExistsByIdAsync(
 			AddPostCommentLikeCommand command,
 			CancellationToken cancellationToken)
 		{
@@ -65,7 +65,7 @@ public static class PostCommentLikeMockAssertions
 				cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneExistsByIdAsync(
+		public async Task ShouldHaveReceivedOneExistsByIdAsync(
 			DeletePostCommentLikeCommand command,
 			CancellationToken cancellationToken)
 		{
@@ -77,18 +77,18 @@ public static class PostCommentLikeMockAssertions
 
 	extension(IPostCommentCommandRepository repository)
 	{
-		public async Task ShouldReceiveOneGetByIdAsync(
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
 			AddPostCommentLikeCommand command,
 			PostCommentInclude include,
 			CancellationToken cancellationToken)
 		{
 			await repository.ShouldHaveReceivedOne().GetByIdAsync(
 				command.CommentId,
-				command.IsPostCommentInclude(include),
+				include,
 				cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneExistsByIdAsync(
+		public async Task ShouldHaveReceivedOneExistsByIdAsync(
 			DeletePostCommentLikeCommand command,
 			CancellationToken cancellationToken)
 		{
@@ -100,7 +100,7 @@ public static class PostCommentLikeMockAssertions
 
 	extension(IUserCommandRepository repository)
 	{
-		public async Task ShouldReceiveOneGetByIdAsync(
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
 			AddPostCommentLikeCommand command,
 			CancellationToken cancellationToken)
 		{
@@ -112,7 +112,7 @@ public static class PostCommentLikeMockAssertions
 
 	extension(IPostQueryRepository repository)
 	{
-		public async Task ShouldReceiveOneExistsByIdAsync(
+		public async Task ShouldHaveReceivedOneExistsByIdAsync(
 			GetAllPostCommentLikesQuery query,
 			CancellationToken cancellationToken)
 		{
@@ -121,7 +121,7 @@ public static class PostCommentLikeMockAssertions
 				cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneExistsByIdAsync(
+		public async Task ShouldHaveReceivedOneExistsByIdAsync(
 			GetPostCommentLikeByIdQuery query,
 			CancellationToken cancellationToken)
 		{
@@ -133,7 +133,7 @@ public static class PostCommentLikeMockAssertions
 
 	extension(IPostCommentQueryRepository repository)
 	{
-		public async Task ShouldReceiveOneGetByIdAsync(
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
 			GetAllPostCommentLikesQuery query,
 			CancellationToken cancellationToken)
 		{
@@ -143,7 +143,7 @@ public static class PostCommentLikeMockAssertions
 				cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneExistsByIdAsync(
+		public async Task ShouldHaveReceivedOneExistsByIdAsync(
 			GetPostCommentLikeByIdQuery query,
 			CancellationToken cancellationToken)
 		{
@@ -155,7 +155,7 @@ public static class PostCommentLikeMockAssertions
 
 	extension(IUserQueryRepository repository)
 	{
-		public async Task ShouldReceiveOneGetByIdAsync(
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
 			GetAllPostCommentLikesForUserQuery query,
 			CancellationToken cancellationToken)
 		{
@@ -168,19 +168,19 @@ public static class PostCommentLikeMockAssertions
 
 	extension(IPostCommentLikeQueryRepository repository)
 	{
-		public async Task ShouldReceiveOneGetAllAsync(
+		public async Task ShouldHaveReceivedOneGetAllAsync(
 			GetAllPostCommentLikesQuery query,
 			CancellationToken cancellationToken)
 		{
 			await repository.ShouldHaveReceivedOne().GetAllAsync(
 				query.Filter,
-				query.CurrentUser,
 				query.Sorting,
 				query.Pagination,
+				query.CurrentUser,
 				cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneGetTotalCountAsync(
+		public async Task ShouldHaveReceivedOneGetTotalCountAsync(
 			GetAllPostCommentLikesQuery query,
 			CancellationToken cancellationToken)
 		{
@@ -189,19 +189,19 @@ public static class PostCommentLikeMockAssertions
 				cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneGetAllForUserAsync(
+		public async Task ShouldHaveReceivedOneGetAllForUserAsync(
 			GetAllPostCommentLikesForUserQuery query,
 			CancellationToken cancellationToken)
 		{
 			await repository.ShouldHaveReceivedOne().GetAllForUserAsync(
 				query.Filter,
-				query.CurrentUser,
 				query.Sorting,
 				query.Pagination,
+				query.CurrentUser,
 				cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneGetTotalCountForUserAsync(
+		public async Task ShouldHaveReceivedOneGetTotalCountForUserAsync(
 			GetAllPostCommentLikesForUserQuery query,
 			CancellationToken cancellationToken)
 		{
@@ -210,7 +210,7 @@ public static class PostCommentLikeMockAssertions
 				cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneGetByIdAsync(
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
 			GetPostCommentLikeByIdQuery query,
 			CancellationToken cancellationToken)
 		{
@@ -223,7 +223,7 @@ public static class PostCommentLikeMockAssertions
 
 	extension(IEventPublisher eventPublisher)
 	{
-		public async Task ShouldReceiveOnePublishAsync(
+		public async Task ShouldHaveReceivedOnePublishAsync(
 			AddPostCommentLikeCommand command,
 			PostCommentLike postCommentLike,
 			CancellationToken cancellationToken)
@@ -231,7 +231,7 @@ public static class PostCommentLikeMockAssertions
 			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(command.IsPostCommentLikeAddedEventRequest(postCommentLike), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOnePublishAsync(
+		public async Task ShouldHaveReceivedOnePublishAsync(
 			DeletePostCommentLikeCommand command,
 			PostCommentLike postCommentLike,
 			CancellationToken cancellationToken)

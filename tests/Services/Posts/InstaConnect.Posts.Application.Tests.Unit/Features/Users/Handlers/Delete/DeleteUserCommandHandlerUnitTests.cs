@@ -24,6 +24,6 @@ public class DeleteUserCommandHandlerUnitTests : BaseUserApplicationCommandUnitT
 		await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		await UserService.ShouldReceiveOneDeleteAsync(_request, CancellationToken);
+		await UserService.ShouldHaveReceivedOneDeleteAsync(_request, CancellationToken);
 	}
 }

@@ -1,0 +1,74 @@
+using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entities;
+using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Requests;
+using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.ValueObjects;
+using InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Abstractions;
+
+namespace InstaConnect.Identity.Infrastructure.Tests.Features.EmailConfirmationTokens.Assertions;
+
+public static class EmailConfirmationTokenMockAssertions
+{
+	extension(IEmailConfirmationTokenCollection collection)
+	{
+		public void ShouldHaveReceivedOneAggregateFluent(EmailConfirmationTokenId id)
+		{
+			collection.ShouldHaveReceivedOne().AggregateFluent();
+		}
+
+		public async Task ShouldHaveReceivedOneAddAsync(
+			EmailConfirmationToken emailConfirmationToken,
+			CancellationToken cancellationToken)
+		{
+			await collection.ShouldHaveReceivedOne().AddAsync(emailConfirmationToken, cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneUpdateAsync(
+			EmailConfirmationToken emailConfirmationToken,
+			CancellationToken cancellationToken)
+		{
+			await collection.ShouldHaveReceivedOne().UpdateAsync(emailConfirmationToken, cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneDeleteAsync(
+			EmailConfirmationToken emailConfirmationToken,
+			CancellationToken cancellationToken)
+		{
+			await collection.ShouldHaveReceivedOne().DeleteAsync(emailConfirmationToken, cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneDeleteRangeAsync(
+			ICollection<EmailConfirmationToken> emailConfirmationTokens,
+			CancellationToken cancellationToken)
+		{
+			await collection.ShouldHaveReceivedOne().DeleteRangeAsync(emailConfirmationTokens, cancellationToken);
+		}
+	}
+
+	extension(IEmailConfirmationTokenFluent fluent)
+	{
+		public void ShouldHaveReceivedOneMatch(EmailConfirmationTokenId id)
+		{
+			fluent.ShouldHaveReceivedOne().Match(id);
+		}
+
+		public void ShouldHaveReceivedOneApplyIncludes(
+			EmailConfirmationTokenId id,
+			EmailConfirmationTokenInclude include)
+		{
+			fluent.ShouldHaveReceivedOne().ApplyIncludes(include);
+		}
+
+		public async Task ShouldHaveReceivedOneAnyAsync(
+			EmailConfirmationTokenId id,
+			CancellationToken cancellationToken)
+		{
+			await fluent.ShouldHaveReceivedOne().AnyAsync(cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneFirstOrDefaultAsync(
+			EmailConfirmationTokenId id,
+			CancellationToken cancellationToken)
+		{
+			await fluent.ShouldHaveReceivedOne().FirstOrDefaultAsync(cancellationToken);
+		}
+	}
+}

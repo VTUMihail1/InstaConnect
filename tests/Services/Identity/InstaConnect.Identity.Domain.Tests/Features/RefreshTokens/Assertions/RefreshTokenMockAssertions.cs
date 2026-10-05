@@ -12,12 +12,12 @@ public static class RefreshTokenMockAssertions
 {
 	extension(IDateTimeProvider dateTimeProvider)
 	{
-		public void ShouldReceiveOneGetOffsetUtcNow(IOptions<RefreshTokenOptions> refreshTokenOptions)
+		public void ShouldHaveReceivedOneGetOffsetUtcNow(IOptions<RefreshTokenOptions> refreshTokenOptions)
 		{
 			dateTimeProvider.ShouldHaveReceivedOne().GetOffsetUtcNow(refreshTokenOptions.Value.LifetimeSeconds);
 		}
 
-		public void ShouldReceiveOneGetOffsetUtcNow(RotateRefreshTokenCommand command)
+		public void ShouldHaveReceivedOneGetOffsetUtcNow(RotateRefreshTokenCommand command)
 		{
 			dateTimeProvider.ShouldHaveReceivedOne().GetOffsetUtcNow();
 		}
@@ -25,7 +25,7 @@ public static class RefreshTokenMockAssertions
 
 	extension(IPasswordHasher passwordHasher)
 	{
-		public void ShouldReceiveOneIsMismatch(IssueRefreshTokenCommand command, User user)
+		public void ShouldHaveReceivedOneIsMismatch(IssueRefreshTokenCommand command, User user)
 		{
 			passwordHasher.ShouldHaveReceivedOne().IsMismatch(command.Password, user.PasswordHash);
 		}
@@ -33,12 +33,12 @@ public static class RefreshTokenMockAssertions
 
 	extension(IRefreshTokenFactory factory)
 	{
-		public void ShouldReceiveOneCreate(IssueRefreshTokenCommand command, RefreshToken refreshToken)
+		public void ShouldHaveReceivedOneCreate(IssueRefreshTokenCommand command, RefreshToken refreshToken)
 		{
 			factory.ShouldHaveReceivedOne().Create(refreshToken.Id.Id);
 		}
 
-		public void ShouldReceiveOneCreate(RotateRefreshTokenCommand command)
+		public void ShouldHaveReceivedOneCreate(RotateRefreshTokenCommand command)
 		{
 			factory.ShouldHaveReceivedOne().Create(command.Id.Id);
 		}
@@ -46,12 +46,12 @@ public static class RefreshTokenMockAssertions
 
 	extension(ISessionTokenGenerator generator)
 	{
-		public void ShouldReceiveOneGenerate(IssueRefreshTokenCommand command, RefreshToken refreshToken)
+		public void ShouldHaveReceivedOneGenerate(IssueRefreshTokenCommand command, RefreshToken refreshToken)
 		{
 			generator.ShouldHaveReceivedOne().Generate(refreshToken);
 		}
 
-		public void ShouldReceiveOneGenerate(RotateRefreshTokenCommand command, RefreshToken refreshToken)
+		public void ShouldHaveReceivedOneGenerate(RotateRefreshTokenCommand command, RefreshToken refreshToken)
 		{
 			generator.ShouldHaveReceivedOne().Generate(refreshToken);
 		}
@@ -59,29 +59,29 @@ public static class RefreshTokenMockAssertions
 
 	extension(IUserCommandRepository repository)
 	{
-		public async Task ShouldReceiveOneGetByNameAsync(
+		public async Task ShouldHaveReceivedOneGetByNameAsync(
 			IssueRefreshTokenCommand command,
 			UserInclude include,
 			CancellationToken cancellationToken)
 		{
 			await repository.ShouldHaveReceivedOne().GetByNameAsync(
 				command.Name,
-				command.IsUserInclude(include),
+				include,
 				cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneGetByIdAsync(
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
 			RotateRefreshTokenCommand command,
 			UserInclude include,
 			CancellationToken cancellationToken)
 		{
 			await repository.ShouldHaveReceivedOne().GetByIdAsync(
 				command.Id.Id,
-				command.IsUserInclude(include),
+				include,
 				cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneExistsByIdAsync(
+		public async Task ShouldHaveReceivedOneExistsByIdAsync(
 			DeleteRefreshTokenCommand command,
 			CancellationToken cancellationToken)
 		{
@@ -93,42 +93,42 @@ public static class RefreshTokenMockAssertions
 
 	extension(IRefreshTokenCommandRepository repository)
 	{
-		public async Task ShouldReceiveOneGetByIdAsync(
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
 			RotateRefreshTokenCommand command,
 			CancellationToken cancellationToken)
 		{
 			await repository.ShouldHaveReceivedOne().GetByIdAsync(command.Id, cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneGetByIdAsync(
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
 			DeleteRefreshTokenCommand command,
 			CancellationToken cancellationToken)
 		{
 			await repository.ShouldHaveReceivedOne().GetByIdAsync(command.Id, cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneAddAsync(
+		public async Task ShouldHaveReceivedOneAddAsync(
 			IssueRefreshTokenCommand command,
 			CancellationToken cancellationToken)
 		{
 			await repository.ShouldHaveReceivedOne().AddAsync(command.IsRefreshToken(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneAddAsync(
+		public async Task ShouldHaveReceivedOneAddAsync(
 			RotateRefreshTokenCommand command,
 			CancellationToken cancellationToken)
 		{
 			await repository.ShouldHaveReceivedOne().AddAsync(command.IsRefreshToken(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneDeleteAsync(
+		public async Task ShouldHaveReceivedOneDeleteAsync(
 			RotateRefreshTokenCommand command,
 			CancellationToken cancellationToken)
 		{
 			await repository.ShouldHaveReceivedOne().DeleteAsync(command.IsRefreshToken(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneDeleteAsync(
+		public async Task ShouldHaveReceivedOneDeleteAsync(
 			DeleteRefreshTokenCommand command,
 			CancellationToken cancellationToken)
 		{

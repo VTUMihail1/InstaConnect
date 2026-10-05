@@ -54,7 +54,7 @@ public class DeleteRefreshTokenCommandServiceUnitTests : BaseRefreshTokenDomainC
 		await _service.DeleteAsync(_command, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneExistsByIdAsync(_command, CancellationToken);
+		await Repository.ShouldHaveReceivedOneExistsByIdAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -64,7 +64,7 @@ public class DeleteRefreshTokenCommandServiceUnitTests : BaseRefreshTokenDomainC
 		await _service.DeleteAsync(_command, CancellationToken);
 
 		// Assert
-		await RefreshTokenRepository.ShouldReceiveOneGetByIdAsync(_command, CancellationToken);
+		await RefreshTokenRepository.ShouldHaveReceivedOneGetByIdAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -74,6 +74,6 @@ public class DeleteRefreshTokenCommandServiceUnitTests : BaseRefreshTokenDomainC
 		await _service.DeleteAsync(_command, CancellationToken);
 
 		// Assert
-		await RefreshTokenRepository.ShouldReceiveOneDeleteAsync(_command, CancellationToken);
+		await RefreshTokenRepository.ShouldHaveReceivedOneDeleteAsync(_command, CancellationToken);
 	}
 }

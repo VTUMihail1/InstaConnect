@@ -15,24 +15,12 @@ public abstract class BaseChatWebTest : BaseChatTest, IClassFixture<ChatsWebAppl
 		ServiceScope = webApplicationFactory.Services.CreateScope();
 	}
 
-	public async Task InitializeAsync()
-	{
-		await ServiceScope.ResetChatsDatabaseAsync(CancellationToken);
-		await OnInitializeAsync();
-	}
-
-	public async Task DisposeAsync()
-	{
-		await OnDisposeAsync();
-		await ServiceScope.ResetChatsDatabaseAsync(CancellationToken);
-	}
-
-	protected virtual Task OnInitializeAsync()
+	public virtual Task InitializeAsync()
 	{
 		return Task.CompletedTask;
 	}
 
-	protected virtual Task OnDisposeAsync()
+	public virtual Task DisposeAsync()
 	{
 		return Task.CompletedTask;
 	}

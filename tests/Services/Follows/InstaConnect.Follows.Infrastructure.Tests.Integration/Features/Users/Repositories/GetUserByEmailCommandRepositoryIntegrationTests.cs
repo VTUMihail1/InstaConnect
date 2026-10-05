@@ -1,0 +1,54 @@
+using InstaConnect.Common.Domain.Features.ValueObjects.Models;
+using InstaConnect.Common.Infrastructure.Tests.Features.Builders;
+using InstaConnect.Follows.Domain.Features.Users.Models.Requests;
+
+namespace InstaConnect.Follows.Infrastructure.Tests.Integration.Features.Users.Repositories;
+
+public class GetUserByEmailCommandRepositoryIntegrationTests : BaseUserInfrastructureCommandIntegrationTest
+{
+	private readonly EmailBuilderFactory _emailBuilderFactory;
+	private readonly EmailBuilder _emailBuilder;
+	private readonly Email _email;
+
+	private readonly UserInclude _include;
+
+	public GetUserByEmailCommandRepositoryIntegrationTests(FollowsWebApplicationFactory webApplicationFactory)
+		: base(webApplicationFactory)
+	{
+		_emailBuilderFactory = new();
+		_emailBuilder = _emailBuilderFactory.Create(User.Email);
+		_email = _emailBuilder.Build();
+
+		_include = IncludeBuilderFactory.Create().WithFollowers().WithFollowings().Build();
+	}
+
+	public override async Task InitializeAsync()
+	{
+		await ServiceScope.AddAsync(User, CancellationToken);
+	}
+
+	[Fact]
+	public async Task GetByEmailAsync_ShouldReturnResponse_WhenCommandIsValid()
+	{
+		// Act
+		var response = await Repository.GetByEmailAsync(_email, _include, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(_email, User);
+	}
+
+	[Theory]
+	[UserEmailDifferentCaseData]
+	public async Task GetByEmailAsync_ShouldReturnResponse_WhenCommandAndEmailAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var email = _emailBuilder.WithEmail(transformer).Build();
+
+		// Act
+		var response = await Repository.GetByEmailAsync(email, _include, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(email, User);
+	}
+}

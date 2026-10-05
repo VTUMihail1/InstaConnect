@@ -1,0 +1,128 @@
+using InstaConnect.Identity.Domain.Features.Users.Models.Requests;
+using InstaConnect.Identity.Infrastructure.Features.Users.Helpers.Repositories;
+using InstaConnect.Identity.Infrastructure.Tests.Features.Common.Builders;
+using InstaConnect.Identity.Infrastructure.Tests.Features.Users.Assertions;
+using InstaConnect.Identity.Infrastructure.Tests.Features.Users.Builders;
+using InstaConnect.Identity.Infrastructure.Tests.Features.Users.Utilities;
+using InstaConnect.Identity.Infrastructure.Tests.Unit.Features.Users.Utilities;
+
+namespace InstaConnect.Identity.Infrastructure.Tests.Unit.Features.Users.Repositories;
+
+public class GetAllUsersQueryRepositoryUnitTests : BaseUserInfrastructureQueryUnitTest
+{
+	private readonly UsersFilterQueryBuilderFactory _filterQueryBuilderFactory;
+	private readonly UsersFilterQueryBuilder _filterQueryBuilder;
+	private readonly UsersFilterQuery _filterQuery;
+
+	private readonly UsersSortingQueryBuilderFactory _sortingQueryBuilderFactory;
+	private readonly UsersSortingQueryBuilder _sortingQueryBuilder;
+	private readonly UsersSortingQuery _sortingQuery;
+
+	private readonly UsersPaginationQueryBuilderFactory _paginationQueryBuilderFactory;
+	private readonly UsersPaginationQueryBuilder _paginationQueryBuilder;
+	private readonly UsersPaginationQuery _paginationQuery;
+
+	private readonly CurrentUserQueryBuilderFactory _currentUserQueryBuilderFactory;
+	private readonly CurrentUserQueryBuilder _currentUserQueryBuilder;
+	private readonly CurrentUserQuery _currentUserQuery;
+
+	private readonly UserQueryRepository _repository;
+
+	public GetAllUsersQueryRepositoryUnitTests()
+	{
+		_filterQueryBuilderFactory = new();
+		_filterQueryBuilder = _filterQueryBuilderFactory.Create(User);
+		_filterQuery = _filterQueryBuilder.Build();
+
+		_sortingQueryBuilderFactory = new();
+		_sortingQueryBuilder = _sortingQueryBuilderFactory.Create();
+		_sortingQuery = _sortingQueryBuilder.Build();
+
+		_paginationQueryBuilderFactory = new();
+		_paginationQueryBuilder = _paginationQueryBuilderFactory.Create();
+		_paginationQuery = _paginationQueryBuilder.Build();
+
+		_currentUserQueryBuilderFactory = new();
+		_currentUserQueryBuilder = _currentUserQueryBuilderFactory.Create(User);
+		_currentUserQuery = _currentUserQueryBuilder.Build();
+
+		_repository = new(Collection);
+
+		Collection.SetupAggregateFluent(_filterQuery, _sortingQuery, _paginationQuery, _currentUserQuery, Fluent);
+		Fluent.SetupMatch(_filterQuery, _sortingQuery, _paginationQuery, _currentUserQuery);
+		Fluent.SetupProjectToFullResponse(_filterQuery, _sortingQuery, _paginationQuery, _currentUserQuery, ResponseFluent);
+		ResponseFluent.SetupApplySorting(_filterQuery, _sortingQuery, _paginationQuery, _currentUserQuery);
+		ResponseFluent.SetupApplyPagination(_filterQuery, _sortingQuery, _paginationQuery, _currentUserQuery);
+		ResponseFluent.SetupToListAsync(_filterQuery, _sortingQuery, _paginationQuery, _currentUserQuery, Users, CancellationToken);
+	}
+
+	[Fact]
+	public async Task GetAllAsync_ShouldReturnResponse_WhenRequestIsValid()
+	{
+		// Act
+		var response = await _repository.GetAllAsync(_filterQuery, _sortingQuery, _paginationQuery, _currentUserQuery, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(_filterQuery, _sortingQuery, _paginationQuery, _currentUserQuery, Users);
+	}
+
+	[Fact]
+	public async Task GetAllAsync_ShouldCallTheCollectionAggregateFluent_WhenRequestIsValid()
+	{
+		// Act
+		await _repository.GetAllAsync(_filterQuery, _sortingQuery, _paginationQuery, _currentUserQuery, CancellationToken);
+
+		// Assert
+		Collection.ShouldHaveReceivedOneAggregateFluent(_filterQuery, _sortingQuery, _paginationQuery, _currentUserQuery);
+	}
+
+	[Fact]
+	public async Task GetAllAsync_ShouldCallTheFluentMatch_WhenRequestIsValid()
+	{
+		// Act
+		await _repository.GetAllAsync(_filterQuery, _sortingQuery, _paginationQuery, _currentUserQuery, CancellationToken);
+
+		// Assert
+		Fluent.ShouldHaveReceivedOneMatch(_filterQuery, _sortingQuery, _paginationQuery, _currentUserQuery);
+	}
+
+	[Fact]
+	public async Task GetAllAsync_ShouldCallTheFluentProjectToFullResponse_WhenRequestIsValid()
+	{
+		// Act
+		await _repository.GetAllAsync(_filterQuery, _sortingQuery, _paginationQuery, _currentUserQuery, CancellationToken);
+
+		// Assert
+		Fluent.ShouldHaveReceivedOneProjectToFullResponse(_filterQuery, _sortingQuery, _paginationQuery, _currentUserQuery);
+	}
+
+	[Fact]
+	public async Task GetAllAsync_ShouldCallTheResponseFluentApplySorting_WhenRequestIsValid()
+	{
+		// Act
+		await _repository.GetAllAsync(_filterQuery, _sortingQuery, _paginationQuery, _currentUserQuery, CancellationToken);
+
+		// Assert
+		ResponseFluent.ShouldHaveReceivedOneApplySorting(_filterQuery, _sortingQuery, _paginationQuery, _currentUserQuery);
+	}
+
+	[Fact]
+	public async Task GetAllAsync_ShouldCallTheResponseFluentApplyPagination_WhenRequestIsValid()
+	{
+		// Act
+		await _repository.GetAllAsync(_filterQuery, _sortingQuery, _paginationQuery, _currentUserQuery, CancellationToken);
+
+		// Assert
+		ResponseFluent.ShouldHaveReceivedOneApplyPagination(_filterQuery, _sortingQuery, _paginationQuery, _currentUserQuery);
+	}
+
+	[Fact]
+	public async Task GetAllAsync_ShouldCallTheResponseFluentToListAsync_WhenRequestIsValid()
+	{
+		// Act
+		await _repository.GetAllAsync(_filterQuery, _sortingQuery, _paginationQuery, _currentUserQuery, CancellationToken);
+
+		// Assert
+		await ResponseFluent.ShouldHaveReceivedOneToListAsync(_filterQuery, _sortingQuery, _paginationQuery, _currentUserQuery, CancellationToken);
+	}
+}

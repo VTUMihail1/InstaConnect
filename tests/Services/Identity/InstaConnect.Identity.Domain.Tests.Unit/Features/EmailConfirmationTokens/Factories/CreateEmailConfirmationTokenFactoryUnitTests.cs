@@ -37,7 +37,7 @@ public class CreateEmailConfirmationTokenFactoryUnitTests : BaseEmailConfirmatio
 		_factory.Create(EmailConfirmationToken.Id.Id);
 
 		// Assert
-		GuidProvider.ShouldReceiveOneNewStringGuid();
+		GuidProvider.ShouldHaveReceivedOneNewStringGuid();
 	}
 
 	[Fact]
@@ -47,7 +47,7 @@ public class CreateEmailConfirmationTokenFactoryUnitTests : BaseEmailConfirmatio
 		_factory.Create(EmailConfirmationToken.Id.Id);
 
 		// Assert
-		DateTimeProvider.ShouldReceiveOneGetOffsetUtcNow(EmailConfirmationTokenOptions);
+		DateTimeProvider.ShouldHaveReceivedOneGetOffsetUtcNow(EmailConfirmationTokenOptions);
 	}
 
 	[Fact]
@@ -57,6 +57,6 @@ public class CreateEmailConfirmationTokenFactoryUnitTests : BaseEmailConfirmatio
 		_factory.Create(EmailConfirmationToken.Id.Id);
 
 		// Assert
-		DateTimeProvider.ShouldReceiveOneGetOffsetUtcNow();
+		DateTimeProvider.ShouldHaveReceivedOneGetOffsetUtcNow();
 	}
 }

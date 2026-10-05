@@ -64,7 +64,7 @@ public class GetPostCommentByIdQueryServiceUnitTests : BasePostCommentDomainQuer
 		await _service.GetByIdAsync(_query, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneExistsByIdAsync(_query, CancellationToken);
+		await Repository.ShouldHaveReceivedOneExistsByIdAsync(_query, CancellationToken);
 	}
 
 	[Fact]
@@ -74,6 +74,6 @@ public class GetPostCommentByIdQueryServiceUnitTests : BasePostCommentDomainQuer
 		await _service.GetByIdAsync(_query, CancellationToken);
 
 		// Assert
-		await CommentRepository.ShouldReceiveOneGetByIdAsync(_query, CancellationToken);
+		await CommentRepository.ShouldHaveReceivedOneGetByIdAsync(_query, CancellationToken);
 	}
 }

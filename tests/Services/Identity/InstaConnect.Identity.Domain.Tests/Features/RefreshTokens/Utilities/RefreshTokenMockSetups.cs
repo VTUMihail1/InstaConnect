@@ -98,7 +98,7 @@ public static class RefreshTokenMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByNameAsync(command.Name, command.IsUserInclude(include), cancellationToken)
+				.GetByNameAsync(command.Name, include, cancellationToken)
 				.ReturnsTaskResponse(user);
 		}
 
@@ -109,7 +109,7 @@ public static class RefreshTokenMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByNameAsync(command.Name, command.IsUserInclude(include), cancellationToken)
+				.GetByNameAsync(command.Name, include, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 
@@ -120,7 +120,7 @@ public static class RefreshTokenMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id.Id, command.IsUserInclude(include), cancellationToken)
+				.GetByIdAsync(command.Id.Id, include, cancellationToken)
 				.ReturnsTaskResponse(user);
 		}
 
@@ -131,7 +131,7 @@ public static class RefreshTokenMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id.Id, command.IsUserInclude(include), cancellationToken)
+				.GetByIdAsync(command.Id.Id, include, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 

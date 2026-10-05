@@ -4,7 +4,7 @@ public interface IPostCommentLikeCommandRepository
 {
 	public Task<PostCommentLike?> GetByIdAsync(
 		PostCommentLikeId id,
-		PostCommentLikeInclude? include,
+		PostCommentLikeInclude include,
 		CancellationToken cancellationToken);
 
 	public Task<PostCommentLike?> GetByIdAsync(

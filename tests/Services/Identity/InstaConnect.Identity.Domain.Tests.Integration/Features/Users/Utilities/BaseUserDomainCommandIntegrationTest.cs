@@ -24,13 +24,12 @@ public abstract class BaseUserDomainCommandIntegrationTest : BaseUserWebTest
 		EmailConfirmationTokenEventClient = webApplicationFactory.CreateEmailConfirmationTokenEventClient();
 	}
 
-	protected override async Task OnInitializeAsync()
+	public override async Task InitializeAsync()
 	{
-		await base.OnInitializeAsync();
 		await EventClient.StartAsync(CancellationToken);
 	}
 
-	protected override async Task OnDisposeAsync()
+	public override async Task DisposeAsync()
 	{
 		await EventClient.StopAsync(CancellationToken);
 	}

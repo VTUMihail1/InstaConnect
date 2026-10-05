@@ -63,7 +63,7 @@ public class AddForgotPasswordTokenCommandServiceUnitTests : BaseForgotPasswordT
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneGetByNameAsync(_command, CancellationToken);
+		await Repository.ShouldHaveReceivedOneGetByNameAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -73,7 +73,7 @@ public class AddForgotPasswordTokenCommandServiceUnitTests : BaseForgotPasswordT
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		Factory.ShouldReceiveOneCreate(_command, ForgotPasswordToken);
+		Factory.ShouldHaveReceivedOneCreate(_command, ForgotPasswordToken);
 	}
 
 	[Fact]
@@ -83,7 +83,7 @@ public class AddForgotPasswordTokenCommandServiceUnitTests : BaseForgotPasswordT
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await ForgotPasswordTokenRepository.ShouldReceiveOneAddAsync(_command, CancellationToken);
+		await ForgotPasswordTokenRepository.ShouldHaveReceivedOneAddAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -93,7 +93,7 @@ public class AddForgotPasswordTokenCommandServiceUnitTests : BaseForgotPasswordT
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await EventPublisher.ShouldReceiveOnePublishAsync(_command, ForgotPasswordToken, CancellationToken);
+		await EventPublisher.ShouldHaveReceivedOnePublishAsync(_command, ForgotPasswordToken, CancellationToken);
 	}
 
 	[Fact]
@@ -103,6 +103,6 @@ public class AddForgotPasswordTokenCommandServiceUnitTests : BaseForgotPasswordT
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await EmailSender.ShouldReceiveOneSendAsync(_command, CancellationToken);
+		await EmailSender.ShouldHaveReceivedOneSendAsync(_command, CancellationToken);
 	}
 }

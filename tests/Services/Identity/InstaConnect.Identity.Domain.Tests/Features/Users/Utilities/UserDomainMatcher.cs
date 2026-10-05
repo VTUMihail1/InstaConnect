@@ -7,11 +7,6 @@ public static class UserDomainMatcher
 {
 	extension(UpdateUserCommand command)
 	{
-		public UserInclude IsUserInclude(UserInclude include)
-		{
-			return Matcher.Is<UserInclude>(p => p.Matches(command, include));
-		}
-
 		public User IsUser()
 		{
 			return Matcher.Is<User>(p => p.Matches(command));

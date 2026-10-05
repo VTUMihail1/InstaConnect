@@ -3,15 +3,19 @@ namespace InstaConnect.Posts.Infrastructure.Features.PostComments.Helpers.Reposi
 internal class PostCommentCommandRepository : IPostCommentCommandRepository
 {
 	private readonly IPostCommentCollection _collection;
+	private readonly IPostCommentIncludeBuilderFactory _includeBuilderFactory;
 
-	public PostCommentCommandRepository(IPostCommentCollection collection)
+	public PostCommentCommandRepository(
+		IPostCommentCollection collection,
+		IPostCommentIncludeBuilderFactory includeBuilderFactory)
 	{
 		_collection = collection;
+		_includeBuilderFactory = includeBuilderFactory;
 	}
 
 	public async Task<PostComment?> GetByIdAsync(
 		PostCommentId id,
-		PostCommentInclude? include,
+		PostCommentInclude include,
 		CancellationToken cancellationToken)
 	{
 		return await _collection
@@ -25,7 +29,9 @@ internal class PostCommentCommandRepository : IPostCommentCommandRepository
 		PostCommentId id,
 		CancellationToken cancellationToken)
 	{
-		return await GetByIdAsync(id, null, cancellationToken);
+		var include = _includeBuilderFactory.Create().Build();
+
+		return await GetByIdAsync(id, include, cancellationToken);
 	}
 
 	public async Task<bool> ExistsByIdAsync(

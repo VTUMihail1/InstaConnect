@@ -1,3 +1,6 @@
+using InstaConnect.Common.Domain.Features.ValueObjects.Models;
+using InstaConnect.Follows.Domain.Features.Users.Models.Requests;
+using InstaConnect.Follows.Domain.Features.Users.Models.Responses;
 using InstaConnect.Follows.Infrastructure.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Follows.Infrastructure.Tests.Features.Users.Assertions;
@@ -14,6 +17,47 @@ public static class UserMatchAssertions
 		public void ShouldSatisfy(UserUpdatedEventRequest request)
 		{
 			user.ShouldSatisfy(u => u.Matches(request));
+		}
+
+		public void ShouldSatisfy(UserId id, User u)
+		{
+			user.ShouldSatisfy(p => p.Matches(id, u));
+		}
+
+		public void ShouldSatisfy(Name name, User u)
+		{
+			user.ShouldSatisfy(p => p.Matches(name, u));
+		}
+
+		public void ShouldSatisfy(Email email, User u)
+		{
+			user.ShouldSatisfy(p => p.Matches(email, u));
+		}
+	}
+
+	extension(UserResponse response)
+	{
+		public void ShouldSatisfy(UserId id, CurrentUserQuery currentUserQuery, User user)
+		{
+			response.ShouldSatisfy(p => p.Matches(id, currentUserQuery, user));
+		}
+	}
+
+	extension(bool response)
+	{
+		public void ShouldSatisfy(UserId id)
+		{
+			response.ShouldSatisfy(p => p.Matches(id));
+		}
+
+		public void ShouldSatisfy(Name name)
+		{
+			response.ShouldSatisfy(p => p.Matches(name));
+		}
+
+		public void ShouldSatisfy(Email email)
+		{
+			response.ShouldSatisfy(p => p.Matches(email));
 		}
 	}
 

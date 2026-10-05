@@ -24,6 +24,6 @@ public class DeletePostLikeCommandHandlerUnitTests : BasePostLikeApplicationComm
 		await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		await LikeService.ShouldReceiveOneDeleteAsync(_request, CancellationToken);
+		await LikeService.ShouldHaveReceivedOneDeleteAsync(_request, CancellationToken);
 	}
 }

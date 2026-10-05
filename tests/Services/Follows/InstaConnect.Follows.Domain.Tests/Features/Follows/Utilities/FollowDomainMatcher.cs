@@ -6,11 +6,6 @@ public static class FollowDomainMatcher
 {
 	extension(DeleteFollowCommand command)
 	{
-		public FollowInclude IsFollowInclude(FollowInclude include)
-		{
-			return Matcher.Is<FollowInclude>(p => p.Matches(command, include));
-		}
-
 		public Follow IsFollow()
 		{
 			return Matcher.Is<Follow>(p => p.Matches(command));

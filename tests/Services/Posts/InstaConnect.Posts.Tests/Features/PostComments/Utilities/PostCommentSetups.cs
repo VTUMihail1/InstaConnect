@@ -10,6 +10,11 @@ public static class PostCommentSetups
 {
 	extension(IServiceProvider serviceProvider)
 	{
+		public IPostCommentQueryRepository GetPostCommentQueryRepository()
+		{
+			return serviceProvider.GetRequiredService<IPostCommentQueryRepository>();
+		}
+
 		public IPostCommentCommandRepository GetPostCommentCommandRepository()
 		{
 			return serviceProvider.GetRequiredService<IPostCommentCommandRepository>();
@@ -23,6 +28,11 @@ public static class PostCommentSetups
 
 	extension(IServiceScope serviceScope)
 	{
+		public IPostCommentQueryRepository GetPostCommentQueryRepository()
+		{
+			return serviceScope.ServiceProvider.GetPostCommentQueryRepository();
+		}
+
 		public IPostCommentCommandRepository GetPostCommentCommandRepository()
 		{
 			return serviceScope.ServiceProvider.GetPostCommentCommandRepository();

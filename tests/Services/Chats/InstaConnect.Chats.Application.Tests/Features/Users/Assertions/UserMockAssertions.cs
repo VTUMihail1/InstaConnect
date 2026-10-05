@@ -6,21 +6,21 @@ public static class UserMockAssertions
 {
 	extension(IUserCommandService userService)
 	{
-		public async Task ShouldReceiveOneAddAsync(
+		public async Task ShouldHaveReceivedOneAddAsync(
 		AddUserCommandRequest request,
 		CancellationToken cancellationToken)
 		{
 			await userService.ShouldHaveReceivedOne().AddAsync(request.IsAddUserCommand(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneUpdateAsync(
+		public async Task ShouldHaveReceivedOneUpdateAsync(
 			UpdateUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
 			await userService.ShouldHaveReceivedOne().UpdateAsync(request.IsUpdateUserCommand(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneDeleteAsync(
+		public async Task ShouldHaveReceivedOneDeleteAsync(
 			DeleteUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{

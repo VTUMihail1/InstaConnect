@@ -16,7 +16,7 @@ public class RefreshTokenFluent : MongoDbFluent<RefreshToken>, IRefreshTokenFlue
 		_includerFactory = includerFactory;
 	}
 
-	public IRefreshTokenFluent ApplyIncludes(RefreshTokenInclude? include)
+	public IRefreshTokenFluent ApplyIncludes(RefreshTokenInclude include)
 	{
 		ApplyIncludes(_includerFactory, include);
 

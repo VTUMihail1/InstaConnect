@@ -19,11 +19,6 @@ public static class FollowDomainMockFactory
 		return new FollowCollectionResponseFactory(new Paginator());
 	}
 
-	public static IFollowIncludeBuilderFactory CreateIncludeBuilderFactory()
-	{
-		return new FollowIncludeBuilderFactory(new FollowIncludeDescriptorFactory());
-	}
-
 	public static IFollowCommandRepository CreateCommandRepository()
 	{
 		return Mocker.Mock<IFollowCommandRepository>();

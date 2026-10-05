@@ -50,7 +50,7 @@ public class RotateRefreshTokenControllerUnitTests : BaseRefreshTokenPresentatio
 		await _controller.RotateAsync(_request, CancellationToken);
 
 		// Assert
-		await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);
+		await Sender.ShouldHaveReceivedOneSendAsync(_request, CancellationToken);
 	}
 
 	[Fact]
@@ -60,6 +60,6 @@ public class RotateRefreshTokenControllerUnitTests : BaseRefreshTokenPresentatio
 		await _controller.RotateAsync(_request, CancellationToken);
 
 		// Assert
-		CookieStore.ShouldReceiveOneSet(_request, _refreshToken);
+		CookieStore.ShouldHaveReceivedOneSet(_request, _refreshToken);
 	}
 }

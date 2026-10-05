@@ -81,19 +81,6 @@ public static class PostEquals
 		}
 	}
 
-	extension(PostInclude p)
-	{
-		public bool Matches(UpdatePostCommand command, PostInclude include)
-		{
-			return p.Matches(include);
-		}
-
-		public bool Matches(DeletePostCommand command, PostInclude include)
-		{
-			return p.Matches(include);
-		}
-	}
-
 	extension(PostAddedEventRequest p)
 	{
 		public bool Matches(AddPostCommand command, Post post)

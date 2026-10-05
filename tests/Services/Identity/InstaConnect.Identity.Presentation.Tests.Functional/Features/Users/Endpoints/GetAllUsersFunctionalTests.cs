@@ -18,9 +18,8 @@ public class GetAllUsersFunctionalTests : BaseUserPresentationQueryFunctionalTes
 		_request = _requestBuilder.Build();
 	}
 
-	protected override async Task OnInitializeAsync()
+	public override async Task InitializeAsync()
 	{
-		await base.OnInitializeAsync();
 		await ServiceScope.AddRangeAsync(Users, CancellationToken);
 	}
 

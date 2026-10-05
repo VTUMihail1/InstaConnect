@@ -3,15 +3,19 @@ namespace InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Hel
 internal class ForgotPasswordTokenCommandRepository : IForgotPasswordTokenCommandRepository
 {
 	private readonly IForgotPasswordTokenCollection _collection;
+	private readonly IForgotPasswordTokenIncludeBuilderFactory _includeBuilderFactory;
 
-	public ForgotPasswordTokenCommandRepository(IForgotPasswordTokenCollection collection)
+	public ForgotPasswordTokenCommandRepository(
+		IForgotPasswordTokenCollection collection,
+		IForgotPasswordTokenIncludeBuilderFactory includeBuilderFactory)
 	{
 		_collection = collection;
+		_includeBuilderFactory = includeBuilderFactory;
 	}
 
 	public async Task<ForgotPasswordToken?> GetByIdAsync(
 		ForgotPasswordTokenId id,
-		ForgotPasswordTokenInclude? include,
+		ForgotPasswordTokenInclude include,
 		CancellationToken cancellationToken)
 	{
 		return await _collection
@@ -25,7 +29,9 @@ internal class ForgotPasswordTokenCommandRepository : IForgotPasswordTokenComman
 		ForgotPasswordTokenId id,
 		CancellationToken cancellationToken)
 	{
-		return await GetByIdAsync(id, null, cancellationToken);
+		var include = _includeBuilderFactory.Create().Build();
+
+		return await GetByIdAsync(id, include, cancellationToken);
 	}
 
 	public async Task<bool> ExistsByIdAsync(

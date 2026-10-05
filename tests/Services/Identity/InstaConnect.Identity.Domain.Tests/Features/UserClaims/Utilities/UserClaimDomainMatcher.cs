@@ -6,11 +6,6 @@ public static class UserClaimDomainMatcher
 {
 	extension(DeleteUserClaimCommand command)
 	{
-		public UserClaimInclude IsUserClaimInclude(UserClaimInclude include)
-		{
-			return Matcher.Is<UserClaimInclude>(p => p.Matches(command, include));
-		}
-
 		public UserClaim IsUserClaim()
 		{
 			return Matcher.Is<UserClaim>(p => p.Matches(command));

@@ -95,7 +95,7 @@ public class AddPostCommentLikeCommandServiceUnitTests : BasePostCommentLikeDoma
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await UserRepository.ShouldReceiveOneGetByIdAsync(_command, CancellationToken);
+		await UserRepository.ShouldHaveReceivedOneGetByIdAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -105,7 +105,7 @@ public class AddPostCommentLikeCommandServiceUnitTests : BasePostCommentLikeDoma
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneExistsByIdAsync(_command, CancellationToken);
+		await Repository.ShouldHaveReceivedOneExistsByIdAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -115,7 +115,7 @@ public class AddPostCommentLikeCommandServiceUnitTests : BasePostCommentLikeDoma
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await CommentRepository.ShouldReceiveOneGetByIdAsync(_command, _commentInclude, CancellationToken);
+		await CommentRepository.ShouldHaveReceivedOneGetByIdAsync(_command, _commentInclude, CancellationToken);
 	}
 
 	[Fact]
@@ -125,7 +125,7 @@ public class AddPostCommentLikeCommandServiceUnitTests : BasePostCommentLikeDoma
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		Factory.ShouldReceiveOneCreate(_command);
+		Factory.ShouldHaveReceivedOneCreate(_command);
 	}
 
 	[Fact]
@@ -135,7 +135,7 @@ public class AddPostCommentLikeCommandServiceUnitTests : BasePostCommentLikeDoma
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await CommentLikeRepository.ShouldReceiveOneGetByIdAsync(_command, PostCommentLike, CancellationToken);
+		await CommentLikeRepository.ShouldHaveReceivedOneGetByIdAsync(_command, PostCommentLike, CancellationToken);
 	}
 
 	[Fact]
@@ -145,7 +145,7 @@ public class AddPostCommentLikeCommandServiceUnitTests : BasePostCommentLikeDoma
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await CommentLikeRepository.ShouldReceiveOneAddAsync(_command, CancellationToken);
+		await CommentLikeRepository.ShouldHaveReceivedOneAddAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -155,6 +155,6 @@ public class AddPostCommentLikeCommandServiceUnitTests : BasePostCommentLikeDoma
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await EventPublisher.ShouldReceiveOnePublishAsync(_command, PostCommentLike, CancellationToken);
+		await EventPublisher.ShouldHaveReceivedOnePublishAsync(_command, PostCommentLike, CancellationToken);
 	}
 }

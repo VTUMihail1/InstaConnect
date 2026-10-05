@@ -37,7 +37,7 @@ public class CreateForgotPasswordTokenFactoryUnitTests : BaseForgotPasswordToken
 		_factory.Create(ForgotPasswordToken.Id.Id);
 
 		// Assert
-		GuidProvider.ShouldReceiveOneNewStringGuid();
+		GuidProvider.ShouldHaveReceivedOneNewStringGuid();
 	}
 
 	[Fact]
@@ -47,7 +47,7 @@ public class CreateForgotPasswordTokenFactoryUnitTests : BaseForgotPasswordToken
 		_factory.Create(ForgotPasswordToken.Id.Id);
 
 		// Assert
-		DateTimeProvider.ShouldReceiveOneGetOffsetUtcNow(ForgotPasswordTokenOptions);
+		DateTimeProvider.ShouldHaveReceivedOneGetOffsetUtcNow(ForgotPasswordTokenOptions);
 	}
 
 	[Fact]
@@ -57,6 +57,6 @@ public class CreateForgotPasswordTokenFactoryUnitTests : BaseForgotPasswordToken
 		_factory.Create(ForgotPasswordToken.Id.Id);
 
 		// Assert
-		DateTimeProvider.ShouldReceiveOneGetOffsetUtcNow();
+		DateTimeProvider.ShouldHaveReceivedOneGetOffsetUtcNow();
 	}
 }

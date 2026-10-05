@@ -7,7 +7,7 @@ public static class FollowMockAssertions
 {
 	extension(IFollowFactory factory)
 	{
-		public void ShouldReceiveOneCreate(
+		public void ShouldHaveReceivedOneCreate(
 			AddFollowCommand command)
 		{
 			factory.ShouldHaveReceivedOne().Create(
@@ -18,7 +18,7 @@ public static class FollowMockAssertions
 
 	extension(IUserCommandRepository repository)
 	{
-		public async Task ShouldReceiveOneGetByFollowerIdAsync(
+		public async Task ShouldHaveReceivedOneGetByFollowerIdAsync(
 			AddFollowCommand command,
 			CancellationToken cancellationToken)
 		{
@@ -27,7 +27,7 @@ public static class FollowMockAssertions
 				cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneGetByFollowingIdAsync(
+		public async Task ShouldHaveReceivedOneGetByFollowingIdAsync(
 			AddFollowCommand command,
 			CancellationToken cancellationToken)
 		{
@@ -39,7 +39,7 @@ public static class FollowMockAssertions
 
 	extension(IFollowCommandRepository repository)
 	{
-		public async Task ShouldReceiveOneExistsByIdAsync(
+		public async Task ShouldHaveReceivedOneExistsByIdAsync(
 			AddFollowCommand command,
 			Follow follow,
 			CancellationToken cancellationToken)
@@ -49,25 +49,25 @@ public static class FollowMockAssertions
 				cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneGetByIdAsync(
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
 			DeleteFollowCommand command,
 			FollowInclude include,
 			CancellationToken cancellationToken)
 		{
 			await repository.ShouldHaveReceivedOne().GetByIdAsync(
 				command.Id,
-				command.IsFollowInclude(include),
+				include,
 				cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneAddAsync(
+		public async Task ShouldHaveReceivedOneAddAsync(
 			AddFollowCommand command,
 			CancellationToken cancellationToken)
 		{
 			await repository.ShouldHaveReceivedOne().AddAsync(command.IsFollow(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneDeleteAsync(
+		public async Task ShouldHaveReceivedOneDeleteAsync(
 			DeleteFollowCommand command,
 			CancellationToken cancellationToken)
 		{
@@ -77,7 +77,7 @@ public static class FollowMockAssertions
 
 	extension(IUserQueryRepository repository)
 	{
-		public async Task ShouldReceiveOneGetByIdAsync(
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
 			GetAllFollowsQuery query,
 			CancellationToken cancellationToken)
 		{
@@ -87,7 +87,7 @@ public static class FollowMockAssertions
 				cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneGetByIdAsync(
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
 			GetAllFollowsForFollowingQuery query,
 			CancellationToken cancellationToken)
 		{
@@ -100,19 +100,19 @@ public static class FollowMockAssertions
 
 	extension(IFollowQueryRepository repository)
 	{
-		public async Task ShouldReceiveOneGetAllAsync(
+		public async Task ShouldHaveReceivedOneGetAllAsync(
 			GetAllFollowsQuery query,
 			CancellationToken cancellationToken)
 		{
 			await repository.ShouldHaveReceivedOne().GetAllAsync(
 				query.Filter,
-				query.CurrentUser,
 				query.Sorting,
 				query.Pagination,
+				query.CurrentUser,
 				cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneGetTotalCountAsync(
+		public async Task ShouldHaveReceivedOneGetTotalCountAsync(
 			GetAllFollowsQuery query,
 			CancellationToken cancellationToken)
 		{
@@ -121,19 +121,19 @@ public static class FollowMockAssertions
 				cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneGetAllForFollowingAsync(
+		public async Task ShouldHaveReceivedOneGetAllForFollowingAsync(
 			GetAllFollowsForFollowingQuery query,
 			CancellationToken cancellationToken)
 		{
 			await repository.ShouldHaveReceivedOne().GetAllForFollowingAsync(
 				query.Filter,
-				query.CurrentUser,
 				query.Sorting,
 				query.Pagination,
+				query.CurrentUser,
 				cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneGetTotalCountForFollowingAsync(
+		public async Task ShouldHaveReceivedOneGetTotalCountForFollowingAsync(
 			GetAllFollowsForFollowingQuery query,
 			CancellationToken cancellationToken)
 		{
@@ -142,7 +142,7 @@ public static class FollowMockAssertions
 				cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneGetByIdAsync(
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
 			GetFollowByIdQuery query,
 			CancellationToken cancellationToken)
 		{
@@ -155,7 +155,7 @@ public static class FollowMockAssertions
 
 	extension(IFollowNotificationService notificationService)
 	{
-		public async Task ShouldReceiveOneAddedAsync(
+		public async Task ShouldHaveReceivedOneAddedAsync(
 			AddFollowCommand command,
 			Follow follow,
 			CancellationToken cancellationToken)
@@ -166,7 +166,7 @@ public static class FollowMockAssertions
 
 	extension(IEventPublisher eventPublisher)
 	{
-		public async Task ShouldReceiveOnePublishAsync(
+		public async Task ShouldHaveReceivedOnePublishAsync(
 			AddFollowCommand command,
 			Follow follow,
 			CancellationToken cancellationToken)
@@ -174,7 +174,7 @@ public static class FollowMockAssertions
 			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(command.IsFollowAddedEventRequest(follow), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOnePublishAsync(
+		public async Task ShouldHaveReceivedOnePublishAsync(
 			DeleteFollowCommand command,
 			Follow follow,
 			CancellationToken cancellationToken)

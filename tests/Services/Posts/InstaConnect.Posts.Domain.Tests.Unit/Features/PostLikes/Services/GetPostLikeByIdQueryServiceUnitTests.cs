@@ -64,7 +64,7 @@ public class GetPostLikeByIdQueryServiceUnitTests : BasePostLikeDomainQueryUnitT
 		await _service.GetByIdAsync(_query, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneExistsByIdAsync(_query, CancellationToken);
+		await Repository.ShouldHaveReceivedOneExistsByIdAsync(_query, CancellationToken);
 	}
 
 	[Fact]
@@ -74,6 +74,6 @@ public class GetPostLikeByIdQueryServiceUnitTests : BasePostLikeDomainQueryUnitT
 		await _service.GetByIdAsync(_query, CancellationToken);
 
 		// Assert
-		await LikeRepository.ShouldReceiveOneGetByIdAsync(_query, CancellationToken);
+		await LikeRepository.ShouldHaveReceivedOneGetByIdAsync(_query, CancellationToken);
 	}
 }

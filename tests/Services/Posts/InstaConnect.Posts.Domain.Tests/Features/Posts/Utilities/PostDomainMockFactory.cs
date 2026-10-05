@@ -14,11 +14,6 @@ public static class PostDomainMockFactory
 		return new PostCollectionResponseFactory(new Paginator());
 	}
 
-	public static IPostIncludeBuilderFactory CreateIncludeBuilderFactory()
-	{
-		return new PostIncludeBuilderFactory(new PostIncludeDescriptorFactory());
-	}
-
 	public static IPostCommandRepository CreateCommandRepository()
 	{
 		return Mocker.Mock<IPostCommandRepository>();

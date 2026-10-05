@@ -1,5 +1,7 @@
 using InstaConnect.Common.Domain.Features.Entities.Abstractions;
+using InstaConnect.Common.Domain.Features.Requests.Abstractions;
 using InstaConnect.Common.Domain.Features.ValueObjects.Models;
+using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 
 namespace InstaConnect.Common.Tests.Features.Utilities;
 
@@ -46,6 +48,11 @@ public static class CommonEquals
 
 	extension<TExpected>(ICollection<TExpected> e)
 	{
+		public bool MatchesCollection(ICollection<TExpected> expected)
+		{
+			return e.OrderBy(x => x).SequenceEqual(expected);
+		}
+
 		public bool MatchesCollection<TEntity, TKey>(
 		ICollection<TEntity> entities,
 		Func<TExpected, TKey> expectedKey,
@@ -65,9 +72,41 @@ public static class CommonEquals
 				   matcher(e, a));
 		}
 
-		public bool MatchesCollection(ICollection<TExpected> expected)
+		public bool MatchesCollection<TEntity, TKey, TQuery>(
+		TQuery request,
+		ICollection<TEntity> entities,
+		Func<TExpected, TKey> expectedKey,
+		Func<TEntity, TKey> entityKey,
+		Func<TExpected, TEntity, bool> matcher,
+		Func<TEntity, bool> filter)
+		where TQuery : IPaginationQuery
+		where TEntity : IEntity
+		where TKey : notnull
 		{
-			return e.OrderBy(x => x).SequenceEqual(expected);
+			var entitiesByKey = entities.FilterToDictionary(request, filter, entityKey);
+
+			return e.Count == entitiesByKey.Count &&
+				   e.Any() &&
+				   e.All(e =>
+				   entitiesByKey.TryGetValue(expectedKey(e), out var a) &&
+				   matcher(e, a));
+		}
+
+		public bool MatchesSortedCollection<TEntity, TQuery>(
+			TQuery request,
+			ICollection<TEntity> entities,
+			Func<TExpected, TEntity, bool> matcher,
+			ISortEnumTermTransformer<TEntity> termTransformer,
+			Func<TEntity, bool> filter)
+			where TQuery : IPaginationQuery
+			where TEntity : IEntity
+		{
+			var sortedEntities = entities.Filter(request, termTransformer, filter);
+
+			return e.Count == sortedEntities.Count &&
+				   e.Any() &&
+				   e.Zip(sortedEntities, (e, a) => matcher(e, a))
+						   .All(match => match);
 		}
 	}
 }

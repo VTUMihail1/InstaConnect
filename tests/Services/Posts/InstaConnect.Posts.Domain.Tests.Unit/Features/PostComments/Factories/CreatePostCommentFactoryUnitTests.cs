@@ -35,7 +35,7 @@ public class CreatePostCommentFactoryUnitTests : BasePostCommentDomainCommandUni
 		_factory.Create(PostComment.Id.Id, PostComment.UserId, PostComment.Content);
 
 		// Assert
-		GuidProvider.ShouldReceiveOneNewStringGuid();
+		GuidProvider.ShouldHaveReceivedOneNewStringGuid();
 	}
 
 	[Fact]
@@ -45,6 +45,6 @@ public class CreatePostCommentFactoryUnitTests : BasePostCommentDomainCommandUni
 		_factory.Create(PostComment.Id.Id, PostComment.UserId, PostComment.Content);
 
 		// Assert
-		DateTimeProvider.ShouldReceiveOneGetOffsetUtcNow();
+		DateTimeProvider.ShouldHaveReceivedOneGetOffsetUtcNow();
 	}
 }

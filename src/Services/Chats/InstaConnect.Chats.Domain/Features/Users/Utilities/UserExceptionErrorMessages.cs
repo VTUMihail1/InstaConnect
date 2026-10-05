@@ -1,5 +1,3 @@
-using InstaConnect.Chats.Domain.Features.Common.Models.Requests;
-
 namespace InstaConnect.Chats.Domain.Features.Users.Utilities;
 
 public static class UserExceptionErrorMessages
@@ -30,13 +28,5 @@ public static class UserExceptionErrorMessages
 		const string Format = "User(email: {0}) already exists";
 
 		return Format.FormatCurrentCulture(email.Value);
-	}
-
-	public static string GetIncludeDescriptorsNotSupportedMessage(ICollection<ChatsIncludeDescriptor> includeProperties)
-	{
-		const string Format = "UserIncludeDescriptors({0}) is not supported";
-
-		return Format.FormatCurrentCulture(includeProperties
-			.JoinDescriptorsWithComma<ChatsDestinationType, ChatsIncludeType, ChatsIncludeDescriptor>());
 	}
 }

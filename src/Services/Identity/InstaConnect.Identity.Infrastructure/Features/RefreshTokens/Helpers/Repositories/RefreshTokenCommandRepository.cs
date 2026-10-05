@@ -3,15 +3,19 @@ namespace InstaConnect.Identity.Infrastructure.Features.RefreshTokens.Helpers.Re
 internal class RefreshTokenCommandRepository : IRefreshTokenCommandRepository
 {
 	private readonly IRefreshTokenCollection _collection;
+	private readonly IRefreshTokenIncludeBuilderFactory _includeBuilderFactory;
 
-	public RefreshTokenCommandRepository(IRefreshTokenCollection collection)
+	public RefreshTokenCommandRepository(
+		IRefreshTokenCollection collection,
+		IRefreshTokenIncludeBuilderFactory includeBuilderFactory)
 	{
 		_collection = collection;
+		_includeBuilderFactory = includeBuilderFactory;
 	}
 
 	public async Task<RefreshToken?> GetByIdAsync(
 		RefreshTokenId id,
-		RefreshTokenInclude? include,
+		RefreshTokenInclude include,
 		CancellationToken cancellationToken)
 	{
 		return await _collection
@@ -25,7 +29,9 @@ internal class RefreshTokenCommandRepository : IRefreshTokenCommandRepository
 		RefreshTokenId id,
 		CancellationToken cancellationToken)
 	{
-		return await GetByIdAsync(id, null, cancellationToken);
+		var include = _includeBuilderFactory.Create().Build();
+
+		return await GetByIdAsync(id, include, cancellationToken);
 	}
 
 	public async Task AddAsync(RefreshToken entity, CancellationToken cancellationToken)

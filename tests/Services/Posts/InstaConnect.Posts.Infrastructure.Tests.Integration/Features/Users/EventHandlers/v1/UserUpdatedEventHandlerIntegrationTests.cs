@@ -2,7 +2,7 @@ using InstaConnect.Common.Infrastructure.Tests.Features.Utilities;
 
 namespace InstaConnect.Posts.Infrastructure.Tests.Integration.Features.Users.EventHandlers.v1;
 
-public class UserUpdatedEventHandlerIntegrationTests : BaseUserInfrastructureCommandIntegrationTest
+public class UserUpdatedEventHandlerIntegrationTests : BaseUserInfrastructureEventHandlerIntegrationTest
 {
 	private readonly UserUpdatedEventRequestBuilderFactory _requestBuilderFactory;
 	private readonly UserUpdatedEventRequestBuilder _requestBuilder;
@@ -20,9 +20,8 @@ public class UserUpdatedEventHandlerIntegrationTests : BaseUserInfrastructureCom
 		_handler = ServiceScope.GetUserUpdatedEventHandler();
 	}
 
-	protected override async Task OnInitializeAsync()
+	public override async Task InitializeAsync()
 	{
-		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 	}
 

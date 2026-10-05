@@ -36,6 +36,6 @@ public class UpdateUserCommandHandlerUnitTests : BaseUserApplicationCommandUnitT
 		await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		await UserService.ShouldReceiveOneUpdateAsync(_request, CancellationToken);
+		await UserService.ShouldHaveReceivedOneUpdateAsync(_request, CancellationToken);
 	}
 }

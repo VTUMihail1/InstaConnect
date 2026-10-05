@@ -46,6 +46,6 @@ public class GetUserDetailsByIdControllerUnitTests : BaseUserPresentationQueryUn
 		await _controller.GetDetailsByIdAsync(_request, CancellationToken);
 
 		// Assert
-		await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);
+		await Sender.ShouldHaveReceivedOneSendAsync(_request, CancellationToken);
 	}
 }

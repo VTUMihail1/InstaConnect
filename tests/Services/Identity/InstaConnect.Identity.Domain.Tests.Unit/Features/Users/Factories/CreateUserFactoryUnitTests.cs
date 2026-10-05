@@ -36,7 +36,7 @@ public class CreateUserFactoryUnitTests : BaseUserDomainCommandUnitTest
 		_factory.Create(User.Name, User.FirstName, User.LastName, User.Email, Password);
 
 		// Assert
-		GuidProvider.ShouldReceiveOneNewStringGuid();
+		GuidProvider.ShouldHaveReceivedOneNewStringGuid();
 	}
 
 	[Fact]
@@ -46,7 +46,7 @@ public class CreateUserFactoryUnitTests : BaseUserDomainCommandUnitTest
 		_factory.Create(User.Name, User.FirstName, User.LastName, User.Email, Password);
 
 		// Assert
-		PasswordHasher.ShouldReceiveOneHash(Password);
+		PasswordHasher.ShouldHaveReceivedOneHash(Password);
 	}
 
 	[Fact]
@@ -56,6 +56,6 @@ public class CreateUserFactoryUnitTests : BaseUserDomainCommandUnitTest
 		_factory.Create(User.Name, User.FirstName, User.LastName, User.Email, Password);
 
 		// Assert
-		DateTimeProvider.ShouldReceiveOneGetOffsetUtcNow();
+		DateTimeProvider.ShouldHaveReceivedOneGetOffsetUtcNow();
 	}
 }

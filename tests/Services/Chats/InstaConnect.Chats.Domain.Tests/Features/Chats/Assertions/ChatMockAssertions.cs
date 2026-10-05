@@ -7,7 +7,7 @@ public static class ChatMockAssertions
 {
 	extension(IChatFactory factory)
 	{
-		public void ShouldReceiveOneCreate(
+		public void ShouldHaveReceivedOneCreate(
 			AddChatCommand command)
 		{
 			factory.ShouldHaveReceivedOne().Create(
@@ -18,7 +18,7 @@ public static class ChatMockAssertions
 
 	extension(IUserCommandRepository repository)
 	{
-		public async Task ShouldReceiveOneGetByParticipantOneIdAsync(
+		public async Task ShouldHaveReceivedOneGetByParticipantOneIdAsync(
 			AddChatCommand command,
 			CancellationToken cancellationToken)
 		{
@@ -27,7 +27,7 @@ public static class ChatMockAssertions
 				cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneGetByParticipantTwoIdAsync(
+		public async Task ShouldHaveReceivedOneGetByParticipantTwoIdAsync(
 			AddChatCommand command,
 			CancellationToken cancellationToken)
 		{
@@ -39,7 +39,7 @@ public static class ChatMockAssertions
 
 	extension(IChatCommandRepository repository)
 	{
-		public async Task ShouldReceiveOneGetByIdAsync(
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
 			AddChatCommand command,
 			Chat chat,
 			CancellationToken cancellationToken)
@@ -49,7 +49,7 @@ public static class ChatMockAssertions
 				cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneAddAsync(
+		public async Task ShouldHaveReceivedOneAddAsync(
 			AddChatCommand command,
 			CancellationToken cancellationToken)
 		{
@@ -59,7 +59,7 @@ public static class ChatMockAssertions
 
 	extension(IUserQueryRepository repository)
 	{
-		public async Task ShouldReceiveOneGetByIdAsync(
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
 			GetAllChatsQuery query,
 			CancellationToken cancellationToken)
 		{
@@ -72,19 +72,19 @@ public static class ChatMockAssertions
 
 	extension(IChatQueryRepository repository)
 	{
-		public async Task ShouldReceiveOneGetAllAsync(
+		public async Task ShouldHaveReceivedOneGetAllAsync(
 			GetAllChatsQuery query,
 			CancellationToken cancellationToken)
 		{
 			await repository.ShouldHaveReceivedOne().GetAllAsync(
 				query.Filter,
-				query.CurrentUser,
 				query.Sorting,
 				query.Pagination,
+				query.CurrentUser,
 				cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneGetTotalCountAsync(
+		public async Task ShouldHaveReceivedOneGetTotalCountAsync(
 			GetAllChatsQuery query,
 			CancellationToken cancellationToken)
 		{
@@ -93,7 +93,7 @@ public static class ChatMockAssertions
 				cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneGetByIdAsync(
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
 			GetChatByIdQuery query,
 			CancellationToken cancellationToken)
 		{
@@ -106,7 +106,7 @@ public static class ChatMockAssertions
 
 	extension(IEventPublisher eventPublisher)
 	{
-		public async Task ShouldReceiveOnePublishAsync(
+		public async Task ShouldHaveReceivedOnePublishAsync(
 			AddChatCommand command,
 			Chat chat,
 			CancellationToken cancellationToken)

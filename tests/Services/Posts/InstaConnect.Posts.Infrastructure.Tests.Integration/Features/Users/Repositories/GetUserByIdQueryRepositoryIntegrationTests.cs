@@ -1,0 +1,75 @@
+using InstaConnect.Posts.Domain.Features.Users.Models.Requests;
+using InstaConnect.Posts.Domain.Features.Users.Models.ValueObjects;
+using InstaConnect.Posts.Infrastructure.Tests.Features.Common.Builders;
+
+namespace InstaConnect.Posts.Infrastructure.Tests.Integration.Features.Users.Repositories;
+
+public class GetUserByIdQueryRepositoryIntegrationTests : BaseUserInfrastructureQueryIntegrationTest
+{
+	private readonly UserIdBuilderFactory _idBuilderFactory;
+	private readonly UserIdBuilder _idBuilder;
+	private readonly UserId _id;
+
+	private readonly CurrentUserQueryBuilderFactory _currentUserQueryBuilderFactory;
+	private readonly CurrentUserQueryBuilder _currentUserQueryBuilder;
+	private readonly CurrentUserQuery _currentUserQuery;
+
+	public GetUserByIdQueryRepositoryIntegrationTests(PostsWebApplicationFactory webApplicationFactory)
+		: base(webApplicationFactory)
+	{
+		_idBuilderFactory = new();
+		_idBuilder = _idBuilderFactory.Create(User.Id);
+		_id = _idBuilder.Build();
+
+		_currentUserQueryBuilderFactory = new();
+		_currentUserQueryBuilder = _currentUserQueryBuilderFactory.Create(User);
+		_currentUserQuery = _currentUserQueryBuilder.Build();
+	}
+
+	public override async Task InitializeAsync()
+	{
+		await ServiceScope.AddAsync(User, CancellationToken);
+	}
+
+	[Fact]
+	public async Task GetByIdAsync_ShouldReturnResponse_WhenQueryIsValid()
+	{
+		// Act
+		var response = await Repository.GetByIdAsync(_id, _currentUserQuery, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(_id, _currentUserQuery, User);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task GetByIdAsync_ShouldReturnResponse_WhenQueryAndIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var id = _idBuilder.WithId(transformer).Build();
+
+		// Act
+		var response = await Repository.GetByIdAsync(id, _currentUserQuery, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(id, _currentUserQuery, User);
+	}
+
+	[Theory]
+	[UserIdNullData]
+	[UserIdEmptyData]
+	[UserIdDifferentCaseData]
+	public async Task GetByIdAsync_ShouldReturnResponse_WhenQueryAndCurrentUserIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var currentUserQuery = _currentUserQueryBuilder.WithCurrentUserId(transformer).Build();
+
+		// Act
+		var response = await Repository.GetByIdAsync(_id, currentUserQuery, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(_id, currentUserQuery, User);
+	}
+}

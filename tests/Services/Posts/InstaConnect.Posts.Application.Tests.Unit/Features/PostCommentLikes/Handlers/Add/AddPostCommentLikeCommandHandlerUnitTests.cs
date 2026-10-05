@@ -36,6 +36,6 @@ public class AddPostCommentLikeCommandHandlerUnitTests : BasePostCommentLikeAppl
 		await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		await CommentLikeService.ShouldReceiveOneAddAsync(_request, CancellationToken);
+		await CommentLikeService.ShouldHaveReceivedOneAddAsync(_request, CancellationToken);
 	}
 }

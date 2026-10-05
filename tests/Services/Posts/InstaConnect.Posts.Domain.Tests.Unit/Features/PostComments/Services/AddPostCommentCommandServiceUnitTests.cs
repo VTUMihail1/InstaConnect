@@ -70,7 +70,7 @@ public class AddPostCommentCommandServiceUnitTests : BasePostCommentDomainComman
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await UserRepository.ShouldReceiveOneGetByIdAsync(_command, CancellationToken);
+		await UserRepository.ShouldHaveReceivedOneGetByIdAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -80,7 +80,7 @@ public class AddPostCommentCommandServiceUnitTests : BasePostCommentDomainComman
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneGetByIdAsync(_command, _include, CancellationToken);
+		await Repository.ShouldHaveReceivedOneGetByIdAsync(_command, _include, CancellationToken);
 	}
 
 	[Fact]
@@ -90,7 +90,7 @@ public class AddPostCommentCommandServiceUnitTests : BasePostCommentDomainComman
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		Factory.ShouldReceiveOneCreate(_command);
+		Factory.ShouldHaveReceivedOneCreate(_command);
 	}
 
 	[Fact]
@@ -100,7 +100,7 @@ public class AddPostCommentCommandServiceUnitTests : BasePostCommentDomainComman
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await CommentRepository.ShouldReceiveOneAddAsync(_command, CancellationToken);
+		await CommentRepository.ShouldHaveReceivedOneAddAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -110,6 +110,6 @@ public class AddPostCommentCommandServiceUnitTests : BasePostCommentDomainComman
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await EventPublisher.ShouldReceiveOnePublishAsync(_command, PostComment, CancellationToken);
+		await EventPublisher.ShouldHaveReceivedOnePublishAsync(_command, PostComment, CancellationToken);
 	}
 }

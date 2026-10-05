@@ -12,6 +12,7 @@ using InstaConnect.Posts.Domain.Tests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Domain.Tests.Features.Posts.Utilities;
 using InstaConnect.Posts.Domain.Tests.Features.Users.Utilities;
 using InstaConnect.Posts.Tests.Features.PostCommentLikes.Utilities;
+using InstaConnect.Posts.Tests.Features.Posts.Utilities;
 
 namespace InstaConnect.Posts.Domain.Tests.Unit.Features.PostCommentLikes.Utilities;
 
@@ -48,7 +49,7 @@ public abstract class BasePostCommentLikeDomainCommandUnitTest : BasePostComment
 		DateTimeProvider = DomainMockFactory.CreateDateTimeProvider();
 		UserRepository = UserDomainMockFactory.CreateCommandRepository();
 		CommentRepository = PostCommentDomainMockFactory.CreateCommandRepository();
-		IncludeBuilderFactory = PostDomainMockFactory.CreateIncludeBuilderFactory();
+		IncludeBuilderFactory = PostMockFactory.CreateIncludeBuilderFactory();
 		CommentLikeRepository = PostCommentLikeDomainMockFactory.CreateCommandRepository();
 		CommentIncludeBuilderFactory = PostCommentDomainMockFactory.CreateIncludeBuilderFactory();
 		CommentLikeIncludeBuilderFactory = PostCommentLikeDomainMockFactory.CreateIncludeBuilderFactory();

@@ -20,7 +20,7 @@ public class ChatMessageFluent : MongoDbFluent<ChatMessage>, IChatMessageFluent
 		_responseFluentFactory = responseFluentFactory;
 	}
 
-	public IChatMessageFluent ApplyIncludes(ChatMessageInclude? include)
+	public IChatMessageFluent ApplyIncludes(ChatMessageInclude include)
 	{
 		ApplyIncludes(_includerFactory, include);
 

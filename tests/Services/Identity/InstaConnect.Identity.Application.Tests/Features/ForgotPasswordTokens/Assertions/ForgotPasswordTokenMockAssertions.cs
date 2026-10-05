@@ -6,14 +6,14 @@ public static class ForgotPasswordTokenMockAssertions
 {
 	extension(IForgotPasswordTokenCommandService forgotPasswordTokenService)
 	{
-		public async Task ShouldReceiveOneAddAsync(
+		public async Task ShouldHaveReceivedOneAddAsync(
 		AddForgotPasswordTokenCommandRequest request,
 		CancellationToken cancellationToken)
 		{
 			await forgotPasswordTokenService.ShouldHaveReceivedOne().AddAsync(request.IsAddForgotPasswordTokenCommand(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneVerifyAsync(
+		public async Task ShouldHaveReceivedOneVerifyAsync(
 			VerifyForgotPasswordTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{

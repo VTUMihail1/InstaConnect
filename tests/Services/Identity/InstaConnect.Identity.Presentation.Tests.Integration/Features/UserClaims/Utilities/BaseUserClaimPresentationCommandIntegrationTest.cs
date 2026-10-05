@@ -12,13 +12,12 @@ public abstract class BaseUserClaimPresentationCommandIntegrationTest : BaseUser
 		ClaimEventClient = webApplicationFactory.CreateClaimEventClient();
 	}
 
-	protected override async Task OnInitializeAsync()
+	public override async Task InitializeAsync()
 	{
-		await base.OnInitializeAsync();
 		await ClaimEventClient.StartAsync(CancellationToken);
 	}
 
-	protected override async Task OnDisposeAsync()
+	public override async Task DisposeAsync()
 	{
 		await ClaimEventClient.StopAsync(CancellationToken);
 	}

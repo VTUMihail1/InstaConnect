@@ -36,6 +36,6 @@ public class UpdateChatMessageCommandHandlerUnitTests : BaseChatMessageApplicati
 		await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		await CommentService.ShouldReceiveOneUpdateAsync(_request, CancellationToken);
+		await CommentService.ShouldHaveReceivedOneUpdateAsync(_request, CancellationToken);
 	}
 }

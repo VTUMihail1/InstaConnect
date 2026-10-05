@@ -16,7 +16,7 @@ public class EmailConfirmationTokenFluent : MongoDbFluent<EmailConfirmationToken
 		_includerFactory = includerFactory;
 	}
 
-	public IEmailConfirmationTokenFluent ApplyIncludes(EmailConfirmationTokenInclude? include)
+	public IEmailConfirmationTokenFluent ApplyIncludes(EmailConfirmationTokenInclude include)
 	{
 		ApplyIncludes(_includerFactory, include);
 

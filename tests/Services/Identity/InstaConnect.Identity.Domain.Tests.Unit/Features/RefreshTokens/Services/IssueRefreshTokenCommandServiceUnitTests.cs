@@ -81,7 +81,7 @@ public class IssueRefreshTokenCommandServiceUnitTests : BaseRefreshTokenDomainCo
 		await _service.IssueAsync(_command, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneGetByNameAsync(_command, _include, CancellationToken);
+		await Repository.ShouldHaveReceivedOneGetByNameAsync(_command, _include, CancellationToken);
 	}
 
 	[Fact]
@@ -91,7 +91,7 @@ public class IssueRefreshTokenCommandServiceUnitTests : BaseRefreshTokenDomainCo
 		await _service.IssueAsync(_command, CancellationToken);
 
 		// Assert
-		PasswordHasher.ShouldReceiveOneIsMismatch(_command, User);
+		PasswordHasher.ShouldHaveReceivedOneIsMismatch(_command, User);
 	}
 
 	[Fact]
@@ -101,7 +101,7 @@ public class IssueRefreshTokenCommandServiceUnitTests : BaseRefreshTokenDomainCo
 		await _service.IssueAsync(_command, CancellationToken);
 
 		// Assert
-		Factory.ShouldReceiveOneCreate(_command, RefreshToken);
+		Factory.ShouldHaveReceivedOneCreate(_command, RefreshToken);
 	}
 
 	[Fact]
@@ -111,7 +111,7 @@ public class IssueRefreshTokenCommandServiceUnitTests : BaseRefreshTokenDomainCo
 		await _service.IssueAsync(_command, CancellationToken);
 
 		// Assert
-		await RefreshTokenRepository.ShouldReceiveOneAddAsync(_command, CancellationToken);
+		await RefreshTokenRepository.ShouldHaveReceivedOneAddAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -121,6 +121,6 @@ public class IssueRefreshTokenCommandServiceUnitTests : BaseRefreshTokenDomainCo
 		await _service.IssueAsync(_command, CancellationToken);
 
 		// Assert
-		SessionTokenGenerator.ShouldReceiveOneGenerate(_command, RefreshToken);
+		SessionTokenGenerator.ShouldHaveReceivedOneGenerate(_command, RefreshToken);
 	}
 }

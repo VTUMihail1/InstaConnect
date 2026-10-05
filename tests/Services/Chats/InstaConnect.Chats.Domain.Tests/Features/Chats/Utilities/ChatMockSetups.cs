@@ -125,7 +125,7 @@ public static class ChatMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetAllAsync(query.Filter, query.CurrentUser, query.Sorting, query.Pagination, cancellationToken)
+				.GetAllAsync(query.Filter, query.Sorting, query.Pagination, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(chats.ToResponse(query));
 		}
 

@@ -27,9 +27,9 @@ public class UpdatePostCommentCommandServiceIntegrationTests : BasePostCommentDo
 		_command = _commandBuilder.Build();
 	}
 
-	protected override async Task OnInitializeAsync()
+	public override async Task InitializeAsync()
 	{
-		await base.OnInitializeAsync();
+		await base.InitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 		await ServiceScope.AddAsync(Post, CancellationToken);
 		await ServiceScope.AddAsync(PostComment, CancellationToken);

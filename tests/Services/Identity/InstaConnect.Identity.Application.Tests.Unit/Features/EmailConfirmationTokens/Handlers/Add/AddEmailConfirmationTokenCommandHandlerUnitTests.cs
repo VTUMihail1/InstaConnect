@@ -26,6 +26,6 @@ public class AddEmailConfirmationTokenCommandHandlerUnitTests : BaseEmailConfirm
 		await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		await Service.ShouldReceiveOneAddAsync(_request, CancellationToken);
+		await Service.ShouldHaveReceivedOneAddAsync(_request, CancellationToken);
 	}
 }

@@ -1,5 +1,3 @@
-using InstaConnect.Posts.Domain.Features.Common.Models.Requests;
-
 namespace InstaConnect.Posts.Domain.Features.PostComments.Utilities;
 
 public static class PostCommentExceptionErrorMessages
@@ -30,13 +28,5 @@ public static class PostCommentExceptionErrorMessages
 		const string Format = "PostCommentsForUserSortTerm(type: {0}) is not supported";
 
 		return Format.FormatCurrentCulture(sortTerm);
-	}
-
-	public static string GetIncludePropertyNotSupportedMessage(ICollection<PostsIncludeDescriptor> descriptors)
-	{
-		const string Format = "PostCommentIncludeDescriptors({0}) is not supported";
-
-		return Format.FormatCurrentCulture(descriptors
-			.JoinDescriptorsWithComma<PostsDestinationType, PostsIncludeType, PostsIncludeDescriptor>());
 	}
 }

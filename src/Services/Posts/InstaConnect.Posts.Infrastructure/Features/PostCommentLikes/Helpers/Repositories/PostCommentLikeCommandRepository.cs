@@ -3,15 +3,19 @@ namespace InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Helpers.Re
 internal class PostCommentLikeCommandRepository : IPostCommentLikeCommandRepository
 {
 	private readonly IPostCommentLikeCollection _collection;
+	private readonly IPostCommentLikeIncludeBuilderFactory _includeBuilderFactory;
 
-	public PostCommentLikeCommandRepository(IPostCommentLikeCollection collection)
+	public PostCommentLikeCommandRepository(
+		IPostCommentLikeCollection collection,
+		IPostCommentLikeIncludeBuilderFactory includeBuilderFactory)
 	{
 		_collection = collection;
+		_includeBuilderFactory = includeBuilderFactory;
 	}
 
 	public async Task<PostCommentLike?> GetByIdAsync(
 		PostCommentLikeId id,
-		PostCommentLikeInclude? include,
+		PostCommentLikeInclude include,
 		CancellationToken cancellationToken)
 	{
 		return await _collection
@@ -25,7 +29,9 @@ internal class PostCommentLikeCommandRepository : IPostCommentLikeCommandReposit
 		PostCommentLikeId id,
 		CancellationToken cancellationToken)
 	{
-		return await GetByIdAsync(id, null, cancellationToken);
+		var include = _includeBuilderFactory.Create().Build();
+
+		return await GetByIdAsync(id, include, cancellationToken);
 	}
 
 	public async Task<bool> ExistsByIdAsync(

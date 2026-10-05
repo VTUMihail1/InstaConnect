@@ -6,11 +6,6 @@ public static class PostCommentDomainMatcher
 {
 	extension(AddPostCommentCommand command)
 	{
-		public PostInclude IsPostInclude(PostInclude include)
-		{
-			return Matcher.Is<PostInclude>(p => p.Matches(command, include));
-		}
-
 		public PostComment IsPostComment()
 		{
 			return Matcher.Is<PostComment>(p => p.Matches(command));
@@ -24,11 +19,6 @@ public static class PostCommentDomainMatcher
 
 	extension(UpdatePostCommentCommand command)
 	{
-		public PostCommentInclude IsPostCommentInclude(PostCommentInclude include)
-		{
-			return Matcher.Is<PostCommentInclude>(p => p.Matches(command, include));
-		}
-
 		public PostComment IsPostComment()
 		{
 			return Matcher.Is<PostComment>(p => p.Matches(command));
@@ -42,11 +32,6 @@ public static class PostCommentDomainMatcher
 
 	extension(DeletePostCommentCommand command)
 	{
-		public PostCommentInclude IsPostCommentInclude(PostCommentInclude include)
-		{
-			return Matcher.Is<PostCommentInclude>(p => p.Matches(command, include));
-		}
-
 		public PostComment IsPostComment()
 		{
 			return Matcher.Is<PostComment>(p => p.Matches(command));

@@ -59,7 +59,7 @@ public class AddChatMessageCommandServiceUnitTests : BaseChatMessageDomainComman
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneGetByIdAsync(_command, _include, CancellationToken);
+		await Repository.ShouldHaveReceivedOneGetByIdAsync(_command, _include, CancellationToken);
 	}
 
 	[Fact]
@@ -69,7 +69,7 @@ public class AddChatMessageCommandServiceUnitTests : BaseChatMessageDomainComman
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		Factory.ShouldReceiveOneCreate(_command);
+		Factory.ShouldHaveReceivedOneCreate(_command);
 	}
 
 	[Fact]
@@ -79,7 +79,7 @@ public class AddChatMessageCommandServiceUnitTests : BaseChatMessageDomainComman
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await MessageRepository.ShouldReceiveOneAddAsync(_command, CancellationToken);
+		await MessageRepository.ShouldHaveReceivedOneAddAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -89,6 +89,6 @@ public class AddChatMessageCommandServiceUnitTests : BaseChatMessageDomainComman
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await NotificationService.ShouldReceiveOneAddedAsync(_command, ChatMessage, CancellationToken);
+		await NotificationService.ShouldHaveReceivedOneAddedAsync(_command, ChatMessage, CancellationToken);
 	}
 }

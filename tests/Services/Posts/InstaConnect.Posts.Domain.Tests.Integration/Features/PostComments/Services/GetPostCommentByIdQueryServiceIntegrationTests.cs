@@ -28,9 +28,8 @@ public class GetPostCommentByIdQueryServiceIntegrationTests : BasePostCommentDom
 		_query = _queryBuilder.Build();
 	}
 
-	protected override async Task OnInitializeAsync()
+	public override async Task InitializeAsync()
 	{
-		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 		await ServiceScope.AddAsync(Post, CancellationToken);
 		await ServiceScope.AddAsync(PostLike, CancellationToken);

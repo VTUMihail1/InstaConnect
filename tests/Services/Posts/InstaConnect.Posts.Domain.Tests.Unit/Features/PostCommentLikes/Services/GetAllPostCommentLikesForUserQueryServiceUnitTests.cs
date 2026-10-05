@@ -55,7 +55,7 @@ public class GetAllPostCommentLikesForUserQueryServiceUnitTests : BasePostCommen
 		await _service.GetAllForUserAsync(_query, CancellationToken);
 
 		// Assert
-		await UserRepository.ShouldReceiveOneGetByIdAsync(_query, CancellationToken);
+		await UserRepository.ShouldHaveReceivedOneGetByIdAsync(_query, CancellationToken);
 	}
 
 	[Fact]
@@ -65,7 +65,7 @@ public class GetAllPostCommentLikesForUserQueryServiceUnitTests : BasePostCommen
 		await _service.GetAllForUserAsync(_query, CancellationToken);
 
 		// Assert
-		await CommentLikeRepository.ShouldReceiveOneGetAllForUserAsync(_query, CancellationToken);
+		await CommentLikeRepository.ShouldHaveReceivedOneGetAllForUserAsync(_query, CancellationToken);
 	}
 
 	[Fact]
@@ -75,6 +75,6 @@ public class GetAllPostCommentLikesForUserQueryServiceUnitTests : BasePostCommen
 		await _service.GetAllForUserAsync(_query, CancellationToken);
 
 		// Assert
-		await CommentLikeRepository.ShouldReceiveOneGetTotalCountForUserAsync(_query, CancellationToken);
+		await CommentLikeRepository.ShouldHaveReceivedOneGetTotalCountForUserAsync(_query, CancellationToken);
 	}
 }

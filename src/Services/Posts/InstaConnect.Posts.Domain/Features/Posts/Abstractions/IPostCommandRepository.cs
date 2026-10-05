@@ -10,7 +10,7 @@ public interface IPostCommandRepository
 
 	public Task<Post?> GetByIdAsync(PostId id, CancellationToken cancellationToken);
 
-	public Task<Post?> GetByIdAsync(PostId id, PostInclude? include, CancellationToken cancellationToken);
+	public Task<Post?> GetByIdAsync(PostId id, PostInclude include, CancellationToken cancellationToken);
 
 	public Task<bool> ExistsByIdAsync(PostId id, CancellationToken cancellationToken);
 

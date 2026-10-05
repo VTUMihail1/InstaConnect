@@ -14,9 +14,8 @@ public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowApplicationQu
 		_request = _requestBuilder.Build();
 	}
 
-	protected override async Task OnInitializeAsync()
+	public override async Task InitializeAsync()
 	{
-		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(Follower, CancellationToken);
 		await ServiceScope.AddAsync(Following, CancellationToken);
 		await ServiceScope.AddAsync(Follow, CancellationToken);

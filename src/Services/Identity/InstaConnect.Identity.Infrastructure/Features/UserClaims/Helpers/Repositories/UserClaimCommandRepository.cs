@@ -3,15 +3,19 @@ namespace InstaConnect.Identity.Infrastructure.Features.UserClaims.Helpers.Repos
 internal class UserClaimCommandRepository : IUserClaimCommandRepository
 {
 	private readonly IUserClaimCollection _collection;
+	private readonly IUserClaimIncludeBuilderFactory _includeBuilderFactory;
 
-	public UserClaimCommandRepository(IUserClaimCollection collection)
+	public UserClaimCommandRepository(
+		IUserClaimCollection collection,
+		IUserClaimIncludeBuilderFactory includeBuilderFactory)
 	{
 		_collection = collection;
+		_includeBuilderFactory = includeBuilderFactory;
 	}
 
 	public async Task<UserClaim?> GetByIdAsync(
 		UserClaimId id,
-		UserClaimInclude? include,
+		UserClaimInclude include,
 		CancellationToken cancellationToken)
 	{
 		return await _collection
@@ -25,7 +29,9 @@ internal class UserClaimCommandRepository : IUserClaimCommandRepository
 		UserClaimId id,
 		CancellationToken cancellationToken)
 	{
-		return await GetByIdAsync(id, null, cancellationToken);
+		var include = _includeBuilderFactory.Create().Build();
+
+		return await GetByIdAsync(id, include, cancellationToken);
 	}
 
 	public async Task<bool> ExistsByIdAsync(

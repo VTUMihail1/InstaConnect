@@ -7,35 +7,35 @@ public static class FollowMockAssertions
 {
 	extension(IApplicationSender sender)
 	{
-		public async Task ShouldReceiveOneSendAsync(
+		public async Task ShouldHaveReceivedOneSendAsync(
 		GetAllFollowsApiRequest request,
 		CancellationToken cancellationToken)
 		{
 			await sender.ShouldHaveReceivedOne().SendAsync(request.IsGetAllFollowsQueryRequest(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneSendAsync(
+		public async Task ShouldHaveReceivedOneSendAsync(
 			GetAllFollowsForFollowingApiRequest request,
 			CancellationToken cancellationToken)
 		{
 			await sender.ShouldHaveReceivedOne().SendAsync(request.IsGetAllFollowsForFollowingQueryRequest(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneSendAsync(
+		public async Task ShouldHaveReceivedOneSendAsync(
 			GetFollowByIdApiRequest request,
 			CancellationToken cancellationToken)
 		{
 			await sender.ShouldHaveReceivedOne().SendAsync(request.IsGetFollowByIdQueryRequest(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneSendAsync(
+		public async Task ShouldHaveReceivedOneSendAsync(
 			AddFollowApiRequest request,
 			CancellationToken cancellationToken)
 		{
 			await sender.ShouldHaveReceivedOne().SendAsync(request.IsAddFollowCommandRequest(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneSendAsync(
+		public async Task ShouldHaveReceivedOneSendAsync(
 			DeleteFollowApiRequest request,
 			CancellationToken cancellationToken)
 		{

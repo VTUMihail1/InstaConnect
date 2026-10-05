@@ -4,7 +4,7 @@ public interface IPostCommentCommandRepository
 {
 	public Task<PostComment?> GetByIdAsync(
 		PostCommentId id,
-		PostCommentInclude? include,
+		PostCommentInclude include,
 		CancellationToken cancellationToken);
 
 	public Task<PostComment?> GetByIdAsync(

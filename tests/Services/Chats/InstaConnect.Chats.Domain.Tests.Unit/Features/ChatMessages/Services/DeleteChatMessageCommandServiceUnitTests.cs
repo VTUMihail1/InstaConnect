@@ -73,7 +73,7 @@ public class DeleteChatMessageCommandServiceUnitTests : BaseChatMessageDomainCom
 		await _service.DeleteAsync(_command, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneExistsByIdAsync(_command, CancellationToken);
+		await Repository.ShouldHaveReceivedOneExistsByIdAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -83,7 +83,7 @@ public class DeleteChatMessageCommandServiceUnitTests : BaseChatMessageDomainCom
 		await _service.DeleteAsync(_command, CancellationToken);
 
 		// Assert
-		await MessageRepository.ShouldReceiveOneGetByIdAsync(_command, _messageInclude, CancellationToken);
+		await MessageRepository.ShouldHaveReceivedOneGetByIdAsync(_command, _messageInclude, CancellationToken);
 	}
 
 	[Fact]
@@ -93,7 +93,7 @@ public class DeleteChatMessageCommandServiceUnitTests : BaseChatMessageDomainCom
 		await _service.DeleteAsync(_command, CancellationToken);
 
 		// Assert
-		await MessageRepository.ShouldReceiveOneDeleteAsync(_command, CancellationToken);
+		await MessageRepository.ShouldHaveReceivedOneDeleteAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -103,6 +103,6 @@ public class DeleteChatMessageCommandServiceUnitTests : BaseChatMessageDomainCom
 		await _service.DeleteAsync(_command, CancellationToken);
 
 		// Assert
-		await NotificationService.ShouldReceiveOneDeletedAsync(_command, ChatMessage, CancellationToken);
+		await NotificationService.ShouldHaveReceivedOneDeletedAsync(_command, ChatMessage, CancellationToken);
 	}
 }

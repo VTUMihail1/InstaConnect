@@ -44,7 +44,7 @@ public class GetAllUsersQueryServiceUnitTests : BaseUserDomainQueryUnitTest
 		await _service.GetAllAsync(_query, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneGetAllAsync(_query, CancellationToken);
+		await Repository.ShouldHaveReceivedOneGetAllAsync(_query, CancellationToken);
 	}
 
 	[Fact]
@@ -54,6 +54,6 @@ public class GetAllUsersQueryServiceUnitTests : BaseUserDomainQueryUnitTest
 		await _service.GetAllAsync(_query, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneGetTotalCountAsync(_query, CancellationToken);
+		await Repository.ShouldHaveReceivedOneGetTotalCountAsync(_query, CancellationToken);
 	}
 }

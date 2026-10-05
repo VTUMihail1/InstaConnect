@@ -6,13 +6,13 @@ public static class ChatMessageMockAssertions
 {
 	extension(IChatMessageQueryService chatMessageService)
 	{
-		public async Task ShouldReceiveOneGetAllAsync(GetAllChatMessagesQueryRequest request, CancellationToken cancellationToken)
+		public async Task ShouldHaveReceivedOneGetAllAsync(GetAllChatMessagesQueryRequest request, CancellationToken cancellationToken)
 		{
 			await chatMessageService.ShouldHaveReceivedOne()
 				.GetAllAsync(request.IsGetAllChatMessagesQuery(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneGetByIdAsync(GetChatMessageByIdQueryRequest request, CancellationToken cancellationToken)
+		public async Task ShouldHaveReceivedOneGetByIdAsync(GetChatMessageByIdQueryRequest request, CancellationToken cancellationToken)
 		{
 			await chatMessageService.ShouldHaveReceivedOne()
 				.GetByIdAsync(request.IsGetChatMessageByIdQuery(), cancellationToken);
@@ -21,19 +21,19 @@ public static class ChatMessageMockAssertions
 
 	extension(IChatMessageCommandService chatMessageService)
 	{
-		public async Task ShouldReceiveOneAddAsync(AddChatMessageCommandRequest request, CancellationToken cancellationToken)
+		public async Task ShouldHaveReceivedOneAddAsync(AddChatMessageCommandRequest request, CancellationToken cancellationToken)
 		{
 			await chatMessageService.ShouldHaveReceivedOne()
 				.AddAsync(request.IsAddChatMessageCommand(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneUpdateAsync(UpdateChatMessageCommandRequest request, CancellationToken cancellationToken)
+		public async Task ShouldHaveReceivedOneUpdateAsync(UpdateChatMessageCommandRequest request, CancellationToken cancellationToken)
 		{
 			await chatMessageService.ShouldHaveReceivedOne()
 				.UpdateAsync(request.IsUpdateChatMessageCommand(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneDeleteAsync(DeleteChatMessageCommandRequest request, CancellationToken cancellationToken)
+		public async Task ShouldHaveReceivedOneDeleteAsync(DeleteChatMessageCommandRequest request, CancellationToken cancellationToken)
 		{
 			await chatMessageService.ShouldHaveReceivedOne()
 				.DeleteAsync(request.IsDeleteChatMessageCommand(), cancellationToken);

@@ -36,6 +36,6 @@ public class GetPostCommentLikeByIdQueryHandlerUnitTests : BasePostCommentLikeAp
 		await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		await CommentLikeService.ShouldReceiveOneGetByIdAsync(_request, CancellationToken);
+		await CommentLikeService.ShouldHaveReceivedOneGetByIdAsync(_request, CancellationToken);
 	}
 }

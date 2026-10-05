@@ -9,21 +9,21 @@ public static class RefreshTokenMockAssertions
 
 	extension(IApplicationSender sender)
 	{
-		public async Task ShouldReceiveOneSendAsync(
+		public async Task ShouldHaveReceivedOneSendAsync(
 			IssueRefreshTokenApiRequest request,
 			CancellationToken cancellationToken)
 		{
 			await sender.ShouldHaveReceivedOne().SendAsync(request.IsIssueRefreshTokenCommandRequest(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneSendAsync(
+		public async Task ShouldHaveReceivedOneSendAsync(
 			RotateRefreshTokenApiRequest request,
 			CancellationToken cancellationToken)
 		{
 			await sender.ShouldHaveReceivedOne().SendAsync(request.IsRotateRefreshTokenCommandRequest(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneSendAsync(
+		public async Task ShouldHaveReceivedOneSendAsync(
 			DeleteCurrentRefreshTokenApiRequest request,
 			CancellationToken cancellationToken)
 		{
@@ -33,21 +33,21 @@ public static class RefreshTokenMockAssertions
 
 	extension(IRefreshTokenCookieStore store)
 	{
-		public void ShouldReceiveOneSet(
+		public void ShouldHaveReceivedOneSet(
 			IssueRefreshTokenApiRequest request,
 			RefreshToken refreshToken)
 		{
 			store.ShouldHaveReceivedOne().Set(request.IsRefreshTokenCookieRequest(refreshToken));
 		}
 
-		public void ShouldReceiveOneSet(
+		public void ShouldHaveReceivedOneSet(
 			RotateRefreshTokenApiRequest request,
 			RefreshToken refreshToken)
 		{
 			store.ShouldHaveReceivedOne().Set(request.IsRefreshTokenCookieRequest(refreshToken));
 		}
 
-		public void ShouldReceiveOneDelete(DeleteCurrentRefreshTokenApiRequest request)
+		public void ShouldHaveReceivedOneDelete(DeleteCurrentRefreshTokenApiRequest request)
 		{
 			store.ShouldHaveReceivedOne().Delete();
 		}

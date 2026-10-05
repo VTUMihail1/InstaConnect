@@ -6,11 +6,6 @@ public static class PostLikeDomainMatcher
 {
 	extension(AddPostLikeCommand command)
 	{
-		public PostInclude IsPostInclude(PostInclude include)
-		{
-			return Matcher.Is<PostInclude>(p => p.Matches(command, include));
-		}
-
 		public PostLike IsPostLike()
 		{
 			return Matcher.Is<PostLike>(p => p.Matches(command));
@@ -24,11 +19,6 @@ public static class PostLikeDomainMatcher
 
 	extension(DeletePostLikeCommand command)
 	{
-		public PostLikeInclude IsPostLikeInclude(PostLikeInclude include)
-		{
-			return Matcher.Is<PostLikeInclude>(p => p.Matches(command, include));
-		}
-
 		public PostLike IsPostLike()
 		{
 			return Matcher.Is<PostLike>(p => p.Matches(command));

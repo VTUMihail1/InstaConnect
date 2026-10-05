@@ -20,7 +20,7 @@ public class PostCommentLikeFluent : MongoDbFluent<PostCommentLike>, IPostCommen
 		_responseFluentFactory = responseFluentFactory;
 	}
 
-	public IPostCommentLikeFluent ApplyIncludes(PostCommentLikeInclude? include)
+	public IPostCommentLikeFluent ApplyIncludes(PostCommentLikeInclude include)
 	{
 		ApplyIncludes(_includerFactory, include);
 

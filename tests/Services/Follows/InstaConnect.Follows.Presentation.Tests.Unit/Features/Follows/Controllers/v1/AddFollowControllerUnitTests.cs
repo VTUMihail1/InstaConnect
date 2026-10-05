@@ -46,6 +46,6 @@ public class AddFollowControllerUnitTests : BaseFollowPresentationCommandUnitTes
 		await _controller.AddAsync(_request, CancellationToken);
 
 		// Assert
-		await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);
+		await Sender.ShouldHaveReceivedOneSendAsync(_request, CancellationToken);
 	}
 }

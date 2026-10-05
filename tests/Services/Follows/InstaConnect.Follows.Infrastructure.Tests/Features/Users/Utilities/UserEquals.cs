@@ -1,3 +1,7 @@
+using InstaConnect.Common.Domain.Features.ValueObjects.Models;
+using InstaConnect.Follows.Domain.Features.Users.Models.Requests;
+using InstaConnect.Follows.Domain.Features.Users.Models.Responses;
+
 namespace InstaConnect.Follows.Infrastructure.Tests.Features.Users.Utilities;
 
 public static class UserEquals
@@ -12,6 +16,70 @@ public static class UserEquals
 		public bool Matches(UserUpdatedEventRequest request)
 		{
 			return user.Matches(request.User);
+		}
+
+		public bool Matches(
+			UserId id,
+			User u)
+		{
+			return user.Matches(u);
+		}
+
+		public bool Matches(
+			Name name,
+			User u)
+		{
+			return user.Matches(u);
+		}
+
+		public bool Matches(
+			Email email,
+			User u)
+		{
+			return user.Matches(u);
+		}
+	}
+
+	extension(UserResponse? response)
+	{
+		public bool MatchesFull(User? user)
+		{
+			return response != null &&
+				   user != null &&
+				   user.Id.Matches(response.Id) &&
+				   user.FirstName == response.FirstName &&
+				   user.LastName == response.LastName &&
+				   user.Name.Matches(response.Name) &&
+				   user.Email.Matches(response.Email) &&
+				   user.ProfileImage.Matches(response.ProfileImage) &&
+				   user.CreatedAtUtc == response.CreatedAtUtc &&
+				   user.UpdatedAtUtc == response.UpdatedAtUtc;
+		}
+
+		public bool Matches(
+			UserId id,
+			CurrentUserQuery currentUserQuery,
+			User user)
+		{
+			return response.MatchesFull(user);
+		}
+	}
+
+	extension(bool response)
+	{
+		public bool Matches(UserId id)
+		{
+			return response;
+		}
+
+		public bool Matches(Name name)
+		{
+			return !response;
+		}
+
+		public bool Matches(Email email)
+		{
+			return !response;
 		}
 	}
 

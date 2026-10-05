@@ -38,6 +38,6 @@ public abstract class BaseFollowDomainCommandUnitTest : BaseFollowTest
 		Repository = FollowDomainMockFactory.CreateCommandRepository();
 		UserRepository = UserDomainMockFactory.CreateCommandRepository();
 		NotificationService = FollowDomainMockFactory.CreateNotificationService();
-		IncludeBuilderFactory = FollowDomainMockFactory.CreateIncludeBuilderFactory();
+		IncludeBuilderFactory = FollowMockFactory.CreateIncludeBuilderFactory();
 	}
 }

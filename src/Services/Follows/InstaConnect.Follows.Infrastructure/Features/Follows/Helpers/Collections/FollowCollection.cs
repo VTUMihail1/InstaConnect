@@ -25,13 +25,6 @@ public class FollowCollection : MongoDbCollection<Follow>, IFollowCollection
 		return _fluentFactory.Create(fluent);
 	}
 
-	public async Task UpdateAsync(
-		Follow entity,
-		CancellationToken cancellationToken)
-	{
-		await UpdateAsync(entity.Id.GetFilter(), entity, cancellationToken);
-	}
-
 	public async Task DeleteAsync(
 		Follow entity,
 		CancellationToken cancellationToken)

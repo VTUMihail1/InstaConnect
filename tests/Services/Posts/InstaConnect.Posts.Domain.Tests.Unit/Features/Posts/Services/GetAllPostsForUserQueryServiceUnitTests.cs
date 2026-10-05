@@ -55,7 +55,7 @@ public class GetAllPostsForUserQueryServiceUnitTests : BasePostDomainQueryUnitTe
 		await _service.GetAllForUserAsync(_query, CancellationToken);
 
 		// Assert
-		await UserRepository.ShouldReceiveOneGetByIdAsync(_query, CancellationToken);
+		await UserRepository.ShouldHaveReceivedOneGetByIdAsync(_query, CancellationToken);
 	}
 
 	[Fact]
@@ -65,7 +65,7 @@ public class GetAllPostsForUserQueryServiceUnitTests : BasePostDomainQueryUnitTe
 		await _service.GetAllForUserAsync(_query, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneGetAllForUserAsync(_query, CancellationToken);
+		await Repository.ShouldHaveReceivedOneGetAllForUserAsync(_query, CancellationToken);
 	}
 
 	[Fact]
@@ -75,6 +75,6 @@ public class GetAllPostsForUserQueryServiceUnitTests : BasePostDomainQueryUnitTe
 		await _service.GetAllForUserAsync(_query, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneGetTotalCountForUserAsync(_query, CancellationToken);
+		await Repository.ShouldHaveReceivedOneGetTotalCountForUserAsync(_query, CancellationToken);
 	}
 }

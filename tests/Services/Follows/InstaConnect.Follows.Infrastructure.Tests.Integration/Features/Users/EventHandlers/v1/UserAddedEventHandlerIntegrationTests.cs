@@ -2,7 +2,7 @@ using InstaConnect.Common.Infrastructure.Tests.Features.Utilities;
 
 namespace InstaConnect.Follows.Infrastructure.Tests.Integration.Features.Users.EventHandlers.v1;
 
-public class UserAddedEventHandlerIntegrationTests : BaseUserInfrastructureCommandIntegrationTest
+public class UserAddedEventHandlerIntegrationTests : BaseUserInfrastructureEventHandlerIntegrationTest
 {
 	private readonly UserAddedEventRequestBuilderFactory _requestBuilderFactory;
 	private readonly UserAddedEventRequestBuilder _requestBuilder;

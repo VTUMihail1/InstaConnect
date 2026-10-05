@@ -151,22 +151,6 @@ public static class PostLikeEquals
 		}
 	}
 
-	extension(PostInclude p)
-	{
-		public bool Matches(AddPostLikeCommand command, PostInclude include)
-		{
-			return p.Matches(include);
-		}
-	}
-
-	extension(PostLikeInclude p)
-	{
-		public bool Matches(DeletePostLikeCommand command, PostLikeInclude include)
-		{
-			return p.Matches(include);
-		}
-	}
-
 	extension(PostLikeResponse? response)
 	{
 		public bool MatchesFull<TQuery>(TQuery request, PostLike? postLike)

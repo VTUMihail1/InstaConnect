@@ -6,7 +6,7 @@ public static class UserMockAssertions
 {
 	extension(IUserFactory factory)
 	{
-		public void ShouldReceiveOneCreate(
+		public void ShouldHaveReceivedOneCreate(
 			AddUserCommand command)
 		{
 			factory.ShouldHaveReceivedOne().Create(
@@ -23,70 +23,70 @@ public static class UserMockAssertions
 
 	extension(IUserCommandRepository repository)
 	{
-		public async Task ShouldReceiveOneAddAsync(
+		public async Task ShouldHaveReceivedOneAddAsync(
 			AddUserCommand command,
 			CancellationToken cancellationToken)
 		{
 			await repository.ShouldHaveReceivedOne().AddAsync(command.IsUser(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneUpdateAsync(
+		public async Task ShouldHaveReceivedOneUpdateAsync(
 			UpdateUserCommand command,
 			CancellationToken cancellationToken)
 		{
 			await repository.ShouldHaveReceivedOne().UpdateAsync(command.IsUser(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneDeleteAsync(
+		public async Task ShouldHaveReceivedOneDeleteAsync(
 			DeleteUserCommand command,
 			CancellationToken cancellationToken)
 		{
 			await repository.ShouldHaveReceivedOne().DeleteAsync(command.IsUser(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneExistsByIdAsync(
+		public async Task ShouldHaveReceivedOneExistsByIdAsync(
 			AddUserCommand request,
 			CancellationToken cancellationToken)
 		{
 			await repository.ShouldHaveReceivedOne().ExistsByIdAsync(request.Id, cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneGetByIdAsync(
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
 			UpdateUserCommand request,
 			CancellationToken cancellationToken)
 		{
 			await repository.ShouldHaveReceivedOne().GetByIdAsync(request.Id, cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneGetByIdAsync(
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
 			DeleteUserCommand request,
 			CancellationToken cancellationToken)
 		{
 			await repository.ShouldHaveReceivedOne().GetByIdAsync(request.Id, cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneIsNameUniqueAsync(
+		public async Task ShouldHaveReceivedOneIsNameUniqueAsync(
 			AddUserCommand request,
 			CancellationToken cancellationToken)
 		{
 			await repository.ShouldHaveReceivedOne().IsNameUniqueAsync(request.Name, cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneIsNameUniqueAsync(
+		public async Task ShouldHaveReceivedOneIsNameUniqueAsync(
 			UpdateUserCommand request,
 			CancellationToken cancellationToken)
 		{
 			await repository.ShouldHaveReceivedOne().IsNameUniqueAsync(request.Name, cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneIsEmailUniqueAsync(
+		public async Task ShouldHaveReceivedOneIsEmailUniqueAsync(
 			AddUserCommand request,
 			CancellationToken cancellationToken)
 		{
 			await repository.ShouldHaveReceivedOne().IsEmailUniqueAsync(request.Email, cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneIsEmailUniqueAsync(
+		public async Task ShouldHaveReceivedOneIsEmailUniqueAsync(
 			UpdateUserCommand request,
 			CancellationToken cancellationToken)
 		{

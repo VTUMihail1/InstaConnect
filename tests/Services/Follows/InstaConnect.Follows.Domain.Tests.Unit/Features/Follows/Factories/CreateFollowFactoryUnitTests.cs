@@ -35,6 +35,6 @@ public class CreateFollowFactoryUnitTests : BaseFollowDomainCommandUnitTest
 		_factory.Create(Follow.Id.FollowerId, Follow.Id.FollowingId);
 
 		// Assert
-		DateTimeProvider.ShouldReceiveOneGetOffsetUtcNow();
+		DateTimeProvider.ShouldHaveReceivedOneGetOffsetUtcNow();
 	}
 }

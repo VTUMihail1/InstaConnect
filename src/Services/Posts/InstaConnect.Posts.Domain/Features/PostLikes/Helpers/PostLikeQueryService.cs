@@ -30,9 +30,9 @@ internal class PostLikeQueryService : IPostLikeQueryService
 
 		var postLikes = await _likeRepository.GetAllAsync(
 			query.Filter,
-			query.CurrentUser,
 			query.Sorting,
 			query.Pagination,
+			query.CurrentUser,
 			cancellationToken);
 
 		var totalCount = await _likeRepository.GetTotalCountAsync(query.Filter, cancellationToken);
@@ -51,9 +51,9 @@ internal class PostLikeQueryService : IPostLikeQueryService
 
 		var postLikes = await _likeRepository.GetAllForUserAsync(
 			query.Filter,
-			query.CurrentUser,
 			query.Sorting,
 			query.Pagination,
+			query.CurrentUser,
 			cancellationToken);
 
 		var totalCount = await _likeRepository.GetTotalCountForUserAsync(query.Filter, cancellationToken);

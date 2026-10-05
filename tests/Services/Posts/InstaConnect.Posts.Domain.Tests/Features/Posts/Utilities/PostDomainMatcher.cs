@@ -6,11 +6,6 @@ public static class PostDomainMatcher
 {
 	extension(UpdatePostCommand command)
 	{
-		public PostInclude IsPostInclude(PostInclude include)
-		{
-			return Matcher.Is<PostInclude>(p => p.Matches(command, include));
-		}
-
 		public Post IsPost()
 		{
 			return Matcher.Is<Post>(p => p.Matches(command));
@@ -24,11 +19,6 @@ public static class PostDomainMatcher
 
 	extension(DeletePostCommand command)
 	{
-		public PostInclude IsPostInclude(PostInclude include)
-		{
-			return Matcher.Is<PostInclude>(p => p.Matches(command, include));
-		}
-
 		public Post IsPost()
 		{
 			return Matcher.Is<Post>(p => p.Matches(command));

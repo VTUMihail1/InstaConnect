@@ -37,7 +37,7 @@ public static class PostCommentLikeMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, command.IsPostCommentLikeInclude(include), cancellationToken)
+				.GetByIdAsync(command.Id, include, cancellationToken)
 				.ReturnsTaskResponse(postCommentLike);
 		}
 
@@ -68,7 +68,7 @@ public static class PostCommentLikeMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, command.IsPostCommentLikeInclude(include), cancellationToken)
+				.GetByIdAsync(command.Id, include, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 	}
@@ -121,7 +121,7 @@ public static class PostCommentLikeMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.CommentId, command.IsPostCommentInclude(include), cancellationToken)
+				.GetByIdAsync(command.CommentId, include, cancellationToken)
 				.ReturnsTaskResponse(postComment);
 		}
 
@@ -132,7 +132,7 @@ public static class PostCommentLikeMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.CommentId, command.IsPostCommentInclude(include), cancellationToken)
+				.GetByIdAsync(command.CommentId, include, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 
@@ -289,7 +289,7 @@ public static class PostCommentLikeMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetAllAsync(query.Filter, query.CurrentUser, query.Sorting, query.Pagination, cancellationToken)
+				.GetAllAsync(query.Filter, query.Sorting, query.Pagination, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(postCommentLikes.ToResponse(query));
 		}
 
@@ -309,7 +309,7 @@ public static class PostCommentLikeMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetAllForUserAsync(query.Filter, query.CurrentUser, query.Sorting, query.Pagination, cancellationToken)
+				.GetAllForUserAsync(query.Filter, query.Sorting, query.Pagination, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(postCommentLikes.ToResponse(query));
 		}
 

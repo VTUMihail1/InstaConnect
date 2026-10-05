@@ -132,7 +132,7 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, command.IsUserInclude(include), cancellationToken)
+				.GetByIdAsync(command.Id, include, cancellationToken)
 				.ReturnsTaskResponse(user);
 		}
 
@@ -153,7 +153,7 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, command.IsUserInclude(include), cancellationToken)
+				.GetByIdAsync(command.Id, include, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 
@@ -176,7 +176,7 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetAllAsync(query.Filter, query.Current, query.Sorting, query.Pagination, cancellationToken)
+				.GetAllAsync(query.Filter, query.Sorting, query.Pagination, query.Current, cancellationToken)
 				.ReturnsTaskResponse(users.ToResponse(query));
 		}
 

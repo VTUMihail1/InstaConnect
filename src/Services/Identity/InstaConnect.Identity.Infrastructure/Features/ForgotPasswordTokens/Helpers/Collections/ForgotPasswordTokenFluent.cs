@@ -16,7 +16,7 @@ public class ForgotPasswordTokenFluent : MongoDbFluent<ForgotPasswordToken>, IFo
 		_includerFactory = includerFactory;
 	}
 
-	public IForgotPasswordTokenFluent ApplyIncludes(ForgotPasswordTokenInclude? include)
+	public IForgotPasswordTokenFluent ApplyIncludes(ForgotPasswordTokenInclude include)
 	{
 		ApplyIncludes(_includerFactory, include);
 

@@ -75,7 +75,7 @@ public class DeletePostCommentLikeCommandServiceUnitTests : BasePostCommentLikeD
 		await _service.DeleteAsync(_command, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneExistsByIdAsync(_command, CancellationToken);
+		await Repository.ShouldHaveReceivedOneExistsByIdAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -85,7 +85,7 @@ public class DeletePostCommentLikeCommandServiceUnitTests : BasePostCommentLikeD
 		await _service.DeleteAsync(_command, CancellationToken);
 
 		// Assert
-		await CommentRepository.ShouldReceiveOneExistsByIdAsync(_command, CancellationToken);
+		await CommentRepository.ShouldHaveReceivedOneExistsByIdAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -95,7 +95,7 @@ public class DeletePostCommentLikeCommandServiceUnitTests : BasePostCommentLikeD
 		await _service.DeleteAsync(_command, CancellationToken);
 
 		// Assert
-		await CommentLikeRepository.ShouldReceiveOneGetByIdAsync(_command, _commentLikeInclude, CancellationToken);
+		await CommentLikeRepository.ShouldHaveReceivedOneGetByIdAsync(_command, _commentLikeInclude, CancellationToken);
 	}
 
 	[Fact]
@@ -105,7 +105,7 @@ public class DeletePostCommentLikeCommandServiceUnitTests : BasePostCommentLikeD
 		await _service.DeleteAsync(_command, CancellationToken);
 
 		// Assert
-		await CommentLikeRepository.ShouldReceiveOneDeleteAsync(_command, CancellationToken);
+		await CommentLikeRepository.ShouldHaveReceivedOneDeleteAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -115,6 +115,6 @@ public class DeletePostCommentLikeCommandServiceUnitTests : BasePostCommentLikeD
 		await _service.DeleteAsync(_command, CancellationToken);
 
 		// Assert
-		await EventPublisher.ShouldReceiveOnePublishAsync(_command, PostCommentLike, CancellationToken);
+		await EventPublisher.ShouldHaveReceivedOnePublishAsync(_command, PostCommentLike, CancellationToken);
 	}
 }

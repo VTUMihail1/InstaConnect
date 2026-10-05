@@ -11,9 +11,9 @@ internal class UserQueryRepository : IUserQueryRepository
 
 	public async Task<ICollection<UserResponse>> GetAllAsync(
 		UsersFilterQuery filter,
-		CurrentUserQuery current,
 		UsersSortingQuery sorting,
 		UsersPaginationQuery pagination,
+		CurrentUserQuery current,
 		CancellationToken cancellationToken)
 	{
 		return await _collection

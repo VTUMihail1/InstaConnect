@@ -14,9 +14,8 @@ public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeApplicati
 		_request = _requestBuilder.Build();
 	}
 
-	protected override async Task OnInitializeAsync()
-	{
-		await base.OnInitializeAsync();
+	public override async Task InitializeAsync()
+	{ 
 		await ServiceScope.AddAsync(User, CancellationToken);
 		await ServiceScope.AddAsync(Post, CancellationToken);
 		await ServiceScope.AddAsync(PostLike, CancellationToken);

@@ -18,9 +18,9 @@ internal class ChatMessageQueryRepository : IChatMessageQueryRepository
 
 	public async Task<ICollection<ChatMessageResponse>> GetAllAsync(
 		ChatMessagesFilterQuery filter,
-		CurrentUserQuery currentUser,
 		ChatMessagesSortingQuery sorting,
 		ChatMessagesPaginationQuery pagination,
+		CurrentUserQuery currentUser,
 		CancellationToken cancellationToken)
 	{
 		var messageInclude = _messageIncludeBuilderFactory.Create().WithSender().Build();

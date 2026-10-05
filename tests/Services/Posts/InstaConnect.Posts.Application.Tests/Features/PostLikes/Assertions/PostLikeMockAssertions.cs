@@ -6,21 +6,21 @@ public static class PostLikeMockAssertions
 {
 	extension(IPostLikeQueryService postLikeService)
 	{
-		public async Task ShouldReceiveOneGetAllAsync(
+		public async Task ShouldHaveReceivedOneGetAllAsync(
 		GetAllPostLikesQueryRequest request,
 		CancellationToken cancellationToken)
 		{
 			await postLikeService.ShouldHaveReceivedOne().GetAllAsync(request.IsGetAllPostLikesQuery(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneGetAllForUserAsync(
+		public async Task ShouldHaveReceivedOneGetAllForUserAsync(
 			GetAllPostLikesForUserQueryRequest request,
 			CancellationToken cancellationToken)
 		{
 			await postLikeService.ShouldHaveReceivedOne().GetAllForUserAsync(request.IsGetAllPostLikesForUserQuery(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneGetByIdAsync(
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
 			GetPostLikeByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
@@ -30,14 +30,14 @@ public static class PostLikeMockAssertions
 
 	extension(IPostLikeCommandService postLikeService)
 	{
-		public async Task ShouldReceiveOneAddAsync(
+		public async Task ShouldHaveReceivedOneAddAsync(
 		AddPostLikeCommandRequest request,
 		CancellationToken cancellationToken)
 		{
 			await postLikeService.ShouldHaveReceivedOne().AddAsync(request.IsAddPostLikeCommand(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneDeleteAsync(
+		public async Task ShouldHaveReceivedOneDeleteAsync(
 			DeletePostLikeCommandRequest request,
 			CancellationToken cancellationToken)
 		{

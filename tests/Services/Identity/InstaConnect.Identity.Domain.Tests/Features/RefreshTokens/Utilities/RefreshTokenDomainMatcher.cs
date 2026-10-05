@@ -4,11 +4,6 @@ public static class RefreshTokenDomainMatcher
 {
 	extension(IssueRefreshTokenCommand command)
 	{
-		public UserInclude IsUserInclude(UserInclude include)
-		{
-			return Matcher.Is<UserInclude>(p => p.Matches(command, include));
-		}
-
 		public RefreshToken IsRefreshToken()
 		{
 			return Matcher.Is<RefreshToken>(p => p.Matches(command));
@@ -17,11 +12,6 @@ public static class RefreshTokenDomainMatcher
 
 	extension(RotateRefreshTokenCommand command)
 	{
-		public UserInclude IsUserInclude(UserInclude include)
-		{
-			return Matcher.Is<UserInclude>(p => p.Matches(command, include));
-		}
-
 		public RefreshToken IsRefreshToken()
 		{
 			return Matcher.Is<RefreshToken>(p => p.Matches(command));

@@ -3,15 +3,19 @@ namespace InstaConnect.Posts.Infrastructure.Features.Posts.Helpers.Repositories;
 internal class PostCommandRepository : IPostCommandRepository
 {
 	private readonly IPostCollection _collection;
+	private readonly IPostIncludeBuilderFactory _includeBuilderFactory;
 
-	public PostCommandRepository(IPostCollection collection)
+	public PostCommandRepository(
+		IPostCollection collection,
+		IPostIncludeBuilderFactory includeBuilderFactory)
 	{
 		_collection = collection;
+		_includeBuilderFactory = includeBuilderFactory;
 	}
 
 	public async Task<Post?> GetByIdAsync(
 		PostId id,
-		PostInclude? include,
+		PostInclude include,
 		CancellationToken cancellationToken)
 	{
 		return await _collection
@@ -25,7 +29,9 @@ internal class PostCommandRepository : IPostCommandRepository
 		PostId id,
 		CancellationToken cancellationToken)
 	{
-		return await GetByIdAsync(id, null, cancellationToken);
+		var include = _includeBuilderFactory.Create().Build();
+
+		return await GetByIdAsync(id, include, cancellationToken);
 	}
 
 	public async Task<bool> ExistsByIdAsync(

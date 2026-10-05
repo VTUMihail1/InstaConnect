@@ -34,6 +34,6 @@ public class CreateUserClaimFactoryUnitTests : BaseUserClaimDomainCommandUnitTes
 		_factory.Create(UserClaim.Id.Id, UserClaim.Id.Claim);
 
 		// Assert
-		DateTimeProvider.ShouldReceiveOneGetOffsetUtcNow();
+		DateTimeProvider.ShouldHaveReceivedOneGetOffsetUtcNow();
 	}
 }

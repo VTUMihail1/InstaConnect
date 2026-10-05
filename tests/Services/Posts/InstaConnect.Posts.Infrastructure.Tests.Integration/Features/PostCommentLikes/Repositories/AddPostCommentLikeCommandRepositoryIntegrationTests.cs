@@ -1,0 +1,33 @@
+using InstaConnect.Posts.Infrastructure.Tests.Integration.Features.PostCommentLikes.Utilities;
+using InstaConnect.Posts.Tests.Features.PostCommentLikes.Assertions;
+using InstaConnect.Posts.Tests.Features.PostCommentLikes.Utilities;
+using InstaConnect.Posts.Tests.Features.PostComments.Utilities;
+using InstaConnect.Posts.Tests.Features.Posts.Utilities;
+
+namespace InstaConnect.Posts.Infrastructure.Tests.Integration.Features.PostCommentLikes.Repositories;
+
+public class AddPostCommentLikeCommandRepositoryIntegrationTests : BasePostCommentLikeInfrastructureCommandIntegrationTest
+{
+	public AddPostCommentLikeCommandRepositoryIntegrationTests(PostsWebApplicationFactory webApplicationFactory)
+		: base(webApplicationFactory)
+	{
+	}
+
+	public override async Task InitializeAsync()
+	{
+		await ServiceScope.AddAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(Post, CancellationToken);
+		await ServiceScope.AddAsync(PostComment, CancellationToken);
+	}
+
+	[Fact]
+	public async Task AddAsync_ShouldAddPostCommentLike_WhenCommandIsValid()
+	{
+		// Act
+		await Repository.AddAsync(PostCommentLike, CancellationToken);
+		var postCommentLike = await ServiceScope.GetByIdAsync(PostCommentLike.Id, CancellationToken);
+
+		// Assert
+		postCommentLike.ShouldSatisfy(PostCommentLike);
+	}
+}

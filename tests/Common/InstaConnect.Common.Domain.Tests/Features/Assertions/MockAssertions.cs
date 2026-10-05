@@ -7,7 +7,7 @@ public static class MockAssertions
 {
 	extension(IGuidProvider guidProvider)
 	{
-		public void ShouldReceiveOneNewStringGuid()
+		public void ShouldHaveReceivedOneNewStringGuid()
 		{
 			guidProvider.ShouldHaveReceivedOne().NewStringGuid();
 		}
@@ -15,7 +15,7 @@ public static class MockAssertions
 
 	extension(IDateTimeProvider dateTimeProvider)
 	{
-		public void ShouldReceiveOneGetOffsetUtcNow()
+		public void ShouldHaveReceivedOneGetOffsetUtcNow()
 		{
 			dateTimeProvider.ShouldHaveReceivedOne().GetOffsetUtcNow();
 		}

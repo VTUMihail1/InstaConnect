@@ -20,7 +20,7 @@ public class UserFluent : MongoDbFluent<User>, IUserFluent
 		_responseFluentFactory = responseFluentFactory;
 	}
 
-	public IUserFluent ApplyIncludes(UserInclude? include)
+	public IUserFluent ApplyIncludes(UserInclude include)
 	{
 		ApplyIncludes(_includerFactory, include);
 

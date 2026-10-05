@@ -58,7 +58,7 @@ public class DeleteUserClaimCommandServiceUnitTests : BaseUserClaimDomainCommand
 		await _service.DeleteAsync(_command, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneExistsByIdAsync(_command, CancellationToken);
+		await Repository.ShouldHaveReceivedOneExistsByIdAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -68,7 +68,7 @@ public class DeleteUserClaimCommandServiceUnitTests : BaseUserClaimDomainCommand
 		await _service.DeleteAsync(_command, CancellationToken);
 
 		// Assert
-		await ClaimRepository.ShouldReceiveOneGetByIdAsync(_command, _include, CancellationToken);
+		await ClaimRepository.ShouldHaveReceivedOneGetByIdAsync(_command, _include, CancellationToken);
 	}
 
 	[Fact]
@@ -78,7 +78,7 @@ public class DeleteUserClaimCommandServiceUnitTests : BaseUserClaimDomainCommand
 		await _service.DeleteAsync(_command, CancellationToken);
 
 		// Assert
-		await ClaimRepository.ShouldReceiveOneDeleteAsync(_command, CancellationToken);
+		await ClaimRepository.ShouldHaveReceivedOneDeleteAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -88,6 +88,6 @@ public class DeleteUserClaimCommandServiceUnitTests : BaseUserClaimDomainCommand
 		await _service.DeleteAsync(_command, CancellationToken);
 
 		// Assert
-		await EventPublisher.ShouldReceiveOnePublishAsync(_command, UserClaim, CancellationToken);
+		await EventPublisher.ShouldHaveReceivedOnePublishAsync(_command, UserClaim, CancellationToken);
 	}
 }

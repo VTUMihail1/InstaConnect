@@ -6,21 +6,21 @@ public static class PostMockAssertions
 {
 	extension(IPostQueryService postService)
 	{
-		public async Task ShouldReceiveOneGetAllAsync(
+		public async Task ShouldHaveReceivedOneGetAllAsync(
 		GetAllPostsQueryRequest request,
 		CancellationToken cancellationToken)
 		{
 			await postService.ShouldHaveReceivedOne().GetAllAsync(request.IsGetAllPostsQuery(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneGetAllForUserAsync(
+		public async Task ShouldHaveReceivedOneGetAllForUserAsync(
 			GetAllPostsForUserQueryRequest request,
 			CancellationToken cancellationToken)
 		{
 			await postService.ShouldHaveReceivedOne().GetAllForUserAsync(request.IsGetAllPostsForUserQuery(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneGetByIdAsync(
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
 			GetPostByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
@@ -30,21 +30,21 @@ public static class PostMockAssertions
 
 	extension(IPostCommandService postService)
 	{
-		public async Task ShouldReceiveOneAddAsync(
+		public async Task ShouldHaveReceivedOneAddAsync(
 		AddPostCommandRequest request,
 		CancellationToken cancellationToken)
 		{
 			await postService.ShouldHaveReceivedOne().AddAsync(request.IsAddPostCommand(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneUpdateAsync(
+		public async Task ShouldHaveReceivedOneUpdateAsync(
 			UpdatePostCommandRequest request,
 			CancellationToken cancellationToken)
 		{
 			await postService.ShouldHaveReceivedOne().UpdateAsync(request.IsUpdatePostCommand(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneDeleteAsync(
+		public async Task ShouldHaveReceivedOneDeleteAsync(
 			DeletePostCommandRequest request,
 			CancellationToken cancellationToken)
 		{

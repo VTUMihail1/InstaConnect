@@ -47,7 +47,7 @@ public class DeleteFollowCommandServiceUnitTests : BaseFollowDomainCommandUnitTe
 		await _service.DeleteAsync(_command, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneGetByIdAsync(_command, _include, CancellationToken);
+		await Repository.ShouldHaveReceivedOneGetByIdAsync(_command, _include, CancellationToken);
 	}
 
 	[Fact]
@@ -57,7 +57,7 @@ public class DeleteFollowCommandServiceUnitTests : BaseFollowDomainCommandUnitTe
 		await _service.DeleteAsync(_command, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneDeleteAsync(_command, CancellationToken);
+		await Repository.ShouldHaveReceivedOneDeleteAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -67,6 +67,6 @@ public class DeleteFollowCommandServiceUnitTests : BaseFollowDomainCommandUnitTe
 		await _service.DeleteAsync(_command, CancellationToken);
 
 		// Assert
-		await EventPublisher.ShouldReceiveOnePublishAsync(_command, Follow, CancellationToken);
+		await EventPublisher.ShouldHaveReceivedOnePublishAsync(_command, Follow, CancellationToken);
 	}
 }

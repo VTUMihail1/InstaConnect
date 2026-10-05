@@ -76,7 +76,7 @@ public class AddFollowCommandServiceUnitTests : BaseFollowDomainCommandUnitTest
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await UserRepository.ShouldReceiveOneGetByFollowerIdAsync(_command, CancellationToken);
+		await UserRepository.ShouldHaveReceivedOneGetByFollowerIdAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -86,7 +86,7 @@ public class AddFollowCommandServiceUnitTests : BaseFollowDomainCommandUnitTest
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await UserRepository.ShouldReceiveOneGetByFollowingIdAsync(_command, CancellationToken);
+		await UserRepository.ShouldHaveReceivedOneGetByFollowingIdAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -96,7 +96,7 @@ public class AddFollowCommandServiceUnitTests : BaseFollowDomainCommandUnitTest
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		Factory.ShouldReceiveOneCreate(_command);
+		Factory.ShouldHaveReceivedOneCreate(_command);
 	}
 
 	[Fact]
@@ -106,7 +106,7 @@ public class AddFollowCommandServiceUnitTests : BaseFollowDomainCommandUnitTest
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneExistsByIdAsync(_command, Follow, CancellationToken);
+		await Repository.ShouldHaveReceivedOneExistsByIdAsync(_command, Follow, CancellationToken);
 	}
 
 	[Fact]
@@ -116,7 +116,7 @@ public class AddFollowCommandServiceUnitTests : BaseFollowDomainCommandUnitTest
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneAddAsync(_command, CancellationToken);
+		await Repository.ShouldHaveReceivedOneAddAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -126,7 +126,7 @@ public class AddFollowCommandServiceUnitTests : BaseFollowDomainCommandUnitTest
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await EventPublisher.ShouldReceiveOnePublishAsync(_command, Follow, CancellationToken);
+		await EventPublisher.ShouldHaveReceivedOnePublishAsync(_command, Follow, CancellationToken);
 	}
 
 	[Fact]
@@ -136,6 +136,6 @@ public class AddFollowCommandServiceUnitTests : BaseFollowDomainCommandUnitTest
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await NotificationService.ShouldReceiveOneAddedAsync(_command, Follow, CancellationToken);
+		await NotificationService.ShouldHaveReceivedOneAddedAsync(_command, Follow, CancellationToken);
 	}
 }

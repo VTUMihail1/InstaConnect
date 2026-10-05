@@ -15,24 +15,12 @@ public abstract class BasePostCommentWebTest : BasePostCommentTest, IClassFixtur
 		ServiceScope = webApplicationFactory.Services.CreateScope();
 	}
 
-	public async Task InitializeAsync()
-	{
-		await ServiceScope.ResetPostsDatabaseAsync(CancellationToken);
-		await OnInitializeAsync();
-	}
-
-	public async Task DisposeAsync()
-	{
-		await OnDisposeAsync();
-		await ServiceScope.ResetPostsDatabaseAsync(CancellationToken);
-	}
-
-	protected virtual Task OnInitializeAsync()
+	public virtual Task InitializeAsync()
 	{
 		return Task.CompletedTask;
 	}
 
-	protected virtual Task OnDisposeAsync()
+	public virtual Task DisposeAsync()
 	{
 		return Task.CompletedTask;
 	}

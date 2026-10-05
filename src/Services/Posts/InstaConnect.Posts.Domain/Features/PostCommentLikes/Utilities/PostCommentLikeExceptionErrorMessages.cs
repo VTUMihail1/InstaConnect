@@ -1,5 +1,3 @@
-using InstaConnect.Posts.Domain.Features.Common.Models.Requests;
-
 namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Utilities;
 
 public static class PostCommentLikeExceptionErrorMessages
@@ -30,13 +28,5 @@ public static class PostCommentLikeExceptionErrorMessages
 		const string Format = "PostCommentLikesForUserSortTerm(type: {0}) is not supported";
 
 		return Format.FormatCurrentCulture(sortTerm);
-	}
-
-	public static string GetIncludeDescriptorsNotSupportedMessage(ICollection<PostsIncludeDescriptor> descriptors)
-	{
-		const string Format = "PostCommentLikeDescriptors({0}) is not supported";
-
-		return Format.FormatCurrentCulture(descriptors
-			.JoinDescriptorsWithComma<PostsDestinationType, PostsIncludeType, PostsIncludeDescriptor>());
 	}
 }

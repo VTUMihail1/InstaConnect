@@ -58,7 +58,7 @@ public static class ChatMessageMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, command.IsChatInclude(include), cancellationToken)
+				.GetByIdAsync(command.Id, include, cancellationToken)
 				.ReturnsTaskResponse(chat);
 		}
 
@@ -69,7 +69,7 @@ public static class ChatMessageMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, command.IsChatInclude(include), cancellationToken)
+				.GetByIdAsync(command.Id, include, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 
@@ -119,7 +119,7 @@ public static class ChatMessageMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, command.IsChatMessageInclude(include), cancellationToken)
+				.GetByIdAsync(command.Id, include, cancellationToken)
 				.ReturnsTaskResponse(chatMessage);
 		}
 
@@ -130,7 +130,7 @@ public static class ChatMessageMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, command.IsChatMessageInclude(include), cancellationToken)
+				.GetByIdAsync(command.Id, include, cancellationToken)
 				.ReturnsTaskResponse(chatMessage);
 		}
 
@@ -141,7 +141,7 @@ public static class ChatMessageMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, command.IsChatMessageInclude(include), cancellationToken)
+				.GetByIdAsync(command.Id, include, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 
@@ -152,7 +152,7 @@ public static class ChatMessageMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, command.IsChatMessageInclude(include), cancellationToken)
+				.GetByIdAsync(command.Id, include, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 	}
@@ -206,7 +206,7 @@ public static class ChatMessageMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetAllAsync(query.Filter, query.CurrentUser, query.Sorting, query.Pagination, cancellationToken)
+				.GetAllAsync(query.Filter, query.Sorting, query.Pagination, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(chatMessages.ToResponse(query));
 		}
 

@@ -15,9 +15,9 @@ internal class PostQueryRepository : IPostQueryRepository
 
 	public async Task<ICollection<PostResponse>> GetAllAsync(
 		PostsFilterQuery filter,
-		CurrentUserQuery currentUser,
 		PostsSortingQuery sorting,
 		PostsPaginationQuery pagination,
+		CurrentUserQuery currentUser,
 		CancellationToken cancellationToken)
 	{
 		var include = _includeBuilderFactory.Create().WithUser().WithPostLikes().Build();
@@ -34,9 +34,9 @@ internal class PostQueryRepository : IPostQueryRepository
 
 	public async Task<ICollection<PostResponse>> GetAllForUserAsync(
 		PostsForUserFilterQuery filter,
-		CurrentUserQuery currentUser,
 		PostsForUserSortingQuery sorting,
 		PostsPaginationQuery pagination,
+		CurrentUserQuery currentUser,
 		CancellationToken cancellationToken)
 	{
 		var include = _includeBuilderFactory.Create().WithPostLikes().Build();
@@ -64,7 +64,7 @@ internal class PostQueryRepository : IPostQueryRepository
 			.GetCountAsync(cancellationToken);
 	}
 
-	public async Task<long> GetTotalCountForUserAsync(
+	public async Task<long> GetForUserTotalCountAsync(
 		PostsForUserFilterQuery filter,
 		CancellationToken cancellationToken)
 	{

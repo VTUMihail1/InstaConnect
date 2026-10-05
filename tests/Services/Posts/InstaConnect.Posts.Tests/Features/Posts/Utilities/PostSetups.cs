@@ -9,6 +9,11 @@ public static class PostSetups
 {
 	extension(IServiceProvider serviceProvider)
 	{
+		public IPostQueryRepository GetPostQueryRepository()
+		{
+			return serviceProvider.GetRequiredService<IPostQueryRepository>();
+		}
+
 		public IPostCommandRepository GetPostCommandRepository()
 		{
 			return serviceProvider.GetRequiredService<IPostCommandRepository>();
@@ -22,6 +27,11 @@ public static class PostSetups
 
 	extension(IServiceScope serviceScope)
 	{
+		public IPostQueryRepository GetPostQueryRepository()
+		{
+			return serviceScope.ServiceProvider.GetPostQueryRepository();
+		}
+
 		public IPostCommandRepository GetPostCommandRepository()
 		{
 			return serviceScope.ServiceProvider.GetPostCommandRepository();

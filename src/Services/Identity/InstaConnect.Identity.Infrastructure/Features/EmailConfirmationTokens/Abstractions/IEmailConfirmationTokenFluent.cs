@@ -5,5 +5,5 @@ namespace InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.
 public interface IEmailConfirmationTokenFluent : IMongoDbFluent<EmailConfirmationToken>
 {
 	public IEmailConfirmationTokenFluent Match(EmailConfirmationTokenId filter);
-	public IEmailConfirmationTokenFluent ApplyIncludes(EmailConfirmationTokenInclude? include);
+	public IEmailConfirmationTokenFluent ApplyIncludes(EmailConfirmationTokenInclude include);
 }

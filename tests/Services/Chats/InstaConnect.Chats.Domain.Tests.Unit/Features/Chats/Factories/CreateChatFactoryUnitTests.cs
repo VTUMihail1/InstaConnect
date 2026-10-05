@@ -34,6 +34,6 @@ public class CreateChatFactoryUnitTests : BaseChatDomainCommandUnitTest
 		_factory.Create(Chat.Id.ParticipantOneId, Chat.Id.ParticipantTwoId);
 
 		// Assert
-		DateTimeProvider.ShouldReceiveOneGetOffsetUtcNow();
+		DateTimeProvider.ShouldHaveReceivedOneGetOffsetUtcNow();
 	}
 }

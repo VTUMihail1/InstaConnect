@@ -35,6 +35,6 @@ public class CreatePostCommentLikeFactoryUnitTests : BasePostCommentLikeDomainCo
 		_factory.Create(PostCommentLike.Id.CommentId, PostCommentLike.Id.UserId);
 
 		// Assert
-		DateTimeProvider.ShouldReceiveOneGetOffsetUtcNow();
+		DateTimeProvider.ShouldHaveReceivedOneGetOffsetUtcNow();
 	}
 }

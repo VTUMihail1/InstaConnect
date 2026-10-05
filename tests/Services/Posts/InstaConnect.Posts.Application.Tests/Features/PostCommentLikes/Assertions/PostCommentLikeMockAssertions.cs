@@ -6,21 +6,21 @@ public static class PostCommentLikeMockAssertions
 {
 	extension(IPostCommentLikeQueryService postCommentLikeService)
 	{
-		public async Task ShouldReceiveOneGetAllAsync(GetAllPostCommentLikesQueryRequest request, CancellationToken cancellationToken)
+		public async Task ShouldHaveReceivedOneGetAllAsync(GetAllPostCommentLikesQueryRequest request, CancellationToken cancellationToken)
 		{
 			await postCommentLikeService.ShouldHaveReceivedOne()
 
 				.GetAllAsync(request.IsGetAllPostCommentLikesQuery(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneGetAllForUserAsync(GetAllPostCommentLikesForUserQueryRequest request, CancellationToken cancellationToken)
+		public async Task ShouldHaveReceivedOneGetAllForUserAsync(GetAllPostCommentLikesForUserQueryRequest request, CancellationToken cancellationToken)
 		{
 			await postCommentLikeService.ShouldHaveReceivedOne()
 
 				.GetAllForUserAsync(request.IsGetAllPostCommentLikesForUserQuery(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneGetByIdAsync(GetPostCommentLikeByIdQueryRequest request, CancellationToken cancellationToken)
+		public async Task ShouldHaveReceivedOneGetByIdAsync(GetPostCommentLikeByIdQueryRequest request, CancellationToken cancellationToken)
 		{
 			await postCommentLikeService.ShouldHaveReceivedOne()
 
@@ -30,14 +30,14 @@ public static class PostCommentLikeMockAssertions
 
 	extension(IPostCommentLikeCommandService postCommentLikeService)
 	{
-		public async Task ShouldReceiveOneAddAsync(AddPostCommentLikeCommandRequest request, CancellationToken cancellationToken)
+		public async Task ShouldHaveReceivedOneAddAsync(AddPostCommentLikeCommandRequest request, CancellationToken cancellationToken)
 		{
 			await postCommentLikeService.ShouldHaveReceivedOne()
 
 				.AddAsync(request.IsAddPostCommentLikeCommand(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneDeleteAsync(DeletePostCommentLikeCommandRequest request, CancellationToken cancellationToken)
+		public async Task ShouldHaveReceivedOneDeleteAsync(DeletePostCommentLikeCommandRequest request, CancellationToken cancellationToken)
 		{
 			await postCommentLikeService.ShouldHaveReceivedOne()
 

@@ -36,6 +36,6 @@ public class IssueRefreshTokenCommandHandlerUnitTests : BaseRefreshTokenApplicat
 		await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		await Service.ShouldReceiveOneIssueAsync(_request, CancellationToken);
+		await Service.ShouldHaveReceivedOneIssueAsync(_request, CancellationToken);
 	}
 }

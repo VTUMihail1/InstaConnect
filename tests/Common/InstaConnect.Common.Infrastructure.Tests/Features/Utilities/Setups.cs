@@ -12,6 +12,7 @@ public static class Setups
 		{
 			return serviceProvider.GetRequiredService<IEventPublisher>();
 		}
+
 	}
 
 	extension(IServiceScope serviceScope)

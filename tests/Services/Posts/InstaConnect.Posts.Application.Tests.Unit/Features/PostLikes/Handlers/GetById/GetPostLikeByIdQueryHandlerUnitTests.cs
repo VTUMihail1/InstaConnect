@@ -36,6 +36,6 @@ public class GetPostLikeByIdQueryHandlerUnitTests : BasePostLikeApplicationQuery
 		await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		await LikeService.ShouldReceiveOneGetByIdAsync(_request, CancellationToken);
+		await LikeService.ShouldHaveReceivedOneGetByIdAsync(_request, CancellationToken);
 	}
 }

@@ -35,7 +35,7 @@ public class CreateChatMessageFactoryUnitTests : BaseChatMessageDomainCommandUni
 		_factory.Create(ChatMessage.Id.Id, ChatMessage.SenderId, ChatMessage.Content);
 
 		// Assert
-		GuidProvider.ShouldReceiveOneNewStringGuid();
+		GuidProvider.ShouldHaveReceivedOneNewStringGuid();
 	}
 
 	[Fact]
@@ -45,6 +45,6 @@ public class CreateChatMessageFactoryUnitTests : BaseChatMessageDomainCommandUni
 		_factory.Create(ChatMessage.Id.Id, ChatMessage.SenderId, ChatMessage.Content);
 
 		// Assert
-		DateTimeProvider.ShouldReceiveOneGetOffsetUtcNow();
+		DateTimeProvider.ShouldHaveReceivedOneGetOffsetUtcNow();
 	}
 }

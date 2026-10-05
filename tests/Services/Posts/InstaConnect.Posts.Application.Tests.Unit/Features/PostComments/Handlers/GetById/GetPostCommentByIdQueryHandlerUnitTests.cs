@@ -36,6 +36,6 @@ public class GetPostCommentByIdQueryHandlerUnitTests : BasePostCommentApplicatio
 		await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		await CommentService.ShouldReceiveOneGetByIdAsync(_request, CancellationToken);
+		await CommentService.ShouldHaveReceivedOneGetByIdAsync(_request, CancellationToken);
 	}
 }

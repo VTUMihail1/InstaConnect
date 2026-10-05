@@ -1,5 +1,3 @@
-using InstaConnect.Identity.Domain.Features.Common.Models.Requests;
-
 namespace InstaConnect.Identity.Domain.Features.UserClaims.Utilities;
 
 public static class UserClaimExceptionErrorMessages
@@ -23,13 +21,5 @@ public static class UserClaimExceptionErrorMessages
 		const string Format = "UserClaimSortTerm(type: {0}) is not supported";
 
 		return Format.FormatCurrentCulture(sortTerm);
-	}
-
-	public static string GetIncludeDescriptorsNotSupportedMessage(ICollection<IdentityIncludeDescriptor> descriptors)
-	{
-		const string Format = "UserClaimDescriptors({0}) is not supported";
-
-		return Format.FormatCurrentCulture(descriptors
-			.JoinDescriptorsWithComma<IdentityDestinationType, IdentityIncludeType, IdentityIncludeDescriptor>());
 	}
 }

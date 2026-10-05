@@ -65,7 +65,7 @@ public class AddUserClaimCommandServiceUnitTests : BaseUserClaimDomainCommandUni
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneGetByIdAsync(_command, CancellationToken);
+		await Repository.ShouldHaveReceivedOneGetByIdAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -75,7 +75,7 @@ public class AddUserClaimCommandServiceUnitTests : BaseUserClaimDomainCommandUni
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		Factory.ShouldReceiveOneCreate(_command);
+		Factory.ShouldHaveReceivedOneCreate(_command);
 	}
 
 	[Fact]
@@ -85,7 +85,7 @@ public class AddUserClaimCommandServiceUnitTests : BaseUserClaimDomainCommandUni
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await ClaimRepository.ShouldReceiveOneGetByIdAsync(_command, UserClaim, CancellationToken);
+		await ClaimRepository.ShouldHaveReceivedOneGetByIdAsync(_command, UserClaim, CancellationToken);
 	}
 
 	[Fact]
@@ -95,7 +95,7 @@ public class AddUserClaimCommandServiceUnitTests : BaseUserClaimDomainCommandUni
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await ClaimRepository.ShouldReceiveOneAddAsync(_command, CancellationToken);
+		await ClaimRepository.ShouldHaveReceivedOneAddAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -105,6 +105,6 @@ public class AddUserClaimCommandServiceUnitTests : BaseUserClaimDomainCommandUni
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await EventPublisher.ShouldReceiveOnePublishAsync(_command, UserClaim, CancellationToken);
+		await EventPublisher.ShouldHaveReceivedOnePublishAsync(_command, UserClaim, CancellationToken);
 	}
 }

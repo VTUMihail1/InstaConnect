@@ -18,14 +18,6 @@ public static class UserClaimEquals
 		}
 	}
 
-	extension(UserClaimInclude p)
-	{
-		public bool Matches(DeleteUserClaimCommand command, UserClaimInclude include)
-		{
-			return p.Matches(include);
-		}
-	}
-
 	extension(UserClaimAddedEventRequest request)
 	{
 		public bool Matches(AddUserClaimCommand command, UserClaim entity)

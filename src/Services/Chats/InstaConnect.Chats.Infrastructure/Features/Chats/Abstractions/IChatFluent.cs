@@ -9,5 +9,5 @@ public interface IChatFluent : IMongoDbFluent<Chat>
 	public IChatResponseFluent ProjectToFullResponse(CurrentUserQuery currentUser);
 	public IChatResponseFluent ProjectToResponseWithoutParticipantOne(CurrentUserQuery currentUser);
 	public IChatResponseFluent ProjectToResponseWithoutParticipantTwo(CurrentUserQuery currentUser);
-	public IChatFluent ApplyIncludes(ChatInclude? include);
+	public IChatFluent ApplyIncludes(ChatInclude include);
 }

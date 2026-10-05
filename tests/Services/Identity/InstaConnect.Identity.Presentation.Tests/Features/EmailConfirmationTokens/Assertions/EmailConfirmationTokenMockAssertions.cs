@@ -8,13 +8,13 @@ public static class EmailConfirmationTokenMockAssertions
 
 	extension(IApplicationSender sender)
 	{
-		public async Task ShouldReceiveOneSendAsync(
+		public async Task ShouldHaveReceivedOneSendAsync(
 			AddEmailConfirmationTokenApiRequest request,
 			CancellationToken cancellationToken)
 		{
 			await sender.ShouldHaveReceivedOne().SendAsync(request.IsAddEmailConfirmationTokenCommandRequest(), cancellationToken);
 		}
-		public async Task ShouldReceiveOneSendAsync(
+		public async Task ShouldHaveReceivedOneSendAsync(
 			VerifyEmailConfirmationTokenApiRequest request,
 			CancellationToken cancellationToken)
 		{

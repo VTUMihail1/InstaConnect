@@ -37,7 +37,7 @@ public class CreateRefreshTokenFactoryUnitTests : BaseRefreshTokenDomainCommandU
 		_factory.Create(RefreshToken.Id.Id);
 
 		// Assert
-		GuidProvider.ShouldReceiveOneNewStringGuid();
+		GuidProvider.ShouldHaveReceivedOneNewStringGuid();
 	}
 
 	[Fact]
@@ -47,7 +47,7 @@ public class CreateRefreshTokenFactoryUnitTests : BaseRefreshTokenDomainCommandU
 		_factory.Create(RefreshToken.Id.Id);
 
 		// Assert
-		DateTimeProvider.ShouldReceiveOneGetOffsetUtcNow(RefreshTokenOptions);
+		DateTimeProvider.ShouldHaveReceivedOneGetOffsetUtcNow(RefreshTokenOptions);
 	}
 
 	[Fact]
@@ -57,6 +57,6 @@ public class CreateRefreshTokenFactoryUnitTests : BaseRefreshTokenDomainCommandU
 		_factory.Create(RefreshToken.Id.Id);
 
 		// Assert
-		DateTimeProvider.ShouldReceiveOneGetOffsetUtcNow();
+		DateTimeProvider.ShouldHaveReceivedOneGetOffsetUtcNow();
 	}
 }

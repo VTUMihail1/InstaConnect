@@ -11,21 +11,11 @@ internal class UserIncluderFactory : IUserIncluderFactory
 		_includers = includers;
 	}
 
-	public IEnumerable<IUserIncluder> Create(ICollection<PostsIncludeDescriptor>? descriptors)
+	public IEnumerable<IUserIncluder> Create(ICollection<PostsIncludeDescriptor> descriptors)
 	{
-		if (descriptors == null)
-		{
-			return [];
-		}
-
 		var includers = _includers.Where(s => descriptors.Any(p =>
 														p.IncludeType == s.IncludeType &&
 														p.DestinationType == s.DestinationType));
-
-		if (includers.IsEmpty())
-		{
-			throw new UserIncludeDescriptorsNotSupportedException(descriptors);
-		}
 
 		return includers;
 	}

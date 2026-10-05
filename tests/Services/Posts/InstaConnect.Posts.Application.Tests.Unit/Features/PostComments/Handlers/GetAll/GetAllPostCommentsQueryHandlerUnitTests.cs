@@ -36,6 +36,6 @@ public class GetAllPostCommentsQueryHandlerUnitTests : BasePostCommentApplicatio
 		await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		await CommentService.ShouldReceiveOneGetAllAsync(_request, CancellationToken);
+		await CommentService.ShouldHaveReceivedOneGetAllAsync(_request, CancellationToken);
 	}
 }

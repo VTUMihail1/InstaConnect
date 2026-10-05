@@ -6,21 +6,21 @@ public static class RefreshTokenMockAssertions
 {
 	extension(IRefreshTokenCommandService refreshTokenService)
 	{
-		public async Task ShouldReceiveOneIssueAsync(
+		public async Task ShouldHaveReceivedOneIssueAsync(
 		IssueRefreshTokenCommandRequest request,
 		CancellationToken cancellationToken)
 		{
 			await refreshTokenService.ShouldHaveReceivedOne().IssueAsync(request.IsIssueRefreshTokenCommand(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneRotateAsync(
+		public async Task ShouldHaveReceivedOneRotateAsync(
 			RotateRefreshTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
 			await refreshTokenService.ShouldHaveReceivedOne().RotateAsync(request.IsRotateRefreshTokenCommand(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneDeleteAsync(
+		public async Task ShouldHaveReceivedOneDeleteAsync(
 			DeleteCurrentRefreshTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{

@@ -7,7 +7,7 @@ public static class UserClaimMockAssertions
 {
 	extension(IUserClaimFactory factory)
 	{
-		public void ShouldReceiveOneCreate(
+		public void ShouldHaveReceivedOneCreate(
 			AddUserClaimCommand command)
 		{
 			factory.ShouldHaveReceivedOne().Create(
@@ -18,7 +18,7 @@ public static class UserClaimMockAssertions
 
 	extension(IUserClaimCommandRepository repository)
 	{
-		public async Task ShouldReceiveOneGetByIdAsync(
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
 			AddUserClaimCommand command,
 			UserClaim userClaim,
 			CancellationToken cancellationToken)
@@ -28,25 +28,25 @@ public static class UserClaimMockAssertions
 				cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneGetByIdAsync(
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
 			DeleteUserClaimCommand command,
 			UserClaimInclude include,
 			CancellationToken cancellationToken)
 		{
 			await repository.ShouldHaveReceivedOne().GetByIdAsync(
 				command.Id,
-				command.IsUserClaimInclude(include),
+				include,
 				cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneAddAsync(
+		public async Task ShouldHaveReceivedOneAddAsync(
 			AddUserClaimCommand command,
 			CancellationToken cancellationToken)
 		{
 			await repository.ShouldHaveReceivedOne().AddAsync(command.IsUserClaim(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneDeleteAsync(
+		public async Task ShouldHaveReceivedOneDeleteAsync(
 			DeleteUserClaimCommand command,
 			CancellationToken cancellationToken)
 		{
@@ -56,7 +56,7 @@ public static class UserClaimMockAssertions
 
 	extension(IUserCommandRepository repository)
 	{
-		public async Task ShouldReceiveOneGetByIdAsync(
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
 			AddUserClaimCommand command,
 			CancellationToken cancellationToken)
 		{
@@ -65,7 +65,7 @@ public static class UserClaimMockAssertions
 				cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneExistsByIdAsync(
+		public async Task ShouldHaveReceivedOneExistsByIdAsync(
 			DeleteUserClaimCommand command,
 			CancellationToken cancellationToken)
 		{
@@ -77,7 +77,7 @@ public static class UserClaimMockAssertions
 
 	extension(IUserQueryRepository repository)
 	{
-		public async Task ShouldReceiveOneGetByIdAsync(
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
 			GetAllUserClaimsQuery query,
 			CancellationToken cancellationToken)
 		{
@@ -90,19 +90,19 @@ public static class UserClaimMockAssertions
 
 	extension(IUserClaimQueryRepository repository)
 	{
-		public async Task ShouldReceiveOneGetAllAsync(
+		public async Task ShouldHaveReceivedOneGetAllAsync(
 			GetAllUserClaimsQuery query,
 			CancellationToken cancellationToken)
 		{
 			await repository.ShouldHaveReceivedOne().GetAllAsync(
 				query.Filter,
-				query.Current,
 				query.Sorting,
 				query.Pagination,
+				query.Current,
 				cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneGetTotalCountAsync(
+		public async Task ShouldHaveReceivedOneGetTotalCountAsync(
 			GetAllUserClaimsQuery query,
 			CancellationToken cancellationToken)
 		{
@@ -114,7 +114,7 @@ public static class UserClaimMockAssertions
 
 	extension(IEventPublisher eventPublisher)
 	{
-		public async Task ShouldReceiveOnePublishAsync(
+		public async Task ShouldHaveReceivedOnePublishAsync(
 			AddUserClaimCommand command,
 			UserClaim userClaim,
 			CancellationToken cancellationToken)
@@ -122,7 +122,7 @@ public static class UserClaimMockAssertions
 			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(command.IsUserClaimAddedEventRequest(userClaim), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOnePublishAsync(
+		public async Task ShouldHaveReceivedOnePublishAsync(
 			DeleteUserClaimCommand command,
 			UserClaim userClaim,
 			CancellationToken cancellationToken)

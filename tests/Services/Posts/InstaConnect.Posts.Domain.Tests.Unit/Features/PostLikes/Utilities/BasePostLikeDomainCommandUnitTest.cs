@@ -10,6 +10,7 @@ using InstaConnect.Posts.Domain.Tests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Domain.Tests.Features.Posts.Utilities;
 using InstaConnect.Posts.Domain.Tests.Features.Users.Utilities;
 using InstaConnect.Posts.Tests.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Tests.Features.Posts.Utilities;
 
 namespace InstaConnect.Posts.Domain.Tests.Unit.Features.PostLikes.Utilities;
 
@@ -42,7 +43,7 @@ public abstract class BasePostLikeDomainCommandUnitTest : BasePostLikeTest
 		DateTimeProvider = DomainMockFactory.CreateDateTimeProvider();
 		UserRepository = UserDomainMockFactory.CreateCommandRepository();
 		LikeRepository = PostLikeDomainMockFactory.CreateCommandRepository();
-		IncludeBuilderFactory = PostDomainMockFactory.CreateIncludeBuilderFactory();
+		IncludeBuilderFactory = PostMockFactory.CreateIncludeBuilderFactory();
 		LikeIncludeBuilderFactory = PostLikeDomainMockFactory.CreateIncludeBuilderFactory();
 	}
 }

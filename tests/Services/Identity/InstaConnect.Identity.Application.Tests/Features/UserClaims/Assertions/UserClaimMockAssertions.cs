@@ -6,7 +6,7 @@ public static class UserClaimMockAssertions
 {
 	extension(IUserClaimQueryService userClaimService)
 	{
-		public async Task ShouldReceiveOneGetAllAsync(
+		public async Task ShouldHaveReceivedOneGetAllAsync(
 		GetAllUserClaimsQueryRequest request,
 		CancellationToken cancellationToken)
 		{
@@ -16,14 +16,14 @@ public static class UserClaimMockAssertions
 
 	extension(IUserClaimCommandService userClaimService)
 	{
-		public async Task ShouldReceiveOneAddAsync(
+		public async Task ShouldHaveReceivedOneAddAsync(
 		AddUserClaimCommandRequest request,
 		CancellationToken cancellationToken)
 		{
 			await userClaimService.ShouldHaveReceivedOne().AddAsync(request.IsAddUserClaimCommand(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneDeleteAsync(
+		public async Task ShouldHaveReceivedOneDeleteAsync(
 			DeleteUserClaimCommandRequest request,
 			CancellationToken cancellationToken)
 		{

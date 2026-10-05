@@ -48,7 +48,7 @@ public static class PostMockSetups
 		CancellationToken cancellationToken)
 		{
 			service
-				.GetAllAsync(query.Filter, query.CurrentUser, query.Sorting, query.Pagination, cancellationToken)
+				.GetAllAsync(query.Filter, query.Sorting, query.Pagination, query.CurrentUser, cancellationToken)
 				.ReturnsTaskResponse(posts.ToResponse(query));
 		}
 
@@ -69,8 +69,8 @@ public static class PostMockSetups
 			CancellationToken cancellationToken)
 		{
 			service
-				.GetAllForUserAsync(query.Filter, query.CurrentUser, query.Sorting, query.Pagination, cancellationToken)
-				.ReturnsTaskResponse(posts.ToResponse(query, user));
+				.GetAllForUserAsync(query.Filter, query.Sorting, query.Pagination, query.CurrentUser, cancellationToken)
+				.ReturnsTaskResponse(posts.ToResponse(query));
 		}
 
 		public void SetupGetTotalCountForUserAsync(
@@ -79,7 +79,7 @@ public static class PostMockSetups
 		CancellationToken cancellationToken)
 		{
 			service
-				.GetTotalCountForUserAsync(query.Filter, cancellationToken)
+				.GetForUserTotalCountAsync(query.Filter, cancellationToken)
 				.ReturnsTaskResponse(posts.ToTotalCountResponse(query));
 		}
 
@@ -113,7 +113,7 @@ public static class PostMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, command.IsPostInclude(include), cancellationToken)
+				.GetByIdAsync(command.Id, include, cancellationToken)
 				.ReturnsTaskResponse(post);
 		}
 
@@ -124,7 +124,7 @@ public static class PostMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, command.IsPostInclude(include), cancellationToken)
+				.GetByIdAsync(command.Id, include, cancellationToken)
 				.ReturnsTaskResponse(post);
 		}
 
@@ -135,7 +135,7 @@ public static class PostMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, command.IsPostInclude(include), cancellationToken)
+				.GetByIdAsync(command.Id, include, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 
@@ -146,7 +146,7 @@ public static class PostMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id, command.IsPostInclude(include), cancellationToken)
+				.GetByIdAsync(command.Id, include, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 	}

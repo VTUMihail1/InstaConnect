@@ -15,24 +15,12 @@ public abstract class BaseEmailConfirmationTokenWebTest : BaseEmailConfirmationT
 		ServiceScope = webApplicationFactory.Services.CreateScope();
 	}
 
-	public async Task InitializeAsync()
-	{
-		await ServiceScope.ResetIdentityDatabaseAsync(CancellationToken);
-		await OnInitializeAsync();
-	}
-
-	public async Task DisposeAsync()
-	{
-		await OnDisposeAsync();
-		await ServiceScope.ResetIdentityDatabaseAsync(CancellationToken);
-	}
-
-	protected virtual Task OnInitializeAsync()
+	public virtual Task InitializeAsync()
 	{
 		return Task.CompletedTask;
 	}
 
-	protected virtual Task OnDisposeAsync()
+	public virtual Task DisposeAsync()
 	{
 		return Task.CompletedTask;
 	}

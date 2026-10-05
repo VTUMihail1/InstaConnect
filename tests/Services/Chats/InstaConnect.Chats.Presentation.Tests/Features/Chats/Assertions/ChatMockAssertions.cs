@@ -7,21 +7,21 @@ public static class ChatMockAssertions
 {
 	extension(IApplicationSender sender)
 	{
-		public async Task ShouldReceiveOneSendAsync(
+		public async Task ShouldHaveReceivedOneSendAsync(
 		GetAllChatsApiRequest request,
 		CancellationToken cancellationToken)
 		{
 			await sender.ShouldHaveReceivedOne().SendAsync(request.IsGetAllChatsQueryRequest(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneSendAsync(
+		public async Task ShouldHaveReceivedOneSendAsync(
 			GetChatByIdApiRequest request,
 			CancellationToken cancellationToken)
 		{
 			await sender.ShouldHaveReceivedOne().SendAsync(request.IsGetChatByIdQueryRequest(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneSendAsync(
+		public async Task ShouldHaveReceivedOneSendAsync(
 			AddChatApiRequest request,
 			CancellationToken cancellationToken)
 		{

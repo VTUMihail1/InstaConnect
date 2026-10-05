@@ -36,7 +36,7 @@ public class CreatePostFactoryUnitTests : BasePostDomainCommandUnitTest
 		_factory.Create(Post.UserId, Post.Title, Post.Content);
 
 		// Assert
-		GuidProvider.ShouldReceiveOneNewStringGuid();
+		GuidProvider.ShouldHaveReceivedOneNewStringGuid();
 	}
 
 	[Fact]
@@ -46,6 +46,6 @@ public class CreatePostFactoryUnitTests : BasePostDomainCommandUnitTest
 		_factory.Create(Post.UserId, Post.Title, Post.Content);
 
 		// Assert
-		DateTimeProvider.ShouldReceiveOneGetOffsetUtcNow();
+		DateTimeProvider.ShouldHaveReceivedOneGetOffsetUtcNow();
 	}
 }

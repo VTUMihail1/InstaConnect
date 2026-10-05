@@ -2,7 +2,7 @@ using InstaConnect.Common.Infrastructure.Tests.Features.Utilities;
 
 namespace InstaConnect.Follows.Infrastructure.Tests.Unit.Features.Users.EventHandlers.v1;
 
-public class UserUpdatedEventHandlerUnitTests : BaseUserPresentationCommandUnitTest
+public class UserUpdatedEventHandlerUnitTests : BaseUserInfrastructureEventHandlerUnitTest
 {
 	private readonly UserUpdatedEventRequestBuilderFactory _requestBuilderFactory;
 	private readonly UserUpdatedEventRequestBuilder _requestBuilder;
@@ -26,6 +26,6 @@ public class UserUpdatedEventHandlerUnitTests : BaseUserPresentationCommandUnitT
 		await _handler.Consume(_request, CancellationToken);
 
 		// Assert
-		await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);
+		await Sender.ShouldHaveReceivedOneSendAsync(_request, CancellationToken);
 	}
 }

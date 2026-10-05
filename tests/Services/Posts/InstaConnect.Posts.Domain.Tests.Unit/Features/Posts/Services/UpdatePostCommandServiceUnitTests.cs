@@ -69,7 +69,7 @@ public class UpdatePostCommandServiceUnitTests : BasePostDomainCommandUnitTest
 		await _service.UpdateAsync(_command, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneGetByIdAsync(_command, _include, CancellationToken);
+		await Repository.ShouldHaveReceivedOneGetByIdAsync(_command, _include, CancellationToken);
 	}
 
 	[Fact]
@@ -79,7 +79,7 @@ public class UpdatePostCommandServiceUnitTests : BasePostDomainCommandUnitTest
 		await _service.UpdateAsync(_command, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneUpdateAsync(_command, CancellationToken);
+		await Repository.ShouldHaveReceivedOneUpdateAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -89,7 +89,7 @@ public class UpdatePostCommandServiceUnitTests : BasePostDomainCommandUnitTest
 		await _service.UpdateAsync(_command, CancellationToken);
 
 		// Assert
-		DateTimeProvider.ShouldReceiveOneGetOffsetUtcNow(_command);
+		DateTimeProvider.ShouldHaveReceivedOneGetOffsetUtcNow(_command);
 	}
 
 	[Fact]
@@ -99,6 +99,6 @@ public class UpdatePostCommandServiceUnitTests : BasePostDomainCommandUnitTest
 		await _service.UpdateAsync(_command, CancellationToken);
 
 		// Assert
-		await EventPublisher.ShouldReceiveOnePublishAsync(_command, Post, CancellationToken);
+		await EventPublisher.ShouldHaveReceivedOnePublishAsync(_command, Post, CancellationToken);
 	}
 }

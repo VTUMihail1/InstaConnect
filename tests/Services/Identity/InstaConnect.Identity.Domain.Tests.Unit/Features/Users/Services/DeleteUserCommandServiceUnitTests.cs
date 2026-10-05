@@ -53,7 +53,7 @@ public class DeleteUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.DeleteAsync(_command, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneGetByIdAsync(_command, CancellationToken);
+		await Repository.ShouldHaveReceivedOneGetByIdAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -63,7 +63,7 @@ public class DeleteUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.DeleteAsync(_command, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneDeleteAsync(_command, CancellationToken);
+		await Repository.ShouldHaveReceivedOneDeleteAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -73,6 +73,6 @@ public class DeleteUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.DeleteAsync(_command, CancellationToken);
 
 		// Assert
-		await EventPublisher.ShouldReceiveOnePublishAsync(_command, User, CancellationToken);
+		await EventPublisher.ShouldHaveReceivedOnePublishAsync(_command, User, CancellationToken);
 	}
 }

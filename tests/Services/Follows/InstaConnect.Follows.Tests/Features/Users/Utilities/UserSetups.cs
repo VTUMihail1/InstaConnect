@@ -10,6 +10,11 @@ public static class UserSetups
 {
 	extension(IServiceProvider serviceProvider)
 	{
+		public IUserQueryRepository GetUserQueryRepository()
+		{
+			return serviceProvider.GetRequiredService<IUserQueryRepository>();
+		}
+
 		public IUserCommandRepository GetUserCommandRepository()
 		{
 			return serviceProvider.GetRequiredService<IUserCommandRepository>();
@@ -33,6 +38,11 @@ public static class UserSetups
 
 	extension(IServiceScope serviceScope)
 	{
+		public IUserQueryRepository GetUserQueryRepository()
+		{
+			return serviceScope.ServiceProvider.GetUserQueryRepository();
+		}
+
 		public IUserCommandRepository GetUserCommandRepository()
 		{
 			return serviceScope.ServiceProvider.GetUserCommandRepository();

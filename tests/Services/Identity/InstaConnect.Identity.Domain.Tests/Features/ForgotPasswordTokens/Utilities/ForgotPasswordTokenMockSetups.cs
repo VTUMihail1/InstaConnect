@@ -83,7 +83,7 @@ public static class ForgotPasswordTokenMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id.Id, command.IsUserInclude(include), cancellationToken)
+				.GetByIdAsync(command.Id.Id, include, cancellationToken)
 				.ReturnsTaskResponse(user);
 		}
 
@@ -94,7 +94,7 @@ public static class ForgotPasswordTokenMockSetups
 			CancellationToken cancellationToken)
 		{
 			repository
-				.GetByIdAsync(command.Id.Id, command.IsUserInclude(include), cancellationToken)
+				.GetByIdAsync(command.Id.Id, include, cancellationToken)
 				.ReturnsTaskResponse(null);
 		}
 	}

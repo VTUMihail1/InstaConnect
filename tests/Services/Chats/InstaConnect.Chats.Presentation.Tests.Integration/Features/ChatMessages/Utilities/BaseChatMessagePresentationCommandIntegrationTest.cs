@@ -12,13 +12,12 @@ public abstract class BaseChatMessagePresentationCommandIntegrationTest : BaseCh
 		MessageNotificationClient = webApplicationFactory.CreateMessageNotificationClient(ParticipantTwo.Id);
 	}
 
-	protected override async Task OnInitializeAsync()
+	public override async Task InitializeAsync()
 	{
-		await base.OnInitializeAsync();
 		await MessageNotificationClient.StartAsync(CancellationToken);
 	}
 
-	protected override async Task OnDisposeAsync()
+	public override async Task DisposeAsync()
 	{
 		await MessageNotificationClient.StopAsync(CancellationToken);
 	}

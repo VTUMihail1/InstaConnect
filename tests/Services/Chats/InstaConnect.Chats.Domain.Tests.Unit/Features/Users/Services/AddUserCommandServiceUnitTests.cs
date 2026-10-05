@@ -78,7 +78,7 @@ public class AddUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		UserFactory.ShouldReceiveOneCreate(_command);
+		UserFactory.ShouldHaveReceivedOneCreate(_command);
 	}
 
 	[Fact]
@@ -88,7 +88,7 @@ public class AddUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await UserRepository.ShouldReceiveOneAddAsync(_command, CancellationToken);
+		await UserRepository.ShouldHaveReceivedOneAddAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -98,7 +98,7 @@ public class AddUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await UserRepository.ShouldReceiveOneExistsByIdAsync(_command, CancellationToken);
+		await UserRepository.ShouldHaveReceivedOneExistsByIdAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -108,7 +108,7 @@ public class AddUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await UserRepository.ShouldReceiveOneIsNameUniqueAsync(_command, CancellationToken);
+		await UserRepository.ShouldHaveReceivedOneIsNameUniqueAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -118,6 +118,6 @@ public class AddUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await UserRepository.ShouldReceiveOneIsEmailUniqueAsync(_command, CancellationToken);
+		await UserRepository.ShouldHaveReceivedOneIsEmailUniqueAsync(_command, CancellationToken);
 	}
 }

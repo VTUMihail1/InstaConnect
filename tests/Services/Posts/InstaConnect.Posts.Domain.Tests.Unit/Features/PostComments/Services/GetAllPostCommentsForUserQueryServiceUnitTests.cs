@@ -55,7 +55,7 @@ public class GetAllPostCommentsForUserQueryServiceUnitTests : BasePostCommentDom
 		await _service.GetAllForUserAsync(_query, CancellationToken);
 
 		// Assert
-		await UserRepository.ShouldReceiveOneGetByIdAsync(_query, CancellationToken);
+		await UserRepository.ShouldHaveReceivedOneGetByIdAsync(_query, CancellationToken);
 	}
 
 	[Fact]
@@ -65,7 +65,7 @@ public class GetAllPostCommentsForUserQueryServiceUnitTests : BasePostCommentDom
 		await _service.GetAllForUserAsync(_query, CancellationToken);
 
 		// Assert
-		await CommentRepository.ShouldReceiveOneGetAllForUserAsync(_query, CancellationToken);
+		await CommentRepository.ShouldHaveReceivedOneGetAllForUserAsync(_query, CancellationToken);
 	}
 
 	[Fact]
@@ -75,6 +75,6 @@ public class GetAllPostCommentsForUserQueryServiceUnitTests : BasePostCommentDom
 		await _service.GetAllForUserAsync(_query, CancellationToken);
 
 		// Assert
-		await CommentRepository.ShouldReceiveOneGetTotalCountForUserAsync(_query, CancellationToken);
+		await CommentRepository.ShouldHaveReceivedOneGetTotalCountForUserAsync(_query, CancellationToken);
 	}
 }

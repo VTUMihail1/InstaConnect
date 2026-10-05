@@ -64,7 +64,7 @@ public class GetChatMessageByIdQueryServiceUnitTests : BaseChatMessageDomainQuer
 		await _service.GetByIdAsync(_query, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneExistsByIdAsync(_query, CancellationToken);
+		await Repository.ShouldHaveReceivedOneExistsByIdAsync(_query, CancellationToken);
 	}
 
 	[Fact]
@@ -74,6 +74,6 @@ public class GetChatMessageByIdQueryServiceUnitTests : BaseChatMessageDomainQuer
 		await _service.GetByIdAsync(_query, CancellationToken);
 
 		// Assert
-		await MessageRepository.ShouldReceiveOneGetByIdAsync(_query, CancellationToken);
+		await MessageRepository.ShouldHaveReceivedOneGetByIdAsync(_query, CancellationToken);
 	}
 }

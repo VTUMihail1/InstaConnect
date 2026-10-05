@@ -36,6 +36,6 @@ public class GetAllUserClaimsQueryHandlerUnitTests : BaseUserClaimApplicationQue
 		await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		await Service.ShouldReceiveOneGetAllAsync(_request, CancellationToken);
+		await Service.ShouldHaveReceivedOneGetAllAsync(_request, CancellationToken);
 	}
 }

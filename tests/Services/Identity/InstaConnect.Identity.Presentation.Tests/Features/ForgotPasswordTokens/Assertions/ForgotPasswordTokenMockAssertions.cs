@@ -8,13 +8,13 @@ public static class ForgotPasswordTokenMockAssertions
 
 	extension(IApplicationSender sender)
 	{
-		public async Task ShouldReceiveOneSendAsync(
+		public async Task ShouldHaveReceivedOneSendAsync(
 			AddForgotPasswordTokenApiRequest request,
 			CancellationToken cancellationToken)
 		{
 			await sender.ShouldHaveReceivedOne().SendAsync(request.IsAddForgotPasswordTokenCommandRequest(), cancellationToken);
 		}
-		public async Task ShouldReceiveOneSendAsync(
+		public async Task ShouldHaveReceivedOneSendAsync(
 			VerifyForgotPasswordTokenApiRequest request,
 			CancellationToken cancellationToken)
 		{

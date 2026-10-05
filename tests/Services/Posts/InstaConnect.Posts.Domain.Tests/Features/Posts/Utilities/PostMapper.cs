@@ -83,8 +83,7 @@ public static class PostMapper
 		}
 
 		public ICollection<PostResponse> ToResponse(
-			GetAllPostsForUserQuery query,
-			User user)
+			GetAllPostsForUserQuery query)
 		{
 			return posts.Filter(query.Pagination, post => post.MatchesFilter(query.Filter), post => post.ToResponseWithoutUser(query));
 		}

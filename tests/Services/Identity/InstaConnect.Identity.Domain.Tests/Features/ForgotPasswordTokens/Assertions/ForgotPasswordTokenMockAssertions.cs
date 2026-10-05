@@ -12,12 +12,12 @@ public static class ForgotPasswordTokenMockAssertions
 {
 	extension(IDateTimeProvider dateTimeProvider)
 	{
-		public void ShouldReceiveOneGetOffsetUtcNow(IOptions<ForgotPasswordTokenOptions> forgotPasswordTokenOptions)
+		public void ShouldHaveReceivedOneGetOffsetUtcNow(IOptions<ForgotPasswordTokenOptions> forgotPasswordTokenOptions)
 		{
 			dateTimeProvider.ShouldHaveReceivedOne().GetOffsetUtcNow(forgotPasswordTokenOptions.Value.LifetimeSeconds);
 		}
 
-		public void ShouldReceiveOneGetOffsetUtcNow(VerifyForgotPasswordTokenCommand command)
+		public void ShouldHaveReceivedOneGetOffsetUtcNow(VerifyForgotPasswordTokenCommand command)
 		{
 			dateTimeProvider.ShouldHaveReceivedOne().GetOffsetUtcNow();
 		}
@@ -25,7 +25,7 @@ public static class ForgotPasswordTokenMockAssertions
 
 	extension(IPasswordHasher passwordHasher)
 	{
-		public void ShouldReceiveOneHash(VerifyForgotPasswordTokenCommand command)
+		public void ShouldHaveReceivedOneHash(VerifyForgotPasswordTokenCommand command)
 		{
 			passwordHasher.ShouldHaveReceivedOne().Hash(command.Password);
 		}
@@ -33,7 +33,7 @@ public static class ForgotPasswordTokenMockAssertions
 
 	extension(IForgotPasswordTokenFactory factory)
 	{
-		public void ShouldReceiveOneCreate(AddForgotPasswordTokenCommand command, ForgotPasswordToken forgotPasswordToken)
+		public void ShouldHaveReceivedOneCreate(AddForgotPasswordTokenCommand command, ForgotPasswordToken forgotPasswordToken)
 		{
 			factory.ShouldHaveReceivedOne().Create(forgotPasswordToken.Id.Id);
 		}
@@ -41,7 +41,7 @@ public static class ForgotPasswordTokenMockAssertions
 
 	extension(IForgotPasswordTokenEmailSender emailSender)
 	{
-		public async Task ShouldReceiveOneSendAsync(
+		public async Task ShouldHaveReceivedOneSendAsync(
 			AddForgotPasswordTokenCommand command,
 			CancellationToken cancellationToken)
 		{
@@ -51,7 +51,7 @@ public static class ForgotPasswordTokenMockAssertions
 
 	extension(IEventPublisher eventPublisher)
 	{
-		public async Task ShouldReceiveOnePublishAsync(
+		public async Task ShouldHaveReceivedOnePublishAsync(
 			AddForgotPasswordTokenCommand command,
 			ForgotPasswordToken forgotPasswordToken,
 			CancellationToken cancellationToken)
@@ -59,7 +59,7 @@ public static class ForgotPasswordTokenMockAssertions
 			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(command.IsForgotPasswordTokenAddedEventRequest(forgotPasswordToken), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOnePublishAsync(
+		public async Task ShouldHaveReceivedOnePublishAsync(
 			VerifyForgotPasswordTokenCommand command,
 			ICollection<ForgotPasswordToken> forgotPasswordTokens,
 			CancellationToken cancellationToken)
@@ -70,25 +70,25 @@ public static class ForgotPasswordTokenMockAssertions
 
 	extension(IUserCommandRepository repository)
 	{
-		public async Task ShouldReceiveOneGetByNameAsync(
+		public async Task ShouldHaveReceivedOneGetByNameAsync(
 			AddForgotPasswordTokenCommand command,
 			CancellationToken cancellationToken)
 		{
 			await repository.ShouldHaveReceivedOne().GetByNameAsync(command.Name, cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneGetByIdAsync(
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
 			VerifyForgotPasswordTokenCommand command,
 			UserInclude include,
 			CancellationToken cancellationToken)
 		{
 			await repository.ShouldHaveReceivedOne().GetByIdAsync(
 				command.Id.Id,
-				command.IsUserInclude(include),
+				include,
 				cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneUpdateAsync(
+		public async Task ShouldHaveReceivedOneUpdateAsync(
 			VerifyForgotPasswordTokenCommand command,
 			IPasswordHasher passwordHasher,
 			CancellationToken cancellationToken)
@@ -99,21 +99,21 @@ public static class ForgotPasswordTokenMockAssertions
 
 	extension(IForgotPasswordTokenCommandRepository repository)
 	{
-		public async Task ShouldReceiveOneAddAsync(
+		public async Task ShouldHaveReceivedOneAddAsync(
 			AddForgotPasswordTokenCommand command,
 			CancellationToken cancellationToken)
 		{
 			await repository.ShouldHaveReceivedOne().AddAsync(command.IsForgotPasswordToken(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneGetByIdAsync(
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
 			VerifyForgotPasswordTokenCommand command,
 			CancellationToken cancellationToken)
 		{
 			await repository.ShouldHaveReceivedOne().GetByIdAsync(command.Id, cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneDeleteRangeAsync(
+		public async Task ShouldHaveReceivedOneDeleteRangeAsync(
 			VerifyForgotPasswordTokenCommand command,
 			CancellationToken cancellationToken)
 		{

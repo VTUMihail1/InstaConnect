@@ -24,6 +24,6 @@ public class DeleteChatMessageCommandHandlerUnitTests : BaseChatMessageApplicati
 		await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		await CommentService.ShouldReceiveOneDeleteAsync(_request, CancellationToken);
+		await CommentService.ShouldHaveReceivedOneDeleteAsync(_request, CancellationToken);
 	}
 }

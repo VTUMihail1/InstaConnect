@@ -6,14 +6,14 @@ public static class ChatMockAssertions
 {
 	extension(IChatQueryService chatService)
 	{
-		public async Task ShouldReceiveOneGetAllAsync(
+		public async Task ShouldHaveReceivedOneGetAllAsync(
 		GetAllChatsQueryRequest request,
 		CancellationToken cancellationToken)
 		{
 			await chatService.ShouldHaveReceivedOne().GetAllAsync(request.IsGetAllChatsQuery(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneGetByIdAsync(
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
 			GetChatByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
@@ -23,7 +23,7 @@ public static class ChatMockAssertions
 
 	extension(IChatCommandService chatService)
 	{
-		public async Task ShouldReceiveOneAddAsync(
+		public async Task ShouldHaveReceivedOneAddAsync(
 		AddChatCommandRequest request,
 		CancellationToken cancellationToken)
 		{

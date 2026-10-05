@@ -84,14 +84,6 @@ public static class ForgotPasswordTokenEquals
 		}
 	}
 
-	extension(UserInclude p)
-	{
-		public bool Matches(VerifyForgotPasswordTokenCommand command, UserInclude include)
-		{
-			return p.Matches(include);
-		}
-	}
-
 	extension(ForgotPasswordToken forgotPasswordToken)
 	{
 		public bool Matches(AddForgotPasswordTokenCommand command)

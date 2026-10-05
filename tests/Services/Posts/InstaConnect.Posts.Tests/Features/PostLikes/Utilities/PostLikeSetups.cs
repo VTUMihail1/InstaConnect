@@ -10,6 +10,11 @@ public static class PostLikeSetups
 {
 	extension(IServiceProvider serviceProvider)
 	{
+		public IPostLikeQueryRepository GetPostLikeQueryRepository()
+		{
+			return serviceProvider.GetRequiredService<IPostLikeQueryRepository>();
+		}
+
 		public IPostLikeCommandRepository GetPostLikeCommandRepository()
 		{
 			return serviceProvider.GetRequiredService<IPostLikeCommandRepository>();
@@ -23,6 +28,11 @@ public static class PostLikeSetups
 
 	extension(IServiceScope serviceScope)
 	{
+		public IPostLikeQueryRepository GetPostLikeQueryRepository()
+		{
+			return serviceScope.ServiceProvider.GetPostLikeQueryRepository();
+		}
+
 		public IPostLikeCommandRepository GetPostLikeCommandRepository()
 		{
 			return serviceScope.ServiceProvider.GetPostLikeCommandRepository();

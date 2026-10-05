@@ -138,7 +138,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.UpdateAsync(_command, CancellationToken);
 
 		// Assert
-		await UserRepository.ShouldReceiveOneGetByIdAsync(_command, CancellationToken);
+		await UserRepository.ShouldHaveReceivedOneGetByIdAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -151,7 +151,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.UpdateAsync(command, CancellationToken);
 
 		// Assert
-		await UserRepository.ShouldReceiveOneGetByIdAsync(command, CancellationToken);
+		await UserRepository.ShouldHaveReceivedOneGetByIdAsync(command, CancellationToken);
 	}
 
 	[Theory]
@@ -166,7 +166,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.UpdateAsync(command, CancellationToken);
 
 		// Assert
-		await UserRepository.ShouldReceiveOneGetByIdAsync(command, CancellationToken);
+		await UserRepository.ShouldHaveReceivedOneGetByIdAsync(command, CancellationToken);
 	}
 
 	[Fact]
@@ -179,7 +179,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.UpdateAsync(command, CancellationToken);
 
 		// Assert
-		await UserRepository.ShouldReceiveOneGetByIdAsync(command, CancellationToken);
+		await UserRepository.ShouldHaveReceivedOneGetByIdAsync(command, CancellationToken);
 	}
 
 	[Theory]
@@ -194,7 +194,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.UpdateAsync(command, CancellationToken);
 
 		// Assert
-		await UserRepository.ShouldReceiveOneGetByIdAsync(command, CancellationToken);
+		await UserRepository.ShouldHaveReceivedOneGetByIdAsync(command, CancellationToken);
 	}
 
 	[Fact]
@@ -204,7 +204,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.UpdateAsync(_command, CancellationToken);
 
 		// Assert
-		await UserRepository.ShouldReceiveOneIsNameUniqueAsync(_command, CancellationToken);
+		await UserRepository.ShouldHaveReceivedOneIsNameUniqueAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -217,7 +217,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.UpdateAsync(command, CancellationToken);
 
 		// Assert
-		await UserRepository.ShouldReceiveOneIsNameUniqueAsync(command, CancellationToken);
+		await UserRepository.ShouldHaveReceivedOneIsNameUniqueAsync(command, CancellationToken);
 	}
 
 	[Theory]
@@ -232,7 +232,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.UpdateAsync(command, CancellationToken);
 
 		// Assert
-		await UserRepository.ShouldReceiveOneIsNameUniqueAsync(command, CancellationToken);
+		await UserRepository.ShouldHaveReceivedOneIsNameUniqueAsync(command, CancellationToken);
 	}
 
 	[Fact]
@@ -245,7 +245,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.UpdateAsync(command, CancellationToken);
 
 		// Assert
-		await UserRepository.ShouldReceiveOneIsNameUniqueAsync(command, CancellationToken);
+		await UserRepository.ShouldHaveReceivedOneIsNameUniqueAsync(command, CancellationToken);
 	}
 
 	[Theory]
@@ -260,7 +260,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.UpdateAsync(command, CancellationToken);
 
 		// Assert
-		await UserRepository.ShouldReceiveOneIsNameUniqueAsync(command, CancellationToken);
+		await UserRepository.ShouldHaveReceivedOneIsNameUniqueAsync(command, CancellationToken);
 	}
 
 	[Fact]
@@ -270,7 +270,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.UpdateAsync(_command, CancellationToken);
 
 		// Assert
-		await UserRepository.ShouldReceiveOneIsEmailUniqueAsync(_command, CancellationToken);
+		await UserRepository.ShouldHaveReceivedOneIsEmailUniqueAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -283,7 +283,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.UpdateAsync(command, CancellationToken);
 
 		// Assert
-		await UserRepository.ShouldReceiveOneIsEmailUniqueAsync(command, CancellationToken);
+		await UserRepository.ShouldHaveReceivedOneIsEmailUniqueAsync(command, CancellationToken);
 	}
 
 	[Theory]
@@ -298,7 +298,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.UpdateAsync(command, CancellationToken);
 
 		// Assert
-		await UserRepository.ShouldReceiveOneIsEmailUniqueAsync(command, CancellationToken);
+		await UserRepository.ShouldHaveReceivedOneIsEmailUniqueAsync(command, CancellationToken);
 	}
 
 	[Fact]
@@ -311,7 +311,7 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.UpdateAsync(command, CancellationToken);
 
 		// Assert
-		await UserRepository.ShouldReceiveOneIsEmailUniqueAsync(command, CancellationToken);
+		await UserRepository.ShouldHaveReceivedOneIsEmailUniqueAsync(command, CancellationToken);
 	}
 
 	[Theory]
@@ -326,6 +326,6 @@ public class UpdateUserCommandServiceUnitTests : BaseUserDomainCommandUnitTest
 		await _service.UpdateAsync(command, CancellationToken);
 
 		// Assert
-		await UserRepository.ShouldReceiveOneIsEmailUniqueAsync(command, CancellationToken);
+		await UserRepository.ShouldHaveReceivedOneIsEmailUniqueAsync(command, CancellationToken);
 	}
 }

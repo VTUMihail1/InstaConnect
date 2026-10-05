@@ -19,14 +19,6 @@ public static class FollowEquals
 		}
 	}
 
-	extension(FollowInclude p)
-	{
-		public bool Matches(DeleteFollowCommand command, FollowInclude include)
-		{
-			return p.Matches(include);
-		}
-	}
-
 	extension(FollowAddedEventRequest r)
 	{
 		public bool Matches(AddFollowCommand command, Follow entity)

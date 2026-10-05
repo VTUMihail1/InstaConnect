@@ -4,23 +4,23 @@ public interface IPostQueryRepository
 {
 	public Task<ICollection<PostResponse>> GetAllAsync(
 		PostsFilterQuery filter,
-		CurrentUserQuery currentUser,
 		PostsSortingQuery sorting,
 		PostsPaginationQuery pagination,
+		CurrentUserQuery currentUser,
 		CancellationToken cancellationToken);
 
 	public Task<ICollection<PostResponse>> GetAllForUserAsync(
 		PostsForUserFilterQuery filter,
-		CurrentUserQuery currentUser,
 		PostsForUserSortingQuery sorting,
 		PostsPaginationQuery pagination,
+		CurrentUserQuery currentUser,
 		CancellationToken cancellationToken);
 
 	public Task<long> GetTotalCountAsync(
 		PostsFilterQuery filter,
 		CancellationToken cancellationToken);
 
-	public Task<long> GetTotalCountForUserAsync(
+	public Task<long> GetForUserTotalCountAsync(
 		PostsForUserFilterQuery filter,
 		CancellationToken cancellationToken);
 

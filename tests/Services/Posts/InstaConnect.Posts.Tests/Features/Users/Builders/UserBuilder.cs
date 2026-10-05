@@ -1,10 +1,11 @@
+using InstaConnect.Posts.Domain.Features.Users.Models.ValueObjects;
 using InstaConnect.Posts.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Posts.Tests.Features.Users.Builders;
 
 public class UserBuilder
 {
-	private readonly string _id;
+	private string _id;
 	private readonly string _name;
 	private readonly string _firstName;
 	private readonly string _lastName;
@@ -23,6 +24,13 @@ public class UserBuilder
 		_profileImage = UserDataFaker.GetProfileImage();
 		_createdAtUtc = UserDataFaker.GetCreatedAtUtc();
 		_updatedAtUtc = _createdAtUtc;
+	}
+
+	public UserBuilder WithId(UserId id)
+	{
+		_id = id.Id;
+
+		return this;
 	}
 
 	public User Build()

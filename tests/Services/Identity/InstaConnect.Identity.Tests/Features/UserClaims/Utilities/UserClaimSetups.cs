@@ -9,6 +9,11 @@ public static class UserClaimSetups
 {
 	extension(IServiceProvider serviceProvider)
 	{
+		public IUserClaimQueryRepository GetClaimQueryRepository()
+		{
+			return serviceProvider.GetRequiredService<IUserClaimQueryRepository>();
+		}
+
 		public IUserClaimCommandRepository GetClaimCommandRepository()
 		{
 			return serviceProvider.GetRequiredService<IUserClaimCommandRepository>();
@@ -22,6 +27,11 @@ public static class UserClaimSetups
 
 	extension(IServiceScope serviceScope)
 	{
+		public IUserClaimQueryRepository GetClaimQueryRepository()
+		{
+			return serviceScope.ServiceProvider.GetClaimQueryRepository();
+		}
+
 		public IUserClaimCommandRepository GetClaimCommandRepository()
 		{
 			return serviceScope.ServiceProvider.GetClaimCommandRepository();

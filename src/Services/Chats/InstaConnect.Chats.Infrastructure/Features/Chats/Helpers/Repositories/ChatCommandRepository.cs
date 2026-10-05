@@ -3,15 +3,19 @@ namespace InstaConnect.Chats.Infrastructure.Features.Chats.Helpers.Repositories;
 internal class ChatCommandRepository : IChatCommandRepository
 {
 	private readonly IChatCollection _collection;
+	private readonly IChatIncludeBuilderFactory _includeBuilderFactory;
 
-	public ChatCommandRepository(IChatCollection collection)
+	public ChatCommandRepository(
+		IChatCollection collection,
+		IChatIncludeBuilderFactory includeBuilderFactory)
 	{
 		_collection = collection;
+		_includeBuilderFactory = includeBuilderFactory;
 	}
 
 	public async Task<Chat?> GetByIdAsync(
 		ChatId id,
-		ChatInclude? include,
+		ChatInclude include,
 		CancellationToken cancellationToken)
 	{
 		return await _collection
@@ -25,7 +29,9 @@ internal class ChatCommandRepository : IChatCommandRepository
 		ChatId id,
 		CancellationToken cancellationToken)
 	{
-		return await GetByIdAsync(id, null, cancellationToken);
+		var include = _includeBuilderFactory.Create().Build();
+
+		return await GetByIdAsync(id, include, cancellationToken);
 	}
 
 	public async Task<bool> ExistsByIdAsync(

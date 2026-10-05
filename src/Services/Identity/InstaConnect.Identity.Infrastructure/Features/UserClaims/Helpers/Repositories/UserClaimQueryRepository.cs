@@ -11,9 +11,9 @@ internal class UserClaimQueryRepository : IUserClaimQueryRepository
 
 	public async Task<ICollection<UserClaimResponse>> GetAllAsync(
 		UserClaimsFilterQuery filter,
-		CurrentUserQuery current,
 		UserClaimsSortingQuery sorting,
 		UserClaimsPaginationQuery pagination,
+		CurrentUserQuery current,
 		CancellationToken cancellationToken)
 	{
 		return await _collection

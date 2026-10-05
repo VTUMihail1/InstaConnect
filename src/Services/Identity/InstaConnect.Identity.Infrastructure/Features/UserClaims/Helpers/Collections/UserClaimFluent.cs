@@ -19,7 +19,7 @@ public class UserClaimFluent : MongoDbFluent<UserClaim>, IUserClaimFluent
 		_responseFluentFactory = responseFluentFactory;
 	}
 
-	public IUserClaimFluent ApplyIncludes(UserClaimInclude? include)
+	public IUserClaimFluent ApplyIncludes(UserClaimInclude include)
 	{
 		ApplyIncludes(_includerFactory, include);
 

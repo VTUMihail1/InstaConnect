@@ -28,14 +28,14 @@ public abstract class MongoDbFluent<TEntity>
 
 	protected void ApplyIncludes<TInclude, TIncludeType, TDestinationType, TIncludeDescriptor, TIncluder>(
 		IIncluderFactory<TIncludeType, TDestinationType, TIncludeDescriptor, TIncluder, TEntity> includerFactory,
-		TInclude? include)
+		TInclude include)
 	    where TDestinationType : Enum
 	    where TIncludeType : Enum
 	    where TIncludeDescriptor : IIncludeDescriptor<TDestinationType, TIncludeType>
 	    where TIncluder : IIncluder<TEntity, TIncludeType, TDestinationType>
 		where TInclude : IInclude<TDestinationType, TIncludeType, TIncludeDescriptor>
 	{
-		var includers = includerFactory.Create(include?.Descriptors);
+		var includers = includerFactory.Create(include.Descriptors);
 
 		foreach (var includer in includers)
 		{

@@ -40,6 +40,6 @@ public class RotateRefreshTokenCommandHandlerUnitTests : BaseRefreshTokenApplica
 		await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		await Service.ShouldReceiveOneRotateAsync(_request, CancellationToken);
+		await Service.ShouldHaveReceivedOneRotateAsync(_request, CancellationToken);
 	}
 }

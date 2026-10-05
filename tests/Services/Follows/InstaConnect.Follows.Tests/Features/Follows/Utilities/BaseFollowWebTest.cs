@@ -15,24 +15,12 @@ public abstract class BaseFollowWebTest : BaseFollowTest, IClassFixture<FollowsW
 		ServiceScope = webApplicationFactory.Services.CreateScope();
 	}
 
-	public async Task InitializeAsync()
-	{
-		await ServiceScope.ResetFollowsDatabaseAsync(CancellationToken);
-		await OnInitializeAsync();
-	}
-
-	public async Task DisposeAsync()
-	{
-		await OnDisposeAsync();
-		await ServiceScope.ResetFollowsDatabaseAsync(CancellationToken);
-	}
-
-	protected virtual Task OnInitializeAsync()
+	public virtual Task InitializeAsync()
 	{
 		return Task.CompletedTask;
 	}
 
-	protected virtual Task OnDisposeAsync()
+	public virtual Task DisposeAsync()
 	{
 		return Task.CompletedTask;
 	}

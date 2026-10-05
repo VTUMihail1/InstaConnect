@@ -5,10 +5,14 @@ namespace InstaConnect.Identity.Infrastructure.Features.Users.Helpers.Repositori
 internal class UserCommandRepository : IUserCommandRepository
 {
 	private readonly IUserCollection _collection;
+	private readonly IUserIncludeBuilderFactory _includeBuilderFactory;
 
-	public UserCommandRepository(IUserCollection collection)
+	public UserCommandRepository(
+		IUserCollection collection,
+		IUserIncludeBuilderFactory includeBuilderFactory)
 	{
 		_collection = collection;
+		_includeBuilderFactory = includeBuilderFactory;
 	}
 
 	public async Task<bool> AnyAsync(CancellationToken cancellationToken)
@@ -20,7 +24,7 @@ internal class UserCommandRepository : IUserCommandRepository
 
 	public async Task<User?> GetByIdAsync(
 		UserId id,
-		UserInclude? include,
+		UserInclude include,
 		CancellationToken cancellationToken)
 	{
 		return await _collection
@@ -34,7 +38,9 @@ internal class UserCommandRepository : IUserCommandRepository
 		UserId id,
 		CancellationToken cancellationToken)
 	{
-		return await GetByIdAsync(id, null, cancellationToken);
+		var include = _includeBuilderFactory.Create().Build();
+
+		return await GetByIdAsync(id, include, cancellationToken);
 	}
 
 	public async Task<bool> ExistsByIdAsync(
@@ -49,7 +55,7 @@ internal class UserCommandRepository : IUserCommandRepository
 
 	public async Task<User?> GetByNameAsync(
 		Name name,
-		UserInclude? include,
+		UserInclude include,
 		CancellationToken cancellationToken)
 	{
 		return await _collection
@@ -63,7 +69,9 @@ internal class UserCommandRepository : IUserCommandRepository
 		Name name,
 		CancellationToken cancellationToken)
 	{
-		return await GetByNameAsync(name, null, cancellationToken);
+		var include = _includeBuilderFactory.Create().Build();
+
+		return await GetByNameAsync(name, include, cancellationToken);
 	}
 
 	public async Task<bool> IsNameUniqueAsync(
@@ -78,7 +86,7 @@ internal class UserCommandRepository : IUserCommandRepository
 
 	public async Task<User?> GetByEmailAsync(
 		Email email,
-		UserInclude? include,
+		UserInclude include,
 		CancellationToken cancellationToken)
 	{
 		return await _collection
@@ -92,7 +100,9 @@ internal class UserCommandRepository : IUserCommandRepository
 		Email email,
 		CancellationToken cancellationToken)
 	{
-		return await GetByEmailAsync(email, null, cancellationToken);
+		var include = _includeBuilderFactory.Create().Build();
+
+		return await GetByEmailAsync(email, include, cancellationToken);
 	}
 
 	public async Task<bool> IsEmailUniqueAsync(

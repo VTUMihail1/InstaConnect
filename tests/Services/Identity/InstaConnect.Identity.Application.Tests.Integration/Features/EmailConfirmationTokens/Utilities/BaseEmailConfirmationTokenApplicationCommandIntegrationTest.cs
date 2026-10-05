@@ -16,13 +16,12 @@ public abstract class BaseEmailConfirmationTokenApplicationCommandIntegrationTes
 		EmailConfirmationTokenEventClient = webApplicationFactory.CreateEmailConfirmationTokenEventClient();
 	}
 
-	protected override async Task OnInitializeAsync()
+	public override async Task InitializeAsync()
 	{
-		await base.OnInitializeAsync();
 		await EmailConfirmationTokenEventClient.StartAsync(CancellationToken);
 	}
 
-	protected override async Task OnDisposeAsync()
+	public override async Task DisposeAsync()
 	{
 		await EmailConfirmationTokenEventClient.StopAsync(CancellationToken);
 	}

@@ -4,7 +4,7 @@ public interface IForgotPasswordTokenCommandRepository
 {
 	public Task<ForgotPasswordToken?> GetByIdAsync(
 		ForgotPasswordTokenId id,
-		ForgotPasswordTokenInclude? include,
+		ForgotPasswordTokenInclude include,
 		CancellationToken cancellationToken);
 
 	public Task<ForgotPasswordToken?> GetByIdAsync(

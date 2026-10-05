@@ -7,11 +7,6 @@ public static class ForgotPasswordTokenDomainMatcher
 {
 	extension(VerifyForgotPasswordTokenCommand command)
 	{
-		public UserInclude IsUserInclude(UserInclude include)
-		{
-			return Matcher.Is<UserInclude>(p => p.Matches(command, include));
-		}
-
 		public User IsUser(IPasswordHasher passwordHasher)
 		{
 			return Matcher.Is<User>(p => p.Matches(command, passwordHasher));

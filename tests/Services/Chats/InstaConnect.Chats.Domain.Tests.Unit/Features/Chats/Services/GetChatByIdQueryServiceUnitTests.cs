@@ -53,6 +53,6 @@ public class GetChatByIdQueryServiceUnitTests : BaseChatDomainQueryUnitTest
 		await _service.GetByIdAsync(_query, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneGetByIdAsync(_query, CancellationToken);
+		await Repository.ShouldHaveReceivedOneGetByIdAsync(_query, CancellationToken);
 	}
 }

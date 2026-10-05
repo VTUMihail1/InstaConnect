@@ -22,9 +22,8 @@ public class DeleteUserCommandServiceIntegrationTests : BaseUserDomainCommandInt
 		_command = _commandBuilder.Build();
 	}
 
-	protected override async Task OnInitializeAsync()
+	public override async Task InitializeAsync()
 	{
-		await base.OnInitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 	}
 

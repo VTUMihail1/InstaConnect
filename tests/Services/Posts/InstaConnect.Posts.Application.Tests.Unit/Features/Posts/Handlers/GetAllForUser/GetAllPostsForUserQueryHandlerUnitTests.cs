@@ -36,6 +36,6 @@ public class GetAllPostsForUserQueryHandlerUnitTests : BasePostApplicationQueryU
 		await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		await Service.ShouldReceiveOneGetAllForUserAsync(_request, CancellationToken);
+		await Service.ShouldHaveReceivedOneGetAllForUserAsync(_request, CancellationToken);
 	}
 }

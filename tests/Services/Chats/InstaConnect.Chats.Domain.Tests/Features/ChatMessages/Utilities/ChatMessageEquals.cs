@@ -25,27 +25,6 @@ public static class ChatMessageEquals
 		}
 	}
 
-	extension(ChatInclude p)
-	{
-		public bool Matches(AddChatMessageCommand command, ChatInclude include)
-		{
-			return p.Matches(include);
-		}
-	}
-
-	extension(ChatMessageInclude p)
-	{
-		public bool Matches(UpdateChatMessageCommand command, ChatMessageInclude include)
-		{
-			return p.Matches(include);
-		}
-
-		public bool Matches(DeleteChatMessageCommand command, ChatMessageInclude include)
-		{
-			return p.Matches(include);
-		}
-	}
-
 	extension(ChatMessageAddedNotificationRequest request)
 	{
 		public bool Matches(AddChatMessageCommand command, ChatMessage entity)

@@ -2,11 +2,8 @@ using FluentValidation.Results;
 
 using InstaConnect.Common.Domain.Features.AccessTokens.Models;
 using InstaConnect.Common.Domain.Features.Common.Extensions;
-using InstaConnect.Common.Domain.Features.Databases.Abstractions;
-using InstaConnect.Common.Domain.Features.Entities.Abstractions;
 using InstaConnect.Common.Domain.Features.Requests.Abstractions;
 using InstaConnect.Common.Infrastructure.Features.Databases.Helpers;
-using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 
 namespace InstaConnect.Common.Domain.Tests.Features.Utilities;
 
@@ -30,46 +27,6 @@ public static class CommonEquals
 		}
 	}
 
-	extension<TExpected>(ICollection<TExpected> expected)
-	{
-		public bool MatchesCollection<TEntity, TKey, TQuery>(
-		TQuery request,
-		ICollection<TEntity> entities,
-		Func<TExpected, TKey> expectedKey,
-		Func<TEntity, TKey> entityKey,
-		Func<TExpected, TEntity, bool> matcher,
-		Func<TEntity, bool> filter)
-		where TQuery : IPaginationQuery
-		where TEntity : IEntity
-		where TKey : notnull
-		{
-			var entitiesByKey = entities.FilterToDictionary(request, filter, entityKey);
-
-			return expected.Count == entitiesByKey.Count &&
-				   expected.Any() &&
-				   expected.All(e =>
-				   entitiesByKey.TryGetValue(expectedKey(e), out var a) &&
-				   matcher(e, a));
-		}
-
-		public bool MatchesSortedCollection<TEntity, TQuery>(
-			TQuery request,
-			ICollection<TEntity> entities,
-			Func<TExpected, TEntity, bool> matcher,
-			ISortEnumTermTransformer<TEntity> termTransformer,
-			Func<TEntity, bool> filter)
-			where TQuery : IPaginationQuery
-			where TEntity : IEntity
-		{
-			var sortedEntities = entities.Filter(request, termTransformer, filter);
-
-			return expected.Count == sortedEntities.Count &&
-				   expected.Any() &&
-				   expected.Zip(sortedEntities, (e, a) => matcher(e, a))
-						   .All(match => match);
-		}
-	}
-
 	extension<TResponse>(TResponse response) where TResponse : ICollectionResponse
 	{
 		public bool MatchesCollectionResponse<TQuery>(
@@ -84,22 +41,6 @@ public static class CommonEquals
 				   response.TotalCount == totalCount &&
 				   response.HasPreviousPage == paginator.HasPreviousPage(response.Page) &&
 				   response.HasNextPage == paginator.HasNextPage(response.Page, response.PageSize, response.TotalCount);
-		}
-	}
-
-	extension<TDestinationType, TIncludeType, TIncludeDescriptor>(IInclude<TDestinationType, TIncludeType, TIncludeDescriptor> i)
-		where TDestinationType : Enum
-		where TIncludeType : Enum
-		where TIncludeDescriptor : IIncludeDescriptor<TDestinationType, TIncludeType>
-	{
-		public bool Matches(IInclude<TDestinationType, TIncludeType, TIncludeDescriptor> include)
-		{
-			return i.Descriptors
-					.OrderBy(descriptor => descriptor.DestinationType)
-					.ThenBy(descriptor => descriptor.IncludeType)
-					.SequenceEqual(include.Descriptors
-									 .OrderBy(descriptor => descriptor.DestinationType)
-									 .ThenBy(descriptor => descriptor.IncludeType));
 		}
 	}
 }

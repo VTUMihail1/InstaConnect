@@ -6,14 +6,14 @@ public static class EmailConfirmationTokenMockAssertions
 {
 	extension(IEmailConfirmationTokenCommandService emailConfirmationTokenService)
 	{
-		public async Task ShouldReceiveOneAddAsync(
+		public async Task ShouldHaveReceivedOneAddAsync(
 		AddEmailConfirmationTokenCommandRequest request,
 		CancellationToken cancellationToken)
 		{
 			await emailConfirmationTokenService.ShouldHaveReceivedOne().AddAsync(request.IsAddEmailConfirmationTokenCommand(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneVerifyAsync(
+		public async Task ShouldHaveReceivedOneVerifyAsync(
 			VerifyEmailConfirmationTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{

@@ -1,10 +1,11 @@
+using InstaConnect.Posts.Domain.Features.Posts.Models.ValueObjects;
 using InstaConnect.Posts.Tests.Features.Posts.Utilities;
 
 namespace InstaConnect.Posts.Tests.Features.Posts.Builders;
 
 public class PostBuilder
 {
-	private readonly string _id;
+	private string _id;
 	private readonly string _title;
 	private readonly string _content;
 	private readonly string _userId;
@@ -21,6 +22,13 @@ public class PostBuilder
 		_content = PostDataFaker.GetContent();
 		_createdAtUtc = PostDataFaker.GetCreatedAtUtc();
 		_updatedAtUtc = _createdAtUtc;
+	}
+
+	public PostBuilder WithId(PostId id)
+	{
+		_id = id.Id;
+
+		return this;
 	}
 
 	public Post Build()

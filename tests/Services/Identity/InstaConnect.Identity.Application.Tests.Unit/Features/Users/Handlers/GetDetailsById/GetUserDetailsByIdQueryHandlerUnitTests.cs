@@ -36,6 +36,6 @@ public class GetUserDetailsByIdQueryHandlerUnitTests : BaseUserApplicationQueryU
 		await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		await Service.ShouldReceiveOneGetByIdAsync(_request, CancellationToken);
+		await Service.ShouldHaveReceivedOneGetByIdAsync(_request, CancellationToken);
 	}
 }

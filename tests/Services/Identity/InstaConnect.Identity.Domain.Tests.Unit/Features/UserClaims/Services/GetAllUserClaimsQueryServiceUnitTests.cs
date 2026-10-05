@@ -55,7 +55,7 @@ public class GetAllUserClaimsQueryServiceUnitTests : BaseUserClaimDomainQueryUni
 		await _service.GetAllAsync(_query, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneGetByIdAsync(_query, CancellationToken);
+		await Repository.ShouldHaveReceivedOneGetByIdAsync(_query, CancellationToken);
 	}
 
 	[Fact]
@@ -65,7 +65,7 @@ public class GetAllUserClaimsQueryServiceUnitTests : BaseUserClaimDomainQueryUni
 		await _service.GetAllAsync(_query, CancellationToken);
 
 		// Assert
-		await ClaimRepository.ShouldReceiveOneGetAllAsync(_query, CancellationToken);
+		await ClaimRepository.ShouldHaveReceivedOneGetAllAsync(_query, CancellationToken);
 	}
 
 	[Fact]
@@ -75,6 +75,6 @@ public class GetAllUserClaimsQueryServiceUnitTests : BaseUserClaimDomainQueryUni
 		await _service.GetAllAsync(_query, CancellationToken);
 
 		// Assert
-		await ClaimRepository.ShouldReceiveOneGetTotalCountAsync(_query, CancellationToken);
+		await ClaimRepository.ShouldHaveReceivedOneGetTotalCountAsync(_query, CancellationToken);
 	}
 }

@@ -4,6 +4,7 @@ using InstaConnect.Chats.Domain.Features.Common.Extensions;
 using InstaConnect.Chats.Domain.Tests.Features.ChatMessages.Utilities;
 using InstaConnect.Chats.Domain.Tests.Features.Chats.Utilities;
 using InstaConnect.Chats.Tests.Features.ChatMessages.Utilities;
+using InstaConnect.Chats.Tests.Features.Chats.Utilities;
 using InstaConnect.Common.Domain.Features.DateTimes.Abstractions;
 using InstaConnect.Common.Domain.Features.Guids.Abstractions;
 using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
@@ -39,8 +40,8 @@ public abstract class BaseChatMessageDomainCommandUnitTest : BaseChatMessageTest
 		Repository = ChatDomainMockFactory.CreateCommandRepository();
 		DateTimeProvider = DomainMockFactory.CreateDateTimeProvider();
 		MessageRepository = ChatMessageDomainMockFactory.CreateCommandRepository();
-		IncludeBuilderFactory = ChatMessageDomainMockFactory.CreateChatIncludeBuilderFactory();
+		IncludeBuilderFactory = ChatMockFactory.CreateIncludeBuilderFactory();
 		NotificationService = ChatMessageDomainMockFactory.CreateNotificationService();
-		MessageIncludeBuilderFactory = ChatMessageDomainMockFactory.CreateIncludeBuilderFactory();
+		MessageIncludeBuilderFactory = ChatMessageMockFactory.CreateIncludeBuilderFactory();
 	}
 }

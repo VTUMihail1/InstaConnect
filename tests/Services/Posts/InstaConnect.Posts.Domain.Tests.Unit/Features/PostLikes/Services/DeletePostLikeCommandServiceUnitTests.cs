@@ -61,7 +61,7 @@ public class DeletePostLikeCommandServiceUnitTests : BasePostLikeDomainCommandUn
 		await _service.DeleteAsync(_command, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneExistsByIdAsync(_command, CancellationToken);
+		await Repository.ShouldHaveReceivedOneExistsByIdAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -71,7 +71,7 @@ public class DeletePostLikeCommandServiceUnitTests : BasePostLikeDomainCommandUn
 		await _service.DeleteAsync(_command, CancellationToken);
 
 		// Assert
-		await LikeRepository.ShouldReceiveOneGetByIdAsync(_command, _likeInclude, CancellationToken);
+		await LikeRepository.ShouldHaveReceivedOneGetByIdAsync(_command, _likeInclude, CancellationToken);
 	}
 
 	[Fact]
@@ -81,7 +81,7 @@ public class DeletePostLikeCommandServiceUnitTests : BasePostLikeDomainCommandUn
 		await _service.DeleteAsync(_command, CancellationToken);
 
 		// Assert
-		await LikeRepository.ShouldReceiveOneDeleteAsync(_command, CancellationToken);
+		await LikeRepository.ShouldHaveReceivedOneDeleteAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -91,6 +91,6 @@ public class DeletePostLikeCommandServiceUnitTests : BasePostLikeDomainCommandUn
 		await _service.DeleteAsync(_command, CancellationToken);
 
 		// Assert
-		await EventPublisher.ShouldReceiveOnePublishAsync(_command, PostLike, CancellationToken);
+		await EventPublisher.ShouldHaveReceivedOnePublishAsync(_command, PostLike, CancellationToken);
 	}
 }

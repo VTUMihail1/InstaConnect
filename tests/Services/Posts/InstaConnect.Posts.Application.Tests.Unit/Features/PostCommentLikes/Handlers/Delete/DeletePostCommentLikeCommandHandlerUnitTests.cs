@@ -24,6 +24,6 @@ public class DeletePostCommentLikeCommandHandlerUnitTests : BasePostCommentLikeA
 		await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		await CommentLikeService.ShouldReceiveOneDeleteAsync(_request, CancellationToken);
+		await CommentLikeService.ShouldHaveReceivedOneDeleteAsync(_request, CancellationToken);
 	}
 }

@@ -14,14 +14,6 @@ public static class EmailConfirmationTokenEquals
 		}
 	}
 
-	extension(UserInclude p)
-	{
-		public bool Matches(VerifyEmailConfirmationTokenCommand command, UserInclude include)
-		{
-			return p.Matches(include);
-		}
-	}
-
 	extension(EmailConfirmationToken emailConfirmationToken)
 	{
 		public bool Matches(AddEmailConfirmationTokenCommand command)

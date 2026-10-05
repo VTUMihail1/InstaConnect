@@ -10,5 +10,5 @@ public interface IPostCommentFluent : IMongoDbFluent<PostComment>
 	public IPostCommentResponseFluent ProjectToFullResponse(CurrentUserQuery currentUser);
 	public IPostCommentResponseFluent ProjectToResponseWithoutUser(CurrentUserQuery currentUser);
 	public IPostCommentResponseFluent ProjectToResponseWithoutPost(CurrentUserQuery currentUser);
-	public IPostCommentFluent ApplyIncludes(PostCommentInclude? include);
+	public IPostCommentFluent ApplyIncludes(PostCommentInclude include);
 }

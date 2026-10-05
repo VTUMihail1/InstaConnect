@@ -19,13 +19,12 @@ public abstract class BaseForgotPasswordTokenDomainCommandIntegrationTest : Base
 		ForgotPasswordTokenEventClient = webApplicationFactory.CreateForgotPasswordTokenEventClient();
 	}
 
-	protected override async Task OnInitializeAsync()
+	public override async Task InitializeAsync()
 	{
-		await base.OnInitializeAsync();
 		await ForgotPasswordTokenEventClient.StartAsync(CancellationToken);
 	}
 
-	protected override async Task OnDisposeAsync()
+	public override async Task DisposeAsync()
 	{
 		await ForgotPasswordTokenEventClient.StopAsync(CancellationToken);
 	}

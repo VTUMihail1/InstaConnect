@@ -36,6 +36,6 @@ public class GetAllPostCommentLikesForUserQueryHandlerUnitTests : BasePostCommen
 		await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		await CommentLikeService.ShouldReceiveOneGetAllForUserAsync(_request, CancellationToken);
+		await CommentLikeService.ShouldHaveReceivedOneGetAllForUserAsync(_request, CancellationToken);
 	}
 }

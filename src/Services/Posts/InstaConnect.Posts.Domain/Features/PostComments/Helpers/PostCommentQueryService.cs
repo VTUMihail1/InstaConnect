@@ -30,9 +30,9 @@ internal class PostCommentQueryService : IPostCommentQueryService
 
 		var postComments = await _commentRepository.GetAllAsync(
 			query.Filter,
-			query.CurrentUser,
 			query.Sorting,
 			query.Pagination,
+			query.CurrentUser,
 			cancellationToken);
 
 		var totalCount = await _commentRepository.GetTotalCountAsync(query.Filter, cancellationToken);
@@ -51,9 +51,9 @@ internal class PostCommentQueryService : IPostCommentQueryService
 
 		var postComments = await _commentRepository.GetAllForUserAsync(
 			query.Filter,
-			query.CurrentUser,
 			query.Sorting,
 			query.Pagination,
+			query.CurrentUser,
 			cancellationToken);
 
 		var totalCount = await _commentRepository.GetTotalCountForUserAsync(query.Filter, cancellationToken);

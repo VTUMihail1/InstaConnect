@@ -3,15 +3,19 @@ namespace InstaConnect.Chats.Infrastructure.Features.ChatMessages.Helpers.Reposi
 internal class ChatMessageCommandRepository : IChatMessageCommandRepository
 {
 	private readonly IChatMessageCollection _collection;
+	private readonly IChatMessageIncludeBuilderFactory _includeBuilderFactory;
 
-	public ChatMessageCommandRepository(IChatMessageCollection collection)
+	public ChatMessageCommandRepository(
+		IChatMessageCollection collection,
+		IChatMessageIncludeBuilderFactory includeBuilderFactory)
 	{
 		_collection = collection;
+		_includeBuilderFactory = includeBuilderFactory;
 	}
 
 	public async Task<ChatMessage?> GetByIdAsync(
 		ChatMessageId id,
-		ChatMessageInclude? include,
+		ChatMessageInclude include,
 		CancellationToken cancellationToken)
 	{
 		return await _collection
@@ -25,7 +29,9 @@ internal class ChatMessageCommandRepository : IChatMessageCommandRepository
 		ChatMessageId id,
 		CancellationToken cancellationToken)
 	{
-		return await GetByIdAsync(id, null, cancellationToken);
+		var include = _includeBuilderFactory.Create().Build();
+
+		return await GetByIdAsync(id, include, cancellationToken);
 	}
 
 	public async Task<bool> ExistsByIdAsync(

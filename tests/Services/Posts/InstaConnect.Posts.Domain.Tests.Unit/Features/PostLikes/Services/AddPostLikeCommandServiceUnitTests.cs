@@ -81,7 +81,7 @@ public class AddPostLikeCommandServiceUnitTests : BasePostLikeDomainCommandUnitT
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await UserRepository.ShouldReceiveOneGetByIdAsync(_command, CancellationToken);
+		await UserRepository.ShouldHaveReceivedOneGetByIdAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -91,7 +91,7 @@ public class AddPostLikeCommandServiceUnitTests : BasePostLikeDomainCommandUnitT
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneGetByIdAsync(_command, _include, CancellationToken);
+		await Repository.ShouldHaveReceivedOneGetByIdAsync(_command, _include, CancellationToken);
 	}
 
 	[Fact]
@@ -101,7 +101,7 @@ public class AddPostLikeCommandServiceUnitTests : BasePostLikeDomainCommandUnitT
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		Factory.ShouldReceiveOneCreate(_command);
+		Factory.ShouldHaveReceivedOneCreate(_command);
 	}
 
 	[Fact]
@@ -111,7 +111,7 @@ public class AddPostLikeCommandServiceUnitTests : BasePostLikeDomainCommandUnitT
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await LikeRepository.ShouldReceiveOneGetByIdAsync(_command, PostLike, CancellationToken);
+		await LikeRepository.ShouldHaveReceivedOneGetByIdAsync(_command, PostLike, CancellationToken);
 	}
 
 	[Fact]
@@ -121,7 +121,7 @@ public class AddPostLikeCommandServiceUnitTests : BasePostLikeDomainCommandUnitT
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await LikeRepository.ShouldReceiveOneAddAsync(_command, CancellationToken);
+		await LikeRepository.ShouldHaveReceivedOneAddAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -131,6 +131,6 @@ public class AddPostLikeCommandServiceUnitTests : BasePostLikeDomainCommandUnitT
 		await _service.AddAsync(_command, CancellationToken);
 
 		// Assert
-		await EventPublisher.ShouldReceiveOnePublishAsync(_command, PostLike, CancellationToken);
+		await EventPublisher.ShouldHaveReceivedOnePublishAsync(_command, PostLike, CancellationToken);
 	}
 }

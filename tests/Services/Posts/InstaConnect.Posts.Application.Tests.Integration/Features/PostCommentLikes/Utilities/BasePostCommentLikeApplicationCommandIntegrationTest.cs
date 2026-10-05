@@ -17,13 +17,12 @@ public abstract class BasePostCommentLikeApplicationCommandIntegrationTest : Bas
 		CommentLikeEventClient = webApplicationFactory.CreateCommentLikeEventClient();
 	}
 
-	protected override async Task OnInitializeAsync()
-	{
-		await base.OnInitializeAsync();
+	public override async Task InitializeAsync()
+	{ 
 		await CommentLikeEventClient.StartAsync(CancellationToken);
 	}
 
-	protected override async Task OnDisposeAsync()
+	public override async Task DisposeAsync()
 	{
 		await CommentLikeEventClient.StopAsync(CancellationToken);
 	}

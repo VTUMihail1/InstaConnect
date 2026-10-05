@@ -84,7 +84,7 @@ public class UpdateChatMessageCommandServiceUnitTests : BaseChatMessageDomainCom
 		await _service.UpdateAsync(_command, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneExistsByIdAsync(_command, CancellationToken);
+		await Repository.ShouldHaveReceivedOneExistsByIdAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -94,7 +94,7 @@ public class UpdateChatMessageCommandServiceUnitTests : BaseChatMessageDomainCom
 		await _service.UpdateAsync(_command, CancellationToken);
 
 		// Assert
-		await MessageRepository.ShouldReceiveOneGetByIdAsync(_command, _messageInclude, CancellationToken);
+		await MessageRepository.ShouldHaveReceivedOneGetByIdAsync(_command, _messageInclude, CancellationToken);
 	}
 
 	[Fact]
@@ -104,7 +104,7 @@ public class UpdateChatMessageCommandServiceUnitTests : BaseChatMessageDomainCom
 		await _service.UpdateAsync(_command, CancellationToken);
 
 		// Assert
-		DateTimeProvider.ShouldReceiveOneGetOffsetUtcNow(_command);
+		DateTimeProvider.ShouldHaveReceivedOneGetOffsetUtcNow(_command);
 	}
 
 	[Fact]
@@ -114,7 +114,7 @@ public class UpdateChatMessageCommandServiceUnitTests : BaseChatMessageDomainCom
 		await _service.UpdateAsync(_command, CancellationToken);
 
 		// Assert
-		await MessageRepository.ShouldReceiveOneUpdateAsync(_command, CancellationToken);
+		await MessageRepository.ShouldHaveReceivedOneUpdateAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -124,6 +124,6 @@ public class UpdateChatMessageCommandServiceUnitTests : BaseChatMessageDomainCom
 		await _service.UpdateAsync(_command, CancellationToken);
 
 		// Assert
-		await NotificationService.ShouldReceiveOneUpdatedAsync(_command, ChatMessage, CancellationToken);
+		await NotificationService.ShouldHaveReceivedOneUpdatedAsync(_command, ChatMessage, CancellationToken);
 	}
 }

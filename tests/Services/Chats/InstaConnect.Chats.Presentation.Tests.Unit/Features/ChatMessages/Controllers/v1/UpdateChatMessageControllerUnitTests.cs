@@ -46,6 +46,6 @@ public class UpdateChatMessageControllerUnitTests : BaseChatMessagePresentationC
 		await _controller.UpdateAsync(_request, CancellationToken);
 
 		// Assert
-		await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);
+		await Sender.ShouldHaveReceivedOneSendAsync(_request, CancellationToken);
 	}
 }

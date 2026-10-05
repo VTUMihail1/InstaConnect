@@ -79,7 +79,7 @@ public class VerifyForgotPasswordTokenCommandServiceUnitTests : BaseForgotPasswo
 		await _service.VerifyAsync(_command, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneGetByIdAsync(_command, _include, CancellationToken);
+		await Repository.ShouldHaveReceivedOneGetByIdAsync(_command, _include, CancellationToken);
 	}
 
 	[Fact]
@@ -89,7 +89,7 @@ public class VerifyForgotPasswordTokenCommandServiceUnitTests : BaseForgotPasswo
 		await _service.VerifyAsync(_command, CancellationToken);
 
 		// Assert
-		await ForgotPasswordTokenRepository.ShouldReceiveOneGetByIdAsync(_command, CancellationToken);
+		await ForgotPasswordTokenRepository.ShouldHaveReceivedOneGetByIdAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -99,7 +99,7 @@ public class VerifyForgotPasswordTokenCommandServiceUnitTests : BaseForgotPasswo
 		await _service.VerifyAsync(_command, CancellationToken);
 
 		// Assert
-		DateTimeProvider.ShouldReceiveOneGetOffsetUtcNow(_command);
+		DateTimeProvider.ShouldHaveReceivedOneGetOffsetUtcNow(_command);
 	}
 
 	[Fact]
@@ -109,7 +109,7 @@ public class VerifyForgotPasswordTokenCommandServiceUnitTests : BaseForgotPasswo
 		await _service.VerifyAsync(_command, CancellationToken);
 
 		// Assert
-		await ForgotPasswordTokenRepository.ShouldReceiveOneDeleteRangeAsync(_command, CancellationToken);
+		await ForgotPasswordTokenRepository.ShouldHaveReceivedOneDeleteRangeAsync(_command, CancellationToken);
 	}
 
 	[Fact]
@@ -119,7 +119,7 @@ public class VerifyForgotPasswordTokenCommandServiceUnitTests : BaseForgotPasswo
 		await _service.VerifyAsync(_command, CancellationToken);
 
 		// Assert
-		await EventPublisher.ShouldReceiveOnePublishAsync(_command, User.ForgotPasswordTokens, CancellationToken);
+		await EventPublisher.ShouldHaveReceivedOnePublishAsync(_command, User.ForgotPasswordTokens, CancellationToken);
 	}
 
 	[Fact]
@@ -129,7 +129,7 @@ public class VerifyForgotPasswordTokenCommandServiceUnitTests : BaseForgotPasswo
 		await _service.VerifyAsync(_command, CancellationToken);
 
 		// Assert
-		PasswordHasher.ShouldReceiveOneHash(_command);
+		PasswordHasher.ShouldHaveReceivedOneHash(_command);
 	}
 
 	[Fact]
@@ -139,6 +139,6 @@ public class VerifyForgotPasswordTokenCommandServiceUnitTests : BaseForgotPasswo
 		await _service.VerifyAsync(_command, CancellationToken);
 
 		// Assert
-		await Repository.ShouldReceiveOneUpdateAsync(_command, PasswordHasher, CancellationToken);
+		await Repository.ShouldHaveReceivedOneUpdateAsync(_command, PasswordHasher, CancellationToken);
 	}
 }

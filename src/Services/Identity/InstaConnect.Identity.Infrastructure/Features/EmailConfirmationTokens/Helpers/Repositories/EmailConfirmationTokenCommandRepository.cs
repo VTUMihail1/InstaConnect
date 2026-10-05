@@ -3,15 +3,19 @@ namespace InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.
 internal class EmailConfirmationTokenCommandRepository : IEmailConfirmationTokenCommandRepository
 {
 	private readonly IEmailConfirmationTokenCollection _collection;
+	private readonly IEmailConfirmationTokenIncludeBuilderFactory _includeBuilderFactory;
 
-	public EmailConfirmationTokenCommandRepository(IEmailConfirmationTokenCollection collection)
+	public EmailConfirmationTokenCommandRepository(
+		IEmailConfirmationTokenCollection collection,
+		IEmailConfirmationTokenIncludeBuilderFactory includeBuilderFactory)
 	{
 		_collection = collection;
+		_includeBuilderFactory = includeBuilderFactory;
 	}
 
 	public async Task<EmailConfirmationToken?> GetByIdAsync(
 		EmailConfirmationTokenId id,
-		EmailConfirmationTokenInclude? include,
+		EmailConfirmationTokenInclude include,
 		CancellationToken cancellationToken)
 	{
 		return await _collection
@@ -25,7 +29,9 @@ internal class EmailConfirmationTokenCommandRepository : IEmailConfirmationToken
 		EmailConfirmationTokenId id,
 		CancellationToken cancellationToken)
 	{
-		return await GetByIdAsync(id, null, cancellationToken);
+		var include = _includeBuilderFactory.Create().Build();
+
+		return await GetByIdAsync(id, include, cancellationToken);
 	}
 
 	public async Task<bool> ExistsByIdAsync(

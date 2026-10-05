@@ -24,6 +24,6 @@ public class VerifyForgotPasswordTokenCommandHandlerUnitTests : BaseForgotPasswo
 		await _handler.Handle(_request, CancellationToken);
 
 		// Assert
-		await Service.ShouldReceiveOneVerifyAsync(_request, CancellationToken);
+		await Service.ShouldHaveReceivedOneVerifyAsync(_request, CancellationToken);
 	}
 }

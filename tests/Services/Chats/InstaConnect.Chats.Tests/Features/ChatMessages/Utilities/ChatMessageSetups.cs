@@ -10,6 +10,11 @@ public static class ChatMessageSetups
 {
 	extension(IServiceProvider serviceProvider)
 	{
+		public IChatMessageQueryRepository GetMessageQueryRepository()
+		{
+			return serviceProvider.GetRequiredService<IChatMessageQueryRepository>();
+		}
+
 		public IChatMessageCommandRepository GetMessageCommandRepository()
 		{
 			return serviceProvider.GetRequiredService<IChatMessageCommandRepository>();
@@ -23,6 +28,11 @@ public static class ChatMessageSetups
 
 	extension(IServiceScope serviceScope)
 	{
+		public IChatMessageQueryRepository GetMessageQueryRepository()
+		{
+			return serviceScope.ServiceProvider.GetMessageQueryRepository();
+		}
+
 		public IChatMessageCommandRepository GetMessageCommandRepository()
 		{
 			return serviceScope.ServiceProvider.GetMessageCommandRepository();

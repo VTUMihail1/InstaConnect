@@ -11,6 +11,11 @@ public static class PostCommentLikeSetups
 {
 	extension(IServiceProvider serviceProvider)
 	{
+		public IPostCommentLikeQueryRepository GetPostCommentLikeQueryRepository()
+		{
+			return serviceProvider.GetRequiredService<IPostCommentLikeQueryRepository>();
+		}
+
 		public IPostCommentLikeCommandRepository GetPostCommentLikeCommandRepository()
 		{
 			return serviceProvider.GetRequiredService<IPostCommentLikeCommandRepository>();
@@ -24,6 +29,11 @@ public static class PostCommentLikeSetups
 
 	extension(IServiceScope serviceScope)
 	{
+		public IPostCommentLikeQueryRepository GetPostCommentLikeQueryRepository()
+		{
+			return serviceScope.ServiceProvider.GetPostCommentLikeQueryRepository();
+		}
+
 		public IPostCommentLikeCommandRepository GetPostCommentLikeCommandRepository()
 		{
 			return serviceScope.ServiceProvider.GetPostCommentLikeCommandRepository();
