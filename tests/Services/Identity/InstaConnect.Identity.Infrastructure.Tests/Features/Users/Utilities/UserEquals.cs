@@ -139,11 +139,6 @@ public static class UserEquals
 
 	extension(bool response)
 	{
-		public bool Matches(User? user)
-		{
-			return response == (user != null);
-		}
-
 		public bool Matches(UserId id, User? user)
 		{
 			return response == (user != null);

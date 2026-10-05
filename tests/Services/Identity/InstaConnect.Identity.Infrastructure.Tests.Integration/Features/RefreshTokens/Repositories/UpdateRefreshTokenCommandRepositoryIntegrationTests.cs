@@ -22,7 +22,7 @@ public class UpdateRefreshTokenCommandRepositoryIntegrationTests : BaseRefreshTo
 	public async Task UpdateAsync_ShouldUpdateRefreshToken_WhenCommandIsValid()
 	{
 		// Arrange
-		var updatedRefreshToken = RefreshTokenBuilder.WithAlreadyExpiresAtUtc().Build();
+		var updatedRefreshToken = RefreshTokenBuilderFactory.Create(User).WithValue(RefreshToken.Id).Build();
 
 		// Act
 		await Repository.UpdateAsync(updatedRefreshToken, CancellationToken);

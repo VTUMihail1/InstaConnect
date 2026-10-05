@@ -26,9 +26,10 @@ internal class IdentityDatabaseSeeder : IIdentityDatabaseSeeder
 
 	public async Task SeedAsync(CancellationToken cancellationToken)
 	{
-		var any = await _repository.AnyAsync(cancellationToken);
+		var nameIsNotUnique = !await _repository.IsNameUniqueAsync(new(_adminOptions.Name), cancellationToken);
+		var emailIsNotUnique = !await _repository.IsEmailUniqueAsync(new(_adminOptions.Email), cancellationToken);
 
-		if (any)
+		if (nameIsNotUnique || emailIsNotUnique)
 		{
 			return;
 		}

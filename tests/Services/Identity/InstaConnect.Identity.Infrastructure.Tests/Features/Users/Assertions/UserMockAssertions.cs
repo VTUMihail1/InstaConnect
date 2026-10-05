@@ -9,11 +9,6 @@ public static class UserMockAssertions
 {
 	extension(IUserCollection collection)
 	{
-		public void ShouldHaveReceivedOneAggregateFluent()
-		{
-			collection.ShouldHaveReceivedOne().AggregateFluent();
-		}
-
 		public void ShouldHaveReceivedOneAggregateFluent(UserId id)
 		{
 			collection.ShouldHaveReceivedOne().AggregateFluent();
@@ -145,11 +140,6 @@ public static class UserMockAssertions
 			CurrentUserQuery currentUserQuery)
 		{
 			fluent.ShouldHaveReceivedOne().ProjectToFullResponse(currentUserQuery);
-		}
-
-		public async Task ShouldHaveReceivedOneAnyAsync(CancellationToken cancellationToken)
-		{
-			await fluent.ShouldHaveReceivedOne().AnyAsync(cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneAnyAsync(

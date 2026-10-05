@@ -71,11 +71,6 @@ public static class UserMatchAssertions
 
 	extension(bool response)
 	{
-		public void ShouldSatisfy(User? user)
-		{
-			response.ShouldSatisfy(p => p.Matches(user));
-		}
-
 		public void ShouldSatisfy(UserId id, User? user)
 		{
 			response.ShouldSatisfy(p => p.Matches(id, user));

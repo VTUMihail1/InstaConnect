@@ -29,4 +29,18 @@ public class DeleteChatMessageCommandRepositoryIntegrationTests : BaseChatMessag
 		// Assert
 		chatMessage.ShouldBeNull();
 	}
+
+	[Fact]
+	public async Task DeleteAsync_ShouldDeleteChatMessage_WhenInvertedCommandIsValid()
+	{
+		// Arrange
+		var invertedChatMessage = ChatMessageBuilder.WithParticipantOneId(ParticipantTwo.Id).WithParticipantTwoId(ParticipantOne.Id).Build();
+
+		// Act
+		await Repository.DeleteAsync(invertedChatMessage, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(ChatMessage.Id, CancellationToken);
+
+		// Assert
+		chatMessage.ShouldBeNull();
+	}
 }

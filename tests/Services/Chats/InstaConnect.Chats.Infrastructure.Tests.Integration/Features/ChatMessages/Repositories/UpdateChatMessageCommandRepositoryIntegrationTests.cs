@@ -24,7 +24,7 @@ public class UpdateChatMessageCommandRepositoryIntegrationTests : BaseChatMessag
 	public async Task UpdateAsync_ShouldUpdateChatMessage_WhenCommandIsValid()
 	{
 		// Arrange
-		var updatedChatMessage = ChatMessageBuilder.WithSenderId(ParticipantTwo.Id).Build();
+		var updatedChatMessage = ChatMessageBuilderFactory.Create(Chat).WithMessageId(ChatMessage.Id).Build();
 
 		// Act
 		await Repository.UpdateAsync(updatedChatMessage, CancellationToken);

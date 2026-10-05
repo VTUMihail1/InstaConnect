@@ -9,11 +9,6 @@ public static class UserMockSetups
 {
 	extension(IUserCollection collection)
 	{
-		public void SetupAggregateFluent(IUserFluent fluent)
-		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
-		}
-
 		public void SetupAggregateFluent(
 			UserId id,
 			IUserFluent fluent)
@@ -69,13 +64,6 @@ public static class UserMockSetups
 			CancellationToken cancellationToken)
 		{
 			fluent.GetCountAsync(cancellationToken).ReturnsTaskResponse(users.ToTotalCountResponse(filterQuery));
-		}
-
-		public void SetupAnyAsync(
-			User? user,
-			CancellationToken cancellationToken)
-		{
-			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(user != null);
 		}
 
 		public void SetupAnyAsync(
