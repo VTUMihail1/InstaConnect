@@ -21,7 +21,7 @@ public class UserExistsByIdQueryRepositoryUnitTests : BaseUserInfrastructureQuer
 
 		Collection.SetupAggregateFluent(_id, Fluent);
 		Fluent.SetupMatch(_id);
-		Fluent.SetupAnyAsync(_id, CancellationToken);
+		Fluent.SetupAnyAsync(_id, User, CancellationToken);
 	}
 
 	[Fact]
@@ -31,7 +31,7 @@ public class UserExistsByIdQueryRepositoryUnitTests : BaseUserInfrastructureQuer
 		var response = await _repository.ExistsByIdAsync(_id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(_id);
+		response.ShouldSatisfy(_id, User);
 	}
 
 	[Fact]

@@ -55,9 +55,10 @@ public static class UserClaimMockSetups
 
 		public void SetupAnyAsync(
 			UserClaimId id,
+			UserClaim? userClaim,
 			CancellationToken cancellationToken)
 		{
-			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(true);
+			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(userClaim != null);
 		}
 
 		public void SetupApplyIncludes(

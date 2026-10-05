@@ -129,9 +129,9 @@ public static class UserClaimEquals
 
 	extension(bool response)
 	{
-		public bool Matches(UserClaimId id)
+		public bool Matches(UserClaimId id, UserClaim? userClaim)
 		{
-			return response;
+			return response == (userClaim != null);
 		}
 	}
 }

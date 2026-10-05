@@ -71,24 +71,24 @@ public static class UserMatchAssertions
 
 	extension(bool response)
 	{
-		public void ShouldSatisfy()
+		public void ShouldSatisfy(User? user)
 		{
-			response.ShouldSatisfy(p => p.Matches());
+			response.ShouldSatisfy(p => p.Matches(user));
 		}
 
-		public void ShouldSatisfy(UserId id)
+		public void ShouldSatisfy(UserId id, User? user)
 		{
-			response.ShouldSatisfy(p => p.Matches(id));
+			response.ShouldSatisfy(p => p.Matches(id, user));
 		}
 
-		public void ShouldSatisfy(Name name)
+		public void ShouldSatisfy(Name name, User? user)
 		{
-			response.ShouldSatisfy(p => p.Matches(name));
+			response.ShouldSatisfy(p => p.Matches(name, user));
 		}
 
-		public void ShouldSatisfy(Email email)
+		public void ShouldSatisfy(Email email, User? user)
 		{
-			response.ShouldSatisfy(p => p.Matches(email));
+			response.ShouldSatisfy(p => p.Matches(email, user));
 		}
 	}
 }

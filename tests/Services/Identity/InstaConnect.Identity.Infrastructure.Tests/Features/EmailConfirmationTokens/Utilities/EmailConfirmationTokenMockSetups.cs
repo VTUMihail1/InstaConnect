@@ -21,9 +21,10 @@ public static class EmailConfirmationTokenMockSetups
 	{
 		public void SetupAnyAsync(
 			EmailConfirmationTokenId id,
+			EmailConfirmationToken? emailConfirmationToken,
 			CancellationToken cancellationToken)
 		{
-			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(true);
+			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(emailConfirmationToken != null);
 		}
 
 		public void SetupApplyIncludes(

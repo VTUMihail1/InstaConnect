@@ -32,6 +32,19 @@ public class GetUserByNameCommandRepositoryIntegrationTests : BaseUserInfrastruc
 	}
 
 	[Fact]
+	public async Task GetByNameAsync_ShouldReturnNull_WhenNameIsInvalid()
+	{
+		// Arrange
+		await ServiceScope.DeleteAsync(User, CancellationToken);
+
+		// Act
+		var response = await Repository.GetByNameAsync(_name, _include, CancellationToken);
+
+		// Assert
+		response.ShouldBeNull();
+	}
+
+	[Fact]
 	public async Task GetByNameAsync_ShouldReturnResponse_WhenCommandIsValid()
 	{
 		// Act

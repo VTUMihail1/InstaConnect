@@ -30,13 +30,28 @@ public class PostLikeExistsByIdQueryRepositoryIntegrationTests : BasePostLikeInf
 	}
 
 	[Fact]
+	public async Task ExistsByIdAsync_ShouldReturnNull_WhenIdIsInvalid()
+	{
+		// Arrange
+		await ServiceScope.DeleteAsync(PostLike, CancellationToken);
+
+		// Act
+		var response = await Repository.ExistsByIdAsync(_id, CancellationToken);
+		var postLike = await ServiceScope.GetByIdAsync(_id, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(_id, postLike);
+	}
+
+	[Fact]
 	public async Task ExistsByIdAsync_ShouldReturnResponse_WhenQueryIsValid()
 	{
 		// Act
 		var response = await Repository.ExistsByIdAsync(_id, CancellationToken);
+		var postLike = await ServiceScope.GetByIdAsync(_id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(_id);
+		response.ShouldSatisfy(_id, postLike);
 	}
 
 	[Theory]
@@ -49,9 +64,10 @@ public class PostLikeExistsByIdQueryRepositoryIntegrationTests : BasePostLikeInf
 
 		// Act
 		var response = await Repository.ExistsByIdAsync(id, CancellationToken);
+		var postLike = await ServiceScope.GetByIdAsync(_id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(id);
+		response.ShouldSatisfy(id, postLike);
 	}
 
 	[Theory]
@@ -64,8 +80,9 @@ public class PostLikeExistsByIdQueryRepositoryIntegrationTests : BasePostLikeInf
 
 		// Act
 		var response = await Repository.ExistsByIdAsync(id, CancellationToken);
+		var postLike = await ServiceScope.GetByIdAsync(_id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(id);
+		response.ShouldSatisfy(id, postLike);
 	}
 }

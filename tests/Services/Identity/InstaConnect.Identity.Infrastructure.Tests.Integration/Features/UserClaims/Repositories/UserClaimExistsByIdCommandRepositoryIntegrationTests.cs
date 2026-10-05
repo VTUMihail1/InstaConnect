@@ -29,13 +29,28 @@ public class UserClaimExistsByIdCommandRepositoryIntegrationTests : BaseUserClai
 	}
 
 	[Fact]
+	public async Task ExistsByIdAsync_ShouldReturnNull_WhenIdIsInvalid()
+	{
+		// Arrange
+		await ServiceScope.DeleteAsync(UserClaim, CancellationToken);
+
+		// Act
+		var response = await Repository.ExistsByIdAsync(_id, CancellationToken);
+		var userClaim = await ServiceScope.GetByIdAsync(_id, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(_id, userClaim);
+	}
+
+	[Fact]
 	public async Task ExistsByIdAsync_ShouldReturnResponse_WhenCommandIsValid()
 	{
 		// Act
 		var response = await Repository.ExistsByIdAsync(_id, CancellationToken);
+		var userClaim = await ServiceScope.GetByIdAsync(_id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(_id);
+		response.ShouldSatisfy(_id, userClaim);
 	}
 
 	[Theory]
@@ -48,8 +63,9 @@ public class UserClaimExistsByIdCommandRepositoryIntegrationTests : BaseUserClai
 
 		// Act
 		var response = await Repository.ExistsByIdAsync(id, CancellationToken);
+		var userClaim = await ServiceScope.GetByIdAsync(_id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(id);
+		response.ShouldSatisfy(id, userClaim);
 	}
 }

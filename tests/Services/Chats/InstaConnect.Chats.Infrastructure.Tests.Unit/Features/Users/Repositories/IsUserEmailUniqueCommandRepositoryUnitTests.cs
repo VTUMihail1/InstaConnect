@@ -22,7 +22,7 @@ public class IsUserEmailUniqueCommandRepositoryUnitTests : BaseUserInfrastructur
 
 		Collection.SetupAggregateFluent(_email, Fluent);
 		Fluent.SetupMatch(_email);
-		Fluent.SetupAnyAsync(_email, CancellationToken);
+		Fluent.SetupAnyAsync(_email, User, CancellationToken);
 	}
 
 	[Fact]
@@ -32,7 +32,7 @@ public class IsUserEmailUniqueCommandRepositoryUnitTests : BaseUserInfrastructur
 		var response = await _repository.IsEmailUniqueAsync(_email, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(_email);
+		response.ShouldSatisfy(_email, User);
 	}
 
 	[Fact]

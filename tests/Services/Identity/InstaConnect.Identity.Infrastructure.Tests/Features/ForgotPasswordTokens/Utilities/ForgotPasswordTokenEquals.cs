@@ -18,9 +18,9 @@ public static class ForgotPasswordTokenEquals
 
 	extension(bool response)
 	{
-		public bool Matches(ForgotPasswordTokenId id)
+		public bool Matches(ForgotPasswordTokenId id, ForgotPasswordToken? forgotPasswordToken)
 		{
-			return response;
+			return response == (forgotPasswordToken != null);
 		}
 	}
 }

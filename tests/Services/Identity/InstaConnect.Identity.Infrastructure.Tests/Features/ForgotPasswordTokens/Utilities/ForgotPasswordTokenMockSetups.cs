@@ -21,9 +21,10 @@ public static class ForgotPasswordTokenMockSetups
 	{
 		public void SetupAnyAsync(
 			ForgotPasswordTokenId id,
+			ForgotPasswordToken? forgotPasswordToken,
 			CancellationToken cancellationToken)
 		{
-			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(true);
+			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(forgotPasswordToken != null);
 		}
 
 		public void SetupApplyIncludes(

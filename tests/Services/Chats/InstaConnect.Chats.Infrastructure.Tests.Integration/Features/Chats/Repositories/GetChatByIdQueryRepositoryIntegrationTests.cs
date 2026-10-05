@@ -38,6 +38,19 @@ public class GetChatByIdQueryRepositoryIntegrationTests : BaseChatInfrastructure
 	}
 
 	[Fact]
+	public async Task GetByIdAsync_ShouldReturnNull_WhenIdIsInvalid()
+	{
+		// Arrange
+		await ServiceScope.DeleteAsync(Chat, CancellationToken);
+
+		// Act
+		var response = await Repository.GetByIdAsync(_id, _currentUserQuery, CancellationToken);
+
+		// Assert
+		response.ShouldBeNull();
+	}
+
+	[Fact]
 	public async Task GetByIdAsync_ShouldReturnResponse_WhenQueryIsValid()
 	{
 		// Act

@@ -22,13 +22,28 @@ public class UserExistsByIdCommandRepositoryIntegrationTests : BaseUserInfrastru
 	}
 
 	[Fact]
+	public async Task ExistsByIdAsync_ShouldReturnNull_WhenIdIsInvalid()
+	{
+		// Arrange
+		await ServiceScope.DeleteAsync(User, CancellationToken);
+
+		// Act
+		var response = await Repository.ExistsByIdAsync(_id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(_id, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(_id, user);
+	}
+
+	[Fact]
 	public async Task ExistsByIdAsync_ShouldReturnResponse_WhenCommandIsValid()
 	{
 		// Act
 		var response = await Repository.ExistsByIdAsync(_id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(_id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(_id);
+		response.ShouldSatisfy(_id, user);
 	}
 
 	[Theory]
@@ -41,8 +56,9 @@ public class UserExistsByIdCommandRepositoryIntegrationTests : BaseUserInfrastru
 
 		// Act
 		var response = await Repository.ExistsByIdAsync(id, CancellationToken);
+		var user = await ServiceScope.GetByIdAsync(_id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(id);
+		response.ShouldSatisfy(id, user);
 	}
 }

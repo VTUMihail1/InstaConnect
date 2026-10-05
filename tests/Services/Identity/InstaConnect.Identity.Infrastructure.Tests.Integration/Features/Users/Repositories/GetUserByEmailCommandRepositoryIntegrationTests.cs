@@ -32,6 +32,19 @@ public class GetUserByEmailCommandRepositoryIntegrationTests : BaseUserInfrastru
 	}
 
 	[Fact]
+	public async Task GetByEmailAsync_ShouldReturnNull_WhenEmailIsInvalid()
+	{
+		// Arrange
+		await ServiceScope.DeleteAsync(User, CancellationToken);
+
+		// Act
+		var response = await Repository.GetByEmailAsync(_email, _include, CancellationToken);
+
+		// Assert
+		response.ShouldBeNull();
+	}
+
+	[Fact]
 	public async Task GetByEmailAsync_ShouldReturnResponse_WhenCommandIsValid()
 	{
 		// Act

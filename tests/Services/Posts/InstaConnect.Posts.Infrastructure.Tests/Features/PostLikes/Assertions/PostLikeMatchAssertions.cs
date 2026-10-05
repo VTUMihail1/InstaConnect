@@ -95,9 +95,9 @@ public static class PostLikeMatchAssertions
 
 	extension(bool response)
 	{
-		public void ShouldSatisfy(PostLikeId id)
+		public void ShouldSatisfy(PostLikeId id, PostLike? postLike)
 		{
-			response.ShouldSatisfy(p => p.Matches(id));
+			response.ShouldSatisfy(p => p.Matches(id, postLike));
 		}
 	}
 }

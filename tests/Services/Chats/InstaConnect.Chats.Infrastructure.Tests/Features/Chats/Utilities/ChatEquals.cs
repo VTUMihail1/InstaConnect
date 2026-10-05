@@ -249,9 +249,9 @@ public static class ChatEquals
 
 	extension(bool response)
 	{
-		public bool Matches(ChatId id)
+		public bool Matches(ChatId id, Chat? chat)
 		{
-			return response;
+			return response == (chat != null);
 		}
 	}
 }

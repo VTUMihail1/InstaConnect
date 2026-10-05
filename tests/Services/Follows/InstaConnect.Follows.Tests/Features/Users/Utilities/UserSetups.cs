@@ -1,3 +1,4 @@
+using InstaConnect.Common.Domain.Features.ValueObjects.Models;
 using InstaConnect.Follows.Domain.Features.Follows.Abstractions;
 using InstaConnect.Follows.Domain.Features.Users.Abstractions;
 using InstaConnect.Follows.Domain.Features.Users.Models.ValueObjects;
@@ -73,6 +74,30 @@ public static class UserSetups
 			var include = serviceScope.GetUserIncludeBuilderFactory().Create().WithFollowFollowers(followFollowerInclude).WithFollowFollowings(followFollowingInclude).Build();
 
 			return (await serviceScope.GetUserCommandRepository().GetByIdAsync(id, include, cancellationToken)).SetFollowFollowers().SetFollowFollowings();
+		}
+
+		public async Task<User?> GetByNameAsync(
+			Name name,
+			CancellationToken cancellationToken)
+		{
+			var followFollowerInclude = serviceScope.GetFollowFollowerIncludeBuilderFactory().Create().WithFollower().Build();
+			var followFollowingInclude = serviceScope.GetFollowFollowingIncludeBuilderFactory().Create().WithFollowing().Build();
+
+			var include = serviceScope.GetUserIncludeBuilderFactory().Create().WithFollowFollowers(followFollowerInclude).WithFollowFollowings(followFollowingInclude).Build();
+
+			return (await serviceScope.GetUserCommandRepository().GetByNameAsync(name, include, cancellationToken)).SetFollowFollowers().SetFollowFollowings();
+		}
+
+		public async Task<User?> GetByEmailAsync(
+			Email email,
+			CancellationToken cancellationToken)
+		{
+			var followFollowerInclude = serviceScope.GetFollowFollowerIncludeBuilderFactory().Create().WithFollower().Build();
+			var followFollowingInclude = serviceScope.GetFollowFollowingIncludeBuilderFactory().Create().WithFollowing().Build();
+
+			var include = serviceScope.GetUserIncludeBuilderFactory().Create().WithFollowFollowers(followFollowerInclude).WithFollowFollowings(followFollowingInclude).Build();
+
+			return (await serviceScope.GetUserCommandRepository().GetByEmailAsync(email, include, cancellationToken)).SetFollowFollowers().SetFollowFollowings();
 		}
 
 		public async Task AddAsync(

@@ -14,7 +14,7 @@ public class UserAnyCommandRepositoryUnitTests : BaseUserInfrastructureCommandUn
 		_repository = new(Collection, IncludeBuilderFactory);
 
 		Collection.SetupAggregateFluent(Fluent);
-		Fluent.SetupAnyAsync(CancellationToken);
+		Fluent.SetupAnyAsync(User, CancellationToken);
 	}
 
 	[Fact]
@@ -24,7 +24,7 @@ public class UserAnyCommandRepositoryUnitTests : BaseUserInfrastructureCommandUn
 		var response = await _repository.AnyAsync(CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy();
+		response.ShouldSatisfy(User);
 	}
 
 	[Fact]

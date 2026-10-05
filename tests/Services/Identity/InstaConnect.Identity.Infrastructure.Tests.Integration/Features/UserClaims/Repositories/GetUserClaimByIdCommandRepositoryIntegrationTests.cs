@@ -34,6 +34,19 @@ public class GetUserClaimByIdCommandRepositoryIntegrationTests : BaseUserClaimIn
 	}
 
 	[Fact]
+	public async Task GetByIdAsync_ShouldReturnNull_WhenIdIsInvalid()
+	{
+		// Arrange
+		await ServiceScope.DeleteAsync(UserClaim, CancellationToken);
+
+		// Act
+		var response = await Repository.GetByIdAsync(_id, _include, CancellationToken);
+
+		// Assert
+		response.ShouldBeNull();
+	}
+
+	[Fact]
 	public async Task GetByIdAsync_ShouldReturnResponse_WhenCommandIsValid()
 	{
 		// Act

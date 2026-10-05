@@ -27,13 +27,28 @@ public class UserIsNameUniqueCommandRepositoryIntegrationTests : BaseUserInfrast
 	}
 
 	[Fact]
+	public async Task IsNameUniqueAsync_ShouldReturnNull_WhenNameIsInvalid()
+	{
+		// Arrange
+		await ServiceScope.DeleteAsync(User, CancellationToken);
+
+		// Act
+		var response = await Repository.IsNameUniqueAsync(_name, CancellationToken);
+		var user = await ServiceScope.GetByNameAsync(_name, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(_name, user);
+	}
+
+	[Fact]
 	public async Task IsNameUniqueAsync_ShouldReturnResponse_WhenCommandIsValid()
 	{
 		// Act
 		var response = await Repository.IsNameUniqueAsync(_name, CancellationToken);
+		var user = await ServiceScope.GetByNameAsync(_name, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(_name);
+		response.ShouldSatisfy(_name, user);
 	}
 
 	[Theory]
@@ -46,8 +61,9 @@ public class UserIsNameUniqueCommandRepositoryIntegrationTests : BaseUserInfrast
 
 		// Act
 		var response = await Repository.IsNameUniqueAsync(name, CancellationToken);
+		var user = await ServiceScope.GetByNameAsync(_name, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(name);
+		response.ShouldSatisfy(name, user);
 	}
 }

@@ -16,9 +16,9 @@ public static class ForgotPasswordTokenMatchAssertions
 
 	extension(bool response)
 	{
-		public void ShouldSatisfy(ForgotPasswordTokenId id)
+		public void ShouldSatisfy(ForgotPasswordTokenId id, ForgotPasswordToken? forgotPasswordToken)
 		{
-			response.ShouldSatisfy(p => p.Matches(id));
+			response.ShouldSatisfy(p => p.Matches(id, forgotPasswordToken));
 		}
 	}
 }

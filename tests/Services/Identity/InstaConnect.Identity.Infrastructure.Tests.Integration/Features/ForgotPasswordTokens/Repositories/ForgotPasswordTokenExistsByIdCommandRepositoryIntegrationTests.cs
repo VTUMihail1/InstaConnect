@@ -30,13 +30,28 @@ public class ForgotPasswordTokenExistsByIdCommandRepositoryIntegrationTests : Ba
 	}
 
 	[Fact]
+	public async Task ExistsByIdAsync_ShouldReturnNull_WhenIdIsInvalid()
+	{
+		// Arrange
+		await ServiceScope.DeleteAsync(ForgotPasswordToken, CancellationToken);
+
+		// Act
+		var response = await Repository.ExistsByIdAsync(_id, CancellationToken);
+		var forgotPasswordToken = await ServiceScope.GetByIdAsync(_id, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(_id, forgotPasswordToken);
+	}
+
+	[Fact]
 	public async Task ExistsByIdAsync_ShouldReturnResponse_WhenCommandIsValid()
 	{
 		// Act
 		var response = await Repository.ExistsByIdAsync(_id, CancellationToken);
+		var forgotPasswordToken = await ServiceScope.GetByIdAsync(_id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(_id);
+		response.ShouldSatisfy(_id, forgotPasswordToken);
 	}
 
 	[Theory]
@@ -49,9 +64,10 @@ public class ForgotPasswordTokenExistsByIdCommandRepositoryIntegrationTests : Ba
 
 		// Act
 		var response = await Repository.ExistsByIdAsync(id, CancellationToken);
+		var forgotPasswordToken = await ServiceScope.GetByIdAsync(_id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(id);
+		response.ShouldSatisfy(id, forgotPasswordToken);
 	}
 
 	[Theory]
@@ -64,8 +80,9 @@ public class ForgotPasswordTokenExistsByIdCommandRepositoryIntegrationTests : Ba
 
 		// Act
 		var response = await Repository.ExistsByIdAsync(id, CancellationToken);
+		var forgotPasswordToken = await ServiceScope.GetByIdAsync(_id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(id);
+		response.ShouldSatisfy(id, forgotPasswordToken);
 	}
 }

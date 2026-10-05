@@ -25,7 +25,7 @@ public class FollowExistsByIdQueryRepositoryUnitTests : BaseFollowInfrastructure
 
 		Collection.SetupAggregateFluent(_id, Fluent);
 		Fluent.SetupMatch(_id);
-		Fluent.SetupAnyAsync(_id, CancellationToken);
+		Fluent.SetupAnyAsync(_id, Follow, CancellationToken);
 	}
 
 	[Fact]
@@ -35,7 +35,7 @@ public class FollowExistsByIdQueryRepositoryUnitTests : BaseFollowInfrastructure
 		var response = await _repository.ExistsByIdAsync(_id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(_id);
+		response.ShouldSatisfy(_id, Follow);
 	}
 
 	[Fact]

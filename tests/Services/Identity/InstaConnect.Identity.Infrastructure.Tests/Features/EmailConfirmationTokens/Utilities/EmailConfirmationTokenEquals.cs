@@ -18,9 +18,9 @@ public static class EmailConfirmationTokenEquals
 
 	extension(bool response)
 	{
-		public bool Matches(EmailConfirmationTokenId id)
+		public bool Matches(EmailConfirmationTokenId id, EmailConfirmationToken? emailConfirmationToken)
 		{
-			return response;
+			return response == (emailConfirmationToken != null);
 		}
 	}
 }

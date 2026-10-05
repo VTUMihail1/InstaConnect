@@ -80,9 +80,10 @@ public static class FollowMockSetups
 
 		public void SetupAnyAsync(
 			FollowId id,
+			Follow? follow,
 			CancellationToken cancellationToken)
 		{
-			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(true);
+			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(follow != null);
 		}
 
 		public void SetupApplyIncludes(

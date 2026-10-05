@@ -1,3 +1,4 @@
+using InstaConnect.Common.Domain.Features.ValueObjects.Models;
 using InstaConnect.Identity.Domain.Features.Users.Abstractions;
 using InstaConnect.Identity.Domain.Features.Users.Models.ValueObjects;
 
@@ -49,6 +50,24 @@ public static class UserSetups
 			var include = serviceScope.GetIncludeBuilderFactory().Create().WithUserClaims().WithRefreshTokens().WithForgotPasswordTokens().WithEmailConfirmationTokens().Build();
 
 			return (await serviceScope.GetCommandRepository().GetByIdAsync(id, include, cancellationToken)).SetUserClaims().SetRefreshTokens().SetForgotPasswordTokens().SetEmailConfirmationTokens();
+		}
+
+		public async Task<User?> GetByNameAsync(
+			Name name,
+			CancellationToken cancellationToken)
+		{
+			var include = serviceScope.GetIncludeBuilderFactory().Create().WithUserClaims().WithRefreshTokens().WithForgotPasswordTokens().WithEmailConfirmationTokens().Build();
+
+			return (await serviceScope.GetCommandRepository().GetByNameAsync(name, include, cancellationToken)).SetUserClaims().SetRefreshTokens().SetForgotPasswordTokens().SetEmailConfirmationTokens();
+		}
+
+		public async Task<User?> GetByEmailAsync(
+			Email email,
+			CancellationToken cancellationToken)
+		{
+			var include = serviceScope.GetIncludeBuilderFactory().Create().WithUserClaims().WithRefreshTokens().WithForgotPasswordTokens().WithEmailConfirmationTokens().Build();
+
+			return (await serviceScope.GetCommandRepository().GetByEmailAsync(email, include, cancellationToken)).SetUserClaims().SetRefreshTokens().SetForgotPasswordTokens().SetEmailConfirmationTokens();
 		}
 
 		public async Task AddAsync(

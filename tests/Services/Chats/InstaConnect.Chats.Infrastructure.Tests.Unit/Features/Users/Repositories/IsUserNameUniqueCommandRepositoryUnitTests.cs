@@ -22,7 +22,7 @@ public class IsUserNameUniqueCommandRepositoryUnitTests : BaseUserInfrastructure
 
 		Collection.SetupAggregateFluent(_name, Fluent);
 		Fluent.SetupMatch(_name);
-		Fluent.SetupAnyAsync(_name, CancellationToken);
+		Fluent.SetupAnyAsync(_name, User, CancellationToken);
 	}
 
 	[Fact]
@@ -32,7 +32,7 @@ public class IsUserNameUniqueCommandRepositoryUnitTests : BaseUserInfrastructure
 		var response = await _repository.IsNameUniqueAsync(_name, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(_name);
+		response.ShouldSatisfy(_name, User);
 	}
 
 	[Fact]

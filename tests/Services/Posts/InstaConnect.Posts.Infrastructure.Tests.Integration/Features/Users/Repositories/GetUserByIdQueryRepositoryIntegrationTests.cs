@@ -32,6 +32,19 @@ public class GetUserByIdQueryRepositoryIntegrationTests : BaseUserInfrastructure
 	}
 
 	[Fact]
+	public async Task GetByIdAsync_ShouldReturnNull_WhenIdIsInvalid()
+	{
+		// Arrange
+		await ServiceScope.DeleteAsync(User, CancellationToken);
+
+		// Act
+		var response = await Repository.GetByIdAsync(_id, _currentUserQuery, CancellationToken);
+
+		// Assert
+		response.ShouldBeNull();
+	}
+
+	[Fact]
 	public async Task GetByIdAsync_ShouldReturnResponse_WhenQueryIsValid()
 	{
 		// Act

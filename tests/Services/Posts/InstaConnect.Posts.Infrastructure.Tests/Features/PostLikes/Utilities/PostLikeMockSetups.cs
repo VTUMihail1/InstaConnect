@@ -80,9 +80,10 @@ public static class PostLikeMockSetups
 
 		public void SetupAnyAsync(
 			PostLikeId id,
+			PostLike? postLike,
 			CancellationToken cancellationToken)
 		{
-			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(true);
+			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(postLike != null);
 		}
 
 		public void SetupApplyIncludes(

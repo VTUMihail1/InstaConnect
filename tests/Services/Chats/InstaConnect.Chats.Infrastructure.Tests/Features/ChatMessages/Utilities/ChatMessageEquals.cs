@@ -253,9 +253,9 @@ public static class ChatMessageEquals
 
 	extension(bool response)
 	{
-		public bool Matches(ChatMessageId id)
+		public bool Matches(ChatMessageId id, ChatMessage? chatMessage)
 		{
-			return response;
+			return response == (chatMessage != null);
 		}
 	}
 }

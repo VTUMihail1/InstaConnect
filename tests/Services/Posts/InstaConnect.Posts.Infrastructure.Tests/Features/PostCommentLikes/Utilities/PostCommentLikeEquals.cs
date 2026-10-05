@@ -242,9 +242,9 @@ public static class PostCommentLikeEquals
 
 	extension(bool response)
 	{
-		public bool Matches(PostCommentLikeId id)
+		public bool Matches(PostCommentLikeId id, PostCommentLike? postCommentLike)
 		{
-			return response;
+			return response == (postCommentLike != null);
 		}
 	}
 }

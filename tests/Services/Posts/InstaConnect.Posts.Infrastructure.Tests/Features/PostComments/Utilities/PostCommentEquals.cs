@@ -254,9 +254,9 @@ public static class PostCommentEquals
 
 	extension(bool response)
 	{
-		public bool Matches(PostCommentId id)
+		public bool Matches(PostCommentId id, PostComment? postComment)
 		{
-			return response;
+			return response == (postComment != null);
 		}
 	}
 }

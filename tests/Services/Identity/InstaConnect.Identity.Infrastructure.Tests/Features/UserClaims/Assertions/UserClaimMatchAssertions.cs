@@ -62,9 +62,9 @@ public static class UserClaimMatchAssertions
 
 	extension(bool response)
 	{
-		public void ShouldSatisfy(UserClaimId id)
+		public void ShouldSatisfy(UserClaimId id, UserClaim? userClaim)
 		{
-			response.ShouldSatisfy(p => p.Matches(id));
+			response.ShouldSatisfy(p => p.Matches(id, userClaim));
 		}
 	}
 }

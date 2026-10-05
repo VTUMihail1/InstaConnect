@@ -27,13 +27,28 @@ public class UserIsEmailUniqueCommandRepositoryIntegrationTests : BaseUserInfras
 	}
 
 	[Fact]
+	public async Task IsEmailUniqueAsync_ShouldReturnNull_WhenEmailIsInvalid()
+	{
+		// Arrange
+		await ServiceScope.DeleteAsync(User, CancellationToken);
+
+		// Act
+		var response = await Repository.IsEmailUniqueAsync(_email, CancellationToken);
+		var user = await ServiceScope.GetByEmailAsync(_email, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(_email, user);
+	}
+
+	[Fact]
 	public async Task IsEmailUniqueAsync_ShouldReturnResponse_WhenCommandIsValid()
 	{
 		// Act
 		var response = await Repository.IsEmailUniqueAsync(_email, CancellationToken);
+		var user = await ServiceScope.GetByEmailAsync(_email, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(_email);
+		response.ShouldSatisfy(_email, user);
 	}
 
 	[Theory]
@@ -46,8 +61,9 @@ public class UserIsEmailUniqueCommandRepositoryIntegrationTests : BaseUserInfras
 
 		// Act
 		var response = await Repository.IsEmailUniqueAsync(email, CancellationToken);
+		var user = await ServiceScope.GetByEmailAsync(_email, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(email);
+		response.ShouldSatisfy(email, user);
 	}
 }

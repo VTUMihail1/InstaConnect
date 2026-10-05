@@ -230,9 +230,9 @@ public static class PostEquals
 
 	extension(bool response)
 	{
-		public bool Matches(PostId id)
+		public bool Matches(PostId id, Post? post)
 		{
-			return response;
+			return response == (post != null);
 		}
 	}
 }

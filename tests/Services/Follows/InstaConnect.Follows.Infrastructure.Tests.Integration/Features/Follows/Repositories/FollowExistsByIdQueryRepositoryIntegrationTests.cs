@@ -28,13 +28,28 @@ public class FollowExistsByIdQueryRepositoryIntegrationTests : BaseFollowInfrast
 	}
 
 	[Fact]
+	public async Task ExistsByIdAsync_ShouldReturnNull_WhenIdIsInvalid()
+	{
+		// Arrange
+		await ServiceScope.DeleteAsync(Follow, CancellationToken);
+
+		// Act
+		var response = await Repository.ExistsByIdAsync(_id, CancellationToken);
+		var follow = await ServiceScope.GetByIdAsync(_id, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(_id, follow);
+	}
+
+	[Fact]
 	public async Task ExistsByIdAsync_ShouldReturnResponse_WhenQueryIsValid()
 	{
 		// Act
 		var response = await Repository.ExistsByIdAsync(_id, CancellationToken);
+		var follow = await ServiceScope.GetByIdAsync(_id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(_id);
+		response.ShouldSatisfy(_id, follow);
 	}
 
 	[Theory]
@@ -47,9 +62,10 @@ public class FollowExistsByIdQueryRepositoryIntegrationTests : BaseFollowInfrast
 
 		// Act
 		var response = await Repository.ExistsByIdAsync(id, CancellationToken);
+		var follow = await ServiceScope.GetByIdAsync(_id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(id);
+		response.ShouldSatisfy(id, follow);
 	}
 
 	[Theory]
@@ -62,8 +78,9 @@ public class FollowExistsByIdQueryRepositoryIntegrationTests : BaseFollowInfrast
 
 		// Act
 		var response = await Repository.ExistsByIdAsync(id, CancellationToken);
+		var follow = await ServiceScope.GetByIdAsync(_id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(id);
+		response.ShouldSatisfy(id, follow);
 	}
 }

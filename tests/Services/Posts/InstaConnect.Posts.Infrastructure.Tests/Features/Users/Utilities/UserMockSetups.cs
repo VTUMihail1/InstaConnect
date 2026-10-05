@@ -42,23 +42,26 @@ public static class UserMockSetups
 	{
 		public void SetupAnyAsync(
 			UserId id,
+			User? user,
 			CancellationToken cancellationToken)
 		{
-			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(true);
+			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(user != null);
 		}
 
 		public void SetupAnyAsync(
 			Name name,
+			User? user,
 			CancellationToken cancellationToken)
 		{
-			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(true);
+			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(user != null);
 		}
 
 		public void SetupAnyAsync(
 			Email email,
+			User? user,
 			CancellationToken cancellationToken)
 		{
-			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(true);
+			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(user != null);
 		}
 
 		public void SetupApplyIncludes(

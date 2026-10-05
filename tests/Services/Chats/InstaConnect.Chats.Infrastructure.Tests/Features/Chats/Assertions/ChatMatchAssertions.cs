@@ -92,9 +92,9 @@ public static class ChatMatchAssertions
 
 	extension(bool response)
 	{
-		public void ShouldSatisfy(ChatId id)
+		public void ShouldSatisfy(ChatId id, Chat? chat)
 		{
-			response.ShouldSatisfy(p => p.Matches(id));
+			response.ShouldSatisfy(p => p.Matches(id, chat));
 		}
 	}
 }

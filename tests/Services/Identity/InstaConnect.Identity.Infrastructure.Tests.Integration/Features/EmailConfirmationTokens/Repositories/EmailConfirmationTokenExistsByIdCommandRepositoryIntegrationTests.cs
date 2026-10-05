@@ -30,13 +30,28 @@ public class EmailConfirmationTokenExistsByIdCommandRepositoryIntegrationTests :
 	}
 
 	[Fact]
+	public async Task ExistsByIdAsync_ShouldReturnNull_WhenIdIsInvalid()
+	{
+		// Arrange
+		await ServiceScope.DeleteAsync(EmailConfirmationToken, CancellationToken);
+
+		// Act
+		var response = await Repository.ExistsByIdAsync(_id, CancellationToken);
+		var emailConfirmationToken = await ServiceScope.GetByIdAsync(_id, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(_id, emailConfirmationToken);
+	}
+
+	[Fact]
 	public async Task ExistsByIdAsync_ShouldReturnResponse_WhenCommandIsValid()
 	{
 		// Act
 		var response = await Repository.ExistsByIdAsync(_id, CancellationToken);
+		var emailConfirmationToken = await ServiceScope.GetByIdAsync(_id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(_id);
+		response.ShouldSatisfy(_id, emailConfirmationToken);
 	}
 
 	[Theory]
@@ -49,9 +64,10 @@ public class EmailConfirmationTokenExistsByIdCommandRepositoryIntegrationTests :
 
 		// Act
 		var response = await Repository.ExistsByIdAsync(id, CancellationToken);
+		var emailConfirmationToken = await ServiceScope.GetByIdAsync(_id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(id);
+		response.ShouldSatisfy(id, emailConfirmationToken);
 	}
 
 	[Theory]
@@ -64,8 +80,9 @@ public class EmailConfirmationTokenExistsByIdCommandRepositoryIntegrationTests :
 
 		// Act
 		var response = await Repository.ExistsByIdAsync(id, CancellationToken);
+		var emailConfirmationToken = await ServiceScope.GetByIdAsync(_id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(id);
+		response.ShouldSatisfy(id, emailConfirmationToken);
 	}
 }

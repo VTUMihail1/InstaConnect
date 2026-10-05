@@ -31,13 +31,28 @@ public class ChatMessageExistsByIdCommandRepositoryIntegrationTests : BaseChatMe
 	}
 
 	[Fact]
+	public async Task ExistsByIdAsync_ShouldReturnNull_WhenIdIsInvalid()
+	{
+		// Arrange
+		await ServiceScope.DeleteAsync(ChatMessage, CancellationToken);
+
+		// Act
+		var response = await Repository.ExistsByIdAsync(_id, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(_id, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(_id, chatMessage);
+	}
+
+	[Fact]
 	public async Task ExistsByIdAsync_ShouldReturnResponse_WhenCommandIsValid()
 	{
 		// Act
 		var response = await Repository.ExistsByIdAsync(_id, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(_id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(_id);
+		response.ShouldSatisfy(_id, chatMessage);
 	}
 
 	[Theory]
@@ -50,9 +65,10 @@ public class ChatMessageExistsByIdCommandRepositoryIntegrationTests : BaseChatMe
 
 		// Act
 		var response = await Repository.ExistsByIdAsync(id, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(_id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(id);
+		response.ShouldSatisfy(id, chatMessage);
 	}
 
 	[Theory]
@@ -65,9 +81,10 @@ public class ChatMessageExistsByIdCommandRepositoryIntegrationTests : BaseChatMe
 
 		// Act
 		var response = await Repository.ExistsByIdAsync(id, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(_id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(id);
+		response.ShouldSatisfy(id, chatMessage);
 	}
 
 	[Theory]
@@ -80,9 +97,10 @@ public class ChatMessageExistsByIdCommandRepositoryIntegrationTests : BaseChatMe
 
 		// Act
 		var response = await Repository.ExistsByIdAsync(id, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(_id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(id);
+		response.ShouldSatisfy(id, chatMessage);
 	}
 
 	[Fact]
@@ -93,9 +111,10 @@ public class ChatMessageExistsByIdCommandRepositoryIntegrationTests : BaseChatMe
 
 		// Act
 		var response = await Repository.ExistsByIdAsync(id, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(_id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(id);
+		response.ShouldSatisfy(id, chatMessage);
 	}
 
 	[Theory]
@@ -108,9 +127,10 @@ public class ChatMessageExistsByIdCommandRepositoryIntegrationTests : BaseChatMe
 
 		// Act
 		var response = await Repository.ExistsByIdAsync(id, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(_id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(id);
+		response.ShouldSatisfy(id, chatMessage);
 	}
 
 	[Theory]
@@ -123,9 +143,10 @@ public class ChatMessageExistsByIdCommandRepositoryIntegrationTests : BaseChatMe
 
 		// Act
 		var response = await Repository.ExistsByIdAsync(id, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(_id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(id);
+		response.ShouldSatisfy(id, chatMessage);
 	}
 
 	[Theory]
@@ -138,8 +159,9 @@ public class ChatMessageExistsByIdCommandRepositoryIntegrationTests : BaseChatMe
 
 		// Act
 		var response = await Repository.ExistsByIdAsync(id, CancellationToken);
+		var chatMessage = await ServiceScope.GetByIdAsync(_id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(id);
+		response.ShouldSatisfy(id, chatMessage);
 	}
 }

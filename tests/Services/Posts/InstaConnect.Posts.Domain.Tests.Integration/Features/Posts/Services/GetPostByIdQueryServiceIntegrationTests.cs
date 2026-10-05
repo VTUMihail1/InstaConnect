@@ -32,7 +32,6 @@ public class GetPostByIdQueryServiceIntegrationTests : BasePostDomainQueryIntegr
 		await ServiceScope.AddAsync(PostLike, CancellationToken);
 	}
 
-
 	[Fact]
 	public async Task GetByIdAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
 	{

@@ -28,13 +28,28 @@ public class ChatExistsByIdQueryRepositoryIntegrationTests : BaseChatInfrastruct
 	}
 
 	[Fact]
+	public async Task ExistsByIdAsync_ShouldReturnNull_WhenIdIsInvalid()
+	{
+		// Arrange
+		await ServiceScope.DeleteAsync(Chat, CancellationToken);
+
+		// Act
+		var response = await Repository.ExistsByIdAsync(_id, CancellationToken);
+		var chat = await ServiceScope.GetByIdAsync(_id, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(_id, chat);
+	}
+
+	[Fact]
 	public async Task ExistsByIdAsync_ShouldReturnResponse_WhenQueryIsValid()
 	{
 		// Act
 		var response = await Repository.ExistsByIdAsync(_id, CancellationToken);
+		var chat = await ServiceScope.GetByIdAsync(_id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(_id);
+		response.ShouldSatisfy(_id, chat);
 	}
 
 	[Theory]
@@ -47,9 +62,10 @@ public class ChatExistsByIdQueryRepositoryIntegrationTests : BaseChatInfrastruct
 
 		// Act
 		var response = await Repository.ExistsByIdAsync(id, CancellationToken);
+		var chat = await ServiceScope.GetByIdAsync(_id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(id);
+		response.ShouldSatisfy(id, chat);
 	}
 
 	[Theory]
@@ -62,9 +78,10 @@ public class ChatExistsByIdQueryRepositoryIntegrationTests : BaseChatInfrastruct
 
 		// Act
 		var response = await Repository.ExistsByIdAsync(id, CancellationToken);
+		var chat = await ServiceScope.GetByIdAsync(_id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(id);
+		response.ShouldSatisfy(id, chat);
 	}
 
 	[Fact]
@@ -75,9 +92,10 @@ public class ChatExistsByIdQueryRepositoryIntegrationTests : BaseChatInfrastruct
 
 		// Act
 		var response = await Repository.ExistsByIdAsync(id, CancellationToken);
+		var chat = await ServiceScope.GetByIdAsync(_id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(id);
+		response.ShouldSatisfy(id, chat);
 	}
 
 	[Theory]
@@ -90,9 +108,10 @@ public class ChatExistsByIdQueryRepositoryIntegrationTests : BaseChatInfrastruct
 
 		// Act
 		var response = await Repository.ExistsByIdAsync(id, CancellationToken);
+		var chat = await ServiceScope.GetByIdAsync(_id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(id);
+		response.ShouldSatisfy(id, chat);
 	}
 
 	[Theory]
@@ -105,8 +124,9 @@ public class ChatExistsByIdQueryRepositoryIntegrationTests : BaseChatInfrastruct
 
 		// Act
 		var response = await Repository.ExistsByIdAsync(id, CancellationToken);
+		var chat = await ServiceScope.GetByIdAsync(_id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(id);
+		response.ShouldSatisfy(id, chat);
 	}
 }

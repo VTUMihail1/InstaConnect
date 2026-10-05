@@ -249,9 +249,9 @@ public static class FollowEquals
 
 	extension(bool response)
 	{
-		public bool Matches(FollowId id)
+		public bool Matches(FollowId id, Follow? follow)
 		{
-			return response;
+			return response == (follow != null);
 		}
 	}
 }

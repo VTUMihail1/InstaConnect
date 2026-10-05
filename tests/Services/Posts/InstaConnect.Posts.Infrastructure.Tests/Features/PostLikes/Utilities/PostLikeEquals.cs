@@ -240,9 +240,9 @@ public static class PostLikeEquals
 
 	extension(bool response)
 	{
-		public bool Matches(PostLikeId id)
+		public bool Matches(PostLikeId id, PostLike? postLike)
 		{
-			return response;
+			return response == (postLike != null);
 		}
 	}
 }

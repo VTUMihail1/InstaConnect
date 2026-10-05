@@ -25,7 +25,7 @@ public class PostLikeExistsByIdCommandRepositoryUnitTests : BasePostLikeInfrastr
 
 		Collection.SetupAggregateFluent(_id, Fluent);
 		Fluent.SetupMatch(_id);
-		Fluent.SetupAnyAsync(_id, CancellationToken);
+		Fluent.SetupAnyAsync(_id, PostLike, CancellationToken);
 	}
 
 	[Fact]
@@ -35,7 +35,7 @@ public class PostLikeExistsByIdCommandRepositoryUnitTests : BasePostLikeInfrastr
 		var response = await _repository.ExistsByIdAsync(_id, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(_id);
+		response.ShouldSatisfy(_id, PostLike);
 	}
 
 	[Fact]

@@ -80,9 +80,10 @@ public static class PostMockSetups
 
 		public void SetupAnyAsync(
 			PostId id,
+			Post? post,
 			CancellationToken cancellationToken)
 		{
-			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(true);
+			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(post != null);
 		}
 
 		public void SetupApplyIncludes(

@@ -139,24 +139,24 @@ public static class UserEquals
 
 	extension(bool response)
 	{
-		public bool Matches()
+		public bool Matches(User? user)
 		{
-			return response;
+			return response == (user != null);
 		}
 
-		public bool Matches(UserId id)
+		public bool Matches(UserId id, User? user)
 		{
-			return response;
+			return response == (user != null);
 		}
 
-		public bool Matches(Name name)
+		public bool Matches(Name name, User? user)
 		{
-			return !response;
+			return response == (user == null);
 		}
 
-		public bool Matches(Email email)
+		public bool Matches(Email email, User? user)
 		{
-			return !response;
+			return response == (user == null);
 		}
 	}
 }

@@ -35,6 +35,19 @@ public class GetPostByIdCommandRepositoryIntegrationTests : BasePostInfrastructu
 	}
 
 	[Fact]
+	public async Task GetByIdAsync_ShouldReturnNull_WhenIdIsInvalid()
+	{
+		// Arrange
+		await ServiceScope.DeleteAsync(Post, CancellationToken);
+
+		// Act
+		var response = await Repository.GetByIdAsync(_id, _include, CancellationToken);
+
+		// Assert
+		response.ShouldBeNull();
+	}
+
+	[Fact]
 	public async Task GetByIdAsync_ShouldReturnResponse_WhenCommandIsValid()
 	{
 		// Act

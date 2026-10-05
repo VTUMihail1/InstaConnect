@@ -55,9 +55,10 @@ public static class ChatMessageMockSetups
 
 		public void SetupAnyAsync(
 			ChatMessageId id,
+			ChatMessage? chatMessage,
 			CancellationToken cancellationToken)
 		{
-			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(true);
+			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(chatMessage != null);
 		}
 
 		public void SetupApplyIncludes(

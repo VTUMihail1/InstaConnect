@@ -71,30 +71,35 @@ public static class UserMockSetups
 			fluent.GetCountAsync(cancellationToken).ReturnsTaskResponse(users.ToTotalCountResponse(filterQuery));
 		}
 
-		public void SetupAnyAsync(CancellationToken cancellationToken)
+		public void SetupAnyAsync(
+			User? user,
+			CancellationToken cancellationToken)
 		{
-			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(true);
+			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(user != null);
 		}
 
 		public void SetupAnyAsync(
 			UserId id,
+			User? user,
 			CancellationToken cancellationToken)
 		{
-			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(true);
+			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(user != null);
 		}
 
 		public void SetupAnyAsync(
 			Name name,
+			User? user,
 			CancellationToken cancellationToken)
 		{
-			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(true);
+			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(user != null);
 		}
 
 		public void SetupAnyAsync(
 			Email email,
+			User? user,
 			CancellationToken cancellationToken)
 		{
-			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(true);
+			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(user != null);
 		}
 
 		public void SetupApplyIncludes(

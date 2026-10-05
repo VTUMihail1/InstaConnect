@@ -94,9 +94,9 @@ public static class FollowMatchAssertions
 
 	extension(bool response)
 	{
-		public void ShouldSatisfy(FollowId id)
+		public void ShouldSatisfy(FollowId id, Follow? follow)
 		{
-			response.ShouldSatisfy(f => f.Matches(id));
+			response.ShouldSatisfy(f => f.Matches(id, follow));
 		}
 	}
 }
