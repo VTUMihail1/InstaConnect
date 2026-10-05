@@ -5,8 +5,8 @@ namespace InstaConnect.Chats.Tests.Features.ChatMessages.Builders;
 
 public class ChatMessageBuilder
 {
-	private string _participantOneId;
-	private string _participantTwoId;
+	private readonly string _participantOneId;
+	private readonly string _participantTwoId;
 	private readonly Chat _chat;
 	private string _messageId;
 	private string _senderId;
@@ -26,20 +26,6 @@ public class ChatMessageBuilder
 		_content = ChatMessageDataFaker.GetContent();
 		_createdAtUtc = ChatMessageDataFaker.GetCreatedAtUtc();
 		_updatedAtUtc = _createdAtUtc;
-	}
-
-	public ChatMessageBuilder WithParticipantOneId(UserId participantOneId)
-	{
-		_participantOneId = participantOneId.Id;
-
-		return this;
-	}
-
-	public ChatMessageBuilder WithParticipantTwoId(UserId participantTwoId)
-	{
-		_participantTwoId = participantTwoId.Id;
-
-		return this;
 	}
 
 	public ChatMessageBuilder WithSenderId(UserId senderId)
