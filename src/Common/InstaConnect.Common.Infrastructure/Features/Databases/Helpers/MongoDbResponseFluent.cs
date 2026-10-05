@@ -23,8 +23,8 @@ public abstract class MongoDbResponseFluent<TEntity> : IMongoDbResponseFluent<TE
 		ISortTermerFactory<TSortTerm, TSortTermer, TEntity> sortTermerFactory,
 		TSortingQuery sorting)
 			where TSortingQuery : ISortingQuery<TSortTerm>
-		    where TSortTerm : Enum
-	        where TSortTermer : ISortTermer<TSortTerm, TEntity>
+			where TSortTerm : Enum
+			where TSortTermer : ISortTermer<TSortTerm, TEntity>
 	{
 		var order = sortOrdererFactory.Create(sorting.Order);
 		var term = sortTermerFactory.Create(sorting.Term);

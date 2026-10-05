@@ -6,7 +6,7 @@ using MongoDB.Driver;
 
 namespace InstaConnect.Posts.Infrastructure.Features.Posts.Helpers.Collections;
 
-public class PostCollection : MongoDbCollection<Post>, IPostCollection
+internal class PostCollection : MongoDbCollection<Post>, IPostCollection
 {
 	private readonly IPostFluentFactory _fluentFactory;
 

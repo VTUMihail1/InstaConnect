@@ -15,7 +15,7 @@ public static class UserClaimValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.Id,
+				p => p.Id,
 				messageTransformer);
 		}
 
@@ -25,7 +25,7 @@ public static class UserClaimValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.Id,
+				p => p.Id,
 				messageTransformer);
 		}
 
@@ -35,7 +35,7 @@ public static class UserClaimValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.Id,
+				p => p.Id,
 				messageTransformer);
 		}
 
@@ -45,7 +45,7 @@ public static class UserClaimValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.Claim,
+				p => p.Claim,
 				messageTransformer);
 		}
 
@@ -55,7 +55,7 @@ public static class UserClaimValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.Body.Claim,
+				p => p.Body.Claim,
 				messageTransformer);
 		}
 
@@ -65,7 +65,7 @@ public static class UserClaimValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.CurrentId,
+				p => p.CurrentId,
 				messageTransformer);
 		}
 
@@ -75,7 +75,7 @@ public static class UserClaimValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.Page,
+				p => p.Page,
 				messageTransformer);
 		}
 
@@ -85,7 +85,7 @@ public static class UserClaimValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.PageSize,
+				p => p.PageSize,
 				messageTransformer);
 		}
 
@@ -95,7 +95,7 @@ public static class UserClaimValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.SortOrder,
+				p => p.SortOrder,
 				messageTransformer);
 		}
 
@@ -105,7 +105,7 @@ public static class UserClaimValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.SortTerm,
+				p => p.SortTerm,
 				messageTransformer);
 		}
 	}

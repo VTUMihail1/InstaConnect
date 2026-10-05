@@ -1,6 +1,6 @@
+using InstaConnect.Identity.Tests.Features.Common.Utilities;
 using InstaConnect.Identity.Tests.Features.UserClaims.Abstractions;
 using InstaConnect.Identity.Tests.Features.UserClaims.Helpers;
-using InstaConnect.Identity.Tests.Features.Common.Utilities;
 
 namespace InstaConnect.Identity.Tests.Features.UserClaims.Extensions;
 

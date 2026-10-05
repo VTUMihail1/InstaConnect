@@ -6,7 +6,7 @@ using MongoDB.Driver;
 
 namespace InstaConnect.Follows.Infrastructure.Features.Follows.Helpers.Collections;
 
-public class FollowResponseFluent :
+internal class FollowResponseFluent :
 	MongoDbResponseFluent<FollowResponse>, IFollowResponseFluent
 {
 	private readonly IPaginator _paginator;

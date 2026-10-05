@@ -2,7 +2,7 @@ using MongoDB.Driver;
 
 namespace InstaConnect.Follows.Infrastructure.Features.Follows.Helpers.Collections;
 
-public class FollowFluentFactory : IFollowFluentFactory
+internal class FollowFluentFactory : IFollowFluentFactory
 {
 	private readonly IFollowIncluderFactory _includerFactory;
 	private readonly IFollowResponseFluentFactory _responseFluentFactory;

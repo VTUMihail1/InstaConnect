@@ -34,7 +34,7 @@ public static class PostMatchAssertions
 			PostsSortingQuery sortingQuery,
 			PostsPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery,
-		    ICollection<Post> posts)
+			ICollection<Post> posts)
 		{
 			response.ShouldSatisfy(p => p.Matches(filterQuery, sortingQuery, paginationQuery, currentUserQuery, posts));
 		}
@@ -55,8 +55,8 @@ public static class PostMatchAssertions
 			PostsForUserSortingQuery sortingQuery,
 			PostsPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery,
-		    User user,
-		    ICollection<Post> posts)
+			User user,
+			ICollection<Post> posts)
 		{
 			response.ShouldSatisfy(p => p.Matches(filterQuery, sortingQuery, paginationQuery, currentUserQuery, user, posts));
 		}

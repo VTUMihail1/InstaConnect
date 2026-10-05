@@ -1,8 +1,8 @@
-using InstaConnect.Identity.Events.Features.Users;
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 using InstaConnect.Identity.Domain.Tests.Features.Users.Utilities;
 using InstaConnect.Identity.Events.Features.UserClaims;
+using InstaConnect.Identity.Events.Features.Users;
 
 namespace InstaConnect.Identity.Domain.Tests.Features.UserClaims.Utilities;
 
@@ -135,7 +135,7 @@ public static class UserClaimEquals
 			return response.MatchesCollectionResponse(query.Pagination, userClaims.Count(userClaim => userClaim.MatchesFilter(query.Filter))) &&
 				   response.User.MatchesFull(user) &&
 				   response.UserClaims.MatchesCollection(query.Pagination,
-				                                         userClaims,
+														 userClaims,
 														 response => response.Id,
 														 userClaim => userClaim.Id,
 														 (response, userClaim) => response.MatchesWithoutUser(userClaim),

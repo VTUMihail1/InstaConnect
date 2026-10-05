@@ -17,7 +17,7 @@ public static class UserClaimValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.Id,
+				p => p.Id,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -31,7 +31,7 @@ public static class UserClaimValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.Id,
+				p => p.Id,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -45,7 +45,7 @@ public static class UserClaimValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.Id,
+				p => p.Id,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -59,7 +59,7 @@ public static class UserClaimValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.Claim,
+				p => p.Claim,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -73,7 +73,7 @@ public static class UserClaimValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.Claim,
+				p => p.Claim,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -87,7 +87,7 @@ public static class UserClaimValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.CurrentId,
+				p => p.CurrentId,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -101,7 +101,7 @@ public static class UserClaimValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.Page,
+				p => p.Page,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -115,7 +115,7 @@ public static class UserClaimValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.PageSize,
+				p => p.PageSize,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -129,7 +129,7 @@ public static class UserClaimValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.SortOrder,
+				p => p.SortOrder,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -143,7 +143,7 @@ public static class UserClaimValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.SortTerm,
+				p => p.SortTerm,
 				messageTransformer,
 				cancellationToken);
 		}

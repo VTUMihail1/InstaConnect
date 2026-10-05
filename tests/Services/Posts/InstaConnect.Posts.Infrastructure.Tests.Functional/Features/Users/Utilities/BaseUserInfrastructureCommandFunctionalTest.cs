@@ -1,8 +1,7 @@
-using InstaConnect.Posts.Infrastructure.Tests.Features.Users.Abstractions;
-using InstaConnect.Posts.Infrastructure.Tests.Features.Users.Extensions;
-
 using InstaConnect.Common.Events.Features.Events.Abstractions;
 using InstaConnect.Common.Infrastructure.Tests.Features.Utilities;
+using InstaConnect.Posts.Infrastructure.Tests.Features.Users.Abstractions;
+using InstaConnect.Posts.Infrastructure.Tests.Features.Users.Extensions;
 
 namespace InstaConnect.Posts.Infrastructure.Tests.Functional.Features.Users.Utilities;
 

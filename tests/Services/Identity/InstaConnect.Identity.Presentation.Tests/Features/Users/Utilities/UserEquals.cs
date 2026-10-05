@@ -383,7 +383,7 @@ public static class UserEquals
 		{
 			return response.MatchesCollectionResponse(request, users.Count(matchesFilter)) &&
 				   response.Users.MatchesSortedCollection(request,
-				                                          users,
+														  users,
 														  matches,
 														  termTransformer,
 														  matchesFilter);

@@ -12,7 +12,7 @@ public static class ForgotPasswordTokenValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.Name,
+				p => p.Name,
 				messageTransformer);
 		}
 
@@ -22,7 +22,7 @@ public static class ForgotPasswordTokenValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.Id,
+				p => p.Id,
 				messageTransformer);
 		}
 
@@ -32,7 +32,7 @@ public static class ForgotPasswordTokenValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.Value,
+				p => p.Value,
 				messageTransformer);
 		}
 
@@ -42,7 +42,7 @@ public static class ForgotPasswordTokenValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.Body.Password,
+				p => p.Body.Password,
 				messageTransformer);
 		}
 
@@ -52,7 +52,7 @@ public static class ForgotPasswordTokenValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.Body.ConfirmPassword,
+				p => p.Body.ConfirmPassword,
 				messageTransformer);
 		}
 	}

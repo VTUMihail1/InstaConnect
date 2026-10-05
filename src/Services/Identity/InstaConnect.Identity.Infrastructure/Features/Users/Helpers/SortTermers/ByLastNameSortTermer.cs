@@ -2,7 +2,7 @@ using System.Linq.Expressions;
 
 namespace InstaConnect.Identity.Infrastructure.Features.Users.Helpers.SortTermers;
 
-public class ByLastNameSortTermer : IUsersSortTermer
+internal class ByLastNameSortTermer : IUsersSortTermer
 {
 	public UsersSortTerm SortTerm => UsersSortTerm.ByLastName;
 

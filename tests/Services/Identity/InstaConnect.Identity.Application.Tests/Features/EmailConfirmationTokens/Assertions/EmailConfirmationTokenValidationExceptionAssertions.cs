@@ -15,7 +15,7 @@ public static class EmailConfirmationTokenValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.Name,
+				p => p.Name,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -29,7 +29,7 @@ public static class EmailConfirmationTokenValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.Id,
+				p => p.Id,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -43,7 +43,7 @@ public static class EmailConfirmationTokenValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.Value,
+				p => p.Value,
 				messageTransformer,
 				cancellationToken);
 		}

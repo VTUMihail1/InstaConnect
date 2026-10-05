@@ -15,7 +15,7 @@ public static class ForgotPasswordTokenValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.Name,
+				p => p.Name,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -29,7 +29,7 @@ public static class ForgotPasswordTokenValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.Id,
+				p => p.Id,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -43,7 +43,7 @@ public static class ForgotPasswordTokenValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.Value,
+				p => p.Value,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -57,7 +57,7 @@ public static class ForgotPasswordTokenValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.Password,
+				p => p.Password,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -71,7 +71,7 @@ public static class ForgotPasswordTokenValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.ConfirmPassword,
+				p => p.ConfirmPassword,
 				messageTransformer,
 				cancellationToken);
 		}

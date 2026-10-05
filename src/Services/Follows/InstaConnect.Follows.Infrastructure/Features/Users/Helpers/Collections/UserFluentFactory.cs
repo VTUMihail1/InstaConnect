@@ -2,7 +2,7 @@ using MongoDB.Driver;
 
 namespace InstaConnect.Follows.Infrastructure.Features.Users.Helpers.Collections;
 
-public class UserFluentFactory : IUserFluentFactory
+internal class UserFluentFactory : IUserFluentFactory
 {
 	private readonly IUserIncluderFactory _includerFactory;
 	private readonly IUserResponseFluentFactory _responseFluentFactory;

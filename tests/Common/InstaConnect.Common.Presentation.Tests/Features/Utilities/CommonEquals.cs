@@ -19,8 +19,8 @@ public static class CommonEquals
 		public bool MatchesHttpOnly(DateTimeOffset expires)
 		{
 			return cookie.Expires == expires &&
-		           cookie.Secure &&
-		           cookie.HttpOnly;
+				   cookie.Secure &&
+				   cookie.HttpOnly;
 		}
 	}
 

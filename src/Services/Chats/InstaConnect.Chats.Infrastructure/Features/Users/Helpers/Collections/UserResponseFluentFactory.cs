@@ -4,7 +4,7 @@ using MongoDB.Driver;
 
 namespace InstaConnect.Chats.Infrastructure.Features.Users.Helpers.Collections;
 
-public class UserResponseFluentFactory : IUserResponseFluentFactory
+internal class UserResponseFluentFactory : IUserResponseFluentFactory
 {
 	public IUserResponseFluent Create(IAggregateFluent<UserResponse> fluent)
 	{

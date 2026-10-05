@@ -12,7 +12,7 @@ public static class EmailConfirmationTokenValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.Name,
+				p => p.Name,
 				messageTransformer);
 		}
 
@@ -22,7 +22,7 @@ public static class EmailConfirmationTokenValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.Id,
+				p => p.Id,
 				messageTransformer);
 		}
 
@@ -32,7 +32,7 @@ public static class EmailConfirmationTokenValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.Value,
+				p => p.Value,
 				messageTransformer);
 		}
 	}

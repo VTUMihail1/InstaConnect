@@ -2,7 +2,7 @@ using MongoDB.Driver;
 
 namespace InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Helpers.Collections;
 
-public class EmailConfirmationTokenFluentFactory : IEmailConfirmationTokenFluentFactory
+internal class EmailConfirmationTokenFluentFactory : IEmailConfirmationTokenFluentFactory
 {
 	private readonly IEmailConfirmationTokenIncluderFactory _includerFactory;
 

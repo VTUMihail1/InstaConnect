@@ -6,7 +6,7 @@ using MongoDB.Driver;
 
 namespace InstaConnect.Chats.Infrastructure.Features.Chats.Helpers.Collections;
 
-public class ChatResponseFluent :
+internal class ChatResponseFluent :
 	MongoDbResponseFluent<ChatResponse>, IChatResponseFluent
 {
 	private readonly IPaginator _paginator;

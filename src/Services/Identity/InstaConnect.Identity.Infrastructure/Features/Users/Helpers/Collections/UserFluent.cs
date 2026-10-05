@@ -6,7 +6,7 @@ using MongoDB.Driver;
 
 namespace InstaConnect.Identity.Infrastructure.Features.Users.Helpers.Collections;
 
-public class UserFluent : MongoDbFluent<User>, IUserFluent
+internal class UserFluent : MongoDbFluent<User>, IUserFluent
 {
 	private readonly IUserIncluderFactory _includerFactory;
 	private readonly IUserResponseFluentFactory _responseFluentFactory;

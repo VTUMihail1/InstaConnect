@@ -6,7 +6,7 @@ using MongoDB.Driver;
 
 namespace InstaConnect.Chats.Infrastructure.Features.ChatMessages.Helpers.Collections;
 
-public class ChatMessageCollection : MongoDbCollection<ChatMessage>, IChatMessageCollection
+internal class ChatMessageCollection : MongoDbCollection<ChatMessage>, IChatMessageCollection
 {
 	private readonly IChatMessageFluentFactory _fluentFactory;
 

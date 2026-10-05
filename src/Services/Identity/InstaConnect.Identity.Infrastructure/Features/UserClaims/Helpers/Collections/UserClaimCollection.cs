@@ -6,7 +6,7 @@ using MongoDB.Driver;
 
 namespace InstaConnect.Identity.Infrastructure.Features.UserClaims.Helpers.Collections;
 
-public class UserClaimCollection : MongoDbCollection<UserClaim>, IUserClaimCollection
+internal class UserClaimCollection : MongoDbCollection<UserClaim>, IUserClaimCollection
 {
 	private readonly IUserClaimFluentFactory _fluentFactory;
 

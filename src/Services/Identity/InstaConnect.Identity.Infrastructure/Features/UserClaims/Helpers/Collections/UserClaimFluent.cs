@@ -5,7 +5,7 @@ using MongoDB.Driver;
 
 namespace InstaConnect.Identity.Infrastructure.Features.UserClaims.Helpers.Collections;
 
-public class UserClaimFluent : MongoDbFluent<UserClaim>, IUserClaimFluent
+internal class UserClaimFluent : MongoDbFluent<UserClaim>, IUserClaimFluent
 {
 	private readonly IUserClaimIncluderFactory _includerFactory;
 	private readonly IUserClaimResponseFluentFactory _responseFluentFactory;

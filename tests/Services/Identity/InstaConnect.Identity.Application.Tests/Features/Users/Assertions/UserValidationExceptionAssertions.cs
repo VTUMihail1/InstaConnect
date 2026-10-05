@@ -16,7 +16,7 @@ public static class UserValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.Id,
+				p => p.Id,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -30,7 +30,7 @@ public static class UserValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.Id,
+				p => p.Id,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -44,7 +44,7 @@ public static class UserValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.CurrentId,
+				p => p.CurrentId,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -58,7 +58,7 @@ public static class UserValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.Id,
+				p => p.Id,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -72,7 +72,7 @@ public static class UserValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.Id,
+				p => p.Id,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -86,7 +86,7 @@ public static class UserValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.Name,
+				p => p.Name,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -100,7 +100,7 @@ public static class UserValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.Name,
+				p => p.Name,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -114,7 +114,7 @@ public static class UserValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.Name,
+				p => p.Name,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -128,7 +128,7 @@ public static class UserValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.FirstName,
+				p => p.FirstName,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -142,7 +142,7 @@ public static class UserValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.FirstName,
+				p => p.FirstName,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -156,7 +156,7 @@ public static class UserValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.FirstName,
+				p => p.FirstName,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -170,7 +170,7 @@ public static class UserValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.LastName,
+				p => p.LastName,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -184,7 +184,7 @@ public static class UserValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.LastName,
+				p => p.LastName,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -198,7 +198,7 @@ public static class UserValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.LastName,
+				p => p.LastName,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -212,7 +212,7 @@ public static class UserValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.Email,
+				p => p.Email,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -226,7 +226,7 @@ public static class UserValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.Email,
+				p => p.Email,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -240,7 +240,7 @@ public static class UserValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.Password,
+				p => p.Password,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -254,7 +254,7 @@ public static class UserValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.ConfirmPassword,
+				p => p.ConfirmPassword,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -268,7 +268,7 @@ public static class UserValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.CurrentId,
+				p => p.CurrentId,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -282,7 +282,7 @@ public static class UserValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.CurrentId,
+				p => p.CurrentId,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -296,7 +296,7 @@ public static class UserValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.CurrentId,
+				p => p.CurrentId,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -310,7 +310,7 @@ public static class UserValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.CurrentId,
+				p => p.CurrentId,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -324,7 +324,7 @@ public static class UserValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.CurrentId,
+				p => p.CurrentId,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -338,7 +338,7 @@ public static class UserValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.Page,
+				p => p.Page,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -352,7 +352,7 @@ public static class UserValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.PageSize,
+				p => p.PageSize,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -366,7 +366,7 @@ public static class UserValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.SortOrder,
+				p => p.SortOrder,
 				messageTransformer,
 				cancellationToken);
 		}
@@ -380,7 +380,7 @@ public static class UserValidationExceptionAssertions
 
 			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
-				p =>p.SortTerm,
+				p => p.SortTerm,
 				messageTransformer,
 				cancellationToken);
 		}

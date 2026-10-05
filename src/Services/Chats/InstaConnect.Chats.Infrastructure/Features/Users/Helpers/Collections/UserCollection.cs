@@ -6,7 +6,7 @@ using MongoDB.Driver;
 
 namespace InstaConnect.Chats.Infrastructure.Features.Users.Helpers.Collections;
 
-public class UserCollection : MongoDbCollection<User>, IUserCollection
+internal class UserCollection : MongoDbCollection<User>, IUserCollection
 {
 	private readonly IUserFluentFactory _fluentFactory;
 

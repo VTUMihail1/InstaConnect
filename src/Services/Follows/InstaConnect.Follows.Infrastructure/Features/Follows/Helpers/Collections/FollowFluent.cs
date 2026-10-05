@@ -6,7 +6,7 @@ using MongoDB.Driver;
 
 namespace InstaConnect.Follows.Infrastructure.Features.Follows.Helpers.Collections;
 
-public class FollowFluent : MongoDbFluent<Follow>, IFollowFluent
+internal class FollowFluent : MongoDbFluent<Follow>, IFollowFluent
 {
 	private readonly IFollowIncluderFactory _includerFactory;
 	private readonly IFollowResponseFluentFactory _responseFluentFactory;

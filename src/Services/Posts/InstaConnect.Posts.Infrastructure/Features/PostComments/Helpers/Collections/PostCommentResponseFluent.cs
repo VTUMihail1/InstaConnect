@@ -6,7 +6,7 @@ using MongoDB.Driver;
 
 namespace InstaConnect.Posts.Infrastructure.Features.PostComments.Helpers.Collections;
 
-public class PostCommentResponseFluent :
+internal class PostCommentResponseFluent :
 	MongoDbResponseFluent<PostCommentResponse>, IPostCommentResponseFluent
 {
 	private readonly IPaginator _paginator;

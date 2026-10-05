@@ -2,7 +2,7 @@ using MongoDB.Driver;
 
 namespace InstaConnect.Chats.Infrastructure.Features.ChatMessages.Helpers.Collections;
 
-public class ChatMessageFluentFactory : IChatMessageFluentFactory
+internal class ChatMessageFluentFactory : IChatMessageFluentFactory
 {
 	private readonly IChatMessageIncluderFactory _includerFactory;
 	private readonly IChatMessageResponseFluentFactory _responseFluentFactory;

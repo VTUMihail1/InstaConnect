@@ -2,7 +2,7 @@ using MongoDB.Driver;
 
 namespace InstaConnect.Identity.Infrastructure.Features.RefreshTokens.Helpers.Collections;
 
-public class RefreshTokenFluentFactory : IRefreshTokenFluentFactory
+internal class RefreshTokenFluentFactory : IRefreshTokenFluentFactory
 {
 	private readonly IRefreshTokenIncluderFactory _includerFactory;
 

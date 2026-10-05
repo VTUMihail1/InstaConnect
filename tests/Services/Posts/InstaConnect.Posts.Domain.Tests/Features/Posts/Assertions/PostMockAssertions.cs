@@ -76,8 +76,8 @@ public static class PostMockAssertions
 	extension(IPostCommandRepository repository)
 	{
 		public async Task ShouldHaveReceivedOneAddAsync(
-		    AddPostCommand command,
-		    CancellationToken cancellationToken)
+			AddPostCommand command,
+			CancellationToken cancellationToken)
 		{
 			await repository.ShouldHaveReceivedOne().AddAsync(command.IsPost(), cancellationToken);
 		}

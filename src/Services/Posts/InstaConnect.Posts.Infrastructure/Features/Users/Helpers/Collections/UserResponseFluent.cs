@@ -5,7 +5,7 @@ using MongoDB.Driver;
 
 namespace InstaConnect.Posts.Infrastructure.Features.Users.Helpers.Collections;
 
-public class UserResponseFluent :
+internal class UserResponseFluent :
 	MongoDbResponseFluent<UserResponse>, IUserResponseFluent
 {
 	public UserResponseFluent(IAggregateFluent<UserResponse> fluent) : base(fluent)

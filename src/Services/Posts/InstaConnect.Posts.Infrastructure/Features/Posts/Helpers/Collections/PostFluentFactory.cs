@@ -2,7 +2,7 @@ using MongoDB.Driver;
 
 namespace InstaConnect.Posts.Infrastructure.Features.Posts.Helpers.Collections;
 
-public class PostFluentFactory : IPostFluentFactory
+internal class PostFluentFactory : IPostFluentFactory
 {
 	private readonly IPostIncluderFactory _includerFactory;
 	private readonly IPostResponseFluentFactory _responseFluentFactory;

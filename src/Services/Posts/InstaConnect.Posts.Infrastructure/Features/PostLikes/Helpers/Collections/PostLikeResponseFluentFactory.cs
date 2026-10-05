@@ -5,7 +5,7 @@ using MongoDB.Driver;
 
 namespace InstaConnect.Posts.Infrastructure.Features.PostLikes.Helpers.Collections;
 
-public class PostLikeResponseFluentFactory : IPostLikeResponseFluentFactory
+internal class PostLikeResponseFluentFactory : IPostLikeResponseFluentFactory
 {
 	private readonly IPaginator _paginator;
 	private readonly ISortOrdererFactory _sortOrdererFactory;

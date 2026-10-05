@@ -1,4 +1,3 @@
-using InstaConnect.Identity.Events.Features.Users;
 using InstaConnect.Common.Application.Features.Requests.Abstractions;
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
@@ -7,6 +6,7 @@ using InstaConnect.Identity.Application.Features.Users.Abstractions;
 using InstaConnect.Identity.Application.Tests.Features.UserClaims.Utilities;
 using InstaConnect.Identity.Application.Tests.Features.Users.Utilities;
 using InstaConnect.Identity.Events.Features.UserClaims;
+using InstaConnect.Identity.Events.Features.Users;
 
 namespace InstaConnect.Identity.Application.Tests.Features.UserClaims.Utilities;
 
@@ -207,7 +207,7 @@ public static class UserClaimEquals
 				   response.User.MatchesFull(user) &&
 				   response.UserClaims.MatchesCollection(
 													request,
-					                                userClaims,
+													userClaims,
 													response => new(new(response.Id), response.Claim),
 													userClaim => userClaim.Id,
 													matches,
@@ -227,7 +227,7 @@ public static class UserClaimEquals
 				   response.User.MatchesFull(user) &&
 				   response.UserClaims.MatchesSortedCollection(
 														  request,
-					                                      userClaims,
+														  userClaims,
 														  matches,
 														  termTransformer,
 														  matchesFilter);
@@ -244,7 +244,7 @@ public static class UserClaimEquals
 				   response.User == null &&
 				   response.UserClaims.MatchesCollection(
 													request,
-					                                userClaims,
+													userClaims,
 													response => new(new(response.Id), response.Claim),
 													userClaim => userClaim.Id,
 													matches,

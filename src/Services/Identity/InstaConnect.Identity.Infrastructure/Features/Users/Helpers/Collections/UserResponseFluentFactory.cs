@@ -5,7 +5,7 @@ using MongoDB.Driver;
 
 namespace InstaConnect.Identity.Infrastructure.Features.Users.Helpers.Collections;
 
-public class UserResponseFluentFactory : IUserResponseFluentFactory
+internal class UserResponseFluentFactory : IUserResponseFluentFactory
 {
 	private readonly IPaginator _paginator;
 	private readonly ISortOrdererFactory _sortOrdererFactory;

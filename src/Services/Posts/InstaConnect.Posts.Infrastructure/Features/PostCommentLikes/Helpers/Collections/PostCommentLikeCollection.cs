@@ -6,7 +6,7 @@ using MongoDB.Driver;
 
 namespace InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Helpers.Collections;
 
-public class PostCommentLikeCollection : MongoDbCollection<PostCommentLike>, IPostCommentLikeCollection
+internal class PostCommentLikeCollection : MongoDbCollection<PostCommentLike>, IPostCommentLikeCollection
 {
 	private readonly IPostCommentLikeFluentFactory _fluentFactory;
 

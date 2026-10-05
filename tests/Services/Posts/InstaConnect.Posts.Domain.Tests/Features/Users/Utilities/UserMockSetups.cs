@@ -10,7 +10,7 @@ public static class UserMockSetups
 		{
 			factory
 				.Create(
-				    command.Id,
+					command.Id,
 					command.FirstName,
 					command.LastName,
 					command.Name,
@@ -26,8 +26,8 @@ public static class UserMockSetups
 	{
 		public void SetupExistsByIdAsync(
 			AddUserCommand command,
-		    User user,
-		    CancellationToken cancellationToken)
+			User user,
+			CancellationToken cancellationToken)
 		{
 			repository
 				.ExistsByIdAsync(command.Id, cancellationToken)
@@ -87,7 +87,7 @@ public static class UserMockSetups
 		public void SetupIsNameUniqueAsync(
 			AddUserCommand command,
 			User user,
-		    CancellationToken cancellationToken)
+			CancellationToken cancellationToken)
 		{
 			repository
 				.IsNameUniqueAsync(command.Name, cancellationToken)
@@ -127,7 +127,7 @@ public static class UserMockSetups
 		public void SetupIsEmailUniqueAsync(
 			AddUserCommand command,
 			User user,
-		    CancellationToken cancellationToken)
+			CancellationToken cancellationToken)
 		{
 			repository
 				.IsEmailUniqueAsync(command.Email, cancellationToken)

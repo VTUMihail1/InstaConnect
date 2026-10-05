@@ -14,7 +14,7 @@ public static class UserValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.Id,
+				p => p.Id,
 				messageTransformer);
 		}
 
@@ -24,7 +24,7 @@ public static class UserValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.Id,
+				p => p.Id,
 				messageTransformer);
 		}
 
@@ -34,7 +34,7 @@ public static class UserValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.CurrentId,
+				p => p.CurrentId,
 				messageTransformer);
 		}
 
@@ -44,7 +44,7 @@ public static class UserValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.Id,
+				p => p.Id,
 				messageTransformer);
 		}
 
@@ -54,7 +54,7 @@ public static class UserValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.Id,
+				p => p.Id,
 				messageTransformer);
 		}
 
@@ -64,7 +64,7 @@ public static class UserValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.CurrentId,
+				p => p.CurrentId,
 				messageTransformer);
 		}
 
@@ -74,7 +74,7 @@ public static class UserValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.CurrentId,
+				p => p.CurrentId,
 				messageTransformer);
 		}
 
@@ -84,7 +84,7 @@ public static class UserValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.CurrentId,
+				p => p.CurrentId,
 				messageTransformer);
 		}
 
@@ -94,7 +94,7 @@ public static class UserValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.CurrentId,
+				p => p.CurrentId,
 				messageTransformer);
 		}
 
@@ -104,7 +104,7 @@ public static class UserValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.CurrentId,
+				p => p.CurrentId,
 				messageTransformer);
 		}
 
@@ -114,7 +114,7 @@ public static class UserValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.Form.FirstName,
+				p => p.Form.FirstName,
 				messageTransformer);
 		}
 
@@ -124,7 +124,7 @@ public static class UserValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.Form.FirstName,
+				p => p.Form.FirstName,
 				messageTransformer);
 		}
 
@@ -134,7 +134,7 @@ public static class UserValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.FirstName,
+				p => p.FirstName,
 				messageTransformer);
 		}
 
@@ -144,7 +144,7 @@ public static class UserValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.Form.LastName,
+				p => p.Form.LastName,
 				messageTransformer);
 		}
 
@@ -154,7 +154,7 @@ public static class UserValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.Form.LastName,
+				p => p.Form.LastName,
 				messageTransformer);
 		}
 
@@ -164,7 +164,7 @@ public static class UserValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.LastName,
+				p => p.LastName,
 				messageTransformer);
 		}
 
@@ -174,7 +174,7 @@ public static class UserValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.Form.Name,
+				p => p.Form.Name,
 				messageTransformer);
 		}
 
@@ -184,7 +184,7 @@ public static class UserValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.Form.Name,
+				p => p.Form.Name,
 				messageTransformer);
 		}
 
@@ -194,7 +194,7 @@ public static class UserValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.Name,
+				p => p.Name,
 				messageTransformer);
 		}
 
@@ -204,7 +204,7 @@ public static class UserValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.Form.Email,
+				p => p.Form.Email,
 				messageTransformer);
 		}
 
@@ -214,7 +214,7 @@ public static class UserValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.Form.Email,
+				p => p.Form.Email,
 				messageTransformer);
 		}
 
@@ -224,7 +224,7 @@ public static class UserValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.Form.Password,
+				p => p.Form.Password,
 				messageTransformer);
 		}
 
@@ -234,7 +234,7 @@ public static class UserValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.Form.ConfirmPassword,
+				p => p.Form.ConfirmPassword,
 				messageTransformer);
 		}
 
@@ -244,7 +244,7 @@ public static class UserValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.Page,
+				p => p.Page,
 				messageTransformer);
 		}
 
@@ -254,7 +254,7 @@ public static class UserValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.PageSize,
+				p => p.PageSize,
 				messageTransformer);
 		}
 
@@ -264,7 +264,7 @@ public static class UserValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.SortOrder,
+				p => p.SortOrder,
 				messageTransformer);
 		}
 
@@ -274,7 +274,7 @@ public static class UserValidationProblemDetailsAssertions
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
 				request,
-				p =>p.SortTerm,
+				p => p.SortTerm,
 				messageTransformer);
 		}
 	}

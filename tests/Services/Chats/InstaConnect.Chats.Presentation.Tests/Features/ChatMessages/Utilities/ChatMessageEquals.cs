@@ -1,10 +1,10 @@
 using InstaConnect.Chats.Domain.Features.ChatMessages.Models.Requests;
-using InstaConnect.Chats.Domain.Features.Users.Models.Requests;
 using InstaConnect.Chats.Domain.Features.Chats.Models.Requests;
+using InstaConnect.Chats.Domain.Features.Users.Models.Requests;
 using InstaConnect.Chats.Presentation.Features.Users.Abstractions;
-using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Chats.Presentation.Tests.Features.Chats.Utilities;
 using InstaConnect.Chats.Presentation.Tests.Features.Users.Utilities;
+using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Presentation.Features.Requests.Abstractions;
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 

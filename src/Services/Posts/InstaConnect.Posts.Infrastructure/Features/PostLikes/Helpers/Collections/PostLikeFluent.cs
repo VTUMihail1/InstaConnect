@@ -6,7 +6,7 @@ using MongoDB.Driver;
 
 namespace InstaConnect.Posts.Infrastructure.Features.PostLikes.Helpers.Collections;
 
-public class PostLikeFluent : MongoDbFluent<PostLike>, IPostLikeFluent
+internal class PostLikeFluent : MongoDbFluent<PostLike>, IPostLikeFluent
 {
 	private readonly IPostLikeIncluderFactory _includerFactory;
 	private readonly IPostLikeResponseFluentFactory _responseFluentFactory;

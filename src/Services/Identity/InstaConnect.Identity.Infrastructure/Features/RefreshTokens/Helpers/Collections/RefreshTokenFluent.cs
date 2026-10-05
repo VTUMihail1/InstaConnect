@@ -5,7 +5,7 @@ using MongoDB.Driver;
 
 namespace InstaConnect.Identity.Infrastructure.Features.RefreshTokens.Helpers.Collections;
 
-public class RefreshTokenFluent : MongoDbFluent<RefreshToken>, IRefreshTokenFluent
+internal class RefreshTokenFluent : MongoDbFluent<RefreshToken>, IRefreshTokenFluent
 {
 	private readonly IRefreshTokenIncluderFactory _includerFactory;
 

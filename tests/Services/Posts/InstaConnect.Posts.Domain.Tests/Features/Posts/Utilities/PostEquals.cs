@@ -237,7 +237,7 @@ public static class PostEquals
 			return response.MatchesCollectionResponse(request.Pagination, posts.Count(matchesFilter)) &&
 				   response.User.MatchesFull(user) &&
 				   response.Posts.MatchesCollection(request.Pagination,
-				                                    posts,
+													posts,
 													response => response.Id,
 													post => post.Id,
 													matches,

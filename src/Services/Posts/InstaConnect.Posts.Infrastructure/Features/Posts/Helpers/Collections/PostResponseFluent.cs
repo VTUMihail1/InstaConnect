@@ -6,7 +6,7 @@ using MongoDB.Driver;
 
 namespace InstaConnect.Posts.Infrastructure.Features.Posts.Helpers.Collections;
 
-public class PostResponseFluent :
+internal class PostResponseFluent :
 	MongoDbResponseFluent<PostResponse>, IPostResponseFluent
 {
 	private readonly IPaginator _paginator;

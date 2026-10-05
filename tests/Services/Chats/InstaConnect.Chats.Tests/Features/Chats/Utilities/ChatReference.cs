@@ -6,7 +6,7 @@ public static class ChatReference
 	{
 		public ICollection<Chat> SetParticipantOne()
 		{
-			foreach(var chat in chats)
+			foreach (var chat in chats)
 			{
 				chat.SetParticipantOne();
 			}

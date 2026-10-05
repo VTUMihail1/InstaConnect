@@ -82,7 +82,7 @@ public class GetAllPostsQueryBuilder
 	public GetAllPostsQuery Build()
 	{
 		return new(
-			       new(
+				   new(
 					   new(_userName),
 					   _title),
 				   new(_sortOrder, _sortTerm),
