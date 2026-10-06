@@ -1,4 +1,5 @@
 using InstaConnect.Common.Application.Features.Requests.Abstractions;
+using InstaConnect.Common.Application.Tests.Features.Assertions;
 using InstaConnect.Identity.Presentation.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.Users.Assertions;
@@ -11,63 +12,63 @@ public static class UserMockAssertions
 		GetAllUsersApiRequest request,
 		CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(request.IsGetAllUsersQueryRequest(), cancellationToken);
+			await sender.ShouldHaveReceivedOneSendAsync(request.IsGetAllUsersQueryRequest(), cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneSendAsync(
 			GetUserByIdApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(request.IsGetUserByIdQueryRequest(), cancellationToken);
+			await sender.ShouldHaveReceivedOneSendAsync(request.IsGetUserByIdQueryRequest(), cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneSendAsync(
 			GetCurrentUserByIdApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(request.IsGetCurrentUserByIdQueryRequest(), cancellationToken);
+			await sender.ShouldHaveReceivedOneSendAsync(request.IsGetCurrentUserByIdQueryRequest(), cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneSendAsync(
 			GetUserDetailsByIdApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(request.IsGetUserDetailsByIdQueryRequest(), cancellationToken);
+			await sender.ShouldHaveReceivedOneSendAsync(request.IsGetUserDetailsByIdQueryRequest(), cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneSendAsync(
 			GetCurrentUserDetailsByIdApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(request.IsGetCurrentUserDetailsByIdQueryRequest(), cancellationToken);
+			await sender.ShouldHaveReceivedOneSendAsync(request.IsGetCurrentUserDetailsByIdQueryRequest(), cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneSendAsync(
 			AddUserApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(request.IsAddUserCommandRequest(), cancellationToken);
+			await sender.ShouldHaveReceivedOneSendAsync(request.IsAddUserCommandRequest(), cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneSendAsync(
 			UpdateCurrentUserApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(request.IsUpdateCurrentUserCommandRequest(), cancellationToken);
+			await sender.ShouldHaveReceivedOneSendAsync(request.IsUpdateCurrentUserCommandRequest(), cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneSendAsync(
 			DeleteUserApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(request.IsDeleteUserCommandRequest(), cancellationToken);
+			await sender.ShouldHaveReceivedOneSendAsync(request.IsDeleteUserCommandRequest(), cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneSendAsync(
 			DeleteCurrentUserApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(request.IsDeleteCurrentUserCommandRequest(), cancellationToken);
+			await sender.ShouldHaveReceivedOneSendAsync(request.IsDeleteCurrentUserCommandRequest(), cancellationToken);
 		}
 	}
 }

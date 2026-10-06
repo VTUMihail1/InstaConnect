@@ -13,6 +13,11 @@ public static class ForgotPasswordTokenMockSetups
 			ForgotPasswordTokenId id,
 			IForgotPasswordTokenFluent fluent)
 		{
+			collection.SetupAggregateFluent(fluent);
+		}
+
+		public void SetupAggregateFluent(IForgotPasswordTokenFluent fluent)
+		{
 			collection.AggregateFluent().ReturnsResponse(fluent);
 		}
 	}
@@ -24,12 +29,17 @@ public static class ForgotPasswordTokenMockSetups
 			ForgotPasswordToken? forgotPasswordToken,
 			CancellationToken cancellationToken)
 		{
-			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(forgotPasswordToken != null);
+			fluent.SetupAnyAsync(forgotPasswordToken != null, cancellationToken);
 		}
 
 		public void SetupApplyIncludes(
 			ForgotPasswordTokenId id,
 			ForgotPasswordTokenInclude include)
+		{
+			fluent.SetupApplyIncludes(include);
+		}
+
+		public void SetupApplyIncludes(ForgotPasswordTokenInclude include)
 		{
 			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
 		}
@@ -44,7 +54,7 @@ public static class ForgotPasswordTokenMockSetups
 			ForgotPasswordToken forgotPasswordToken,
 			CancellationToken cancellationToken)
 		{
-			fluent.FirstOrDefaultAsync(cancellationToken).ReturnsTaskResponse(forgotPasswordToken);
+			fluent.SetupFirstOrDefaultAsync(forgotPasswordToken, cancellationToken);
 		}
 	}
 }

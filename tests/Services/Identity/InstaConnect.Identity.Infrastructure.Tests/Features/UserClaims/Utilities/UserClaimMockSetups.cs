@@ -14,7 +14,7 @@ public static class UserClaimMockSetups
 			UserClaimId id,
 			IUserClaimFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
@@ -22,7 +22,7 @@ public static class UserClaimMockSetups
 			CurrentUserQuery currentUserQuery,
 			IUserClaimFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
@@ -32,12 +32,17 @@ public static class UserClaimMockSetups
 			CurrentUserQuery currentUserQuery,
 			IUserClaimFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
 			UserClaimsFilterQuery filterQuery,
 			IUserClaimFluent fluent)
+		{
+			collection.SetupAggregateFluent(fluent);
+		}
+
+		public void SetupAggregateFluent(IUserClaimFluent fluent)
 		{
 			collection.AggregateFluent().ReturnsResponse(fluent);
 		}
@@ -50,7 +55,7 @@ public static class UserClaimMockSetups
 			ICollection<UserClaim> userClaims,
 			CancellationToken cancellationToken)
 		{
-			fluent.GetCountAsync(cancellationToken).ReturnsTaskResponse(userClaims.ToTotalCountResponse(filterQuery));
+			fluent.SetupGetCountAsync(userClaims.ToTotalCountResponse(filterQuery), cancellationToken);
 		}
 
 		public void SetupAnyAsync(
@@ -58,12 +63,17 @@ public static class UserClaimMockSetups
 			UserClaim? userClaim,
 			CancellationToken cancellationToken)
 		{
-			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(userClaim != null);
+			fluent.SetupAnyAsync(userClaim != null, cancellationToken);
 		}
 
 		public void SetupApplyIncludes(
 			UserClaimId id,
 			UserClaimInclude include)
+		{
+			fluent.SetupApplyIncludes(include);
+		}
+
+		public void SetupApplyIncludes(UserClaimInclude include)
 		{
 			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
 		}
@@ -77,7 +87,7 @@ public static class UserClaimMockSetups
 			UserClaimId id,
 			CurrentUserQuery currentUserQuery)
 		{
-			fluent.Match(id).ReturnsResponse(fluent);
+			fluent.SetupMatch(id);
 		}
 
 		public void SetupMatch(UserClaimsFilterQuery filterQuery)
@@ -91,11 +101,18 @@ public static class UserClaimMockSetups
 			UserClaimsPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
-			fluent.Match(filterQuery).ReturnsResponse(fluent);
+			fluent.SetupMatch(filterQuery);
 		}
 
 		public void SetupProjectToFullResponse(
 			UserClaimId id,
+			CurrentUserQuery currentUserQuery,
+			IUserClaimResponseFluent responseFluent)
+		{
+			fluent.SetupProjectToFullResponse(currentUserQuery, responseFluent);
+		}
+
+		public void SetupProjectToFullResponse(
 			CurrentUserQuery currentUserQuery,
 			IUserClaimResponseFluent responseFluent)
 		{
@@ -109,6 +126,13 @@ public static class UserClaimMockSetups
 			CurrentUserQuery currentUserQuery,
 			IUserClaimResponseFluent responseFluent)
 		{
+			fluent.SetupProjectToResponseWithoutUser(currentUserQuery, responseFluent);
+		}
+
+		public void SetupProjectToResponseWithoutUser(
+			CurrentUserQuery currentUserQuery,
+			IUserClaimResponseFluent responseFluent)
+		{
 			fluent.ProjectToResponseWithoutUser(currentUserQuery).ReturnsResponse(responseFluent);
 		}
 
@@ -117,7 +141,7 @@ public static class UserClaimMockSetups
 			UserClaim userClaim,
 			CancellationToken cancellationToken)
 		{
-			fluent.FirstOrDefaultAsync(cancellationToken).ReturnsTaskResponse(userClaim);
+			fluent.SetupFirstOrDefaultAsync(userClaim, cancellationToken);
 		}
 	}
 
@@ -129,6 +153,11 @@ public static class UserClaimMockSetups
 			UserClaimsPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
+			fluent.SetupApplySorting(sortingQuery);
+		}
+
+		public void SetupApplySorting(UserClaimsSortingQuery sortingQuery)
+		{
 			fluent.ApplySorting(sortingQuery).ReturnsResponse(fluent);
 		}
 
@@ -137,6 +166,11 @@ public static class UserClaimMockSetups
 			UserClaimsSortingQuery sortingQuery,
 			UserClaimsPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
+		{
+			fluent.SetupApplyPagination(paginationQuery);
+		}
+
+		public void SetupApplyPagination(UserClaimsPaginationQuery paginationQuery)
 		{
 			fluent.ApplyPagination(paginationQuery).ReturnsResponse(fluent);
 		}
@@ -149,7 +183,7 @@ public static class UserClaimMockSetups
 			ICollection<UserClaim> userClaims,
 			CancellationToken cancellationToken)
 		{
-			fluent.ToListAsync(cancellationToken).ReturnsTaskResponse(userClaims.ToResponse(filterQuery, paginationQuery, currentUserQuery));
+			fluent.SetupToListAsync(userClaims.ToResponse(filterQuery, paginationQuery, currentUserQuery), cancellationToken);
 		}
 
 		public void SetupFirstOrDefaultAsync(
@@ -158,7 +192,7 @@ public static class UserClaimMockSetups
 			UserClaim userClaim,
 			CancellationToken cancellationToken)
 		{
-			fluent.FirstOrDefaultAsync(cancellationToken).ReturnsTaskResponse(userClaim.ToResponse(id, currentUserQuery));
+			fluent.SetupFirstOrDefaultAsync(userClaim.ToResponse(id, currentUserQuery), cancellationToken);
 		}
 	}
 }

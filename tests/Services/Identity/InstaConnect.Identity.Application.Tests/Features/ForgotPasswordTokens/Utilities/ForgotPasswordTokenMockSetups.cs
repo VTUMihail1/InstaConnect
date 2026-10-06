@@ -1,3 +1,5 @@
+using InstaConnect.Identity.Domain.Tests.Features.ForgotPasswordTokens.Utilities;
+
 namespace InstaConnect.Identity.Application.Tests.Features.ForgotPasswordTokens.Utilities;
 
 public static class ForgotPasswordTokenMockSetups
@@ -9,9 +11,7 @@ public static class ForgotPasswordTokenMockSetups
 			ForgotPasswordToken forgotPasswordToken,
 			CancellationToken cancellationToken)
 		{
-			service
-				.AddAsync(request.IsAddForgotPasswordTokenCommand(), cancellationToken)
-				.ReturnsTaskResponse(forgotPasswordToken.ToResponse(request));
+			service.SetupAddAsync(request.IsAddForgotPasswordTokenCommand(), forgotPasswordToken.ToResponse(request), cancellationToken);
 		}
 	}
 }

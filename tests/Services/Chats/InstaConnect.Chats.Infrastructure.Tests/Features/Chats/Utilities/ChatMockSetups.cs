@@ -14,7 +14,7 @@ public static class ChatMockSetups
 			ChatId id,
 			IChatFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
@@ -22,7 +22,7 @@ public static class ChatMockSetups
 			CurrentUserQuery currentUserQuery,
 			IChatFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
@@ -32,12 +32,17 @@ public static class ChatMockSetups
 			CurrentUserQuery currentUserQuery,
 			IChatFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
 			ChatsFilterQuery filterQuery,
 			IChatFluent fluent)
+		{
+			collection.SetupAggregateFluent(fluent);
+		}
+
+		public void SetupAggregateFluent(IChatFluent fluent)
 		{
 			collection.AggregateFluent().ReturnsResponse(fluent);
 		}
@@ -50,7 +55,7 @@ public static class ChatMockSetups
 			ICollection<Chat> chats,
 			CancellationToken cancellationToken)
 		{
-			fluent.GetCountAsync(cancellationToken).ReturnsTaskResponse(chats.ToTotalCountResponse(filterQuery));
+			fluent.SetupGetCountAsync(chats.ToTotalCountResponse(filterQuery), cancellationToken);
 		}
 
 		public void SetupAnyAsync(
@@ -58,14 +63,14 @@ public static class ChatMockSetups
 			Chat? chat,
 			CancellationToken cancellationToken)
 		{
-			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(chat != null);
+			fluent.SetupAnyAsync(chat != null, cancellationToken);
 		}
 
 		public void SetupApplyIncludes(
 			ChatId id,
 			ChatInclude include)
 		{
-			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
+			fluent.SetupApplyIncludes(include);
 		}
 
 		public void SetupApplyIncludes(
@@ -73,14 +78,14 @@ public static class ChatMockSetups
 			CurrentUserQuery currentUserQuery,
 			ChatInclude include)
 		{
-			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
+			fluent.SetupApplyIncludes(include);
 		}
 
 		public void SetupApplyIncludes(
 			ChatsFilterQuery filterQuery,
 			ChatInclude include)
 		{
-			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
+			fluent.SetupApplyIncludes(include);
 		}
 
 		public void SetupApplyIncludes(
@@ -89,6 +94,11 @@ public static class ChatMockSetups
 			ChatsPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery,
 			ChatInclude include)
+		{
+			fluent.SetupApplyIncludes(include);
+		}
+
+		public void SetupApplyIncludes(ChatInclude include)
 		{
 			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
 		}
@@ -102,7 +112,7 @@ public static class ChatMockSetups
 			ChatId id,
 			CurrentUserQuery currentUserQuery)
 		{
-			fluent.Match(id).ReturnsResponse(fluent);
+			fluent.SetupMatch(id);
 		}
 
 		public void SetupMatch(ChatsFilterQuery filterQuery)
@@ -116,11 +126,18 @@ public static class ChatMockSetups
 			ChatsPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
-			fluent.Match(filterQuery).ReturnsResponse(fluent);
+			fluent.SetupMatch(filterQuery);
 		}
 
 		public void SetupProjectToFullResponse(
 			ChatId id,
+			CurrentUserQuery currentUserQuery,
+			IChatResponseFluent responseFluent)
+		{
+			fluent.SetupProjectToFullResponse(currentUserQuery, responseFluent);
+		}
+
+		public void SetupProjectToFullResponse(
 			CurrentUserQuery currentUserQuery,
 			IChatResponseFluent responseFluent)
 		{
@@ -134,6 +151,13 @@ public static class ChatMockSetups
 			CurrentUserQuery currentUserQuery,
 			IChatResponseFluent responseFluent)
 		{
+			fluent.SetupProjectToResponseWithoutParticipantOne(currentUserQuery, responseFluent);
+		}
+
+		public void SetupProjectToResponseWithoutParticipantOne(
+			CurrentUserQuery currentUserQuery,
+			IChatResponseFluent responseFluent)
+		{
 			fluent.ProjectToResponseWithoutParticipantOne(currentUserQuery).ReturnsResponse(responseFluent);
 		}
 
@@ -142,7 +166,7 @@ public static class ChatMockSetups
 			Chat chat,
 			CancellationToken cancellationToken)
 		{
-			fluent.FirstOrDefaultAsync(cancellationToken).ReturnsTaskResponse(chat);
+			fluent.SetupFirstOrDefaultAsync(chat, cancellationToken);
 		}
 	}
 
@@ -154,6 +178,11 @@ public static class ChatMockSetups
 			ChatsPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
+			fluent.SetupApplySorting(sortingQuery);
+		}
+
+		public void SetupApplySorting(ChatsSortingQuery sortingQuery)
+		{
 			fluent.ApplySorting(sortingQuery).ReturnsResponse(fluent);
 		}
 
@@ -162,6 +191,11 @@ public static class ChatMockSetups
 			ChatsSortingQuery sortingQuery,
 			ChatsPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
+		{
+			fluent.SetupApplyPagination(paginationQuery);
+		}
+
+		public void SetupApplyPagination(ChatsPaginationQuery paginationQuery)
 		{
 			fluent.ApplyPagination(paginationQuery).ReturnsResponse(fluent);
 		}
@@ -174,7 +208,7 @@ public static class ChatMockSetups
 			ICollection<Chat> chats,
 			CancellationToken cancellationToken)
 		{
-			fluent.ToListAsync(cancellationToken).ReturnsTaskResponse(chats.ToResponse(filterQuery, paginationQuery));
+			fluent.SetupToListAsync(chats.ToResponse(filterQuery, paginationQuery), cancellationToken);
 		}
 
 		public void SetupFirstOrDefaultAsync(
@@ -183,7 +217,7 @@ public static class ChatMockSetups
 			Chat chat,
 			CancellationToken cancellationToken)
 		{
-			fluent.FirstOrDefaultAsync(cancellationToken).ReturnsTaskResponse(chat.ToFullResponse());
+			fluent.SetupFirstOrDefaultAsync(chat.ToFullResponse(), cancellationToken);
 		}
 	}
 }

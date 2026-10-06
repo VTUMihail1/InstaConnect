@@ -11,14 +11,12 @@ public static class RefreshTokenMockAssertions
 	{
 		public void ShouldHaveReceivedOneAggregateFluent(RefreshTokenId id)
 		{
-			collection.ShouldHaveReceivedOne().AggregateFluent();
+			collection.ShouldHaveReceivedOneAggregateFluent();
 		}
 
-		public async Task ShouldHaveReceivedOneAddAsync(
-			RefreshToken refreshToken,
-			CancellationToken cancellationToken)
+		public void ShouldHaveReceivedOneAggregateFluent()
 		{
-			await collection.ShouldHaveReceivedOne().AddAsync(refreshToken, cancellationToken);
+			collection.ShouldHaveReceivedOne().AggregateFluent();
 		}
 
 		public async Task ShouldHaveReceivedOneUpdateAsync(
@@ -47,6 +45,11 @@ public static class RefreshTokenMockAssertions
 			RefreshTokenId id,
 			RefreshTokenInclude include)
 		{
+			fluent.ShouldHaveReceivedOneApplyIncludes(include);
+		}
+
+		public void ShouldHaveReceivedOneApplyIncludes(RefreshTokenInclude include)
+		{
 			fluent.ShouldHaveReceivedOne().ApplyIncludes(include);
 		}
 
@@ -54,7 +57,7 @@ public static class RefreshTokenMockAssertions
 			RefreshTokenId id,
 			CancellationToken cancellationToken)
 		{
-			await fluent.ShouldHaveReceivedOne().FirstOrDefaultAsync(cancellationToken);
+			await fluent.ShouldHaveReceivedOneFirstOrDefaultAsync(cancellationToken);
 		}
 	}
 }

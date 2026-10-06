@@ -1,4 +1,5 @@
 using InstaConnect.Common.Application.Features.Requests.Abstractions;
+using InstaConnect.Common.Application.Tests.Features.Assertions;
 using InstaConnect.Identity.Presentation.Features.RefreshTokens.Abstractions;
 using InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Utilities;
 
@@ -13,21 +14,21 @@ public static class RefreshTokenMockAssertions
 			IssueRefreshTokenApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(request.IsIssueRefreshTokenCommandRequest(), cancellationToken);
+			await sender.ShouldHaveReceivedOneSendAsync(request.IsIssueRefreshTokenCommandRequest(), cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneSendAsync(
 			RotateRefreshTokenApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(request.IsRotateRefreshTokenCommandRequest(), cancellationToken);
+			await sender.ShouldHaveReceivedOneSendAsync(request.IsRotateRefreshTokenCommandRequest(), cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneSendAsync(
 			DeleteCurrentRefreshTokenApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(request.IsDeleteCurrentRefreshTokenCommandRequest(), cancellationToken);
+			await sender.ShouldHaveReceivedOneSendAsync(request.IsDeleteCurrentRefreshTokenCommandRequest(), cancellationToken);
 		}
 	}
 
@@ -37,17 +38,27 @@ public static class RefreshTokenMockAssertions
 			IssueRefreshTokenApiRequest request,
 			RefreshToken refreshToken)
 		{
-			store.ShouldHaveReceivedOne().Set(request.IsRefreshTokenCookieRequest(refreshToken));
+			store.ShouldHaveReceivedOneSet(request.IsRefreshTokenCookieRequest(refreshToken));
 		}
 
 		public void ShouldHaveReceivedOneSet(
 			RotateRefreshTokenApiRequest request,
 			RefreshToken refreshToken)
 		{
-			store.ShouldHaveReceivedOne().Set(request.IsRefreshTokenCookieRequest(refreshToken));
+			store.ShouldHaveReceivedOneSet(request.IsRefreshTokenCookieRequest(refreshToken));
+		}
+
+		public void ShouldHaveReceivedOneSet(SetRefreshTokenCookieApiRequest request)
+		{
+			store.ShouldHaveReceivedOne().Set(request);
 		}
 
 		public void ShouldHaveReceivedOneDelete(DeleteCurrentRefreshTokenApiRequest request)
+		{
+			store.ShouldHaveReceivedOneDelete();
+		}
+
+		public void ShouldHaveReceivedOneDelete()
 		{
 			store.ShouldHaveReceivedOne().Delete();
 		}

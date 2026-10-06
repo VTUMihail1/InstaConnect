@@ -14,7 +14,7 @@ public static class PostCommentMockSetups
 			PostCommentId id,
 			IPostCommentFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
@@ -22,7 +22,7 @@ public static class PostCommentMockSetups
 			CurrentUserQuery currentUserQuery,
 			IPostCommentFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
@@ -32,14 +32,14 @@ public static class PostCommentMockSetups
 			CurrentUserQuery currentUserQuery,
 			IPostCommentFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
 			PostCommentsFilterQuery filterQuery,
 			IPostCommentFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
@@ -49,12 +49,17 @@ public static class PostCommentMockSetups
 			CurrentUserQuery currentUserQuery,
 			IPostCommentFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
 			PostCommentsForUserFilterQuery filterQuery,
 			IPostCommentFluent fluent)
+		{
+			collection.SetupAggregateFluent(fluent);
+		}
+
+		public void SetupAggregateFluent(IPostCommentFluent fluent)
 		{
 			collection.AggregateFluent().ReturnsResponse(fluent);
 		}
@@ -67,7 +72,7 @@ public static class PostCommentMockSetups
 			ICollection<PostComment> postComments,
 			CancellationToken cancellationToken)
 		{
-			fluent.GetCountAsync(cancellationToken).ReturnsTaskResponse(postComments.ToTotalCountResponse(filterQuery));
+			fluent.SetupGetCountAsync(postComments.ToTotalCountResponse(filterQuery), cancellationToken);
 		}
 
 		public void SetupGetCountAsync(
@@ -75,7 +80,7 @@ public static class PostCommentMockSetups
 			ICollection<PostComment> postComments,
 			CancellationToken cancellationToken)
 		{
-			fluent.GetCountAsync(cancellationToken).ReturnsTaskResponse(postComments.ToTotalCountResponse(filterQuery));
+			fluent.SetupGetCountAsync(postComments.ToTotalCountResponse(filterQuery), cancellationToken);
 		}
 
 		public void SetupAnyAsync(
@@ -83,14 +88,14 @@ public static class PostCommentMockSetups
 			PostComment? postComment,
 			CancellationToken cancellationToken)
 		{
-			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(postComment != null);
+			fluent.SetupAnyAsync(postComment != null, cancellationToken);
 		}
 
 		public void SetupApplyIncludes(
 			PostCommentId id,
 			PostCommentInclude include)
 		{
-			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
+			fluent.SetupApplyIncludes(include);
 		}
 
 		public void SetupApplyIncludes(
@@ -98,21 +103,21 @@ public static class PostCommentMockSetups
 			CurrentUserQuery currentUserQuery,
 			PostCommentInclude include)
 		{
-			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
+			fluent.SetupApplyIncludes(include);
 		}
 
 		public void SetupApplyIncludes(
 			PostCommentsFilterQuery filterQuery,
 			PostCommentInclude include)
 		{
-			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
+			fluent.SetupApplyIncludes(include);
 		}
 
 		public void SetupApplyIncludes(
 			PostCommentsForUserFilterQuery filterQuery,
 			PostCommentInclude include)
 		{
-			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
+			fluent.SetupApplyIncludes(include);
 		}
 
 		public void SetupApplyIncludes(
@@ -122,7 +127,7 @@ public static class PostCommentMockSetups
 			CurrentUserQuery currentUserQuery,
 			PostCommentInclude include)
 		{
-			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
+			fluent.SetupApplyIncludes(include);
 		}
 
 		public void SetupApplyIncludes(
@@ -131,6 +136,11 @@ public static class PostCommentMockSetups
 			PostCommentsPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery,
 			PostCommentInclude include)
+		{
+			fluent.SetupApplyIncludes(include);
+		}
+
+		public void SetupApplyIncludes(PostCommentInclude include)
 		{
 			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
 		}
@@ -144,7 +154,7 @@ public static class PostCommentMockSetups
 			PostCommentId id,
 			CurrentUserQuery currentUserQuery)
 		{
-			fluent.Match(id).ReturnsResponse(fluent);
+			fluent.SetupMatch(id);
 		}
 
 		public void SetupMatch(PostCommentsFilterQuery filterQuery)
@@ -163,7 +173,7 @@ public static class PostCommentMockSetups
 			PostCommentsPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
-			fluent.Match(filterQuery).ReturnsResponse(fluent);
+			fluent.SetupMatch(filterQuery);
 		}
 
 		public void SetupMatch(
@@ -172,11 +182,18 @@ public static class PostCommentMockSetups
 			PostCommentsPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
-			fluent.Match(filterQuery).ReturnsResponse(fluent);
+			fluent.SetupMatch(filterQuery);
 		}
 
 		public void SetupProjectToFullResponse(
 			PostCommentId id,
+			CurrentUserQuery currentUserQuery,
+			IPostCommentResponseFluent responseFluent)
+		{
+			fluent.SetupProjectToFullResponse(currentUserQuery, responseFluent);
+		}
+
+		public void SetupProjectToFullResponse(
 			CurrentUserQuery currentUserQuery,
 			IPostCommentResponseFluent responseFluent)
 		{
@@ -190,6 +207,13 @@ public static class PostCommentMockSetups
 			CurrentUserQuery currentUserQuery,
 			IPostCommentResponseFluent responseFluent)
 		{
+			fluent.SetupProjectToResponseWithoutPost(currentUserQuery, responseFluent);
+		}
+
+		public void SetupProjectToResponseWithoutPost(
+			CurrentUserQuery currentUserQuery,
+			IPostCommentResponseFluent responseFluent)
+		{
 			fluent.ProjectToResponseWithoutPost(currentUserQuery).ReturnsResponse(responseFluent);
 		}
 
@@ -197,6 +221,13 @@ public static class PostCommentMockSetups
 			PostCommentsForUserFilterQuery filterQuery,
 			PostCommentsForUserSortingQuery sortingQuery,
 			PostCommentsPaginationQuery paginationQuery,
+			CurrentUserQuery currentUserQuery,
+			IPostCommentResponseFluent responseFluent)
+		{
+			fluent.SetupProjectToResponseWithoutUser(currentUserQuery, responseFluent);
+		}
+
+		public void SetupProjectToResponseWithoutUser(
 			CurrentUserQuery currentUserQuery,
 			IPostCommentResponseFluent responseFluent)
 		{
@@ -208,7 +239,7 @@ public static class PostCommentMockSetups
 			PostComment postComment,
 			CancellationToken cancellationToken)
 		{
-			fluent.FirstOrDefaultAsync(cancellationToken).ReturnsTaskResponse(postComment);
+			fluent.SetupFirstOrDefaultAsync(postComment, cancellationToken);
 		}
 	}
 
@@ -220,7 +251,7 @@ public static class PostCommentMockSetups
 			PostCommentsPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
-			fluent.ApplySorting(sortingQuery).ReturnsResponse(fluent);
+			fluent.SetupApplySorting(sortingQuery);
 		}
 
 		public void SetupApplySorting(
@@ -229,6 +260,16 @@ public static class PostCommentMockSetups
 			PostCommentsPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
+			fluent.SetupApplySorting(sortingQuery);
+		}
+
+		public void SetupApplySorting(PostCommentsSortingQuery sortingQuery)
+		{
+			fluent.ApplySorting(sortingQuery).ReturnsResponse(fluent);
+		}
+
+		public void SetupApplySorting(PostCommentsForUserSortingQuery sortingQuery)
+		{
 			fluent.ApplySorting(sortingQuery).ReturnsResponse(fluent);
 		}
 
@@ -238,7 +279,7 @@ public static class PostCommentMockSetups
 			PostCommentsPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
-			fluent.ApplyPagination(paginationQuery).ReturnsResponse(fluent);
+			fluent.SetupApplyPagination(paginationQuery);
 		}
 
 		public void SetupApplyPagination(
@@ -246,6 +287,11 @@ public static class PostCommentMockSetups
 			PostCommentsForUserSortingQuery sortingQuery,
 			PostCommentsPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
+		{
+			fluent.SetupApplyPagination(paginationQuery);
+		}
+
+		public void SetupApplyPagination(PostCommentsPaginationQuery paginationQuery)
 		{
 			fluent.ApplyPagination(paginationQuery).ReturnsResponse(fluent);
 		}
@@ -258,7 +304,7 @@ public static class PostCommentMockSetups
 			ICollection<PostComment> postComments,
 			CancellationToken cancellationToken)
 		{
-			fluent.ToListAsync(cancellationToken).ReturnsTaskResponse(postComments.ToResponse(filterQuery, paginationQuery, currentUserQuery));
+			fluent.SetupToListAsync(postComments.ToResponse(filterQuery, paginationQuery, currentUserQuery), cancellationToken);
 		}
 
 		public void SetupToListAsync(
@@ -269,7 +315,7 @@ public static class PostCommentMockSetups
 			ICollection<PostComment> postComments,
 			CancellationToken cancellationToken)
 		{
-			fluent.ToListAsync(cancellationToken).ReturnsTaskResponse(postComments.ToResponse(filterQuery, paginationQuery, currentUserQuery));
+			fluent.SetupToListAsync(postComments.ToResponse(filterQuery, paginationQuery, currentUserQuery), cancellationToken);
 		}
 
 		public void SetupFirstOrDefaultAsync(
@@ -278,7 +324,7 @@ public static class PostCommentMockSetups
 			PostComment postComment,
 			CancellationToken cancellationToken)
 		{
-			fluent.FirstOrDefaultAsync(cancellationToken).ReturnsTaskResponse(postComment.ToFullResponse(currentUserQuery));
+			fluent.SetupFirstOrDefaultAsync(postComment.ToFullResponse(currentUserQuery), cancellationToken);
 		}
 	}
 }

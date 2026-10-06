@@ -12,19 +12,19 @@ public static class ChatMockAssertions
 	{
 		public void ShouldHaveReceivedOneAggregateFluent(ChatId id)
 		{
-			collection.ShouldHaveReceivedOne().AggregateFluent();
+			collection.ShouldHaveReceivedOneAggregateFluent();
 		}
 
 		public void ShouldHaveReceivedOneAggregateFluent(
 			ChatId id,
 			CurrentUserQuery currentUserQuery)
 		{
-			collection.ShouldHaveReceivedOne().AggregateFluent();
+			collection.ShouldHaveReceivedOneAggregateFluent();
 		}
 
 		public void ShouldHaveReceivedOneAggregateFluent(ChatsFilterQuery filterQuery)
 		{
-			collection.ShouldHaveReceivedOne().AggregateFluent();
+			collection.ShouldHaveReceivedOneAggregateFluent();
 		}
 
 		public void ShouldHaveReceivedOneAggregateFluent(
@@ -33,14 +33,12 @@ public static class ChatMockAssertions
 			ChatsPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
-			collection.ShouldHaveReceivedOne().AggregateFluent();
+			collection.ShouldHaveReceivedOneAggregateFluent();
 		}
 
-		public async Task ShouldHaveReceivedOneAddAsync(
-			Chat chat,
-			CancellationToken cancellationToken)
+		public void ShouldHaveReceivedOneAggregateFluent()
 		{
-			await collection.ShouldHaveReceivedOne().AddAsync(chat, cancellationToken);
+			collection.ShouldHaveReceivedOne().AggregateFluent();
 		}
 
 		public async Task ShouldHaveReceivedOneDeleteAsync(
@@ -64,7 +62,7 @@ public static class ChatMockAssertions
 			ChatsPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
-			fluent.ShouldHaveReceivedOne().Match(filterQuery);
+			fluent.ShouldHaveReceivedOneMatch(filterQuery);
 		}
 
 		public void ShouldHaveReceivedOneMatch(ChatId id)
@@ -76,14 +74,14 @@ public static class ChatMockAssertions
 			ChatId id,
 			CurrentUserQuery currentUserQuery)
 		{
-			fluent.ShouldHaveReceivedOne().Match(id);
+			fluent.ShouldHaveReceivedOneMatch(id);
 		}
 
 		public void ShouldHaveReceivedOneApplyIncludes(
 			ChatId id,
 			ChatInclude include)
 		{
-			fluent.ShouldHaveReceivedOne().ApplyIncludes(include);
+			fluent.ShouldHaveReceivedOneApplyIncludes(include);
 		}
 
 		public void ShouldHaveReceivedOneApplyIncludes(
@@ -91,14 +89,14 @@ public static class ChatMockAssertions
 			CurrentUserQuery currentUserQuery,
 			ChatInclude include)
 		{
-			fluent.ShouldHaveReceivedOne().ApplyIncludes(include);
+			fluent.ShouldHaveReceivedOneApplyIncludes(include);
 		}
 
 		public void ShouldHaveReceivedOneApplyIncludes(
 			ChatsFilterQuery filterQuery,
 			ChatInclude include)
 		{
-			fluent.ShouldHaveReceivedOne().ApplyIncludes(include);
+			fluent.ShouldHaveReceivedOneApplyIncludes(include);
 		}
 
 		public void ShouldHaveReceivedOneApplyIncludes(
@@ -108,12 +106,22 @@ public static class ChatMockAssertions
 			CurrentUserQuery currentUserQuery,
 			ChatInclude include)
 		{
+			fluent.ShouldHaveReceivedOneApplyIncludes(include);
+		}
+
+		public void ShouldHaveReceivedOneApplyIncludes(ChatInclude include)
+		{
 			fluent.ShouldHaveReceivedOne().ApplyIncludes(include);
 		}
 
 		public void ShouldHaveReceivedOneProjectToFullResponse(
 			ChatId id,
 			CurrentUserQuery currentUserQuery)
+		{
+			fluent.ShouldHaveReceivedOneProjectToFullResponse(currentUserQuery);
+		}
+
+		public void ShouldHaveReceivedOneProjectToFullResponse(CurrentUserQuery currentUserQuery)
 		{
 			fluent.ShouldHaveReceivedOne().ProjectToFullResponse(currentUserQuery);
 		}
@@ -124,6 +132,11 @@ public static class ChatMockAssertions
 			ChatsPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
+			fluent.ShouldHaveReceivedOneProjectToResponseWithoutParticipantOne(currentUserQuery);
+		}
+
+		public void ShouldHaveReceivedOneProjectToResponseWithoutParticipantOne(CurrentUserQuery currentUserQuery)
+		{
 			fluent.ShouldHaveReceivedOne().ProjectToResponseWithoutParticipantOne(currentUserQuery);
 		}
 
@@ -131,21 +144,21 @@ public static class ChatMockAssertions
 			ChatId id,
 			CancellationToken cancellationToken)
 		{
-			await fluent.ShouldHaveReceivedOne().AnyAsync(cancellationToken);
+			await fluent.ShouldHaveReceivedOneAnyAsync(cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneGetCountAsync(
 			ChatsFilterQuery filterQuery,
 			CancellationToken cancellationToken)
 		{
-			await fluent.ShouldHaveReceivedOne().GetCountAsync(cancellationToken);
+			await fluent.ShouldHaveReceivedOneGetCountAsync(cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneFirstOrDefaultAsync(
 			ChatId id,
 			CancellationToken cancellationToken)
 		{
-			await fluent.ShouldHaveReceivedOne().FirstOrDefaultAsync(cancellationToken);
+			await fluent.ShouldHaveReceivedOneFirstOrDefaultAsync(cancellationToken);
 		}
 	}
 
@@ -157,6 +170,11 @@ public static class ChatMockAssertions
 			ChatsPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
+			fluent.ShouldHaveReceivedOneApplySorting(sortingQuery);
+		}
+
+		public void ShouldHaveReceivedOneApplySorting(ChatsSortingQuery sortingQuery)
+		{
 			fluent.ShouldHaveReceivedOne().ApplySorting(sortingQuery);
 		}
 
@@ -166,6 +184,11 @@ public static class ChatMockAssertions
 			ChatsPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
+			fluent.ShouldHaveReceivedOneApplyPagination(paginationQuery);
+		}
+
+		public void ShouldHaveReceivedOneApplyPagination(ChatsPaginationQuery paginationQuery)
+		{
 			fluent.ShouldHaveReceivedOne().ApplyPagination(paginationQuery);
 		}
 
@@ -174,7 +197,7 @@ public static class ChatMockAssertions
 			CurrentUserQuery currentUserQuery,
 			CancellationToken cancellationToken)
 		{
-			await fluent.ShouldHaveReceivedOne().FirstOrDefaultAsync(cancellationToken);
+			await fluent.ShouldHaveReceivedOneFirstOrDefaultAsync(cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneToListAsync(
@@ -184,7 +207,7 @@ public static class ChatMockAssertions
 			CurrentUserQuery currentUserQuery,
 			CancellationToken cancellationToken)
 		{
-			await fluent.ShouldHaveReceivedOne().ToListAsync(cancellationToken);
+			await fluent.ShouldHaveReceivedOneToListAsync(cancellationToken);
 		}
 	}
 }

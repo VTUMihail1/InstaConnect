@@ -14,7 +14,7 @@ public static class PostCommentLikeMockSetups
 			PostCommentLikeId id,
 			IPostCommentLikeFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
@@ -22,7 +22,7 @@ public static class PostCommentLikeMockSetups
 			CurrentUserQuery currentUserQuery,
 			IPostCommentLikeFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
@@ -32,14 +32,14 @@ public static class PostCommentLikeMockSetups
 			CurrentUserQuery currentUserQuery,
 			IPostCommentLikeFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
 			PostCommentLikesFilterQuery filterQuery,
 			IPostCommentLikeFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
@@ -49,12 +49,17 @@ public static class PostCommentLikeMockSetups
 			CurrentUserQuery currentUserQuery,
 			IPostCommentLikeFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
 			PostCommentLikesForUserFilterQuery filterQuery,
 			IPostCommentLikeFluent fluent)
+		{
+			collection.SetupAggregateFluent(fluent);
+		}
+
+		public void SetupAggregateFluent(IPostCommentLikeFluent fluent)
 		{
 			collection.AggregateFluent().ReturnsResponse(fluent);
 		}
@@ -67,7 +72,7 @@ public static class PostCommentLikeMockSetups
 			ICollection<PostCommentLike> postCommentLikes,
 			CancellationToken cancellationToken)
 		{
-			fluent.GetCountAsync(cancellationToken).ReturnsTaskResponse(postCommentLikes.ToTotalCountResponse(filterQuery));
+			fluent.SetupGetCountAsync(postCommentLikes.ToTotalCountResponse(filterQuery), cancellationToken);
 		}
 
 		public void SetupGetCountAsync(
@@ -75,7 +80,7 @@ public static class PostCommentLikeMockSetups
 			ICollection<PostCommentLike> postCommentLikes,
 			CancellationToken cancellationToken)
 		{
-			fluent.GetCountAsync(cancellationToken).ReturnsTaskResponse(postCommentLikes.ToTotalCountResponse(filterQuery));
+			fluent.SetupGetCountAsync(postCommentLikes.ToTotalCountResponse(filterQuery), cancellationToken);
 		}
 
 		public void SetupAnyAsync(
@@ -83,14 +88,14 @@ public static class PostCommentLikeMockSetups
 			PostCommentLike? postCommentLike,
 			CancellationToken cancellationToken)
 		{
-			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(postCommentLike != null);
+			fluent.SetupAnyAsync(postCommentLike != null, cancellationToken);
 		}
 
 		public void SetupApplyIncludes(
 			PostCommentLikeId id,
 			PostCommentLikeInclude include)
 		{
-			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
+			fluent.SetupApplyIncludes(include);
 		}
 
 		public void SetupApplyIncludes(
@@ -98,21 +103,21 @@ public static class PostCommentLikeMockSetups
 			CurrentUserQuery currentUserQuery,
 			PostCommentLikeInclude include)
 		{
-			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
+			fluent.SetupApplyIncludes(include);
 		}
 
 		public void SetupApplyIncludes(
 			PostCommentLikesFilterQuery filterQuery,
 			PostCommentLikeInclude include)
 		{
-			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
+			fluent.SetupApplyIncludes(include);
 		}
 
 		public void SetupApplyIncludes(
 			PostCommentLikesForUserFilterQuery filterQuery,
 			PostCommentLikeInclude include)
 		{
-			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
+			fluent.SetupApplyIncludes(include);
 		}
 
 		public void SetupApplyIncludes(
@@ -122,7 +127,7 @@ public static class PostCommentLikeMockSetups
 			CurrentUserQuery currentUserQuery,
 			PostCommentLikeInclude include)
 		{
-			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
+			fluent.SetupApplyIncludes(include);
 		}
 
 		public void SetupApplyIncludes(
@@ -131,6 +136,11 @@ public static class PostCommentLikeMockSetups
 			PostCommentLikesPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery,
 			PostCommentLikeInclude include)
+		{
+			fluent.SetupApplyIncludes(include);
+		}
+
+		public void SetupApplyIncludes(PostCommentLikeInclude include)
 		{
 			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
 		}
@@ -144,7 +154,7 @@ public static class PostCommentLikeMockSetups
 			PostCommentLikeId id,
 			CurrentUserQuery currentUserQuery)
 		{
-			fluent.Match(id).ReturnsResponse(fluent);
+			fluent.SetupMatch(id);
 		}
 
 		public void SetupMatch(PostCommentLikesFilterQuery filterQuery)
@@ -163,7 +173,7 @@ public static class PostCommentLikeMockSetups
 			PostCommentLikesPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
-			fluent.Match(filterQuery).ReturnsResponse(fluent);
+			fluent.SetupMatch(filterQuery);
 		}
 
 		public void SetupMatch(
@@ -172,11 +182,18 @@ public static class PostCommentLikeMockSetups
 			PostCommentLikesPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
-			fluent.Match(filterQuery).ReturnsResponse(fluent);
+			fluent.SetupMatch(filterQuery);
 		}
 
 		public void SetupProjectToFullResponse(
 			PostCommentLikeId id,
+			CurrentUserQuery currentUserQuery,
+			IPostCommentLikeResponseFluent responseFluent)
+		{
+			fluent.SetupProjectToFullResponse(currentUserQuery, responseFluent);
+		}
+
+		public void SetupProjectToFullResponse(
 			CurrentUserQuery currentUserQuery,
 			IPostCommentLikeResponseFluent responseFluent)
 		{
@@ -190,6 +207,13 @@ public static class PostCommentLikeMockSetups
 			CurrentUserQuery currentUserQuery,
 			IPostCommentLikeResponseFluent responseFluent)
 		{
+			fluent.SetupProjectToResponseWithoutPostComment(currentUserQuery, responseFluent);
+		}
+
+		public void SetupProjectToResponseWithoutPostComment(
+			CurrentUserQuery currentUserQuery,
+			IPostCommentLikeResponseFluent responseFluent)
+		{
 			fluent.ProjectToResponseWithoutPostComment(currentUserQuery).ReturnsResponse(responseFluent);
 		}
 
@@ -197,6 +221,13 @@ public static class PostCommentLikeMockSetups
 			PostCommentLikesForUserFilterQuery filterQuery,
 			PostCommentLikesForUserSortingQuery sortingQuery,
 			PostCommentLikesPaginationQuery paginationQuery,
+			CurrentUserQuery currentUserQuery,
+			IPostCommentLikeResponseFluent responseFluent)
+		{
+			fluent.SetupProjectToResponseWithoutUser(currentUserQuery, responseFluent);
+		}
+
+		public void SetupProjectToResponseWithoutUser(
 			CurrentUserQuery currentUserQuery,
 			IPostCommentLikeResponseFluent responseFluent)
 		{
@@ -208,7 +239,7 @@ public static class PostCommentLikeMockSetups
 			PostCommentLike postCommentLike,
 			CancellationToken cancellationToken)
 		{
-			fluent.FirstOrDefaultAsync(cancellationToken).ReturnsTaskResponse(postCommentLike);
+			fluent.SetupFirstOrDefaultAsync(postCommentLike, cancellationToken);
 		}
 	}
 
@@ -220,7 +251,7 @@ public static class PostCommentLikeMockSetups
 			PostCommentLikesPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
-			fluent.ApplySorting(sortingQuery).ReturnsResponse(fluent);
+			fluent.SetupApplySorting(sortingQuery);
 		}
 
 		public void SetupApplySorting(
@@ -229,6 +260,16 @@ public static class PostCommentLikeMockSetups
 			PostCommentLikesPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
+			fluent.SetupApplySorting(sortingQuery);
+		}
+
+		public void SetupApplySorting(PostCommentLikesSortingQuery sortingQuery)
+		{
+			fluent.ApplySorting(sortingQuery).ReturnsResponse(fluent);
+		}
+
+		public void SetupApplySorting(PostCommentLikesForUserSortingQuery sortingQuery)
+		{
 			fluent.ApplySorting(sortingQuery).ReturnsResponse(fluent);
 		}
 
@@ -238,7 +279,7 @@ public static class PostCommentLikeMockSetups
 			PostCommentLikesPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
-			fluent.ApplyPagination(paginationQuery).ReturnsResponse(fluent);
+			fluent.SetupApplyPagination(paginationQuery);
 		}
 
 		public void SetupApplyPagination(
@@ -246,6 +287,11 @@ public static class PostCommentLikeMockSetups
 			PostCommentLikesForUserSortingQuery sortingQuery,
 			PostCommentLikesPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
+		{
+			fluent.SetupApplyPagination(paginationQuery);
+		}
+
+		public void SetupApplyPagination(PostCommentLikesPaginationQuery paginationQuery)
 		{
 			fluent.ApplyPagination(paginationQuery).ReturnsResponse(fluent);
 		}
@@ -258,7 +304,7 @@ public static class PostCommentLikeMockSetups
 			ICollection<PostCommentLike> postCommentLikes,
 			CancellationToken cancellationToken)
 		{
-			fluent.ToListAsync(cancellationToken).ReturnsTaskResponse(postCommentLikes.ToResponse(filterQuery, paginationQuery, currentUserQuery));
+			fluent.SetupToListAsync(postCommentLikes.ToResponse(filterQuery, paginationQuery, currentUserQuery), cancellationToken);
 		}
 
 		public void SetupToListAsync(
@@ -269,7 +315,7 @@ public static class PostCommentLikeMockSetups
 			ICollection<PostCommentLike> postCommentLikes,
 			CancellationToken cancellationToken)
 		{
-			fluent.ToListAsync(cancellationToken).ReturnsTaskResponse(postCommentLikes.ToResponse(filterQuery, paginationQuery, currentUserQuery));
+			fluent.SetupToListAsync(postCommentLikes.ToResponse(filterQuery, paginationQuery, currentUserQuery), cancellationToken);
 		}
 
 		public void SetupFirstOrDefaultAsync(
@@ -278,7 +324,7 @@ public static class PostCommentLikeMockSetups
 			PostCommentLike postCommentLike,
 			CancellationToken cancellationToken)
 		{
-			fluent.FirstOrDefaultAsync(cancellationToken).ReturnsTaskResponse(postCommentLike.ToFullResponse(currentUserQuery));
+			fluent.SetupFirstOrDefaultAsync(postCommentLike.ToFullResponse(currentUserQuery), cancellationToken);
 		}
 	}
 }

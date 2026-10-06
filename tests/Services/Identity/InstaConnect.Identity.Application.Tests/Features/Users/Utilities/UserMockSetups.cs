@@ -1,3 +1,5 @@
+using InstaConnect.Identity.Domain.Tests.Features.Users.Utilities;
+
 namespace InstaConnect.Identity.Application.Tests.Features.Users.Utilities;
 
 public static class UserMockSetups
@@ -9,9 +11,7 @@ public static class UserMockSetups
 		ICollection<User> users,
 		CancellationToken cancellationToken)
 		{
-			service
-				.GetAllAsync(request.IsGetAllUsersQuery(), cancellationToken)
-				.ReturnsTaskResponse(users.ToResponse(request));
+			service.SetupGetAllAsync(request.IsGetAllUsersQuery(), users.ToResponse(request), cancellationToken);
 		}
 
 		public void SetupGetByIdAsync(
@@ -19,9 +19,7 @@ public static class UserMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			service
-				.GetByIdAsync(request.IsGetUserByIdQuery(), cancellationToken)
-				.ReturnsTaskResponse(user.ToResponse(request));
+			service.SetupGetByIdAsync(request.IsGetUserByIdQuery(), user.ToResponse(request), cancellationToken);
 		}
 
 		public void SetupGetByIdAsync(
@@ -29,9 +27,7 @@ public static class UserMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			service
-				.GetByIdAsync(request.IsGetUserByIdQuery(), cancellationToken)
-				.ReturnsTaskResponse(user.ToResponse(request));
+			service.SetupGetByIdAsync(request.IsGetUserByIdQuery(), user.ToResponse(request), cancellationToken);
 		}
 
 		public void SetupGetByIdAsync(
@@ -39,9 +35,7 @@ public static class UserMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			service
-				.GetByIdAsync(request.IsGetUserByIdQuery(), cancellationToken)
-				.ReturnsTaskResponse(user.ToResponse(request));
+			service.SetupGetByIdAsync(request.IsGetUserByIdQuery(), user.ToResponse(request), cancellationToken);
 		}
 
 		public void SetupGetByIdAsync(
@@ -49,9 +43,7 @@ public static class UserMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			service
-				.GetByIdAsync(request.IsGetUserByIdQuery(), cancellationToken)
-				.ReturnsTaskResponse(user.ToResponse(request));
+			service.SetupGetByIdAsync(request.IsGetUserByIdQuery(), user.ToResponse(request), cancellationToken);
 		}
 	}
 
@@ -62,9 +54,7 @@ public static class UserMockSetups
 		User user,
 		CancellationToken cancellationToken)
 		{
-			service
-				.AddAsync(request.IsAddUserCommand(), cancellationToken)
-				.ReturnsTaskResponse(user.ToResponse(request));
+			service.SetupAddAsync(request.IsAddUserCommand(), user.ToResponse(request), cancellationToken);
 		}
 
 		public void SetupUpdateAsync(
@@ -72,9 +62,7 @@ public static class UserMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			service
-				.UpdateAsync(request.IsUpdateUserCommand(), cancellationToken)
-				.ReturnsTaskResponse(user.ToResponse(request));
+			service.SetupUpdateAsync(request.IsUpdateUserCommand(), user.ToResponse(request), cancellationToken);
 		}
 	}
 }

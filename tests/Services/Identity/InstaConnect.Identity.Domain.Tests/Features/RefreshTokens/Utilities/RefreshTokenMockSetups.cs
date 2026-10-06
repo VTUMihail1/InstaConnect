@@ -2,6 +2,8 @@ using InstaConnect.Common.Domain.Features.DateTimes.Abstractions;
 using InstaConnect.Common.Domain.Features.Guids.Abstractions;
 using InstaConnect.Identity.Domain.Features.Common.Helpers;
 using InstaConnect.Identity.Domain.Features.RefreshTokens.Models.Options;
+using InstaConnect.Identity.Domain.Tests.Features.Common.Utilities;
+using InstaConnect.Identity.Domain.Tests.Features.Users.Utilities;
 
 using Microsoft.Extensions.Options;
 
@@ -13,9 +15,7 @@ public static class RefreshTokenMockSetups
 	{
 		public void SetupNewStringGuid(RefreshToken refreshToken)
 		{
-			guidProvider
-				.NewStringGuid()
-				.ReturnsResponse(refreshToken.Id.Value);
+			guidProvider.SetupNewStringGuid(refreshToken.Id.Value);
 		}
 	}
 
@@ -23,25 +23,19 @@ public static class RefreshTokenMockSetups
 	{
 		public void SetupGetOffsetUtcNow(RefreshToken refreshToken)
 		{
-			dateTimeProvider
-				.GetOffsetUtcNow()
-				.ReturnsResponse(refreshToken.CreatedAtUtc);
+			dateTimeProvider.SetupGetOffsetUtcNow(refreshToken.CreatedAtUtc);
 		}
 
 		public void SetupGetOffsetUtcNow(
 			RefreshToken refreshToken,
 			IOptions<RefreshTokenOptions> refreshTokenOptions)
 		{
-			dateTimeProvider
-				.GetOffsetUtcNow(refreshTokenOptions.Value.LifetimeSeconds)
-				.ReturnsResponse(refreshToken.ExpiresAtUtc);
+			dateTimeProvider.SetupGetOffsetUtcNow(refreshTokenOptions.Value.LifetimeSeconds, refreshToken.ExpiresAtUtc);
 		}
 
 		public void SetupGetOffsetUtcNow(RotateRefreshTokenCommand command, DateTimeOffset utcNow)
 		{
-			dateTimeProvider
-				.GetOffsetUtcNow()
-				.ReturnsResponse(utcNow);
+			dateTimeProvider.SetupGetOffsetUtcNow(utcNow);
 		}
 	}
 
@@ -49,9 +43,7 @@ public static class RefreshTokenMockSetups
 	{
 		public void SetupIsMismatch(IssueRefreshTokenCommand command, User user)
 		{
-			passwordHasher
-				.IsMismatch(command.Password, user.PasswordHash)
-				.ReturnsResponse(true);
+			passwordHasher.SetupIsMismatch(command.Password, user.PasswordHash, true);
 		}
 	}
 
@@ -59,15 +51,20 @@ public static class RefreshTokenMockSetups
 	{
 		public void SetupCreate(IssueRefreshTokenCommand command, RefreshToken refreshToken)
 		{
-			factory
-				.Create(refreshToken.Id.Id)
-				.ReturnsResponse(refreshToken);
+			factory.SetupCreate(refreshToken.Id.Id, refreshToken);
 		}
 
 		public void SetupCreate(RotateRefreshTokenCommand command, RefreshToken refreshToken)
 		{
+			factory.SetupCreate(command.Id.Id, refreshToken);
+		}
+
+		public void SetupCreate(
+			UserId id,
+			RefreshToken refreshToken)
+		{
 			factory
-				.Create(command.Id.Id)
+				.Create(id)
 				.ReturnsResponse(refreshToken);
 		}
 	}
@@ -76,16 +73,21 @@ public static class RefreshTokenMockSetups
 	{
 		public void SetupGenerate(IssueRefreshTokenCommand command, RefreshToken refreshToken)
 		{
-			generator
-				.Generate(refreshToken)
-				.ReturnsResponse(refreshToken.ToResponse(command));
+			generator.SetupGenerate(refreshToken, refreshToken.ToResponse(command));
 		}
 
 		public void SetupGenerate(RotateRefreshTokenCommand command, RefreshToken refreshToken)
 		{
+			generator.SetupGenerate(refreshToken, refreshToken.ToResponse(command));
+		}
+
+		public void SetupGenerate(
+			RefreshToken refreshToken,
+			SessionToken sessionToken)
+		{
 			generator
 				.Generate(refreshToken)
-				.ReturnsResponse(refreshToken.ToResponse(command));
+				.ReturnsResponse(sessionToken);
 		}
 	}
 
@@ -97,9 +99,7 @@ public static class RefreshTokenMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.GetByNameAsync(command.Name, include, cancellationToken)
-				.ReturnsTaskResponse(user);
+			repository.SetupGetByNameAsync(command.Name, include, user, cancellationToken);
 		}
 
 		public void RemoveGetByNameAsync(
@@ -108,9 +108,7 @@ public static class RefreshTokenMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.GetByNameAsync(command.Name, include, cancellationToken)
-				.ReturnsTaskResponse(null);
+			repository.SetupGetByNameAsync(command.Name, include, null, cancellationToken);
 		}
 
 		public void SetupGetByIdAsync(
@@ -119,9 +117,7 @@ public static class RefreshTokenMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.GetByIdAsync(command.Id.Id, include, cancellationToken)
-				.ReturnsTaskResponse(user);
+			repository.SetupGetByIdAsync(command.Id.Id, include, user, cancellationToken);
 		}
 
 		public void RemoveGetByIdAsync(
@@ -130,27 +126,21 @@ public static class RefreshTokenMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.GetByIdAsync(command.Id.Id, include, cancellationToken)
-				.ReturnsTaskResponse(null);
+			repository.SetupGetByIdAsync(command.Id.Id, include, null, cancellationToken);
 		}
 
 		public void SetupExistsByIdAsync(
 			DeleteRefreshTokenCommand command,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.ExistsByIdAsync(command.Id.Id, cancellationToken)
-				.ReturnsTaskResponse(true);
+			repository.SetupExistsByIdAsync(command.Id.Id, true, cancellationToken);
 		}
 
 		public void RemoveExistsByIdAsync(
 			DeleteRefreshTokenCommand command,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.ExistsByIdAsync(command.Id.Id, cancellationToken)
-				.ReturnsTaskResponse(false);
+			repository.SetupExistsByIdAsync(command.Id.Id, false, cancellationToken);
 		}
 	}
 
@@ -161,9 +151,7 @@ public static class RefreshTokenMockSetups
 			RefreshToken refreshToken,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.GetByIdAsync(command.Id, cancellationToken)
-				.ReturnsTaskResponse(refreshToken);
+			repository.SetupGetByIdAsync(command.Id, refreshToken, cancellationToken);
 		}
 
 		public void SetupGetByIdAsync(
@@ -171,8 +159,16 @@ public static class RefreshTokenMockSetups
 			RefreshToken refreshToken,
 			CancellationToken cancellationToken)
 		{
+			repository.SetupGetByIdAsync(command.Id, refreshToken, cancellationToken);
+		}
+
+		public void SetupGetByIdAsync(
+			RefreshTokenId id,
+			RefreshToken? refreshToken,
+			CancellationToken cancellationToken)
+		{
 			repository
-				.GetByIdAsync(command.Id, cancellationToken)
+				.GetByIdAsync(id, cancellationToken)
 				.ReturnsTaskResponse(refreshToken);
 		}
 
@@ -181,9 +177,7 @@ public static class RefreshTokenMockSetups
 			RefreshToken refreshToken,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.GetByIdAsync(command.Id, cancellationToken)
-				.ReturnsTaskResponse(null);
+			repository.SetupGetByIdAsync(command.Id, null, cancellationToken);
 		}
 
 		public void RemoveGetByIdAsync(
@@ -191,9 +185,30 @@ public static class RefreshTokenMockSetups
 			RefreshToken refreshToken,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.GetByIdAsync(command.Id, cancellationToken)
-				.ReturnsTaskResponse(null);
+			repository.SetupGetByIdAsync(command.Id, null, cancellationToken);
+		}
+	}
+
+	extension(IRefreshTokenCommandService service)
+	{
+		public void SetupIssueAsync(
+			IssueRefreshTokenCommand command,
+			SessionToken sessionToken,
+			CancellationToken cancellationToken)
+		{
+			service
+				.IssueAsync(command, cancellationToken)
+				.ReturnsTaskResponse(sessionToken);
+		}
+
+		public void SetupRotateAsync(
+			RotateRefreshTokenCommand command,
+			SessionToken sessionToken,
+			CancellationToken cancellationToken)
+		{
+			service
+				.RotateAsync(command, cancellationToken)
+				.ReturnsTaskResponse(sessionToken);
 		}
 	}
 }

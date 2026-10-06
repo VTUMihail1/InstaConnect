@@ -1,5 +1,7 @@
 using InstaConnect.Common.Domain.Features.DateTimes.Abstractions;
 using InstaConnect.Common.Domain.Features.Guids.Abstractions;
+using InstaConnect.Posts.Domain.Tests.Features.Posts.Utilities;
+using InstaConnect.Posts.Domain.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Posts.Domain.Tests.Features.PostComments.Utilities;
 
@@ -9,9 +11,7 @@ public static class PostCommentMockSetups
 	{
 		public void SetupNewStringGuid(PostComment postComment)
 		{
-			guidProvider
-				.NewStringGuid()
-				.ReturnsResponse(postComment.Id.CommentId);
+			guidProvider.SetupNewStringGuid(postComment.Id.CommentId);
 		}
 	}
 
@@ -19,9 +19,7 @@ public static class PostCommentMockSetups
 	{
 		public void SetupGetOffsetUtcNow(PostComment postComment)
 		{
-			dateTimeProvider
-				.GetOffsetUtcNow()
-				.ReturnsResponse(postComment.CreatedAtUtc);
+			dateTimeProvider.SetupGetOffsetUtcNow(postComment.CreatedAtUtc);
 		}
 	}
 
@@ -31,12 +29,25 @@ public static class PostCommentMockSetups
 			AddPostCommentCommand command,
 			PostComment postComment)
 		{
+			factory.SetupCreate(
+				command.Id,
+				command.UserId,
+				command.Content,
+				postComment.To(command));
+		}
+
+		public void SetupCreate(
+			PostId id,
+			UserId userId,
+			string content,
+			PostComment postComment)
+		{
 			factory
 				.Create(
-					command.Id,
-					command.UserId,
-					command.Content)
-				.ReturnsResponse(postComment.To(command));
+					id,
+					userId,
+					content)
+				.ReturnsResponse(postComment);
 		}
 	}
 
@@ -48,9 +59,7 @@ public static class PostCommentMockSetups
 			Post post,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.GetByIdAsync(command.Id, include, cancellationToken)
-				.ReturnsTaskResponse(post);
+			repository.SetupGetByIdAsync(command.Id, include, post, cancellationToken);
 		}
 
 		public void RemoveGetByIdAsync(
@@ -59,45 +68,35 @@ public static class PostCommentMockSetups
 			Post post,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.GetByIdAsync(command.Id, include, cancellationToken)
-				.ReturnsTaskResponse(null);
+			repository.SetupGetByIdAsync(command.Id, include, null, cancellationToken);
 		}
 
 		public void SetupExistsByIdAsync(
 			UpdatePostCommentCommand command,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.ExistsByIdAsync(command.Id.Id, cancellationToken)
-				.ReturnsTaskResponse(true);
+			repository.SetupExistsByIdAsync(command.Id.Id, true, cancellationToken);
 		}
 
 		public void SetupExistsByIdAsync(
 			DeletePostCommentCommand command,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.ExistsByIdAsync(command.Id.Id, cancellationToken)
-				.ReturnsTaskResponse(true);
+			repository.SetupExistsByIdAsync(command.Id.Id, true, cancellationToken);
 		}
 
 		public void RemoveExistsByIdAsync(
 			UpdatePostCommentCommand command,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.ExistsByIdAsync(command.Id.Id, cancellationToken)
-				.ReturnsTaskResponse(false);
+			repository.SetupExistsByIdAsync(command.Id.Id, false, cancellationToken);
 		}
 
 		public void RemoveExistsByIdAsync(
 			DeletePostCommentCommand command,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.ExistsByIdAsync(command.Id.Id, cancellationToken)
-				.ReturnsTaskResponse(false);
+			repository.SetupExistsByIdAsync(command.Id.Id, false, cancellationToken);
 		}
 	}
 
@@ -109,9 +108,7 @@ public static class PostCommentMockSetups
 			PostComment postComment,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.GetByIdAsync(command.Id, include, cancellationToken)
-				.ReturnsTaskResponse(postComment);
+			repository.SetupGetByIdAsync(command.Id, include, postComment, cancellationToken);
 		}
 
 		public void SetupGetByIdAsync(
@@ -120,8 +117,17 @@ public static class PostCommentMockSetups
 			PostComment postComment,
 			CancellationToken cancellationToken)
 		{
+			repository.SetupGetByIdAsync(command.Id, include, postComment, cancellationToken);
+		}
+
+		public void SetupGetByIdAsync(
+			PostCommentId id,
+			PostCommentInclude include,
+			PostComment? postComment,
+			CancellationToken cancellationToken)
+		{
 			repository
-				.GetByIdAsync(command.Id, include, cancellationToken)
+				.GetByIdAsync(id, include, cancellationToken)
 				.ReturnsTaskResponse(postComment);
 		}
 
@@ -131,9 +137,7 @@ public static class PostCommentMockSetups
 			PostComment postComment,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.GetByIdAsync(command.Id, include, cancellationToken)
-				.ReturnsTaskResponse(null);
+			repository.SetupGetByIdAsync(command.Id, include, null, cancellationToken);
 		}
 
 		public void RemoveGetByIdAsync(
@@ -142,9 +146,17 @@ public static class PostCommentMockSetups
 			PostComment postComment,
 			CancellationToken cancellationToken)
 		{
+			repository.SetupGetByIdAsync(command.Id, include, null, cancellationToken);
+		}
+
+		public void SetupExistsByIdAsync(
+			PostCommentId id,
+			bool exists,
+			CancellationToken cancellationToken)
+		{
 			repository
-				.GetByIdAsync(command.Id, include, cancellationToken)
-				.ReturnsTaskResponse(null);
+				.ExistsByIdAsync(id, cancellationToken)
+				.ReturnsTaskResponse(exists);
 		}
 	}
 
@@ -155,9 +167,7 @@ public static class PostCommentMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.GetByIdAsync(command.UserId, cancellationToken)
-				.ReturnsTaskResponse(user);
+			repository.SetupGetByIdAsync(command.UserId, user, cancellationToken);
 		}
 
 		public void RemoveGetByIdAsync(
@@ -165,9 +175,7 @@ public static class PostCommentMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.GetByIdAsync(command.UserId, cancellationToken)
-				.ReturnsTaskResponse(null);
+			repository.SetupGetByIdAsync(command.UserId, null, cancellationToken);
 		}
 	}
 
@@ -178,9 +186,7 @@ public static class PostCommentMockSetups
 			Post post,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.GetByIdAsync(query.Filter.Id, query.CurrentUser, cancellationToken)
-				.ReturnsTaskResponse(post.ToResponse(query));
+			repository.SetupGetByIdAsync(query.Filter.Id, query.CurrentUser, post.ToResponse(query), cancellationToken);
 		}
 
 		public void RemoveGetByIdAsync(
@@ -188,27 +194,21 @@ public static class PostCommentMockSetups
 			Post post,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.GetByIdAsync(query.Filter.Id, query.CurrentUser, cancellationToken)
-				.ReturnsTaskResponse(null);
+			repository.SetupGetByIdAsync(query.Filter.Id, query.CurrentUser, null, cancellationToken);
 		}
 
 		public void SetupExistsByIdAsync(
 			GetPostCommentByIdQuery query,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.ExistsByIdAsync(query.Id.Id, cancellationToken)
-				.ReturnsTaskResponse(true);
+			repository.SetupExistsByIdAsync(query.Id.Id, true, cancellationToken);
 		}
 
 		public void RemoveExistsByIdAsync(
 			GetPostCommentByIdQuery query,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.ExistsByIdAsync(query.Id.Id, cancellationToken)
-				.ReturnsTaskResponse(false);
+			repository.SetupExistsByIdAsync(query.Id.Id, false, cancellationToken);
 		}
 	}
 
@@ -219,9 +219,7 @@ public static class PostCommentMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.GetByIdAsync(query.Filter.UserId, query.CurrentUser, cancellationToken)
-				.ReturnsTaskResponse(user.ToResponse(query));
+			repository.SetupGetByIdAsync(query.Filter.UserId, query.CurrentUser, user.ToResponse(query), cancellationToken);
 		}
 
 		public void RemoveGetByIdAsync(
@@ -229,9 +227,7 @@ public static class PostCommentMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.GetByIdAsync(query.Filter.UserId, query.CurrentUser, cancellationToken)
-				.ReturnsTaskResponse(null);
+			repository.SetupGetByIdAsync(query.Filter.UserId, query.CurrentUser, null, cancellationToken);
 		}
 	}
 
@@ -242,9 +238,20 @@ public static class PostCommentMockSetups
 			ICollection<PostComment> postComments,
 			CancellationToken cancellationToken)
 		{
+			repository.SetupGetAllAsync(query.Filter, query.Sorting, query.Pagination, query.CurrentUser, postComments.ToResponse(query), cancellationToken);
+		}
+
+		public void SetupGetAllAsync(
+			PostCommentsFilterQuery filter,
+			PostCommentsSortingQuery sorting,
+			PostCommentsPaginationQuery pagination,
+			CurrentUserQuery currentUser,
+			ICollection<PostCommentResponse> responses,
+			CancellationToken cancellationToken)
+		{
 			repository
-				.GetAllAsync(query.Filter, query.Sorting, query.Pagination, query.CurrentUser, cancellationToken)
-				.ReturnsTaskResponse(postComments.ToResponse(query));
+				.GetAllAsync(filter, sorting, pagination, currentUser, cancellationToken)
+				.ReturnsTaskResponse(responses);
 		}
 
 		public void SetupGetTotalCountAsync(
@@ -252,9 +259,17 @@ public static class PostCommentMockSetups
 			ICollection<PostComment> postComments,
 			CancellationToken cancellationToken)
 		{
+			repository.SetupGetTotalCountAsync(query.Filter, postComments.ToTotalCountResponse(query), cancellationToken);
+		}
+
+		public void SetupGetTotalCountAsync(
+			PostCommentsFilterQuery filter,
+			long totalCount,
+			CancellationToken cancellationToken)
+		{
 			repository
-				.GetTotalCountAsync(query.Filter, cancellationToken)
-				.ReturnsTaskResponse(postComments.ToTotalCountResponse(query));
+				.GetTotalCountAsync(filter, cancellationToken)
+				.ReturnsTaskResponse(totalCount);
 		}
 
 		public void SetupGetAllForUserAsync(
@@ -262,9 +277,20 @@ public static class PostCommentMockSetups
 			ICollection<PostComment> postComments,
 			CancellationToken cancellationToken)
 		{
+			repository.SetupGetAllForUserAsync(query.Filter, query.Sorting, query.Pagination, query.CurrentUser, postComments.ToResponse(query), cancellationToken);
+		}
+
+		public void SetupGetAllForUserAsync(
+			PostCommentsForUserFilterQuery filter,
+			PostCommentsForUserSortingQuery sorting,
+			PostCommentsPaginationQuery pagination,
+			CurrentUserQuery currentUser,
+			ICollection<PostCommentResponse> responses,
+			CancellationToken cancellationToken)
+		{
 			repository
-				.GetAllForUserAsync(query.Filter, query.Sorting, query.Pagination, query.CurrentUser, cancellationToken)
-				.ReturnsTaskResponse(postComments.ToResponse(query));
+				.GetAllForUserAsync(filter, sorting, pagination, currentUser, cancellationToken)
+				.ReturnsTaskResponse(responses);
 		}
 
 		public void SetupGetTotalCountForUserAsync(
@@ -272,9 +298,17 @@ public static class PostCommentMockSetups
 			ICollection<PostComment> postComments,
 			CancellationToken cancellationToken)
 		{
+			repository.SetupGetTotalCountForUserAsync(query.Filter, postComments.ToTotalCountResponse(query), cancellationToken);
+		}
+
+		public void SetupGetTotalCountForUserAsync(
+			PostCommentsForUserFilterQuery filter,
+			long totalCount,
+			CancellationToken cancellationToken)
+		{
 			repository
-				.GetTotalCountForUserAsync(query.Filter, cancellationToken)
-				.ReturnsTaskResponse(postComments.ToTotalCountResponse(query));
+				.GetTotalCountForUserAsync(filter, cancellationToken)
+				.ReturnsTaskResponse(totalCount);
 		}
 
 		public void SetupGetByIdAsync(
@@ -282,9 +316,18 @@ public static class PostCommentMockSetups
 			PostComment postComment,
 			CancellationToken cancellationToken)
 		{
+			repository.SetupGetByIdAsync(query.Id, query.CurrentUser, postComment.ToResponse(query), cancellationToken);
+		}
+
+		public void SetupGetByIdAsync(
+			PostCommentId id,
+			CurrentUserQuery currentUser,
+			PostCommentResponse? response,
+			CancellationToken cancellationToken)
+		{
 			repository
-				.GetByIdAsync(query.Id, query.CurrentUser, cancellationToken)
-				.ReturnsTaskResponse(postComment.ToResponse(query));
+				.GetByIdAsync(id, currentUser, cancellationToken)
+				.ReturnsTaskResponse(response);
 		}
 
 		public void RemoveGetByIdAsync(
@@ -292,9 +335,17 @@ public static class PostCommentMockSetups
 			PostComment postComment,
 			CancellationToken cancellationToken)
 		{
+			repository.SetupGetByIdAsync(query.Id, query.CurrentUser, null, cancellationToken);
+		}
+
+		public void SetupExistsByIdAsync(
+			PostCommentId id,
+			bool exists,
+			CancellationToken cancellationToken)
+		{
 			repository
-				.GetByIdAsync(query.Id, query.CurrentUser, cancellationToken)
-				.ReturnsTaskResponse(null);
+				.ExistsByIdAsync(id, cancellationToken)
+				.ReturnsTaskResponse(exists);
 		}
 	}
 
@@ -304,9 +355,63 @@ public static class PostCommentMockSetups
 			UpdatePostCommentCommand command,
 			PostComment postComment)
 		{
-			dateTimeProvider
-				.GetOffsetUtcNow()
-				.ReturnsResponse(postComment.UpdatedAtUtc);
+			dateTimeProvider.SetupGetOffsetUtcNow(postComment.UpdatedAtUtc);
+		}
+	}
+
+	extension(IPostCommentQueryService service)
+	{
+		public void SetupGetAllAsync(
+			GetAllPostCommentsQuery query,
+			PostCommentCollectionResponse response,
+			CancellationToken cancellationToken)
+		{
+			service
+				.GetAllAsync(query, cancellationToken)
+				.ReturnsTaskResponse(response);
+		}
+
+		public void SetupGetAllForUserAsync(
+			GetAllPostCommentsForUserQuery query,
+			PostCommentCollectionResponse response,
+			CancellationToken cancellationToken)
+		{
+			service
+				.GetAllForUserAsync(query, cancellationToken)
+				.ReturnsTaskResponse(response);
+		}
+
+		public void SetupGetByIdAsync(
+			GetPostCommentByIdQuery query,
+			PostCommentResponse response,
+			CancellationToken cancellationToken)
+		{
+			service
+				.GetByIdAsync(query, cancellationToken)
+				.ReturnsTaskResponse(response);
+		}
+	}
+
+	extension(IPostCommentCommandService service)
+	{
+		public void SetupAddAsync(
+			AddPostCommentCommand command,
+			PostCommentId id,
+			CancellationToken cancellationToken)
+		{
+			service
+				.AddAsync(command, cancellationToken)
+				.ReturnsTaskResponse(id);
+		}
+
+		public void SetupUpdateAsync(
+			UpdatePostCommentCommand command,
+			PostCommentId id,
+			CancellationToken cancellationToken)
+		{
+			service
+				.UpdateAsync(command, cancellationToken)
+				.ReturnsTaskResponse(id);
 		}
 	}
 }

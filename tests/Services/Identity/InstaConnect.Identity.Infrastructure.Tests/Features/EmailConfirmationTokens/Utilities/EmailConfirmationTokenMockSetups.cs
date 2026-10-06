@@ -13,6 +13,11 @@ public static class EmailConfirmationTokenMockSetups
 			EmailConfirmationTokenId id,
 			IEmailConfirmationTokenFluent fluent)
 		{
+			collection.SetupAggregateFluent(fluent);
+		}
+
+		public void SetupAggregateFluent(IEmailConfirmationTokenFluent fluent)
+		{
 			collection.AggregateFluent().ReturnsResponse(fluent);
 		}
 	}
@@ -24,12 +29,17 @@ public static class EmailConfirmationTokenMockSetups
 			EmailConfirmationToken? emailConfirmationToken,
 			CancellationToken cancellationToken)
 		{
-			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(emailConfirmationToken != null);
+			fluent.SetupAnyAsync(emailConfirmationToken != null, cancellationToken);
 		}
 
 		public void SetupApplyIncludes(
 			EmailConfirmationTokenId id,
 			EmailConfirmationTokenInclude include)
+		{
+			fluent.SetupApplyIncludes(include);
+		}
+
+		public void SetupApplyIncludes(EmailConfirmationTokenInclude include)
 		{
 			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
 		}
@@ -44,7 +54,7 @@ public static class EmailConfirmationTokenMockSetups
 			EmailConfirmationToken emailConfirmationToken,
 			CancellationToken cancellationToken)
 		{
-			fluent.FirstOrDefaultAsync(cancellationToken).ReturnsTaskResponse(emailConfirmationToken);
+			fluent.SetupFirstOrDefaultAsync(emailConfirmationToken, cancellationToken);
 		}
 	}
 }

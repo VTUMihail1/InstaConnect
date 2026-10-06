@@ -1,5 +1,3 @@
-using InstaConnect.Common.Infrastructure.Tests.Features.Utilities;
-
 namespace InstaConnect.Chats.Infrastructure.Tests.Features.Users.Assertions;
 
 public static class UserValidationExceptionAssertions

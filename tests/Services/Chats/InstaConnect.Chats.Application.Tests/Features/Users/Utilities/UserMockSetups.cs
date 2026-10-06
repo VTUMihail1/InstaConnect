@@ -1,3 +1,5 @@
+using InstaConnect.Chats.Domain.Tests.Features.Users.Utilities;
+
 namespace InstaConnect.Chats.Application.Tests.Features.Users.Utilities;
 
 public static class UserMockSetups
@@ -9,9 +11,7 @@ public static class UserMockSetups
 		User user,
 		CancellationToken cancellationToken)
 		{
-			userService
-				.AddAsync(request.IsAddUserCommand(), cancellationToken)
-				.ReturnsTaskResponse(user.ToResponse(request));
+			userService.SetupAddAsync(request.IsAddUserCommand(), user.ToResponse(request), cancellationToken);
 		}
 
 		public void SetupUpdateAsync(
@@ -19,9 +19,7 @@ public static class UserMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			userService
-				.UpdateAsync(request.IsUpdateUserCommand(), cancellationToken)
-				.ReturnsTaskResponse(user.ToResponse(request));
+			userService.SetupUpdateAsync(request.IsUpdateUserCommand(), user.ToResponse(request), cancellationToken);
 		}
 	}
 }

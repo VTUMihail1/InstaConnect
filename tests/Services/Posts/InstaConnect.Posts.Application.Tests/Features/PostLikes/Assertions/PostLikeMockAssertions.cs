@@ -1,4 +1,5 @@
 using InstaConnect.Posts.Application.Tests.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Domain.Tests.Features.PostLikes.Assertions;
 
 namespace InstaConnect.Posts.Application.Tests.Features.PostLikes.Assertions;
 
@@ -10,21 +11,21 @@ public static class PostLikeMockAssertions
 		GetAllPostLikesQueryRequest request,
 		CancellationToken cancellationToken)
 		{
-			await postLikeService.ShouldHaveReceivedOne().GetAllAsync(request.IsGetAllPostLikesQuery(), cancellationToken);
+			await postLikeService.ShouldHaveReceivedOneGetAllAsync(request.IsGetAllPostLikesQuery(), cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneGetAllForUserAsync(
 			GetAllPostLikesForUserQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await postLikeService.ShouldHaveReceivedOne().GetAllForUserAsync(request.IsGetAllPostLikesForUserQuery(), cancellationToken);
+			await postLikeService.ShouldHaveReceivedOneGetAllForUserAsync(request.IsGetAllPostLikesForUserQuery(), cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneGetByIdAsync(
 			GetPostLikeByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await postLikeService.ShouldHaveReceivedOne().GetByIdAsync(request.IsGetPostLikeByIdQuery(), cancellationToken);
+			await postLikeService.ShouldHaveReceivedOneGetByIdAsync(request.IsGetPostLikeByIdQuery(), cancellationToken);
 		}
 	}
 
@@ -34,14 +35,14 @@ public static class PostLikeMockAssertions
 		AddPostLikeCommandRequest request,
 		CancellationToken cancellationToken)
 		{
-			await postLikeService.ShouldHaveReceivedOne().AddAsync(request.IsAddPostLikeCommand(), cancellationToken);
+			await postLikeService.ShouldHaveReceivedOneAddAsync(request.IsAddPostLikeCommand(), cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneDeleteAsync(
 			DeletePostLikeCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await postLikeService.ShouldHaveReceivedOne().DeleteAsync(request.IsDeletePostLikeCommand(), cancellationToken);
+			await postLikeService.ShouldHaveReceivedOneDeleteAsync(request.IsDeletePostLikeCommand(), cancellationToken);
 		}
 	}
 }

@@ -1,5 +1,4 @@
 using InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Helpers.Repositories;
-using InstaConnect.Identity.Infrastructure.Tests.Features.EmailConfirmationTokens.Assertions;
 using InstaConnect.Identity.Infrastructure.Tests.Unit.Features.EmailConfirmationTokens.Utilities;
 
 namespace InstaConnect.Identity.Infrastructure.Tests.Unit.Features.EmailConfirmationTokens.Repositories;

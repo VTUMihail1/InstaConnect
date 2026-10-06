@@ -1,4 +1,5 @@
 using InstaConnect.Common.Application.Features.Requests.Abstractions;
+using InstaConnect.Common.Application.Tests.Features.Utilities;
 
 namespace InstaConnect.Follows.Presentation.Tests.Features.Follows.Utilities;
 
@@ -12,9 +13,7 @@ public static class FollowMockSetups
 		ICollection<Follow> follows,
 		CancellationToken cancellationToken)
 		{
-			sender
-				.SendAsync(request.IsGetAllFollowsQueryRequest(), cancellationToken)
-				.ReturnsTaskResponse(follows.ToResponse(request, follower));
+			sender.SetupSendAsync(request.IsGetAllFollowsQueryRequest(), follows.ToResponse(request, follower), cancellationToken);
 		}
 
 		public void SetupSendAsync(
@@ -23,9 +22,7 @@ public static class FollowMockSetups
 			ICollection<Follow> follows,
 			CancellationToken cancellationToken)
 		{
-			sender
-				.SendAsync(request.IsGetAllFollowsForFollowingQueryRequest(), cancellationToken)
-				.ReturnsTaskResponse(follows.ToResponse(request, following));
+			sender.SetupSendAsync(request.IsGetAllFollowsForFollowingQueryRequest(), follows.ToResponse(request, following), cancellationToken);
 		}
 
 		public void SetupSendAsync(
@@ -33,9 +30,7 @@ public static class FollowMockSetups
 			Follow follow,
 			CancellationToken cancellationToken)
 		{
-			sender
-				.SendAsync(request.IsGetFollowByIdQueryRequest(), cancellationToken)
-				.ReturnsTaskResponse(follow.ToResponse(request));
+			sender.SetupSendAsync(request.IsGetFollowByIdQueryRequest(), follow.ToResponse(request), cancellationToken);
 		}
 
 		public void SetupSendAsync(
@@ -43,9 +38,7 @@ public static class FollowMockSetups
 			Follow follow,
 			CancellationToken cancellationToken)
 		{
-			sender
-				.SendAsync(request.IsAddFollowCommandRequest(), cancellationToken)
-				.ReturnsTaskResponse(follow.ToResponse(request));
+			sender.SetupSendAsync(request.IsAddFollowCommandRequest(), follow.ToResponse(request), cancellationToken);
 		}
 	}
 }

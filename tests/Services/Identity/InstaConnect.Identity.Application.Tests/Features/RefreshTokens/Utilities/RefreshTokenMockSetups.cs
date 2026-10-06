@@ -1,3 +1,5 @@
+using InstaConnect.Identity.Domain.Tests.Features.RefreshTokens.Utilities;
+
 namespace InstaConnect.Identity.Application.Tests.Features.RefreshTokens.Utilities;
 
 public static class RefreshTokenMockSetups
@@ -9,9 +11,7 @@ public static class RefreshTokenMockSetups
 			RefreshToken refreshToken,
 			CancellationToken cancellationToken)
 		{
-			service
-				.IssueAsync(request.IsIssueRefreshTokenCommand(), cancellationToken)
-				.ReturnsTaskResponse(refreshToken.ToResponse(request));
+			service.SetupIssueAsync(request.IsIssueRefreshTokenCommand(), refreshToken.ToResponse(request), cancellationToken);
 		}
 
 		public void SetupRotateAsync(
@@ -19,9 +19,7 @@ public static class RefreshTokenMockSetups
 			RefreshToken refreshToken,
 			CancellationToken cancellationToken)
 		{
-			service
-				.RotateAsync(request.IsRotateRefreshTokenCommand(), cancellationToken)
-				.ReturnsTaskResponse(refreshToken.ToResponse(request));
+			service.SetupRotateAsync(request.IsRotateRefreshTokenCommand(), refreshToken.ToResponse(request), cancellationToken);
 		}
 	}
 }

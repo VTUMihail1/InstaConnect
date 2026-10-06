@@ -11,10 +11,21 @@ public static class PostMockAssertions
 		public void ShouldHaveReceivedOneCreate(
 			AddPostCommand command)
 		{
-			factory.ShouldHaveReceivedOne().Create(
+			factory.ShouldHaveReceivedOneCreate(
 				command.UserId,
 				command.Title,
 				command.Content);
+		}
+
+		public void ShouldHaveReceivedOneCreate(
+			UserId userId,
+			string title,
+			string content)
+		{
+			factory.ShouldHaveReceivedOne().Create(
+				userId,
+				title,
+				content);
 		}
 	}
 
@@ -24,11 +35,26 @@ public static class PostMockAssertions
 		GetAllPostsQuery query,
 		CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().GetAllAsync(
+			await repository.ShouldHaveReceivedOneGetAllAsync(
 				query.Filter,
 				query.Sorting,
 				query.Pagination,
 				query.CurrentUser,
+				cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneGetAllAsync(
+			PostsFilterQuery filter,
+			PostsSortingQuery sorting,
+			PostsPaginationQuery pagination,
+			CurrentUserQuery currentUser,
+			CancellationToken cancellationToken)
+		{
+			await repository.ShouldHaveReceivedOne().GetAllAsync(
+				filter,
+				sorting,
+				pagination,
+				currentUser,
 				cancellationToken);
 		}
 
@@ -36,8 +62,17 @@ public static class PostMockAssertions
 		GetAllPostsQuery query,
 		CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().GetTotalCountAsync(
+			await repository.ShouldHaveReceivedOneGetTotalCountAsync(
 				query.Filter,
+				cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneGetTotalCountAsync(
+			PostsFilterQuery filter,
+			CancellationToken cancellationToken)
+		{
+			await repository.ShouldHaveReceivedOne().GetTotalCountAsync(
+				filter,
 				cancellationToken);
 		}
 
@@ -45,7 +80,7 @@ public static class PostMockAssertions
 			GetAllPostsForUserQuery query,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().GetAllForUserAsync(
+			await repository.ShouldHaveReceivedOneGetAllForUserAsync(
 				query.Filter,
 				query.Sorting,
 				query.Pagination,
@@ -53,12 +88,36 @@ public static class PostMockAssertions
 				cancellationToken);
 		}
 
+		public async Task ShouldHaveReceivedOneGetAllForUserAsync(
+			PostsForUserFilterQuery filter,
+			PostsForUserSortingQuery sorting,
+			PostsPaginationQuery pagination,
+			CurrentUserQuery currentUser,
+			CancellationToken cancellationToken)
+		{
+			await repository.ShouldHaveReceivedOne().GetAllForUserAsync(
+				filter,
+				sorting,
+				pagination,
+				currentUser,
+				cancellationToken);
+		}
+
 		public async Task ShouldHaveReceivedOneGetTotalCountForUserAsync(
 		GetAllPostsForUserQuery query,
 		CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().GetForUserTotalCountAsync(
+			await repository.ShouldHaveReceivedOneGetTotalCountForUserAsync(
 				query.Filter,
+				cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneGetTotalCountForUserAsync(
+			PostsForUserFilterQuery filter,
+			CancellationToken cancellationToken)
+		{
+			await repository.ShouldHaveReceivedOne().GetForUserTotalCountAsync(
+				filter,
 				cancellationToken);
 		}
 
@@ -66,9 +125,29 @@ public static class PostMockAssertions
 			GetPostByIdQuery query,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().GetByIdAsync(
+			await repository.ShouldHaveReceivedOneGetByIdAsync(
 				query.Id,
 				query.CurrentUser,
+				cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
+			PostId id,
+			CurrentUserQuery currentUser,
+			CancellationToken cancellationToken)
+		{
+			await repository.ShouldHaveReceivedOne().GetByIdAsync(
+				id,
+				currentUser,
+				cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneExistsByIdAsync(
+			PostId id,
+			CancellationToken cancellationToken)
+		{
+			await repository.ShouldHaveReceivedOne().ExistsByIdAsync(
+				id,
 				cancellationToken);
 		}
 	}
@@ -79,21 +158,42 @@ public static class PostMockAssertions
 			AddPostCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().AddAsync(command.IsPost(), cancellationToken);
+			await repository.ShouldHaveReceivedOneAddAsync(command.IsPost(), cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneAddAsync(
+			Post post,
+			CancellationToken cancellationToken)
+		{
+			await repository.ShouldHaveReceivedOne().AddAsync(post, cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneUpdateAsync(
 			UpdatePostCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().UpdateAsync(command.IsPost(), cancellationToken);
+			await repository.ShouldHaveReceivedOneUpdateAsync(command.IsPost(), cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneUpdateAsync(
+			Post post,
+			CancellationToken cancellationToken)
+		{
+			await repository.ShouldHaveReceivedOne().UpdateAsync(post, cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneDeleteAsync(
 			DeletePostCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().DeleteAsync(command.IsPost(), cancellationToken);
+			await repository.ShouldHaveReceivedOneDeleteAsync(command.IsPost(), cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneDeleteAsync(
+			Post post,
+			CancellationToken cancellationToken)
+		{
+			await repository.ShouldHaveReceivedOne().DeleteAsync(post, cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneGetByIdAsync(
@@ -101,7 +201,7 @@ public static class PostMockAssertions
 			PostInclude include,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().GetByIdAsync(
+			await repository.ShouldHaveReceivedOneGetByIdAsync(
 				command.Id,
 				include,
 				cancellationToken);
@@ -112,9 +212,29 @@ public static class PostMockAssertions
 			PostInclude include,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().GetByIdAsync(
+			await repository.ShouldHaveReceivedOneGetByIdAsync(
 				command.Id,
 				include,
+				cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
+			PostId id,
+			PostInclude include,
+			CancellationToken cancellationToken)
+		{
+			await repository.ShouldHaveReceivedOne().GetByIdAsync(
+				id,
+				include,
+				cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneExistsByIdAsync(
+			PostId id,
+			CancellationToken cancellationToken)
+		{
+			await repository.ShouldHaveReceivedOne().ExistsByIdAsync(
+				id,
 				cancellationToken);
 		}
 	}
@@ -125,7 +245,7 @@ public static class PostMockAssertions
 			GetAllPostsForUserQuery query,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().GetByIdAsync(
+			await repository.ShouldHaveReceivedOneGetByIdAsync(
 				query.Filter.UserId,
 				query.CurrentUser,
 				cancellationToken);
@@ -138,7 +258,7 @@ public static class PostMockAssertions
 			AddPostCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().GetByIdAsync(
+			await repository.ShouldHaveReceivedOneGetByIdAsync(
 				command.UserId,
 				cancellationToken);
 		}
@@ -148,7 +268,7 @@ public static class PostMockAssertions
 	{
 		public void ShouldHaveReceivedOneGetOffsetUtcNow(UpdatePostCommand command)
 		{
-			dateTimeProvider.ShouldHaveReceivedOne().GetOffsetUtcNow();
+			dateTimeProvider.ShouldHaveReceivedOneGetOffsetUtcNow();
 		}
 	}
 
@@ -159,7 +279,7 @@ public static class PostMockAssertions
 			Post post,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(command.IsPostAddedEventRequest(post), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOnePublishAsync(command.IsPostAddedEventRequest(post), cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOnePublishAsync(
@@ -167,7 +287,7 @@ public static class PostMockAssertions
 			Post post,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(command.IsPostUpdatedEventRequest(post), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOnePublishAsync(command.IsPostUpdatedEventRequest(post), cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOnePublishAsync(
@@ -175,7 +295,55 @@ public static class PostMockAssertions
 			Post post,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(command.IsPostDeletedEventRequest(post), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOnePublishAsync(command.IsPostDeletedEventRequest(post), cancellationToken);
+		}
+	}
+
+	extension(IPostQueryService service)
+	{
+		public async Task ShouldHaveReceivedOneGetAllAsync(
+			GetAllPostsQuery query,
+			CancellationToken cancellationToken)
+		{
+			await service.ShouldHaveReceivedOne().GetAllAsync(query, cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneGetAllForUserAsync(
+			GetAllPostsForUserQuery query,
+			CancellationToken cancellationToken)
+		{
+			await service.ShouldHaveReceivedOne().GetAllForUserAsync(query, cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
+			GetPostByIdQuery query,
+			CancellationToken cancellationToken)
+		{
+			await service.ShouldHaveReceivedOne().GetByIdAsync(query, cancellationToken);
+		}
+	}
+
+	extension(IPostCommandService service)
+	{
+		public async Task ShouldHaveReceivedOneAddAsync(
+			AddPostCommand command,
+			CancellationToken cancellationToken)
+		{
+			await service.ShouldHaveReceivedOne().AddAsync(command, cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneUpdateAsync(
+			UpdatePostCommand command,
+			CancellationToken cancellationToken)
+		{
+			await service.ShouldHaveReceivedOne().UpdateAsync(command, cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneDeleteAsync(
+			DeletePostCommand command,
+			CancellationToken cancellationToken)
+		{
+			await service.ShouldHaveReceivedOne().DeleteAsync(command, cancellationToken);
 		}
 	}
 }

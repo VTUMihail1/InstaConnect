@@ -14,7 +14,7 @@ public static class PostLikeMockSetups
 			PostLikeId id,
 			IPostLikeFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
@@ -22,7 +22,7 @@ public static class PostLikeMockSetups
 			CurrentUserQuery currentUserQuery,
 			IPostLikeFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
@@ -32,14 +32,14 @@ public static class PostLikeMockSetups
 			CurrentUserQuery currentUserQuery,
 			IPostLikeFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
 			PostLikesFilterQuery filterQuery,
 			IPostLikeFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
@@ -49,12 +49,17 @@ public static class PostLikeMockSetups
 			CurrentUserQuery currentUserQuery,
 			IPostLikeFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
 			PostLikesForUserFilterQuery filterQuery,
 			IPostLikeFluent fluent)
+		{
+			collection.SetupAggregateFluent(fluent);
+		}
+
+		public void SetupAggregateFluent(IPostLikeFluent fluent)
 		{
 			collection.AggregateFluent().ReturnsResponse(fluent);
 		}
@@ -67,7 +72,7 @@ public static class PostLikeMockSetups
 			ICollection<PostLike> postLikes,
 			CancellationToken cancellationToken)
 		{
-			fluent.GetCountAsync(cancellationToken).ReturnsTaskResponse(postLikes.ToTotalCountResponse(filterQuery));
+			fluent.SetupGetCountAsync(postLikes.ToTotalCountResponse(filterQuery), cancellationToken);
 		}
 
 		public void SetupGetCountAsync(
@@ -75,7 +80,7 @@ public static class PostLikeMockSetups
 			ICollection<PostLike> postLikes,
 			CancellationToken cancellationToken)
 		{
-			fluent.GetCountAsync(cancellationToken).ReturnsTaskResponse(postLikes.ToTotalCountResponse(filterQuery));
+			fluent.SetupGetCountAsync(postLikes.ToTotalCountResponse(filterQuery), cancellationToken);
 		}
 
 		public void SetupAnyAsync(
@@ -83,14 +88,14 @@ public static class PostLikeMockSetups
 			PostLike? postLike,
 			CancellationToken cancellationToken)
 		{
-			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(postLike != null);
+			fluent.SetupAnyAsync(postLike != null, cancellationToken);
 		}
 
 		public void SetupApplyIncludes(
 			PostLikeId id,
 			PostLikeInclude include)
 		{
-			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
+			fluent.SetupApplyIncludes(include);
 		}
 
 		public void SetupApplyIncludes(
@@ -98,21 +103,21 @@ public static class PostLikeMockSetups
 			CurrentUserQuery currentUserQuery,
 			PostLikeInclude include)
 		{
-			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
+			fluent.SetupApplyIncludes(include);
 		}
 
 		public void SetupApplyIncludes(
 			PostLikesFilterQuery filterQuery,
 			PostLikeInclude include)
 		{
-			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
+			fluent.SetupApplyIncludes(include);
 		}
 
 		public void SetupApplyIncludes(
 			PostLikesForUserFilterQuery filterQuery,
 			PostLikeInclude include)
 		{
-			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
+			fluent.SetupApplyIncludes(include);
 		}
 
 		public void SetupApplyIncludes(
@@ -122,7 +127,7 @@ public static class PostLikeMockSetups
 			CurrentUserQuery currentUserQuery,
 			PostLikeInclude include)
 		{
-			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
+			fluent.SetupApplyIncludes(include);
 		}
 
 		public void SetupApplyIncludes(
@@ -131,6 +136,11 @@ public static class PostLikeMockSetups
 			PostLikesPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery,
 			PostLikeInclude include)
+		{
+			fluent.SetupApplyIncludes(include);
+		}
+
+		public void SetupApplyIncludes(PostLikeInclude include)
 		{
 			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
 		}
@@ -144,7 +154,7 @@ public static class PostLikeMockSetups
 			PostLikeId id,
 			CurrentUserQuery currentUserQuery)
 		{
-			fluent.Match(id).ReturnsResponse(fluent);
+			fluent.SetupMatch(id);
 		}
 
 		public void SetupMatch(PostLikesFilterQuery filterQuery)
@@ -163,7 +173,7 @@ public static class PostLikeMockSetups
 			PostLikesPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
-			fluent.Match(filterQuery).ReturnsResponse(fluent);
+			fluent.SetupMatch(filterQuery);
 		}
 
 		public void SetupMatch(
@@ -172,11 +182,18 @@ public static class PostLikeMockSetups
 			PostLikesPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
-			fluent.Match(filterQuery).ReturnsResponse(fluent);
+			fluent.SetupMatch(filterQuery);
 		}
 
 		public void SetupProjectToFullResponse(
 			PostLikeId id,
+			CurrentUserQuery currentUserQuery,
+			IPostLikeResponseFluent responseFluent)
+		{
+			fluent.SetupProjectToFullResponse(currentUserQuery, responseFluent);
+		}
+
+		public void SetupProjectToFullResponse(
 			CurrentUserQuery currentUserQuery,
 			IPostLikeResponseFluent responseFluent)
 		{
@@ -190,6 +207,13 @@ public static class PostLikeMockSetups
 			CurrentUserQuery currentUserQuery,
 			IPostLikeResponseFluent responseFluent)
 		{
+			fluent.SetupProjectToResponseWithoutPost(currentUserQuery, responseFluent);
+		}
+
+		public void SetupProjectToResponseWithoutPost(
+			CurrentUserQuery currentUserQuery,
+			IPostLikeResponseFluent responseFluent)
+		{
 			fluent.ProjectToResponseWithoutPost(currentUserQuery).ReturnsResponse(responseFluent);
 		}
 
@@ -197,6 +221,13 @@ public static class PostLikeMockSetups
 			PostLikesForUserFilterQuery filterQuery,
 			PostLikesForUserSortingQuery sortingQuery,
 			PostLikesPaginationQuery paginationQuery,
+			CurrentUserQuery currentUserQuery,
+			IPostLikeResponseFluent responseFluent)
+		{
+			fluent.SetupProjectToResponseWithoutUser(currentUserQuery, responseFluent);
+		}
+
+		public void SetupProjectToResponseWithoutUser(
 			CurrentUserQuery currentUserQuery,
 			IPostLikeResponseFluent responseFluent)
 		{
@@ -208,7 +239,7 @@ public static class PostLikeMockSetups
 			PostLike postLike,
 			CancellationToken cancellationToken)
 		{
-			fluent.FirstOrDefaultAsync(cancellationToken).ReturnsTaskResponse(postLike);
+			fluent.SetupFirstOrDefaultAsync(postLike, cancellationToken);
 		}
 	}
 
@@ -220,7 +251,7 @@ public static class PostLikeMockSetups
 			PostLikesPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
-			fluent.ApplySorting(sortingQuery).ReturnsResponse(fluent);
+			fluent.SetupApplySorting(sortingQuery);
 		}
 
 		public void SetupApplySorting(
@@ -229,6 +260,16 @@ public static class PostLikeMockSetups
 			PostLikesPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
+			fluent.SetupApplySorting(sortingQuery);
+		}
+
+		public void SetupApplySorting(PostLikesSortingQuery sortingQuery)
+		{
+			fluent.ApplySorting(sortingQuery).ReturnsResponse(fluent);
+		}
+
+		public void SetupApplySorting(PostLikesForUserSortingQuery sortingQuery)
+		{
 			fluent.ApplySorting(sortingQuery).ReturnsResponse(fluent);
 		}
 
@@ -238,7 +279,7 @@ public static class PostLikeMockSetups
 			PostLikesPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
-			fluent.ApplyPagination(paginationQuery).ReturnsResponse(fluent);
+			fluent.SetupApplyPagination(paginationQuery);
 		}
 
 		public void SetupApplyPagination(
@@ -246,6 +287,11 @@ public static class PostLikeMockSetups
 			PostLikesForUserSortingQuery sortingQuery,
 			PostLikesPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
+		{
+			fluent.SetupApplyPagination(paginationQuery);
+		}
+
+		public void SetupApplyPagination(PostLikesPaginationQuery paginationQuery)
 		{
 			fluent.ApplyPagination(paginationQuery).ReturnsResponse(fluent);
 		}
@@ -258,7 +304,7 @@ public static class PostLikeMockSetups
 			ICollection<PostLike> postLikes,
 			CancellationToken cancellationToken)
 		{
-			fluent.ToListAsync(cancellationToken).ReturnsTaskResponse(postLikes.ToResponse(filterQuery, paginationQuery, currentUserQuery));
+			fluent.SetupToListAsync(postLikes.ToResponse(filterQuery, paginationQuery, currentUserQuery), cancellationToken);
 		}
 
 		public void SetupToListAsync(
@@ -269,7 +315,7 @@ public static class PostLikeMockSetups
 			ICollection<PostLike> postLikes,
 			CancellationToken cancellationToken)
 		{
-			fluent.ToListAsync(cancellationToken).ReturnsTaskResponse(postLikes.ToResponse(filterQuery, paginationQuery, currentUserQuery));
+			fluent.SetupToListAsync(postLikes.ToResponse(filterQuery, paginationQuery, currentUserQuery), cancellationToken);
 		}
 
 		public void SetupFirstOrDefaultAsync(
@@ -278,7 +324,7 @@ public static class PostLikeMockSetups
 			PostLike postLike,
 			CancellationToken cancellationToken)
 		{
-			fluent.FirstOrDefaultAsync(cancellationToken).ReturnsTaskResponse(postLike.ToFullResponse(currentUserQuery));
+			fluent.SetupFirstOrDefaultAsync(postLike.ToFullResponse(currentUserQuery), cancellationToken);
 		}
 	}
 }

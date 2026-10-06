@@ -1,3 +1,5 @@
+using InstaConnect.Chats.Domain.Tests.Features.Chats.Utilities;
+
 namespace InstaConnect.Chats.Application.Tests.Features.Chats.Utilities;
 
 public static class ChatMockSetups
@@ -10,9 +12,7 @@ public static class ChatMockSetups
 		ICollection<Chat> chats,
 		CancellationToken cancellationToken)
 		{
-			service
-				.GetAllAsync(request.IsGetAllChatsQuery(), cancellationToken)
-				.ReturnsTaskResponse(chats.ToResponse(request, participantOne));
+			service.SetupGetAllAsync(request.IsGetAllChatsQuery(), chats.ToResponse(request, participantOne), cancellationToken);
 		}
 
 		public void SetupGetByIdAsync(
@@ -20,9 +20,7 @@ public static class ChatMockSetups
 			Chat chat,
 			CancellationToken cancellationToken)
 		{
-			service
-				.GetByIdAsync(request.IsGetChatByIdQuery(), cancellationToken)
-				.ReturnsTaskResponse(chat.ToResponse(request));
+			service.SetupGetByIdAsync(request.IsGetChatByIdQuery(), chat.ToResponse(request), cancellationToken);
 		}
 	}
 
@@ -33,9 +31,7 @@ public static class ChatMockSetups
 		Chat chat,
 		CancellationToken cancellationToken)
 		{
-			service
-				.AddAsync(request.IsAddChatCommand(), cancellationToken)
-				.ReturnsTaskResponse(chat.ToResponse(request));
+			service.SetupAddAsync(request.IsAddChatCommand(), chat.ToResponse(request), cancellationToken);
 		}
 	}
 }

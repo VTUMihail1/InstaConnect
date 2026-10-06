@@ -1,5 +1,6 @@
 using InstaConnect.Common.Domain.Features.DateTimes.Abstractions;
 using InstaConnect.Common.Domain.Features.Guids.Abstractions;
+using InstaConnect.Posts.Domain.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Posts.Domain.Tests.Features.Posts.Utilities;
 
@@ -9,9 +10,7 @@ public static class PostMockSetups
 	{
 		public void SetupNewStringGuid(Post post)
 		{
-			guidProvider
-				.NewStringGuid()
-				.ReturnsResponse(post.Id.Id);
+			guidProvider.SetupNewStringGuid(post.Id.Id);
 		}
 	}
 
@@ -19,9 +18,7 @@ public static class PostMockSetups
 	{
 		public void SetupGetOffsetUtcNow(Post post)
 		{
-			dateTimeProvider
-				.GetOffsetUtcNow()
-				.ReturnsResponse(post.CreatedAtUtc);
+			dateTimeProvider.SetupGetOffsetUtcNow(post.CreatedAtUtc);
 		}
 	}
 
@@ -31,12 +28,25 @@ public static class PostMockSetups
 			AddPostCommand command,
 			Post post)
 		{
+			factory.SetupCreate(
+				command.UserId,
+				command.Title,
+				command.Content,
+				post.To(command));
+		}
+
+		public void SetupCreate(
+			UserId userId,
+			string title,
+			string content,
+			Post post)
+		{
 			factory
 				.Create(
-					command.UserId,
-					command.Title,
-					command.Content)
-				.ReturnsResponse(post.To(command));
+					userId,
+					title,
+					content)
+				.ReturnsResponse(post);
 		}
 	}
 
@@ -47,9 +57,20 @@ public static class PostMockSetups
 		ICollection<Post> posts,
 		CancellationToken cancellationToken)
 		{
+			service.SetupGetAllAsync(query.Filter, query.Sorting, query.Pagination, query.CurrentUser, posts.ToResponse(query), cancellationToken);
+		}
+
+		public void SetupGetAllAsync(
+			PostsFilterQuery filter,
+			PostsSortingQuery sorting,
+			PostsPaginationQuery pagination,
+			CurrentUserQuery currentUser,
+			ICollection<PostResponse> responses,
+			CancellationToken cancellationToken)
+		{
 			service
-				.GetAllAsync(query.Filter, query.Sorting, query.Pagination, query.CurrentUser, cancellationToken)
-				.ReturnsTaskResponse(posts.ToResponse(query));
+				.GetAllAsync(filter, sorting, pagination, currentUser, cancellationToken)
+				.ReturnsTaskResponse(responses);
 		}
 
 		public void SetupGetTotalCountAsync(
@@ -57,9 +78,17 @@ public static class PostMockSetups
 		ICollection<Post> posts,
 		CancellationToken cancellationToken)
 		{
+			service.SetupGetTotalCountAsync(query.Filter, posts.ToTotalCountResponse(query), cancellationToken);
+		}
+
+		public void SetupGetTotalCountAsync(
+			PostsFilterQuery filter,
+			long totalCount,
+			CancellationToken cancellationToken)
+		{
 			service
-				.GetTotalCountAsync(query.Filter, cancellationToken)
-				.ReturnsTaskResponse(posts.ToTotalCountResponse(query));
+				.GetTotalCountAsync(filter, cancellationToken)
+				.ReturnsTaskResponse(totalCount);
 		}
 
 		public void SetupGetAllForUserAsync(
@@ -68,9 +97,20 @@ public static class PostMockSetups
 			ICollection<Post> posts,
 			CancellationToken cancellationToken)
 		{
+			service.SetupGetAllForUserAsync(query.Filter, query.Sorting, query.Pagination, query.CurrentUser, posts.ToResponse(query), cancellationToken);
+		}
+
+		public void SetupGetAllForUserAsync(
+			PostsForUserFilterQuery filter,
+			PostsForUserSortingQuery sorting,
+			PostsPaginationQuery pagination,
+			CurrentUserQuery currentUser,
+			ICollection<PostResponse> responses,
+			CancellationToken cancellationToken)
+		{
 			service
-				.GetAllForUserAsync(query.Filter, query.Sorting, query.Pagination, query.CurrentUser, cancellationToken)
-				.ReturnsTaskResponse(posts.ToResponse(query));
+				.GetAllForUserAsync(filter, sorting, pagination, currentUser, cancellationToken)
+				.ReturnsTaskResponse(responses);
 		}
 
 		public void SetupGetTotalCountForUserAsync(
@@ -78,9 +118,17 @@ public static class PostMockSetups
 		ICollection<Post> posts,
 		CancellationToken cancellationToken)
 		{
+			service.SetupGetTotalCountForUserAsync(query.Filter, posts.ToTotalCountResponse(query), cancellationToken);
+		}
+
+		public void SetupGetTotalCountForUserAsync(
+			PostsForUserFilterQuery filter,
+			long totalCount,
+			CancellationToken cancellationToken)
+		{
 			service
-				.GetForUserTotalCountAsync(query.Filter, cancellationToken)
-				.ReturnsTaskResponse(posts.ToTotalCountResponse(query));
+				.GetForUserTotalCountAsync(filter, cancellationToken)
+				.ReturnsTaskResponse(totalCount);
 		}
 
 		public void SetupGetByIdAsync(
@@ -88,9 +136,18 @@ public static class PostMockSetups
 			Post post,
 			CancellationToken cancellationToken)
 		{
+			service.SetupGetByIdAsync(query.Id, query.CurrentUser, post.ToResponse(query), cancellationToken);
+		}
+
+		public void SetupGetByIdAsync(
+			PostId id,
+			CurrentUserQuery currentUser,
+			PostResponse? response,
+			CancellationToken cancellationToken)
+		{
 			service
-				.GetByIdAsync(query.Id, query.CurrentUser, cancellationToken)
-				.ReturnsTaskResponse(post.ToResponse(query));
+				.GetByIdAsync(id, currentUser, cancellationToken)
+				.ReturnsTaskResponse(response);
 		}
 
 		public void RemoveGetByIdAsync(
@@ -98,9 +155,17 @@ public static class PostMockSetups
 			Post post,
 			CancellationToken cancellationToken)
 		{
+			service.SetupGetByIdAsync(query.Id, query.CurrentUser, null, cancellationToken);
+		}
+
+		public void SetupExistsByIdAsync(
+			PostId id,
+			bool exists,
+			CancellationToken cancellationToken)
+		{
 			service
-				.GetByIdAsync(query.Id, query.CurrentUser, cancellationToken)
-				.ReturnsTaskResponse(null);
+				.ExistsByIdAsync(id, cancellationToken)
+				.ReturnsTaskResponse(exists);
 		}
 	}
 
@@ -112,9 +177,7 @@ public static class PostMockSetups
 			Post post,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.GetByIdAsync(command.Id, include, cancellationToken)
-				.ReturnsTaskResponse(post);
+			repository.SetupGetByIdAsync(command.Id, include, post, cancellationToken);
 		}
 
 		public void SetupGetByIdAsync(
@@ -123,8 +186,17 @@ public static class PostMockSetups
 			Post post,
 			CancellationToken cancellationToken)
 		{
+			repository.SetupGetByIdAsync(command.Id, include, post, cancellationToken);
+		}
+
+		public void SetupGetByIdAsync(
+			PostId id,
+			PostInclude include,
+			Post? post,
+			CancellationToken cancellationToken)
+		{
 			repository
-				.GetByIdAsync(command.Id, include, cancellationToken)
+				.GetByIdAsync(id, include, cancellationToken)
 				.ReturnsTaskResponse(post);
 		}
 
@@ -134,9 +206,7 @@ public static class PostMockSetups
 			Post post,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.GetByIdAsync(command.Id, include, cancellationToken)
-				.ReturnsTaskResponse(null);
+			repository.SetupGetByIdAsync(command.Id, include, null, cancellationToken);
 		}
 
 		public void RemoveGetByIdAsync(
@@ -145,9 +215,17 @@ public static class PostMockSetups
 			Post post,
 			CancellationToken cancellationToken)
 		{
+			repository.SetupGetByIdAsync(command.Id, include, null, cancellationToken);
+		}
+
+		public void SetupExistsByIdAsync(
+			PostId id,
+			bool exists,
+			CancellationToken cancellationToken)
+		{
 			repository
-				.GetByIdAsync(command.Id, include, cancellationToken)
-				.ReturnsTaskResponse(null);
+				.ExistsByIdAsync(id, cancellationToken)
+				.ReturnsTaskResponse(exists);
 		}
 	}
 
@@ -158,9 +236,7 @@ public static class PostMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.GetByIdAsync(query.Filter.UserId, query.CurrentUser, cancellationToken)
-				.ReturnsTaskResponse(user.ToResponse(query));
+			repository.SetupGetByIdAsync(query.Filter.UserId, query.CurrentUser, user.ToResponse(query), cancellationToken);
 		}
 
 		public void RemoveGetByIdAsync(
@@ -168,9 +244,7 @@ public static class PostMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.GetByIdAsync(query.Filter.UserId, query.CurrentUser, cancellationToken)
-				.ReturnsTaskResponse(null);
+			repository.SetupGetByIdAsync(query.Filter.UserId, query.CurrentUser, null, cancellationToken);
 		}
 	}
 
@@ -181,9 +255,7 @@ public static class PostMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.GetByIdAsync(command.UserId, cancellationToken)
-				.ReturnsTaskResponse(user);
+			repository.SetupGetByIdAsync(command.UserId, user, cancellationToken);
 		}
 
 		public void RemoveGetByIdAsync(
@@ -191,9 +263,7 @@ public static class PostMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.GetByIdAsync(command.UserId, cancellationToken)
-				.ReturnsTaskResponse(null);
+			repository.SetupGetByIdAsync(command.UserId, null, cancellationToken);
 		}
 	}
 
@@ -203,9 +273,63 @@ public static class PostMockSetups
 			UpdatePostCommand command,
 			Post post)
 		{
-			dateTimeProvider
-				.GetOffsetUtcNow()
-				.ReturnsResponse(post.UpdatedAtUtc);
+			dateTimeProvider.SetupGetOffsetUtcNow(post.UpdatedAtUtc);
+		}
+	}
+
+	extension(IPostQueryService service)
+	{
+		public void SetupGetAllAsync(
+			GetAllPostsQuery query,
+			PostCollectionResponse response,
+			CancellationToken cancellationToken)
+		{
+			service
+				.GetAllAsync(query, cancellationToken)
+				.ReturnsTaskResponse(response);
+		}
+
+		public void SetupGetAllForUserAsync(
+			GetAllPostsForUserQuery query,
+			PostCollectionResponse response,
+			CancellationToken cancellationToken)
+		{
+			service
+				.GetAllForUserAsync(query, cancellationToken)
+				.ReturnsTaskResponse(response);
+		}
+
+		public void SetupGetByIdAsync(
+			GetPostByIdQuery query,
+			PostResponse response,
+			CancellationToken cancellationToken)
+		{
+			service
+				.GetByIdAsync(query, cancellationToken)
+				.ReturnsTaskResponse(response);
+		}
+	}
+
+	extension(IPostCommandService service)
+	{
+		public void SetupAddAsync(
+			AddPostCommand command,
+			PostId id,
+			CancellationToken cancellationToken)
+		{
+			service
+				.AddAsync(command, cancellationToken)
+				.ReturnsTaskResponse(id);
+		}
+
+		public void SetupUpdateAsync(
+			UpdatePostCommand command,
+			PostId id,
+			CancellationToken cancellationToken)
+		{
+			service
+				.UpdateAsync(command, cancellationToken)
+				.ReturnsTaskResponse(id);
 		}
 	}
 }

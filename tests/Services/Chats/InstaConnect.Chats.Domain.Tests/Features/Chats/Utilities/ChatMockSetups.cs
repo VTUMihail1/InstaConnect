@@ -1,3 +1,4 @@
+using InstaConnect.Chats.Domain.Tests.Features.Users.Utilities;
 using InstaConnect.Common.Domain.Features.DateTimes.Abstractions;
 
 namespace InstaConnect.Chats.Domain.Tests.Features.Chats.Utilities;
@@ -8,9 +9,7 @@ public static class ChatMockSetups
 	{
 		public void SetupGetOffsetUtcNow(Chat chat)
 		{
-			dateTimeProvider
-				.GetOffsetUtcNow()
-				.ReturnsResponse(chat.CreatedAtUtc);
+			dateTimeProvider.SetupGetOffsetUtcNow(chat.CreatedAtUtc);
 		}
 	}
 
@@ -20,11 +19,22 @@ public static class ChatMockSetups
 			AddChatCommand command,
 			Chat chat)
 		{
+			factory.SetupCreate(
+				command.ParticipantOneId,
+				command.ParticipantTwoId,
+				chat.To(command));
+		}
+
+		public void SetupCreate(
+			UserId participantOneId,
+			UserId participantTwoId,
+			Chat chat)
+		{
 			factory
 				.Create(
-					command.ParticipantOneId,
-					command.ParticipantTwoId)
-				.ReturnsResponse(chat.To(command));
+					participantOneId,
+					participantTwoId)
+				.ReturnsResponse(chat);
 		}
 	}
 
@@ -35,9 +45,7 @@ public static class ChatMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.GetByIdAsync(command.ParticipantOneId, cancellationToken)
-				.ReturnsTaskResponse(user);
+			repository.SetupGetByIdAsync(command.ParticipantOneId, user, cancellationToken);
 		}
 
 		public void SetupGetParticipantTwoByIdAsync(
@@ -45,9 +53,7 @@ public static class ChatMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.GetByIdAsync(command.ParticipantTwoId, cancellationToken)
-				.ReturnsTaskResponse(user);
+			repository.SetupGetByIdAsync(command.ParticipantTwoId, user, cancellationToken);
 		}
 
 		public void RemoveGetParticipantOneByIdAsync(
@@ -55,9 +61,7 @@ public static class ChatMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.GetByIdAsync(command.ParticipantOneId, cancellationToken)
-				.ReturnsTaskResponse(null);
+			repository.SetupGetByIdAsync(command.ParticipantOneId, null, cancellationToken);
 		}
 
 		public void RemoveGetParticipantTwoByIdAsync(
@@ -65,9 +69,7 @@ public static class ChatMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.GetByIdAsync(command.ParticipantTwoId, cancellationToken)
-				.ReturnsTaskResponse(null);
+			repository.SetupGetByIdAsync(command.ParticipantTwoId, null, cancellationToken);
 		}
 	}
 
@@ -78,9 +80,7 @@ public static class ChatMockSetups
 			Chat chat,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.GetByIdAsync(chat.Id, cancellationToken)
-				.ReturnsTaskResponse(null);
+			repository.SetupGetByIdAsync(chat.Id, null, cancellationToken);
 		}
 
 		public void SetupGetByIdAsync(
@@ -88,9 +88,38 @@ public static class ChatMockSetups
 			Chat chat,
 			CancellationToken cancellationToken)
 		{
+			repository.SetupGetByIdAsync(chat.Id, chat, cancellationToken);
+		}
+
+		public void SetupGetByIdAsync(
+			ChatId id,
+			Chat? chat,
+			CancellationToken cancellationToken)
+		{
 			repository
-				.GetByIdAsync(chat.Id, cancellationToken)
+				.GetByIdAsync(id, cancellationToken)
 				.ReturnsTaskResponse(chat);
+		}
+
+		public void SetupGetByIdAsync(
+			ChatId id,
+			ChatInclude include,
+			Chat? chat,
+			CancellationToken cancellationToken)
+		{
+			repository
+				.GetByIdAsync(id, include, cancellationToken)
+				.ReturnsTaskResponse(chat);
+		}
+
+		public void SetupExistsByIdAsync(
+			ChatId id,
+			bool exists,
+			CancellationToken cancellationToken)
+		{
+			repository
+				.ExistsByIdAsync(id, cancellationToken)
+				.ReturnsTaskResponse(exists);
 		}
 	}
 
@@ -101,9 +130,7 @@ public static class ChatMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.GetByIdAsync(query.Filter.ParticipantOneId, query.CurrentUser, cancellationToken)
-				.ReturnsTaskResponse(user.ToResponse(query));
+			repository.SetupGetByIdAsync(query.Filter.ParticipantOneId, query.CurrentUser, user.ToResponse(query), cancellationToken);
 		}
 
 		public void RemoveGetByIdAsync(
@@ -111,9 +138,7 @@ public static class ChatMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			repository
-				.GetByIdAsync(query.Filter.ParticipantOneId, query.CurrentUser, cancellationToken)
-				.ReturnsTaskResponse(null);
+			repository.SetupGetByIdAsync(query.Filter.ParticipantOneId, query.CurrentUser, null, cancellationToken);
 		}
 	}
 
@@ -124,9 +149,20 @@ public static class ChatMockSetups
 			ICollection<Chat> chats,
 			CancellationToken cancellationToken)
 		{
+			repository.SetupGetAllAsync(query.Filter, query.Sorting, query.Pagination, query.CurrentUser, chats.ToResponse(query), cancellationToken);
+		}
+
+		public void SetupGetAllAsync(
+			ChatsFilterQuery filter,
+			ChatsSortingQuery sorting,
+			ChatsPaginationQuery pagination,
+			CurrentUserQuery currentUser,
+			ICollection<ChatResponse> responses,
+			CancellationToken cancellationToken)
+		{
 			repository
-				.GetAllAsync(query.Filter, query.Sorting, query.Pagination, query.CurrentUser, cancellationToken)
-				.ReturnsTaskResponse(chats.ToResponse(query));
+				.GetAllAsync(filter, sorting, pagination, currentUser, cancellationToken)
+				.ReturnsTaskResponse(responses);
 		}
 
 		public void SetupGetTotalCountAsync(
@@ -134,9 +170,17 @@ public static class ChatMockSetups
 			ICollection<Chat> chats,
 			CancellationToken cancellationToken)
 		{
+			repository.SetupGetTotalCountAsync(query.Filter, chats.ToTotalCountResponse(query), cancellationToken);
+		}
+
+		public void SetupGetTotalCountAsync(
+			ChatsFilterQuery filter,
+			long totalCount,
+			CancellationToken cancellationToken)
+		{
 			repository
-				.GetTotalCountAsync(query.Filter, cancellationToken)
-				.ReturnsTaskResponse(chats.ToTotalCountResponse(query));
+				.GetTotalCountAsync(filter, cancellationToken)
+				.ReturnsTaskResponse(totalCount);
 		}
 
 		public void SetupGetByIdAsync(
@@ -144,9 +188,18 @@ public static class ChatMockSetups
 			Chat chat,
 			CancellationToken cancellationToken)
 		{
+			repository.SetupGetByIdAsync(query.Id, query.CurrentUser, chat.ToResponse(query), cancellationToken);
+		}
+
+		public void SetupGetByIdAsync(
+			ChatId id,
+			CurrentUserQuery currentUser,
+			ChatResponse? response,
+			CancellationToken cancellationToken)
+		{
 			repository
-				.GetByIdAsync(query.Id, query.CurrentUser, cancellationToken)
-				.ReturnsTaskResponse(chat.ToResponse(query));
+				.GetByIdAsync(id, currentUser, cancellationToken)
+				.ReturnsTaskResponse(response);
 		}
 
 		public void RemoveGetByIdAsync(
@@ -154,9 +207,53 @@ public static class ChatMockSetups
 			Chat chat,
 			CancellationToken cancellationToken)
 		{
+			repository.SetupGetByIdAsync(query.Id, query.CurrentUser, null, cancellationToken);
+		}
+
+		public void SetupExistsByIdAsync(
+			ChatId id,
+			bool exists,
+			CancellationToken cancellationToken)
+		{
 			repository
-				.GetByIdAsync(query.Id, query.CurrentUser, cancellationToken)
-				.ReturnsTaskResponse(null);
+				.ExistsByIdAsync(id, cancellationToken)
+				.ReturnsTaskResponse(exists);
+		}
+	}
+
+	extension(IChatQueryService service)
+	{
+		public void SetupGetAllAsync(
+			GetAllChatsQuery query,
+			ChatCollectionResponse response,
+			CancellationToken cancellationToken)
+		{
+			service
+				.GetAllAsync(query, cancellationToken)
+				.ReturnsTaskResponse(response);
+		}
+
+		public void SetupGetByIdAsync(
+			GetChatByIdQuery query,
+			ChatResponse response,
+			CancellationToken cancellationToken)
+		{
+			service
+				.GetByIdAsync(query, cancellationToken)
+				.ReturnsTaskResponse(response);
+		}
+	}
+
+	extension(IChatCommandService service)
+	{
+		public void SetupAddAsync(
+			AddChatCommand command,
+			ChatId id,
+			CancellationToken cancellationToken)
+		{
+			service
+				.AddAsync(command, cancellationToken)
+				.ReturnsTaskResponse(id);
 		}
 	}
 }

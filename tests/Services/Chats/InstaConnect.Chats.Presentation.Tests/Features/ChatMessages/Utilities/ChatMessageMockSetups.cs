@@ -1,4 +1,5 @@
 using InstaConnect.Common.Application.Features.Requests.Abstractions;
+using InstaConnect.Common.Application.Tests.Features.Utilities;
 
 namespace InstaConnect.Chats.Presentation.Tests.Features.ChatMessages.Utilities;
 
@@ -12,9 +13,7 @@ public static class ChatMessageMockSetups
 		ICollection<ChatMessage> chatMessages,
 		CancellationToken cancellationToken)
 		{
-			sender
-				.SendAsync(request.IsGetAllChatMessagesQueryRequest(), cancellationToken)
-				.ReturnsTaskResponse(chatMessages.ToResponse(request, chat));
+			sender.SetupSendAsync(request.IsGetAllChatMessagesQueryRequest(), chatMessages.ToResponse(request, chat), cancellationToken);
 		}
 
 		public void SetupSendAsync(
@@ -22,9 +21,7 @@ public static class ChatMessageMockSetups
 			ChatMessage chatMessage,
 			CancellationToken cancellationToken)
 		{
-			sender
-				.SendAsync(request.IsGetChatMessageByIdQueryRequest(), cancellationToken)
-				.ReturnsTaskResponse(chatMessage.ToResponse(request));
+			sender.SetupSendAsync(request.IsGetChatMessageByIdQueryRequest(), chatMessage.ToResponse(request), cancellationToken);
 		}
 
 		public void SetupSendAsync(
@@ -32,9 +29,7 @@ public static class ChatMessageMockSetups
 			ChatMessage chatMessage,
 			CancellationToken cancellationToken)
 		{
-			sender
-				.SendAsync(request.IsAddChatMessageCommandRequest(), cancellationToken)
-				.ReturnsTaskResponse(chatMessage.ToResponse(request));
+			sender.SetupSendAsync(request.IsAddChatMessageCommandRequest(), chatMessage.ToResponse(request), cancellationToken);
 		}
 
 		public void SetupSendAsync(
@@ -42,9 +37,7 @@ public static class ChatMessageMockSetups
 			ChatMessage chatMessage,
 			CancellationToken cancellationToken)
 		{
-			sender
-				.SendAsync(request.IsUpdateChatMessageCommandRequest(), cancellationToken)
-				.ReturnsTaskResponse(chatMessage.ToResponse(request));
+			sender.SetupSendAsync(request.IsUpdateChatMessageCommandRequest(), chatMessage.ToResponse(request), cancellationToken);
 		}
 	}
 }

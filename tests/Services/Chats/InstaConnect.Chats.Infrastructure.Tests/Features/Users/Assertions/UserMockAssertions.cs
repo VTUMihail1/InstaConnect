@@ -2,6 +2,7 @@ using InstaConnect.Chats.Domain.Features.Users.Models.Requests;
 using InstaConnect.Chats.Infrastructure.Features.Users.Abstractions;
 using InstaConnect.Chats.Infrastructure.Tests.Features.Users.Utilities;
 using InstaConnect.Common.Application.Features.Requests.Abstractions;
+using InstaConnect.Common.Application.Tests.Features.Assertions;
 using InstaConnect.Common.Domain.Features.ValueObjects.Models;
 
 namespace InstaConnect.Chats.Infrastructure.Tests.Features.Users.Assertions;
@@ -12,31 +13,29 @@ public static class UserMockAssertions
 	{
 		public void ShouldHaveReceivedOneAggregateFluent(UserId id)
 		{
-			collection.ShouldHaveReceivedOne().AggregateFluent();
+			collection.ShouldHaveReceivedOneAggregateFluent();
 		}
 
 		public void ShouldHaveReceivedOneAggregateFluent(
 			UserId id,
 			CurrentUserQuery currentUserQuery)
 		{
-			collection.ShouldHaveReceivedOne().AggregateFluent();
+			collection.ShouldHaveReceivedOneAggregateFluent();
 		}
 
 		public void ShouldHaveReceivedOneAggregateFluent(Name name)
 		{
-			collection.ShouldHaveReceivedOne().AggregateFluent();
+			collection.ShouldHaveReceivedOneAggregateFluent();
 		}
 
 		public void ShouldHaveReceivedOneAggregateFluent(Email email)
 		{
-			collection.ShouldHaveReceivedOne().AggregateFluent();
+			collection.ShouldHaveReceivedOneAggregateFluent();
 		}
 
-		public async Task ShouldHaveReceivedOneAddAsync(
-			User user,
-			CancellationToken cancellationToken)
+		public void ShouldHaveReceivedOneAggregateFluent()
 		{
-			await collection.ShouldHaveReceivedOne().AddAsync(user, cancellationToken);
+			collection.ShouldHaveReceivedOne().AggregateFluent();
 		}
 
 		public async Task ShouldHaveReceivedOneUpdateAsync(
@@ -65,7 +64,7 @@ public static class UserMockAssertions
 			UserId id,
 			CurrentUserQuery currentUserQuery)
 		{
-			fluent.ShouldHaveReceivedOne().Match(id);
+			fluent.ShouldHaveReceivedOneMatch(id);
 		}
 
 		public void ShouldHaveReceivedOneMatch(Name name)
@@ -82,19 +81,24 @@ public static class UserMockAssertions
 			UserId id,
 			UserInclude include)
 		{
-			fluent.ShouldHaveReceivedOne().ApplyIncludes(include);
+			fluent.ShouldHaveReceivedOneApplyIncludes(include);
 		}
 
 		public void ShouldHaveReceivedOneApplyIncludes(
 			Name name,
 			UserInclude include)
 		{
-			fluent.ShouldHaveReceivedOne().ApplyIncludes(include);
+			fluent.ShouldHaveReceivedOneApplyIncludes(include);
 		}
 
 		public void ShouldHaveReceivedOneApplyIncludes(
 			Email email,
 			UserInclude include)
+		{
+			fluent.ShouldHaveReceivedOneApplyIncludes(include);
+		}
+
+		public void ShouldHaveReceivedOneApplyIncludes(UserInclude include)
 		{
 			fluent.ShouldHaveReceivedOne().ApplyIncludes(include);
 		}
@@ -103,6 +107,11 @@ public static class UserMockAssertions
 			UserId id,
 			CurrentUserQuery currentUserQuery)
 		{
+			fluent.ShouldHaveReceivedOneProjectToFullResponse(currentUserQuery);
+		}
+
+		public void ShouldHaveReceivedOneProjectToFullResponse(CurrentUserQuery currentUserQuery)
+		{
 			fluent.ShouldHaveReceivedOne().ProjectToFullResponse(currentUserQuery);
 		}
 
@@ -110,42 +119,42 @@ public static class UserMockAssertions
 			UserId id,
 			CancellationToken cancellationToken)
 		{
-			await fluent.ShouldHaveReceivedOne().AnyAsync(cancellationToken);
+			await fluent.ShouldHaveReceivedOneAnyAsync(cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneAnyAsync(
 			Name name,
 			CancellationToken cancellationToken)
 		{
-			await fluent.ShouldHaveReceivedOne().AnyAsync(cancellationToken);
+			await fluent.ShouldHaveReceivedOneAnyAsync(cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneAnyAsync(
 			Email email,
 			CancellationToken cancellationToken)
 		{
-			await fluent.ShouldHaveReceivedOne().AnyAsync(cancellationToken);
+			await fluent.ShouldHaveReceivedOneAnyAsync(cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneFirstOrDefaultAsync(
 			UserId id,
 			CancellationToken cancellationToken)
 		{
-			await fluent.ShouldHaveReceivedOne().FirstOrDefaultAsync(cancellationToken);
+			await fluent.ShouldHaveReceivedOneFirstOrDefaultAsync(cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneFirstOrDefaultAsync(
 			Name name,
 			CancellationToken cancellationToken)
 		{
-			await fluent.ShouldHaveReceivedOne().FirstOrDefaultAsync(cancellationToken);
+			await fluent.ShouldHaveReceivedOneFirstOrDefaultAsync(cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneFirstOrDefaultAsync(
 			Email email,
 			CancellationToken cancellationToken)
 		{
-			await fluent.ShouldHaveReceivedOne().FirstOrDefaultAsync(cancellationToken);
+			await fluent.ShouldHaveReceivedOneFirstOrDefaultAsync(cancellationToken);
 		}
 	}
 
@@ -156,7 +165,7 @@ public static class UserMockAssertions
 			CurrentUserQuery currentUserQuery,
 			CancellationToken cancellationToken)
 		{
-			await fluent.ShouldHaveReceivedOne().FirstOrDefaultAsync(cancellationToken);
+			await fluent.ShouldHaveReceivedOneFirstOrDefaultAsync(cancellationToken);
 		}
 	}
 
@@ -166,21 +175,21 @@ public static class UserMockAssertions
 		UserAddedEventRequest request,
 		CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(request.IsAddUserCommandRequest(), cancellationToken);
+			await sender.ShouldHaveReceivedOneSendAsync(request.IsAddUserCommandRequest(), cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneSendAsync(
 			UserUpdatedEventRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(request.IsUpdateUserCommandRequest(), cancellationToken);
+			await sender.ShouldHaveReceivedOneSendAsync(request.IsUpdateUserCommandRequest(), cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneSendAsync(
 			UserDeletedEventRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(request.IsDeleteUserCommandRequest(), cancellationToken);
+			await sender.ShouldHaveReceivedOneSendAsync(request.IsDeleteUserCommandRequest(), cancellationToken);
 		}
 	}
 }

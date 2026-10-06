@@ -1,3 +1,5 @@
+using InstaConnect.Posts.Domain.Tests.Features.PostLikes.Utilities;
+
 namespace InstaConnect.Posts.Application.Tests.Features.PostLikes.Utilities;
 
 public static class PostLikeMockSetups
@@ -10,9 +12,7 @@ public static class PostLikeMockSetups
 		ICollection<PostLike> postLikes,
 		CancellationToken cancellationToken)
 		{
-			likeService
-				.GetAllAsync(request.IsGetAllPostLikesQuery(), cancellationToken)
-				.ReturnsTaskResponse(postLikes.ToResponse(request, post));
+			likeService.SetupGetAllAsync(request.IsGetAllPostLikesQuery(), postLikes.ToResponse(request, post), cancellationToken);
 		}
 
 		public void SetupGetAllForUserAsync(
@@ -21,9 +21,7 @@ public static class PostLikeMockSetups
 			ICollection<PostLike> postLikes,
 			CancellationToken cancellationToken)
 		{
-			likeService
-				.GetAllForUserAsync(request.IsGetAllPostLikesForUserQuery(), cancellationToken)
-				.ReturnsTaskResponse(postLikes.ToResponse(request, user));
+			likeService.SetupGetAllForUserAsync(request.IsGetAllPostLikesForUserQuery(), postLikes.ToResponse(request, user), cancellationToken);
 		}
 
 		public void SetupGetByIdAsync(
@@ -31,9 +29,7 @@ public static class PostLikeMockSetups
 			PostLike postLike,
 			CancellationToken cancellationToken)
 		{
-			likeService
-				.GetByIdAsync(request.IsGetPostLikeByIdQuery(), cancellationToken)
-				.ReturnsTaskResponse(postLike.ToResponse(request));
+			likeService.SetupGetByIdAsync(request.IsGetPostLikeByIdQuery(), postLike.ToResponse(request), cancellationToken);
 		}
 	}
 
@@ -44,9 +40,7 @@ public static class PostLikeMockSetups
 		PostLike postLike,
 		CancellationToken cancellationToken)
 		{
-			likeService
-				.AddAsync(request.IsAddPostLikeCommand(), cancellationToken)
-				.ReturnsTaskResponse(postLike.ToResponse(request));
+			likeService.SetupAddAsync(request.IsAddPostLikeCommand(), postLike.ToResponse(request), cancellationToken);
 		}
 	}
 }

@@ -17,6 +17,8 @@
     <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Strings.Base" />
     <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Ints.Base" />
     <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.DateTimeOffsets.Base" />
+    <Using Include="InstaConnect.Common.Infrastructure.Tests.Features.Assertions" />
+    <Using Include="InstaConnect.Common.Infrastructure.Tests.Features.Utilities" />
   </ItemGroup>
 
   <ItemGroup Label="Users">

@@ -2,7 +2,9 @@ using InstaConnect.Common.Domain.Features.DateTimes.Abstractions;
 using InstaConnect.Common.Events.Features.Events.Abstractions;
 using InstaConnect.Identity.Domain.Features.Common.Helpers;
 using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Options;
+using InstaConnect.Identity.Domain.Tests.Features.Common.Assertions;
 using InstaConnect.Identity.Domain.Tests.Features.ForgotPasswordTokens.Utilities;
+using InstaConnect.Identity.Domain.Tests.Features.Users.Assertions;
 
 using Microsoft.Extensions.Options;
 
@@ -14,12 +16,12 @@ public static class ForgotPasswordTokenMockAssertions
 	{
 		public void ShouldHaveReceivedOneGetOffsetUtcNow(IOptions<ForgotPasswordTokenOptions> forgotPasswordTokenOptions)
 		{
-			dateTimeProvider.ShouldHaveReceivedOne().GetOffsetUtcNow(forgotPasswordTokenOptions.Value.LifetimeSeconds);
+			dateTimeProvider.ShouldHaveReceivedOneGetOffsetUtcNow(forgotPasswordTokenOptions.Value.LifetimeSeconds);
 		}
 
 		public void ShouldHaveReceivedOneGetOffsetUtcNow(VerifyForgotPasswordTokenCommand command)
 		{
-			dateTimeProvider.ShouldHaveReceivedOne().GetOffsetUtcNow();
+			dateTimeProvider.ShouldHaveReceivedOneGetOffsetUtcNow();
 		}
 	}
 
@@ -27,7 +29,7 @@ public static class ForgotPasswordTokenMockAssertions
 	{
 		public void ShouldHaveReceivedOneHash(VerifyForgotPasswordTokenCommand command)
 		{
-			passwordHasher.ShouldHaveReceivedOne().Hash(command.Password);
+			passwordHasher.ShouldHaveReceivedOneHash(command.Password);
 		}
 	}
 
@@ -35,7 +37,12 @@ public static class ForgotPasswordTokenMockAssertions
 	{
 		public void ShouldHaveReceivedOneCreate(AddForgotPasswordTokenCommand command, ForgotPasswordToken forgotPasswordToken)
 		{
-			factory.ShouldHaveReceivedOne().Create(forgotPasswordToken.Id.Id);
+			factory.ShouldHaveReceivedOneCreate(forgotPasswordToken.Id.Id);
+		}
+
+		public void ShouldHaveReceivedOneCreate(UserId id)
+		{
+			factory.ShouldHaveReceivedOne().Create(id);
 		}
 	}
 
@@ -45,7 +52,14 @@ public static class ForgotPasswordTokenMockAssertions
 			AddForgotPasswordTokenCommand command,
 			CancellationToken cancellationToken)
 		{
-			await emailSender.ShouldHaveReceivedOne().SendAsync(command.IsForgotPasswordToken(), cancellationToken);
+			await emailSender.ShouldHaveReceivedOneSendAsync(command.IsForgotPasswordToken(), cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneSendAsync(
+			ForgotPasswordToken forgotPasswordToken,
+			CancellationToken cancellationToken)
+		{
+			await emailSender.ShouldHaveReceivedOne().SendAsync(forgotPasswordToken, cancellationToken);
 		}
 	}
 
@@ -56,7 +70,7 @@ public static class ForgotPasswordTokenMockAssertions
 			ForgotPasswordToken forgotPasswordToken,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(command.IsForgotPasswordTokenAddedEventRequest(forgotPasswordToken), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOnePublishAsync(command.IsForgotPasswordTokenAddedEventRequest(forgotPasswordToken), cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOnePublishAsync(
@@ -64,7 +78,7 @@ public static class ForgotPasswordTokenMockAssertions
 			ICollection<ForgotPasswordToken> forgotPasswordTokens,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(command.IsForgotPasswordTokenDeletedEventRequestCollection(forgotPasswordTokens), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOnePublishAsync(command.IsForgotPasswordTokenDeletedEventRequestCollection(forgotPasswordTokens), cancellationToken);
 		}
 	}
 
@@ -74,7 +88,7 @@ public static class ForgotPasswordTokenMockAssertions
 			AddForgotPasswordTokenCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().GetByNameAsync(command.Name, cancellationToken);
+			await repository.ShouldHaveReceivedOneGetByNameAsync(command.Name, cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneGetByIdAsync(
@@ -82,7 +96,7 @@ public static class ForgotPasswordTokenMockAssertions
 			UserInclude include,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().GetByIdAsync(
+			await repository.ShouldHaveReceivedOneGetByIdAsync(
 				command.Id.Id,
 				include,
 				cancellationToken);
@@ -93,7 +107,7 @@ public static class ForgotPasswordTokenMockAssertions
 			IPasswordHasher passwordHasher,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().UpdateAsync(command.IsUser(passwordHasher), cancellationToken);
+			await repository.ShouldHaveReceivedOneUpdateAsync(command.IsUser(passwordHasher), cancellationToken);
 		}
 	}
 
@@ -103,21 +117,59 @@ public static class ForgotPasswordTokenMockAssertions
 			AddForgotPasswordTokenCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().AddAsync(command.IsForgotPasswordToken(), cancellationToken);
+			await repository.ShouldHaveReceivedOneAddAsync(command.IsForgotPasswordToken(), cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneAddAsync(
+			ForgotPasswordToken forgotPasswordToken,
+			CancellationToken cancellationToken)
+		{
+			await repository.ShouldHaveReceivedOne().AddAsync(forgotPasswordToken, cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneGetByIdAsync(
 			VerifyForgotPasswordTokenCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().GetByIdAsync(command.Id, cancellationToken);
+			await repository.ShouldHaveReceivedOneGetByIdAsync(command.Id, cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
+			ForgotPasswordTokenId id,
+			CancellationToken cancellationToken)
+		{
+			await repository.ShouldHaveReceivedOne().GetByIdAsync(id, cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneDeleteRangeAsync(
 			VerifyForgotPasswordTokenCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().DeleteRangeAsync(command.IsForgotPasswordTokenCollection(), cancellationToken);
+			await repository.ShouldHaveReceivedOneDeleteRangeAsync(command.IsForgotPasswordTokenCollection(), cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneDeleteRangeAsync(
+			IEnumerable<ForgotPasswordToken> forgotPasswordTokens,
+			CancellationToken cancellationToken)
+		{
+			await repository.ShouldHaveReceivedOne().DeleteRangeAsync(forgotPasswordTokens, cancellationToken);
+		}
+	}
+
+	extension(IForgotPasswordTokenCommandService service)
+	{
+		public async Task ShouldHaveReceivedOneAddAsync(
+			AddForgotPasswordTokenCommand command,
+			CancellationToken cancellationToken)
+		{
+			await service.ShouldHaveReceivedOne().AddAsync(command, cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneVerifyAsync(
+			VerifyForgotPasswordTokenCommand command,
+			CancellationToken cancellationToken)
+		{
+			await service.ShouldHaveReceivedOne().VerifyAsync(command, cancellationToken);
 		}
 	}
 }

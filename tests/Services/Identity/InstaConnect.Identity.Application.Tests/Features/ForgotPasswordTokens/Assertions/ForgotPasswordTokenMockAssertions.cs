@@ -1,4 +1,5 @@
 using InstaConnect.Identity.Application.Tests.Features.ForgotPasswordTokens.Utilities;
+using InstaConnect.Identity.Domain.Tests.Features.ForgotPasswordTokens.Assertions;
 
 namespace InstaConnect.Identity.Application.Tests.Features.ForgotPasswordTokens.Assertions;
 
@@ -10,14 +11,14 @@ public static class ForgotPasswordTokenMockAssertions
 		AddForgotPasswordTokenCommandRequest request,
 		CancellationToken cancellationToken)
 		{
-			await forgotPasswordTokenService.ShouldHaveReceivedOne().AddAsync(request.IsAddForgotPasswordTokenCommand(), cancellationToken);
+			await forgotPasswordTokenService.ShouldHaveReceivedOneAddAsync(request.IsAddForgotPasswordTokenCommand(), cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneVerifyAsync(
 			VerifyForgotPasswordTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await forgotPasswordTokenService.ShouldHaveReceivedOne().VerifyAsync(request.IsVerifyForgotPasswordTokenCommand(), cancellationToken);
+			await forgotPasswordTokenService.ShouldHaveReceivedOneVerifyAsync(request.IsVerifyForgotPasswordTokenCommand(), cancellationToken);
 		}
 	}
 }

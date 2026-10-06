@@ -1,4 +1,5 @@
 using InstaConnect.Common.Application.Features.Requests.Abstractions;
+using InstaConnect.Common.Application.Tests.Features.Utilities;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.Users.Utilities;
 
@@ -11,9 +12,7 @@ public static class UserMockSetups
 		ICollection<User> users,
 		CancellationToken cancellationToken)
 		{
-			sender
-				.SendAsync(request.IsGetAllUsersQueryRequest(), cancellationToken)
-				.ReturnsTaskResponse(users.ToResponse(request));
+			sender.SetupSendAsync(request.IsGetAllUsersQueryRequest(), users.ToResponse(request), cancellationToken);
 		}
 
 		public void SetupSendAsync(
@@ -21,9 +20,7 @@ public static class UserMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			sender
-				.SendAsync(request.IsGetUserByIdQueryRequest(), cancellationToken)
-				.ReturnsTaskResponse(user.ToResponse(request));
+			sender.SetupSendAsync(request.IsGetUserByIdQueryRequest(), user.ToResponse(request), cancellationToken);
 		}
 
 		public void SetupSendAsync(
@@ -31,9 +28,7 @@ public static class UserMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			sender
-				.SendAsync(request.IsGetUserDetailsByIdQueryRequest(), cancellationToken)
-				.ReturnsTaskResponse(user.ToResponse(request));
+			sender.SetupSendAsync(request.IsGetUserDetailsByIdQueryRequest(), user.ToResponse(request), cancellationToken);
 		}
 
 		public void SetupSendAsync(
@@ -41,9 +36,7 @@ public static class UserMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			sender
-				.SendAsync(request.IsGetCurrentUserByIdQueryRequest(), cancellationToken)
-				.ReturnsTaskResponse(user.ToResponse(request));
+			sender.SetupSendAsync(request.IsGetCurrentUserByIdQueryRequest(), user.ToResponse(request), cancellationToken);
 		}
 
 		public void SetupSendAsync(
@@ -51,9 +44,7 @@ public static class UserMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			sender
-				.SendAsync(request.IsGetCurrentUserDetailsByIdQueryRequest(), cancellationToken)
-				.ReturnsTaskResponse(user.ToResponse(request));
+			sender.SetupSendAsync(request.IsGetCurrentUserDetailsByIdQueryRequest(), user.ToResponse(request), cancellationToken);
 		}
 
 		public void SetupSendAsync(
@@ -61,9 +52,7 @@ public static class UserMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			sender
-				.SendAsync(request.IsAddUserCommandRequest(), cancellationToken)
-				.ReturnsTaskResponse(user.ToResponse(request));
+			sender.SetupSendAsync(request.IsAddUserCommandRequest(), user.ToResponse(request), cancellationToken);
 		}
 
 		public void SetupSendAsync(
@@ -71,9 +60,7 @@ public static class UserMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			sender
-				.SendAsync(request.IsUpdateCurrentUserCommandRequest(), cancellationToken)
-				.ReturnsTaskResponse(user.ToResponse(request));
+			sender.SetupSendAsync(request.IsUpdateCurrentUserCommandRequest(), user.ToResponse(request), cancellationToken);
 		}
 	}
 }

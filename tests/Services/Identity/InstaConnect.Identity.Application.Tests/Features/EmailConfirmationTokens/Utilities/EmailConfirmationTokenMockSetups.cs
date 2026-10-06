@@ -1,3 +1,5 @@
+using InstaConnect.Identity.Domain.Tests.Features.EmailConfirmationTokens.Utilities;
+
 namespace InstaConnect.Identity.Application.Tests.Features.EmailConfirmationTokens.Utilities;
 
 public static class EmailConfirmationTokenMockSetups
@@ -9,9 +11,7 @@ public static class EmailConfirmationTokenMockSetups
 			EmailConfirmationToken emailConfirmationToken,
 			CancellationToken cancellationToken)
 		{
-			service
-				.AddAsync(request.IsAddEmailConfirmationTokenCommand(), cancellationToken)
-				.ReturnsTaskResponse(emailConfirmationToken.ToResponse(request));
+			service.SetupAddAsync(request.IsAddEmailConfirmationTokenCommand(), emailConfirmationToken.ToResponse(request), cancellationToken);
 		}
 	}
 }

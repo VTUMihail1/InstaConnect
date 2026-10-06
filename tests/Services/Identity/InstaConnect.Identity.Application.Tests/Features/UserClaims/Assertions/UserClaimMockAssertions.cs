@@ -1,4 +1,5 @@
 using InstaConnect.Identity.Application.Tests.Features.UserClaims.Utilities;
+using InstaConnect.Identity.Domain.Tests.Features.UserClaims.Assertions;
 
 namespace InstaConnect.Identity.Application.Tests.Features.UserClaims.Assertions;
 
@@ -10,7 +11,7 @@ public static class UserClaimMockAssertions
 		GetAllUserClaimsQueryRequest request,
 		CancellationToken cancellationToken)
 		{
-			await userClaimService.ShouldHaveReceivedOne().GetAllAsync(request.IsGetAllUserClaimsQuery(), cancellationToken);
+			await userClaimService.ShouldHaveReceivedOneGetAllAsync(request.IsGetAllUserClaimsQuery(), cancellationToken);
 		}
 	}
 
@@ -20,14 +21,14 @@ public static class UserClaimMockAssertions
 		AddUserClaimCommandRequest request,
 		CancellationToken cancellationToken)
 		{
-			await userClaimService.ShouldHaveReceivedOne().AddAsync(request.IsAddUserClaimCommand(), cancellationToken);
+			await userClaimService.ShouldHaveReceivedOneAddAsync(request.IsAddUserClaimCommand(), cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneDeleteAsync(
 			DeleteUserClaimCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await userClaimService.ShouldHaveReceivedOne().DeleteAsync(request.IsDeleteUserClaimCommand(), cancellationToken);
+			await userClaimService.ShouldHaveReceivedOneDeleteAsync(request.IsDeleteUserClaimCommand(), cancellationToken);
 		}
 	}
 }

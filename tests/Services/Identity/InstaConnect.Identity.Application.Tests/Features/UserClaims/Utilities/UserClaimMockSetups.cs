@@ -1,3 +1,5 @@
+using InstaConnect.Identity.Domain.Tests.Features.UserClaims.Utilities;
+
 namespace InstaConnect.Identity.Application.Tests.Features.UserClaims.Utilities;
 
 public static class UserClaimMockSetups
@@ -10,9 +12,7 @@ public static class UserClaimMockSetups
 		ICollection<UserClaim> userClaims,
 		CancellationToken cancellationToken)
 		{
-			service
-				.GetAllAsync(request.IsGetAllUserClaimsQuery(), cancellationToken)
-				.ReturnsTaskResponse(userClaims.ToResponse(request, user));
+			service.SetupGetAllAsync(request.IsGetAllUserClaimsQuery(), userClaims.ToResponse(request, user), cancellationToken);
 		}
 	}
 
@@ -23,9 +23,7 @@ public static class UserClaimMockSetups
 		UserClaim userClaim,
 		CancellationToken cancellationToken)
 		{
-			service
-				.AddAsync(request.IsAddUserClaimCommand(), cancellationToken)
-				.ReturnsTaskResponse(userClaim.ToResponse(request));
+			service.SetupAddAsync(request.IsAddUserClaimCommand(), userClaim.ToResponse(request), cancellationToken);
 		}
 	}
 }

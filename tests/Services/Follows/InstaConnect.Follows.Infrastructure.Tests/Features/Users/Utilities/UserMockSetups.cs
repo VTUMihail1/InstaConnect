@@ -12,7 +12,7 @@ public static class UserMockSetups
 			UserId id,
 			IUserFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
@@ -20,19 +20,24 @@ public static class UserMockSetups
 			CurrentUserQuery currentUserQuery,
 			IUserFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
 			Name name,
 			IUserFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
 			Email email,
 			IUserFluent fluent)
+		{
+			collection.SetupAggregateFluent(fluent);
+		}
+
+		public void SetupAggregateFluent(IUserFluent fluent)
 		{
 			collection.AggregateFluent().ReturnsResponse(fluent);
 		}
@@ -45,7 +50,7 @@ public static class UserMockSetups
 			User? user,
 			CancellationToken cancellationToken)
 		{
-			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(user != null);
+			fluent.SetupAnyAsync(user != null, cancellationToken);
 		}
 
 		public void SetupAnyAsync(
@@ -53,7 +58,7 @@ public static class UserMockSetups
 			User? user,
 			CancellationToken cancellationToken)
 		{
-			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(user != null);
+			fluent.SetupAnyAsync(user != null, cancellationToken);
 		}
 
 		public void SetupAnyAsync(
@@ -61,26 +66,31 @@ public static class UserMockSetups
 			User? user,
 			CancellationToken cancellationToken)
 		{
-			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(user != null);
+			fluent.SetupAnyAsync(user != null, cancellationToken);
 		}
 
 		public void SetupApplyIncludes(
 			UserId id,
 			UserInclude include)
 		{
-			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
+			fluent.SetupApplyIncludes(include);
 		}
 
 		public void SetupApplyIncludes(
 			Name name,
 			UserInclude include)
 		{
-			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
+			fluent.SetupApplyIncludes(include);
 		}
 
 		public void SetupApplyIncludes(
 			Email email,
 			UserInclude include)
+		{
+			fluent.SetupApplyIncludes(include);
+		}
+
+		public void SetupApplyIncludes(UserInclude include)
 		{
 			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
 		}
@@ -94,7 +104,7 @@ public static class UserMockSetups
 			UserId id,
 			CurrentUserQuery currentUserQuery)
 		{
-			fluent.Match(id).ReturnsResponse(fluent);
+			fluent.SetupMatch(id);
 		}
 
 		public void SetupMatch(Name name)
@@ -112,6 +122,13 @@ public static class UserMockSetups
 			CurrentUserQuery currentUserQuery,
 			IUserResponseFluent responseFluent)
 		{
+			fluent.SetupProjectToFullResponse(currentUserQuery, responseFluent);
+		}
+
+		public void SetupProjectToFullResponse(
+			CurrentUserQuery currentUserQuery,
+			IUserResponseFluent responseFluent)
+		{
 			fluent.ProjectToFullResponse(currentUserQuery).ReturnsResponse(responseFluent);
 		}
 
@@ -120,7 +137,7 @@ public static class UserMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			fluent.FirstOrDefaultAsync(cancellationToken).ReturnsTaskResponse(user);
+			fluent.SetupFirstOrDefaultAsync(user, cancellationToken);
 		}
 
 		public void SetupFirstOrDefaultAsync(
@@ -128,7 +145,7 @@ public static class UserMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			fluent.FirstOrDefaultAsync(cancellationToken).ReturnsTaskResponse(user);
+			fluent.SetupFirstOrDefaultAsync(user, cancellationToken);
 		}
 
 		public void SetupFirstOrDefaultAsync(
@@ -136,7 +153,7 @@ public static class UserMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			fluent.FirstOrDefaultAsync(cancellationToken).ReturnsTaskResponse(user);
+			fluent.SetupFirstOrDefaultAsync(user, cancellationToken);
 		}
 	}
 
@@ -148,7 +165,7 @@ public static class UserMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			fluent.FirstOrDefaultAsync(cancellationToken).ReturnsTaskResponse(user.ToResponse(id, currentUserQuery));
+			fluent.SetupFirstOrDefaultAsync(user.ToResponse(id, currentUserQuery), cancellationToken);
 		}
 	}
 }

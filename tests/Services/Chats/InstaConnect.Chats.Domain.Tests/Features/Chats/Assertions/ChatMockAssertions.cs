@@ -10,9 +10,18 @@ public static class ChatMockAssertions
 		public void ShouldHaveReceivedOneCreate(
 			AddChatCommand command)
 		{
-			factory.ShouldHaveReceivedOne().Create(
+			factory.ShouldHaveReceivedOneCreate(
 				command.ParticipantOneId,
 				command.ParticipantTwoId);
+		}
+
+		public void ShouldHaveReceivedOneCreate(
+			UserId participantOneId,
+			UserId participantTwoId)
+		{
+			factory.ShouldHaveReceivedOne().Create(
+				participantOneId,
+				participantTwoId);
 		}
 	}
 
@@ -22,7 +31,7 @@ public static class ChatMockAssertions
 			AddChatCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().GetByIdAsync(
+			await repository.ShouldHaveReceivedOneGetByIdAsync(
 				command.ParticipantOneId,
 				cancellationToken);
 		}
@@ -31,7 +40,7 @@ public static class ChatMockAssertions
 			AddChatCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().GetByIdAsync(
+			await repository.ShouldHaveReceivedOneGetByIdAsync(
 				command.ParticipantTwoId,
 				cancellationToken);
 		}
@@ -44,8 +53,37 @@ public static class ChatMockAssertions
 			Chat chat,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().GetByIdAsync(
+			await repository.ShouldHaveReceivedOneGetByIdAsync(
 				chat.Id,
+				cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
+			ChatId id,
+			CancellationToken cancellationToken)
+		{
+			await repository.ShouldHaveReceivedOne().GetByIdAsync(
+				id,
+				cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
+			ChatId id,
+			ChatInclude include,
+			CancellationToken cancellationToken)
+		{
+			await repository.ShouldHaveReceivedOne().GetByIdAsync(
+				id,
+				include,
+				cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneExistsByIdAsync(
+			ChatId id,
+			CancellationToken cancellationToken)
+		{
+			await repository.ShouldHaveReceivedOne().ExistsByIdAsync(
+				id,
 				cancellationToken);
 		}
 
@@ -53,7 +91,14 @@ public static class ChatMockAssertions
 			AddChatCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().AddAsync(command.IsChat(), cancellationToken);
+			await repository.ShouldHaveReceivedOneAddAsync(command.IsChat(), cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneAddAsync(
+			Chat chat,
+			CancellationToken cancellationToken)
+		{
+			await repository.ShouldHaveReceivedOne().AddAsync(chat, cancellationToken);
 		}
 	}
 
@@ -63,7 +108,7 @@ public static class ChatMockAssertions
 			GetAllChatsQuery query,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().GetByIdAsync(
+			await repository.ShouldHaveReceivedOneGetByIdAsync(
 				query.Filter.ParticipantOneId,
 				query.CurrentUser,
 				cancellationToken);
@@ -76,7 +121,7 @@ public static class ChatMockAssertions
 			GetAllChatsQuery query,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().GetAllAsync(
+			await repository.ShouldHaveReceivedOneGetAllAsync(
 				query.Filter,
 				query.Sorting,
 				query.Pagination,
@@ -84,12 +129,36 @@ public static class ChatMockAssertions
 				cancellationToken);
 		}
 
+		public async Task ShouldHaveReceivedOneGetAllAsync(
+			ChatsFilterQuery filter,
+			ChatsSortingQuery sorting,
+			ChatsPaginationQuery pagination,
+			CurrentUserQuery currentUser,
+			CancellationToken cancellationToken)
+		{
+			await repository.ShouldHaveReceivedOne().GetAllAsync(
+				filter,
+				sorting,
+				pagination,
+				currentUser,
+				cancellationToken);
+		}
+
 		public async Task ShouldHaveReceivedOneGetTotalCountAsync(
 			GetAllChatsQuery query,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().GetTotalCountAsync(
+			await repository.ShouldHaveReceivedOneGetTotalCountAsync(
 				query.Filter,
+				cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneGetTotalCountAsync(
+			ChatsFilterQuery filter,
+			CancellationToken cancellationToken)
+		{
+			await repository.ShouldHaveReceivedOne().GetTotalCountAsync(
+				filter,
 				cancellationToken);
 		}
 
@@ -97,9 +166,29 @@ public static class ChatMockAssertions
 			GetChatByIdQuery query,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().GetByIdAsync(
+			await repository.ShouldHaveReceivedOneGetByIdAsync(
 				query.Id,
 				query.CurrentUser,
+				cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
+			ChatId id,
+			CurrentUserQuery currentUser,
+			CancellationToken cancellationToken)
+		{
+			await repository.ShouldHaveReceivedOne().GetByIdAsync(
+				id,
+				currentUser,
+				cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneExistsByIdAsync(
+			ChatId id,
+			CancellationToken cancellationToken)
+		{
+			await repository.ShouldHaveReceivedOne().ExistsByIdAsync(
+				id,
 				cancellationToken);
 		}
 	}
@@ -111,7 +200,34 @@ public static class ChatMockAssertions
 			Chat chat,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(command.IsChatAddedEventRequest(chat), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOnePublishAsync(command.IsChatAddedEventRequest(chat), cancellationToken);
+		}
+	}
+
+	extension(IChatQueryService service)
+	{
+		public async Task ShouldHaveReceivedOneGetAllAsync(
+			GetAllChatsQuery query,
+			CancellationToken cancellationToken)
+		{
+			await service.ShouldHaveReceivedOne().GetAllAsync(query, cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
+			GetChatByIdQuery query,
+			CancellationToken cancellationToken)
+		{
+			await service.ShouldHaveReceivedOne().GetByIdAsync(query, cancellationToken);
+		}
+	}
+
+	extension(IChatCommandService service)
+	{
+		public async Task ShouldHaveReceivedOneAddAsync(
+			AddChatCommand command,
+			CancellationToken cancellationToken)
+		{
+			await service.ShouldHaveReceivedOne().AddAsync(command, cancellationToken);
 		}
 	}
 }

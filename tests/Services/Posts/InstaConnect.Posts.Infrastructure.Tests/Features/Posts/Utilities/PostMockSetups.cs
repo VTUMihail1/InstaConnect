@@ -14,7 +14,7 @@ public static class PostMockSetups
 			PostId id,
 			IPostFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
@@ -22,7 +22,7 @@ public static class PostMockSetups
 			CurrentUserQuery currentUserQuery,
 			IPostFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
@@ -32,14 +32,14 @@ public static class PostMockSetups
 			CurrentUserQuery currentUserQuery,
 			IPostFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
 			PostsFilterQuery filterQuery,
 			IPostFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
@@ -49,12 +49,17 @@ public static class PostMockSetups
 			CurrentUserQuery currentUserQuery,
 			IPostFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
 			PostsForUserFilterQuery filterQuery,
 			IPostFluent fluent)
+		{
+			collection.SetupAggregateFluent(fluent);
+		}
+
+		public void SetupAggregateFluent(IPostFluent fluent)
 		{
 			collection.AggregateFluent().ReturnsResponse(fluent);
 		}
@@ -67,7 +72,7 @@ public static class PostMockSetups
 			ICollection<Post> posts,
 			CancellationToken cancellationToken)
 		{
-			fluent.GetCountAsync(cancellationToken).ReturnsTaskResponse(posts.ToTotalCountResponse(filterQuery));
+			fluent.SetupGetCountAsync(posts.ToTotalCountResponse(filterQuery), cancellationToken);
 		}
 
 		public void SetupGetCountAsync(
@@ -75,7 +80,7 @@ public static class PostMockSetups
 			ICollection<Post> posts,
 			CancellationToken cancellationToken)
 		{
-			fluent.GetCountAsync(cancellationToken).ReturnsTaskResponse(posts.ToTotalCountResponse(filterQuery));
+			fluent.SetupGetCountAsync(posts.ToTotalCountResponse(filterQuery), cancellationToken);
 		}
 
 		public void SetupAnyAsync(
@@ -83,14 +88,14 @@ public static class PostMockSetups
 			Post? post,
 			CancellationToken cancellationToken)
 		{
-			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(post != null);
+			fluent.SetupAnyAsync(post != null, cancellationToken);
 		}
 
 		public void SetupApplyIncludes(
 			PostId id,
 			PostInclude include)
 		{
-			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
+			fluent.SetupApplyIncludes(include);
 		}
 
 		public void SetupApplyIncludes(
@@ -98,21 +103,21 @@ public static class PostMockSetups
 			CurrentUserQuery currentUserQuery,
 			PostInclude include)
 		{
-			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
+			fluent.SetupApplyIncludes(include);
 		}
 
 		public void SetupApplyIncludes(
 			PostsFilterQuery filterQuery,
 			PostInclude include)
 		{
-			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
+			fluent.SetupApplyIncludes(include);
 		}
 
 		public void SetupApplyIncludes(
 			PostsForUserFilterQuery filterQuery,
 			PostInclude include)
 		{
-			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
+			fluent.SetupApplyIncludes(include);
 		}
 
 		public void SetupApplyIncludes(
@@ -122,7 +127,7 @@ public static class PostMockSetups
 			CurrentUserQuery currentUserQuery,
 			PostInclude include)
 		{
-			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
+			fluent.SetupApplyIncludes(include);
 		}
 
 		public void SetupApplyIncludes(
@@ -131,6 +136,11 @@ public static class PostMockSetups
 			PostsPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery,
 			PostInclude include)
+		{
+			fluent.SetupApplyIncludes(include);
+		}
+
+		public void SetupApplyIncludes(PostInclude include)
 		{
 			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
 		}
@@ -144,7 +154,7 @@ public static class PostMockSetups
 			PostId id,
 			CurrentUserQuery currentUserQuery)
 		{
-			fluent.Match(id).ReturnsResponse(fluent);
+			fluent.SetupMatch(id);
 		}
 
 		public void SetupMatch(PostsFilterQuery filterQuery)
@@ -163,7 +173,7 @@ public static class PostMockSetups
 			PostsPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
-			fluent.Match(filterQuery).ReturnsResponse(fluent);
+			fluent.SetupMatch(filterQuery);
 		}
 
 		public void SetupMatch(
@@ -172,7 +182,7 @@ public static class PostMockSetups
 			PostsPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
-			fluent.Match(filterQuery).ReturnsResponse(fluent);
+			fluent.SetupMatch(filterQuery);
 		}
 
 		public void SetupProjectToFullResponse(
@@ -180,13 +190,20 @@ public static class PostMockSetups
 			CurrentUserQuery currentUserQuery,
 			IPostResponseFluent responseFluent)
 		{
-			fluent.ProjectToFullResponse(currentUserQuery).ReturnsResponse(responseFluent);
+			fluent.SetupProjectToFullResponse(currentUserQuery, responseFluent);
 		}
 
 		public void SetupProjectToFullResponse(
 			PostsFilterQuery filterQuery,
 			PostsSortingQuery sortingQuery,
 			PostsPaginationQuery paginationQuery,
+			CurrentUserQuery currentUserQuery,
+			IPostResponseFluent responseFluent)
+		{
+			fluent.SetupProjectToFullResponse(currentUserQuery, responseFluent);
+		}
+
+		public void SetupProjectToFullResponse(
 			CurrentUserQuery currentUserQuery,
 			IPostResponseFluent responseFluent)
 		{
@@ -200,6 +217,13 @@ public static class PostMockSetups
 			CurrentUserQuery currentUserQuery,
 			IPostResponseFluent responseFluent)
 		{
+			fluent.SetupProjectToResponseWithoutUser(currentUserQuery, responseFluent);
+		}
+
+		public void SetupProjectToResponseWithoutUser(
+			CurrentUserQuery currentUserQuery,
+			IPostResponseFluent responseFluent)
+		{
 			fluent.ProjectToResponseWithoutUser(currentUserQuery).ReturnsResponse(responseFluent);
 		}
 
@@ -208,7 +232,7 @@ public static class PostMockSetups
 			Post post,
 			CancellationToken cancellationToken)
 		{
-			fluent.FirstOrDefaultAsync(cancellationToken).ReturnsTaskResponse(post);
+			fluent.SetupFirstOrDefaultAsync(post, cancellationToken);
 		}
 
 		public void SetupFirstOrDefaultAsync(
@@ -217,7 +241,7 @@ public static class PostMockSetups
 			Post post,
 			CancellationToken cancellationToken)
 		{
-			fluent.FirstOrDefaultAsync(cancellationToken).ReturnsTaskResponse(post);
+			fluent.SetupFirstOrDefaultAsync(post, cancellationToken);
 		}
 	}
 
@@ -229,7 +253,7 @@ public static class PostMockSetups
 			PostsPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
-			fluent.ApplySorting(sortingQuery).ReturnsResponse(fluent);
+			fluent.SetupApplySorting(sortingQuery);
 		}
 
 		public void SetupApplySorting(
@@ -238,6 +262,16 @@ public static class PostMockSetups
 			PostsPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
+			fluent.SetupApplySorting(sortingQuery);
+		}
+
+		public void SetupApplySorting(PostsSortingQuery sortingQuery)
+		{
+			fluent.ApplySorting(sortingQuery).ReturnsResponse(fluent);
+		}
+
+		public void SetupApplySorting(PostsForUserSortingQuery sortingQuery)
+		{
 			fluent.ApplySorting(sortingQuery).ReturnsResponse(fluent);
 		}
 
@@ -247,7 +281,7 @@ public static class PostMockSetups
 			PostsPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
-			fluent.ApplyPagination(paginationQuery).ReturnsResponse(fluent);
+			fluent.SetupApplyPagination(paginationQuery);
 		}
 
 		public void SetupApplyPagination(
@@ -255,6 +289,11 @@ public static class PostMockSetups
 			PostsForUserSortingQuery sortingQuery,
 			PostsPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
+		{
+			fluent.SetupApplyPagination(paginationQuery);
+		}
+
+		public void SetupApplyPagination(PostsPaginationQuery paginationQuery)
 		{
 			fluent.ApplyPagination(paginationQuery).ReturnsResponse(fluent);
 		}
@@ -267,7 +306,7 @@ public static class PostMockSetups
 			ICollection<Post> posts,
 			CancellationToken cancellationToken)
 		{
-			fluent.ToListAsync(cancellationToken).ReturnsTaskResponse(posts.ToResponse(filterQuery, paginationQuery, currentUserQuery));
+			fluent.SetupToListAsync(posts.ToResponse(filterQuery, paginationQuery, currentUserQuery), cancellationToken);
 		}
 
 		public void SetupToListAsync(
@@ -278,7 +317,7 @@ public static class PostMockSetups
 			ICollection<Post> posts,
 			CancellationToken cancellationToken)
 		{
-			fluent.ToListAsync(cancellationToken).ReturnsTaskResponse(posts.ToResponse(filterQuery, paginationQuery, currentUserQuery));
+			fluent.SetupToListAsync(posts.ToResponse(filterQuery, paginationQuery, currentUserQuery), cancellationToken);
 		}
 
 		public void SetupFirstOrDefaultAsync(
@@ -287,7 +326,7 @@ public static class PostMockSetups
 			Post post,
 			CancellationToken cancellationToken)
 		{
-			fluent.FirstOrDefaultAsync(cancellationToken).ReturnsTaskResponse(post.ToFullResponse(currentUserQuery));
+			fluent.SetupFirstOrDefaultAsync(post.ToFullResponse(currentUserQuery), cancellationToken);
 		}
 	}
 }

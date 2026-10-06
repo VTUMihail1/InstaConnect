@@ -1,4 +1,5 @@
 using InstaConnect.Follows.Application.Tests.Features.Users.Utilities;
+using InstaConnect.Follows.Domain.Tests.Features.Users.Assertions;
 
 namespace InstaConnect.Follows.Application.Tests.Features.Users.Assertions;
 
@@ -10,21 +11,21 @@ public static class UserMockAssertions
 		AddUserCommandRequest request,
 		CancellationToken cancellationToken)
 		{
-			await userService.ShouldHaveReceivedOne().AddAsync(request.IsAddUserCommand(), cancellationToken);
+			await userService.ShouldHaveReceivedOneAddAsync(request.IsAddUserCommand(), cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneUpdateAsync(
 			UpdateUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await userService.ShouldHaveReceivedOne().UpdateAsync(request.IsUpdateUserCommand(), cancellationToken);
+			await userService.ShouldHaveReceivedOneUpdateAsync(request.IsUpdateUserCommand(), cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneDeleteAsync(
 			DeleteUserCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await userService.ShouldHaveReceivedOne().DeleteAsync(request.IsDeleteUserCommand(), cancellationToken);
+			await userService.ShouldHaveReceivedOneDeleteAsync(request.IsDeleteUserCommand(), cancellationToken);
 		}
 	}
 }

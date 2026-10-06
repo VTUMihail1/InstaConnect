@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\src\Services\Posts\InstaConnect.Posts.Infrastructure\InstaConnect.Posts.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Application.Tests\InstaConnect.Common.Application.Tests.csproj" />
     <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Infrastructure.Tests\InstaConnect.Common.Infrastructure.Tests.csproj" />
     <ProjectReference Include="..\InstaConnect.Posts.Tests\InstaConnect.Posts.Tests.csproj" />
   </ItemGroup>
@@ -18,6 +19,8 @@
     <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Strings.Base" />
     <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Ints.Base" />
     <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.DateTimeOffsets.Base" />
+    <Using Include="InstaConnect.Common.Infrastructure.Tests.Features.Assertions" />
+    <Using Include="InstaConnect.Common.Infrastructure.Tests.Features.Utilities" />
   </ItemGroup>
 
   <ItemGroup Label="Users">

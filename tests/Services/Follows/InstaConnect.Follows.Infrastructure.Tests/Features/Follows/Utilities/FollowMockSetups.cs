@@ -14,7 +14,7 @@ public static class FollowMockSetups
 			FollowId id,
 			IFollowFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
@@ -22,7 +22,7 @@ public static class FollowMockSetups
 			CurrentUserQuery currentUserQuery,
 			IFollowFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
@@ -32,14 +32,14 @@ public static class FollowMockSetups
 			CurrentUserQuery currentUserQuery,
 			IFollowFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
 			FollowsFilterQuery filterQuery,
 			IFollowFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
@@ -49,12 +49,17 @@ public static class FollowMockSetups
 			CurrentUserQuery currentUserQuery,
 			IFollowFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
 			FollowsForFollowingFilterQuery filterQuery,
 			IFollowFluent fluent)
+		{
+			collection.SetupAggregateFluent(fluent);
+		}
+
+		public void SetupAggregateFluent(IFollowFluent fluent)
 		{
 			collection.AggregateFluent().ReturnsResponse(fluent);
 		}
@@ -67,7 +72,7 @@ public static class FollowMockSetups
 			ICollection<Follow> follows,
 			CancellationToken cancellationToken)
 		{
-			fluent.GetCountAsync(cancellationToken).ReturnsTaskResponse(follows.ToTotalCountResponse(filterQuery));
+			fluent.SetupGetCountAsync(follows.ToTotalCountResponse(filterQuery), cancellationToken);
 		}
 
 		public void SetupGetCountAsync(
@@ -75,7 +80,7 @@ public static class FollowMockSetups
 			ICollection<Follow> follows,
 			CancellationToken cancellationToken)
 		{
-			fluent.GetCountAsync(cancellationToken).ReturnsTaskResponse(follows.ToTotalCountResponse(filterQuery));
+			fluent.SetupGetCountAsync(follows.ToTotalCountResponse(filterQuery), cancellationToken);
 		}
 
 		public void SetupAnyAsync(
@@ -83,14 +88,14 @@ public static class FollowMockSetups
 			Follow? follow,
 			CancellationToken cancellationToken)
 		{
-			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(follow != null);
+			fluent.SetupAnyAsync(follow != null, cancellationToken);
 		}
 
 		public void SetupApplyIncludes(
 			FollowId id,
 			FollowInclude include)
 		{
-			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
+			fluent.SetupApplyIncludes(include);
 		}
 
 		public void SetupApplyIncludes(
@@ -98,21 +103,21 @@ public static class FollowMockSetups
 			CurrentUserQuery currentUserQuery,
 			FollowInclude include)
 		{
-			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
+			fluent.SetupApplyIncludes(include);
 		}
 
 		public void SetupApplyIncludes(
 			FollowsFilterQuery filterQuery,
 			FollowInclude include)
 		{
-			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
+			fluent.SetupApplyIncludes(include);
 		}
 
 		public void SetupApplyIncludes(
 			FollowsForFollowingFilterQuery filterQuery,
 			FollowInclude include)
 		{
-			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
+			fluent.SetupApplyIncludes(include);
 		}
 
 		public void SetupApplyIncludes(
@@ -122,7 +127,7 @@ public static class FollowMockSetups
 			CurrentUserQuery currentUserQuery,
 			FollowInclude include)
 		{
-			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
+			fluent.SetupApplyIncludes(include);
 		}
 
 		public void SetupApplyIncludes(
@@ -131,6 +136,11 @@ public static class FollowMockSetups
 			FollowsPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery,
 			FollowInclude include)
+		{
+			fluent.SetupApplyIncludes(include);
+		}
+
+		public void SetupApplyIncludes(FollowInclude include)
 		{
 			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
 		}
@@ -144,7 +154,7 @@ public static class FollowMockSetups
 			FollowId id,
 			CurrentUserQuery currentUserQuery)
 		{
-			fluent.Match(id).ReturnsResponse(fluent);
+			fluent.SetupMatch(id);
 		}
 
 		public void SetupMatch(FollowsFilterQuery filterQuery)
@@ -163,7 +173,7 @@ public static class FollowMockSetups
 			FollowsPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
-			fluent.Match(filterQuery).ReturnsResponse(fluent);
+			fluent.SetupMatch(filterQuery);
 		}
 
 		public void SetupMatch(
@@ -172,11 +182,18 @@ public static class FollowMockSetups
 			FollowsPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
-			fluent.Match(filterQuery).ReturnsResponse(fluent);
+			fluent.SetupMatch(filterQuery);
 		}
 
 		public void SetupProjectToFullResponse(
 			FollowId id,
+			CurrentUserQuery currentUserQuery,
+			IFollowResponseFluent responseFluent)
+		{
+			fluent.SetupProjectToFullResponse(currentUserQuery, responseFluent);
+		}
+
+		public void SetupProjectToFullResponse(
 			CurrentUserQuery currentUserQuery,
 			IFollowResponseFluent responseFluent)
 		{
@@ -190,6 +207,13 @@ public static class FollowMockSetups
 			CurrentUserQuery currentUserQuery,
 			IFollowResponseFluent responseFluent)
 		{
+			fluent.SetupProjectToResponseWithoutFollower(currentUserQuery, responseFluent);
+		}
+
+		public void SetupProjectToResponseWithoutFollower(
+			CurrentUserQuery currentUserQuery,
+			IFollowResponseFluent responseFluent)
+		{
 			fluent.ProjectToResponseWithoutFollower(currentUserQuery).ReturnsResponse(responseFluent);
 		}
 
@@ -197,6 +221,13 @@ public static class FollowMockSetups
 			FollowsForFollowingFilterQuery filterQuery,
 			FollowsForFollowingSortingQuery sortingQuery,
 			FollowsPaginationQuery paginationQuery,
+			CurrentUserQuery currentUserQuery,
+			IFollowResponseFluent responseFluent)
+		{
+			fluent.SetupProjectToResponseWithoutFollowing(currentUserQuery, responseFluent);
+		}
+
+		public void SetupProjectToResponseWithoutFollowing(
 			CurrentUserQuery currentUserQuery,
 			IFollowResponseFluent responseFluent)
 		{
@@ -208,7 +239,7 @@ public static class FollowMockSetups
 			Follow follow,
 			CancellationToken cancellationToken)
 		{
-			fluent.FirstOrDefaultAsync(cancellationToken).ReturnsTaskResponse(follow);
+			fluent.SetupFirstOrDefaultAsync(follow, cancellationToken);
 		}
 	}
 
@@ -220,7 +251,7 @@ public static class FollowMockSetups
 			FollowsPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
-			fluent.ApplySorting(sortingQuery).ReturnsResponse(fluent);
+			fluent.SetupApplySorting(sortingQuery);
 		}
 
 		public void SetupApplySorting(
@@ -229,6 +260,16 @@ public static class FollowMockSetups
 			FollowsPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
+			fluent.SetupApplySorting(sortingQuery);
+		}
+
+		public void SetupApplySorting(FollowsSortingQuery sortingQuery)
+		{
+			fluent.ApplySorting(sortingQuery).ReturnsResponse(fluent);
+		}
+
+		public void SetupApplySorting(FollowsForFollowingSortingQuery sortingQuery)
+		{
 			fluent.ApplySorting(sortingQuery).ReturnsResponse(fluent);
 		}
 
@@ -238,7 +279,7 @@ public static class FollowMockSetups
 			FollowsPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
-			fluent.ApplyPagination(paginationQuery).ReturnsResponse(fluent);
+			fluent.SetupApplyPagination(paginationQuery);
 		}
 
 		public void SetupApplyPagination(
@@ -246,6 +287,11 @@ public static class FollowMockSetups
 			FollowsForFollowingSortingQuery sortingQuery,
 			FollowsPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
+		{
+			fluent.SetupApplyPagination(paginationQuery);
+		}
+
+		public void SetupApplyPagination(FollowsPaginationQuery paginationQuery)
 		{
 			fluent.ApplyPagination(paginationQuery).ReturnsResponse(fluent);
 		}
@@ -258,7 +304,7 @@ public static class FollowMockSetups
 			ICollection<Follow> follows,
 			CancellationToken cancellationToken)
 		{
-			fluent.ToListAsync(cancellationToken).ReturnsTaskResponse(follows.ToResponse(filterQuery, paginationQuery, currentUserQuery));
+			fluent.SetupToListAsync(follows.ToResponse(filterQuery, paginationQuery, currentUserQuery), cancellationToken);
 		}
 
 		public void SetupToListAsync(
@@ -269,7 +315,7 @@ public static class FollowMockSetups
 			ICollection<Follow> follows,
 			CancellationToken cancellationToken)
 		{
-			fluent.ToListAsync(cancellationToken).ReturnsTaskResponse(follows.ToResponse(filterQuery, paginationQuery, currentUserQuery));
+			fluent.SetupToListAsync(follows.ToResponse(filterQuery, paginationQuery, currentUserQuery), cancellationToken);
 		}
 
 		public void SetupFirstOrDefaultAsync(
@@ -278,7 +324,7 @@ public static class FollowMockSetups
 			Follow follow,
 			CancellationToken cancellationToken)
 		{
-			fluent.FirstOrDefaultAsync(cancellationToken).ReturnsTaskResponse(follow.ToResponse(id, currentUserQuery));
+			fluent.SetupFirstOrDefaultAsync(follow.ToResponse(id, currentUserQuery), cancellationToken);
 		}
 	}
 }

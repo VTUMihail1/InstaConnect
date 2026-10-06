@@ -1,4 +1,5 @@
 using InstaConnect.Identity.Application.Tests.Features.EmailConfirmationTokens.Utilities;
+using InstaConnect.Identity.Domain.Tests.Features.EmailConfirmationTokens.Assertions;
 
 namespace InstaConnect.Identity.Application.Tests.Features.EmailConfirmationTokens.Assertions;
 
@@ -10,14 +11,14 @@ public static class EmailConfirmationTokenMockAssertions
 		AddEmailConfirmationTokenCommandRequest request,
 		CancellationToken cancellationToken)
 		{
-			await emailConfirmationTokenService.ShouldHaveReceivedOne().AddAsync(request.IsAddEmailConfirmationTokenCommand(), cancellationToken);
+			await emailConfirmationTokenService.ShouldHaveReceivedOneAddAsync(request.IsAddEmailConfirmationTokenCommand(), cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneVerifyAsync(
 			VerifyEmailConfirmationTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await emailConfirmationTokenService.ShouldHaveReceivedOne().VerifyAsync(request.IsVerifyEmailConfirmationTokenCommand(), cancellationToken);
+			await emailConfirmationTokenService.ShouldHaveReceivedOneVerifyAsync(request.IsVerifyEmailConfirmationTokenCommand(), cancellationToken);
 		}
 	}
 }

@@ -1,5 +1,7 @@
+using InstaConnect.Common.Events.Features.AccessTokens.Models;
 using InstaConnect.Common.Events.Features.Events.Abstractions;
 using InstaConnect.Identity.Domain.Tests.Features.UserClaims.Utilities;
+using InstaConnect.Identity.Domain.Tests.Features.Users.Assertions;
 
 namespace InstaConnect.Identity.Domain.Tests.Features.UserClaims.Assertions;
 
@@ -10,9 +12,18 @@ public static class UserClaimMockAssertions
 		public void ShouldHaveReceivedOneCreate(
 			AddUserClaimCommand command)
 		{
-			factory.ShouldHaveReceivedOne().Create(
+			factory.ShouldHaveReceivedOneCreate(
 				command.Id,
 				command.Claim);
+		}
+
+		public void ShouldHaveReceivedOneCreate(
+			UserId id,
+			ApplicationClaims claim)
+		{
+			factory.ShouldHaveReceivedOne().Create(
+				id,
+				claim);
 		}
 	}
 
@@ -23,7 +34,7 @@ public static class UserClaimMockAssertions
 			UserClaim userClaim,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().GetByIdAsync(
+			await repository.ShouldHaveReceivedOneGetByIdAsync(
 				userClaim.Id,
 				cancellationToken);
 		}
@@ -33,8 +44,28 @@ public static class UserClaimMockAssertions
 			UserClaimInclude include,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().GetByIdAsync(
+			await repository.ShouldHaveReceivedOneGetByIdAsync(
 				command.Id,
+				include,
+				cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
+			UserClaimId id,
+			CancellationToken cancellationToken)
+		{
+			await repository.ShouldHaveReceivedOne().GetByIdAsync(
+				id,
+				cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
+			UserClaimId id,
+			UserClaimInclude include,
+			CancellationToken cancellationToken)
+		{
+			await repository.ShouldHaveReceivedOne().GetByIdAsync(
+				id,
 				include,
 				cancellationToken);
 		}
@@ -43,14 +74,28 @@ public static class UserClaimMockAssertions
 			AddUserClaimCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().AddAsync(command.IsUserClaim(), cancellationToken);
+			await repository.ShouldHaveReceivedOneAddAsync(command.IsUserClaim(), cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneAddAsync(
+			UserClaim userClaim,
+			CancellationToken cancellationToken)
+		{
+			await repository.ShouldHaveReceivedOne().AddAsync(userClaim, cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneDeleteAsync(
 			DeleteUserClaimCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().DeleteAsync(command.IsUserClaim(), cancellationToken);
+			await repository.ShouldHaveReceivedOneDeleteAsync(command.IsUserClaim(), cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneDeleteAsync(
+			UserClaim userClaim,
+			CancellationToken cancellationToken)
+		{
+			await repository.ShouldHaveReceivedOne().DeleteAsync(userClaim, cancellationToken);
 		}
 	}
 
@@ -60,7 +105,7 @@ public static class UserClaimMockAssertions
 			AddUserClaimCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().GetByIdAsync(
+			await repository.ShouldHaveReceivedOneGetByIdAsync(
 				command.Id,
 				cancellationToken);
 		}
@@ -69,7 +114,7 @@ public static class UserClaimMockAssertions
 			DeleteUserClaimCommand command,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().ExistsByIdAsync(
+			await repository.ShouldHaveReceivedOneExistsByIdAsync(
 				command.Id.Id,
 				cancellationToken);
 		}
@@ -81,7 +126,7 @@ public static class UserClaimMockAssertions
 			GetAllUserClaimsQuery query,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().GetByIdAsync(
+			await repository.ShouldHaveReceivedOneGetByIdAsync(
 				query.Filter.Id,
 				query.Current,
 				cancellationToken);
@@ -94,7 +139,7 @@ public static class UserClaimMockAssertions
 			GetAllUserClaimsQuery query,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().GetAllAsync(
+			await repository.ShouldHaveReceivedOneGetAllAsync(
 				query.Filter,
 				query.Sorting,
 				query.Pagination,
@@ -102,12 +147,36 @@ public static class UserClaimMockAssertions
 				cancellationToken);
 		}
 
+		public async Task ShouldHaveReceivedOneGetAllAsync(
+			UserClaimsFilterQuery filter,
+			UserClaimsSortingQuery sorting,
+			UserClaimsPaginationQuery pagination,
+			CurrentUserQuery current,
+			CancellationToken cancellationToken)
+		{
+			await repository.ShouldHaveReceivedOne().GetAllAsync(
+				filter,
+				sorting,
+				pagination,
+				current,
+				cancellationToken);
+		}
+
 		public async Task ShouldHaveReceivedOneGetTotalCountAsync(
 			GetAllUserClaimsQuery query,
 			CancellationToken cancellationToken)
 		{
-			await repository.ShouldHaveReceivedOne().GetTotalCountAsync(
+			await repository.ShouldHaveReceivedOneGetTotalCountAsync(
 				query.Filter,
+				cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneGetTotalCountAsync(
+			UserClaimsFilterQuery filter,
+			CancellationToken cancellationToken)
+		{
+			await repository.ShouldHaveReceivedOne().GetTotalCountAsync(
+				filter,
 				cancellationToken);
 		}
 	}
@@ -119,7 +188,7 @@ public static class UserClaimMockAssertions
 			UserClaim userClaim,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(command.IsUserClaimAddedEventRequest(userClaim), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOnePublishAsync(command.IsUserClaimAddedEventRequest(userClaim), cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOnePublishAsync(
@@ -127,7 +196,34 @@ public static class UserClaimMockAssertions
 			UserClaim userClaim,
 			CancellationToken cancellationToken)
 		{
-			await eventPublisher.ShouldHaveReceivedOne().PublishAsync(command.IsUserClaimDeletedEventRequest(userClaim), cancellationToken);
+			await eventPublisher.ShouldHaveReceivedOnePublishAsync(command.IsUserClaimDeletedEventRequest(userClaim), cancellationToken);
+		}
+	}
+
+	extension(IUserClaimQueryService service)
+	{
+		public async Task ShouldHaveReceivedOneGetAllAsync(
+			GetAllUserClaimsQuery query,
+			CancellationToken cancellationToken)
+		{
+			await service.ShouldHaveReceivedOne().GetAllAsync(query, cancellationToken);
+		}
+	}
+
+	extension(IUserClaimCommandService service)
+	{
+		public async Task ShouldHaveReceivedOneAddAsync(
+			AddUserClaimCommand command,
+			CancellationToken cancellationToken)
+		{
+			await service.ShouldHaveReceivedOne().AddAsync(command, cancellationToken);
+		}
+
+		public async Task ShouldHaveReceivedOneDeleteAsync(
+			DeleteUserClaimCommand command,
+			CancellationToken cancellationToken)
+		{
+			await service.ShouldHaveReceivedOne().DeleteAsync(command, cancellationToken);
 		}
 	}
 }

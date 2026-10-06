@@ -13,7 +13,7 @@ public static class UserMockSetups
 			UserId id,
 			IUserFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
@@ -21,21 +21,21 @@ public static class UserMockSetups
 			CurrentUserQuery currentUserQuery,
 			IUserFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
 			Name name,
 			IUserFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
 			Email email,
 			IUserFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
@@ -45,12 +45,17 @@ public static class UserMockSetups
 			CurrentUserQuery currentUserQuery,
 			IUserFluent fluent)
 		{
-			collection.AggregateFluent().ReturnsResponse(fluent);
+			collection.SetupAggregateFluent(fluent);
 		}
 
 		public void SetupAggregateFluent(
 			UsersFilterQuery filterQuery,
 			IUserFluent fluent)
+		{
+			collection.SetupAggregateFluent(fluent);
+		}
+
+		public void SetupAggregateFluent(IUserFluent fluent)
 		{
 			collection.AggregateFluent().ReturnsResponse(fluent);
 		}
@@ -63,7 +68,7 @@ public static class UserMockSetups
 			ICollection<User> users,
 			CancellationToken cancellationToken)
 		{
-			fluent.GetCountAsync(cancellationToken).ReturnsTaskResponse(users.ToTotalCountResponse(filterQuery));
+			fluent.SetupGetCountAsync(users.ToTotalCountResponse(filterQuery), cancellationToken);
 		}
 
 		public void SetupAnyAsync(
@@ -71,7 +76,7 @@ public static class UserMockSetups
 			User? user,
 			CancellationToken cancellationToken)
 		{
-			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(user != null);
+			fluent.SetupAnyAsync(user != null, cancellationToken);
 		}
 
 		public void SetupAnyAsync(
@@ -79,7 +84,7 @@ public static class UserMockSetups
 			User? user,
 			CancellationToken cancellationToken)
 		{
-			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(user != null);
+			fluent.SetupAnyAsync(user != null, cancellationToken);
 		}
 
 		public void SetupAnyAsync(
@@ -87,26 +92,31 @@ public static class UserMockSetups
 			User? user,
 			CancellationToken cancellationToken)
 		{
-			fluent.AnyAsync(cancellationToken).ReturnsTaskResponse(user != null);
+			fluent.SetupAnyAsync(user != null, cancellationToken);
 		}
 
 		public void SetupApplyIncludes(
 			UserId id,
 			UserInclude include)
 		{
-			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
+			fluent.SetupApplyIncludes(include);
 		}
 
 		public void SetupApplyIncludes(
 			Name name,
 			UserInclude include)
 		{
-			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
+			fluent.SetupApplyIncludes(include);
 		}
 
 		public void SetupApplyIncludes(
 			Email email,
 			UserInclude include)
+		{
+			fluent.SetupApplyIncludes(include);
+		}
+
+		public void SetupApplyIncludes(UserInclude include)
 		{
 			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
 		}
@@ -120,7 +130,7 @@ public static class UserMockSetups
 			UserId id,
 			CurrentUserQuery currentUserQuery)
 		{
-			fluent.Match(id).ReturnsResponse(fluent);
+			fluent.SetupMatch(id);
 		}
 
 		public void SetupMatch(Name name)
@@ -144,7 +154,7 @@ public static class UserMockSetups
 			UsersPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
-			fluent.Match(filterQuery).ReturnsResponse(fluent);
+			fluent.SetupMatch(filterQuery);
 		}
 
 		public void SetupProjectToFullResponse(
@@ -152,7 +162,7 @@ public static class UserMockSetups
 			CurrentUserQuery currentUserQuery,
 			IUserResponseFluent responseFluent)
 		{
-			fluent.ProjectToFullResponse(currentUserQuery).ReturnsResponse(responseFluent);
+			fluent.SetupProjectToFullResponse(currentUserQuery, responseFluent);
 		}
 
 		public void SetupProjectToFullResponse(
@@ -162,6 +172,13 @@ public static class UserMockSetups
 			CurrentUserQuery currentUserQuery,
 			IUserResponseFluent responseFluent)
 		{
+			fluent.SetupProjectToFullResponse(currentUserQuery, responseFluent);
+		}
+
+		public void SetupProjectToFullResponse(
+			CurrentUserQuery currentUserQuery,
+			IUserResponseFluent responseFluent)
+		{
 			fluent.ProjectToFullResponse(currentUserQuery).ReturnsResponse(responseFluent);
 		}
 
@@ -170,7 +187,7 @@ public static class UserMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			fluent.FirstOrDefaultAsync(cancellationToken).ReturnsTaskResponse(user);
+			fluent.SetupFirstOrDefaultAsync(user, cancellationToken);
 		}
 
 		public void SetupFirstOrDefaultAsync(
@@ -178,7 +195,7 @@ public static class UserMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			fluent.FirstOrDefaultAsync(cancellationToken).ReturnsTaskResponse(user);
+			fluent.SetupFirstOrDefaultAsync(user, cancellationToken);
 		}
 
 		public void SetupFirstOrDefaultAsync(
@@ -186,7 +203,7 @@ public static class UserMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			fluent.FirstOrDefaultAsync(cancellationToken).ReturnsTaskResponse(user);
+			fluent.SetupFirstOrDefaultAsync(user, cancellationToken);
 		}
 	}
 
@@ -198,6 +215,11 @@ public static class UserMockSetups
 			UsersPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
 		{
+			fluent.SetupApplySorting(sortingQuery);
+		}
+
+		public void SetupApplySorting(UsersSortingQuery sortingQuery)
+		{
 			fluent.ApplySorting(sortingQuery).ReturnsResponse(fluent);
 		}
 
@@ -206,6 +228,11 @@ public static class UserMockSetups
 			UsersSortingQuery sortingQuery,
 			UsersPaginationQuery paginationQuery,
 			CurrentUserQuery currentUserQuery)
+		{
+			fluent.SetupApplyPagination(paginationQuery);
+		}
+
+		public void SetupApplyPagination(UsersPaginationQuery paginationQuery)
 		{
 			fluent.ApplyPagination(paginationQuery).ReturnsResponse(fluent);
 		}
@@ -218,7 +245,7 @@ public static class UserMockSetups
 			ICollection<User> users,
 			CancellationToken cancellationToken)
 		{
-			fluent.ToListAsync(cancellationToken).ReturnsTaskResponse(users.ToResponse(filterQuery, paginationQuery, currentUserQuery));
+			fluent.SetupToListAsync(users.ToResponse(filterQuery, paginationQuery, currentUserQuery), cancellationToken);
 		}
 
 		public void SetupFirstOrDefaultAsync(
@@ -227,7 +254,7 @@ public static class UserMockSetups
 			User user,
 			CancellationToken cancellationToken)
 		{
-			fluent.FirstOrDefaultAsync(cancellationToken).ReturnsTaskResponse(user.ToResponse(id, currentUserQuery));
+			fluent.SetupFirstOrDefaultAsync(user.ToResponse(id, currentUserQuery), cancellationToken);
 		}
 	}
 }

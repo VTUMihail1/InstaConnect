@@ -1,3 +1,5 @@
+using InstaConnect.Posts.Domain.Tests.Features.PostComments.Utilities;
+
 namespace InstaConnect.Posts.Application.Tests.Features.PostComments.Utilities;
 
 public static class PostCommentMockSetups
@@ -10,9 +12,7 @@ public static class PostCommentMockSetups
 		ICollection<PostComment> postComments,
 		CancellationToken cancellationToken)
 		{
-			commentService
-				.GetAllAsync(request.IsGetAllPostCommentsQuery(), cancellationToken)
-				.ReturnsTaskResponse(postComments.ToResponse(request, post));
+			commentService.SetupGetAllAsync(request.IsGetAllPostCommentsQuery(), postComments.ToResponse(request, post), cancellationToken);
 		}
 
 		public void SetupGetAllForUserAsync(
@@ -21,9 +21,7 @@ public static class PostCommentMockSetups
 			ICollection<PostComment> postComments,
 			CancellationToken cancellationToken)
 		{
-			commentService
-				.GetAllForUserAsync(request.IsGetAllPostCommentsForUserQuery(), cancellationToken)
-				.ReturnsTaskResponse(postComments.ToResponse(request, user));
+			commentService.SetupGetAllForUserAsync(request.IsGetAllPostCommentsForUserQuery(), postComments.ToResponse(request, user), cancellationToken);
 		}
 
 		public void SetupGetByIdAsync(
@@ -31,9 +29,7 @@ public static class PostCommentMockSetups
 			PostComment postComment,
 			CancellationToken cancellationToken)
 		{
-			commentService
-				.GetByIdAsync(request.IsGetPostCommentByIdQuery(), cancellationToken)
-				.ReturnsTaskResponse(postComment.ToResponse(request));
+			commentService.SetupGetByIdAsync(request.IsGetPostCommentByIdQuery(), postComment.ToResponse(request), cancellationToken);
 		}
 	}
 
@@ -44,9 +40,7 @@ public static class PostCommentMockSetups
 		PostComment postComment,
 		CancellationToken cancellationToken)
 		{
-			commentService
-				.AddAsync(request.IsAddPostCommentCommand(), cancellationToken)
-				.ReturnsTaskResponse(postComment.ToResponse(request));
+			commentService.SetupAddAsync(request.IsAddPostCommentCommand(), postComment.ToResponse(request), cancellationToken);
 		}
 
 		public void SetupUpdateAsync(
@@ -54,9 +48,7 @@ public static class PostCommentMockSetups
 			PostComment postComment,
 			CancellationToken cancellationToken)
 		{
-			commentService
-				.UpdateAsync(request.IsUpdatePostCommentCommand(), cancellationToken)
-				.ReturnsTaskResponse(postComment.ToResponse(request));
+			commentService.SetupUpdateAsync(request.IsUpdatePostCommentCommand(), postComment.ToResponse(request), cancellationToken);
 		}
 	}
 }

@@ -1,3 +1,5 @@
+using InstaConnect.Posts.Domain.Tests.Features.Posts.Utilities;
+
 namespace InstaConnect.Posts.Application.Tests.Features.Posts.Utilities;
 
 public static class PostMockSetups
@@ -9,9 +11,7 @@ public static class PostMockSetups
 		ICollection<Post> posts,
 		CancellationToken cancellationToken)
 		{
-			service
-				.GetAllAsync(request.IsGetAllPostsQuery(), cancellationToken)
-				.ReturnsTaskResponse(posts.ToResponse(request));
+			service.SetupGetAllAsync(request.IsGetAllPostsQuery(), posts.ToResponse(request), cancellationToken);
 		}
 
 		public void SetupGetAllForUserAsync(
@@ -20,9 +20,7 @@ public static class PostMockSetups
 			ICollection<Post> posts,
 			CancellationToken cancellationToken)
 		{
-			service
-				.GetAllForUserAsync(request.IsGetAllPostsForUserQuery(), cancellationToken)
-				.ReturnsTaskResponse(posts.ToResponse(request, user));
+			service.SetupGetAllForUserAsync(request.IsGetAllPostsForUserQuery(), posts.ToResponse(request, user), cancellationToken);
 		}
 
 		public void SetupGetByIdAsync(
@@ -30,9 +28,7 @@ public static class PostMockSetups
 			Post post,
 			CancellationToken cancellationToken)
 		{
-			service
-				.GetByIdAsync(request.IsGetPostByIdQuery(), cancellationToken)
-				.ReturnsTaskResponse(post.ToResponse(request));
+			service.SetupGetByIdAsync(request.IsGetPostByIdQuery(), post.ToResponse(request), cancellationToken);
 		}
 	}
 
@@ -43,9 +39,7 @@ public static class PostMockSetups
 		Post post,
 		CancellationToken cancellationToken)
 		{
-			service
-				.AddAsync(request.IsAddPostCommand(), cancellationToken)
-				.ReturnsTaskResponse(post.ToResponse(request));
+			service.SetupAddAsync(request.IsAddPostCommand(), post.ToResponse(request), cancellationToken);
 		}
 
 		public void SetupUpdateAsync(
@@ -53,9 +47,7 @@ public static class PostMockSetups
 			Post post,
 			CancellationToken cancellationToken)
 		{
-			service
-				.UpdateAsync(request.IsUpdatePostCommand(), cancellationToken)
-				.ReturnsTaskResponse(post.ToResponse(request));
+			service.SetupUpdateAsync(request.IsUpdatePostCommand(), post.ToResponse(request), cancellationToken);
 		}
 	}
 }

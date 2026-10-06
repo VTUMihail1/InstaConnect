@@ -1,5 +1,6 @@
 using InstaConnect.Chats.Presentation.Tests.Features.Chats.Utilities;
 using InstaConnect.Common.Application.Features.Requests.Abstractions;
+using InstaConnect.Common.Application.Tests.Features.Assertions;
 
 namespace InstaConnect.Chats.Presentation.Tests.Features.Chats.Assertions;
 
@@ -11,21 +12,21 @@ public static class ChatMockAssertions
 		GetAllChatsApiRequest request,
 		CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(request.IsGetAllChatsQueryRequest(), cancellationToken);
+			await sender.ShouldHaveReceivedOneSendAsync(request.IsGetAllChatsQueryRequest(), cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneSendAsync(
 			GetChatByIdApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(request.IsGetChatByIdQueryRequest(), cancellationToken);
+			await sender.ShouldHaveReceivedOneSendAsync(request.IsGetChatByIdQueryRequest(), cancellationToken);
 		}
 
 		public async Task ShouldHaveReceivedOneSendAsync(
 			AddChatApiRequest request,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldHaveReceivedOne().SendAsync(request.IsAddChatCommandRequest(), cancellationToken);
+			await sender.ShouldHaveReceivedOneSendAsync(request.IsAddChatCommandRequest(), cancellationToken);
 		}
 	}
 }

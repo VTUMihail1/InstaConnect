@@ -13,6 +13,11 @@ public static class RefreshTokenMockSetups
 			RefreshTokenId id,
 			IRefreshTokenFluent fluent)
 		{
+			collection.SetupAggregateFluent(fluent);
+		}
+
+		public void SetupAggregateFluent(IRefreshTokenFluent fluent)
+		{
 			collection.AggregateFluent().ReturnsResponse(fluent);
 		}
 	}
@@ -22,6 +27,11 @@ public static class RefreshTokenMockSetups
 		public void SetupApplyIncludes(
 			RefreshTokenId id,
 			RefreshTokenInclude include)
+		{
+			fluent.SetupApplyIncludes(include);
+		}
+
+		public void SetupApplyIncludes(RefreshTokenInclude include)
 		{
 			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
 		}
@@ -36,7 +46,7 @@ public static class RefreshTokenMockSetups
 			RefreshToken refreshToken,
 			CancellationToken cancellationToken)
 		{
-			fluent.FirstOrDefaultAsync(cancellationToken).ReturnsTaskResponse(refreshToken);
+			fluent.SetupFirstOrDefaultAsync(refreshToken, cancellationToken);
 		}
 	}
 }
