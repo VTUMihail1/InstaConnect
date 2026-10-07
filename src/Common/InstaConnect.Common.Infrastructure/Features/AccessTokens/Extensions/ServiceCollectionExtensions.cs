@@ -15,7 +15,7 @@ public static class ServiceCollectionExtensions
 	{
 		public IServiceCollection AddAccessTokens(IConfiguration configuration)
 		{
-			serviceCollection.AddValidatedOptions<AccessTokenOptions>(AccessTokenOptions.SectionName);
+			serviceCollection.AddValidatedOptions<AccessTokenOptions, AccessTokenOptionsValidator>(AccessTokenOptions.SectionName);
 			var options = configuration.GetOptions<AccessTokenOptions>(AccessTokenOptions.SectionName);
 
 			serviceCollection.AddSingleton<IEncoder, Encoder>();

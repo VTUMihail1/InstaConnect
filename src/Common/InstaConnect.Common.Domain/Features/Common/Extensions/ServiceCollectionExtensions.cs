@@ -1,9 +1,14 @@
 using System.Reflection;
 
-using InstaConnect.Common.Domain.Features.Common.Abstractions;
+using FluentValidation;
 
+using InstaConnect.Common.Domain.Features.Common.Abstractions;
+using InstaConnect.Common.Domain.Features.Common.Helpers;
+
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Options;
 
 using Scrutor;
 
@@ -46,14 +51,23 @@ public static class ServiceCollectionExtensions
 			return serviceCollection;
 		}
 
-		public IServiceCollection AddValidatedOptions<TOptions>(string sectionName)
+		public IServiceCollection AddValidatedOptions<TOptions, TValidator>(string sectionName)
 			where TOptions : class, IApplicationOptions
+			where TValidator : IValidator<TOptions>, new()
 		{
 			serviceCollection
 				.AddOptions<TOptions>()
-				.BindConfiguration(sectionName)
-				.ValidateDataAnnotations()
 				.ValidateOnStart();
+
+			serviceCollection.TryAddTransient<IOptionsFactory<TOptions>>(serviceProvider => new ConfigurationOptionsFactory<TOptions>(
+				serviceProvider.GetRequiredService<IConfiguration>(),
+				sectionName,
+				serviceProvider.GetServices<IConfigureOptions<TOptions>>(),
+				serviceProvider.GetServices<IPostConfigureOptions<TOptions>>(),
+				serviceProvider.GetServices<IValidateOptions<TOptions>>()));
+
+			serviceCollection.TryAddEnumerable(ServiceDescriptor.Singleton<IValidateOptions<TOptions>>(
+				new FluentValidationOptionsValidator<TOptions>(new TValidator())));
 
 			return serviceCollection;
 		}

@@ -10,7 +10,7 @@ internal static class ServiceCollectionExtensions
 	{
 		internal IServiceCollection AddFollowServices()
 		{
-			serviceCollection.AddValidatedOptions<FollowOptions>(FollowOptions.SectionName);
+			serviceCollection.AddValidatedOptions<FollowOptions, FollowOptionsValidator>(FollowOptions.SectionName);
 
 			return serviceCollection;
 		}

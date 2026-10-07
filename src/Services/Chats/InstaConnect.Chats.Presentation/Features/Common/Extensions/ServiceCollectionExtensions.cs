@@ -22,7 +22,7 @@ public static class ServiceCollectionExtensions
 				.AddChatMessageServices();
 
 			serviceCollection
-				.AddValidatedOptions<MainOptions>(MainOptions.SectionName)
+				.AddValidatedOptions<MainOptions, MainOptionsValidator>(MainOptions.SectionName)
 				.AddServicesWithMatchingInterfaces(ChatsPresentationReference.Assembly)
 				.AddApiControllers()
 				.AddMappers(ChatsPresentationReference.Assembly, CommonPresentationReference.Assembly)

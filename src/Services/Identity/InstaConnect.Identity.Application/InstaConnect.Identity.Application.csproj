@@ -11,6 +11,7 @@
     <Using Include="Microsoft.Extensions.DependencyInjection" />
     <Using Include="InstaConnect.Common.Application.Features.Requests.Abstractions"/>
     <Using Include="InstaConnect.Common.Application.Features.Validations.Extensions" />
+    <Using Include="InstaConnect.Common.Domain.Features.Validations.Extensions" />
   </ItemGroup>
 
   <ItemGroup Label="Users">

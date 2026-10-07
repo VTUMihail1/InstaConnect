@@ -29,7 +29,7 @@ internal static class ServiceCollectionExtensions
 				.AddEmailConfirmationTokenServices();
 
 			serviceCollection
-				.AddValidatedOptions<MainOptions>(MainOptions.SectionName)
+				.AddValidatedOptions<MainOptions, MainOptionsValidator>(MainOptions.SectionName)
 				.AddServicesWithMatchingInterfaces(IdentityPresentationReference.Assembly)
 				.AddApiControllers()
 				.AddMappers(IdentityPresentationReference.Assembly, CommonPresentationReference.Assembly)

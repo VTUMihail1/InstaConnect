@@ -20,7 +20,7 @@ public static class ServiceCollectionExtensions
 				.AddFollowServices();
 
 			serviceCollection
-				.AddValidatedOptions<MainOptions>(MainOptions.SectionName)
+				.AddValidatedOptions<MainOptions, MainOptionsValidator>(MainOptions.SectionName)
 				.AddServicesWithMatchingInterfaces(FollowsPresentationReference.Assembly)
 				.AddApiControllers()
 				.AddMappers(FollowsPresentationReference.Assembly, CommonPresentationReference.Assembly)

@@ -13,7 +13,7 @@ internal static class ServiceCollectionExtensions
 		{
 			const string CollectionName = "forgot_password_tokens";
 
-			serviceCollection.AddValidatedOptions<ForgotPasswordTokenOptions>(ForgotPasswordTokenOptions.SectionName);
+			serviceCollection.AddValidatedOptions<ForgotPasswordTokenOptions, ForgotPasswordTokenOptionsValidator>(ForgotPasswordTokenOptions.SectionName);
 
 			serviceCollection.AddImplementationsOf<IForgotPasswordTokenIncluder>(IdentityInfrastructureReference.Assembly);
 

@@ -23,6 +23,6 @@ public static class RefreshTokenDomainMockFactory
 
 	public static IOptions<RefreshTokenOptions> CreateOptions()
 	{
-		return Options.Create(new RefreshTokenOptions { LifetimeSeconds = RefreshTokenDataFaker.GetLifetimeSeconds() });
+		return Options.Create(new RefreshTokenOptions(RefreshTokenDataFaker.GetLifetimeSeconds()));
 	}
 }

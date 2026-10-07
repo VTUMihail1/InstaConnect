@@ -23,6 +23,6 @@ public static class EmailConfirmationTokenDomainMockFactory
 
 	public static IOptions<EmailConfirmationTokenOptions> CreateOptions()
 	{
-		return Options.Create(new EmailConfirmationTokenOptions { LifetimeSeconds = EmailConfirmationTokenDataFaker.GetLifetimeSeconds() });
+		return Options.Create(new EmailConfirmationTokenOptions(EmailConfirmationTokenDataFaker.GetLifetimeSeconds()));
 	}
 }

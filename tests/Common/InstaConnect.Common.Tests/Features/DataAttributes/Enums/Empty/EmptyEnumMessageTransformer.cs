@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 
-using InstaConnect.Common.Application.Features.Validations.Utilities;
+using InstaConnect.Common.Domain.Features.Validations.Utilities;
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Base;
 
 namespace InstaConnect.Common.Tests.Features.DataAttributes.Enums.Empty;

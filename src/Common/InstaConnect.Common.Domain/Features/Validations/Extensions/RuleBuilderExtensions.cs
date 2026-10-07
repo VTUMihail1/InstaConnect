@@ -2,10 +2,10 @@ using System.Linq.Expressions;
 
 using FluentValidation;
 
-using InstaConnect.Common.Application.Features.Validations.Utilities;
 using InstaConnect.Common.Domain.Features.Common.Extensions;
+using InstaConnect.Common.Domain.Features.Validations.Utilities;
 
-namespace InstaConnect.Common.Application.Features.Validations.Extensions;
+namespace InstaConnect.Common.Domain.Features.Validations.Extensions;
 
 public static class RuleBuilderExtensions
 {

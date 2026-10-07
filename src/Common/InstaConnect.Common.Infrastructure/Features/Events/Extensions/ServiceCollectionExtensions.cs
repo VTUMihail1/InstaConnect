@@ -19,7 +19,7 @@ public static class ServiceCollectionExtensions
 	{
 		public IServiceCollection AddEvents(IConfiguration configuration, string prefix, params Assembly[] currentAssemblies)
 		{
-			serviceCollection.AddValidatedOptions<RabbitMqOptions>(RabbitMqOptions.SectionName);
+			serviceCollection.AddValidatedOptions<RabbitMqOptions, RabbitMqOptionsValidator>(RabbitMqOptions.SectionName);
 			var options = configuration.GetOptions<RabbitMqOptions>(RabbitMqOptions.SectionName);
 
 			serviceCollection.AddMassTransit(busConfigurator =>

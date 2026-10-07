@@ -23,6 +23,6 @@ public static class ForgotPasswordTokenDomainMockFactory
 
 	public static IOptions<ForgotPasswordTokenOptions> CreateOptions()
 	{
-		return Options.Create(new ForgotPasswordTokenOptions { LifetimeSeconds = ForgotPasswordTokenDataFaker.GetLifetimeSeconds() });
+		return Options.Create(new ForgotPasswordTokenOptions(ForgotPasswordTokenDataFaker.GetLifetimeSeconds()));
 	}
 }

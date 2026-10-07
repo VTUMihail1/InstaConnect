@@ -26,7 +26,7 @@ public static class ServiceCollectionExtensions
 				.AddPostCommentLikeServices();
 
 			serviceCollection
-				.AddValidatedOptions<MainOptions>(MainOptions.SectionName)
+				.AddValidatedOptions<MainOptions, MainOptionsValidator>(MainOptions.SectionName)
 				.AddServicesWithMatchingInterfaces(PostsPresentationReference.Assembly)
 				.AddApiControllers()
 				.AddMappers(PostsPresentationReference.Assembly, CommonPresentationReference.Assembly)

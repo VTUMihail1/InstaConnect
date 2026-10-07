@@ -13,7 +13,7 @@ internal static class ServiceCollectionExtensions
 		{
 			const string CollectionName = "refresh_tokens";
 
-			serviceCollection.AddOptions<RefreshTokenOptions>(RefreshTokenOptions.SectionName);
+			serviceCollection.AddValidatedOptions<RefreshTokenOptions, RefreshTokenOptionsValidator>(RefreshTokenOptions.SectionName);
 
 			serviceCollection.AddImplementationsOf<IRefreshTokenIncluder>(IdentityInfrastructureReference.Assembly);
 

@@ -1,6 +1,6 @@
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 
-namespace InstaConnect.Common.Application.Features.Validations.Utilities;
+namespace InstaConnect.Common.Domain.Features.Validations.Utilities;
 
 public static class CommonErrorMessages
 {

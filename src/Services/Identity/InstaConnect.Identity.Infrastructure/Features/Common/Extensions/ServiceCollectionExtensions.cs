@@ -31,7 +31,7 @@ public static class ServiceCollectionExtensions
 			IWebHostEnvironment webHostEnvironment,
 			Assembly presentationAssembly)
 		{
-			serviceCollection.AddValidatedOptions<AdminOptions>(AdminOptions.SectionName);
+			serviceCollection.AddValidatedOptions<AdminOptions, AdminOptionsValidator>(AdminOptions.SectionName);
 
 			serviceCollection.AddSingleton<IPasswordHasher, PasswordHasher>();
 
