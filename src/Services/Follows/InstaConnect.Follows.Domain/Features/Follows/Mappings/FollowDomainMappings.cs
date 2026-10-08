@@ -9,10 +9,10 @@ internal class FollowDomainMappings : IRegister
 	public void Register(TypeAdapterConfig config)
 	{
 		config.NewConfig<Follow, FollowAddedEventRequest>()
-			.ConstructUsing(src => new(src.Adapt<FollowEventRequest>(config)!));
+			.ConstructUsing(src => new(src.Adapt<FollowEventRequest>(config)));
 
 		config.NewConfig<Follow, FollowDeletedEventRequest>()
-			.ConstructUsing(src => new(src.Adapt<FollowEventRequest>(config)!));
+			.ConstructUsing(src => new(src.Adapt<FollowEventRequest>(config)));
 
 		config.NewConfig<Follow, FollowEventRequest>()
 			.ConstructUsing(src => new(
@@ -31,6 +31,6 @@ internal class FollowDomainMappings : IRegister
 				src.CreatedAtUtc));
 
 		config.NewConfig<Follow, FollowAddedNotificationRequest>()
-			.ConstructUsing(src => new(src.Adapt<FollowNotificationRequest>(config)!));
+			.ConstructUsing(src => new(src.Adapt<FollowNotificationRequest>(config)));
 	}
 }

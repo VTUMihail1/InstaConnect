@@ -1,4 +1,5 @@
 using InstaConnect.Chats.Application.Tests.Features.Chats.Utilities;
+using InstaConnect.Chats.Events.Features.Chats;
 using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
 
 namespace InstaConnect.Chats.Application.Tests.Features.Chats.Assertions;
@@ -7,59 +8,59 @@ public static class ChatMatchAssertions
 {
 	extension(AddChatCommandResponse response)
 	{
-		public void ShouldSatisfy(Chat chat, AddChatCommandRequest request)
+		public void ShouldSatisfy(AddChatCommandRequest request, Chat chat)
 		{
-			response.ShouldSatisfy(p => p.Matches(chat, request));
+			response.ShouldSatisfy(p => p.Matches(request, chat));
 		}
 	}
 
 	extension(GetChatByIdQueryResponse response)
 	{
-		public void ShouldSatisfy(Chat chat, GetChatByIdQueryRequest request)
+		public void ShouldSatisfy(GetChatByIdQueryRequest request, Chat chat)
 		{
-			response.ShouldSatisfy(p => p.Matches(chat, request));
+			response.ShouldSatisfy(p => p.Matches(request, chat));
 		}
 
-		public void ShouldSatisfyInverted(Chat chat, GetChatByIdQueryRequest request)
+		public void ShouldSatisfyInverted(GetChatByIdQueryRequest request, Chat chat)
 		{
-			response.ShouldSatisfy(p => p.MatchesInverted(chat, request));
+			response.ShouldSatisfy(p => p.MatchesInverted(request, chat));
 		}
 	}
 
 	extension(GetAllChatsQueryResponse response)
 	{
 		public void ShouldSatisfy(
+		GetAllChatsQueryRequest request,
 		User participantOne,
-		ICollection<Chat> chats,
-		GetAllChatsQueryRequest request)
+		ICollection<Chat> chats)
 		{
-			response.ShouldSatisfy(p => p.Matches(participantOne, chats, request));
+			response.ShouldSatisfy(p => p.Matches(request, participantOne, chats));
 		}
 
 		public void ShouldSatisfy(
+			GetAllChatsQueryRequest request,
 			User participantOne,
 			ICollection<Chat> chats,
-			GetAllChatsQueryRequest request,
 			ISortEnumTermTransformer<Chat> termTransformer)
 		{
-			response.ShouldSatisfy(p => p.Matches(participantOne, chats, request, termTransformer));
+			response.ShouldSatisfy(p => p.Matches(request, participantOne, chats, termTransformer));
 		}
 
 		public void ShouldSatisfyInverted(
+		GetAllChatsQueryRequest request,
 		User participantTwo,
-		ICollection<Chat> chats,
-		GetAllChatsQueryRequest request)
+		ICollection<Chat> chats)
 		{
-			response.ShouldSatisfy(p => p.MatchesInverted(participantTwo, chats, request));
+			response.ShouldSatisfy(p => p.MatchesInverted(request, participantTwo, chats));
 		}
 
 		public void ShouldSatisfyInverted(
+			GetAllChatsQueryRequest request,
 			User participantTwo,
 			ICollection<Chat> chats,
-			GetAllChatsQueryRequest request,
 			ISortEnumTermTransformer<Chat> termTransformer)
 		{
-			response.ShouldSatisfy(p => p.MatchesInverted(participantTwo, chats, request, termTransformer));
+			response.ShouldSatisfy(p => p.MatchesInverted(request, participantTwo, chats, termTransformer));
 		}
 	}
 
@@ -68,6 +69,14 @@ public static class ChatMatchAssertions
 		public void ShouldSatisfy(AddChatCommandRequest request)
 		{
 			chat.ShouldSatisfy(p => p.Matches(request));
+		}
+	}
+
+	extension(ChatAddedEventRequest r)
+	{
+		public void ShouldSatisfy(AddChatCommandRequest request, Chat entity)
+		{
+			r.ShouldSatisfy(r => r.Matches(request, entity));
 		}
 	}
 }

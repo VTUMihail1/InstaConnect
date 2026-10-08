@@ -11,21 +11,11 @@ internal class ForgotPasswordTokenIncluderFactory : IForgotPasswordTokenIncluder
 		_includers = includers;
 	}
 
-	public IEnumerable<IForgotPasswordTokenIncluder> Create(ICollection<IdentityIncludeDescriptor>? descriptors)
+	public IEnumerable<IForgotPasswordTokenIncluder> Create(ICollection<IdentityIncludeDescriptor> descriptors)
 	{
-		if (descriptors == null)
-		{
-			return [];
-		}
-
 		var includers = _includers.Where(s => descriptors.Any(p =>
 														p.IncludeType == s.IncludeType &&
 														p.DestinationType == s.DestinationType));
-
-		if (includers.IsEmpty())
-		{
-			throw new ForgotPasswordTokenIncludeDescriptorsNotSupportedException(descriptors);
-		}
 
 		return includers;
 	}

@@ -9,8 +9,8 @@ internal class RefreshTokenCommandService : IRefreshTokenCommandService
 	private readonly IDateTimeProvider _dateTimeProvider;
 	private readonly IRefreshTokenFactory _refreshTokenFactory;
 	private readonly ISessionTokenGenerator _sessionTokenGenerator;
+	private readonly IUserIncludeBuilderFactory _includeBuilderFactory;
 	private readonly IRefreshTokenCommandRepository _refreshTokenRepository;
-	private readonly IUserIncludeBuilderFactory _includeQueryBuilderFactory;
 
 	public RefreshTokenCommandService(
 		IPasswordHasher passwordHasher,
@@ -18,21 +18,21 @@ internal class RefreshTokenCommandService : IRefreshTokenCommandService
 		IDateTimeProvider dateTimeProvider,
 		IRefreshTokenFactory refreshTokenFactory,
 		ISessionTokenGenerator sessionTokenGenerator,
-		IRefreshTokenCommandRepository refreshTokenRepository,
-		IUserIncludeBuilderFactory includeQueryBuilderFactory)
+		IUserIncludeBuilderFactory includeBuilderFactory,
+		IRefreshTokenCommandRepository refreshTokenRepository)
 	{
 		_passwordHasher = passwordHasher;
 		_repository = repository;
 		_dateTimeProvider = dateTimeProvider;
 		_refreshTokenFactory = refreshTokenFactory;
 		_sessionTokenGenerator = sessionTokenGenerator;
+		_includeBuilderFactory = includeBuilderFactory;
 		_refreshTokenRepository = refreshTokenRepository;
-		_includeQueryBuilderFactory = includeQueryBuilderFactory;
 	}
 
 	public async Task<SessionToken> IssueAsync(IssueRefreshTokenCommand command, CancellationToken cancellationToken)
 	{
-		var include = _includeQueryBuilderFactory.Create().WithUserClaims().Build();
+		var include = _includeBuilderFactory.Create().WithUserClaims().Build();
 		var user = await _repository.GetByNameAsync(command.Name, include, cancellationToken);
 
 		if (user == null)
@@ -60,7 +60,7 @@ internal class RefreshTokenCommandService : IRefreshTokenCommandService
 
 	public async Task<SessionToken> RotateAsync(RotateRefreshTokenCommand command, CancellationToken cancellationToken)
 	{
-		var include = _includeQueryBuilderFactory.Create().WithUserClaims().Build();
+		var include = _includeBuilderFactory.Create().WithUserClaims().Build();
 		var user = await _repository.GetByIdAsync(command.Id.Id, include, cancellationToken);
 
 		if (user == null)

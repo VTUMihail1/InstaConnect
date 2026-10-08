@@ -1,13 +1,14 @@
+using InstaConnect.Posts.Domain.Features.PostComments.Models.ValueObjects;
 using InstaConnect.Posts.Tests.Features.PostComments.Utilities;
 
 namespace InstaConnect.Posts.Tests.Features.PostComments.Builders;
 
 public class PostCommentBuilder
 {
-	private readonly string _id;
+	private string _id;
 	private readonly Post _post;
 	private readonly string _content;
-	private readonly string _commentId;
+	private string _commentId;
 	private readonly string _userId;
 	private readonly User _user;
 	private readonly DateTimeOffset _createdAtUtc;
@@ -22,7 +23,15 @@ public class PostCommentBuilder
 		_user = user;
 		_content = PostCommentDataFaker.GetContent();
 		_createdAtUtc = PostCommentDataFaker.GetCreatedAtUtc();
-		_updatedAtUtc = PostCommentDataFaker.GetUpdatedAtUtc();
+		_updatedAtUtc = _createdAtUtc;
+	}
+
+	public PostCommentBuilder WithId(PostCommentId id)
+	{
+		_id = id.Id.Id;
+		_commentId = id.CommentId;
+
+		return this;
 	}
 
 	public PostComment Build()

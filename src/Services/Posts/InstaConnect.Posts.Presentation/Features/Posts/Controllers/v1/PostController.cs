@@ -1,4 +1,4 @@
-using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Requests.Abstractions;
 using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
 using InstaConnect.Common.Presentation.Features.Controllers.Utilities;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
@@ -9,6 +9,7 @@ using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
 
 namespace InstaConnect.Posts.Presentation.Features.Posts.Controllers.v1;
 
+[ApiController]
 [ApiVersion(PostRoutes.Version1)]
 [Route(PostRoutes.Resource)]
 [EnableRateLimiting(RateLimiterPolicies.Default)]

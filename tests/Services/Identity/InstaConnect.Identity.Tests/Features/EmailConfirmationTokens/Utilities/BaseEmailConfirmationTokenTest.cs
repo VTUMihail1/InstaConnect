@@ -13,6 +13,8 @@ public abstract class BaseEmailConfirmationTokenTest : BaseTest
 	protected IPasswordHasher PasswordHasher { get; }
 	protected string Password { get; }
 	protected IFormFile ProfileImage { get; }
+	protected DateTimeOffset ExpiredDate { get; }
+	protected DateTimeOffset UnexpiredDate { get; }
 
 	protected UserBuilderFactory UserBuilderFactory { get; }
 	protected UserBuilder UserBuilder { get; }
@@ -51,6 +53,9 @@ public abstract class BaseEmailConfirmationTokenTest : BaseTest
 		EmailConfirmationTokenBuilder = EmailConfirmationTokenBuilderFactory.Create(User);
 		EmailConfirmationToken = EmailConfirmationTokenBuilder.Build();
 		EmailConfirmationTokens = EmailConfirmationToken.Generate(Users);
+
+		ExpiredDate = EmailConfirmationTokenDataFaker.GetExpired(EmailConfirmationToken.ExpiresAtUtc);
+		UnexpiredDate = EmailConfirmationTokenDataFaker.GetUnexpired(EmailConfirmationToken.ExpiresAtUtc);
 
 		CancellationToken = MockFactory.CreateCancellationToken();
 	}

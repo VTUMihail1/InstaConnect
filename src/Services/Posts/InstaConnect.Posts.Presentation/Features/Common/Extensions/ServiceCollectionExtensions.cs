@@ -1,9 +1,10 @@
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Domain.Features.Mappers.Extensions;
+using InstaConnect.Common.Domain.Features.Validations.Extensions;
 using InstaConnect.Common.Presentation.Features.Common.Extensions;
 using InstaConnect.Common.Presentation.Features.Common.Models;
 using InstaConnect.Common.Presentation.Features.Controllers.Extensions;
-using InstaConnect.Common.Presentation.Features.ExceptionHandling.Extensions;
+using InstaConnect.Common.Presentation.Features.Exceptions.Extensions;
 using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Extensions;
 using InstaConnect.Posts.Presentation.Features.PostComments.Extensions;
 using InstaConnect.Posts.Presentation.Features.PostLikes.Extensions;
@@ -29,11 +30,12 @@ public static class ServiceCollectionExtensions
 				.AddValidatedOptions<MainOptions>(MainOptions.SectionName)
 				.AddServicesWithMatchingInterfaces(PostsPresentationReference.Assembly)
 				.AddApiControllers()
-				.AddMapper(PostsPresentationReference.Assembly, CommonPresentationReference.Assembly)
+				.AddMappers(PostsPresentationReference.Assembly, CommonPresentationReference.Assembly)
+				.AddValidations(PostsPresentationReference.Assembly, CommonPresentationReference.Assembly)
 				.AddAuthorizationPolicies()
 				.AddCorsPolicies(configuration)
 				.AddRateLimiterPolicies()
-				.AddExceptionHandler();
+				.AddExceptions();
 
 			return serviceCollection;
 		}

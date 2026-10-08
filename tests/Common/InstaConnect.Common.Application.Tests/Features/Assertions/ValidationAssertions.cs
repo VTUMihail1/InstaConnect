@@ -12,9 +12,9 @@ public static class ValidationAssertions
 	extension<TRequest>(TestValidationResult<TRequest> testValidationResult)
 	{
 		public void ShouldHaveValidationErrorForProperty<TProperty>(
+			TRequest request,
 			Expression<Func<TRequest, TProperty>> memberAccessor,
-			IMessageTransformer<TProperty> messageTransformer,
-			TRequest request)
+			IMessageTransformer<TProperty> messageTransformer)
 		{
 			testValidationResult
 				.ShouldHaveValidationErrorFor(memberAccessor)

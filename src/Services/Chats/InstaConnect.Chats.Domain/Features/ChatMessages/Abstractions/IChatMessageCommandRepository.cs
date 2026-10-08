@@ -12,7 +12,7 @@ public interface IChatMessageCommandRepository
 
 	public Task<ChatMessage?> GetByIdAsync(ChatMessageId id, CancellationToken cancellationToken);
 
-	public Task<ChatMessage?> GetByIdAsync(ChatMessageId id, ChatMessageInclude? include, CancellationToken cancellationToken);
+	public Task<ChatMessage?> GetByIdAsync(ChatMessageId id, ChatMessageInclude include, CancellationToken cancellationToken);
 
 	public Task<bool> ExistsByIdAsync(ChatMessageId id, CancellationToken cancellationToken);
 }

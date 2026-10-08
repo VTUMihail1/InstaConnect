@@ -1,80 +1,68 @@
+using InstaConnect.Identity.Domain.Tests.Features.Users.Utilities;
+
 namespace InstaConnect.Identity.Application.Tests.Features.Users.Utilities;
 
 public static class UserMockSetups
 {
 	extension(IUserQueryService service)
 	{
-		public void SetupGetAllQuery(
+		public void SetupGetAllAsync(
 		GetAllUsersQueryRequest request,
 		ICollection<User> users,
 		CancellationToken cancellationToken)
 		{
-			service
-				.GetAllAsync(UserMatcher.IsGetAllUsersQuery(request), cancellationToken)
-				.ReturnsResponse(users.ToResponse(request));
+			service.SetupGetAllAsync(request.IsGetAllUsersQuery(), users.ToResponse(request), cancellationToken);
 		}
 
-		public void SetupGetByIdQuery(
+		public void SetupGetByIdAsync(
 			GetUserByIdQueryRequest request,
 			User user,
 			CancellationToken cancellationToken)
 		{
-			service
-				.GetByIdAsync(UserMatcher.IsGetUserByIdQuery(request), cancellationToken)
-				.ReturnsResponse(user.ToResponse(request));
+			service.SetupGetByIdAsync(request.IsGetUserByIdQuery(), user.ToResponse(request), cancellationToken);
 		}
 
-		public void SetupGetByIdQuery(
+		public void SetupGetByIdAsync(
 			GetCurrentUserByIdQueryRequest request,
 			User user,
 			CancellationToken cancellationToken)
 		{
-			service
-				.GetByIdAsync(UserMatcher.IsGetUserByIdQuery(request), cancellationToken)
-				.ReturnsResponse(user.ToResponse(request));
+			service.SetupGetByIdAsync(request.IsGetUserByIdQuery(), user.ToResponse(request), cancellationToken);
 		}
 
-		public void SetupGetByIdQuery(
+		public void SetupGetByIdAsync(
 			GetUserDetailsByIdQueryRequest request,
 			User user,
 			CancellationToken cancellationToken)
 		{
-			service
-				.GetByIdAsync(UserMatcher.IsGetUserByIdQuery(request), cancellationToken)
-				.ReturnsResponse(user.ToResponse(request));
+			service.SetupGetByIdAsync(request.IsGetUserByIdQuery(), user.ToResponse(request), cancellationToken);
 		}
 
-		public void SetupGetByIdQuery(
+		public void SetupGetByIdAsync(
 			GetCurrentUserDetailsByIdQueryRequest request,
 			User user,
 			CancellationToken cancellationToken)
 		{
-			service
-				.GetByIdAsync(UserMatcher.IsGetUserByIdQuery(request), cancellationToken)
-				.ReturnsResponse(user.ToResponse(request));
+			service.SetupGetByIdAsync(request.IsGetUserByIdQuery(), user.ToResponse(request), cancellationToken);
 		}
 	}
 
 	extension(IUserCommandService service)
 	{
-		public void SetupAddCommand(
+		public void SetupAddAsync(
 		AddUserCommandRequest request,
 		User user,
 		CancellationToken cancellationToken)
 		{
-			service
-				.AddAsync(UserMatcher.IsAddUserCommand(request), cancellationToken)
-				.ReturnsResponse(user.ToResponse(request));
+			service.SetupAddAsync(request.IsAddUserCommand(), user.ToResponse(request), cancellationToken);
 		}
 
-		public void SetupUpdateCommand(
+		public void SetupUpdateAsync(
 			UpdateCurrentUserCommandRequest request,
 			User user,
 			CancellationToken cancellationToken)
 		{
-			service
-				.UpdateAsync(UserMatcher.IsUpdateUserCommand(request), cancellationToken)
-				.ReturnsResponse(user.ToResponse(request));
+			service.SetupUpdateAsync(request.IsUpdateUserCommand(), user.ToResponse(request), cancellationToken);
 		}
 	}
 }

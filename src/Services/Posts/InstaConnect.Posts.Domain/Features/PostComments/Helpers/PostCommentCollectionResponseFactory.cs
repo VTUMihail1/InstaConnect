@@ -1,4 +1,4 @@
-using InstaConnect.Common.Domain.Features.Data.Abstractions;
+using InstaConnect.Common.Domain.Features.Databases.Abstractions;
 using InstaConnect.Posts.Domain.Features.Users.Models.Responses;
 
 namespace InstaConnect.Posts.Domain.Features.PostComments.Helpers;

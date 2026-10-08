@@ -8,7 +8,7 @@ using InstaConnect.Common.Domain.Features.AccessTokens.Utilities;
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Events.Features.AccessTokens.Models;
 using InstaConnect.Common.Infrastructure.Features.AccessTokens.Abstractions;
-using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
+using InstaConnect.Common.Presentation.Features.Exceptions.Models;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Net.Http.Headers;
@@ -42,7 +42,7 @@ public static class HttpClientExtensions
 			const string CookieHeader = "Cookie";
 			const string Format = "{0}={1}";
 
-			var cookieHeader = cookies.Select(cookie => Format.FormatCurrentCulture(cookie.Name, cookie.Value)).JoinAsStringWithSemicolon();
+			var cookieHeader = cookies.Select(cookie => Format.FormatCurrentCulture(cookie.Name, cookie.Value)).JoinWithSemicolon();
 
 			httpClient.DefaultRequestHeaders.Remove(CookieHeader);
 			httpClient.DefaultRequestHeaders.TryAddWithoutValidation(CookieHeader, cookieHeader);
@@ -74,11 +74,14 @@ public static class HttpClientExtensions
 			return httpResponseMessage.StatusCode;
 		}
 
-		public ICollection<SetCookieHeaderValue> GetCookies()
+		public SetCookieHeaderValue GetCookie(string key)
 		{
 			const string SetCookieHeader = "Set-Cookie";
 
-			return [.. httpResponseMessage.Headers.GetValues(SetCookieHeader).Select(header => SetCookieHeaderValue.Parse(header))];
+			return httpResponseMessage.Headers
+				.GetValues(SetCookieHeader)
+				.Select(header => SetCookieHeaderValue.Parse(header))
+				.Single(cookie => cookie.Name == key);
 		}
 	}
 }

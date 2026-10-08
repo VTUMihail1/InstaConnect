@@ -3,13 +3,13 @@ using InstaConnect.Common.Infrastructure.Features.Guids.Helpers;
 
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Common.Infrastructure.Extensions;
+namespace InstaConnect.Common.Infrastructure.Features.Guids.Extensions;
 
-public static partial class ServiceCollectionExtensions
+public static class ServiceCollectionExtensions
 {
 	extension(IServiceCollection serviceCollection)
 	{
-		public IServiceCollection AddGuidProvider()
+		public IServiceCollection AddGuids()
 		{
 			serviceCollection.AddScoped<IGuidProvider, GuidProvider>();
 

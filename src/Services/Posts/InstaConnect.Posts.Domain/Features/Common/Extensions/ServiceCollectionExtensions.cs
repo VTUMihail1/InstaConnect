@@ -1,4 +1,5 @@
 using InstaConnect.Common.Domain.Features.Mappers.Extensions;
+using InstaConnect.Common.Domain.Features.Validations.Extensions;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Extensions;
 using InstaConnect.Posts.Domain.Features.PostComments.Extensions;
 using InstaConnect.Posts.Domain.Features.PostLikes.Extensions;
@@ -21,7 +22,8 @@ public static class ServiceCollectionExtensions
 				.AddPostCommentLikeServices();
 
 			serviceCollection
-				.AddMapper(PostsDomainReference.Assembly, CommonDomainReference.Assembly)
+				.AddMappers(PostsDomainReference.Assembly, CommonDomainReference.Assembly)
+				.AddValidations(PostsDomainReference.Assembly, CommonDomainReference.Assembly)
 				.AddServicesWithMatchingInterfaces(PostsDomainReference.Assembly);
 
 			return serviceCollection;

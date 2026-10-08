@@ -35,6 +35,6 @@ public class DeleteUserControllerUnitTests : BaseUserPresentationCommandUnitTest
 		await _controller.DeleteAsync(_request, CancellationToken);
 
 		// Assert
-		await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);
+		await Sender.ShouldHaveReceivedOneSendAsync(_request, CancellationToken);
 	}
 }

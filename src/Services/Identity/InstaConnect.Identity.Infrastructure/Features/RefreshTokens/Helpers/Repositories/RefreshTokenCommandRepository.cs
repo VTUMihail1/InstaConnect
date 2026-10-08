@@ -1,32 +1,26 @@
-using InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Extensions;
-using InstaConnect.Identity.Infrastructure.Features.RefreshTokens.Extensions;
-
-using MongoDB.Driver;
-
 namespace InstaConnect.Identity.Infrastructure.Features.RefreshTokens.Helpers.Repositories;
 
 internal class RefreshTokenCommandRepository : IRefreshTokenCommandRepository
 {
-	private readonly IIdentityContext _context;
-	private readonly IRefreshTokenIncluderFactory _refreshTokenIncluderFactory;
+	private readonly IRefreshTokenCollection _collection;
+	private readonly IRefreshTokenIncludeBuilderFactory _includeBuilderFactory;
 
 	public RefreshTokenCommandRepository(
-		IIdentityContext context,
-		IRefreshTokenIncluderFactory refreshTokenIncluderFactory)
+		IRefreshTokenCollection collection,
+		IRefreshTokenIncludeBuilderFactory includeBuilderFactory)
 	{
-		_context = context;
-		_refreshTokenIncluderFactory = refreshTokenIncluderFactory;
+		_collection = collection;
+		_includeBuilderFactory = includeBuilderFactory;
 	}
 
 	public async Task<RefreshToken?> GetByIdAsync(
 		RefreshTokenId id,
-		RefreshTokenInclude? include,
+		RefreshTokenInclude include,
 		CancellationToken cancellationToken)
 	{
-		return await _context
-			.RefreshTokens
-			.Aggregate()
-			.Includes(_refreshTokenIncluderFactory, include)
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(include)
 			.Match(id)
 			.FirstOrDefaultAsync(cancellationToken);
 	}
@@ -35,38 +29,28 @@ internal class RefreshTokenCommandRepository : IRefreshTokenCommandRepository
 		RefreshTokenId id,
 		CancellationToken cancellationToken)
 	{
-		return await GetByIdAsync(id, null, cancellationToken);
+		var include = _includeBuilderFactory.Create().Build();
+
+		return await GetByIdAsync(id, include, cancellationToken);
 	}
 
 	public async Task AddAsync(RefreshToken entity, CancellationToken cancellationToken)
 	{
-		await _context
-			.RefreshTokens
-			.AddAsync(_context.ClientSessionHandle, entity, cancellationToken);
+		await _collection.AddAsync(entity, cancellationToken);
 	}
 
 	public async Task AddRangeAsync(IEnumerable<RefreshToken> entities, CancellationToken cancellationToken)
 	{
-		await _context
-			.RefreshTokens
-			.AddRangeAsync(_context.ClientSessionHandle, entities, cancellationToken);
+		await _collection.AddRangeAsync(entities, cancellationToken);
 	}
 
 	public async Task UpdateAsync(RefreshToken entity, CancellationToken cancellationToken)
 	{
-		await _context.RefreshTokens
-			.UpdateAsync(
-			_context.ClientSessionHandle,
-			entity,
-			cancellationToken);
+		await _collection.UpdateAsync(entity, cancellationToken);
 	}
 
 	public async Task DeleteAsync(RefreshToken entity, CancellationToken cancellationToken)
 	{
-		await _context.RefreshTokens
-			.DeleteAsync(
-			_context.ClientSessionHandle,
-			entity,
-			cancellationToken);
+		await _collection.DeleteAsync(entity, cancellationToken);
 	}
 }

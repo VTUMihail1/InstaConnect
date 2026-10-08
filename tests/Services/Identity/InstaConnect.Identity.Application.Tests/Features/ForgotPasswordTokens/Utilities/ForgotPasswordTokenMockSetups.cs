@@ -1,17 +1,17 @@
+using InstaConnect.Identity.Domain.Tests.Features.ForgotPasswordTokens.Utilities;
+
 namespace InstaConnect.Identity.Application.Tests.Features.ForgotPasswordTokens.Utilities;
 
 public static class ForgotPasswordTokenMockSetups
 {
 	extension(IForgotPasswordTokenCommandService service)
 	{
-		public void SetupAddCommand(
+		public void SetupAddAsync(
 			AddForgotPasswordTokenCommandRequest request,
 			ForgotPasswordToken forgotPasswordToken,
 			CancellationToken cancellationToken)
 		{
-			service
-				.AddAsync(ForgotPasswordTokenMatcher.IsAddForgotPasswordTokenCommand(request), cancellationToken)
-				.ReturnsResponse(forgotPasswordToken.ToResponse(request));
+			service.SetupAddAsync(request.IsAddForgotPasswordTokenCommand(), forgotPasswordToken.ToResponse(request), cancellationToken);
 		}
 	}
 }

@@ -1,5 +1,3 @@
-using InstaConnect.Identity.Domain.Features.Common.Models.Requests;
-
 namespace InstaConnect.Identity.Domain.Features.Users.Utilities;
 
 public static class UserExceptionErrorMessages
@@ -72,13 +70,5 @@ public static class UserExceptionErrorMessages
 		const string Format = "UserSortTerm(type: {0}) is not supported";
 
 		return Format.FormatCurrentCulture(sortTerm);
-	}
-
-	public static string GetIncludeDescriptorsNotSupportedMessage(ICollection<IdentityIncludeDescriptor> descriptors)
-	{
-		const string Format = "UserDescriptors({0}) is not supported";
-
-		return Format.FormatCurrentCulture(descriptors
-			.JoinIncludeDescriptorsAsStringWithComa<IdentityDestinationType, IdentityIncludeType, IdentityIncludeDescriptor>());
 	}
 }

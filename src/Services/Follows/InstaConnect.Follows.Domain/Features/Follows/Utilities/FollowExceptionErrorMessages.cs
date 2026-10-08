@@ -1,5 +1,3 @@
-using InstaConnect.Follows.Domain.Features.Common.Models.Requests;
-
 namespace InstaConnect.Follows.Domain.Features.Follows.Utilities;
 
 public static class FollowExceptionErrorMessages
@@ -30,13 +28,5 @@ public static class FollowExceptionErrorMessages
 		const string Format = "FollowsForFollowingSortTerm(type: {0}) is not supported";
 
 		return Format.FormatCurrentCulture(sortTerm);
-	}
-
-	public static string GetIncludeDescriptorsNotSupportedMessage(ICollection<FollowsIncludeDescriptor> descriptors)
-	{
-		const string Format = "FollowIncludeDescriptors({0}) is not supported";
-
-		return Format.FormatCurrentCulture(descriptors
-			.JoinIncludeDescriptorsAsStringWithComa<FollowsDestinationType, FollowsIncludeType, FollowsIncludeDescriptor>());
 	}
 }

@@ -15,7 +15,5 @@ public static class FollowRoutes
 	public const string CurrentId = "current/follows/{followingId}";
 
 	public const string Version1 = "1.0";
-
-	public const string Hub = "/hubs/follows";
 }
 

@@ -4,16 +4,16 @@ public interface IFollowQueryRepository
 {
 	public Task<ICollection<FollowResponse>> GetAllAsync(
 		FollowsFilterQuery filter,
-		CurrentUserQuery currentUser,
 		FollowsSortingQuery sorting,
 		FollowsPaginationQuery pagination,
+		CurrentUserQuery currentUser,
 		CancellationToken cancellationToken);
 
 	public Task<ICollection<FollowResponse>> GetAllForFollowingAsync(
 		FollowsForFollowingFilterQuery filter,
-		CurrentUserQuery currentUser,
 		FollowsForFollowingSortingQuery sorting,
 		FollowsPaginationQuery pagination,
+		CurrentUserQuery currentUser,
 		CancellationToken cancellationToken);
 
 	public Task<long> GetTotalCountAsync(

@@ -5,10 +5,17 @@ namespace InstaConnect.Chats.Presentation.Tests.Functional.Features.Chats.Utilit
 
 public abstract class BaseChatPresentationQueryFunctionalTest : BaseChatWebTest
 {
-	protected IChatClient Client { get; }
+	protected IChatApiClient ApiClient { get; }
 
 	protected BaseChatPresentationQueryFunctionalTest(ChatsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
-		Client = webApplicationFactory.CreateChatClient();
+		ApiClient = webApplicationFactory.CreateApiClient();
+	}
+
+	public override async Task InitializeAsync()
+	{
+		await ServiceScope.AddRangeAsync(ParticipantOnes, CancellationToken);
+		await ServiceScope.AddRangeAsync(ParticipantTwos, CancellationToken);
+		await OnInitializeAsync();
 	}
 }

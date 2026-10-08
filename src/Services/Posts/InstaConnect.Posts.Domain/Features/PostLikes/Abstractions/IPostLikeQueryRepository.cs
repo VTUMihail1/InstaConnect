@@ -4,9 +4,9 @@ public interface IPostLikeQueryRepository
 {
 	public Task<ICollection<PostLikeResponse>> GetAllAsync(
 		PostLikesFilterQuery filter,
-		CurrentUserQuery currentUser,
 		PostLikesSortingQuery sorting,
 		PostLikesPaginationQuery pagination,
+		CurrentUserQuery currentUser,
 		CancellationToken cancellationToken);
 
 	public Task<long> GetTotalCountAsync(
@@ -15,9 +15,9 @@ public interface IPostLikeQueryRepository
 
 	public Task<ICollection<PostLikeResponse>> GetAllForUserAsync(
 		PostLikesForUserFilterQuery filter,
-		CurrentUserQuery currentUser,
 		PostLikesForUserSortingQuery sorting,
 		PostLikesPaginationQuery pagination,
+		CurrentUserQuery currentUser,
 		CancellationToken cancellationToken);
 
 	public Task<long> GetTotalCountForUserAsync(

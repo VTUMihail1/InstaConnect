@@ -1,52 +1,46 @@
+using InstaConnect.Follows.Domain.Tests.Features.Follows.Utilities;
+
 namespace InstaConnect.Follows.Application.Tests.Features.Follows.Utilities;
 
 public static class FollowMockSetups
 {
 	extension(IFollowQueryService likeService)
 	{
-		public void SetupGetAllQuery(
+		public void SetupGetAllAsync(
 		GetAllFollowsQueryRequest request,
 		User follower,
 		ICollection<Follow> follows,
 		CancellationToken cancellationToken)
 		{
-			likeService
-				.GetAllAsync(FollowMatcher.IsGetAllFollowsQuery(request), cancellationToken)
-				.ReturnsResponse(follows.ToResponse(follower, request));
+			likeService.SetupGetAllAsync(request.IsGetAllFollowsQuery(), follows.ToResponse(request, follower), cancellationToken);
 		}
 
-		public void SetupGetAllForFollowingQuery(
+		public void SetupGetAllForFollowingAsync(
 			GetAllFollowsForFollowingQueryRequest request,
 			User following,
 			ICollection<Follow> follows,
 			CancellationToken cancellationToken)
 		{
-			likeService
-				.GetAllForFollowingAsync(FollowMatcher.IsGetAllFollowsForFollowingQuery(request), cancellationToken)
-				.ReturnsResponse(follows.ToResponse(following, request));
+			likeService.SetupGetAllForFollowingAsync(request.IsGetAllFollowsForFollowingQuery(), follows.ToResponse(request, following), cancellationToken);
 		}
 
-		public void SetupGetByIdQuery(
+		public void SetupGetByIdAsync(
 			GetFollowByIdQueryRequest request,
 			Follow follow,
 			CancellationToken cancellationToken)
 		{
-			likeService
-				.GetByIdAsync(FollowMatcher.IsGetFollowByIdQuery(request), cancellationToken)
-				.ReturnsResponse(follow.ToResponse(request));
+			likeService.SetupGetByIdAsync(request.IsGetFollowByIdQuery(), follow.ToResponse(request), cancellationToken);
 		}
 	}
 
 	extension(IFollowCommandService likeService)
 	{
-		public void SetupAddCommand(
+		public void SetupAddAsync(
 		AddFollowCommandRequest request,
 		Follow follow,
 		CancellationToken cancellationToken)
 		{
-			likeService
-				.AddAsync(FollowMatcher.IsAddFollowCommand(request), cancellationToken)
-				.ReturnsResponse(follow.ToResponse(request));
+			likeService.SetupAddAsync(request.IsAddFollowCommand(), follow.ToResponse(request), cancellationToken);
 		}
 	}
 }

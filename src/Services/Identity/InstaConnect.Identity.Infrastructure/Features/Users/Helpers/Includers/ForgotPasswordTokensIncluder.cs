@@ -6,11 +6,11 @@ namespace InstaConnect.Identity.Infrastructure.Features.Users.Helpers.Includers;
 
 internal class ForgotPasswordTokensIncluder : IUserIncluder
 {
-	private readonly IIdentityContext _context;
+	private readonly IMongoCollection<ForgotPasswordToken> _collection;
 
-	public ForgotPasswordTokensIncluder(IIdentityContext context)
+	public ForgotPasswordTokensIncluder(IMongoCollection<ForgotPasswordToken> collection)
 	{
-		_context = context;
+		_collection = collection;
 	}
 
 	public IdentityDestinationType DestinationType => IdentityDestinationType.User;
@@ -21,7 +21,7 @@ internal class ForgotPasswordTokensIncluder : IUserIncluder
 	{
 		return aggregate
 			.IncludeMany(
-				_context.ForgotPasswordTokens,
+				_collection,
 				p => p.Id,
 				l => l.Id.Id,
 				p => p.ForgotPasswordTokens

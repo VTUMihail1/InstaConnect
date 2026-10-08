@@ -1,0 +1,70 @@
+using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
+using InstaConnect.Posts.Infrastructure.Tests.Features.Posts.Assertions;
+using InstaConnect.Posts.Infrastructure.Tests.Features.Posts.Builders;
+using InstaConnect.Posts.Infrastructure.Tests.Integration.Features.Posts.Utilities;
+using InstaConnect.Posts.Tests.Features.Posts.DataAttributes.Title;
+using InstaConnect.Posts.Tests.Features.Posts.Utilities;
+
+namespace InstaConnect.Posts.Infrastructure.Tests.Integration.Features.Posts.Repositories;
+
+public class GetPostsForUserTotalCountQueryRepositoryIntegrationTests : BasePostInfrastructureQueryIntegrationTest
+{
+	private readonly PostsForUserFilterQueryBuilderFactory _filterQueryBuilderFactory;
+	private readonly PostsForUserFilterQueryBuilder _filterQueryBuilder;
+	private readonly PostsForUserFilterQuery _filterQuery;
+
+	public GetPostsForUserTotalCountQueryRepositoryIntegrationTests(PostsWebApplicationFactory webApplicationFactory)
+		: base(webApplicationFactory)
+	{
+		_filterQueryBuilderFactory = new();
+		_filterQueryBuilder = _filterQueryBuilderFactory.Create(Post);
+		_filterQuery = _filterQueryBuilder.Build();
+	}
+
+	protected override async Task OnInitializeAsync()
+	{
+		await ServiceScope.AddRangeAsync(Posts, CancellationToken);
+	}
+
+	[Fact]
+	public async Task GetForUserTotalCountAsync_ShouldReturnResponse_WhenQueryIsValid()
+	{
+		// Act
+		var response = await Repository.GetForUserTotalCountAsync(_filterQuery, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(_filterQuery, Posts);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task GetForUserTotalCountAsync_ShouldReturnResponse_WhenQueryAndUserIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var filterQuery = _filterQueryBuilder.WithUserId(transformer).Build();
+
+		// Act
+		var response = await Repository.GetForUserTotalCountAsync(filterQuery, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(filterQuery, Posts);
+	}
+
+	[Theory]
+	[PostTitleNullData]
+	[PostTitleEmptyData]
+	[PostTitleDifferentCaseData]
+	public async Task GetForUserTotalCountAsync_ShouldReturnResponse_WhenQueryAndTitleAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var filterQuery = _filterQueryBuilder.WithTitle(transformer).Build();
+
+		// Act
+		var response = await Repository.GetForUserTotalCountAsync(filterQuery, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(filterQuery, Posts);
+	}
+}

@@ -23,4 +23,6 @@ public static class MockValues
 	public const string OpenTelemetryEndpoint = "http://test:4317";
 
 	public const string CorsAllowedOrigins = "http://svc:5100";
+
+	public const string MainBaseUrl = "http://test";
 }

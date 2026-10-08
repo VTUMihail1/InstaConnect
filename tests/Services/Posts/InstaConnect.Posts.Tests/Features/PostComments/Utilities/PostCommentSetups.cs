@@ -10,6 +10,11 @@ public static class PostCommentSetups
 {
 	extension(IServiceProvider serviceProvider)
 	{
+		public IPostCommentQueryRepository GetPostCommentQueryRepository()
+		{
+			return serviceProvider.GetRequiredService<IPostCommentQueryRepository>();
+		}
+
 		public IPostCommentCommandRepository GetPostCommentCommandRepository()
 		{
 			return serviceProvider.GetRequiredService<IPostCommentCommandRepository>();
@@ -23,6 +28,11 @@ public static class PostCommentSetups
 
 	extension(IServiceScope serviceScope)
 	{
+		public IPostCommentQueryRepository GetPostCommentQueryRepository()
+		{
+			return serviceScope.ServiceProvider.GetPostCommentQueryRepository();
+		}
+
 		public IPostCommentCommandRepository GetPostCommentCommandRepository()
 		{
 			return serviceScope.ServiceProvider.GetPostCommentCommandRepository();
@@ -33,31 +43,31 @@ public static class PostCommentSetups
 			return serviceScope.ServiceProvider.GetPostCommentIncludeBuilderFactory();
 		}
 
-		public async Task<PostComment?> GetPostCommentByIdAsync(
+		public async Task<PostComment?> GetByIdAsync(
 			PostCommentId id,
 			CancellationToken cancellationToken)
 		{
 			var include = serviceScope.GetPostIncludeBuilderFactory().Create().WithUser().Build();
 			var commentInclude = serviceScope.GetPostCommentIncludeBuilderFactory().Create().WithUser().WithPost(include).Build();
 
-			return await serviceScope.GetPostCommentCommandRepository().GetByIdAsync(id, commentInclude, cancellationToken);
+			return (await serviceScope.GetPostCommentCommandRepository().GetByIdAsync(id, commentInclude, cancellationToken)).SetUser().SetPost();
 		}
 
-		public async Task AddPostCommentAsync(
+		public async Task AddAsync(
 			PostComment postComment,
 			CancellationToken cancellationToken)
 		{
 			await serviceScope.GetPostCommentCommandRepository().AddAsync(postComment, cancellationToken);
 		}
 
-		public async Task AddPostCommentRangeAsync(
+		public async Task AddRangeAsync(
 			IEnumerable<PostComment> postComments,
 			CancellationToken cancellationToken)
 		{
 			await serviceScope.GetPostCommentCommandRepository().AddRangeAsync(postComments, cancellationToken);
 		}
 
-		public async Task DeletePostCommentAsync(
+		public async Task DeleteAsync(
 			PostComment postComment,
 			CancellationToken cancellationToken)
 		{

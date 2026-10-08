@@ -9,10 +9,10 @@ internal class UserClaimDomainMappings : IRegister
 	public void Register(TypeAdapterConfig config)
 	{
 		config.NewConfig<UserClaim, UserClaimAddedEventRequest>()
-			.ConstructUsing(src => new(src.Adapt<UserClaimEventRequest>(config)!));
+			.ConstructUsing(src => new(src.Adapt<UserClaimEventRequest>(config)));
 
 		config.NewConfig<UserClaim, UserClaimDeletedEventRequest>()
-			.ConstructUsing(src => new(src.Adapt<UserClaimEventRequest>(config)!));
+			.ConstructUsing(src => new(src.Adapt<UserClaimEventRequest>(config)));
 
 		config.NewConfig<UserClaim, UserClaimEventRequest>()
 			.ConstructUsing(src => new(

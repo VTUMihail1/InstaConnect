@@ -4,7 +4,7 @@ public interface IUserCommandRepository
 {
 	public Task<User?> GetByIdAsync(
 		UserId id,
-		UserInclude? include,
+		UserInclude include,
 		CancellationToken cancellationToken);
 
 	public Task<User?> GetByIdAsync(
@@ -17,7 +17,7 @@ public interface IUserCommandRepository
 
 	public Task<User?> GetByNameAsync(
 		Name name,
-		UserInclude? include,
+		UserInclude include,
 		CancellationToken cancellationToken);
 
 	public Task<User?> GetByNameAsync(
@@ -30,7 +30,7 @@ public interface IUserCommandRepository
 
 	public Task<User?> GetByEmailAsync(
 		Email email,
-		UserInclude? include,
+		UserInclude include,
 		CancellationToken cancellationToken);
 
 	public Task<User?> GetByEmailAsync(

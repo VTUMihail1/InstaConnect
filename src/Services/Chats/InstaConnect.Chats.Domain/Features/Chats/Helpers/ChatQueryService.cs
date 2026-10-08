@@ -27,9 +27,9 @@ internal class ChatQueryService : IChatQueryService
 
 		var chats = await _repository.GetAllAsync(
 			query.Filter,
-			query.CurrentUser,
 			query.Sorting,
 			query.Pagination,
+			query.CurrentUser,
 			cancellationToken);
 
 		var totalCount = await _repository.GetTotalCountAsync(query.Filter, cancellationToken);

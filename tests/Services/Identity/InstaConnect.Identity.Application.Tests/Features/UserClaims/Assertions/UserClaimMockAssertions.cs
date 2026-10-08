@@ -1,4 +1,5 @@
 using InstaConnect.Identity.Application.Tests.Features.UserClaims.Utilities;
+using InstaConnect.Identity.Domain.Tests.Features.UserClaims.Assertions;
 
 namespace InstaConnect.Identity.Application.Tests.Features.UserClaims.Assertions;
 
@@ -6,28 +7,28 @@ public static class UserClaimMockAssertions
 {
 	extension(IUserClaimQueryService userClaimService)
 	{
-		public async Task ShouldReceiveOneGetAllAsync(
+		public async Task ShouldHaveReceivedOneGetAllAsync(
 		GetAllUserClaimsQueryRequest request,
 		CancellationToken cancellationToken)
 		{
-			await userClaimService.ShouldHaveReceivedOne().GetAllAsync(UserClaimMatcher.IsGetAllUserClaimsQuery(request), cancellationToken);
+			await userClaimService.ShouldHaveReceivedOneGetAllAsync(request.IsGetAllUserClaimsQuery(), cancellationToken);
 		}
 	}
 
 	extension(IUserClaimCommandService userClaimService)
 	{
-		public async Task ShouldReceiveOneAddAsync(
+		public async Task ShouldHaveReceivedOneAddAsync(
 		AddUserClaimCommandRequest request,
 		CancellationToken cancellationToken)
 		{
-			await userClaimService.ShouldHaveReceivedOne().AddAsync(UserClaimMatcher.IsAddUserClaimCommand(request), cancellationToken);
+			await userClaimService.ShouldHaveReceivedOneAddAsync(request.IsAddUserClaimCommand(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneDeleteAsync(
+		public async Task ShouldHaveReceivedOneDeleteAsync(
 			DeleteUserClaimCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await userClaimService.ShouldHaveReceivedOne().DeleteAsync(UserClaimMatcher.IsDeleteUserClaimCommand(request), cancellationToken);
+			await userClaimService.ShouldHaveReceivedOneDeleteAsync(request.IsDeleteUserClaimCommand(), cancellationToken);
 		}
 	}
 }

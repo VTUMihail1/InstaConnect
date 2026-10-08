@@ -10,6 +10,11 @@ public static class PostLikeSetups
 {
 	extension(IServiceProvider serviceProvider)
 	{
+		public IPostLikeQueryRepository GetPostLikeQueryRepository()
+		{
+			return serviceProvider.GetRequiredService<IPostLikeQueryRepository>();
+		}
+
 		public IPostLikeCommandRepository GetPostLikeCommandRepository()
 		{
 			return serviceProvider.GetRequiredService<IPostLikeCommandRepository>();
@@ -23,6 +28,11 @@ public static class PostLikeSetups
 
 	extension(IServiceScope serviceScope)
 	{
+		public IPostLikeQueryRepository GetPostLikeQueryRepository()
+		{
+			return serviceScope.ServiceProvider.GetPostLikeQueryRepository();
+		}
+
 		public IPostLikeCommandRepository GetPostLikeCommandRepository()
 		{
 			return serviceScope.ServiceProvider.GetPostLikeCommandRepository();
@@ -33,31 +43,31 @@ public static class PostLikeSetups
 			return serviceScope.ServiceProvider.GetPostLikeIncludeBuilderFactory();
 		}
 
-		public async Task<PostLike?> GetPostLikeByIdAsync(
+		public async Task<PostLike?> GetByIdAsync(
 			PostLikeId id,
 			CancellationToken cancellationToken)
 		{
 			var include = serviceScope.GetPostIncludeBuilderFactory().Create().WithUser().Build();
 			var likeInclude = serviceScope.GetPostLikeIncludeBuilderFactory().Create().WithUser().WithPost(include).Build();
 
-			return await serviceScope.GetPostLikeCommandRepository().GetByIdAsync(id, likeInclude, cancellationToken);
+			return (await serviceScope.GetPostLikeCommandRepository().GetByIdAsync(id, likeInclude, cancellationToken)).SetUser().SetPost();
 		}
 
-		public async Task AddPostLikeAsync(
+		public async Task AddAsync(
 			PostLike postLike,
 			CancellationToken cancellationToken)
 		{
 			await serviceScope.GetPostLikeCommandRepository().AddAsync(postLike, cancellationToken);
 		}
 
-		public async Task AddPostLikeRangeAsync(
+		public async Task AddRangeAsync(
 			IEnumerable<PostLike> postLikes,
 			CancellationToken cancellationToken)
 		{
 			await serviceScope.GetPostLikeCommandRepository().AddRangeAsync(postLikes, cancellationToken);
 		}
 
-		public async Task DeletePostLikeAsync(
+		public async Task DeleteAsync(
 			PostLike postLike,
 			CancellationToken cancellationToken)
 		{

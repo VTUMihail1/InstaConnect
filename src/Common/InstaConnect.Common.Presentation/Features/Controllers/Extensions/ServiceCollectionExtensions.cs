@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
 
-using Asp.Versioning;
-
 using InstaConnect.Common.Domain.Features.AccessTokens.Utilities;
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Events.Features.AccessTokens.Models;
@@ -53,21 +51,18 @@ public static class ServiceCollectionExtensions
 			{
 				options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 				options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-			});
+			})
+			.AddControllersAsServices();
 
 			serviceCollection.Configure<ApiBehaviorOptions>(options =>
-				options.SuppressInferBindingSourcesForParameters = true);
-
-			serviceCollection.AddApiVersioning(options =>
 			{
-				options.DefaultApiVersion = new ApiVersion(1);
-				options.ReportApiVersions = true;
-			})
-			.AddApiExplorer(options =>
-			{
-				options.GroupNameFormat = "'v'VVV";
-				options.SubstituteApiVersionInUrl = true;
+				options.SuppressInferBindingSourcesForParameters = true;
+				options.SuppressModelStateInvalidFilter = true;
+				options.SuppressMapClientErrors = true;
 			});
+
+			serviceCollection.AddApiVersioning(options => options.ReportApiVersions = true)
+							 .AddMvc();
 
 			return serviceCollection;
 		}
@@ -79,11 +74,6 @@ public static class ServiceCollectionExtensions
 
 			serviceCollection.AddCors(o =>
 			{
-				o.AddDefaultPolicy(builder =>
-					builder.AllowAnyOrigin()
-						   .AllowAnyHeader()
-						   .AllowAnyMethod());
-
 				o.AddPolicy(CorsPolicies.SpecificOrigins, builder =>
 					builder.WithOrigins(options.AllowedOrigins.Split(", "))
 						   .AllowAnyHeader()

@@ -1,4 +1,5 @@
-using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Requests.Abstractions;
+using InstaConnect.Common.Application.Tests.Features.Utilities;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.RefreshTokens.Utilities;
 
@@ -6,24 +7,20 @@ public static class RefreshTokenMockSetups
 {
 	extension(IApplicationSender sender)
 	{
-		public void SetupIssueCommandRequest(
+		public void SetupSendAsync(
 			IssueRefreshTokenApiRequest request,
 			RefreshToken refreshToken,
 			CancellationToken cancellationToken)
 		{
-			sender
-				.SendAsync(RefreshTokenMatcher.IsIssueRefreshTokenCommandRequest(request), cancellationToken)
-				.ReturnsResponse(refreshToken.ToResponse(request));
+			sender.SetupSendAsync(request.IsIssueRefreshTokenCommandRequest(), refreshToken.ToResponse(request), cancellationToken);
 		}
 
-		public void SetupRotateCommandRequest(
+		public void SetupSendAsync(
 			RotateRefreshTokenApiRequest request,
 			RefreshToken refreshToken,
 			CancellationToken cancellationToken)
 		{
-			sender
-				.SendAsync(RefreshTokenMatcher.IsRotateRefreshTokenCommandRequest(request), cancellationToken)
-				.ReturnsResponse(refreshToken.ToResponse(request));
+			sender.SetupSendAsync(request.IsRotateRefreshTokenCommandRequest(), refreshToken.ToResponse(request), cancellationToken);
 		}
 	}
 }

@@ -1,8 +1,17 @@
 using System.Reflection;
 
 using InstaConnect.Common.Domain.Features.Mappers.Extensions;
-using InstaConnect.Common.Infrastructure.Extensions;
+using InstaConnect.Common.Domain.Features.Validations.Extensions;
+using InstaConnect.Common.Infrastructure.Features.AccessTokens.Extensions;
+using InstaConnect.Common.Infrastructure.Features.Caches.Extensions;
+using InstaConnect.Common.Infrastructure.Features.Common.Extensions;
+using InstaConnect.Common.Infrastructure.Features.DateTimes.Extensions;
 using InstaConnect.Common.Infrastructure.Features.Emails.Extensions;
+using InstaConnect.Common.Infrastructure.Features.Events.Extensions;
+using InstaConnect.Common.Infrastructure.Features.Guids.Extensions;
+using InstaConnect.Common.Infrastructure.Features.Images.Extensions;
+using InstaConnect.Common.Infrastructure.Features.Seeders.Extensions;
+using InstaConnect.Common.Infrastructure.Features.Telemetries.Extensions;
 using InstaConnect.Identity.Domain.Features.Common.Helpers;
 using InstaConnect.Identity.Infrastructure.Features.Common.Helpers;
 using InstaConnect.Identity.Infrastructure.Features.Common.Models.Options;
@@ -36,19 +45,20 @@ public static class ServiceCollectionExtensions
 				.AddEmailConfirmationTokenServices();
 
 			serviceCollection
-				.AddOpenTelemetry(configuration, webHostEnvironment)
-				.AddMapper(IdentityInfrastructureReference.Assembly)
-				.AddSendGrid(configuration)
-				.AddServicesWithMatchingInterfaces(IdentityInfrastructureReference.Assembly)
-				.AddRedis(configuration)
-				.AddMongo<IIdentityContext>(configuration)
-				.AddDatabaseSeeder<IIdentityDatabaseSeeder>()
-				.AddCloudinary(configuration)
-				.AddRabbitMQ(configuration, IdentityEventHandlerUtilities.Prefix, presentationAssembly)
-				.AddJwtBearer(configuration)
-				.AddGuidProvider()
-				.AddDateTimeProvider()
-				.AddSortOrders();
+				.AddTelemetries(configuration, webHostEnvironment)
+				.AddMappers(IdentityInfrastructureReference.Assembly)
+				.AddValidations(IdentityInfrastructureReference.Assembly, CommonInfrastructureReference.Assembly)
+				.AddEmailSenders(configuration)
+				.AddServicesWithMatchingInterfacesExceptFluents(IdentityInfrastructureReference.Assembly)
+				.AddCaches(configuration)
+				.AddDatabases(configuration)
+				.AddSeeders<IIdentityDatabaseSeeder>()
+				.AddImages(configuration)
+				.AddEvents(configuration, IdentityEventHandlerUtilities.Prefix, presentationAssembly)
+				.AddAccessTokens(configuration)
+				.AddGuids()
+				.AddDateTimes()
+				.AddDatabaseSortOrders();
 
 			return serviceCollection;
 		}

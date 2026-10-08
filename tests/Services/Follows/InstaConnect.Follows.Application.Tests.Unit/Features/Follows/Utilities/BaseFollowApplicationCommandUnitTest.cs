@@ -12,6 +12,6 @@ public abstract class BaseFollowApplicationCommandUnitTest : BaseFollowTest
 	protected BaseFollowApplicationCommandUnitTest()
 	{
 		Mapper = MockFactory.CreateMapper(FollowsApplicationReference.Assembly);
-		Service = FollowMockFactory.CreateCommandService();
+		Service = FollowApplicationMockFactory.CreateCommandService();
 	}
 }

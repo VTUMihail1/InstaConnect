@@ -1,6 +1,6 @@
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Posts.Domain.Features.PostComments.Models.ValueObjects;
-using InstaConnect.Posts.Events.Features.PostComments;
+using InstaConnect.Posts.Domain.Features.Posts.Models.ValueObjects;
 using InstaConnect.Posts.Tests.Features.Posts.Utilities;
 using InstaConnect.Posts.Tests.Features.Users.Utilities;
 
@@ -8,60 +8,30 @@ namespace InstaConnect.Posts.Tests.Features.PostComments.Utilities;
 
 public static class PostCommentEquals
 {
-	extension(PostCommentAddedEventRequest request)
-	{
-		public bool Matches(PostComment entity)
-		{
-			return entity.Matches(request.PostComment);
-		}
-	}
-
-	extension(PostCommentUpdatedEventRequest request)
-	{
-		public bool Matches(PostComment entity)
-		{
-			return entity.Matches(request.PostComment);
-		}
-	}
-
-	extension(PostCommentDeletedEventRequest request)
-	{
-		public bool Matches(PostComment entity)
-		{
-			return entity.Matches(request.PostComment);
-		}
-	}
-
-	extension(PostCommentEventRequest r)
-	{
-		public bool Matches(PostCommentEventRequest request)
-		{
-			return r.Id == request.Id &&
-				   r.CommentId == request.CommentId &&
-				   r.UserId == request.UserId &&
-				   r.Content == request.Content &&
-				   r.User.Matches(request.User) &&
-				   r.Post.Matches(request.Post) &&
-				   r.CreatedAtUtc == request.CreatedAtUtc &&
-				   r.UpdatedAtUtc == request.UpdatedAtUtc;
-		}
-	}
-
 	extension(PostComment entity)
 	{
-		public bool Matches(PostCommentEventRequest request)
+		public bool Matches(PostComment postComment)
 		{
-			return entity.Id.Matches(request.Id, request.CommentId) &&
-				   entity.Content == request.Content &&
-				   entity.User != null && entity.User.Matches(request.User) &&
-				   entity.Post != null && entity.Post.Matches(request.Post) &&
-				   entity.CreatedAtUtc == request.CreatedAtUtc &&
-				   entity.UpdatedAtUtc == request.UpdatedAtUtc;
+			return entity.Id.Matches(postComment.Id) &&
+				   entity.UserId.Matches(postComment.UserId) &&
+				   entity.Content == postComment.Content &&
+				   entity.CreatedAtUtc == postComment.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == postComment.UpdatedAtUtc;
 		}
 	}
 
 	extension(PostCommentId p)
 	{
+		public bool Matches(PostCommentId id)
+		{
+			return p.Matches(id.Id, id.CommentId);
+		}
+
+		public bool Matches(PostId id, string commentId)
+		{
+			return p.Matches(id.Id, commentId);
+		}
+
 		public bool Matches(string id, string commentId)
 		{
 			return p.Id.Matches(id) &&

@@ -1,4 +1,4 @@
-using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
+using InstaConnect.Common.Presentation.Features.Exceptions.Models;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.ForgotPasswordTokens.Assertions;
 
@@ -7,53 +7,53 @@ public static class ForgotPasswordTokenValidationProblemDetailsAssertions
 	extension(ApplicationProblemDetails problemDetails)
 	{
 		public void ShouldSatisfyInvalidValidationForName(
-			IStringMessageTransformer messageTransformer,
-			AddForgotPasswordTokenApiRequest request)
+			AddForgotPasswordTokenApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.Name,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForId(
-			IStringMessageTransformer messageTransformer,
-			VerifyForgotPasswordTokenApiRequest request)
+			VerifyForgotPasswordTokenApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.Id,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForValue(
-			IStringMessageTransformer messageTransformer,
-			VerifyForgotPasswordTokenApiRequest request)
+			VerifyForgotPasswordTokenApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.Value,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForPassword(
-			IStringMessageTransformer messageTransformer,
-			VerifyForgotPasswordTokenApiRequest request)
+			VerifyForgotPasswordTokenApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.Body.Password,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForConfirmPassword(
-			IStringMessageTransformer messageTransformer,
-			VerifyForgotPasswordTokenApiRequest request)
+			VerifyForgotPasswordTokenApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.Body.ConfirmPassword,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 	}
 }

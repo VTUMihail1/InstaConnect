@@ -1,0 +1,70 @@
+using InstaConnect.Common.Domain.Features.ValueObjects.Models;
+using InstaConnect.Common.Infrastructure.Tests.Features.Builders;
+using InstaConnect.Identity.Infrastructure.Features.Users.Helpers.Repositories;
+using InstaConnect.Identity.Infrastructure.Tests.Features.Users.Assertions;
+using InstaConnect.Identity.Infrastructure.Tests.Features.Users.Utilities;
+using InstaConnect.Identity.Infrastructure.Tests.Unit.Features.Users.Utilities;
+
+namespace InstaConnect.Identity.Infrastructure.Tests.Unit.Features.Users.Repositories;
+
+public class UserIsNameUniqueCommandRepositoryUnitTests : BaseUserInfrastructureCommandUnitTest
+{
+	private readonly NameBuilderFactory _nameBuilderFactory;
+	private readonly NameBuilder _nameBuilder;
+	private readonly Name _name;
+
+	private readonly UserCommandRepository _repository;
+
+	public UserIsNameUniqueCommandRepositoryUnitTests()
+	{
+		_nameBuilderFactory = new();
+		_nameBuilder = _nameBuilderFactory.Create(User.Name);
+		_name = _nameBuilder.Build();
+
+		_repository = new(Collection, IncludeBuilderFactory);
+
+		Collection.SetupAggregateFluent(_name, Fluent);
+		Fluent.SetupMatch(_name);
+		Fluent.SetupAnyAsync(_name, User, CancellationToken);
+	}
+
+	[Fact]
+	public async Task IsNameUniqueAsync_ShouldReturnResponse_WhenRequestIsValid()
+	{
+		// Act
+		var response = await _repository.IsNameUniqueAsync(_name, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(_name, User);
+	}
+
+	[Fact]
+	public async Task IsNameUniqueAsync_ShouldCallTheCollectionAggregateFluent_WhenRequestIsValid()
+	{
+		// Act
+		await _repository.IsNameUniqueAsync(_name, CancellationToken);
+
+		// Assert
+		Collection.ShouldHaveReceivedOneAggregateFluent(_name);
+	}
+
+	[Fact]
+	public async Task IsNameUniqueAsync_ShouldCallTheFluentMatch_WhenRequestIsValid()
+	{
+		// Act
+		await _repository.IsNameUniqueAsync(_name, CancellationToken);
+
+		// Assert
+		Fluent.ShouldHaveReceivedOneMatch(_name);
+	}
+
+	[Fact]
+	public async Task IsNameUniqueAsync_ShouldCallTheFluentAnyAsync_WhenRequestIsValid()
+	{
+		// Act
+		await _repository.IsNameUniqueAsync(_name, CancellationToken);
+
+		// Assert
+		await Fluent.ShouldHaveReceivedOneAnyAsync(_name, CancellationToken);
+	}
+}

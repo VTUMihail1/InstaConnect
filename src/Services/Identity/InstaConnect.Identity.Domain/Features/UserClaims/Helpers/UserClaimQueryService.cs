@@ -27,9 +27,9 @@ internal class UserClaimQueryService : IUserClaimQueryService
 
 		var userClaims = await _claimRepository.GetAllAsync(
 			query.Filter,
-			query.Current,
 			query.Sorting,
 			query.Pagination,
+			query.Current,
 			cancellationToken);
 
 		var totalCount = await _claimRepository.GetTotalCountAsync(query.Filter, cancellationToken);

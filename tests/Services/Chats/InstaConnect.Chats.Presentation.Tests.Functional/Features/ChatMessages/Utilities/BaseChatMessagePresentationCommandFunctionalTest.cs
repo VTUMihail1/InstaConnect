@@ -5,23 +5,27 @@ namespace InstaConnect.Chats.Presentation.Tests.Functional.Features.ChatMessages
 
 public abstract class BaseChatMessagePresentationCommandFunctionalTest : BaseChatMessageWebTest
 {
-	protected IChatMessageClient HttpClient { get; }
+	protected IChatMessageApiClient ApiClient { get; }
 
-	protected IChatMessageNotificationClient NotificationClient { get; }
+	protected IChatMessageNotificationClient MessageNotificationClient { get; }
 
 	protected BaseChatMessagePresentationCommandFunctionalTest(ChatsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
-		HttpClient = webApplicationFactory.CreateChatMessageClient();
-		NotificationClient = webApplicationFactory.CreateChatMessageNotificationClient(ParticipantTwo.Id);
+		ApiClient = webApplicationFactory.CreateMessageApiClient();
+		MessageNotificationClient = webApplicationFactory.CreateMessageNotificationClient(ParticipantTwo.Id);
 	}
 
-	protected override async Task OnInitializeAsync()
+	public override async Task InitializeAsync()
 	{
-		await NotificationClient.ConnectAsync(CancellationToken);
+		await ServiceScope.AddAsync(ParticipantOne, CancellationToken);
+		await ServiceScope.AddAsync(ParticipantTwo, CancellationToken);
+		await ServiceScope.AddAsync(Chat, CancellationToken);
+		await OnInitializeAsync();
+		await MessageNotificationClient.StartAsync(CancellationToken);
 	}
 
-	protected override async Task OnDisposeAsync()
+	public override async Task DisposeAsync()
 	{
-		await NotificationClient.DisconnectAsync(CancellationToken);
+		await MessageNotificationClient.StopAsync(CancellationToken);
 	}
 }

@@ -1,13 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <IsTestProject>false</IsTestProject>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="MediatR" />
-  </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\src\Services\Follows\InstaConnect.Follows.Domain\InstaConnect.Follows.Domain.csproj" />
     <ProjectReference Include="..\..\..\..\src\Services\Follows\InstaConnect.Follows.Infrastructure\InstaConnect.Follows.Infrastructure.csproj" />
@@ -16,7 +8,7 @@
   </ItemGroup>
 
   <ItemGroup Label="Common">
-    <Using Include="InstaConnect.Common.Tests.Features.Events" />
+    <Using Include="InstaConnect.Common.Tests.Features.Abstractions" />
     <Using Include="InstaConnect.Common.Tests.Features.Assertions" />
     <Using Include="InstaConnect.Common.Tests.Features.Utilities" />
     <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.DateTimeOffsets.Base" />

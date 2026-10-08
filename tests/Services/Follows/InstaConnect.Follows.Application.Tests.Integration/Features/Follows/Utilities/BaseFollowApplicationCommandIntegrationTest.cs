@@ -1,4 +1,4 @@
-using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Requests.Abstractions;
 using InstaConnect.Follows.Tests.Features.Follows.Abstractions;
 using InstaConnect.Follows.Tests.Features.Follows.Extensions;
 
@@ -8,22 +8,30 @@ public abstract class BaseFollowApplicationCommandIntegrationTest : BaseFollowWe
 {
 	protected IApplicationSender Sender { get; }
 
+	protected IFollowEventClient EventClient { get; }
+
 	protected IFollowNotificationClient NotificationClient { get; }
 
 	protected BaseFollowApplicationCommandIntegrationTest(FollowsWebApplicationFactory webApplicationFactory)
 		: base(webApplicationFactory)
 	{
 		Sender = ServiceScope.GetSender();
-		NotificationClient = webApplicationFactory.CreateFollowNotificationClient(Following.Id);
+		EventClient = webApplicationFactory.CreateEventClient();
+		NotificationClient = webApplicationFactory.CreateNotificationClient(Following.Id);
 	}
 
-	protected override async Task OnInitializeAsync()
+	public override async Task InitializeAsync()
 	{
-		await NotificationClient.ConnectAsync(CancellationToken);
+		await ServiceScope.AddAsync(Follower, CancellationToken);
+		await ServiceScope.AddAsync(Following, CancellationToken);
+		await OnInitializeAsync();
+		await EventClient.StartAsync(CancellationToken);
+		await NotificationClient.StartAsync(CancellationToken);
 	}
 
-	protected override async Task OnDisposeAsync()
+	public override async Task DisposeAsync()
 	{
-		await NotificationClient.DisconnectAsync(CancellationToken);
+		await EventClient.StopAsync(CancellationToken);
+		await NotificationClient.StopAsync(CancellationToken);
 	}
 }

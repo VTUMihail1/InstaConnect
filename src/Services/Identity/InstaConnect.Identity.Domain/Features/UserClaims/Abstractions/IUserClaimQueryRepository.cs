@@ -4,9 +4,9 @@ public interface IUserClaimQueryRepository
 {
 	public Task<ICollection<UserClaimResponse>> GetAllAsync(
 		UserClaimsFilterQuery filter,
-		CurrentUserQuery current,
 		UserClaimsSortingQuery sorting,
 		UserClaimsPaginationQuery pagination,
+		CurrentUserQuery current,
 		CancellationToken cancellationToken);
 
 	public Task<long> GetTotalCountAsync(

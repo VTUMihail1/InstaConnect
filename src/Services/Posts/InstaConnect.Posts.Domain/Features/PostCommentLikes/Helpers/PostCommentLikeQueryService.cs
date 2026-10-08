@@ -40,9 +40,9 @@ internal class PostCommentLikeQueryService : IPostCommentLikeQueryService
 
 		var postCommentLikes = await _commentLikeRepository.GetAllAsync(
 			query.Filter,
-			query.CurrentUser,
 			query.Sorting,
 			query.Pagination,
+			query.CurrentUser,
 			cancellationToken);
 
 		var totalCount = await _commentLikeRepository.GetTotalCountAsync(query.Filter, cancellationToken);
@@ -61,9 +61,9 @@ internal class PostCommentLikeQueryService : IPostCommentLikeQueryService
 
 		var postCommentLikes = await _commentLikeRepository.GetAllForUserAsync(
 			query.Filter,
-			query.CurrentUser,
 			query.Sorting,
 			query.Pagination,
+			query.CurrentUser,
 			cancellationToken);
 
 		var totalCount = await _commentLikeRepository.GetTotalCountForUserAsync(query.Filter, cancellationToken);

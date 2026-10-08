@@ -9,12 +9,17 @@ public static class ChatSetups
 {
 	extension(IServiceProvider serviceProvider)
 	{
-		public IChatCommandRepository GetChatCommandRepository()
+		public IChatQueryRepository GetQueryRepository()
+		{
+			return serviceProvider.GetRequiredService<IChatQueryRepository>();
+		}
+
+		public IChatCommandRepository GetCommandRepository()
 		{
 			return serviceProvider.GetRequiredService<IChatCommandRepository>();
 		}
 
-		public IChatIncludeBuilderFactory GetChatIncludeBuilderFactory()
+		public IChatIncludeBuilderFactory GetIncludeBuilderFactory()
 		{
 			return serviceProvider.GetRequiredService<IChatIncludeBuilderFactory>();
 		}
@@ -22,44 +27,49 @@ public static class ChatSetups
 
 	extension(IServiceScope serviceScope)
 	{
-		public IChatCommandRepository GetChatCommandRepository()
+		public IChatQueryRepository GetQueryRepository()
 		{
-			return serviceScope.ServiceProvider.GetChatCommandRepository();
+			return serviceScope.ServiceProvider.GetQueryRepository();
 		}
 
-		public IChatIncludeBuilderFactory GetChatIncludeBuilderFactory()
+		public IChatCommandRepository GetCommandRepository()
 		{
-			return serviceScope.ServiceProvider.GetChatIncludeBuilderFactory();
+			return serviceScope.ServiceProvider.GetCommandRepository();
 		}
 
-		public async Task<Chat?> GetChatByIdAsync(
+		public IChatIncludeBuilderFactory GetIncludeBuilderFactory()
+		{
+			return serviceScope.ServiceProvider.GetIncludeBuilderFactory();
+		}
+
+		public async Task<Chat?> GetByIdAsync(
 			ChatId id,
 			CancellationToken cancellationToken)
 		{
-			var include = serviceScope.GetChatIncludeBuilderFactory().Create().WithParticipantOne().WithParticipantTwo().Build();
+			var include = serviceScope.GetIncludeBuilderFactory().Create().WithParticipantOne().WithParticipantTwo().Build();
 
-			return await serviceScope.GetChatCommandRepository().GetByIdAsync(id, include, cancellationToken);
+			return (await serviceScope.GetCommandRepository().GetByIdAsync(id, include, cancellationToken)).SetParticipantOne().SetParticipantTwo();
 		}
 
-		public async Task AddChatAsync(
+		public async Task AddAsync(
 			Chat chat,
 			CancellationToken cancellationToken)
 		{
-			await serviceScope.GetChatCommandRepository().AddAsync(chat, cancellationToken);
+			await serviceScope.GetCommandRepository().AddAsync(chat, cancellationToken);
 		}
 
-		public async Task AddChatRangeAsync(
+		public async Task AddRangeAsync(
 			IEnumerable<Chat> chats,
 			CancellationToken cancellationToken)
 		{
-			await serviceScope.GetChatCommandRepository().AddRangeAsync(chats, cancellationToken);
+			await serviceScope.GetCommandRepository().AddRangeAsync(chats, cancellationToken);
 		}
 
-		public async Task DeleteChatAsync(
+		public async Task DeleteAsync(
 			Chat chat,
 			CancellationToken cancellationToken)
 		{
-			await serviceScope.GetChatCommandRepository().DeleteAsync(chat, cancellationToken);
+			await serviceScope.GetCommandRepository().DeleteAsync(chat, cancellationToken);
 		}
 	}
 }

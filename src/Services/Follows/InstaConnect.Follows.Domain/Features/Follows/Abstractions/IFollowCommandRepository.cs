@@ -10,7 +10,7 @@ public interface IFollowCommandRepository
 
 	public Task<Follow?> GetByIdAsync(FollowId id, CancellationToken cancellationToken);
 
-	public Task<Follow?> GetByIdAsync(FollowId id, FollowInclude? include, CancellationToken cancellationToken);
+	public Task<Follow?> GetByIdAsync(FollowId id, FollowInclude include, CancellationToken cancellationToken);
 
 	public Task<bool> ExistsByIdAsync(FollowId id, CancellationToken cancellationToken);
 }

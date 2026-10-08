@@ -1,5 +1,3 @@
-using InstaConnect.Chats.Domain.Features.Common.Models.Requests;
-
 namespace InstaConnect.Chats.Domain.Features.ChatMessages.Utilities;
 
 public static class ChatMessageExceptionErrorMessages
@@ -23,13 +21,5 @@ public static class ChatMessageExceptionErrorMessages
 		const string Format = "ChatMessagesSortTerm(type: {0}) is not supported";
 
 		return Format.FormatCurrentCulture(sortTerm);
-	}
-
-	public static string GetIncludeDescriptorsNotSupportedMessage(ICollection<ChatsIncludeDescriptor> descriptors)
-	{
-		const string Format = "ChatMessageIncludeDescriptors({0}) is not supported";
-
-		return Format.FormatCurrentCulture(descriptors
-			.JoinIncludeDescriptorsAsStringWithComa<ChatsDestinationType, ChatsIncludeType, ChatsIncludeDescriptor>());
 	}
 }

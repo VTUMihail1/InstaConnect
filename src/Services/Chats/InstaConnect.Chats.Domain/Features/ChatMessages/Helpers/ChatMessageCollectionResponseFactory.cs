@@ -1,4 +1,4 @@
-using InstaConnect.Common.Domain.Features.Data.Abstractions;
+using InstaConnect.Common.Domain.Features.Databases.Abstractions;
 
 namespace InstaConnect.Chats.Domain.Features.ChatMessages.Helpers;
 

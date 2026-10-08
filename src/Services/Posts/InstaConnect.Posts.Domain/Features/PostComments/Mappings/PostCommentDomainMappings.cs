@@ -10,15 +10,15 @@ internal class PostCommentDomainMappings : IRegister
 	{
 		config.NewConfig<PostComment, PostCommentAddedEventRequest>()
 			.ConstructUsing(src => new(
-				src.Adapt<PostCommentEventRequest>(config)!));
+				src.Adapt<PostCommentEventRequest>(config)));
 
 		config.NewConfig<PostComment, PostCommentUpdatedEventRequest>()
 			.ConstructUsing(src => new(
-				src.Adapt<PostCommentEventRequest>(config)!));
+				src.Adapt<PostCommentEventRequest>(config)));
 
 		config.NewConfig<PostComment, PostCommentDeletedEventRequest>()
 			.ConstructUsing(src => new(
-				src.Adapt<PostCommentEventRequest>(config)!));
+				src.Adapt<PostCommentEventRequest>(config)));
 
 		config.NewConfig<PostComment, PostCommentEventRequest>()
 			.ConstructUsing(src => new(

@@ -1,4 +1,5 @@
-using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Requests.Abstractions;
+using InstaConnect.Common.Application.Tests.Features.Utilities;
 
 namespace InstaConnect.Chats.Presentation.Tests.Features.ChatMessages.Utilities;
 
@@ -6,45 +7,37 @@ public static class ChatMessageMockSetups
 {
 	extension(IApplicationSender sender)
 	{
-		public void SetupGetAllQueryRequest(
+		public void SetupSendAsync(
 		GetAllChatMessagesApiRequest request,
 		Chat chat,
 		ICollection<ChatMessage> chatMessages,
 		CancellationToken cancellationToken)
 		{
-			sender
-				.SendAsync(ChatMessageMatcher.IsGetAllChatMessagesQueryRequest(request), cancellationToken)
-				.ReturnsResponse(chatMessages.ToResponse(chat, request));
+			sender.SetupSendAsync(request.IsGetAllChatMessagesQueryRequest(), chatMessages.ToResponse(request, chat), cancellationToken);
 		}
 
-		public void SetupGetByIdQueryRequest(
+		public void SetupSendAsync(
 			GetChatMessageByIdApiRequest request,
 			ChatMessage chatMessage,
 			CancellationToken cancellationToken)
 		{
-			sender
-				.SendAsync(ChatMessageMatcher.IsGetChatMessageByIdQueryRequest(request), cancellationToken)
-				.ReturnsResponse(chatMessage.ToResponse(request));
+			sender.SetupSendAsync(request.IsGetChatMessageByIdQueryRequest(), chatMessage.ToResponse(request), cancellationToken);
 		}
 
-		public void SetupAddCommandRequest(
+		public void SetupSendAsync(
 			AddChatMessageApiRequest request,
 			ChatMessage chatMessage,
 			CancellationToken cancellationToken)
 		{
-			sender
-				.SendAsync(ChatMessageMatcher.IsAddChatMessageCommandRequest(request), cancellationToken)
-				.ReturnsResponse(chatMessage.ToResponse(request));
+			sender.SetupSendAsync(request.IsAddChatMessageCommandRequest(), chatMessage.ToResponse(request), cancellationToken);
 		}
 
-		public void SetupUpdateCommandRequest(
+		public void SetupSendAsync(
 			UpdateChatMessageApiRequest request,
 			ChatMessage chatMessage,
 			CancellationToken cancellationToken)
 		{
-			sender
-				.SendAsync(ChatMessageMatcher.IsUpdateChatMessageCommandRequest(request), cancellationToken)
-				.ReturnsResponse(chatMessage.ToResponse(request));
+			sender.SetupSendAsync(request.IsUpdateChatMessageCommandRequest(), chatMessage.ToResponse(request), cancellationToken);
 		}
 	}
 }

@@ -4,9 +4,9 @@ public interface IChatQueryRepository
 {
 	public Task<ICollection<ChatResponse>> GetAllAsync(
 		ChatsFilterQuery filter,
-		CurrentUserQuery currentUser,
 		ChatsSortingQuery sorting,
 		ChatsPaginationQuery pagination,
+		CurrentUserQuery currentUser,
 		CancellationToken cancellationToken);
 
 	public Task<long> GetTotalCountAsync(

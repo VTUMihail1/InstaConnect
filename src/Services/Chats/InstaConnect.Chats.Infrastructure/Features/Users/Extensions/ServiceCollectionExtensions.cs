@@ -10,7 +10,11 @@ internal static class ServiceCollectionExtensions
 	{
 		internal IServiceCollection AddUserServices()
 		{
+			const string CollectionName = "users";
+
 			serviceCollection.AddImplementationsOf<IUserIncluder>(ChatsInfrastructureReference.Assembly);
+
+			serviceCollection.AddCollection<User>(CollectionName);
 
 			BsonClassMap.TryRegisterClassMap<User>(cm =>
 			{

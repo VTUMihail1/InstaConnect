@@ -1,4 +1,4 @@
-using InstaConnect.Common.Presentation.Features.ExceptionHandling.Models;
+using InstaConnect.Common.Presentation.Features.Exceptions.Models;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.EmailConfirmationTokens.Assertions;
 
@@ -7,33 +7,33 @@ public static class EmailConfirmationTokenValidationProblemDetailsAssertions
 	extension(ApplicationProblemDetails problemDetails)
 	{
 		public void ShouldSatisfyInvalidValidationForName(
-			IStringMessageTransformer messageTransformer,
-			AddEmailConfirmationTokenApiRequest request)
+			AddEmailConfirmationTokenApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.Name,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForId(
-			IStringMessageTransformer messageTransformer,
-			VerifyEmailConfirmationTokenApiRequest request)
+			VerifyEmailConfirmationTokenApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.Id,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 
 		public void ShouldSatisfyInvalidValidationForValue(
-			IStringMessageTransformer messageTransformer,
-			VerifyEmailConfirmationTokenApiRequest request)
+			VerifyEmailConfirmationTokenApiRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
 			problemDetails.ShouldSatisfyInvalidValidation(
+				request,
 				p => p.Value,
-				messageTransformer,
-				request);
+				messageTransformer);
 		}
 	}
 }

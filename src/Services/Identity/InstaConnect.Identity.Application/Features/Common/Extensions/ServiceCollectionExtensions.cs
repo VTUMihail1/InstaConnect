@@ -1,5 +1,5 @@
 using InstaConnect.Common.Application.Features.Common.Extensions;
-using InstaConnect.Common.Application.Features.Messaging.Extensions;
+using InstaConnect.Common.Application.Features.Requests.Extensions;
 using InstaConnect.Common.Domain.Features.Mappers.Extensions;
 
 namespace InstaConnect.Identity.Application.Features.Common.Extensions;
@@ -18,9 +18,9 @@ public static class ServiceCollectionExtensions
 				.AddEmailConfirmationTokenServices();
 
 			serviceCollection
-				.AddValidators(IdentityApplicationReference.Assembly)
-				.AddCQRS(IdentityApplicationReference.Assembly)
-				.AddMapper(IdentityApplicationReference.Assembly, CommonApplicationReference.Assembly);
+				.AddValidations(IdentityApplicationReference.Assembly)
+				.AddRequests(IdentityApplicationReference.Assembly)
+				.AddMappers(IdentityApplicationReference.Assembly, CommonApplicationReference.Assembly);
 
 			return serviceCollection;
 		}

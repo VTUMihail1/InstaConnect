@@ -1,20 +1,19 @@
 using CloudinaryDotNet;
 
 using InstaConnect.Common.Domain.Features.Images.Abstractions;
-using InstaConnect.Common.Infrastructure.Features.Images.Abstractions;
 using InstaConnect.Common.Infrastructure.Features.Images.Helpers;
 using InstaConnect.Common.Infrastructure.Features.Images.Models;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Common.Infrastructure.Extensions;
+namespace InstaConnect.Common.Infrastructure.Features.Images.Extensions;
 
-public static partial class ServiceCollectionExtensions
+public static class ServiceCollectionExtensions
 {
 	extension(IServiceCollection serviceCollection)
 	{
-		public IServiceCollection AddCloudinary(IConfiguration configuration)
+		public IServiceCollection AddImages(IConfiguration configuration)
 		{
 			serviceCollection.AddValidatedOptions<CloudinaryOptions>(CloudinaryOptions.SectionName);
 			var options = configuration.GetOptions<CloudinaryOptions>(CloudinaryOptions.SectionName);
@@ -24,8 +23,7 @@ public static partial class ServiceCollectionExtensions
 				options.ApiKey,
 				options.ApiSecret)));
 
-			serviceCollection.AddScoped<IImageUploadFactory, ImageUploadFactory>()
-							 .AddScoped<IImageHandler, ImageHandler>();
+			serviceCollection.AddScoped<IImageHandler, ImageHandler>();
 
 			return serviceCollection;
 		}

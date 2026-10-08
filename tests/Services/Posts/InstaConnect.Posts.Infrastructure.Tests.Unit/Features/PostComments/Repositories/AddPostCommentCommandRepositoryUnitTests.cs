@@ -1,0 +1,24 @@
+using InstaConnect.Posts.Infrastructure.Features.PostComments.Helpers.Repositories;
+using InstaConnect.Posts.Infrastructure.Tests.Unit.Features.PostComments.Utilities;
+
+namespace InstaConnect.Posts.Infrastructure.Tests.Unit.Features.PostComments.Repositories;
+
+public class AddPostCommentCommandRepositoryUnitTests : BasePostCommentInfrastructureCommandUnitTest
+{
+	private readonly PostCommentCommandRepository _repository;
+
+	public AddPostCommentCommandRepositoryUnitTests()
+	{
+		_repository = new(Collection, IncludeBuilderFactory);
+	}
+
+	[Fact]
+	public async Task AddAsync_ShouldCallTheCollectionAddAsync_WhenRequestIsValid()
+	{
+		// Act
+		await _repository.AddAsync(PostComment, CancellationToken);
+
+		// Assert
+		await Collection.ShouldHaveReceivedOneAddAsync(PostComment, CancellationToken);
+	}
+}

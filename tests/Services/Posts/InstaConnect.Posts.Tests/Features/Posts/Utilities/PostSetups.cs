@@ -9,6 +9,11 @@ public static class PostSetups
 {
 	extension(IServiceProvider serviceProvider)
 	{
+		public IPostQueryRepository GetPostQueryRepository()
+		{
+			return serviceProvider.GetRequiredService<IPostQueryRepository>();
+		}
+
 		public IPostCommandRepository GetPostCommandRepository()
 		{
 			return serviceProvider.GetRequiredService<IPostCommandRepository>();
@@ -22,6 +27,11 @@ public static class PostSetups
 
 	extension(IServiceScope serviceScope)
 	{
+		public IPostQueryRepository GetPostQueryRepository()
+		{
+			return serviceScope.ServiceProvider.GetPostQueryRepository();
+		}
+
 		public IPostCommandRepository GetPostCommandRepository()
 		{
 			return serviceScope.ServiceProvider.GetPostCommandRepository();
@@ -32,30 +42,30 @@ public static class PostSetups
 			return serviceScope.ServiceProvider.GetPostIncludeBuilderFactory();
 		}
 
-		public async Task<Post?> GetPostByIdAsync(
+		public async Task<Post?> GetByIdAsync(
 			PostId id,
 			CancellationToken cancellationToken)
 		{
 			var include = serviceScope.GetPostIncludeBuilderFactory().Create().WithUser().Build();
 
-			return await serviceScope.GetPostCommandRepository().GetByIdAsync(id, include, cancellationToken);
+			return (await serviceScope.GetPostCommandRepository().GetByIdAsync(id, include, cancellationToken)).SetUser();
 		}
 
-		public async Task AddPostAsync(
+		public async Task AddAsync(
 			Post post,
 			CancellationToken cancellationToken)
 		{
 			await serviceScope.GetPostCommandRepository().AddAsync(post, cancellationToken);
 		}
 
-		public async Task AddPostRangeAsync(
+		public async Task AddRangeAsync(
 			IEnumerable<Post> posts,
 			CancellationToken cancellationToken)
 		{
 			await serviceScope.GetPostCommandRepository().AddRangeAsync(posts, cancellationToken);
 		}
 
-		public async Task DeletePostAsync(
+		public async Task DeleteAsync(
 			Post post,
 			CancellationToken cancellationToken)
 		{

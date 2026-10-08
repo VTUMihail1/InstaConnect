@@ -35,7 +35,7 @@ public class DeleteCurrentRefreshTokenControllerUnitTests : BaseRefreshTokenPres
 		await _controller.DeleteCurrentAsync(_request, CancellationToken);
 
 		// Assert
-		await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);
+		await Sender.ShouldHaveReceivedOneSendAsync(_request, CancellationToken);
 	}
 
 	[Fact]
@@ -45,6 +45,6 @@ public class DeleteCurrentRefreshTokenControllerUnitTests : BaseRefreshTokenPres
 		await _controller.DeleteCurrentAsync(_request, CancellationToken);
 
 		// Assert
-		CookieStore.ShouldReceiveOneDelete(_request);
+		CookieStore.ShouldHaveReceivedOneDelete(_request);
 	}
 }

@@ -1,14 +1,31 @@
 using InstaConnect.Identity.Presentation.Tests.Features.EmailConfirmationTokens.Abstractions;
 using InstaConnect.Identity.Presentation.Tests.Features.EmailConfirmationTokens.Extensions;
+using InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Abstractions;
+using InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Extensions;
 
 namespace InstaConnect.Identity.Presentation.Tests.Functional.Features.EmailConfirmationTokens.Utilities;
 
 public abstract class BaseEmailConfirmationTokenPresentationCommandFunctionalTest : BaseEmailConfirmationTokenWebTest
 {
-	protected IEmailConfirmationTokenClient Client { get; }
+	protected IEmailConfirmationTokenApiClient EmailConfirmationTokenApiClient { get; }
+
+	protected IEmailConfirmationTokenEventClient EmailConfirmationTokenEventClient { get; }
 
 	protected BaseEmailConfirmationTokenPresentationCommandFunctionalTest(IdentityWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
-		Client = webApplicationFactory.CreateEmailConfirmationTokenClient();
+		EmailConfirmationTokenApiClient = webApplicationFactory.CreateEmailConfirmationTokenApiClient();
+		EmailConfirmationTokenEventClient = webApplicationFactory.CreateEmailConfirmationTokenEventClient();
+	}
+
+	public override async Task InitializeAsync()
+	{
+		await ServiceScope.AddAsync(User, CancellationToken);
+		await OnInitializeAsync();
+		await EmailConfirmationTokenEventClient.StartAsync(CancellationToken);
+	}
+
+	public override async Task DisposeAsync()
+	{
+		await EmailConfirmationTokenEventClient.StopAsync(CancellationToken);
 	}
 }

@@ -4,7 +4,7 @@ public interface IRefreshTokenCommandRepository
 {
 	public Task<RefreshToken?> GetByIdAsync(
 		RefreshTokenId id,
-		RefreshTokenInclude? include,
+		RefreshTokenInclude include,
 		CancellationToken cancellationToken);
 
 	public Task<RefreshToken?> GetByIdAsync(

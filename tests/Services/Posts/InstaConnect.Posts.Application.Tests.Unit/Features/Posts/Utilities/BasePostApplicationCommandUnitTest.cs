@@ -12,6 +12,6 @@ public abstract class BasePostApplicationCommandUnitTest : BasePostTest
 	protected BasePostApplicationCommandUnitTest()
 	{
 		Mapper = MockFactory.CreateMapper(PostsApplicationReference.Assembly);
-		Service = PostMockFactory.CreateCommandService();
+		Service = PostApplicationMockFactory.CreateCommandService();
 	}
 }

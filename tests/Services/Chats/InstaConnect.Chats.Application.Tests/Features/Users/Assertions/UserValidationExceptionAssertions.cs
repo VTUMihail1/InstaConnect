@@ -1,4 +1,4 @@
-using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Requests.Abstractions;
 
 namespace InstaConnect.Chats.Application.Tests.Features.Users.Assertions;
 
@@ -7,194 +7,226 @@ public static class UserValidationExceptionAssertions
 	extension(IApplicationSender sender)
 	{
 		public async Task ShouldThrowInvalidValidationExceptionForIdAsync(
-		IStringMessageTransformer messageTransformer,
-		UpdateUserCommandRequest request,
+			UpdateUserCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 		CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<UpdateUserCommandRequest, string, UpdateUserCommandResponse>(
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.Id,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForIdAsync(
-			IStringMessageTransformer messageTransformer,
 			AddUserCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<AddUserCommandRequest, string, AddUserCommandResponse>(
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.Id,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForIdAsync(
-			IStringMessageTransformer messageTransformer,
 			DeleteUserCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync(
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.Id,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForNameAsync(
-			IStringMessageTransformer messageTransformer,
 			UpdateUserCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<UpdateUserCommandRequest, string, UpdateUserCommandResponse>(
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.Name,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForNameAsync(
-			IStringMessageTransformer messageTransformer,
 			AddUserCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<AddUserCommandRequest, string, AddUserCommandResponse>(
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.Name,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForFirstNameAsync(
-			IStringMessageTransformer messageTransformer,
 			UpdateUserCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<UpdateUserCommandRequest, string, UpdateUserCommandResponse>(
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.FirstName,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForFirstNameAsync(
-			IStringMessageTransformer messageTransformer,
 			AddUserCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<AddUserCommandRequest, string, AddUserCommandResponse>(
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.FirstName,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForLastNameAsync(
-			IStringMessageTransformer messageTransformer,
 			UpdateUserCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<UpdateUserCommandRequest, string, UpdateUserCommandResponse>(
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.LastName,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForLastNameAsync(
-			IStringMessageTransformer messageTransformer,
 			AddUserCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<AddUserCommandRequest, string, AddUserCommandResponse>(
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.LastName,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForEmailAsync(
-			IStringMessageTransformer messageTransformer,
 			UpdateUserCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<UpdateUserCommandRequest, string, UpdateUserCommandResponse>(
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.Email,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForEmailAsync(
-			IStringMessageTransformer messageTransformer,
 			AddUserCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<AddUserCommandRequest, string, AddUserCommandResponse>(
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.Email,
 				messageTransformer,
-				request,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForProfileImageAsync(
-			IStringMessageTransformer messageTransformer,
 			UpdateUserCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<UpdateUserCommandRequest, string, UpdateUserCommandResponse>(
-				p => p.ProfileImageUrl!,
-				messageTransformer!,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
+				p => p.ProfileImageUrl!,
+				messageTransformer,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForProfileImageAsync(
-			IStringMessageTransformer messageTransformer,
 			AddUserCommandRequest request,
+			IStringMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<AddUserCommandRequest, string, AddUserCommandResponse>(
-				p => p.ProfileImageUrl!,
-				messageTransformer!,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
+				p => p.ProfileImageUrl!,
+				messageTransformer,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForCreatedAtUtcAsync(
-			IDateTimeOffsetMessageTransformer messageTransformer,
 			AddUserCommandRequest request,
+			IDateTimeOffsetMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<AddUserCommandRequest, DateTimeOffset, AddUserCommandResponse>(
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
+				request,
 				p => p.CreatedAtUtc,
-				messageTransformer!,
-				request,
+				messageTransformer,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForUpdatedAtUtcAsync(
-			IDateTimeOffsetMessageTransformer messageTransformer,
 			AddUserCommandRequest request,
+			IDateTimeOffsetMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<AddUserCommandRequest, DateTimeOffset, AddUserCommandResponse>(
-				p => p.UpdatedAtUtc,
-				messageTransformer!,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
+				p => p.UpdatedAtUtc,
+				messageTransformer,
 				cancellationToken);
 		}
 
 		public async Task ShouldThrowInvalidValidationExceptionForUpdatedAtUtcAsync(
-			IDateTimeOffsetMessageTransformer messageTransformer,
 			UpdateUserCommandRequest request,
+			IDateTimeOffsetMessageTransformer messageTransformer,
 			CancellationToken cancellationToken)
 		{
-			await sender.ShouldThrowInvalidValidationExceptionAsync<UpdateUserCommandRequest, DateTimeOffset, UpdateUserCommandResponse>(
-				p => p.UpdatedAtUtc,
-				messageTransformer!,
+			var func = () => sender.SendAsync(request, cancellationToken);
+
+			await func.ShouldThrowInvalidValidationExceptionAsync(
 				request,
+				p => p.UpdatedAtUtc,
+				messageTransformer,
 				cancellationToken);
 		}
 	}

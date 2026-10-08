@@ -1,5 +1,5 @@
-using InstaConnect.Common.Infrastructure.Features.Data.Abstractions;
+using InstaConnect.Common.Infrastructure.Features.Databases.Abstractions;
 
 namespace InstaConnect.Chats.Infrastructure.Features.ChatMessages.Abstractions;
 
-internal interface IChatMessagesSortTermer : ISortTermer<ChatMessagesSortTerm, ChatMessageResponse>;
+public interface IChatMessagesSortTermer : ISortTermer<ChatMessagesSortTerm, ChatMessageResponse>;

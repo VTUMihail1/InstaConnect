@@ -1,4 +1,4 @@
-using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Requests.Abstractions;
 using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
 using InstaConnect.Common.Presentation.Features.Controllers.Utilities;
 using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Add;
@@ -6,6 +6,7 @@ using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Command
 
 namespace InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Controllers.v1;
 
+[ApiController]
 [ApiVersion(EmailConfirmationTokenRoutes.Version1)]
 [Route(EmailConfirmationTokenRoutes.Resource)]
 [EnableRateLimiting(RateLimiterPolicies.Default)]

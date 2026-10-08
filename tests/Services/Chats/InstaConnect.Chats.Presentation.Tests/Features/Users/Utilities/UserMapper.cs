@@ -6,7 +6,7 @@ public static class UserMapper
 {
 	extension(User user)
 	{
-		public UserQueryResponse ToFullResponse()
+		public UserQueryResponse ToFullQueryResponse()
 		{
 			return new(user.Id.Id,
 					   user.FirstName,

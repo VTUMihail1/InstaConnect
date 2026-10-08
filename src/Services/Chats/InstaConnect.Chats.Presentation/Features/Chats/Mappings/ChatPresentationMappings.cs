@@ -20,7 +20,7 @@ internal class ChatPresentationMappings : IRegister
 				src.PageSize));
 
 		config.NewConfig<GetAllChatsQueryResponse, GetAllChatsApiResponse>()
-			.ConstructUsing(src => new(src.Response.Adapt<ChatCollectionApiResponse>(config)!));
+			.ConstructUsing(src => new(src.Response.Adapt<ChatCollectionApiResponse>(config)));
 
 		config.NewConfig<GetChatByIdApiRequest, GetChatByIdQueryRequest>()
 			.ConstructUsing(src => new(
@@ -28,7 +28,7 @@ internal class ChatPresentationMappings : IRegister
 				src.CurrentUserId));
 
 		config.NewConfig<GetChatByIdQueryResponse, GetChatByIdApiResponse>()
-			.ConstructUsing(src => new(src.Response.Adapt<ChatApiResponse>(config)!));
+			.ConstructUsing(src => new(src.Response.Adapt<ChatApiResponse>(config)));
 
 		config.NewConfig<AddChatApiRequest, AddChatCommandRequest>()
 			.ConstructUsing(src => new(
@@ -36,7 +36,7 @@ internal class ChatPresentationMappings : IRegister
 									   new(src.Body.ParticipantTwoId)));
 
 		config.NewConfig<AddChatCommandResponse, AddChatApiResponse>()
-			.ConstructUsing(src => new(src.Response.Adapt<ChatIdApiResponse>(config)!));
+			.ConstructUsing(src => new(src.Response.Adapt<ChatIdApiResponse>(config)));
 
 		config.NewConfig<ChatIdCommandResponse, ChatIdApiResponse>()
 			.ConstructUsing(src => new(
@@ -55,7 +55,7 @@ internal class ChatPresentationMappings : IRegister
 			.ConstructUsing(src => new(
 				  src.ParticipantOne.Adapt<UserApiResponse>(config),
 				  src.ParticipantTwo.Adapt<UserApiResponse>(config),
-				  src.Chats.Adapt<ICollection<ChatApiResponse>>(config)!,
+				  src.Chats.Adapt<ICollection<ChatApiResponse>>(config),
 				  src.Page,
 				  src.PageSize,
 				  src.TotalCount,
