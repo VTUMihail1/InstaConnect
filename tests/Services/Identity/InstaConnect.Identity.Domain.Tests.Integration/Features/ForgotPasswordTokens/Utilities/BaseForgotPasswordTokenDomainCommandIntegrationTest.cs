@@ -24,7 +24,6 @@ public abstract class BaseForgotPasswordTokenDomainCommandIntegrationTest : Base
 	public override async Task InitializeAsync()
 	{
 		await ServiceScope.AddAsync(User, CancellationToken);
-		await ServiceScope.AddAsync(UserClaim, CancellationToken);
 		await OnInitializeAsync();
 		await ForgotPasswordTokenEventClient.StartAsync(CancellationToken);
 	}
