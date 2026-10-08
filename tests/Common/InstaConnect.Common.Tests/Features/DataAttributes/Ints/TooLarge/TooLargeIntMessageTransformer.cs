@@ -16,6 +16,6 @@ internal class TooLargeIntMessageTransformer : IIntMessageTransformer
 
 	public string Transform<T>(Expression<Func<T, int>> propertyExpression, int value)
 	{
-		return CommonErrorMessages.GetMaxValue(propertyExpression.GetPropertyDisplayName(), value, _maxValue);
+		return CommonValidationErrorMessages.GetMaxValue(propertyExpression.GetPropertyDisplayName(), value, _maxValue);
 	}
 }

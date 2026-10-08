@@ -16,6 +16,6 @@ internal class NotEqualStringMessageTransformer : IStringMessageTransformer
 
 	public string Transform<T>(Expression<Func<T, string>> propertyExpression, string value)
 	{
-		return CommonErrorMessages.GetNotEqual(propertyExpression.GetPropertyDisplayName(), _equalPropertyName);
+		return CommonValidationErrorMessages.GetNotEqual(propertyExpression.GetPropertyDisplayName(), _equalPropertyName);
 	}
 }

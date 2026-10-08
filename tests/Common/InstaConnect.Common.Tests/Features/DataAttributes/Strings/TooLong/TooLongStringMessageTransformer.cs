@@ -16,6 +16,6 @@ internal class TooLongStringMessageTransformer : IStringMessageTransformer
 
 	public string Transform<T>(Expression<Func<T, string>> propertyExpression, string value)
 	{
-		return CommonErrorMessages.GetMaxLength(propertyExpression.GetPropertyDisplayName(), value.Length, _maxLength);
+		return CommonValidationErrorMessages.GetMaxLength(propertyExpression.GetPropertyDisplayName(), value.Length, _maxLength);
 	}
 }

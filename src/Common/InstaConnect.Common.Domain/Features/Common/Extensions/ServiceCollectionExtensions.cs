@@ -67,7 +67,7 @@ public static class ServiceCollectionExtensions
 				serviceProvider.GetServices<IValidateOptions<TOptions>>()));
 
 			serviceCollection.TryAddEnumerable(ServiceDescriptor.Singleton<IValidateOptions<TOptions>>(
-				new FluentValidationOptionsValidator<TOptions>(new TValidator())));
+				new FluentValidationOptionsValidator<TOptions>(sectionName, [new TValidator()])));
 
 			return serviceCollection;
 		}

@@ -9,6 +9,6 @@ internal class EmptyDateTimeOffsetMessageTransformer : IDateTimeOffsetMessageTra
 {
 	public string Transform<T>(Expression<Func<T, DateTimeOffset>> propertyExpression, DateTimeOffset value)
 	{
-		return CommonErrorMessages.GetEmpty(propertyExpression.GetPropertyDisplayName());
+		return CommonValidationErrorMessages.GetEmpty(propertyExpression.GetPropertyDisplayName());
 	}
 }

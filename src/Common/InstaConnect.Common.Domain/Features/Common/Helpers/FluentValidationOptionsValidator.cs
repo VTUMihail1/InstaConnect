@@ -1,6 +1,8 @@
 using FluentValidation;
 
 using InstaConnect.Common.Domain.Features.Common.Abstractions;
+using InstaConnect.Common.Domain.Features.Common.Utilities;
+using InstaConnect.Common.Domain.Features.Validations.Extensions;
 
 using Microsoft.Extensions.Options;
 
@@ -9,24 +11,24 @@ namespace InstaConnect.Common.Domain.Features.Common.Helpers;
 internal sealed class FluentValidationOptionsValidator<TOptions> : IValidateOptions<TOptions>
 	where TOptions : class, IApplicationOptions
 {
-	private readonly IValidator<TOptions> _validator;
+	private readonly string _sectionName;
+	private readonly IEnumerable<IValidator<TOptions>> _validators;
 
-	public FluentValidationOptionsValidator(IValidator<TOptions> validator)
+	public FluentValidationOptionsValidator(string sectionName, IEnumerable<IValidator<TOptions>> validators)
 	{
-		_validator = validator;
+		_sectionName = sectionName;
+		_validators = validators;
 	}
 
 	public ValidateOptionsResult Validate(string? name, TOptions options)
 	{
-		var result = _validator.Validate(options);
+		var errorMessages = _validators.GetErrorMessages(options);
 
-		if (result.IsValid)
+		if (errorMessages.Any())
 		{
-			return ValidateOptionsResult.Success;
+			return ValidateOptionsResult.Fail(CommonOptionsErrorMessages.GetInvalid(_sectionName, errorMessages));
 		}
 
-		var failures = result.Errors.Select(error => $"{typeof(TOptions).Name}: {error.ErrorMessage}");
-
-		return ValidateOptionsResult.Fail(failures);
+		return ValidateOptionsResult.Success;
 	}
 }

@@ -2,7 +2,7 @@ using InstaConnect.Common.Domain.Features.Common.Extensions;
 
 namespace InstaConnect.Common.Domain.Features.Validations.Utilities;
 
-public static class CommonErrorMessages
+public static class CommonValidationErrorMessages
 {
 	public static string GetEmpty(string propertyName)
 	{

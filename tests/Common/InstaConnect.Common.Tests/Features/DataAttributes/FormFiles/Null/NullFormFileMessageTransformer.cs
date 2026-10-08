@@ -11,6 +11,6 @@ internal class NullFormFileMessageTransformer : IFormFileMessageTransformer
 {
 	public string Transform<T>(Expression<Func<T, IFormFile>> propertyExpression, IFormFile value)
 	{
-		return CommonErrorMessages.GetEmpty(propertyExpression.GetPropertyDisplayName());
+		return CommonValidationErrorMessages.GetEmpty(propertyExpression.GetPropertyDisplayName());
 	}
 }

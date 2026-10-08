@@ -9,6 +9,6 @@ internal class FalseBooleanMessageTransformer : IBooleanMessageTransformer
 {
 	public string Transform<T>(Expression<Func<T, bool>> propertyExpression, bool value)
 	{
-		return CommonErrorMessages.GetEmpty(propertyExpression.GetPropertyDisplayName());
+		return CommonValidationErrorMessages.GetEmpty(propertyExpression.GetPropertyDisplayName());
 	}
 }

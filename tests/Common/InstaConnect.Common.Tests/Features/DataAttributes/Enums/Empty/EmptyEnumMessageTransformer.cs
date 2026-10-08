@@ -10,6 +10,6 @@ internal class EmptyEnumMessageTransformer<TEnum> : IEnumMessageTransformer<TEnu
 {
 	public string Transform<T>(Expression<Func<T, TEnum>> propertyExpression, TEnum value)
 	{
-		return CommonErrorMessages.GetEmpty(propertyExpression.GetPropertyDisplayName());
+		return CommonValidationErrorMessages.GetEmpty(propertyExpression.GetPropertyDisplayName());
 	}
 }

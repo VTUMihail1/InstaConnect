@@ -14,6 +14,11 @@ public static class EnumerableExtensions
 			return string.Join(separator, enumerable);
 		}
 
+		public string JoinWithSpace()
+		{
+			return enumerable.JoinWith(" ");
+		}
+
 		public string JoinWithComma()
 		{
 			return enumerable.JoinWith(", ");

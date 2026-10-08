@@ -1,6 +1,7 @@
 using FluentValidation;
 
 using InstaConnect.Common.Domain.Features.Exceptions.Exceptions;
+using InstaConnect.Common.Domain.Features.Validations.Extensions;
 
 using MediatR;
 
@@ -22,19 +23,11 @@ internal sealed class ValidationPipelineBehavior<TRequest, TResponse>
 		RequestHandlerDelegate<TResponse> next,
 		CancellationToken cancellationToken)
 	{
-		var validationContext = new ValidationContext<TRequest>(request);
+		var errorMessages = await _validators.GetErrorMessagesAsync(request, cancellationToken);
 
-		var validationResults = await Task.WhenAll(
-			_validators.Select(v => v.ValidateAsync(validationContext, cancellationToken)));
-
-		var validationFailures = validationResults
-			.Where(vr => !vr.IsValid)
-			.SelectMany(vr => vr.Errors)
-			.Select(vr => vr.ErrorMessage);
-
-		if (validationFailures.Any())
+		if (errorMessages.Any())
 		{
-			throw new InvalidValidationException(validationFailures);
+			throw new InvalidValidationException(errorMessages);
 		}
 
 		return await next(cancellationToken);
