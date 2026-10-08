@@ -1,61 +1,53 @@
+using InstaConnect.Posts.Domain.Tests.Features.Posts.Utilities;
+
 namespace InstaConnect.Posts.Application.Tests.Features.Posts.Utilities;
 
 public static class PostMockSetups
 {
 	extension(IPostQueryService service)
 	{
-		public void SetupGetAllQuery(
+		public void SetupGetAllAsync(
 		GetAllPostsQueryRequest request,
 		ICollection<Post> posts,
 		CancellationToken cancellationToken)
 		{
-			service
-				.GetAllAsync(PostMatcher.IsGetAllPostsQuery(request), cancellationToken)
-				.ReturnsResponse(posts.ToResponse(request));
+			service.SetupGetAllAsync(request.IsGetAllPostsQuery(), posts.ToResponse(request), cancellationToken);
 		}
 
-		public void SetupGetAllForUserQuery(
+		public void SetupGetAllForUserAsync(
 			GetAllPostsForUserQueryRequest request,
 			User user,
 			ICollection<Post> posts,
 			CancellationToken cancellationToken)
 		{
-			service
-				.GetAllForUserAsync(PostMatcher.IsGetAllPostsForUserQuery(request), cancellationToken)
-				.ReturnsResponse(posts.ToResponse(user, request));
+			service.SetupGetAllForUserAsync(request.IsGetAllPostsForUserQuery(), posts.ToResponse(request, user), cancellationToken);
 		}
 
-		public void SetupGetByIdQuery(
+		public void SetupGetByIdAsync(
 			GetPostByIdQueryRequest request,
 			Post post,
 			CancellationToken cancellationToken)
 		{
-			service
-				.GetByIdAsync(PostMatcher.IsGetPostByIdQuery(request), cancellationToken)
-				.ReturnsResponse(post.ToResponse(request));
+			service.SetupGetByIdAsync(request.IsGetPostByIdQuery(), post.ToResponse(request), cancellationToken);
 		}
 	}
 
 	extension(IPostCommandService service)
 	{
-		public void SetupAddCommand(
+		public void SetupAddAsync(
 		AddPostCommandRequest request,
 		Post post,
 		CancellationToken cancellationToken)
 		{
-			service
-				.AddAsync(PostMatcher.IsAddPostCommand(request), cancellationToken)
-				.ReturnsResponse(post.ToResponse(request));
+			service.SetupAddAsync(request.IsAddPostCommand(), post.ToResponse(request), cancellationToken);
 		}
 
-		public void SetupUpdateCommand(
+		public void SetupUpdateAsync(
 			UpdatePostCommandRequest request,
 			Post post,
 			CancellationToken cancellationToken)
 		{
-			service
-				.UpdateAsync(PostMatcher.IsUpdatePostCommand(request), cancellationToken)
-				.ReturnsResponse(post.ToResponse(request));
+			service.SetupUpdateAsync(request.IsUpdatePostCommand(), post.ToResponse(request), cancellationToken);
 		}
 	}
 }

@@ -16,7 +16,7 @@ public class UpdatePostControllerUnitTests : BasePostPresentationCommandUnitTest
 
 		_controller = new(Mapper, Sender);
 
-		Sender.SetupUpdateCommandRequest(_request, Post, CancellationToken);
+		Sender.SetupSendAsync(_request, Post, CancellationToken);
 	}
 
 	[Fact]
@@ -36,7 +36,7 @@ public class UpdatePostControllerUnitTests : BasePostPresentationCommandUnitTest
 		var response = await _controller.UpdateAsync(_request, CancellationToken);
 
 		// Assert
-		response.ShouldSatisfy(Post, _request);
+		response.ShouldSatisfy(_request, Post);
 	}
 
 	[Fact]
@@ -46,6 +46,6 @@ public class UpdatePostControllerUnitTests : BasePostPresentationCommandUnitTest
 		await _controller.UpdateAsync(_request, CancellationToken);
 
 		// Assert
-		await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);
+		await Sender.ShouldHaveReceivedOneSendAsync(_request, CancellationToken);
 	}
 }

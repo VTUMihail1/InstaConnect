@@ -5,10 +5,19 @@ namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.PostCommentL
 
 public abstract class BasePostCommentLikePresentationQueryFunctionalTest : BasePostCommentLikeWebTest
 {
-	protected IPostCommentLikeClient Client { get; }
+	protected IPostCommentLikeApiClient CommentLikeApiClient { get; }
 
 	protected BasePostCommentLikePresentationQueryFunctionalTest(PostsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
-		Client = webApplicationFactory.CreatePostCommentLikeClient();
+		CommentLikeApiClient = webApplicationFactory.CreateCommentLikeApiClient();
+	}
+
+	public override async Task InitializeAsync()
+	{
+		await ServiceScope.AddRangeAsync(Users, CancellationToken);
+		await ServiceScope.AddRangeAsync(Posts, CancellationToken);
+		await ServiceScope.AddRangeAsync(PostLikes, CancellationToken);
+		await ServiceScope.AddRangeAsync(PostComments, CancellationToken);
+		await OnInitializeAsync();
 	}
 }

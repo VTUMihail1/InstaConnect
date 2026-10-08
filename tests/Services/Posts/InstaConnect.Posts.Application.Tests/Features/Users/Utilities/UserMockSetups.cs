@@ -1,27 +1,25 @@
+using InstaConnect.Posts.Domain.Tests.Features.Users.Utilities;
+
 namespace InstaConnect.Posts.Application.Tests.Features.Users.Utilities;
 
 public static class UserMockSetups
 {
 	extension(IUserCommandService userService)
 	{
-		public void SetupAddCommand(
+		public void SetupAddAsync(
 		AddUserCommandRequest request,
 		User user,
 		CancellationToken cancellationToken)
 		{
-			userService
-				.AddAsync(UserMatcher.IsAddUserCommand(request), cancellationToken)
-				.ReturnsResponse(user.ToResponse(request));
+			userService.SetupAddAsync(request.IsAddUserCommand(), user.ToResponse(request), cancellationToken);
 		}
 
-		public void SetupUpdateCommand(
+		public void SetupUpdateAsync(
 			UpdateUserCommandRequest request,
 			User user,
 			CancellationToken cancellationToken)
 		{
-			userService
-				.UpdateAsync(UserMatcher.IsUpdateUserCommand(request), cancellationToken)
-				.ReturnsResponse(user.ToResponse(request));
+			userService.SetupUpdateAsync(request.IsUpdateUserCommand(), user.ToResponse(request), cancellationToken);
 		}
 	}
 }

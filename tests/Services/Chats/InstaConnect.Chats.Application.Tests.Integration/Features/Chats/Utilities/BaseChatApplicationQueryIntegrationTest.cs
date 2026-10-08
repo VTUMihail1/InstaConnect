@@ -1,4 +1,4 @@
-using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Requests.Abstractions;
 
 namespace InstaConnect.Chats.Application.Tests.Integration.Features.Chats.Utilities;
 
@@ -9,5 +9,12 @@ public abstract class BaseChatApplicationQueryIntegrationTest : BaseChatWebTest
 	protected BaseChatApplicationQueryIntegrationTest(ChatsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
 		Sender = ServiceScope.GetSender();
+	}
+
+	public override async Task InitializeAsync()
+	{
+		await ServiceScope.AddRangeAsync(ParticipantOnes, CancellationToken);
+		await ServiceScope.AddRangeAsync(ParticipantTwos, CancellationToken);
+		await OnInitializeAsync();
 	}
 }

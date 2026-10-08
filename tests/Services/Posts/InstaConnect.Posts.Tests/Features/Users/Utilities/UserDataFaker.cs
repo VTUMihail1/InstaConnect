@@ -54,11 +54,11 @@ public static class UserDataFaker
 
 	public static DateTimeOffset GetCreatedAtUtc()
 	{
-		return DataFaker.GetRecentDate();
+		return DataFaker.GetSoonDate();
 	}
 
 	public static DateTimeOffset GetUpdatedAtUtc()
 	{
-		return DataFaker.GetRecentDate();
+		return DataFaker.GetSoonDate();
 	}
 }

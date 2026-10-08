@@ -6,38 +6,12 @@ using Xunit;
 
 namespace InstaConnect.Identity.Tests.Features.RefreshTokens.Utilities;
 
-public abstract class BaseRefreshTokenWebTest : BaseRefreshTokenTest, IClassFixture<IdentityWebApplicationFactory>, IAsyncLifetime
+public abstract class BaseRefreshTokenWebTest : BaseRefreshTokenTest, IClassFixture<IdentityWebApplicationFactory>
 {
 	protected IServiceScope ServiceScope { get; }
-
-	protected IEventHarness EventHarness { get; }
 
 	protected BaseRefreshTokenWebTest(IdentityWebApplicationFactory webApplicationFactory) : base(webApplicationFactory.Services.GetPasswordHasher())
 	{
 		ServiceScope = webApplicationFactory.Services.CreateScope();
-		EventHarness = ServiceScope.GetEventHarness();
-	}
-
-	public async Task InitializeAsync()
-	{
-		await EventHarness.StartAsync(CancellationToken);
-		await ServiceScope.ResetIdentityDatabase(CancellationToken);
-		await OnInitializeAsync();
-	}
-
-	public async Task DisposeAsync()
-	{
-		await ServiceScope.ResetIdentityDatabase(CancellationToken);
-		await EventHarness.StopAsync(CancellationToken);
-	}
-
-	protected virtual Task OnInitializeAsync()
-	{
-		return Task.CompletedTask;
-	}
-
-	protected virtual Task OnDisposeAsync()
-	{
-		return Task.CompletedTask;
 	}
 }

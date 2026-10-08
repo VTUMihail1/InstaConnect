@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 
-using InstaConnect.Common.Application.Features.Validations.Utilities;
+using InstaConnect.Common.Domain.Features.Validations.Utilities;
 using InstaConnect.Common.Tests.Features.DataAttributes.Ints.Base;
 
 namespace InstaConnect.Common.Tests.Features.DataAttributes.Ints.TooSmall;
@@ -16,6 +16,6 @@ internal class TooSmallIntMessageTransformer : IIntMessageTransformer
 
 	public string Transform<T>(Expression<Func<T, int>> propertyExpression, int value)
 	{
-		return CommonErrorMessages.GetMinValue(propertyExpression.GetProperty(), value, _minValue);
+		return CommonValidationErrorMessages.GetMinValue(propertyExpression.GetPropertyDisplayName(), value, _minValue);
 	}
 }

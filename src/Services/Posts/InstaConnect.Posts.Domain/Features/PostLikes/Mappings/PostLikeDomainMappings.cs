@@ -10,11 +10,11 @@ internal class PostLikeDomainMappings : IRegister
 	{
 		config.NewConfig<PostLike, PostLikeAddedEventRequest>()
 			.ConstructUsing(src => new(
-				src.Adapt<PostLikeEventRequest>(config)!));
+				src.Adapt<PostLikeEventRequest>(config)));
 
 		config.NewConfig<PostLike, PostLikeDeletedEventRequest>()
 			.ConstructUsing(src => new(
-				src.Adapt<PostLikeEventRequest>(config)!));
+				src.Adapt<PostLikeEventRequest>(config)));
 
 		config.NewConfig<PostLike, PostLikeEventRequest>()
 			.ConstructUsing(src => new(

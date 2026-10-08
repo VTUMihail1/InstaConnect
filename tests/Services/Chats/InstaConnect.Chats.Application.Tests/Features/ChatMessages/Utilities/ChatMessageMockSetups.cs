@@ -1,51 +1,45 @@
+using InstaConnect.Chats.Domain.Tests.Features.ChatMessages.Utilities;
+
 namespace InstaConnect.Chats.Application.Tests.Features.ChatMessages.Utilities;
 
 public static class ChatMessageMockSetups
 {
 	extension(IChatMessageQueryService commentService)
 	{
-		public void SetupGetAllQuery(
+		public void SetupGetAllAsync(
 		GetAllChatMessagesQueryRequest request,
 		Chat chat,
 		ICollection<ChatMessage> chatMessages,
 		CancellationToken cancellationToken)
 		{
-			commentService
-				.GetAllAsync(ChatMessageMatcher.IsGetAllChatMessagesQuery(request), cancellationToken)
-				.ReturnsResponse(chatMessages.ToResponse(chat, request));
+			commentService.SetupGetAllAsync(request.IsGetAllChatMessagesQuery(), chatMessages.ToResponse(request, chat), cancellationToken);
 		}
 
-		public void SetupGetByIdQuery(
+		public void SetupGetByIdAsync(
 			GetChatMessageByIdQueryRequest request,
 			ChatMessage chatMessage,
 			CancellationToken cancellationToken)
 		{
-			commentService
-				.GetByIdAsync(ChatMessageMatcher.IsGetChatMessageByIdQuery(request), cancellationToken)
-				.ReturnsResponse(chatMessage.ToResponse(request));
+			commentService.SetupGetByIdAsync(request.IsGetChatMessageByIdQuery(), chatMessage.ToResponse(request), cancellationToken);
 		}
 	}
 
 	extension(IChatMessageCommandService commentService)
 	{
-		public void SetupAddCommand(
+		public void SetupAddAsync(
 		AddChatMessageCommandRequest request,
 		ChatMessage chatMessage,
 		CancellationToken cancellationToken)
 		{
-			commentService
-				.AddAsync(ChatMessageMatcher.IsAddChatMessageCommand(request), cancellationToken)
-				.ReturnsResponse(chatMessage.ToResponse(request));
+			commentService.SetupAddAsync(request.IsAddChatMessageCommand(), chatMessage.ToResponse(request), cancellationToken);
 		}
 
-		public void SetupUpdateCommand(
+		public void SetupUpdateAsync(
 			UpdateChatMessageCommandRequest request,
 			ChatMessage chatMessage,
 			CancellationToken cancellationToken)
 		{
-			commentService
-				.UpdateAsync(ChatMessageMatcher.IsUpdateChatMessageCommand(request), cancellationToken)
-				.ReturnsResponse(chatMessage.ToResponse(request));
+			commentService.SetupUpdateAsync(request.IsUpdateChatMessageCommand(), chatMessage.ToResponse(request), cancellationToken);
 		}
 	}
 }

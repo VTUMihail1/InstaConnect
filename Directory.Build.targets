@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup Condition="'$(IsTestCodeProject)' == 'true' And '$(IsTestRunnerProject)' != 'true'">
+    <IsTestProject>false</IsTestProject>
+  </PropertyGroup>
+</Project>

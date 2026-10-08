@@ -12,6 +12,8 @@ public abstract class BaseEmailConfirmationTokenApplicationCommandUnitTest : Bas
 	protected BaseEmailConfirmationTokenApplicationCommandUnitTest() : base(IdentityMockFactory.CreatePasswordHasher())
 	{
 		Mapper = MockFactory.CreateMapper(IdentityApplicationReference.Assembly);
-		Service = EmailConfirmationTokenMockFactory.CreateCommandService();
+		Service = EmailConfirmationTokenApplicationMockFactory.CreateCommandService();
+
+		PasswordHasher.ClearCalls();
 	}
 }

@@ -9,10 +9,10 @@ internal class PostCommentLikeDomainMappings : IRegister
 	public void Register(TypeAdapterConfig config)
 	{
 		config.NewConfig<PostCommentLike, PostCommentLikeAddedEventRequest>()
-			.ConstructUsing(src => new(src.Adapt<PostCommentLikeEventRequest>(config)!));
+			.ConstructUsing(src => new(src.Adapt<PostCommentLikeEventRequest>(config)));
 
 		config.NewConfig<PostCommentLike, PostCommentLikeDeletedEventRequest>()
-			.ConstructUsing(src => new(src.Adapt<PostCommentLikeEventRequest>(config)!));
+			.ConstructUsing(src => new(src.Adapt<PostCommentLikeEventRequest>(config)));
 
 		config.NewConfig<PostCommentLike, PostCommentLikeEventRequest>()
 			.ConstructUsing(src => new(

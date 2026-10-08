@@ -6,11 +6,11 @@ namespace InstaConnect.Identity.Infrastructure.Features.Users.Helpers.Includers;
 
 internal class RefreshTokensIncluder : IUserIncluder
 {
-	private readonly IIdentityContext _context;
+	private readonly IMongoCollection<RefreshToken> _collection;
 
-	public RefreshTokensIncluder(IIdentityContext context)
+	public RefreshTokensIncluder(IMongoCollection<RefreshToken> collection)
 	{
-		_context = context;
+		_collection = collection;
 	}
 
 	public IdentityDestinationType DestinationType => IdentityDestinationType.User;
@@ -21,7 +21,7 @@ internal class RefreshTokensIncluder : IUserIncluder
 	{
 		return aggregate
 			.IncludeMany(
-				_context.RefreshTokens,
+				_collection,
 				p => p.Id,
 				l => l.Id.Id,
 				p => p.RefreshTokens

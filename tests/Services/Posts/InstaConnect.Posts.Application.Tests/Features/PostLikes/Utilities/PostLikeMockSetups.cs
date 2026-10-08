@@ -1,52 +1,46 @@
+using InstaConnect.Posts.Domain.Tests.Features.PostLikes.Utilities;
+
 namespace InstaConnect.Posts.Application.Tests.Features.PostLikes.Utilities;
 
 public static class PostLikeMockSetups
 {
 	extension(IPostLikeQueryService likeService)
 	{
-		public void SetupGetAllQuery(
+		public void SetupGetAllAsync(
 		GetAllPostLikesQueryRequest request,
 		Post post,
 		ICollection<PostLike> postLikes,
 		CancellationToken cancellationToken)
 		{
-			likeService
-				.GetAllAsync(PostLikeMatcher.IsGetAllPostLikesQuery(request), cancellationToken)
-				.ReturnsResponse(postLikes.ToResponse(post, request));
+			likeService.SetupGetAllAsync(request.IsGetAllPostLikesQuery(), postLikes.ToResponse(request, post), cancellationToken);
 		}
 
-		public void SetupGetAllForUserQuery(
+		public void SetupGetAllForUserAsync(
 			GetAllPostLikesForUserQueryRequest request,
 			User user,
 			ICollection<PostLike> postLikes,
 			CancellationToken cancellationToken)
 		{
-			likeService
-				.GetAllForUserAsync(PostLikeMatcher.IsGetAllPostLikesForUserQuery(request), cancellationToken)
-				.ReturnsResponse(postLikes.ToResponse(user, request));
+			likeService.SetupGetAllForUserAsync(request.IsGetAllPostLikesForUserQuery(), postLikes.ToResponse(request, user), cancellationToken);
 		}
 
-		public void SetupGetByIdQuery(
+		public void SetupGetByIdAsync(
 			GetPostLikeByIdQueryRequest request,
 			PostLike postLike,
 			CancellationToken cancellationToken)
 		{
-			likeService
-				.GetByIdAsync(PostLikeMatcher.IsGetPostLikeByIdQuery(request), cancellationToken)
-				.ReturnsResponse(postLike.ToResponse(request));
+			likeService.SetupGetByIdAsync(request.IsGetPostLikeByIdQuery(), postLike.ToResponse(request), cancellationToken);
 		}
 	}
 
 	extension(IPostLikeCommandService likeService)
 	{
-		public void SetupAddCommand(
+		public void SetupAddAsync(
 		AddPostLikeCommandRequest request,
 		PostLike postLike,
 		CancellationToken cancellationToken)
 		{
-			likeService
-				.AddAsync(PostLikeMatcher.IsAddPostLikeCommand(request), cancellationToken)
-				.ReturnsResponse(postLike.ToResponse(request));
+			likeService.SetupAddAsync(request.IsAddPostLikeCommand(), postLike.ToResponse(request), cancellationToken);
 		}
 	}
 }

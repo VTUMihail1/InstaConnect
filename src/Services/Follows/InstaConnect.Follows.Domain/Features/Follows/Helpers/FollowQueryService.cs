@@ -27,9 +27,9 @@ internal class FollowQueryService : IFollowQueryService
 
 		var follows = await _repository.GetAllAsync(
 			query.Filter,
-			query.CurrentUser,
 			query.Sorting,
 			query.Pagination,
+			query.CurrentUser,
 			cancellationToken);
 
 		var totalCount = await _repository.GetTotalCountAsync(query.Filter, cancellationToken);
@@ -48,9 +48,9 @@ internal class FollowQueryService : IFollowQueryService
 
 		var follows = await _repository.GetAllForFollowingAsync(
 			query.Filter,
-			query.CurrentUser,
 			query.Sorting,
 			query.Pagination,
+			query.CurrentUser,
 			cancellationToken);
 
 		var totalCount = await _repository.GetTotalCountForFollowingAsync(query.Filter, cancellationToken);

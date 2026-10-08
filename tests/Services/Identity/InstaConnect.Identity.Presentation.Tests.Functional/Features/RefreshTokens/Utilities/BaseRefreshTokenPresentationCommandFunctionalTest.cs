@@ -5,10 +5,17 @@ namespace InstaConnect.Identity.Presentation.Tests.Functional.Features.RefreshTo
 
 public abstract class BaseRefreshTokenPresentationCommandFunctionalTest : BaseRefreshTokenWebTest
 {
-	protected IRefreshTokenClient Client { get; }
+	protected IRefreshTokenApiClient RefreshTokenApiClient { get; }
 
 	protected BaseRefreshTokenPresentationCommandFunctionalTest(IdentityWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
-		Client = webApplicationFactory.CreateRefreshTokenClient();
+		RefreshTokenApiClient = webApplicationFactory.CreateRefreshTokenApiClient();
+	}
+
+	public override async Task InitializeAsync()
+	{
+		await ServiceScope.AddAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(UserClaim, CancellationToken);
+		await OnInitializeAsync();
 	}
 }

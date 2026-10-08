@@ -16,7 +16,7 @@ public class IssueRefreshTokenControllerUnitTests : BaseRefreshTokenPresentation
 
 		_controller = new(Mapper, Sender, CookieStore);
 
-		Sender.SetupIssueCommandRequest(_request, RefreshToken, CancellationToken);
+		Sender.SetupSendAsync(_request, RefreshToken, CancellationToken);
 	}
 
 	[Fact]
@@ -46,7 +46,7 @@ public class IssueRefreshTokenControllerUnitTests : BaseRefreshTokenPresentation
 		await _controller.IssueAsync(_request, CancellationToken);
 
 		// Assert
-		await Sender.ShouldReceiveOneSendAsync(_request, CancellationToken);
+		await Sender.ShouldHaveReceivedOneSendAsync(_request, CancellationToken);
 	}
 
 	[Fact]
@@ -56,6 +56,6 @@ public class IssueRefreshTokenControllerUnitTests : BaseRefreshTokenPresentation
 		await _controller.IssueAsync(_request, CancellationToken);
 
 		// Assert
-		CookieStore.ShouldReceiveOneSet(RefreshToken);
+		CookieStore.ShouldHaveReceivedOneSet(_request, RefreshToken);
 	}
 }

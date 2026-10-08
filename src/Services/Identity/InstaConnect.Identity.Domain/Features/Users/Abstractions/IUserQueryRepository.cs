@@ -4,9 +4,9 @@ public interface IUserQueryRepository
 {
 	public Task<ICollection<UserResponse>> GetAllAsync(
 		UsersFilterQuery filter,
-		CurrentUserQuery current,
 		UsersSortingQuery sorting,
 		UsersPaginationQuery pagination,
+		CurrentUserQuery current,
 		CancellationToken cancellationToken);
 
 	public Task<long> GetTotalCountAsync(

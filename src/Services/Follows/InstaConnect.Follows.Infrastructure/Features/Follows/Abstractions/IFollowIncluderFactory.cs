@@ -1,8 +1,8 @@
-using InstaConnect.Common.Infrastructure.Features.Data.Abstractions;
+using InstaConnect.Common.Infrastructure.Features.Databases.Abstractions;
 using InstaConnect.Follows.Domain.Features.Common.Models.Requests;
 
 namespace InstaConnect.Follows.Infrastructure.Features.Follows.Abstractions;
 
-internal interface IFollowIncluderFactory
+public interface IFollowIncluderFactory
 	: IIncluderFactory<FollowsIncludeType, FollowsDestinationType, FollowsIncludeDescriptor, IFollowIncluder, Follow>;
 

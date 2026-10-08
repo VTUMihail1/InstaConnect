@@ -6,39 +6,12 @@ using Xunit;
 
 namespace InstaConnect.Follows.Tests.Features.Follows.Utilities;
 
-public abstract class BaseFollowWebTest : BaseFollowTest, IClassFixture<FollowsWebApplicationFactory>, IAsyncLifetime
+public abstract class BaseFollowWebTest : BaseFollowTest, IClassFixture<FollowsWebApplicationFactory>
 {
 	protected IServiceScope ServiceScope { get; }
-
-	protected IEventHarness EventHarness { get; }
 
 	protected BaseFollowWebTest(FollowsWebApplicationFactory webApplicationFactory)
 	{
 		ServiceScope = webApplicationFactory.Services.CreateScope();
-		EventHarness = ServiceScope.GetEventHarness();
-	}
-
-	public async Task InitializeAsync()
-	{
-		await EventHarness.StartAsync(CancellationToken);
-		await ServiceScope.ResetFollowsDatabase(CancellationToken);
-		await OnInitializeAsync();
-	}
-
-	public async Task DisposeAsync()
-	{
-		await OnDisposeAsync();
-		await ServiceScope.ResetFollowsDatabase(CancellationToken);
-		await EventHarness.StopAsync(CancellationToken);
-	}
-
-	protected virtual Task OnInitializeAsync()
-	{
-		return Task.CompletedTask;
-	}
-
-	protected virtual Task OnDisposeAsync()
-	{
-		return Task.CompletedTask;
 	}
 }

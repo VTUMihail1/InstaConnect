@@ -1,26 +1,23 @@
 using InstaConnect.Follows.Domain.Features.Users.Models.Responses;
-using InstaConnect.Follows.Infrastructure.Features.Users.Extensions;
-
-using MongoDB.Driver;
 
 namespace InstaConnect.Follows.Infrastructure.Features.Users.Helpers.Repositories;
 
 internal class UserQueryRepository : IUserQueryRepository
 {
-	private readonly IFollowsContext _context;
+	private readonly IUserCollection _collection;
 
-	public UserQueryRepository(IFollowsContext context)
+	public UserQueryRepository(IUserCollection collection)
 	{
-		_context = context;
+		_collection = collection;
 	}
+
 	public async Task<UserResponse?> GetByIdAsync(
 		UserId id,
 		CurrentUserQuery currentUser,
 		CancellationToken cancellationToken)
 	{
-		return await _context
-			.Users
-			.AggregateWithCaseInsensitiveCollation()
+		return await _collection
+			.AggregateFluent()
 			.Match(id)
 			.ProjectToFullResponse(currentUser)
 			.FirstOrDefaultAsync(cancellationToken);
@@ -30,9 +27,8 @@ internal class UserQueryRepository : IUserQueryRepository
 		UserId id,
 		CancellationToken cancellationToken)
 	{
-		return await _context
-			.Users
-			.AggregateWithCaseInsensitiveCollation()
+		return await _collection
+			.AggregateFluent()
 			.Match(id)
 			.AnyAsync(cancellationToken);
 	}

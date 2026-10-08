@@ -1,45 +1,31 @@
-using InstaConnect.Common.Domain.Features.Data.Abstractions;
-using InstaConnect.Common.Infrastructure.Features.Data.Abstractions;
-using InstaConnect.Identity.Infrastructure.Features.UserClaims.Extensions;
-using InstaConnect.Identity.Infrastructure.Features.Users.Extensions;
-
-using MongoDB.Driver;
-
 namespace InstaConnect.Identity.Infrastructure.Features.UserClaims.Helpers.Repositories;
 
 internal class UserClaimQueryRepository : IUserClaimQueryRepository
 {
-	private readonly IPaginator _paginator;
-	private readonly IIdentityContext _context;
-	private readonly ISortOrdererFactory _sortOrdererFactory;
-	private readonly IUserClaimsSortTermerFactory _claimSortTermerFactory;
+	private readonly IUserClaimCollection _collection;
+	private readonly IUserClaimIncludeBuilderFactory _includeBuilderFactory;
 
 	public UserClaimQueryRepository(
-		IPaginator paginator,
-		IIdentityContext context,
-		ISortOrdererFactory sortOrdererFactory,
-		IUserClaimsSortTermerFactory claimSortTermerFactory)
+		IUserClaimCollection collection,
+		IUserClaimIncludeBuilderFactory includeBuilderFactory)
 	{
-		_paginator = paginator;
-		_context = context;
-		_sortOrdererFactory = sortOrdererFactory;
-		_claimSortTermerFactory = claimSortTermerFactory;
+		_collection = collection;
+		_includeBuilderFactory = includeBuilderFactory;
 	}
 
 	public async Task<ICollection<UserClaimResponse>> GetAllAsync(
 		UserClaimsFilterQuery filter,
-		CurrentUserQuery current,
 		UserClaimsSortingQuery sorting,
 		UserClaimsPaginationQuery pagination,
+		CurrentUserQuery current,
 		CancellationToken cancellationToken)
 	{
-		return await _context
-			.UserClaims
-			.AggregateWithCaseInsensitiveCollation()
+		return await _collection
+			.AggregateFluent()
 			.Match(filter)
 			.ProjectToResponseWithoutUser(current)
-			.Sort(_sortOrdererFactory, _claimSortTermerFactory, sorting)
-			.Paginate(_paginator, pagination)
+			.ApplySorting(sorting)
+			.ApplyPagination(pagination)
 			.ToListAsync(cancellationToken);
 	}
 
@@ -47,11 +33,10 @@ internal class UserClaimQueryRepository : IUserClaimQueryRepository
 		UserClaimsFilterQuery filter,
 		CancellationToken cancellationToken)
 	{
-		return await _context
-			.UserClaims
-			.AggregateWithCaseInsensitiveCollation()
+		return await _collection
+			.AggregateFluent()
 			.Match(filter)
-			.GetCount(cancellationToken);
+			.GetCountAsync(cancellationToken);
 	}
 
 	public async Task<UserClaimResponse?> GetByIdAsync(
@@ -59,9 +44,11 @@ internal class UserClaimQueryRepository : IUserClaimQueryRepository
 		CurrentUserQuery current,
 		CancellationToken cancellationToken)
 	{
-		return await _context
-			.UserClaims
-			.AggregateWithCaseInsensitiveCollation()
+		var include = _includeBuilderFactory.Create().WithUser().Build();
+
+		return await _collection
+			.AggregateFluent()
+			.ApplyIncludes(include)
 			.Match(id)
 			.ProjectToFullResponse(current)
 			.FirstOrDefaultAsync(cancellationToken);
@@ -71,9 +58,8 @@ internal class UserClaimQueryRepository : IUserClaimQueryRepository
 		UserClaimId id,
 		CancellationToken cancellationToken)
 	{
-		return await _context
-			.UserClaims
-			.AggregateWithCaseInsensitiveCollation()
+		return await _collection
+			.AggregateFluent()
 			.Match(id)
 			.AnyAsync(cancellationToken);
 	}

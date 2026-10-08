@@ -13,7 +13,7 @@ public static class ServiceCollectionExtensions
 {
 	extension(IServiceCollection serviceCollection)
 	{
-		public IServiceCollection AddRazorEmailRenderer(Assembly templateAssembly, string rootNamespace)
+		public IServiceCollection AddEmailRenderers(Assembly templateAssembly, string rootNamespace)
 		{
 			serviceCollection.AddSingleton<IRazorLightEngine>(_ =>
 				new RazorLightEngineBuilder()

@@ -1,0 +1,25 @@
+using InstaConnect.Posts.Infrastructure.Features.Posts.Helpers.Repositories;
+using InstaConnect.Posts.Infrastructure.Tests.Features.Posts.Assertions;
+using InstaConnect.Posts.Infrastructure.Tests.Unit.Features.Posts.Utilities;
+
+namespace InstaConnect.Posts.Infrastructure.Tests.Unit.Features.Posts.Repositories;
+
+public class UpdatePostCommandRepositoryUnitTests : BasePostInfrastructureCommandUnitTest
+{
+	private readonly PostCommandRepository _repository;
+
+	public UpdatePostCommandRepositoryUnitTests()
+	{
+		_repository = new(Collection, IncludeBuilderFactory);
+	}
+
+	[Fact]
+	public async Task UpdateAsync_ShouldCallTheCollectionUpdateAsync_WhenRequestIsValid()
+	{
+		// Act
+		await _repository.UpdateAsync(Post, CancellationToken);
+
+		// Assert
+		await Collection.ShouldHaveReceivedOneUpdateAsync(Post, CancellationToken);
+	}
+}

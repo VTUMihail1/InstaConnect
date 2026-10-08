@@ -6,11 +6,11 @@ namespace InstaConnect.Chats.Infrastructure.Features.Chats.Helpers.Includers;
 
 internal class ParticipantOneIncluder : IChatIncluder
 {
-	private readonly IChatsContext _context;
+	private readonly IMongoCollection<User> _collection;
 
-	public ParticipantOneIncluder(IChatsContext context)
+	public ParticipantOneIncluder(IMongoCollection<User> collection)
 	{
-		_context = context;
+		_collection = collection;
 	}
 
 	public ChatsDestinationType DestinationType => ChatsDestinationType.Chat;
@@ -21,7 +21,7 @@ internal class ParticipantOneIncluder : IChatIncluder
 	{
 		return aggregate
 			.IncludeOne(
-				_context.Users,
+				_collection,
 				p => p.Id.ParticipantOneId,
 				u => u.Id,
 				p => p.ParticipantOne!

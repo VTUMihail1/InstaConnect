@@ -1,4 +1,4 @@
-using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Requests.Abstractions;
 using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
 using InstaConnect.Common.Presentation.Features.Controllers.Utilities;
 using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Add;
@@ -6,6 +6,7 @@ using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.V
 
 namespace InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Controllers.v1;
 
+[ApiController]
 [ApiVersion(ForgotPasswordTokenRoutes.Version1)]
 [Route(ForgotPasswordTokenRoutes.Resource)]
 [EnableRateLimiting(RateLimiterPolicies.Default)]

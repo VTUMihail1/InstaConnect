@@ -1,4 +1,5 @@
-using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Requests.Abstractions;
+using InstaConnect.Common.Application.Tests.Features.Utilities;
 
 namespace InstaConnect.Posts.Presentation.Tests.Features.PostCommentLikes.Utilities;
 
@@ -6,46 +7,38 @@ public static class PostCommentLikeMockSetups
 {
 	extension(IApplicationSender sender)
 	{
-		public void SetupGetAllQueryRequest(
+		public void SetupSendAsync(
 		GetAllPostCommentLikesApiRequest request,
 		PostComment postComment,
 		ICollection<PostCommentLike> postCommentLikes,
 		CancellationToken cancellationToken)
 		{
-			sender
-				.SendAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesQueryRequest(request), cancellationToken)
-				.ReturnsResponse(postCommentLikes.ToResponse(postComment, request));
+			sender.SetupSendAsync(request.IsGetAllPostCommentLikesQueryRequest(), postCommentLikes.ToResponse(request, postComment), cancellationToken);
 		}
 
-		public void SetupGetAllForUserQueryRequest(
+		public void SetupSendAsync(
 			GetAllPostCommentLikesForUserApiRequest request,
 			User user,
 			ICollection<PostCommentLike> postCommentLikes,
 			CancellationToken cancellationToken)
 		{
-			sender
-				.SendAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesForUserQueryRequest(request), cancellationToken)
-				.ReturnsResponse(postCommentLikes.ToResponse(user, request));
+			sender.SetupSendAsync(request.IsGetAllPostCommentLikesForUserQueryRequest(), postCommentLikes.ToResponse(request, user), cancellationToken);
 		}
 
-		public void SetupGetByIdQueryRequest(
+		public void SetupSendAsync(
 			GetPostCommentLikeByIdApiRequest request,
 			PostCommentLike postCommentLike,
 			CancellationToken cancellationToken)
 		{
-			sender
-				.SendAsync(PostCommentLikeMatcher.IsGetPostCommentLikeByIdQueryRequest(request), cancellationToken)
-				.ReturnsResponse(postCommentLike.ToResponse(request));
+			sender.SetupSendAsync(request.IsGetPostCommentLikeByIdQueryRequest(), postCommentLike.ToResponse(request), cancellationToken);
 		}
 
-		public void SetupAddCommandRequest(
+		public void SetupSendAsync(
 			AddPostCommentLikeApiRequest request,
 			PostCommentLike postCommentLike,
 			CancellationToken cancellationToken)
 		{
-			sender
-				.SendAsync(PostCommentLikeMatcher.IsAddPostCommentLikeCommandRequest(request), cancellationToken)
-				.ReturnsResponse(postCommentLike.ToResponse(request));
+			sender.SetupSendAsync(request.IsAddPostCommentLikeCommandRequest(), postCommentLike.ToResponse(request), cancellationToken);
 		}
 	}
 }

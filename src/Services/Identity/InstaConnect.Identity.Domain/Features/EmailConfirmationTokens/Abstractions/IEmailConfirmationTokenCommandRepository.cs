@@ -4,7 +4,7 @@ public interface IEmailConfirmationTokenCommandRepository
 {
 	public Task<EmailConfirmationToken?> GetByIdAsync(
 		EmailConfirmationTokenId id,
-		EmailConfirmationTokenInclude? include,
+		EmailConfirmationTokenInclude include,
 		CancellationToken cancellationToken);
 
 	public Task<EmailConfirmationToken?> GetByIdAsync(

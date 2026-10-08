@@ -1,16 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <PackageReference Include="MediatR" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Events\InstaConnect.Common.Events.csproj" />
     <ProjectReference Include="..\..\Identity\InstaConnect.Identity.Events\InstaConnect.Identity.Events.csproj" />
   </ItemGroup>
 
   <ItemGroup Label="Common">
-    <Using Include="InstaConnect.Common.Events.Features.Common.Abstractions" />
+    <Using Include="InstaConnect.Common.Events.Features.Events.Abstractions" />
   </ItemGroup>
 
 </Project>

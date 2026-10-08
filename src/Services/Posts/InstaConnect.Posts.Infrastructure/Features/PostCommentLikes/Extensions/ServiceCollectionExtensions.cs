@@ -10,9 +10,13 @@ internal static class ServiceCollectionExtensions
 	{
 		internal IServiceCollection AddPostCommentLikeServices()
 		{
+			const string CollectionName = "post_comment_likes";
+
 			serviceCollection.AddImplementationsOf<IPostCommentLikesSortTermer>(PostsInfrastructureReference.Assembly);
 			serviceCollection.AddImplementationsOf<IPostCommentLikesForUserSortTermer>(PostsInfrastructureReference.Assembly);
 			serviceCollection.AddImplementationsOf<IPostCommentLikeIncluder>(PostsInfrastructureReference.Assembly);
+
+			serviceCollection.AddCollection<PostCommentLike>(CollectionName);
 
 			BsonClassMap.TryRegisterClassMap<PostCommentLike>(cm =>
 			{

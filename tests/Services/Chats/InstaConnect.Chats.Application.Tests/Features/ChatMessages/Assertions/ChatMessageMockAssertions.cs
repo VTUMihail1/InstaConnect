@@ -1,4 +1,5 @@
 using InstaConnect.Chats.Application.Tests.Features.ChatMessages.Utilities;
+using InstaConnect.Chats.Domain.Tests.Features.ChatMessages.Assertions;
 
 namespace InstaConnect.Chats.Application.Tests.Features.ChatMessages.Assertions;
 
@@ -6,37 +7,32 @@ public static class ChatMessageMockAssertions
 {
 	extension(IChatMessageQueryService chatMessageService)
 	{
-		public async Task ShouldReceiveOneGetAllAsync(GetAllChatMessagesQueryRequest request, CancellationToken cancellationToken)
+		public async Task ShouldHaveReceivedOneGetAllAsync(GetAllChatMessagesQueryRequest request, CancellationToken cancellationToken)
 		{
-			await chatMessageService.ShouldHaveReceivedOne()
-				.GetAllAsync(ChatMessageMatcher.IsGetAllChatMessagesQuery(request), cancellationToken);
+			await chatMessageService.ShouldHaveReceivedOneGetAllAsync(request.IsGetAllChatMessagesQuery(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneGetByIdAsync(GetChatMessageByIdQueryRequest request, CancellationToken cancellationToken)
+		public async Task ShouldHaveReceivedOneGetByIdAsync(GetChatMessageByIdQueryRequest request, CancellationToken cancellationToken)
 		{
-			await chatMessageService.ShouldHaveReceivedOne()
-				.GetByIdAsync(ChatMessageMatcher.IsGetChatMessageByIdQuery(request), cancellationToken);
+			await chatMessageService.ShouldHaveReceivedOneGetByIdAsync(request.IsGetChatMessageByIdQuery(), cancellationToken);
 		}
 	}
 
 	extension(IChatMessageCommandService chatMessageService)
 	{
-		public async Task ShouldReceiveOneAddAsync(AddChatMessageCommandRequest request, CancellationToken cancellationToken)
+		public async Task ShouldHaveReceivedOneAddAsync(AddChatMessageCommandRequest request, CancellationToken cancellationToken)
 		{
-			await chatMessageService.ShouldHaveReceivedOne()
-				.AddAsync(ChatMessageMatcher.IsAddChatMessageCommand(request), cancellationToken);
+			await chatMessageService.ShouldHaveReceivedOneAddAsync(request.IsAddChatMessageCommand(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneUpdateAsync(UpdateChatMessageCommandRequest request, CancellationToken cancellationToken)
+		public async Task ShouldHaveReceivedOneUpdateAsync(UpdateChatMessageCommandRequest request, CancellationToken cancellationToken)
 		{
-			await chatMessageService.ShouldHaveReceivedOne()
-				.UpdateAsync(ChatMessageMatcher.IsUpdateChatMessageCommand(request), cancellationToken);
+			await chatMessageService.ShouldHaveReceivedOneUpdateAsync(request.IsUpdateChatMessageCommand(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneDeleteAsync(DeleteChatMessageCommandRequest request, CancellationToken cancellationToken)
+		public async Task ShouldHaveReceivedOneDeleteAsync(DeleteChatMessageCommandRequest request, CancellationToken cancellationToken)
 		{
-			await chatMessageService.ShouldHaveReceivedOne()
-				.DeleteAsync(ChatMessageMatcher.IsDeleteChatMessageCommand(request), cancellationToken);
+			await chatMessageService.ShouldHaveReceivedOneDeleteAsync(request.IsDeleteChatMessageCommand(), cancellationToken);
 		}
 	}
 }

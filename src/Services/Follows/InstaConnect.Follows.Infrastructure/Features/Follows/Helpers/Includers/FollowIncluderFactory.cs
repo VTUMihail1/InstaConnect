@@ -11,21 +11,11 @@ internal class FollowIncluderFactory : IFollowIncluderFactory
 		_includers = includers;
 	}
 
-	public IEnumerable<IFollowIncluder> Create(ICollection<FollowsIncludeDescriptor>? descriptors)
+	public IEnumerable<IFollowIncluder> Create(ICollection<FollowsIncludeDescriptor> descriptors)
 	{
-		if (descriptors == null)
-		{
-			return [];
-		}
-
 		var includers = _includers.Where(s => descriptors.Any(p =>
 														p.IncludeType == s.IncludeType &&
 														p.DestinationType == s.DestinationType));
-
-		if (includers.IsEmpty())
-		{
-			throw new FollowIncludeDescriptorsNotSupportedException(descriptors);
-		}
 
 		return includers;
 	}

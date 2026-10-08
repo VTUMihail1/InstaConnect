@@ -1,4 +1,3 @@
-using InstaConnect.Common.Infrastructure.Extensions;
 using InstaConnect.Common.Infrastructure.Features.AccessTokens.Abstractions;
 using InstaConnect.Common.Infrastructure.Features.AccessTokens.Helpers;
 using InstaConnect.Common.Infrastructure.Features.AccessTokens.Models;
@@ -8,13 +7,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 
-namespace InstaConnect.Common.Infrastructure.Extensions;
+namespace InstaConnect.Common.Infrastructure.Features.AccessTokens.Extensions;
 
-public static partial class ServiceCollectionExtensions
+public static class ServiceCollectionExtensions
 {
 	extension(IServiceCollection serviceCollection)
 	{
-		public IServiceCollection AddJwtBearer(IConfiguration configuration)
+		public IServiceCollection AddAccessTokens(IConfiguration configuration)
 		{
 			serviceCollection.AddValidatedOptions<AccessTokenOptions>(AccessTokenOptions.SectionName);
 			var options = configuration.GetOptions<AccessTokenOptions>(AccessTokenOptions.SectionName);

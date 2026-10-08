@@ -1,4 +1,5 @@
-using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Requests.Abstractions;
+using InstaConnect.Common.Application.Tests.Features.Utilities;
 
 namespace InstaConnect.Identity.Presentation.Tests.Features.UserClaims.Utilities;
 
@@ -6,25 +7,21 @@ public static class UserClaimMockSetups
 {
 	extension(IApplicationSender sender)
 	{
-		public void SetupGetAllQueryRequest(
+		public void SetupSendAsync(
 		GetAllUserClaimsApiRequest request,
 		User user,
 		ICollection<UserClaim> userClaims,
 		CancellationToken cancellationToken)
 		{
-			sender
-				.SendAsync(UserClaimMatcher.IsGetAllUserClaimsQueryRequest(request), cancellationToken)
-				.ReturnsResponse(userClaims.ToResponse(user, request));
+			sender.SetupSendAsync(request.IsGetAllUserClaimsQueryRequest(), userClaims.ToResponse(request, user), cancellationToken);
 		}
 
-		public void SetupAddCommandRequest(
+		public void SetupSendAsync(
 			AddUserClaimApiRequest request,
 			UserClaim userClaim,
 			CancellationToken cancellationToken)
 		{
-			sender
-				.SendAsync(UserClaimMatcher.IsAddUserClaimCommandRequest(request), cancellationToken)
-				.ReturnsResponse(userClaim.ToResponse(request));
+			sender.SetupSendAsync(request.IsAddUserClaimCommandRequest(), userClaim.ToResponse(request), cancellationToken);
 		}
 	}
 }

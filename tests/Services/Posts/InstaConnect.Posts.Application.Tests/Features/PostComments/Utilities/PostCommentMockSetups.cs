@@ -1,62 +1,54 @@
+using InstaConnect.Posts.Domain.Tests.Features.PostComments.Utilities;
+
 namespace InstaConnect.Posts.Application.Tests.Features.PostComments.Utilities;
 
 public static class PostCommentMockSetups
 {
 	extension(IPostCommentQueryService commentService)
 	{
-		public void SetupGetAllQuery(
+		public void SetupGetAllAsync(
 		GetAllPostCommentsQueryRequest request,
 		Post post,
 		ICollection<PostComment> postComments,
 		CancellationToken cancellationToken)
 		{
-			commentService
-				.GetAllAsync(PostCommentMatcher.IsGetAllPostCommentsQuery(request), cancellationToken)
-				.ReturnsResponse(postComments.ToResponse(post, request));
+			commentService.SetupGetAllAsync(request.IsGetAllPostCommentsQuery(), postComments.ToResponse(request, post), cancellationToken);
 		}
 
-		public void SetupGetAllForUserQuery(
+		public void SetupGetAllForUserAsync(
 			GetAllPostCommentsForUserQueryRequest request,
 			User user,
 			ICollection<PostComment> postComments,
 			CancellationToken cancellationToken)
 		{
-			commentService
-				.GetAllForUserAsync(PostCommentMatcher.IsGetAllPostCommentsForUserQuery(request), cancellationToken)
-				.ReturnsResponse(postComments.ToResponse(user, request));
+			commentService.SetupGetAllForUserAsync(request.IsGetAllPostCommentsForUserQuery(), postComments.ToResponse(request, user), cancellationToken);
 		}
 
-		public void SetupGetByIdQuery(
+		public void SetupGetByIdAsync(
 			GetPostCommentByIdQueryRequest request,
 			PostComment postComment,
 			CancellationToken cancellationToken)
 		{
-			commentService
-				.GetByIdAsync(PostCommentMatcher.IsGetPostCommentByIdQuery(request), cancellationToken)
-				.ReturnsResponse(postComment.ToResponse(request));
+			commentService.SetupGetByIdAsync(request.IsGetPostCommentByIdQuery(), postComment.ToResponse(request), cancellationToken);
 		}
 	}
 
 	extension(IPostCommentCommandService commentService)
 	{
-		public void SetupAddCommand(
+		public void SetupAddAsync(
 		AddPostCommentCommandRequest request,
 		PostComment postComment,
 		CancellationToken cancellationToken)
 		{
-			commentService
-				.AddAsync(PostCommentMatcher.IsAddPostCommentCommand(request), cancellationToken)
-				.ReturnsResponse(postComment.ToResponse(request));
+			commentService.SetupAddAsync(request.IsAddPostCommentCommand(), postComment.ToResponse(request), cancellationToken);
 		}
 
-		public void SetupUpdateCommand(
+		public void SetupUpdateAsync(
 			UpdatePostCommentCommandRequest request,
 			PostComment postComment,
 			CancellationToken cancellationToken)
 		{
-			commentService
-				.UpdateAsync(PostCommentMatcher.IsUpdatePostCommentCommand(request), cancellationToken)
-				.ReturnsResponse(postComment.ToResponse(request));
+			commentService.SetupUpdateAsync(request.IsUpdatePostCommentCommand(), postComment.ToResponse(request), cancellationToken);
 		}
 	}
 }

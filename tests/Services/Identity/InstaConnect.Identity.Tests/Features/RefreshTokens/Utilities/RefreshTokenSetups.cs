@@ -32,37 +32,37 @@ public static class RefreshTokenSetups
 			return serviceScope.ServiceProvider.GetRefreshTokenIncludeBuilderFactory();
 		}
 
-		public async Task<RefreshToken?> GetRefreshTokenByIdAsync(
+		public async Task<RefreshToken?> GetByIdAsync(
 			RefreshTokenId id,
 			CancellationToken cancellationToken)
 		{
 			var refreshTokenInclude = serviceScope.GetRefreshTokenIncludeBuilderFactory().Create().WithUser().Build();
 
-			return await serviceScope.GetRefreshTokenCommandRepository().GetByIdAsync(id, refreshTokenInclude, cancellationToken);
+			return (await serviceScope.GetRefreshTokenCommandRepository().GetByIdAsync(id, refreshTokenInclude, cancellationToken)).SetUser();
 		}
 
-		public async Task AddRefreshTokenAsync(
+		public async Task AddAsync(
 			RefreshToken refreshToken,
 			CancellationToken cancellationToken)
 		{
 			await serviceScope.GetRefreshTokenCommandRepository().AddAsync(refreshToken, cancellationToken);
 		}
 
-		public async Task AddRefreshTokenRangeAsync(
+		public async Task AddRangeAsync(
 			IEnumerable<RefreshToken> refreshTokens,
 			CancellationToken cancellationToken)
 		{
 			await serviceScope.GetRefreshTokenCommandRepository().AddRangeAsync(refreshTokens, cancellationToken);
 		}
 
-		public async Task UpdateRefreshTokenAsync(
+		public async Task UpdateAsync(
 			RefreshToken refreshToken,
 			CancellationToken cancellationToken)
 		{
 			await serviceScope.GetRefreshTokenCommandRepository().UpdateAsync(refreshToken, cancellationToken);
 		}
 
-		public async Task DeleteRefreshTokenAsync(
+		public async Task DeleteAsync(
 			RefreshToken refreshToken,
 			CancellationToken cancellationToken)
 		{

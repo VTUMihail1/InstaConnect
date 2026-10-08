@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 
-using InstaConnect.Common.Application.Features.Validations.Utilities;
+using InstaConnect.Common.Domain.Features.Validations.Utilities;
 using InstaConnect.Common.Tests.Features.DataAttributes.DateTimeOffsets.Base;
 
 namespace InstaConnect.Common.Tests.Features.DataAttributes.DateTimeOffsets.Empty;
@@ -9,6 +9,6 @@ internal class EmptyDateTimeOffsetMessageTransformer : IDateTimeOffsetMessageTra
 {
 	public string Transform<T>(Expression<Func<T, DateTimeOffset>> propertyExpression, DateTimeOffset value)
 	{
-		return CommonErrorMessages.GetEmpty(propertyExpression.GetProperty());
+		return CommonValidationErrorMessages.GetEmpty(propertyExpression.GetPropertyDisplayName());
 	}
 }

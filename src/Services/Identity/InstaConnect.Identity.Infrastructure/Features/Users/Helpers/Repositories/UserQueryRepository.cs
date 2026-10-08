@@ -1,44 +1,27 @@
-using InstaConnect.Common.Domain.Features.Data.Abstractions;
-using InstaConnect.Common.Infrastructure.Features.Data.Abstractions;
-using InstaConnect.Identity.Infrastructure.Features.Users.Extensions;
-
-using MongoDB.Driver;
-
 namespace InstaConnect.Identity.Infrastructure.Features.Users.Helpers.Repositories;
 
 internal class UserQueryRepository : IUserQueryRepository
 {
-	private readonly IPaginator _paginator;
-	private readonly IIdentityContext _context;
-	private readonly ISortOrdererFactory _sortOrdererFactory;
-	private readonly IUsersSortTermerFactory _sortTermerFactory;
+	private readonly IUserCollection _collection;
 
-	public UserQueryRepository(
-		IPaginator paginator,
-		IIdentityContext context,
-		ISortOrdererFactory sortOrdererFactory,
-		IUsersSortTermerFactory sortTermerFactory)
+	public UserQueryRepository(IUserCollection collection)
 	{
-		_paginator = paginator;
-		_context = context;
-		_sortOrdererFactory = sortOrdererFactory;
-		_sortTermerFactory = sortTermerFactory;
+		_collection = collection;
 	}
 
 	public async Task<ICollection<UserResponse>> GetAllAsync(
 		UsersFilterQuery filter,
-		CurrentUserQuery current,
 		UsersSortingQuery sorting,
 		UsersPaginationQuery pagination,
+		CurrentUserQuery current,
 		CancellationToken cancellationToken)
 	{
-		return await _context
-			.Users
-			.AggregateWithCaseInsensitiveCollation()
+		return await _collection
+			.AggregateFluent()
 			.Match(filter)
 			.ProjectToFullResponse(current)
-			.Sort(_sortOrdererFactory, _sortTermerFactory, sorting)
-			.Paginate(_paginator, pagination)
+			.ApplySorting(sorting)
+			.ApplyPagination(pagination)
 			.ToListAsync(cancellationToken);
 	}
 
@@ -46,11 +29,10 @@ internal class UserQueryRepository : IUserQueryRepository
 		UsersFilterQuery filter,
 		CancellationToken cancellationToken)
 	{
-		return await _context
-			.Users
-			.AggregateWithCaseInsensitiveCollation()
+		return await _collection
+			.AggregateFluent()
 			.Match(filter)
-			.GetCount(cancellationToken);
+			.GetCountAsync(cancellationToken);
 	}
 
 	public async Task<UserResponse?> GetByIdAsync(
@@ -58,9 +40,8 @@ internal class UserQueryRepository : IUserQueryRepository
 		CurrentUserQuery current,
 		CancellationToken cancellationToken)
 	{
-		return await _context
-			.Users
-			.AggregateWithCaseInsensitiveCollation()
+		return await _collection
+			.AggregateFluent()
 			.Match(id)
 			.ProjectToFullResponse(current)
 			.FirstOrDefaultAsync(cancellationToken);
@@ -70,9 +51,8 @@ internal class UserQueryRepository : IUserQueryRepository
 		UserId id,
 		CancellationToken cancellationToken)
 	{
-		return await _context
-			.Users
-			.AggregateWithCaseInsensitiveCollation()
+		return await _collection
+			.AggregateFluent()
 			.Match(id)
 			.AnyAsync(cancellationToken);
 	}

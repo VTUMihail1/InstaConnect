@@ -10,7 +10,7 @@ public interface IUserClaimCommandRepository
 
 	public Task<UserClaim?> GetByIdAsync(UserClaimId id, CancellationToken cancellationToken);
 
-	public Task<UserClaim?> GetByIdAsync(UserClaimId id, UserClaimInclude? include, CancellationToken cancellationToken);
+	public Task<UserClaim?> GetByIdAsync(UserClaimId id, UserClaimInclude include, CancellationToken cancellationToken);
 
 	public Task<bool> ExistsByIdAsync(UserClaimId id, CancellationToken cancellationToken);
 }

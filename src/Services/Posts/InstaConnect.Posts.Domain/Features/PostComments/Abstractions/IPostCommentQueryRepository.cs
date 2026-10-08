@@ -4,16 +4,16 @@ public interface IPostCommentQueryRepository
 {
 	public Task<ICollection<PostCommentResponse>> GetAllAsync(
 		PostCommentsFilterQuery filter,
-		CurrentUserQuery currentUser,
 		PostCommentsSortingQuery sorting,
 		PostCommentsPaginationQuery pagination,
+		CurrentUserQuery currentUser,
 		CancellationToken cancellationToken);
 
 	public Task<ICollection<PostCommentResponse>> GetAllForUserAsync(
 		PostCommentsForUserFilterQuery filter,
-		CurrentUserQuery currentUser,
 		PostCommentsForUserSortingQuery sorting,
 		PostCommentsPaginationQuery pagination,
+		CurrentUserQuery currentUser,
 		CancellationToken cancellationToken);
 
 	public Task<long> GetTotalCountAsync(

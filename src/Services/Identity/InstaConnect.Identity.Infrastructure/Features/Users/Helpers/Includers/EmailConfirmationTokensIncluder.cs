@@ -6,11 +6,11 @@ namespace InstaConnect.Identity.Infrastructure.Features.Users.Helpers.Includers;
 
 internal class EmailConfirmationTokensIncluder : IUserIncluder
 {
-	private readonly IIdentityContext _context;
+	private readonly IMongoCollection<EmailConfirmationToken> _collection;
 
-	public EmailConfirmationTokensIncluder(IIdentityContext context)
+	public EmailConfirmationTokensIncluder(IMongoCollection<EmailConfirmationToken> collection)
 	{
-		_context = context;
+		_collection = collection;
 	}
 
 	public IdentityDestinationType DestinationType => IdentityDestinationType.User;
@@ -21,7 +21,7 @@ internal class EmailConfirmationTokensIncluder : IUserIncluder
 	{
 		return aggregate
 			.IncludeMany(
-				_context.EmailConfirmationTokens,
+				_collection,
 				p => p.Id,
 				l => l.Id.Id,
 				p => p.EmailConfirmationTokens

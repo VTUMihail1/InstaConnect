@@ -28,7 +28,7 @@ public class ChatMessageApplicationMappings : IRegister
 											new(src.CurrentUserId))));
 
 		config.NewConfig<ChatMessageCollectionResponse, GetAllChatMessagesQueryResponse>()
-			.ConstructUsing(src => new(src.Adapt<ChatMessageCollectionQueryResponse>(config)!));
+			.ConstructUsing(src => new(src.Adapt<ChatMessageCollectionQueryResponse>(config)));
 
 		config.NewConfig<GetChatMessageByIdQueryRequest, GetChatMessageByIdQuery>()
 			.ConstructUsing(src => new(
@@ -41,7 +41,7 @@ public class ChatMessageApplicationMappings : IRegister
 										   new(src.CurrentUserId))));
 
 		config.NewConfig<ChatMessageResponse, GetChatMessageByIdQueryResponse>()
-			.ConstructUsing(src => new(src.Adapt<ChatMessageQueryResponse>(config)!));
+			.ConstructUsing(src => new(src.Adapt<ChatMessageQueryResponse>(config)));
 
 		config.NewConfig<AddChatMessageCommandRequest, AddChatMessageCommand>()
 			.ConstructUsing(src => new(
@@ -51,7 +51,7 @@ public class ChatMessageApplicationMappings : IRegister
 									   src.Content));
 
 		config.NewConfig<ChatMessageId, AddChatMessageCommandResponse>()
-			.ConstructUsing(src => new(src.Adapt<ChatMessageIdCommandResponse>(config)!));
+			.ConstructUsing(src => new(src.Adapt<ChatMessageIdCommandResponse>(config)));
 
 		config.NewConfig<UpdateChatMessageCommandRequest, UpdateChatMessageCommand>()
 			.ConstructUsing(src => new(
@@ -63,7 +63,7 @@ public class ChatMessageApplicationMappings : IRegister
 									   src.Content));
 
 		config.NewConfig<ChatMessageId, UpdateChatMessageCommandResponse>()
-			.ConstructUsing(src => new(src.Adapt<ChatMessageIdCommandResponse>(config)!));
+			.ConstructUsing(src => new(src.Adapt<ChatMessageIdCommandResponse>(config)));
 
 		config.NewConfig<DeleteChatMessageCommandRequest, DeleteChatMessageCommand>()
 			.ConstructUsing(src => new(
@@ -95,7 +95,7 @@ public class ChatMessageApplicationMappings : IRegister
 			.ConstructUsing(src => new(
 				src.Chat.Adapt<ChatQueryResponse>(config),
 				src.Sender.Adapt<UserQueryResponse>(config),
-				src.ChatMessages.Adapt<ICollection<ChatMessageQueryResponse>>(config)!,
+				src.ChatMessages.Adapt<ICollection<ChatMessageQueryResponse>>(config),
 				src.Page,
 				src.PageSize,
 				src.TotalCount,

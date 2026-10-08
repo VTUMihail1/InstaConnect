@@ -12,7 +12,7 @@ internal class RefreshTokenPresentationMappings : IRegister
 {
 	public void Register(TypeAdapterConfig config)
 	{
-		config.NewConfig<SessionTokenCommandResponse, SetRefreshTokenCookieRequest>()
+		config.NewConfig<SessionTokenCommandResponse, SetRefreshTokenCookieApiRequest>()
 			.ConstructUsing(src => new(src.Id.Id, src.Id.Value, src.ExpiresAtUtc));
 
 		config.NewConfig<IssueRefreshTokenApiRequest, IssueRefreshTokenCommandRequest>()
@@ -21,7 +21,7 @@ internal class RefreshTokenPresentationMappings : IRegister
 									   src.Body.Password));
 
 		config.NewConfig<IssueRefreshTokenCommandResponse, IssueRefreshTokenApiResponse>()
-			.ConstructUsing(src => new(src.Response.AccessToken.Adapt<AccessTokenApiResponse>(config)!));
+			.ConstructUsing(src => new(src.Response.AccessToken.Adapt<AccessTokenApiResponse>(config)));
 
 		config.NewConfig<RotateRefreshTokenApiRequest, RotateRefreshTokenCommandRequest>()
 			.ConstructUsing(src => new(
@@ -29,7 +29,7 @@ internal class RefreshTokenPresentationMappings : IRegister
 				src.Value));
 
 		config.NewConfig<RotateRefreshTokenCommandResponse, RotateRefreshTokenApiResponse>()
-			.ConstructUsing(src => new(src.Response.AccessToken.Adapt<AccessTokenApiResponse>(config)!));
+			.ConstructUsing(src => new(src.Response.AccessToken.Adapt<AccessTokenApiResponse>(config)));
 
 		config.NewConfig<DeleteCurrentRefreshTokenApiRequest, DeleteCurrentRefreshTokenCommandRequest>()
 			.ConstructUsing(src => new(

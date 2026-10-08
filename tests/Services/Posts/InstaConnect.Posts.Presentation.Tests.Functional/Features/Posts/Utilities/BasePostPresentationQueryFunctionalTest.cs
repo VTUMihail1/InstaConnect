@@ -5,10 +5,17 @@ namespace InstaConnect.Posts.Presentation.Tests.Functional.Features.Posts.Utilit
 
 public abstract class BasePostPresentationQueryFunctionalTest : BasePostWebTest
 {
-	protected IPostClient Client { get; }
+	protected IPostApiClient ApiClient { get; }
 
 	protected BasePostPresentationQueryFunctionalTest(PostsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
-		Client = webApplicationFactory.CreatePostClient();
+		ApiClient = webApplicationFactory.CreateApiClient();
+	}
+
+	public override async Task InitializeAsync()
+	{
+		await ServiceScope.AddRangeAsync(Users, CancellationToken);
+		await ServiceScope.AddRangeAsync(PostLikes, CancellationToken);
+		await OnInitializeAsync();
 	}
 }

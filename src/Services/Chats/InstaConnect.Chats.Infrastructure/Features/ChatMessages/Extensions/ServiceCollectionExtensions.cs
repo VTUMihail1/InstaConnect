@@ -10,8 +10,12 @@ internal static class ServiceCollectionExtensions
 	{
 		internal IServiceCollection AddChatMessageServices()
 		{
+			const string CollectionName = "chat_messages";
+
 			serviceCollection.AddImplementationsOf<IChatMessagesSortTermer>(ChatsInfrastructureReference.Assembly);
 			serviceCollection.AddImplementationsOf<IChatMessageIncluder>(ChatsInfrastructureReference.Assembly);
+
+			serviceCollection.AddCollection<ChatMessage>(CollectionName);
 
 			BsonClassMap.TryRegisterClassMap<ChatMessage>(cm =>
 			{

@@ -3,6 +3,7 @@ using System.Net;
 
 using FluentAssertions;
 
+using InstaConnect.Common.Presentation.Tests.Features.Extensions;
 using InstaConnect.Common.Presentation.Tests.Features.Utilities;
 
 using Microsoft.AspNetCore.Http;
@@ -50,11 +51,8 @@ public static class MatchAssertions
 	{
 		public void ShouldBeActionResultAndSatisfy(Expression<Func<T, bool>> predicate)
 		{
-			actionResult.Result
-				.Should()
-				.BeOfType<OkObjectResult>()
-				.Which
-				.Value
+			actionResult
+				.GetValue()
 				.Should()
 				.Match(predicate);
 		}

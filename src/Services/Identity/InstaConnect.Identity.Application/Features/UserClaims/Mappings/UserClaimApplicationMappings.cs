@@ -24,12 +24,12 @@ public class UserClaimApplicationMappings : IRegister
 										   new(src.CurrentId))));
 
 		config.NewConfig<UserClaimCollectionResponse, GetAllUserClaimsQueryResponse>()
-			.ConstructUsing(src => new(src.Adapt<UserClaimCollectionQueryResponse>(config)!));
+			.ConstructUsing(src => new(src.Adapt<UserClaimCollectionQueryResponse>(config)));
 
 		config.NewConfig<UserClaimCollectionResponse, UserClaimCollectionQueryResponse>()
 			.ConstructUsing(src => new(
 				  src.User.Adapt<UserQueryResponse>(config),
-				  src.UserClaims.Adapt<ICollection<UserClaimQueryResponse>>(config)!,
+				  src.UserClaims.Adapt<ICollection<UserClaimQueryResponse>>(config),
 				  src.Page,
 				  src.PageSize,
 				  src.TotalCount,
@@ -42,7 +42,7 @@ public class UserClaimApplicationMappings : IRegister
 				src.Claim));
 
 		config.NewConfig<UserClaimId, AddUserClaimCommandResponse>()
-			.ConstructUsing(src => new(src.Adapt<UserClaimIdCommandResponse>(config)!));
+			.ConstructUsing(src => new(src.Adapt<UserClaimIdCommandResponse>(config)));
 
 		config.NewConfig<DeleteUserClaimCommandRequest, DeleteUserClaimCommand>()
 			.ConstructUsing(src => new(

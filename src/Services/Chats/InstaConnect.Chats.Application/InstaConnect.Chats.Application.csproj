@@ -5,24 +5,11 @@
     <ProjectReference Include="..\InstaConnect.Chats.Domain\InstaConnect.Chats.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-      <_Parameter1>InstaConnect.Chats.Application.Tests.Unit</_Parameter1>
-    </AssemblyAttribute>
-    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-      <_Parameter1>InstaConnect.Chats.Application.Tests.Integration</_Parameter1>
-    </AssemblyAttribute>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="MediatR" />
-  </ItemGroup>
-
   <ItemGroup Label="Common">
     <Using Include="FluentValidation" />
     <Using Include="Microsoft.Extensions.DependencyInjection" />
-    <Using Include="InstaConnect.Common.Application.Features.Messaging.Abstractions"/>
-    <Using Include="InstaConnect.Common.Application.Features.Validations.Extensions" />
+    <Using Include="InstaConnect.Common.Application.Features.Requests.Abstractions"/>
+    <Using Include="InstaConnect.Common.Domain.Features.Validations.Extensions" />
   </ItemGroup>
 
   <ItemGroup Label="Users">

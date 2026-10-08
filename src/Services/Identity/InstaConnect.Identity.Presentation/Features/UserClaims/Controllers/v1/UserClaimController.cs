@@ -1,4 +1,4 @@
-using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Requests.Abstractions;
 using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
 using InstaConnect.Common.Presentation.Features.Controllers.Utilities;
 using InstaConnect.Identity.Application.Features.UserClaims.Commands.Add;
@@ -7,6 +7,7 @@ using InstaConnect.Identity.Application.Features.UserClaims.Queries.GetAll;
 
 namespace InstaConnect.Identity.Presentation.Features.UserClaims.Controllers.v1;
 
+[ApiController]
 [ApiVersion(UserClaimRoutes.Version1)]
 [Route(UserClaimRoutes.Resource)]
 [Authorize(AuthorizationPolicies.Admin)]

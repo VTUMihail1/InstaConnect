@@ -8,9 +8,7 @@ internal class EmptyEnumTransformer<TEnum> : IEnumTransformer<TEnum>
 {
 	public TEnum Transform(TEnum value)
 	{
-		var result = DataFaker.GetEmptyEnum<TEnum>();
-
-		return result;
+		return DataFaker.GetEmptyEnum<TEnum>();
 	}
 }
 

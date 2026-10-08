@@ -12,6 +12,8 @@ public abstract class BaseForgotPasswordTokenApplicationCommandUnitTest : BaseFo
 	protected BaseForgotPasswordTokenApplicationCommandUnitTest() : base(IdentityMockFactory.CreatePasswordHasher())
 	{
 		Mapper = MockFactory.CreateMapper(IdentityApplicationReference.Assembly);
-		Service = ForgotPasswordTokenMockFactory.CreateCommandService();
+		Service = ForgotPasswordTokenApplicationMockFactory.CreateCommandService();
+
+		PasswordHasher.ClearCalls();
 	}
 }

@@ -10,8 +10,12 @@ internal static class ServiceCollectionExtensions
 	{
 		internal IServiceCollection AddChatServices()
 		{
+			const string CollectionName = "chats";
+
 			serviceCollection.AddImplementationsOf<IChatsSortTermer>(ChatsInfrastructureReference.Assembly);
 			serviceCollection.AddImplementationsOf<IChatIncluder>(ChatsInfrastructureReference.Assembly);
+
+			serviceCollection.AddCollection<Chat>(CollectionName);
 
 			BsonClassMap.TryRegisterClassMap<Chat>(cm =>
 			{

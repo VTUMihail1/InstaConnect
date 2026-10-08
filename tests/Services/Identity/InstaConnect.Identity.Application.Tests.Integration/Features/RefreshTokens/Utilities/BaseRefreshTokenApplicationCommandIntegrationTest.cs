@@ -1,4 +1,4 @@
-using InstaConnect.Common.Application.Features.Messaging.Abstractions;
+using InstaConnect.Common.Application.Features.Requests.Abstractions;
 
 namespace InstaConnect.Identity.Application.Tests.Integration.Features.RefreshTokens.Utilities;
 
@@ -9,5 +9,12 @@ public abstract class BaseRefreshTokenApplicationCommandIntegrationTest : BaseRe
 	protected BaseRefreshTokenApplicationCommandIntegrationTest(IdentityWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
 		Sender = ServiceScope.GetSender();
+	}
+
+	public override async Task InitializeAsync()
+	{
+		await ServiceScope.AddAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(UserClaim, CancellationToken);
+		await OnInitializeAsync();
 	}
 }

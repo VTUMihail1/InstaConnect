@@ -1,0 +1,73 @@
+using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
+using InstaConnect.Posts.Domain.Features.Posts.Models.ValueObjects;
+using InstaConnect.Posts.Infrastructure.Tests.Features.Posts.Assertions;
+using InstaConnect.Posts.Infrastructure.Tests.Integration.Features.Posts.Utilities;
+using InstaConnect.Posts.Tests.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Tests.Features.Posts.Assertions;
+using InstaConnect.Posts.Tests.Features.Posts.Builders;
+using InstaConnect.Posts.Tests.Features.Posts.DataAttributes.Id;
+using InstaConnect.Posts.Tests.Features.Posts.Utilities;
+
+namespace InstaConnect.Posts.Infrastructure.Tests.Integration.Features.Posts.Repositories;
+
+public class GetPostByIdCommandRepositoryIntegrationTests : BasePostInfrastructureCommandIntegrationTest
+{
+	private readonly PostIdBuilderFactory _idBuilderFactory;
+	private readonly PostIdBuilder _idBuilder;
+	private readonly PostId _id;
+
+	private readonly PostInclude _include;
+
+	public GetPostByIdCommandRepositoryIntegrationTests(PostsWebApplicationFactory webApplicationFactory)
+		: base(webApplicationFactory)
+	{
+		_idBuilderFactory = new();
+		_idBuilder = _idBuilderFactory.Create(Post.Id);
+		_id = _idBuilder.Build();
+
+		_include = IncludeBuilderFactory.Create().WithUser().WithPostLikes().Build();
+	}
+
+	protected override async Task OnInitializeAsync()
+	{
+		await ServiceScope.AddAsync(Post, CancellationToken);
+	}
+
+	[Fact]
+	public async Task GetByIdAsync_ShouldReturnNull_WhenIdIsInvalid()
+	{
+		// Arrange
+		await ServiceScope.DeleteAsync(Post, CancellationToken);
+
+		// Act
+		var response = await Repository.GetByIdAsync(_id, _include, CancellationToken);
+
+		// Assert
+		response.ShouldBeNull();
+	}
+
+	[Fact]
+	public async Task GetByIdAsync_ShouldReturnResponse_WhenCommandIsValid()
+	{
+		// Act
+		var response = await Repository.GetByIdAsync(_id, _include, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(_id, Post);
+	}
+
+	[Theory]
+	[PostIdDifferentCaseData]
+	public async Task GetByIdAsync_ShouldReturnResponse_WhenCommandAndIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var id = _idBuilder.WithId(transformer).Build();
+
+		// Act
+		var response = await Repository.GetByIdAsync(id, _include, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(id, Post);
+	}
+}

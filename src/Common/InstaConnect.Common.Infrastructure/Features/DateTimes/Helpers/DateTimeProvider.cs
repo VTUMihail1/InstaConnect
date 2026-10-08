@@ -11,7 +11,7 @@ public class DateTimeProvider : IDateTimeProvider
 
 	public DateTimeOffset GetOffsetUtcNow(int seconds)
 	{
-		return DateTimeOffset.UtcNow.AddSeconds(seconds);
+		return DateTimeOffset.FromUnixTimeSeconds(DateTimeOffset.UtcNow.ToUnixTimeSeconds() + seconds);
 	}
 
 	public DateTime GetUtcNow()
@@ -21,6 +21,6 @@ public class DateTimeProvider : IDateTimeProvider
 
 	public DateTime GetUtcNow(int seconds)
 	{
-		return DateTime.UtcNow.AddSeconds(seconds);
+		return GetOffsetUtcNow(seconds).UtcDateTime;
 	}
 }

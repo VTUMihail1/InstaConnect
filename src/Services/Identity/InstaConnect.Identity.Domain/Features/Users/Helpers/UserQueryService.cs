@@ -17,9 +17,9 @@ internal class UserQueryService : IUserQueryService
 	{
 		var users = await _repository.GetAllAsync(
 			query.Filter,
-			query.Current,
 			query.Sorting,
 			query.Pagination,
+			query.Current,
 			cancellationToken);
 
 		var totalCount = await _repository.GetTotalCountAsync(query.Filter, cancellationToken);

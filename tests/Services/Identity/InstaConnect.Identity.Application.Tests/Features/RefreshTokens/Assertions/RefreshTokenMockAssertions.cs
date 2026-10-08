@@ -1,4 +1,5 @@
 using InstaConnect.Identity.Application.Tests.Features.RefreshTokens.Utilities;
+using InstaConnect.Identity.Domain.Tests.Features.RefreshTokens.Assertions;
 
 namespace InstaConnect.Identity.Application.Tests.Features.RefreshTokens.Assertions;
 
@@ -6,25 +7,25 @@ public static class RefreshTokenMockAssertions
 {
 	extension(IRefreshTokenCommandService refreshTokenService)
 	{
-		public async Task ShouldReceiveOneIssueAsync(
+		public async Task ShouldHaveReceivedOneIssueAsync(
 		IssueRefreshTokenCommandRequest request,
 		CancellationToken cancellationToken)
 		{
-			await refreshTokenService.ShouldHaveReceivedOne().IssueAsync(RefreshTokenMatcher.IsIssueRefreshTokenCommand(request), cancellationToken);
+			await refreshTokenService.ShouldHaveReceivedOneIssueAsync(request.IsIssueRefreshTokenCommand(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneRotateAsync(
+		public async Task ShouldHaveReceivedOneRotateAsync(
 			RotateRefreshTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await refreshTokenService.ShouldHaveReceivedOne().RotateAsync(RefreshTokenMatcher.IsRotateRefreshTokenCommand(request), cancellationToken);
+			await refreshTokenService.ShouldHaveReceivedOneRotateAsync(request.IsRotateRefreshTokenCommand(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneDeleteAsync(
+		public async Task ShouldHaveReceivedOneDeleteAsync(
 			DeleteCurrentRefreshTokenCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await refreshTokenService.ShouldHaveReceivedOne().DeleteAsync(RefreshTokenMatcher.IsDeleteRefreshTokenCommand(request), cancellationToken);
+			await refreshTokenService.ShouldHaveReceivedOneDeleteAsync(request.IsDeleteRefreshTokenCommand(), cancellationToken);
 		}
 	}
 }

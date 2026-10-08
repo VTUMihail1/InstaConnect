@@ -1,3 +1,4 @@
+using InstaConnect.Chats.Domain.Features.ChatMessages.Models.ValueObjects;
 using InstaConnect.Chats.Domain.Features.Users.Models.ValueObjects;
 
 namespace InstaConnect.Chats.Tests.Features.ChatMessages.Builders;
@@ -7,7 +8,7 @@ public class ChatMessageBuilder
 	private readonly string _participantOneId;
 	private readonly string _participantTwoId;
 	private readonly Chat _chat;
-	private readonly string _messageId;
+	private string _messageId;
 	private string _senderId;
 	private readonly User _sender;
 	private readonly string _content;
@@ -24,12 +25,19 @@ public class ChatMessageBuilder
 		_sender = chat.ParticipantOne!;
 		_content = ChatMessageDataFaker.GetContent();
 		_createdAtUtc = ChatMessageDataFaker.GetCreatedAtUtc();
-		_updatedAtUtc = ChatMessageDataFaker.GetUpdatedAtUtc();
+		_updatedAtUtc = _createdAtUtc;
 	}
 
 	public ChatMessageBuilder WithSenderId(UserId senderId)
 	{
 		_senderId = senderId.Id;
+
+		return this;
+	}
+
+	public ChatMessageBuilder WithMessageId(ChatMessageId messageId)
+	{
+		_messageId = messageId.MessageId;
 
 		return this;
 	}

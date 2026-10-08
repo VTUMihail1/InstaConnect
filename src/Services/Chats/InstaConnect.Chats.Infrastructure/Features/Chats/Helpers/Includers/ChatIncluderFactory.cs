@@ -11,21 +11,11 @@ internal class ChatIncluderFactory : IChatIncluderFactory
 		_includers = includers;
 	}
 
-	public IEnumerable<IChatIncluder> Create(ICollection<ChatsIncludeDescriptor>? descriptors)
+	public IEnumerable<IChatIncluder> Create(ICollection<ChatsIncludeDescriptor> descriptors)
 	{
-		if (descriptors == null)
-		{
-			return [];
-		}
-
 		var includers = _includers.Where(s => descriptors.Any(p =>
 														p.IncludeType == s.IncludeType &&
 														p.DestinationType == s.DestinationType));
-
-		if (includers.IsEmpty())
-		{
-			throw new ChatIncludeDescriptorsNotSupportedException(descriptors);
-		}
 
 		return includers;
 	}

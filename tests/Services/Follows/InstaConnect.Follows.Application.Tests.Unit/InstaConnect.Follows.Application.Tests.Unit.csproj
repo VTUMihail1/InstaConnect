@@ -1,35 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <Nullable>disable</Nullable>
-
-    <IsPackable>false</IsPackable>
-    <IsTestProject>true</IsTestProject>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="coverlet.collector">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="MediatR" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="xunit" />
-    <PackageReference Include="xunit.runner.visualstudio">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\src\Services\Follows\InstaConnect.Follows.Application\InstaConnect.Follows.Application.csproj" />
-	<ProjectReference Include="..\InstaConnect.Follows.Application.Tests\InstaConnect.Follows.Application.Tests.csproj" />
+    <ProjectReference Include="..\InstaConnect.Follows.Application.Tests\InstaConnect.Follows.Application.Tests.csproj" />
   </ItemGroup>
-  
+
   <ItemGroup Label="Common">
-    <Using Include="Xunit" />
     <Using Include="FluentValidation.TestHelper" />
-    <Using Include="InstaConnect.Common.Tests.Features.Events" />
+    <Using Include="InstaConnect.Common.Tests.Features.Abstractions" />
     <Using Include="InstaConnect.Common.Tests.Features.Assertions" />
     <Using Include="InstaConnect.Common.Tests.Features.Utilities" />
     <Using Include="InstaConnect.Common.Tests.Features.DataAttributes.Enums" />
@@ -40,7 +18,7 @@
     <Using Include="InstaConnect.Common.Application.Tests.Features.Assertions" />
     <Using Include="InstaConnect.Follows.Tests.Features.Common.Utilities" />
   </ItemGroup>
-  
+
   <ItemGroup Label="Users">
     <Using Include="InstaConnect.Follows.Domain.Features.Users.Abstractions" />
     <Using Include="InstaConnect.Follows.Domain.Features.Users.Models.Entities" />

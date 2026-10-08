@@ -1,41 +1,37 @@
+using InstaConnect.Chats.Domain.Tests.Features.Chats.Utilities;
+
 namespace InstaConnect.Chats.Application.Tests.Features.Chats.Utilities;
 
 public static class ChatMockSetups
 {
 	extension(IChatQueryService service)
 	{
-		public void SetupGetAllQuery(
+		public void SetupGetAllAsync(
 		GetAllChatsQueryRequest request,
 		User participantOne,
 		ICollection<Chat> chats,
 		CancellationToken cancellationToken)
 		{
-			service
-				.GetAllAsync(ChatMatcher.IsGetAllChatsQuery(request), cancellationToken)
-				.ReturnsResponse(chats.ToResponse(participantOne, request));
+			service.SetupGetAllAsync(request.IsGetAllChatsQuery(), chats.ToResponse(request, participantOne), cancellationToken);
 		}
 
-		public void SetupGetByIdQuery(
+		public void SetupGetByIdAsync(
 			GetChatByIdQueryRequest request,
 			Chat chat,
 			CancellationToken cancellationToken)
 		{
-			service
-				.GetByIdAsync(ChatMatcher.IsGetChatByIdQuery(request), cancellationToken)
-				.ReturnsResponse(chat.ToResponse(request));
+			service.SetupGetByIdAsync(request.IsGetChatByIdQuery(), chat.ToResponse(request), cancellationToken);
 		}
 	}
 
 	extension(IChatCommandService service)
 	{
-		public void SetupAddCommand(
+		public void SetupAddAsync(
 		AddChatCommandRequest request,
 		Chat chat,
 		CancellationToken cancellationToken)
 		{
-			service
-				.AddAsync(ChatMatcher.IsAddChatCommand(request), cancellationToken)
-				.ReturnsResponse(chat.ToResponse(request));
+			service.SetupAddAsync(request.IsAddChatCommand(), chat.ToResponse(request), cancellationToken);
 		}
 	}
 }

@@ -1,0 +1,24 @@
+using InstaConnect.Identity.Infrastructure.Tests.Integration.Features.ForgotPasswordTokens.Utilities;
+using InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.Assertions;
+using InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.Utilities;
+
+namespace InstaConnect.Identity.Infrastructure.Tests.Integration.Features.ForgotPasswordTokens.Repositories;
+
+public class AddForgotPasswordTokenCommandRepositoryIntegrationTests : BaseForgotPasswordTokenInfrastructureCommandIntegrationTest
+{
+	public AddForgotPasswordTokenCommandRepositoryIntegrationTests(IdentityWebApplicationFactory webApplicationFactory)
+		: base(webApplicationFactory)
+	{
+	}
+
+	[Fact]
+	public async Task AddAsync_ShouldAddForgotPasswordToken_WhenCommandIsValid()
+	{
+		// Act
+		await Repository.AddAsync(ForgotPasswordToken, CancellationToken);
+		var forgotPasswordToken = await ServiceScope.GetByIdAsync(ForgotPasswordToken.Id, CancellationToken);
+
+		// Assert
+		forgotPasswordToken.ShouldSatisfy(ForgotPasswordToken);
+	}
+}

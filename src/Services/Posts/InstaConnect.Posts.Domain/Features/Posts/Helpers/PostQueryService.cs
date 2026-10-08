@@ -20,9 +20,9 @@ internal class PostQueryService : IPostQueryService
 	{
 		var posts = await _repository.GetAllAsync(
 			query.Filter,
-			query.CurrentUser,
 			query.Sorting,
 			query.Pagination,
+			query.CurrentUser,
 			cancellationToken);
 
 		var totalCount = await _repository.GetTotalCountAsync(query.Filter, cancellationToken);
@@ -41,12 +41,12 @@ internal class PostQueryService : IPostQueryService
 
 		var posts = await _repository.GetAllForUserAsync(
 			query.Filter,
-			query.CurrentUser,
 			query.Sorting,
 			query.Pagination,
+			query.CurrentUser,
 			cancellationToken);
 
-		var totalCount = await _repository.GetTotalCountForUserAsync(query.Filter, cancellationToken);
+		var totalCount = await _repository.GetForUserTotalCountAsync(query.Filter, cancellationToken);
 
 		return _collectionResponseFactory.CreateForUser(user, posts, totalCount, query.Pagination);
 	}

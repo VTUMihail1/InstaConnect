@@ -12,6 +12,8 @@ public abstract class BaseRefreshTokenApplicationCommandUnitTest : BaseRefreshTo
 	protected BaseRefreshTokenApplicationCommandUnitTest() : base(IdentityMockFactory.CreatePasswordHasher())
 	{
 		Mapper = MockFactory.CreateMapper(IdentityApplicationReference.Assembly);
-		Service = RefreshTokenMockFactory.CreateCommandService();
+		Service = RefreshTokenApplicationMockFactory.CreateCommandService();
+
+		PasswordHasher.ClearCalls();
 	}
 }

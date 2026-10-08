@@ -2,54 +2,54 @@ namespace InstaConnect.Identity.Application.Tests.Features.RefreshTokens.Asserti
 
 public static class RefreshTokenValidationAssertions
 {
-	extension(TestValidationResult<DeleteCurrentRefreshTokenCommandRequest> result)
+	extension(TestValidationResult<DeleteCurrentRefreshTokenCommandRequest> response)
 	{
 		public void ShouldHaveValidationErrorForId(
-			IStringMessageTransformer messageTransformer,
-			DeleteCurrentRefreshTokenCommandRequest request)
+			DeleteCurrentRefreshTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Id, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.Id, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForValue(
-			IStringMessageTransformer messageTransformer,
-			DeleteCurrentRefreshTokenCommandRequest request)
+			DeleteCurrentRefreshTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Value, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.Value, messageTransformer);
 		}
 	}
 
-	extension(TestValidationResult<IssueRefreshTokenCommandRequest> result)
+	extension(TestValidationResult<IssueRefreshTokenCommandRequest> response)
 	{
 		public void ShouldHaveValidationErrorForName(
-			IStringMessageTransformer messageTransformer,
-			IssueRefreshTokenCommandRequest request)
+			IssueRefreshTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Name, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.Name, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForPassword(
-			IStringMessageTransformer messageTransformer,
-			IssueRefreshTokenCommandRequest request)
+			IssueRefreshTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Password, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.Password, messageTransformer);
 		}
 	}
 
-	extension(TestValidationResult<RotateRefreshTokenCommandRequest> result)
+	extension(TestValidationResult<RotateRefreshTokenCommandRequest> response)
 	{
 		public void ShouldHaveValidationErrorForId(
-			IStringMessageTransformer messageTransformer,
-			RotateRefreshTokenCommandRequest request)
+			RotateRefreshTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Id, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.Id, messageTransformer);
 		}
 
 		public void ShouldHaveValidationErrorForValue(
-			IStringMessageTransformer messageTransformer,
-			RotateRefreshTokenCommandRequest request)
+			RotateRefreshTokenCommandRequest request,
+			IStringMessageTransformer messageTransformer)
 		{
-			result.ShouldHaveValidationErrorForProperty(p => p.Value, messageTransformer, request);
+			response.ShouldHaveValidationErrorForProperty(request, p => p.Value, messageTransformer);
 		}
 	}
 }

@@ -18,12 +18,12 @@ internal class ChatMessageDomainMappings : IRegister
 				src.UpdatedAtUtc));
 
 		config.NewConfig<ChatMessage, ChatMessageAddedNotificationRequest>()
-			.ConstructUsing(src => new(src.Adapt<ChatMessageNotificationRequest>(config)!));
+			.ConstructUsing(src => new(src.Adapt<ChatMessageNotificationRequest>(config)));
 
 		config.NewConfig<ChatMessage, ChatMessageUpdatedNotificationRequest>()
-			.ConstructUsing(src => new(src.Adapt<ChatMessageNotificationRequest>(config)!));
+			.ConstructUsing(src => new(src.Adapt<ChatMessageNotificationRequest>(config)));
 
 		config.NewConfig<ChatMessage, ChatMessageDeletedNotificationRequest>()
-			.ConstructUsing(src => new(src.Adapt<ChatMessageNotificationRequest>(config)!));
+			.ConstructUsing(src => new(src.Adapt<ChatMessageNotificationRequest>(config)));
 	}
 }

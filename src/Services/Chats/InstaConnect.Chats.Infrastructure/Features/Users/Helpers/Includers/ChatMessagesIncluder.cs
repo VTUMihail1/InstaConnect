@@ -6,11 +6,11 @@ namespace InstaConnect.Chats.Infrastructure.Features.Users.Helpers.Includers;
 
 internal class ChatMessagesIncluder : IUserIncluder
 {
-	private readonly IChatsContext _context;
+	private readonly IMongoCollection<ChatMessage> _collection;
 
-	public ChatMessagesIncluder(IChatsContext context)
+	public ChatMessagesIncluder(IMongoCollection<ChatMessage> collection)
 	{
-		_context = context;
+		_collection = collection;
 	}
 
 	public ChatsDestinationType DestinationType => ChatsDestinationType.User;
@@ -21,7 +21,7 @@ internal class ChatMessagesIncluder : IUserIncluder
 	{
 		return aggregate
 			.IncludeMany(
-				_context.ChatMessages,
+				_collection,
 				p => p.Id,
 				l => l.SenderId,
 				p => p.ChatMessages

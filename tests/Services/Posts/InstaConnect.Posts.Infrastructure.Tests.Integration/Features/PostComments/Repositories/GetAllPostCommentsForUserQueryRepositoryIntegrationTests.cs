@@ -1,0 +1,135 @@
+using InstaConnect.Common.Domain.Features.Requests.Models;
+using InstaConnect.Common.Tests.Features.DataAttributes.Enums.Sort;
+using InstaConnect.Posts.Domain.Features.PostComments.Models.Entities;
+using InstaConnect.Posts.Domain.Features.PostComments.Models.Requests;
+using InstaConnect.Posts.Domain.Features.Users.Models.Requests;
+using InstaConnect.Posts.Infrastructure.Tests.Features.Common.Builders;
+using InstaConnect.Posts.Infrastructure.Tests.Features.PostComments.Assertions;
+using InstaConnect.Posts.Infrastructure.Tests.Features.PostComments.Builders;
+using InstaConnect.Posts.Infrastructure.Tests.Integration.Features.PostComments.Utilities;
+using InstaConnect.Posts.Tests.Features.PostCommentLikes.Utilities;
+using InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.SortOrder;
+using InstaConnect.Posts.Tests.Features.PostComments.DataAttributes.SortTerm.ForUser;
+using InstaConnect.Posts.Tests.Features.PostComments.Utilities;
+using InstaConnect.Posts.Tests.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Tests.Features.Posts.Utilities;
+
+namespace InstaConnect.Posts.Infrastructure.Tests.Integration.Features.PostComments.Repositories;
+
+public class GetAllPostCommentsForUserQueryRepositoryIntegrationTests : BasePostCommentInfrastructureQueryIntegrationTest
+{
+	private readonly PostCommentsForUserFilterQueryBuilderFactory _filterQueryBuilderFactory;
+	private readonly PostCommentsForUserFilterQueryBuilder _filterQueryBuilder;
+	private readonly PostCommentsForUserFilterQuery _filterQuery;
+
+	private readonly PostCommentsForUserSortingQueryBuilderFactory _sortingQueryBuilderFactory;
+	private readonly PostCommentsForUserSortingQueryBuilder _sortingQueryBuilder;
+	private readonly PostCommentsForUserSortingQuery _sortingQuery;
+
+	private readonly PostCommentsPaginationQueryBuilderFactory _paginationQueryBuilderFactory;
+	private readonly PostCommentsPaginationQueryBuilder _paginationQueryBuilder;
+	private readonly PostCommentsPaginationQuery _paginationQuery;
+
+	private readonly CurrentUserQueryBuilderFactory _currentUserQueryBuilderFactory;
+	private readonly CurrentUserQueryBuilder _currentUserQueryBuilder;
+	private readonly CurrentUserQuery _currentUserQuery;
+
+	public GetAllPostCommentsForUserQueryRepositoryIntegrationTests(PostsWebApplicationFactory webApplicationFactory)
+		: base(webApplicationFactory)
+	{
+		_filterQueryBuilderFactory = new();
+		_filterQueryBuilder = _filterQueryBuilderFactory.Create(PostComment);
+		_filterQuery = _filterQueryBuilder.Build();
+
+		_sortingQueryBuilderFactory = new();
+		_sortingQueryBuilder = _sortingQueryBuilderFactory.Create();
+		_sortingQuery = _sortingQueryBuilder.Build();
+
+		_paginationQueryBuilderFactory = new();
+		_paginationQueryBuilder = _paginationQueryBuilderFactory.Create();
+		_paginationQuery = _paginationQueryBuilder.Build();
+
+		_currentUserQueryBuilderFactory = new();
+		_currentUserQueryBuilder = _currentUserQueryBuilderFactory.Create(User);
+		_currentUserQuery = _currentUserQueryBuilder.Build();
+	}
+
+	protected override async Task OnInitializeAsync()
+	{
+		await ServiceScope.AddRangeAsync(PostComments, CancellationToken);
+	}
+
+	[Fact]
+	public async Task GetAllForUserAsync_ShouldReturnResponse_WhenQueryIsValid()
+	{
+		// Act
+		var response = await Repository.GetAllForUserAsync(_filterQuery, _sortingQuery, _paginationQuery, _currentUserQuery, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(_filterQuery, _sortingQuery, _paginationQuery, _currentUserQuery, User, PostComments);
+	}
+
+	[Theory]
+	[UserIdDifferentCaseData]
+	public async Task GetAllForUserAsync_ShouldReturnResponse_WhenQueryAndUserIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var filterQuery = _filterQueryBuilder.WithUserId(transformer).Build();
+
+		// Act
+		var response = await Repository.GetAllForUserAsync(filterQuery, _sortingQuery, _paginationQuery, _currentUserQuery, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(filterQuery, _sortingQuery, _paginationQuery, _currentUserQuery, User, PostComments);
+	}
+
+	[Theory]
+	[UserIdNullData]
+	[UserIdEmptyData]
+	[UserIdDifferentCaseData]
+	public async Task GetAllForUserAsync_ShouldReturnResponse_WhenQueryAndCurrentUserIdAreValid(
+		IStringTransformer transformer)
+	{
+		// Arrange
+		var currentUserQuery = _currentUserQueryBuilder.WithCurrentUserId(transformer).Build();
+
+		// Act
+		var response = await Repository.GetAllForUserAsync(_filterQuery, _sortingQuery, _paginationQuery, currentUserQuery, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(_filterQuery, _sortingQuery, _paginationQuery, currentUserQuery, User, PostComments);
+	}
+
+	[Theory]
+	[PostCommentsSortOrderWithAscendingTermData]
+	[PostCommentsSortOrderWithDescendingTermData]
+	public async Task GetAllForUserAsync_ShouldReturnResponse_WhenQueryAndSortOrderAreValid(
+		IEnumTransformer<CommonSortOrder> transformer, ISortEnumTermTransformer<PostComment> termTransformer)
+	{
+		// Arrange
+		var sortingQuery = _sortingQueryBuilder.WithSortOrder(transformer).Build();
+
+		// Act
+		var response = await Repository.GetAllForUserAsync(_filterQuery, sortingQuery, _paginationQuery, _currentUserQuery, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(_filterQuery, sortingQuery, _paginationQuery, _currentUserQuery, User, PostComments, termTransformer);
+	}
+
+	[Theory]
+	[PostCommentsForUserSortTermWithCreatedAtTermData]
+	[PostCommentsForUserSortTermWithUserNameTermData]
+	public async Task GetAllForUserAsync_ShouldReturnResponse_WhenQueryAndSortTermAreValid(
+		IEnumTransformer<PostCommentsForUserSortTerm> transformer, ISortEnumTermTransformer<PostComment> termTransformer)
+	{
+		// Arrange
+		var sortingQuery = _sortingQueryBuilder.WithSortTerm(transformer).Build();
+
+		// Act
+		var response = await Repository.GetAllForUserAsync(_filterQuery, sortingQuery, _paginationQuery, _currentUserQuery, CancellationToken);
+
+		// Assert
+		response.ShouldSatisfy(_filterQuery, sortingQuery, _paginationQuery, _currentUserQuery, User, PostComments, termTransformer);
+	}
+}

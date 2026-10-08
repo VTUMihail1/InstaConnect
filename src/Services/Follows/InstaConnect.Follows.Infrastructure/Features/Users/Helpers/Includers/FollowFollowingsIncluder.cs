@@ -6,11 +6,11 @@ namespace InstaConnect.Follows.Infrastructure.Features.Users.Helpers.Includers;
 
 internal class FollowFollowingsIncluder : IUserIncluder
 {
-	private readonly IFollowsContext _context;
+	private readonly IMongoCollection<Follow> _collection;
 
-	public FollowFollowingsIncluder(IFollowsContext context)
+	public FollowFollowingsIncluder(IMongoCollection<Follow> collection)
 	{
-		_context = context;
+		_collection = collection;
 	}
 
 	public FollowsDestinationType DestinationType => FollowsDestinationType.User;
@@ -21,7 +21,7 @@ internal class FollowFollowingsIncluder : IUserIncluder
 	{
 		return aggregate
 			.IncludeMany(
-				_context.Follows,
+				_collection,
 				p => p.Id,
 				l => l.Id.FollowingId,
 				p => p.FollowFollowings

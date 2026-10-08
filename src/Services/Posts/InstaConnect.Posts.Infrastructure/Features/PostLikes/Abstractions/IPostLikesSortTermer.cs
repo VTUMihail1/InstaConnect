@@ -1,5 +1,5 @@
-using InstaConnect.Common.Infrastructure.Features.Data.Abstractions;
+using InstaConnect.Common.Infrastructure.Features.Databases.Abstractions;
 
 namespace InstaConnect.Posts.Infrastructure.Features.PostLikes.Abstractions;
 
-internal interface IPostLikesSortTermer : ISortTermer<PostLikesSortTerm, PostLikeResponse>;
+public interface IPostLikesSortTermer : ISortTermer<PostLikesSortTerm, PostLikeResponse>;

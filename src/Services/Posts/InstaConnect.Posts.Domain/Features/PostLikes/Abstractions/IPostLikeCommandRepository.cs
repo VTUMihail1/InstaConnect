@@ -4,7 +4,7 @@ public interface IPostLikeCommandRepository
 {
 	public Task<PostLike?> GetByIdAsync(
 		PostLikeId id,
-		PostLikeInclude? include,
+		PostLikeInclude include,
 		CancellationToken cancellationToken);
 
 	public Task<PostLike?> GetByIdAsync(

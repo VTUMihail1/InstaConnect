@@ -1,4 +1,5 @@
 using InstaConnect.Follows.Application.Tests.Features.Follows.Utilities;
+using InstaConnect.Follows.Domain.Tests.Features.Follows.Assertions;
 
 namespace InstaConnect.Follows.Application.Tests.Features.Follows.Assertions;
 
@@ -6,42 +7,42 @@ public static class FollowMockAssertions
 {
 	extension(IFollowQueryService followService)
 	{
-		public async Task ShouldReceiveOneGetAllAsync(
+		public async Task ShouldHaveReceivedOneGetAllAsync(
 		GetAllFollowsQueryRequest request,
 		CancellationToken cancellationToken)
 		{
-			await followService.ShouldHaveReceivedOne().GetAllAsync(FollowMatcher.IsGetAllFollowsQuery(request), cancellationToken);
+			await followService.ShouldHaveReceivedOneGetAllAsync(request.IsGetAllFollowsQuery(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneGetAllForFollowingAsync(
+		public async Task ShouldHaveReceivedOneGetAllForFollowingAsync(
 			GetAllFollowsForFollowingQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await followService.ShouldHaveReceivedOne().GetAllForFollowingAsync(FollowMatcher.IsGetAllFollowsForFollowingQuery(request), cancellationToken);
+			await followService.ShouldHaveReceivedOneGetAllForFollowingAsync(request.IsGetAllFollowsForFollowingQuery(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneGetByIdAsync(
+		public async Task ShouldHaveReceivedOneGetByIdAsync(
 			GetFollowByIdQueryRequest request,
 			CancellationToken cancellationToken)
 		{
-			await followService.ShouldHaveReceivedOne().GetByIdAsync(FollowMatcher.IsGetFollowByIdQuery(request), cancellationToken);
+			await followService.ShouldHaveReceivedOneGetByIdAsync(request.IsGetFollowByIdQuery(), cancellationToken);
 		}
 	}
 
 	extension(IFollowCommandService followService)
 	{
-		public async Task ShouldReceiveOneAddAsync(
+		public async Task ShouldHaveReceivedOneAddAsync(
 		AddFollowCommandRequest request,
 		CancellationToken cancellationToken)
 		{
-			await followService.ShouldHaveReceivedOne().AddAsync(FollowMatcher.IsAddFollowCommand(request), cancellationToken);
+			await followService.ShouldHaveReceivedOneAddAsync(request.IsAddFollowCommand(), cancellationToken);
 		}
 
-		public async Task ShouldReceiveOneDeleteAsync(
+		public async Task ShouldHaveReceivedOneDeleteAsync(
 			DeleteFollowCommandRequest request,
 			CancellationToken cancellationToken)
 		{
-			await followService.ShouldHaveReceivedOne().DeleteAsync(FollowMatcher.IsDeleteFollowCommand(request), cancellationToken);
+			await followService.ShouldHaveReceivedOneDeleteAsync(request.IsDeleteFollowCommand(), cancellationToken);
 		}
 	}
 }

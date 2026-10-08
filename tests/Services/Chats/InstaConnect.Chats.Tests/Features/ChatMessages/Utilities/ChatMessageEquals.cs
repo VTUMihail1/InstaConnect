@@ -1,4 +1,5 @@
 using InstaConnect.Chats.Domain.Features.ChatMessages.Models.ValueObjects;
+using InstaConnect.Chats.Domain.Features.Chats.Models.ValueObjects;
 using InstaConnect.Chats.Tests.Features.Chats.Utilities;
 using InstaConnect.Chats.Tests.Features.Users.Utilities;
 using InstaConnect.Common.Domain.Features.Common.Extensions;
@@ -7,45 +8,30 @@ namespace InstaConnect.Chats.Tests.Features.ChatMessages.Utilities;
 
 public static class ChatMessageEquals
 {
-	extension(ChatMessageAddedNotificationRequest request)
-	{
-		public bool Matches(ChatMessage entity)
-		{
-			return entity.Matches(request.ChatMessage);
-		}
-	}
-
-	extension(ChatMessageUpdatedNotificationRequest request)
-	{
-		public bool Matches(ChatMessage entity)
-		{
-			return entity.Matches(request.ChatMessage);
-		}
-	}
-
-	extension(ChatMessageDeletedNotificationRequest request)
-	{
-		public bool Matches(ChatMessage entity)
-		{
-			return entity.Matches(request.ChatMessage);
-		}
-	}
-
 	extension(ChatMessage entity)
 	{
-		public bool Matches(ChatMessageNotificationRequest request)
+		public bool Matches(ChatMessage chatMessage)
 		{
-			return entity.Id.Matches(request.ParticipantOneId, request.ParticipantTwoId, request.MessageId) &&
-				   entity.Sender != null && entity.Sender.Matches(request.Sender) &&
-				   entity.Chat != null && entity.Chat.Matches(request.Chat) &&
-				   entity.Content == request.Content &&
-				   entity.CreatedAtUtc == request.CreatedAtUtc &&
-				   entity.UpdatedAtUtc == request.UpdatedAtUtc;
+			return entity.Id.Matches(chatMessage.Id) &&
+				   entity.SenderId.Matches(chatMessage.SenderId) &&
+				   entity.Content == chatMessage.Content &&
+				   entity.CreatedAtUtc == chatMessage.CreatedAtUtc &&
+				   entity.UpdatedAtUtc == chatMessage.UpdatedAtUtc;
 		}
 	}
 
 	extension(ChatMessageId p)
 	{
+		public bool Matches(ChatMessageId id)
+		{
+			return p.Matches(id.Id, id.MessageId);
+		}
+
+		public bool Matches(ChatId id, string messageId)
+		{
+			return p.Matches(id.ParticipantOneId.Id, id.ParticipantTwoId.Id, messageId);
+		}
+
 		public bool Matches(string participantOneId, string participantTwoId, string messageId)
 		{
 			return p.Id.Matches(participantOneId, participantTwoId) &&

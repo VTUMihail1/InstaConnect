@@ -1,5 +1,5 @@
 using InstaConnect.Common.Domain.Features.Mappers.Abstractions;
-using InstaConnect.Common.Events.Features.Common.Abstractions;
+using InstaConnect.Common.Events.Features.Events.Abstractions;
 
 namespace InstaConnect.Posts.Domain.Features.Posts.Helpers;
 

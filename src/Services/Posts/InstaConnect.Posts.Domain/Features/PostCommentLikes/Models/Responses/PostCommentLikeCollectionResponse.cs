@@ -1,3 +1,5 @@
+using InstaConnect.Common.Domain.Features.Requests.Abstractions;
+
 using InstaConnect.Posts.Domain.Features.Users.Models.Responses;
 
 namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Responses;
@@ -10,4 +12,4 @@ public record PostCommentLikeCollectionResponse(
 	int PageSize,
 	long TotalCount,
 	bool HasNextPage,
-	bool HasPreviousPage) : IEntityCollectionResponse;
+	bool HasPreviousPage) : ICollectionResponse;
