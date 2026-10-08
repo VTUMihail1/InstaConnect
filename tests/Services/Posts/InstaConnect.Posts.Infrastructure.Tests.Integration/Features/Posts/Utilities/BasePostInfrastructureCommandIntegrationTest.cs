@@ -1,4 +1,5 @@
 using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
+using InstaConnect.Posts.Tests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Tests.Features.Posts.Utilities;
 
 namespace InstaConnect.Posts.Infrastructure.Tests.Integration.Features.Posts.Utilities;
@@ -15,5 +16,12 @@ public abstract class BasePostInfrastructureCommandIntegrationTest : BasePostWeb
 		Repository = ServiceScope.GetPostCommandRepository();
 		IncludeBuilderFactory = ServiceScope.GetPostIncludeBuilderFactory();
 
+	}
+
+	public override async Task InitializeAsync()
+	{
+		await base.InitializeAsync();
+		await ServiceScope.AddAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(PostLike, CancellationToken);
 	}
 }

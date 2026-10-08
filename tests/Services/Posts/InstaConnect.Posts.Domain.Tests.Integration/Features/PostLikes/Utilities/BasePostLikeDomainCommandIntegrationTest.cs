@@ -3,6 +3,8 @@ using InstaConnect.Posts.Domain.Tests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Tests.Features.PostLikes.Abstractions;
 using InstaConnect.Posts.Tests.Features.PostLikes.Extensions;
 using InstaConnect.Posts.Tests.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Tests.Features.Posts.Utilities;
+using InstaConnect.Posts.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Posts.Domain.Tests.Integration.Features.PostLikes.Utilities;
 
@@ -20,6 +22,9 @@ public abstract class BasePostLikeDomainCommandIntegrationTest : BasePostLikeWeb
 
 	public override async Task InitializeAsync()
 	{
+		await base.InitializeAsync();
+		await ServiceScope.AddAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(Post, CancellationToken);
 		await LikeEventClient.StartAsync(CancellationToken);
 	}
 

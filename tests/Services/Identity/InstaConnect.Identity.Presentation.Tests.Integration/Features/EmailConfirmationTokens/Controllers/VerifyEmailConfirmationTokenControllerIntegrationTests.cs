@@ -17,7 +17,6 @@ public class VerifyEmailConfirmationTokenControllerIntegrationTests : BaseEmailC
 	public override async Task InitializeAsync()
 	{
 		await base.InitializeAsync();
-		await ServiceScope.AddAsync(User, CancellationToken);
 		await ServiceScope.AddRangeAsync(User.EmailConfirmationTokens, CancellationToken);
 	}
 

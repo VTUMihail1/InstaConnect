@@ -10,4 +10,11 @@ public abstract class BaseChatApplicationQueryIntegrationTest : BaseChatWebTest
 	{
 		Sender = ServiceScope.GetSender();
 	}
+
+	public override async Task InitializeAsync()
+	{
+		await base.InitializeAsync();
+		await ServiceScope.AddRangeAsync(ParticipantOnes, CancellationToken);
+		await ServiceScope.AddRangeAsync(ParticipantTwos, CancellationToken);
+	}
 }

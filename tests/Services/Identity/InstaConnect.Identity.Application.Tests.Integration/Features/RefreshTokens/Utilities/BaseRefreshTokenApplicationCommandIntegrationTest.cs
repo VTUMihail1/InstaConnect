@@ -10,4 +10,11 @@ public abstract class BaseRefreshTokenApplicationCommandIntegrationTest : BaseRe
 	{
 		Sender = ServiceScope.GetSender();
 	}
+
+	public override async Task InitializeAsync()
+	{
+		await base.InitializeAsync();
+		await ServiceScope.AddAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(UserClaim, CancellationToken);
+	}
 }

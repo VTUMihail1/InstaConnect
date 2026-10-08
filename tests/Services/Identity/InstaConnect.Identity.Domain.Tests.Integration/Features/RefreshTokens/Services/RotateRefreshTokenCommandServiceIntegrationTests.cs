@@ -5,7 +5,6 @@ using InstaConnect.Identity.Domain.Tests.Features.RefreshTokens.Builders;
 using InstaConnect.Identity.Domain.Tests.Integration.Features.RefreshTokens.Utilities;
 using InstaConnect.Identity.Tests.Features.RefreshTokens.DataAttributes.Value;
 using InstaConnect.Identity.Tests.Features.RefreshTokens.Utilities;
-using InstaConnect.Identity.Tests.Features.UserClaims.Utilities;
 using InstaConnect.Identity.Tests.Features.Users.DataAttributes.Id;
 using InstaConnect.Identity.Tests.Features.Users.Utilities;
 
@@ -27,8 +26,7 @@ public class RotateRefreshTokenCommandServiceIntegrationTests : BaseRefreshToken
 
 	public override async Task InitializeAsync()
 	{
-		await ServiceScope.AddAsync(User, CancellationToken);
-		await ServiceScope.AddRangeAsync(User.UserClaims, CancellationToken);
+		await base.InitializeAsync();
 		await ServiceScope.AddAsync(RefreshToken, CancellationToken);
 	}
 

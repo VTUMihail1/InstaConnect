@@ -15,4 +15,11 @@ public abstract class BaseFollowInfrastructureCommandIntegrationTest : BaseFollo
 		Repository = ServiceScope.GetFollowCommandRepository();
 		IncludeBuilderFactory = ServiceScope.GetFollowIncludeBuilderFactory();
 	}
+
+	public override async Task InitializeAsync()
+	{
+		await base.InitializeAsync();
+		await ServiceScope.AddAsync(Follower, CancellationToken);
+		await ServiceScope.AddAsync(Following, CancellationToken);
+	}
 }

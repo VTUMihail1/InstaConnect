@@ -38,7 +38,6 @@ public class UpdateUserCommandServiceIntegrationTests : BaseUserDomainCommandInt
 		await ServiceScope.AddRangeAsync(User.EmailConfirmationTokens, CancellationToken);
 	}
 
-
 	[Fact]
 	public async Task UpdateAsync_ShouldThrowUserNotFoundException_WhenUserNotFound()
 	{

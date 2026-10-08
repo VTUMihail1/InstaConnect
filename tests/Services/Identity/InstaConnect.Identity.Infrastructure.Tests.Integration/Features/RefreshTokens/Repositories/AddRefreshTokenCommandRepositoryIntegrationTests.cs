@@ -1,7 +1,6 @@
 using InstaConnect.Identity.Infrastructure.Tests.Integration.Features.RefreshTokens.Utilities;
 using InstaConnect.Identity.Tests.Features.RefreshTokens.Assertions;
 using InstaConnect.Identity.Tests.Features.RefreshTokens.Utilities;
-using InstaConnect.Identity.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Identity.Infrastructure.Tests.Integration.Features.RefreshTokens.Repositories;
 
@@ -10,11 +9,6 @@ public class AddRefreshTokenCommandRepositoryIntegrationTests : BaseRefreshToken
 	public AddRefreshTokenCommandRepositoryIntegrationTests(IdentityWebApplicationFactory webApplicationFactory)
 		: base(webApplicationFactory)
 	{
-	}
-
-	public override async Task InitializeAsync()
-	{
-		await ServiceScope.AddAsync(User, CancellationToken);
 	}
 
 	[Fact]

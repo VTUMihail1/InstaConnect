@@ -8,4 +8,11 @@ public abstract class BaseChatPresentationQueryIntegrationTest : BaseChatWebTest
 	{
 		Controller = ServiceScope.GetChatController();
 	}
+
+	public override async Task InitializeAsync()
+	{
+		await base.InitializeAsync();
+		await ServiceScope.AddRangeAsync(ParticipantOnes, CancellationToken);
+		await ServiceScope.AddRangeAsync(ParticipantTwos, CancellationToken);
+	}
 }

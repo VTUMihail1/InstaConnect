@@ -1,6 +1,7 @@
 using InstaConnect.Follows.Domain.Features.Follows.Abstractions;
 using InstaConnect.Follows.Domain.Tests.Features.Follows.Utilities;
 using InstaConnect.Follows.Tests.Features.Follows.Utilities;
+using InstaConnect.Follows.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Follows.Domain.Tests.Integration.Features.Follows.Utilities;
 
@@ -11,5 +12,12 @@ public abstract class BaseFollowDomainQueryIntegrationTest : BaseFollowWebTest
 	protected BaseFollowDomainQueryIntegrationTest(FollowsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
 	{
 		Service = ServiceScope.GetFollowQueryService();
+	}
+
+	public override async Task InitializeAsync()
+	{
+		await base.InitializeAsync();
+		await ServiceScope.AddRangeAsync(Followers, CancellationToken);
+		await ServiceScope.AddRangeAsync(Followings, CancellationToken);
 	}
 }

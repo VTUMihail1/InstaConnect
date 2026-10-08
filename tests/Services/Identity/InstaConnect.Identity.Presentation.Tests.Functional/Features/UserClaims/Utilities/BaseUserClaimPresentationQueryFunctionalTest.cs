@@ -11,4 +11,10 @@ public abstract class BaseUserClaimPresentationQueryFunctionalTest : BaseUserCla
 	{
 		ClaimApiClient = webApplicationFactory.CreateClaimApiClient();
 	}
+
+	public override async Task InitializeAsync()
+	{
+		await base.InitializeAsync();
+		await ServiceScope.AddRangeAsync(Users, CancellationToken);
+	}
 }

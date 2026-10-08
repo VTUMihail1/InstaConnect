@@ -28,14 +28,6 @@ public class AddPostCommentLikeCommandServiceIntegrationTests : BasePostCommentL
 		_command = _commandBuilder.Build();
 	}
 
-	public override async Task InitializeAsync()
-	{
-		await base.InitializeAsync();
-		await ServiceScope.AddAsync(User, CancellationToken);
-		await ServiceScope.AddAsync(Post, CancellationToken);
-		await ServiceScope.AddAsync(PostComment, CancellationToken);
-	}
-
 	[Fact]
 	public async Task AddAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
 	{

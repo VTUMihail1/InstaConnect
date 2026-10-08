@@ -1,6 +1,5 @@
 using InstaConnect.Identity.Infrastructure.Tests.Integration.Features.EmailConfirmationTokens.Utilities;
 using InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Utilities;
-using InstaConnect.Identity.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Identity.Infrastructure.Tests.Integration.Features.EmailConfirmationTokens.Repositories;
 
@@ -13,7 +12,7 @@ public class DeleteEmailConfirmationTokenCommandRepositoryIntegrationTests : Bas
 
 	public override async Task InitializeAsync()
 	{
-		await ServiceScope.AddAsync(User, CancellationToken);
+		await base.InitializeAsync();
 		await ServiceScope.AddAsync(EmailConfirmationToken, CancellationToken);
 	}
 

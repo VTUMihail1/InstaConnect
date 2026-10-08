@@ -23,8 +23,7 @@ public class GetPostCommentsForUserTotalCountQueryRepositoryIntegrationTests : B
 
 	public override async Task InitializeAsync()
 	{
-		await ServiceScope.AddRangeAsync(Users, CancellationToken);
-		await ServiceScope.AddRangeAsync(Posts, CancellationToken);
+		await base.InitializeAsync();
 		await ServiceScope.AddRangeAsync(PostComments, CancellationToken);
 	}
 

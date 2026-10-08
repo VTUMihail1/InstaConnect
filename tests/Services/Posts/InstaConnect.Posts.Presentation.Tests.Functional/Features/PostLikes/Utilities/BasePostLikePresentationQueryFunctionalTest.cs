@@ -11,4 +11,11 @@ public abstract class BasePostLikePresentationQueryFunctionalTest : BasePostLike
 	{
 		LikeApiClient = webApplicationFactory.CreateLikeApiClient();
 	}
+
+	public override async Task InitializeAsync()
+	{
+		await base.InitializeAsync();
+		await ServiceScope.AddRangeAsync(Users, CancellationToken);
+		await ServiceScope.AddRangeAsync(Posts, CancellationToken);
+	}
 }

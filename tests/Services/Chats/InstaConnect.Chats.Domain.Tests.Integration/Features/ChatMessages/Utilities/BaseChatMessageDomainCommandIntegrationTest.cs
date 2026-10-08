@@ -3,6 +3,8 @@ using InstaConnect.Chats.Domain.Tests.Features.ChatMessages.Utilities;
 using InstaConnect.Chats.Tests.Features.ChatMessages.Abstractions;
 using InstaConnect.Chats.Tests.Features.ChatMessages.Extensions;
 using InstaConnect.Chats.Tests.Features.ChatMessages.Utilities;
+using InstaConnect.Chats.Tests.Features.Chats.Utilities;
+using InstaConnect.Chats.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Chats.Domain.Tests.Integration.Features.ChatMessages.Utilities;
 
@@ -21,6 +23,10 @@ public abstract class BaseChatMessageDomainCommandIntegrationTest : BaseChatMess
 
 	public override async Task InitializeAsync()
 	{
+		await base.InitializeAsync();
+		await ServiceScope.AddAsync(ParticipantOne, CancellationToken);
+		await ServiceScope.AddAsync(ParticipantTwo, CancellationToken);
+		await ServiceScope.AddAsync(Chat, CancellationToken);
 		await MessageNotificationClient.StartAsync(CancellationToken);
 	}
 

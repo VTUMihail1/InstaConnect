@@ -20,9 +20,7 @@ public class GetAllChatMessagesControllerIntegrationTests : BaseChatMessagePrese
 
 	public override async Task InitializeAsync()
 	{
-		await ServiceScope.AddRangeAsync(ParticipantOnes, CancellationToken);
-		await ServiceScope.AddRangeAsync(ParticipantTwos, CancellationToken);
-		await ServiceScope.AddRangeAsync(Chats, CancellationToken);
+		await base.InitializeAsync();
 		await ServiceScope.AddRangeAsync(ChatMessages, CancellationToken);
 	}
 

@@ -56,6 +56,7 @@ public class GetAllUsersQueryRepositoryIntegrationTests : BaseUserInfrastructure
 
 	public override async Task InitializeAsync()
 	{
+		await base.InitializeAsync();
 		await ServiceScope.AddRangeAsync(Users, CancellationToken);
 	}
 

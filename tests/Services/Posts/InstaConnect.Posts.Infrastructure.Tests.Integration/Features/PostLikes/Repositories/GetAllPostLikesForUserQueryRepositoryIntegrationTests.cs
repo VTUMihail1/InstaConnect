@@ -54,8 +54,7 @@ public class GetAllPostLikesForUserQueryRepositoryIntegrationTests : BasePostLik
 
 	public override async Task InitializeAsync()
 	{
-		await ServiceScope.AddRangeAsync(Users, CancellationToken);
-		await ServiceScope.AddRangeAsync(Posts, CancellationToken);
+		await base.InitializeAsync();
 		await ServiceScope.AddRangeAsync(PostLikes, CancellationToken);
 	}
 

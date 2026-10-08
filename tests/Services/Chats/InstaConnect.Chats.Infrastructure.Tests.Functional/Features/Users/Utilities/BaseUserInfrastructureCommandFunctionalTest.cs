@@ -19,6 +19,7 @@ public abstract class BaseUserInfrastructureCommandFunctionalTest : BaseUserWebT
 
 	public override async Task InitializeAsync()
 	{
+		await base.InitializeAsync();
 		await UserEventClient.StartAsync(CancellationToken);
 	}
 

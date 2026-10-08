@@ -11,4 +11,11 @@ public abstract class BaseFollowPresentationQueryFunctionalTest : BaseFollowWebT
 	{
 		ApiClient = webApplicationFactory.CreateApiClient();
 	}
+
+	public override async Task InitializeAsync()
+	{
+		await base.InitializeAsync();
+		await ServiceScope.AddRangeAsync(Followers, CancellationToken);
+		await ServiceScope.AddRangeAsync(Followings, CancellationToken);
+	}
 }

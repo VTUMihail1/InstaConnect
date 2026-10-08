@@ -6,7 +6,6 @@ using InstaConnect.Identity.Infrastructure.Tests.Integration.Features.UserClaims
 using InstaConnect.Identity.Tests.Features.UserClaims.Builders;
 using InstaConnect.Identity.Tests.Features.UserClaims.Utilities;
 using InstaConnect.Identity.Tests.Features.Users.DataAttributes.Id;
-using InstaConnect.Identity.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Identity.Infrastructure.Tests.Integration.Features.UserClaims.Repositories;
 
@@ -34,7 +33,7 @@ public class GetUserClaimByIdQueryRepositoryIntegrationTests : BaseUserClaimInfr
 
 	public override async Task InitializeAsync()
 	{
-		await ServiceScope.AddAsync(User, CancellationToken);
+		await base.InitializeAsync();
 		await ServiceScope.AddAsync(UserClaim, CancellationToken);
 	}
 

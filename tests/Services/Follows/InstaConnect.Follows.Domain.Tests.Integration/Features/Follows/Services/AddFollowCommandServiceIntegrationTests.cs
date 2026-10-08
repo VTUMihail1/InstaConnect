@@ -24,14 +24,6 @@ public class AddFollowCommandServiceIntegrationTests : BaseFollowDomainCommandIn
 		_command = _commandBuilder.Build();
 	}
 
-	public override async Task InitializeAsync()
-	{
-		await ServiceScope.AddAsync(Follower, CancellationToken);
-		await ServiceScope.AddAsync(Following, CancellationToken);
-
-		await base.InitializeAsync();
-	}
-
 	[Fact]
 	public async Task AddAsync_ShouldThrowUserNotFoundException_WhenFollowerIdIsInvalid()
 	{

@@ -3,6 +3,8 @@ using InstaConnect.Identity.Domain.Tests.Features.EmailConfirmationTokens.Utilit
 using InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Abstractions;
 using InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Extensions;
 using InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Utilities;
+using InstaConnect.Identity.Tests.Features.UserClaims.Utilities;
+using InstaConnect.Identity.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Identity.Domain.Tests.Integration.Features.EmailConfirmationTokens.Utilities;
 
@@ -21,6 +23,9 @@ public abstract class BaseEmailConfirmationTokenDomainCommandIntegrationTest : B
 
 	public override async Task InitializeAsync()
 	{
+		await base.InitializeAsync();
+		await ServiceScope.AddAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(UserClaim, CancellationToken);
 		await EmailConfirmationTokenEventClient.StartAsync(CancellationToken);
 	}
 

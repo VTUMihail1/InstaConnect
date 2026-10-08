@@ -3,6 +3,7 @@ using InstaConnect.Identity.Domain.Tests.Features.UserClaims.Utilities;
 using InstaConnect.Identity.Tests.Features.UserClaims.Abstractions;
 using InstaConnect.Identity.Tests.Features.UserClaims.Extensions;
 using InstaConnect.Identity.Tests.Features.UserClaims.Utilities;
+using InstaConnect.Identity.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Identity.Domain.Tests.Integration.Features.UserClaims.Utilities;
 
@@ -21,6 +22,8 @@ public abstract class BaseUserClaimDomainCommandIntegrationTest : BaseUserClaimW
 
 	public override async Task InitializeAsync()
 	{
+		await base.InitializeAsync();
+		await ServiceScope.AddAsync(User, CancellationToken);
 		await ClaimEventClient.StartAsync(CancellationToken);
 	}
 

@@ -26,13 +26,6 @@ public class AddPostLikeCommandServiceIntegrationTests : BasePostLikeDomainComma
 		_command = _commandBuilder.Build();
 	}
 
-	public override async Task InitializeAsync()
-	{
-		await base.InitializeAsync();
-		await ServiceScope.AddAsync(User, CancellationToken);
-		await ServiceScope.AddAsync(Post, CancellationToken);
-	}
-
 	[Fact]
 	public async Task AddAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
 	{

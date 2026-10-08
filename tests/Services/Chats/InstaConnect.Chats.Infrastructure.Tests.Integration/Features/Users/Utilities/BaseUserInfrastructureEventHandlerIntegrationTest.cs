@@ -20,6 +20,7 @@ public abstract class BaseUserInfrastructureEventHandlerIntegrationTest : BaseUs
 
 	public override async Task InitializeAsync()
 	{
+		await base.InitializeAsync();
 		await UserEventClient.StartAsync(CancellationToken);
 	}
 

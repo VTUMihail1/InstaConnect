@@ -5,7 +5,6 @@ using InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.Builders;
 using InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.DataAttributes.Value;
 using InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.Utilities;
 using InstaConnect.Identity.Tests.Features.Users.DataAttributes.Id;
-using InstaConnect.Identity.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Identity.Infrastructure.Tests.Integration.Features.ForgotPasswordTokens.Repositories;
 
@@ -25,7 +24,7 @@ public class ForgotPasswordTokenExistsByIdCommandRepositoryIntegrationTests : Ba
 
 	public override async Task InitializeAsync()
 	{
-		await ServiceScope.AddAsync(User, CancellationToken);
+		await base.InitializeAsync();
 		await ServiceScope.AddAsync(ForgotPasswordToken, CancellationToken);
 	}
 

@@ -19,6 +19,9 @@ public abstract class BaseChatPresentationCommandFunctionalTest : BaseChatWebTes
 
 	public override async Task InitializeAsync()
 	{
+		await base.InitializeAsync();
+		await ServiceScope.AddAsync(ParticipantOne, CancellationToken);
+		await ServiceScope.AddAsync(ParticipantTwo, CancellationToken);
 		await EventClient.StartAsync(CancellationToken);
 	}
 

@@ -3,6 +3,7 @@ using InstaConnect.Follows.Domain.Tests.Features.Follows.Utilities;
 using InstaConnect.Follows.Tests.Features.Follows.Abstractions;
 using InstaConnect.Follows.Tests.Features.Follows.Extensions;
 using InstaConnect.Follows.Tests.Features.Follows.Utilities;
+using InstaConnect.Follows.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Follows.Domain.Tests.Integration.Features.Follows.Utilities;
 
@@ -23,6 +24,9 @@ public abstract class BaseFollowDomainCommandIntegrationTest : BaseFollowWebTest
 
 	public override async Task InitializeAsync()
 	{
+		await base.InitializeAsync();
+		await ServiceScope.AddAsync(Follower, CancellationToken);
+		await ServiceScope.AddAsync(Following, CancellationToken);
 		await EventClient.StartAsync(CancellationToken);
 		await NotificationClient.StartAsync(CancellationToken);
 	}

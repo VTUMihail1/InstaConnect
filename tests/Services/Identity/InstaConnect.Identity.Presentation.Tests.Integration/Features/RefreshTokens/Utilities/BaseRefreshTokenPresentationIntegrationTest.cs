@@ -8,4 +8,11 @@ public abstract class BaseRefreshTokenPresentationIntegrationTest : BaseRefreshT
 	{
 		Controller = ServiceScope.GetRefreshTokenController();
 	}
+
+	public override async Task InitializeAsync()
+	{
+		await base.InitializeAsync();
+		await ServiceScope.AddAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(UserClaim, CancellationToken);
+	}
 }

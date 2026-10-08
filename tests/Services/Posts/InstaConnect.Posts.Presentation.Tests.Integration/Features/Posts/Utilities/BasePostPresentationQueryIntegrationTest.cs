@@ -11,4 +11,11 @@ public abstract class BasePostPresentationQueryIntegrationTest : BasePostWebTest
 		Controller = ServiceScope.GetPostController();
 		UserController = ServiceScope.GetUserPostController();
 	}
+
+	public override async Task InitializeAsync()
+	{
+		await base.InitializeAsync();
+		await ServiceScope.AddRangeAsync(Users, CancellationToken);
+		await ServiceScope.AddRangeAsync(PostLikes, CancellationToken);
+	}
 }

@@ -11,4 +11,11 @@ public abstract class BaseRefreshTokenPresentationCommandFunctionalTest : BaseRe
 	{
 		RefreshTokenApiClient = webApplicationFactory.CreateRefreshTokenApiClient();
 	}
+
+	public override async Task InitializeAsync()
+	{
+		await base.InitializeAsync();
+		await ServiceScope.AddAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(UserClaim, CancellationToken);
+	}
 }

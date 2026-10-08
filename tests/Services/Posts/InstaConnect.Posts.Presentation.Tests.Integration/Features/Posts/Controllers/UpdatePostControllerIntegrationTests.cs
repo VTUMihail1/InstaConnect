@@ -17,7 +17,6 @@ public class UpdatePostControllerIntegrationTests : BasePostPresentationCommandI
 	public override async Task InitializeAsync()
 	{
 		await base.InitializeAsync();
-		await ServiceScope.AddAsync(User, CancellationToken);
 		await ServiceScope.AddAsync(Post, CancellationToken);
 	}
 

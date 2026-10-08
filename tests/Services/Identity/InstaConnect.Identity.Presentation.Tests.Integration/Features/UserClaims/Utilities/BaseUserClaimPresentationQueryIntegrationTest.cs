@@ -8,4 +8,10 @@ public abstract class BaseUserClaimPresentationQueryIntegrationTest : BaseUserCl
 	{
 		Controller = ServiceScope.GetUserClaimController();
 	}
+
+	public override async Task InitializeAsync()
+	{
+		await base.InitializeAsync();
+		await ServiceScope.AddRangeAsync(Users, CancellationToken);
+	}
 }

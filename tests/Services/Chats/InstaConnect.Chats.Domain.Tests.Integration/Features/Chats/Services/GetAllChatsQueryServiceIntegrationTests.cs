@@ -32,8 +32,7 @@ public class GetAllChatsQueryServiceIntegrationTests : BaseChatDomainQueryIntegr
 
 	public override async Task InitializeAsync()
 	{
-		await ServiceScope.AddRangeAsync(ParticipantOnes, CancellationToken);
-		await ServiceScope.AddRangeAsync(ParticipantTwos, CancellationToken);
+		await base.InitializeAsync();
 		await ServiceScope.AddRangeAsync(Chats, CancellationToken);
 	}
 

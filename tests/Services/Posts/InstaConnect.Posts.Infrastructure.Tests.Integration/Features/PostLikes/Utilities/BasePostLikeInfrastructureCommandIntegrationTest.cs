@@ -1,5 +1,6 @@
 using InstaConnect.Posts.Domain.Features.PostLikes.Abstractions;
 using InstaConnect.Posts.Tests.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Tests.Features.Posts.Utilities;
 
 namespace InstaConnect.Posts.Infrastructure.Tests.Integration.Features.PostLikes.Utilities;
 
@@ -15,5 +16,12 @@ public abstract class BasePostLikeInfrastructureCommandIntegrationTest : BasePos
 		Repository = ServiceScope.GetPostLikeCommandRepository();
 		IncludeBuilderFactory = ServiceScope.GetPostLikeIncludeBuilderFactory();
 
+	}
+
+	public override async Task InitializeAsync()
+	{
+		await base.InitializeAsync();
+		await ServiceScope.AddAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(Post, CancellationToken);
 	}
 }

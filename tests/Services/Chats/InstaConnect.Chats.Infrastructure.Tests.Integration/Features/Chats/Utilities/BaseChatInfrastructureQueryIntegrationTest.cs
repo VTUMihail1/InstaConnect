@@ -12,4 +12,11 @@ public abstract class BaseChatInfrastructureQueryIntegrationTest : BaseChatWebTe
 	{
 		Repository = ServiceScope.GetQueryRepository();
 	}
+
+	public override async Task InitializeAsync()
+	{
+		await base.InitializeAsync();
+		await ServiceScope.AddRangeAsync(ParticipantOnes, CancellationToken);
+		await ServiceScope.AddRangeAsync(ParticipantTwos, CancellationToken);
+	}
 }

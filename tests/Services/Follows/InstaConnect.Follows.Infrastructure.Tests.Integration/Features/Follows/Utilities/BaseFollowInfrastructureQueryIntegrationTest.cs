@@ -12,4 +12,11 @@ public abstract class BaseFollowInfrastructureQueryIntegrationTest : BaseFollowW
 	{
 		Repository = ServiceScope.GetFollowQueryRepository();
 	}
+
+	public override async Task InitializeAsync()
+	{
+		await base.InitializeAsync();
+		await ServiceScope.AddRangeAsync(Followers, CancellationToken);
+		await ServiceScope.AddRangeAsync(Followings, CancellationToken);
+	}
 }

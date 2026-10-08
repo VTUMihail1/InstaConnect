@@ -1,5 +1,7 @@
 using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Abstractions;
 using InstaConnect.Identity.Tests.Features.EmailConfirmationTokens.Utilities;
+using InstaConnect.Identity.Tests.Features.UserClaims.Utilities;
+using InstaConnect.Identity.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Identity.Infrastructure.Tests.Integration.Features.EmailConfirmationTokens.Utilities;
 
@@ -14,5 +16,12 @@ public abstract class BaseEmailConfirmationTokenInfrastructureCommandIntegration
 	{
 		Repository = ServiceScope.GetEmailConfirmationTokenCommandRepository();
 		IncludeBuilderFactory = ServiceScope.GetEmailConfirmationTokenIncludeBuilderFactory();
+	}
+
+	public override async Task InitializeAsync()
+	{
+		await base.InitializeAsync();
+		await ServiceScope.AddAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(UserClaim, CancellationToken);
 	}
 }

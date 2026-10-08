@@ -1,6 +1,5 @@
 using InstaConnect.Identity.Infrastructure.Tests.Integration.Features.UserClaims.Utilities;
 using InstaConnect.Identity.Tests.Features.UserClaims.Utilities;
-using InstaConnect.Identity.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Identity.Infrastructure.Tests.Integration.Features.UserClaims.Repositories;
 
@@ -13,7 +12,7 @@ public class DeleteUserClaimCommandRepositoryIntegrationTests : BaseUserClaimInf
 
 	public override async Task InitializeAsync()
 	{
-		await ServiceScope.AddAsync(User, CancellationToken);
+		await base.InitializeAsync();
 		await ServiceScope.AddAsync(UserClaim, CancellationToken);
 	}
 

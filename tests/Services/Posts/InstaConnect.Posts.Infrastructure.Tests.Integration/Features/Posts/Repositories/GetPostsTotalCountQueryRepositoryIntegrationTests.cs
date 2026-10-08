@@ -23,7 +23,7 @@ public class GetPostsTotalCountQueryRepositoryIntegrationTests : BasePostInfrast
 
 	public override async Task InitializeAsync()
 	{
-		await ServiceScope.AddRangeAsync(Users, CancellationToken);
+		await base.InitializeAsync();
 		await ServiceScope.AddRangeAsync(Posts, CancellationToken);
 	}
 

@@ -1,6 +1,8 @@
 using InstaConnect.Chats.Domain.Features.ChatMessages.Abstractions;
 using InstaConnect.Chats.Domain.Tests.Features.ChatMessages.Utilities;
 using InstaConnect.Chats.Tests.Features.ChatMessages.Utilities;
+using InstaConnect.Chats.Tests.Features.Chats.Utilities;
+using InstaConnect.Chats.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Chats.Domain.Tests.Integration.Features.ChatMessages.Utilities;
 
@@ -12,5 +14,13 @@ public abstract class BaseChatMessageDomainQueryIntegrationTest : BaseChatMessag
 		: base(webApplicationFactory)
 	{
 		Service = ServiceScope.GetChatMessageQueryService();
+	}
+
+	public override async Task InitializeAsync()
+	{
+		await base.InitializeAsync();
+		await ServiceScope.AddRangeAsync(ParticipantOnes, CancellationToken);
+		await ServiceScope.AddRangeAsync(ParticipantTwos, CancellationToken);
+		await ServiceScope.AddRangeAsync(Chats, CancellationToken);
 	}
 }

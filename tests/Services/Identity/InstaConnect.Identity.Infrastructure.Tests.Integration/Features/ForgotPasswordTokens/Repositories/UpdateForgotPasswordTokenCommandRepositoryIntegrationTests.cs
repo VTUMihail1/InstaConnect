@@ -1,7 +1,6 @@
 using InstaConnect.Identity.Infrastructure.Tests.Integration.Features.ForgotPasswordTokens.Utilities;
 using InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.Assertions;
 using InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.Utilities;
-using InstaConnect.Identity.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Identity.Infrastructure.Tests.Integration.Features.ForgotPasswordTokens.Repositories;
 
@@ -14,7 +13,7 @@ public class UpdateForgotPasswordTokenCommandRepositoryIntegrationTests : BaseFo
 
 	public override async Task InitializeAsync()
 	{
-		await ServiceScope.AddAsync(User, CancellationToken);
+		await base.InitializeAsync();
 		await ServiceScope.AddAsync(ForgotPasswordToken, CancellationToken);
 	}
 

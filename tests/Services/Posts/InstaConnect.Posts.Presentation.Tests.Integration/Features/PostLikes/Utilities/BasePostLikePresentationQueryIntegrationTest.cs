@@ -11,4 +11,11 @@ public abstract class BasePostLikePresentationQueryIntegrationTest : BasePostLik
 		Controller = ServiceScope.GetPostLikeController();
 		UserController = ServiceScope.GetUserPostLikeController();
 	}
+
+	public override async Task InitializeAsync()
+	{
+		await base.InitializeAsync();
+		await ServiceScope.AddRangeAsync(Users, CancellationToken);
+		await ServiceScope.AddRangeAsync(Posts, CancellationToken);
+	}
 }

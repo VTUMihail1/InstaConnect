@@ -14,12 +14,6 @@ public class IssueRefreshTokenCommandHandlerIntegrationTests : BaseRefreshTokenA
 		_request = _requestBuilder.Build();
 	}
 
-	public override async Task InitializeAsync()
-	{
-		await ServiceScope.AddAsync(User, CancellationToken);
-		await ServiceScope.AddRangeAsync(User.UserClaims, CancellationToken);
-	}
-
 	[Theory]
 	[UserNameNullWithMessageData]
 	[UserNameEmptyWithMessageData]

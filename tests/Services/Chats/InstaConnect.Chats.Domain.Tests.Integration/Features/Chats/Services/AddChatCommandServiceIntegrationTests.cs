@@ -24,13 +24,6 @@ public class AddChatCommandServiceIntegrationTests : BaseChatDomainCommandIntegr
 		_command = _commandBuilder.Build();
 	}
 
-	public override async Task InitializeAsync()
-	{
-		await base.InitializeAsync();
-		await ServiceScope.AddAsync(ParticipantOne, CancellationToken);
-		await ServiceScope.AddAsync(ParticipantTwo, CancellationToken);
-	}
-
 	[Fact]
 	public async Task AddAsync_ShouldThrowUserNotFoundException_WhenParticipantOneIdIsInvalid()
 	{

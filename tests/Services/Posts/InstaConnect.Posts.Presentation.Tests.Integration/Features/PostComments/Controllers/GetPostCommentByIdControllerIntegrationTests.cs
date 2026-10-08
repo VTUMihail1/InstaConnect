@@ -16,11 +16,8 @@ public class GetPostCommentByIdControllerIntegrationTests : BasePostCommentPrese
 
 	public override async Task InitializeAsync()
 	{
-		await ServiceScope.AddAsync(User, CancellationToken);
-		await ServiceScope.AddAsync(Post, CancellationToken);
-		await ServiceScope.AddAsync(PostLike, CancellationToken);
+		await base.InitializeAsync();
 		await ServiceScope.AddAsync(PostComment, CancellationToken);
-		await ServiceScope.AddAsync(PostCommentLike, CancellationToken);
 	}
 
 	[Theory]

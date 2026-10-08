@@ -10,4 +10,10 @@ public abstract class BaseUserClaimApplicationQueryIntegrationTest : BaseUserCla
 	{
 		Sender = ServiceScope.GetSender();
 	}
+
+	public override async Task InitializeAsync()
+	{
+		await base.InitializeAsync();
+		await ServiceScope.AddRangeAsync(Users, CancellationToken);
+	}
 }

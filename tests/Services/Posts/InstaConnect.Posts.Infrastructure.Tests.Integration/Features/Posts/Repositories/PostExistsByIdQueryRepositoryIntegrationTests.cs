@@ -25,7 +25,7 @@ public class PostExistsByIdQueryRepositoryIntegrationTests : BasePostInfrastruct
 
 	public override async Task InitializeAsync()
 	{
-		await ServiceScope.AddAsync(User, CancellationToken);
+		await base.InitializeAsync();
 		await ServiceScope.AddAsync(Post, CancellationToken);
 	}
 

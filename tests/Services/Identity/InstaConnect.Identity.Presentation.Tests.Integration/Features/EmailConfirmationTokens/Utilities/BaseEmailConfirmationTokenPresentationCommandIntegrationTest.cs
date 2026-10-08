@@ -17,6 +17,9 @@ public abstract class BaseEmailConfirmationTokenPresentationCommandIntegrationTe
 
 	public override async Task InitializeAsync()
 	{
+		await base.InitializeAsync();
+		await ServiceScope.AddAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(UserClaim, CancellationToken);
 		await EventClient.StartAsync(CancellationToken);
 	}
 

@@ -3,6 +3,8 @@ using InstaConnect.Identity.Domain.Tests.Features.ForgotPasswordTokens.Utilities
 using InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.Abstractions;
 using InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.Extensions;
 using InstaConnect.Identity.Tests.Features.ForgotPasswordTokens.Utilities;
+using InstaConnect.Identity.Tests.Features.UserClaims.Utilities;
+using InstaConnect.Identity.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Identity.Domain.Tests.Integration.Features.ForgotPasswordTokens.Utilities;
 
@@ -21,6 +23,9 @@ public abstract class BaseForgotPasswordTokenDomainCommandIntegrationTest : Base
 
 	public override async Task InitializeAsync()
 	{
+		await base.InitializeAsync();
+		await ServiceScope.AddAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(UserClaim, CancellationToken);
 		await ForgotPasswordTokenEventClient.StartAsync(CancellationToken);
 	}
 

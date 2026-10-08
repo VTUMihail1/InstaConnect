@@ -14,12 +14,6 @@ public class AddEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEmail
 		_request = _requestBuilder.Build();
 	}
 
-	public override async Task InitializeAsync()
-	{
-		await base.InitializeAsync();
-		await ServiceScope.AddAsync(User, CancellationToken);
-	}
-
 	[Theory]
 	[UserNameNullWithMessageData]
 	[UserNameEmptyWithMessageData]

@@ -11,7 +11,6 @@ using InstaConnect.Identity.Tests.Features.UserClaims.DataAttributes.SortOrder;
 using InstaConnect.Identity.Tests.Features.UserClaims.DataAttributes.SortTerm;
 using InstaConnect.Identity.Tests.Features.UserClaims.Utilities;
 using InstaConnect.Identity.Tests.Features.Users.DataAttributes.Id;
-using InstaConnect.Identity.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Identity.Infrastructure.Tests.Integration.Features.UserClaims.Repositories;
 
@@ -55,7 +54,7 @@ public class GetAllUserClaimsQueryRepositoryIntegrationTests : BaseUserClaimInfr
 
 	public override async Task InitializeAsync()
 	{
-		await ServiceScope.AddRangeAsync(Users, CancellationToken);
+		await base.InitializeAsync();
 		await ServiceScope.AddRangeAsync(UserClaims, CancellationToken);
 	}
 

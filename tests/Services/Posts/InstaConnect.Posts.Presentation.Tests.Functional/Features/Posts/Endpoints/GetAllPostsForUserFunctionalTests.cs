@@ -20,9 +20,8 @@ public class GetAllPostsForUserFunctionalTests : BasePostPresentationQueryFuncti
 
 	public override async Task InitializeAsync()
 	{
-		await ServiceScope.AddRangeAsync(Users, CancellationToken);
+		await base.InitializeAsync();
 		await ServiceScope.AddRangeAsync(Posts, CancellationToken);
-		await ServiceScope.AddRangeAsync(PostLikes, CancellationToken);
 	}
 
 	[Theory]

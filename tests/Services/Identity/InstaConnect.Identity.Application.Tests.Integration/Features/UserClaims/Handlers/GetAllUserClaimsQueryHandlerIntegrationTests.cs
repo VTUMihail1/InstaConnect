@@ -20,7 +20,7 @@ public class GetAllUserClaimsQueryHandlerIntegrationTests : BaseUserClaimApplica
 
 	public override async Task InitializeAsync()
 	{
-		await ServiceScope.AddRangeAsync(Users, CancellationToken);
+		await base.InitializeAsync();
 		await ServiceScope.AddRangeAsync(UserClaims, CancellationToken);
 	}
 

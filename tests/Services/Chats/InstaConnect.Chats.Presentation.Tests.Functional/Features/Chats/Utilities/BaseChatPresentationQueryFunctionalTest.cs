@@ -11,4 +11,11 @@ public abstract class BaseChatPresentationQueryFunctionalTest : BaseChatWebTest
 	{
 		ApiClient = webApplicationFactory.CreateApiClient();
 	}
+
+	public override async Task InitializeAsync()
+	{
+		await base.InitializeAsync();
+		await ServiceScope.AddRangeAsync(ParticipantOnes, CancellationToken);
+		await ServiceScope.AddRangeAsync(ParticipantTwos, CancellationToken);
+	}
 }

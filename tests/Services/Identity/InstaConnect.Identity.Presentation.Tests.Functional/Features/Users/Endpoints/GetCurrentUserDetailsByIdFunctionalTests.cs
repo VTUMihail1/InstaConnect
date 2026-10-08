@@ -16,6 +16,7 @@ public class GetCurrentUserDetailsByIdFunctionalTests : BaseUserPresentationQuer
 
 	public override async Task InitializeAsync()
 	{
+		await base.InitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 	}
 

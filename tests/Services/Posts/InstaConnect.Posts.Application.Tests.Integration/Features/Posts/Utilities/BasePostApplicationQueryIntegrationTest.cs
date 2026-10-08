@@ -10,4 +10,11 @@ public abstract class BasePostApplicationQueryIntegrationTest : BasePostWebTest
 	{
 		Sender = ServiceScope.GetSender();
 	}
+
+	public override async Task InitializeAsync()
+	{
+		await base.InitializeAsync();
+		await ServiceScope.AddRangeAsync(Users, CancellationToken);
+		await ServiceScope.AddRangeAsync(PostLikes, CancellationToken);
+	}
 }

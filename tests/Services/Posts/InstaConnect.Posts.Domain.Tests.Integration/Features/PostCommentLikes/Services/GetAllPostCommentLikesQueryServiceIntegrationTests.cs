@@ -37,10 +37,7 @@ public class GetAllPostCommentLikesQueryServiceIntegrationTests : BasePostCommen
 
 	public override async Task InitializeAsync()
 	{
-		await ServiceScope.AddRangeAsync(Users, CancellationToken);
-		await ServiceScope.AddRangeAsync(Posts, CancellationToken);
-		await ServiceScope.AddRangeAsync(PostLikes, CancellationToken);
-		await ServiceScope.AddRangeAsync(PostComments, CancellationToken);
+		await base.InitializeAsync();
 		await ServiceScope.AddRangeAsync(PostCommentLikes, CancellationToken);
 	}
 

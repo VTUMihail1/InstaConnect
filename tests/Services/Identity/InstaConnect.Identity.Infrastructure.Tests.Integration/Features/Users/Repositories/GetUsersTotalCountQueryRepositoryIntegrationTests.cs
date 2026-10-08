@@ -25,6 +25,7 @@ public class GetUsersTotalCountQueryRepositoryIntegrationTests : BaseUserInfrast
 
 	public override async Task InitializeAsync()
 	{
+		await base.InitializeAsync();
 		await ServiceScope.AddRangeAsync(Users, CancellationToken);
 	}
 

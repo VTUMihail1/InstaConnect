@@ -1,7 +1,6 @@
 using InstaConnect.Identity.Infrastructure.Tests.Integration.Features.UserClaims.Utilities;
 using InstaConnect.Identity.Tests.Features.UserClaims.Assertions;
 using InstaConnect.Identity.Tests.Features.UserClaims.Utilities;
-using InstaConnect.Identity.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Identity.Infrastructure.Tests.Integration.Features.UserClaims.Repositories;
 
@@ -10,11 +9,6 @@ public class AddUserClaimCommandRepositoryIntegrationTests : BaseUserClaimInfras
 	public AddUserClaimCommandRepositoryIntegrationTests(IdentityWebApplicationFactory webApplicationFactory)
 		: base(webApplicationFactory)
 	{
-	}
-
-	public override async Task InitializeAsync()
-	{
-		await ServiceScope.AddAsync(User, CancellationToken);
 	}
 
 	[Fact]

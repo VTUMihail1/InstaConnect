@@ -20,7 +20,7 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 
 	public override async Task InitializeAsync()
 	{
-		await ServiceScope.AddRangeAsync(Users, CancellationToken);
+		await base.InitializeAsync();
 		await ServiceScope.AddRangeAsync(UserClaims, CancellationToken);
 	}
 
@@ -230,7 +230,6 @@ public class GetAllUserClaimsFunctionalTests : BaseUserClaimPresentationQueryFun
 		// Assert
 		response.ShouldSatisfyInvalidValidationForPageSize(request, messageTransformer);
 	}
-
 
 	[Fact]
 	public async Task GetAllAsync_ShouldHaveNotFoundStatusCode_WhenUserNotFound()

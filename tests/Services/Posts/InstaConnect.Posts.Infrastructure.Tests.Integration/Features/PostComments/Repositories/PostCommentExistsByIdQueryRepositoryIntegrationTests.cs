@@ -25,8 +25,7 @@ public class PostCommentExistsByIdQueryRepositoryIntegrationTests : BasePostComm
 
 	public override async Task InitializeAsync()
 	{
-		await ServiceScope.AddAsync(User, CancellationToken);
-		await ServiceScope.AddAsync(Post, CancellationToken);
+		await base.InitializeAsync();
 		await ServiceScope.AddAsync(PostComment, CancellationToken);
 	}
 

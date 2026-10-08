@@ -24,9 +24,7 @@ public class ChatMessageExistsByIdQueryRepositoryIntegrationTests : BaseChatMess
 
 	public override async Task InitializeAsync()
 	{
-		await ServiceScope.AddAsync(ParticipantOne, CancellationToken);
-		await ServiceScope.AddAsync(ParticipantTwo, CancellationToken);
-		await ServiceScope.AddAsync(Chat, CancellationToken);
+		await base.InitializeAsync();
 		await ServiceScope.AddAsync(ChatMessage, CancellationToken);
 	}
 

@@ -10,4 +10,11 @@ public abstract class BaseFollowApplicationQueryIntegrationTest : BaseFollowWebT
 	{
 		Sender = ServiceScope.GetSender();
 	}
+
+	public override async Task InitializeAsync()
+	{
+		await base.InitializeAsync();
+		await ServiceScope.AddRangeAsync(Followers, CancellationToken);
+		await ServiceScope.AddRangeAsync(Followings, CancellationToken);
+	}
 }

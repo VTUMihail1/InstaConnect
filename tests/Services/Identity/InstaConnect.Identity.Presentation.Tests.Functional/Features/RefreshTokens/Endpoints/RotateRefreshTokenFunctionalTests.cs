@@ -18,8 +18,7 @@ public class RotateRefreshTokenFunctionalTests : BaseRefreshTokenPresentationCom
 
 	public override async Task InitializeAsync()
 	{
-		await ServiceScope.AddAsync(User, CancellationToken);
-		await ServiceScope.AddRangeAsync(User.UserClaims, CancellationToken);
+		await base.InitializeAsync();
 		await ServiceScope.AddAsync(RefreshToken, CancellationToken);
 	}
 

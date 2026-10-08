@@ -18,6 +18,9 @@ public abstract class BasePostApplicationCommandIntegrationTest : BasePostWebTes
 
 	public override async Task InitializeAsync()
 	{
+		await base.InitializeAsync();
+		await ServiceScope.AddAsync(User, CancellationToken);
+		await ServiceScope.AddAsync(PostLike, CancellationToken);
 		await EventClient.StartAsync(CancellationToken);
 	}
 
