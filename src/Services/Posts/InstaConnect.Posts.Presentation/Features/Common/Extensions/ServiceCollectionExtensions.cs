@@ -1,5 +1,6 @@
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Domain.Features.Mappers.Extensions;
+using InstaConnect.Common.Domain.Features.Validations.Extensions;
 using InstaConnect.Common.Presentation.Features.Common.Extensions;
 using InstaConnect.Common.Presentation.Features.Common.Models;
 using InstaConnect.Common.Presentation.Features.Controllers.Extensions;
@@ -26,10 +27,11 @@ public static class ServiceCollectionExtensions
 				.AddPostCommentLikeServices();
 
 			serviceCollection
-				.AddValidatedOptions<MainOptions, MainOptionsValidator>(MainOptions.SectionName)
+				.AddValidatedOptions<MainOptions>(MainOptions.SectionName)
 				.AddServicesWithMatchingInterfaces(PostsPresentationReference.Assembly)
 				.AddApiControllers()
 				.AddMappers(PostsPresentationReference.Assembly, CommonPresentationReference.Assembly)
+				.AddValidations(PostsPresentationReference.Assembly, CommonPresentationReference.Assembly)
 				.AddAuthorizationPolicies()
 				.AddCorsPolicies(configuration)
 				.AddRateLimiterPolicies()

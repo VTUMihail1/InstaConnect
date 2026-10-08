@@ -3,6 +3,7 @@ using InstaConnect.Chats.Infrastructure.Features.Chats.Extensions;
 using InstaConnect.Chats.Infrastructure.Features.Common.Utilities;
 using InstaConnect.Chats.Infrastructure.Features.Users.Extensions;
 using InstaConnect.Common.Domain.Features.Mappers.Extensions;
+using InstaConnect.Common.Domain.Features.Validations.Extensions;
 using InstaConnect.Common.Infrastructure.Features.AccessTokens.Extensions;
 using InstaConnect.Common.Infrastructure.Features.Caches.Extensions;
 using InstaConnect.Common.Infrastructure.Features.Common.Extensions;
@@ -30,6 +31,7 @@ public static class ServiceCollectionExtensions
 			serviceCollection
 				.AddTelemetries(configuration, webHostEnvironment)
 				.AddMappers(ChatsInfrastructureReference.Assembly, CommonInfrastructureReference.Assembly)
+				.AddValidations(ChatsInfrastructureReference.Assembly, CommonInfrastructureReference.Assembly)
 				.AddServicesWithMatchingInterfacesExceptFluents(ChatsInfrastructureReference.Assembly)
 				.AddDatabases(configuration)
 				.AddEvents(configuration, ChatsEventHandlerUtilities.Prefix, ChatsInfrastructureReference.Assembly)

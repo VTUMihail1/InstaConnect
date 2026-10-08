@@ -13,7 +13,7 @@ internal static class ServiceCollectionExtensions
 		{
 			const string CollectionName = "email_confirmation_tokens";
 
-			serviceCollection.AddValidatedOptions<EmailConfirmationTokenOptions, EmailConfirmationTokenOptionsValidator>(EmailConfirmationTokenOptions.SectionName);
+			serviceCollection.AddValidatedOptions<EmailConfirmationTokenOptions>(EmailConfirmationTokenOptions.SectionName);
 
 			serviceCollection.AddImplementationsOf<IEmailConfirmationTokenIncluder>(IdentityInfrastructureReference.Assembly);
 

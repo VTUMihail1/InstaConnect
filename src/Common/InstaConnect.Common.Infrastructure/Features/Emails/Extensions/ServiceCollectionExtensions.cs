@@ -15,7 +15,7 @@ public static class ServiceCollectionExtensions
 	{
 		public IServiceCollection AddEmailSenders(IConfiguration configuration)
 		{
-			serviceCollection.AddValidatedOptions<SendGridOptions, SendGridOptionsValidator>(SendGridOptions.SectionName);
+			serviceCollection.AddValidatedOptions<SendGridOptions>(SendGridOptions.SectionName);
 
 			var options = configuration.GetOptions<SendGridOptions>(SendGridOptions.SectionName);
 

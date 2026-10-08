@@ -34,7 +34,7 @@ public static class ServiceCollectionExtensions
 		{
 			const string ConventionName = "ApplicationConventionPack";
 
-			serviceCollection.AddValidatedOptions<MongoOptions, MongoOptionsValidator>(MongoOptions.SectionName);
+			serviceCollection.AddValidatedOptions<MongoOptions>(MongoOptions.SectionName);
 			var options = configuration.GetOptions<MongoOptions>(MongoOptions.SectionName);
 
 			serviceCollection.AddSingleton<IMongoClient>(_ =>

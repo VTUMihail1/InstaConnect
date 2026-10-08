@@ -19,11 +19,6 @@ public static class EnumerableExtensions
 			return enumerable.JoinWith(" ");
 		}
 
-		public string JoinWithComma()
-		{
-			return enumerable.JoinWith(", ");
-		}
-
 		public string JoinWithSemicolon()
 		{
 			return enumerable.JoinWith("; ");

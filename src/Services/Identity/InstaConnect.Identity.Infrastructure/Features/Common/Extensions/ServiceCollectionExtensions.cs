@@ -1,8 +1,10 @@
 using System.Reflection;
 
 using InstaConnect.Common.Domain.Features.Mappers.Extensions;
+using InstaConnect.Common.Domain.Features.Validations.Extensions;
 using InstaConnect.Common.Infrastructure.Features.AccessTokens.Extensions;
 using InstaConnect.Common.Infrastructure.Features.Caches.Extensions;
+using InstaConnect.Common.Infrastructure.Features.Common.Extensions;
 using InstaConnect.Common.Infrastructure.Features.DateTimes.Extensions;
 using InstaConnect.Common.Infrastructure.Features.Emails.Extensions;
 using InstaConnect.Common.Infrastructure.Features.Events.Extensions;
@@ -31,7 +33,7 @@ public static class ServiceCollectionExtensions
 			IWebHostEnvironment webHostEnvironment,
 			Assembly presentationAssembly)
 		{
-			serviceCollection.AddValidatedOptions<AdminOptions, AdminOptionsValidator>(AdminOptions.SectionName);
+			serviceCollection.AddValidatedOptions<AdminOptions>(AdminOptions.SectionName);
 
 			serviceCollection.AddSingleton<IPasswordHasher, PasswordHasher>();
 
@@ -45,6 +47,7 @@ public static class ServiceCollectionExtensions
 			serviceCollection
 				.AddTelemetries(configuration, webHostEnvironment)
 				.AddMappers(IdentityInfrastructureReference.Assembly)
+				.AddValidations(IdentityInfrastructureReference.Assembly, CommonInfrastructureReference.Assembly)
 				.AddEmailSenders(configuration)
 				.AddServicesWithMatchingInterfacesExceptFluents(IdentityInfrastructureReference.Assembly)
 				.AddCaches(configuration)

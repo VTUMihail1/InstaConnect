@@ -12,7 +12,7 @@ internal static class ServiceCollectionExtensions
 	{
 		internal IServiceCollection AddChatMessageServices()
 		{
-			serviceCollection.AddValidatedOptions<ChatMessageOptions, ChatMessageOptionsValidator>(ChatMessageOptions.SectionName);
+			serviceCollection.AddValidatedOptions<ChatMessageOptions>(ChatMessageOptions.SectionName);
 
 			serviceCollection.AddScoped<IChatMessageNotificationService, ChatMessageNotificationService>();
 

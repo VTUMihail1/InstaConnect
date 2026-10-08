@@ -15,7 +15,7 @@ public static class ServiceCollectionExtensions
 	{
 		public IServiceCollection AddImages(IConfiguration configuration)
 		{
-			serviceCollection.AddValidatedOptions<CloudinaryOptions, CloudinaryOptionsValidator>(CloudinaryOptions.SectionName);
+			serviceCollection.AddValidatedOptions<CloudinaryOptions>(CloudinaryOptions.SectionName);
 			var options = configuration.GetOptions<CloudinaryOptions>(CloudinaryOptions.SectionName);
 
 			serviceCollection.AddScoped(_ => new Cloudinary(new Account(

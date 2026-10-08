@@ -16,7 +16,7 @@ public static class ServiceCollectionExtensions
 	{
 		public IServiceCollection AddTelemetries(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
 		{
-			serviceCollection.AddValidatedOptions<OpenTelemetryOptions, OpenTelemetryOptionsValidator>(OpenTelemetryOptions.SectionName);
+			serviceCollection.AddValidatedOptions<OpenTelemetryOptions>(OpenTelemetryOptions.SectionName);
 			var options = configuration.GetOptions<OpenTelemetryOptions>(OpenTelemetryOptions.SectionName);
 
 			serviceCollection.AddOpenTelemetry()

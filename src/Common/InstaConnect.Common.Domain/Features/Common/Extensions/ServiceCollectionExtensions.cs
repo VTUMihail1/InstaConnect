@@ -51,9 +51,8 @@ public static class ServiceCollectionExtensions
 			return serviceCollection;
 		}
 
-		public IServiceCollection AddValidatedOptions<TOptions, TValidator>(string sectionName)
+		public IServiceCollection AddValidatedOptions<TOptions>(string sectionName)
 			where TOptions : class, IApplicationOptions
-			where TValidator : IValidator<TOptions>, new()
 		{
 			serviceCollection
 				.AddOptions<TOptions>()
@@ -66,8 +65,10 @@ public static class ServiceCollectionExtensions
 				serviceProvider.GetServices<IPostConfigureOptions<TOptions>>(),
 				serviceProvider.GetServices<IValidateOptions<TOptions>>()));
 
-			serviceCollection.TryAddEnumerable(ServiceDescriptor.Singleton<IValidateOptions<TOptions>>(
-				new FluentValidationOptionsValidator<TOptions>(sectionName, [new TValidator()])));
+			serviceCollection.TryAddEnumerable(
+				ServiceDescriptor.Singleton<IValidateOptions<TOptions>, FluentValidationOptionsValidator<TOptions>>(sp => new FluentValidationOptionsValidator<TOptions>(
+				    sectionName,
+				    sp.GetServices<IValidator<TOptions>>())));
 
 			return serviceCollection;
 		}

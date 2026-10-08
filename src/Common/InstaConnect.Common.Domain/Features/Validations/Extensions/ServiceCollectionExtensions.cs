@@ -4,7 +4,7 @@ using FluentValidation;
 
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Common.Application.Features.Validations.Extensions;
+namespace InstaConnect.Common.Domain.Features.Validations.Extensions;
 
 public static class ServiceCollectionExtensions
 {
@@ -14,7 +14,7 @@ public static class ServiceCollectionExtensions
 		{
 			ValidatorOptions.Global.DefaultRuleLevelCascadeMode = CascadeMode.Stop;
 
-			serviceCollection.AddValidatorsFromAssemblies(assemblies);
+			serviceCollection.AddValidatorsFromAssemblies(assemblies, ServiceLifetime.Transient);
 
 			return serviceCollection;
 		}

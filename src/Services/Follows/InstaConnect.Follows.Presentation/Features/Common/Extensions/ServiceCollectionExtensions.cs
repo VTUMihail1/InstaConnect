@@ -1,5 +1,6 @@
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Domain.Features.Mappers.Extensions;
+using InstaConnect.Common.Domain.Features.Validations.Extensions;
 using InstaConnect.Common.Presentation.Features.Common.Extensions;
 using InstaConnect.Common.Presentation.Features.Common.Models;
 using InstaConnect.Common.Presentation.Features.Controllers.Extensions;
@@ -20,10 +21,11 @@ public static class ServiceCollectionExtensions
 				.AddFollowServices();
 
 			serviceCollection
-				.AddValidatedOptions<MainOptions, MainOptionsValidator>(MainOptions.SectionName)
+				.AddValidatedOptions<MainOptions>(MainOptions.SectionName)
 				.AddServicesWithMatchingInterfaces(FollowsPresentationReference.Assembly)
 				.AddApiControllers()
 				.AddMappers(FollowsPresentationReference.Assembly, CommonPresentationReference.Assembly)
+				.AddValidations(FollowsPresentationReference.Assembly, CommonPresentationReference.Assembly)
 				.AddAuthorizationPolicies()
 				.AddCorsPolicies(configuration)
 				.AddRateLimiterPolicies()

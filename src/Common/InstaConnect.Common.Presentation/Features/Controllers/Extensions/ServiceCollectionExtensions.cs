@@ -69,7 +69,7 @@ public static class ServiceCollectionExtensions
 
 		public IServiceCollection AddCorsPolicies(IConfiguration configuration)
 		{
-			serviceCollection.AddValidatedOptions<CorsOptions, CorsOptionsValidator>(CorsOptions.SectionName);
+			serviceCollection.AddValidatedOptions<CorsOptions>(CorsOptions.SectionName);
 			var options = configuration.GetOptions<CorsOptions>(CorsOptions.SectionName);
 
 			serviceCollection.AddCors(o =>

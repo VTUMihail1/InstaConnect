@@ -3,6 +3,7 @@ using InstaConnect.Chats.Presentation.Features.Chats.Extensions;
 using InstaConnect.Chats.Presentation.Features.Users.Extensions;
 using InstaConnect.Common.Domain.Features.Common.Extensions;
 using InstaConnect.Common.Domain.Features.Mappers.Extensions;
+using InstaConnect.Common.Domain.Features.Validations.Extensions;
 using InstaConnect.Common.Presentation.Features.Common.Extensions;
 using InstaConnect.Common.Presentation.Features.Common.Models;
 using InstaConnect.Common.Presentation.Features.Controllers.Extensions;
@@ -22,10 +23,11 @@ public static class ServiceCollectionExtensions
 				.AddChatMessageServices();
 
 			serviceCollection
-				.AddValidatedOptions<MainOptions, MainOptionsValidator>(MainOptions.SectionName)
+				.AddValidatedOptions<MainOptions>(MainOptions.SectionName)
 				.AddServicesWithMatchingInterfaces(ChatsPresentationReference.Assembly)
 				.AddApiControllers()
 				.AddMappers(ChatsPresentationReference.Assembly, CommonPresentationReference.Assembly)
+				.AddValidations(ChatsPresentationReference.Assembly, CommonPresentationReference.Assembly)
 				.AddAuthorizationPolicies()
 				.AddCorsPolicies(configuration)
 				.AddRateLimiterPolicies()

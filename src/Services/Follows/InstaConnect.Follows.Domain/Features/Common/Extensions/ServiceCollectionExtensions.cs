@@ -1,4 +1,5 @@
 using InstaConnect.Common.Domain.Features.Mappers.Extensions;
+using InstaConnect.Common.Domain.Features.Validations.Extensions;
 using InstaConnect.Follows.Domain.Features.Follows.Extensions;
 using InstaConnect.Follows.Domain.Features.Users.Extensions;
 
@@ -16,6 +17,7 @@ public static class ServiceCollectionExtensions
 
 			serviceCollection
 				.AddMappers(FollowsDomainReference.Assembly, CommonDomainReference.Assembly)
+				.AddValidations(FollowsDomainReference.Assembly, CommonDomainReference.Assembly)
 				.AddServicesWithMatchingInterfaces(FollowsDomainReference.Assembly);
 
 			return serviceCollection;

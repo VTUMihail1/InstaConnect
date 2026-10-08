@@ -1,4 +1,5 @@
 using InstaConnect.Common.Domain.Features.Mappers.Extensions;
+using InstaConnect.Common.Domain.Features.Validations.Extensions;
 using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Extensions;
 using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Extensions;
 using InstaConnect.Identity.Domain.Features.RefreshTokens.Extensions;
@@ -22,6 +23,7 @@ public static class ServiceCollectionExtensions
 
 			serviceCollection
 				.AddMappers(IdentityDomainReference.Assembly, CommonDomainReference.Assembly)
+				.AddValidations(IdentityDomainReference.Assembly, CommonDomainReference.Assembly)
 				.AddServicesWithMatchingInterfaces(IdentityDomainReference.Assembly);
 
 			return serviceCollection;
