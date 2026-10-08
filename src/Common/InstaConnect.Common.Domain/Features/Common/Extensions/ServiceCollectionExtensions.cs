@@ -1,7 +1,5 @@
 using System.Reflection;
 
-using FluentValidation;
-
 using InstaConnect.Common.Domain.Features.Common.Abstractions;
 using InstaConnect.Common.Domain.Features.Common.Helpers;
 
@@ -56,19 +54,15 @@ public static class ServiceCollectionExtensions
 		{
 			serviceCollection
 				.AddOptions<TOptions>()
+				.ValidateFluentValidation(sectionName)
 				.ValidateOnStart();
 
 			serviceCollection.TryAddTransient<IOptionsFactory<TOptions>>(serviceProvider => new ConfigurationOptionsFactory<TOptions>(
-				serviceProvider.GetRequiredService<IConfiguration>(),
 				sectionName,
+				serviceProvider.GetRequiredService<IConfiguration>(),
 				serviceProvider.GetServices<IConfigureOptions<TOptions>>(),
 				serviceProvider.GetServices<IPostConfigureOptions<TOptions>>(),
 				serviceProvider.GetServices<IValidateOptions<TOptions>>()));
-
-			serviceCollection.TryAddEnumerable(
-				ServiceDescriptor.Singleton<IValidateOptions<TOptions>, FluentValidationOptionsValidator<TOptions>>(sp => new FluentValidationOptionsValidator<TOptions>(
-				    sectionName,
-				    sp.GetServices<IValidator<TOptions>>())));
 
 			return serviceCollection;
 		}

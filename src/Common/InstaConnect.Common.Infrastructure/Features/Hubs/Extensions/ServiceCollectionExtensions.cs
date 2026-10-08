@@ -11,7 +11,6 @@ public static class ServiceCollectionExtensions
 	{
 		public IServiceCollection AddHubs(IConfiguration configuration)
 		{
-			serviceCollection.AddValidatedOptions<RedisOptions>(RedisOptions.SectionName);
 			var options = configuration.GetOptions<RedisOptions>(RedisOptions.SectionName);
 
 			serviceCollection.AddSignalR()
