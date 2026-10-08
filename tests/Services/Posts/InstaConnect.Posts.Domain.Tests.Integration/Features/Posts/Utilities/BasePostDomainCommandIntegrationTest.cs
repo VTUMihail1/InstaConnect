@@ -24,7 +24,6 @@ public abstract class BasePostDomainCommandIntegrationTest : BasePostWebTest
 	{
 		await base.InitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
-		await ServiceScope.AddAsync(PostLike, CancellationToken);
 		await EventClient.StartAsync(CancellationToken);
 	}
 

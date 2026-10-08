@@ -27,8 +27,6 @@ public abstract class BasePostCommentDomainCommandIntegrationTest : BasePostComm
 		await base.InitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 		await ServiceScope.AddAsync(Post, CancellationToken);
-		await ServiceScope.AddAsync(PostLike, CancellationToken);
-		await ServiceScope.AddAsync(PostCommentLike, CancellationToken);
 		await CommentEventClient.StartAsync(CancellationToken);
 	}
 

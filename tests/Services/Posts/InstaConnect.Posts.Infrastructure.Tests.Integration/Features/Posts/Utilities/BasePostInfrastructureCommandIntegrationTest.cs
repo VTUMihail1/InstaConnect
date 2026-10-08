@@ -22,6 +22,5 @@ public abstract class BasePostInfrastructureCommandIntegrationTest : BasePostWeb
 	{
 		await base.InitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
-		await ServiceScope.AddAsync(PostLike, CancellationToken);
 	}
 }
