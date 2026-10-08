@@ -13,8 +13,8 @@ public abstract class BaseChatApplicationQueryIntegrationTest : BaseChatWebTest
 
 	public override async Task InitializeAsync()
 	{
-		await base.InitializeAsync();
 		await ServiceScope.AddRangeAsync(ParticipantOnes, CancellationToken);
 		await ServiceScope.AddRangeAsync(ParticipantTwos, CancellationToken);
+		await OnInitializeAsync();
 	}
 }

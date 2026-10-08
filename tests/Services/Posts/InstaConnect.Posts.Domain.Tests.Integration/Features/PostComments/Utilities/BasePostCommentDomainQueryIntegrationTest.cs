@@ -19,10 +19,10 @@ public abstract class BasePostCommentDomainQueryIntegrationTest : BasePostCommen
 
 	public override async Task InitializeAsync()
 	{
-		await base.InitializeAsync();
 		await ServiceScope.AddRangeAsync(Users, CancellationToken);
 		await ServiceScope.AddRangeAsync(Posts, CancellationToken);
 		await ServiceScope.AddRangeAsync(PostLikes, CancellationToken);
 		await ServiceScope.AddRangeAsync(PostCommentLikes, CancellationToken);
+		await OnInitializeAsync();
 	}
 }

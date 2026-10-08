@@ -6,22 +6,12 @@ using Xunit;
 
 namespace InstaConnect.Posts.Tests.Features.PostLikes.Utilities;
 
-public abstract class BasePostLikeWebTest : BasePostLikeTest, IClassFixture<PostsWebApplicationFactory>, IAsyncLifetime
+public abstract class BasePostLikeWebTest : BasePostLikeTest, IClassFixture<PostsWebApplicationFactory>
 {
 	protected IServiceScope ServiceScope { get; }
 
 	protected BasePostLikeWebTest(PostsWebApplicationFactory webApplicationFactory)
 	{
 		ServiceScope = webApplicationFactory.Services.CreateScope();
-	}
-
-	public virtual Task InitializeAsync()
-	{
-		return Task.CompletedTask;
-	}
-
-	public virtual Task DisposeAsync()
-	{
-		return Task.CompletedTask;
 	}
 }

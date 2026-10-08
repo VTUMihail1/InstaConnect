@@ -16,7 +16,7 @@ public abstract class BaseUserClaimInfrastructureQueryIntegrationTest : BaseUser
 
 	public override async Task InitializeAsync()
 	{
-		await base.InitializeAsync();
 		await ServiceScope.AddRangeAsync(Users, CancellationToken);
+		await OnInitializeAsync();
 	}
 }

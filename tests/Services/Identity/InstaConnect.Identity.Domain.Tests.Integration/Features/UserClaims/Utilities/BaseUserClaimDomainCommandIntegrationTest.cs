@@ -22,8 +22,8 @@ public abstract class BaseUserClaimDomainCommandIntegrationTest : BaseUserClaimW
 
 	public override async Task InitializeAsync()
 	{
-		await base.InitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
+		await OnInitializeAsync();
 		await ClaimEventClient.StartAsync(CancellationToken);
 	}
 

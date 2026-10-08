@@ -32,9 +32,8 @@ public class GetPostLikeByIdQueryRepositoryIntegrationTests : BasePostLikeInfras
 		_currentUserQuery = _currentUserQueryBuilder.Build();
 	}
 
-	public override async Task InitializeAsync()
+	protected override async Task OnInitializeAsync()
 	{
-		await base.InitializeAsync();
 		await ServiceScope.AddAsync(PostLike, CancellationToken);
 	}
 

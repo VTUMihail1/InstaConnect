@@ -14,8 +14,8 @@ public abstract class BasePostLikePresentationQueryFunctionalTest : BasePostLike
 
 	public override async Task InitializeAsync()
 	{
-		await base.InitializeAsync();
 		await ServiceScope.AddRangeAsync(Users, CancellationToken);
 		await ServiceScope.AddRangeAsync(Posts, CancellationToken);
+		await OnInitializeAsync();
 	}
 }

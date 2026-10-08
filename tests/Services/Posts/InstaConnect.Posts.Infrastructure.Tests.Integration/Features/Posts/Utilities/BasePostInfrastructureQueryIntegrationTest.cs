@@ -17,8 +17,8 @@ public abstract class BasePostInfrastructureQueryIntegrationTest : BasePostWebTe
 
 	public override async Task InitializeAsync()
 	{
-		await base.InitializeAsync();
 		await ServiceScope.AddRangeAsync(Users, CancellationToken);
 		await ServiceScope.AddRangeAsync(PostLikes, CancellationToken);
+		await OnInitializeAsync();
 	}
 }

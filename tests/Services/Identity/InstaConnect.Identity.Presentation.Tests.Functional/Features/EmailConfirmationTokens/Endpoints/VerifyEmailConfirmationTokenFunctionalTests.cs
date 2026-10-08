@@ -16,9 +16,8 @@ public class VerifyEmailConfirmationTokenFunctionalTests : BaseEmailConfirmation
 		_request = _requestBuilder.Build();
 	}
 
-	public override async Task InitializeAsync()
+	protected override async Task OnInitializeAsync()
 	{
-		await base.InitializeAsync();
 		await ServiceScope.AddRangeAsync(User.EmailConfirmationTokens, CancellationToken);
 	}
 

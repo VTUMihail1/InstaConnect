@@ -17,9 +17,9 @@ public abstract class BaseFollowPresentationCommandIntegrationTest : BaseFollowW
 
 	public override async Task InitializeAsync()
 	{
-		await base.InitializeAsync();
 		await ServiceScope.AddAsync(Follower, CancellationToken);
 		await ServiceScope.AddAsync(Following, CancellationToken);
+		await OnInitializeAsync();
 		await EventClient.StartAsync(CancellationToken);
 		await NotificationClient.StartAsync(CancellationToken);
 	}

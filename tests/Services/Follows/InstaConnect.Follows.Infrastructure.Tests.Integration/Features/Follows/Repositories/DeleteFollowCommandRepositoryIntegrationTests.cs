@@ -10,9 +10,8 @@ public class DeleteFollowCommandRepositoryIntegrationTests : BaseFollowInfrastru
 	{
 	}
 
-	public override async Task InitializeAsync()
+	protected override async Task OnInitializeAsync()
 	{
-		await base.InitializeAsync();
 		await ServiceScope.AddAsync(Follow, CancellationToken);
 	}
 

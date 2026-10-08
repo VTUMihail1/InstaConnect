@@ -51,9 +51,8 @@ public class GetAllFollowsQueryRepositoryIntegrationTests : BaseFollowInfrastruc
 		_currentUserQuery = _currentUserQueryBuilder.Build();
 	}
 
-	public override async Task InitializeAsync()
+	protected override async Task OnInitializeAsync()
 	{
-		await base.InitializeAsync();
 		await ServiceScope.AddRangeAsync(Follows, CancellationToken);
 	}
 

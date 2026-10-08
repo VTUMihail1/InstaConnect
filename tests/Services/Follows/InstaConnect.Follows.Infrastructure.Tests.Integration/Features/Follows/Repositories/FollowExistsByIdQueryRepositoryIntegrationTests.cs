@@ -20,9 +20,8 @@ public class FollowExistsByIdQueryRepositoryIntegrationTests : BaseFollowInfrast
 		_id = _idBuilder.Build();
 	}
 
-	public override async Task InitializeAsync()
+	protected override async Task OnInitializeAsync()
 	{
-		await base.InitializeAsync();
 		await ServiceScope.AddAsync(Follow, CancellationToken);
 	}
 

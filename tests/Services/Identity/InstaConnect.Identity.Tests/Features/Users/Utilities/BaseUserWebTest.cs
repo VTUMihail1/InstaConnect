@@ -7,7 +7,7 @@ using Xunit;
 
 namespace InstaConnect.Identity.Tests.Features.Users.Utilities;
 
-public abstract class BaseUserWebTest : BaseUserTest, IClassFixture<IdentityWebApplicationFactory>, IAsyncLifetime
+public abstract class BaseUserWebTest : BaseUserTest, IClassFixture<IdentityWebApplicationFactory>
 {
 	protected IServiceScope ServiceScope { get; }
 
@@ -17,15 +17,5 @@ public abstract class BaseUserWebTest : BaseUserTest, IClassFixture<IdentityWebA
 	{
 		ServiceScope = webApplicationFactory.Services.CreateScope();
 		ImageHandler = ServiceScope.GetImageHandler();
-	}
-
-	public virtual Task InitializeAsync()
-	{
-		return Task.CompletedTask;
-	}
-
-	public virtual Task DisposeAsync()
-	{
-		return Task.CompletedTask;
 	}
 }

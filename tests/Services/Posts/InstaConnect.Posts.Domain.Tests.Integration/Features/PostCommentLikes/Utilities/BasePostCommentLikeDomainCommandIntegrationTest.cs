@@ -24,10 +24,10 @@ public abstract class BasePostCommentLikeDomainCommandIntegrationTest : BasePost
 
 	public override async Task InitializeAsync()
 	{
-		await base.InitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 		await ServiceScope.AddAsync(Post, CancellationToken);
 		await ServiceScope.AddAsync(PostComment, CancellationToken);
+		await OnInitializeAsync();
 		await CommentLikeEventClient.StartAsync(CancellationToken);
 	}
 

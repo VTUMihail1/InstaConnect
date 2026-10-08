@@ -14,9 +14,8 @@ public class DeletePostFunctionalTests : BasePostPresentationCommandFunctionalTe
 		_request = _requestBuilder.Build();
 	}
 
-	public override async Task InitializeAsync()
+	protected override async Task OnInitializeAsync()
 	{
-		await base.InitializeAsync();
 		await ServiceScope.AddAsync(Post, CancellationToken);
 	}
 

@@ -30,9 +30,8 @@ public class GetFollowByIdQueryRepositoryIntegrationTests : BaseFollowInfrastruc
 		_currentUserQuery = _currentUserQueryBuilder.Build();
 	}
 
-	public override async Task InitializeAsync()
+	protected override async Task OnInitializeAsync()
 	{
-		await base.InitializeAsync();
 		await ServiceScope.AddAsync(Follow, CancellationToken);
 	}
 

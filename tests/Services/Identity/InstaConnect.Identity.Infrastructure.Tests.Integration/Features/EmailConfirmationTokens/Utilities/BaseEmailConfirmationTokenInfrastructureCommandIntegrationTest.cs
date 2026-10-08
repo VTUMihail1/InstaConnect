@@ -20,8 +20,8 @@ public abstract class BaseEmailConfirmationTokenInfrastructureCommandIntegration
 
 	public override async Task InitializeAsync()
 	{
-		await base.InitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 		await ServiceScope.AddAsync(UserClaim, CancellationToken);
+		await OnInitializeAsync();
 	}
 }

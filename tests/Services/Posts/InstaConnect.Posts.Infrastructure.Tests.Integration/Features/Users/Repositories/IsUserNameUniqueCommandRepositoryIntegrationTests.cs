@@ -17,9 +17,8 @@ public class IsUserNameUniqueCommandRepositoryIntegrationTests : BaseUserInfrast
 		_name = _nameBuilder.Build();
 	}
 
-	public override async Task InitializeAsync()
+	protected override async Task OnInitializeAsync()
 	{
-		await base.InitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 	}
 

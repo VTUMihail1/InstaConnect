@@ -20,9 +20,8 @@ public class UserUpdatedEventHandlerIntegrationTests : BaseUserInfrastructureEve
 		_handler = ServiceScope.GetUserUpdatedEventHandler();
 	}
 
-	public override async Task InitializeAsync()
+	protected override async Task OnInitializeAsync()
 	{
-		await base.InitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 	}
 

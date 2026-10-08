@@ -27,9 +27,8 @@ public class GetChatMessageByIdCommandRepositoryIntegrationTests : BaseChatMessa
 		_include = MessageIncludeBuilderFactory.Create().WithSender().WithChat().Build();
 	}
 
-	public override async Task InitializeAsync()
+	protected override async Task OnInitializeAsync()
 	{
-		await base.InitializeAsync();
 		await ServiceScope.AddAsync(ChatMessage, CancellationToken);
 	}
 

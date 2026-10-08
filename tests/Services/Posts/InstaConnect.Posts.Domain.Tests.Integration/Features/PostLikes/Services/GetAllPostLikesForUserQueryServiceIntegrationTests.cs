@@ -30,9 +30,8 @@ public class GetAllPostLikesForUserQueryServiceIntegrationTests : BasePostLikeDo
 		_query = _queryBuilder.Build();
 	}
 
-	public override async Task InitializeAsync()
+	protected override async Task OnInitializeAsync()
 	{
-		await base.InitializeAsync();
 		await ServiceScope.AddRangeAsync(PostLikes, CancellationToken);
 	}
 

@@ -26,7 +26,7 @@ public abstract class BaseUserDomainCommandIntegrationTest : BaseUserWebTest
 
 	public override async Task InitializeAsync()
 	{
-		await base.InitializeAsync();
+		await OnInitializeAsync();
 		await EventClient.StartAsync(CancellationToken);
 	}
 

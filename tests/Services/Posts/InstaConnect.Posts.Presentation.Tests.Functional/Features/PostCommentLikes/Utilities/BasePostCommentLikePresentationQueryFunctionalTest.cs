@@ -14,10 +14,10 @@ public abstract class BasePostCommentLikePresentationQueryFunctionalTest : BaseP
 
 	public override async Task InitializeAsync()
 	{
-		await base.InitializeAsync();
 		await ServiceScope.AddRangeAsync(Users, CancellationToken);
 		await ServiceScope.AddRangeAsync(Posts, CancellationToken);
 		await ServiceScope.AddRangeAsync(PostLikes, CancellationToken);
 		await ServiceScope.AddRangeAsync(PostComments, CancellationToken);
+		await OnInitializeAsync();
 	}
 }

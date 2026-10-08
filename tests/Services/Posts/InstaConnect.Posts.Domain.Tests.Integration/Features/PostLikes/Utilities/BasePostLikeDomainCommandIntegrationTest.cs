@@ -22,9 +22,9 @@ public abstract class BasePostLikeDomainCommandIntegrationTest : BasePostLikeWeb
 
 	public override async Task InitializeAsync()
 	{
-		await base.InitializeAsync();
 		await ServiceScope.AddAsync(User, CancellationToken);
 		await ServiceScope.AddAsync(Post, CancellationToken);
+		await OnInitializeAsync();
 		await LikeEventClient.StartAsync(CancellationToken);
 	}
 

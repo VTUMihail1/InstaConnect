@@ -6,22 +6,12 @@ using Xunit;
 
 namespace InstaConnect.Chats.Tests.Features.Users.Utilities;
 
-public abstract class BaseUserWebTest : BaseUserTest, IClassFixture<ChatsWebApplicationFactory>, IAsyncLifetime
+public abstract class BaseUserWebTest : BaseUserTest, IClassFixture<ChatsWebApplicationFactory>
 {
 	protected IServiceScope ServiceScope { get; }
 
 	protected BaseUserWebTest(ChatsWebApplicationFactory webApplicationFactory)
 	{
 		ServiceScope = webApplicationFactory.Services.CreateScope();
-	}
-
-	public virtual Task InitializeAsync()
-	{
-		return Task.CompletedTask;
-	}
-
-	public virtual Task DisposeAsync()
-	{
-		return Task.CompletedTask;
 	}
 }

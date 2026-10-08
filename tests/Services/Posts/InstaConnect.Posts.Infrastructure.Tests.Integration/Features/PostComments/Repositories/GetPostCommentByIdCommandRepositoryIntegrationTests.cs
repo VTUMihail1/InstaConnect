@@ -28,9 +28,8 @@ public class GetPostCommentByIdCommandRepositoryIntegrationTests : BasePostComme
 		_include = IncludeBuilderFactory.Create().WithUser().WithPost().Build();
 	}
 
-	public override async Task InitializeAsync()
+	protected override async Task OnInitializeAsync()
 	{
-		await base.InitializeAsync();
 		await ServiceScope.AddAsync(PostComment, CancellationToken);
 	}
 

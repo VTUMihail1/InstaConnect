@@ -14,10 +14,10 @@ public abstract class BaseChatMessagePresentationCommandIntegrationTest : BaseCh
 
 	public override async Task InitializeAsync()
 	{
-		await base.InitializeAsync();
 		await ServiceScope.AddAsync(ParticipantOne, CancellationToken);
 		await ServiceScope.AddAsync(ParticipantTwo, CancellationToken);
 		await ServiceScope.AddAsync(Chat, CancellationToken);
+		await OnInitializeAsync();
 		await MessageNotificationClient.StartAsync(CancellationToken);
 	}
 

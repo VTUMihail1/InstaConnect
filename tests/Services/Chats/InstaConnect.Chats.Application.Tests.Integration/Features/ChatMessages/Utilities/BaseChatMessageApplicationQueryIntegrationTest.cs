@@ -13,9 +13,9 @@ public abstract class BaseChatMessageApplicationQueryIntegrationTest : BaseChatM
 
 	public override async Task InitializeAsync()
 	{
-		await base.InitializeAsync();
 		await ServiceScope.AddRangeAsync(ParticipantOnes, CancellationToken);
 		await ServiceScope.AddRangeAsync(ParticipantTwos, CancellationToken);
 		await ServiceScope.AddRangeAsync(Chats, CancellationToken);
+		await OnInitializeAsync();
 	}
 }
