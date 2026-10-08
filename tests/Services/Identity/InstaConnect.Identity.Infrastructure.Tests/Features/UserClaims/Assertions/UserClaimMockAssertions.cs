@@ -84,6 +84,14 @@ public static class UserClaimMockAssertions
 			fluent.ShouldHaveReceivedOneApplyIncludes(include);
 		}
 
+		public void ShouldHaveReceivedOneApplyIncludes(
+			UserClaimId id,
+			CurrentUserQuery currentUserQuery,
+			UserClaimInclude include)
+		{
+			fluent.ShouldHaveReceivedOneApplyIncludes(include);
+		}
+
 		public void ShouldHaveReceivedOneApplyIncludes(UserClaimInclude include)
 		{
 			fluent.ShouldHaveReceivedOne().ApplyIncludes(include);

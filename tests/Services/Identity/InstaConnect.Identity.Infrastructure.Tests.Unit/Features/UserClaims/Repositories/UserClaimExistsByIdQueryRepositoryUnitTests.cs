@@ -21,7 +21,7 @@ public class UserClaimExistsByIdQueryRepositoryUnitTests : BaseUserClaimInfrastr
 		_idBuilder = _idBuilderFactory.Create(UserClaim.Id);
 		_id = _idBuilder.Build();
 
-		_repository = new(Collection);
+		_repository = new(Collection, IncludeBuilderFactory);
 
 		Collection.SetupAggregateFluent(_id, Fluent);
 		Fluent.SetupMatch(_id);

@@ -3,10 +3,14 @@ namespace InstaConnect.Identity.Infrastructure.Features.UserClaims.Helpers.Repos
 internal class UserClaimQueryRepository : IUserClaimQueryRepository
 {
 	private readonly IUserClaimCollection _collection;
+	private readonly IUserClaimIncludeBuilderFactory _includeBuilderFactory;
 
-	public UserClaimQueryRepository(IUserClaimCollection collection)
+	public UserClaimQueryRepository(
+		IUserClaimCollection collection,
+		IUserClaimIncludeBuilderFactory includeBuilderFactory)
 	{
 		_collection = collection;
+		_includeBuilderFactory = includeBuilderFactory;
 	}
 
 	public async Task<ICollection<UserClaimResponse>> GetAllAsync(
@@ -40,8 +44,11 @@ internal class UserClaimQueryRepository : IUserClaimQueryRepository
 		CurrentUserQuery current,
 		CancellationToken cancellationToken)
 	{
+		var include = _includeBuilderFactory.Create().WithUser().Build();
+
 		return await _collection
 			.AggregateFluent()
+			.ApplyIncludes(include)
 			.Match(id)
 			.ProjectToFullResponse(current)
 			.FirstOrDefaultAsync(cancellationToken);

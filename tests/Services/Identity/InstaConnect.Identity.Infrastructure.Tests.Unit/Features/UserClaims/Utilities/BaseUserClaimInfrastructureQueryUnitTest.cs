@@ -1,3 +1,4 @@
+using InstaConnect.Identity.Domain.Features.UserClaims.Abstractions;
 using InstaConnect.Identity.Infrastructure.Features.UserClaims.Abstractions;
 using InstaConnect.Identity.Infrastructure.Tests.Features.UserClaims.Utilities;
 using InstaConnect.Identity.Tests.Features.UserClaims.Utilities;
@@ -12,11 +13,14 @@ public abstract class BaseUserClaimInfrastructureQueryUnitTest : BaseUserClaimTe
 
 	protected IUserClaimResponseFluent ResponseFluent { get; }
 
+	protected IUserClaimIncludeBuilderFactory IncludeBuilderFactory { get; }
+
 	protected BaseUserClaimInfrastructureQueryUnitTest() : base(IdentityMockFactory.CreatePasswordHasher())
 	{
 		Collection = UserClaimInfrastructureMockFactory.CreateCollection();
 		Fluent = UserClaimInfrastructureMockFactory.CreateFluent();
 		ResponseFluent = UserClaimInfrastructureMockFactory.CreateResponseFluent();
+		IncludeBuilderFactory = UserClaimMockFactory.CreateIncludeBuilderFactory();
 
 		PasswordHasher.ClearCalls();
 	}

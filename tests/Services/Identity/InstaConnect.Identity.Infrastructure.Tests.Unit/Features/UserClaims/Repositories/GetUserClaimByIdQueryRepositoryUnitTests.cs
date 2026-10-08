@@ -1,3 +1,4 @@
+using InstaConnect.Identity.Domain.Features.UserClaims.Models.Requests;
 using InstaConnect.Identity.Domain.Features.UserClaims.Models.ValueObjects;
 using InstaConnect.Identity.Domain.Features.Users.Models.Requests;
 using InstaConnect.Identity.Infrastructure.Features.UserClaims.Helpers.Repositories;
@@ -19,6 +20,8 @@ public class GetUserClaimByIdQueryRepositoryUnitTests : BaseUserClaimInfrastruct
 	private readonly CurrentUserQueryBuilder _currentUserQueryBuilder;
 	private readonly CurrentUserQuery _currentUserQuery;
 
+	private readonly UserClaimInclude _include;
+
 	private readonly UserClaimQueryRepository _repository;
 
 	public GetUserClaimByIdQueryRepositoryUnitTests()
@@ -31,9 +34,12 @@ public class GetUserClaimByIdQueryRepositoryUnitTests : BaseUserClaimInfrastruct
 		_currentUserQueryBuilder = _currentUserQueryBuilderFactory.Create(User);
 		_currentUserQuery = _currentUserQueryBuilder.Build();
 
-		_repository = new(Collection);
+		_include = IncludeBuilderFactory.Create().WithUser().Build();
+
+		_repository = new(Collection, IncludeBuilderFactory);
 
 		Collection.SetupAggregateFluent(_id, _currentUserQuery, Fluent);
+		Fluent.SetupApplyIncludes(_id, _currentUserQuery, _include);
 		Fluent.SetupMatch(_id, _currentUserQuery);
 		Fluent.SetupProjectToFullResponse(_id, _currentUserQuery, ResponseFluent);
 		ResponseFluent.SetupFirstOrDefaultAsync(_id, _currentUserQuery, UserClaim, CancellationToken);
@@ -57,6 +63,16 @@ public class GetUserClaimByIdQueryRepositoryUnitTests : BaseUserClaimInfrastruct
 
 		// Assert
 		Collection.ShouldHaveReceivedOneAggregateFluent(_id, _currentUserQuery);
+	}
+
+	[Fact]
+	public async Task GetByIdAsync_ShouldCallTheFluentApplyIncludes_WhenRequestIsValid()
+	{
+		// Act
+		await _repository.GetByIdAsync(_id, _currentUserQuery, CancellationToken);
+
+		// Assert
+		Fluent.ShouldHaveReceivedOneApplyIncludes(_id, _currentUserQuery, _include);
 	}
 
 	[Fact]

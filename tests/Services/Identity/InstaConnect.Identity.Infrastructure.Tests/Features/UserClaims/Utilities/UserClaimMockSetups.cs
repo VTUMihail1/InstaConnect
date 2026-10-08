@@ -73,6 +73,14 @@ public static class UserClaimMockSetups
 			fluent.SetupApplyIncludes(include);
 		}
 
+		public void SetupApplyIncludes(
+			UserClaimId id,
+			CurrentUserQuery currentUserQuery,
+			UserClaimInclude include)
+		{
+			fluent.SetupApplyIncludes(include);
+		}
+
 		public void SetupApplyIncludes(UserClaimInclude include)
 		{
 			fluent.ApplyIncludes(include).ReturnsResponse(fluent);
