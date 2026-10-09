@@ -1,6 +1,6 @@
 # InstaConnect
 
-[![CI](https://github.com/VTUMihail1/InstaConnect/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/VTUMihail1/InstaConnect/actions/workflows/ci.yml)
+[![CI](https://github.com/m-nikolovv/InstaConnect/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/m-nikolovv/InstaConnect/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 ![.NET 10](https://img.shields.io/badge/.NET-10-512BD4)
 
@@ -33,7 +33,7 @@ Each service follows Clean Architecture, split into `Domain`, `Application`, `In
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/VTUMihail1/InstaConnect.git
+   git clone https://github.com/m-nikolovv/InstaConnect.git
    cd InstaConnect
    ```
 
