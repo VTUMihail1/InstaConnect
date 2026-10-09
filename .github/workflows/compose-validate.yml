@@ -4,9 +4,6 @@ on:
   push:
   pull_request:
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 concurrency:
   group: compose-${{ github.ref }}
   cancel-in-progress: true
@@ -14,11 +11,11 @@ concurrency:
 jobs:
   compose-validate:
     name: Validate Docker Compose
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Validate docker-compose.yml
         run: docker compose config --quiet
