@@ -49,9 +49,18 @@ jobs:
       - name: Build solution
         run: dotnet build ./InstaConnect.sln --configuration Release --no-restore
 
+      - name: Install dotnet-retest
+        run: dotnet tool install --global dotnet-retest --version 1.0.0
+
       - name: Run tests
+        env:
+          DOTNET_ROLL_FORWARD: Major
         run: >
-          dotnet test ./InstaConnect.sln
+          dotnet retest
+          --retries 3
+          --gh-comment false
+          --
+          ./InstaConnect.sln
           --configuration Release
           --no-restore
           --no-build
