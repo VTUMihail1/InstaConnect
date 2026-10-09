@@ -1,0 +1,35 @@
+'service: identity':
+  - changed-files:
+      - any-glob-to-any-file: ['src/Services/Identity/**', 'tests/Services/Identity/**']
+
+'service: posts':
+  - changed-files:
+      - any-glob-to-any-file: ['src/Services/Posts/**', 'tests/Services/Posts/**']
+
+'service: chats':
+  - changed-files:
+      - any-glob-to-any-file: ['src/Services/Chats/**', 'tests/Services/Chats/**']
+
+'service: follows':
+  - changed-files:
+      - any-glob-to-any-file: ['src/Services/Follows/**', 'tests/Services/Follows/**']
+
+'service: common':
+  - changed-files:
+      - any-glob-to-any-file: ['src/Common/**', 'tests/Common/**']
+
+'area: ci':
+  - changed-files:
+      - any-glob-to-any-file: ['.github/**']
+
+'area: docker':
+  - changed-files:
+      - any-glob-to-any-file: ['docker/**', '**/Dockerfile', '.dockerignore']
+
+'area: tests':
+  - changed-files:
+      - any-glob-to-any-file: ['tests/**']
+
+documentation:
+  - changed-files:
+      - any-glob-to-any-file: ['**/*.md', 'LICENSE']

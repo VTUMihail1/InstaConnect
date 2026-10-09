@@ -35,6 +35,12 @@ bld/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
+
+# JetBrains Rider
+.idea/
+
+# Visual Studio / Rider launch profiles (regenerated per machine)
+**/Properties/launchSettings.json
 # Uncomment if you have tasks that create the project's static files in wwwroot
 #wwwroot/
 
@@ -362,7 +368,8 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-# Files
-.containers
+# Docker Compose volumes (docker/docker-compose.yml)
+docker/.containers/
+
+# Environment files with secrets (anywhere in the repo)
 .env
-/tests/Services/Posts/InstaConnect.Posts.Tests/Features/PostCommentLikes/Utilities/PostCommentLikeMapper.cs

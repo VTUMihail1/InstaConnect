@@ -8,7 +8,7 @@ public static class ContainerFactory
 {
 	public static MongoDbContainer GetMongoDbContainer()
 	{
-		return new MongoDbBuilder("mongo:latest")
+		return new MongoDbBuilder("mongo:8.0")
 		   .WithReplicaSet()
 		   .WithCleanUp(true)
 		   .Build();
@@ -16,14 +16,14 @@ public static class ContainerFactory
 
 	public static RabbitMqContainer GetRabbitMqContainer()
 	{
-		return new RabbitMqBuilder("rabbitmq:latest")
+		return new RabbitMqBuilder("rabbitmq:4.3")
 			.WithCleanUp(true)
 			.Build();
 	}
 
 	public static RedisContainer GetRedisContainer()
 	{
-		return new RedisBuilder("redis:latest")
+		return new RedisBuilder("redis:7.4")
 			.WithCleanUp(true)
 			.Build();
 	}
