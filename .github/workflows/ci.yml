@@ -1,0 +1,310 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 6 * * 1'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+jobs:
+  changes:
+    name: Detect Changes
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      services: ${{ steps.services.outputs.services }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Detect changed paths
+        id: filter
+        uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
+        with:
+          filters: |
+            shared:
+              - 'src/Common/**'
+              - 'tests/Common/**'
+              - 'Directory.*.props'
+              - 'Directory.*.targets'
+              - 'global.json'
+              - '.config/dotnet-tools.json'
+              - 'InstaConnect.sln'
+              - '.dockerignore'
+              - '.github/workflows/ci.yml'
+              - '.github/actions/**'
+            Identity:
+              - 'src/Services/Identity/**'
+              - 'tests/Services/Identity/**'
+            Posts:
+              - 'src/Services/Posts/**'
+              - 'tests/Services/Posts/**'
+              - 'src/Services/Identity/InstaConnect.Identity.Events/**'
+            Chats:
+              - 'src/Services/Chats/**'
+              - 'tests/Services/Chats/**'
+              - 'src/Services/Identity/InstaConnect.Identity.Events/**'
+            Follows:
+              - 'src/Services/Follows/**'
+              - 'tests/Services/Follows/**'
+              - 'src/Services/Identity/InstaConnect.Identity.Events/**'
+
+      - name: Select services
+        id: services
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          SHARED: ${{ steps.filter.outputs.shared }}
+          CHANGES: ${{ steps.filter.outputs.changes }}
+        run: |
+          if [[ "$SHARED" == 'true' || "$EVENT_NAME" == 'workflow_dispatch' || "$EVENT_NAME" == 'schedule' ]]; then
+            SERVICES='["Identity","Posts","Chats","Follows"]'
+          else
+            SERVICES=$(echo "$CHANGES" | jq -c 'map(select(. != "shared"))')
+          fi
+          echo "Services: $SERVICES"
+          echo "services=$SERVICES" >> "$GITHUB_OUTPUT"
+
+  checks:
+    name: Code Style & Security Audit
+    needs: changes
+    if: needs.changes.outputs.services != '[]'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up .NET
+        uses: ./.github/actions/setup-dotnet
+        with:
+          save-cache: 'true'
+
+      - name: Restore dependencies
+        run: dotnet restore ./InstaConnect.sln
+
+      - name: Check formatting
+        run: dotnet format ./InstaConnect.sln --verify-no-changes --no-restore
+
+      - name: Check for vulnerable packages
+        run: |
+          OUTPUT=$(dotnet list ./InstaConnect.sln package --vulnerable --include-transitive 2>&1 || true)
+          echo "$OUTPUT"
+          if echo "$OUTPUT" | grep -q "has the following vulnerable packages"; then
+            exit 1
+          fi
+
+  build-test:
+    name: Build & Test (${{ matrix.service }} - ${{ matrix.suite }})
+    needs: changes
+    if: needs.changes.outputs.services != '[]'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        service: ${{ fromJSON(needs.changes.outputs.services) }}
+        suite: [Unit, Integration, Functional]
+    env:
+      SOLUTION_FILTER: ${{ matrix.service }}.${{ matrix.suite }}.slnf
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up .NET
+        uses: ./.github/actions/setup-dotnet
+
+      - name: Create solution filter
+        env:
+          SERVICE: ${{ matrix.service }}
+          SUITE: ${{ matrix.suite }}
+        run: |
+          {
+            echo '{ "solution": { "path": "InstaConnect.sln", "projects": ['
+            git ls-files "tests/Services/$SERVICE/*.Tests.$SUITE.csproj" | sed 's#.*#    "&"#; $!s#$#,#'
+            echo '] } }'
+          } > "$SOLUTION_FILTER"
+          cat "$SOLUTION_FILTER"
+
+      - name: Restore dependencies
+        run: dotnet restore "$SOLUTION_FILTER"
+
+      - name: Build
+        run: dotnet build "$SOLUTION_FILTER" --configuration Release --no-restore
+
+      - name: Run tests
+        run: >
+          dotnet retest
+          --retries 3
+          --gh-comment false
+          --
+          "$SOLUTION_FILTER"
+          --configuration Release
+          --no-restore
+          --no-build
+          --logger "trx"
+          --collect "XPlat Code Coverage"
+          --results-directory ./test-results
+          --blame-hang-timeout 3m
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: test-results-${{ matrix.service }}-${{ matrix.suite }}
+          path: ./test-results
+          if-no-files-found: ignore
+
+  coverage:
+    name: Code Coverage
+    needs: [changes, build-test]
+    if: ${{ !cancelled() && (needs.build-test.result == 'success' || needs.build-test.result == 'failure') }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up .NET
+        uses: ./.github/actions/setup-dotnet
+
+      - name: Download test results
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          pattern: test-results-*
+          path: ./test-results
+
+      - name: Find coverage files
+        id: find
+        run: |
+          if find ./test-results -name coverage.cobertura.xml -print -quit 2>/dev/null | grep -q .; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::No coverage files were produced, skipping the coverage report."
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Generate coverage report
+        if: steps.find.outputs.found == 'true'
+        run: >
+          dotnet reportgenerator
+          -reports:"./test-results/**/coverage.cobertura.xml"
+          -targetdir:./coverage-report
+          -reporttypes:"HtmlInline;MarkdownSummaryGithub"
+          -assemblyfilters:"-*.Tests*"
+          -verbosity:Warning
+
+      - name: Publish coverage summary
+        if: steps.find.outputs.found == 'true'
+        run: cat ./coverage-report/SummaryGithub.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload coverage report
+        if: steps.find.outputs.found == 'true'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: coverage-report
+          path: ./coverage-report
+
+  compose-validate:
+    name: Docker Compose Validation
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Validate docker/docker-compose.yml
+        run: docker compose -f docker/docker-compose.yml config --quiet
+
+  docker:
+    name: Docker Image (${{ matrix.service }})
+    needs: [changes, checks, build-test]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      fail-fast: false
+      matrix:
+        service: ${{ fromJSON(needs.changes.outputs.services) }}
+    env:
+      PUSH: ${{ github.ref == 'refs/heads/master' && github.event_name == 'push' }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Resolve image name
+        id: image
+        env:
+          SERVICE: ${{ matrix.service }}
+        run: echo "name=${SERVICE,,}-svc" >> "$GITHUB_OUTPUT"
+
+      - name: Log in to GitHub Container Registry
+        if: env.PUSH == 'true'
+        uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+
+      - name: Extract image metadata
+        id: meta
+        uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6.2.0
+        with:
+          images: ghcr.io/${{ github.repository_owner }}/${{ steps.image.outputs.name }}
+          tags: |
+            type=sha,prefix=
+            type=raw,value=latest
+
+      - name: Build and push
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: .
+          file: src/Services/${{ matrix.service }}/InstaConnect.${{ matrix.service }}.Presentation/Dockerfile
+          push: ${{ env.PUSH == 'true' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha,scope=${{ steps.image.outputs.name }}
+          cache-to: type=gha,mode=max,scope=${{ steps.image.outputs.name }}
+
+  ci-success:
+    name: All Checks Passed
+    needs: [changes, checks, build-test, coverage, compose-validate, docker]
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+
+    steps:
+      - name: Check job results
+        env:
+          RESULTS: ${{ join(needs.*.result, ' ') }}
+        run: |
+          echo "Job results: $RESULTS"
+          if [[ " $RESULTS " == *" failure "* || " $RESULTS " == *" cancelled "* ]]; then
+            exit 1
+          fi
