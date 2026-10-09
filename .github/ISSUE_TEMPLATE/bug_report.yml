@@ -1,0 +1,32 @@
+name: Bug report
+description: Report something that isn't working
+labels: [bug]
+body:
+  - type: dropdown
+    id: service
+    attributes:
+      label: Service
+      options: [Identity, Posts, Chats, Follows, Gateway / infrastructure, Not sure]
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Describe the bug and what you expected to happen instead.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Send POST /posts/api/v1/posts
+        2. ...
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or error output
+      render: shell

@@ -1,79 +1,97 @@
 # InstaConnect
 
+[![CI](https://github.com/VTUMihail1/InstaConnect/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/VTUMihail1/InstaConnect/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+![.NET 10](https://img.shields.io/badge/.NET-10-512BD4)
+
 A microservices-based social media platform for connecting and sharing content.
 
----
+## Architecture
+
+InstaConnect is made up of four independently deployable services behind an nginx gateway. Services communicate asynchronously through RabbitMQ events.
+
+| Service | Responsibility | Gateway route |
+|---|---|---|
+| **Identity** | Users, authentication (JWT + refresh tokens), email confirmation, password reset | `/identity/` |
+| **Posts** | Posts, comments and likes | `/posts/` |
+| **Chats** | Chats and real-time messaging (SignalR) | `/chats/` |
+| **Follows** | Follower relationships and real-time follow notifications (SignalR) | `/follows/` |
+
+Each service follows Clean Architecture, split into `Domain`, `Application`, `Infrastructure`, `Presentation` and `Events` projects, with code organised by feature. Shared building blocks live in `src/Common`.
+
+**Tech stack:** ASP.NET Core, MediatR, FluentValidation, Mapster, MassTransit + RabbitMQ, MongoDB, Redis, SignalR, OpenTelemetry + Serilog (Grafana LGTM), xUnit, NSubstitute, FluentAssertions, Testcontainers.
 
 ## Prerequisites
 
-Before running the project, ensure you have the following installed:
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- [.NET SDK](https://dotnet.microsoft.com/download) matching [global.json](global.json) (only needed to build or test outside Docker)
+- A [Cloudinary](https://cloudinary.com/) account
+- A [SendGrid](https://sendgrid.com/) account
 
-- Docker Desktop
-- Git
-- Cloudinary account
-- SendGrid account
+## Getting Started
 
----
+1. Clone the repository:
 
-## Running the Project
+   ```bash
+   git clone https://github.com/VTUMihail1/InstaConnect.git
+   cd InstaConnect
+   ```
 
-### 1. Clone the Repository
+2. Create a `docker/.env` file from the template and fill in your values:
 
-```bash
-git clone https://github.com/VTUMihail1/InstaConnect.git
-cd InstaConnect
-```
+   ```bash
+   cp docker/.env.example docker/.env
+   ```
 
----
+3. Start the application:
 
-### 2. Create Environment File
+   ```bash
+   docker compose -f docker/docker-compose.yml up --build
+   ```
 
-Create `.env` via terminal
+| Endpoint | URL |
+|---|---|
+| API gateway | http://localhost |
+| Grafana (logs, traces, metrics) | http://localhost:3000 |
+| RabbitMQ management | http://localhost:15672 |
 
-#### PowerShell (Windows)
-
-```powershell
-@"
-ADMIN_EMAIL=your_admin_email
-ADMIN_PASSWORD=your_admin_password
-MONGO_USERNAME=your_mongo_username
-MONGO_PASSWORD=your_mongo_password
-REDIS_PASSWORD=your_redis_password
-RABBITMQ_USERNAME=your_rabbitmq_username
-RABBITMQ_PASSWORD=your_rabbitmq_password
-SEND_GRID_SENDER=your_sendgrid_sender
-SEND_GRID_API_KEY=your_sendgrid_api_key
-ACCESS_TOKEN_SECURITY_KEY=your_secret_key_here
-CLOUDINARY_CLOUD_NAME=your_cloud_name
-CLOUDINARY_API_KEY=your_api_key
-CLOUDINARY_API_SECRET=your_api_secret
-"@ | Out-File -FilePath .env -Encoding utf8
-```
-
-#### Bash (macOS / Linux)
+## Development
 
 ```bash
-cat > .env << EOF
-ADMIN_EMAIL=your_admin_email
-ADMIN_PASSWORD=your_admin_password
-MONGO_USERNAME=your_mongo_username
-MONGO_PASSWORD=your_mongo_password
-REDIS_PASSWORD=your_redis_password
-RABBITMQ_USERNAME=your_rabbitmq_username
-RABBITMQ_PASSWORD=your_rabbitmq_password
-SEND_GRID_SENDER=your_sendgrid_sender
-SEND_GRID_API_KEY=your_sendgrid_api_key
-ACCESS_TOKEN_SECURITY_KEY=your_secret_key_here
-CLOUDINARY_CLOUD_NAME=your_cloud_name
-CLOUDINARY_API_KEY=your_api_key
-CLOUDINARY_API_SECRET=your_api_secret
-EOF
+dotnet tool restore                # install local tools (dotnet-retest, reportgenerator)
+dotnet build InstaConnect.sln
+dotnet test InstaConnect.sln       # integration tests need Docker running (Testcontainers)
+dotnet format InstaConnect.sln     # apply code style
 ```
 
----
+Tests are split into `*.Tests.Unit`, `*.Tests.Integration` and `*.Tests.Functional` projects per layer. Projects ending in just `.Tests` hold shared test utilities.
 
-### 3. Start the Application
+See [CONTRIBUTING.md](.github/CONTRIBUTING.md) for the contribution workflow.
 
-```bash
-docker-compose up --build
+## Project Structure
+
+```text
+src/
+  Common/                 Shared building blocks (Domain, Application, Infrastructure, Presentation, Events)
+  Services/
+    Identity|Posts|Chats|Follows/
+      InstaConnect.<Service>.Domain
+      InstaConnect.<Service>.Application
+      InstaConnect.<Service>.Infrastructure
+      InstaConnect.<Service>.Presentation   (API host + Dockerfile)
+      InstaConnect.<Service>.Events         (integration events published to other services)
+tests/
+  Common/                 Shared test utilities
+  Services/<Service>/     Unit, integration and functional tests per layer
+docker/
+  docker-compose.yml      Local stack: infrastructure, services and gateway
+  .env.example            Environment template for docker-compose.yml
+  mongo/                  MongoDB init scripts
+  nginx/                  API gateway configuration
+.config/                  .NET local tool manifest
+.github/                  CI workflows, Dependabot, issue/PR templates, contributing and security guides
 ```
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
