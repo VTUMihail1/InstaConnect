@@ -365,7 +365,8 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-# Files
-.containers
+# Docker Compose volumes (docker/docker-compose.yml)
+docker/.containers/
+
+# Environment files with secrets (anywhere in the repo)
 .env
-/tests/Services/Posts/InstaConnect.Posts.Tests/Features/PostCommentLikes/Utilities/PostCommentLikeMapper.cs
