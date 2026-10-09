@@ -7,7 +7,7 @@
 3. Make sure the checks below pass locally.
 4. Open a pull request against `master` and fill in the template.
 
-CI must pass (the **CI Passed** check) before a pull request is merged.
+CI must pass (the **All Checks Passed** check) before a pull request is merged.
 
 ## Local Checks
 

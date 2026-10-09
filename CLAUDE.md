@@ -39,4 +39,4 @@ docker compose -f docker/docker-compose.yml up --build    # full stack; needs do
 ## CI
 
 - `.github/workflows/ci.yml` builds and tests only the changed services, split by suite, and retries failed tests up to 3 times with `dotnet retest`.
-- Docker images are pushed to GHCR only from `master` after all checks pass. The required status check is **CI Passed**.
+- Docker images are pushed to GHCR only from `master` after all checks pass. The required status check is **All Checks Passed**.

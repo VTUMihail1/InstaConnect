@@ -82,7 +82,7 @@ jobs:
           echo "services=$SERVICES" >> "$GITHUB_OUTPUT"
 
   checks:
-    name: Format & Vulnerability Checks
+    name: Code Style & Security Audit
     needs: changes
     if: needs.changes.outputs.services != '[]'
     runs-on: ubuntu-24.04
@@ -112,7 +112,7 @@ jobs:
           fi
 
   build-test:
-    name: Build & Test (${{ matrix.service }} ${{ matrix.suite }})
+    name: Build & Test (${{ matrix.service }} - ${{ matrix.suite }})
     needs: changes
     if: needs.changes.outputs.services != '[]'
     runs-on: ubuntu-24.04
@@ -225,7 +225,7 @@ jobs:
           path: ./coverage-report
 
   compose-validate:
-    name: Validate Docker Compose
+    name: Docker Compose Validation
     runs-on: ubuntu-24.04
     timeout-minutes: 5
 
@@ -237,7 +237,7 @@ jobs:
         run: docker compose -f docker/docker-compose.yml config --quiet
 
   docker:
-    name: Docker Build & Push (${{ matrix.service }})
+    name: Docker Image (${{ matrix.service }})
     needs: [changes, checks, build-test]
     runs-on: ubuntu-24.04
     timeout-minutes: 30
@@ -293,7 +293,7 @@ jobs:
           cache-to: type=gha,mode=max,scope=${{ steps.image.outputs.name }}
 
   ci-success:
-    name: CI Passed
+    name: All Checks Passed
     needs: [changes, checks, build-test, coverage, compose-validate, docker]
     if: always()
     runs-on: ubuntu-24.04
