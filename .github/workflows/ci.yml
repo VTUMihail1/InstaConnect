@@ -56,13 +56,16 @@ jobs:
             Posts:
               - 'src/Services/Posts/**'
               - 'tests/Services/Posts/**'
-              - 'src/Services/Identity/InstaConnect.Identity.Events/**'            Chats:
+              - 'src/Services/Identity/InstaConnect.Identity.Events/**'
+            Chats:
               - 'src/Services/Chats/**'
               - 'tests/Services/Chats/**'
-              - 'src/Services/Identity/InstaConnect.Identity.Events/**'            Follows:
+              - 'src/Services/Identity/InstaConnect.Identity.Events/**'
+            Follows:
               - 'src/Services/Follows/**'
               - 'tests/Services/Follows/**'
               - 'src/Services/Identity/InstaConnect.Identity.Events/**'
+
       - name: Select services
         id: services
         env:
@@ -173,7 +176,7 @@ jobs:
   coverage:
     name: Code Coverage
     needs: [changes, build-test]
-    if: ${{ !cancelled() && needs.changes.outputs.services != '[]' }}
+    if: ${{ !cancelled() && (needs.build-test.result == 'success' || needs.build-test.result == 'failure') }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
 
@@ -190,7 +193,18 @@ jobs:
           pattern: test-results-*
           path: ./test-results
 
+      - name: Find coverage files
+        id: find
+        run: |
+          if find ./test-results -name coverage.cobertura.xml -print -quit 2>/dev/null | grep -q .; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::No coverage files were produced, skipping the coverage report."
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Generate coverage report
+        if: steps.find.outputs.found == 'true'
         run: >
           dotnet reportgenerator
           -reports:"./test-results/**/coverage.cobertura.xml"
@@ -200,9 +214,11 @@ jobs:
           -verbosity:Warning
 
       - name: Publish coverage summary
+        if: steps.find.outputs.found == 'true'
         run: cat ./coverage-report/SummaryGithub.md >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload coverage report
+        if: steps.find.outputs.found == 'true'
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: coverage-report
